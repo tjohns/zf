@@ -26,7 +26,6 @@
 			<language type="de">vācu</language>
 			<language type="el">grieķu</language>
 			<language type="en">angļu</language>
-			<language type="en_AU" alt="proposed-x1002">angļu (austrālija)</language>
 			<language type="en_US">angļu (ASV)</language>
 			<language type="eo">esperanto</language>
 			<language type="es">spāņu</language>
@@ -45,7 +44,6 @@
 			<language type="gn">gvaranu</language>
 			<language type="gu">gudžaratu</language>
 			<language type="he">ivrits</language>
-			<language type="he" alt="proposed-x1001">ebreju (ivrits)</language>
 			<language type="hi">hindi</language>
 			<language type="hr">horvātu</language>
 			<language type="hu">ungāru</language>
@@ -55,7 +53,6 @@
 			<language type="ie">interlingue</language>
 			<language type="is">islandiešu</language>
 			<language type="it">itāliešu</language>
-			<language type="it" alt="proposed-x1001">itāļu</language>
 			<language type="ja">japāņu</language>
 			<language type="jv">javiešu</language>
 			<language type="ka">gruzīnu</language>
@@ -119,9 +116,7 @@
 			<language type="yi">ebreju (jidišs)</language>
 			<language type="zh">ķīniešu</language>
 			<language type="zh_Hans">ķīniešu vienkāršotā</language>
-			<language type="zh_Hans" alt="proposed-x1001">ķīniešu (vienkāršotā)</language>
 			<language type="zh_Hant">ķīniešu tradicionālā</language>
-			<language type="zh_Hant" alt="proposed-x1001">ķīniešu (tradicionālā)</language>
 			<language type="zu">zulu</language>
 		</languages>
 		<scripts>
@@ -141,18 +136,14 @@
 			<territory type="AL">Albānija</territory>
 			<territory type="AM">Armēnija</territory>
 			<territory type="AN">Antiļas</territory>
-			<territory type="AN" alt="proposed-x1001">Nīderlandes Antiļas</territory>
 			<territory type="AO">Angola</territory>
 			<territory type="AQ">Antarktika</territory>
 			<territory type="AR">Argentīna</territory>
 			<territory type="AS">Amerikāņu Samoa</territory>
-			<territory type="AS" alt="proposed-x1001">ASV Samoa</territory>
 			<territory type="AT">Austrija</territory>
 			<territory type="AU">Austrālija</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Olandes salas</territory>
-			<territory type="AX" alt="proposed-x1001">Ālandi</territory>
-			<territory type="AX" alt="proposed-x1002">Ālandu salas</territory>
 			<territory type="AZ">Azerbaidžāna</territory>
 			<territory type="BA">Bosnija un Hercegovina</territory>
 			<territory type="BB">Barbadosa</territory>
@@ -168,7 +159,6 @@
 			<territory type="BO">Bolīvija</territory>
 			<territory type="BR">Brazīlija</territory>
 			<territory type="BS">Bahamas</territory>
-			<territory type="BS" alt="proposed-x1001">Bahamu salas</territory>
 			<territory type="BT">Butāna</territory>
 			<territory type="BV">Buvē sala</territory>
 			<territory type="BW">Botsvāna</territory>
@@ -176,12 +166,9 @@
 			<territory type="BZ">Beliza</territory>
 			<territory type="CA">Kanāda</territory>
 			<territory type="CC">Kokosu (Kīlinga) salas</territory>
-			<territory type="CC" alt="proposed-x1001">Kokosu salas</territory>
 			<territory type="CD">Kongo Demokrātiskā Republika</territory>
-			<territory type="CD" alt="proposed-x1001">Kongo-Kinshasa</territory>
 			<territory type="CF">Centrālāfrikas Republika</territory>
 			<territory type="CG">Kongo</territory>
-			<territory type="CG" alt="proposed-x1001">Kongo-Brazzaville</territory>
 			<territory type="CH">Šveice</territory>
 			<territory type="CI">Kotdivuāra</territory>
 			<territory type="CK">Kuka salas</territory>
@@ -212,20 +199,14 @@
 			<territory type="FI">Somija</territory>
 			<territory type="FJ">Fidži</territory>
 			<territory type="FK">Folklenda salas</territory>
-			<territory type="FK" alt="proposed-x1001">Folklenda (Malvinu) salas</territory>
 			<territory type="FM">Mikronēzijas Federatīvās Valstis</territory>
-			<territory type="FM" alt="proposed-x1001">Mikronēzija</territory>
 			<territory type="FO">Farēru salas</territory>
-			<territory type="FO" alt="proposed-x1001">Farēru (Fēru) salas</territory>
-			<territory type="FO" alt="proposed-x1002">Fēru salas</territory>
 			<territory type="FR">Francija</territory>
 			<territory type="GA">Gabona</territory>
 			<territory type="GB">Lielbritānija</territory>
-			<territory type="GB" alt="proposed-x1001">Lielbritānijas un Ziemeļīrijas Apvienotā Karaliste</territory>
 			<territory type="GD">Grenāda</territory>
 			<territory type="GE">Gruzija</territory>
 			<territory type="GF">Franču Gviāna</territory>
-			<territory type="GF" alt="proposed-x1001">Francijas Gviāna</territory>
 			<territory type="GG">Gērnsija</territory>
 			<territory type="GH">Gana</territory>
 			<territory type="GI">Gibraltārs</territory>
@@ -241,10 +222,7 @@
 			<territory type="GW">Gvineja-Bisava</territory>
 			<territory type="GY">Gajāna</territory>
 			<territory type="HK">Honkonga, Ķīnas īpašās pārvaldes apgabals</territory>
-			<territory type="HK" alt="proposed-x1001">Honkonga</territory>
-			<territory type="HK" alt="short">Honkonga</territory>
 			<territory type="HM">Hērda un Makdonalda salas</territory>
-			<territory type="HM" alt="proposed-x1001">Hērda sala un Makdonalda salas</territory>
 			<territory type="HN">Hondurasa</territory>
 			<territory type="HR">Horvātija</territory>
 			<territory type="HT">Haiti</territory>
@@ -253,14 +231,11 @@
 			<territory type="IE">Īrija</territory>
 			<territory type="IL">Izraēla</territory>
 			<territory type="IM">Mena</territory>
-			<territory type="IM" alt="proposed-x1001">Menas sala</territory>
 			<territory type="IN">Indija</territory>
 			<territory type="IO">Britu Indijas okeāna teritorija</territory>
-			<territory type="IO" alt="proposed-x1001">Indijas okeāna Britu teritorija</territory>
 			<territory type="IQ">Irāka</territory>
 			<territory type="IR">Irāna</territory>
 			<territory type="IS">Islande</territory>
-			<territory type="IS" alt="proposed-x1001">Īslande</territory>
 			<territory type="IT">Itālija</territory>
 			<territory type="JE">Džērsija</territory>
 			<territory type="JM">Jamaika</territory>
@@ -268,7 +243,6 @@
 			<territory type="JP">Japāna</territory>
 			<territory type="KE">Kenija</territory>
 			<territory type="KG">Kirgīzija</territory>
-			<territory type="KG" alt="proposed-x1001">Kirgizstāna</territory>
 			<territory type="KH">Kambodža</territory>
 			<territory type="KI">Kiribati</territory>
 			<territory type="KM">Komoru salas</territory>
@@ -300,11 +274,7 @@
 			<territory type="MM">Mjanma</territory>
 			<territory type="MN">Mongolija</territory>
 			<territory type="MO">Makao, Ķīnas īpašās pārvaldes apgabals</territory>
-			<territory type="MO" alt="proposed-x1001">Makao</territory>
-			<territory type="MO" alt="short">Makao</territory>
 			<territory type="MP">Ziemeļu Marianas</territory>
-			<territory type="MP" alt="proposed-x1001">Ziemeļmarianas salas</territory>
-			<territory type="MP" alt="proposed-x1002">Ziemeļu Marianas salas</territory>
 			<territory type="MQ">Martinika</territory>
 			<territory type="MR">Mauritānija</territory>
 			<territory type="MS">Montserrata</territory>
@@ -319,7 +289,6 @@
 			<territory type="NC">Jaunkaledonija</territory>
 			<territory type="NE">Nigēra</territory>
 			<territory type="NF">Norfolka</territory>
-			<territory type="NF" alt="proposed-x1001">Norfolkas sala</territory>
 			<territory type="NG">Nigērija</territory>
 			<territory type="NI">Nikaragva</territory>
 			<territory type="NL">Nīderlande</territory>
@@ -332,7 +301,6 @@
 			<territory type="PA">Panama</territory>
 			<territory type="PE">Peru</territory>
 			<territory type="PF">Franču Polinēzija</territory>
-			<territory type="PF" alt="proposed-x1001">Francijas Polinēzija</territory>
 			<territory type="PG">Papua-Jaungvineja</territory>
 			<territory type="PH">Filipīnas</territory>
 			<territory type="PK">Pakistāna</territory>
@@ -341,7 +309,6 @@
 			<territory type="PN">Pitkērna</territory>
 			<territory type="PR">Puertoriko</territory>
 			<territory type="PS">Palestīniešu pašpārvaldes teritorija</territory>
-			<territory type="PS" alt="proposed-x1001">Palestīna</territory>
 			<territory type="PT">Portugāle</territory>
 			<territory type="PW">Palau</territory>
 			<territory type="PY">Paragvaja</territory>
@@ -354,17 +321,12 @@
 			<territory type="SA">Saūda Arābija</territory>
 			<territory type="SB">Zālamana salas</territory>
 			<territory type="SC">Seišeļu salas</territory>
-			<territory type="SC" alt="proposed-x1001">Seišelu salas</territory>
 			<territory type="SD">Sudāna</territory>
 			<territory type="SE">Zviedrija</territory>
 			<territory type="SG">Singapūra</territory>
 			<territory type="SH">Sv. Helēnas sala</territory>
-			<territory type="SH" alt="proposed-x1001">Sv.Helēnas sala</territory>
-			<territory type="SH" alt="proposed-x1002">Svētās Helēnas Sala</territory>
 			<territory type="SI">Slovēnija</territory>
 			<territory type="SJ">Svalbāra un Jana Majena sala</territory>
-			<territory type="SJ" alt="proposed-x1001">Svalbāra un Jana Majena</territory>
-			<territory type="SJ" alt="proposed-x1002">Svalbāras arhipelāgs un Jana Majena sala</territory>
 			<territory type="SK">Slovākija</territory>
 			<territory type="SL">Sjerraleone</territory>
 			<territory type="SM">Sanmarīno</territory>
@@ -378,7 +340,6 @@
 			<territory type="TC">Tērksas un Kaikosas salas</territory>
 			<territory type="TD">Čada</territory>
 			<territory type="TF">Franču dienvidu teritorijas</territory>
-			<territory type="TF" alt="proposed-x1001">Francijas Dienvidjūru teritorija</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Taizeme</territory>
 			<territory type="TJ">Tadžikistāna</territory>
@@ -387,35 +348,26 @@
 			<territory type="TM">Turkmenistāna</territory>
 			<territory type="TN">Tunisija</territory>
 			<territory type="TO">Tonga</territory>
-			<territory type="TO" alt="proposed-x1001">Tongiešu</territory>
 			<territory type="TR">Turcija</territory>
 			<territory type="TT">Trinidāda un Tobāgo</territory>
-			<territory type="TT" alt="proposed-x1001">Trinidāda un Tobago</territory>
 			<territory type="TV">Tuvalu</territory>
 			<territory type="TW">Taivāna</territory>
 			<territory type="TZ">Tanzānija</territory>
 			<territory type="UA">Ukraina</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">ASV mazās aizjūras teritorijas</territory>
-			<territory type="UM" alt="proposed-x1001">ASV Mazās Aizjūras salas</territory>
 			<territory type="US">United States</territory>
-			<territory type="US" alt="proposed-x1001">Amerikas Savienotās Valstis</territory>
 			<territory type="UY">Urugvaja</territory>
 			<territory type="UZ">Uzbekistāna</territory>
 			<territory type="VA">Vatikāns</territory>
 			<territory type="VC">Sentvinsenta un Grenadīnas</territory>
 			<territory type="VE">Venecuēla</territory>
 			<territory type="VG">Britu Virdžīnu salas</territory>
-			<territory type="VG" alt="proposed-x1001">Britu Virdžīnas</territory>
 			<territory type="VI">Amerikāņu Virdžīnu salas</territory>
-			<territory type="VI" alt="proposed-x1001">ASV Virdžīnas</territory>
-			<territory type="VI" alt="proposed-x1002">Amerikāņu Virdžīnas</territory>
 			<territory type="VN">Vjetnama</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Volisa un Futuna</territory>
-			<territory type="WF" alt="proposed-x1001">Volisa un Futunas salas</territory>
 			<territory type="WS">Samoa</territory>
-			<territory type="WS" alt="proposed-x1001">Rietumsamoa</territory>
 			<territory type="YE">Jemena</territory>
 			<territory type="YT">Majota</territory>
 			<territory type="ZA">Dienvidāfrika</territory>
@@ -439,15 +391,9 @@
 	</characters>
 	<delimiters>
 		<quotationStart>“</quotationStart>
-		<quotationStart alt="proposed-x1001">”</quotationStart>
-		<quotationStart alt="proposed-x1002">‘</quotationStart>
 		<quotationEnd>”</quotationEnd>
-		<quotationEnd alt="proposed-x1001">’</quotationEnd>
 		<alternateQuotationStart>‘</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">“</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1002">’</alternateQuotationStart>
 		<alternateQuotationEnd>’</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">”</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
@@ -505,22 +451,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">Sv</day>
-							<day type="sun" alt="proposed-x1001">Saule</day>
 							<day type="mon">P</day>
-							<day type="mon" alt="proposed-x1001">Pirmdiena</day>
 							<day type="tue">O</day>
-							<day type="tue" alt="proposed-x1001">Ot</day>
 							<day type="wed">T</day>
-							<day type="wed" alt="proposed-x1001">Tr</day>
-							<day type="wed" alt="proposed-x1002">Trešd</day>
 							<day type="thu">C</day>
-							<day type="thu" alt="proposed-x1001">Cet</day>
-							<day type="thu" alt="proposed-x1002">Ce</day>
 							<day type="fri">Pk</day>
-							<day type="fri" alt="proposed-x1001">Piektd</day>
 							<day type="sat">S</day>
-							<day type="sat" alt="proposed-x1001">Sestdiena</day>
-							<day type="sat" alt="proposed-x1002">Se</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">svētdiena</day>
@@ -575,9 +511,7 @@
 					</eraNames>
 					<eraAbbr>
 						<era type="0">pmē</era>
-						<era type="0" alt="proposed-x1001">p.m.ē.</era>
 						<era type="1">mē</era>
-						<era type="1" alt="proposed-x1001">m.ē.</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0">p.m.ē.</era>
@@ -603,7 +537,6 @@
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>yy.d.M</pattern>
-							<pattern alt="proposed-x1001">yyyy-MM-dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -688,7 +621,6 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH:mm;−HH:mm</hourFormat>
-			<hourFormat alt="proposed-x1001">+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>GMT{0}</gmtFormat>
 			<regionFormat>{0}</regionFormat>
 			<zone type="Etc/Unknown">
@@ -795,7 +727,6 @@
 			</zone>
 			<zone type="America/Rio_Branco">
 				<exemplarCity>Riobranko</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Riubranku</exemplarCity>
 			</zone>
 			<zone type="America/Porto_Velho">
 				<exemplarCity>Portuvelju</exemplarCity>
@@ -823,7 +754,6 @@
 			</zone>
 			<zone type="America/Bahia">
 				<exemplarCity>Brazīlija (Salvadora)</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Salvadora</exemplarCity>
 			</zone>
 			<zone type="America/Maceio">
 				<exemplarCity>Maseio</exemplarCity>
@@ -1402,7 +1332,6 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>#,##0.00 ¤</pattern>
-					<pattern alt="proposed-x1001">¤ #,##0.00</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -1594,7 +1523,6 @@
 	<posix>
 		<messages>
 			<yesstr>jā:ja:j</yesstr>
-			<yesstr alt="proposed-x1001">ājā:ja:j</yesstr>
 			<nostr>nē:ne:n</nostr>
 		</messages>
 	</posix>

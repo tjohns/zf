@@ -69,7 +69,7 @@
 					</eraNames>
 					<eraAbbr>
 						<era type="0">BE</era>
-						aAbbr>
+					</eraAbbr>
 					<eraNarrow>
 						<alias source="locale" path="../eraAbbr"/>
 					</eraNarrow>

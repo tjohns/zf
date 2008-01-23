@@ -9,10 +9,6 @@
 	<characters>
 		<exemplarCharacters>[a b d e ɛ f-i k-o ɔ p r-u w y]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[c j q v z]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[c j l v]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1002">[̃ ã e ĩ õ ũ]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a-e ɛ f-o ɔ p r-u w y z]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1002">[a b d e ɛ f-i k m-o ɔ p r-u w y z]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>
@@ -193,9 +189,6 @@
 			<currency type="GHC">
 				<displayName>Sidi</displayName>
 				<symbol>GH¢</symbol>
-				<symbol alt="proposed-x1001">¢</symbol>
-				<symbol alt="variant">GH¢</symbol>
-				<symbol alt="variant-proposed-x1001">₵</symbol>
 			</currency>
 		</currencies>
 	</numbers>

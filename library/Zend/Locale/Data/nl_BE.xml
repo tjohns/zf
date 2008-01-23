@@ -13,16 +13,11 @@
 			<language type="oc">Occitaans (na 1500); Provençaals</language>
 			<language type="sh">Servo-Kroatisch</language>
 			<language type="ssa">Nilo-Saharaans</language>
-			<language type="ssa" alt="proposed-x1001">Nilo-Saharisch</language>
 		</languages>
 		<territories>
 			<territory type="013">Centraal-Amerika</territory>
-			<territory type="419" alt="proposed-x1001">Latijns-Amerika en de Caraïben</territory>
 			<territory type="IM">Het Eiland Man</territory>
 			<territory type="KG">Kirgizië</territory>
-			<territory type="MV" alt="proposed-x1001">Malediven</territory>
-			<territory type="SB" alt="proposed-x1001">Salomoneilanden</territory>
-			<territory type="TZ" alt="proposed-x1001">Tanzanië</territory>
 		</territories>
 		<types>
 			<type type="traditional" key="collation">Traditioneel</type>
@@ -45,8 +40,6 @@
 				</dateFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">MM/yy</dateFormatItem>
-						<dateFormatItem id="yyMMM" alt="proposed-x1001">MMM-yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

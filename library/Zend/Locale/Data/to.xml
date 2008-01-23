@@ -16,7 +16,6 @@
 			<language type="es">lea fakasepeni</language>
 			<language type="fa">lea fakapēsia</language>
 			<language type="fi">lea fakafinilani</language>
-			<language type="fi" alt="proposed-x1001">le fakafinilani</language>
 			<language type="fj">lea fakafisi</language>
 			<language type="fr">lea fakafalanisē</language>
 			<language type="ga">lea fakaʻaealani</language>
@@ -77,7 +76,6 @@
 			<territory type="015">ʻAfelika tokelau</territory>
 			<territory type="017">ʻAfelika lotoloto</territory>
 			<territory type="018">ʻAfelika fakatonga</territory>
-			<territory type="018" alt="proposed-x1001">ʻAfelika tonga</territory>
 			<territory type="019">Ongo ʻAmelika</territory>
 			<territory type="021">ʻAmelika tonga ange</territory>
 			<territory type="029">Kalipea</territory>
@@ -88,7 +86,6 @@
 			<territory type="053">ʻAositelēlia mo Nuʻusila</territory>
 			<territory type="054">Melanisia</territory>
 			<territory type="057">Potu fonua Mikolonisia</territory>
-			<territory type="057" alt="proposed-x1001">Mikolonisia</territory>
 			<territory type="061">Polinisia</territory>
 			<territory type="062">ʻĒsia tongalotoloto</territory>
 			<territory type="142">ʻĒsia</territory>
@@ -126,11 +123,8 @@
 			<territory type="KI">Kilipasi</territory>
 			<territory type="KP">Kōloa tokelau</territory>
 			<territory type="KR">Kōlea tonga</territory>
-			<territory type="KR" alt="proposed-x1001">Kōlea Tonga</territory>
 			<territory type="LK">Sīloni</territory>
 			<territory type="MH">ʻOtumotu Māsolo</territory>
-			<territory type="MH" alt="proposed-x1001">ʻOtu Māsolo</territory>
-			<territory type="MH" alt="proposed-x1002">ʻOtu motu Māsolo</territory>
 			<territory type="MX">Mekesikō</territory>
 			<territory type="NC">Niu Kaletonia</territory>
 			<territory type="NL">Holani</territory>
@@ -146,7 +140,6 @@
 			<territory type="SB">ʻOtumotu Solomone</territory>
 			<territory type="SE">Suēteni</territory>
 			<territory type="SG">Singapula</territory>
-			<territory type="SG" alt="proposed-x1001">Singapura</territory>
 			<territory type="TK">Tokelau</territory>
 			<territory type="TO">Tonga</territory>
 			<territory type="TR">Toake</territory>
@@ -181,7 +174,6 @@
 	<characters>
 		<exemplarCharacters>[a á ā e é ē f h ʻ i í ī k-n {ng} o ó ō p s-u ú ū v]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[à ă â å ä æ b c ç d è ĕ ê ë g ì ĭ î ï j ñ ò ŏ ô ö ø œ q r ß ù ŭ û ü w-y ÿ z]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[à ă â å ä æ b c ç d è ĕ ê ë g ì ĭ î ï j ñ ò ŏ ô ö ø ō q r ß ù ŭ û ü w-y ÿ z]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<alternateQuotationStart>«</alternateQuotationStart>
@@ -211,15 +203,12 @@
 							<month type="2">F</month>
 							<month type="3">M</month>
 							<month type="4">E</month>
-							<month type="4" alt="proposed-x1001">ʻE</month>
 							<month type="5">M</month>
 							<month type="6">S</month>
 							<month type="7">S</month>
 							<month type="8">A</month>
-							<month type="8" alt="proposed-x1001">ʻA</month>
 							<month type="9">S</month>
 							<month type="10">O</month>
-							<month type="10" alt="proposed-x1001">ʻO</month>
 							<month type="11">N</month>
 							<month type="12">T</month>
 						</monthWidth>
@@ -244,15 +233,12 @@
 							<month type="2">F</month>
 							<month type="3">M</month>
 							<month type="4">E</month>
-							<month type="4" alt="proposed-x1001">ʻE</month>
 							<month type="5">M</month>
 							<month type="6">S</month>
 							<month type="7">S</month>
 							<month type="8">A</month>
-							<month type="8" alt="proposed-x1001">ʻA</month>
 							<month type="9">S</month>
 							<month type="10">O</month>
-							<month type="10" alt="proposed-x1001">ʻO</month>
 							<month type="11">N</month>
 							<month type="12">T</month>
 						</monthWidth>
@@ -396,9 +382,7 @@
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
 						<dateFormatItem id="Md">d-M</dateFormatItem>
 						<dateFormatItem id="yyMM">MM-yy</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">MM-yyyy</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
-						<dateFormatItem id="yyMMM" alt="proposed-x1001">MMM yyyy</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>

@@ -9,223 +9,122 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="af">Tiếng Hà Lan (Nam Phi)</language>
-			<language type="af" alt="proposed-x1001">Nam Phi</language>
 			<language type="am">Tiếng Amharic</language>
-			<language type="am" alt="proposed-x1001">Amharic</language>
 			<language type="ar">Tiếng A-rập</language>
-			<language type="ar" alt="proposed-x1001">Ả-rập</language>
 			<language type="as">Tiếng Assam</language>
 			<language type="ay">Tiếng Aymara</language>
-			<language type="ay" alt="proposed-x1001">Aymara</language>
 			<language type="az">Tiếng Ai-déc-bai-gian</language>
-			<language type="az" alt="proposed-x1001">Agiecbaigiăng</language>
 			<language type="be">Tiếng Bê-la-rút</language>
-			<language type="be" alt="proposed-x1001">Tiếng Bêlarút</language>
 			<language type="bg">Tiếng Bun-ga-ri</language>
-			<language type="bg" alt="proposed-x1001">Bun-ga-ri</language>
 			<language type="bh">Tiếng Bihari</language>
-			<language type="bh" alt="proposed-x1001">Bihari</language>
 			<language type="bn">Tiếng Bengali (Ấn Độ)</language>
-			<language type="bn" alt="proposed-x1001">Bengali (Ấn Ðộ)</language>
 			<language type="bo">Tiếng Tây Tạng</language>
 			<language type="br">Tiếng Breton</language>
-			<language type="br" alt="proposed-x1001">Breton</language>
 			<language type="bs">Tiếng Nam Tư</language>
-			<language type="bs" alt="proposed-x1001">Nam Tư (Bosnian)</language>
 			<language type="ca">Tiếng Ca-ta-lăng</language>
-			<language type="ca" alt="proposed-x1001">Catalan</language>
 			<language type="cs">Tiếng Séc</language>
-			<language type="cs" alt="proposed-x1001">Séc (Czech)</language>
 			<language type="cy">Tiếng Xentơ</language>
-			<language type="cy" alt="proposed-x1001">Welsh</language>
 			<language type="da">Tiếng Đan Mạch</language>
-			<language type="da" alt="proposed-x1001">Tiếng Ðan Mạch</language>
 			<language type="de">Tiếng Đức</language>
-			<language type="de" alt="proposed-x1001">Tiếng Ðức</language>
 			<language type="el">Tiếng Hy Lạp</language>
-			<language type="el" alt="proposed-x1001">Hy Lạp</language>
 			<language type="en">Tiếng Anh</language>
 			<language type="en_GB">Tiếng Anh (Anh)</language>
 			<language type="en_US">Tiếng Anh (Mỹ)</language>
 			<language type="eo">Tiếng Quốc Tế Ngữ</language>
-			<language type="eo" alt="proposed-x1001">Etperantô</language>
 			<language type="es">Tiếng Tây Ban Nha</language>
 			<language type="et">Tiếng E-xtô-ni-a</language>
-			<language type="et" alt="proposed-x1001">Estonian</language>
 			<language type="eu">Tiếng Basque</language>
-			<language type="eu" alt="proposed-x1001">Basque</language>
 			<language type="fa">Tiếng Ba Tư</language>
-			<language type="fa" alt="proposed-x1001">Ba Tư</language>
 			<language type="fi">Tiếng Phần Lan</language>
 			<language type="fil">Tiếng Philipin</language>
-			<language type="fil" alt="proposed-x1001">Phi-lip-pin</language>
 			<language type="fo">Tiếng Faore</language>
-			<language type="fo" alt="proposed-x1001">Ðảo Faroe</language>
 			<language type="fr">Tiếng Pháp</language>
 			<language type="fy">Tiếng Frisian</language>
-			<language type="fy" alt="proposed-x1001">Frisian</language>
 			<language type="ga">Tiếng Ai-len</language>
-			<language type="ga" alt="proposed-x1001">Ai-len</language>
 			<language type="gd">Tiếng Xentơ (Xcốt len)</language>
-			<language type="gd" alt="proposed-x1001">Xen-tô của người Ê-cốt</language>
 			<language type="gl">Tiếng Galician</language>
-			<language type="gl" alt="proposed-x1001">Galician</language>
 			<language type="gn">Tiếng Guarani</language>
-			<language type="gn" alt="proposed-x1001">Guarani</language>
 			<language type="gu">Tiếng  Gujarati</language>
-			<language type="gu" alt="proposed-x1001">Gujarati</language>
 			<language type="he">Tiếng Hê-brơ</language>
-			<language type="he" alt="proposed-x1001">Do Thái</language>
 			<language type="hi">Tiếng Hin-đi</language>
-			<language type="hi" alt="proposed-x1001">Hin-đi (Ấn Ðộ)</language>
 			<language type="hr">Tiếng Crô-a-ti-a</language>
-			<language type="hr" alt="proposed-x1001">Croatia</language>
 			<language type="hu">Tiếng Hung-ga-ri</language>
-			<language type="hu" alt="proposed-x1001">Hung-ga-ri</language>
 			<language type="hy">Tiếng Ác-mê-ni</language>
-			<language type="hy" alt="proposed-x1001">Ac-mê-ni</language>
 			<language type="ia">Tiếng Khoa Học Quốc Tế</language>
-			<language type="ia" alt="proposed-x1001">Quốc tế ngữ</language>
 			<language type="id">Tiếng In-đô-nê-xia</language>
-			<language type="id" alt="proposed-x1001">In-đô-nê-xi-a</language>
 			<language type="ie">Tiếng Khoa học quốc tế</language>
-			<language type="ie" alt="proposed-x1001">Ngôn ngữ đa phương</language>
 			<language type="is">Tiếng Ai-xơ-len</language>
-			<language type="is" alt="proposed-x1001">Băng Ðảo</language>
 			<language type="it">Tiếng Ý</language>
 			<language type="ja">Tiếng Nhật</language>
 			<language type="jv">Tiếng Gia-va</language>
-			<language type="jv" alt="proposed-x1001">Tiếng Java</language>
 			<language type="ka">Tiếng Georgian</language>
-			<language type="ka" alt="proposed-x1001">Georgian</language>
 			<language type="km">Tiếng Campuchia</language>
-			<language type="km" alt="proposed-x1001">Người Cao-Miên</language>
 			<language type="kn">Tiếng Kan-na-đa</language>
-			<language type="kn" alt="proposed-x1001">Kannada</language>
 			<language type="ko">Tiếng Hàn Quốc</language>
-			<language type="ko" alt="proposed-x1001">Tiếng Hàn</language>
 			<language type="ks">Tiếng Kashmiri</language>
-			<language type="ks" alt="proposed-x1001">Kashmiri</language>
 			<language type="ku">Tiếng Kurd (Iran)</language>
-			<language type="ku" alt="proposed-x1001">Kurd (Iran)</language>
 			<language type="ky">Tiếng Kyrgyz</language>
-			<language type="ky" alt="proposed-x1001">Kyrgyz</language>
 			<language type="la">Tiếng La-tinh</language>
-			<language type="la" alt="proposed-x1001">La Tinh</language>
 			<language type="ln">Tiếng Lingala</language>
-			<language type="ln" alt="proposed-x1001">Lingala</language>
 			<language type="lo">Tiếng Lào</language>
-			<language type="lo" alt="proposed-x1001">Lào</language>
 			<language type="lt">Tiếng Lít-va</language>
-			<language type="lt" alt="proposed-x1001">Lát-vi</language>
 			<language type="lv">Tiếng Lát-vi-a</language>
-			<language type="lv" alt="proposed-x1001">Latvian</language>
 			<language type="mk">Tiếng Ma-xê-đô-ni-a</language>
-			<language type="mk" alt="proposed-x1001">Macedonian</language>
 			<language type="ml">Tiếng Malayalam</language>
-			<language type="ml" alt="proposed-x1001">Malayalam</language>
 			<language type="mn">Tiếng Mông Cổ</language>
-			<language type="mn" alt="proposed-x1001">Mông Cổ</language>
 			<language type="mr">Tiếng Marathi</language>
-			<language type="mr" alt="proposed-x1001">Marathi</language>
 			<language type="ms">Tiếng Ma-lay-xi-a</language>
-			<language type="ms" alt="proposed-x1001">Mã Lai</language>
 			<language type="mt">Tiếng Mantơ</language>
-			<language type="mt" alt="proposed-x1001">Maltese</language>
 			<language type="ne">Tiếng Nê-pan</language>
-			<language type="ne" alt="proposed-x1001">Nepal</language>
 			<language type="nl">Tiếng Hà Lan</language>
 			<language type="nn">Tiếng Na Uy (Nynorsk)</language>
-			<language type="nn" alt="proposed-x1001">Na Uy (Nynorsk)</language>
 			<language type="no">Tiếng Na Uy</language>
 			<language type="oc">Tiếng Occitan</language>
-			<language type="oc" alt="proposed-x1001">Occitan</language>
 			<language type="or">Tiếng Ô-ri-a</language>
-			<language type="or" alt="proposed-x1001">Ô-ri-a</language>
 			<language type="pa">Tiếng Punjabi</language>
-			<language type="pa" alt="proposed-x1001">Punjabi</language>
 			<language type="pl">Tiếng Ba Lan</language>
-			<language type="pl" alt="proposed-x1001">Ba Lan</language>
 			<language type="ps">Tiếng Pa-tô</language>
-			<language type="ps" alt="proposed-x1001">Pa-tô (Afghanistan và Pakistan)</language>
 			<language type="pt">Tiếng Bồ Đào Nha</language>
-			<language type="pt" alt="proposed-x1001">Bồ Ðào Nha (Ba Tây)</language>
 			<language type="pt_BR">Tiếng Bồ Đào Nha (Braxin)</language>
-			<language type="pt_BR" alt="proposed-x1001">Bồ Đào Nha (Braxin)</language>
 			<language type="pt_PT">Tiếng Bồ Đào Nha (I-bê-ri)</language>
-			<language type="pt_PT" alt="proposed-x1001">Tiếng Bồ Đào Nha</language>
-			<language type="pt_PT" alt="proposed-x1002">Bồ Ðào Nha</language>
 			<language type="rm">Tiếng Rhaeto-Romance</language>
-			<language type="rm" alt="proposed-x1001">Rhaeto-Romance</language>
 			<language type="ro">Tiếng Ru-ma-ni</language>
-			<language type="ro" alt="proposed-x1001">Romanian</language>
 			<language type="ru">Tiếng Nga</language>
-			<language type="ru" alt="proposed-x1001">Nga</language>
 			<language type="sa">Tiếng Phạn</language>
-			<language type="sa" alt="proposed-x1001">Phạn</language>
 			<language type="sd">Tiếng Sin-hi</language>
-			<language type="sd" alt="proposed-x1001">Sin-hi</language>
 			<language type="sh">Tiếng Xéc bi - Croatia</language>
-			<language type="sh" alt="proposed-x1001">Xéc bi-Croatia</language>
 			<language type="si">Tiếng Sinhala</language>
 			<language type="sk">Tiếng Xlô-vác</language>
-			<language type="sk" alt="proposed-x1001">Slovak</language>
 			<language type="sl">Tiếng Xlô-ven</language>
-			<language type="sl" alt="proposed-x1001">Slovenian</language>
 			<language type="so">Tiếng Xô-ma-li</language>
-			<language type="so" alt="proposed-x1001">Somali</language>
 			<language type="sq">Tiếng An-ba-ni</language>
-			<language type="sq" alt="proposed-x1001">An-ba-ni</language>
 			<language type="sr">Tiếng Séc-bi</language>
-			<language type="sr" alt="proposed-x1001">Xéc-bi (Serbian)</language>
 			<language type="st">Tiếng Sesotho</language>
-			<language type="st" alt="proposed-x1001">Sesotho</language>
 			<language type="su">Tiếng Xu đăng</language>
-			<language type="su" alt="proposed-x1001">Xu-đăng</language>
 			<language type="sv">Tiếng Thụy Điển</language>
-			<language type="sv" alt="proposed-x1001">Tiếng Thuỵ Ðiển</language>
 			<language type="sw">Tiếng Bantu (Đông Phi)</language>
-			<language type="sw" alt="proposed-x1001">Bantu (Ðông Phi)</language>
 			<language type="ta">Tiếng Tamil</language>
-			<language type="ta" alt="proposed-x1001">Tamil</language>
 			<language type="te">Tiếng Telugu</language>
-			<language type="te" alt="proposed-x1001">Telugu</language>
 			<language type="th">Tiếng Thái</language>
-			<language type="th" alt="proposed-x1001">Thái Lan</language>
 			<language type="ti">Tiếng Tigrigya</language>
-			<language type="ti" alt="proposed-x1001">Tigrigya</language>
 			<language type="tk">Tiếng Tuôc-men</language>
-			<language type="tk" alt="proposed-x1001">Tuôcmen</language>
 			<language type="tl">Tiếng Tagalog</language>
 			<language type="tlh">Tiếng Klingon</language>
-			<language type="tlh" alt="proposed-x1001">Klingon</language>
 			<language type="tr">Tiếng Thổ Nhĩ Kỳ</language>
-			<language type="tr" alt="proposed-x1001">Thổ Nhĩ Kỳ</language>
 			<language type="tw">Tiếng Twi</language>
-			<language type="tw" alt="proposed-x1001">Twi</language>
 			<language type="ug">Tiếng Uighur</language>
-			<language type="ug" alt="proposed-x1001">Uighur</language>
 			<language type="uk">Tiếng U-crai-na</language>
-			<language type="uk" alt="proposed-x1001">U-kren (Ukranian)</language>
 			<language type="und">und</language>
 			<language type="ur">Tiếng Uđu</language>
-			<language type="ur" alt="proposed-x1001">U đu</language>
 			<language type="uz">Tiếng U-dơ-bếch</language>
-			<language type="uz" alt="proposed-x1001">Uz-béc</language>
 			<language type="vi">Tiếng Việt</language>
-			<language type="vi" alt="proposed-x1001">Việt</language>
 			<language type="wo">Tiếng Wolof</language>
-			<language type="wo" alt="proposed-x1001">Wolof</language>
 			<language type="xh">Tiếng Bantu</language>
-			<language type="xh" alt="proposed-x1001">Bantu</language>
 			<language type="yi">Tiếng Y-đit</language>
-			<language type="yi" alt="proposed-x1001">Iđít (Do Thái)</language>
 			<language type="zh">Tiếng Trung Quốc</language>
 			<language type="zh_Hans">Tiếng Trung Quốc (Giản thế)</language>
 			<language type="zh_Hant">Tiếng Trung Quốc (Phồn thể)</language>
-			<language type="zh_Hant" alt="proposed-x1001">Tiếng Trung Quốc (Truyền thống)</language>
 			<language type="zu">Tiếng Zulu</language>
-			<language type="zu" alt="proposed-x1001">Zulu</language>
 		</languages>
 		<scripts>
 			<script type="Zxxx">Zxxx</script>
@@ -234,105 +133,67 @@
 		<territories>
 			<territory type="AE">Các Tiểu Vương quốc A-rập Thống nhất</territory>
 			<territory type="AF">Áp-ga-ni-xtan</territory>
-			<territory type="AF" alt="proposed-x1001">A Phú Hãn (Afghanistan)</territory>
 			<territory type="AG">An-ti-gu-a và Ba-bu-đa</territory>
-			<territory type="AG" alt="proposed-x1001">An-ti-gu-a và Ba-bu-đa (Antigua và Barbuda)</territory>
 			<territory type="AL">An-ba-ni</territory>
-			<territory type="AL" alt="proposed-x1001">An-ba-ni (Albania)</territory>
 			<territory type="AM">Ác-mê-ni-a</territory>
-			<territory type="AM" alt="proposed-x1001">Ác-mê-ni-a (Armenia)</territory>
 			<territory type="AN">Antilles Hà Lan</territory>
 			<territory type="AO">Ăng-gô-la</territory>
-			<territory type="AO" alt="proposed-x1001">Ăng-gô-la (Angola)</territory>
 			<territory type="AQ">Nam Cực</territory>
 			<territory type="AR">Ác-hen-ti-na</territory>
-			<territory type="AR" alt="proposed-x1001">Á Căn Đình (Argentina)</territory>
 			<territory type="AS">Đảo Xa-mô-a của Mỹ (Samoa)</territory>
 			<territory type="AT">Áo</territory>
 			<territory type="AU">Úc</territory>
-			<territory type="AU" alt="proposed-x1001">Australia (Úc)</territory>
 			<territory type="AX">Quần đảo Aland</territory>
-			<territory type="AX" alt="proposed-x1001">Åland Islands</territory>
 			<territory type="AZ">Ai-déc-bai-gian</territory>
-			<territory type="AZ" alt="proposed-x1001">Ai-déc-bai-gian (Azerbaijan)</territory>
 			<territory type="BA">Bô-xni-a Héc-xê-gô-vi-na</territory>
-			<territory type="BA" alt="proposed-x1001">Bô-xni-a Héc-xê-gô-vi-na (Bosnia và Herzegovina)</territory>
 			<territory type="BB">Bác-ba-đốt</territory>
 			<territory type="BD">Băng-la-đét</territory>
-			<territory type="BD" alt="proposed-x1001">Băng-la-đét (Bangladesh)</territory>
 			<territory type="BE">Bỉ</territory>
 			<territory type="BF">Buốc-ki-na Pha-xô</territory>
-			<territory type="BF" alt="proposed-x1001">Buốc-ki-na Pha-xô (Burkina Faso)</territory>
 			<territory type="BG">Bun-ga-ri</territory>
-			<territory type="BG" alt="proposed-x1001">Bun-ga-ri (Bulgaria)</territory>
 			<territory type="BH">Ba-ren</territory>
 			<territory type="BI">Bu-run-đi</territory>
-			<territory type="BI" alt="proposed-x1001">Bu-run-đi (Burundi)</territory>
 			<territory type="BJ">Bê-nanh</territory>
-			<territory type="BJ" alt="proposed-x1001">Bê-nanh (Benin)</territory>
 			<territory type="BN">Bru-nây</territory>
 			<territory type="BO">Bô-li-vi-a</territory>
-			<territory type="BO" alt="proposed-x1001">Bô-li-vi-a (Bolivia)</territory>
 			<territory type="BR">Bra-xin</territory>
-			<territory type="BR" alt="proposed-x1001">Ba Tây (Bra-xin)</territory>
 			<territory type="BS">Ba-ha-ma</territory>
-			<territory type="BS" alt="proposed-x1001">Ba-ha-ma (Bahamas)</territory>
 			<territory type="BT">Bu-tan (Bhutan)</territory>
 			<territory type="BV">Đảo Bouvet (Na Uy)</territory>
 			<territory type="BW">Bốt-xoa-na</territory>
-			<territory type="BW" alt="proposed-x1001">Bốt-xoa-na (Botswana)</territory>
 			<territory type="BY">Bê-la-rút</territory>
-			<territory type="BY" alt="proposed-x1001">Bê-la-rút (Belarus)</territory>
 			<territory type="BZ">Bê-li-xê</territory>
 			<territory type="CA">Ca-na-đa</territory>
-			<territory type="CA" alt="proposed-x1001">Canada (Gia Nã Đại)</territory>
 			<territory type="CC">Quần đảo Cocos</territory>
 			<territory type="CD">Cộng hoà dân chủ Côngô</territory>
-			<territory type="CD" alt="proposed-x1001">Cộng Ḥa Dân Chủ Côngô</territory>
 			<territory type="CF">Cộng hòa Trung Phi</territory>
 			<territory type="CG">Công-gô</territory>
-			<territory type="CG" alt="proposed-x1001">Công-gô (Congo)</territory>
 			<territory type="CH">Thụy Sĩ</territory>
 			<territory type="CI">Bờ Biển Ngà</territory>
-			<territory type="CI" alt="proposed-x1001">Côte d'Ivoire</territory>
 			<territory type="CK">Quần Đảo Cook</territory>
 			<territory type="CL">Chi-lê</territory>
-			<territory type="CL" alt="proposed-x1001">Chi-lê (Chile)</territory>
 			<territory type="CM">Ca-mơ-run</territory>
-			<territory type="CM" alt="proposed-x1001">Ca-mơ-run (Cameroon)</territory>
 			<territory type="CN">Trung Quốc</territory>
-			<territory type="CN" alt="proposed-x1001">Trung Hoa</territory>
 			<territory type="CO">Cô-lôm-bi-a</territory>
-			<territory type="CO" alt="proposed-x1001">Cô-lôm-bi-a (Colombia)</territory>
 			<territory type="CR">Cốt-xta Ri-ca</territory>
 			<territory type="CS">Séc-bia</territory>
-			<territory type="CS" alt="proposed-x1001">Serbia &amp; Montenegro</territory>
 			<territory type="CU">Cu Ba</territory>
-			<territory type="CU" alt="proposed-x1001">Cu-ba</territory>
 			<territory type="CV">Cáp-ve</territory>
 			<territory type="CX">Đảo Giáng Sinh</territory>
 			<territory type="CY">Síp</territory>
-			<territory type="CY" alt="proposed-x1001">Síp (Cyprus)</territory>
 			<territory type="CZ">Cộng hòa Séc</territory>
-			<territory type="CZ" alt="proposed-x1001">Cộng hòa Séc (Czech)</territory>
 			<territory type="DE">Đức</territory>
 			<territory type="DJ">Gi-bu-ti</territory>
 			<territory type="DK">Đan Mạch</territory>
 			<territory type="DO">Cộng hoà Đô-mi-ni-ca</territory>
-			<territory type="DO" alt="proposed-x1001">Cộng hòa Ðô-mi-ni-ca-na</territory>
 			<territory type="DZ">An-giê-ri</territory>
-			<territory type="DZ" alt="proposed-x1001">An-ghê-ri (Algeria)</territory>
 			<territory type="EC">Ê-cu-a-đo</territory>
-			<territory type="EC" alt="proposed-x1001">Ê-qu-a-đo (Ecuador)</territory>
 			<territory type="EE">E-xtô-ni-a</territory>
-			<territory type="EE" alt="proposed-x1001">E-xtô-ni-a (Estonia)</territory>
 			<territory type="EG">Ai Cập</territory>
 			<territory type="EH">Tây Sahara</territory>
 			<territory type="ER">Ê-ri-tơ-rê-a</territory>
-			<territory type="ER" alt="proposed-x1001">Ê-ri-tơ-rê-a (Eritrea)</territory>
 			<territory type="ES">Tây Ban Nha</territory>
 			<territory type="ET">Ê-ti-ô-pi-a</territory>
-			<territory type="ET" alt="proposed-x1001">Ê-ti-ô-pi-a (Ethiopia)</territory>
 			<territory type="FI">Phần Lan</territory>
 			<territory type="FJ">Phi-gi</territory>
 			<territory type="FK">Quần Đảo Falkland</territory>
@@ -340,254 +201,164 @@
 			<territory type="FO">Quần Đảo Faroe</territory>
 			<territory type="FR">Pháp</territory>
 			<territory type="GA">Ga-bông</territory>
-			<territory type="GA" alt="proposed-x1001">Ga-bông (Gabon)</territory>
 			<territory type="GB">Vương quốc Anh</territory>
 			<territory type="GD">Grê-na-đa</territory>
 			<territory type="GE">Gru-di-a</territory>
-			<territory type="GE" alt="proposed-x1001">Giê-oóc-gi-a (Georgia)</territory>
 			<territory type="GF">Quiana thuộc Pháp</territory>
 			<territory type="GG">Guernsey</territory>
 			<territory type="GH">Gha-na</territory>
-			<territory type="GH" alt="proposed-x1001">Gha-na (Ghana)</territory>
 			<territory type="GL">Đảo Băng</territory>
 			<territory type="GM">Găm-bi-a</territory>
-			<territory type="GM" alt="proposed-x1001">Găm-bi-a (Gambia)</territory>
 			<territory type="GN">Ghi-nê</territory>
-			<territory type="GN" alt="proposed-x1001">Ghi-nê (Guinea)</territory>
 			<territory type="GQ">Ghi-nê Xích-đạo</territory>
-			<territory type="GQ" alt="proposed-x1001">Ghi-nê Xích-đạo (Equatorial Guinea)</territory>
 			<territory type="GR">Hy Lạp</territory>
 			<territory type="GS">Quần đảo Nam Georgia và Nam Sandwich</territory>
 			<territory type="GT">Goa-tê-ma-la</territory>
 			<territory type="GW">Ghi-nê Bít-xao</territory>
-			<territory type="GW" alt="proposed-x1001">Ghi-nê Bít xao (Guinea-Bissau)</territory>
 			<territory type="GY">Guy-a-na</territory>
 			<territory type="HM">Đảo Heard và Quần đảo McDonald</territory>
 			<territory type="HN">Hôn-đu-rát</territory>
-			<territory type="HN" alt="proposed-x1001">Hôn-đu-rát (Honduras)</territory>
 			<territory type="HR">Crô-a-ti-a</territory>
-			<territory type="HR" alt="proposed-x1001">Crô-a-ti-a (Croatia)</territory>
 			<territory type="HT">Ha-i-ti</territory>
-			<territory type="HT" alt="proposed-x1001">Ha-i-ti (Haiti)</territory>
 			<territory type="HU">Hung-ga-ri</territory>
-			<territory type="HU" alt="proposed-x1001">Hung-ga-ri (Hungary)</territory>
 			<territory type="ID">Nam Dương</territory>
-			<territory type="ID" alt="proposed-x1001">In-đô-nê-xi-a (Nam Dương)</territory>
 			<territory type="IE">Ai-len</territory>
-			<territory type="IE" alt="proposed-x1001">Ireland (Ái Nhĩ Lan)</territory>
 			<territory type="IL">I-xra-en</territory>
-			<territory type="IL" alt="proposed-x1001">Israel (Do Thái)</territory>
 			<territory type="IM">Isle of Man</territory>
 			<territory type="IN">Ấn Độ</territory>
 			<territory type="IO">Thuộc địa Anh tại Ấn Độ Dương</territory>
 			<territory type="IQ">I-rắc</territory>
 			<territory type="IR">I-ran</territory>
 			<territory type="IS">Ai-xơ-len</territory>
-			<territory type="IS" alt="proposed-x1001">Ai-xơ-len (Iceland)</territory>
 			<territory type="IT">Ý</territory>
-			<territory type="IT" alt="proposed-x1001">Italia (Ý)</territory>
 			<territory type="JE">Jersey</territory>
 			<territory type="JM">Ha-mai-ca</territory>
 			<territory type="JO">Gióc-đa-ni</territory>
-			<territory type="JO" alt="proposed-x1001">Gioóc-đa-ni (Jordan)</territory>
 			<territory type="JP">Nhật Bản</territory>
 			<territory type="KE">Kê-ni-a</territory>
-			<territory type="KE" alt="proposed-x1001">Kê-ni-a (Kenya)</territory>
 			<territory type="KG">Cư-rơ-gư-xtan</territory>
-			<territory type="KG" alt="proposed-x1001">Ka-dắc-xtan (Kyrgyzstan)</territory>
 			<territory type="KH">Campuchia</territory>
-			<territory type="KH" alt="proposed-x1001">Cam-pu-chia</territory>
 			<territory type="KI">Ki-ri-ba-ti</territory>
 			<territory type="KM">Cô-mô</territory>
-			<territory type="KM" alt="proposed-x1001">Cô-mô (Comoros)</territory>
 			<territory type="KN">Xan-kít và Nê-vi</territory>
-			<territory type="KN" alt="proposed-x1001">Xanh-kít và Nê-vi (Saint Kitts và Nevis)</territory>
 			<territory type="KP">Bắc Triều Tiên</territory>
 			<territory type="KR">Hàn Quốc</territory>
-			<territory type="KR" alt="proposed-x1001">Nam Triều Tiên</territory>
 			<territory type="KW">Cô-oét</territory>
 			<territory type="KY">Quần Đảo Cayman</territory>
 			<territory type="KZ">Ka-dắc-xtan</territory>
-			<territory type="KZ" alt="proposed-x1001">Ka-dắc-xtan (Kazakhstan)</territory>
 			<territory type="LA">Lào</territory>
 			<territory type="LB">Li-băng</territory>
-			<territory type="LB" alt="proposed-x1001">Li-băng (Lebanon)</territory>
 			<territory type="LC">Xan Lu-xi</territory>
-			<territory type="LC" alt="proposed-x1001">Xanh Lu-xi  (Saint Lucia)</territory>
 			<territory type="LI">Lich-ten-xtên</territory>
-			<territory type="LI" alt="proposed-x1001">Lich-ten-xtên (Liechtenstein)</territory>
 			<territory type="LK">Xri Lan-ca</territory>
-			<territory type="LK" alt="proposed-x1001">Xri Lan-ca (Sri Lanka)</territory>
 			<territory type="LR">Li-bê-ri-a</territory>
 			<territory type="LS">Lê-xô-thô</territory>
-			<territory type="LS" alt="proposed-x1001">Lê-xô-thô (Lesotho)</territory>
 			<territory type="LT">Li-tu-a-ni-a</territory>
-			<territory type="LT" alt="proposed-x1001">Li-tu-a-ni-a (Lithuania)</territory>
 			<territory type="LU">Lúc-xăm-bua</territory>
 			<territory type="LV">Lát-vi-a</territory>
 			<territory type="LY">Li-bi</territory>
-			<territory type="LY" alt="proposed-x1001">Libyan Arab Jamahiriya</territory>
 			<territory type="MA">Ma-rốc</territory>
-			<territory type="MA" alt="proposed-x1001">Ma-rốc (Morocco)</territory>
 			<territory type="MC">Mô-na-cô</territory>
 			<territory type="MD">Môn-đô-va</territory>
-			<territory type="MD" alt="proposed-x1001">Môn-đô-va (Moldova)</territory>
 			<territory type="ME">Montenegro</territory>
 			<territory type="MG">Ma-đa-gát-xca</territory>
-			<territory type="MG" alt="proposed-x1001">Ma-đa-gát-xca (Madagascar)</territory>
 			<territory type="MH">Quần đảo Mác-san</territory>
-			<territory type="MH" alt="proposed-x1001">Quần Đảo Marshall</territory>
 			<territory type="MK">Ma-xê-đô-ni-a</territory>
-			<territory type="MK" alt="proposed-x1001">Ma-xê-đô-ni-a (Macedonia)</territory>
 			<territory type="ML">Ma-li</territory>
 			<territory type="MM">Mi-an-ma</territory>
-			<territory type="MM" alt="proposed-x1001">Miến Điện (Myanmar)</territory>
 			<territory type="MN">Mông Cổ</territory>
 			<territory type="MO">Macao</territory>
 			<territory type="MP">Quần Đảo Bắc Mariana</territory>
 			<territory type="MR">Mô-ri-ta-ni</territory>
-			<territory type="MR" alt="proposed-x1001">Mô-ri-ta-ni-a (Mauritania)</territory>
 			<territory type="MT">Man-ta</territory>
 			<territory type="MU">Mô-ri-xơ</territory>
 			<territory type="MV">Man-đi-vơ</territory>
 			<territory type="MW">Ma-la-uy</territory>
-			<territory type="MW" alt="proposed-x1001">Ma-la-uy (Malawi)</territory>
 			<territory type="MX">Mê-hi-cô</territory>
-			<territory type="MX" alt="proposed-x1001">Mễ Tây Cơ (Mê-hi-cô)</territory>
 			<territory type="MY">Ma-lay-xi-a</territory>
-			<territory type="MY" alt="proposed-x1001">Mã Lai (Ma-lay-xi-a)</territory>
 			<territory type="MZ">Mô-dăm-bích</territory>
-			<territory type="MZ" alt="proposed-x1001">Mô-dăm- bích (Mozambique)</territory>
 			<territory type="NA">Nam-mi-bi-a</territory>
-			<territory type="NA" alt="proposed-x1001">Na-mi-bi-a (Namibia)</territory>
 			<territory type="NC">New Caledonia</territory>
-			<territory type="NC" alt="proposed-x1001">Tân Caledonia</territory>
 			<territory type="NE">Ni-giê</territory>
-			<territory type="NE" alt="proposed-x1001">Ni-giê (Niger)</territory>
 			<territory type="NF">Đảo Norfolk</territory>
 			<territory type="NG">Ni-giê-ri-a</territory>
-			<territory type="NG" alt="proposed-x1001">Ni-giê-ri-a (Nigeria)</territory>
 			<territory type="NI">Ni-ca-ra-goa</territory>
-			<territory type="NI" alt="proposed-x1001">Ni-ca-ra-goa (Nicaragua)</territory>
 			<territory type="NL">Hà Lan</territory>
 			<territory type="NO">Na Uy</territory>
 			<territory type="NP">Nê-pan</territory>
-			<territory type="NP" alt="proposed-x1001">Nê-pan (Nepal)</territory>
 			<territory type="NZ">Niu Di-lân</territory>
-			<territory type="NZ" alt="proposed-x1001">New Zealand</territory>
 			<territory type="OM">Ô-man</territory>
 			<territory type="PA">Pa-na-ma</territory>
 			<territory type="PE">Pê-ru</territory>
 			<territory type="PF">Polynesia thuộc Pháp</territory>
-			<territory type="PF" alt="proposed-x1001">Polynesia của Pháp</territory>
 			<territory type="PG">Pa-pu-a Niu Ghi-nê</territory>
-			<territory type="PG" alt="proposed-x1001">Pa-pua Niu Ghi-nê (Papua New Guinea)</territory>
 			<territory type="PH">Phi-lip-pin</territory>
-			<territory type="PH" alt="proposed-x1001">Phi-líp-pin (Phi Luật Tân)</territory>
 			<territory type="PK">Pa-ki-xtan</territory>
-			<territory type="PK" alt="proposed-x1001">Pa-ki-xtan (Pakistan)</territory>
 			<territory type="PL">Ba Lan</territory>
 			<territory type="PM">Saint Pierre và Miquelon</territory>
 			<territory type="PS">Lãnh thổ Palestine</territory>
-			<territory type="PS" alt="proposed-x1001">Palestine</territory>
 			<territory type="PT">Bồ Đào Nha</territory>
 			<territory type="PY">Pa-ra-goay</territory>
-			<territory type="PY" alt="proposed-x1001">Pa-ra-goay (Paraguay)</territory>
 			<territory type="QA">Ca-ta</territory>
 			<territory type="QU">Liên Minh Châu Âu</territory>
 			<territory type="RO">Ru-ma-ni</territory>
-			<territory type="RO" alt="proposed-x1001">Ru-ma-ni-a (Romania)</territory>
 			<territory type="RS">Xéc-bi</territory>
 			<territory type="RU">Nga</territory>
 			<territory type="RW">Ru-an-đa</territory>
-			<territory type="RW" alt="proposed-x1001">Ru-an-đa (Rwanda)</territory>
 			<territory type="SA">A-rập Xê-út</territory>
-			<territory type="SA" alt="proposed-x1001">Ả-rập Xê-út  (Saudi Arabia)</territory>
 			<territory type="SB">Quần đảo Xô-lô-mông</territory>
 			<territory type="SC">Xây-sen</territory>
-			<territory type="SC" alt="proposed-x1001">Xây sen (Seychelles)</territory>
 			<territory type="SD">Xu-đăng</territory>
-			<territory type="SD" alt="proposed-x1001">Xuđăng (Sudan)</territory>
 			<territory type="SE">Thụy Điển</territory>
 			<territory type="SG">Xin-ga-po</territory>
 			<territory type="SH">Saint Helena</territory>
 			<territory type="SI">Xlô-ven-ni-a</territory>
-			<territory type="SI" alt="proposed-x1001">Xlô-ven-ni-a (Slovenia)</territory>
 			<territory type="SJ">Svalbard và Jan Mayen</territory>
 			<territory type="SK">Xlô-va-ki-a</territory>
-			<territory type="SK" alt="proposed-x1001">Xlô-va-ki-a (Slovakia)</territory>
 			<territory type="SL">Xi-ê-ra Lê-ôn</territory>
-			<territory type="SL" alt="proposed-x1001">Xi-ê-ra Lê-ôn (Sierra Leone)</territory>
 			<territory type="SM">Xan Ma-ri-nô</territory>
-			<territory type="SM" alt="proposed-x1001">Xan Ma-ri-nô (San Marino)</territory>
 			<territory type="SN">Xê-nê-gan</territory>
-			<territory type="SN" alt="proposed-x1001">Xê-nê-gan (Senegal)</territory>
 			<territory type="SO">Xô-ma-li</territory>
-			<territory type="SO" alt="proposed-x1001">Xô-ma-li-a (Somalia)</territory>
 			<territory type="SR">Xu-ri-nam</territory>
-			<territory type="SR" alt="proposed-x1001">Xu-ri-nam (Suriname)</territory>
 			<territory type="ST">Xao Tô-mê và Prin-xi-pê</territory>
-			<territory type="ST" alt="proposed-x1001">Săo Tomé và Príncipe</territory>
 			<territory type="SV">En-san-va-đo</territory>
 			<territory type="SY">Xi-ri</territory>
-			<territory type="SY" alt="proposed-x1001">Xi-ri (Syria)</territory>
 			<territory type="SZ">Xoa-di-len</territory>
-			<territory type="SZ" alt="proposed-x1001">Swaziland</territory>
 			<territory type="TC">Quần Đảo Turk và Caicos</territory>
 			<territory type="TD">Sát</territory>
-			<territory type="TD" alt="proposed-x1001">Sát (Chad)</territory>
 			<territory type="TF">Thuộc Địa Nam của Pháp</territory>
 			<territory type="TG">Tô-gô</territory>
 			<territory type="TH">Thái Lan</territory>
 			<territory type="TJ">Tát-gi-ki-xtan</territory>
-			<territory type="TJ" alt="proposed-x1001">Tát-gi-ki-xtan (Tajikistan)</territory>
 			<territory type="TK">Tokelau</territory>
 			<territory type="TL">Ðông Ti-mo</territory>
 			<territory type="TM">Tuốc-mê-ni-xtan</territory>
-			<territory type="TM" alt="proposed-x1001">Tuốc-mê-ni-xtan (Turkmenistan)</territory>
 			<territory type="TN">Tuy-ni-di</territory>
-			<territory type="TN" alt="proposed-x1001">Tuy-ni-di (Tunisia)</territory>
 			<territory type="TO">Tông-ga</territory>
-			<territory type="TO" alt="proposed-x1001">Tonga</territory>
 			<territory type="TR">Thổ Nhĩ Kỳ</territory>
 			<territory type="TT">Tri-ni-đát và Tô-ba-gô</territory>
 			<territory type="TV">Tu-va-lu</territory>
 			<territory type="TW">Đài Loan</territory>
 			<territory type="TZ">Tan-da-ni-a</territory>
-			<territory type="TZ" alt="proposed-x1001">Tan-da-ni-a (Tanzania)</territory>
 			<territory type="UA">U-crai-na</territory>
-			<territory type="UA" alt="proposed-x1001">U-crai-na (Ukraine)</territory>
 			<territory type="UG">U-gan-đa</territory>
 			<territory type="UM">Các đảo nhỏ xa trung tâm thuộc Mỹ</territory>
 			<territory type="US">Hoa Kỳ</territory>
 			<territory type="UY">U-ru-goay</territory>
-			<territory type="UY" alt="proposed-x1001">U-ru-goay (Uruguay)</territory>
 			<territory type="UZ">U-dơ-bê-ki-xtan</territory>
-			<territory type="UZ" alt="proposed-x1001">U-dơ-bê-ki-xtan (Uzbekistan)</territory>
 			<territory type="VA">Va-ti-căng</territory>
-			<territory type="VA" alt="proposed-x1001">Thành phố Vatican</territory>
 			<territory type="VC">Xan Vin-xen và Grê-na-din</territory>
-			<territory type="VC" alt="proposed-x1001">Xanh Vin-xăng và Grênad (Saint Vincent và Grenadines)</territory>
 			<territory type="VE">Vê-nê-zu-ê-la</territory>
-			<territory type="VE" alt="proposed-x1001">Vê-nê-zu-ê-la (Venezuela)</territory>
 			<territory type="VG">Quần đảo Virgin, Vương quốc Anh</territory>
-			<territory type="VG" alt="proposed-x1001">Đảo Virgin, thuộc Anh</territory>
 			<territory type="VI">Quần đảo Virgin, Mỹ</territory>
-			<territory type="VI" alt="proposed-x1001">Quần đảo Virgin, thuộc Mỹ</territory>
-			<territory type="VI" alt="proposed-x1002">Đảo Virgin, thuộc Mỹ</territory>
 			<territory type="VN">Việt Nam</territory>
-			<territory type="VN" alt="proposed-x1001">Việt Nam</territory>
 			<territory type="VU">Va-nu-a-tu</territory>
 			<territory type="WF">Wallis và Futuna</territory>
 			<territory type="WS">Xa-moa</territory>
-			<territory type="WS" alt="proposed-x1001">Xa-moa (Samoa)</territory>
 			<territory type="YE">Y-ê-men</territory>
-			<territory type="YE" alt="proposed-x1001">Y-ê-men (Yemen)</territory>
 			<territory type="ZA">Nam Phi</territory>
 			<territory type="ZM">Dăm-bi-a</territory>
-			<territory type="ZM" alt="proposed-x1001">Dăm-bi-a (Zambia)</territory>
 			<territory type="ZW">Dim-ba-bu-ê</territory>
-			<territory type="ZW" alt="proposed-x1001">Dim-ba-bu-ê (Zimbabwe)</territory>
 			<territory type="ZZ">ZZ</territory>
 		</territories>
 	</localeDisplayNames>
@@ -601,28 +372,17 @@
 					<monthContext type="format">
 						<monthWidth type="abbreviated">
 							<month type="1">thg 1</month>
-							<month type="1" alt="proposed-x1001">tháng một</month>
 							<month type="2">thg 2</month>
-							<month type="2" alt="proposed-x1001">tháng hai</month>
 							<month type="3">thg 3</month>
-							<month type="3" alt="proposed-x1001">tháng ba</month>
 							<month type="4">thg 4</month>
-							<month type="4" alt="proposed-x1001">tháng tư</month>
 							<month type="5">thg 5</month>
 							<month type="6">thg 6</month>
-							<month type="6" alt="proposed-x1001">tháng sáu</month>
 							<month type="7">thg 7</month>
-							<month type="7" alt="proposed-x1001">tháng bẩy</month>
 							<month type="8">thg 8</month>
-							<month type="8" alt="proposed-x1001">tháng tám</month>
 							<month type="9">thg 9</month>
-							<month type="9" alt="proposed-x1001">tháng chín</month>
 							<month type="10">thg 10</month>
-							<month type="10" alt="proposed-x1001">tháng mười</month>
 							<month type="11">thg 11</month>
-							<month type="11" alt="proposed-x1001">tháng mười một</month>
 							<month type="12">thg 12</month>
-							<month type="12" alt="proposed-x1001">tháng mười hai</month>
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">tháng một</month>
@@ -660,23 +420,15 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">CN</day>
-							<day type="sun" alt="proposed-x1001">Chủ Nhật</day>
 							<day type="mon">Th 2</day>
-							<day type="mon" alt="proposed-x1001">Thứ Hai</day>
 							<day type="tue">Th 3</day>
-							<day type="tue" alt="proposed-x1001">Thứ 3</day>
 							<day type="wed">Th 4</day>
-							<day type="wed" alt="proposed-x1001">Thứ Tư</day>
 							<day type="thu">Th 5</day>
-							<day type="thu" alt="proposed-x1001">Thứ Năm</day>
 							<day type="fri">Th 6</day>
-							<day type="fri" alt="proposed-x1001">Thứ Sáu</day>
 							<day type="sat">Th 7</day>
-							<day type="sat" alt="proposed-x1001">Thứ Bảy</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">Chủ nhật</day>
-							<day type="sun" alt="proposed-x1001">Chủ Nhật</day>
 							<day type="mon">Thứ hai</day>
 							<day type="tue">Thứ ba</day>
 							<day type="wed">Thứ tư</day>
@@ -794,159 +546,120 @@
 			</zone>
 			<zone type="Europe/Andorra">
 				<exemplarCity>Andorra Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">An-đô-ra (Andorra)</exemplarCity>
 			</zone>
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Antarctica (South Pole) Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Nam Cực</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Antarctica (DumontDUrville) Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Dumont D'Urville</exemplarCity>
 			</zone>
 			<zone type="America/Barbados">
 				<exemplarCity>Barbados Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Bác-ba-đốt (Barbados)</exemplarCity>
 			</zone>
 			<zone type="Asia/Bahrain">
 				<exemplarCity>Bahrain Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ba-ren (Bahrain)</exemplarCity>
 			</zone>
 			<zone type="America/Belize">
 				<exemplarCity>Belize Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Bê-li-xê (Belize)</exemplarCity>
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>Chile (Easter) Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Easter Island</exemplarCity>
 			</zone>
 			<zone type="America/Costa_Rica">
 				<exemplarCity>Costa Rica Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cốt-xta-ri-ca (Costa Rica)</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Cape_Verde">
 				<exemplarCity>Cape Verde Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cáp-ve (Cape Verde)</exemplarCity>
 			</zone>
 			<zone type="Africa/Djibouti">
 				<exemplarCity>Djibouti Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Gi-bu-ti (Djibouti)</exemplarCity>
 			</zone>
 			<zone type="America/Dominica">
 				<exemplarCity>Dominica Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ðô-mi-ni-ca (Dominica)</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Spain (Canary) Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Quần Đảo Canary</exemplarCity>
 			</zone>
 			<zone type="Pacific/Fiji">
 				<exemplarCity>Fiji Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Phi-gi (Fiji)</exemplarCity>
 			</zone>
 			<zone type="America/Grenada">
 				<exemplarCity>Grenada Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Grê-na-đa (Grenada)</exemplarCity>
 			</zone>
 			<zone type="Atlantic/South_Georgia">
 				<exemplarCity>South Georgia and the South Sandwich Islands Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Nam Georgia</exemplarCity>
 			</zone>
 			<zone type="America/Guatemala">
 				<exemplarCity>Guatemala Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Goa-tê-ma-la (Guatemala)</exemplarCity>
 			</zone>
 			<zone type="America/Guyana">
 				<exemplarCity>Guyana Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Guy-a-na (Guyana)</exemplarCity>
 			</zone>
 			<zone type="Asia/Hong_Kong">
 				<exemplarCity>Hong Kong SAR China Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Hồng Kông</exemplarCity>
 			</zone>
 			<zone type="America/Jamaica">
 				<exemplarCity>Jamaica Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ha-mai-ca (Jamaica)</exemplarCity>
 			</zone>
 			<zone type="America/St_Kitts">
 				<exemplarCity>Saint Kitts and Nevis Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">St. Kitts</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuwait">
 				<exemplarCity>Kuwait Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cô-oét (Kuwait)</exemplarCity>
 			</zone>
 			<zone type="Asia/Vientiane">
 				<exemplarCity>Laos Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Viêng Chăn</exemplarCity>
 			</zone>
 			<zone type="America/St_Lucia">
 				<exemplarCity>Saint Lucia Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">St. Lucia</exemplarCity>
 			</zone>
 			<zone type="Europe/Luxembourg">
 				<exemplarCity>Luxembourg Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Luxembourg (Lục Xâm Bảo)</exemplarCity>
 			</zone>
 			<zone type="Europe/Monaco">
 				<exemplarCity>Monaco Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Mô-na-cô</exemplarCity>
 			</zone>
 			<zone type="Europe/Malta">
 				<exemplarCity>Malta Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Man-ta (Malta)</exemplarCity>
 			</zone>
 			<zone type="Indian/Mauritius">
 				<exemplarCity>Mauritius Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Mô-ri-xơ (Mauritius)</exemplarCity>
 			</zone>
 			<zone type="Indian/Maldives">
 				<exemplarCity>Maldives Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Man-đi-vơ (Maldives)</exemplarCity>
 			</zone>
 			<zone type="Pacific/Nauru">
 				<exemplarCity>Nauru Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Na-u-ru (Nauru)</exemplarCity>
 			</zone>
 			<zone type="America/Panama">
 				<exemplarCity>Panama Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Pa-na-ma</exemplarCity>
 			</zone>
 			<zone type="Pacific/Palau">
 				<exemplarCity>Palau Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Pa-lau</exemplarCity>
 			</zone>
 			<zone type="Asia/Qatar">
 				<exemplarCity>Qatar Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ca-ta (Qatar)</exemplarCity>
 			</zone>
 			<zone type="Asia/Singapore">
 				<exemplarCity>Singapore Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Xin-ga-po (Singapore)</exemplarCity>
 			</zone>
 			<zone type="America/El_Salvador">
 				<exemplarCity>El Salvador Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Salvador</exemplarCity>
 			</zone>
 			<zone type="Asia/Taipei">
 				<exemplarCity>Taiwan Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Đài Bắc</exemplarCity>
 			</zone>
 			<zone type="America/Anchorage">
 				<exemplarCity>United States (Anchorage) Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Giờ Alaska</exemplarCity>
 			</zone>
 			<zone type="America/St_Vincent">
 				<exemplarCity>Saint Vincent and the Grenadines Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">St. Vincent</exemplarCity>
 			</zone>
 			<zone type="America/St_Thomas">
 				<exemplarCity>U.S. Virgin Islands Time</exemplarCity>
-				<exemplarCity alt="proposed-x1001">St. Thomas</exemplarCity>
 			</zone>
 			<zone type="Asia/Saigon">
 				<exemplarCity>Giờ Việt Nam</exemplarCity>
-				<exemplarCity alt="proposed-x1001">TP Hồ Chí Minh</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -991,7 +704,6 @@
 			</currency>
 			<currency type="BND">
 				<displayName>Đô-la Bru-nây</displayName>
-				<displayName alt="proposed-x1001">Ðô la Bru-nây</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>Boliviano Bôlivia</displayName>
@@ -1001,11 +713,9 @@
 			</currency>
 			<currency type="CAD">
 				<displayName>Đô-la Canada</displayName>
-				<displayName alt="proposed-x1001">Đô-la Gia Nã Đại</displayName>
 			</currency>
 			<currency type="CHF">
 				<displayName>franc Thuỵ Sĩ</displayName>
-				<displayName alt="proposed-x1001">Franc Thụy sĩ</displayName>
 			</currency>
 			<currency type="CLP">
 				<displayName>Peso Chilê</displayName>
@@ -1021,11 +731,9 @@
 			</currency>
 			<currency type="DEM">
 				<displayName>Mác (Đức)</displayName>
-				<displayName alt="proposed-x1001">Mác (tiền Đức)</displayName>
 			</currency>
 			<currency type="DKK">
 				<displayName>Cuaron Đan Mạch</displayName>
-				<displayName alt="proposed-x1001">Ðồng Cua-ron Ðan Mạch</displayName>
 			</currency>
 			<currency type="EEK">
 				<displayName>Crun Extônia</displayName>
@@ -1035,11 +743,9 @@
 			</currency>
 			<currency type="EUR">
 				<displayName>Euro</displayName>
-				<displayName alt="proposed-x1001">Euros</displayName>
 			</currency>
 			<currency type="FJD">
 				<displayName>Đô-la Fi-ji</displayName>
-				<displayName alt="proposed-x1001">Ðô la Fi-gi</displayName>
 			</currency>
 			<currency type="FRF">
 				<displayName>franc Pháp</displayName>
@@ -1052,7 +758,6 @@
 			</currency>
 			<currency type="HRK">
 				<displayName>Kuna Croatia</displayName>
-				<displayName alt="proposed-x1001">Kuna Crô-át</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>Phôrin Hungari</displayName>
@@ -1074,7 +779,6 @@
 			</currency>
 			<currency type="KRW">
 				<displayName>Won Hàn Quốc</displayName>
-				<displayName alt="proposed-x1001">Won Nam Triều Tiên</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>Litat Lituani</displayName>
@@ -1093,7 +797,6 @@
 			</currency>
 			<currency type="NOK">
 				<displayName>Curon Na Uy</displayName>
-				<displayName alt="proposed-x1001">Tiền tệ Na uy</displayName>
 			</currency>
 			<currency type="NZD">
 				<displayName>Đô-la New Zealand</displayName>
@@ -1112,7 +815,6 @@
 			</currency>
 			<currency type="RON">
 				<displayName>Lây Rumani</displayName>
-				<displayName alt="proposed-x1001">Đồng Lây Rumani Mới</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Đina Xéc-bi</displayName>
@@ -1125,7 +827,6 @@
 			</currency>
 			<currency type="SEK">
 				<displayName>Cua-ron Thuỵ Điển</displayName>
-				<displayName alt="proposed-x1001">Ðồng Cua-ron thụy ðiển</displayName>
 			</currency>
 			<currency type="SGD">
 				<displayName>Đô-la Singapore</displayName>
@@ -1147,7 +848,6 @@
 			</currency>
 			<currency type="TWD">
 				<displayName>Đô-la Đài Loan</displayName>
-				<displayName alt="proposed-x1001">Đô la Đài Loan mới</displayName>
 			</currency>
 			<currency type="UAH">
 				<displayName>Rúp U-crai-na</displayName>
@@ -1160,11 +860,7 @@
 			</currency>
 			<currency type="VND">
 				<displayName>đồng</displayName>
-				<displayName alt="proposed-x1001">VND</displayName>
-				<displayName alt="proposed-x1002">Ðồng Việt Nam</displayName>
 				<symbol>₫</symbol>
-				<symbol alt="proposed-x1001">VNĐ</symbol>
-				<symbol alt="proposed-x1002">đ</symbol>
 			</currency>
 			<currency type="XXX">
 				<displayName>XXX</displayName>

@@ -14,7 +14,6 @@
 	<characters>
 		<exemplarCharacters>[a b d ḓ e-i k l ḽ m n ṅ ṋ o p r-t ṱ u-z]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[c j q]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a b d-i k l ḽ m n ṅ ṋ o p r-t ṱ u-z]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>

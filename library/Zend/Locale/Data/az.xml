@@ -13,7 +13,6 @@
 			<language type="ar">ərəb</language>
 			<language type="as">assamese</language>
 			<language type="az">azərbaycanca</language>
-			<language type="az" alt="proposed-x1001">azərbaycan dili</language>
 			<language type="be">belarusca</language>
 			<language type="bg">bolqar</language>
 			<language type="bh">bihari</language>
@@ -25,13 +24,10 @@
 			<language type="cy">uels</language>
 			<language type="da">danimarka</language>
 			<language type="de">almanca</language>
-			<language type="de" alt="proposed-x1001">alman</language>
 			<language type="el">yunan</language>
 			<language type="en">ingiliscə</language>
-			<language type="en" alt="proposed-x1001">ingilis</language>
 			<language type="eo">esperanto</language>
 			<language type="es">ispanca</language>
-			<language type="es" alt="proposed-x1001">ispan</language>
 			<language type="et">eston</language>
 			<language type="eu">bask</language>
 			<language type="fa">fars dili</language>
@@ -39,7 +35,6 @@
 			<language type="fil">taqaloq</language>
 			<language type="fo">farer</language>
 			<language type="fr">fransızca</language>
-			<language type="fr" alt="proposed-x1001">fransız</language>
 			<language type="fy">frisk</language>
 			<language type="ga">i̇rland</language>
 			<language type="gd">scots gaelic</language>
@@ -57,7 +52,6 @@
 			<language type="is">i̇sland</language>
 			<language type="it">i̇talyan</language>
 			<language type="ja">yaponca</language>
-			<language type="ja" alt="proposed-x1001">yapon</language>
 			<language type="jv">yavaca</language>
 			<language type="ka">gürcü dili</language>
 			<language type="km">kambocya dili</language>
@@ -86,12 +80,10 @@
 			<language type="pl">polyak</language>
 			<language type="ps">puştu dili(əfqanıstan)</language>
 			<language type="pt">portuqalca</language>
-			<language type="pt" alt="proposed-x1001">portuqal</language>
 			<language type="pt_BR">portuqaliya dili</language>
 			<language type="pt_PT">portuqalca (portuqaliya)</language>
 			<language type="ro">rumın</language>
 			<language type="ru">rusca</language>
-			<language type="ru" alt="proposed-x1001">rus</language>
 			<language type="sa">sanskrit dili(hindistan)</language>
 			<language type="sd">sindhi</language>
 			<language type="sh">serb-xorvatca</language>

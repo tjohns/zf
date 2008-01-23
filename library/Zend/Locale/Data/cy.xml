@@ -52,7 +52,6 @@
 			<language type="is">Islandeg</language>
 			<language type="it">Eidaleg</language>
 			<language type="ja">Siapaneeg</language>
-			<language type="ja" alt="proposed-x1001">Japaneg</language>
 			<language type="jv">Jafanaeg</language>
 			<language type="ka">Georgian</language>
 			<language type="km">Cambodieg</language>
@@ -513,25 +512,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>d MMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yyyy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -568,7 +563,6 @@
 						<dateFormatItem id="HHmmss">HH:mm:ss</dateFormatItem>
 						<dateFormatItem id="MMMMdd">dd MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">dd/MM</dateFormatItem>
-						<dateFormatItem id="MMdd" alt="proposed-x1001">MM-dd</dateFormatItem>
 						<dateFormatItem id="hhmm">hh:mm a</dateFormatItem>
 						<dateFormatItem id="hhmmss">hh:mm:ss a</dateFormatItem>
 						<dateFormatItem id="yyMMdd">yy-MM-dd</dateFormatItem>

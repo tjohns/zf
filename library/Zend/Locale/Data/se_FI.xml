@@ -11,66 +11,38 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="ang">ang</language>
-			<language type="ang" alt="proposed-x1001">boares eŋgelasgiella</language>
 			<language type="apa">apa</language>
-			<language type="apa" alt="proposed-x1001">apachegielat</language>
 			<language type="be">be</language>
-			<language type="be" alt="proposed-x1001">vilgesruoššagiella</language>
 			<language type="cs">cs</language>
-			<language type="cs" alt="proposed-x1001">čeahkagiella</language>
 			<language type="da">da</language>
-			<language type="da" alt="proposed-x1001">dánskkagiella</language>
 			<language type="de">de</language>
-			<language type="de" alt="proposed-x1001">duiskkagiella</language>
 			<language type="el">el</language>
-			<language type="el" alt="proposed-x1001">greikkagiella</language>
 			<language type="en">en</language>
-			<language type="en" alt="proposed-x1001">eŋgelasgiella</language>
 			<language type="es">es</language>
-			<language type="es" alt="proposed-x1001">espánnjagiella</language>
 			<language type="et">et</language>
-			<language type="et" alt="proposed-x1001">esttegiella</language>
 			<language type="fi">fi</language>
-			<language type="fi" alt="proposed-x1001">suomagiella</language>
 			<language type="fiu">fiu</language>
-			<language type="fiu" alt="proposed-x1001">eará fenno-ugrálaš gielat</language>
 			<language type="fo">fo</language>
-			<language type="fo" alt="proposed-x1001">sjekk - Fearsulluid giella</language>
 			<language type="fr">fr</language>
-			<language type="fr" alt="proposed-x1001">fránskkagiella</language>
 			<language type="gem">gem</language>
-			<language type="gem" alt="proposed-x1001">eará duiskkagielat</language>
 			<language type="is">is</language>
-			<language type="is" alt="proposed-x1001">islánddagiella</language>
 			<language type="nb">nb</language>
-			<language type="nb" alt="proposed-x1001">girjedárogiella</language>
 			<language type="nn">nn</language>
-			<language type="nn" alt="proposed-x1001">ođđadárogiella</language>
 			<language type="no">no</language>
-			<language type="no" alt="proposed-x1001">dárru</language>
 			<language type="ru">ru</language>
-			<language type="ru" alt="proposed-x1001">ruoššagiella</language>
 			<language type="se">se</language>
-			<language type="se" alt="proposed-x1001">davvisámegiella</language>
 			<language type="sma">sma</language>
-			<language type="sma" alt="proposed-x1001">lullisámegiella</language>
 			<language type="smi">smi</language>
-			<language type="smi" alt="proposed-x1001">sámegielat</language>
 			<language type="smj">smj</language>
-			<language type="smj" alt="proposed-x1001">julevsámegiella</language>
 			<language type="smn">smn</language>
-			<language type="smn" alt="proposed-x1001">anárašgiella</language>
 			<language type="sms">sms</language>
-			<language type="sms" alt="proposed-x1001">nuortalašgiella</language>
 			<language type="sv">sv</language>
-			<language type="sv" alt="proposed-x1001">ruoŧagiella</language>
 		</languages>
 		<territories>
 			<territory type="002">Afrihká</territory>
 			<territory type="005">Mátta-Amerihká</territory>
 			<territory type="011">Oarji-Afrihká</territory>
 			<territory type="014">014</territory>
-			<territory type="014" alt="proposed-x1001">Nuorta-Afrihkká</territory>
 			<territory type="015">Davvi-Afrihká</territory>
 			<territory type="017">Gaska-Afrihká</territory>
 			<territory type="021">Davvi-Amerihká</territory>
@@ -84,117 +56,63 @@
 			<territory type="154">Davvi-Eurohpa</territory>
 			<territory type="155">Oarji-Eurohpa</territory>
 			<territory type="AT">AT</territory>
-			<territory type="AT" alt="proposed-x1001">Nuortariika</territory>
 			<territory type="AU">AU</territory>
-			<territory type="AU" alt="proposed-x1001">Austrália</territory>
 			<territory type="AX">AX</territory>
-			<territory type="AX" alt="proposed-x1001">Ålánda</territory>
 			<territory type="BE">BE</territory>
-			<territory type="BE" alt="proposed-x1001">Belgia</territory>
 			<territory type="BG">BG</territory>
-			<territory type="BG" alt="proposed-x1001">Bulgária</territory>
 			<territory type="BR">BR</territory>
-			<territory type="BR" alt="proposed-x1001">Brasilia</territory>
 			<territory type="BY">BY</territory>
-			<territory type="BY" alt="proposed-x1001">Vilges-Ruošša</territory>
 			<territory type="CH">CH</territory>
-			<territory type="CH" alt="proposed-x1001">Šveica</territory>
 			<territory type="CM">CM</territory>
 			<territory type="CN">CN</territory>
-			<territory type="CN" alt="proposed-x1001">Kiinná</territory>
 			<territory type="CZ">CZ</territory>
-			<territory type="CZ" alt="proposed-x1001">Čheahkka</territory>
-			<territory type="CZ" alt="proposed-x1002">Čeahkka</territory>
 			<territory type="DE">DE</territory>
-			<territory type="DE" alt="proposed-x1001">Duiska</territory>
 			<territory type="DK">DK</territory>
-			<territory type="DK" alt="proposed-x1001">Dánmárku</territory>
 			<territory type="EE">EE</territory>
 			<territory type="ES">ES</territory>
-			<territory type="ES" alt="proposed-x1001">Espánnja</territory>
 			<territory type="FI">FI</territory>
-			<territory type="FI" alt="proposed-x1001">Suopma</territory>
 			<territory type="FO">FO</territory>
-			<territory type="FO" alt="proposed-x1001">Fearsullot</territory>
 			<territory type="FR">FR</territory>
-			<territory type="FR" alt="proposed-x1001">Fránkariika</territory>
 			<territory type="GL">GL</territory>
-			<territory type="GL" alt="proposed-x1001">Kalaallit Nunaat</territory>
 			<territory type="GR">GR</territory>
-			<territory type="GR" alt="proposed-x1001">Greika</territory>
 			<territory type="HR">HR</territory>
-			<territory type="HR" alt="proposed-x1001">Kroátia</territory>
 			<territory type="HU">HU</territory>
-			<territory type="HU" alt="proposed-x1001">Ungára</territory>
 			<territory type="IE">IE</territory>
-			<territory type="IE" alt="proposed-x1001">Irlánda</territory>
 			<territory type="IQ">IQ</territory>
-			<territory type="IQ" alt="proposed-x1001">Irak</territory>
 			<territory type="IR">IR</territory>
-			<territory type="IR" alt="proposed-x1001">Iran</territory>
 			<territory type="IS">IS</territory>
-			<territory type="IS" alt="proposed-x1001">Islánda</territory>
 			<territory type="IT">IT</territory>
-			<territory type="IT" alt="proposed-x1001">Itália</territory>
 			<territory type="JP">JP</territory>
-			<territory type="JP" alt="proposed-x1001">Jáhpan</territory>
 			<territory type="KP">KP</territory>
 			<territory type="KR">KR</territory>
-			<territory type="KR" alt="proposed-x1001">Mátta-Korea</territory>
 			<territory type="LB">LB</territory>
-			<territory type="LB" alt="proposed-x1001">Libanon</territory>
 			<territory type="LT">LT</territory>
-			<territory type="LT" alt="proposed-x1001">Lietuva</territory>
 			<territory type="LV">LV</territory>
-			<territory type="LV" alt="proposed-x1001">Látvia</territory>
 			<territory type="MA">MA</territory>
-			<territory type="MA" alt="proposed-x1001">Marokko</territory>
 			<territory type="MG">MG</territory>
-			<territory type="MG" alt="proposed-x1001">Madagaskar</territory>
 			<territory type="MH">MH</territory>
-			<territory type="MH" alt="proposed-x1001">Marshallsullot</territory>
 			<territory type="MK">MK</territory>
-			<territory type="MK" alt="proposed-x1001">Makedonia</territory>
 			<territory type="MP">MP</territory>
-			<territory type="MP" alt="proposed-x1001">Davvi-Mariánat</territory>
 			<territory type="MR">MR</territory>
-			<territory type="MR" alt="proposed-x1001">Mauretánia</territory>
 			<territory type="MV">MV</territory>
-			<territory type="MV" alt="proposed-x1001">Malediivvat</territory>
 			<territory type="MY">MY</territory>
-			<territory type="MY" alt="proposed-x1001">Malesia</territory>
 			<territory type="NL">NL</territory>
-			<territory type="NL" alt="proposed-x1001">Vuolleeatnamat</territory>
 			<territory type="NO">NO</territory>
-			<territory type="NO" alt="proposed-x1001">Norga</territory>
 			<territory type="NZ">NZ</territory>
 			<territory type="PH">PH</territory>
-			<territory type="PH" alt="proposed-x1001">Filippiinnat</territory>
 			<territory type="PL">PL</territory>
 			<territory type="PS">PS</territory>
-			<territory type="PS" alt="proposed-x1001">Palestiinná</territory>
 			<territory type="RU">RU</territory>
-			<territory type="RU" alt="proposed-x1001">Ruošša</territory>
 			<territory type="SE">SE</territory>
-			<territory type="SE" alt="proposed-x1001">Ruoŧŧa</territory>
 			<territory type="SI">SI</territory>
-			<territory type="SI" alt="proposed-x1001">Slovenia</territory>
 			<territory type="SJ">SJ</territory>
-			<territory type="SJ" alt="proposed-x1001">Svalbárda ja Jan Mayen</territory>
 			<territory type="SK">SK</territory>
-			<territory type="SK" alt="proposed-x1001">Slovákia</territory>
 			<territory type="SR">SR</territory>
-			<territory type="SR" alt="proposed-x1001">Surinam</territory>
 			<territory type="TD">TD</territory>
-			<territory type="TD" alt="proposed-x1001">Tchad</territory>
 			<territory type="TL">TL</territory>
-			<territory type="TL" alt="proposed-x1001">Nuorta-Timor</territory>
 			<territory type="TR">TR</territory>
-			<territory type="TR" alt="proposed-x1001">Durka</territory>
 			<territory type="US">US</territory>
-			<territory type="US" alt="proposed-x1001">Amerihká ovttastuvvan Stáhtat</territory>
 			<territory type="ZA">ZA</territory>
-			<territory type="ZA" alt="proposed-x1001">Mátta-Afrihká</territory>
 		</territories>
 		<keys>
 			<key type="calendar">calendar</key>

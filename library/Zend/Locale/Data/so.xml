@@ -11,8 +11,6 @@
 			<language type="af">Afrikaanays</language>
 			<language type="am">Amhari</language>
 			<language type="ar">Carabi</language>
-			<language type="ar" alt="proposed-x1001">Af carabi</language>
-			<language type="ar" alt="proposed-x1002">Arabic</language>
 			<language type="as">Asaamiis</language>
 			<language type="az">Azerbaijan</language>
 			<language type="be">Beleruusiyaan</language>
@@ -26,19 +24,14 @@
 			<language type="cy">Welsh</language>
 			<language type="da">Danmarkays</language>
 			<language type="de">Jarmal</language>
-			<language type="de" alt="proposed-x1001">German</language>
 			<language type="de_CH">Jarmal (Iswiiserlaand)</language>
 			<language type="el">Giriik</language>
 			<language type="en">Ingiriisi</language>
-			<language type="en" alt="proposed-x1001">Ingiriis</language>
-			<language type="en" alt="proposed-x1002">English</language>
 			<language type="en_GB">Ingiriisi (Boqortooyada Midowday)</language>
 			<language type="en_US">Ingiriisi (Maraykan)</language>
 			<language type="eo">Isberento</language>
 			<language type="es">Isbaanish</language>
-			<language type="es" alt="proposed-x1001">Spanish</language>
 			<language type="es_419">Isbaanishka Laatiin Ameerika</language>
-			<language type="es_419" alt="proposed-x1001">Isbaanish (Isbayn)</language>
 			<language type="es_ES">Isbaanish (Isbayn)</language>
 			<language type="et">Istooniyaan</language>
 			<language type="eu">Basquu</language>
@@ -47,10 +40,8 @@
 			<language type="fil">Tagalog</language>
 			<language type="fo">Farowsi</language>
 			<language type="fr">Faransiis</language>
-			<language type="fr" alt="proposed-x1001">French</language>
 			<language type="fr_CH">Faransiis (Iswiiserlaand)</language>
 			<language type="fy">Firiisiyan Galbeed</language>
-			<language type="fy" alt="proposed-x1001">Faarisi</language>
 			<language type="ga">Ayrish</language>
 			<language type="gd">Iskot Giilik</language>
 			<language type="gl">Galiisiyaan</language>
@@ -66,10 +57,7 @@
 			<language type="ie">Interlingue</language>
 			<language type="is">Ayslandays</language>
 			<language type="it">Talyaani</language>
-			<language type="it" alt="proposed-x1001">Italian</language>
 			<language type="ja">Jabbaaniis</language>
-			<language type="ja" alt="proposed-x1001">Jabaaniis</language>
-			<language type="ja" alt="proposed-x1002">Japanese</language>
 			<language type="jv">Jafaaniis</language>
 			<language type="ka">Joorijiyaan</language>
 			<language type="km">Kamboodhian</language>
@@ -98,16 +86,10 @@
 			<language type="pl">Boolish</language>
 			<language type="ps">Bashtuu</language>
 			<language type="pt">Boortaqiis</language>
-			<language type="pt" alt="proposed-x1001">Portuguese</language>
-			<language type="pt" alt="proposed-x1002">Burtuqiis</language>
 			<language type="pt_BR">Boortaqiiska Baraasiil</language>
-			<language type="pt_BR" alt="proposed-x1001">Boortiqiis (Brazil)</language>
 			<language type="pt_PT">Boortaqiis (Boortuqaal)</language>
-			<language type="pt_PT" alt="proposed-x1001">Burtaqiis(Burtuqaal)</language>
 			<language type="ro">Romanka</language>
 			<language type="ru">Ruush</language>
-			<language type="ru" alt="proposed-x1001">Ruushiyaan</language>
-			<language type="ru" alt="proposed-x1002">Russian</language>
 			<language type="sa">Sanskrit</language>
 			<language type="sd">SINDHI</language>
 			<language type="sh">Serbiyaan</language>
@@ -138,12 +120,10 @@
 			<language type="xh">Hoosta</language>
 			<language type="yi">Yadhish</language>
 			<language type="zh">Jayniis</language>
-			<language type="zh" alt="proposed-x1001">Chinese</language>
 			<language type="zu">Zuulu</language>
 		</languages>
 		<scripts>
 			<script type="Latn">Laatiin</script>
-			<script type="Latn" alt="proposed-x1001">Latin</script>
 			<script type="Zxxx">Aan la qorin</script>
 			<script type="Zzzz">Far aan la aqoon amase aan saxnayn</script>
 		</scripts>
@@ -164,7 +144,6 @@
 			<territory type="BH">Baxrayn</territory>
 			<territory type="BJ">Beniin</territory>
 			<territory type="BR">Braasiil</territory>
-			<territory type="BR" alt="proposed-x1001">Baraasiil</territory>
 			<territory type="CA">Kanada</territory>
 			<territory type="CH">Swiiserlaand</territory>
 			<territory type="CL">Jili</territory>
@@ -179,7 +158,6 @@
 			<territory type="EG">Masar</territory>
 			<territory type="ES">Isbeyn</territory>
 			<territory type="ET">Itoobiya</territory>
-			<territory type="ET" alt="proposed-x1001">Itoobbiya</territory>
 			<territory type="FI">Fiinlaand</territory>
 			<territory type="FR">Faransiis</territory>
 			<territory type="GB">United Kingdom</territory>
@@ -470,15 +448,12 @@
 			</currency>
 			<currency type="DJF">
 				<displayName>Faran Jabbuuti</displayName>
-				<displayName alt="proposed-x1001">Jabuuti Faran</displayName>
 			</currency>
 			<currency type="ETB">
 				<displayName>Birta Itoobbiya</displayName>
-				<displayName alt="proposed-x1001">Itoobiya Bir</displayName>
 			</currency>
 			<currency type="EUR">
 				<displayName>Yuuroo</displayName>
-				<displayName alt="proposed-x1001">Euro</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>British Pound Sterling</displayName>
@@ -497,12 +472,10 @@
 			</currency>
 			<currency type="SOS">
 				<displayName>Shilin soomaali</displayName>
-				<displayName alt="proposed-x1001">Somalia Schilling</displayName>
 				<symbol>$</symbol>
 			</currency>
 			<currency type="USD">
 				<displayName>Doollar maraykan</displayName>
-				<displayName alt="proposed-x1001">US Dollar</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>Lacag aan la qoon ama aan saxnayn</displayName>

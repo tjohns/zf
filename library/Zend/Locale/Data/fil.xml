@@ -75,7 +75,6 @@
 			<language type="mt">Maltese</language>
 			<language type="ne">Nepali</language>
 			<language type="nl">Dutch</language>
-			<language type="nn" alt="proposed-x1001">Norwegian</language>
 			<language type="no">Norwegian</language>
 			<language type="oc">Occitan</language>
 			<language type="or">Oriya</language>
@@ -123,11 +122,9 @@
 		</languages>
 		<territories>
 			<territory type="AD">Andorra</territory>
-			<territory type="AD" alt="proposed-x1001">Andorra</territory>
 			<territory type="AE">United Arab Emirates</territory>
 			<territory type="AF">Afghanistan</territory>
 			<territory type="AG">Antigua at Barbuda</territory>
-			<territory type="AG" alt="proposed-x1001">Antigua and Barbuda</territory>
 			<territory type="AI">Anguilla</territory>
 			<territory type="AL">Albanya</territory>
 			<territory type="AM">Armenya</territory>
@@ -135,7 +132,6 @@
 			<territory type="AO">Angola</territory>
 			<territory type="AQ">Antartika</territory>
 			<territory type="AR">Arhentina</territory>
-			<territory type="AR" alt="proposed-x1001">Argentina</territory>
 			<territory type="AS">American Samoa</territory>
 			<territory type="AT">Austriya</territory>
 			<territory type="AU">Australiya</territory>
@@ -335,7 +331,6 @@
 			<territory type="VC">Saint Vincent and the Grenadines</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">British Virgin Islands</territory>
-			<territory type="VG" alt="proposed-x1001">Virgin Islands, British</territory>
 			<territory type="VI">Virgin Islands, U.S.</territory>
 			<territory type="VN">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
@@ -361,7 +356,6 @@
 							<month type="2">Peb</month>
 							<month type="3">Mar</month>
 							<month type="4">Abr</month>
-							<month type="4" alt="proposed-x1001">Apr</month>
 							<month type="5">May</month>
 							<month type="6">Hun</month>
 							<month type="7">Hul</month>
@@ -381,7 +375,6 @@
 							<month type="7">Hulyo</month>
 							<month type="8">Agosto</month>
 							<month type="9">Setyembre</month>
-							<month type="9" alt="proposed-x1001">Septiyembre</month>
 							<month type="10">Oktubre</month>
 							<month type="11">Nobyembre</month>
 							<month type="12">Disyembre</month>
@@ -422,19 +415,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">Lin</day>
-							<day type="sun" alt="proposed-x1001">LI</day>
 							<day type="mon">Lun</day>
-							<day type="mon" alt="proposed-x1001">LU</day>
 							<day type="tue">Mar</day>
-							<day type="tue" alt="proposed-x1001">MA</day>
 							<day type="wed">Mye</day>
-							<day type="wed" alt="proposed-x1001">MI</day>
 							<day type="thu">Huw</day>
-							<day type="thu" alt="proposed-x1001">HU</day>
 							<day type="fri">Bye</day>
-							<day type="fri" alt="proposed-x1001">BI</day>
 							<day type="sat">Sab</day>
-							<day type="sat" alt="proposed-x1001">SA</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">Linggo</day>
@@ -448,8 +434,6 @@
 					</dayContext>
 					<dayContext type="stand-alone">
 						<dayWidth type="abbreviated">
-							<day type="sun" alt="proposed-x1001">L</day>
-							<day type="tue" alt="proposed-x1001">M</day>
 						</dayWidth>
 						<dayWidth type="narrow">
 							<day type="sun">L</day>
@@ -462,7 +446,6 @@
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">Linggo</day>
-							<day type="mon" alt="proposed-x1002">Lunes</day>
 							<day type="tue">Martes</day>
 							<day type="wed">Miyerkules</day>
 							<day type="thu">Huwebes</day>
@@ -496,7 +479,6 @@
 				<dateTimeFormats>
 					<availableFormats>
 						<dateFormatItem id="yyMM">yy-MM</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">MM-yy</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>

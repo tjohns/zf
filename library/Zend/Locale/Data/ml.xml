@@ -11,13 +11,9 @@
 			<language type="aa">അഫാര്‍</language>
 			<language type="ab">അബ്ഖാസിയന്‍</language>
 			<language type="af">ആഫ്രിക്കാന്‍സ്</language>
-			<language type="af" alt="proposed-x1001">ആഫ്രിക്കന്‍</language>
 			<language type="am">അംഹാറിക്</language>
 			<language type="ar">അറബി</language>
-			<language type="ar" alt="proposed-x1001">അറബിക്ക്</language>
-			<language type="ar" alt="proposed-x1002">അറബിക്</language>
 			<language type="as">ആസ്സാമീസ്</language>
-			<language type="as" alt="proposed-x1001">ആസാമീസ്</language>
 			<language type="ast">ഓസ്‌ട്രിയന്‍</language>
 			<language type="ay">അയ്മാറ</language>
 			<language type="az">അസര്‍ബൈജാനി</language>
@@ -28,20 +24,14 @@
 			<language type="bn">ബംഗാളി</language>
 			<language type="bo">തിബറ്റന്‍</language>
 			<language type="br">ബ്രിറ്റോണ്‍</language>
-			<language type="br" alt="proposed-x1001">ബ്രിട്ടണ്‍</language>
 			<language type="ca">കറ്റാലന്‍</language>
-			<language type="ca" alt="proposed-x1001">ക്യാറ്റലന്‍</language>
 			<language type="co">കോര്‍സിക്കന്‍</language>
 			<language type="cs">ചെക്ക്</language>
 			<language type="cy">വെല്‍ഷ്</language>
-			<language type="cy" alt="proposed-x1001">വെൽ‌ഷ് ഭാഷ</language>
 			<language type="da">ഡാനിഷ്</language>
 			<language type="de">ജര്‍മ്മന്‍</language>
-			<language type="de" alt="proposed-x1001">ജെര്‍മന്‍</language>
-			<language type="de" alt="proposed-x1002">ജര്‍മ്മന്</language>
 			<language type="dgr">ഡോഗ്രിബ്</language>
 			<language type="dra">ദ്രാവിഡഭാഷ</language>
-			<language type="dra" alt="proposed-x1001">മറ്റു ദ്രാവിഡ ഭാഷകള്‍</language>
 			<language type="dz">ഭൂട്ടാനി</language>
 			<language type="el">ഗ്രീക്ക്</language>
 			<language type="en">ഇംഗ്ലീഷ്</language>
@@ -53,56 +43,42 @@
 			<language type="fj">ഫിജിയന്‍</language>
 			<language type="fo">ഫാറോസ്</language>
 			<language type="fr">ഫ്രഞ്ച്</language>
-			<language type="fr" alt="proposed-x1001">ഫ്രെഞ്ച്</language>
 			<language type="fy">ഫ്രീസിയന്‍</language>
 			<language type="ga">ഐറിഷ്</language>
 			<language type="gd">സ്കോട്ടിഷ് ഗൈലിക്</language>
 			<language type="gl">ഗലീഷ്യന്‍</language>
-			<language type="gl" alt="proposed-x1001">ഗലിഷ്യണ്‍</language>
 			<language type="gn">ഗ്വാറാനി</language>
-			<language type="gn" alt="proposed-x1001">ഗ്വാറാണി</language>
 			<language type="gu">ഗുജറാത്തി</language>
 			<language type="ha">ഹൌസ</language>
 			<language type="he">ഹീബ്രു</language>
-			<language type="he" alt="proposed-x1001">ഹിബ്രു</language>
 			<language type="hi">ഹിന്ദി</language>
 			<language type="hr">ക്രോയേഷ്യന്‍</language>
 			<language type="hu">ഹംഗേറിയന്‍</language>
 			<language type="hy">അര്‍മേനിയന്‍</language>
-			<language type="hy" alt="proposed-x1001">ആര്‍മേനിയന്‍</language>
 			<language type="ia">ഇന്‍റര്‍ലിംഗ്വാ</language>
 			<language type="id">ഇന്‍ഡോനേഷ്യന്‍</language>
 			<language type="ie">ഇന്‍റര്‍ലിംഗ്വി</language>
-			<language type="ie" alt="proposed-x1001">ഭാഷകള്</language>
 			<language type="ik">ഇനുപിയാക്</language>
 			<language type="is">ഐസ്‌ലാന്‍ഡിക്</language>
-			<language type="is" alt="proposed-x1001">ഐസ്ലാഡിക്ക്</language>
 			<language type="it">ഇറ്റാലിയന്‍</language>
 			<language type="iu">ഇനുക്റ്റിറ്റട്ട്</language>
 			<language type="ja">ജപ്പാനീസ്</language>
-			<language type="ja" alt="proposed-x1001">ജാപ്പനീസ്</language>
 			<language type="jv">ജാവാനീസ്</language>
 			<language type="ka">ജോര്‍ജിയന്‍</language>
 			<language type="kha">ഘാസി</language>
 			<language type="kk">കസാഖ്</language>
 			<language type="km">കംമ്പോഡിയന്‍</language>
 			<language type="kn">കന്നഡ</language>
-			<language type="kn" alt="proposed-x1001">കന്നട</language>
 			<language type="ko">കൊറിയന്‍</language>
 			<language type="kok">കൊങ്കണി</language>
 			<language type="ks">കാശ്മീരി</language>
 			<language type="ku">കുര്‍ദിഷ്</language>
-			<language type="ku" alt="proposed-x1001">കുര്‍ദ്ദിഷ്</language>
 			<language type="ky">കിര്‍ഗിസ്</language>
 			<language type="la">ലാറ്റിന്‍</language>
-			<language type="la" alt="proposed-x1001">ലത്തീന്‍</language>
 			<language type="ln">ലിംഗാല</language>
 			<language type="lo">ലാവോ</language>
-			<language type="lo" alt="proposed-x1001">ലാവോത്യന്‍</language>
 			<language type="lt">ലിത്വേനിയന്‍</language>
-			<language type="lt" alt="proposed-x1001">ലിത്വാനിയന്‍</language>
 			<language type="lv">ലാത്വിയന്‍</language>
-			<language type="lv" alt="proposed-x1001">ലാറ്റ്വിയന്‍</language>
 			<language type="mai">മൈഥിലി</language>
 			<language type="mg">മലഗാസി</language>
 			<language type="mi">മൌറി</language>
@@ -113,7 +89,6 @@
 			<language type="mo">മൊള്‍ഡോവന്‍</language>
 			<language type="mr">മറാഠി</language>
 			<language type="ms">മലയ</language>
-			<language type="ms" alt="proposed-x1001">മലായ്</language>
 			<language type="mt">മാള്‍ട്ടീസ്</language>
 			<language type="my">ബര്‍മീസ്</language>
 			<language type="na">നൌറു</language>
@@ -133,7 +108,6 @@
 			<language type="rm">രഹയ്ട്ടോ-റോമന്‍സ്</language>
 			<language type="rn">കിറുണ്ടി</language>
 			<language type="ro">റൊമാനിയന്‍</language>
-			<language type="ro" alt="proposed-x1001">റോമാനിയന്‍</language>
 			<language type="root">ശിഖര്‍</language>
 			<language type="ru">റഷ്യന്‍</language>
 			<language type="rw">കിന്യര്‍വണ്ട</language>
@@ -142,7 +116,6 @@
 			<language type="sd">സിന്ധി</language>
 			<language type="sg">സാങ്കോ</language>
 			<language type="si">സിംഹള</language>
-			<language type="si" alt="proposed-x1001">സിംഹളീസ്</language>
 			<language type="sk">സ്ലോവാക്ക്</language>
 			<language type="sl">സ്ലോവേനിയന്‍</language>
 			<language type="sm">സമോവന്‍</language>
@@ -151,30 +124,24 @@
 			<language type="sq">അല്‍ബേനിയന്‍</language>
 			<language type="sr">സെര്‍ബിയന്‍</language>
 			<language type="ss">സ്വാറ്റി</language>
-			<language type="ss" alt="proposed-x1001">സ്വാസി</language>
 			<language type="st">സെസോതോ</language>
-			<language type="st" alt="proposed-x1001">സെസോത്തോ</language>
 			<language type="su">സുഡാനീസ്</language>
 			<language type="sv">സ്വീഡിഷ്</language>
 			<language type="sw">സ്വാഹിലി</language>
 			<language type="syr">സിറിയക്ക്</language>
 			<language type="ta">തമിഴ്</language>
 			<language type="te">തെലുങ്ക്</language>
-			<language type="te" alt="proposed-x1001">തെലുഗു</language>
 			<language type="tg">താജിക്</language>
 			<language type="th">തായ്</language>
 			<language type="ti">തിഗ്രിഗ്‌നാ</language>
 			<language type="tk">തുര്‍ക്ക് മെന്‍</language>
-			<language type="tk" alt="proposed-x1001">തുര്‍ക്കമന്‍</language>
 			<language type="tl">തഗാലോഗ്</language>
 			<language type="tn">സെറ്റ്സ്വാന</language>
 			<language type="to">ടോംഗന്‍</language>
 			<language type="tr">ടര്‍ക്കിഷ്</language>
 			<language type="ts">ഷോണ</language>
 			<language type="tt">ടാട്ടാര്‍</language>
-			<language type="tt" alt="proposed-x1001">റ്റാറ്റര്‍</language>
 			<language type="tw">ത്വവി</language>
-			<language type="tw" alt="proposed-x1001">റ്റ്വ്വി</language>
 			<language type="udm">ഉഡ്മുര്‍ട്ട്</language>
 			<language type="ug">ഉയ്ഘുര്‍</language>
 			<language type="uga">ഉഗറിട്ടിക്</language>
@@ -182,9 +149,7 @@
 			<language type="umb">ഉംബുന്ദു</language>
 			<language type="und">അജ്ഞാതമോ അനിശ്ചിതമോ ആയ ഭാഷ</language>
 			<language type="ur">ഉറുദു</language>
-			<language type="ur" alt="proposed-x1001">ഉര്‍ദു</language>
 			<language type="uz">ഉസ്ബെക്</language>
-			<language type="uz" alt="proposed-x1001">ഉസ്ബക്</language>
 			<language type="vai">വൈ</language>
 			<language type="ve">വെന്ദ</language>
 			<language type="vi">വിയറ്റ്നാമീസ്</language>
@@ -213,20 +178,15 @@
 		</languages>
 		<scripts>
 			<script type="Arab">അറബി</script>
-			<script type="Arab" alt="proposed-x1001">അറബിക്ക്</script>
 			<script type="Beng">ബംഗാളി</script>
 			<script type="Brah">ബ്രാഹ്മി</script>
-			<script type="Brah" alt="proposed-x1001">ബ്രഹ്മി</script>
 			<script type="Deva">ദേവനാഗരി</script>
 			<script type="Grek">ഗ്രീക്ക്</script>
 			<script type="Gujr">ഗുജറാത്തി</script>
 			<script type="Guru">ഗുരുമുഖി</script>
 			<script type="Hant">പരമ്പരാഗത ചീനലിപി</script>
-			<script type="Hant" alt="proposed-x1001">ചൈനീസ് പഴയ ലിപി  Chinese: [okay] Vote accepted.  Abkhazian: [okay] Vote accepted.</script>
-			<script type="Hant" alt="proposed-x1002">ചൈനയുടെ പ്രാചീന ലിപി</script>
 			<script type="Hebr">ഹീബ്രു</script>
 			<script type="Hira">ഹിരഗാന</script>
-			<script type="Hira" alt="proposed-x1001">ഹിബ്രു</script>
 			<script type="Inds">ഇന്‍ഡസ്</script>
 			<script type="Jpan">ജാപ്പനീസ്</script>
 			<script type="Knda">കന്നഡ</script>
@@ -292,13 +252,10 @@
 			<territory type="BY">ബെലറൂസ്</territory>
 			<territory type="BZ">ബെലീസ്</territory>
 			<territory type="CA">കാനഡ</territory>
-			<territory type="CA" alt="proposed-x1001">കനഡ</territory>
 			<territory type="CC">കോക്കസ്</territory>
 			<territory type="CD">കോംഗോ - കിന്‍ഷാസ</territory>
-			<territory type="CD" alt="proposed-x1001">കോംഗോ</territory>
 			<territory type="CF">സെന്‍ട്രല്‍ ആഫ്രിക്കന്‍ റിപ്പബ്ലിക്</territory>
 			<territory type="CG">കോംഗോ - ബ്രാസാവില്‍</territory>
-			<territory type="CG" alt="proposed-x1001">കോംഗോ</territory>
 			<territory type="CH">സ്വിറ്റ്സര്‍ലന്‍ഡ്</territory>
 			<territory type="CI">ഐവറി കോസ്റ്റ്</territory>
 			<territory type="CL">ചിലി</territory>
@@ -314,7 +271,6 @@
 			<territory type="DE">ജര്‍മനി</territory>
 			<territory type="DJ">ജിബൂട്ടി</territory>
 			<territory type="DK">ഡെന്മാര്‍ക്ക്</territory>
-			<territory type="DK" alt="proposed-x1001">ഡെന്‍മാര്‍ക്ക്</territory>
 			<territory type="DM">ഡൊമിനിക്ക</territory>
 			<territory type="DO">ഡൊമിനിക്കന്‍ റിപ്പബ്ലിക്</territory>
 			<territory type="DZ">അല്‍ജീറിയ</territory>
@@ -340,8 +296,6 @@
 			<territory type="GW">ഗിനി-ബിസോ</territory>
 			<territory type="GY">ഗയാന</territory>
 			<territory type="HK">ഹോങ് കോങ് എസ്.ഏ.ആര്‍. ചൈന</territory>
-			<territory type="HK" alt="short">ഹോങ് കോങ്</territory>
-			<territory type="HK" alt="short-proposed-x1001">ഹോങ്കോങ്</territory>
 			<territory type="HR">ക്രൊയേഷ്യ</territory>
 			<territory type="HT">ഹൈയ്തി</territory>
 			<territory type="HU">ഹംഗറി</territory>
@@ -381,8 +335,6 @@
 			<territory type="MM">മ്യാന്‍മാര്‍</territory>
 			<territory type="MN">മംഗോളിയ</territory>
 			<territory type="MO">മക്കാവോ എസ്.ഏ.ആര്‍. ചൈന</territory>
-			<territory type="MO" alt="short">മക്കാവോ</territory>
-			<territory type="MO" alt="short-proposed-x1001">മക്കാവു</territory>
 			<territory type="MT">മാള്‍ട്ട</territory>
 			<territory type="MU">മൌറീഷ്യസ്</territory>
 			<territory type="MV">മാലിദ്വീപ്</territory>
@@ -449,47 +401,28 @@
 		</keys>
 		<types>
 			<type type="big5han" key="collation">പരമ്പരാഗത ചൈനീസ് ക്രമീകരണം - ബിഗ്5</type>
-			<type type="big5han" key="collation" alt="proposed-x1001">പരമ്പരാഗത ചീന തരം തിരിവ് ക്രമം</type>
-			<type type="big5han" key="collation" alt="proposed-x1002">പരമ്പരാഗതചീനകലണ്ടര്‍</type>
 			<type type="buddhist" key="calendar">ബുദ്ധകലണ്ടര്‍</type>
 			<type type="chinese" key="calendar">ചൈനീസ് കലണ്ടര്‍</type>
-			<type type="chinese" key="calendar" alt="proposed-x1001">ചീനകലണ്ടര്‍</type>
 			<type type="direct" key="collation">പ്രത്യക്ഷക്രമീകരണം</type>
-			<type type="direct" key="collation" alt="proposed-x1001">നേര് തരം തിരിവ് ക്രമം</type>
-			<type type="direct" key="collation" alt="proposed-x1002">ഡയറക്റ്റ് കലണ്ടര്‍</type>
 			<type type="gb2312han" key="collation">ലളിതമായ ചൈനീസ് ക്രമീകരണം - ജീബി2312</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1001">ലളിത ചീന തരം തിരിവ് ക്രമം</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1002">ലളിതചീനകലണ്ടര്‍</type>
 			<type type="gregorian" key="calendar">ഇംഗ്ലീഷ് കലണ്ടര്‍</type>
 			<type type="hebrew" key="calendar">യഹൂദകലണ്ടര്‍</type>
 			<type type="islamic" key="calendar">ഇസ്ലാം കലണ്ടര്‍</type>
 			<type type="islamic-civil" key="calendar">ഇസ്ലാം-സിവില്‍ കലണ്ടര്‍</type>
 			<type type="japanese" key="calendar">ജപ്പാനീസ് കലണ്ടര്‍</type>
 			<type type="phonebook" key="collation">ഫോണ്‍ബുക്കിലെ ക്രമീകരണം</type>
-			<type type="phonebook" key="collation" alt="proposed-x1001">ഫോണ്‍‌ബുക്ക് രീതി</type>
-			<type type="phonebook" key="collation" alt="proposed-x1002">ഫോണ് ബുക്ക് തരം തിരിവ് ക്രമം</type>
 			<type type="pinyin" key="collation">പിന്‍‌യിന്‍ ക്രമീകരണം</type>
-			<type type="pinyin" key="collation" alt="proposed-x1001">പിന്‍‌യിന്‍ തരം തിരിവ് ക്രമം</type>
-			<type type="pinyin" key="collation" alt="proposed-x1002">പിന്‍‌യിന്‍ രീതി</type>
 			<type type="stroke" key="collation">സ്റ്റ്രോക്ക് ക്രമീകരണം</type>
-			<type type="stroke" key="collation" alt="proposed-x1001">സ്റ്റ്രോക്ക്  തരം തിരിവ് ക്രമം</type>
-			<type type="stroke" key="collation" alt="proposed-x1002">സ്റ്റ്രോക്ക് രീതി</type>
 			<type type="traditional" key="collation">പരമ്പരാഗത ക്രമീകരണം</type>
-			<type type="traditional" key="collation" alt="proposed-x1001">പരമ്പരാഗതരീതി</type>
-			<type type="traditional" key="collation" alt="proposed-x1002">പരമ്പരാഗത തരം തിരിവ് ക്രമം</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">യു.എസ്.</measurementSystemName>
-			<measurementSystemName type="US" alt="proposed-x1001">യു.എസ്</measurementSystemName>
-			<measurementSystemName type="US" alt="proposed-x1002">ബ്രിട്ടീഷ്</measurementSystemName>
 			<measurementSystemName type="metric">മെട്രിക്</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[\u200C \u200D അ-ഋ ൠ ഌ ൡ എ-ഐ ഒ-ന പ-ര ല വ ള ഴ റ ശ-ഹ ഃ ം ാ-ൃ െ-ൈ ൊ-ൌ ൗ ്]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[a-z]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[\u200C \u200D]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[അ-ഋ ൠ ഌ ൡ എ-ഐ ഒ-ന പ-ര ല വ ള ഴ റ ശ-ഹ ഃ ം ാ-ൃ െ-ൈ ൊ-ൌ ൗ ്]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>“</quotationStart>
@@ -505,20 +438,14 @@
 						<monthWidth type="abbreviated">
 							<month type="1">ജനു</month>
 							<month type="2">ഫെബ്രു</month>
-							<month type="2" alt="proposed-x1001">ഫിബ്</month>
 							<month type="3">മാര്‍</month>
-							<month type="3" alt="proposed-x1001">മാറ്അ</month>
 							<month type="4">ഏപ്രി</month>
-							<month type="4" alt="proposed-x1001">ഏപ്റില്അ</month>
 							<month type="5">മെയ്</month>
 							<month type="6">ജൂണ്‍</month>
-							<month type="6" alt="proposed-x1001">ജൂണ്അ</month>
 							<month type="7">ജൂലൈ</month>
-							<month type="7" alt="proposed-x1001">ജൂൈല</month>
 							<month type="8">ആഗ</month>
 							<month type="9">സെപ്തം</month>
 							<month type="10">ഒക്ടോ</month>
-							<month type="10" alt="proposed-x1001">ഒക്ട</month>
 							<month type="11">നവം</month>
 							<month type="12">ഡിസം</month>
 						</monthWidth>
@@ -538,26 +465,16 @@
 						<monthWidth type="wide">
 							<month type="1">ജനുവരി</month>
 							<month type="2">ഫെബ്രുവരി</month>
-							<month type="2" alt="proposed-x1001">ഫിബ്റവരി</month>
 							<month type="3">മാര്‍ച്ച്</month>
-							<month type="3" alt="proposed-x1001">മാറ്അച്അച്</month>
 							<month type="4">ഏപ്രില്‍</month>
-							<month type="4" alt="proposed-x1001">ഏപ്റില്അ</month>
 							<month type="5">മെയ്</month>
 							<month type="6">ജൂണ്‍</month>
-							<month type="6" alt="proposed-x1001">ജൂണ്അ</month>
 							<month type="7">ജൂലൈ</month>
-							<month type="7" alt="proposed-x1001">ജൂൈല</month>
 							<month type="8">ആഗസ്ത്</month>
-							<month type="8" alt="proposed-x1001">ആഗസ്ത്അ</month>
 							<month type="9">സെപ്തംബര്‍</month>
-							<month type="9" alt="proposed-x1001">സെപ്തംബറ്അ</month>
 							<month type="10">ഒക്ടോബര്‍</month>
-							<month type="10" alt="proposed-x1001">ഒക്ടൈബറ്അ</month>
 							<month type="11">നവംബര്‍</month>
-							<month type="11" alt="proposed-x1001">നവംബറ്അ</month>
 							<month type="12">ഡിസംബര്‍</month>
-							<month type="12" alt="proposed-x1001">ഡിസംബറ്അ</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
@@ -570,29 +487,17 @@
 						</monthWidth>
 						<monthWidth type="narrow">
 							<month type="1">ജ</month>
-							<month type="1" alt="proposed-x1001">1</month>
 							<month type="2">ഫ</month>
-							<month type="2" alt="proposed-x1001">2</month>
 							<month type="3">മ</month>
-							<month type="3" alt="proposed-x1001">3</month>
 							<month type="4">ഏ</month>
-							<month type="4" alt="proposed-x1001">4</month>
 							<month type="5">മ</month>
-							<month type="5" alt="proposed-x1001">5</month>
 							<month type="6">ജ</month>
-							<month type="6" alt="proposed-x1001">6</month>
 							<month type="7">ജ</month>
-							<month type="7" alt="proposed-x1001">7</month>
 							<month type="8">ആ</month>
-							<month type="8" alt="proposed-x1001">8</month>
 							<month type="9">സ</month>
-							<month type="9" alt="proposed-x1001">9</month>
 							<month type="10">ഒ</month>
-							<month type="10" alt="proposed-x1001">10</month>
 							<month type="11">ന</month>
-							<month type="11" alt="proposed-x1001">11</month>
 							<month type="12">ഡ</month>
-							<month type="12" alt="proposed-x1001">12</month>
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="3">മാര്‍ച്ച്</month>
@@ -615,18 +520,14 @@
 							<day type="tue">ചൊ</day>
 							<day type="wed">ബു</day>
 							<day type="thu">വ്യാ</day>
-							<day type="thu" alt="proposed-x1001">വ്യ</day>
 							<day type="fri">വെ</day>
 							<day type="sat">ശ</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">ഞായര്‍</day>
-							<day type="sun" alt="proposed-x1001">ഞായറ്അ</day>
 							<day type="mon">തിങ്കള്‍</day>
-							<day type="mon" alt="proposed-x1001">തിങ്കള്അ</day>
 							<day type="tue">ചൊവ്വ</day>
 							<day type="wed">ബുധന്‍</day>
-							<day type="wed" alt="proposed-x1001">ബുനഭ്അ</day>
 							<day type="thu">വ്യാഴം</day>
 							<day type="fri">വെള്ളി</day>
 							<day type="sat">ശനി</day>
@@ -635,24 +536,12 @@
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
 							<day type="sun">ഞ</day>
-							<day type="sun" alt="proposed-x1001">ഞാ</day>
-							<day type="sun" alt="proposed-x1002">1</day>
 							<day type="mon">ത</day>
-							<day type="mon" alt="proposed-x1001">തി</day>
-							<day type="mon" alt="proposed-x1002">2</day>
 							<day type="tue">ച</day>
-							<day type="tue" alt="proposed-x1001">ചൊ</day>
-							<day type="tue" alt="proposed-x1002">3</day>
 							<day type="wed">ബ</day>
-							<day type="wed" alt="proposed-x1001">ബു</day>
-							<day type="wed" alt="proposed-x1002">4</day>
 							<day type="thu">വ</day>
-							<day type="thu" alt="proposed-x1001">5</day>
 							<day type="fri">വ</day>
-							<day type="fri" alt="proposed-x1001">വെ</day>
-							<day type="fri" alt="proposed-x1002">6</day>
 							<day type="sat">ശ</day>
-							<day type="sat" alt="proposed-x1001">7</day>
 						</dayWidth>
 					</dayContext>
 				</days>
@@ -666,33 +555,22 @@
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">ഒന്നാം പാദം</quarter>
-							<quarter type="1" alt="proposed-x1001">Q1</quarter>
 							<quarter type="2">രണ്ടാം പാദം</quarter>
-							<quarter type="2" alt="proposed-x1001">Q2</quarter>
 							<quarter type="3">മൂന്നാം പാദം</quarter>
-							<quarter type="3" alt="proposed-x1001">Q3</quarter>
 							<quarter type="4">നാലാം പാദം</quarter>
-							<quarter type="4" alt="proposed-x1001">Q4</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
 				<am>രാവിലെ</am>
-				<am alt="proposed-x1001">AM</am>
 				<pm>വൈകുന്നേരം</pm>
-				<pm alt="proposed-x1001">വൈകു</pm>
-				<pm alt="proposed-x1002">PM</pm>
 				<eras>
 					<eraNames>
 						<era type="0">ക്രിസ്തുവിനു് മുമ്പ്‌</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">ക്രിസ്തുവിനു് പിമ്പ്</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">ക്രി.മു.</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">ക്രി.പി.</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0">ക്രി.മു.</era>
@@ -703,28 +581,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>yyyy, MMMM d, EEEE</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
-							<pattern alt="proposed-x1002">EEEE d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>yyyy, MMMM d</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
-							<pattern alt="proposed-x1002">d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>yyyy, MMM d</pattern>
-							<pattern alt="proposed-x1001">dd-MM-yyyy</pattern>
-							<pattern alt="proposed-x1002">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd-MM-yy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -732,25 +603,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>h:mm a</pattern>
-							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
@@ -758,12 +625,10 @@
 					<dateTimeFormatLength>
 						<dateTimeFormat>
 							<pattern>{1} {0}</pattern>
-							<pattern alt="proposed-x1001">1999, സെപ്തം 14 1:25:59 PM</pattern>
 						</dateTimeFormat>
 					</dateTimeFormatLength>
 					<availableFormats>
 						<dateFormatItem id="MMMMd">MMMM d</dateFormatItem>
-						<dateFormatItem id="MMMMd" alt="proposed-x1001">d MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">dd-MM</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyyyMM">MM-yyyy</dateFormatItem>
@@ -773,8 +638,6 @@
 				<fields>
 					<field type="era">
 						<displayName>അബ്ദം</displayName>
-						<displayName alt="proposed-x1001">കാലഘട്ടം</displayName>
-						<displayName alt="proposed-x1002">വര്‍ഷം</displayName>
 					</field>
 					<field type="year">
 						<displayName>വര്‍ഷം</displayName>
@@ -784,7 +647,6 @@
 					</field>
 					<field type="week">
 						<displayName>ആഴ്ച</displayName>
-						<displayName alt="proposed-x1001">വാരം</displayName>
 					</field>
 					<field type="day">
 						<displayName>ദിവസം</displayName>
@@ -796,11 +658,9 @@
 					</field>
 					<field type="weekday">
 						<displayName>ആഴ്ചയിലെ ദിവസം</displayName>
-						<displayName alt="proposed-x1001">ആഴ്ച</displayName>
 					</field>
 					<field type="dayperiod">
 						<displayName>AM/PM</displayName>
-						<displayName alt="proposed-x1001">രാവിലെ/വൈകുന്നേരം</displayName>
 					</field>
 					<field type="hour">
 						<displayName>മണിക്കൂര്‍</displayName>
@@ -813,7 +673,6 @@
 					</field>
 					<field type="zone">
 						<displayName>മേഖല</displayName>
-						<displayName alt="proposed-x1001">കാലഘട്ടം</displayName>
 					</field>
 				</fields>
 			</calendar>
@@ -822,7 +681,6 @@
 			<hourFormat>+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>GMT{0}</gmtFormat>
 			<regionFormat>{0} സമയം</regionFormat>
-			<regionFormat alt="proposed-x1001">{0}</regionFormat>
 			<zone type="Etc/Unknown">
 				<exemplarCity>അറിയപ്പെടാത്ത നഗരം</exemplarCity>
 			</zone>
@@ -832,7 +690,6 @@
 		<symbols>
 			<decimal>.</decimal>
 			<group>,</group>
-			<nativeZeroDigit alt="proposed-x1001">൦</nativeZeroDigit>
 		</symbols>
 		<decimalFormats>
 			<decimalFormatLength>
@@ -858,7 +715,6 @@
 		<currencies>
 			<currency type="AED">
 				<displayName>യു.എ.ഇ. ദിര്‍ഹം</displayName>
-				<displayName alt="proposed-x1001">യുഎഇ ദിര്‍ഹം</displayName>
 			</currency>
 			<currency type="AUD">
 				<displayName>ആസ്ട്രേലിയന്‍ ഡോളര്‍</displayName>
@@ -886,21 +742,18 @@
 			</currency>
 			<currency type="INR">
 				<displayName>ഇന്ത്യന്‍ രൂപ</displayName>
-				<displayName alt="proposed-x1001">ഇന്‍ഡ്യന്‍ രൂപ</displayName>
 			</currency>
 			<currency type="ITL">
 				<displayName>ഇറ്റാലിയന്‍ ലിറ</displayName>
 			</currency>
 			<currency type="JPY">
 				<displayName>ജപ്പാനീസ് യെന്‍</displayName>
-				<displayName alt="proposed-x1001">ജാപ്പാനീസ് യെന്‍</displayName>
 			</currency>
 			<currency type="RUB">
 				<displayName>റഷ്യന്‍ റൂബിള്‍</displayName>
 			</currency>
 			<currency type="USD">
 				<displayName>യു.എസ്. ഡോളര്‍</displayName>
-				<displayName alt="proposed-x1001">യുഎസ് ഡോളര്‍</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>അറിയപ്പെടാത്തതോ നിലവിലില്ലാത്തതോ ആയ നാണയം</displayName>

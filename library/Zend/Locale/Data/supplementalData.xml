@@ -75,7 +75,7 @@
             <currency iso4217="AOK" from="1977-01-08" to="1991-03"/>
         </region>
         <region iso3166="AQ">
-        <currency iso4217="XXX"/>
+            <currency iso4217="XXX"/>
         </region>
         <region iso3166="AR">
             <currency iso4217="ARS" from="1992-01-01"/>
@@ -552,7 +552,7 @@
             <currency iso4217="EUR" from="2002-01-01"/>
             <currency iso4217="DEM" from="1999-10-02" to="2002-05-15"/>
             <currency iso4217="YUM" from="1994-01-24" to="2002-05-15"/>
-            gion>
+        </region>
         <region iso3166="MF">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="FRF" from="1960-01-01" to="2002-02-17"/>
@@ -738,7 +738,7 @@
             <currency iso4217="RSD" from="2006-10-25"/>
             <currency iso4217="CSD" from="2002-05-15" to="2006-10-25"/>
             <currency iso4217="YUM" from="1994-01-24" to="2002-05-15"/>
-            gion>
+        </region>
         <region iso3166="RU">
             <currency iso4217="RUB" from="1999-01-01"/>
             <currency iso4217="RUR" from="1991-12-25" to="1998-12-31"/>

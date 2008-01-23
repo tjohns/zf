@@ -35,7 +35,6 @@
 			<language type="fil">Tagalogisht</language>
 			<language type="fo">Faroisht</language>
 			<language type="fr">Frengjisht</language>
-			<language type="fr" alt="proposed-x1001">Frëngjisht</language>
 			<language type="fy">Frizianisht</language>
 			<language type="ga">Irlandisht</language>
 			<language type="gd">Galisht</language>
@@ -44,7 +43,6 @@
 			<language type="gu">Guxharati</language>
 			<language type="he">Hebraisht</language>
 			<language type="hi">Hindi</language>
-			<language type="hi" alt="proposed-x1001">Hindisht</language>
 			<language type="hr">Kroatisht</language>
 			<language type="hu">Hungarisht</language>
 			<language type="hy">Armen</language>
@@ -54,7 +52,6 @@
 			<language type="is">Islandisht</language>
 			<language type="it">Italisht</language>
 			<language type="ja">Japanisht</language>
-			<language type="ja" alt="proposed-x1001">Japonisht</language>
 			<language type="jv">Javanisht</language>
 			<language type="ka">Gjeorgjisht</language>
 			<language type="km">Kamboxhiane</language>
@@ -83,7 +80,6 @@
 			<language type="pl">Polonisht</language>
 			<language type="ps">Pashto</language>
 			<language type="pt">Portugeze</language>
-			<language type="pt" alt="proposed-x1001">Portugalisht</language>
 			<language type="pt_BR">Portugalisht (Brazil)</language>
 			<language type="pt_PT">Portugalisht (Portugali)</language>
 			<language type="ro">Rumanisht</language>
@@ -96,7 +92,6 @@
 			<language type="sl">Sllovenisht</language>
 			<language type="so">Somalisht</language>
 			<language type="sq">shqipe</language>
-			<language type="sq" alt="proposed-x1001">Shqip</language>
 			<language type="sr">Serbisht</language>
 			<language type="st">Sesotho</language>
 			<language type="su">Sundanisht</language>

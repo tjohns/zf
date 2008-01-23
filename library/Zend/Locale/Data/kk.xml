@@ -184,11 +184,9 @@
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">жексені</day>
-							<day type="sun" alt="proposed-x1001">жексенбі</day>
 							<day type="mon">дуйсенбі</day>
 							<day type="tue">сейсенбі</day>
 							<day type="wed">сәренбі</day>
-							<day type="wed" alt="proposed-x1001">сәрсенбі</day>
 							<day type="thu">бейсенбі</day>
 							<day type="fri">жұма</day>
 							<day type="sat">сенбі</day>

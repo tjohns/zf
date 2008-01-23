@@ -24,16 +24,13 @@
 			<language type="cy">{0&gt;welsh&lt;}100{&gt;galesera &lt;0}</language>
 			<language type="da">daniera</language>
 			<language type="de">alemanera</language>
-			<language type="de" alt="proposed-x1001">alemanieraz</language>
 			<language type="el">greziera</language>
 			<language type="en">ingelera</language>
-			<language type="en" alt="proposed-x1001">ingelesez</language>
 			<language type="en_AU">ingelesa (australia)</language>
 			<language type="en_GB">ingelesa (erresuma batua)</language>
 			<language type="en_US">ingelesa (aeb)</language>
 			<language type="eo">esperantoa</language>
 			<language type="es">espainiera</language>
-			<language type="es" alt="proposed-x1001">gazteleraz</language>
 			<language type="et">estoniera</language>
 			<language type="eu">euskara</language>
 			<language type="fa">pertsiera</language>
@@ -41,7 +38,6 @@
 			<language type="fil">tagalo</language>
 			<language type="fo">faroera</language>
 			<language type="fr">frantsesera</language>
-			<language type="fr" alt="proposed-x1001">frantsesez</language>
 			<language type="fy">frisiarra</language>
 			<language type="ga">gaelikoa</language>
 			<language type="gd">eskoziar gaelikoa</language>
@@ -59,7 +55,6 @@
 			<language type="is">islandiera</language>
 			<language type="it">italiera</language>
 			<language type="ja">japoniera</language>
-			<language type="ja" alt="proposed-x1001">japonieraz</language>
 			<language type="jv">javera</language>
 			<language type="ka">georgiera</language>
 			<language type="km">khemerera</language>
@@ -128,7 +123,6 @@
 		</languages>
 		<territories>
 			<territory type="AE">Arabiar Emirrerri Batuak</territory>
-			<territory type="AE" alt="proposed-x1001">Arabiar Emirerri Batuak</territory>
 			<territory type="AF">Afganistan</territory>
 			<territory type="AG">Antigua eta Barbuda</territory>
 			<territory type="AL">Albania</territory>
@@ -150,7 +144,6 @@
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benin</territory>
 			<territory type="BO">Bolibia</territory>
-			<territory type="BO" alt="proposed-x1001">Bolivia</territory>
 			<territory type="BR">Brasil</territory>
 			<territory type="BS">Bahamak</territory>
 			<territory type="BT">Bh2utan</territory>
@@ -206,7 +199,6 @@
 			<territory type="GR">Grezia</territory>
 			<territory type="GS">Hegoaldeko Georgia eta Hegoaldeko Sandwich uharteak</territory>
 			<territory type="GW">Ginea-Bissau</territory>
-			<territory type="GW" alt="proposed-x1001">Ginea Bissau</territory>
 			<territory type="HM">Heard eta McDonald Uharteak</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Kroazia</territory>
@@ -227,7 +219,6 @@
 			<territory type="JO">Jordania</territory>
 			<territory type="JP">Japonia</territory>
 			<territory type="KE">Kenia</territory>
-			<territory type="KE" alt="proposed-x1001">Kenya</territory>
 			<territory type="KG">Kirgizistan</territory>
 			<territory type="KH">Kanbodia</territory>
 			<territory type="KI">Kiribati</territory>
@@ -266,7 +257,6 @@
 			<territory type="MW">Malawi</territory>
 			<territory type="MX">Mexiko</territory>
 			<territory type="MY">Malasia</territory>
-			<territory type="MY" alt="proposed-x1001">Malaysia</territory>
 			<territory type="MZ">Mozambike</territory>
 			<territory type="NA">Namibia</territory>
 			<territory type="NC">Kaledonia Berria</territory>
@@ -289,7 +279,6 @@
 			<territory type="PS">Palestina</territory>
 			<territory type="PT">Portugal</territory>
 			<territory type="PY">Paraguai</territory>
-			<territory type="PY" alt="proposed-x1001">Paraguay</territory>
 			<territory type="QA">Katar</territory>
 			<territory type="RO">Errumania</territory>
 			<territory type="RS">Serbia</territory>
@@ -311,7 +300,6 @@
 			<territory type="SO">Somalia</territory>
 			<territory type="SR">Surinam</territory>
 			<territory type="ST">Sao Tomé eta Principe</territory>
-			<territory type="ST" alt="proposed-x1001">Sao Tome eta Principe</territory>
 			<territory type="SY">Siria</territory>
 			<territory type="SZ">Swazilandia</territory>
 			<territory type="TC">Turk eta Caico uharteak</territory>
@@ -319,7 +307,6 @@
 			<territory type="TF">Frantziaren Lurralde Australak</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Tailandia</territory>
-			<territory type="TH" alt="proposed-x1001">Thailandia</territory>
 			<territory type="TJ">Tadjikistan</territory>
 			<territory type="TK">Tokelau</territory>
 			<territory type="TL">Ekialdeko Timor</territory>
@@ -335,11 +322,9 @@
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Estatu Batuetatik urruti dauden uharte txikiak</territory>
 			<territory type="US">Ameriketako Estatu Batuak</territory>
-			<territory type="US" alt="proposed-x1001">Estatu Batuak</territory>
 			<territory type="UY">Uruguai</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Vatikano</territory>
-			<territory type="VA" alt="proposed-x1001">Vatikano Hiria</territory>
 			<territory type="VC">Saint Vincent eta Grenadinak</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Virginia uharteak (Erresuma Batua)</territory>
@@ -350,7 +335,6 @@
 			<territory type="WS">Samoa</territory>
 			<territory type="YE">Yemen</territory>
 			<territory type="ZA">Hegoafrika</territory>
-			<territory type="ZA" alt="proposed-x1001">Hego Afrika</territory>
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabwe</territory>
 		</territories>
@@ -419,19 +403,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">ig</day>
-							<day type="sun" alt="proposed-x1001">igandea</day>
 							<day type="mon">al</day>
-							<day type="mon" alt="proposed-x1001">astelehena</day>
 							<day type="tue">as</day>
-							<day type="tue" alt="proposed-x1001">asteartea</day>
 							<day type="wed">az</day>
-							<day type="wed" alt="proposed-x1001">asteazkena</day>
 							<day type="thu">og</day>
-							<day type="thu" alt="proposed-x1001">osteguna</day>
 							<day type="fri">or</day>
-							<day type="fri" alt="proposed-x1001">ostirala</day>
 							<day type="sat">lr</day>
-							<day type="sat" alt="proposed-x1001">satelitea</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">igandea</day>
@@ -483,25 +460,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, yyyy'eko' MMMM'ren' dd'a'</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>yyyy'eko' MMM'ren' dd'a'</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>yyyy-MMM-dd</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>yy-MM-dd</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>

@@ -10,16 +10,13 @@
 		<languages>
 			<language type="af">Afrikaans</language>
 			<language type="afa">Ander Afro-Asiaties</language>
-			<language type="afa" alt="proposed-x1001">Afro-Asiaties (Ander)</language>
 			<language type="am">Amharies</language>
 			<language type="ar">Arabies</language>
 			<language type="arc">Aramees</language>
 			<language type="art">Ander Kunsmatig</language>
-			<language type="art" alt="proposed-x1001">Kunsmatig (Ander)</language>
 			<language type="as">Assamees</language>
 			<language type="az">Aserbeidjaans</language>
 			<language type="bat">Ander Balties</language>
-			<language type="bat" alt="proposed-x1001">Balties (Ander)</language>
 			<language type="be">Wit-Russies</language>
 			<language type="ber">Berbers</language>
 			<language type="bg">Bulgaars</language>
@@ -30,7 +27,6 @@
 			<language type="bs">Bosnies</language>
 			<language type="ca">Katalaans</language>
 			<language type="cel">Ander Kelties</language>
-			<language type="cel" alt="proposed-x1001">Kelties (Ander)</language>
 			<language type="chr">Cherokees</language>
 			<language type="cop">Kopties</language>
 			<language type="cs">Tsjeggies</language>
@@ -39,29 +35,23 @@
 			<language type="da">Deens</language>
 			<language type="de">Duits</language>
 			<language type="egy">Antieke Egipties</language>
-			<language type="egy" alt="proposed-x1001">Egipties (Antiek)</language>
 			<language type="el">Grieks</language>
 			<language type="en">Engels</language>
 			<language type="eo">Esperanto</language>
 			<language type="es">Spaans</language>
 			<language type="es_419">Spaans (Latyns-Amerika)</language>
-			<language type="es_419" alt="proposed-x1001">Latyns-Amerikaanse Spaans</language>
 			<language type="et">Estnies</language>
 			<language type="eu">Baskies</language>
 			<language type="fa">Persies</language>
 			<language type="fi">Fins</language>
 			<language type="fil">Filippyns</language>
-			<language type="fil" alt="proposed-x1001">Tagaloog</language>
 			<language type="fj">Fidjiaans</language>
 			<language type="fo">Faroëes</language>
-			<language type="fo" alt="proposed-x1001">Färöers</language>
 			<language type="fr">Frans</language>
 			<language type="fy">Fries</language>
 			<language type="ga">Iers</language>
 			<language type="gd">Skots-Gaelies</language>
-			<language type="gd" alt="proposed-x1001">Gaelies</language>
 			<language type="gem">Ander Germaans</language>
-			<language type="gem" alt="proposed-x1001">Germaans (Ander)</language>
 			<language type="gl">Galicies</language>
 			<language type="gn">Guarani</language>
 			<language type="got">Goties</language>
@@ -72,28 +62,22 @@
 			<language type="hi">Hindi</language>
 			<language type="hit">Hetities</language>
 			<language type="hr">Kroaties</language>
-			<language type="hr" alt="proposed-x1001">Kroasies</language>
 			<language type="hu">Hongaars</language>
 			<language type="hy">Armeens</language>
 			<language type="ia">Interlingua</language>
 			<language type="id">Indonesies</language>
 			<language type="ie">Interlingue</language>
-			<language type="ie" alt="proposed-x1001">Interlingua</language>
 			<language type="ine">Ander Indo-Europees</language>
-			<language type="ine" alt="proposed-x1001">Indo-Europees (Ander)</language>
 			<language type="is">Yslands</language>
 			<language type="it">Italiaans</language>
 			<language type="ja">Japannees</language>
 			<language type="jv">Javaans</language>
 			<language type="ka">Georgies</language>
 			<language type="khi">Ander Khoi-San</language>
-			<language type="khi" alt="proposed-x1001">Khoi-San (Ander)</language>
 			<language type="km">Khmer</language>
-			<language type="km" alt="proposed-x1001">Kambodjaans</language>
 			<language type="kn">Kannada</language>
 			<language type="ko">Koreaans</language>
 			<language type="kru">kru</language>
-			<language type="kru" alt="proposed-x1001">Koerdies</language>
 			<language type="ku">Koerdies</language>
 			<language type="kw">Kornies</language>
 			<language type="ky">Kirgisies</language>
@@ -101,20 +85,15 @@
 			<language type="li">Limburgs</language>
 			<language type="ln">Lingala</language>
 			<language type="lo">Laotanees</language>
-			<language type="lo" alt="proposed-x1001">Lao</language>
 			<language type="lt">Litaus</language>
 			<language type="lv">Letties</language>
 			<language type="mas">Masai</language>
 			<language type="mg">Malgassies</language>
 			<language type="mk">Macedonies</language>
-			<language type="mk" alt="proposed-x1001">Masedonies</language>
 			<language type="ml">Malabaars</language>
-			<language type="ml" alt="proposed-x1001">Malajalam</language>
 			<language type="mn">Mongalees</language>
-			<language type="mn" alt="proposed-x1001">Mongools</language>
 			<language type="mr">Mahratti</language>
 			<language type="ms">Maleisies</language>
-			<language type="ms" alt="proposed-x1001">Maleis</language>
 			<language type="mt">Maltees</language>
 			<language type="mul">Veelvuldige tale</language>
 			<language type="my">Birmaans</language>
@@ -124,7 +103,6 @@
 			<language type="nl_BE">Vlaams</language>
 			<language type="nn">Noors (Nynorsk)</language>
 			<language type="no">Noors</language>
-			<language type="no" alt="proposed-x1001">Noorweegs</language>
 			<language type="nr">Suid-Ndebele</language>
 			<language type="nso">Sepedi</language>
 			<language type="oc">Occitaans</language>
@@ -136,20 +114,17 @@
 			<language type="pt">Portugees</language>
 			<language type="pt_BR">Brasiliaanse Portugees</language>
 			<language type="ro">Roemeens</language>
-			<language type="ro" alt="proposed-x1001">Romeens</language>
 			<language type="ru">Russies</language>
 			<language type="sa">Sanskrit</language>
 			<language type="sco">Skots</language>
 			<language type="sd">Sindhi</language>
 			<language type="sem">Ander Semities</language>
-			<language type="sem" alt="proposed-x1001">Semities (Ander)</language>
 			<language type="sgn">Gebaretaal</language>
 			<language type="sh">Serwo-Kroaties</language>
 			<language type="si">Singalees</language>
 			<language type="sk">Slowaaks</language>
 			<language type="sl">Sloweens</language>
 			<language type="sla">Ander Slawies</language>
-			<language type="sla" alt="proposed-x1001">Slawies (Ander)</language>
 			<language type="sn">Shona</language>
 			<language type="so">Somalies</language>
 			<language type="sq">Albanees</language>
@@ -204,7 +179,6 @@
 			<script type="Ugar">Ugarities</script>
 			<script type="Visp">Sigbare spraak</script>
 			<script type="Zxxx">Ongeskrewe</script>
-			<script type="Zxxx" alt="proposed-x1001">Kode vir ongeskrewe tale</script>
 			<script type="Zyyy">Algemeen</script>
 			<script type="Zzzz">Kode vir ongekodeerde alfabette</script>
 		</scripts>
@@ -243,7 +217,6 @@
 			<territory type="AG">Antigua en Barbuda</territory>
 			<territory type="AL">Albanië</territory>
 			<territory type="AM">Armenië</territory>
-			<territory type="AM" alt="proposed-x1001">Arminië</territory>
 			<territory type="AN">Nederlands-Antille</territory>
 			<territory type="AO">Angola</territory>
 			<territory type="AQ">Antarktika</territory>
@@ -252,13 +225,10 @@
 			<territory type="AT">Oostenryk</territory>
 			<territory type="AU">Australië</territory>
 			<territory type="AZ">Aserbeidjan</territory>
-			<territory type="AZ" alt="proposed-x1001">Azerbeidjan</territory>
-			<territory type="AZ" alt="proposed-x1002">Aserbaijan</territory>
 			<territory type="BA">Bosnië en Herzegowina</territory>
 			<territory type="BD">Bangladesj</territory>
 			<territory type="BE">België</territory>
 			<territory type="BF">Boerkina Fasso</territory>
-			<territory type="BF" alt="proposed-x1001">Burkina Faso</territory>
 			<territory type="BG">Bulgarye</territory>
 			<territory type="BH">Bahrein</territory>
 			<territory type="BJ">Benin</territory>
@@ -288,7 +258,6 @@
 			<territory type="DK">Denemarke</territory>
 			<territory type="DO">Dominikaanse Republiek</territory>
 			<territory type="DZ">Algerië</territory>
-			<territory type="DZ" alt="proposed-x1001">Algeria</territory>
 			<territory type="EE">Estland</territory>
 			<territory type="EG">Egipte</territory>
 			<territory type="EH">Wes-Sahara</territory>
@@ -374,7 +343,6 @@
 			<territory type="PA">Panama</territory>
 			<territory type="PE">Peru</territory>
 			<territory type="PG">Papoea Nieu-Guinee</territory>
-			<territory type="PG" alt="proposed-x1001">Papoea-Nieu-Guinee</territory>
 			<territory type="PH">Filippyne</territory>
 			<territory type="PK">Pakistan</territory>
 			<territory type="PL">Pole</territory>
@@ -400,9 +368,7 @@
 			<territory type="SO">Somalië</territory>
 			<territory type="SR">Suriname</territory>
 			<territory type="ST">Sao Tome en Principe</territory>
-			<territory type="ST" alt="proposed-x1001">Sao Tomé en Principe</territory>
 			<territory type="SV">Salvador</territory>
-			<territory type="SV" alt="proposed-x1001">El Salvador</territory>
 			<territory type="SY">Sirië</territory>
 			<territory type="SZ">Swaziland</territory>
 			<territory type="TD">Tsjaad</territory>
@@ -416,7 +382,6 @@
 			<territory type="TW">Taiwan</territory>
 			<territory type="TZ">Tanzanië</territory>
 			<territory type="UA">Oekraine</territory>
-			<territory type="UA" alt="proposed-x1001">Oekraïne</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="US">Verenigde State van Amerika</territory>
 			<territory type="UZ">Oesbekistan</territory>
@@ -432,7 +397,6 @@
 		</territories>
 		<variants>
 			<variant type="1901">Tradisionele Duitse ortografie</variant>
-			<variant type="1901" alt="proposed-x1001">Trandisionele Duitse ortografie</variant>
 			<variant type="1996">Duitse ortografie van 1996</variant>
 			<variant type="REVISED">Hersiene ortografie</variant>
 		</variants>
@@ -460,7 +424,6 @@
 	<characters>
 		<exemplarCharacters>[a á â b-e é è ê ë f-i î ï j-o ô ö p-u û v-z ŉ]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[à å-ç ñ ø œ ß]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a á â ä b-e é è ê ë f-i í-ï j-o ó ò ô ö p-u ú-ü v-y ý z ŉ]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
@@ -475,28 +438,17 @@
 					<monthContext type="format">
 						<monthWidth type="abbreviated">
 							<month type="1">Jan</month>
-							<month type="1" alt="proposed-x1001">Jan.</month>
 							<month type="2">Feb</month>
-							<month type="2" alt="proposed-x1001">Feb.</month>
 							<month type="3">Mar</month>
-							<month type="3" alt="proposed-x1001">Mrt.</month>
 							<month type="4">Apr</month>
-							<month type="4" alt="proposed-x1001">Apr.</month>
 							<month type="5">Mei</month>
 							<month type="6">Jun</month>
-							<month type="6" alt="proposed-x1001">Jun.</month>
 							<month type="7">Jul</month>
-							<month type="7" alt="proposed-x1001">Jul.</month>
 							<month type="8">Aug</month>
-							<month type="8" alt="proposed-x1001">Aug.</month>
 							<month type="9">Sep</month>
-							<month type="9" alt="proposed-x1001">Sep.</month>
 							<month type="10">Okt</month>
-							<month type="10" alt="proposed-x1001">Okt.</month>
 							<month type="11">Nov</month>
-							<month type="11" alt="proposed-x1001">Nov.</month>
 							<month type="12">Des</month>
-							<month type="12" alt="proposed-x1001">Des.</month>
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">Januarie</month>
@@ -534,19 +486,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">So</day>
-							<day type="sun" alt="proposed-x1001">So.</day>
 							<day type="mon">Ma</day>
-							<day type="mon" alt="proposed-x1001">Ma.</day>
 							<day type="tue">Di</day>
-							<day type="tue" alt="proposed-x1001">Di.</day>
 							<day type="wed">Wo</day>
-							<day type="wed" alt="proposed-x1001">Wo.</day>
 							<day type="thu">Do</day>
-							<day type="thu" alt="proposed-x1001">Do.</day>
 							<day type="fri">Vr</day>
-							<day type="fri" alt="proposed-x1001">Vr.</day>
 							<day type="sat">Sa</day>
-							<day type="sat" alt="proposed-x1001">Sa.</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">Sondag</day>
@@ -602,25 +547,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd MMM yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>yyyy/MM/dd</pattern>
-							<pattern alt="proposed-x1001">yyyy-MM-dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -628,27 +569,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
-							<pattern alt="proposed-x1002">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
-							<pattern alt="proposed-x1002">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>h:mm a</pattern>
-							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
@@ -662,10 +597,8 @@
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
 						<dateFormatItem id="MMMMdd">dd MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">MM/dd</dateFormatItem>
-						<dateFormatItem id="MMdd" alt="proposed-x1001">MM-dd</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyyyMM">yyyy/MM</dateFormatItem>
-						<dateFormatItem id="yyyyMM" alt="proposed-x1001">yyyy-MM</dateFormatItem>
 						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>

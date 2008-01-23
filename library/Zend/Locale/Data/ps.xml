@@ -25,24 +25,17 @@
 			<language type="cy">ويلشي</language>
 			<language type="da">ډېنش</language>
 			<language type="de">الماني</language>
-			<language type="de" alt="proposed-x1001">ألماني</language>
 			<language type="el">یوناني</language>
-			<language type="el" alt="proposed-x1001">يوناني</language>
 			<language type="en">انګلیسي</language>
-			<language type="en" alt="proposed-x1001">انګليسي</language>
 			<language type="eo">اسپرانتو</language>
 			<language type="es">هسپانوي</language>
 			<language type="et">حبشي</language>
-			<language type="et" alt="proposed-x1001">اسټوني</language>
 			<language type="eu">باسکي</language>
 			<language type="fa">فارسي</language>
-			<language type="fa" alt="proposed-x1001">پاړسۍ</language>
 			<language type="fi">فینلنډي</language>
-			<language type="fi" alt="proposed-x1001">فنلېندي</language>
 			<language type="fil">تګالوګ</language>
 			<language type="fo">فاروئې</language>
 			<language type="fr">فرانسوي</language>
-			<language type="fr" alt="proposed-x1001">فرانسيسي</language>
 			<language type="fy">فريزي</language>
 			<language type="ga">ائيرلېنډي</language>
 			<language type="gd">سکاټلېنډي ګېلک</language>
@@ -50,21 +43,17 @@
 			<language type="gn">ګوراني</language>
 			<language type="gu">ګجراتي</language>
 			<language type="he">عبري</language>
-			<language type="he" alt="proposed-x1001">عبراني</language>
 			<language type="hi">هندي</language>
 			<language type="hr">کروواتي</language>
 			<language type="hu">هنګري</language>
 			<language type="hy">ارمني</language>
-			<language type="hy" alt="proposed-x1001">ارمنيايي</language>
 			<language type="ia">انټرلنګوا</language>
 			<language type="id">انډونېشيايي</language>
 			<language type="ie">آسا نا جبة</language>
 			<language type="ine">هند و اروپایي</language>
 			<language type="is">أيسلېنډي</language>
 			<language type="it">ایټالوي</language>
-			<language type="it" alt="proposed-x1001">اتالوي</language>
 			<language type="ja">جاپانی</language>
-			<language type="ja" alt="proposed-x1001">جاپاني</language>
 			<language type="jv">جاوايې</language>
 			<language type="ka">جورجيائي</language>
 			<language type="km">کمبوډيايې يا د کمبوډيا</language>
@@ -73,7 +62,6 @@
 			<language type="ku">کردي</language>
 			<language type="ky">کرګيز</language>
 			<language type="la">لاتیني</language>
-			<language type="la" alt="proposed-x1001">لاطيني</language>
 			<language type="lo">لويتين</language>
 			<language type="lt">ليتواني</language>
 			<language type="lv">لېټواني</language>
@@ -83,7 +71,6 @@
 			<language type="mn">مغولي</language>
 			<language type="mr">مراټهي</language>
 			<language type="ms">ملایا</language>
-			<language type="ms" alt="proposed-x1001">مالايي</language>
 			<language type="mt">مالټايي</language>
 			<language type="ne">نېپالي</language>
 			<language type="nl">هالېنډي</language>
@@ -93,7 +80,6 @@
 			<language type="or">اوريا</language>
 			<language type="pa">پنجابي</language>
 			<language type="pl">پولنډي</language>
-			<language type="pl" alt="proposed-x1001">پولېنډي</language>
 			<language type="ps">پښتو</language>
 			<language type="pt">پورتګالي</language>
 			<language type="pt_BR">پرتگال (برازيل)</language>
@@ -101,7 +87,6 @@
 			<language type="ro">روماني</language>
 			<language type="ru">روسي</language>
 			<language type="sa">سنسکریټ</language>
-			<language type="sa" alt="proposed-x1001">سانسيکريت</language>
 			<language type="sd">سندهي</language>
 			<language type="sh">سرب-کروشيايي</language>
 			<language type="si">سينهالي</language>
@@ -113,7 +98,6 @@
 			<language type="st">سيسوتو</language>
 			<language type="su">سوډاني</language>
 			<language type="sv">سویډنی</language>
-			<language type="sv" alt="proposed-x1001">سوېدي</language>
 			<language type="sw">سواهېلي</language>
 			<language type="ta">تامل</language>
 			<language type="te">تېليګو</language>
@@ -121,7 +105,6 @@
 			<language type="th">تايلېنډي</language>
 			<language type="ti">تيګريني</language>
 			<language type="tk">ترکمني</language>
-			<language type="tk" alt="proposed-x1001">ترکمن</language>
 			<language type="tlh">کلينګاني</language>
 			<language type="tr">ترکي</language>
 			<language type="tt">تاتار</language>

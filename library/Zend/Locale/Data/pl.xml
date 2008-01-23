@@ -9,1069 +9,492 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="aa">afar</language>
-			<language type="aa" alt="proposed-x1001">Afar</language>
 			<language type="ab">abchaski</language>
-			<language type="ab" alt="proposed-x1001">Abchaski</language>
 			<language type="ace">aceh</language>
-			<language type="ace" alt="proposed-x1001">Aceh</language>
 			<language type="ach">aczoli</language>
-			<language type="ach" alt="proposed-x1001">Aczoli</language>
 			<language type="ada">adangme</language>
-			<language type="ada" alt="proposed-x1001">Adangme</language>
 			<language type="ady">adygejski</language>
-			<language type="ady" alt="proposed-x1001">Adygejski</language>
 			<language type="ae">awestyjski</language>
-			<language type="ae" alt="proposed-x1001">Awestyjski</language>
 			<language type="af">afrikaans</language>
-			<language type="af" alt="proposed-x1001">Afrikaans</language>
 			<language type="afa">afro-azjatycki (inne)</language>
-			<language type="afa" alt="proposed-x1001">Afro-azjatycki (pozostałe)</language>
-			<language type="afa" alt="proposed-x1002">Afro-azjatycki (inne)</language>
-			<language type="afa" alt="proposed-x1003">afro-azjatycki (pozostałe)</language>
 			<language type="afh">afrihili</language>
-			<language type="afh" alt="proposed-x1001">Arihili</language>
-			<language type="afh" alt="proposed-x1002">Afrihili</language>
 			<language type="ain">ajnu</language>
-			<language type="ain" alt="proposed-x1001">Ajnu</language>
 			<language type="ak">akan</language>
-			<language type="ak" alt="proposed-x1001">Akan</language>
 			<language type="akk">akadyjski</language>
-			<language type="akk" alt="proposed-x1001">Akadyjski</language>
 			<language type="ale">aleucki</language>
-			<language type="ale" alt="proposed-x1001">Aleucki</language>
 			<language type="alg">języki algonkin</language>
-			<language type="alg" alt="proposed-x1001">Języki Algonkin</language>
 			<language type="alt">południowoałtajski</language>
-			<language type="alt" alt="proposed-x1001">Wschodnioałtajskie</language>
-			<language type="alt" alt="proposed-x1002">wschodnioałtajskie</language>
 			<language type="am">amharski</language>
-			<language type="am" alt="proposed-x1001">Amharski</language>
 			<language type="an">aragoński</language>
-			<language type="an" alt="proposed-x1001">Aragoński</language>
 			<language type="ang">staroangielski (450-1100)</language>
-			<language type="ang" alt="proposed-x1001">Staroangielski (450-1100)</language>
 			<language type="anp">angika</language>
-			<language type="anp" alt="proposed-x1001">Angika</language>
 			<language type="apa">języki Apaczów</language>
-			<language type="apa" alt="proposed-x1001">Języki Apaczów</language>
 			<language type="ar">arabski</language>
-			<language type="ar" alt="proposed-x1001">Arabski</language>
 			<language type="arc">aramejski</language>
-			<language type="arc" alt="proposed-x1001">Aramejski</language>
 			<language type="arn">araukański</language>
-			<language type="arn" alt="proposed-x1001">Araukański</language>
 			<language type="arp">arapaho</language>
-			<language type="arp" alt="proposed-x1001">Arapaho</language>
 			<language type="art">sztuczny (inne)</language>
-			<language type="art" alt="proposed-x1001">Sztuczny (pozostałe)</language>
-			<language type="art" alt="proposed-x1002">sztuczny (pozostałe)</language>
-			<language type="art" alt="proposed-x1003">Sztuczny (inne)</language>
 			<language type="arw">arawak</language>
-			<language type="arw" alt="proposed-x1001">Arawak</language>
 			<language type="as">asamski</language>
-			<language type="as" alt="proposed-x1001">Asamski</language>
 			<language type="ast">asturyjski</language>
-			<language type="ast" alt="proposed-x1001">Asturyjski</language>
 			<language type="ath">języki Atapasków</language>
-			<language type="ath" alt="proposed-x1001">Języki Atapasków</language>
 			<language type="aus">języki australijskie</language>
-			<language type="aus" alt="proposed-x1001">Języki australijskie</language>
 			<language type="av">awarski</language>
-			<language type="av" alt="proposed-x1001">Awarski</language>
 			<language type="awa">awadhi</language>
-			<language type="awa" alt="proposed-x1001">Awadhi</language>
 			<language type="ay">ajmara</language>
-			<language type="ay" alt="proposed-x1001">Ajmara</language>
-			<language type="ay" alt="proposed-x1002">aymara</language>
 			<language type="az">azerski</language>
-			<language type="az" alt="proposed-x1001">Azerski</language>
 			<language type="ba">baszkirski</language>
-			<language type="ba" alt="proposed-x1001">bashkir</language>
-			<language type="ba" alt="proposed-x1002">Baszkirski</language>
 			<language type="bad">banda</language>
-			<language type="bad" alt="proposed-x1001">Banda</language>
 			<language type="bai">języki Bamileke</language>
-			<language type="bai" alt="proposed-x1001">Języki Bamileke</language>
 			<language type="bal">beludżi</language>
-			<language type="bal" alt="proposed-x1001">Beludżi</language>
 			<language type="ban">balijski</language>
-			<language type="ban" alt="proposed-x1001">Balijski</language>
 			<language type="bas">basa</language>
-			<language type="bas" alt="proposed-x1001">Basa</language>
 			<language type="bat">bałtycki (inne)</language>
-			<language type="bat" alt="proposed-x1001">Bałtycki (inne)</language>
-			<language type="bat" alt="proposed-x1002">bałtycki (pozostałe)</language>
-			<language type="bat" alt="proposed-x1003">Bałtycki (pozostałe)</language>
 			<language type="be">białoruski</language>
-			<language type="be" alt="proposed-x1001">Białoruski</language>
 			<language type="bej">bedża</language>
-			<language type="bej" alt="proposed-x1001">Bedża</language>
 			<language type="bem">bemba</language>
-			<language type="bem" alt="proposed-x1001">Bemba</language>
 			<language type="ber">berberski</language>
-			<language type="ber" alt="proposed-x1001">Berberski</language>
 			<language type="bg">bułgarski</language>
-			<language type="bg" alt="proposed-x1001">Bułgarski</language>
 			<language type="bh">biharski</language>
-			<language type="bh" alt="proposed-x1001">Biharski</language>
-			<language type="bh" alt="proposed-x1002">bihari</language>
 			<language type="bho">bhodźpuri</language>
-			<language type="bho" alt="proposed-x1001">Bhodźpuri</language>
 			<language type="bi">bislama</language>
-			<language type="bi" alt="proposed-x1001">Bislama</language>
 			<language type="bik">bikol</language>
-			<language type="bik" alt="proposed-x1001">Bikol</language>
 			<language type="bin">bini</language>
-			<language type="bin" alt="proposed-x1001">Bini</language>
 			<language type="bla">siksika</language>
-			<language type="bla" alt="proposed-x1001">Siksika</language>
 			<language type="bm">bambara</language>
-			<language type="bm" alt="proposed-x1001">Bambara</language>
 			<language type="bn">bengalski</language>
-			<language type="bn" alt="proposed-x1001">Bengalski</language>
 			<language type="bnt">bantu</language>
-			<language type="bnt" alt="proposed-x1001">Bantu</language>
 			<language type="bo">tybetański</language>
-			<language type="bo" alt="proposed-x1001">Tybetański</language>
 			<language type="br">bretoński</language>
 			<language type="bra">bradź</language>
-			<language type="bra" alt="proposed-x1001">Bradź</language>
 			<language type="bs">bośniacki</language>
-			<language type="bs" alt="proposed-x1001">Bośniacki</language>
 			<language type="btk">batak</language>
-			<language type="btk" alt="proposed-x1001">Batak</language>
 			<language type="bua">buriacki</language>
-			<language type="bua" alt="proposed-x1001">Buriacki</language>
 			<language type="bug">bugiński</language>
-			<language type="bug" alt="proposed-x1001">Bugiński</language>
 			<language type="byn">blin</language>
-			<language type="byn" alt="proposed-x1001">Blin</language>
 			<language type="ca">kataloński</language>
-			<language type="ca" alt="proposed-x1001">Kataloński</language>
 			<language type="cad">kaddo</language>
-			<language type="cad" alt="proposed-x1001">Kaddo</language>
 			<language type="cai">język Indian środkowoamerykańskich (inne)</language>
-			<language type="cai" alt="proposed-x1001">Język indian środkowoamerykańskich (pozostałe)</language>
-			<language type="cai" alt="proposed-x1002">Język Indian środkowoamerykańskich (inne)</language>
-			<language type="cai" alt="proposed-x1003">język indian środkowoamerykańskich (pozostałe)</language>
 			<language type="car">karibi</language>
-			<language type="car" alt="proposed-x1001">Karibi</language>
 			<language type="cau">kaukaski (inne)</language>
-			<language type="cau" alt="proposed-x1001">kaukaski (pozostałe)</language>
-			<language type="cau" alt="proposed-x1002">Kaukaski (pozostałe)</language>
-			<language type="cau" alt="proposed-x1003">Kaukaski (inne)</language>
 			<language type="cch">atsam</language>
-			<language type="cch" alt="proposed-x1001">Atsam</language>
 			<language type="ce">czeczeński</language>
-			<language type="ce" alt="proposed-x1001">Czeczeński</language>
 			<language type="ceb">cebuano</language>
-			<language type="ceb" alt="proposed-x1001">Cebuano</language>
 			<language type="cel">celtycki (inne)</language>
-			<language type="cel" alt="proposed-x1001">Celtycki (inne)</language>
-			<language type="cel" alt="proposed-x1002">Celtycki (pozostałe)</language>
-			<language type="cel" alt="proposed-x1003">celtycki (pozostałe)</language>
 			<language type="ch">chamorro</language>
-			<language type="ch" alt="proposed-x1001">Chamorro</language>
 			<language type="chb">czibcza</language>
-			<language type="chb" alt="proposed-x1001">Czibcza</language>
 			<language type="chg">czagatajski</language>
-			<language type="chg" alt="proposed-x1001">Cagatajski</language>
-			<language type="chg" alt="proposed-x1002">Czagatajski</language>
 			<language type="chk">truk</language>
-			<language type="chk" alt="proposed-x1001">Truk</language>
 			<language type="chm">maryjski</language>
-			<language type="chm" alt="proposed-x1001">Maryjski</language>
 			<language type="chn">żargon Chinook</language>
-			<language type="chn" alt="proposed-x1001">Żargon Chinook</language>
 			<language type="cho">choctaw</language>
-			<language type="cho" alt="proposed-x1001">Choctaw</language>
 			<language type="chp">chipewyan</language>
-			<language type="chp" alt="proposed-x1001">Chipewyan</language>
 			<language type="chr">czirokezki</language>
-			<language type="chr" alt="proposed-x1001">Czirokezki</language>
 			<language type="chy">język Czejenów</language>
-			<language type="chy" alt="proposed-x1001">Jzyk Czejenów</language>
 			<language type="cmc">czam</language>
-			<language type="cmc" alt="proposed-x1001">Czam</language>
 			<language type="co">korsykański</language>
-			<language type="co" alt="proposed-x1001">Korsykański</language>
 			<language type="cop">koptyjski</language>
-			<language type="cop" alt="proposed-x1001">Koptyjski</language>
 			<language type="cpe">kreolski i pidżynowy, angielskie (inne)</language>
-			<language type="cpe" alt="proposed-x1001">Kreolski i pidżynowy, Angielskie (pozostałe)</language>
-			<language type="cpe" alt="proposed-x1002">Kreolskie i Pidżynowe, Angielskie (inne)</language>
-			<language type="cpe" alt="proposed-x1003">Kreolski i pidżynowy, angielskie (inne)</language>
-			<language type="cpe" alt="proposed-x1004">kreolski i pidżynowy, angielskie (pozostałe)</language>
 			<language type="cpf">kreolski i pidżynowy, francuskie (inne)</language>
-			<language type="cpf" alt="proposed-x1001">kreolski i Pidżynowy, francuskie (pozostałe)</language>
-			<language type="cpf" alt="proposed-x1002">kreolski i pidżynowy, francuskie (pozostałe)</language>
-			<language type="cpf" alt="proposed-x1003">Kreolski i Pidżynowy, Francuskie (pozostałe)</language>
-			<language type="cpf" alt="proposed-x1004">Kreolski i Pidżynowy, francuskie (inne)</language>
 			<language type="cpp">kreolski i pidżynowy, portugalskie (inne)</language>
-			<language type="cpp" alt="proposed-x1001">kreolski i Pidżynowy, portugalskie (pozostałe)</language>
-			<language type="cpp" alt="proposed-x1002">Kreolski i Pidżynowy, Portugalskie (pozostałe)</language>
-			<language type="cpp" alt="proposed-x1003">Kreolski i Pidżynowy, portugalskie (inne)</language>
 			<language type="cr">kri</language>
-			<language type="cr" alt="proposed-x1001">Kri</language>
 			<language type="crh">karaimski turecki; karaimski tatarski</language>
-			<language type="crh" alt="proposed-x1001">Karaimski Turecki; Karaimski Tatarski</language>
-			<language type="crh" alt="proposed-x1002">karaimski Turecki; Karaimski Tatarski</language>
 			<language type="crp">kreolski i pidżynowy (inne)</language>
-			<language type="crp" alt="proposed-x1001">Kreolski i pidżynowy (inne)</language>
-			<language type="crp" alt="proposed-x1002">kreolski i pidżynowy (pozostałe)</language>
-			<language type="crp" alt="proposed-x1003">Kreolskie i Pidżynowe (inne)</language>
-			<language type="crp" alt="proposed-x1004">Kreolski i Pidżynowy (pozostałe)</language>
 			<language type="cs">czeski</language>
-			<language type="cs" alt="proposed-x1001">Czeski</language>
 			<language type="csb">kaszubski</language>
-			<language type="csb" alt="proposed-x1001">Kaszubski</language>
 			<language type="cu">staro-cerkiewno-słowiański</language>
-			<language type="cu" alt="proposed-x1001">Staro-cerkiewno-słowiański</language>
 			<language type="cus">kuszycki (inne)</language>
-			<language type="cus" alt="proposed-x1001">Kuszycki (pozostałe)</language>
-			<language type="cus" alt="proposed-x1002">Kuszycki (inne)</language>
-			<language type="cus" alt="proposed-x1003">kuszycki (pozostałe)</language>
 			<language type="cv">czuwaski</language>
-			<language type="cv" alt="proposed-x1001">Czuwaski</language>
 			<language type="cy">walijski</language>
-			<language type="cy" alt="proposed-x1001">Walijski</language>
 			<language type="da">duński</language>
-			<language type="da" alt="proposed-x1001">Duński</language>
 			<language type="dak">dakota</language>
-			<language type="dak" alt="proposed-x1001">Dakota</language>
 			<language type="dar">dargwijski</language>
-			<language type="dar" alt="proposed-x1001">Dargwijski</language>
 			<language type="day">dajak</language>
-			<language type="day" alt="proposed-x1001">Dajak</language>
 			<language type="de">niemiecki</language>
-			<language type="de" alt="proposed-x1001">Niemiecki</language>
-			<language type="de_AT" alt="proposed-x1001">Niemiecki (Austria)</language>
-			<language type="de_CH" alt="proposed-x1001">Niemiecki (Szwajcaria)</language>
 			<language type="del">delaware</language>
-			<language type="del" alt="proposed-x1001">Delaware</language>
 			<language type="dgr">dogrib</language>
-			<language type="dgr" alt="proposed-x1001">Dogrib</language>
 			<language type="din">dinka</language>
-			<language type="din" alt="proposed-x1001">Dinka</language>
 			<language type="doi">dogri</language>
-			<language type="doi" alt="proposed-x1001">Dogri</language>
 			<language type="dra">drawidyjski (inne)</language>
-			<language type="dra" alt="proposed-x1001">Drawidyjski (inne)</language>
-			<language type="dra" alt="proposed-x1002">drawidyjski (pozostałe)</language>
-			<language type="dra" alt="proposed-x1003">Drawidyjski (pozostałe)</language>
 			<language type="dsb">dolnołużycki</language>
-			<language type="dsb" alt="proposed-x1001">Dolnołużycki</language>
 			<language type="dua">duala</language>
-			<language type="dua" alt="proposed-x1001">Duala</language>
 			<language type="dum">niderlandzki, średniowiecze (ok. 1050-1350)</language>
-			<language type="dum" alt="proposed-x1001">Niderlandzki, średniowiecze (ok. 1050-1350)</language>
 			<language type="dv">malediwski</language>
-			<language type="dv" alt="proposed-x1001">Malediwski</language>
 			<language type="dyu">dyula</language>
-			<language type="dyu" alt="proposed-x1001">Dyula</language>
 			<language type="dz">dzongkha</language>
-			<language type="dz" alt="proposed-x1001">Dzongkha</language>
-			<language type="dz" alt="proposed-x1002">butański</language>
 			<language type="ee">ewe</language>
-			<language type="ee" alt="proposed-x1001">Ewe</language>
 			<language type="efi">efik</language>
-			<language type="efi" alt="proposed-x1001">Efik</language>
 			<language type="egy">egipski (starożytny)</language>
-			<language type="egy" alt="proposed-x1001">Egipski (starożytny)</language>
 			<language type="eka">ekajuk</language>
-			<language type="eka" alt="proposed-x1001">Ekajuk</language>
 			<language type="el">grecki</language>
-			<language type="el" alt="proposed-x1001">Grecki</language>
 			<language type="elx">elamicki</language>
-			<language type="elx" alt="proposed-x1001">Elamicki</language>
 			<language type="en">angielski</language>
-			<language type="en" alt="proposed-x1001">Angielski</language>
-			<language type="en_CA" alt="proposed-x1001">Angielski (Kanada)</language>
-			<language type="en_GB" alt="proposed-x1001">angielski (Wlk. Brytania)</language>
-			<language type="en_GB" alt="proposed-x1002">Angielski (Wielka Brytania)</language>
 			<language type="en_US">angielski (USA)</language>
-			<language type="en_US" alt="proposed-x1002">Angielski (Stany Zjednoczone)</language>
 			<language type="enm">średnioangielski</language>
-			<language type="enm" alt="proposed-x1001">Średnioangielski</language>
 			<language type="eo">esperanto</language>
-			<language type="eo" alt="proposed-x1001">Esperanto</language>
 			<language type="es">hiszpański</language>
-			<language type="es" alt="proposed-x1001">Hiszpański</language>
-			<language type="es_419" alt="proposed-x1001">Hiszpański (Ameryka Łacińska i Karaiby)</language>
-			<language type="es_ES" alt="proposed-x1001">Hiszpański (Hiszpania)</language>
 			<language type="et">estoński</language>
-			<language type="et" alt="proposed-x1001">Estoński</language>
 			<language type="eu">baskijski</language>
-			<language type="eu" alt="proposed-x1001">Baskijski</language>
 			<language type="ewo">ewondo</language>
-			<language type="ewo" alt="proposed-x1001">Ewondo</language>
 			<language type="fa">perski</language>
-			<language type="fa" alt="proposed-x1001">Perski</language>
 			<language type="fan">fang</language>
-			<language type="fan" alt="proposed-x1001">Fang</language>
 			<language type="fat">fanti</language>
-			<language type="fat" alt="proposed-x1001">Fanti</language>
 			<language type="ff">fulani</language>
-			<language type="ff" alt="proposed-x1001">Fulani</language>
 			<language type="fi">fiński</language>
-			<language type="fi" alt="proposed-x1001">Fiński</language>
 			<language type="fil">filipiński</language>
-			<language type="fil" alt="proposed-x1001">filipino</language>
-			<language type="fil" alt="proposed-x1002">Filipino</language>
 			<language type="fiu">ugrofiński (inne)</language>
-			<language type="fiu" alt="proposed-x1001">ugrofiński (pozostałe)</language>
-			<language type="fiu" alt="proposed-x1002">Ugrofiński (inne)</language>
-			<language type="fiu" alt="proposed-x1003">Ugrofiński (pozostałe)</language>
 			<language type="fj">fidżijski</language>
-			<language type="fj" alt="proposed-x1001">Fidżijski</language>
 			<language type="fo">farerski</language>
-			<language type="fo" alt="proposed-x1001">Frerski</language>
-			<language type="fo" alt="proposed-x1002">Farerski</language>
-			<language type="fo" alt="proposed-x1003">farski</language>
 			<language type="fon">fon</language>
-			<language type="fon" alt="proposed-x1001">Fon</language>
 			<language type="fr">francuski</language>
-			<language type="fr" alt="proposed-x1001">Francuski</language>
-			<language type="fr_CA" alt="proposed-x1001">Francuski (Kanada)</language>
-			<language type="fr_CH" alt="proposed-x1001">Francuski (Szwajcaria)</language>
 			<language type="frm">średniofrancuski</language>
-			<language type="frm" alt="proposed-x1001">Średniofrancuski</language>
 			<language type="fro">starofrancuski</language>
-			<language type="fro" alt="proposed-x1001">Starofrancuski</language>
 			<language type="frr">fryzyjski północny</language>
-			<language type="frr" alt="proposed-x1001">Fryzyjski północny</language>
 			<language type="frs">fryzyjski wschodni</language>
-			<language type="frs" alt="proposed-x1001">Fyzyjski wschodni</language>
 			<language type="fur">friulijski</language>
-			<language type="fur" alt="proposed-x1001">Friulijski</language>
 			<language type="fy">fryzyjski</language>
 			<language type="ga">irlandzki</language>
-			<language type="ga" alt="proposed-x1001">gaelicki</language>
-			<language type="ga" alt="proposed-x1002">Irlandzki</language>
 			<language type="gaa">ga</language>
-			<language type="gaa" alt="proposed-x1001">Ga</language>
 			<language type="gay">gayo</language>
-			<language type="gay" alt="proposed-x1001">Gayo</language>
 			<language type="gba">gbaya</language>
-			<language type="gba" alt="proposed-x1001">Gbaya</language>
 			<language type="gd">szkocki gaelicki</language>
-			<language type="gd" alt="proposed-x1001">Szkocki Gaelicki</language>
 			<language type="gem">germański (inne)</language>
-			<language type="gem" alt="proposed-x1001">germański (pozostałe)</language>
-			<language type="gem" alt="proposed-x1002">Germański (inne)</language>
-			<language type="gem" alt="proposed-x1003">Germański (pozostałe)</language>
 			<language type="gez">gyyz</language>
-			<language type="gez" alt="proposed-x1001">Gyyz</language>
 			<language type="gil">gilbertański</language>
-			<language type="gil" alt="proposed-x1001">Gilbertański</language>
 			<language type="gl">galisyjski</language>
-			<language type="gl" alt="proposed-x1001">galicyjski</language>
-			<language type="gl" alt="proposed-x1002">Galisyjski</language>
 			<language type="gmh">średnio-wysoko-niemiecki</language>
-			<language type="gmh" alt="proposed-x1001">Średnio-wysoko-niemiecki</language>
 			<language type="gn">guarani</language>
-			<language type="gn" alt="proposed-x1001">Guarani</language>
 			<language type="goh">staro-wysoko-niemiecki</language>
-			<language type="goh" alt="proposed-x1001">Staro-wysoko-niemiecki</language>
 			<language type="gon">gondi</language>
-			<language type="gon" alt="proposed-x1001">Gondi</language>
 			<language type="gor">gorontalo</language>
-			<language type="gor" alt="proposed-x1001">Gorontalo</language>
 			<language type="got">gocki</language>
-			<language type="got" alt="proposed-x1001">Gocki</language>
 			<language type="grb">grebo</language>
-			<language type="grb" alt="proposed-x1001">Grebo</language>
 			<language type="grc">starogrecki</language>
-			<language type="grc" alt="proposed-x1001">Starogrecki</language>
 			<language type="gu">gudźaracki</language>
-			<language type="gu" alt="proposed-x1001">gudżarati</language>
-			<language type="gu" alt="proposed-x1002">Gudźaracki</language>
 			<language type="gv">manx</language>
-			<language type="gv" alt="proposed-x1001">Manx</language>
 			<language type="gwi">gwichʼin</language>
-			<language type="gwi" alt="proposed-x1001">Gwichʼin</language>
 			<language type="ha">hausa</language>
-			<language type="ha" alt="proposed-x1001">Hausa</language>
 			<language type="hai">haida</language>
-			<language type="hai" alt="proposed-x1001">Haida</language>
 			<language type="haw">hawajski</language>
-			<language type="haw" alt="proposed-x1001">Hawajski</language>
 			<language type="he">hebrajski</language>
-			<language type="he" alt="proposed-x1001">Hebrajski</language>
 			<language type="hi">hindi</language>
-			<language type="hi" alt="proposed-x1001">Hindi</language>
 			<language type="hil">hiligajnon</language>
-			<language type="hil" alt="proposed-x1001">Hiligajnon</language>
 			<language type="him">himachali</language>
-			<language type="him" alt="proposed-x1001">Himachali</language>
 			<language type="hit">hetycki</language>
-			<language type="hit" alt="proposed-x1001">Hetycki</language>
 			<language type="hmn">hmongijskie</language>
-			<language type="hmn" alt="proposed-x1001">Hmongijskie</language>
 			<language type="ho">hiri motu</language>
-			<language type="ho" alt="proposed-x1001">Hiri Motu</language>
 			<language type="hr">chorwacki</language>
-			<language type="hr" alt="proposed-x1001">Chorwacki</language>
 			<language type="hsb">górnołużycki</language>
-			<language type="hsb" alt="proposed-x1001">Górnołużycki</language>
 			<language type="ht">haitański</language>
-			<language type="ht" alt="proposed-x1001">Haitański</language>
 			<language type="hu">węgierski</language>
-			<language type="hu" alt="proposed-x1001">Węgierski</language>
 			<language type="hup">hupa</language>
-			<language type="hup" alt="proposed-x1001">Hupa</language>
 			<language type="hy">ormiański</language>
-			<language type="hy" alt="proposed-x1001">Ormiański</language>
 			<language type="hz">herero</language>
-			<language type="hz" alt="proposed-x1001">Herero</language>
 			<language type="ia">interlingua</language>
-			<language type="ia" alt="proposed-x1001">Interlingua</language>
 			<language type="iba">ibanag</language>
-			<language type="iba" alt="proposed-x1001">Ibanag</language>
 			<language type="id">indonezyjski</language>
-			<language type="id" alt="proposed-x1001">Indonezyjski</language>
 			<language type="ie">interlingue</language>
-			<language type="ie" alt="proposed-x1001">Interlingue</language>
-			<language type="ie" alt="proposed-x1002">interlingua</language>
 			<language type="ig">igbo</language>
-			<language type="ig" alt="proposed-x1001">Igbo</language>
 			<language type="ii">syczuański</language>
-			<language type="ii" alt="proposed-x1001">Syczuański</language>
 			<language type="ijo">ijo</language>
-			<language type="ijo" alt="proposed-x1001">Ijo</language>
 			<language type="ik">inupiak</language>
-			<language type="ik" alt="proposed-x1001">Inupiak</language>
 			<language type="ilo">ilokano</language>
-			<language type="ilo" alt="proposed-x1001">Ilokano</language>
 			<language type="inc">indoaryjskie (pozostałe)</language>
-			<language type="inc" alt="proposed-x1001">Indoaryjskie (pozostałe)</language>
 			<language type="ine">indoeuropejskie (pozostałe)</language>
-			<language type="ine" alt="proposed-x1001">Indoeuropejskie (pozostałe)</language>
-			<language type="ine" alt="proposed-x1002">Indoeuropejskie (inne)</language>
 			<language type="inh">inguski</language>
-			<language type="inh" alt="proposed-x1001">Inguski</language>
 			<language type="io">ido</language>
-			<language type="io" alt="proposed-x1001">Ido</language>
 			<language type="ira">irański</language>
-			<language type="ira" alt="proposed-x1001">Irański (pozostałe)</language>
 			<language type="iro">języki Irokezów</language>
-			<language type="iro" alt="proposed-x1001">Języki Irokezów</language>
 			<language type="is">islandzki</language>
-			<language type="is" alt="proposed-x1001">Islandzki</language>
 			<language type="it">włoski</language>
-			<language type="it" alt="proposed-x1001">Włoski</language>
 			<language type="iu">inuktitut</language>
-			<language type="iu" alt="proposed-x1001">Inuktitut</language>
 			<language type="ja">japoński</language>
-			<language type="ja" alt="proposed-x1001">Japoński</language>
 			<language type="jbo">lojban</language>
-			<language type="jbo" alt="proposed-x1001">Lojban</language>
 			<language type="jpr">judeoperski</language>
-			<language type="jpr" alt="proposed-x1001">Judeoperski</language>
 			<language type="jrb">judeoarabski</language>
-			<language type="jrb" alt="proposed-x1001">Judeoarabski</language>
 			<language type="jv">jawajski</language>
-			<language type="jv" alt="proposed-x1001">Jawajski</language>
 			<language type="ka">gruziński</language>
-			<language type="ka" alt="proposed-x1001">Gruziński</language>
 			<language type="kaa">karakałpacki</language>
-			<language type="kaa" alt="proposed-x1001">Karakałpacki</language>
 			<language type="kab">kabylski</language>
-			<language type="kab" alt="proposed-x1001">Kabylski</language>
 			<language type="kac">kaczin</language>
-			<language type="kac" alt="proposed-x1001">Kaczin</language>
 			<language type="kaj">jju</language>
-			<language type="kaj" alt="proposed-x1001">Jju</language>
 			<language type="kam">kamba</language>
-			<language type="kam" alt="proposed-x1001">Kamba</language>
 			<language type="kar">kareński</language>
-			<language type="kar" alt="proposed-x1001">Kareński</language>
 			<language type="kaw">kawi</language>
-			<language type="kaw" alt="proposed-x1001">Kawi</language>
 			<language type="kbd">kabardyjski</language>
-			<language type="kbd" alt="proposed-x1001">Kabardyjski</language>
 			<language type="kcg">tyap</language>
 			<language type="kfo">koro</language>
-			<language type="kfo" alt="proposed-x1001">Koro</language>
 			<language type="kg">kongo</language>
-			<language type="kg" alt="proposed-x1001">Kongo</language>
 			<language type="kha">khasi</language>
-			<language type="kha" alt="proposed-x1001">Khasi</language>
 			<language type="khi">khoisan (inne)</language>
-			<language type="khi" alt="proposed-x1001">khoisan (pozostałe)</language>
-			<language type="khi" alt="proposed-x1002">Khoisan (pozostałe)</language>
-			<language type="khi" alt="proposed-x1003">Khoisan (inne)</language>
 			<language type="kho">chotański</language>
-			<language type="kho" alt="proposed-x1001">Chotański</language>
 			<language type="ki">kikuju</language>
-			<language type="ki" alt="proposed-x1001">Kikuju</language>
 			<language type="kj">kwanyama</language>
-			<language type="kj" alt="proposed-x1001">Kuanyama</language>
 			<language type="kk">kazachski</language>
-			<language type="kk" alt="proposed-x1001">Kazaski</language>
-			<language type="kk" alt="proposed-x1002">kazaski</language>
 			<language type="kl">grenlandzki</language>
-			<language type="kl" alt="proposed-x1001">Kalaallisut</language>
-			<language type="kl" alt="proposed-x1002">kalaallisut</language>
 			<language type="km">khmerski</language>
-			<language type="km" alt="proposed-x1001">Khmerski</language>
 			<language type="kmb">kimbundu</language>
-			<language type="kmb" alt="proposed-x1001">Kimbundu</language>
 			<language type="kn">kannada</language>
-			<language type="kn" alt="proposed-x1001">Kannada</language>
 			<language type="ko">koreański</language>
-			<language type="ko" alt="proposed-x1001">Koreański</language>
 			<language type="kok">konkani</language>
-			<language type="kok" alt="proposed-x1001">Konkani</language>
 			<language type="kos">kosrae</language>
-			<language type="kos" alt="proposed-x1001">Kosrae</language>
 			<language type="kpe">kpelle</language>
-			<language type="kpe" alt="proposed-x1001">Kpelle</language>
 			<language type="kr">kanuri</language>
-			<language type="kr" alt="proposed-x1001">Kanuri</language>
 			<language type="krc">karaczajsko-bałkarski</language>
-			<language type="krc" alt="proposed-x1001">Karaczajsko-bałkarski</language>
 			<language type="krl">karelski</language>
-			<language type="krl" alt="proposed-x1001">Karelski</language>
 			<language type="kro">kru</language>
-			<language type="kro" alt="proposed-x1001">Kru</language>
 			<language type="kru">kurukh</language>
-			<language type="kru" alt="proposed-x1001">Kurukh</language>
 			<language type="ks">kaszmirski</language>
-			<language type="ks" alt="proposed-x1001">Kaszmirski</language>
 			<language type="ku">kurdyjski</language>
-			<language type="ku" alt="proposed-x1001">Kurdyjski</language>
 			<language type="kum">kumycki</language>
-			<language type="kum" alt="proposed-x1001">Kumycki</language>
 			<language type="kut">kutenai</language>
-			<language type="kut" alt="proposed-x1001">Kutenai</language>
 			<language type="kv">komi</language>
-			<language type="kv" alt="proposed-x1001">Komi</language>
 			<language type="kw">kornijski</language>
-			<language type="kw" alt="proposed-x1001">Kornijski</language>
 			<language type="ky">kirgiski</language>
-			<language type="ky" alt="proposed-x1001">kirgijski</language>
-			<language type="ky" alt="proposed-x1002">Kirgiski</language>
 			<language type="la">łaciński</language>
-			<language type="la" alt="proposed-x1001">Łaciński</language>
-			<language type="la" alt="proposed-x1002">łacina</language>
 			<language type="lad">ladyński</language>
-			<language type="lad" alt="proposed-x1001">Ladyński</language>
 			<language type="lah">lahnda</language>
-			<language type="lah" alt="proposed-x1001">Lahnda</language>
 			<language type="lam">lamba</language>
-			<language type="lam" alt="proposed-x1001">Lamba</language>
 			<language type="lb">luksemburski</language>
-			<language type="lb" alt="proposed-x1001">Luksemburski</language>
 			<language type="lez">lezgijski</language>
-			<language type="lez" alt="proposed-x1001">Lezgijski</language>
 			<language type="lg">ganda</language>
-			<language type="lg" alt="proposed-x1001">Ganda</language>
 			<language type="li">limburgijski</language>
-			<language type="li" alt="proposed-x1001">Limburgijski</language>
 			<language type="ln">lingala</language>
-			<language type="ln" alt="proposed-x1001">Lingala</language>
 			<language type="lo">laotański</language>
-			<language type="lo" alt="proposed-x1001">Laotański</language>
 			<language type="lol">mongo</language>
-			<language type="lol" alt="proposed-x1001">Mongo</language>
 			<language type="loz">lozi</language>
-			<language type="loz" alt="proposed-x1001">Lozi</language>
 			<language type="lt">litewski</language>
-			<language type="lt" alt="proposed-x1001">Litewski</language>
 			<language type="lu">luba-katanga</language>
-			<language type="lu" alt="proposed-x1001">Luba-Katanga</language>
 			<language type="lua">luba-lulua</language>
-			<language type="lua" alt="proposed-x1001">Luba-Lulua</language>
 			<language type="lui">luiseno</language>
-			<language type="lui" alt="proposed-x1001">Luiseno</language>
 			<language type="lun">lunda</language>
-			<language type="lun" alt="proposed-x1001">Lunda</language>
 			<language type="luo">luo</language>
-			<language type="luo" alt="proposed-x1001">Luo</language>
 			<language type="lus">lushai</language>
-			<language type="lus" alt="proposed-x1001">Lushai</language>
 			<language type="lv">łotewski</language>
-			<language type="lv" alt="proposed-x1001">Łotewski</language>
 			<language type="mad">madurajski</language>
-			<language type="mad" alt="proposed-x1001">Madurajski</language>
 			<language type="mag">magahi</language>
-			<language type="mag" alt="proposed-x1001">Magahi</language>
 			<language type="mai">maithili</language>
-			<language type="mai" alt="proposed-x1001">Maithili</language>
 			<language type="mak">makasar</language>
-			<language type="mak" alt="proposed-x1001">Makasar</language>
 			<language type="man">mandingo</language>
-			<language type="man" alt="proposed-x1001">Mandingo</language>
 			<language type="map">austronezyjski</language>
-			<language type="map" alt="proposed-x1001">Austronezyjski</language>
 			<language type="mas">masajski</language>
-			<language type="mas" alt="proposed-x1001">Masajski</language>
 			<language type="mdf">moksha</language>
-			<language type="mdf" alt="proposed-x1001">Moksha</language>
 			<language type="mdr">mandar</language>
-			<language type="mdr" alt="proposed-x1001">Mandar</language>
 			<language type="men">mende</language>
-			<language type="men" alt="proposed-x1001">Mende</language>
 			<language type="mg">malgaski</language>
-			<language type="mg" alt="proposed-x1001">Malgaski</language>
 			<language type="mga">średnioirlandzki</language>
-			<language type="mga" alt="proposed-x1001">Średnioirlandzki</language>
 			<language type="mh">marshall</language>
-			<language type="mh" alt="proposed-x1001">Marshall</language>
 			<language type="mi">maoryjski</language>
-			<language type="mi" alt="proposed-x1001">Maoryjski</language>
 			<language type="mic">micmac</language>
-			<language type="mic" alt="proposed-x1001">Micmac</language>
 			<language type="min">minangkabu</language>
-			<language type="min" alt="proposed-x1001">Minangkabu</language>
 			<language type="mis">języki różne</language>
-			<language type="mis" alt="proposed-x1001">Języki różne</language>
 			<language type="mk">macedoński</language>
-			<language type="mk" alt="proposed-x1001">Macedoński</language>
 			<language type="mkh">mon-khmer (pozostałe)</language>
-			<language type="mkh" alt="proposed-x1001">Mon-khmer (inne)</language>
-			<language type="mkh" alt="proposed-x1002">Mon-khmer (pozostałe)</language>
 			<language type="ml">malajalam</language>
-			<language type="ml" alt="proposed-x1001">Malajalam</language>
 			<language type="mn">mongolski</language>
-			<language type="mn" alt="proposed-x1001">Mongolski</language>
 			<language type="mnc">manchu</language>
-			<language type="mnc" alt="proposed-x1001">Manchu</language>
 			<language type="mni">manipuryjski</language>
-			<language type="mni" alt="proposed-x1001">Manipuryjski</language>
 			<language type="mno">języki Manobo</language>
-			<language type="mno" alt="proposed-x1001">Języki Manobo</language>
 			<language type="mo">mołdawski</language>
-			<language type="mo" alt="proposed-x1001">Mołdawski</language>
 			<language type="moh">mohawk</language>
-			<language type="moh" alt="proposed-x1001">Mohawk</language>
 			<language type="mos">mossi</language>
-			<language type="mos" alt="proposed-x1001">Mossi</language>
 			<language type="mr">marathi</language>
-			<language type="mr" alt="proposed-x1001">Marathijski</language>
-			<language type="mr" alt="proposed-x1002">marathijski</language>
 			<language type="ms">malajski</language>
-			<language type="ms" alt="proposed-x1001">Malajski</language>
 			<language type="mt">maltański</language>
-			<language type="mt" alt="proposed-x1001">Maltański</language>
 			<language type="mul">wiele języków</language>
-			<language type="mul" alt="proposed-x1001">Wiele języków</language>
 			<language type="mun">języki mundajskie</language>
-			<language type="mun" alt="proposed-x1001">Języki mundajskie</language>
 			<language type="mus">creek</language>
-			<language type="mus" alt="proposed-x1001">Creek</language>
 			<language type="mwl">mirandese</language>
-			<language type="mwl" alt="proposed-x1001">Mirandese</language>
 			<language type="mwr">marwari</language>
-			<language type="mwr" alt="proposed-x1001">Marwari</language>
 			<language type="my">birmański</language>
-			<language type="my" alt="proposed-x1001">Birmański</language>
 			<language type="myn">języki Maja</language>
-			<language type="myn" alt="proposed-x1001">języki maja</language>
-			<language type="myn" alt="proposed-x1002">Języki Maja</language>
 			<language type="myv">erzya</language>
-			<language type="myv" alt="proposed-x1001">Erzya</language>
 			<language type="na">nauru</language>
-			<language type="na" alt="proposed-x1001">Nauru</language>
 			<language type="nah">nahuatl</language>
-			<language type="nah" alt="proposed-x1001">Nahuatl</language>
 			<language type="nai">języki Indian północnoamerykańskich (pozostałe)</language>
-			<language type="nai" alt="proposed-x1001">Języki Indian północnoamerykańskich (pozostałe)</language>
-			<language type="nai" alt="proposed-x1002">języki indian północnoamerykańskich (pozostałe)</language>
-			<language type="nai" alt="proposed-x1003">Języki Indian północnoamerykańskich (inne)</language>
 			<language type="nap">neapolitański</language>
-			<language type="nap" alt="proposed-x1001">Neapolitański</language>
 			<language type="nb">norweski Bokmål</language>
-			<language type="nb" alt="proposed-x1001">Norweski Bokmål</language>
 			<language type="nd">ndebele północny</language>
-			<language type="nd" alt="proposed-x1001">Ndebele północny</language>
 			<language type="nds">dolnoniemiecki, dolnosaksoński</language>
-			<language type="nds" alt="proposed-x1001">dolnoniemiecki</language>
-			<language type="nds" alt="proposed-x1002">Dolnoniemiecki</language>
 			<language type="ne">nepalski</language>
-			<language type="ne" alt="proposed-x1001">Nepalski</language>
 			<language type="new">newarski</language>
-			<language type="new" alt="proposed-x1001">Newarski</language>
 			<language type="ng">ndonga</language>
-			<language type="ng" alt="proposed-x1001">Ndonga</language>
 			<language type="nia">nias</language>
-			<language type="nia" alt="proposed-x1001">Nias</language>
 			<language type="nic">niger-kordofańskie (pozostałe)</language>
-			<language type="nic" alt="proposed-x1001">Niger-kordofańskie (pozostałe)</language>
-			<language type="nic" alt="proposed-x1002">Niger-kordofańskie (inne)</language>
 			<language type="niu">niue</language>
-			<language type="niu" alt="proposed-x1001">Niue</language>
 			<language type="nl">niderlandzki</language>
-			<language type="nl" alt="proposed-x1001">Niderlandzki</language>
-			<language type="nl" alt="proposed-x1002">holenderski</language>
-			<language type="nl_BE" alt="proposed-x1001">Niderlandzki (Belgia)</language>
 			<language type="nn">norweski Nynorsk</language>
-			<language type="nn" alt="proposed-x1001">norweski (Nynorsk)</language>
-			<language type="nn" alt="proposed-x1002">Norweski Nynorsk</language>
 			<language type="no">norweski</language>
-			<language type="no" alt="proposed-x1001">Norweski</language>
 			<language type="nog">nogajski</language>
-			<language type="nog" alt="proposed-x1001">Nogajski</language>
 			<language type="non">staronordyjski</language>
-			<language type="non" alt="proposed-x1001">non</language>
-			<language type="non" alt="proposed-x1002">Staronordyjski</language>
 			<language type="nqo">n’ko</language>
-			<language type="nqo" alt="proposed-x1001">N’Ko</language>
 			<language type="nr">ndebele południowy</language>
-			<language type="nr" alt="proposed-x1001">Ndebele południowy</language>
 			<language type="nso">sotho północny</language>
-			<language type="nso" alt="proposed-x1001">Sotho północny</language>
 			<language type="nub">języki nubijskie</language>
-			<language type="nub" alt="proposed-x1001">Języki nubijskie</language>
 			<language type="nv">nawaho</language>
-			<language type="nv" alt="proposed-x1001">Nnawaho</language>
 			<language type="nwc">newarski klasyczny</language>
-			<language type="nwc" alt="proposed-x1001">Newarski klasyczny</language>
 			<language type="ny">njandża</language>
-			<language type="ny" alt="proposed-x1001">Njandża</language>
 			<language type="nym">niamwezi</language>
-			<language type="nym" alt="proposed-x1001">Niamwezi</language>
 			<language type="nyn">nyankole</language>
-			<language type="nyn" alt="proposed-x1001">Nyankole</language>
 			<language type="nyo">nyoro</language>
-			<language type="nyo" alt="proposed-x1001">Nyoro</language>
 			<language type="nzi">nzema</language>
-			<language type="nzi" alt="proposed-x1001">Nzema</language>
 			<language type="oc">prowansalski</language>
-			<language type="oc" alt="proposed-x1001">oksytański</language>
-			<language type="oc" alt="proposed-x1002">Oksytański</language>
-			<language type="oc" alt="proposed-x1003">oksytański (po 1500); prowansalski</language>
 			<language type="oj">odżibwa</language>
-			<language type="oj" alt="proposed-x1001">Odżibwa</language>
 			<language type="om">oromski</language>
-			<language type="om" alt="proposed-x1001">oromo</language>
-			<language type="om" alt="proposed-x1002">Oromo</language>
 			<language type="or">orija</language>
-			<language type="or" alt="proposed-x1001">oriya</language>
-			<language type="or" alt="proposed-x1002">Orija</language>
 			<language type="os">osetyjski</language>
-			<language type="os" alt="proposed-x1001">Osetyjski</language>
 			<language type="osa">osage</language>
-			<language type="osa" alt="proposed-x1001">Osage</language>
 			<language type="ota">osmańsko-turecki</language>
-			<language type="ota" alt="proposed-x1001">Osmańsko-turecki</language>
 			<language type="oto">języki Otomi</language>
-			<language type="oto" alt="proposed-x1001">Języki Otomi</language>
 			<language type="pa">pendżabski</language>
-			<language type="pa" alt="proposed-x1001">Pendżabski</language>
 			<language type="paa">papuaski (inne)</language>
-			<language type="paa" alt="proposed-x1001">Papuaski (pozostałe)</language>
-			<language type="paa" alt="proposed-x1002">Papuaski (inne)</language>
-			<language type="paa" alt="proposed-x1003">papuaski (pozostałe)</language>
 			<language type="pag">pangasino</language>
-			<language type="pag" alt="proposed-x1001">Pangasino</language>
 			<language type="pal">pahlavi</language>
-			<language type="pal" alt="proposed-x1001">Pahlavi</language>
 			<language type="pam">pampango</language>
-			<language type="pam" alt="proposed-x1001">Pampango</language>
 			<language type="pap">papiamento</language>
-			<language type="pap" alt="proposed-x1001">Papiamento</language>
 			<language type="pau">palau</language>
-			<language type="pau" alt="proposed-x1001">Palau</language>
 			<language type="peo">staroperski</language>
-			<language type="peo" alt="proposed-x1001">Staroperski</language>
 			<language type="phi">filipińskie (pozostałe)</language>
-			<language type="phi" alt="proposed-x1001">Filipińskie (pozostałe)</language>
 			<language type="phn">fenicki</language>
-			<language type="phn" alt="proposed-x1001">Fenicki</language>
 			<language type="pi">palijski</language>
-			<language type="pi" alt="proposed-x1001">Palijski</language>
 			<language type="pl">polski</language>
-			<language type="pl" alt="proposed-x1001">Polski</language>
 			<language type="pon">ponpejski</language>
-			<language type="pon" alt="proposed-x1001">Ponpejski</language>
-			<language type="pon" alt="proposed-x1002">pon</language>
 			<language type="pra">prakryty</language>
-			<language type="pra" alt="proposed-x1001">Prakryty</language>
 			<language type="pro">staroprowansalski</language>
-			<language type="pro" alt="proposed-x1001">Staroprowansalski</language>
 			<language type="ps">paszto</language>
-			<language type="ps" alt="proposed-x1001">Paszto</language>
-			<language type="ps" alt="proposed-x1002">pastho</language>
 			<language type="pt">portugalski</language>
-			<language type="pt" alt="proposed-x1001">Portugalski</language>
-			<language type="pt_BR" alt="proposed-x1001">Portugalski (Brazylia)</language>
-			<language type="pt_BR" alt="proposed-x1002">Portugalski (Brazylia)</language>
-			<language type="pt_PT" alt="proposed-x1001">Portugalski (Portugalia)</language>
-			<language type="pt_PT" alt="proposed-x1002">portugalski (Portugal)</language>
 			<language type="qu">keczua</language>
-			<language type="qu" alt="proposed-x1001">kiczuański</language>
-			<language type="qu" alt="proposed-x1002">Keczua</language>
 			<language type="raj">radźasthani</language>
-			<language type="raj" alt="proposed-x1001">Radźasthani</language>
 			<language type="rap">rapanui</language>
-			<language type="rap" alt="proposed-x1001">Rapanui</language>
 			<language type="rar">rarotonga</language>
-			<language type="rar" alt="proposed-x1001">Rarotonga</language>
 			<language type="rm">retoromański</language>
-			<language type="rm" alt="proposed-x1001">Retoromański</language>
-			<language type="rm" alt="proposed-x1002">retoroman</language>
 			<language type="rn">rundi</language>
-			<language type="rn" alt="proposed-x1001">Rundi</language>
 			<language type="ro">rumuński</language>
-			<language type="ro" alt="proposed-x1001">Rumuński</language>
 			<language type="roa">romański (inne)</language>
-			<language type="roa" alt="proposed-x1001">romański (pozostałe)</language>
-			<language type="roa" alt="proposed-x1002">Romański (pozostałe)</language>
-			<language type="roa" alt="proposed-x1003">Romański (inne)</language>
 			<language type="rom">cygański</language>
-			<language type="rom" alt="proposed-x1001">Cygański</language>
 			<language type="ru">rosyjski</language>
-			<language type="ru" alt="proposed-x1001">Rosyjski</language>
 			<language type="rup">arumuński</language>
-			<language type="rup" alt="proposed-x1001">Arumuński</language>
 			<language type="rw">kinya-ruanda</language>
-			<language type="rw" alt="proposed-x1001">Kinya-ruanda</language>
-			<language type="rw" alt="proposed-x1002">kinyarwanda</language>
 			<language type="sa">sanskryt</language>
-			<language type="sa" alt="proposed-x1001">Sanskryt</language>
 			<language type="sad">sandawe</language>
-			<language type="sad" alt="proposed-x1001">Sandawe</language>
 			<language type="sah">jakucki</language>
 			<language type="sai">języki Indian południowoamerykańskich (pozostałe)</language>
-			<language type="sai" alt="proposed-x1001">języki indian południowoamerykańskich (pozostałe)</language>
-			<language type="sai" alt="proposed-x1002">Języki Indian południowoamerykańskich (inne)</language>
-			<language type="sai" alt="proposed-x1003">Języki Indian południowoamerykańskich (pozostałe)</language>
 			<language type="sal">języki salisz</language>
-			<language type="sal" alt="proposed-x1001">Języki salisz</language>
 			<language type="sam">samarytański aramejski</language>
-			<language type="sam" alt="proposed-x1001">Samarytański Aramejski</language>
 			<language type="sas">sasak</language>
-			<language type="sas" alt="proposed-x1001">Sasak</language>
 			<language type="sat">santali</language>
-			<language type="sat" alt="proposed-x1001">Santali</language>
 			<language type="sc">sardyński</language>
-			<language type="sc" alt="proposed-x1001">Sardyński</language>
 			<language type="scn">sycylijski</language>
-			<language type="scn" alt="proposed-x1001">Sycylijski</language>
 			<language type="sco">szkocki</language>
-			<language type="sco" alt="proposed-x1001">Szkocki</language>
 			<language type="sd">sindhi</language>
-			<language type="sd" alt="proposed-x1001">Sindhi</language>
 			<language type="se">lapoński północny</language>
-			<language type="se" alt="proposed-x1001">Lapoński północny</language>
 			<language type="sel">selkupski</language>
-			<language type="sel" alt="proposed-x1001">Selkupski</language>
 			<language type="sem">semickie (pozostałe)</language>
-			<language type="sem" alt="proposed-x1001">Semickie (inne)</language>
-			<language type="sem" alt="proposed-x1002">Semickie (pozostałe)</language>
 			<language type="sg">sango</language>
-			<language type="sg" alt="proposed-x1001">Sango</language>
-			<language type="sg" alt="proposed-x1002">sangro</language>
 			<language type="sga">staroirlandzki</language>
-			<language type="sga" alt="proposed-x1001">Staroirlandzki</language>
 			<language type="sgn">migowy</language>
-			<language type="sgn" alt="proposed-x1001">Migowy</language>
 			<language type="sh">serbsko - chorwacki</language>
 			<language type="shn">shan</language>
-			<language type="shn" alt="proposed-x1001">Shan</language>
 			<language type="si">syngaleski</language>
-			<language type="si" alt="proposed-x1001">sinhaleski</language>
-			<language type="si" alt="proposed-x1002">Syngaleski</language>
 			<language type="sid">sidamo</language>
-			<language type="sid" alt="proposed-x1001">Sidamo</language>
 			<language type="sio">języki siouańskie</language>
-			<language type="sio" alt="proposed-x1001">Języki siouańskie</language>
 			<language type="sit">chińsko-tybetańskie (pozostałe)</language>
-			<language type="sit" alt="proposed-x1001">Chińsko-tybetańskie (pozostałe)</language>
-			<language type="sit" alt="proposed-x1002">Chińsko-tybetańskie (inne)</language>
 			<language type="sk">słowacki</language>
-			<language type="sk" alt="proposed-x1001">Słowacki</language>
 			<language type="sl">słoweński</language>
-			<language type="sl" alt="proposed-x1001">Słoweński</language>
 			<language type="sla">słowiańskie (pozostałe)</language>
-			<language type="sla" alt="proposed-x1001">Słowiańskie (pozostałe)</language>
-			<language type="sla" alt="proposed-x1002">Słowiańskie (inne)</language>
 			<language type="sm">samoański</language>
-			<language type="sm" alt="proposed-x1001">Samoański</language>
 			<language type="sma">lapoński południowy</language>
-			<language type="sma" alt="proposed-x1001">Lapoński południowy</language>
 			<language type="smi">lapońskie (pozostałe)</language>
-			<language type="smi" alt="proposed-x1001">Lapońskie (inne)</language>
-			<language type="smi" alt="proposed-x1002">Lapońskie (pozostałe)</language>
 			<language type="smj">lapoński Lule</language>
-			<language type="smj" alt="proposed-x1001">Lapoński Lule</language>
 			<language type="smn">lapoński Inari</language>
-			<language type="smn" alt="proposed-x1001">Lapoński Inari</language>
 			<language type="sms">lapoński Skolt</language>
-			<language type="sms" alt="proposed-x1001">Lapoński Skolt</language>
 			<language type="sn">szona</language>
-			<language type="sn" alt="proposed-x1001">shona</language>
-			<language type="sn" alt="proposed-x1002">Szona</language>
 			<language type="snk">soninke</language>
-			<language type="snk" alt="proposed-x1001">Soninke</language>
 			<language type="so">somalijski</language>
-			<language type="so" alt="proposed-x1001">somali</language>
 			<language type="sog">sogdyjski</language>
-			<language type="sog" alt="proposed-x1001">Sogdyjski</language>
 			<language type="son">songhaj</language>
 			<language type="sq">albański</language>
-			<language type="sq" alt="proposed-x1001">Albański</language>
 			<language type="sr">serbski</language>
-			<language type="sr" alt="proposed-x1001">Serbski</language>
 			<language type="srr">serer</language>
-			<language type="srr" alt="proposed-x1001">Serer</language>
 			<language type="ss">siswati</language>
-			<language type="ss" alt="proposed-x1001">suazi</language>
-			<language type="ss" alt="proposed-x1002">Suazi</language>
 			<language type="ssa">nilo-saharyjskie (pozostałe)</language>
-			<language type="ssa" alt="proposed-x1001">Nilo-saharyjskie (inne)</language>
-			<language type="ssa" alt="proposed-x1002">Nilo-saharyjskie (pozostałe)</language>
 			<language type="st">sotho południowy</language>
-			<language type="st" alt="proposed-x1001">Sotho południowy</language>
-			<language type="st" alt="proposed-x1002">sesotho (sotho)</language>
 			<language type="su">sundajski</language>
-			<language type="su" alt="proposed-x1001">Sundajski</language>
 			<language type="suk">sukuma</language>
-			<language type="suk" alt="proposed-x1001">Sukuma</language>
 			<language type="sus">susu</language>
-			<language type="sus" alt="proposed-x1001">Susu</language>
 			<language type="sux">sumeryjski</language>
-			<language type="sux" alt="proposed-x1001">Sumeryjski</language>
 			<language type="sv">szwedzki</language>
-			<language type="sv" alt="proposed-x1001">Szwedzki</language>
 			<language type="sw">suahili</language>
-			<language type="sw" alt="proposed-x1001">Suahili</language>
 			<language type="syr">syryjski</language>
-			<language type="syr" alt="proposed-x1001">Syryjski</language>
 			<language type="ta">tamilski</language>
-			<language type="ta" alt="proposed-x1001">Tamilski</language>
 			<language type="tai">taj (pozostałe)</language>
-			<language type="tai" alt="proposed-x1001">Taj (inne)</language>
-			<language type="tai" alt="proposed-x1002">Taj (pozostałe)</language>
 			<language type="te">telugu</language>
-			<language type="te" alt="proposed-x1001">Telugu</language>
 			<language type="tet">tetum</language>
-			<language type="tet" alt="proposed-x1001">Tetum</language>
 			<language type="tg">tadżycki</language>
-			<language type="tg" alt="proposed-x1001">Tadżycki</language>
 			<language type="th">tajski</language>
-			<language type="th" alt="proposed-x1001">Tajski</language>
 			<language type="ti">tigrinia</language>
-			<language type="ti" alt="proposed-x1001">tigrinya</language>
-			<language type="ti" alt="proposed-x1002">Tigrinia</language>
 			<language type="tig">tigre</language>
-			<language type="tig" alt="proposed-x1001">Tigre</language>
 			<language type="tk">turkmeński</language>
-			<language type="tk" alt="proposed-x1001">Turkmeński</language>
 			<language type="tkl">tokelau</language>
-			<language type="tkl" alt="proposed-x1001">Tokelau</language>
 			<language type="tl">tagalski</language>
-			<language type="tl" alt="proposed-x1001">tagalog</language>
-			<language type="tl" alt="proposed-x1002">Tagalski</language>
 			<language type="tlh">klingoński</language>
-			<language type="tlh" alt="proposed-x1001">Klingoński</language>
 			<language type="tli">tlingit</language>
-			<language type="tli" alt="proposed-x1001">Tlingit</language>
 			<language type="tmh">tamaszek</language>
-			<language type="tmh" alt="proposed-x1001">Tamaszek</language>
 			<language type="tn">setswana</language>
-			<language type="tn" alt="proposed-x1001">tswana</language>
-			<language type="tn" alt="proposed-x1002">Tswana</language>
 			<language type="to">tonga (wyspy Tonga)</language>
-			<language type="to" alt="proposed-x1001">Tonga</language>
-			<language type="to" alt="proposed-x1002">tonga</language>
 			<language type="tog">tonga (Niasa)</language>
-			<language type="tog" alt="proposed-x1001">Tonga (Niasa)</language>
 			<language type="tr">turecki</language>
-			<language type="tr" alt="proposed-x1001">Turecki</language>
 			<language type="ts">tsonga</language>
-			<language type="ts" alt="proposed-x1001">Tsonga</language>
 			<language type="tt">tatarski</language>
-			<language type="tt" alt="proposed-x1001">Tatarski</language>
 			<language type="tup">języki tupi</language>
-			<language type="tup" alt="proposed-x1001">Języki Tupi</language>
 			<language type="tut">ałtajski (pozostałe)</language>
-			<language type="tut" alt="proposed-x1001">Ałtajski (pozostałe)</language>
-			<language type="tut" alt="proposed-x1002">Ałtajski (inne)</language>
 			<language type="tvl">tuvalu</language>
 			<language type="tw">twi</language>
-			<language type="tw" alt="proposed-x1001">Twi</language>
 			<language type="ty">tahitański</language>
-			<language type="ty" alt="proposed-x1001">Tahitański</language>
 			<language type="tyv">tuwiński</language>
-			<language type="tyv" alt="proposed-x1001">Tuwiński</language>
 			<language type="udm">udmurcki</language>
-			<language type="udm" alt="proposed-x1001">Udmurcki</language>
 			<language type="ug">ujgurski</language>
-			<language type="ug" alt="proposed-x1001">Ujgurski</language>
 			<language type="uga">ugarycki</language>
-			<language type="uga" alt="proposed-x1001">Ugarycki</language>
 			<language type="uk">ukraiński</language>
-			<language type="uk" alt="proposed-x1001">Ukraiński</language>
 			<language type="umb">umbundu</language>
-			<language type="umb" alt="proposed-x1001">Umbundu</language>
 			<language type="und">nieokreślony</language>
-			<language type="und" alt="proposed-x1001">Nieokreślony</language>
 			<language type="ur">urdu</language>
-			<language type="ur" alt="proposed-x1001">Urdu</language>
 			<language type="uz">uzbecki</language>
-			<language type="uz" alt="proposed-x1001">Uzbecki</language>
-			<language type="uz" alt="proposed-x1002">Uzbeck</language>
 			<language type="vai">wai</language>
-			<language type="vai" alt="proposed-x1001">Wai</language>
 			<language type="ve">venda</language>
 			<language type="vi">wietnamski</language>
-			<language type="vi" alt="proposed-x1001">Venda</language>
-			<language type="vi" alt="proposed-x1002">Wietnamski</language>
 			<language type="vo">volapuk</language>
-			<language type="vo" alt="proposed-x1001">Volapuk</language>
 			<language type="vot">wotiacki</language>
-			<language type="vot" alt="proposed-x1001">Wotiacki</language>
 			<language type="wa">waloński</language>
-			<language type="wa" alt="proposed-x1001">Waloński</language>
 			<language type="wak">języki wakasz</language>
-			<language type="wak" alt="proposed-x1001">Języki wakasz</language>
-			<language type="wak" alt="proposed-x1002">Języki Wakasz</language>
 			<language type="wal">walamo</language>
 			<language type="war">waraj</language>
 			<language type="was">washo</language>
-			<language type="was" alt="proposed-x1001">Washo</language>
 			<language type="wen">języki łużyckie</language>
-			<language type="wen" alt="proposed-x1001">Języki łużyckie</language>
 			<language type="wo">wolof</language>
 			<language type="xal">kałmucki</language>
-			<language type="xal" alt="proposed-x1001">Kałmucki</language>
 			<language type="xh">khosa</language>
-			<language type="xh" alt="proposed-x1001">xhosa</language>
 			<language type="yao">yao</language>
 			<language type="yap">japski</language>
 			<language type="yi">jidysz</language>
-			<language type="yi" alt="proposed-x1001">jidisz</language>
 			<language type="yo">joruba</language>
-			<language type="yo" alt="proposed-x1001">yoruba</language>
 			<language type="ypk">jupik</language>
 			<language type="za">czuang</language>
 			<language type="zap">zapotecki</language>
 			<language type="zen">zenaga</language>
 			<language type="zh">chiński</language>
-			<language type="zh" alt="proposed-x1001">Chiński</language>
 			<language type="zh_Hans">chiński (uproszczony)</language>
-			<language type="zh_Hans" alt="proposed-x1001">Chiński (uproszczony Han)</language>
-			<language type="zh_Hans" alt="proposed-x1002">chiński (uproszczony Han)</language>
 			<language type="zh_Hant">chiński (tradycyjny)</language>
-			<language type="zh_Hant" alt="proposed-x1001">Chiński (tradycyjny Han)</language>
-			<language type="zh_Hant" alt="proposed-x1002">chiński (tradycyjny Han)</language>
 			<language type="znd">azande</language>
-			<language type="znd" alt="proposed-x1001">zande</language>
 			<language type="zu">zulu</language>
 			<language type="zun">zuni</language>
 			<language type="zxx">brak kontekstu lingwistycznego</language>
-			<language type="zxx" alt="proposed-x1001">Brak kontekstu lingwistycznego</language>
 			<language type="zza">zazaki</language>
 		</languages>
 		<scripts>
 			<script type="Arab">Arabski</script>
 			<script type="Armn">Ormiański</script>
-			<script type="Armn" alt="proposed-x1001">Armeński</script>
 			<script type="Bali">Balijski</script>
-			<script type="Bali" alt="proposed-x1001">Bali</script>
 			<script type="Batk">Batak</script>
 			<script type="Beng">Bengalski</script>
 			<script type="Blis">Bliss</script>
@@ -1083,9 +506,6 @@
 			<script type="Cans">Zunifikowane symbole kanadyjskich autochtonów</script>
 			<script type="Cham">Czamski</script>
 			<script type="Cher">Irokeski</script>
-			<script type="Cher" alt="proposed-x1001">Czirokeski</script>
-			<script type="Cher" alt="proposed-x1002">Czerokezki</script>
-			<script type="Cher" alt="proposed-x1003">czirokeski</script>
 			<script type="Copt">Koptyjski</script>
 			<script type="Cprt">Cypryjski</script>
 			<script type="Cyrl">Cyrylicki</script>
@@ -1101,10 +521,8 @@
 			<script type="Goth">Gotycki</script>
 			<script type="Grek">Grecki</script>
 			<script type="Gujr">Gudźaracki</script>
-			<script type="Gujr" alt="proposed-x1001">Gudżarati</script>
 			<script type="Guru">Gurmukhi</script>
 			<script type="Hang">Hangul</script>
-			<script type="Hang" alt="proposed-x1001">Hangyl</script>
 			<script type="Hani">Han</script>
 			<script type="Hano">Hanunoo</script>
 			<script type="Hans">Uproszczony Han</script>
@@ -1143,7 +561,6 @@
 			<script type="Orkh">Orkhon</script>
 			<script type="Orya">Oriya</script>
 			<script type="Osma">Osmanya</script>
-			<script type="Osma" alt="proposed-x1001">Csmanya</script>
 			<script type="Perm">Staropermski</script>
 			<script type="Phag">Phags-pa</script>
 			<script type="Phnx">Fenicki</script>
@@ -1185,10 +602,8 @@
 		</scripts>
 		<territories>
 			<territory type="001">świat</territory>
-			<territory type="001" alt="proposed-x1001">Świat</territory>
 			<territory type="002">Afryka</territory>
 			<territory type="003">Ameryka - północ</territory>
-			<territory type="003" alt="proposed-x1001">Ameryka Północna</territory>
 			<territory type="005">Ameryka Południowa</territory>
 			<territory type="009">Oceania</territory>
 			<territory type="011">Afryka Zachodnia</territory>
@@ -1199,7 +614,6 @@
 			<territory type="018">Afryka Południowa</territory>
 			<territory type="019">Ameryka</territory>
 			<territory type="021">Ameryka Północna</territory>
-			<territory type="021" alt="proposed-x1001">Północna Ameryka</territory>
 			<territory type="029">Karaiby</territory>
 			<territory type="030">Azja Wschodnia</territory>
 			<territory type="034">Azja Południowa</territory>
@@ -1208,10 +622,8 @@
 			<territory type="053">Australia i Nowa Zelandia</territory>
 			<territory type="054">Melanezja</territory>
 			<territory type="057">Region Mikronezji</territory>
-			<territory type="057" alt="proposed-x1001">Mikronezja</territory>
 			<territory type="061">Polinezja</territory>
 			<territory type="062">Azja Środkowo-południowa</territory>
-			<territory type="062" alt="proposed-x1001">(empty)</territory>
 			<territory type="142">Azja</territory>
 			<territory type="143">Azja Środkowa</territory>
 			<territory type="145">Azja Zachodnia</territory>
@@ -1220,7 +632,6 @@
 			<territory type="154">Europa Północna</territory>
 			<territory type="155">Europa Zachodnia</territory>
 			<territory type="172">Wspólnota Niezależnych Państw</territory>
-			<territory type="172" alt="proposed-x1001">Wspólnota Niepodległych Państw</territory>
 			<territory type="419">Ameryka Łacińska i Karaiby</territory>
 			<territory type="830">Wyspy Normandzkie</territory>
 			<territory type="AD">Andora</territory>
@@ -1239,7 +650,6 @@
 			<territory type="AU">Australia</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Wyspy Alandzkie</territory>
-			<territory type="AX" alt="proposed-x1001">Wyspy Aland</territory>
 			<territory type="AZ">Azerbejdżan</territory>
 			<territory type="BA">Bośnia i Hercegowina</territory>
 			<territory type="BB">Barbados</territory>
@@ -1252,24 +662,18 @@
 			<territory type="BJ">Benin</territory>
 			<territory type="BM">Bermudy</territory>
 			<territory type="BN">Brunei Darussalam</territory>
-			<territory type="BN" alt="proposed-x1001">Brunei</territory>
 			<territory type="BO">Boliwia</territory>
 			<territory type="BR">Brazylia</territory>
 			<territory type="BS">Bahamy</territory>
 			<territory type="BT">Bhutan</territory>
 			<territory type="BV">Wyspa Bouveta</territory>
-			<territory type="BV" alt="proposed-x1001">Wyspa Bouvet</territory>
 			<territory type="BW">Botswana</territory>
 			<territory type="BY">Białoruś</territory>
 			<territory type="BZ">Belize</territory>
 			<territory type="CA">Kanada</territory>
 			<territory type="CC">Wyspy Kokosowe</territory>
-			<territory type="CC" alt="proposed-x1001">Wyspy Kokosowe (Keelinga)</territory>
 			<territory type="CD">Kongo, Republika Demokratyczna</territory>
-			<territory type="CD" alt="proposed-x1001">Zair</territory>
-			<territory type="CD" alt="proposed-x1002">Demokratyczna Republika Konga</territory>
 			<territory type="CF">Republika Środkowej Afryki</territory>
-			<territory type="CF" alt="proposed-x1001">Republika Środkowoafrykańska</territory>
 			<territory type="CG">Kongo</territory>
 			<territory type="CH">Szwajcaria</territory>
 			<territory type="CI">Wybrzeże Kości Słoniowej</territory>
@@ -1285,13 +689,11 @@
 			<territory type="CX">Wyspa Bożego Narodzenia</territory>
 			<territory type="CY">Cypr</territory>
 			<territory type="CZ">Czechy</territory>
-			<territory type="CZ" alt="proposed-x1001">Republika Czeska</territory>
 			<territory type="DE">Niemcy</territory>
 			<territory type="DJ">Dżibuti</territory>
 			<territory type="DK">Dania</territory>
 			<territory type="DM">Dominika</territory>
 			<territory type="DO">Republika Dominikańska</territory>
-			<territory type="DO" alt="proposed-x1001">Republika Dominikany</territory>
 			<territory type="DZ">Algieria</territory>
 			<territory type="EC">Ekwador</territory>
 			<territory type="EE">Estonia</territory>
@@ -1303,19 +705,15 @@
 			<territory type="FI">Finlandia</territory>
 			<territory type="FJ">Fidżi</territory>
 			<territory type="FK">Falklandy</territory>
-			<territory type="FK" alt="proposed-x1001">Falklandy (Malwiny)</territory>
 			<territory type="FM">Mikronezja</territory>
-			<territory type="FM" alt="proposed-x1001">Mikronezja, Stany Sfederowane</territory>
 			<territory type="FO">Wyspy Owcze</territory>
 			<territory type="FR">Francja</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Wielka Brytania</territory>
-			<territory type="GB" alt="proposed-x1001">Zjednoczone Królestwo Wielkiej Brytanii</territory>
 			<territory type="GD">Grenada</territory>
 			<territory type="GE">Gruzja</territory>
 			<territory type="GF">Gujana Francuska</territory>
 			<territory type="GG">Wyspa Guernsey</territory>
-			<territory type="GG" alt="proposed-x1001">Guernsey</territory>
 			<territory type="GH">Ghana</territory>
 			<territory type="GI">Gibraltar</territory>
 			<territory type="GL">Grenlandia</territory>
@@ -1325,15 +723,12 @@
 			<territory type="GQ">Gwinea Równikowa</territory>
 			<territory type="GR">Grecja</territory>
 			<territory type="GS">Georgia Południowa i Sandwich Południowy</territory>
-			<territory type="GS" alt="proposed-x1001">Wyspy Georgia Południowa i Sandwich Południowy</territory>
 			<territory type="GT">Gwatemala</territory>
 			<territory type="GU">Guam</territory>
 			<territory type="GW">Gwinea Bissau</territory>
 			<territory type="GY">Gujana</territory>
 			<territory type="HK">Hongkong, Specjalny Region Administracyjny Chin</territory>
-			<territory type="HK" alt="short">Hongkong</territory>
 			<territory type="HM">Wyspy Heard i McDonalda</territory>
-			<territory type="HM" alt="proposed-x1001">Wyspy Heard i McDonald</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Chorwacja</territory>
 			<territory type="HT">Haiti</territory>
@@ -1344,13 +739,11 @@
 			<territory type="IM">Wyspa Man</territory>
 			<territory type="IN">Indie</territory>
 			<territory type="IO">Terytorium Brytyjskie Oceanu Indyjskiego</territory>
-			<territory type="IO" alt="proposed-x1001">Terytorium brytyjskie na Oceanie Indyjskim</territory>
 			<territory type="IQ">Irak</territory>
 			<territory type="IR">Iran</territory>
 			<territory type="IS">Islandia</territory>
 			<territory type="IT">Włochy</territory>
 			<territory type="JE">Wyspa Jersey</territory>
-			<territory type="JE" alt="proposed-x1001">Jersey</territory>
 			<territory type="JM">Jamajka</territory>
 			<territory type="JO">Jordania</territory>
 			<territory type="JP">Japonia</territory>
@@ -1361,46 +754,33 @@
 			<territory type="KM">Komory</territory>
 			<territory type="KN">Saint Kitts i Nevis</territory>
 			<territory type="KP">Korea Północna</territory>
-			<territory type="KP" alt="proposed-x1001">Koreańska Republika Ludowo-Demokratyczna</territory>
 			<territory type="KR">Korea Południowa</territory>
-			<territory type="KR" alt="proposed-x1001">Republika Korei</territory>
 			<territory type="KW">Kuwejt</territory>
 			<territory type="KY">Kajmany</territory>
 			<territory type="KZ">Kazachstan</territory>
 			<territory type="LA">Laos</territory>
-			<territory type="LA" alt="proposed-x1001">Laos (Demokratyczna Republika Ludowa)</territory>
 			<territory type="LB">Liban</territory>
 			<territory type="LC">Saint Lucia</territory>
 			<territory type="LI">Liechtenstein</territory>
-			<territory type="LI" alt="proposed-x1001">Lichtenstein</territory>
 			<territory type="LK">Sri Lanka</territory>
 			<territory type="LR">Liberia</territory>
 			<territory type="LS">Lesotho</territory>
-			<territory type="LS" alt="proposed-x1001">Lesoto</territory>
 			<territory type="LT">Litwa</territory>
 			<territory type="LU">Luksemburg</territory>
 			<territory type="LV">Łotwa</territory>
 			<territory type="LY">Libia</territory>
-			<territory type="LY" alt="proposed-x1001">Libijska</territory>
 			<territory type="MA">Maroko</territory>
 			<territory type="MC">Monako</territory>
 			<territory type="MD">Mołdawia</territory>
-			<territory type="MD" alt="proposed-x1001">Mołdawia, Republika</territory>
 			<territory type="ME">Czarnogóra</territory>
 			<territory type="MG">Madagaskar</territory>
 			<territory type="MH">Wyspy Marshalla</territory>
 			<territory type="MK">Macedonia</territory>
-			<territory type="MK" alt="proposed-x1001">Macedonia, Republika</territory>
-			<territory type="MK" alt="proposed-x1002">Była Jugosłowiańska Republika Macedonii</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MM">Birma</territory>
-			<territory type="MM" alt="proposed-x1001">Myanmar</territory>
 			<territory type="MN">Mongolia</territory>
 			<territory type="MO">Makau, Specjalny Region Administracyjny Chin</territory>
-			<territory type="MO" alt="proposed-x1001">Makao</territory>
-			<territory type="MO" alt="short">Makau</territory>
 			<territory type="MP">Mariany Północne</territory>
-			<territory type="MP" alt="proposed-x1001">Wspólnota Marianów Północnych</territory>
 			<territory type="MQ">Martynika</territory>
 			<territory type="MR">Mauretania</territory>
 			<territory type="MS">Montserrat</territory>
@@ -1428,17 +808,13 @@
 			<territory type="PE">Peru</territory>
 			<territory type="PF">Polinezja Francuska</territory>
 			<territory type="PG">Papua Nowa Gwinea</territory>
-			<territory type="PG" alt="proposed-x1001">Papua-Nowa Gwinea</territory>
 			<territory type="PH">Filipiny</territory>
 			<territory type="PK">Pakistan</territory>
 			<territory type="PL">Polska</territory>
 			<territory type="PM">Saint-Pierre i Miquelon</territory>
-			<territory type="PM" alt="proposed-x1001">St. Pierre i Miquelon</territory>
 			<territory type="PN">Pitcairn</territory>
 			<territory type="PR">Portoryko</territory>
-			<territory type="PR" alt="proposed-x1001">Puerto Rico</territory>
 			<territory type="PS">Terytoria Palestyńskie</territory>
-			<territory type="PS" alt="proposed-x1001">Palestyna</territory>
 			<territory type="PT">Portugalia</territory>
 			<territory type="PW">Palau</territory>
 			<territory type="PY">Paragwaj</territory>
@@ -1449,7 +825,6 @@
 			<territory type="RO">Rumunia</territory>
 			<territory type="RS">Serbia</territory>
 			<territory type="RU">Rosja</territory>
-			<territory type="RU" alt="proposed-x1001">Federacja Rosyjska</territory>
 			<territory type="RW">Rwanda</territory>
 			<territory type="SA">Arabia Saudyjska</territory>
 			<territory type="SB">Wyspy Salomona</territory>
@@ -1458,10 +833,8 @@
 			<territory type="SE">Szwecja</territory>
 			<territory type="SG">Singapur</territory>
 			<territory type="SH">Wyspa Świętej Heleny</territory>
-			<territory type="SH" alt="proposed-x1001">Święta Helena</territory>
 			<territory type="SI">Słowenia</territory>
 			<territory type="SJ">Svalbard i Jan Mayen</territory>
-			<territory type="SJ" alt="proposed-x1001">Svalbard i Wyspy Jan Mayen</territory>
 			<territory type="SK">Słowacja</territory>
 			<territory type="SL">Sierra Leone</territory>
 			<territory type="SM">San Marino</territory>
@@ -1473,52 +846,39 @@
 			<territory type="SY">Syria</territory>
 			<territory type="SZ">Suazi</territory>
 			<territory type="TC">Turks i Caicos</territory>
-			<territory type="TC" alt="proposed-x1001">Wyspy Turks i Caicos</territory>
 			<territory type="TD">Czad</territory>
 			<territory type="TF">Francuskie Terytoria Południowe i Antarktyczne</territory>
-			<territory type="TF" alt="proposed-x1001">Francuskie Terytoria Południowe</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Tajlandia</territory>
 			<territory type="TJ">Tadżykistan</territory>
 			<territory type="TK">Tokelau</territory>
 			<territory type="TL">Timor Wschodni</territory>
 			<territory type="TM">Turkmenistan</territory>
-			<territory type="TM" alt="proposed-x1001">Turkmenia</territory>
 			<territory type="TN">Tunezja</territory>
 			<territory type="TO">Tonga</territory>
 			<territory type="TR">Turcja</territory>
 			<territory type="TT">Trynidad i Tobago</territory>
-			<territory type="TT" alt="proposed-x1001">Trinidad i Tobago</territory>
 			<territory type="TV">Tuvalu</territory>
 			<territory type="TW">Tajwan</territory>
 			<territory type="TZ">Tanzania</territory>
 			<territory type="UA">Ukraina</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Dalekie Wyspy Mniejsze Stanów Zjednoczonych</territory>
-			<territory type="UM" alt="proposed-x1001">Powiernicze Wyspy Pacyfiku Stanów Zjednoczonych</territory>
-			<territory type="UM" alt="proposed-x1002">Pomniejsze wyspy Stanów Zjednoczonych</territory>
-			<territory type="UM" alt="proposed-x1003">United States Minor Outlying Islands</territory>
 			<territory type="US">Stany Zjednoczone</territory>
 			<territory type="UY">Urugwaj</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Watykan</territory>
-			<territory type="VA" alt="proposed-x1001">Stolica Apostolska (Państwo Watykańskie)</territory>
-			<territory type="VA" alt="proposed-x1002">Stolica Apostolska (Watykan)</territory>
 			<territory type="VC">Saint Vincent i Grenadyny</territory>
-			<territory type="VC" alt="proposed-x1001">Saint Vincent and the Grenadines</territory>
 			<territory type="VE">Wenezuela</territory>
 			<territory type="VG">Brytyjskie Wyspy Dziewicze</territory>
 			<territory type="VI">Wyspy Dziewicze Stanów Zjednoczonych</territory>
-			<territory type="VI" alt="proposed-x1001">Wyspy Dziewicze, Stanów Zjednoczonych</territory>
 			<territory type="VN">Wietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis i Futuna</territory>
-			<territory type="WF" alt="proposed-x1001">Wyspy Wallis i Futuna</territory>
 			<territory type="WS">Samoa</territory>
 			<territory type="YE">Jemen</territory>
 			<territory type="YT">Majotta</territory>
 			<territory type="ZA">Republika Południowej Afryki</territory>
-			<territory type="ZA" alt="proposed-x1001">Afryka Południowa</territory>
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabwe</territory>
 			<territory type="ZZ">Nieznany lub nieprawidłowy region</territory>
@@ -1549,7 +909,6 @@
 			<type type="buddhist" key="calendar">Kalendarz buddyjski</type>
 			<type type="chinese" key="calendar">Kalendarz chiński</type>
 			<type type="direct" key="collation">porządek bezpośredni</type>
-			<type type="direct" key="collation" alt="proposed-x1001">Porządek bezpośredni</type>
 			<type type="gb2312han" key="collation">Uproszczony chiński (GB2312)</type>
 			<type type="gregorian" key="calendar">Kalendarz gregoriański</type>
 			<type type="hebrew" key="calendar">Kalendarz żydowski</type>
@@ -1557,13 +916,9 @@
 			<type type="islamic-civil" key="calendar">Kalendarz muzułmański cywilny</type>
 			<type type="japanese" key="calendar">Kalendarz japoński</type>
 			<type type="phonebook" key="collation">porządek książki telefonicznej</type>
-			<type type="phonebook" key="collation" alt="proposed-x1001">Porządek książki telefonicznej</type>
 			<type type="pinyin" key="collation">porządek Pinyin</type>
-			<type type="pinyin" key="collation" alt="proposed-x1001">Porządek Pinyin</type>
 			<type type="stroke" key="collation">porządek akcentów</type>
-			<type type="stroke" key="collation" alt="proposed-x1001">Porządek akcentów</type>
 			<type type="traditional" key="collation">tradycyjny</type>
-			<type type="traditional" key="collation" alt="proposed-x1001">Porządek tradycyjny</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">USA</measurementSystemName>
@@ -1573,18 +928,12 @@
 	<characters>
 		<exemplarCharacters>[a ą b c ć d e ę f-l ł m n ń o ó p r s ś t u w-z ź ż]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[q v x]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a ą b c ć d e ę f-l ł m n ń o ó p r s ś t u w y z ź ż]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
-		<quotationStart alt="proposed-x1001">„</quotationStart>
-		<quotationStart alt="proposed-x1002">‚</quotationStart>
 		<quotationEnd>’</quotationEnd>
-		<quotationEnd alt="proposed-x1001">”</quotationEnd>
 		<alternateQuotationStart>„</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">‚</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -1593,35 +942,17 @@
 					<monthContext type="format">
 						<monthWidth type="abbreviated">
 							<month type="1">sty</month>
-							<month type="1" alt="proposed-x1001">st</month>
-							<month type="1" alt="proposed-x1002">I</month>
 							<month type="2">lut</month>
-							<month type="2" alt="proposed-x1001">II</month>
 							<month type="3">mar</month>
-							<month type="3" alt="proposed-x1001">mrz</month>
-							<month type="3" alt="proposed-x1002">III</month>
 							<month type="4">kwi</month>
-							<month type="4" alt="proposed-x1001">kw</month>
-							<month type="4" alt="proposed-x1002">IV</month>
 							<month type="5">maj</month>
-							<month type="5" alt="proposed-x1001">V</month>
 							<month type="6">cze</month>
-							<month type="6" alt="proposed-x1001">cz</month>
-							<month type="6" alt="proposed-x1002">VI</month>
 							<month type="7">lip</month>
-							<month type="7" alt="proposed-x1001">VII</month>
 							<month type="8">sie</month>
-							<month type="8" alt="proposed-x1001">sier</month>
-							<month type="8" alt="proposed-x1002">VIII</month>
 							<month type="9">wrz</month>
-							<month type="9" alt="proposed-x1001">IX</month>
 							<month type="10">paź</month>
-							<month type="10" alt="proposed-x1001">X</month>
 							<month type="11">lis</month>
-							<month type="11" alt="proposed-x1001">XI</month>
 							<month type="12">gru</month>
-							<month type="12" alt="proposed-x1001">XII</month>
-							<month type="12" alt="proposed-x1002">gr</month>
 						</monthWidth>
 						<monthWidth type="narrow">
 							<month type="1">s</month>
@@ -1639,57 +970,33 @@
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">stycznia</month>
-							<month type="1" alt="proposed-x1001">styczeń</month>
 							<month type="2">lutego</month>
-							<month type="2" alt="proposed-x1001">luty</month>
 							<month type="3">marca</month>
-							<month type="3" alt="proposed-x1001">marzec</month>
 							<month type="4">kwietnia</month>
-							<month type="4" alt="proposed-x1001">kwiecień</month>
 							<month type="5">maja</month>
-							<month type="5" alt="proposed-x1001">maj</month>
 							<month type="6">czerwca</month>
-							<month type="6" alt="proposed-x1001">czerwiec</month>
 							<month type="7">lipca</month>
-							<month type="7" alt="proposed-x1001">lipiec</month>
 							<month type="8">sierpnia</month>
-							<month type="8" alt="proposed-x1001">sierpień</month>
 							<month type="9">września</month>
-							<month type="9" alt="proposed-x1001">wrzesień</month>
 							<month type="10">października</month>
-							<month type="10" alt="proposed-x1001">październik</month>
 							<month type="11">listopada</month>
-							<month type="11" alt="proposed-x1001">listopad</month>
 							<month type="12">grudnia</month>
-							<month type="12" alt="proposed-x1001">grudzień</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
 						<monthWidth type="abbreviated">
 							<month type="1">sty</month>
-							<month type="1" alt="proposed-x1001">st</month>
-							<month type="1" alt="proposed-x1002">I</month>
 							<month type="2">lut</month>
 							<month type="3">mar</month>
-							<month type="3" alt="proposed-x1001">III</month>
-							<month type="3" alt="proposed-x1002">mrz</month>
 							<month type="4">kwi</month>
-							<month type="4" alt="proposed-x1001">IV</month>
-							<month type="4" alt="proposed-x1002">kw</month>
 							<month type="5">maj</month>
 							<month type="6">cze</month>
-							<month type="6" alt="proposed-x1001">VI</month>
-							<month type="6" alt="proposed-x1002">cz</month>
 							<month type="7">lip</month>
 							<month type="8">sie</month>
-							<month type="8" alt="proposed-x1001">sier</month>
-							<month type="8" alt="proposed-x1002">VIII</month>
 							<month type="9">wrz</month>
 							<month type="10">paź</month>
 							<month type="11">lis</month>
 							<month type="12">gru</month>
-							<month type="12" alt="proposed-x1001">gr</month>
-							<month type="12" alt="proposed-x1002">XII</month>
 						</monthWidth>
 						<monthWidth type="narrow">
 							<month type="1">s</month>
@@ -1725,19 +1032,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">niedz.</day>
-							<day type="sun" alt="proposed-x1001">nd</day>
 							<day type="mon">pon.</day>
-							<day type="mon" alt="proposed-x1001">pn</day>
 							<day type="tue">wt.</day>
-							<day type="tue" alt="proposed-x1001">wt</day>
 							<day type="wed">śr.</day>
-							<day type="wed" alt="proposed-x1001">śr</day>
 							<day type="thu">czw.</day>
-							<day type="thu" alt="proposed-x1001">czw</day>
 							<day type="fri">pt.</day>
-							<day type="fri" alt="proposed-x1001">pt</day>
 							<day type="sat">sob.</day>
-							<day type="sat" alt="proposed-x1001">sob</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">niedziela</day>
@@ -1765,13 +1065,9 @@
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
 							<quarter type="1">K1</quarter>
-							<quarter type="1" alt="proposed-x1001">1 kw.</quarter>
 							<quarter type="2">K2</quarter>
-							<quarter type="2" alt="proposed-x1001">2 kw.</quarter>
 							<quarter type="3">K3</quarter>
-							<quarter type="3" alt="proposed-x1001">3 kw.</quarter>
 							<quarter type="4">K4</quarter>
-							<quarter type="4" alt="proposed-x1001">4 kw.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">I kwartał</quarter>
@@ -1800,9 +1096,7 @@
 				<eras>
 					<eraNames>
 						<era type="0">Przed Chrystusem</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">Anno Domini</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">p.n.e.</era>
@@ -1813,7 +1107,6 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, d MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, dd MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
@@ -1824,13 +1117,11 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>yyyy-MM-dd</pattern>
-							<pattern alt="proposed-x1001">dd MMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>yy-MM-dd</pattern>
-							<pattern alt="proposed-x1001">dd.MM.yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -1868,19 +1159,14 @@
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">MM-dd</dateFormatItem>
 						<dateFormatItem id="Md">d.M</dateFormatItem>
-						<dateFormatItem id="Md" alt="proposed-x1001">d/MM</dateFormatItem>
-						<dateFormatItem id="Md" alt="proposed-x1002">d-M</dateFormatItem>
 						<dateFormatItem id="hhmm">hh:mm a</dateFormatItem>
 						<dateFormatItem id="hhmmss">hh:mm:ss a</dateFormatItem>
 						<dateFormatItem id="mmss">mm:ss</dateFormatItem>
 						<dateFormatItem id="yyMM">MM/yy</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">MM-yy</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyyyMM">yyyy-MM</dateFormatItem>
 						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" alt="proposed-x1001">LLLL yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" alt="proposed-x1002">MMMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 				<fields>
@@ -1928,7 +1214,6 @@
 			<hourFormat>+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>GMT{0}</gmtFormat>
 			<regionFormat>Czas {0}</regionFormat>
-			<regionFormat alt="proposed-x1001">{0}</regionFormat>
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>Comodoro Rivadavia</exemplarCity>
 			</zone>
@@ -1946,366 +1231,254 @@
 			</zone>
 			<zone type="Asia/Dubai">
 				<exemplarCity>Dubaj</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Zjednoczone Emiraty Arabskie</exemplarCity>
 			</zone>
 			<zone type="Asia/Kabul">
-				<exemplarCity alt="proposed-x1001">Afganistan</exemplarCity>
 			</zone>
 			<zone type="America/Antigua">
 				<exemplarCity>Antigua i Barbuda</exemplarCity>
 			</zone>
 			<zone type="Europe/Tirane">
 				<exemplarCity>Tirana</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Albania</exemplarCity>
 			</zone>
 			<zone type="Asia/Yerevan">
 				<exemplarCity>Erewan</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Armenia</exemplarCity>
 			</zone>
 			<zone type="America/Curacao">
 				<exemplarCity>Curaçao</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antyle Holenderskie</exemplarCity>
 			</zone>
 			<zone type="Africa/Luanda">
-				<exemplarCity alt="proposed-x1001">Angola</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>Stacja Naukowa Rothera</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Stacja Naukowa Rothera)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Stacja Rothera</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Palmer">
 				<exemplarCity>Archipelag Palmera</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Stacja Palmer</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Antarktyka (Archipelag Palmera)</exemplarCity>
 			</zone>
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Biegun południowy</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Biegun południowy)</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Syowa">
 				<exemplarCity>Stacja Syowa</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Stacja Syowa</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Mawson">
 				<exemplarCity>Wybrzeże Mawsona</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Wybrzeże Mawsona)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Stacja Mawson</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Davis">
 				<exemplarCity>Stacja Davis</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Davis</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Antarktyka (Davis)</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Vostok">
 				<exemplarCity>Stacja Vostok</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wostok</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Antarktyka (Wostok)</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Casey">
 				<exemplarCity>Stacja Casey</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Casey)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Casey</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Dumont d'Urville</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Dumont d'Urville)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Baza Dumont D'Urville</exemplarCity>
 			</zone>
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity>Mc Murdo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Antarktyka (Mc Murdo)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Stacja McMurdo</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Rio_Gallegos">
-				<exemplarCity alt="proposed-x1001">Argentyna (Rio Gallegos)</exemplarCity>
 			</zone>
 			<zone type="America/Mendoza">
-				<exemplarCity alt="proposed-x1001">Argentyna (Mendoza)</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/San_Juan">
-				<exemplarCity alt="proposed-x1001">Argentyna (San Juan)</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Ushuaia">
-				<exemplarCity alt="proposed-x1001">Argentyna (Ushuaia)</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/La_Rioja">
-				<exemplarCity alt="proposed-x1001">Argentyna (La Rioja)</exemplarCity>
 			</zone>
 			<zone type="America/Catamarca">
-				<exemplarCity alt="proposed-x1001">Argentyna (Catamarca)</exemplarCity>
 			</zone>
 			<zone type="America/Jujuy">
-				<exemplarCity alt="proposed-x1001">Argentyna (Jujuy)</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Tucuman">
-				<exemplarCity alt="proposed-x1001">Argentyna (Tucuman)</exemplarCity>
 			</zone>
 			<zone type="America/Cordoba">
-				<exemplarCity alt="proposed-x1001">Argentyna (Cordoba)</exemplarCity>
 			</zone>
 			<zone type="America/Buenos_Aires">
-				<exemplarCity alt="proposed-x1001">Argentyna (Buenos Aires)</exemplarCity>
 			</zone>
 			<zone type="Pacific/Pago_Pago">
-				<exemplarCity alt="proposed-x1001">Samoa Amerykańskie</exemplarCity>
 			</zone>
 			<zone type="Europe/Vienna">
 				<exemplarCity>Wiedeń</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Austria</exemplarCity>
 			</zone>
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity>Wyspa Lord Howe</exemplarCity>
 			</zone>
 			<zone type="Europe/Mariehamn">
 				<exemplarCity>Maarianhamina</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Alandzkie</exemplarCity>
 			</zone>
 			<zone type="Asia/Baku">
-				<exemplarCity alt="proposed-x1001">Azerbejdżan</exemplarCity>
 			</zone>
 			<zone type="Europe/Sarajevo">
 				<exemplarCity>Sarajewo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Bośnia i Hercegowina</exemplarCity>
 			</zone>
 			<zone type="Asia/Dhaka">
 				<exemplarCity>Dakka</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Bangladesz</exemplarCity>
 			</zone>
 			<zone type="Europe/Brussels">
 				<exemplarCity>Bruksela</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Belgia</exemplarCity>
 			</zone>
 			<zone type="Africa/Ouagadougou">
 				<exemplarCity>Wagadugu</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Burkina Faso</exemplarCity>
 			</zone>
 			<zone type="Europe/Sofia">
-				<exemplarCity alt="proposed-x1001">Bułgaria</exemplarCity>
 			</zone>
 			<zone type="Asia/Bahrain">
 				<exemplarCity>Bahrajn</exemplarCity>
 			</zone>
 			<zone type="Africa/Bujumbura">
 				<exemplarCity>Bużumbura</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Burundi</exemplarCity>
 			</zone>
 			<zone type="Africa/Porto-Novo">
 				<exemplarCity>Porto Novo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Benin</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Bermuda">
 				<exemplarCity>Bermudy</exemplarCity>
 			</zone>
 			<zone type="America/La_Paz">
-				<exemplarCity alt="proposed-x1001">Boliwia</exemplarCity>
 			</zone>
 			<zone type="America/Eirunepe">
-				<exemplarCity alt="proposed-x1001">Brazylia (Eirunepe)</exemplarCity>
 			</zone>
 			<zone type="America/Rio_Branco">
-				<exemplarCity alt="proposed-x1001">Brazylia (Rio Branco)</exemplarCity>
 			</zone>
 			<zone type="America/Porto_Velho">
 				<exemplarCity>Pôrto Velho</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Brazylia (Porto Velho)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Porto Velho</exemplarCity>
 			</zone>
 			<zone type="America/Boa_Vista">
-				<exemplarCity alt="proposed-x1001">Brazylia (Boa Vista)</exemplarCity>
 			</zone>
 			<zone type="America/Manaus">
-				<exemplarCity alt="proposed-x1001">Brazylia (Manaus)</exemplarCity>
 			</zone>
 			<zone type="America/Cuiaba">
 				<exemplarCity>Cuiabá</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cuiaba</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Brazylia (Cuiaba)</exemplarCity>
 			</zone>
 			<zone type="America/Campo_Grande">
-				<exemplarCity alt="proposed-x1001">Brazylia (Campo Grande)</exemplarCity>
 			</zone>
 			<zone type="America/Belem">
 				<exemplarCity>Belém</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Brazylia (Belem)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Belem</exemplarCity>
 			</zone>
 			<zone type="America/Araguaina">
-				<exemplarCity alt="proposed-x1001">Brazylia (Araguaina)</exemplarCity>
 			</zone>
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>Săo Paulo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sao Paulo</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Brazylia (Sao Paulo)</exemplarCity>
 			</zone>
 			<zone type="America/Bahia">
 				<exemplarCity>Salvador</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Bahia</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Brazylia (Bahia)</exemplarCity>
 			</zone>
 			<zone type="America/Fortaleza">
-				<exemplarCity alt="proposed-x1001">Brazylia (Fortaleza)</exemplarCity>
 			</zone>
 			<zone type="America/Maceio">
 				<exemplarCity>Maceió</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Brazylia (Maceio)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Maceio</exemplarCity>
 			</zone>
 			<zone type="America/Recife">
-				<exemplarCity alt="proposed-x1001">Brazylia (Recife)</exemplarCity>
 			</zone>
 			<zone type="America/Noronha">
-				<exemplarCity alt="proposed-x1001">Brazylia (Noronha)</exemplarCity>
 			</zone>
 			<zone type="America/Nassau">
-				<exemplarCity alt="proposed-x1001">Bahamy</exemplarCity>
 			</zone>
 			<zone type="Asia/Thimphu">
-				<exemplarCity alt="proposed-x1001">Bhutan</exemplarCity>
 			</zone>
 			<zone type="Africa/Gaborone">
-				<exemplarCity alt="proposed-x1001">Botswana</exemplarCity>
 			</zone>
 			<zone type="Europe/Minsk">
 				<exemplarCity>Mińsk</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Białoruś</exemplarCity>
 			</zone>
 			<zone type="America/Dawson">
-				<exemplarCity alt="proposed-x1001">Kanada (Dawson)</exemplarCity>
 			</zone>
 			<zone type="America/Whitehorse">
-				<exemplarCity alt="proposed-x1001">Kanada (Whitehorse)</exemplarCity>
 			</zone>
 			<zone type="America/Inuvik">
-				<exemplarCity alt="proposed-x1001">Kanada (Inuvik)</exemplarCity>
 			</zone>
 			<zone type="America/Vancouver">
-				<exemplarCity alt="proposed-x1001">Kanada (Vancouver)</exemplarCity>
 			</zone>
 			<zone type="America/Dawson_Creek">
-				<exemplarCity alt="proposed-x1001">Kanada (Dawson Creek)</exemplarCity>
 			</zone>
 			<zone type="America/Yellowknife">
-				<exemplarCity alt="proposed-x1001">Kanada (Yellowknife)</exemplarCity>
 			</zone>
 			<zone type="America/Edmonton">
-				<exemplarCity alt="proposed-x1001">Kanada (Edmonton)</exemplarCity>
 			</zone>
 			<zone type="America/Swift_Current">
-				<exemplarCity alt="proposed-x1001">Kanada (Swift Current)</exemplarCity>
 			</zone>
 			<zone type="America/Cambridge_Bay">
-				<exemplarCity alt="proposed-x1001">Kanada (Cambridge Bay)</exemplarCity>
 			</zone>
 			<zone type="America/Regina">
-				<exemplarCity alt="proposed-x1001">Kanada (Regina)</exemplarCity>
 			</zone>
 			<zone type="America/Winnipeg">
-				<exemplarCity alt="proposed-x1001">Kanada (Winnipeg)</exemplarCity>
 			</zone>
 			<zone type="America/Rainy_River">
-				<exemplarCity alt="proposed-x1001">Kanada (Rainy River)</exemplarCity>
 			</zone>
 			<zone type="America/Rankin_Inlet">
-				<exemplarCity alt="proposed-x1001">Kanada (Rankin Inlet)</exemplarCity>
 			</zone>
 			<zone type="America/Coral_Harbour">
-				<exemplarCity alt="proposed-x1001">Kanada (Coral Harbour)</exemplarCity>
 			</zone>
 			<zone type="America/Thunder_Bay">
-				<exemplarCity alt="proposed-x1001">Kanada (Thunder Bay)</exemplarCity>
 			</zone>
 			<zone type="America/Nipigon">
-				<exemplarCity alt="proposed-x1001">Kanada (Nipigon)</exemplarCity>
 			</zone>
 			<zone type="America/Toronto">
-				<exemplarCity alt="proposed-x1001">Kanada (Toronto)</exemplarCity>
 			</zone>
 			<zone type="America/Montreal">
-				<exemplarCity alt="proposed-x1001">Kanada (Montreal)</exemplarCity>
 			</zone>
 			<zone type="America/Iqaluit">
-				<exemplarCity alt="proposed-x1001">Kanada (Iqaluit)</exemplarCity>
 			</zone>
 			<zone type="America/Pangnirtung">
-				<exemplarCity alt="proposed-x1001">Kanada (Pangnirtung)</exemplarCity>
 			</zone>
 			<zone type="America/Moncton">
-				<exemplarCity alt="proposed-x1001">Kanada (Moncton)</exemplarCity>
 			</zone>
 			<zone type="America/Halifax">
-				<exemplarCity alt="proposed-x1001">Kanada (Halifax)</exemplarCity>
 			</zone>
 			<zone type="America/Goose_Bay">
-				<exemplarCity alt="proposed-x1001">Kanada (Goose Bay)</exemplarCity>
 			</zone>
 			<zone type="America/Glace_Bay">
-				<exemplarCity alt="proposed-x1001">Kanada (Glace Bay)</exemplarCity>
 			</zone>
 			<zone type="America/Blanc-Sablon">
-				<exemplarCity alt="proposed-x1001">Kanada (Blanc-Sablon)</exemplarCity>
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity>St. John's</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kanada (St. John's)</exemplarCity>
 			</zone>
 			<zone type="Indian/Cocos">
 				<exemplarCity>Wyspy Kokosowe</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Kokosowe (Keelinga)</exemplarCity>
 			</zone>
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinszasa</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kongo - Kinszasa</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
-				<exemplarCity alt="proposed-x1001">Lubumbaszi</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Kongo - Lubumbashi</exemplarCity>
 			</zone>
 			<zone type="Africa/Bangui">
 				<exemplarCity>Bangi</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Republika Środkowoafrykańska</exemplarCity>
 			</zone>
 			<zone type="Africa/Brazzaville">
-				<exemplarCity alt="proposed-x1001">Kongo Brazzaville</exemplarCity>
 			</zone>
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zurych</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Szwajcaria</exemplarCity>
 			</zone>
 			<zone type="Africa/Abidjan">
 				<exemplarCity>Abidżan</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wybrzeże Kości Słoniowej</exemplarCity>
 			</zone>
 			<zone type="Pacific/Rarotonga">
-				<exemplarCity alt="proposed-x1001">Wyspy Cooka</exemplarCity>
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>Wyspa Wielkanocna</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Wielkanocne</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
-				<exemplarCity alt="proposed-x1001">Chile</exemplarCity>
 			</zone>
 			<zone type="Africa/Douala">
 				<exemplarCity>Duala</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kamerun</exemplarCity>
 			</zone>
 			<zone type="Asia/Kashgar">
 				<exemplarCity>Kaszgar</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Chiny (Kaszgar)</exemplarCity>
 			</zone>
 			<zone type="Asia/Urumqi">
 				<exemplarCity>Urumczi</exemplarCity>
 			</zone>
 			<zone type="Asia/Chongqing">
 				<exemplarCity>Czunking</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Chiny (Czunking)</exemplarCity>
 			</zone>
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Szanghaj</exemplarCity>
 			</zone>
 			<zone type="Asia/Harbin">
-				<exemplarCity alt="proposed-x1001">Chiny (Harbin)</exemplarCity>
 			</zone>
 			<zone type="America/Bogota">
 				<exemplarCity>Kolumbia</exemplarCity>
@@ -2315,61 +1488,48 @@
 			</zone>
 			<zone type="America/Havana">
 				<exemplarCity>Hawana</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kuba</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Cape_Verde">
 				<exemplarCity>Zielony Przylądek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Zielonego Przylądka</exemplarCity>
 			</zone>
 			<zone type="Indian/Christmas">
 				<exemplarCity>Wyspa Bożego Narodzenia</exemplarCity>
 			</zone>
 			<zone type="Asia/Nicosia">
 				<exemplarCity>Nikozja</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cypr</exemplarCity>
 			</zone>
 			<zone type="Europe/Prague">
 				<exemplarCity>Praga</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Republika Czeska</exemplarCity>
 			</zone>
 			<zone type="Europe/Berlin">
-				<exemplarCity alt="proposed-x1001">Niemcy</exemplarCity>
 			</zone>
 			<zone type="Africa/Djibouti">
 				<exemplarCity>Dżibuti</exemplarCity>
 			</zone>
 			<zone type="Europe/Copenhagen">
 				<exemplarCity>Kopenhaga</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Dania</exemplarCity>
 			</zone>
 			<zone type="America/Dominica">
 				<exemplarCity>Dominika</exemplarCity>
 			</zone>
 			<zone type="America/Santo_Domingo">
-				<exemplarCity alt="proposed-x1001">Republika Dominikańska</exemplarCity>
 			</zone>
 			<zone type="Africa/Algiers">
 				<exemplarCity>Algier</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Algieria</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
-				<exemplarCity alt="proposed-x1001">Ekwador</exemplarCity>
 			</zone>
 			<zone type="Europe/Tallinn">
 				<exemplarCity>Tallin</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Estonia</exemplarCity>
 			</zone>
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kair</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Egipt</exemplarCity>
 			</zone>
 			<zone type="Africa/El_Aaiun">
 				<exemplarCity>Ujun</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sahara Zachodnia</exemplarCity>
 			</zone>
 			<zone type="Africa/Asmera">
 				<exemplarCity>Asmara</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Erytrea</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Wyspy Kanaryjskie</exemplarCity>
@@ -2379,401 +1539,304 @@
 			</zone>
 			<zone type="Africa/Addis_Ababa">
 				<exemplarCity>Addis Abeba</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Etiopia</exemplarCity>
 			</zone>
 			<zone type="Europe/Helsinki">
-				<exemplarCity alt="proposed-x1001">Finlandia</exemplarCity>
 			</zone>
 			<zone type="Pacific/Fiji">
 				<exemplarCity>Fidżi</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Stanley">
-				<exemplarCity alt="proposed-x1001">Falklandy (Malwiny)</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Faeroe">
 				<exemplarCity>Wyspy Owcze</exemplarCity>
 			</zone>
 			<zone type="Europe/Paris">
 				<exemplarCity>Paryż</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Francja</exemplarCity>
 			</zone>
 			<zone type="Africa/Libreville">
-				<exemplarCity alt="proposed-x1001">Gabon</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity>Londyn</exemplarCity>
 			</zone>
 			<zone type="Asia/Tbilisi">
-				<exemplarCity alt="proposed-x1001">Gruzja</exemplarCity>
 			</zone>
 			<zone type="America/Cayenne">
 				<exemplarCity>Kajenna</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Gujana Francuska</exemplarCity>
 			</zone>
 			<zone type="Africa/Accra">
 				<exemplarCity>Akra</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ghana</exemplarCity>
 			</zone>
 			<zone type="America/Thule">
-				<exemplarCity alt="proposed-x1001">Grenlandia (Thule)</exemplarCity>
 			</zone>
 			<zone type="America/Godthab">
-				<exemplarCity alt="proposed-x1001">Grenlandia</exemplarCity>
 			</zone>
 			<zone type="America/Scoresbysund">
-				<exemplarCity alt="proposed-x1001">Grenlandia (Scoresbysund)</exemplarCity>
 			</zone>
 			<zone type="America/Danmarkshavn">
-				<exemplarCity alt="proposed-x1001">Grenlandia (Danmarkshavn)</exemplarCity>
 			</zone>
 			<zone type="Africa/Banjul">
 				<exemplarCity>Bandżul</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Gambia</exemplarCity>
 			</zone>
 			<zone type="Africa/Conakry">
 				<exemplarCity>Konakri</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Gwinea</exemplarCity>
 			</zone>
 			<zone type="America/Guadeloupe">
 				<exemplarCity>Gwadelupa</exemplarCity>
 			</zone>
 			<zone type="Africa/Malabo">
-				<exemplarCity alt="proposed-x1001">Gwinea Równikowa</exemplarCity>
 			</zone>
 			<zone type="Europe/Athens">
 				<exemplarCity>Ateny</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Grecja</exemplarCity>
 			</zone>
 			<zone type="Atlantic/South_Georgia">
 				<exemplarCity>Georgia Południowa</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Georgia Południowa i Sandwich Południowy</exemplarCity>
 			</zone>
 			<zone type="America/Guatemala">
 				<exemplarCity>Gwatemala</exemplarCity>
 			</zone>
 			<zone type="Africa/Bissau">
-				<exemplarCity alt="proposed-x1001">Gwinea Bissau</exemplarCity>
 			</zone>
 			<zone type="America/Guyana">
 				<exemplarCity>Gujana</exemplarCity>
 			</zone>
 			<zone type="Asia/Hong_Kong">
 				<exemplarCity>Hongkong</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Hongkong, Specjalny Region Administracyjny Chin</exemplarCity>
 			</zone>
 			<zone type="America/Tegucigalpa">
 				<exemplarCity>Honduras</exemplarCity>
 			</zone>
 			<zone type="Europe/Zagreb">
 				<exemplarCity>Zagrzeb</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Chorwacja</exemplarCity>
 			</zone>
 			<zone type="America/Port-au-Prince">
 				<exemplarCity>Haiti</exemplarCity>
 			</zone>
 			<zone type="Europe/Budapest">
 				<exemplarCity>Budapeszt</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Węgry</exemplarCity>
 			</zone>
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Dżakarta</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Indonezja (Dżakarta)</exemplarCity>
 			</zone>
 			<zone type="Asia/Makassar">
-				<exemplarCity alt="proposed-x1001">Indonezja (Makassar)</exemplarCity>
 			</zone>
 			<zone type="Asia/Jayapura">
-				<exemplarCity alt="proposed-x1001">Indonezja (Jayapura)</exemplarCity>
 			</zone>
 			<zone type="Europe/Dublin">
-				<exemplarCity alt="proposed-x1001">Irlandia</exemplarCity>
 			</zone>
 			<zone type="Asia/Jerusalem">
 				<exemplarCity>Jerozolima</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Izrael</exemplarCity>
 			</zone>
 			<zone type="Europe/Isle_of_Man">
 				<exemplarCity>Wyspa Man</exemplarCity>
 			</zone>
 			<zone type="Asia/Calcutta">
 				<exemplarCity>Kalkuta</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Indie</exemplarCity>
 			</zone>
 			<zone type="Indian/Chagos">
 				<exemplarCity>Czagos</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Terytorium Brytyjskie Oceanu Indyjskiego</exemplarCity>
 			</zone>
 			<zone type="Asia/Baghdad">
 				<exemplarCity>Bagdad</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Irak</exemplarCity>
 			</zone>
 			<zone type="Asia/Tehran">
 				<exemplarCity>Teheran</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Iran</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Reykjavik">
 				<exemplarCity>Rejkiawik</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Islandia</exemplarCity>
 			</zone>
 			<zone type="Europe/Rome">
 				<exemplarCity>Rzym</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Włochy</exemplarCity>
 			</zone>
 			<zone type="America/Jamaica">
 				<exemplarCity>Jamajka</exemplarCity>
 			</zone>
 			<zone type="Asia/Amman">
-				<exemplarCity alt="proposed-x1001">Jordania</exemplarCity>
 			</zone>
 			<zone type="Asia/Tokyo">
 				<exemplarCity>Tokio</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Japonia</exemplarCity>
 			</zone>
 			<zone type="Africa/Nairobi">
-				<exemplarCity alt="proposed-x1001">Kenia</exemplarCity>
 			</zone>
 			<zone type="Asia/Bishkek">
 				<exemplarCity>Biszkek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kirgistan</exemplarCity>
 			</zone>
 			<zone type="Asia/Phnom_Penh">
-				<exemplarCity alt="proposed-x1001">Kambodża</exemplarCity>
 			</zone>
 			<zone type="Indian/Comoro">
 				<exemplarCity>Komory</exemplarCity>
 			</zone>
 			<zone type="America/St_Kitts">
 				<exemplarCity>Saint Kitts</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Saint Kitts i Nevis</exemplarCity>
 			</zone>
 			<zone type="Asia/Pyongyang">
-				<exemplarCity alt="proposed-x1001">Korea Północna</exemplarCity>
 			</zone>
 			<zone type="Asia/Seoul">
 				<exemplarCity>Seul</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Korea Południowa</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuwait">
 				<exemplarCity>Kuwejt</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kuewjt</exemplarCity>
 			</zone>
 			<zone type="America/Cayman">
 				<exemplarCity>Kajmany</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtau">
 				<exemplarCity>Aktau</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kazachstan (Aktau)</exemplarCity>
 			</zone>
 			<zone type="Asia/Oral">
 				<exemplarCity>Uralsk</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtobe">
 				<exemplarCity>Aktiubińsk</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kazachstan (Aktiubińsk)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Aktobe</exemplarCity>
 			</zone>
 			<zone type="Asia/Qyzylorda">
 				<exemplarCity>Kyzył Orda</exemplarCity>
 			</zone>
 			<zone type="Asia/Almaty">
 				<exemplarCity>Ałma Ata</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kazachstan (Ałma Ata)</exemplarCity>
 			</zone>
 			<zone type="Asia/Vientiane">
 				<exemplarCity>Wientian</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Laos</exemplarCity>
 			</zone>
 			<zone type="Asia/Beirut">
 				<exemplarCity>Bejrut</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Liban</exemplarCity>
 			</zone>
 			<zone type="America/St_Lucia">
 				<exemplarCity>Saint Lucia</exemplarCity>
 			</zone>
 			<zone type="Europe/Vaduz">
-				<exemplarCity alt="proposed-x1001">Liechtenstein</exemplarCity>
 			</zone>
 			<zone type="Asia/Colombo">
 				<exemplarCity>Kolombo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sri Lanka</exemplarCity>
 			</zone>
 			<zone type="Africa/Monrovia">
-				<exemplarCity alt="proposed-x1001">Liberia</exemplarCity>
 			</zone>
 			<zone type="Africa/Maseru">
-				<exemplarCity alt="proposed-x1001">Lesoto</exemplarCity>
 			</zone>
 			<zone type="Europe/Vilnius">
 				<exemplarCity>Wilno</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Litwa</exemplarCity>
 			</zone>
 			<zone type="Europe/Luxembourg">
 				<exemplarCity>Luksemburg</exemplarCity>
 			</zone>
 			<zone type="Europe/Riga">
 				<exemplarCity>Ryga</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Łotwa</exemplarCity>
 			</zone>
 			<zone type="Africa/Tripoli">
 				<exemplarCity>Trypolis</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Libia</exemplarCity>
 			</zone>
 			<zone type="Africa/Casablanca">
-				<exemplarCity alt="proposed-x1001">Maroko</exemplarCity>
 			</zone>
 			<zone type="Europe/Monaco">
 				<exemplarCity>Monako</exemplarCity>
 			</zone>
 			<zone type="Europe/Chisinau">
 				<exemplarCity>Kiszyniów</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Mołdawia</exemplarCity>
 			</zone>
 			<zone type="Europe/Podgorica">
-				<exemplarCity alt="proposed-x1001">Czarnogóra</exemplarCity>
 			</zone>
 			<zone type="Indian/Antananarivo">
 				<exemplarCity>Antananarywa</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Madagaskar</exemplarCity>
 			</zone>
 			<zone type="Europe/Skopje">
-				<exemplarCity alt="proposed-x1001">Macedonia</exemplarCity>
 			</zone>
 			<zone type="Africa/Bamako">
-				<exemplarCity alt="proposed-x1001">Mali</exemplarCity>
 			</zone>
 			<zone type="Asia/Rangoon">
 				<exemplarCity>Rangun</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Birma</exemplarCity>
 			</zone>
 			<zone type="Asia/Hovd">
 				<exemplarCity>Howd</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Chowd</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Mongolia (Howd)</exemplarCity>
 			</zone>
 			<zone type="Asia/Ulaanbaatar">
 				<exemplarCity>Ułan Bator</exemplarCity>
 			</zone>
 			<zone type="Asia/Choibalsan">
 				<exemplarCity>Czojbalsan</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Mongolia (Czojbalsan)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Choibalsan</exemplarCity>
 			</zone>
 			<zone type="Asia/Macau">
 				<exemplarCity>Makau</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Makau, Specjalny Region Administracyjny Chin</exemplarCity>
 			</zone>
 			<zone type="Pacific/Saipan">
-				<exemplarCity alt="proposed-x1001">Mariany Północne</exemplarCity>
 			</zone>
 			<zone type="America/Martinique">
 				<exemplarCity>Martynika</exemplarCity>
 			</zone>
 			<zone type="Africa/Nouakchott">
 				<exemplarCity>Nawakszut</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Mauretania</exemplarCity>
 			</zone>
 			<zone type="Indian/Maldives">
 				<exemplarCity>Malediwy</exemplarCity>
 			</zone>
 			<zone type="Africa/Blantyre">
-				<exemplarCity alt="proposed-x1001">Malawi</exemplarCity>
 			</zone>
 			<zone type="America/Tijuana">
-				<exemplarCity alt="proposed-x1001">Meksyk (Tijuana)</exemplarCity>
 			</zone>
 			<zone type="America/Hermosillo">
-				<exemplarCity alt="proposed-x1001">Meksyk (Hermosillo)</exemplarCity>
 			</zone>
 			<zone type="America/Mazatlan">
-				<exemplarCity alt="proposed-x1001">Meksyk (Mazatlan)</exemplarCity>
 			</zone>
 			<zone type="America/Chihuahua">
-				<exemplarCity alt="proposed-x1001">Meksyk (Chihuahua)</exemplarCity>
 			</zone>
 			<zone type="America/Monterrey">
-				<exemplarCity alt="proposed-x1001">Meksyk (Monterrey)</exemplarCity>
 			</zone>
 			<zone type="America/Mexico_City">
 				<exemplarCity>Meksyk</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Meksyk (Meksyk)</exemplarCity>
 			</zone>
 			<zone type="America/Merida">
-				<exemplarCity alt="proposed-x1001">Meksyk (Merida)</exemplarCity>
 			</zone>
 			<zone type="America/Cancun">
-				<exemplarCity alt="proposed-x1001">Meksyk (Cancun)</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuala_Lumpur">
-				<exemplarCity alt="proposed-x1001">Malezja (Kuala Lumpur)</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity>Kuczing</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Malezja (Kuczing)</exemplarCity>
 			</zone>
 			<zone type="Africa/Maputo">
-				<exemplarCity alt="proposed-x1001">Mozambik</exemplarCity>
 			</zone>
 			<zone type="Africa/Windhoek">
 				<exemplarCity>Windhuk</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Namibia</exemplarCity>
 			</zone>
 			<zone type="Pacific/Noumea">
 				<exemplarCity>Numea</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Nowa Kaledonia</exemplarCity>
 			</zone>
 			<zone type="Africa/Niamey">
 				<exemplarCity>Niamej</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Niger</exemplarCity>
 			</zone>
 			<zone type="Pacific/Norfolk">
-				<exemplarCity alt="proposed-x1001">Wyspa Norfolk</exemplarCity>
 			</zone>
 			<zone type="Africa/Lagos">
-				<exemplarCity alt="proposed-x1001">Nigeria</exemplarCity>
 			</zone>
 			<zone type="America/Managua">
 				<exemplarCity>Nikaragua</exemplarCity>
 			</zone>
 			<zone type="Europe/Amsterdam">
-				<exemplarCity alt="proposed-x1001">Holandia</exemplarCity>
 			</zone>
 			<zone type="Europe/Oslo">
-				<exemplarCity alt="proposed-x1001">Norwegia</exemplarCity>
 			</zone>
 			<zone type="Asia/Katmandu">
-				<exemplarCity alt="proposed-x1001">Nepal</exemplarCity>
 			</zone>
 			<zone type="Asia/Muscat">
 				<exemplarCity>Maskat</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Oman</exemplarCity>
 			</zone>
 			<zone type="America/Lima">
-				<exemplarCity alt="proposed-x1001">Peru</exemplarCity>
 			</zone>
 			<zone type="Pacific/Marquesas">
 				<exemplarCity>Markizy</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Marquesas</exemplarCity>
 			</zone>
 			<zone type="Pacific/Port_Moresby">
-				<exemplarCity alt="proposed-x1001">Papua Nowa Gwinea</exemplarCity>
 			</zone>
 			<zone type="Asia/Manila">
-				<exemplarCity alt="proposed-x1001">Filipiny</exemplarCity>
 			</zone>
 			<zone type="Asia/Karachi">
 				<exemplarCity>Karaczi</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Pakistan</exemplarCity>
 			</zone>
 			<zone type="Europe/Warsaw">
 				<exemplarCity>Warszawa</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Polska</exemplarCity>
 			</zone>
 			<zone type="America/Miquelon">
-				<exemplarCity alt="proposed-x1001">Saint Pierre i Miquelon</exemplarCity>
 			</zone>
 			<zone type="Pacific/Pitcairn">
 				<exemplarCity>Wyspy Pitcairn</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Pitcairn</exemplarCity>
 			</zone>
 			<zone type="America/Puerto_Rico">
 				<exemplarCity>Portoryko</exemplarCity>
@@ -2792,18 +1855,15 @@
 			</zone>
 			<zone type="America/Asuncion">
 				<exemplarCity>Asunción</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Paragwaj</exemplarCity>
 			</zone>
 			<zone type="Asia/Qatar">
 				<exemplarCity>Katar</exemplarCity>
 			</zone>
 			<zone type="Europe/Bucharest">
 				<exemplarCity>Bukareszt</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Rumunia</exemplarCity>
 			</zone>
 			<zone type="Europe/Belgrade">
 				<exemplarCity>Belgrad</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Serbia</exemplarCity>
 			</zone>
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskwa</exemplarCity>
@@ -2819,11 +1879,9 @@
 			</zone>
 			<zone type="Asia/Krasnoyarsk">
 				<exemplarCity>Krasnojarsk</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Rosja (Krasnojarsk)</exemplarCity>
 			</zone>
 			<zone type="Asia/Irkutsk">
 				<exemplarCity>Irkuck</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Rosja (Irkuck)</exemplarCity>
 			</zone>
 			<zone type="Asia/Yakutsk">
 				<exemplarCity>Jakuck</exemplarCity>
@@ -2835,104 +1893,80 @@
 				<exemplarCity>Sachalin</exemplarCity>
 			</zone>
 			<zone type="Asia/Magadan">
-				<exemplarCity alt="proposed-x1001">Rosja (Magadan)</exemplarCity>
 			</zone>
 			<zone type="Asia/Kamchatka">
 				<exemplarCity>Kamczatka</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Rosja (Kamczatka)</exemplarCity>
 			</zone>
 			<zone type="Asia/Anadyr">
-				<exemplarCity alt="proposed-x1001">Rosja (Anadyr)</exemplarCity>
 			</zone>
 			<zone type="Africa/Kigali">
-				<exemplarCity alt="proposed-x1001">Rwanda</exemplarCity>
 			</zone>
 			<zone type="Asia/Riyadh">
 				<exemplarCity>Rijad</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Arabia Saudyjska</exemplarCity>
 			</zone>
 			<zone type="Pacific/Guadalcanal">
 				<exemplarCity>Wyspy Salomona</exemplarCity>
 			</zone>
 			<zone type="Indian/Mahe">
 				<exemplarCity>Mahé</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Seszele</exemplarCity>
 			</zone>
 			<zone type="Africa/Khartoum">
 				<exemplarCity>Chartum</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sudan</exemplarCity>
 			</zone>
 			<zone type="Europe/Stockholm">
 				<exemplarCity>Sztokholm</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Szwecja</exemplarCity>
 			</zone>
 			<zone type="Asia/Singapore">
 				<exemplarCity>Singapur</exemplarCity>
 			</zone>
 			<zone type="Atlantic/St_Helena">
 				<exemplarCity>Święta Helena</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Św. Helena</exemplarCity>
 			</zone>
 			<zone type="Europe/Ljubljana">
 				<exemplarCity>Lublana</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Słowenia</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
-				<exemplarCity alt="proposed-x1001">Svalbard i Wyspy Jan Mayen</exemplarCity>
 			</zone>
 			<zone type="Europe/Bratislava">
 				<exemplarCity>Bratysława</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Słowacja</exemplarCity>
 			</zone>
 			<zone type="Africa/Freetown">
-				<exemplarCity alt="proposed-x1001">Sierra Leone</exemplarCity>
 			</zone>
 			<zone type="Africa/Dakar">
-				<exemplarCity alt="proposed-x1001">Senegal</exemplarCity>
 			</zone>
 			<zone type="Africa/Mogadishu">
 				<exemplarCity>Mogadiszu</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Somalia</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Mogadisz</exemplarCity>
 			</zone>
 			<zone type="America/Paramaribo">
 				<exemplarCity>Surinam</exemplarCity>
 			</zone>
 			<zone type="Africa/Sao_Tome">
 				<exemplarCity>Săo Tomé</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sao Tome and Principe</exemplarCity>
 			</zone>
 			<zone type="America/El_Salvador">
 				<exemplarCity>Salwador</exemplarCity>
 			</zone>
 			<zone type="Asia/Damascus">
 				<exemplarCity>Damaszek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Syria</exemplarCity>
 			</zone>
 			<zone type="Africa/Mbabane">
-				<exemplarCity alt="proposed-x1001">Suazi</exemplarCity>
 			</zone>
 			<zone type="America/Grand_Turk">
 				<exemplarCity>Turks i Caicos</exemplarCity>
 			</zone>
 			<zone type="Africa/Ndjamena">
 				<exemplarCity>Ndżamena</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Czad</exemplarCity>
 			</zone>
 			<zone type="Indian/Kerguelen">
 				<exemplarCity>Wyspy Kerguelena</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Francuskie Terytoria Południowe i Antarktyczne</exemplarCity>
 			</zone>
 			<zone type="Africa/Lome">
 				<exemplarCity>Lomé</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Togo</exemplarCity>
 			</zone>
 			<zone type="Asia/Bangkok">
-				<exemplarCity alt="proposed-x1001">Tajlandia</exemplarCity>
 			</zone>
 			<zone type="Asia/Dushanbe">
 				<exemplarCity>Duszanbe</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Tadżykistan</exemplarCity>
 			</zone>
 			<zone type="Pacific/Fakaofo">
 				<exemplarCity>Tokelau</exemplarCity>
@@ -2942,34 +1976,25 @@
 			</zone>
 			<zone type="Asia/Ashgabat">
 				<exemplarCity>Aszchabad</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Aszchabat</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Turkmenistan</exemplarCity>
 			</zone>
 			<zone type="Africa/Tunis">
-				<exemplarCity alt="proposed-x1001">Tunezja</exemplarCity>
 			</zone>
 			<zone type="Pacific/Tongatapu">
-				<exemplarCity alt="proposed-x1001">Tonga</exemplarCity>
 			</zone>
 			<zone type="Europe/Istanbul">
 				<exemplarCity>Stambuł</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Istambuł</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Turcja</exemplarCity>
 			</zone>
 			<zone type="America/Port_of_Spain">
 				<exemplarCity>Port-of-Spain</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Trinidad i Tobago</exemplarCity>
 			</zone>
 			<zone type="Pacific/Funafuti">
 				<exemplarCity>Tuvalu</exemplarCity>
 			</zone>
 			<zone type="Asia/Taipei">
 				<exemplarCity>Tajpej</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Tajwan</exemplarCity>
 			</zone>
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity>Dar es-Salaam</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Tanzania</exemplarCity>
 			</zone>
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Użgorod</exemplarCity>
@@ -2984,87 +2009,59 @@
 				<exemplarCity>Zaporoże</exemplarCity>
 			</zone>
 			<zone type="Africa/Kampala">
-				<exemplarCity alt="proposed-x1001">Uganda</exemplarCity>
 			</zone>
 			<zone type="America/Adak">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Adak)</exemplarCity>
 			</zone>
 			<zone type="America/Nome">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Nome)</exemplarCity>
 			</zone>
 			<zone type="America/Anchorage">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Anchorage)</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Czas alaskański</exemplarCity>
 			</zone>
 			<zone type="America/Yakutat">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Yakutat)</exemplarCity>
 			</zone>
 			<zone type="America/Juneau">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Juneau)</exemplarCity>
 			</zone>
 			<zone type="America/Los_Angeles">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Los Angeles)</exemplarCity>
 			</zone>
 			<zone type="America/Boise">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Boise)</exemplarCity>
 			</zone>
 			<zone type="America/Phoenix">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Phoenix)</exemplarCity>
 			</zone>
 			<zone type="America/Shiprock">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Shiprock)</exemplarCity>
 			</zone>
 			<zone type="America/Denver">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Denver)</exemplarCity>
 			</zone>
 			<zone type="America/North_Dakota/New_Salem">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (New Salem)</exemplarCity>
 			</zone>
 			<zone type="America/North_Dakota/Center">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Centralne)</exemplarCity>
 			</zone>
 			<zone type="America/Chicago">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Chicago)</exemplarCity>
 			</zone>
 			<zone type="America/Menominee">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Menominee)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Vincennes">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Vincennes)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Petersburg">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Petersburg)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Knox">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Knox)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Winamac">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Winamac)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Marengo">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Marengo)</exemplarCity>
 			</zone>
 			<zone type="America/Indianapolis">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Indianapolis)</exemplarCity>
 			</zone>
 			<zone type="America/Louisville">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Louisville)</exemplarCity>
 			</zone>
 			<zone type="America/Indiana/Vevay">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Vevay)</exemplarCity>
 			</zone>
 			<zone type="America/Kentucky/Monticello">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Monticello)</exemplarCity>
 			</zone>
 			<zone type="America/Detroit">
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Detroit)</exemplarCity>
 			</zone>
 			<zone type="America/New_York">
 				<exemplarCity>Nowy Jork</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Stany Zjednoczone (Nowy Jork)</exemplarCity>
 			</zone>
 			<zone type="America/Montevideo">
-				<exemplarCity alt="proposed-x1001">Urugwaj</exemplarCity>
 			</zone>
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Samarkanda</exemplarCity>
@@ -3077,45 +2074,34 @@
 			</zone>
 			<zone type="America/St_Vincent">
 				<exemplarCity>Saint Vincent</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Saint Vincent i Grenadyny</exemplarCity>
 			</zone>
 			<zone type="America/Caracas">
-				<exemplarCity alt="proposed-x1001">Wenezuela</exemplarCity>
 			</zone>
 			<zone type="America/Tortola">
-				<exemplarCity alt="proposed-x1001">Brytyjskie Wyspy Dziewicze</exemplarCity>
 			</zone>
 			<zone type="America/St_Thomas">
 				<exemplarCity>Saint Thomas</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wyspy Dziewicze Stanów Zjednoczonych</exemplarCity>
 			</zone>
 			<zone type="Asia/Saigon">
 				<exemplarCity>Sajgon</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wietnam</exemplarCity>
 			</zone>
 			<zone type="Pacific/Efate">
 				<exemplarCity>Vanuatu</exemplarCity>
 			</zone>
 			<zone type="Pacific/Wallis">
-				<exemplarCity alt="proposed-x1001">Wallis i Futuna</exemplarCity>
 			</zone>
 			<zone type="Pacific/Apia">
-				<exemplarCity alt="proposed-x1001">Samoa</exemplarCity>
 			</zone>
 			<zone type="Asia/Aden">
-				<exemplarCity alt="proposed-x1001">Jemen</exemplarCity>
 			</zone>
 			<zone type="Indian/Mayotte">
 				<exemplarCity>Majotta</exemplarCity>
 			</zone>
 			<zone type="Africa/Johannesburg">
-				<exemplarCity alt="proposed-x1001">Republika Południowej Afryki</exemplarCity>
 			</zone>
 			<zone type="Africa/Lusaka">
-				<exemplarCity alt="proposed-x1001">Zambia</exemplarCity>
 			</zone>
 			<zone type="Africa/Harare">
-				<exemplarCity alt="proposed-x1001">Zimbabwe</exemplarCity>
 			</zone>
 			<metazone type="Europe_Central">
 				<long>
@@ -3229,7 +2215,6 @@
 			</currency>
 			<currency type="AUD">
 				<displayName>dolar australijski</displayName>
-				<displayName alt="proposed-x1001">dolary australijskie</displayName>
 				<symbol>$A</symbol>
 			</currency>
 			<currency type="AWG">
@@ -3269,7 +2254,6 @@
 			</currency>
 			<currency type="BGN">
 				<displayName>nowy lew bułgarski</displayName>
-				<displayName alt="proposed-x1001">lewa bułgarska</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>dinar bahrański</displayName>
@@ -3288,7 +2272,6 @@
 			</currency>
 			<currency type="BOB">
 				<displayName>boliviano</displayName>
-				<displayName alt="proposed-x1001">boliviano boliwijski</displayName>
 				<symbol>Bs</symbol>
 			</currency>
 			<currency type="BOP">
@@ -3305,7 +2288,6 @@
 			</currency>
 			<currency type="BRE">
 				<displayName>cruzeiro brazylijskie (1990-1993)</displayName>
-				<displayName alt="proposed-x1001">cruzeiro brazylijskie(1990-1993)</displayName>
 			</currency>
 			<currency type="BRL">
 				<displayName>real brazylijski</displayName>
@@ -3322,7 +2304,6 @@
 			</currency>
 			<currency type="BTN">
 				<displayName>ngultrum Bhutanu</displayName>
-				<displayName alt="proposed-x1001">ngultrum  Bhutan</displayName>
 				<symbol>Nu</symbol>
 			</currency>
 			<currency type="BUK">
@@ -3344,7 +2325,6 @@
 			</currency>
 			<currency type="CAD">
 				<displayName>dolar kanadyjski</displayName>
-				<displayName alt="proposed-x1001">dolary kanadyjskie</displayName>
 				<symbol>Can$</symbol>
 			</currency>
 			<currency type="CDF">
@@ -3352,7 +2332,6 @@
 			</currency>
 			<currency type="CHF">
 				<displayName>frank szwajcarski</displayName>
-				<displayName alt="proposed-x1001">franki szwajcarskie</displayName>
 				<symbol>SwF</symbol>
 			</currency>
 			<currency type="CLP">
@@ -3361,7 +2340,6 @@
 			</currency>
 			<currency type="CNY">
 				<displayName>juan renminbi</displayName>
-				<displayName alt="proposed-x1001">juan renminbi (Chiny)</displayName>
 				<symbol>Y</symbol>
 			</currency>
 			<currency type="COP">
@@ -3394,7 +2372,6 @@
 			</currency>
 			<currency type="DEM">
 				<displayName>marka niemiecka</displayName>
-				<displayName alt="proposed-x1001">marki niemieckie</displayName>
 			</currency>
 			<currency type="DJF">
 				<displayName>frank Dżibuti</displayName>
@@ -3402,7 +2379,6 @@
 			</currency>
 			<currency type="DKK">
 				<displayName>korona duńska</displayName>
-				<displayName alt="proposed-x1001">korony duńskie</displayName>
 				<symbol>DKr</symbol>
 			</currency>
 			<currency type="DOP">
@@ -3447,7 +2423,6 @@
 			</currency>
 			<currency type="FJD">
 				<displayName>dolar fidżi</displayName>
-				<displayName alt="proposed-x1001">dolar fidżijski</displayName>
 				<symbol>F$</symbol>
 			</currency>
 			<currency type="FKP">
@@ -3455,16 +2430,13 @@
 			</currency>
 			<currency type="FRF">
 				<displayName>frank francuski </displayName>
-				<displayName alt="proposed-x1001">franki francuskie</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>funt szterling</displayName>
-				<displayName alt="proposed-x1001">funty brytyjskie</displayName>
 				<symbol>UK£</symbol>
 			</currency>
 			<currency type="GEK">
 				<displayName>kupon gruziński larit</displayName>
-				<displayName alt="proposed-x1001">Larit gruziński kupon</displayName>
 			</currency>
 			<currency type="GEL">
 				<displayName>lari gruzińskie</displayName>
@@ -3508,7 +2480,6 @@
 			</currency>
 			<currency type="HKD">
 				<displayName>dolar hongkoński</displayName>
-				<displayName alt="proposed-x1001">dolary Hongkongu</displayName>
 				<symbol>HK$</symbol>
 			</currency>
 			<currency type="HNL">
@@ -3526,7 +2497,6 @@
 			</currency>
 			<currency type="HUF">
 				<displayName>forint węgierski </displayName>
-				<displayName alt="proposed-x1001">forint węgierski</displayName>
 				<symbol>Ft</symbol>
 			</currency>
 			<currency type="IDR">
@@ -3542,7 +2512,6 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>nowy szekel izraelski</displayName>
-				<displayName alt="proposed-x1001">szekel izraelski</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>rupia indyjska</displayName>
@@ -3572,7 +2541,6 @@
 			</currency>
 			<currency type="JPY">
 				<displayName>jen japoński</displayName>
-				<displayName alt="proposed-x1001">jeny japońskie</displayName>
 				<symbol>JP¥</symbol>
 			</currency>
 			<currency type="KES">
@@ -3606,7 +2574,6 @@
 			</currency>
 			<currency type="KZT">
 				<displayName>Tenge kazachskie</displayName>
-				<displayName alt="proposed-x1001">tenge kazachskie</displayName>
 				<symbol>T</symbol>
 			</currency>
 			<currency type="LAK">
@@ -3629,7 +2596,6 @@
 			</currency>
 			<currency type="LTL">
 				<displayName>lit litewski</displayName>
-				<displayName alt="proposed-x1001">lita litewska</displayName>
 			</currency>
 			<currency type="LTT">
 				<displayName>talon litewski</displayName>
@@ -3685,7 +2651,6 @@
 			</currency>
 			<currency type="MTL">
 				<displayName>lira maltańska</displayName>
-				<displayName alt="proposed-x1001">maltese lira</displayName>
 				<symbol>Lm</symbol>
 			</currency>
 			<currency type="MTP">
@@ -3710,7 +2675,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>ringgit malezyjski</displayName>
-				<displayName alt="proposed-x1001">malezyjski ringgit</displayName>
 				<symbol>RM</symbol>
 			</currency>
 			<currency type="MZE">
@@ -3738,7 +2702,6 @@
 			</currency>
 			<currency type="NOK">
 				<displayName>korona norweska</displayName>
-				<displayName alt="proposed-x1001">korony norweskie</displayName>
 				<symbol>NKr</symbol>
 			</currency>
 			<currency type="NPR">
@@ -3747,7 +2710,6 @@
 			</currency>
 			<currency type="NZD">
 				<displayName>dolar nowozelandzki</displayName>
-				<displayName alt="proposed-x1001">dolary nowozelandzkie</displayName>
 				<symbol>$NZ</symbol>
 			</currency>
 			<currency type="OMR">
@@ -3778,7 +2740,6 @@
 			</currency>
 			<currency type="PLN">
 				<displayName>złoty polski</displayName>
-				<displayName alt="proposed-x1001">nowy złoty polski</displayName>
 				<symbol>zł</symbol>
 			</currency>
 			<currency type="PLZ">
@@ -3803,7 +2764,6 @@
 			</currency>
 			<currency type="RON">
 				<displayName>nowa leja rumuńska</displayName>
-				<displayName alt="proposed-x1001">RON</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>dinar serbski</displayName>
@@ -3838,12 +2798,10 @@
 			</currency>
 			<currency type="SEK">
 				<displayName>korona szwedzka</displayName>
-				<displayName alt="proposed-x1001">korony szwedzkie</displayName>
 				<symbol>SKr</symbol>
 			</currency>
 			<currency type="SGD">
 				<displayName>dolar singapurski</displayName>
-				<displayName alt="proposed-x1001">dolary singapurskie</displayName>
 				<symbol>S$</symbol>
 			</currency>
 			<currency type="SHP">
@@ -3887,7 +2845,6 @@
 			</currency>
 			<currency type="THB">
 				<displayName>baht tajski</displayName>
-				<displayName alt="proposed-x1001">baht tajlandzki</displayName>
 			</currency>
 			<currency type="TJR">
 				<displayName>rubel tadżycki</displayName>
@@ -3910,12 +2867,10 @@
 			</currency>
 			<currency type="TRL">
 				<displayName>lir turecki</displayName>
-				<displayName alt="proposed-x1001">lira turecka</displayName>
 				<symbol>TL</symbol>
 			</currency>
 			<currency type="TRY">
 				<displayName>nowa lira turecka</displayName>
-				<displayName alt="proposed-x1001">nowa turecka lira</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>dolar Trynidadu i Tobago</displayName>
@@ -3931,7 +2886,6 @@
 			</currency>
 			<currency type="UAH">
 				<displayName>hrywna ukraińska</displayName>
-				<displayName alt="proposed-x1001">ukraińska hrywna</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>karbowaniec ukraiński</displayName>
@@ -3945,7 +2899,6 @@
 			</currency>
 			<currency type="USD">
 				<displayName>dolar amerykański </displayName>
-				<displayName alt="proposed-x1001">dolary amerykańskie</displayName>
 				<symbol>US$</symbol>
 			</currency>
 			<currency type="UYP">

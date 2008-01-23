@@ -9,131 +9,80 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="aa">อาฟา</language>
-			<language type="aa" alt="proposed-x1001">อะฟาร์</language>
-			<language type="aa" alt="proposed-x1002">อาฟาร์</language>
 			<language type="ab">แอบกาเซีย</language>
 			<language type="ace">อาเจะห์</language>
-			<language type="ace" alt="proposed-x1001">อะเจะห์</language>
 			<language type="ach">อาโคลิ</language>
 			<language type="ada">อาดางมี</language>
 			<language type="ady">อะดีเกยา</language>
 			<language type="ae">อาเวสทาน</language>
-			<language type="ae" alt="proposed-x1001">อเวสตัน</language>
 			<language type="af">แอฟริกัน</language>
-			<language type="af" alt="proposed-x1001">แอฟริคานส์</language>
-			<language type="af" alt="proposed-x1002">แอฟริกา</language>
-			<language type="af" alt="proposed-x1003">ภาษาแอฟริกา</language>
 			<language type="afa">อาฟโร-เอเชียติก</language>
-			<language type="afa" alt="proposed-x1001">อาฟโร-เอเชียติกอื่นๆ</language>
-			<language type="afa" alt="proposed-x1002">แอฟโร-เอเชียติกอื่นๆ</language>
 			<language type="afh">อาฟริฮิลิ</language>
 			<language type="ain">ไอนุ</language>
 			<language type="ak">อาคาน</language>
-			<language type="ak" alt="proposed-x1001">อาคัน</language>
 			<language type="akk">อัคคาเดีย</language>
-			<language type="akk" alt="proposed-x1001">อัคคาเดียน</language>
 			<language type="ale">อลิอุต</language>
 			<language type="alg">ภาษาอาลงเควียน</language>
 			<language type="alt">อัลไตใต้</language>
 			<language type="am">อัมฮาริก</language>
-			<language type="am" alt="proposed-x1001">อัมฮาริค</language>
-			<language type="am" alt="proposed-x1002">อัมฮารา</language>
-			<language type="am" alt="proposed-x1003">ภาษาอัมฮาริค</language>
 			<language type="an">อารากอน</language>
-			<language type="an" alt="proposed-x1001">อาราโกนิส</language>
 			<language type="ang">อังกฤษโบราณ</language>
-			<language type="ang" alt="proposed-x1001">อังกฤษโบราณ (ค.ศ.450-1100)</language>
 			<language type="anp">อังคิกา</language>
-			<language type="anp" alt="proposed-x1001">อังกิคา</language>
 			<language type="apa">ภาษาอาปาเช่</language>
 			<language type="ar">อาหรับ</language>
-			<language type="ar" alt="proposed-x1001">อารบิก</language>
-			<language type="ar" alt="proposed-x1002">ภาษาอาหรับ</language>
 			<language type="arc">อราเมอิก</language>
-			<language type="arc" alt="proposed-x1001">อารามาอิค</language>
 			<language type="arn">อาราคาเนียน</language>
 			<language type="arp">อาราพาโฮ</language>
 			<language type="art">ภาษาประดิษฐ์ (อื่นๆ)</language>
 			<language type="arw">อาราวัก</language>
 			<language type="as">อัสสัม</language>
-			<language type="as" alt="proposed-x1001">ภาษาอัสสัม</language>
-			<language type="as" alt="proposed-x1002">อัสสัมมิส</language>
 			<language type="ast">อัสเตอเรียน</language>
-			<language type="ast" alt="proposed-x1001">อัสตูรีอัส</language>
 			<language type="ath">ภาษาอาธาพาสกาน</language>
 			<language type="aus">ภาษาออสเตรเลีย</language>
 			<language type="av">อาวาริก</language>
 			<language type="awa">อวาธี</language>
-			<language type="awa" alt="proposed-x1001">อาวาดิ</language>
 			<language type="ay">ไอย์มารา</language>
-			<language type="ay" alt="proposed-x1001">ไอมารา</language>
 			<language type="az">อาเซอร์ไบจาน</language>
-			<language type="az" alt="proposed-x1001">ภาษาอาเซอร์ไบจัน</language>
-			<language type="az" alt="proposed-x1002">อาเซอร์ไบจานี</language>
 			<language type="ba">บัชคีร์</language>
-			<language type="ba" alt="proposed-x1001">บาสช์กีร์</language>
 			<language type="bad">บันดา</language>
 			<language type="bai">ภาษาบามิเลค</language>
 			<language type="bal">บาลูชิ</language>
 			<language type="ban">บาหลี</language>
 			<language type="bas">บาสา</language>
-			<language type="bas" alt="proposed-x1001">ชวา</language>
 			<language type="bat">บอลติก (อื่นๆ)</language>
-			<language type="bat" alt="proposed-x1001">บัลทิก (อื่นๆ)</language>
 			<language type="be">เบลารุส</language>
-			<language type="be" alt="proposed-x1001">บายโลรัสเซีย</language>
-			<language type="be" alt="proposed-x1002">ภาษาเบลารูเชียน</language>
 			<language type="bej">เบจา</language>
 			<language type="bem">เบมบา</language>
 			<language type="ber">เบอร์เบอร์</language>
 			<language type="bg">บัลแกเรีย</language>
-			<language type="bg" alt="proposed-x1001">ภาษาบัลกาเรียน</language>
-			<language type="bg" alt="proposed-x1002">บัลกาเรีย</language>
 			<language type="bh">บิฮารี</language>
-			<language type="bh" alt="proposed-x1001">ภาษาพิหาร</language>
 			<language type="bho">ภจบุรี</language>
-			<language type="bho" alt="proposed-x1001">โบจพูริ</language>
 			<language type="bi">บิสลามา</language>
 			<language type="bik">บิกอล</language>
-			<language type="bik" alt="proposed-x1001">บิกล</language>
 			<language type="bin">บินี</language>
-			<language type="bin" alt="proposed-x1001">บินิ</language>
 			<language type="bla">สิกสิกา</language>
 			<language type="bm">บามบารา</language>
-			<language type="bm" alt="proposed-x1001">บัมบารา</language>
 			<language type="bn">เบงกาลี</language>
-			<language type="bn" alt="proposed-x1001">ภาษาเบงกอล</language>
 			<language type="bnt">บันตู</language>
-			<language type="bnt" alt="proposed-x1001">บันทุ</language>
 			<language type="bo">ทิเบต</language>
 			<language type="br">บรีทัน</language>
-			<language type="br" alt="proposed-x1001">ภาษาบรีตัน</language>
 			<language type="bra">บราจ</language>
 			<language type="bs">บอสเนีย</language>
-			<language type="bs" alt="proposed-x1001">ภาษาบอซเนีย</language>
 			<language type="btk">บาตัก</language>
-			<language type="btk" alt="proposed-x1001">บาทัค</language>
 			<language type="bua">บูเรียต</language>
 			<language type="bug">บูกีนิส</language>
 			<language type="byn">บลิน</language>
 			<language type="ca">คาตาลัน</language>
-			<language type="ca" alt="proposed-x1001">ภาษาคาตะลาน</language>
-			<language type="ca" alt="proposed-x1002">แคตาแลน</language>
 			<language type="cad">คัดโด</language>
 			<language type="cai">อเมริกันอินเดียนกลาง (อื่นๆ)</language>
-			<language type="cai" alt="proposed-x1001">อินเดียอเมริกากลาง(อื่นๆ)</language>
 			<language type="car">คาริบ</language>
 			<language type="cau">คอเคเซียน (อื่นๆ)</language>
 			<language type="ce">เชเชน</language>
-			<language type="ce" alt="proposed-x1001">เชเชิน</language>
 			<language type="ceb">เซบู</language>
-			<language type="ceb" alt="proposed-x1001">เคบัวโน</language>
 			<language type="cel">เซลติก</language>
-			<language type="cel" alt="proposed-x1001">เคลติกอื่นๆ</language>
 			<language type="ch">ชามอร์โร</language>
 			<language type="chb">ชิบชา</language>
 			<language type="chg">ชากาไท</language>
-			<language type="chg" alt="proposed-x1001">ฌาฆาไตย</language>
 			<language type="chk">ชูกิส</language>
 			<language type="chm">มาริ</language>
 			<language type="chn">ชินุคจาร์กอน</language>
@@ -141,108 +90,65 @@
 			<language type="chp">ชิเพวยัน</language>
 			<language type="chr">เชอโรกี</language>
 			<language type="chy">เชเยน</language>
-			<language type="chy" alt="proposed-x1001">ไชเอนน์</language>
 			<language type="cmc">ภาษาชามิก</language>
 			<language type="co">คอร์ซิกา</language>
 			<language type="cop">คอปติก</language>
-			<language type="cop" alt="proposed-x1001">คอปทิก</language>
 			<language type="cpe">ครีโอเลสและพิกกินส์ที่มาจากอังกฤษอื่นๆ</language>
-			<language type="cpe" alt="proposed-x1001">คริโอลและพิดจินที่มาจากภาษาอังกฤษอื่นๆ</language>
 			<language type="cpf">ครีโอเลสและพิกกินส์ที่มาจากฝรั่งเศสอื่นๆ</language>
-			<language type="cpf" alt="proposed-x1001">คริโอลและพิดจินที่มาจากภาษาฝรั่งเศสอื่นๆ</language>
 			<language type="cpp">ครีโอเลสและพิกกินส์ที่มาจากโปรตุเกสอื่นๆ</language>
-			<language type="cpp" alt="proposed-x1001">คริโอลและพิดจินที่มาจากภาษาโปรตุเกสอื่นๆ</language>
 			<language type="cr">ครี</language>
 			<language type="crh">ตุรกีไครเมีย</language>
-			<language type="crh" alt="proposed-x1001">ครีมีนเตอร์กี</language>
 			<language type="crp">ครีโอเลสและพิกกินส์ (อื่นๆ)</language>
-			<language type="crp" alt="proposed-x1001">คริโอลและพิดจิน (อื่นๆ)</language>
 			<language type="cs">เช็ก</language>
-			<language type="cs" alt="proposed-x1001">ภาษาเช็คช์</language>
 			<language type="csb">คาซูเบียน</language>
 			<language type="cu">เชอร์ชสลาวิก</language>
 			<language type="cus">คูชิทิก (อื่นๆ)</language>
 			<language type="cv">ชูวาส</language>
-			<language type="cv" alt="proposed-x1001">ชูวัช</language>
 			<language type="cy">เวลส์</language>
-			<language type="cy" alt="proposed-x1001">ภาษาชาวเวลส์</language>
-			<language type="cy" alt="proposed-x1002">เวลช์</language>
 			<language type="da">เดนมาร์ก</language>
-			<language type="da" alt="proposed-x1001">ภาษาเดนมาร์ก</language>
 			<language type="dak">ดาโกทา</language>
-			<language type="dak" alt="proposed-x1001">ดาโคตา</language>
 			<language type="dar">ดาร์จวา</language>
 			<language type="day">ดายัก</language>
-			<language type="day" alt="proposed-x1001">ดายัค</language>
 			<language type="de">เยอรมัน</language>
-			<language type="de" alt="proposed-x1001">ภาษาเยอรมัน</language>
 			<language type="de_CH">เยอรมันสูง (สวิส)</language>
 			<language type="del">เดลาแวร์</language>
-			<language type="del" alt="proposed-x1001">เดลาวารี</language>
 			<language type="den">สลาฟ</language>
 			<language type="dgr">ดอจริบ</language>
 			<language type="din">ดินกา</language>
-			<language type="din" alt="proposed-x1001">ดิงกา</language>
 			<language type="doi">ดอจริ</language>
-			<language type="doi" alt="proposed-x1001">โฑครี</language>
 			<language type="dra">ดราวิเดียน (อื่นๆ)</language>
 			<language type="dsb">ซอร์เบียนต่ำ</language>
 			<language type="dua">ดัวลา</language>
 			<language type="dum">ดัตช์กลาง</language>
-			<language type="dum" alt="proposed-x1001">ดัทช์กลาง</language>
 			<language type="dv">ดิเวฮิ</language>
 			<language type="dyu">ดิวลา</language>
 			<language type="dz">ดซองคา</language>
-			<language type="dz" alt="proposed-x1001">ดซองขา</language>
 			<language type="ee">เอเว</language>
-			<language type="ee" alt="proposed-x1001">อีเว</language>
 			<language type="efi">อีฟิก</language>
-			<language type="efi" alt="proposed-x1001">เอฟิก</language>
 			<language type="egy">อียิปต์โบราณ</language>
 			<language type="eka">อีกาจุก</language>
-			<language type="eka" alt="proposed-x1001">อีกาจัก</language>
 			<language type="el">กรีก</language>
-			<language type="el" alt="proposed-x1001">ภาษากรีก</language>
 			<language type="elx">อีลาไมต์</language>
-			<language type="elx" alt="proposed-x1001">อีลามิท</language>
 			<language type="en">อังกฤษ</language>
-			<language type="en" alt="proposed-x1001">ภาษาอังกฤษ</language>
-			<language type="en_AU" alt="proposed-x1001">ภาษาอังกฤษ (ออสเตรเลีย)</language>
-			<language type="en_US" alt="proposed-x1001">ภาษาอังกฤษ (อเมริกัน)</language>
 			<language type="enm">อังกฤษกลาง</language>
 			<language type="eo">เอสเปอรันโต</language>
-			<language type="eo" alt="proposed-x1001">เอสเปรันโต</language>
 			<language type="es">สเปน</language>
-			<language type="es" alt="proposed-x1001">ภาษาสเปน</language>
 			<language type="es_419">สเปน (ละตินอเมริกา)</language>
 			<language type="es_ES">สเปน (ไอบีเรีย)</language>
 			<language type="et">เอสโตเนีย</language>
-			<language type="et" alt="proposed-x1001">ภาษาเอสโทเนีย</language>
-			<language type="et" alt="proposed-x1002">เอสโทเนีย</language>
 			<language type="eu">บาสก์</language>
-			<language type="eu" alt="proposed-x1001">แบสก์</language>
-			<language type="eu" alt="proposed-x1002">ภาษาแบ็ซค</language>
 			<language type="ewo">อีวันโด</language>
-			<language type="ewo" alt="proposed-x1001">เอวานโด</language>
-			<language type="ewo" alt="proposed-x1002">อีวานโด</language>
 			<language type="fa">เปอร์เซีย</language>
-			<language type="fa" alt="proposed-x1001">ภาษาเปอร์เซีย</language>
 			<language type="fan">ฟาง</language>
 			<language type="fat">ฟันติ</language>
-			<language type="fat" alt="proposed-x1001">ฟันทิ</language>
 			<language type="ff">ฟูลาฮ์</language>
 			<language type="fi">ฟินแลนด์</language>
-			<language type="fi" alt="proposed-x1001">ฟิน</language>
-			<language type="fi" alt="proposed-x1002">ภาษาฟินแลนด์</language>
 			<language type="fil">ฟิลิปปินส์</language>
-			<language type="fil" alt="proposed-x1001">ภาษาตากาลอค</language>
 			<language type="fiu">ฟินโน-อักเรียน</language>
 			<language type="fj">ฟิจิ</language>
 			<language type="fo">ฟาโรส</language>
-			<language type="fo" alt="proposed-x1001">ภาษาฟาโร</language>
 			<language type="fon">ฟอน</language>
 			<language type="fr">ฝรั่งเศส</language>
-			<language type="fr" alt="proposed-x1001">ภาษาฝรั่งเศส</language>
 			<language type="fr_CH">ฝรั่งเศส (สวิส)</language>
 			<language type="frm">ฝรั่งเศสกลาง</language>
 			<language type="fro">ฝรั่งเศสโบราณ</language>
@@ -250,124 +156,75 @@
 			<language type="frs">ฟริเซียนตะวันออก</language>
 			<language type="fur">เฟรียเลียน</language>
 			<language type="fy">ฟริเซียนตะวันตก</language>
-			<language type="fy" alt="proposed-x1001">ฟรีสแลนด์</language>
-			<language type="fy" alt="proposed-x1002">ภาษาฟรีสแลนด์</language>
 			<language type="ga">ไอริช</language>
-			<language type="ga" alt="proposed-x1001">ภาษาไอริช</language>
 			<language type="gaa">กา</language>
 			<language type="gay">กาโย</language>
 			<language type="gba">กบายา</language>
 			<language type="gd">สก็อตส์เกลิค</language>
-			<language type="gd" alt="proposed-x1001">ภาษาเกล-อิค</language>
 			<language type="gem">เยอรมัน (อื่นๆ)</language>
 			<language type="gez">กีซ</language>
 			<language type="gil">กิลเบอร์ทิส</language>
 			<language type="gl">กาลิเซีย</language>
-			<language type="gl" alt="proposed-x1001">ภาษากาลิเชียน</language>
-			<language type="gl" alt="proposed-x1002">กะลีเชีย</language>
 			<language type="gmh">เยอรมันสูงกลาง</language>
 			<language type="gn">กัวรานี</language>
-			<language type="gn" alt="proposed-x1001">ภาษากวารานี</language>
-			<language type="gn" alt="proposed-x1002">กวารานี</language>
 			<language type="goh">เยอรมันสูงโบราณ</language>
 			<language type="gon">กอนดิ</language>
-			<language type="gon" alt="proposed-x1001">กอนด์</language>
 			<language type="gor">กอรอนทาโล</language>
 			<language type="got">โกธิก</language>
 			<language type="grb">เกรโบ</language>
-			<language type="grb" alt="proposed-x1001">กรีโบ</language>
 			<language type="grc">กรีกโบราณ</language>
 			<language type="gsw">เยอรมันสวิส</language>
 			<language type="gu">คุชราต</language>
-			<language type="gu" alt="proposed-x1001">ภาษากูจาราติ</language>
-			<language type="gu" alt="proposed-x1002">กูจาราติ</language>
 			<language type="gv">มานซ์</language>
 			<language type="gwi">กวิชอิน</language>
 			<language type="ha">โฮซา</language>
-			<language type="ha" alt="proposed-x1001">เฮาซา</language>
 			<language type="hai">ไฮดา</language>
 			<language type="haw">ฮาวาย</language>
 			<language type="he">ฮิบรู</language>
-			<language type="he" alt="proposed-x1001">ภาษายิว</language>
 			<language type="hi">ฮินดี</language>
-			<language type="hi" alt="proposed-x1001">ภาษาฮินดู</language>
-			<language type="hi" alt="proposed-x1002">ฮินดู</language>
 			<language type="hil">ไฮลิเกนอน</language>
-			<language type="hil" alt="proposed-x1001">ฮีลีไกนอน</language>
 			<language type="him">ฮิมาชาลิ</language>
 			<language type="hit">ฮิตไตท์</language>
-			<language type="hit" alt="proposed-x1001">ฮิตทิต</language>
 			<language type="hmn">ม้ง</language>
-			<language type="hmn" alt="proposed-x1001">ฮมอง</language>
 			<language type="ho">ฮิริโมทุ</language>
 			<language type="hr">โครเอเชีย</language>
-			<language type="hr" alt="proposed-x1001">โครเอเทีย</language>
-			<language type="hr" alt="proposed-x1002">ภาษาโครเอเชียน</language>
 			<language type="hsb">ซอร์เบียนบน</language>
 			<language type="ht">เฮติ</language>
-			<language type="ht" alt="proposed-x1001">ไฮเทียน</language>
 			<language type="hu">ฮังการี</language>
-			<language type="hu" alt="proposed-x1001">ภาษาฮังการี</language>
 			<language type="hup">ฮูพา</language>
 			<language type="hy">อาร์เมเนีย</language>
-			<language type="hy" alt="proposed-x1001">ภาษาอาร์เมเนีย</language>
-			<language type="hy" alt="proposed-x1002">อาร์มีเนีย</language>
 			<language type="hz">เฮเรโร</language>
-			<language type="hz" alt="proposed-x1001">เฮียร์โร</language>
 			<language type="ia">ภาษากลางที่ใช้ในการสื่อสารระหว่างประเทศ</language>
-			<language type="ia" alt="proposed-x1001">ภาษานานาชาติ</language>
 			<language type="iba">อิบาน</language>
 			<language type="id">อินโดนีเชีย</language>
-			<language type="id" alt="proposed-x1001">ภาษาอินโดนีเซีย</language>
 			<language type="ie">อินเตอร์ลิงค์</language>
-			<language type="ie" alt="proposed-x1001">อินเตอร์ลิงก์</language>
 			<language type="ig">อิกโบ</language>
 			<language type="ii">เสฉวนยิ</language>
-			<language type="ii" alt="proposed-x1001">ชิชวนยี่</language>
-			<language type="ii" alt="proposed-x1002">สิชวนยิ</language>
 			<language type="ijo">อิโจ</language>
 			<language type="ik">ไอนูเปียก</language>
 			<language type="ilo">อิโลโก</language>
 			<language type="inc">อินดิก (อื่นๆ)</language>
 			<language type="ine">อินโด-ยูโรเปียน (อื่นๆ)</language>
-			<language type="ine" alt="proposed-x1001">อินโดยูโรเปียน (อื่นๆ)</language>
 			<language type="inh">อิงกุช</language>
-			<language type="inh" alt="proposed-x1001">อินกุส</language>
 			<language type="io">อิโด</language>
 			<language type="ira">อิหร่าน</language>
-			<language type="ira" alt="proposed-x1001">อิเรเนียนอื่นๆ</language>
-			<language type="ira" alt="proposed-x1002">อิหร่านอื่นๆ</language>
 			<language type="iro">ภาษาอิโรกัวเอียน</language>
 			<language type="is">ไอซแลนดิก</language>
-			<language type="is" alt="proposed-x1001">ภาษาไอซ์แลนด์</language>
-			<language type="is" alt="proposed-x1002">ไอซ์แลนด์ดิค</language>
 			<language type="it">อิตาลี</language>
-			<language type="it" alt="proposed-x1001">ภาษาอิตาลี</language>
 			<language type="iu">ไอนุกติตัท</language>
-			<language type="iu" alt="proposed-x1001">อินุกติตุต</language>
 			<language type="ja">ญี่ปุ่น</language>
-			<language type="ja" alt="proposed-x1001">ภาษาญี่ปุ่น</language>
 			<language type="jbo">โลจบัน</language>
 			<language type="jpr">ยิว-เปอร์เซีย</language>
-			<language type="jpr" alt="proposed-x1001">จูดี-เปอร์เซีย</language>
 			<language type="jrb">ยิว-อาหรับ</language>
-			<language type="jrb" alt="proposed-x1001">จูดี-อาราบิก</language>
 			<language type="jv">ชวา</language>
-			<language type="jv" alt="proposed-x1001">ภาษาชวา</language>
 			<language type="ka">จอร์เจีย</language>
-			<language type="ka" alt="proposed-x1001">จอร์เจียน</language>
-			<language type="ka" alt="proposed-x1002">ภาษาจอร์เจีย</language>
 			<language type="kaa">การา-กาลพาก</language>
 			<language type="kab">กาไบล</language>
 			<language type="kac">กะฉิ่น</language>
-			<language type="kac" alt="proposed-x1001">คะฉิ่น</language>
 			<language type="kam">คัมบา</language>
-			<language type="kam" alt="proposed-x1001">กามบา</language>
 			<language type="kar">กะเหรี่ยง</language>
 			<language type="kaw">กาวิ</language>
-			<language type="kaw" alt="proposed-x1001">กวิ</language>
 			<language type="kbd">คาร์บาเดีย</language>
-			<language type="kbd" alt="proposed-x1001">กาบาร์เดียน</language>
 			<language type="kg">คองโก</language>
 			<language type="kha">คาสิ</language>
 			<language type="khi">คอยสัน (อื่นๆ)</language>
@@ -377,39 +234,24 @@
 			<language type="kk">คาซัค</language>
 			<language type="kl">กรีนแลนด์ดิค</language>
 			<language type="km">เขมร</language>
-			<language type="km" alt="proposed-x1001">ภาษากัมพูชา</language>
 			<language type="kmb">คิมบุนดู</language>
-			<language type="kmb" alt="proposed-x1001">กิมบันดุ</language>
 			<language type="kn">กันนาดา</language>
-			<language type="kn" alt="proposed-x1001">กานาดา</language>
-			<language type="kn" alt="proposed-x1002">ภาษากันนาดา</language>
 			<language type="ko">เกาหลี</language>
-			<language type="ko" alt="proposed-x1001">ภาษาเกาหลี</language>
 			<language type="kok">กงกัณ</language>
-			<language type="kok" alt="proposed-x1001">กอนกานิ</language>
 			<language type="kos">กอสราเอียน</language>
 			<language type="kpe">กเปลล์</language>
-			<language type="kpe" alt="proposed-x1001">กเปลเล</language>
 			<language type="kr">คานูรี</language>
-			<language type="kr" alt="proposed-x1001">กานุริ</language>
 			<language type="krc">คาราไช-บัลการ์</language>
-			<language type="krc" alt="proposed-x1001">การาชาย-บัลการ์</language>
 			<language type="kro">กรุ</language>
 			<language type="kru">กุรุก</language>
 			<language type="ks">กัศมีร์</language>
-			<language type="ks" alt="proposed-x1001">คัชมีรี</language>
 			<language type="ku">เคิร์ด</language>
-			<language type="ku" alt="proposed-x1001">ภาษาเคิร์ด</language>
-			<language type="ku" alt="proposed-x1002">เคิด</language>
 			<language type="kum">กุมิก</language>
 			<language type="kut">กุเทไน</language>
 			<language type="kv">โกมิ</language>
-			<language type="kv" alt="proposed-x1001">โคมิ</language>
 			<language type="kw">คอร์นิส</language>
 			<language type="ky">เคอร์กิซ</language>
-			<language type="ky" alt="proposed-x1001">ภาษาคีร์กิซ</language>
 			<language type="la">ละติน</language>
-			<language type="la" alt="proposed-x1001">ภาษาละติน</language>
 			<language type="lad">ลาดิโน</language>
 			<language type="lah">ลาฮ์นดา</language>
 			<language type="lam">ลามบา</language>
@@ -418,32 +260,23 @@
 			<language type="lg">กานดา</language>
 			<language type="li">ลิมเบิร์ก</language>
 			<language type="ln">ลิงกาลา</language>
-			<language type="ln" alt="proposed-x1001">ภาษาลิงกาล่า</language>
 			<language type="lo">ลาว</language>
-			<language type="lo" alt="proposed-x1001">ภาษาลาว</language>
 			<language type="lol">มองโก</language>
 			<language type="loz">โลซิ</language>
 			<language type="lt">ลิธัวเนีย</language>
-			<language type="lt" alt="proposed-x1001">ภาษาลิทัวเนีย</language>
-			<language type="lt" alt="proposed-x1002">ลิทัวเนีย</language>
 			<language type="lu">ลูบา-กาตองกา</language>
-			<language type="lu" alt="proposed-x1001">ลูกา-กาทันกา</language>
 			<language type="lua">ลูบา-ลูลัว</language>
 			<language type="lui">ลุยเซโน</language>
 			<language type="lun">ลันดา</language>
 			<language type="luo">ลัว</language>
 			<language type="lus">ลูไช</language>
 			<language type="lv">ลัตเวีย</language>
-			<language type="lv" alt="proposed-x1001">ภาษาลัทเวีย</language>
-			<language type="lv" alt="proposed-x1002">แลตเวีย (เลททิสช์)</language>
 			<language type="mad">มาดูริส</language>
 			<language type="mag">มากาฮิ</language>
 			<language type="mai">ไมถิลี</language>
-			<language type="mai" alt="proposed-x1001">มัยธิลิ</language>
 			<language type="mak">มากาซาร์</language>
 			<language type="man">แมนดินโก</language>
 			<language type="map">ออสโทรนีเซีย</language>
-			<language type="map" alt="proposed-x1001">ออสโตรนีเซียน</language>
 			<language type="mas">มาไซ</language>
 			<language type="mdf">มอกชา</language>
 			<language type="mdr">มานดาร์</language>
@@ -454,179 +287,108 @@
 			<language type="mi">เมารี</language>
 			<language type="mic">มิกแมก</language>
 			<language type="min">มินางกาเบา</language>
-			<language type="min" alt="proposed-x1001">มีนังกาเบา</language>
 			<language type="mis">ภาษาอื่นๆ</language>
 			<language type="mk">มาซิโดเนีย</language>
-			<language type="mk" alt="proposed-x1001">แมซีโดเนีย</language>
-			<language type="mk" alt="proposed-x1002">ภาษามาซีโดเนีย</language>
 			<language type="mkh">มอญ-เขมร (อื่นๆ)</language>
 			<language type="ml">มาลายาลัม</language>
-			<language type="ml" alt="proposed-x1001">ภาษาแมละยา-ลัม</language>
 			<language type="mn">มองโกล</language>
-			<language type="mn" alt="proposed-x1001">มองโกเลีย</language>
-			<language type="mn" alt="proposed-x1002">ภาษามองโกเลีย</language>
 			<language type="mnc">แมนจู</language>
-			<language type="mnc" alt="proposed-x1001">ชาวแมนจูเรีย</language>
 			<language type="mni">มณีปุริ</language>
-			<language type="mni" alt="proposed-x1001">มานิพูริ</language>
 			<language type="mno">ภาษามาโนโบ</language>
 			<language type="mo">โมดาเวีย</language>
-			<language type="mo" alt="proposed-x1001">มอลโดวา</language>
-			<language type="mo" alt="proposed-x1002">มอลดาเวีย</language>
 			<language type="moh">โมฮอว์ก</language>
-			<language type="moh" alt="proposed-x1001">โมฮ็อค</language>
 			<language type="mos">มอสสิ</language>
 			<language type="mr">มาราที</language>
-			<language type="mr" alt="proposed-x1001">ภาษามหารัฐ</language>
-			<language type="mr" alt="proposed-x1002">มราฐี</language>
 			<language type="ms">มลายู</language>
-			<language type="ms" alt="proposed-x1001">ภาษามาเลย์</language>
 			<language type="mt">มอลตา</language>
-			<language type="mt" alt="proposed-x1001">ภาษามัลตีส</language>
 			<language type="mul">หลายภาษา</language>
 			<language type="mun">ภาษามันดา</language>
-			<language type="mun" alt="proposed-x1001">มุนดา</language>
 			<language type="mus">ครีก</language>
-			<language type="mus" alt="proposed-x1001">ครีค</language>
 			<language type="mwl">มิรันดีส</language>
-			<language type="mwl" alt="proposed-x1001">มิรันกิส</language>
 			<language type="mwr">มาร์วารี</language>
-			<language type="mwr" alt="proposed-x1001">มาร์วาริ</language>
 			<language type="my">พม่า</language>
 			<language type="myn">ภาษามายัน</language>
-			<language type="myn" alt="proposed-x1001">ภาษามายา</language>
 			<language type="myv">อิร์ซยา</language>
 			<language type="na">นอรู</language>
-			<language type="na" alt="proposed-x1001">นาอูรู</language>
 			<language type="nah">นาฮวตล์</language>
-			<language type="nah" alt="proposed-x1001">นาวาตล์</language>
 			<language type="nai">อเมริกันอินเดียนเหนืออื่นๆ</language>
-			<language type="nai" alt="proposed-x1001">อเมริกาอินเดียนเหนือ</language>
 			<language type="nap">เนียโพลิแทน</language>
-			<language type="nap" alt="proposed-x1001">นีโพลิทัน</language>
 			<language type="nb">นอร์เวย์บอกมอล</language>
 			<language type="nd">เอ็นเดเบลีเหนือ</language>
-			<language type="nd" alt="proposed-x1001">เอ็นเดเบเลเหนือ</language>
 			<language type="nds">เยอรมันต่ำ; แซกซอนต่ำ</language>
 			<language type="ne">เนปาล</language>
-			<language type="ne" alt="proposed-x1001">ภาษาเนปาล</language>
 			<language type="new">เนวาริ</language>
 			<language type="ng">ดองกา</language>
 			<language type="nia">เนีส</language>
 			<language type="nic">ไนเจอร์-กอร์โดฟาเนีย (อื่นๆ)</language>
-			<language type="nic" alt="proposed-x1001">ไนเกอร์-กอร์โดฟาเนียน (อื่นๆ)</language>
 			<language type="niu">ไนอีน</language>
 			<language type="nl">ดัตช์</language>
-			<language type="nl" alt="proposed-x1001">ฮอลันดา</language>
-			<language type="nl" alt="proposed-x1002">ภาษาฮอลันดา</language>
 			<language type="nl_BE">เฟลมิช</language>
 			<language type="nn">นอร์เวย์ไนนอรส์ก</language>
-			<language type="nn" alt="proposed-x1001">ภาษานอร์วีเจียน</language>
-			<language type="nn" alt="proposed-x1002">นอร์เวย์นีนอสก์</language>
 			<language type="no">นอร์เวย์</language>
-			<language type="no" alt="proposed-x1001">ภาษานอร์เวย์</language>
 			<language type="nog">โนไก</language>
 			<language type="non">นอร์สโบราณ</language>
-			<language type="non" alt="proposed-x1001">นอร์ส</language>
 			<language type="nr">เอ็นเดเบลีใต้</language>
-			<language type="nr" alt="proposed-x1001">เอ็นเดเบเลใต้</language>
 			<language type="nso">โซโธเหนือ</language>
-			<language type="nso" alt="proposed-x1001">โซโทเหนือ</language>
 			<language type="nub">ภาษานูเบียน</language>
 			<language type="nv">นาวาโฮ</language>
-			<language type="nv" alt="proposed-x1001">นาวาโจ</language>
 			<language type="nwc">เนวาริคลาสสิก</language>
 			<language type="ny">เนียนจา; ชิเชวา; เชวา</language>
 			<language type="nym">เนียมเวซี</language>
-			<language type="nym" alt="proposed-x1001">เนียมเวซิ</language>
 			<language type="nyn">เนียโกเล</language>
 			<language type="nyo">เนียโร</language>
 			<language type="nzi">นซิมา</language>
 			<language type="oc">อ็อกซิตัน</language>
-			<language type="oc" alt="proposed-x1001">ภาษาออกซิตัน</language>
-			<language type="oc" alt="proposed-x1002">ออกซิทัน</language>
 			<language type="oj">โอจิบเว</language>
-			<language type="oj" alt="proposed-x1001">โอจิบวา</language>
 			<language type="om">โอโรโม</language>
-			<language type="om" alt="proposed-x1001">โอโรโม (อาฟาน)</language>
 			<language type="or">โอริยา</language>
-			<language type="or" alt="proposed-x1001">ภาษาโอริสสา</language>
 			<language type="os">ออสเซทิก</language>
 			<language type="osa">โอซาเก</language>
 			<language type="ota">ตุรกีออตโดมัน</language>
-			<language type="ota" alt="proposed-x1001">ออตโทแมนเตอร์กีส</language>
 			<language type="oto">ภาษาโอโทเมียน</language>
 			<language type="pa">ปัญจาบ</language>
-			<language type="pa" alt="proposed-x1001">ภาษาปัญจาป</language>
-			<language type="pa" alt="proposed-x1002">ปัญจาป</language>
 			<language type="paa">ปาปัว (อื่นๆ)</language>
 			<language type="pag">พันกาซินัน</language>
-			<language type="pag" alt="proposed-x1001">ปังกาซีนัน</language>
 			<language type="pal">พาฮลาวิ</language>
 			<language type="pam">พามพานกา</language>
 			<language type="pap">พาเพียเมนโท</language>
 			<language type="pau">พาลาอวน</language>
 			<language type="peo">เปอร์เซียโบราณ</language>
 			<language type="phi">ฟิลิปปินส์ (อื่นๆ)</language>
-			<language type="phi" alt="proposed-x1001">ฟิลิปปินส์ [PHI]</language>
-			<language type="phi" alt="proposed-x1002">ฟิลิปปินส์ (อื่นๆ)</language>
 			<language type="phn">ฟินิเชียน</language>
-			<language type="phn" alt="proposed-x1001">โฟนิเชียน</language>
 			<language type="pi">บาลี</language>
 			<language type="pl">โปแลนด์</language>
-			<language type="pl" alt="proposed-x1001">ภาษาโปแลนด์</language>
 			<language type="pon">โพฮ์นเพเอียน</language>
 			<language type="pra">ภาษาปรากฤต</language>
-			<language type="pra" alt="proposed-x1001">ภาษาพรากริต</language>
 			<language type="pro">โพรเวนคอลโบราณ</language>
 			<language type="ps">พาชตู</language>
-			<language type="ps" alt="proposed-x1001">ภาษาปาทาน</language>
-			<language type="ps" alt="proposed-x1002">พาสช์โต (พุสช์โต)</language>
 			<language type="pt">โปรตุเกส</language>
-			<language type="pt" alt="proposed-x1001">ภาษาโปรตุเกส</language>
-			<language type="pt_BR" alt="proposed-x1001">บราซิล (โปรตุเกส)</language>
-			<language type="pt_BR" alt="proposed-x1002">ภาษาโปรตุเกส (บราซิล)</language>
 			<language type="pt_PT">โปรตุเกส (ไอบีเรีย)</language>
-			<language type="pt_PT" alt="proposed-x1001">ภาษาโปรตุเกส (ประเทศโปรตุเกส)</language>
 			<language type="qu">เกซัว</language>
-			<language type="qu" alt="proposed-x1001">คิวชัว</language>
 			<language type="raj">ราจาสธานิ</language>
 			<language type="rap">ราพานุย</language>
 			<language type="rar">ราโรท็องกัน</language>
 			<language type="rm">เรโต-โรแมนซ์</language>
 			<language type="rn">คิรันดี</language>
 			<language type="ro">โรมาเนีย</language>
-			<language type="ro" alt="proposed-x1001">ภาษาโรมาเนีย</language>
-			<language type="ro" alt="proposed-x1002">โรมัน</language>
 			<language type="roa">โรมานซ์ (อื่นๆ)</language>
 			<language type="rom">โรมานี</language>
 			<language type="root">ราก</language>
 			<language type="ru">รัสเซีย</language>
-			<language type="ru" alt="proposed-x1001">ภาษารัสเซีย</language>
 			<language type="rup">อาโรมาเนียน</language>
-			<language type="rup" alt="proposed-x1001">อาโรมาเนีย</language>
 			<language type="rw">คินยาร์วันดา</language>
-			<language type="rw" alt="proposed-x1001">คินยาวันดา</language>
 			<language type="sa">สันสกฤต</language>
-			<language type="sa" alt="proposed-x1001">ภาษาสันสกฤต</language>
 			<language type="sad">ซันดาเว</language>
 			<language type="sah">ยากุต</language>
 			<language type="sai">อเมริกันอินเดียนใต้ (อื่นๆ)</language>
-			<language type="sai" alt="proposed-x1001">อเมริกาอินเดียนใต้ (อื่นๆ)</language>
 			<language type="sal">ภาษาซาลิชัน</language>
 			<language type="sam">ซามาริทันอราเมอิก</language>
-			<language type="sam" alt="proposed-x1001">ซามาริทันอารามาอิก</language>
 			<language type="sas">ซาซัก</language>
-			<language type="sas" alt="proposed-x1001">ซาซะก์</language>
 			<language type="sat">สันตาลี</language>
-			<language type="sat" alt="proposed-x1001">ซันทาลิ</language>
 			<language type="sc">ซาร์ดิเนีย</language>
-			<language type="sc" alt="proposed-x1001">ซาร์ดิเนียน</language>
 			<language type="scn">ซิซิเลียน</language>
 			<language type="sco">สกอตส์</language>
 			<language type="sd">สินธุ</language>
-			<language type="sd" alt="proposed-x1001">ซินดิ</language>
-			<language type="sd" alt="proposed-x1002">ภาษาสินธุ</language>
 			<language type="se">ซามิเหนือ</language>
 			<language type="sel">เซลกุป</language>
 			<language type="sem">เซมิทิก (อื่นๆ)</language>
@@ -634,24 +396,13 @@
 			<language type="sga">ไอริชโบราณ</language>
 			<language type="sgn">ภาษาสัญญาณ</language>
 			<language type="sh">เซอร์โบ-โครเอเทียน</language>
-			<language type="sh" alt="proposed-x1001">เซอร์โบ-โครเอเชีย</language>
-			<language type="sh" alt="proposed-x1002">ภาษาเซอร์เบีย-โครเอเชีย</language>
-			<language type="sh" alt="proposed-x1003">เซิร์บ-โครแอต</language>
 			<language type="shn">ชาน</language>
-			<language type="shn" alt="proposed-x1001">ฉาน</language>
 			<language type="si">สิงหล</language>
-			<language type="si" alt="proposed-x1001">ภาษาสิงหล</language>
 			<language type="sid">ซิดาโม</language>
-			<language type="sid" alt="proposed-x1001">ซีดาโม</language>
 			<language type="sio">ภาษาซิอวน</language>
 			<language type="sit">ซิโน-ทิเบต (อื่นๆ)</language>
-			<language type="sit" alt="proposed-x1001">ซิโน-ทิเบตัน (อื่นๆ)</language>
 			<language type="sk">สโลวัก</language>
-			<language type="sk" alt="proposed-x1001">สโลวัค</language>
-			<language type="sk" alt="proposed-x1002">ภาษาสโลวะเกีย</language>
 			<language type="sl">สโลวีเนีย</language>
-			<language type="sl" alt="proposed-x1001">ภาษาสโลเวเนียน</language>
-			<language type="sl" alt="proposed-x1002">สโลเวเนีย</language>
 			<language type="sla">สลาวิก (อื่นๆ)</language>
 			<language type="sm">ซามัว</language>
 			<language type="sma">ซามิใต้</language>
@@ -660,333 +411,201 @@
 			<language type="smn">อินาริซามิ</language>
 			<language type="sms">สกอลตซามิ</language>
 			<language type="sn">โชนา</language>
-			<language type="sn" alt="proposed-x1001">โซนา</language>
 			<language type="snk">โซนินเก</language>
-			<language type="snk" alt="proposed-x1001">โซนิงเก</language>
 			<language type="so">โซมาลี</language>
-			<language type="so" alt="proposed-x1001">ภาษาโซมาลี</language>
 			<language type="sog">ซอจเดียน</language>
 			<language type="son">ซองไฮ</language>
 			<language type="sq">แอลเบเนีย</language>
-			<language type="sq" alt="proposed-x1001">อัลบาเนีย</language>
-			<language type="sq" alt="proposed-x1002">ภาษาอัลบาเนีย</language>
 			<language type="sr">เซอร์เบีย</language>
-			<language type="sr" alt="proposed-x1001">ภาษาเซอร์เบียน</language>
 			<language type="srn">ซรานานทองโก</language>
 			<language type="srr">เซเรอร์</language>
-			<language type="srr" alt="proposed-x1001">เซอเรอร์</language>
 			<language type="ss">สวาติ</language>
-			<language type="ss" alt="proposed-x1001">ซีสวาติ</language>
 			<language type="ssa">นิโล-ซาฮารัน (อื่นๆ)</language>
 			<language type="st">โซโทใต้</language>
-			<language type="st" alt="proposed-x1001">ภาษาเซโซโท</language>
-			<language type="st" alt="proposed-x1002">เซโสโท</language>
 			<language type="su">ซุนดา</language>
-			<language type="su" alt="proposed-x1001">ภาษาซุนดา</language>
-			<language type="su" alt="proposed-x1002">ซันดานีส</language>
 			<language type="suk">ซุกุมา</language>
-			<language type="suk" alt="proposed-x1001">ซูคูมา</language>
 			<language type="sus">ซูซู</language>
-			<language type="sus" alt="proposed-x1001">ซุซุ</language>
 			<language type="sux">สุเมเรียน</language>
 			<language type="sv">สวีเดน</language>
-			<language type="sv" alt="proposed-x1001">ภาษาสวีเดน</language>
 			<language type="sw">สวาฮีลี</language>
-			<language type="sw" alt="proposed-x1001">ภาษาสวาฮีลี</language>
-			<language type="sw" alt="proposed-x1002">ซวาฮิรี</language>
 			<language type="syr">ไซเรียก</language>
-			<language type="syr" alt="proposed-x1001">ซีเรียค</language>
 			<language type="ta">ทมิฬ</language>
-			<language type="ta" alt="proposed-x1001">ภาษาทมิฬ</language>
 			<language type="tai">ไท (อื่นๆ)</language>
 			<language type="te">เตลูกู</language>
-			<language type="te" alt="proposed-x1001">ทิลูกู</language>
-			<language type="te" alt="proposed-x1002">ภาษาตาลูกู</language>
 			<language type="tem">ทิมเน</language>
 			<language type="ter">เทเรโน</language>
-			<language type="ter" alt="proposed-x1001">เทอเรอโน</language>
 			<language type="tet">เตตุม</language>
-			<language type="tet" alt="proposed-x1001">เททุม</language>
 			<language type="tg">ทาจิก</language>
-			<language type="tg" alt="proposed-x1001">ทาจิค</language>
 			<language type="th">ไทย</language>
-			<language type="th" alt="proposed-x1001">ภาษาไทย</language>
 			<language type="ti">ทิกรินยา</language>
-			<language type="ti" alt="proposed-x1001">ภาษาทีกรินยา</language>
 			<language type="tig">ทิจเร</language>
 			<language type="tiv">ทิฟ</language>
 			<language type="tk">เติร์ก</language>
-			<language type="tk" alt="proposed-x1001">เติร์กเมน</language>
-			<language type="tk" alt="proposed-x1002">ภาษาเติร์กเมนิสถาน</language>
 			<language type="tkl">โทเคลัว</language>
-			<language type="tkl" alt="proposed-x1001">โตเกเลา</language>
-			<language type="tkl" alt="proposed-x1002">โตเกเ</language>
 			<language type="tl">ตากาล็อก</language>
-			<language type="tl" alt="proposed-x1001">ภาษาตากาลอก</language>
 			<language type="tlh">คลินกอน</language>
-			<language type="tlh" alt="proposed-x1001">ภาษาคลิงออน</language>
 			<language type="tli">ทลิงกิต</language>
 			<language type="tmh">ทามาเชก</language>
 			<language type="tn">สวานา</language>
-			<language type="tn" alt="proposed-x1001">ซวานา</language>
-			<language type="tn" alt="proposed-x1002">เซตสวานา</language>
 			<language type="to">ตองกา</language>
-			<language type="to" alt="proposed-x1001">ทองก้า</language>
 			<language type="tog">ท็องกา (ไนซา)</language>
 			<language type="tpi">ท็อกพิซิน</language>
-			<language type="tpi" alt="proposed-x1001">ทอคพีซิน</language>
 			<language type="tr">ตุรกี</language>
-			<language type="tr" alt="proposed-x1001">ภาษาตุรกี</language>
 			<language type="ts">ซองกา</language>
 			<language type="tsi">ซิมเชียน</language>
 			<language type="tt">ตาตาร์</language>
-			<language type="tt" alt="proposed-x1001">ตาด</language>
 			<language type="tum">ทุมบูกา</language>
-			<language type="tum" alt="proposed-x1001">ทุมบุกา</language>
 			<language type="tup">ภาษาทุพิ</language>
 			<language type="tut">อัลทาอิก (อื่นๆ)</language>
-			<language type="tut" alt="proposed-x1001">อัลไตอิก (อื่นๆ)</language>
 			<language type="tvl">ตูวาลู</language>
-			<language type="tvl" alt="proposed-x1001">ทูวาลู</language>
 			<language type="tw">ทวี</language>
-			<language type="tw" alt="proposed-x1001">ภาษาทวิ</language>
 			<language type="ty">ตาฮิเตียน</language>
-			<language type="ty" alt="proposed-x1001">ทาฮิเทียน</language>
 			<language type="tyv">ทูวิเนียน</language>
 			<language type="udm">อัดมาร์ต</language>
-			<language type="udm" alt="proposed-x1001">อุดมูร์ต</language>
 			<language type="ug">อุยกัว</language>
-			<language type="ug" alt="proposed-x1001">ภาษาเติร์ก</language>
 			<language type="uga">ยูการิติก</language>
-			<language type="uga" alt="proposed-x1001">อูการิทิก</language>
 			<language type="uk">ยูเครน</language>
-			<language type="uk" alt="proposed-x1001">ภาษายูเครน</language>
 			<language type="umb">อุมบุนดู</language>
-			<language type="umb" alt="proposed-x1001">อัมบันดู</language>
 			<language type="und">ไม่มีข้อมูล</language>
-			<language type="und" alt="proposed-x1001">ไม่ระบุ</language>
-			<language type="und" alt="proposed-x1002">ไม่ทราบ</language>
 			<language type="ur">อูรดู</language>
-			<language type="ur" alt="proposed-x1001">อิรดู</language>
-			<language type="ur" alt="proposed-x1002">ภาษาอูรดูร์</language>
 			<language type="uz">อุซเบก</language>
-			<language type="uz" alt="proposed-x1001">ภาษาอุบเบกิสถาน</language>
-			<language type="uz" alt="proposed-x1002">อุสเบค</language>
 			<language type="vai">ไว</language>
 			<language type="ve">เวนดา</language>
 			<language type="vi">เวียดนาม</language>
-			<language type="vi" alt="proposed-x1001">ภาษาเวียดนาม</language>
 			<language type="vo">โวลาพุก</language>
 			<language type="vot">โวทิก</language>
 			<language type="wa">วอลลูน</language>
-			<language type="wa" alt="proposed-x1001">วัลลูน</language>
 			<language type="wak">ภาษาวากาชาน</language>
 			<language type="wal">วาลาโม</language>
 			<language type="war">วาเรย์</language>
-			<language type="war" alt="proposed-x1001">วาไร</language>
 			<language type="was">วาโช</language>
 			<language type="wen">ภาษาซอร์เบียน</language>
 			<language type="wo">โวลอฟ</language>
-			<language type="wo" alt="proposed-x1001">วูลอฟ</language>
 			<language type="xal">กาลมิก</language>
 			<language type="xh">โซสา</language>
-			<language type="xh" alt="proposed-x1001">โคซา</language>
 			<language type="yao">เย้า</language>
-			<language type="yao" alt="proposed-x1001">ยาโอ</language>
 			<language type="yap">ยาเพส</language>
 			<language type="yi">ยิดดิช</language>
-			<language type="yi" alt="proposed-x1001">ยีดิช</language>
-			<language type="yi" alt="proposed-x1002">ภาษายิดดิช</language>
 			<language type="yo">โยรูบา</language>
 			<language type="ypk">ภาษายูพิก</language>
 			<language type="za">จวง</language>
-			<language type="za" alt="proposed-x1001">จ้วง</language>
 			<language type="zap">ซาโปเทก</language>
 			<language type="zen">เซนากา</language>
 			<language type="zh">จีน</language>
 			<language type="zh_Hans">จีนตัวย่อ</language>
-			<language type="zh_Hans" alt="proposed-x1001">ภาษาจีน (ประยุกต์)</language>
 			<language type="zh_Hant">จีนตัวเต็ม</language>
-			<language type="zh_Hant" alt="proposed-x1001">ภาษาจีน(ดั้งเดิม)</language>
 			<language type="znd">ซานเด</language>
 			<language type="zu">ซูลู</language>
-			<language type="zu" alt="proposed-x1001">ภาษาซูลู</language>
 			<language type="zun">ซูนิ</language>
 		</languages>
 		<scripts>
 			<script type="Arab">อาหรับ</script>
-			<script type="Arab" alt="proposed-x1001">อาร££บิก</script>
 			<script type="Armn">อาร์เมเนีย</script>
-			<script type="Armn" alt="proposed-x1001">อาร์เมเนียน</script>
 			<script type="Bali">บาหลี</script>
 			<script type="Batk">บาตัก</script>
-			<script type="Batk" alt="proposed-x1001">บาทัก</script>
 			<script type="Beng">เบงกาลี</script>
-			<script type="Beng" alt="proposed-x1001">เบงกาลิ</script>
 			<script type="Blis">บลิสซิมโบลส์</script>
 			<script type="Bopo">โบโพโมโฟ</script>
 			<script type="Brah">บรามี</script>
-			<script type="Brah" alt="proposed-x1001">พราหมี</script>
 			<script type="Brai">เบรลล์</script>
-			<script type="Brai" alt="proposed-x1001">ไบรลเล</script>
 			<script type="Bugi">บูกินิส</script>
 			<script type="Buhd">บูฮิด</script>
 			<script type="Cans">สัญลักษณ์ชนเผ่าพื้นเมืองแคนาดา</script>
 			<script type="Cham">จาม</script>
-			<script type="Cham" alt="proposed-x1001">ชาม</script>
 			<script type="Cher">เชอโรกี</script>
-			<script type="Cher" alt="proposed-x1001">เชโรกี</script>
 			<script type="Cirt">เซิร์ต</script>
 			<script type="Copt">คอปติก</script>
 			<script type="Cprt">ไซพริออต</script>
-			<script type="Cprt" alt="proposed-x1001">ไซเปรียท</script>
 			<script type="Cyrl">ซีริลลิก</script>
-			<script type="Cyrl" alt="proposed-x1001">ไซริลลริก</script>
 			<script type="Cyrs">ซีริลลิกโบสถ์สลาโวนิกโบราณ</script>
-			<script type="Cyrs" alt="proposed-x1001">ไซริลลิก (ภาษาเก่าสโลวาเนีย)</script>
 			<script type="Deva">เทวนาครี</script>
 			<script type="Dsrt">เดเซเรท</script>
-			<script type="Dsrt" alt="proposed-x1001">ดีซีเรต</script>
 			<script type="Egyd">ดีโมติกอียิปต์</script>
-			<script type="Egyd" alt="proposed-x1001">เดโมติคอียิปต์</script>
 			<script type="Egyh">เฮียราติกอียิปต์</script>
-			<script type="Egyh" alt="proposed-x1001">เฮียราติคอียิปต์</script>
 			<script type="Egyp">เฮียโรกลิฟส์อียิปต์</script>
-			<script type="Egyp" alt="proposed-x1001">เฮียโรกลิฟอียิปต์</script>
 			<script type="Ethi">เอธิโอเปีย</script>
-			<script type="Ethi" alt="proposed-x1001">เอธิโอปิก</script>
 			<script type="Geok">คัตซูรี (อาซอมทัฟรูลีและนูสคูรี)</script>
 			<script type="Geor">จอร์เจีย</script>
-			<script type="Geor" alt="proposed-x1001">จอร์เจียน</script>
 			<script type="Glag">กลาโกลิติก</script>
 			<script type="Goth">โกธิก</script>
-			<script type="Goth" alt="proposed-x1001">โกทิก</script>
 			<script type="Grek">กรีก</script>
 			<script type="Gujr">คุชราต</script>
-			<script type="Gujr" alt="proposed-x1001">กูจาราทิ</script>
 			<script type="Guru">เกอร์มูคิ</script>
-			<script type="Guru" alt="proposed-x1001">กูร์มูคี</script>
 			<script type="Hang">ฮันกูล</script>
-			<script type="Hang" alt="proposed-x1001">ฮันกึล</script>
 			<script type="Hani">ฮั่น</script>
-			<script type="Hani" alt="proposed-x1001">ฮัน</script>
 			<script type="Hano">ฮานูนู</script>
-			<script type="Hano" alt="proposed-x1001">ฮานูโนโอ</script>
 			<script type="Hans">ฮั่นตัวย่อ</script>
-			<script type="Hans" alt="proposed-x1001">ฮันปรับปรุง</script>
 			<script type="Hant">ฮั่นตัวเต็ม</script>
-			<script type="Hant" alt="proposed-x1001">ฮันดั้งเดิม</script>
 			<script type="Hebr">ฮีบรู</script>
-			<script type="Hebr" alt="proposed-x1001">ฮิบรู</script>
 			<script type="Hira">ฮิรางานะ</script>
-			<script type="Hira" alt="proposed-x1001">ฮิระงะนะ</script>
 			<script type="Hmng">พาฮาวมอง</script>
 			<script type="Hrkt">กาตะงานะหรือฮิรางานะ</script>
-			<script type="Hrkt" alt="proposed-x1001">คะตาคานะหรือฮิรางานะ</script>
-			<script type="Hrkt" alt="proposed-x1002">คะตะคะนะหรือฮิระงะนะ</script>
 			<script type="Hung">ฮังการีโบราณ</script>
-			<script type="Hung" alt="proposed-x1001">ฮังการีเก่า</script>
 			<script type="Inds">อินดัส (ฮารัปพัน)</script>
 			<script type="Ital">อิตาลีโบราณ</script>
-			<script type="Ital" alt="proposed-x1001">อิตาลีเก่า</script>
 			<script type="Java">ชวา</script>
-			<script type="Java" alt="proposed-x1001">จาวานีส</script>
 			<script type="Jpan">ญี่ปุ่น</script>
 			<script type="Kali">คยาห์</script>
-			<script type="Kali" alt="proposed-x1001">กายาลี</script>
 			<script type="Kana">กาตะกานะ</script>
-			<script type="Kana" alt="proposed-x1001">คะตาคานะ</script>
-			<script type="Kana" alt="proposed-x1002">คะตะคะนะ</script>
 			<script type="Khar">คาโรสติ</script>
 			<script type="Khmr">เขมร</script>
 			<script type="Knda">กันนาดา</script>
-			<script type="Knda" alt="proposed-x1001">กานนาดา</script>
 			<script type="Lana">ล้านนา</script>
 			<script type="Laoo">ลาว</script>
 			<script type="Latf">ลาติน (ฟรังเตอร์)</script>
-			<script type="Latf" alt="proposed-x1001">ละตินฟรังเตอร์</script>
 			<script type="Latg">ลาติน (แกลิก)</script>
-			<script type="Latg" alt="proposed-x1001">ละตินเกลต์</script>
 			<script type="Latn">ลาติน</script>
-			<script type="Latn" alt="proposed-x1001">ละติน</script>
 			<script type="Lepc">เลปชา</script>
-			<script type="Lepc" alt="proposed-x1001">เลปชา (รอง)</script>
 			<script type="Limb">ลิมบู</script>
 			<script type="Lina">ลีเนียร์เอ</script>
-			<script type="Lina" alt="proposed-x1001">ไลเนียร์เอ</script>
 			<script type="Linb">ลีเนียร์บี</script>
-			<script type="Linb" alt="proposed-x1001">ไลเนียร์บี</script>
 			<script type="Mand">แมนแดน</script>
 			<script type="Maya">มายันฮีโรกลิฟส์</script>
-			<script type="Maya" alt="proposed-x1001">เฮียโรกลิฟมายา</script>
 			<script type="Mero">เมโรติก</script>
 			<script type="Mlym">มาลายาลัม</script>
-			<script type="Mlym" alt="proposed-x1001">มะละยาลัม</script>
 			<script type="Mong">มองโกเลีย</script>
 			<script type="Mymr">พม่า</script>
 			<script type="Nkoo">เอ็นโก</script>
 			<script type="Ogam">โอคัม</script>
-			<script type="Ogam" alt="proposed-x1001">โอกาม</script>
 			<script type="Orkh">ออร์คอน</script>
 			<script type="Orya">โอริยา</script>
-			<script type="Orya" alt="proposed-x1001">ออริยา</script>
 			<script type="Osma">ออสมันยา</script>
 			<script type="Perm">เปอร์มิกโบราณ</script>
-			<script type="Perm" alt="proposed-x1001">เปอร์มิกเก่า</script>
 			<script type="Phag">ฟากส์-พา</script>
-			<script type="Phag" alt="proposed-x1001">พัก-ปา</script>
 			<script type="Phnx">ฟินิเชียน</script>
-			<script type="Phnx" alt="proposed-x1001">โฟนิเชียน</script>
 			<script type="Plrd">สัทศาสตร์พอลลาร์ด</script>
-			<script type="Plrd" alt="proposed-x1001">โพลลาร์ดโฟเนติก</script>
 			<script type="Qaai">อินเฮอริต</script>
 			<script type="Rjng">รจัง</script>
 			<script type="Roro">รองโกรองโก</script>
 			<script type="Runr">รูนิก</script>
 			<script type="Sara">ซาราทิ</script>
 			<script type="Shaw">ชาเวียน</script>
-			<script type="Shaw" alt="proposed-x1001">ซาเวียน</script>
 			<script type="Sinh">สิงหล</script>
-			<script type="Sinh" alt="proposed-x1001">ซินฮาลา</script>
 			<script type="Sylo">ไซโลทินากรี</script>
-			<script type="Sylo" alt="proposed-x1001">ไซโลตินากรี</script>
 			<script type="Syrc">ซีเรียค</script>
-			<script type="Syrc" alt="proposed-x1001">ไซเรียก</script>
 			<script type="Syre">ซีเรึยคเอสทราจีโล</script>
-			<script type="Syre" alt="proposed-x1001">ไซเรียก (เอสทรางเกโล)</script>
 			<script type="Syrj">ซีเรียคตะวันตก</script>
-			<script type="Syrj" alt="proposed-x1001">ไซเรียก (ตะวันตก)</script>
 			<script type="Syrn">ซีเรียคตะวันออก</script>
-			<script type="Syrn" alt="proposed-x1001">ไซเรียก (ตะวันออก)</script>
 			<script type="Tagb">ตักบันวา</script>
-			<script type="Tagb" alt="proposed-x1001">ทักบันวา</script>
 			<script type="Tale">ไทเล</script>
 			<script type="Talu">ไทลื้อใหม่</script>
-			<script type="Talu" alt="proposed-x1001">ไทเลใหม่</script>
 			<script type="Taml">ทมิฬ</script>
 			<script type="Telu">เทลูกู</script>
-			<script type="Telu" alt="proposed-x1001">เตลุกุ</script>
 			<script type="Teng">เทงวอร์</script>
 			<script type="Tfng">ทิฟินาค</script>
-			<script type="Tfng" alt="proposed-x1001">ทิฟินา (เบอร์เบอร์)</script>
 			<script type="Tglg">ตากาล็อก</script>
 			<script type="Thaa">ทานา</script>
 			<script type="Thai">ไทย</script>
 			<script type="Tibt">ทิเบต</script>
 			<script type="Ugar">ยูการิติก</script>
-			<script type="Ugar" alt="proposed-x1001">อูการิติก</script>
 			<script type="Vaii">ไว</script>
 			<script type="Visp">คำพูดที่มองเห็นได้</script>
 			<script type="Xpeo">เปอร์เซียโบราณ</script>
-			<script type="Xpeo" alt="proposed-x1001">เปอร์เซียเก่า</script>
 			<script type="Xsux">อักษรรูปลิ่มสุเมเรีย-อัคคาเดีย</script>
-			<script type="Xsux" alt="proposed-x1001">ซูเมโร-อักคาเดียนคูนิฟอร์ม</script>
 			<script type="Yiii">ยิ</script>
 			<script type="Zxxx">ไม่มีภาษาเขียน</script>
-			<script type="Zxxx" alt="proposed-x1001">รหัสสำหรับภาษาที่ไม่มีภาษาเขียน</script>
 			<script type="Zyyy">สามัญ</script>
 			<script type="Zzzz">ไม่ทราบภาษา</script>
-			<script type="Zzzz" alt="proposed-x1001">รหัสสำหรับสคริปต์ที่ไม่มีรหัส</script>
 		</scripts>
 		<territories>
 			<territory type="001">โลก</territory>
@@ -1002,9 +621,7 @@
 			<territory type="018">แอฟริกาใต้ [018]</territory>
 			<territory type="019">อเมริกา</territory>
 			<territory type="021">อเมริกาตอนเหนือ</territory>
-			<territory type="021" alt="proposed-x1001">อเมริกาเหนือ</territory>
 			<territory type="029">แคริบเบียน</territory>
-			<territory type="029" alt="proposed-x1001">แคริเบียน</territory>
 			<territory type="030">เอเชียตะวันออก</territory>
 			<territory type="034">เอเชียใต้</territory>
 			<territory type="035">เอเชียตะวันออกเฉียงใต้</territory>
@@ -1012,7 +629,6 @@
 			<territory type="053">ออสเตรเลียและนิวซีแลนด์</territory>
 			<territory type="054">เมลานีเซีย</territory>
 			<territory type="057">เขตไมโครนีเซีย</territory>
-			<territory type="057" alt="proposed-x1001">ไมโครนีเซีย [057]</territory>
 			<territory type="061">โปลินีเซีย</territory>
 			<territory type="062">เอเชียกลางตอนใต้</territory>
 			<territory type="142">เอเชีย</territory>
@@ -1024,23 +640,19 @@
 			<territory type="155">ยุโรปตะวันตก</territory>
 			<territory type="172">เครือรัฐอิสระ</territory>
 			<territory type="419">ละตินอเมริกาและคาริบเบียน</territory>
-			<territory type="419" alt="proposed-x1001">ละตินอเมริกาและแคริบเบียน</territory>
 			<territory type="830">หมู่เกาะแชนเนล</territory>
 			<territory type="AD">อันดอร์รา</territory>
 			<territory type="AE">สหรัฐอาหรับเอมิเรตส์</territory>
 			<territory type="AF">อัฟกานิสถาน</territory>
 			<territory type="AG">แอนติกาและบาร์บูดา</territory>
 			<territory type="AI">แองกวิลลา</territory>
-			<territory type="AI" alt="proposed-x1001">อันกิล่า</territory>
 			<territory type="AL">แอลเบเนีย</territory>
 			<territory type="AM">อาร์เมเนีย</territory>
 			<territory type="AN">เนเธอร์แลนด์แอนทิลลิส</territory>
-			<territory type="AN" alt="proposed-x1001">เนเฮอร์แลนด์แอนทิลลิส</territory>
 			<territory type="AO">แองโกลา</territory>
 			<territory type="AQ">แอนตาร์กติกา</territory>
 			<territory type="AR">อาร์เจนตินา</territory>
 			<territory type="AS">อเมริกันซามัว</territory>
-			<territory type="AS" alt="proposed-x1001">ซามัว</territory>
 			<territory type="AT">ออสเตรีย</territory>
 			<territory type="AU">ออสเตรเลีย</territory>
 			<territory type="AW">อารูบา</territory>
@@ -1049,7 +661,6 @@
 			<territory type="BA">บอสเนียและเฮอร์เซโกวีนา</territory>
 			<territory type="BB">บาร์เบโดส</territory>
 			<territory type="BD">บังกลาเทศ</territory>
-			<territory type="BD" alt="proposed-x1001">บังคลาเทศ</territory>
 			<territory type="BE">เบลเยียม</territory>
 			<territory type="BF">บูร์กินาฟาโซ</territory>
 			<territory type="BG">บัลแกเรีย</territory>
@@ -1063,40 +674,29 @@
 			<territory type="BS">บาฮามาส</territory>
 			<territory type="BT">ภูฏาน</territory>
 			<territory type="BV">เกาะบูเวต</territory>
-			<territory type="BV" alt="proposed-x1001">เกาะบูเวท</territory>
-			<territory type="BV" alt="proposed-x1002">เกาะบูเวต์</territory>
 			<territory type="BW">บอตสวานา</territory>
 			<territory type="BY">เบลารุส</territory>
 			<territory type="BZ">เบลีซ</territory>
-			<territory type="BZ" alt="proposed-x1001">เบลีช</territory>
 			<territory type="CA">แคนาดา</territory>
 			<territory type="CC">หมู่เกาะโคโคส (คีลิง)</territory>
 			<territory type="CD">คองโก-กินชาซา</territory>
-			<territory type="CD" alt="proposed-x1001">สาธารณรัฐประชาธิปไตยคองโก</territory>
 			<territory type="CF">สาธารณรัฐแอฟริกากลาง</territory>
 			<territory type="CG">คองโก-บราซซาวิล</territory>
-			<territory type="CG" alt="proposed-x1001">สาธารณรัฐคองโก</territory>
-			<territory type="CG" alt="proposed-x1002">คองโก</territory>
 			<territory type="CH">สวิตเซอร์แลนด์</territory>
 			<territory type="CI">โกตดิวัวร์</territory>
 			<territory type="CK">หมู่เกาะคุก</territory>
 			<territory type="CL">ชิลี</territory>
 			<territory type="CM">แคเมอรูน</territory>
 			<territory type="CN">จีน</territory>
-			<territory type="CN" alt="proposed-x1001">สาธารณรัฐประชาชนจีน</territory>
 			<territory type="CO">โคลัมเบีย</territory>
-			<territory type="CO" alt="proposed-x1001">โคลอมเบีย</territory>
 			<territory type="CR">คอสตาริกา</territory>
 			<territory type="CS">เซอร์เบียและมอนเตเนโกร</territory>
-			<territory type="CS" alt="proposed-x1001">เซอร์เบีย</territory>
 			<territory type="CU">คิวบา</territory>
 			<territory type="CV">เคปเวิร์ด</territory>
 			<territory type="CX">เกาะคริสต์มาส</territory>
-			<territory type="CX" alt="proposed-x1001">เกาะคริสมาสต์</territory>
 			<territory type="CY">ไซปรัส</territory>
 			<territory type="CZ">สาธารณรัฐเช็ก</territory>
 			<territory type="DE">เยอรมนี</territory>
-			<territory type="DE" alt="proposed-x1001">เยอรมัน</territory>
 			<territory type="DJ">จิบูตี</territory>
 			<territory type="DK">เดนมาร์ก</territory>
 			<territory type="DM">โดมินิกา</territory>
@@ -1112,43 +712,32 @@
 			<territory type="FI">ฟินแลนด์</territory>
 			<territory type="FJ">ฟิจิ</territory>
 			<territory type="FK">หมู่เกาะฟอล์กแลนด์</territory>
-			<territory type="FK" alt="proposed-x1001">หมู่เกาะฟอล์คแลนด์</territory>
 			<territory type="FM">ไมโครนีเซีย</territory>
 			<territory type="FO">หมู่เกาะฟาโร</territory>
-			<territory type="FO" alt="proposed-x1001">หมู่เกาะแฟโร</territory>
-			<territory type="FO" alt="proposed-x1002">หมู่เกาะฟาร์โร</territory>
 			<territory type="FR">ฝรั่งเศส</territory>
 			<territory type="GA">กาบอง</territory>
 			<territory type="GB">สหราชอาณาจักร</territory>
 			<territory type="GD">เกรนาดา</territory>
 			<territory type="GE">จอร์เจีย</territory>
 			<territory type="GF">เฟรนช์กีอานา</territory>
-			<territory type="GF" alt="proposed-x1001">เฟรนช์เกียนา</territory>
 			<territory type="GH">กาน่า</territory>
-			<territory type="GH" alt="proposed-x1001">กานา</territory>
 			<territory type="GI">ยิบรอลตาร์</territory>
 			<territory type="GL">กรีนแลนด์</territory>
 			<territory type="GM">แกมเบีย</territory>
 			<territory type="GN">กินี</territory>
 			<territory type="GP">กัวเดอลูป</territory>
-			<territory type="GP" alt="proposed-x1001">กวาเดอลูป</territory>
 			<territory type="GQ">อิเควทอเรียลกินี</territory>
 			<territory type="GR">กรีซ</territory>
 			<territory type="GS">เกาะเซาท์จอร์เจียและหมู่เกาะเซาท์แซนด์วิช</territory>
-			<territory type="GS" alt="proposed-x1001">หมู่เกาะเซาท์จอร์เจียและหมู่เกาะเซาท์แซนด์วิช</territory>
 			<territory type="GT">กัวเตมาลา</territory>
 			<territory type="GU">กวม</territory>
 			<territory type="GW">กินี-บิสเซา</territory>
-			<territory type="GW" alt="proposed-x1001">กินีบิสเซา</territory>
 			<territory type="GY">กายานา</territory>
-			<territory type="GY" alt="proposed-x1001">กายอานา</territory>
 			<territory type="HK">ฮ่องกง เขตปกครองพิเศษประเทศจีน</territory>
-			<territory type="HK" alt="short">ฮ่องกง</territory>
 			<territory type="HM">เกาะเฮิร์ดและหมู่เกาะแมกดอนัลด์</territory>
 			<territory type="HN">ฮอนดูรัส</territory>
 			<territory type="HR">โครเอเชีย</territory>
 			<territory type="HT">เฮติ</territory>
-			<territory type="HT" alt="proposed-x1001">ไฮติ</territory>
 			<territory type="HU">ฮังการี</territory>
 			<territory type="ID">อินโดนีเซีย</territory>
 			<territory type="IE">ไอร์แลนด์</territory>
@@ -1156,8 +745,6 @@
 			<territory type="IM">เกาะแมน</territory>
 			<territory type="IN">อินเดีย</territory>
 			<territory type="IO">บริติชอินเดียนโอเชียนเทร์ริทอรี</territory>
-			<territory type="IO" alt="proposed-x1001">บริติสอินเดียโอเชียนเทร์ริทอรี</territory>
-			<territory type="IO" alt="proposed-x1002">เขตมหาสมุทรบริติชอินเดีย</territory>
 			<territory type="IQ">อิรัก</territory>
 			<territory type="IR">อิหร่าน</territory>
 			<territory type="IS">ไอซ์แลนด์</territory>
@@ -1168,10 +755,8 @@
 			<territory type="JP">ญี่ปุ่น</territory>
 			<territory type="KE">เคนยา</territory>
 			<territory type="KG">คีร์กิซสถาน</territory>
-			<territory type="KG" alt="proposed-x1001">คีร์กีซสถาน</territory>
 			<territory type="KH">กัมพูชา</territory>
 			<territory type="KI">คิริบาตี</territory>
-			<territory type="KI" alt="proposed-x1001">คิริบาส</territory>
 			<territory type="KM">คอโมโรส</territory>
 			<territory type="KN">เซนต์คิตส์และเนวิส</territory>
 			<territory type="KP">เกาหลีเหนือ</territory>
@@ -1180,7 +765,6 @@
 			<territory type="KY">หมู่เกาะเคย์แมน</territory>
 			<territory type="KZ">คาซัคสถาน</territory>
 			<territory type="LA">ลาว</territory>
-			<territory type="LA" alt="proposed-x1001">ประเทศลาว</territory>
 			<territory type="LB">เลบานอน</territory>
 			<territory type="LC">เซนต์ลูเซีย</territory>
 			<territory type="LI">ลิกเตนสไตน์</territory>
@@ -1190,7 +774,6 @@
 			<territory type="LT">ลิทัวเนีย</territory>
 			<territory type="LU">ลักเซมเบิร์ก</territory>
 			<territory type="LV">ลัตเวีย</territory>
-			<territory type="LV" alt="proposed-x1001">ลัทเวีย</territory>
 			<territory type="LY">ลิเบีย</territory>
 			<territory type="MA">โมร็อกโก</territory>
 			<territory type="MC">โมนาโก</territory>
@@ -1198,21 +781,15 @@
 			<territory type="ME">มอนเตเนโกร</territory>
 			<territory type="MG">มาดากัสการ์</territory>
 			<territory type="MH">หมู่เกาะมาร์แชลล์</territory>
-			<territory type="MH" alt="proposed-x1001">หมู่เกาะมาร์แชล</territory>
 			<territory type="MK">มาซิโดเนีย</territory>
 			<territory type="ML">มาลี</territory>
 			<territory type="MM">พม่า</territory>
 			<territory type="MN">มองโกเลีย</territory>
 			<territory type="MO">มาเก๊า เขตปกครองพิเศษประเทศจีน</territory>
-			<territory type="MO" alt="proposed-x1001">มาเก๊า</territory>
-			<territory type="MO" alt="short">มาเก๊า</territory>
 			<territory type="MP">หมู่เกาะนอร์ทเทิร์นมาเรียนา</territory>
-			<territory type="MP" alt="proposed-x1001">หมู่เกาะนอร์เทิร์นมาเรียนา</territory>
-			<territory type="MP" alt="proposed-x1002">หมู่เกาะนอร์ธเทินมาเรียนา</territory>
 			<territory type="MQ">มาร์ตินีก</territory>
 			<territory type="MR">มอริเตเนีย</territory>
 			<territory type="MS">มอนต์เซร์แร็ต</territory>
-			<territory type="MS" alt="proposed-x1001">มอนต์เซอร์รัต</territory>
 			<territory type="MT">มอลตา</territory>
 			<territory type="MU">มอริเชียส</territory>
 			<territory type="MV">มัลดีฟส์</territory>
@@ -1220,39 +797,30 @@
 			<territory type="MX">เม็กซิโก</territory>
 			<territory type="MY">มาเลเซีย</territory>
 			<territory type="MZ">โมแซมบิค</territory>
-			<territory type="MZ" alt="proposed-x1001">โมซัมบิก</territory>
 			<territory type="NA">นามิเบีย</territory>
 			<territory type="NC">นิวแคลิโดเนีย</territory>
-			<territory type="NC" alt="proposed-x1001">นิวแคลีโดเนีย</territory>
-			<territory type="NC" alt="proposed-x1002">นิวคาลิโดเนีย</territory>
 			<territory type="NE">ไนเจอร์</territory>
 			<territory type="NF">เกาะนอร์ฟอล์ก</territory>
-			<territory type="NF" alt="proposed-x1001">เกาะนอร์โฟลก</territory>
 			<territory type="NG">ไนจีเรีย</territory>
 			<territory type="NI">นิคารากัว</territory>
-			<territory type="NI" alt="proposed-x1001">นิการากัว</territory>
 			<territory type="NL">เนเธอร์แลนด์</territory>
 			<territory type="NO">นอร์เวย์</territory>
 			<territory type="NP">เนปาล</territory>
 			<territory type="NR">นาอูรู</territory>
 			<territory type="NU">นียู</territory>
-			<territory type="NU" alt="proposed-x1001">นีอูเอ</territory>
 			<territory type="NZ">นิวซีแลนด์</territory>
 			<territory type="OM">โอมาน</territory>
 			<territory type="PA">ปานามา</territory>
 			<territory type="PE">เปรู</territory>
 			<territory type="PF">เฟรนช์โพลีนีเซีย</territory>
-			<territory type="PF" alt="proposed-x1001">เฟรนช์โปลินีเซีย</territory>
 			<territory type="PG">ปาปัวนิวกินี</territory>
 			<territory type="PH">ฟิลิปปินส์</territory>
 			<territory type="PK">ปากีสถาน</territory>
 			<territory type="PL">โปแลนด์</territory>
 			<territory type="PM">แซงปีแยร์และมีเกอลง</territory>
-			<territory type="PM" alt="proposed-x1001">ประเทศเซนต์ปิแอร์และมิคิวลอน</territory>
 			<territory type="PN">พิตแคร์น</territory>
 			<territory type="PR">เปอร์โตริโก</territory>
 			<territory type="PS">ปาเลซติเนียนเทร์ริทอรี</territory>
-			<territory type="PS" alt="proposed-x1001">ปาเลสไตน์</territory>
 			<territory type="PT">โปรตุเกส</territory>
 			<territory type="PW">ปาเลา</territory>
 			<territory type="PY">ปารากวัย</territory>
@@ -1260,7 +828,6 @@
 			<territory type="QO">เอาต์ไลอิงโอเชียเนีย</territory>
 			<territory type="QU">สหภาพยุโรป</territory>
 			<territory type="RE">เรอูเนียง</territory>
-			<territory type="RE" alt="proposed-x1001">เรอูนียง</territory>
 			<territory type="RO">โรมาเนีย</territory>
 			<territory type="RS">เซอร์เบีย</territory>
 			<territory type="RU">รัสเซีย</territory>
@@ -1272,68 +839,46 @@
 			<territory type="SE">สวีเดน</territory>
 			<territory type="SG">สิงคโปร์</territory>
 			<territory type="SH">เซนต์เฮเลนา</territory>
-			<territory type="SH" alt="proposed-x1001">ประเทศเซนต์เฮเลนา</territory>
 			<territory type="SI">สโลวีเนีย</territory>
 			<territory type="SJ">สฟาลบาร์และแจนมาเยน</territory>
 			<territory type="SK">สโลวาเกีย</territory>
-			<territory type="SK" alt="proposed-x1001">สโลวะเกีย</territory>
 			<territory type="SL">เซียร์ราลีโอน</territory>
 			<territory type="SM">ซานมารีโน</territory>
 			<territory type="SN">เซเนกัล</territory>
 			<territory type="SO">โซมาเลีย</territory>
 			<territory type="SR">สุรินัม</territory>
-			<territory type="SR" alt="proposed-x1001">ซูรินัม</territory>
-			<territory type="SR" alt="proposed-x1002">ซูรินาเม</territory>
 			<territory type="ST">เซาตูเมและปรินซิปี</territory>
-			<territory type="ST" alt="proposed-x1001">เซาโตเมและปรินซิเป</territory>
-			<territory type="ST" alt="proposed-x1002">ซาวตูเมและปรินซิปี</territory>
 			<territory type="SV">เอลซัลวาดอร์</territory>
 			<territory type="SY">ซีเรีย</territory>
 			<territory type="SZ">สวาซิแลนด์</territory>
 			<territory type="TC">หมู่เกาะเติกส์และหมู่เกาะเคคอส</territory>
-			<territory type="TC" alt="proposed-x1001">เติร์กและหมู่เกาะไคคอส</territory>
 			<territory type="TD">ชาด</territory>
 			<territory type="TF">อาณาเขตทางใต้ของฝรั่งเศส</territory>
-			<territory type="TF" alt="proposed-x1001">เฟรนช์เซาเทิร์นเทร์ริทอรีส์</territory>
 			<territory type="TG">โตโก</territory>
-			<territory type="TG" alt="proposed-x1001">โทโก</territory>
 			<territory type="TH">ประเทศไทย</territory>
 			<territory type="TJ">ทาจิกิสถาน</territory>
 			<territory type="TK">โตเกเลา</territory>
-			<territory type="TK" alt="proposed-x1001">โทกิโล</territory>
-			<territory type="TK" alt="proposed-x1002">โทเกเลา</territory>
 			<territory type="TL">ติมอร์ตะวันออก</territory>
 			<territory type="TM">เติร์กเมนิสถาน</territory>
 			<territory type="TN">ตูนิเซีย</territory>
 			<territory type="TO">ตองกา</territory>
-			<territory type="TO" alt="proposed-x1001">ภาษาทองก้า</territory>
 			<territory type="TR">ตุรกี</territory>
 			<territory type="TT">ตรินิแดดและโตเบโก</territory>
 			<territory type="TV">ตูวาลู</territory>
 			<territory type="TW">ไต้หวัน</territory>
 			<territory type="TZ">แทนซาเนีย</territory>
-			<territory type="TZ" alt="proposed-x1001">ทันซาเนีย</territory>
-			<territory type="TZ" alt="proposed-x1002">ทานซาเนีย</territory>
 			<territory type="UA">ยูเครน</territory>
 			<territory type="UG">ยูกันดา</territory>
-			<territory type="UG" alt="proposed-x1001">อูกานดา</territory>
 			<territory type="UM">หมู่เกาะสหรัฐไมเนอร์เอาต์ไลอิง</territory>
-			<territory type="UM" alt="proposed-x1001">เกาะไร้คนอาศัยโพ้นทะเลของสหรัฐอเมริกา</territory>
 			<territory type="US">สหรัฐอเมริกา</territory>
 			<territory type="UY">อุรุกวัย</territory>
 			<territory type="UZ">อุซเบกิสถาน</territory>
 			<territory type="VA">วาติกัน</territory>
-			<territory type="VA" alt="proposed-x1001">นครรัฐวาติกัน</territory>
 			<territory type="VC">เซนต์วินเซนต์และเกรนาดีนส์</territory>
 			<territory type="VE">เวเนซุเอลา</territory>
 			<territory type="VG">หมู่เกาะบริติชเวอร์จิน</territory>
-			<territory type="VG" alt="proposed-x1001">หมู่เกาะเวอร์จิน อังกฤษ</territory>
-			<territory type="VG" alt="proposed-x1002">บริทิชเวอร์จินไอส์แลนด์</territory>
 			<territory type="VI">ยูเอสเวอร์จินไอส์แลนด์</territory>
-			<territory type="VI" alt="proposed-x1001">หมู่เกาะเวอร์จิน สหรัฐอเมริกา</territory>
-			<territory type="VI" alt="proposed-x1002">หมู่เกาะเวอร์จินของสหรัฐอเมริกา</territory>
 			<territory type="VN">เวียดนาม</territory>
-			<territory type="VN" alt="proposed-x1001">ประเทศเวียดนาม</territory>
 			<territory type="VU">วานูอาตู</territory>
 			<territory type="WF">วาลลิสและฟุตูนา</territory>
 			<territory type="WS">ซามัว</territory>
@@ -1342,7 +887,6 @@
 			<territory type="ZA">แอฟริกาใต้</territory>
 			<territory type="ZM">แซมเบีย</territory>
 			<territory type="ZW">ซิมบับเว</territory>
-			<territory type="ZW" alt="proposed-x1001">ซิมบาบเว</territory>
 			<territory type="ZZ">ไม่ทราบ</territory>
 		</territories>
 		<variants>
@@ -1353,7 +897,6 @@
 			<variant type="FONIPA">สัทอักษรสากล</variant>
 			<variant type="NEDIS">ภาษาพื้นเมืองนาทิโซเน</variant>
 			<variant type="POLYTON">โพลีโทนิก</variant>
-			<variant type="POLYTON" alt="proposed-x1001">POLYTON</variant>
 			<variant type="POSIX">คอมพิวเตอร์</variant>
 			<variant type="REVISED">ออร์โธกราฟิปรับปรุง</variant>
 			<variant type="ROZAJ">เรเซียน</variant>
@@ -1361,38 +904,23 @@
 		</variants>
 		<keys>
 			<key type="calendar">ปฏิทิน</key>
-			<key type="calendar" alt="proposed-x1001">calendar</key>
-			<key type="collation" alt="proposed-x1001">ส่วนต่าง</key>
-			<key type="collation" alt="proposed-x1002">ตรวจเทียบ</key>
 			<key type="currency">เงินตรา</key>
-			<key type="currency" alt="proposed-x1001">currency</key>
 		</keys>
 		<types>
 			<type type="big5han" key="collation">เรียงตามอักษรจีนตัวเต็ม</type>
-			<type type="big5han" key="collation" alt="proposed-x1001">จีนดั้งเดิม</type>
-			<type type="big5han" key="collation" alt="proposed-x1002">เรียงตามอักษรจีนแบบเต็ม</type>
 			<type type="buddhist" key="calendar">ปฏิทินพุทธ</type>
 			<type type="chinese" key="calendar">ปฏิทินจีน</type>
 			<type type="direct" key="collation">เรียงตามลำดับโดยตรง</type>
-			<type type="direct" key="collation" alt="proposed-x1001">ลำดับตรง</type>
 			<type type="gb2312han" key="collation">เรียงตามอักษรจีนตัวย่อ</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1001">จีนปรับปรุงใหม่</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1002">เรียงตามอักษรจีนแบบย่อ</type>
 			<type type="gregorian" key="calendar">ปฏิทินเกรกอเรียน</type>
 			<type type="hebrew" key="calendar">ปฏิทินฮิบรู</type>
 			<type type="islamic" key="calendar">ปฏิทินอิสลาม</type>
 			<type type="islamic-civil" key="calendar">ปฏิทินอิสลามซีวิล</type>
 			<type type="japanese" key="calendar">ปฏิทินญี่ปุ่น</type>
 			<type type="phonebook" key="collation">เรียงตามสมุดโทรศัพท์</type>
-			<type type="phonebook" key="collation" alt="proposed-x1001">ลำดับสมุดโทรศัพท์</type>
 			<type type="pinyin" key="collation">เรียงตามการถอดเสียงภาษาจีน</type>
-			<type type="pinyin" key="collation" alt="proposed-x1001">ลำดับพินยิน</type>
-			<type type="pinyin" key="collation" alt="proposed-x1002">เรียงตามการออกเสียง</type>
-			<type type="pinyin" key="collation" alt="proposed-x1003">เรียงตามการถอดเสียง</type>
 			<type type="stroke" key="collation">เรียงตามการลากเส้น</type>
-			<type type="stroke" key="collation" alt="proposed-x1001">ลำดับการลากเส้น</type>
 			<type type="traditional" key="collation">เรียงตามแบบดั้งเดิม</type>
-			<type type="traditional" key="collation" alt="proposed-x1001">ดั้งเดิม</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">US</measurementSystemName>
@@ -1402,17 +930,12 @@
 	<characters>
 		<exemplarCharacters>[ฯ ๆ ๎ ็-ํ ก-ฮ ะ-ฺ เ-ๅ]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[\u200B]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[ก-ฮ]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>'</quotationStart>
-		<quotationStart alt="proposed-x1001">“</quotationStart>
 		<quotationEnd>'</quotationEnd>
-		<quotationEnd alt="proposed-x1001">”</quotationEnd>
 		<alternateQuotationStart>&quot;</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">‘</alternateQuotationStart>
 		<alternateQuotationEnd>&quot;</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
@@ -1566,38 +1089,24 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">อา.</day>
-							<day type="sun" alt="proposed-x1001">อาทิตย์</day>
 							<day type="mon">จ.</day>
-							<day type="mon" alt="proposed-x1001">จันทร์</day>
 							<day type="tue">อ.</day>
-							<day type="tue" alt="proposed-x1001">อังคาร</day>
 							<day type="wed">พ.</day>
-							<day type="wed" alt="proposed-x1001">พุธ</day>
 							<day type="thu">พฤ.</day>
-							<day type="thu" alt="proposed-x1001">พฤหัสบดี</day>
 							<day type="fri">ศ.</day>
-							<day type="fri" alt="proposed-x1001">ศุกร์</day>
 							<day type="sat">ส.</day>
-							<day type="sat" alt="proposed-x1001">วันเสาร์</day>
 						</dayWidth>
 						<dayWidth type="narrow">
 							<day type="thu">พฤ</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">วันอาทิตย์</day>
-							<day type="sun" alt="proposed-x1001">อาทิตย์</day>
 							<day type="mon">วันจันทร์</day>
-							<day type="mon" alt="proposed-x1001">จันทร์</day>
 							<day type="tue">วันอังคาร</day>
-							<day type="tue" alt="proposed-x1001">อังคาร</day>
 							<day type="wed">วันพุธ</day>
-							<day type="wed" alt="proposed-x1001">พุธ</day>
 							<day type="thu">วันพฤหัสบดี</day>
-							<day type="thu" alt="proposed-x1001">พฤหัสบดี</day>
 							<day type="fri">วันศุกร์</day>
-							<day type="fri" alt="proposed-x1001">ศุกร์</day>
 							<day type="sat">วันเสาร์</day>
-							<day type="sat" alt="proposed-x1001">เสาร์</day>
 						</dayWidth>
 					</dayContext>
 					<dayContext type="stand-alone">
@@ -1607,7 +1116,6 @@
 							<day type="tue">อ</day>
 							<day type="wed">พ</day>
 							<day type="thu">พ</day>
-							<day type="thu" alt="proposed-x1001">พฤ</day>
 							<day type="fri">ศ</day>
 							<day type="sat">ส</day>
 						</dayWidth>
@@ -1630,9 +1138,7 @@
 					</quarterContext>
 				</quarters>
 				<am>ก่อนเที่ยง</am>
-				<am alt="proposed-x1001">AM</am>
 				<pm>หลังเที่ยง</pm>
-				<pm alt="proposed-x1001">PM</pm>
 				<eras>
 					<eraNames>
 						<era type="0">ปีก่อนคริสต์ศักราชที่</era>
@@ -1707,7 +1213,6 @@
 				<fields>
 					<field type="era">
 						<displayName>สมัย</displayName>
-						<displayName alt="proposed-x1001">ยุค</displayName>
 					</field>
 					<field type="year">
 						<displayName>ปี</displayName>
@@ -1828,34 +1333,27 @@
 			</zone>
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>โรเธรา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">โรเทรา</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Palmer">
 				<exemplarCity>ปาล์มเมอร์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">พาล์เมอร์</exemplarCity>
 			</zone>
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>ขั้วโลกใต้</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เซาท์โพล</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Syowa">
 				<exemplarCity>เซียวา</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Mawson">
 				<exemplarCity>มอร์สัน</exemplarCity>
-				<exemplarCity alt="proposed-x1001">มาว์ซัน</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Davis">
 				<exemplarCity>ดาวีส์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เดวิส</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Vostok">
 				<exemplarCity>วอสต็อค</exemplarCity>
-				<exemplarCity alt="proposed-x1001">วอสทอก</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Casey">
 				<exemplarCity>เคซีย์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เคเซย์</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>ดูมอนต์ดียูร์วิลล์</exemplarCity>
@@ -1871,18 +1369,15 @@
 			</zone>
 			<zone type="America/Argentina/San_Juan">
 				<exemplarCity>ซานจวน</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ซานฮวน</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Ushuaia">
 				<exemplarCity>อูชูเอีย</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/La_Rioja">
 				<exemplarCity>ลาริโอจา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ลารีโอคา</exemplarCity>
 			</zone>
 			<zone type="America/Catamarca">
 				<exemplarCity>คาตามาร์กา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">กาตามาร์กา</exemplarCity>
 			</zone>
 			<zone type="America/Jujuy">
 				<exemplarCity>จูจิว</exemplarCity>
@@ -1913,7 +1408,6 @@
 			</zone>
 			<zone type="Australia/Broken_Hill">
 				<exemplarCity>โบรกเคนฮิว</exemplarCity>
-				<exemplarCity alt="proposed-x1001">โบรกเคนฮิลล์</exemplarCity>
 			</zone>
 			<zone type="Australia/Currie">
 				<exemplarCity>คูร์รี</exemplarCity>
@@ -1980,25 +1474,21 @@
 			</zone>
 			<zone type="America/Rio_Branco">
 				<exemplarCity>รีโอบรังโก</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ริโอบรังโก</exemplarCity>
 			</zone>
 			<zone type="America/Porto_Velho">
 				<exemplarCity>ปอร์ตูเวลโย</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ปอร์ตูเวลโย</exemplarCity>
 			</zone>
 			<zone type="America/Boa_Vista">
 				<exemplarCity>บัววีชตา</exemplarCity>
 			</zone>
 			<zone type="America/Manaus">
 				<exemplarCity>มาเนาส์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">มานาอุส</exemplarCity>
 			</zone>
 			<zone type="America/Cuiaba">
 				<exemplarCity>กุยาบา</exemplarCity>
 			</zone>
 			<zone type="America/Campo_Grande">
 				<exemplarCity>กัมปูกรันดี</exemplarCity>
-				<exemplarCity alt="proposed-x1001">กัมปูกรัมดี</exemplarCity>
 			</zone>
 			<zone type="America/Belem">
 				<exemplarCity>เบเลง</exemplarCity>
@@ -2008,7 +1498,6 @@
 			</zone>
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>เซาเปาลู</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เซา เปาโล</exemplarCity>
 			</zone>
 			<zone type="America/Bahia">
 				<exemplarCity>บาเยีย</exemplarCity>
@@ -2078,11 +1567,9 @@
 			</zone>
 			<zone type="America/Coral_Harbour">
 				<exemplarCity>โครัลฮาร์เบอร์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คอรัลฮาร์เบอร์</exemplarCity>
 			</zone>
 			<zone type="America/Thunder_Bay">
 				<exemplarCity>ทันเดอร์เบย์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ธันเดอร์เบย์</exemplarCity>
 			</zone>
 			<zone type="America/Nipigon">
 				<exemplarCity>นิปิกอน</exemplarCity>
@@ -2113,7 +1600,6 @@
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity>เซนต์จอนส์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เซนต์จอห์น</exemplarCity>
 			</zone>
 			<zone type="Indian/Cocos">
 				<exemplarCity>โคโคส</exemplarCity>
@@ -2135,11 +1621,9 @@
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>อีสเตอร์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">หมู่เกาะอีสเตอร์</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
-				<exemplarCity>ซันติอาโก</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ซานติเอโก</exemplarCity>
+				<exemplarCity>ซั඀ติอาโก</exemplarCity>
 			</zone>
 			<zone type="Asia/Kashgar">
 				<exemplarCity>กัชการ์</exemplarCity>
@@ -2194,7 +1678,6 @@
 			</zone>
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>กาลาปากอส</exemplarCity>
-				<exemplarCity alt="proposed-x1001">กาลาปาโกส</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity>กัวยากิล</exemplarCity>
@@ -2210,8 +1693,6 @@
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>คานารี</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คะเนรี</exemplarCity>
-				<exemplarCity alt="proposed-x1002">หมู่เกาะคานารี</exemplarCity>
 			</zone>
 			<zone type="Africa/Ceuta">
 				<exemplarCity>เซวตา</exemplarCity>
@@ -2236,7 +1717,6 @@
 			</zone>
 			<zone type="Pacific/Ponape">
 				<exemplarCity>โปนาเป</exemplarCity>
-				<exemplarCity alt="proposed-x1001">โพนาป</exemplarCity>
 			</zone>
 			<zone type="Pacific/Kosrae">
 				<exemplarCity>คอสแร</exemplarCity>
@@ -2276,7 +1756,6 @@
 			</zone>
 			<zone type="America/Danmarkshavn">
 				<exemplarCity>ดานมาร์กสฮาวน์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ดันมาร์กชาฟน์</exemplarCity>
 			</zone>
 			<zone type="Africa/Banjul">
 				<exemplarCity>บันจูล</exemplarCity>
@@ -2316,7 +1795,6 @@
 			</zone>
 			<zone type="Asia/Jakarta">
 				<exemplarCity>จาการ์ตา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">จาการ์ตาร์</exemplarCity>
 			</zone>
 			<zone type="Asia/Pontianak">
 				<exemplarCity>พอนเทียนัก</exemplarCity>
@@ -2326,7 +1804,6 @@
 			</zone>
 			<zone type="Asia/Jayapura">
 				<exemplarCity>จายาปุระ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">จายาพูรา</exemplarCity>
 			</zone>
 			<zone type="Europe/Dublin">
 				<exemplarCity>ดับบลิน</exemplarCity>
@@ -2366,17 +1843,12 @@
 			</zone>
 			<zone type="Pacific/Enderbury">
 				<exemplarCity>เอนเดอร์เบอร์รี</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เอ็นเดอร์บูรี</exemplarCity>
 			</zone>
 			<zone type="Pacific/Kiritimati">
 				<exemplarCity>คิริทิมาตี</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คิริติมาตี</exemplarCity>
-				<exemplarCity alt="proposed-x1002">คิริติมาติ</exemplarCity>
 			</zone>
 			<zone type="Pacific/Tarawa">
 				<exemplarCity>ทาราวา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ตาระวา</exemplarCity>
-				<exemplarCity alt="proposed-x1002">ตะระวา</exemplarCity>
 			</zone>
 			<zone type="Indian/Comoro">
 				<exemplarCity>โคโมโร</exemplarCity>
@@ -2395,18 +1867,15 @@
 			</zone>
 			<zone type="Asia/Aqtau">
 				<exemplarCity>อัคตาอู</exemplarCity>
-				<exemplarCity alt="proposed-x1001">อัคทัว</exemplarCity>
 			</zone>
 			<zone type="Asia/Oral">
 				<exemplarCity>ออรัล</exemplarCity>
-				<exemplarCity alt="proposed-x1001">โอรัล</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtobe">
 				<exemplarCity>อัคโทบี</exemplarCity>
 			</zone>
 			<zone type="Asia/Qyzylorda">
 				<exemplarCity>ไคซีลอร์ดา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คืยซิลออร์ดา</exemplarCity>
 			</zone>
 			<zone type="Asia/Almaty">
 				<exemplarCity>อัลมาตี</exemplarCity>
@@ -2452,7 +1921,6 @@
 			</zone>
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>ควจาเลน</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ควาจาเลน</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity>มาจูโร</exemplarCity>
@@ -2558,7 +2026,6 @@
 			</zone>
 			<zone type="Pacific/Chatham">
 				<exemplarCity>แชแธม</exemplarCity>
-				<exemplarCity alt="proposed-x1001">แชแทม</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity>โอคแลนด์</exemplarCity>
@@ -2574,16 +2041,12 @@
 			</zone>
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>ทาฮิติ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ตาฮิติ</exemplarCity>
-				<exemplarCity alt="proposed-x1002">ตาฮิตี</exemplarCity>
 			</zone>
 			<zone type="Pacific/Marquesas">
 				<exemplarCity>มาร์เควซัส</exemplarCity>
-				<exemplarCity alt="proposed-x1001">มาร์คิวซัส</exemplarCity>
 			</zone>
 			<zone type="Pacific/Gambier">
 				<exemplarCity>กองบีเย</exemplarCity>
-				<exemplarCity alt="proposed-x1001">แกมเบอร์</exemplarCity>
 			</zone>
 			<zone type="Pacific/Port_Moresby">
 				<exemplarCity>พอร์ตมอร์สบี</exemplarCity>
@@ -2611,7 +2074,6 @@
 			</zone>
 			<zone type="Atlantic/Azores">
 				<exemplarCity>อาซอเรส</exemplarCity>
-				<exemplarCity alt="proposed-x1001">อาโซเรช</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Madeira">
 				<exemplarCity>มาเดรา</exemplarCity>
@@ -2636,11 +2098,9 @@
 			</zone>
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>คาลินิงกราด</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คาลินินกราด</exemplarCity>
 			</zone>
 			<zone type="Europe/Moscow">
 				<exemplarCity>มอสโค</exemplarCity>
-				<exemplarCity alt="proposed-x1001">มอสโก</exemplarCity>
 			</zone>
 			<zone type="Europe/Volgograd">
 				<exemplarCity>วอลโกกราด</exemplarCity>
@@ -2650,19 +2110,15 @@
 			</zone>
 			<zone type="Asia/Yekaterinburg">
 				<exemplarCity>ยีคาเตอรินเบิร์ก</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เยคาเตรินบูร์ก</exemplarCity>
 			</zone>
 			<zone type="Asia/Omsk">
 				<exemplarCity>โอมสก์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ออมสค์</exemplarCity>
 			</zone>
 			<zone type="Asia/Novosibirsk">
 				<exemplarCity>โนโวซิบิร์สก์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">โนโวซีบีสค์</exemplarCity>
 			</zone>
 			<zone type="Asia/Krasnoyarsk">
 				<exemplarCity>ครัสโนยาร์สก์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ครัสโนยาสค์</exemplarCity>
 			</zone>
 			<zone type="Asia/Irkutsk">
 				<exemplarCity>อีร์คุตสค์</exemplarCity>
@@ -2672,7 +2128,6 @@
 			</zone>
 			<zone type="Asia/Vladivostok">
 				<exemplarCity>วลาดิโวสต็อก</exemplarCity>
-				<exemplarCity alt="proposed-x1001">วลาดีวอสตอค</exemplarCity>
 			</zone>
 			<zone type="Asia/Sakhalin">
 				<exemplarCity>ซาคาลิน</exemplarCity>
@@ -2682,7 +2137,6 @@
 			</zone>
 			<zone type="Asia/Kamchatka">
 				<exemplarCity>คามชัตกา</exemplarCity>
-				<exemplarCity alt="proposed-x1001">คัมชัตคา</exemplarCity>
 			</zone>
 			<zone type="Asia/Anadyr">
 				<exemplarCity>อานาดีร์</exemplarCity>
@@ -2710,7 +2164,6 @@
 			</zone>
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity>แจนมาเยน</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ยานไมเอน</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
 				<exemplarCity>ลองเยียร์เบียน</exemplarCity>
@@ -2780,7 +2233,6 @@
 			</zone>
 			<zone type="Europe/Kiev">
 				<exemplarCity>เคียฟ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">กีฟ</exemplarCity>
 			</zone>
 			<zone type="Europe/Simferopol">
 				<exemplarCity>ซิมเฟอโรโปล</exemplarCity>
@@ -2796,7 +2248,6 @@
 			</zone>
 			<zone type="Pacific/Johnston">
 				<exemplarCity>จอห์นสตัน</exemplarCity>
-				<exemplarCity alt="proposed-x1001">จอห์สตัน</exemplarCity>
 			</zone>
 			<zone type="Pacific/Wake">
 				<exemplarCity>เวก</exemplarCity>
@@ -2812,7 +2263,6 @@
 			</zone>
 			<zone type="America/Anchorage">
 				<exemplarCity>แอนชอเรจ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">เวลาที่อลาสก้า</exemplarCity>
 			</zone>
 			<zone type="America/Yakutat">
 				<exemplarCity>ยากูทัต</exemplarCity>
@@ -2822,14 +2272,12 @@
 			</zone>
 			<zone type="America/Los_Angeles">
 				<exemplarCity>ลอสแองเจลิส</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ลอสแองเจลีส</exemplarCity>
 			</zone>
 			<zone type="America/Boise">
 				<exemplarCity>บอยซี</exemplarCity>
 			</zone>
 			<zone type="America/Phoenix">
 				<exemplarCity>ฟีนิกซ์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ฟินิกซ์</exemplarCity>
 			</zone>
 			<zone type="America/Shiprock">
 				<exemplarCity>ชิปร็อก</exemplarCity>
@@ -2881,7 +2329,6 @@
 			</zone>
 			<zone type="Asia/Samarkand">
 				<exemplarCity>ซามาร์กานด์</exemplarCity>
-				<exemplarCity alt="proposed-x1001">ซามาร์คันด์</exemplarCity>
 			</zone>
 			<zone type="Asia/Tashkent">
 				<exemplarCity>ทาชเคนต์</exemplarCity>
@@ -3093,7 +2540,6 @@
 			<metazone type="Chamorro">
 				<long>
 					<standard>เวลามาตรฐานชามอร์โร</standard>
-					<standard alt="proposed-x1001">เว</standard>
 				</long>
 			</metazone>
 			<metazone type="Chile">
@@ -3171,7 +2617,6 @@
 				<long>
 					<standard>เวลากรีนแลนด์ตะวันออก</standard>
 					<daylight>เวลาฤดูร้อนกรีนแลนด์ตะวันออก</daylight>
-					<daylight alt="proposed-x1001">เว</daylight>
 				</long>
 			</metazone>
 			<metazone type="Greenland_Western">
@@ -3424,7 +2869,6 @@
 			</currency>
 			<currency type="AED">
 				<displayName>ดีแรห์มสหรัฐอาหรับเอมิเรตส์</displayName>
-				<displayName alt="proposed-x1001">เดอร์แฮมสหรัฐอาหรับเอมิเรตส์</displayName>
 			</currency>
 			<currency type="AFA">
 				<displayName>อัฟกานี (1927-2002)</displayName>
@@ -3434,53 +2878,40 @@
 			</currency>
 			<currency type="ALL">
 				<displayName>เลกอัลบาเนีย</displayName>
-				<displayName alt="proposed-x1001">เลคแอลเบเนีย</displayName>
 			</currency>
 			<currency type="AMD">
 				<displayName>ดรัมอาเมเนีย</displayName>
-				<displayName alt="proposed-x1001">แดรมอาร์เมเนีย</displayName>
 			</currency>
 			<currency type="ANG">
 				<displayName>แอนทิลลันกิลเดอร์เนเธอร์แลนด์</displayName>
 			</currency>
 			<currency type="AOA">
 				<displayName>กวานซาแองโกลา</displayName>
-				<displayName alt="proposed-x1001">ควานซาแองโกลา</displayName>
 			</currency>
 			<currency type="AOK">
 				<displayName>กวานซาแองโกลา (1977-1990)</displayName>
-				<displayName alt="proposed-x1001">ควานซาแองโกลา (1977-1990)</displayName>
 			</currency>
 			<currency type="AON">
 				<displayName>นิวกวานซาแองโกลา (1990-2000)</displayName>
-				<displayName alt="proposed-x1001">นิวควานซาแองโกลา (1990-2000)</displayName>
 			</currency>
 			<currency type="AOR">
 				<displayName>กวานซารีจัสทาโดแองโกลา (1995-1999)</displayName>
-				<displayName alt="proposed-x1001">รีจัสทาโดควานซาแองโกลา (1995-1999)</displayName>
 			</currency>
 			<currency type="ARA">
 				<displayName>ออสตรัลอาเจนตินา</displayName>
-				<displayName alt="proposed-x1001">ออสตราลอาร์เจนตินา</displayName>
 			</currency>
 			<currency type="ARP">
 				<displayName>เปโซอาร์เจนติน่า (1983-1985)</displayName>
-				<displayName alt="proposed-x1001">เปโซอาร์เจนตินา (1983-1985)</displayName>
 			</currency>
 			<currency type="ARS">
 				<displayName>เปโซอาร์เจนติน่า</displayName>
-				<displayName alt="proposed-x1001">เปโซอาร์เจนตินา</displayName>
-				<displayName alt="proposed-x1002">เงินเปโซของอาร์เจนติน่า</displayName>
 				<symbol>Arg$</symbol>
 			</currency>
 			<currency type="ATS">
 				<displayName>ชิลลิงออสเตรีย</displayName>
-				<displayName alt="proposed-x1001">ชิลลิ่งออสเตรีย</displayName>
 			</currency>
 			<currency type="AUD">
 				<displayName>เหรียญออสเตรเลีย</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์ออสเตรเลีย</displayName>
-				<displayName alt="proposed-x1002">เงินดอลลาร์ออสเตรเลีย</displayName>
 				<symbol>$A</symbol>
 			</currency>
 			<currency type="AWG">
@@ -3488,18 +2919,15 @@
 			</currency>
 			<currency type="AZM">
 				<displayName>มานัตอาเซอร์ไบจัน</displayName>
-				<displayName alt="proposed-x1001">มานัตอาเซอร์ไบจาน</displayName>
 			</currency>
 			<currency type="BAD">
 				<displayName>ดีนาร์บอสเนีย-เฮอร์เซโกวีนา</displayName>
 			</currency>
 			<currency type="BAM">
 				<displayName>มาร​์กบอสเนีย-เฮอร์เซโกวีนา</displayName>
-				<displayName alt="proposed-x1001">คอนเวอร์ทิเบิกมาร์กบอสเนีย-เฮอร์เซโกวีนา</displayName>
 			</currency>
 			<currency type="BBD">
 				<displayName>ดอลลาร์บาร์เบดอส</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์บาร์เบโดส</displayName>
 			</currency>
 			<currency type="BDT">
 				<displayName>ตากาบังกลาเทศ</displayName>
@@ -3515,11 +2943,9 @@
 			</currency>
 			<currency type="BGL">
 				<displayName>ฮาร์ดลีฟบัลแกเรีย</displayName>
-				<displayName alt="proposed-x1001">ฮาร์ดเลฟบัลแกเรีย</displayName>
 			</currency>
 			<currency type="BGN">
 				<displayName>นิวลีฟบัลแกเรีย</displayName>
-				<displayName alt="proposed-x1001">นิวเลฟบัลแกเรีย</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>ดีนาร์บาห์เรน</displayName>
@@ -3553,7 +2979,6 @@
 			</currency>
 			<currency type="BRL">
 				<displayName>รีล</displayName>
-				<displayName alt="proposed-x1001">รีลบราซิล</displayName>
 			</currency>
 			<currency type="BRN">
 				<displayName>ครูซาโดโนโวบราซิล</displayName>
@@ -3566,30 +2991,24 @@
 			</currency>
 			<currency type="BTN">
 				<displayName>กัลทรัมภูฏาน</displayName>
-				<displayName alt="proposed-x1001">งุลตรัมภูฏาน</displayName>
 			</currency>
 			<currency type="BUK">
 				<displayName>จัคพม่า [BUK]</displayName>
 			</currency>
 			<currency type="BWP">
 				<displayName>พูลาบอตสวานา</displayName>
-				<displayName alt="proposed-x1001">ปูลาบอตสวานา</displayName>
 			</currency>
 			<currency type="BYB">
 				<displayName>นิวรูเบิลเบลารัสเซีย (1994-1999)</displayName>
-				<displayName alt="proposed-x1001">นิวรูเบิลเบลารุส (1994-1999)</displayName>
 			</currency>
 			<currency type="BYR">
 				<displayName>รูเบิลเบลารัสเซีย</displayName>
-				<displayName alt="proposed-x1001">รูเบิลเบลารุส</displayName>
 			</currency>
 			<currency type="BZD">
 				<displayName>ดอลลาร์เบลีซ</displayName>
 			</currency>
 			<currency type="CAD">
 				<displayName>เหรียญคานาดา</displayName>
-				<displayName alt="proposed-x1001">เงินดอลลาร์คานาดา</displayName>
-				<displayName alt="proposed-x1002">ดอลลาร์แคนาดา</displayName>
 				<symbol>Can$</symbol>
 			</currency>
 			<currency type="CDF">
@@ -3600,7 +3019,6 @@
 			</currency>
 			<currency type="CHF">
 				<displayName>ฟรังก์สวิส</displayName>
-				<displayName alt="proposed-x1001">เงินฟรังค์สวิส</displayName>
 			</currency>
 			<currency type="CHW">
 				<displayName>ฟรังก์ดับเบิลยูไออาร์</displayName>
@@ -3610,28 +3028,23 @@
 			</currency>
 			<currency type="CLP">
 				<displayName>เปโซชิลี</displayName>
-				<displayName alt="proposed-x1001">เงินเปโซของประเทศชิลี</displayName>
 				<symbol>Ch$</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>หยวนเหรินเหมินบี้</displayName>
-				<displayName alt="proposed-x1001">หยวนเหรินหมินปี้จีน</displayName>
 				<symbol>￥</symbol>
 			</currency>
 			<currency type="COP">
 				<displayName>เปโซโคลัมเบีย</displayName>
-				<displayName alt="proposed-x1001">เงินเปโซของโคลัมเบีย</displayName>
 			</currency>
 			<currency type="COU">
 				<displayName>วาเลอร์รีล</displayName>
 			</currency>
 			<currency type="CRC">
 				<displayName>โคลอนคอสตาริกา</displayName>
-				<displayName alt="proposed-x1001">โกลองคอสตาริกา</displayName>
 			</currency>
 			<currency type="CSD">
 				<displayName>ไดนาร์เซอร์เบีย</displayName>
-				<displayName alt="proposed-x1001">ดีนาร์เซอร์เบีย</displayName>
 			</currency>
 			<currency type="CSK">
 				<displayName>ฮาร์ดโครูนาเช็กโกสโลวัก</displayName>
@@ -3659,7 +3072,6 @@
 			</currency>
 			<currency type="DKK">
 				<displayName>โครนเดนมาร์ก</displayName>
-				<displayName alt="proposed-x1001">โครเนอร์เดนมาร์ก</displayName>
 			</currency>
 			<currency type="DOP">
 				<displayName>เปโซโดมินิกา</displayName>
@@ -3678,21 +3090,18 @@
 			</currency>
 			<currency type="EGP">
 				<displayName>ปอนด์อียิปต์</displayName>
-				<displayName alt="proposed-x1001">เงินปอนด์ของอียิปต์</displayName>
 			</currency>
 			<currency type="EQE">
 				<displayName>เอ็กเวเล</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>นากฟาเอริเทรีย</displayName>
-				<displayName alt="proposed-x1001">นาฟกาเอริเทรีย</displayName>
 			</currency>
 			<currency type="ESA">
 				<displayName>เปเซตาสเปน (บัญชี)</displayName>
 			</currency>
 			<currency type="ESB">
 				<displayName>เปเซตาสเปน (บัญชีที่เปลี่ยนแปลงได้)</displayName>
-				<displayName alt="proposed-x1001">เปเซตาสเปน (บัญชีคอนเวอร์ทิเบิล)</displayName>
 			</currency>
 			<currency type="ESP">
 				<displayName>เปเซตาสเปน</displayName>
@@ -3702,28 +3111,22 @@
 			</currency>
 			<currency type="EUR">
 				<displayName>ยูโร</displayName>
-				<displayName alt="proposed-x1001">เงินยูโร</displayName>
 			</currency>
 			<currency type="FIM">
 				<displayName>มาร์กกาฟินแลนด์</displayName>
 			</currency>
 			<currency type="FJD">
 				<displayName>ดอลลาร์ฟิจิ</displayName>
-				<displayName alt="proposed-x1001">เหรียญฟิจิ</displayName>
 				<symbol>F$</symbol>
 			</currency>
 			<currency type="FKP">
 				<displayName>ปอนด์เกาะฟอล์กแลนด์</displayName>
-				<displayName alt="proposed-x1001">ปอนด์หมู่เกาะฟอล์กแลนด์</displayName>
 			</currency>
 			<currency type="FRF">
 				<displayName>เหรียญฝรั่งเศส</displayName>
-				<displayName alt="proposed-x1001">ฟรังก์ฝรั่งเศส</displayName>
-				<displayName alt="proposed-x1002">เงินฟรังค์ของฝรั่งเศส</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>ปอนด์สเตอร์ลิงอังกฤษ</displayName>
-				<displayName alt="proposed-x1001">เงินปอนด์สเตอร์ลิงของอังกฤษ</displayName>
 				<symbol>\u00A3</symbol>
 			</currency>
 			<currency type="GEK">
@@ -3734,7 +3137,6 @@
 			</currency>
 			<currency type="GHC">
 				<displayName>เซดีกานา</displayName>
-				<displayName alt="proposed-x1001">เซดิกานา</displayName>
 			</currency>
 			<currency type="GIP">
 				<displayName>ปอนด์ยิบรอลตาร์</displayName>
@@ -3756,19 +3158,15 @@
 			</currency>
 			<currency type="GTQ">
 				<displayName>เควตซัลกัวเตมาลา</displayName>
-				<displayName alt="proposed-x1001">เกตซัลกัวเตมาลา</displayName>
 			</currency>
 			<currency type="GWP">
 				<displayName>เปโซกีนีบิสเซา</displayName>
-				<displayName alt="proposed-x1001">เปโซกินี-บิสเซา</displayName>
 			</currency>
 			<currency type="GYD">
 				<displayName>ดอลลาร์กายอานา</displayName>
 			</currency>
 			<currency type="HKD">
 				<displayName>เหรียญฮ่องกง</displayName>
-				<displayName alt="proposed-x1001">เงินดอลลาร์ฮ่องกง</displayName>
-				<displayName alt="proposed-x1002">ดอลลาร์ฮ่องกง</displayName>
 				<symbol>HK$</symbol>
 			</currency>
 			<currency type="HNL">
@@ -3782,16 +3180,12 @@
 			</currency>
 			<currency type="HTG">
 				<displayName>กอร์ดเฮติ</displayName>
-				<displayName alt="proposed-x1001">กูร์ดเฮติ</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>ฟอรินต์ฮังการี</displayName>
-				<displayName alt="proposed-x1001">เงินโฟรินท์ของฮังการี</displayName>
 			</currency>
 			<currency type="IDR">
 				<displayName>รูเปียอินโดนีเซีย</displayName>
-				<displayName alt="proposed-x1001">รูเปียห์อินโดนีเซีย</displayName>
-				<displayName alt="proposed-x1002">เงินรูเปียอินโดนีเซีย</displayName>
 				<symbol>Rp</symbol>
 			</currency>
 			<currency type="IEP">
@@ -3803,11 +3197,9 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>เชเกลอิสราเอล</displayName>
-				<displayName alt="proposed-x1001">นิวเชเกลอิสราเอล</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>รูปีอินเดีย</displayName>
-				<displayName alt="proposed-x1001">เงินรูปีของอินเดีย</displayName>
 			</currency>
 			<currency type="IQD">
 				<displayName>ดีนาร์อิรัก</displayName>
@@ -3829,13 +3221,10 @@
 			</currency>
 			<currency type="JPY">
 				<displayName>เยน</displayName>
-				<displayName alt="proposed-x1001">เยนญี่ปุ่น</displayName>
-				<displayName alt="proposed-x1002">เงินเยนของญี่ปุ่น</displayName>
 				<symbol>\u00A5</symbol>
 			</currency>
 			<currency type="KES">
 				<displayName>ชิลลิ่งเคนยา</displayName>
-				<displayName alt="proposed-x1001">ชิลลิงของเคนยา</displayName>
 			</currency>
 			<currency type="KGS">
 				<displayName>ซอมคีร์กีซสถาน</displayName>
@@ -3851,7 +3240,6 @@
 			</currency>
 			<currency type="KRW">
 				<displayName>วอนเกาหลีใต้</displayName>
-				<displayName alt="proposed-x1001">เงินวอนของเกาหลีใต้</displayName>
 			</currency>
 			<currency type="KWD">
 				<displayName>ดีนาร์คูเวต</displayName>
@@ -3861,11 +3249,9 @@
 			</currency>
 			<currency type="KZT">
 				<displayName>เทนจ์คาซัคสถาน</displayName>
-				<displayName alt="proposed-x1001">เต็งเกคาซัคสถาน</displayName>
 			</currency>
 			<currency type="LAK">
 				<displayName>กีบลาว</displayName>
-				<displayName alt="proposed-x1001">กีบ</displayName>
 			</currency>
 			<currency type="LBP">
 				<displayName>ปอนด์เลบานอน</displayName>
@@ -3878,28 +3264,24 @@
 			</currency>
 			<currency type="LSL">
 				<displayName>โลตีเลโซโท</displayName>
-				<displayName alt="proposed-x1001">โลติเลโซโท</displayName>
 			</currency>
 			<currency type="LSM">
 				<displayName>มาโลตี</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>ลีตาลิทัวเนีย</displayName>
-				<displayName alt="proposed-x1001">ลิตาลิทัวเนีย</displayName>
 			</currency>
 			<currency type="LTT">
 				<displayName>ทาโลนัสลิทัวเนีย</displayName>
 			</currency>
 			<currency type="LUC">
 				<displayName>ฟรังก์ลักเซมเบิร์ก [LUC]</displayName>
-				<displayName alt="proposed-x1001">คอนเวอร์ทิเบิลฟรังก์ลักเซมเบิร์ก</displayName>
 			</currency>
 			<currency type="LUF">
 				<displayName>ฟรังก์ลักเซมเบิร์ก</displayName>
 			</currency>
 			<currency type="LUL">
 				<displayName>ฟรังก์ลักเซมเบิร์ก  [LUL]</displayName>
-				<displayName alt="proposed-x1001">ไฟแนลเชียลฟรังก์ลักเซมเบิร์ก</displayName>
 			</currency>
 			<currency type="LVL">
 				<displayName>ลัตส์ลัตเวีย</displayName>
@@ -3912,18 +3294,15 @@
 			</currency>
 			<currency type="MAD">
 				<displayName>ดีแรห์มโมร็อกโก</displayName>
-				<displayName alt="proposed-x1001">เดอร์แฮมโมร็อกโก</displayName>
 			</currency>
 			<currency type="MAF">
 				<displayName>ฟรังก์โมร็อกโก</displayName>
 			</currency>
 			<currency type="MDL">
 				<displayName>ลิวมอลโดวาน</displayName>
-				<displayName alt="proposed-x1001">ลิวมอลโดวา</displayName>
 			</currency>
 			<currency type="MGA">
 				<displayName>อาเรียรีมาดากัสการ์</displayName>
-				<displayName alt="proposed-x1001">อารีอารีมาดากัสการ์</displayName>
 			</currency>
 			<currency type="MGF">
 				<displayName>ฟรังก์มาดากัสการ์</displayName>
@@ -3939,18 +3318,15 @@
 			</currency>
 			<currency type="MNT">
 				<displayName>ตูกริกมองโกเลีย</displayName>
-				<displayName alt="proposed-x1001">ทูกรุกมองโกเลีย</displayName>
 			</currency>
 			<currency type="MOP">
 				<displayName>ปาตากามาเก๊า</displayName>
 			</currency>
 			<currency type="MRO">
 				<displayName>ออกิวยามอริเตเนีย</displayName>
-				<displayName alt="proposed-x1001">อูกียามอริเตเนีย</displayName>
 			</currency>
 			<currency type="MTL">
 				<displayName>ลีรามอลตา</displayName>
-				<displayName alt="proposed-x1001">ลีราของมอลต้า</displayName>
 			</currency>
 			<currency type="MTP">
 				<displayName>ปอนด์มอลตา</displayName>
@@ -3960,28 +3336,22 @@
 			</currency>
 			<currency type="MVR">
 				<displayName>รูฟิยาเกาะมัลดีฟส์</displayName>
-				<displayName alt="proposed-x1001">รูฟียาห์มัลดีฟส์</displayName>
 			</currency>
 			<currency type="MWK">
 				<displayName>กวาชามาลาวี</displayName>
-				<displayName alt="proposed-x1001">ควาชามาลาวี</displayName>
 			</currency>
 			<currency type="MXN">
 				<displayName>เปโซแม็กซิโก</displayName>
-				<displayName alt="proposed-x1001">เงินเปโซของเม็กซิโก</displayName>
-				<displayName alt="proposed-x1002">เปโซเม็กซิโก</displayName>
 				<symbol>MEX$</symbol>
 			</currency>
 			<currency type="MXP">
 				<displayName>ซิลเวอรืเม็กซิโก (1861-1992)</displayName>
-				<displayName alt="proposed-x1001">เงินเปโซเม็กซิโก (1861-1992)</displayName>
 			</currency>
 			<currency type="MXV">
 				<displayName>อินเวอร์เซียนเม็กซิโก</displayName>
 			</currency>
 			<currency type="MYR">
 				<displayName>ริงกิตมาเลเซีย</displayName>
-				<displayName alt="proposed-x1001">ตระกูลเงินริงกิตมาเลเซีย</displayName>
 				<symbol>RM</symbol>
 			</currency>
 			<currency type="MZE">
@@ -3989,7 +3359,6 @@
 			</currency>
 			<currency type="MZM">
 				<displayName>เมทิคัลโมซัมบิก</displayName>
-				<displayName alt="proposed-x1001">เมติคัลโมซัมบิกเก่า</displayName>
 			</currency>
 			<currency type="MZN">
 				<displayName>เมติคัลโมซัมบิก</displayName>
@@ -4002,26 +3371,21 @@
 			</currency>
 			<currency type="NIC">
 				<displayName>คอร์โดบานิการากัว</displayName>
-				<displayName alt="proposed-x1001">กอร์โดบานิการากัว</displayName>
 			</currency>
 			<currency type="NIO">
 				<displayName>คอร์โดบาโอโรนิการากัว</displayName>
-				<displayName alt="proposed-x1001">กอร์โดบาโอโรนิการากัว</displayName>
 			</currency>
 			<currency type="NLG">
 				<displayName>กิลเดอร์เนเธอร์แลนด์</displayName>
 			</currency>
 			<currency type="NOK">
 				<displayName>โครนนอร์เวย์</displayName>
-				<displayName alt="proposed-x1001">โครเนอร์นอร์เวย์</displayName>
 			</currency>
 			<currency type="NPR">
 				<displayName>รูปีเนปาล</displayName>
 			</currency>
 			<currency type="NZD">
 				<displayName>เหรียญนิวซีแลนด์</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์นิวซีแลนด์</displayName>
-				<displayName alt="proposed-x1002">เงินดอลลาร์นิวซีแลนด์</displayName>
 				<symbol>$NZ</symbol>
 			</currency>
 			<currency type="OMR">
@@ -4029,7 +3393,6 @@
 			</currency>
 			<currency type="PAB">
 				<displayName>บัลบัวปานามา</displayName>
-				<displayName alt="proposed-x1001">บัลโบอาปานามา</displayName>
 			</currency>
 			<currency type="PEI">
 				<displayName>อินตีเปรู</displayName>
@@ -4042,21 +3405,16 @@
 			</currency>
 			<currency type="PGK">
 				<displayName>กีนาปาปัวนิวกีนี</displayName>
-				<displayName alt="proposed-x1001">กีนาปาปัวนิวกินี</displayName>
 			</currency>
 			<currency type="PHP">
 				<displayName>เปโซฟิลิปปินส์</displayName>
-				<displayName alt="proposed-x1001">เงินเปโซของฟิลิปปินส์</displayName>
 			</currency>
 			<currency type="PKR">
 				<displayName>รูปีปากีสถาน</displayName>
-				<displayName alt="proposed-x1001">เงินรูปีของปากีสถาน</displayName>
 				<symbol>Pra</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>ซลอตีโปแลนด์</displayName>
-				<displayName alt="proposed-x1001">สว้อตตี้</displayName>
-				<displayName alt="proposed-x1002">ซวอตีโปแลนด์</displayName>
 			</currency>
 			<currency type="PLZ">
 				<displayName>ซลอตีโปแลนด์ [PLZ]</displayName>
@@ -4066,11 +3424,9 @@
 			</currency>
 			<currency type="PYG">
 				<displayName>กัวรานีปารากวัย</displayName>
-				<displayName alt="proposed-x1001">กวารานีปารากวัย</displayName>
 			</currency>
 			<currency type="QAR">
 				<displayName>เรียลกาตาร์</displayName>
-				<displayName alt="proposed-x1001">ริยัลกาตาร์</displayName>
 			</currency>
 			<currency type="RHD">
 				<displayName>ดอลลาร์โรดีเซีย</displayName>
@@ -4089,12 +3445,9 @@
 			</currency>
 			<currency type="SAR">
 				<displayName>เรียลซาอุดิอาระเบีย</displayName>
-				<displayName alt="proposed-x1001">เงินสกุลริยัลของซาอุดิอาระเบีย</displayName>
-				<displayName alt="proposed-x1002">ริยัลซาอุดีอาระเบีย</displayName>
 			</currency>
 			<currency type="SBD">
 				<displayName>ดอลลาร์เกาะโซโลมอน</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์หมู่เกาะโซโลมอน</displayName>
 			</currency>
 			<currency type="SCR">
 				<displayName>รูปีเซเชลส์</displayName>
@@ -4107,12 +3460,9 @@
 			</currency>
 			<currency type="SEK">
 				<displayName>โครนาสวีเดน</displayName>
-				<displayName alt="proposed-x1001">โครเนอร์สวีเดน</displayName>
 			</currency>
 			<currency type="SGD">
 				<displayName>เหรียญสิงคโปร์</displayName>
-				<displayName alt="proposed-x1001">เงินดอลลาร์สิงคโปร์</displayName>
-				<displayName alt="proposed-x1002">ดอลลาร์สิงคโปร์</displayName>
 				<symbol>S$</symbol>
 			</currency>
 			<currency type="SHP">
@@ -4129,37 +3479,30 @@
 			</currency>
 			<currency type="SOS">
 				<displayName>ชิลลิงโซมาเลีย</displayName>
-				<displayName alt="proposed-x1001">ชิลลิ่งโซมาเลีย</displayName>
 			</currency>
 			<currency type="SRD">
 				<displayName>ดอลลาร์สุรินัม</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์ซูรินาเม</displayName>
 			</currency>
 			<currency type="SRG">
 				<displayName>กิลเดอร์สุรินัม</displayName>
-				<displayName alt="proposed-x1001">กลิเดอร์ซูรินาเม</displayName>
 			</currency>
 			<currency type="STD">
 				<displayName>ดอบราเซาตูเมและปรินซิปี</displayName>
-				<displayName alt="proposed-x1001">โดบราเซาตูเมและปรินซิปี</displayName>
 			</currency>
 			<currency type="SUR">
 				<displayName>รูเบิลโซเวียต</displayName>
 			</currency>
 			<currency type="SVC">
 				<displayName>โคลอนเอลซัลวาดอร์</displayName>
-				<displayName alt="proposed-x1001">โคลองเอลซัลวาดอร์</displayName>
 			</currency>
 			<currency type="SYP">
 				<displayName>ปอนด์ซีเรีย</displayName>
 			</currency>
 			<currency type="SZL">
 				<displayName>ลิลันกีนีสวาซิแลนด์</displayName>
-				<displayName alt="proposed-x1001">ลิลังเจนีสวาซิแลนด์</displayName>
 			</currency>
 			<currency type="THB">
 				<displayName>บาท</displayName>
-				<displayName alt="proposed-x1001">เงินบาทไทย</displayName>
 				<symbol>฿</symbol>
 			</currency>
 			<currency type="TJR">
@@ -4176,7 +3519,6 @@
 			</currency>
 			<currency type="TOP">
 				<displayName>ปาอังกาตองกา</displayName>
-				<displayName alt="proposed-x1001">พาแองกาตองกา</displayName>
 			</currency>
 			<currency type="TPE">
 				<displayName>เอสคูโดติมอร์</displayName>
@@ -4186,47 +3528,36 @@
 			</currency>
 			<currency type="TRY">
 				<displayName>ตุรกี ลีร่า ใหม่</displayName>
-				<displayName alt="proposed-x1001">ลีราตุรกีใหม่</displayName>
-				<displayName alt="proposed-x1002">สกุลเงินไลราตุรกีใหม่</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>ดอลลาร์ตรินิแดดและโตเบโก</displayName>
 			</currency>
 			<currency type="TWD">
 				<displayName>ดอลลาร์ไต้หวัน</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์ไต้หวันใหม่</displayName>
-				<displayName alt="proposed-x1002">นิวดอลลาร์ไต้หวัน</displayName>
 			</currency>
 			<currency type="TZS">
 				<displayName>ชิลลิงแทนซาเนีย</displayName>
-				<displayName alt="proposed-x1001">ชิลลิ่งแทนซาเนีย</displayName>
 			</currency>
 			<currency type="UAH">
 				<displayName>ฮรีฟเนียยูเครน</displayName>
-				<displayName alt="proposed-x1001">ฮรีฟเนียของยูเครน</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>คาร์โบวาเนตซ์ยูเครน</displayName>
 			</currency>
 			<currency type="UGS">
 				<displayName>ซิลลิ่งอูกันดา (1966-1987)</displayName>
-				<displayName alt="proposed-x1001">ชิลลิ่งยูกันดา (1966-1987)</displayName>
 			</currency>
 			<currency type="UGX">
 				<displayName>ชิลลิงยูกันดา</displayName>
-				<displayName alt="proposed-x1001">ชิลลิ่งยูกันดา</displayName>
 			</currency>
 			<currency type="USD">
 				<displayName>ดอร์ล่าร์สหรัฐ</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์สหรัฐ</displayName>
-				<displayName alt="proposed-x1002">ดอลลาร์สหรัฐอเมริกา</displayName>
 			</currency>
 			<currency type="USN">
 				<displayName>เหรียญสหรัฐ (วันถัดไป)</displayName>
 			</currency>
 			<currency type="USS">
 				<displayName>เหรียญสหรัฐ (วันเดียวกัน)</displayName>
-				<displayName alt="proposed-x1001">ดอลลาร์สหรัญอเมริกา (วันเดียวกัน)</displayName>
 			</currency>
 			<currency type="UYP">
 				<displayName>เปโซอุรุกวัย (1975-1993)</displayName>
@@ -4236,23 +3567,18 @@
 			</currency>
 			<currency type="UZS">
 				<displayName>ซัมอุซเบกิสถาน</displayName>
-				<displayName alt="proposed-x1001">ซอมอุซเบกิสถาน</displayName>
 			</currency>
 			<currency type="VEB">
 				<displayName>โบลิวาร์เวเนซุเอลา</displayName>
-				<displayName alt="proposed-x1001">โบลีวาร์เวเนซุเอลา</displayName>
 			</currency>
 			<currency type="VND">
 				<displayName>ดองเวียดนาม</displayName>
-				<displayName alt="proposed-x1001">ดองของเวียดนาม</displayName>
-				<displayName alt="proposed-x1002">ด่องเวียดนาม</displayName>
 			</currency>
 			<currency type="VUV">
 				<displayName>วาตูวานูอาตู</displayName>
 			</currency>
 			<currency type="WST">
 				<displayName>ทาลาซามัวตะวันตก</displayName>
-				<displayName alt="proposed-x1001">ตาลาซามัวตะวันตก</displayName>
 			</currency>
 			<currency type="XAG">
 				<displayName>เงิน</displayName>
@@ -4265,7 +3591,6 @@
 			</currency>
 			<currency type="XBB">
 				<displayName>หน่วยโมเนทารียุโรป</displayName>
-				<displayName alt="proposed-x1001">หน่วยการเงินยุโรป</displayName>
 			</currency>
 			<currency type="XBC">
 				<displayName>หน่วยบัญชียุโรป [XBC]</displayName>
@@ -4284,18 +3609,15 @@
 			</currency>
 			<currency type="XPD">
 				<displayName>พัลลาดีม</displayName>
-				<displayName alt="proposed-x1001">แพลเลเดียม</displayName>
 			</currency>
 			<currency type="XPT">
 				<displayName>แพลตินัม</displayName>
-				<displayName alt="proposed-x1001">แพลทินัม</displayName>
 			</currency>
 			<currency type="XTS">
 				<displayName>รหัสทดสอบเงินตรา</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>ไม่มีหน่วยเงินตรา</displayName>
-				<displayName alt="proposed-x1001">ไม่ทราบสกุลเงิน</displayName>
 			</currency>
 			<currency type="YDD">
 				<displayName>ดีนาร์เยเมน</displayName>
@@ -4305,26 +3627,21 @@
 			</currency>
 			<currency type="YUD">
 				<displayName>ฮารืดดีนาร์ยูโกสลาเวีย</displayName>
-				<displayName alt="proposed-x1001">ดีนาร์ฮาร์ดยูโกสลาเวีย</displayName>
 			</currency>
 			<currency type="YUM">
 				<displayName>โนวิย์ดีนาร์ยูโกสลาเวีย</displayName>
-				<displayName alt="proposed-x1001">ดีนาร์โนวิย์ยูโกสลาเวีย</displayName>
 			</currency>
 			<currency type="YUN">
 				<displayName>ดีนาร์ยูโกสลาเวีย</displayName>
-				<displayName alt="proposed-x1001">ดีนาร์คอนเวอร์ทิเบิลยูโกสลาเวีย</displayName>
 			</currency>
 			<currency type="ZAL">
 				<displayName>แรนด์แอฟริกาใต้ (การเงิน)</displayName>
-				<displayName alt="proposed-x1001">แรนด์แอฟริกาใต้ (ไฟแนลเชียล)</displayName>
 			</currency>
 			<currency type="ZAR">
 				<displayName>แรนด์แอฟริกาใต้</displayName>
 			</currency>
 			<currency type="ZMK">
 				<displayName>กวาชาแซมเบีย</displayName>
-				<displayName alt="proposed-x1001">ควาชาแซมเบีย</displayName>
 			</currency>
 			<currency type="ZRN">
 				<displayName>นิวแซร์คองโก</displayName>

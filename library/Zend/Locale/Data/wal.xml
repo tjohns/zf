@@ -159,7 +159,6 @@
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[፟ ᎐-᎙ ሀ-ሏ ⶀ ሐ-ሟ ᎀ-ᎃ ⶁ ሠ-ሯ ⶂ ሰ-ሷ ⶃ ሸ-ሿ ⶄ ቀ-ቈ ቊ-ቍ ቐ-ቖ ቘ ቚ-ቝ በ-ቧ ᎄ-ᎇ ⶅ ቨ-ቷ ⶆ ቸ-ቿ ⶇ ኀ-ኈ ኊ-ኍ ነ-ኗ ⶈ ኘ-ኟ ⶉ አ-ኧ ⶊ ከ-ኰ ኲ-ኵ ኸ-ኾ ዀ ዂ-ዅ ወ-ዖ ዘ-ዟ ⶋ ዠ-ዷ ⶌ ዸ-ዿ ⶍ ጀ-ጇ ⶎ ገ-ጐ ጒ-ጕ ጘ-ጟ ⶓ-ⶖ ጠ-ጧ ⶏ ጨ-ጯ ⶐ ጰ-ጷ ⶑ ጸ-ፏ ᎈ-ᎋ ፐ-ፗ ᎌ-ᎏ ⶒ ፘ-ፚ ⶠ-ⶦ ⶨ-ⶮ ⶰ-ⶶ ⶸ-ⶾ ⷀ-ⷆ ⷈ-ⷎ ⷐ-ⷖ ⷘ-ⷞ]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[፟ ፡ ፣-፧ ። ፠ ፨ ᎐-᎙ ፲-፼ ፩-፱ ሀ-ሏ ⶀ ሐ-ሟ ᎀ-ᎃ ⶁ ሠ-ሯ ⶂ ሰ-ሷ ⶃ ሸ-ሿ ⶄ ቀ-ቈ ቊ-ቍ ቐ-ቖ ቘ ቚ-ቝ በ-ቧ ᎄ-ᎇ ⶅ ቨ-ቷ ⶆ ቸ-ቿ ⶇ ኀ-ኈ ኊ-ኍ ነ-ኗ ⶈ ኘ-ኟ ⶉ አ-ኧ ⶊ ከ-ኰ ኲ-ኵ ኸ-ኾ ዀ ዂ-ዅ ወ-ዖ ዘ-ዟ ⶋ ዠ-ዷ ⶌ ዸ-ዿ ⶍ ጀ-ጇ ⶎ ገ-ጐ ጒ-ጕ ጘ-ጟ ⶓ-ⶖ ጠ-ጧ ⶏ ጨ-ጯ ⶐ ጰ-ጷ ⶑ ጸ-ፏ ᎈ-ᎋ ፐ-ፗ ᎌ-ᎏ ⶒ ፘ-ፚ ⶠ-ⶦ ⶨ-ⶮ ⶰ-ⶶ ⶸ-ⶾ ⷀ-ⷆ ⷈ-ⷎ ⷐ-ⷖ ⷘ-ⷞ]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>
@@ -273,25 +272,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE፥ dd MMMM ጋላሳ yyyy G</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd-MMM-yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -299,25 +294,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>h:mm a</pattern>
-							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>

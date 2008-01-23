@@ -9,19 +9,16 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="af">Африканерски</language>
-			<language type="af" alt="proposed-x1001">Африкански</language>
 			<language type="am">Амхарски</language>
 			<language type="ar">Арапски</language>
 			<language type="as">Асемијски</language>
 			<language type="az">Азербејџански</language>
 			<language type="be">Белоруски</language>
 			<language type="bg">Бугарски</language>
-			<language type="bg" alt="proposed-x1001">На Бугарском</language>
 			<language type="bh">Бихарски</language>
 			<language type="bn">Бенгласки</language>
 			<language type="br">Бретонски</language>
 			<language type="bs">Босански</language>
-			<language type="bs" alt="proposed-x1001">Бошњачки</language>
 			<language type="ca">Каталонски</language>
 			<language type="ce">Чеченски</language>
 			<language type="chr">Чероки</language>
@@ -54,15 +51,11 @@
 			<language type="haw">Хавајски</language>
 			<language type="he">Хебрејски</language>
 			<language type="hi">Хинди</language>
-			<language type="hi" alt="proposed-x1001">Хинду</language>
 			<language type="hr">Хрватски</language>
-			<language type="hr" alt="proposed-x1001">На Хрватском</language>
 			<language type="hu">Мађарски</language>
 			<language type="hy">Арменски</language>
-			<language type="hy" alt="proposed-x1001">Јерменски</language>
 			<language type="ia">Интерлингва</language>
 			<language type="id">Индонезијски</language>
-			<language type="id" alt="proposed-x1001">На Индонежанском</language>
 			<language type="ie">Међујезички</language>
 			<language type="is">Исландски</language>
 			<language type="it">Италијански</language>
@@ -70,7 +63,6 @@
 			<language type="jv">Јавански</language>
 			<language type="ka">Грузијски</language>
 			<language type="km">Кмерски</language>
-			<language type="km" alt="proposed-x1001">Камбоџијски</language>
 			<language type="kn">Канада</language>
 			<language type="ko">Корејски</language>
 			<language type="ku">Курдски</language>
@@ -103,21 +95,16 @@
 			<language type="ro">Румунски</language>
 			<language type="ru">Руски</language>
 			<language type="sa">Санскрит</language>
-			<language type="sa" alt="proposed-x1001">Санскритски</language>
 			<language type="sd">Синди</language>
 			<language type="sh">Српско-Хрватски</language>
-			<language type="sh" alt="proposed-x1001">Српскохрватски</language>
 			<language type="si">Сингалески</language>
 			<language type="sk">Словачки</language>
-			<language type="sk" alt="proposed-x1001">На Словачком</language>
 			<language type="sl">Словеначки</language>
-			<language type="sl" alt="proposed-x1001">На Словеначком</language>
 			<language type="so">Сомалски</language>
 			<language type="sq">Албански</language>
 			<language type="sr">Српски</language>
 			<language type="st">Сесото</language>
 			<language type="su">Судански</language>
-			<language type="su" alt="proposed-x1001">Сундски</language>
 			<language type="sux">Сумерски</language>
 			<language type="sv">Шведски</language>
 			<language type="sw">Свахили</language>
@@ -152,7 +139,6 @@
 			<script type="Copt">коптичко писмо</script>
 			<script type="Cyrl">Ћирилица</script>
 			<script type="Cyrs">Старословенска црквена ћирилица</script>
-			<script type="Cyrs" alt="proposed-x1001">ћирилица (црквено словенска варијанта)</script>
 			<script type="Deva">Деванагари</script>
 			<script type="Dsrt">Дезерет</script>
 			<script type="Ethi">етиопско писмо</script>
@@ -185,7 +171,6 @@
 			<territory type="014">Источна Африка</territory>
 			<territory type="015">Северна Африка</territory>
 			<territory type="017">Централна Африка</territory>
-			<territory type="017" alt="proposed-x1001">Средња Африка</territory>
 			<territory type="018">Јужна Африка</territory>
 			<territory type="019">Америке</territory>
 			<territory type="021">Северна Америка</territory>
@@ -206,7 +191,6 @@
 			<territory type="154">Северна Европа</territory>
 			<territory type="155">Западна Европа</territory>
 			<territory type="419">Латинска Америка и Кариби</territory>
-			<territory type="419" alt="proposed-x1001">Латинска америка и Кариби</territory>
 			<territory type="830">Каналска острва</territory>
 			<territory type="AD">Андора</territory>
 			<territory type="AE">Уједињени Арапски Емирати</territory>
@@ -215,7 +199,6 @@
 			<territory type="AI">Ангвила</territory>
 			<territory type="AL">Албанија</territory>
 			<territory type="AM">Арменија</territory>
-			<territory type="AM" alt="proposed-x1001">Јерменија</territory>
 			<territory type="AN">Холандски Антили</territory>
 			<territory type="AO">Ангола</territory>
 			<territory type="AQ">Антарктик</territory>
@@ -225,7 +208,6 @@
 			<territory type="AU">Аустралија</territory>
 			<territory type="AW">Аруба</territory>
 			<territory type="AX">Аландска острва</territory>
-			<territory type="AX" alt="proposed-x1001">Аланд острва</territory>
 			<territory type="AZ">Азербејџан</territory>
 			<territory type="BA">Босна и Херцеговина</territory>
 			<territory type="BB">Барбадос</territory>
@@ -249,9 +231,7 @@
 			<territory type="CA">Канада</territory>
 			<territory type="CC">Кокос (Келинг) Острва</territory>
 			<territory type="CD">Демократска република Конго</territory>
-			<territory type="CD" alt="proposed-x1001">Конго, Демократска Република</territory>
 			<territory type="CF">Централно Афричка Република</territory>
-			<territory type="CF" alt="proposed-x1001">Централна Афричка Република</territory>
 			<territory type="CG">Конго</territory>
 			<territory type="CH">Швајцарска</territory>
 			<territory type="CI">Обала Слоноваче</territory>
@@ -267,7 +247,6 @@
 			<territory type="CX">Божићна острва</territory>
 			<territory type="CY">Кипар</territory>
 			<territory type="CZ">Чешка</territory>
-			<territory type="CZ" alt="proposed-x1001">Чешка република</territory>
 			<territory type="DE">Немачка</territory>
 			<territory type="DJ">Џибути</territory>
 			<territory type="DK">Данска</territory>
@@ -279,23 +258,19 @@
 			<territory type="EG">Египат</territory>
 			<territory type="EH">Западна Сахара</territory>
 			<territory type="ER">Еритреја</territory>
-			<territory type="ER" alt="proposed-x1001">Еритреа</territory>
 			<territory type="ES">Шпанија</territory>
 			<territory type="ET">Етиопија</territory>
 			<territory type="FI">Финска</territory>
 			<territory type="FJ">Фиџи</territory>
 			<territory type="FK">Фолкландска Острва</territory>
-			<territory type="FK" alt="proposed-x1001">Фокландска острва</territory>
 			<territory type="FM">Микронезија</territory>
 			<territory type="FO">Фарска Острва</territory>
 			<territory type="FR">Француска</territory>
 			<territory type="GA">Габон</territory>
 			<territory type="GB">Велика Британија</territory>
-			<territory type="GB" alt="proposed-x1001">Уједињено Краљевство</territory>
 			<territory type="GD">Гренада</territory>
 			<territory type="GE">Грузија</territory>
 			<territory type="GF">Француска Гвајана</territory>
-			<territory type="GF" alt="proposed-x1001">Француска Гуана</territory>
 			<territory type="GG">Гурнси</territory>
 			<territory type="GH">Гана</territory>
 			<territory type="GI">Гибралтар</territory>
@@ -306,17 +281,12 @@
 			<territory type="GQ">Екваторијална Гвинеја</territory>
 			<territory type="GR">Грчка</territory>
 			<territory type="GS">Јужна Џорџија и Јужна Сендвич Острва</territory>
-			<territory type="GS" alt="proposed-x1001">Јужна Џорџија и Јужна Сендвић острва</territory>
 			<territory type="GT">Гватемала</territory>
 			<territory type="GU">Гуам</territory>
 			<territory type="GW">Гвинеја-Бисао</territory>
-			<territory type="GW" alt="proposed-x1001">Гвинеа-Бисау</territory>
 			<territory type="GY">Гвајана</territory>
 			<territory type="HK">Хонг Конг (С. А. Р. Кина)</territory>
-			<territory type="HK" alt="proposed-x1001">Хонг Конг С. А. Р. Кина</territory>
-			<territory type="HK" alt="short">Хонг Конг</territory>
 			<territory type="HM">Херд и Мекдоналд Острва</territory>
-			<territory type="HM" alt="proposed-x1001">Херд Острво и Мекдонал Острва</territory>
 			<territory type="HN">Хондурас</territory>
 			<territory type="HR">Хрватска</territory>
 			<territory type="HT">Хаити</territory>
@@ -325,7 +295,6 @@
 			<territory type="IE">Ирска</territory>
 			<territory type="IL">Израел</territory>
 			<territory type="IM">Острво Ман</territory>
-			<territory type="IM" alt="proposed-x1001">Острво Човека</territory>
 			<territory type="IN">Индија</territory>
 			<territory type="IO">Британско Индијска океанска територија</territory>
 			<territory type="IQ">Ирак</territory>
@@ -338,13 +307,10 @@
 			<territory type="JP">Јапан</territory>
 			<territory type="KE">Кенија</territory>
 			<territory type="KG">Киргизстан</territory>
-			<territory type="KG" alt="proposed-x1001">Киргистан</territory>
 			<territory type="KH">Камбоџа</territory>
 			<territory type="KI">Кирибати</territory>
 			<territory type="KM">Коморска Острва</territory>
-			<territory type="KM" alt="proposed-x1001">Коморос</territory>
 			<territory type="KN">Сент Китс и Невис</territory>
-			<territory type="KN" alt="proposed-x1001">Свети Китс и Невис</territory>
 			<territory type="KP">Северна Кореја</territory>
 			<territory type="KR">Јужна Кореја</territory>
 			<territory type="KW">Кувајт</territory>
@@ -353,11 +319,9 @@
 			<territory type="LA">Лаос</territory>
 			<territory type="LB">Либан</territory>
 			<territory type="LC">Сент Луција</territory>
-			<territory type="LC" alt="proposed-x1001">Света Луција</territory>
 			<territory type="LI">Лихтенштајн</territory>
 			<territory type="LK">Шри Ланка</territory>
 			<territory type="LR">Либерија</territory>
-			<territory type="LR" alt="proposed-x1001">Либериа</territory>
 			<territory type="LS">Лесото</territory>
 			<territory type="LT">Литванија</territory>
 			<territory type="LU">Луксембург</territory>
@@ -374,9 +338,6 @@
 			<territory type="MM">Мијанмар</territory>
 			<territory type="MN">Монголија</territory>
 			<territory type="MO">Макао (С. А. Р. Кина)</territory>
-			<territory type="MO" alt="proposed-x1001">Макао С. А. Р. Кина</territory>
-			<territory type="MO" alt="proposed-x1002">Макао</territory>
-			<territory type="MO" alt="short">Макао</territory>
 			<territory type="MP">Северна Маријанска Острва</territory>
 			<territory type="MQ">Мартиник</territory>
 			<territory type="MR">Мауританија</territory>
@@ -392,7 +353,6 @@
 			<territory type="NC">Нова Каледонија</territory>
 			<territory type="NE">Нигер</territory>
 			<territory type="NF">Норфолк Острво</territory>
-			<territory type="NF" alt="proposed-x1001">Острво Норфолк</territory>
 			<territory type="NG">Нигерија</territory>
 			<territory type="NI">Никарагва</territory>
 			<territory type="NL">Холандија</territory>
@@ -413,7 +373,6 @@
 			<territory type="PN">Питкерн</territory>
 			<territory type="PR">Порто Рико</territory>
 			<territory type="PS">Палестинска територија</territory>
-			<territory type="PS" alt="proposed-x1001">Палестина</territory>
 			<territory type="PT">Португал</territory>
 			<territory type="PW">Палау</territory>
 			<territory type="PY">Парагвај</territory>
@@ -434,30 +393,24 @@
 			<territory type="SH">Света Јелена</territory>
 			<territory type="SI">Словенија</territory>
 			<territory type="SJ">Свалбард и Јанмајен Острва</territory>
-			<territory type="SJ" alt="proposed-x1001">Свалбард и Јан Мајен</territory>
 			<territory type="SK">Словачка</territory>
 			<territory type="SL">Сијера Леоне</territory>
-			<territory type="SL" alt="proposed-x1001">Сиера Леоне</territory>
 			<territory type="SM">Сан Марино</territory>
 			<territory type="SN">Сенегал</territory>
 			<territory type="SO">Сомалија</territory>
 			<territory type="SR">Суринам</territory>
-			<territory type="SR" alt="proposed-x1001">Суринами</territory>
 			<territory type="ST">Сао Томе и Принципе</territory>
 			<territory type="SV">Салвадор</territory>
 			<territory type="SY">Сирија</territory>
 			<territory type="SZ">Свазиленд</territory>
 			<territory type="TC">Туркс и Кајкос Острва</territory>
-			<territory type="TC" alt="proposed-x1001">Турска и Каико острва</territory>
 			<territory type="TD">Чад</territory>
 			<territory type="TF">Француске Јужне Територије</territory>
-			<territory type="TF" alt="proposed-x1001">Јужне Француске територије</territory>
 			<territory type="TG">Того</territory>
 			<territory type="TH">Тајланд</territory>
 			<territory type="TJ">Таџикистан</territory>
 			<territory type="TK">Токелау</territory>
 			<territory type="TL">Тимор-Лесте</territory>
-			<territory type="TL" alt="proposed-x1001">Источни Тимор</territory>
 			<territory type="TM">Туркменистан</territory>
 			<territory type="TN">Тунис</territory>
 			<territory type="TO">Тонга</territory>
@@ -469,24 +422,17 @@
 			<territory type="UA">Украјина</territory>
 			<territory type="UG">Уганда</territory>
 			<territory type="UM">Мања удаљена острва САД</territory>
-			<territory type="UM" alt="proposed-x1001">Мања спољна острва САД-а</territory>
 			<territory type="US">Сједињене Америчке Државе</territory>
-			<territory type="US" alt="proposed-x1001">Сједињене Државе</territory>
 			<territory type="UY">Уругвај</territory>
 			<territory type="UZ">Узбекистан</territory>
 			<territory type="VA">Ватикан</territory>
 			<territory type="VC">Сент Винсент и Гренадини</territory>
-			<territory type="VC" alt="proposed-x1001">Свети Винсент и Гренадине</territory>
 			<territory type="VE">Венецуела</territory>
 			<territory type="VG">Британска Девичанска Острва</territory>
-			<territory type="VG" alt="proposed-x1001">Девичанска острва, Биртанска</territory>
 			<territory type="VI">С.А.Д. Девичанска Острва</territory>
-			<territory type="VI" alt="proposed-x1001">Девичанска острва, САД</territory>
 			<territory type="VN">Вијетнам</territory>
 			<territory type="VU">Вануату</territory>
-			<territory type="VU" alt="proposed-x1001">Ванату</territory>
 			<territory type="WF">Валис и Футуна Острва</territory>
-			<territory type="WF" alt="proposed-x1001">Валис и Футуна</territory>
 			<territory type="WS">Самоа</territory>
 			<territory type="YE">Јемен</territory>
 			<territory type="YT">Мајоте</territory>
@@ -512,7 +458,6 @@
 			<type type="islamic-civil" key="calendar">Исламски цивилни календар</type>
 			<type type="japanese" key="calendar">Јапански календар</type>
 			<type type="phonebook" key="collation">Сортирање као телефонски именик</type>
-			<type type="phonebook" key="collation" alt="proposed-x1001">Сортирање по азбуци</type>
 			<type type="pinyin" key="collation">Пињин сортирање</type>
 			<type type="stroke" key="collation">Сортирање по броју црта</type>
 			<type type="traditional" key="collation">Традиционално сортирање</type>
@@ -524,7 +469,6 @@
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[а-д ђ е-и ј к л љ м н њ о-т ћ у-ч џ ш]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[а-ш]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
@@ -559,11 +503,8 @@
 							<month type="4">април</month>
 							<month type="5">мај</month>
 							<month type="6">јун</month>
-							<month type="6" alt="proposed-x1001">јуни</month>
 							<month type="7">јул</month>
-							<month type="7" alt="proposed-x1001">јули</month>
 							<month type="8">август</month>
-							<month type="8" alt="proposed-x1001">аугуст</month>
 							<month type="9">септембар</month>
 							<month type="10">октобар</month>
 							<month type="11">новембар</month>
@@ -591,19 +532,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">нед</day>
-							<day type="sun" alt="proposed-x1001">нед.</day>
 							<day type="mon">пон</day>
-							<day type="mon" alt="proposed-x1001">понедељак</day>
 							<day type="tue">уто</day>
-							<day type="tue" alt="proposed-x1001">ут.</day>
 							<day type="wed">сре</day>
-							<day type="wed" alt="proposed-x1001">среда</day>
 							<day type="thu">чет</day>
-							<day type="thu" alt="proposed-x1001">четвртак</day>
 							<day type="fri">пет</day>
-							<day type="fri" alt="proposed-x1001">петак</day>
 							<day type="sat">суб</day>
-							<day type="sat" alt="proposed-x1001">суб.</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">недеља</day>
@@ -637,13 +571,9 @@
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">Прво тромесечје</quarter>
-							<quarter type="1" alt="proposed-x1001">Први квартал</quarter>
 							<quarter type="2">Друго тромесечје</quarter>
-							<quarter type="2" alt="proposed-x1001">Други квартал</quarter>
 							<quarter type="3">Треће тромесечје</quarter>
-							<quarter type="3" alt="proposed-x1001">Трећи квартал</quarter>
 							<quarter type="4">Четврто тромесечје</quarter>
-							<quarter type="4" alt="proposed-x1001">Четврти квартал</quarter>
 						</quarterWidth>
 					</quarterContext>
 					<quarterContext type="stand-alone">
@@ -660,17 +590,11 @@
 				<eras>
 					<eraNames>
 						<era type="0">Пре нове ере</era>
-						<era type="0" alt="proposed-x1001">Прије нове ере</era>
-						<era type="0" alt="proposed-x1002">BCE</era>
 						<era type="1">Нове ере</era>
-						<era type="1" alt="proposed-x1001">CE</era>
-						<era type="1" alt="proposed-x1002">године</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">п. н. е.</era>
-						<era type="0" alt="proposed-x1001">п.н.е.</era>
 						<era type="1">н. е</era>
-						<era type="1" alt="proposed-x1001">н.е.</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0">п.н.е.</era>
@@ -703,19 +627,16 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>HH 'часова', mm 'минута', ss 'секунди' vvvv</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>HH.mm.ss z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>HH.mm.ss</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
@@ -972,7 +893,6 @@
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>Лумумбаши</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Лубумбаши</exemplarCity>
 			</zone>
 			<zone type="Africa/Bangui">
 				<exemplarCity>Бангуи</exemplarCity>
@@ -1573,7 +1493,6 @@
 			</zone>
 			<zone type="America/Anchorage">
 				<exemplarCity>Енкориџ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Време на Аљасци</exemplarCity>
 			</zone>
 			<zone type="America/Montevideo">
 				<exemplarCity>Монтевидео</exemplarCity>
@@ -1620,7 +1539,6 @@
 			<metazone type="Europe_Central">
 				<long>
 					<standard>Средње Европско Време</standard>
-					<standard alt="proposed-x1001">Централно Европско Време</standard>
 					<daylight>Централно Европско Летње Време</daylight>
 				</long>
 			</metazone>
@@ -1695,11 +1613,9 @@
 			</currency>
 			<currency type="CZK">
 				<displayName>Чешка круна</displayName>
-				<displayName alt="proposed-x1001">Чешка коруна</displayName>
 			</currency>
 			<currency type="DEM">
 				<displayName>Немачка марка</displayName>
-				<displayName alt="proposed-x1001">Немачке марке</displayName>
 			</currency>
 			<currency type="DKK">
 				<displayName>Данска круна</displayName>
@@ -1710,14 +1626,12 @@
 			</currency>
 			<currency type="EGP">
 				<displayName>Египатска фунта</displayName>
-				<displayName alt="proposed-x1001">Египатски поунд</displayName>
 			</currency>
 			<currency type="ESP">
 				<displayName>Шпанска пезета</displayName>
 			</currency>
 			<currency type="EUR">
 				<displayName>ЕВРО</displayName>
-				<displayName alt="proposed-x1001">Еуро</displayName>
 			</currency>
 			<currency type="FIM">
 				<displayName>Финска марка</displayName>
@@ -1730,7 +1644,6 @@
 			</currency>
 			<currency type="GBP">
 				<displayName>Фунта стерлинга</displayName>
-				<displayName alt="proposed-x1001">Британска фунта</displayName>
 			</currency>
 			<currency type="GRD">
 				<displayName>Драхма</displayName>
@@ -1743,11 +1656,9 @@
 			</currency>
 			<currency type="HRK">
 				<displayName>Куна</displayName>
-				<displayName alt="proposed-x1001">Хрватска куна</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>Мађарска форинта</displayName>
-				<displayName alt="proposed-x1001">Маџарска форинт</displayName>
 			</currency>
 			<currency type="IDR">
 				<displayName>Индонезијска рупиах</displayName>
@@ -1761,7 +1672,6 @@
 			</currency>
 			<currency type="INR">
 				<displayName>Индијски Рупи</displayName>
-				<displayName alt="proposed-x1001">Индијски Рупее</displayName>
 				<symbol>INR</symbol>
 			</currency>
 			<currency type="ITL">
@@ -1769,7 +1679,6 @@
 			</currency>
 			<currency type="JPY">
 				<displayName>Јен</displayName>
-				<displayName alt="proposed-x1001">Јапански ЈЕН</displayName>
 			</currency>
 			<currency type="KES">
 				<displayName>Кенијски шилинг</displayName>
@@ -1798,7 +1707,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>Малезијски ринггит</displayName>
-				<displayName alt="proposed-x1001">Малезијски рингит</displayName>
 			</currency>
 			<currency type="NLG">
 				<displayName>Холандски гулден</displayName>
@@ -1809,7 +1717,6 @@
 			</currency>
 			<currency type="NZD">
 				<displayName>Новозеландски долар</displayName>
-				<displayName alt="proposed-x1001">Новозеландски долари</displayName>
 			</currency>
 			<currency type="PEN">
 				<displayName>Перуански нуево сол</displayName>
@@ -1819,7 +1726,6 @@
 			</currency>
 			<currency type="PKR">
 				<displayName>Пакистански рупи</displayName>
-				<displayName alt="proposed-x1001">Пакистански рупее</displayName>
 			</currency>
 			<currency type="PTE">
 				<displayName>Португалски ескудо</displayName>
@@ -1842,15 +1748,12 @@
 			</currency>
 			<currency type="SGD">
 				<displayName>Сингапурски долар</displayName>
-				<displayName alt="proposed-x1001">Сингапурски Долари</displayName>
 			</currency>
 			<currency type="SIT">
 				<displayName>Толар</displayName>
-				<displayName alt="proposed-x1001">Словенски толар</displayName>
 			</currency>
 			<currency type="SKK">
 				<displayName>Словачка круна</displayName>
-				<displayName alt="proposed-x1001">Словачка коруна</displayName>
 			</currency>
 			<currency type="TRL">
 				<displayName>Турска лира</displayName>
@@ -1860,14 +1763,12 @@
 			</currency>
 			<currency type="TWD">
 				<displayName>Нови тајвански долар</displayName>
-				<displayName alt="proposed-x1001">Нови Тајланд долар</displayName>
 			</currency>
 			<currency type="UAH">
 				<displayName>Украјинска хривња</displayName>
 			</currency>
 			<currency type="USD">
 				<displayName>Амерички долар</displayName>
-				<displayName alt="proposed-x1001">Амерички долари</displayName>
 			</currency>
 			<currency type="VEB">
 				<displayName>Венецуелански боливар</displayName>

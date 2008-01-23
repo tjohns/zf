@@ -189,7 +189,6 @@
 			<currency type="GHC">
 				<displayName>Siɖi</displayName>
 				<symbol>¢</symbol>
-				<symbol alt="variant">₵</symbol>
 			</currency>
 			<currency type="XOF">
 				<displayName>Sefa</displayName>

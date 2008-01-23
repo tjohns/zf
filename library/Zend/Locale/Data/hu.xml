@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
@@ -16,10 +15,7 @@
 			<language type="ady">adyghe</language>
 			<language type="ae">avesztán</language>
 			<language type="af">afrikaans</language>
-			<language type="af" alt="proposed-x1001">afrikai</language>
-			<language type="af" alt="proposed-x1002">afrikaans</language>
 			<language type="afa">afro-ázsiai (egyéb)</language>
-			<language type="afa" alt="proposed-x1001">egyéb afro-ázsiai</language>
 			<language type="afh">afrihili</language>
 			<language type="ain">ainu</language>
 			<language type="ak">akan</language>
@@ -28,10 +24,8 @@
 			<language type="alg">algonki nyelvek</language>
 			<language type="alt">dél-altaji</language>
 			<language type="am">amhara</language>
-			<language type="am" alt="proposed-x1001">amhár</language>
 			<language type="an">aragonéz</language>
 			<language type="ang">óangol</language>
-			<language type="ang" alt="proposed-x1001">óangol (kb. 450-1100)</language>
 			<language type="anp">angika</language>
 			<language type="apa">apacs nyelvek</language>
 			<language type="ar">arab</language>
@@ -39,7 +33,6 @@
 			<language type="arn">araucani</language>
 			<language type="arp">arapaho</language>
 			<language type="art">egyéb mesterséges</language>
-			<language type="art" alt="proposed-x1001">mesterséges (egyéb)</language>
 			<language type="arw">arawaki</language>
 			<language type="as">asszámi</language>
 			<language type="ast">asztúr</language>
@@ -56,7 +49,6 @@
 			<language type="ban">balinéz</language>
 			<language type="bas">basa</language>
 			<language type="bat">balti (egyéb)</language>
-			<language type="bat" alt="proposed-x1001">egyéb balti</language>
 			<language type="be">belorusz</language>
 			<language type="bej">beja</language>
 			<language type="bem">bemba</language>
@@ -82,15 +74,12 @@
 			<language type="ca">katalán</language>
 			<language type="cad">caddo</language>
 			<language type="cai">egyéb közép-amerikai indián</language>
-			<language type="cai" alt="proposed-x1001">közép-amerikai indián (egyéb)</language>
 			<language type="car">karib</language>
 			<language type="cau">egyéb kaukázusi</language>
-			<language type="cau" alt="proposed-x1001">kaukázusi (egyéb)</language>
 			<language type="cch">atszám</language>
 			<language type="ce">csecsen</language>
 			<language type="ceb">cebuáno</language>
 			<language type="cel">egyéb kelta</language>
-			<language type="cel" alt="proposed-x1001">kelta (egyéb)</language>
 			<language type="ch">chamorro</language>
 			<language type="chb">chibcha</language>
 			<language type="chg">csagatáj</language>
@@ -99,7 +88,6 @@
 			<language type="chn">csinuk zsargon</language>
 			<language type="cho">csoktó</language>
 			<language type="chp">csipevé</language>
-			<language type="chp" alt="proposed-x1001">csipuvéj</language>
 			<language type="chr">cseroki</language>
 			<language type="chy">csejen</language>
 			<language type="cmc">csámi nyelvek</language>
@@ -110,8 +98,6 @@
 			<language type="cpp">egyéb portugál alapú kreol és pidgin</language>
 			<language type="cr">krí</language>
 			<language type="crh">krími tatár</language>
-			<language type="crh" alt="proposed-x1001">krími török</language>
-			<language type="crh" alt="proposed-x1002">krími török; krími tatár</language>
 			<language type="crp">egyéb kreol és pidgin</language>
 			<language type="cs">cseh</language>
 			<language type="csb">kasub</language>
@@ -138,22 +124,17 @@
 			<language type="dv">divehi</language>
 			<language type="dyu">diula</language>
 			<language type="dz">butáni</language>
-			<language type="dz" alt="proposed-x1001">dzsonka</language>
 			<language type="ee">eve</language>
 			<language type="efi">efik</language>
 			<language type="egy">egyiptomi (ókori)</language>
-			<language type="egy" alt="proposed-x1001">óegyiptomi</language>
 			<language type="eka">ekajuk</language>
 			<language type="el">görög</language>
 			<language type="elx">elamit</language>
 			<language type="en">angol</language>
 			<language type="en_AU">angol (ausztrál)</language>
-			<language type="en_AU" alt="proposed-x1001">ausztrál angol</language>
 			<language type="en_CA">kanadai angol</language>
 			<language type="en_GB">angol (brit)</language>
-			<language type="en_GB" alt="proposed-x1001">brit angol</language>
 			<language type="en_US">angol (USA)</language>
-			<language type="en_US" alt="proposed-x1001">USA angol</language>
 			<language type="enm">közép angol</language>
 			<language type="eo">eszperantó</language>
 			<language type="es">spanyol</language>
@@ -163,15 +144,12 @@
 			<language type="eu">baszk</language>
 			<language type="ewo">evondo</language>
 			<language type="fa">perzsa</language>
-			<language type="fa" alt="proposed-x1001">pohnpei</language>
 			<language type="fan">fang</language>
 			<language type="fat">fanti</language>
 			<language type="ff">fulani</language>
 			<language type="fi">finn</language>
 			<language type="fil">filippínó</language>
-			<language type="fil" alt="proposed-x1001">filippino</language>
 			<language type="fiu">egyéb finnugor</language>
-			<language type="fiu" alt="proposed-x1001">finnugor (egyéb)</language>
 			<language type="fj">fidzsi</language>
 			<language type="fo">feröeri</language>
 			<language type="fon">fon</language>
@@ -189,10 +167,7 @@
 			<language type="gay">gayo</language>
 			<language type="gba">gbaja</language>
 			<language type="gd">skót gael</language>
-			<language type="gd" alt="proposed-x1001">skót (gael)</language>
-			<language type="gd" alt="proposed-x1002">skót-gael</language>
 			<language type="gem">egyéb germán</language>
-			<language type="gem" alt="proposed-x1001">germán (egyéb)</language>
 			<language type="gez">geez</language>
 			<language type="gil">ikiribati</language>
 			<language type="gl">galíciai</language>
@@ -206,7 +181,6 @@
 			<language type="grc">ógörög</language>
 			<language type="gsw">svájci német</language>
 			<language type="gu">gudzsarati</language>
-			<language type="gu" alt="proposed-x1001">gudzsaráti</language>
 			<language type="gv">Man-szigeti</language>
 			<language type="gwi">gvicsin</language>
 			<language type="ha">hausza</language>
@@ -227,11 +201,9 @@
 			<language type="hy">örmény</language>
 			<language type="hz">herero</language>
 			<language type="ia">interlingva</language>
-			<language type="ia" alt="proposed-x1001">interlingua</language>
 			<language type="iba">iban</language>
 			<language type="id">indonéz</language>
 			<language type="ie">interlingue</language>
-			<language type="ie" alt="proposed-x1001">interlingue/okcidentál</language>
 			<language type="ig">igbo</language>
 			<language type="ii">szecsuán ji</language>
 			<language type="ijo">ijo</language>
@@ -239,7 +211,6 @@
 			<language type="ilo">iloko</language>
 			<language type="inc">egyéb indiai</language>
 			<language type="ine">egyéb indo-európai</language>
-			<language type="ine" alt="proposed-x1001">indo-európai (egyéb)</language>
 			<language type="inh">ingus</language>
 			<language type="io">ido</language>
 			<language type="ira">iráni</language>
@@ -272,7 +243,6 @@
 			<language type="kk">kazah</language>
 			<language type="kl">grönlandi</language>
 			<language type="km">kambodzsai</language>
-			<language type="km" alt="proposed-x1001">khmer</language>
 			<language type="kmb">kimbundu</language>
 			<language type="kn">kannada</language>
 			<language type="ko">koreai</language>
@@ -285,7 +255,6 @@
 			<language type="kro">kru</language>
 			<language type="kru">kuruh</language>
 			<language type="ks">kásmíri</language>
-			<language type="ks" alt="proposed-x1001">kasmíri</language>
 			<language type="ku">kurd</language>
 			<language type="kum">kumük</language>
 			<language type="kut">kutenai</language>
@@ -302,7 +271,6 @@
 			<language type="li">limburgi</language>
 			<language type="ln">lingala</language>
 			<language type="lo">laoszi</language>
-			<language type="lo" alt="proposed-x1001">lao</language>
 			<language type="lol">mongo</language>
 			<language type="loz">lozi</language>
 			<language type="lt">litván</language>
@@ -324,7 +292,6 @@
 			<language type="mdr">mandar</language>
 			<language type="men">mende</language>
 			<language type="mg">málgas</language>
-			<language type="mg" alt="proposed-x1001">madagaszkári</language>
 			<language type="mga">közép ír</language>
 			<language type="mh">marshalli</language>
 			<language type="mi">maori</language>
@@ -334,19 +301,14 @@
 			<language type="mk">macedón</language>
 			<language type="mkh">egyéb mon-khmer</language>
 			<language type="ml">malajálam</language>
-			<language type="ml" alt="proposed-x1001">malayalam</language>
-			<language type="ml" alt="proposed-x1002">malajalam</language>
 			<language type="mn">mongol</language>
 			<language type="mnc">mandzsu</language>
 			<language type="mni">manipuri</language>
 			<language type="mno">manobo nyelvek</language>
 			<language type="mo">moldvai</language>
-			<language type="mo" alt="proposed-x1001">moldáviai</language>
-			<language type="mo" alt="proposed-x1002">moldován</language>
 			<language type="moh">mohawk</language>
 			<language type="mos">moszi</language>
 			<language type="mr">marathi</language>
-			<language type="mr" alt="proposed-x1001">marati</language>
 			<language type="ms">maláj</language>
 			<language type="mt">máltai</language>
 			<language type="mul">többszörös nyelvek</language>
@@ -360,7 +322,6 @@
 			<language type="na">naurui</language>
 			<language type="nah">nahuati</language>
 			<language type="nai">egyéb észak-amerikai</language>
-			<language type="nai" alt="proposed-x1001">észak-amerikai indián (egyéb)</language>
 			<language type="nap">nápolyi</language>
 			<language type="nb">norvég bokmál</language>
 			<language type="nd">északi ndebele</language>
@@ -374,7 +335,6 @@
 			<language type="nl">holland</language>
 			<language type="nl_BE">flamand</language>
 			<language type="nn">norvég nynorsk</language>
-			<language type="nn" alt="proposed-x1001">norvég (nynorsk)</language>
 			<language type="no">norvég</language>
 			<language type="nog">nogaj</language>
 			<language type="non">óskandináv</language>
@@ -390,18 +350,15 @@
 			<language type="nyo">nyoro</language>
 			<language type="nzi">nzima</language>
 			<language type="oc">okszitán</language>
-			<language type="oc" alt="proposed-x1001">okcitán</language>
 			<language type="oj">ojibva</language>
 			<language type="om">oromói</language>
 			<language type="or">orija</language>
-			<language type="or" alt="proposed-x1001">oriya</language>
 			<language type="os">oszét</language>
 			<language type="osa">osage</language>
 			<language type="ota">ottomán török</language>
 			<language type="oto">egyéb otomi nyelvek</language>
 			<language type="pa">pandzsábi</language>
 			<language type="paa">egyéb pápuai</language>
-			<language type="paa" alt="proposed-x1001">pápuai (egyéb)</language>
 			<language type="pag">pangaszinan</language>
 			<language type="pal">pahlavi</language>
 			<language type="pam">pampangan</language>
@@ -409,33 +366,24 @@
 			<language type="pau">palaui</language>
 			<language type="peo">óperzsa</language>
 			<language type="phi">egyéb filippínó</language>
-			<language type="phi" alt="proposed-x1001">filippínó (egyéb)</language>
 			<language type="phn">főniciai</language>
 			<language type="pi">pali</language>
 			<language type="pl">lengyel</language>
 			<language type="pon">pohnpei</language>
 			<language type="pra">prakrit nyelvek</language>
 			<language type="pro">óprovánszi</language>
-			<language type="pro" alt="proposed-x1001">óprovanszál</language>
 			<language type="ps">pastu</language>
-			<language type="ps" alt="proposed-x1001">pástu</language>
-			<language type="ps" alt="proposed-x1002">pastu (afgán)</language>
 			<language type="pt">portugál</language>
 			<language type="pt_BR">brazil portugál</language>
-			<language type="pt_BR" alt="proposed-x1001">portugál (brazíliai)</language>
 			<language type="pt_PT">ibériai portugál</language>
-			<language type="pt_PT" alt="proposed-x1001">portugál (portugáliai)</language>
 			<language type="qu">kecsua</language>
 			<language type="raj">radzsasztáni</language>
 			<language type="rap">rapanui</language>
 			<language type="rar">rarotongai</language>
 			<language type="rm">réto-román</language>
-			<language type="rm" alt="proposed-x1001">rétoromán</language>
 			<language type="rn">kirundi</language>
 			<language type="ro">román</language>
-			<language type="ro" alt="proposed-x1001">római</language>
 			<language type="roa">egyéb román</language>
-			<language type="roa" alt="proposed-x1001">egyéb római</language>
 			<language type="rom">roma</language>
 			<language type="root">eredet</language>
 			<language type="ru">orosz</language>
@@ -445,7 +393,6 @@
 			<language type="sad">szandave</language>
 			<language type="sah">jakut</language>
 			<language type="sai">dél-amerikai indián (egyéb)</language>
-			<language type="sai" alt="proposed-x1001">egyéb dél-amerikai indián</language>
 			<language type="sal">szelis nyelvek</language>
 			<language type="sam">szamaritánus arámi</language>
 			<language type="sas">sasak</language>
@@ -454,16 +401,13 @@
 			<language type="scn">szicíliai</language>
 			<language type="sco">skót</language>
 			<language type="sd">szindhi</language>
-			<language type="sd" alt="proposed-x1001">szindi</language>
 			<language type="se">északi számi</language>
 			<language type="sel">szölkup</language>
-			<language type="sel" alt="proposed-x1001">szelkup</language>
 			<language type="sem">egyéb szemita</language>
 			<language type="sg">sango</language>
 			<language type="sga">óír</language>
 			<language type="sgn">jelbeszédek</language>
 			<language type="sh">szerbhorvát</language>
-			<language type="sh" alt="proposed-x1001">szerb-horvát</language>
 			<language type="shn">san</language>
 			<language type="si">szingaléz</language>
 			<language type="sid">szidamó</language>
@@ -472,7 +416,6 @@
 			<language type="sk">szlovák</language>
 			<language type="sl">szlovén</language>
 			<language type="sla">egyéb szláv</language>
-			<language type="sla" alt="proposed-x1001">szláv (egyéb)</language>
 			<language type="sm">szamoai</language>
 			<language type="sma">déli számi</language>
 			<language type="smi">egyéb számi nyelvek</language>
@@ -482,7 +425,6 @@
 			<language type="sn">sona</language>
 			<language type="snk">szoninke</language>
 			<language type="so">szomáliai</language>
-			<language type="so" alt="proposed-x1001">szomáli</language>
 			<language type="sog">sogdien</language>
 			<language type="son">szongai</language>
 			<language type="sq">albán</language>
@@ -492,8 +434,6 @@
 			<language type="ss">sziszuati</language>
 			<language type="ssa">egyéb nílus-szaharai</language>
 			<language type="st">szeszotó</language>
-			<language type="st" alt="proposed-x1001">sesotho</language>
-			<language type="st" alt="proposed-x1002">déli szeszotó</language>
 			<language type="su">szundanéz</language>
 			<language type="suk">szukuma</language>
 			<language type="sus">szuszu</language>
@@ -510,7 +450,6 @@
 			<language type="tg">tadzsik</language>
 			<language type="th">thai</language>
 			<language type="ti">tigrinja</language>
-			<language type="ti" alt="proposed-x1001">tigrinya</language>
 			<language type="tig">tigré</language>
 			<language type="tiv">tiv</language>
 			<language type="tk">türkmén</language>
@@ -530,10 +469,8 @@
 			<language type="tum">tumbuka</language>
 			<language type="tup">tupi nyelvek</language>
 			<language type="tut">egyéb altáj</language>
-			<language type="tut" alt="proposed-x1001">egyéb altaji</language>
 			<language type="tvl">tuvalu</language>
 			<language type="tw">twi</language>
-			<language type="tw" alt="proposed-x1001">tui</language>
 			<language type="ty">tahiti</language>
 			<language type="tyv">tuvai</language>
 			<language type="udm">udmurt</language>
@@ -556,14 +493,11 @@
 			<language type="was">vaso</language>
 			<language type="wen">szorb nyelvek</language>
 			<language type="wo">volof</language>
-			<language type="wo" alt="proposed-x1001">wolof</language>
 			<language type="xal">kalmük</language>
 			<language type="xh">hosza</language>
-			<language type="xh" alt="proposed-x1001">xhosa</language>
 			<language type="yao">jaó</language>
 			<language type="yap">yapi</language>
 			<language type="yi">jiddis</language>
-			<language type="yi" alt="proposed-x1001">zsidó</language>
 			<language type="yo">joruba</language>
 			<language type="ypk">jupik nyelvek</language>
 			<language type="za">zsuang</language>
@@ -571,9 +505,7 @@
 			<language type="zen">zenaga</language>
 			<language type="zh">kínai</language>
 			<language type="zh_Hans">egyszerűsített kínai</language>
-			<language type="zh_Hans" alt="proposed-x1001">kínai (egyszerűsített)</language>
 			<language type="zh_Hant">hagyományos kínai</language>
-			<language type="zh_Hant" alt="proposed-x1001">kínai (hagyományos)</language>
 			<language type="znd">zande</language>
 			<language type="zu">zulu</language>
 			<language type="zun">zuni</language>
@@ -599,7 +531,6 @@
 			<script type="Cprt">Ciprusi</script>
 			<script type="Cyrl">Cirill</script>
 			<script type="Cyrs">Cirill (régi egyházi szláv variáns)</script>
-			<script type="Cyrs" alt="proposed-x1001">óegyházi szláv cirill</script>
 			<script type="Deva">Devanagári</script>
 			<script type="Dsrt">Deseret</script>
 			<script type="Egyd">Egyiptomi demotikus</script>
@@ -610,7 +541,6 @@
 			<script type="Geor">Grúz</script>
 			<script type="Glag">Glagolitikus</script>
 			<script type="Goth">Gót</script>
-			<script type="Goth" alt="proposed-x1001">Gótikus</script>
 			<script type="Grek">Görög</script>
 			<script type="Gujr">Gudzsaráti</script>
 			<script type="Guru">Gurmuki</script>
@@ -637,7 +567,6 @@
 			<script type="Laoo">Lao</script>
 			<script type="Latf">Fraktur latin</script>
 			<script type="Latg">gael latin</script>
-			<script type="Latg" alt="proposed-x1001">Latin (gael variáns)</script>
 			<script type="Latn">Latin</script>
 			<script type="Lepc">Lepcha</script>
 			<script type="Limb">Limbu</script>
@@ -649,7 +578,6 @@
 			<script type="Maya">Maja hieroglifák</script>
 			<script type="Mero">Meroitikus</script>
 			<script type="Mlym">Malajálam</script>
-			<script type="Mlym" alt="proposed-x1001">Malayalam</script>
 			<script type="Mong">Mongol</script>
 			<script type="Moon">Hol</script>
 			<script type="Mtei">Meitei mayek</script>
@@ -690,13 +618,9 @@
 			<script type="Ugar">Ugari</script>
 			<script type="Visp">Látható beszéd</script>
 			<script type="Xpeo">Óperzsa</script>
-			<script type="Xpeo" alt="proposed-x1001">óperzsa</script>
 			<script type="Yiii">Ji</script>
-			<script type="Yiii" alt="proposed-x1001">Yi</script>
 			<script type="Zxxx">Íratlan nyelvek kódja</script>
 			<script type="Zyyy">Meghatározatlan</script>
-			<script type="Zyyy" alt="proposed-x1001">Közös</script>
-			<script type="Zyyy" alt="proposed-x1002">Általános</script>
 			<script type="Zzzz">Kódolatlan írásrendszerek kódja</script>
 		</scripts>
 		<territories>
@@ -712,7 +636,6 @@
 			<territory type="017">Közép-Afrika</territory>
 			<territory type="018">Afrika déli része</territory>
 			<territory type="019">Amerika</territory>
-			<territory type="021" alt="proposed-x1001">Észak-Amerika</territory>
 			<territory type="029">Karib-térség</territory>
 			<territory type="030">Kelet-Ázsia</territory>
 			<territory type="034">Dél-Ázsia</territory>
@@ -720,7 +643,6 @@
 			<territory type="039">Dél-Európa</territory>
 			<territory type="053">Ausztrália és Új-Zéland</territory>
 			<territory type="054">Melanézia</territory>
-			<territory type="057" alt="proposed-x1001">Mikronézia</territory>
 			<territory type="061">Polinézia</territory>
 			<territory type="062">Délközép-Ázsia</territory>
 			<territory type="142">Ázsia</territory>
@@ -735,8 +657,6 @@
 			<territory type="830">Csatorna-szigetek</territory>
 			<territory type="AD">Andorra</territory>
 			<territory type="AE">Egyesült Arab Emirátus</territory>
-			<territory type="AE" alt="proposed-x1001">Egyesült Arab Emirátusok</territory>
-			<territory type="AE" alt="proposed-x1002">Egyesült Arab Emírségek</territory>
 			<territory type="AF">Afganisztán</territory>
 			<territory type="AG">Antigua és Barbuda</territory>
 			<territory type="AI">Anguilla</territory>
@@ -744,7 +664,6 @@
 			<territory type="AM">Örményország</territory>
 			<territory type="AN">Holland Antillák</territory>
 			<territory type="AO">Angola</territory>
-			<territory type="AO" alt="proposed-x1001">Angóla</territory>
 			<territory type="AQ">Antarktisz</territory>
 			<territory type="AR">Argentína</territory>
 			<territory type="AS">Amerikai Szamoa</territory>
@@ -754,19 +673,16 @@
 			<territory type="AX">Aland-szigetek</territory>
 			<territory type="AZ">Azerbajdzsán</territory>
 			<territory type="BA">Bosznia-Hercegovina</territory>
-			<territory type="BA" alt="proposed-x1001">Bosznia és Hercegovina</territory>
 			<territory type="BB">Barbados</territory>
 			<territory type="BD">Banglades</territory>
 			<territory type="BE">Belgium</territory>
 			<territory type="BF">Burkina Faso</territory>
 			<territory type="BG">Bulgária</territory>
 			<territory type="BH">Bahrein</territory>
-			<territory type="BH" alt="proposed-x1001">Bahrain</territory>
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benin</territory>
 			<territory type="BM">Bermuda</territory>
 			<territory type="BN">Brunei</territory>
-			<territory type="BN" alt="proposed-x1001">Brunei Darussalam</territory>
 			<territory type="BO">Bolívia</territory>
 			<territory type="BR">Brazília</territory>
 			<territory type="BS">Bahamák</territory>
@@ -774,24 +690,16 @@
 			<territory type="BV">Bouvet-sziget</territory>
 			<territory type="BW">Botswana</territory>
 			<territory type="BY">Fehéroroszország</territory>
-			<territory type="BY" alt="proposed-x1001">Belorusszia</territory>
 			<territory type="BZ">Belize</territory>
-			<territory type="BZ" alt="proposed-x1001">Beliz</territory>
 			<territory type="CA">Kanada</territory>
 			<territory type="CC">Kókusz (Keeling)-szigetek</territory>
-			<territory type="CC" alt="proposed-x1001">Kókusz szigetek</territory>
-			<territory type="CC" alt="proposed-x1002">Kókusz-szigetek</territory>
 			<territory type="CD">Kongó, Demokratikus köztársaság</territory>
-			<territory type="CD" alt="proposed-x1001">Kongói Köztársaság</territory>
-			<territory type="CD" alt="proposed-x1002">Kongói Demokratikus Köztársaság</territory>
-			<territory type="CD" alt="proposed-x1003">Kongó - Kinshasa</territory>
 			<territory type="CF">Közép-afrikai Köztársaság</territory>
 			<territory type="CG">Kongó</territory>
 			<territory type="CH">Svájc</territory>
 			<territory type="CI">Elefántcsontpart</territory>
 			<territory type="CK">Cook-szigetek</territory>
 			<territory type="CL">Chile</territory>
-			<territory type="CL" alt="proposed-x1001">Csile</territory>
 			<territory type="CM">Kamerun</territory>
 			<territory type="CN">Kína</territory>
 			<territory type="CO">Kolumbia</territory>
@@ -800,10 +708,8 @@
 			<territory type="CU">Kuba</territory>
 			<territory type="CV">Zöld-foki Köztársaság</territory>
 			<territory type="CX">Karácsony-szigetek</territory>
-			<territory type="CX" alt="proposed-x1001">Karácsony-sziget</territory>
 			<territory type="CY">Ciprus</territory>
 			<territory type="CZ">Csehország</territory>
-			<territory type="CZ" alt="proposed-x1001">Cseh Köztársaság</territory>
 			<territory type="DE">Németország</territory>
 			<territory type="DJ">Dzsibuti</territory>
 			<territory type="DK">Dánia</territory>
@@ -811,54 +717,39 @@
 			<territory type="DO">Dominikai Köztársaság</territory>
 			<territory type="DZ">Algéria</territory>
 			<territory type="EC">Ecuador</territory>
-			<territory type="EC" alt="proposed-x1001">Ekvádor</territory>
 			<territory type="EE">Észtország</territory>
 			<territory type="EG">Egyiptom</territory>
 			<territory type="EH">Nyugat-Szahara</territory>
-			<territory type="EH" alt="proposed-x1001">Nyugat Szahara</territory>
-			<territory type="EH" alt="proposed-x1002">Nyugat-Szahara</territory>
 			<territory type="ER">Eritrea</territory>
 			<territory type="ES">Spanyolország</territory>
 			<territory type="ET">Etiópia</territory>
 			<territory type="FI">Finnország</territory>
 			<territory type="FJ">Fidzsi</territory>
 			<territory type="FK">Falkland-szigetek</territory>
-			<territory type="FK" alt="proposed-x1001">Falkland szigetek</territory>
 			<territory type="FM">Mikronézia</territory>
-			<territory type="FM" alt="proposed-x1001">Mikronézia, Szövetségi Államok</territory>
 			<territory type="FO">Feröer-szigetek</territory>
-			<territory type="FO" alt="proposed-x1001">Fáraó-szigetek</territory>
 			<territory type="FR">Franciaország</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Egyesült Királyság</territory>
 			<territory type="GD">Grenada</territory>
 			<territory type="GE">Grúzia</territory>
 			<territory type="GF">Francia Guyana</territory>
-			<territory type="GF" alt="proposed-x1001">Francia Guiana</territory>
 			<territory type="GG">Guernsey</territory>
 			<territory type="GH">Ghána</territory>
-			<territory type="GH" alt="proposed-x1001">Ghana</territory>
 			<territory type="GI">Gibraltár</territory>
 			<territory type="GL">Grönland</territory>
 			<territory type="GM">Gambia</territory>
 			<territory type="GN">Guinea</territory>
 			<territory type="GP">Guadeloupe</territory>
 			<territory type="GQ">Egyenlítői-Guinea</territory>
-			<territory type="GQ" alt="proposed-x1001">Egyenlítői-Guinea</territory>
-			<territory type="GQ" alt="proposed-x1002">Egyenlítďi Guinea</territory>
 			<territory type="GR">Görögország</territory>
 			<territory type="GS">Dél Grúzia és a Déli Szendvics-szigetek</territory>
-			<territory type="GS" alt="proposed-x1001">Dél-Georgia és Dél-Sandwich Szigetek</territory>
 			<territory type="GT">Guatemala</territory>
 			<territory type="GU">Guam</territory>
 			<territory type="GW">Guinea-Bissau</territory>
-			<territory type="GW" alt="proposed-x1001">Bissau-Guinea</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">Hong Kong S.A.R., China</territory>
-			<territory type="HK" alt="proposed-x1001">Hongkong S.A.R, Kína</territory>
-			<territory type="HK" alt="short">Hongkong</territory>
 			<territory type="HM">Heard és McDonald Szigetek</territory>
-			<territory type="HM" alt="proposed-x1001">Heard Sziget és McDonald-szigetek</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Horvátország</territory>
 			<territory type="HT">Haiti</territory>
@@ -867,16 +758,8 @@
 			<territory type="IE">Írország</territory>
 			<territory type="IL">Izrael</territory>
 			<territory type="IM">Man-sziget</territory>
-			<territory type="IM" alt="proposed-x1001">Man sziget</territory>
 			<territory type="IN">India</territory>
 			<territory type="IO">Brit Indiai Oceán</territory>
-			<territory type="IO" alt="proposed-x1001">Brit Indiai Óceán</territory>
-			<territory type="IO" alt="proposed-x1002">Brit Indiai Óceáni Terület</territory>
-			<territory type="IO" alt="proposed-x1003">Brit indiai óceáni térség</territory>
-			<territory type="IO" alt="proposed-x1004">Brit indiai óceáni területek</territory>
-			<territory type="IO" alt="proposed-x1005">Brit Indiai Óceáni Térség</territory>
-			<territory type="IO" alt="proposed-x1006">Britt Indiai-Óceáni Területek</territory>
-			<territory type="IO" alt="proposed-x1007">Brit Indiai Óceáni Fennhatóság</territory>
 			<territory type="IQ">Irak</territory>
 			<territory type="IR">Irán</territory>
 			<territory type="IS">Izland</territory>
@@ -890,57 +773,36 @@
 			<territory type="KH">Kambodzsa</territory>
 			<territory type="KI">Kiribati</territory>
 			<territory type="KM">Comore-szigetek</territory>
-			<territory type="KM" alt="proposed-x1001">Comor-szigetek</territory>
 			<territory type="KN">Saint Kitts és Nevis</territory>
 			<territory type="KP">Észak-Korea</territory>
-			<territory type="KP" alt="proposed-x1001">Korea, Észak</territory>
 			<territory type="KR">Dél-Korea</territory>
-			<territory type="KR" alt="proposed-x1001">Korea, Dél</territory>
 			<territory type="KW">Kuvait</territory>
-			<territory type="KW" alt="proposed-x1001">Kuwait</territory>
 			<territory type="KY">Kajmán-szigetek</territory>
 			<territory type="KZ">Kazahsztán</territory>
 			<territory type="LA">Laosz</territory>
-			<territory type="LA" alt="proposed-x1001">Laoszi Népi Demokratikus Köztársaság</territory>
-			<territory type="LA" alt="proposed-x1002">Laosz</territory>
 			<territory type="LB">Libanon</territory>
 			<territory type="LC">Santa Lucia</territory>
-			<territory type="LC" alt="proposed-x1001">Saint Lucia</territory>
 			<territory type="LI">Liechtenstein</territory>
 			<territory type="LK">Srí Lanka</territory>
-			<territory type="LK" alt="proposed-x1001">Sri Lanka</territory>
-			<territory type="LK" alt="proposed-x1002">Srí Lanka</territory>
 			<territory type="LR">Libéria</territory>
 			<territory type="LS">Lesotho</territory>
 			<territory type="LT">Litvánia</territory>
 			<territory type="LU">Luxemburg</territory>
 			<territory type="LV">Lettország</territory>
-			<territory type="LV" alt="proposed-x1001">Litvánia</territory>
 			<territory type="LY">Líbia</territory>
-			<territory type="LY" alt="proposed-x1001">Líbia</territory>
-			<territory type="LY" alt="proposed-x1002">Líbiai Arab Jamahiriya</territory>
 			<territory type="MA">Marokkó</territory>
 			<territory type="MC">Monaco</territory>
 			<territory type="MD">Moldova</territory>
-			<territory type="MD" alt="proposed-x1001">Moldova</territory>
-			<territory type="MD" alt="proposed-x1002">Moldáv Köztársaság</territory>
 			<territory type="ME">Montenegró</territory>
 			<territory type="MG">Madagaszkár</territory>
 			<territory type="MH">Marshall-szigetek</territory>
 			<territory type="MK">Macedónia</territory>
-			<territory type="MK" alt="proposed-x1001">Macedónia, Köztársaság</territory>
-			<territory type="MK" alt="proposed-x1002">Macedónia</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MM">Mianmar</territory>
-			<territory type="MM" alt="proposed-x1001">Burma</territory>
 			<territory type="MN">Mongólia</territory>
 			<territory type="MO">Macao S.A.R., China</territory>
-			<territory type="MO" alt="proposed-x1001">Makaó S.A.R, Kína</territory>
-			<territory type="MO" alt="proposed-x1002">Makaó</territory>
-			<territory type="MO" alt="short">Makaó</territory>
 			<territory type="MP">Északi Mariana-szigetek</territory>
 			<territory type="MQ">Martinique</territory>
-			<territory type="MQ" alt="proposed-x1001">Martinique (francia)</territory>
 			<territory type="MR">Mauritánia</territory>
 			<territory type="MS">Montserrat</territory>
 			<territory type="MT">Málta</territory>
@@ -949,17 +811,13 @@
 			<territory type="MW">Malawi</territory>
 			<territory type="MX">Mexikó</territory>
 			<territory type="MY">Malajzia</territory>
-			<territory type="MY" alt="proposed-x1001">Malájföld</territory>
 			<territory type="MZ">Mozambik</territory>
 			<territory type="NA">Namíbia</territory>
 			<territory type="NC">Új-Kaledónia</territory>
-			<territory type="NC" alt="proposed-x1001">Új Kaledónia (francia)</territory>
-			<territory type="NC" alt="proposed-x1002">Új-Kaledónia</territory>
 			<territory type="NE">Niger</territory>
 			<territory type="NF">Norfolk-sziget</territory>
 			<territory type="NG">Nigéria</territory>
 			<territory type="NI">Nicaragua</territory>
-			<territory type="NI" alt="proposed-x1001">Nikaragua</territory>
 			<territory type="NL">Hollandia</territory>
 			<territory type="NO">Norvégia</territory>
 			<territory type="NP">Nepál</territory>
@@ -970,8 +828,6 @@
 			<territory type="PA">Panama</territory>
 			<territory type="PE">Peru</territory>
 			<territory type="PF">Francia Polinézia</territory>
-			<territory type="PF" alt="proposed-x1001">Francia Polinézia</territory>
-			<territory type="PF" alt="proposed-x1002">Polinézia (francia)</territory>
 			<territory type="PG">Pápua Új-Guinea</territory>
 			<territory type="PH">Fülöp-szigetek</territory>
 			<territory type="PK">Pakisztán</territory>
@@ -980,8 +836,6 @@
 			<territory type="PN">Pitcairn-sziget</territory>
 			<territory type="PR">Puerto Rico</territory>
 			<territory type="PS">Palesztin Terület</territory>
-			<territory type="PS" alt="proposed-x1001">Palesztína</territory>
-			<territory type="PS" alt="proposed-x1002">Palesztín Terület</territory>
 			<territory type="PT">Portugália</territory>
 			<territory type="PW">Palau</territory>
 			<territory type="PY">Paraguay</territory>
@@ -989,25 +843,17 @@
 			<territory type="QO">Külső-Óceánia</territory>
 			<territory type="QU">Európai Unió</territory>
 			<territory type="RE">Reunion (francia)</territory>
-			<territory type="RE" alt="proposed-x1001">Réunion</territory>
 			<territory type="RO">Románia</territory>
 			<territory type="RS">Szerbia</territory>
 			<territory type="RU">Oroszország</territory>
-			<territory type="RU" alt="proposed-x1001">Oroszország</territory>
-			<territory type="RU" alt="proposed-x1002">Orosz Köztársaság</territory>
 			<territory type="RW">Ruanda</territory>
 			<territory type="SA">Szaúd-Arábia</territory>
-			<territory type="SA" alt="proposed-x1001">Szaúd-Arábia</territory>
-			<territory type="SA" alt="proposed-x1002">Szaud-Arábia</territory>
 			<territory type="SB">Salamon-szigetek</territory>
 			<territory type="SC">Seychelle-szigetek</territory>
-			<territory type="SC" alt="proposed-x1001">Seychelles-szigetek</territory>
-			<territory type="SC" alt="proposed-x1002">Seychelles</territory>
 			<territory type="SD">Szudán</territory>
 			<territory type="SE">Svédország</territory>
 			<territory type="SG">Szingapúr</territory>
 			<territory type="SH">Szent Helena</territory>
-			<territory type="SH" alt="proposed-x1001">Saint Helena</territory>
 			<territory type="SI">Szlovénia</territory>
 			<territory type="SJ">Svalbard és Jan Mayen</territory>
 			<territory type="SK">Szlovákia</territory>
@@ -1017,17 +863,10 @@
 			<territory type="SO">Szomália</territory>
 			<territory type="SR">Suriname</territory>
 			<territory type="ST">São Tomé és Príncipe</territory>
-			<territory type="ST" alt="proposed-x1001">Saint Tome és Principe</territory>
-			<territory type="ST" alt="proposed-x1002">São Tomé és Príncipe</territory>
 			<territory type="SV">Salvador</territory>
-			<territory type="SV" alt="proposed-x1001">El Salvador</territory>
 			<territory type="SY">Szíria</territory>
-			<territory type="SY" alt="proposed-x1001">Szíriai Arab Köztársaság</territory>
-			<territory type="SY" alt="proposed-x1002">Szíria</territory>
 			<territory type="SZ">Szváziföld</territory>
 			<territory type="TC">Turks- és Caicos-szigetek</territory>
-			<territory type="TC" alt="proposed-x1001">Turks és Caicos-szigetek</territory>
-			<territory type="TC" alt="proposed-x1002">Török és Caicos Szigetek</territory>
 			<territory type="TD">Csád</territory>
 			<territory type="TF">Francia Déli Területek</territory>
 			<territory type="TG">Togo</territory>
@@ -1038,86 +877,62 @@
 			<territory type="TM">Türkmenisztán</territory>
 			<territory type="TN">Tunézia</territory>
 			<territory type="TO">Tonga</territory>
-			<territory type="TO" alt="proposed-x1001">Tongai</territory>
 			<territory type="TR">Törökország</territory>
 			<territory type="TT">Trinidad és Tobago</territory>
 			<territory type="TV">Tuvalu</territory>
 			<territory type="TW">Tajvan</territory>
-			<territory type="TW" alt="proposed-x1001">Tajvan</territory>
-			<territory type="TW" alt="proposed-x1002">Taiwan</territory>
 			<territory type="TZ">Tanzánia</territory>
 			<territory type="UA">Ukrajna</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Amerikai Csendes-óceáni Szigetek</territory>
-			<territory type="UM" alt="proposed-x1001">Egyesült Államok kis félreeső szigetek</territory>
-			<territory type="UM" alt="proposed-x1002">United States Minor Outlying Islands</territory>
 			<territory type="US">Egyesült Államok</territory>
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Üzbegisztán</territory>
 			<territory type="VA">Vatikán</territory>
 			<territory type="VC">Saint Vincent és Grenadines</territory>
-			<territory type="VC" alt="proposed-x1001">Saint Vincent, Grenadines</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Brit Virgin-szigetek</territory>
 			<territory type="VI">Amerikai Virgin-szigetek</territory>
-			<territory type="VI" alt="proposed-x1001">U.S. Virgin-szigetek</territory>
 			<territory type="VN">Vietnam</territory>
-			<territory type="VN" alt="proposed-x1001">Vietnám</territory>
-			<territory type="VN" alt="proposed-x1002">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis és Futuna</territory>
-			<territory type="WF" alt="proposed-x1001">Wallis és Futuna Szigetek</territory>
-			<territory type="WF" alt="proposed-x1002">Wallis és Futuna</territory>
 			<territory type="WS">Szamoa</territory>
-			<territory type="WS" alt="proposed-x1001">Samoa</territory>
 			<territory type="YE">Jemen</territory>
 			<territory type="YT">Mayotte</territory>
 			<territory type="ZA">Dél-Afrika</territory>
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabwe</territory>
 			<territory type="ZZ">Ismeretlen vagy érvénytelen körzet</territory>
-			<territory type="ZZ" alt="proposed-x1001">Ismeretlen vagy érvénytelen terület</territory>
 		</territories>
 		<variants>
 			<variant type="1901">Hagyományos német helyesírás</variant>
 			<variant type="1996">1996-os német helyesírás</variant>
 			<variant type="AREVELA">Keleti örmény</variant>
-			<variant type="AREVELA" alt="proposed-x1001">Kelet-örmény</variant>
 			<variant type="AREVMDA">Nyugati örmény</variant>
-			<variant type="AREVMDA" alt="proposed-x1001">Nyugat-örmény</variant>
 			<variant type="BOONT">Boontling</variant>
 			<variant type="FONIPA">IPA fonetika</variant>
 			<variant type="FONUPA">UPA fonetika</variant>
 			<variant type="MONOTON">Monoton</variant>
-			<variant type="MONOTON" alt="proposed-x1001">Monotónikus</variant>
 			<variant type="NEDIS">Natisone dialektus</variant>
 			<variant type="POLYTON">Politon</variant>
-			<variant type="POLYTON" alt="proposed-x1001">Politón</variant>
-			<variant type="POLYTON" alt="proposed-x1002">Politonikus</variant>
-			<variant type="POLYTON" alt="proposed-x1003">Politónikus</variant>
 			<variant type="POSIX">Kompjúter</variant>
-			<variant type="POSIX" alt="proposed-x1001">Számítógép</variant>
 			<variant type="REVISED">Átdolgozott helyesírás</variant>
 			<variant type="ROZAJ">Resian</variant>
 			<variant type="SAAHO">Saho</variant>
 			<variant type="SCOUSE">Scouse</variant>
 			<variant type="VALENCIA">Valencia</variant>
-			<variant type="VALENCIA" alt="proposed-x1001">VALENCIA</variant>
 		</variants>
 		<keys>
 			<key type="calendar">Naptár</key>
 			<key type="collation">Rendezés</key>
-			<key type="collation" alt="proposed-x1001">Egybevetés</key>
 			<key type="currency">Pénznem</key>
 		</keys>
 		<types>
 			<type type="big5han" key="collation">Hagyományos kínai (Big5)</type>
-			<type type="big5han" key="collation" alt="proposed-x1001">Hagyományos kínai sorrend - Big5</type>
 			<type type="buddhist" key="calendar">buddhista naptár</type>
 			<type type="chinese" key="calendar">kínai naptár</type>
 			<type type="direct" key="collation">Közvetlen sorrend</type>
 			<type type="gb2312han" key="collation">Egyszerűsített kínai (GB2312)</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1001">Egyszerűsített kínai sorrend - GB2312</type>
 			<type type="gregorian" key="calendar">Gergely-naptár</type>
 			<type type="hebrew" key="calendar">héber naptár</type>
 			<type type="islamic" key="calendar">iszlám naptár</type>
@@ -1130,9 +945,7 @@
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">amerikai</measurementSystemName>
-			<measurementSystemName type="US" alt="proposed-x1001">USA</measurementSystemName>
 			<measurementSystemName type="metric">metrikus</measurementSystemName>
-			<measurementSystemName type="metric" alt="proposed-x1001">Metrikus</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<characters>
@@ -1141,9 +954,7 @@
 	</characters>
 	<delimiters>
 		<quotationStart>„</quotationStart>
-		<quotationStart alt="proposed-x1001">»</quotationStart>
 		<quotationEnd>”</quotationEnd>
-		<quotationEnd alt="proposed-x1001">«</quotationEnd>
 		<alternateQuotationStart>„</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
 	</delimiters>
@@ -1210,19 +1021,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">V</day>
-							<day type="sun" alt="proposed-x1001">V.</day>
 							<day type="mon">H</day>
-							<day type="mon" alt="proposed-x1001">H.</day>
 							<day type="tue">K</day>
-							<day type="tue" alt="proposed-x1001">K.</day>
 							<day type="wed">Sze</day>
-							<day type="wed" alt="proposed-x1001">Sze.</day>
 							<day type="thu">Cs</day>
-							<day type="thu" alt="proposed-x1001">Cs.</day>
 							<day type="fri">P</day>
-							<day type="fri" alt="proposed-x1001">P.</day>
 							<day type="sat">Szo</day>
-							<day type="sat" alt="proposed-x1001">Szo.</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">vasárnap</day>
@@ -1271,9 +1075,7 @@
 					</quarterContext>
 				</quarters>
 				<am>de.</am>
-				<am alt="proposed-x1001">DE</am>
 				<pm>du.</pm>
-				<pm alt="proposed-x1001">DU</pm>
 				<eras>
 					<eraNames>
 						<era type="0">időszámításunk előtt</era>
@@ -1288,7 +1090,6 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>yyyy. MMMM d.</pattern>
-							<pattern alt="proposed-x1001">yyyy. MMMM d., EEEE</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
@@ -1299,7 +1100,6 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>yyyy.MM.dd.</pattern>
-							<pattern alt="proposed-x1001">yyyy. MMM d.</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -1312,7 +1112,6 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>H:mm:ss v</pattern>
-							<pattern alt="proposed-x1001">H:mm:ss vvvv</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
@@ -1368,7 +1167,6 @@
 						<relative type="-1">tegnap</relative>
 						<relative type="-2">tegnapelőtt</relative>
 						<relative type="-3">három nappal ezelőtt</relative>
-						<relative type="-3" alt="proposed-x1001">három napja</relative>
 					</field>
 					<field type="weekday">
 						<displayName>hét napja</displayName>
@@ -1457,11 +1255,9 @@
 			</zone>
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Déli-sark</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Déli sark</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Vostok">
 				<exemplarCity>Vosztok</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Vostok</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Dumont d'Urville</exemplarCity>
@@ -1495,31 +1291,24 @@
 			</zone>
 			<zone type="America/Rio_Branco">
 				<exemplarCity>Río Branco</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Rio Branco</exemplarCity>
 			</zone>
 			<zone type="America/Porto_Velho">
 				<exemplarCity>Pôrto Velho</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Porto Velho</exemplarCity>
 			</zone>
 			<zone type="America/Cuiaba">
 				<exemplarCity>Cuiabá</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cuiaba</exemplarCity>
 			</zone>
 			<zone type="America/Belem">
 				<exemplarCity>Belém</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Belem</exemplarCity>
 			</zone>
 			<zone type="America/Araguaina">
 				<exemplarCity>Araguaína</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Araguaina</exemplarCity>
 			</zone>
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>São Paulo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sao Paulo</exemplarCity>
 			</zone>
 			<zone type="America/Maceio">
 				<exemplarCity>Maceió</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Maceio</exemplarCity>
 			</zone>
 			<zone type="Europe/Minsk">
 				<exemplarCity>Minszk</exemplarCity>
@@ -1568,7 +1357,6 @@
 			</zone>
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Galapagos-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Galapagos</exemplarCity>
 			</zone>
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kairó</exemplarCity>
@@ -1581,34 +1369,27 @@
 			</zone>
 			<zone type="Pacific/Truk">
 				<exemplarCity>Truk-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Truk</exemplarCity>
 			</zone>
 			<zone type="Pacific/Ponape">
 				<exemplarCity>Ponape-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ponape</exemplarCity>
 			</zone>
 			<zone type="Pacific/Kosrae">
 				<exemplarCity>Kosrae-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kosrae</exemplarCity>
 			</zone>
 			<zone type="Europe/Paris">
 				<exemplarCity>Párizs</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Paris</exemplarCity>
 			</zone>
 			<zone type="Europe/Gibraltar">
 				<exemplarCity>Gibraltár</exemplarCity>
 			</zone>
 			<zone type="America/Godthab">
 				<exemplarCity>Godthåb</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Godthab</exemplarCity>
 			</zone>
 			<zone type="America/Scoresbysund">
 				<exemplarCity>Scoresby Sound</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Scoresbysund</exemplarCity>
 			</zone>
 			<zone type="America/Danmarkshavn">
 				<exemplarCity>Danmarks Havn</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Danmarkshavn</exemplarCity>
 			</zone>
 			<zone type="Europe/Athens">
 				<exemplarCity>Athén</exemplarCity>
@@ -1618,11 +1399,9 @@
 			</zone>
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Dzsakarta</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Jakarta</exemplarCity>
 			</zone>
 			<zone type="Asia/Makassar">
 				<exemplarCity>Makasar</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Makassar</exemplarCity>
 			</zone>
 			<zone type="Asia/Baghdad">
 				<exemplarCity>Bagdad</exemplarCity>
@@ -1641,10 +1420,8 @@
 			</zone>
 			<zone type="Pacific/Kiritimati">
 				<exemplarCity>Kiritimati-sziget</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kiritimati</exemplarCity>
 			</zone>
 			<zone type="Pacific/Tarawa">
-				<exemplarCity alt="proposed-x1001">Tarawa-sziget</exemplarCity>
 			</zone>
 			<zone type="America/St_Kitts">
 				<exemplarCity>St. Kitts</exemplarCity>
@@ -1654,25 +1431,21 @@
 			</zone>
 			<zone type="Asia/Seoul">
 				<exemplarCity>Dél-Korea</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Söul</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuwait">
 				<exemplarCity>Kuvait</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtau">
 				<exemplarCity>Aktau</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Aqtau</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtobe">
 				<exemplarCity>Aktöbe</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Aqtobe</exemplarCity>
 			</zone>
 			<zone type="Asia/Qyzylorda">
 				<exemplarCity>Kizilorda</exemplarCity>
 			</zone>
 			<zone type="Asia/Almaty">
 				<exemplarCity>Alma-Ata</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Almaty</exemplarCity>
 			</zone>
 			<zone type="Asia/Vientiane">
 				<exemplarCity>Laosz</exemplarCity>
@@ -1694,23 +1467,18 @@
 			</zone>
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>Kwajalein-zátony</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Kwajalein</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity>Majuro-zátony</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Majuro</exemplarCity>
 			</zone>
 			<zone type="Asia/Ulaanbaatar">
 				<exemplarCity>Ulánbátor</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ulan Bator</exemplarCity>
 			</zone>
 			<zone type="Asia/Choibalsan">
 				<exemplarCity>Csojbalszan</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Cho皜balsan</exemplarCity>
 			</zone>
 			<zone type="Asia/Macau">
 				<exemplarCity>Makaó</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Makaó S.A.R., Kína</exemplarCity>
 			</zone>
 			<zone type="Europe/Malta">
 				<exemplarCity>Málta</exemplarCity>
@@ -1734,15 +1502,12 @@
 				<exemplarCity>Chatham-szigetek</exemplarCity>
 			</zone>
 			<zone type="Pacific/Tahiti">
-				<exemplarCity alt="proposed-x1001">Tahiti-sziget</exemplarCity>
 			</zone>
 			<zone type="Pacific/Marquesas">
 				<exemplarCity>Marquesas-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Marquesas</exemplarCity>
 			</zone>
 			<zone type="Pacific/Gambier">
 				<exemplarCity>Gambier-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Gambier</exemplarCity>
 			</zone>
 			<zone type="Europe/Warsaw">
 				<exemplarCity>Varsó</exemplarCity>
@@ -1752,11 +1517,8 @@
 			</zone>
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azori-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Azóri-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Azores</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Madeira">
-				<exemplarCity alt="proposed-x1001">Madeira-sziget</exemplarCity>
 			</zone>
 			<zone type="Europe/Lisbon">
 				<exemplarCity>Lisszabon</exemplarCity>
@@ -1847,22 +1609,18 @@
 			</zone>
 			<zone type="Pacific/Midway">
 				<exemplarCity>Midway-szigetek</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Midway</exemplarCity>
 			</zone>
 			<zone type="Pacific/Wake">
 				<exemplarCity>Wake-sziget</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Wake</exemplarCity>
 			</zone>
 			<zone type="America/Anchorage">
 				<exemplarCity>Alaszkai Idő</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Anchorage</exemplarCity>
 			</zone>
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Szamarkand</exemplarCity>
 			</zone>
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taskent</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Tashkent</exemplarCity>
 			</zone>
 			<zone type="America/St_Vincent">
 				<exemplarCity>St. Vincent</exemplarCity>
@@ -2475,9 +2233,7 @@
 			<metazone type="Europe_Central">
 				<long>
 					<standard>közép-európai idő</standard>
-					<standard alt="proposed-x1001">Közép-európai idő</standard>
 					<daylight>közép-európai nyári idő</daylight>
-					<daylight alt="proposed-x1001">Közép-európai nyári idő</daylight>
 				</long>
 				<short>
 					<standard>CET</standard>
@@ -3696,368 +3452,262 @@
 		<currencies>
 			<currency type="ADP">
 				<displayName>Andorrai peseta</displayName>
-				<displayName alt="proposed-x1001">andorrai peseta</displayName>
 			</currency>
 			<currency type="AED">
 				<displayName>EAE dirham</displayName>
-				<displayName alt="proposed-x1001">emirátusi dirham</displayName>
-				<displayName alt="proposed-x1002">Egyesült Abar Emírségekbeli Dínár</displayName>
 			</currency>
 			<currency type="AFA">
 				<displayName>Afghani (1927-2002)</displayName>
-				<displayName alt="proposed-x1001">afghani (1927-2002)</displayName>
 			</currency>
 			<currency type="AFN">
 				<displayName>Afghani</displayName>
-				<displayName alt="proposed-x1001">afghani</displayName>
 				<symbol>Af</symbol>
-				<symbol alt="proposed-x1001">AFN</symbol>
 			</currency>
 			<currency type="ALL">
 				<displayName>Albán lek</displayName>
-				<displayName alt="proposed-x1001">lek</displayName>
 				<symbol>lek</symbol>
-				<symbol alt="proposed-x1001">ALL</symbol>
 			</currency>
 			<currency type="AMD">
 				<displayName>Dram</displayName>
-				<displayName alt="proposed-x1001">dram</displayName>
 				<symbol>dram</symbol>
-				<symbol alt="proposed-x1001">AMD</symbol>
 			</currency>
 			<currency type="ANG">
 				<displayName>Holland-antilla forint</displayName>
-				<displayName alt="proposed-x1001">holland antillai gulden</displayName>
 				<symbol>NA f.</symbol>
-				<symbol alt="proposed-x1001">ANG</symbol>
 			</currency>
 			<currency type="AOA">
 				<displayName>Angolai kwanza</displayName>
-				<displayName alt="proposed-x1001">kwanza</displayName>
 			</currency>
 			<currency type="AOK">
 				<displayName>Angolai kwanza (1977-1990)</displayName>
-				<displayName alt="proposed-x1001">kwanza (1977-1990)</displayName>
 			</currency>
 			<currency type="AON">
 				<displayName>Angolai új kwanza (1990-2000)</displayName>
-				<displayName alt="proposed-x1001">új kwanza (1990-2000)</displayName>
 			</currency>
 			<currency type="AOR">
 				<displayName>Angolai kwanza reajustado (1995-1999)</displayName>
-				<displayName alt="proposed-x1001">kwanza reajustado (1995-1999)</displayName>
 			</currency>
 			<currency type="ARA">
 				<displayName>Argentín austral</displayName>
-				<displayName alt="proposed-x1001">argentin austral</displayName>
 			</currency>
 			<currency type="ARP">
 				<displayName>Argentín peso (1983-1985)</displayName>
-				<displayName alt="proposed-x1001">argentin peso (1983-1985)</displayName>
 			</currency>
 			<currency type="ARS">
 				<displayName>Peso</displayName>
-				<displayName alt="proposed-x1001">argentin peso</displayName>
-				<displayName alt="proposed-x1002">Argentín Peso</displayName>
 				<symbol>Arg$</symbol>
-				<symbol alt="proposed-x1001">ARS</symbol>
 			</currency>
 			<currency type="ATS">
 				<displayName>Osztrák schilling</displayName>
-				<displayName alt="proposed-x1001">osztrák schilling</displayName>
 			</currency>
 			<currency type="AUD">
 				<displayName>Ausztrál dollár</displayName>
-				<displayName alt="proposed-x1001">ausztrál dollár</displayName>
 				<symbol>$A</symbol>
-				<symbol alt="proposed-x1001">AUD</symbol>
 			</currency>
 			<currency type="AWG">
 				<displayName>Arubai forint</displayName>
-				<displayName alt="proposed-x1001">arubai gulden</displayName>
 			</currency>
 			<currency type="AZM">
 				<displayName>Azerbajdzsáni manat</displayName>
-				<displayName alt="proposed-x1001">azerbajdzsáni manat</displayName>
 			</currency>
 			<currency type="BAD">
 				<displayName>Bosznia-hercegovinai dínár</displayName>
-				<displayName alt="proposed-x1001">bosznia-hercegovinai dínár</displayName>
 			</currency>
 			<currency type="BAM">
 				<displayName>Bozsnia-hercegovinai konvertibilis márka</displayName>
-				<displayName alt="proposed-x1001">márka</displayName>
 				<symbol>KM</symbol>
-				<symbol alt="proposed-x1001">BAM</symbol>
 			</currency>
 			<currency type="BBD">
 				<displayName>Barbadosi dollár</displayName>
-				<displayName alt="proposed-x1001">barbadosi dollár</displayName>
 				<symbol>BDS$</symbol>
-				<symbol alt="proposed-x1001">BBD</symbol>
 			</currency>
 			<currency type="BDT">
 				<displayName>Bangladesi taka</displayName>
-				<displayName alt="proposed-x1001">taka</displayName>
 				<symbol>Tk</symbol>
-				<symbol alt="proposed-x1001">BDT</symbol>
 			</currency>
 			<currency type="BEC">
 				<displayName>Belga frank (konvertibilis)</displayName>
-				<displayName alt="proposed-x1001">belga frank (konvertibilis)</displayName>
 			</currency>
 			<currency type="BEF">
 				<displayName>Belga frank</displayName>
-				<displayName alt="proposed-x1001">belga frank</displayName>
 				<symbol>BF</symbol>
-				<symbol alt="proposed-x1001">BEF</symbol>
 			</currency>
 			<currency type="BEL">
 				<displayName>Belga frank (pénzügyi)</displayName>
-				<displayName alt="proposed-x1001">belga frank (pénzügyi)</displayName>
 			</currency>
 			<currency type="BGL">
 				<displayName>Bolgár kemény leva</displayName>
-				<displayName alt="proposed-x1001">leva</displayName>
 				<symbol>lev</symbol>
-				<symbol alt="proposed-x1001">BGL</symbol>
 			</currency>
 			<currency type="BGN">
 				<displayName>Bolgár új leva</displayName>
-				<displayName alt="proposed-x1001">Bolgár Leva</displayName>
-				<displayName alt="proposed-x1002">új leva</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>Bahreini dinár</displayName>
-				<displayName alt="proposed-x1001">bahreini dinár</displayName>
 				<symbol>BD</symbol>
-				<symbol alt="proposed-x1001">BHD</symbol>
 			</currency>
 			<currency type="BIF">
 				<displayName>Burundi frank</displayName>
-				<displayName alt="proposed-x1001">burundi frank</displayName>
 				<symbol>Fbu</symbol>
-				<symbol alt="proposed-x1001">BIF</symbol>
 			</currency>
 			<currency type="BMD">
 				<displayName>Bermudai dollár</displayName>
-				<displayName alt="proposed-x1001">bermudai dollár</displayName>
 				<symbol>Ber$</symbol>
-				<symbol alt="proposed-x1001">BMD</symbol>
 			</currency>
 			<currency type="BND">
 				<displayName>Brunei dollár</displayName>
-				<displayName alt="proposed-x1001">brunei dollár</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>Boliviano</displayName>
-				<displayName alt="proposed-x1001">boliviano</displayName>
-				<displayName alt="proposed-x1002">Bolíviai Boliviano</displayName>
 				<symbol>Bs</symbol>
-				<symbol alt="proposed-x1001">BOB</symbol>
 			</currency>
 			<currency type="BOP">
 				<displayName>Bolíviai peso</displayName>
-				<displayName alt="proposed-x1001">bolíviai peso</displayName>
 			</currency>
 			<currency type="BOV">
 				<displayName>Bolíviai mvdol</displayName>
-				<displayName alt="proposed-x1001">bolíviai mvdol</displayName>
 			</currency>
 			<currency type="BRB">
 				<displayName>Brazi cruzeiro novo (1967-1986)</displayName>
-				<displayName alt="proposed-x1001">brazil cruzeiro novo (1967-1968)</displayName>
 			</currency>
 			<currency type="BRC">
 				<displayName>Brazi cruzado</displayName>
-				<displayName alt="proposed-x1001">brazil cruzado</displayName>
 			</currency>
 			<currency type="BRE">
 				<displayName>Brazil cruzeiro (1990-1993)</displayName>
-				<displayName alt="proposed-x1001">brazil cruzeiro (1990-1993)</displayName>
 			</currency>
 			<currency type="BRL">
 				<displayName>Brazil real</displayName>
-				<displayName alt="proposed-x1001">real</displayName>
-				<displayName alt="proposed-x1002">Brazil Reál</displayName>
 				<symbol>BRL</symbol>
 			</currency>
 			<currency type="BRN">
 				<displayName>Brazil cruzado novo</displayName>
-				<displayName alt="proposed-x1001">brazil cruzado novo</displayName>
 			</currency>
 			<currency type="BRR">
 				<displayName>Brazil cruzeiro</displayName>
-				<displayName alt="proposed-x1001">brazil cruzeiro</displayName>
 			</currency>
 			<currency type="BSD">
 				<displayName>Bahamai dollár</displayName>
-				<displayName alt="proposed-x1001">bahamai dollár</displayName>
 			</currency>
 			<currency type="BTN">
 				<displayName>Bhutáni ngultrum</displayName>
-				<displayName alt="proposed-x1001">ngultrum</displayName>
 				<symbol>Nu</symbol>
-				<symbol alt="proposed-x1001">BTN</symbol>
 			</currency>
 			<currency type="BUK">
 				<displayName>Burmai kyat</displayName>
 			</currency>
 			<currency type="BWP">
 				<displayName>Botswanai pula</displayName>
-				<displayName alt="proposed-x1001">pula</displayName>
 			</currency>
 			<currency type="BYB">
 				<displayName>Fehérorosz új rubel (1994-1999)</displayName>
-				<displayName alt="proposed-x1001">belorusz új rubel (1994-1999)</displayName>
 			</currency>
 			<currency type="BYR">
 				<displayName>Fehérorosz rubel</displayName>
-				<displayName alt="proposed-x1001">belorusz rubel</displayName>
 				<symbol>Rbl</symbol>
-				<symbol alt="proposed-x1001">BYR</symbol>
 			</currency>
 			<currency type="BZD">
 				<displayName>Belizei dollár</displayName>
-				<displayName alt="proposed-x1001">belizei dollár</displayName>
 				<symbol>BZ$</symbol>
-				<symbol alt="proposed-x1001">BZD</symbol>
 			</currency>
 			<currency type="CAD">
 				<displayName>Kanadai dollár</displayName>
-				<displayName alt="proposed-x1001">kanadai dollár</displayName>
 				<symbol>Can$</symbol>
-				<symbol alt="proposed-x1001">CAD</symbol>
 			</currency>
 			<currency type="CDF">
 				<displayName>Kongói frank</displayName>
-				<displayName alt="proposed-x1001">kongói frank</displayName>
 			</currency>
 			<currency type="CHE">
 				<displayName>WIR euro</displayName>
 			</currency>
 			<currency type="CHF">
 				<displayName>Svájci frank</displayName>
-				<displayName alt="proposed-x1001">svájci frank</displayName>
 				<symbol>SwF</symbol>
-				<symbol alt="proposed-x1001">CHF</symbol>
 			</currency>
 			<currency type="CHW">
 				<displayName>WIR frank</displayName>
 			</currency>
 			<currency type="CLF">
 				<displayName>Chilei unidades de fomento</displayName>
-				<displayName alt="proposed-x1001">chilei unidades de fomento</displayName>
 			</currency>
 			<currency type="CLP">
 				<displayName>Chilei peso</displayName>
-				<displayName alt="proposed-x1001">chilei peso</displayName>
 				<symbol>Ch$</symbol>
-				<symbol alt="proposed-x1001">CLP</symbol>
 			</currency>
 			<currency type="CNY">
 				<displayName>Kínai jüan renminbi</displayName>
-				<displayName alt="proposed-x1001">Yuan Renminbi</displayName>
-				<displayName alt="proposed-x1002">jüan</displayName>
 				<symbol>Y</symbol>
-				<symbol alt="proposed-x1001">CNY</symbol>
 			</currency>
 			<currency type="COP">
 				<displayName>Kolumbiai peso</displayName>
-				<displayName alt="proposed-x1001">kolumbiai peso</displayName>
 				<symbol>Col$</symbol>
-				<symbol alt="proposed-x1001">COP</symbol>
 			</currency>
 			<currency type="COU">
 				<displayName>unidad de valor real</displayName>
 			</currency>
 			<currency type="CRC">
 				<displayName>Costa Ricai colon</displayName>
-				<displayName alt="proposed-x1001">costa ricai colón</displayName>
 				<symbol>C</symbol>
-				<symbol alt="proposed-x1001">CRC</symbol>
 			</currency>
 			<currency type="CSD">
 				<displayName>szerb dinár</displayName>
 			</currency>
 			<currency type="CSK">
 				<displayName>Csehszlovák kemény korona</displayName>
-				<displayName alt="proposed-x1001">csehszlovák korona</displayName>
 			</currency>
 			<currency type="CUP">
 				<displayName>Kubai peso</displayName>
-				<displayName alt="proposed-x1001">kubai peso</displayName>
 			</currency>
 			<currency type="CVE">
 				<displayName>Cape Verdei escudo</displayName>
-				<displayName alt="proposed-x1001">cape verdei escudo</displayName>
 				<symbol>CVEsc</symbol>
-				<symbol alt="proposed-x1001">CVE</symbol>
 			</currency>
 			<currency type="CYP">
 				<displayName>Ciprusi font</displayName>
-				<displayName alt="proposed-x1001">ciprusi font</displayName>
 				<symbol>£C</symbol>
-				<symbol alt="proposed-x1001">CYP</symbol>
 			</currency>
 			<currency type="CZK">
 				<displayName>Cseh korona</displayName>
-				<displayName alt="proposed-x1001">cseh korona</displayName>
 			</currency>
 			<currency type="DDM">
 				<displayName>Kelet-Német márka</displayName>
-				<displayName alt="proposed-x1001">kelet-német márka</displayName>
 			</currency>
 			<currency type="DEM">
 				<displayName>Német márka</displayName>
-				<displayName alt="proposed-x1001">német márka</displayName>
 			</currency>
 			<currency type="DJF">
 				<displayName>Dzsibuti frank</displayName>
-				<displayName alt="proposed-x1001">dzsibuti frank</displayName>
 				<symbol>DF</symbol>
-				<symbol alt="proposed-x1001">DJF</symbol>
 			</currency>
 			<currency type="DKK">
 				<displayName>Dán korona</displayName>
-				<displayName alt="proposed-x1001">dán korona</displayName>
 				<symbol>DKr</symbol>
-				<symbol alt="proposed-x1001">DKK</symbol>
 			</currency>
 			<currency type="DOP">
 				<displayName>Dominikai peso</displayName>
-				<displayName alt="proposed-x1001">dominikai peso</displayName>
 				<symbol>RD$</symbol>
-				<symbol alt="proposed-x1001">DOP</symbol>
 			</currency>
 			<currency type="DZD">
 				<displayName>Algériai dínár</displayName>
-				<displayName alt="proposed-x1001">algériai dinár</displayName>
 				<symbol>DA</symbol>
-				<symbol alt="proposed-x1001">DZD</symbol>
 			</currency>
 			<currency type="ECS">
 				<displayName>Ecuadori sucre</displayName>
-				<displayName alt="proposed-x1001">sucre</displayName>
 			</currency>
 			<currency type="ECV">
 				<displayName>Ecuadori Unidad de Valor Constante (UVC)</displayName>
-				<displayName alt="proposed-x1001">unidad de valor constante</displayName>
 			</currency>
 			<currency type="EEK">
 				<displayName>Észt korona</displayName>
-				<displayName alt="proposed-x1001">észt korona</displayName>
 			</currency>
 			<currency type="EGP">
 				<displayName>Egyiptomi font</displayName>
-				<displayName alt="proposed-x1001">egyiptomi font</displayName>
 			</currency>
 			<currency type="EQE">
 				<displayName>ekwele</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>Eritreai nakfa</displayName>
-				<displayName alt="proposed-x1001">nakfa</displayName>
 			</currency>
 			<currency type="ESA">
 				<displayName>spanyol peseta (A-kontó)</displayName>
@@ -4067,722 +3717,507 @@
 			</currency>
 			<currency type="ESP">
 				<displayName>Spanyol peseta</displayName>
-				<displayName alt="proposed-x1001">spanyol peseta</displayName>
 			</currency>
 			<currency type="ETB">
 				<displayName>Etiópiai birr</displayName>
-				<displayName alt="proposed-x1001">birr</displayName>
 				<symbol>Br</symbol>
-				<symbol alt="proposed-x1001">ETB</symbol>
 			</currency>
 			<currency type="EUR">
 				<displayName>Euro</displayName>
-				<displayName alt="proposed-x1001">Euró</displayName>
 				<symbol>EUR</symbol>
 			</currency>
 			<currency type="FIM">
 				<displayName>Finn markka</displayName>
-				<displayName alt="proposed-x1001">markka</displayName>
 			</currency>
 			<currency type="FJD">
 				<displayName>Fidzsi dollár</displayName>
-				<displayName alt="proposed-x1001">fidzsi dollár</displayName>
 				<symbol>F$</symbol>
-				<symbol alt="proposed-x1001">FJD</symbol>
 			</currency>
 			<currency type="FKP">
 				<displayName>Falkland-szigeteki font</displayName>
-				<displayName alt="proposed-x1001">falklandi pound</displayName>
 			</currency>
 			<currency type="FRF">
 				<displayName>Francia frank</displayName>
-				<displayName alt="proposed-x1001">francia frank</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>Brit font sterling</displayName>
-				<displayName alt="proposed-x1001">brit font</displayName>
-				<displayName alt="proposed-x1002">Angol Font Sterling</displayName>
 				<symbol>GBP</symbol>
 			</currency>
 			<currency type="GEK">
 				<displayName>Grúz kupon larit</displayName>
-				<displayName alt="proposed-x1001">kupon larit</displayName>
 			</currency>
 			<currency type="GEL">
 				<displayName>Grúz lari</displayName>
-				<displayName alt="proposed-x1001">lari</displayName>
 				<symbol>lari</symbol>
-				<symbol alt="proposed-x1001">GEL</symbol>
 			</currency>
 			<currency type="GHC">
 				<displayName>Ghánai cedi</displayName>
-				<displayName alt="proposed-x1001">cedi</displayName>
 			</currency>
 			<currency type="GIP">
 				<displayName>Gibraltári font</displayName>
-				<displayName alt="proposed-x1001">gibraltári font</displayName>
 			</currency>
 			<currency type="GMD">
 				<displayName>Gambiai dalasi</displayName>
-				<displayName alt="proposed-x1001">dalasi</displayName>
 			</currency>
 			<currency type="GNF">
 				<displayName>Guineai frank</displayName>
-				<displayName alt="proposed-x1001">guineai frank</displayName>
 				<symbol>GF</symbol>
-				<symbol alt="proposed-x1001">GNF</symbol>
 			</currency>
 			<currency type="GNS">
 				<displayName>Guineai syli</displayName>
-				<displayName alt="proposed-x1001">guineai syli</displayName>
 			</currency>
 			<currency type="GQE">
 				<displayName>Egyenlítői-guineai ekwele guineana</displayName>
-				<displayName alt="proposed-x1001">egyenlítői-guineai ekwele guineana</displayName>
 			</currency>
 			<currency type="GRD">
 				<displayName>Görög drachma</displayName>
-				<displayName alt="proposed-x1001">görög drachma</displayName>
 			</currency>
 			<currency type="GTQ">
 				<displayName>Guatemalai quetzal</displayName>
-				<displayName alt="proposed-x1001">quetzal</displayName>
 				<symbol>Q</symbol>
-				<symbol alt="proposed-x1001">GTQ</symbol>
 			</currency>
 			<currency type="GWE">
 				<displayName>Portugál guinea escudo</displayName>
-				<displayName alt="proposed-x1001">portugál guinea escudo</displayName>
 			</currency>
 			<currency type="GWP">
 				<displayName>Guinea-Bissaui peso</displayName>
-				<displayName alt="proposed-x1001">guinea-bissaui peso</displayName>
 			</currency>
 			<currency type="GYD">
 				<displayName>Guyanai dollár</displayName>
-				<displayName alt="proposed-x1001">guyanai dollár</displayName>
 				<symbol>G$</symbol>
-				<symbol alt="proposed-x1001">GYD</symbol>
 			</currency>
 			<currency type="HKD">
 				<displayName>Hongkongi dollár</displayName>
-				<displayName alt="proposed-x1001">hongkongi dollár</displayName>
-				<displayName alt="proposed-x1002">Hong Kongi Dollár</displayName>
 				<symbol>HK$</symbol>
-				<symbol alt="proposed-x1001">HKD</symbol>
 			</currency>
 			<currency type="HNL">
 				<displayName>Hodurasi lempira</displayName>
-				<displayName alt="proposed-x1001">lempira</displayName>
 				<symbol>L</symbol>
-				<symbol alt="proposed-x1001">HNL</symbol>
 			</currency>
 			<currency type="HRD">
 				<displayName>Horvát dínár</displayName>
-				<displayName alt="proposed-x1001">dinár</displayName>
 			</currency>
 			<currency type="HRK">
 				<displayName>Horvát kuna</displayName>
-				<displayName alt="proposed-x1001">kuna</displayName>
 			</currency>
 			<currency type="HTG">
 				<displayName>Haiti gourde</displayName>
-				<displayName alt="proposed-x1001">gourde</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>Magyar forint</displayName>
-				<displayName alt="proposed-x1001">forint</displayName>
 				<symbol>Ft</symbol>
-				<symbol alt="proposed-x1001">HUF</symbol>
 			</currency>
 			<currency type="IDR">
 				<displayName>Indonéz rúpia</displayName>
-				<displayName alt="proposed-x1001">indonéz rúpia</displayName>
-				<displayName alt="proposed-x1002">Indonéz Rupia</displayName>
 				<symbol>Rp</symbol>
-				<symbol alt="proposed-x1001">IDR</symbol>
 			</currency>
 			<currency type="IEP">
 				<displayName>Ír font</displayName>
-				<displayName alt="proposed-x1001">ír font</displayName>
 				<symbol>IR£</symbol>
-				<symbol alt="proposed-x1001">IEP</symbol>
 			</currency>
 			<currency type="ILP">
 				<displayName>Izraeli font</displayName>
-				<displayName alt="proposed-x1001">izraeli font</displayName>
 			</currency>
 			<currency type="ILS">
 				<displayName>Izraeli új sékel</displayName>
-				<displayName alt="proposed-x1001">új izraeli shekel</displayName>
-				<displayName alt="proposed-x1002">Izraeli Sékel</displayName>
-				<displayName alt="proposed-x1003">izraeli új sékel</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>indiai rúpia</displayName>
-				<displayName alt="proposed-x1001">Indiai Rupia</displayName>
 				<symbol>INR</symbol>
 			</currency>
 			<currency type="IQD">
 				<displayName>Iraki dínár</displayName>
-				<displayName alt="proposed-x1001">iraki dinár</displayName>
 				<symbol>ID</symbol>
-				<symbol alt="proposed-x1001">IQD</symbol>
 			</currency>
 			<currency type="IRR">
 				<displayName>Iráni rial</displayName>
-				<displayName alt="proposed-x1001">iráni rial</displayName>
 				<symbol>RI</symbol>
-				<symbol alt="proposed-x1001">IRR</symbol>
 			</currency>
 			<currency type="ISK">
 				<displayName>Izlandi korona</displayName>
-				<displayName alt="proposed-x1001">izlandi korona</displayName>
 			</currency>
 			<currency type="ITL">
 				<displayName>Olasz líra</displayName>
-				<displayName alt="proposed-x1001">olasz líra</displayName>
 				<symbol>LIT</symbol>
 			</currency>
 			<currency type="JMD">
 				<displayName>Jamaikai dollár</displayName>
-				<displayName alt="proposed-x1001">jamaicai dollár</displayName>
 				<symbol>J$</symbol>
-				<symbol alt="proposed-x1001">JMD</symbol>
 			</currency>
 			<currency type="JOD">
 				<displayName>Jordániai dínár</displayName>
-				<displayName alt="proposed-x1001">jordániai dinár</displayName>
 				<symbol>JD</symbol>
-				<symbol alt="proposed-x1001">JOD</symbol>
 			</currency>
 			<currency type="JPY">
 				<displayName>Japán jen</displayName>
-				<displayName alt="proposed-x1001">jen</displayName>
 				<symbol>JPY</symbol>
 			</currency>
 			<currency type="KES">
 				<displayName>Kenyai shilling</displayName>
-				<displayName alt="proposed-x1001">kenyai shilling</displayName>
 				<symbol>K Sh</symbol>
-				<symbol alt="proposed-x1001">KES</symbol>
 			</currency>
 			<currency type="KGS">
 				<displayName>Kirgizisztáni szom</displayName>
-				<displayName alt="proposed-x1001">kirgizisztáni szom</displayName>
 				<symbol>som</symbol>
-				<symbol alt="proposed-x1001">KGS</symbol>
 			</currency>
 			<currency type="KHR">
 				<displayName>Kambodzsai riel</displayName>
-				<displayName alt="proposed-x1001">riel</displayName>
 				<symbol>CR</symbol>
-				<symbol alt="proposed-x1001">KHR</symbol>
 			</currency>
 			<currency type="KMF">
 				<displayName>Comorei frank</displayName>
-				<displayName alt="proposed-x1001">comorei frank</displayName>
 				<symbol>CF</symbol>
-				<symbol alt="proposed-x1001">KMF</symbol>
 			</currency>
 			<currency type="KPW">
 				<displayName>Észak-koreai won</displayName>
-				<displayName alt="proposed-x1001">észak-koreai won</displayName>
 			</currency>
 			<currency type="KRW">
 				<displayName>Dél-koreai won</displayName>
-				<displayName alt="proposed-x1001">dél-koreai won</displayName>
 			</currency>
 			<currency type="KWD">
 				<displayName>Kuvaiti dínár</displayName>
-				<displayName alt="proposed-x1001">kuvaiti dinár</displayName>
 				<symbol>KD</symbol>
-				<symbol alt="proposed-x1001">KWD</symbol>
 			</currency>
 			<currency type="KYD">
 				<displayName>Kajmán-szigeteki dollár</displayName>
-				<displayName alt="proposed-x1001">kajmán-szigeteki dollár</displayName>
 			</currency>
 			<currency type="KZT">
 				<displayName>Kazahsztáni tenge</displayName>
-				<displayName alt="proposed-x1001">tenge</displayName>
 				<symbol>T</symbol>
-				<symbol alt="proposed-x1001">KZT</symbol>
 			</currency>
 			<currency type="LAK">
 				<displayName>Laoszi kip</displayName>
-				<displayName alt="proposed-x1001">kip</displayName>
 			</currency>
 			<currency type="LBP">
 				<displayName>Libanoni font</displayName>
-				<displayName alt="proposed-x1001">libanoni font</displayName>
 				<symbol>LL</symbol>
-				<symbol alt="proposed-x1001">LBP</symbol>
 			</currency>
 			<currency type="LKR">
 				<displayName>Sri Lankai rúpia</displayName>
-				<displayName alt="proposed-x1001">srí lankai rúpia</displayName>
 				<symbol>SL Re</symbol>
-				<symbol alt="proposed-x1001">LKR</symbol>
 			</currency>
 			<currency type="LRD">
 				<displayName>Libériai dollár</displayName>
-				<displayName alt="proposed-x1001">libériai dollár</displayName>
 			</currency>
 			<currency type="LSL">
 				<displayName>Lesothoi loti</displayName>
-				<displayName alt="proposed-x1001">loti</displayName>
 				<symbol>M</symbol>
-				<symbol alt="proposed-x1001">LSL</symbol>
 			</currency>
 			<currency type="LSM">
 				<displayName>maloti</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>Litvániai litas</displayName>
-				<displayName alt="proposed-x1001">litas</displayName>
-				<displayName alt="proposed-x1002">Litván Litas</displayName>
 			</currency>
 			<currency type="LTT">
 				<displayName>Litvániai talonas</displayName>
-				<displayName alt="proposed-x1001">talonas</displayName>
 			</currency>
 			<currency type="LUC">
 				<displayName>luxemburgi konvertibilis frank</displayName>
 			</currency>
 			<currency type="LUF">
 				<displayName>Luxemburgi frank</displayName>
-				<displayName alt="proposed-x1001">luxemburgi frank</displayName>
 			</currency>
 			<currency type="LUL">
 				<displayName>luxemburgi pénzügyi frank</displayName>
 			</currency>
 			<currency type="LVL">
 				<displayName>Lett lats</displayName>
-				<displayName alt="proposed-x1001">lats</displayName>
 			</currency>
 			<currency type="LVR">
 				<displayName>Lett rubel</displayName>
-				<displayName alt="proposed-x1001">rubel</displayName>
 			</currency>
 			<currency type="LYD">
 				<displayName>Líbiai dínár</displayName>
-				<displayName alt="proposed-x1001">líbiai dinár</displayName>
 				<symbol>LD</symbol>
-				<symbol alt="proposed-x1001">LYD</symbol>
 			</currency>
 			<currency type="MAD">
 				<displayName>Marokkói dirham</displayName>
-				<displayName alt="proposed-x1001">Marokkói Dínár</displayName>
-				<displayName alt="proposed-x1002">marokkói dirham</displayName>
 			</currency>
 			<currency type="MAF">
 				<displayName>Marokkói frank</displayName>
-				<displayName alt="proposed-x1001">marokkói frank</displayName>
 			</currency>
 			<currency type="MDL">
 				<displayName>Moldován lei</displayName>
-				<displayName alt="proposed-x1001">moldován lei</displayName>
 			</currency>
 			<currency type="MGA">
 				<displayName>Madagaszkári ariary</displayName>
-				<displayName alt="proposed-x1001">madagaszkári ariary</displayName>
 			</currency>
 			<currency type="MGF">
 				<displayName>Madagaszkári frank</displayName>
-				<displayName alt="proposed-x1001">madagaszkári frank</displayName>
 			</currency>
 			<currency type="MKD">
 				<displayName>Macedon dínár</displayName>
-				<displayName alt="proposed-x1001">macedóniai dinár</displayName>
 				<symbol>MDen</symbol>
-				<symbol alt="proposed-x1001">MKD</symbol>
 			</currency>
 			<currency type="MLF">
 				<displayName>Mali frank</displayName>
-				<displayName alt="proposed-x1001">mali frank</displayName>
 			</currency>
 			<currency type="MMK">
 				<displayName>Mianmari kyat</displayName>
 			</currency>
 			<currency type="MNT">
 				<displayName>Mongóliai tugrik</displayName>
-				<displayName alt="proposed-x1001">tugrik</displayName>
-				<displayName alt="proposed-x1002">mongol tugrik</displayName>
 				<symbol>Tug</symbol>
-				<symbol alt="proposed-x1001">MNT</symbol>
 			</currency>
 			<currency type="MOP">
 				<displayName>makaói pataca</displayName>
-				<displayName alt="proposed-x1001">Macaoi pataca</displayName>
 			</currency>
 			<currency type="MRO">
 				<displayName>Mauritániai ouguiya</displayName>
-				<displayName alt="proposed-x1001">ouguiya</displayName>
 				<symbol>UM</symbol>
-				<symbol alt="proposed-x1001">MRO</symbol>
 			</currency>
 			<currency type="MTL">
 				<displayName>Máltai líra</displayName>
-				<displayName alt="proposed-x1001">máltai líra</displayName>
 				<symbol>Lm</symbol>
-				<symbol alt="proposed-x1001">MTL</symbol>
 			</currency>
 			<currency type="MTP">
 				<displayName>Máltai font</displayName>
-				<displayName alt="proposed-x1001">máltai font</displayName>
 			</currency>
 			<currency type="MUR">
 				<displayName>Mauritiusi rúpia</displayName>
-				<displayName alt="proposed-x1001">mauritiusi rúpia</displayName>
 			</currency>
 			<currency type="MVR">
 				<displayName>Maldív-szigeteki rufiyaa</displayName>
-				<displayName alt="proposed-x1001">rufiyaa</displayName>
 			</currency>
 			<currency type="MWK">
 				<displayName>Malawi kwacha</displayName>
-				<displayName alt="proposed-x1001">malawi kwacha</displayName>
 				<symbol>MK</symbol>
-				<symbol alt="proposed-x1001">MWK</symbol>
 			</currency>
 			<currency type="MXN">
 				<displayName>Mexikói peso</displayName>
-				<displayName alt="proposed-x1001">Mexikói Pesó</displayName>
-				<displayName alt="proposed-x1002">mexikói peso</displayName>
 				<symbol>MEX$</symbol>
-				<symbol alt="proposed-x1001">MXN</symbol>
 			</currency>
 			<currency type="MXP">
 				<displayName>Mexikói ezüst peso (1861-1992)</displayName>
-				<displayName alt="proposed-x1001">mexikói ezüst peso (1861-1992)</displayName>
 			</currency>
 			<currency type="MXV">
 				<displayName>Mexikói Unidad de Inversion (UDI)</displayName>
-				<displayName alt="proposed-x1001">mexikói unidad de inversion (UDI)</displayName>
 			</currency>
 			<currency type="MYR">
 				<displayName>Malajziai ringgit</displayName>
-				<displayName alt="proposed-x1001">Maláj Ringgit</displayName>
-				<displayName alt="proposed-x1002">ringgit</displayName>
 				<symbol>RM</symbol>
-				<symbol alt="proposed-x1001">MYR</symbol>
 			</currency>
 			<currency type="MZE">
 				<displayName>Mozambik escudo</displayName>
-				<displayName alt="proposed-x1001">escudo</displayName>
 			</currency>
 			<currency type="MZM">
 				<displayName>Mozambik metical</displayName>
-				<displayName alt="proposed-x1001">metical</displayName>
 				<symbol>Mt</symbol>
-				<symbol alt="proposed-x1001">MZM</symbol>
 			</currency>
 			<currency type="MZN">
 				<displayName>Mozambiki metikális</displayName>
 			</currency>
 			<currency type="NAD">
 				<displayName>Namíbiai dollár</displayName>
-				<displayName alt="proposed-x1001">namíbiai dollár</displayName>
 				<symbol>N$</symbol>
-				<symbol alt="proposed-x1001">NAD</symbol>
 			</currency>
 			<currency type="NGN">
 				<displayName>Nigériai naira</displayName>
-				<displayName alt="proposed-x1001">naira</displayName>
 			</currency>
 			<currency type="NIC">
 				<displayName>Nikaraguai cordoba</displayName>
 			</currency>
 			<currency type="NIO">
 				<displayName>Nikaraguai cordoba oro</displayName>
-				<displayName alt="proposed-x1001">arany cordoba</displayName>
 			</currency>
 			<currency type="NLG">
 				<displayName>Holland forint</displayName>
-				<displayName alt="proposed-x1001">holland gulden</displayName>
 			</currency>
 			<currency type="NOK">
 				<displayName>Norvég korona</displayName>
-				<displayName alt="proposed-x1001">norvég korona</displayName>
 				<symbol>NKr</symbol>
-				<symbol alt="proposed-x1001">NOK</symbol>
 			</currency>
 			<currency type="NPR">
 				<displayName>Nepáli rúpia</displayName>
-				<displayName alt="proposed-x1001">nepáli rúpia</displayName>
 				<symbol>Nrs</symbol>
-				<symbol alt="proposed-x1001">NPR</symbol>
 			</currency>
 			<currency type="NZD">
 				<displayName>Új-zélandi dollár</displayName>
-				<displayName alt="proposed-x1001">új-zélandi dollár</displayName>
 				<symbol>$NZ</symbol>
-				<symbol alt="proposed-x1001">NZD</symbol>
 			</currency>
 			<currency type="OMR">
 				<displayName>Ománi rial</displayName>
-				<displayName alt="proposed-x1001">ománi rial</displayName>
 				<symbol>RO</symbol>
-				<symbol alt="proposed-x1001">OMR</symbol>
 			</currency>
 			<currency type="PAB">
 				<displayName>Panamai balboa</displayName>
-				<displayName alt="proposed-x1001">panamai balboa</displayName>
-				<displayName alt="proposed-x1002">balboa</displayName>
 			</currency>
 			<currency type="PEI">
 				<displayName>Perui inti</displayName>
-				<displayName alt="proposed-x1001">inti</displayName>
 			</currency>
 			<currency type="PEN">
 				<displayName>Perui sol nuevo</displayName>
-				<displayName alt="proposed-x1001">Perui Új Sol</displayName>
-				<displayName alt="proposed-x1002">nuevo sol</displayName>
 			</currency>
 			<currency type="PES">
 				<displayName>Perui sol</displayName>
-				<displayName alt="proposed-x1001">sol</displayName>
 			</currency>
 			<currency type="PGK">
 				<displayName>Pápua új-guineai kina</displayName>
-				<displayName alt="proposed-x1001">kina</displayName>
 			</currency>
 			<currency type="PHP">
 				<displayName>Fülöp-szigeteki peso</displayName>
-				<displayName alt="proposed-x1001">fülöp-szigeteki peso</displayName>
 			</currency>
 			<currency type="PKR">
 				<displayName>Pakisztáni rúpia</displayName>
-				<displayName alt="proposed-x1001">Pakisztáni Rupia</displayName>
-				<displayName alt="proposed-x1002">pakisztáni rúpia</displayName>
 				<symbol>Pra</symbol>
-				<symbol alt="proposed-x1001">PKR</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>Lengyel zloty</displayName>
-				<displayName alt="proposed-x1001">złoty</displayName>
-				<displayName alt="proposed-x1002">Lengyel Új Zloty</displayName>
 				<symbol>Zl</symbol>
-				<symbol alt="proposed-x1001">PLN</symbol>
 			</currency>
 			<currency type="PLZ">
 				<displayName>Lengyel zloty (1950-1995)</displayName>
-				<displayName alt="proposed-x1001">złoty (1950-1995)</displayName>
 			</currency>
 			<currency type="PTE">
 				<displayName>Portugál escudo</displayName>
-				<displayName alt="proposed-x1001">portugál escudo</displayName>
 			</currency>
 			<currency type="PYG">
 				<displayName>Paraguayi guarani</displayName>
-				<displayName alt="proposed-x1001">guarani</displayName>
 			</currency>
 			<currency type="QAR">
 				<displayName>Katari rial</displayName>
-				<displayName alt="proposed-x1001">katari rial</displayName>
 				<symbol>QR</symbol>
-				<symbol alt="proposed-x1001">QAR</symbol>
 			</currency>
 			<currency type="RHD">
 				<displayName>rhodéziai dollár</displayName>
 			</currency>
 			<currency type="ROL">
 				<displayName>Román lej</displayName>
-				<displayName alt="proposed-x1001">lej</displayName>
 				<symbol>leu</symbol>
-				<symbol alt="proposed-x1001">ROL</symbol>
 			</currency>
 			<currency type="RON">
 				<displayName>Román leu</displayName>
-				<displayName alt="proposed-x1001">Új román lej</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Szerb Dínár</displayName>
 			</currency>
 			<currency type="RUB">
 				<displayName>Orosz rubel</displayName>
-				<displayName alt="proposed-x1001">orosz rubel</displayName>
 			</currency>
 			<currency type="RUR">
 				<displayName>Orosz rubel (1991-1998)</displayName>
-				<displayName alt="proposed-x1001">orosz rubel (1991-1998)</displayName>
 			</currency>
 			<currency type="RWF">
 				<displayName>Ruandai frank</displayName>
-				<displayName alt="proposed-x1001">ruandai frank</displayName>
 			</currency>
 			<currency type="SAR">
 				<displayName>Szaúdi riyal</displayName>
-				<displayName alt="proposed-x1001">Szaudi Riál</displayName>
-				<displayName alt="proposed-x1002">szaúdi riyal</displayName>
 				<symbol>SRl</symbol>
-				<symbol alt="proposed-x1001">SAR</symbol>
 			</currency>
 			<currency type="SBD">
 				<displayName>Salamon-szigeteki dollár</displayName>
-				<displayName alt="proposed-x1001">salamon-szigeteki dollár</displayName>
 				<symbol>SI$</symbol>
-				<symbol alt="proposed-x1001">SBD</symbol>
 			</currency>
 			<currency type="SCR">
 				<displayName>Seychelle-szigeteki rúpia</displayName>
-				<displayName alt="proposed-x1001">seychelle-i rúpia</displayName>
 				<symbol>SR</symbol>
-				<symbol alt="proposed-x1001">SCR</symbol>
 			</currency>
 			<currency type="SDD">
 				<displayName>Szudáni dínár</displayName>
-				<displayName alt="proposed-x1001">szudáni dinár</displayName>
 			</currency>
 			<currency type="SDP">
 				<displayName>Szudáni font</displayName>
-				<displayName alt="proposed-x1001">szudáni font</displayName>
 			</currency>
 			<currency type="SEK">
 				<displayName>Svéd korona</displayName>
-				<displayName alt="proposed-x1001">svéd korona</displayName>
 				<symbol>SKr</symbol>
-				<symbol alt="proposed-x1001">SEK</symbol>
 			</currency>
 			<currency type="SGD">
 				<displayName>Szingapúri dollár</displayName>
-				<displayName alt="proposed-x1001">szingapúri dollár</displayName>
 				<symbol>S$</symbol>
-				<symbol alt="proposed-x1001">SGD</symbol>
 			</currency>
 			<currency type="SHP">
 				<displayName>Saint Helena font</displayName>
-				<displayName alt="proposed-x1001">saint helena font</displayName>
 			</currency>
 			<currency type="SIT">
 				<displayName>Szlovén tolar</displayName>
-				<displayName alt="proposed-x1001">tolar</displayName>
-				<displayName alt="proposed-x1002">Szlovén Tolár</displayName>
 			</currency>
 			<currency type="SKK">
 				<displayName>Szlovák korona</displayName>
-				<displayName alt="proposed-x1001">szlovák korona</displayName>
 				<symbol>Sk</symbol>
-				<symbol alt="proposed-x1001">SKK</symbol>
 			</currency>
 			<currency type="SLL">
 				<displayName>Sierra Leonei leone</displayName>
-				<displayName alt="proposed-x1001">leone</displayName>
 			</currency>
 			<currency type="SOS">
 				<displayName>Szomáli shilling</displayName>
-				<displayName alt="proposed-x1001">szomáli shilling</displayName>
 				<symbol>So. Sh.</symbol>
-				<symbol alt="proposed-x1001">SOS</symbol>
 			</currency>
 			<currency type="SRG">
 				<displayName>Suriname-i gulden</displayName>
-				<displayName alt="proposed-x1001">suriname-i guilder</displayName>
 				<symbol>Sf</symbol>
-				<symbol alt="proposed-x1001">SRG</symbol>
 			</currency>
 			<currency type="STD">
 				<displayName>Sao tome-i és principe-i dobra</displayName>
-				<displayName alt="proposed-x1001">dobra</displayName>
 				<symbol>Db</symbol>
-				<symbol alt="proposed-x1001">STD</symbol>
 			</currency>
 			<currency type="SUR">
 				<displayName>Szovjet rubel</displayName>
-				<displayName alt="proposed-x1001">szovjet rubel</displayName>
 			</currency>
 			<currency type="SVC">
 				<displayName>Salvadori colón</displayName>
-				<displayName alt="proposed-x1001">salvadori colon</displayName>
 			</currency>
 			<currency type="SYP">
 				<displayName>Szíriai font</displayName>
-				<displayName alt="proposed-x1001">szíriai font</displayName>
 				<symbol>LS</symbol>
-				<symbol alt="proposed-x1001">SYP</symbol>
 			</currency>
 			<currency type="SZL">
 				<displayName>Szváziföldi lilangeni</displayName>
-				<displayName alt="proposed-x1001">lilangeni</displayName>
 				<symbol>E</symbol>
-				<symbol alt="proposed-x1001">SZL</symbol>
 			</currency>
 			<currency type="THB">
 				<displayName>Thai baht</displayName>
-				<displayName alt="proposed-x1001">Tháj Baht</displayName>
-				<displayName alt="proposed-x1002">baht</displayName>
 			</currency>
 			<currency type="TJR">
 				<displayName>Tádzsikisztáni rubel</displayName>
-				<displayName alt="proposed-x1001">tádzsik rubel</displayName>
 			</currency>
 			<currency type="TJS">
 				<displayName>Tádzsikisztáni somoni</displayName>
-				<displayName alt="proposed-x1001">somoni</displayName>
 			</currency>
 			<currency type="TMM">
 				<displayName>Türkmenisztáni manat</displayName>
-				<displayName alt="proposed-x1001">türkmén manat</displayName>
 			</currency>
 			<currency type="TND">
 				<displayName>Tunéziai dínár</displayName>
-				<displayName alt="proposed-x1001">tunéziai dinár</displayName>
 			</currency>
 			<currency type="TOP">
 				<displayName>pa'anga</displayName>
 			</currency>
 			<currency type="TPE">
 				<displayName>Timori escudo</displayName>
-				<displayName alt="proposed-x1001">timori escudo</displayName>
 			</currency>
 			<currency type="TRL">
 				<displayName>Török líra</displayName>
-				<displayName alt="proposed-x1001">török líra</displayName>
 				<symbol>TL</symbol>
-				<symbol alt="proposed-x1001">TRL</symbol>
 			</currency>
 			<currency type="TRY">
 				<displayName>új török líra</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>Trinidad és tobagoi dollár</displayName>
-				<displayName alt="proposed-x1001">trinidad-tobagói dollár</displayName>
 				<symbol>TT$</symbol>
-				<symbol alt="proposed-x1001">TTD</symbol>
 			</currency>
 			<currency type="TWD">
 				<displayName>Tajvani új dollár</displayName>
-				<displayName alt="proposed-x1001">Új Tajvani Dollár</displayName>
-				<displayName alt="proposed-x1002">új tajvani dollár</displayName>
 				<symbol>NT$</symbol>
-				<symbol alt="proposed-x1001">TWD</symbol>
 			</currency>
 			<currency type="TZS">
 				<displayName>Tanzániai shilling</displayName>
-				<displayName alt="proposed-x1001">tanzániai shilling</displayName>
 				<symbol>T Sh</symbol>
-				<symbol alt="proposed-x1001">TZS</symbol>
 			</currency>
 			<currency type="UAH">
 				<displayName>Ukrán hrivnya</displayName>
-				<displayName alt="proposed-x1001">ukrán hrivnya</displayName>
-				<displayName alt="proposed-x1002">hrivnya</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>Ukrán karbovanec</displayName>
-				<displayName alt="proposed-x1001">ukrán karbovanec</displayName>
-				<displayName alt="proposed-x1002">karbovanec</displayName>
 			</currency>
 			<currency type="UGS">
 				<displayName>Ugandai shilling (1966-1987)</displayName>
-				<displayName alt="proposed-x1001">ugandai shilling (1966-1987)</displayName>
 			</currency>
 			<currency type="UGX">
 				<displayName>Ugandai shilling</displayName>
-				<displayName alt="proposed-x1001">ugandai shilling</displayName>
 				<symbol>U Sh</symbol>
-				<symbol alt="proposed-x1001">UGX</symbol>
 			</currency>
 			<currency type="USD">
 				<displayName>USA dollár</displayName>
@@ -4796,39 +4231,27 @@
 			</currency>
 			<currency type="UYP">
 				<displayName>Uruguay-i peso (1975-1993)</displayName>
-				<displayName alt="proposed-x1001">uruguayi peso (1975-1993)</displayName>
 			</currency>
 			<currency type="UYU">
 				<displayName>Uruguay-i peso uruguayo</displayName>
-				<displayName alt="proposed-x1001">uruguayi peso</displayName>
 				<symbol>Ur$</symbol>
-				<symbol alt="proposed-x1001">UYU</symbol>
 			</currency>
 			<currency type="UZS">
 				<displayName>Üzbegisztáni szum</displayName>
-				<displayName alt="proposed-x1001">üzbegisztáni szum</displayName>
 			</currency>
 			<currency type="VEB">
 				<displayName>Venezuelai bolívar</displayName>
-				<displayName alt="proposed-x1001">Venezuelai Bolivár</displayName>
-				<displayName alt="proposed-x1002">bolivar</displayName>
 				<symbol>Be</symbol>
-				<symbol alt="proposed-x1001">VEB</symbol>
 			</currency>
 			<currency type="VND">
 				<displayName>Vietnámi dong</displayName>
-				<displayName alt="proposed-x1001">Vietnami dong</displayName>
-				<displayName alt="proposed-x1002">dong</displayName>
 			</currency>
 			<currency type="VUV">
 				<displayName>Vanuatui vatu</displayName>
-				<displayName alt="proposed-x1001">vatu</displayName>
 				<symbol>VT</symbol>
-				<symbol alt="proposed-x1001">VUV</symbol>
 			</currency>
 			<currency type="WST">
 				<displayName>Nyugat-szamoai tala</displayName>
-				<displayName alt="proposed-x1001">tala</displayName>
 			</currency>
 			<currency type="XAF">
 				<displayName>CFA frank BEAC</displayName>
@@ -4841,40 +4264,31 @@
 			</currency>
 			<currency type="XBA">
 				<displayName>European Composite Unit</displayName>
-				<displayName alt="proposed-x1001">Európai Kompozit Egység</displayName>
 			</currency>
 			<currency type="XBB">
 				<displayName>European Monetary Unit</displayName>
-				<displayName alt="proposed-x1001">Európai Monetáris Egység</displayName>
 			</currency>
 			<currency type="XBC">
 				<displayName>European Unit of Account (XBC)</displayName>
-				<displayName alt="proposed-x1001">Európai Számla Egység (XBC)</displayName>
 			</currency>
 			<currency type="XBD">
 				<displayName>European Unit of Account (XBD)</displayName>
-				<displayName alt="proposed-x1001">Európai Számla Egység (XBD)</displayName>
 			</currency>
 			<currency type="XCD">
 				<displayName>Kelet-karibi dollár</displayName>
-				<displayName alt="proposed-x1001">kelet-karibi dollár</displayName>
 				<symbol>EC$</symbol>
-				<symbol alt="proposed-x1001">XCD</symbol>
 			</currency>
 			<currency type="XDR">
 				<displayName>Special Drawing Rights</displayName>
 			</currency>
 			<currency type="XEU">
 				<displayName>európai pénznemegység</displayName>
-				<displayName alt="proposed-x1001">European Currency Unit</displayName>
 			</currency>
 			<currency type="XFO">
 				<displayName>Francia arany frank</displayName>
-				<displayName alt="proposed-x1001">francia aranyfrank</displayName>
 			</currency>
 			<currency type="XFU">
 				<displayName>Francia UIC-frank</displayName>
-				<displayName alt="proposed-x1001">francia UIC-frank</displayName>
 			</currency>
 			<currency type="XOF">
 				<displayName>CFA frank BCEAO</displayName>
@@ -4891,9 +4305,6 @@
 			</currency>
 			<currency type="XRE">
 				<displayName>RINET tőke</displayName>
-				<displayName alt="proposed-x1001">RINET fedezet</displayName>
-				<displayName alt="proposed-x1002">RINET pénzalap</displayName>
-				<displayName alt="proposed-x1003">RINET pénzkészlet</displayName>
 			</currency>
 			<currency type="XTS">
 				<displayName>tesztelési pénznemkód</displayName>
@@ -4903,52 +4314,39 @@
 			</currency>
 			<currency type="YDD">
 				<displayName>Jemeni dínár</displayName>
-				<displayName alt="proposed-x1001">jemeni dinár</displayName>
 			</currency>
 			<currency type="YER">
 				<displayName>Jemeni rial</displayName>
-				<displayName alt="proposed-x1001">jemeni rial</displayName>
 				<symbol>YRl</symbol>
-				<symbol alt="proposed-x1001">YER</symbol>
 			</currency>
 			<currency type="YUD">
 				<displayName>Jugoszláv kemény dínár</displayName>
-				<displayName alt="proposed-x1001">jugoszláv dinár</displayName>
 			</currency>
 			<currency type="YUM">
 				<displayName>Jugoszláv új dínár</displayName>
-				<displayName alt="proposed-x1001">új jugoszláv dinár</displayName>
 			</currency>
 			<currency type="YUN">
 				<displayName>Jugoszláv konvertibilis dínár</displayName>
-				<displayName alt="proposed-x1001">konvertibilis jugoszláv dinár</displayName>
 			</currency>
 			<currency type="ZAL">
 				<displayName>Dél-afrikai rand (pénzügyi)</displayName>
 			</currency>
 			<currency type="ZAR">
 				<displayName>Dél-afrikai rand</displayName>
-				<displayName alt="proposed-x1001">rand</displayName>
 				<symbol>R</symbol>
-				<symbol alt="proposed-x1001">ZAR</symbol>
 			</currency>
 			<currency type="ZMK">
 				<displayName>Zambiai kwacha</displayName>
-				<displayName alt="proposed-x1001">zambiai kwacha</displayName>
 			</currency>
 			<currency type="ZRN">
 				<displayName>Zairei új zaire</displayName>
-				<displayName alt="proposed-x1001">zairei új zaire</displayName>
 			</currency>
 			<currency type="ZRZ">
 				<displayName>Zairei zaire</displayName>
-				<displayName alt="proposed-x1001">zairei zaire</displayName>
 			</currency>
 			<currency type="ZWD">
 				<displayName>Zimbabwei dollár</displayName>
-				<displayName alt="proposed-x1001">zimbabwei dollár</displayName>
 				<symbol>Z$</symbol>
-				<symbol alt="proposed-x1001">ZWD</symbol>
 			</currency>
 		</currencies>
 	</numbers>

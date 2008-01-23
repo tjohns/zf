@@ -194,7 +194,6 @@
 			<currency type="GHC">
 				<displayName>Sidi</displayName>
 				<symbol>¢</symbol>
-				<symbol alt="variant">₵</symbol>
 			</currency>
 		</currencies>
 	</numbers>

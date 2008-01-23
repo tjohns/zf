@@ -14,15 +14,12 @@
 			<language type="am">amharščina</language>
 			<language type="ar">arabščina</language>
 			<language type="as">asamščina</language>
-			<language type="as" alt="proposed-x1001">asamski</language>
 			<language type="ay">ajmara</language>
-			<language type="ay" alt="proposed-x1001">ajmarščina</language>
 			<language type="az">azerbajdžanščina</language>
 			<language type="ba">baškirščina</language>
 			<language type="be">beloruščina</language>
 			<language type="bg">bolgarščina</language>
 			<language type="bh">bihari</language>
-			<language type="bh" alt="proposed-x1001">biharščina</language>
 			<language type="bn">bengalščina</language>
 			<language type="br">bretonščina</language>
 			<language type="bs">bosanščina</language>
@@ -46,15 +43,12 @@
 			<language type="fr">francoščina</language>
 			<language type="fy">frizijščina</language>
 			<language type="ga">irščina</language>
-			<language type="ga" alt="proposed-x1001">ga</language>
 			<language type="gd">škotska galščina</language>
 			<language type="gl">galicijščina</language>
 			<language type="gn">gvaranijščina</language>
 			<language type="gu">gudžarati</language>
-			<language type="gu" alt="proposed-x1001">gudžaratščina</language>
 			<language type="he">hebrejščina</language>
 			<language type="hi">hindijščina</language>
-			<language type="hi" alt="proposed-x1001">hindujščina</language>
 			<language type="hr">hrvaščina</language>
 			<language type="hu">madžarščina</language>
 			<language type="hy">armenščina</language>
@@ -78,7 +72,6 @@
 			<language type="lo">laoščina</language>
 			<language type="lt">litovščina</language>
 			<language type="lv">letonščina</language>
-			<language type="lv" alt="proposed-x1001">latvijščina</language>
 			<language type="mk">makedonščina</language>
 			<language type="ml">malajalamščina</language>
 			<language type="mn">mongolščina</language>
@@ -89,7 +82,6 @@
 			<language type="ne">nepalščina</language>
 			<language type="nl">nizozemščina</language>
 			<language type="nn">novonorveščina</language>
-			<language type="nn" alt="proposed-x1001">norveščina</language>
 			<language type="no">norveščina</language>
 			<language type="oc">okcitanščina</language>
 			<language type="or">orijščina</language>
@@ -98,7 +90,6 @@
 			<language type="ps">paštu</language>
 			<language type="pt">portugalščina</language>
 			<language type="pt_PT">iberska portugalščina</language>
-			<language type="pt_PT" alt="proposed-x1001">portugalščina</language>
 			<language type="rm">reto-romanščina</language>
 			<language type="ro">romunščina</language>
 			<language type="ru">ruščina</language>
@@ -125,30 +116,22 @@
 			<language type="tr">turščina</language>
 			<language type="tw">tvi (dialekt jezika akan)</language>
 			<language type="ug">ujgurščina</language>
-			<language type="ug" alt="proposed-x1001">uighurščina</language>
 			<language type="uk">ukrajinščina</language>
 			<language type="und">Neznan ali neveljaven jezik</language>
-			<language type="und" alt="proposed-x1001">Meznan ali neveljaven jezik</language>
 			<language type="ur">urdu</language>
-			<language type="ur" alt="proposed-x1001">urdujščina</language>
 			<language type="uz">uzbekistanščina</language>
 			<language type="vi">vietnamščina</language>
 			<language type="wo">volofščina</language>
-			<language type="wo" alt="proposed-x1001">wolof</language>
 			<language type="xh">xhosa</language>
 			<language type="yi">jidiš</language>
 			<language type="zh">kitajščina</language>
 			<language type="zh_Hans">poenostavljena kitajščina</language>
-			<language type="zh_Hans" alt="proposed-x1001">kitajščina (poenostavljena)</language>
 			<language type="zh_Hant">tradicionalna kitajščina</language>
-			<language type="zh_Hant" alt="proposed-x1001">kitajščina (tradicionalna)</language>
 			<language type="zu">zulujščina</language>
 		</languages>
 		<scripts>
 			<script type="Arab">arabski</script>
-			<script type="Arab" alt="proposed-x1001">Arabski</script>
 			<script type="Armn">armenski</script>
-			<script type="Armn" alt="proposed-x1001">Armenski</script>
 			<script type="Beng">bengalski</script>
 			<script type="Brai">Braillova pisava</script>
 			<script type="Cyrl">cirilica</script>
@@ -159,9 +142,7 @@
 			<script type="Latn">Latinski</script>
 			<script type="Xpeo">stara perzijščina</script>
 			<script type="Zxxx">Nenapisano</script>
-			<script type="Zxxx" alt="proposed-x1001">Zxxx</script>
 			<script type="Zzzz">Neznan ali neveljaven zapis</script>
-			<script type="Zzzz" alt="proposed-x1001">Neznan ali neveljaven skript</script>
 		</scripts>
 		<territories>
 			<territory type="001">Svet</territory>
@@ -170,12 +151,10 @@
 			<territory type="009">Oceanija</territory>
 			<territory type="011">Zahodna Afrika</territory>
 			<territory type="013">Centralna Amerika</territory>
-			<territory type="013" alt="proposed-x1001">Srednja Amerika</territory>
 			<territory type="014">Vzhodna Afrika</territory>
 			<territory type="015">Severna Afrika</territory>
 			<territory type="017">Centralna Afrika</territory>
 			<territory type="018">Južna Afrika [018]</territory>
-			<territory type="018" alt="proposed-x1001">Južna Afrika</territory>
 			<territory type="019">Amerike</territory>
 			<territory type="021">Severna Amerika</territory>
 			<territory type="029">Karibi</territory>
@@ -184,7 +163,6 @@
 			<territory type="035">Jugovzhodna Azija</territory>
 			<territory type="039">Južna Evropa</territory>
 			<territory type="053">Avstralija i Nova Zelandija</territory>
-			<territory type="053" alt="proposed-x1001">Avstralija in Nova Zelandija</territory>
 			<territory type="054">Melanezija</territory>
 			<territory type="057">Micronezija</territory>
 			<territory type="061">Polinezija</territory>
@@ -196,7 +174,6 @@
 			<territory type="151">Vzhodna Evropa</territory>
 			<territory type="154">Severna Evropa</territory>
 			<territory type="155">Zapadna Evropa</territory>
-			<territory type="155" alt="proposed-x1001">Zahodna Evropa</territory>
 			<territory type="172">Skupnost neodvisnih držav</territory>
 			<territory type="419">Latinska Amerika in Karibsko otočje</territory>
 			<territory type="830">Kanalski otoki</territory>
@@ -204,7 +181,6 @@
 			<territory type="AE">Združeni arabski emirati</territory>
 			<territory type="AF">Afganistan</territory>
 			<territory type="AG">Antigva in Barbuda</territory>
-			<territory type="AG" alt="proposed-x1001">Antigua in Barbuda</territory>
 			<territory type="AI">Angvila</territory>
 			<territory type="AL">Albanija</territory>
 			<territory type="AM">Armenija</territory>
@@ -217,7 +193,6 @@
 			<territory type="AU">Avstralija</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Alandski otoki</territory>
-			<territory type="AX" alt="proposed-x1001">Otočje Aland</territory>
 			<territory type="AZ">Azerbajdžan</territory>
 			<territory type="BA">Bosna in Hercegovina</territory>
 			<territory type="BB">Barbados</territory>
@@ -229,23 +204,19 @@
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benin</territory>
 			<territory type="BM">Bermuda</territory>
-			<territory type="BM" alt="proposed-x1001">Bermudi</territory>
 			<territory type="BN">Brunej</territory>
 			<territory type="BO">Bolivija</territory>
 			<territory type="BR">Brazilija</territory>
 			<territory type="BS">Bahami</territory>
 			<territory type="BT">Butan</territory>
 			<territory type="BV">Otok Bouvet</territory>
-			<territory type="BV" alt="proposed-x1001">Bouvetov otok</territory>
 			<territory type="BW">Bocvana</territory>
 			<territory type="BY">Belorusija</territory>
 			<territory type="BZ">Belize</territory>
 			<territory type="CA">Kanada</territory>
 			<territory type="CC">Kokosovi otoki</territory>
 			<territory type="CD">Demokratična republika Kongo</territory>
-			<territory type="CD" alt="proposed-x1001">Kongo, demokratična republika</territory>
 			<territory type="CF">Centralnoafriška republika</territory>
-			<territory type="CF" alt="proposed-x1001">Srednjeafriška republika</territory>
 			<territory type="CG">Kongo</territory>
 			<territory type="CH">Švica</territory>
 			<territory type="CI">Slonokoščena obala</territory>
@@ -261,7 +232,6 @@
 			<territory type="CX">Božični otok</territory>
 			<territory type="CY">Ciper</territory>
 			<territory type="CZ">Češka</territory>
-			<territory type="CZ" alt="proposed-x1001">Češka republika</territory>
 			<territory type="DE">Nemčija</territory>
 			<territory type="DJ">Džibuti</territory>
 			<territory type="DK">Danska</territory>
@@ -278,15 +248,11 @@
 			<territory type="FI">Finska</territory>
 			<territory type="FJ">Fidži</territory>
 			<territory type="FK">Falklandski (Malvinski) otoki</territory>
-			<territory type="FK" alt="proposed-x1001">Falklandsko otočje</territory>
 			<territory type="FM">Mikronezija</territory>
 			<territory type="FO">Fererski otoki</territory>
-			<territory type="FO" alt="proposed-x1001">Ferski otoki</territory>
-			<territory type="FO" alt="proposed-x1002">Fersko otočje</territory>
 			<territory type="FR">Francija</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Velika Britanija</territory>
-			<territory type="GB" alt="proposed-x1001">Združeno kraljestvo (V. Britanija in S. Irska)</territory>
 			<territory type="GD">Grenada</territory>
 			<territory type="GE">Gruzija</territory>
 			<territory type="GF">Francoska Gvajana</territory>
@@ -300,15 +266,12 @@
 			<territory type="GQ">Ekvatorialna Gvineja</territory>
 			<territory type="GR">Grčija</territory>
 			<territory type="GS">Južna Georgija in Južni Sandwich Islands</territory>
-			<territory type="GS" alt="proposed-x1001">J. Georgija in otoki J. Sandwich</territory>
-			<territory type="GS" alt="proposed-x1002">Južna Georgija in Južni Sandwichevi otoki</territory>
 			<territory type="GT">Gvatemala</territory>
 			<territory type="GU">Guam</territory>
 			<territory type="GW">Gvineja Bissau</territory>
 			<territory type="GY">Gvajana</territory>
 			<territory type="HK">Hong Kong S.A.R. Kitajske</territory>
 			<territory type="HM">Heardov otok in McDonaldovi otoki</territory>
-			<territory type="HM" alt="proposed-x1001">Otoka Heard in Mc Donald</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Hrvaška</territory>
 			<territory type="HT">Haiti</territory>
@@ -317,11 +280,8 @@
 			<territory type="IE">Irska</territory>
 			<territory type="IL">Izrael</territory>
 			<territory type="IM">Otok Man</territory>
-			<territory type="IM" alt="proposed-x1001">Isle of Man</territory>
 			<territory type="IN">Indija</territory>
 			<territory type="IO">Britanska Indija</territory>
-			<territory type="IO" alt="proposed-x1001">Britanski teritorij Indijskega oceana</territory>
-			<territory type="IO" alt="proposed-x1002">Britansko ozemlje Indijskega oceana</territory>
 			<territory type="IQ">Irak</territory>
 			<territory type="IR">Iran</territory>
 			<territory type="IS">Islandija</territory>
@@ -329,7 +289,6 @@
 			<territory type="JE">Jersey</territory>
 			<territory type="JM">Jamajka</territory>
 			<territory type="JO">Jordan</territory>
-			<territory type="JO" alt="proposed-x1001">Jordanija</territory>
 			<territory type="JP">Japonska</territory>
 			<territory type="KE">Kenija</territory>
 			<territory type="KG">Kirgizistan</territory>
@@ -343,36 +302,27 @@
 			<territory type="KY">Kajmanski otoki</territory>
 			<territory type="KZ">Kazahstan</territory>
 			<territory type="LA">Ljudska demokratična republika Laos</territory>
-			<territory type="LA" alt="proposed-x1001">Ljudska republika Laos</territory>
-			<territory type="LA" alt="proposed-x1002">Laos</territory>
 			<territory type="LB">Libanon</territory>
 			<territory type="LC">Saint Lucia</territory>
 			<territory type="LI">Liechtenstein</territory>
-			<territory type="LI" alt="proposed-x1001">Lihtenštajn</territory>
 			<territory type="LK">Šrilanka</territory>
-			<territory type="LK" alt="proposed-x1001">Šri Lanka</territory>
 			<territory type="LR">Liberija</territory>
 			<territory type="LS">Lesoto</territory>
 			<territory type="LT">Litva</territory>
 			<territory type="LU">Luxemburg</territory>
 			<territory type="LV">Latvija</territory>
 			<territory type="LY">Libija</territory>
-			<territory type="LY" alt="proposed-x1001">Libijska arabska Jamahiriya</territory>
 			<territory type="MA">Maroko</territory>
 			<territory type="MC">Monako</territory>
 			<territory type="MD">Republika Moldova</territory>
-			<territory type="MD" alt="proposed-x1001">Moldavija</territory>
 			<territory type="ME">Črna gora</territory>
 			<territory type="MG">Madagaskar</territory>
 			<territory type="MH">Marshallovi otoki</territory>
 			<territory type="MK">Republika Makedonija</territory>
-			<territory type="MK" alt="proposed-x1001">Makedonija</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MM">Myanmar</territory>
-			<territory type="MM" alt="proposed-x1001">Mjanmar</territory>
 			<territory type="MN">Mongolija</territory>
 			<territory type="MO">Makao S.A.R. Kitajske</territory>
-			<territory type="MO" alt="proposed-x1001">Macao</territory>
 			<territory type="MP">Severni Marianski otoki</territory>
 			<territory type="MQ">Martinik</territory>
 			<territory type="MR">Mavretanija</territory>
@@ -388,7 +338,6 @@
 			<territory type="NC">Nova Kaledonija</territory>
 			<territory type="NE">Niger</territory>
 			<territory type="NF">Otok Norfolk</territory>
-			<territory type="NF" alt="proposed-x1001">Norfolški otok</territory>
 			<territory type="NG">Nigerija</territory>
 			<territory type="NI">Nikaragva</territory>
 			<territory type="NL">Nizozemska</territory>
@@ -406,11 +355,9 @@
 			<territory type="PK">Pakistan</territory>
 			<territory type="PL">Poljska</territory>
 			<territory type="PM">Saint Pierre in Miquelon</territory>
-			<territory type="PM" alt="proposed-x1001">St. Pierre in Miquelon</territory>
 			<territory type="PN">Pitcairn</territory>
 			<territory type="PR">Portoriko</territory>
 			<territory type="PS">Palestinsko ozemlje</territory>
-			<territory type="PS" alt="proposed-x1001">Palestina</territory>
 			<territory type="PT">Portugalska</territory>
 			<territory type="PW">Palau</territory>
 			<territory type="PY">Paragvaj</territory>
@@ -421,20 +368,16 @@
 			<territory type="RO">Romunija</territory>
 			<territory type="RS">Srbija</territory>
 			<territory type="RU">Ruska federacija</territory>
-			<territory type="RU" alt="proposed-x1001">Rusija</territory>
 			<territory type="RW">Ruanda</territory>
 			<territory type="SA">Saudova Arabija</territory>
 			<territory type="SB">Salomonovo otočje</territory>
-			<territory type="SB" alt="proposed-x1001">Salomonovi otoki</territory>
 			<territory type="SC">Sejšeli</territory>
 			<territory type="SD">Sudan</territory>
 			<territory type="SE">Švedska</territory>
 			<territory type="SG">Singapur</territory>
 			<territory type="SH">Sveta Helena</territory>
-			<territory type="SH" alt="proposed-x1001">St. Helena</territory>
 			<territory type="SI">Slovenija</territory>
 			<territory type="SJ">Svalbard in Jan Mayen</territory>
-			<territory type="SJ" alt="proposed-x1001">Svalbard in otoki Jan Mayen</territory>
 			<territory type="SK">Slovaška</territory>
 			<territory type="SL">Sierra Leone</territory>
 			<territory type="SM">San Marino</territory>
@@ -446,10 +389,8 @@
 			<territory type="SY">Sirija</territory>
 			<territory type="SZ">Svazi</territory>
 			<territory type="TC">Otočji Turks in Caicos</territory>
-			<territory type="TC" alt="proposed-x1001">Otoki Turks in Caicos</territory>
 			<territory type="TD">Čad</territory>
 			<territory type="TF">Francoski južni teritorij</territory>
-			<territory type="TF" alt="proposed-x1001">Francosko južno ozemlje</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Tajska</territory>
 			<territory type="TJ">Tadžikistan</territory>
@@ -458,7 +399,6 @@
 			<territory type="TM">Turkmenistan</territory>
 			<territory type="TN">Tunizija</territory>
 			<territory type="TO">Tonga</territory>
-			<territory type="TO" alt="proposed-x1001">Tonganščina</territory>
 			<territory type="TR">Turčija</territory>
 			<territory type="TT">Trinidad in Tobago</territory>
 			<territory type="TV">Tuvalu</territory>
@@ -467,19 +407,14 @@
 			<territory type="UA">Ukrajina</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Ameriški manjši oddaljeni otoki</territory>
-			<territory type="UM" alt="proposed-x1001">ZDA - manjši oddaljeni otoki</territory>
-			<territory type="UM" alt="proposed-x1002">Druga ameriška ozemlja v Tihem oceanu</territory>
 			<territory type="US">Združene države Amerike</territory>
-			<territory type="US" alt="proposed-x1001">ZDA</territory>
 			<territory type="UY">Urugvaj</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Vatikan</territory>
 			<territory type="VC">Saint Vincent in Grenadine</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Britanski Deviški otoki</territory>
-			<territory type="VG" alt="proposed-x1001">Deviški otoki (britanski)</territory>
 			<territory type="VI">Ameriški Deviški otoki</territory>
-			<territory type="VI" alt="proposed-x1001">Deviški otoki (ZDA)</territory>
 			<territory type="VN">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis in Futuna</territory>
@@ -498,8 +433,6 @@
 		<keys>
 			<key type="calendar">Kolendar</key>
 			<key type="collation">Zlaganje</key>
-			<key type="collation" alt="proposed-x1001">collation</key>
-			<key type="collation" alt="proposed-x1002">Razvrščanje</key>
 			<key type="currency">Valuta</key>
 		</keys>
 		<types>
@@ -507,7 +440,6 @@
 			<type type="buddhist" key="calendar">Budistični kolendar</type>
 			<type type="chinese" key="calendar">Kitajski kolendar</type>
 			<type type="direct" key="collation">Direktno zlaganje</type>
-			<type type="direct" key="collation" alt="proposed-x1001">Neposredno razvrščanje</type>
 			<type type="gb2312han" key="collation">Razvrščanje po sistemu poenostavljene kitajščine - GB2312</type>
 			<type type="gregorian" key="calendar">Gregorijanski kolendar</type>
 			<type type="hebrew" key="calendar">Hebrejski kolendar</type>
@@ -515,13 +447,9 @@
 			<type type="islamic-civil" key="calendar">Islamski civilni kolendar</type>
 			<type type="japanese" key="calendar">Japonski kolendar</type>
 			<type type="phonebook" key="collation">Zlaganje po abecedi</type>
-			<type type="phonebook" key="collation" alt="proposed-x1001">Razvrščanje po abecedi</type>
 			<type type="pinyin" key="collation">Pinyin zlaganje</type>
-			<type type="pinyin" key="collation" alt="proposed-x1001">Razvrščanje po sistemu pinjin</type>
 			<type type="stroke" key="collation">Stroke order zlaganje</type>
-			<type type="stroke" key="collation" alt="proposed-x1001">Razvrščanje po zaporedju pisanja pismenk</type>
 			<type type="traditional" key="collation">Tradicionano zlaganje</type>
-			<type type="traditional" key="collation" alt="proposed-x1001">Razvrščanje po tradicionalnem sistemu</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">Imperialni</measurementSystemName>
@@ -534,13 +462,10 @@
 	<characters>
 		<exemplarCharacters>[a-c č d-p r s š t-v z ž]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[q w-y]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a-c č d-p r s š t-v z ž]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>»</quotationStart>
-		<quotationStart alt="proposed-x1001">‘</quotationStart>
 		<quotationEnd>«</quotationEnd>
-		<quotationEnd alt="proposed-x1001">’</quotationEnd>
 		<alternateQuotationStart>„</alternateQuotationStart>
 		<alternateQuotationEnd>“</alternateQuotationEnd>
 	</delimiters>
@@ -635,17 +560,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">ned</day>
-							<day type="sun" alt="proposed-x1001">ne</day>
 							<day type="mon">pon</day>
-							<day type="mon" alt="proposed-x1001">po</day>
 							<day type="tue">tor</day>
-							<day type="tue" alt="proposed-x1001">to</day>
 							<day type="wed">sre</day>
 							<day type="thu">čet</day>
 							<day type="fri">pet</day>
-							<day type="fri" alt="proposed-x1001">pe</day>
 							<day type="sat">sob</day>
-							<day type="sat" alt="proposed-x1001">so</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">nedelja</day>
@@ -673,17 +593,13 @@
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
 							<quarter type="1">Q1</quarter>
-							<quarter type="1" alt="proposed-x1001">K1</quarter>
 							<quarter type="2">K2</quarter>
 							<quarter type="3">Q3</quarter>
-							<quarter type="3" alt="proposed-x1001">K3</quarter>
 							<quarter type="4">Q4</quarter>
-							<quarter type="4" alt="proposed-x1001">K4</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">Prvo četrtletje</quarter>
 							<quarter type="2">Q2</quarter>
-							<quarter type="2" alt="proposed-x1001">Drugo četrtletje</quarter>
 							<quarter type="3">Tretje četrtletje</quarter>
 							<quarter type="4">Četrto četrtletje</quarter>
 						</quarterWidth>
@@ -778,15 +694,11 @@
 					</field>
 					<field type="day">
 						<displayName>dan</displayName>
-						<displayName alt="proposed-x1001">Dan</displayName>
 						<relative type="0">danes</relative>
-						<relative type="0" alt="proposed-x1001">Danes</relative>
 						<relative type="1">Jutri</relative>
-						<relative type="1" alt="proposed-x1001">jutri</relative>
 						<relative type="2">pojutrišnjem</relative>
 						<relative type="3">čez tri dni</relative>
 						<relative type="-1">včeraj</relative>
-						<relative type="-1" alt="proposed-x1001">Včeraj</relative>
 						<relative type="-2">predvčerajšnjim</relative>
 						<relative type="-3">pred tremi dnevi</relative>
 					</field>
@@ -832,7 +744,6 @@
 			</zone>
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Južni tečaj</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Dumont D'Urville</exemplarCity>
@@ -866,7 +777,6 @@
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>Lubumbaši</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Lubumbashi</exemplarCity>
 			</zone>
 			<zone type="Africa/Abidjan">
 				<exemplarCity>Abidžan</exemplarCity>
@@ -1101,9 +1011,7 @@
 	<numbers>
 		<symbols>
 			<decimal>,</decimal>
-			<decimal alt="proposed-x1001">.</decimal>
 			<group>.</group>
-			<group alt="proposed-x1001">,</group>
 		</symbols>
 		<decimalFormats>
 			<decimalFormatLength>
@@ -1136,230 +1044,174 @@
 		<currencies>
 			<currency type="AED">
 				<displayName>dirham Združenih Arabskih Emiratov</displayName>
-				<displayName alt="proposed-x1001">Dirham Združenih Arabskih Emiratov</displayName>
 			</currency>
 			<currency type="ARS">
 				<displayName>argentinski peso</displayName>
-				<displayName alt="proposed-x1001">Argentinski Peso</displayName>
 			</currency>
 			<currency type="AUD">
 				<displayName>avstralski dolar</displayName>
-				<displayName alt="proposed-x1001">Avstralski Dolar</displayName>
 			</currency>
 			<currency type="BGN">
 				<displayName>bolgarski lev</displayName>
-				<displayName alt="proposed-x1001">Bolgarski Lev</displayName>
 			</currency>
 			<currency type="BND">
 				<displayName>brunejski dolar</displayName>
-				<displayName alt="proposed-x1001">Brunejski Dolar</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>bolivijski boliviano</displayName>
-				<displayName alt="proposed-x1001">Bolivijski Boliviano</displayName>
 			</currency>
 			<currency type="BRL">
 				<displayName>Brazilski Real</displayName>
 			</currency>
 			<currency type="CAD">
 				<displayName>kanadski dolar</displayName>
-				<displayName alt="proposed-x1001">Kanadski Dolar</displayName>
 			</currency>
 			<currency type="CHF">
 				<displayName>švicarski frank</displayName>
-				<displayName alt="proposed-x1001">Švicarski Frank</displayName>
 			</currency>
 			<currency type="CLP">
 				<displayName>čilski peso</displayName>
-				<displayName alt="proposed-x1001">Čilski Peso</displayName>
 			</currency>
 			<currency type="CNY">
 				<displayName>Kitajski Yuan Renminbi</displayName>
-				<displayName alt="proposed-x1001">Kitajski Juan</displayName>
-				<displayName alt="proposed-x1002">kitajski juan</displayName>
 			</currency>
 			<currency type="COP">
 				<displayName>kolumbijski peso</displayName>
-				<displayName alt="proposed-x1001">Kolumbijski Peso</displayName>
 			</currency>
 			<currency type="CZK">
 				<displayName>češka krona</displayName>
-				<displayName alt="proposed-x1001">Češka Krona</displayName>
 			</currency>
 			<currency type="DEM">
 				<displayName>nemška marka</displayName>
-				<displayName alt="proposed-x1001">Nemška Marka</displayName>
 			</currency>
 			<currency type="DKK">
 				<displayName>danska krone</displayName>
-				<displayName alt="proposed-x1001">Danske Krone</displayName>
 			</currency>
 			<currency type="EEK">
 				<displayName>estonska krona</displayName>
-				<displayName alt="proposed-x1001">Estonska Krona</displayName>
 			</currency>
 			<currency type="EGP">
 				<displayName>egiptovski funt</displayName>
-				<displayName alt="proposed-x1001">Egiptovski Funt</displayName>
 			</currency>
 			<currency type="EUR">
 				<displayName>Evro</displayName>
 			</currency>
 			<currency type="FJD">
 				<displayName>fidžijski dolar</displayName>
-				<displayName alt="proposed-x1001">Fidžijski Dolar</displayName>
 			</currency>
 			<currency type="FRF">
 				<displayName>francoski frank</displayName>
-				<displayName alt="proposed-x1001">Francoski Frank</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>Britanski Funt Sterling</displayName>
-				<displayName alt="proposed-x1001">britanski funt</displayName>
-				<displayName alt="proposed-x1002">Britanski Funt</displayName>
 			</currency>
 			<currency type="HKD">
 				<displayName>hongkonški dolar</displayName>
-				<displayName alt="proposed-x1001">Hongkonški Dolar</displayName>
 			</currency>
 			<currency type="HRK">
 				<displayName>hrvaška kuna</displayName>
-				<displayName alt="proposed-x1001">Hrvaška Kuna</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>madžarski forint</displayName>
-				<displayName alt="proposed-x1001">Madžarski Forint</displayName>
 			</currency>
 			<currency type="IDR">
 				<displayName>indonezijska rupija</displayName>
-				<displayName alt="proposed-x1001">Indonezijska Rupija</displayName>
 			</currency>
 			<currency type="ILS">
 				<displayName>izraelski šekel</displayName>
-				<displayName alt="proposed-x1001">Izraelski Šekel</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>Indijski Rupi</displayName>
-				<displayName alt="proposed-x1001">indijska rupija</displayName>
-				<displayName alt="proposed-x1002">Indijska Rupija</displayName>
 			</currency>
 			<currency type="JPY">
 				<displayName>Japonski Jen</displayName>
 			</currency>
 			<currency type="KES">
 				<displayName>kenijski šiling</displayName>
-				<displayName alt="proposed-x1001">Kenijski Šiling</displayName>
 			</currency>
 			<currency type="KRW">
 				<displayName>južnokorejski von</displayName>
-				<displayName alt="proposed-x1001">Južnokorejski Von</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>litovski litas</displayName>
-				<displayName alt="proposed-x1001">Litovski Litas</displayName>
 			</currency>
 			<currency type="MAD">
 				<displayName>maroški dirham</displayName>
-				<displayName alt="proposed-x1001">Maroški Dirham</displayName>
 			</currency>
 			<currency type="MTL">
 				<displayName>malteška lira</displayName>
-				<displayName alt="proposed-x1001">Malteška Lira</displayName>
 			</currency>
 			<currency type="MXN">
 				<displayName>mehiški peso</displayName>
-				<displayName alt="proposed-x1001">Mehiški Peso</displayName>
 			</currency>
 			<currency type="MYR">
 				<displayName>malezijski ringgit</displayName>
-				<displayName alt="proposed-x1001">Malezijski ringgit</displayName>
 			</currency>
 			<currency type="NOK">
 				<displayName>norveška krona</displayName>
-				<displayName alt="proposed-x1001">Norveške krone</displayName>
 			</currency>
 			<currency type="NZD">
 				<displayName>novozelandski dolar</displayName>
-				<displayName alt="proposed-x1001">Novozelandski Dolar</displayName>
 			</currency>
 			<currency type="PEN">
 				<displayName>perujski novi sol</displayName>
-				<displayName alt="proposed-x1001">Perujski Novi Sol</displayName>
 			</currency>
 			<currency type="PHP">
 				<displayName>filipinski peso</displayName>
-				<displayName alt="proposed-x1001">Filipinski Peso</displayName>
 			</currency>
 			<currency type="PKR">
 				<displayName>pakistanska rupija</displayName>
-				<displayName alt="proposed-x1001">Pakistanska Rupija</displayName>
 			</currency>
 			<currency type="PLN">
 				<displayName>poljski novi zlot</displayName>
-				<displayName alt="proposed-x1001">Poljski Novi Zlot</displayName>
 			</currency>
 			<currency type="RON">
 				<displayName>romunski leu</displayName>
-				<displayName alt="proposed-x1001">Romunski Leu</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>srbski dinar</displayName>
-				<displayName alt="proposed-x1001">Srbski Dinar</displayName>
 			</currency>
 			<currency type="RUB">
 				<displayName>Ruska Rublja</displayName>
-				<displayName alt="proposed-x1001">ruski rubelj</displayName>
-				<displayName alt="proposed-x1002">Ruski Rubelj</displayName>
 			</currency>
 			<currency type="SAR">
 				<displayName>saudski rial</displayName>
-				<displayName alt="proposed-x1001">Saudski Rial</displayName>
 			</currency>
 			<currency type="SEK">
 				<displayName>švedska krona</displayName>
-				<displayName alt="proposed-x1001">Švedske Krone</displayName>
 			</currency>
 			<currency type="SGD">
 				<displayName>singapurski dolar</displayName>
-				<displayName alt="proposed-x1001">Singapurski Dolar</displayName>
 			</currency>
 			<currency type="SIT">
 				<displayName>Slovenski tolar</displayName>
 			</currency>
 			<currency type="SKK">
 				<displayName>slovaška krona</displayName>
-				<displayName alt="proposed-x1001">Slovaška Krona</displayName>
 			</currency>
 			<currency type="THB">
 				<displayName>tajski baht</displayName>
-				<displayName alt="proposed-x1001">Tajski Baht</displayName>
 			</currency>
 			<currency type="TRL">
 				<displayName>turška lira</displayName>
-				<displayName alt="proposed-x1001">Turška Lira</displayName>
 			</currency>
 			<currency type="TRY">
 				<displayName>nova turška lira</displayName>
-				<displayName alt="proposed-x1001">Nova turška lira</displayName>
 			</currency>
 			<currency type="TWD">
 				<displayName>novi tajvanski dolar</displayName>
-				<displayName alt="proposed-x1001">Novi Tajvanski Dolar</displayName>
 			</currency>
 			<currency type="UAH">
 				<displayName>ukrajinska grivna</displayName>
-				<displayName alt="proposed-x1001">Ukrajinska Grivna</displayName>
 			</currency>
 			<currency type="USD">
 				<displayName>Ameriški Dolar</displayName>
 			</currency>
 			<currency type="VEB">
 				<displayName>venezuelski bolivar</displayName>
-				<displayName alt="proposed-x1001">Venezuelski Bolivar</displayName>
 			</currency>
 			<currency type="VND">
 				<displayName>vientnamski dong</displayName>
-				<displayName alt="proposed-x1001">Vientnamski Dong</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>Neznana ali neveljavna valuta</displayName>
@@ -1367,7 +1219,6 @@
 			</currency>
 			<currency type="ZAR">
 				<displayName>južnoafriški rand</displayName>
-				<displayName alt="proposed-x1001">Južnoafriški Rand</displayName>
 			</currency>
 		</currencies>
 	</numbers>

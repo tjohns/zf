@@ -129,25 +129,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>MMM dd, yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -160,7 +156,6 @@
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>HH:mm:ss z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">

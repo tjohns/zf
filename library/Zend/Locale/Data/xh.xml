@@ -9,7 +9,6 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="af">isiBhulu</language>
-			<language type="af" alt="proposed-x1001">Isibhulu</language>
 			<language type="am">Isi-Amharic</language>
 			<language type="ar">Isi-Arabic</language>
 			<language type="as">isiAssamese</language>
@@ -27,7 +26,6 @@
 			<language type="de">Isi-German</language>
 			<language type="el">Isi-Greek</language>
 			<language type="en">isiNgesi</language>
-			<language type="en" alt="proposed-x1001">Isingesi</language>
 			<language type="eo">Isi-Esperanto</language>
 			<language type="es">Isi-Spanish</language>
 			<language type="et">Isi-Estonian</language>
@@ -113,10 +111,8 @@
 			<language type="uz">Isi-Uzbek</language>
 			<language type="vi">Isi-Vietnamese</language>
 			<language type="xh">isiXhosa</language>
-			<language type="xh" alt="proposed-x1001">IsiXhosa</language>
 			<language type="yi">Yiddish</language>
 			<language type="zu">isiZulu</language>
-			<language type="zu" alt="proposed-x1001">Isi-Zulu</language>
 		</languages>
 	</localeDisplayNames>
 	<characters>

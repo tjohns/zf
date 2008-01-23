@@ -65,15 +65,12 @@
 						<monthWidth type="wide">
 							<month type="1">Qunxa Garablu</month>
 							<month type="2">Kudo</month>
-							<month type="2" alt="proposed-x1001">Naharsi Kudo</month>
 							<month type="3">Ciggilta Kudo</month>
 							<month type="4">Agda Baxis</month>
-							<month type="4" alt="proposed-x1001">Agda Baxisso</month>
 							<month type="5">Caxah Alsa</month>
 							<month type="6">Qasa Dirri</month>
 							<month type="7">Qado Dirri</month>
 							<month type="8">Liiqen</month>
-							<month type="8" alt="proposed-x1001">Leqeeni</month>
 							<month type="9">Waysu</month>
 							<month type="10">Diteli</month>
 							<month type="11">Ximoli</month>
@@ -180,13 +177,11 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
@@ -237,7 +232,7 @@
 				<symbol>FD</symbol>
 			</currency>
 			<currency type="ERN">
-				<symbol alt="proposed-x1001">$</symbol>
+				<symbol>$</symbol>
 			</currency>
 			<currency type="ETB">
 				<symbol>$</symbol>

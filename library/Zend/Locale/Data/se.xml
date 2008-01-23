@@ -10,12 +10,9 @@
 		<languages>
 			<language type="af">afrikánsagiella</language>
 			<language type="ang">boares eaŋgalasgiella</language>
-			<language type="ang" alt="proposed-x1001">Boares eaŋgalasgiella</language>
 			<language type="apa">apachegielat</language>
-			<language type="apa" alt="proposed-x1001">Apachegielat</language>
 			<language type="ast">asturiagiella</language>
 			<language type="be">vilgesruoššagiella</language>
-			<language type="be" alt="proposed-x1001">Vilgesruoššagiella</language>
 			<language type="bg">bulgáriagiella</language>
 			<language type="bn">bengalgiella</language>
 			<language type="br">bretonagiella</language>
@@ -25,41 +22,25 @@
 			<language type="chm">marigiella</language>
 			<language type="co">corsicagiella</language>
 			<language type="cs">čeahkagiella</language>
-			<language type="cs" alt="proposed-x1001">Tšehkkiagiella</language>
 			<language type="da">dánskkagiella</language>
-			<language type="da" alt="proposed-x1001">Dánskkagiella</language>
 			<language type="de">duiskkagiella</language>
-			<language type="de" alt="proposed-x1001">Duiskkagiella</language>
 			<language type="el">greikkagiella</language>
-			<language type="el" alt="proposed-x1001">Greikkagiella</language>
 			<language type="en">eŋgelasgiella</language>
-			<language type="en" alt="proposed-x1001">Eŋgelasgiella</language>
 			<language type="es">spánskkagiella</language>
-			<language type="es" alt="proposed-x1001">Spánskkagiella</language>
 			<language type="et">esttegiella</language>
-			<language type="et" alt="proposed-x1001">Eestegiella</language>
 			<language type="fa">persijagiella</language>
 			<language type="fi">suomagiella</language>
-			<language type="fi" alt="proposed-x1001">Suomagiella</language>
-			<language type="fi" alt="proposed-x1002">suomagie</language>
 			<language type="fiu">fenno-ugrálaš</language>
-			<language type="fiu" alt="proposed-x1001">Fenno-Ugrálaš</language>
 			<language type="fo">fearagiella</language>
-			<language type="fo" alt="proposed-x1001">sjekk</language>
-			<language type="fo" alt="proposed-x1002">Sjekk</language>
 			<language type="fr">fránskkagiella</language>
-			<language type="fr" alt="proposed-x1001">Fránskkagiella</language>
 			<language type="ga">iirragiella</language>
 			<language type="gem">duiskkagielat</language>
-			<language type="gem" alt="proposed-x1001">Eará duiskkagielat</language>
-			<language type="gem" alt="proposed-x1002">eará duiskkagielat</language>
 			<language type="gu">gujaratagiella</language>
 			<language type="gv">manksgiella</language>
 			<language type="hi">hindigiella</language>
 			<language type="hr">kroátiagiella</language>
 			<language type="hy">armeenalaš gielat</language>
 			<language type="is">islánddagiella</language>
-			<language type="is" alt="proposed-x1001">Islánddagiela</language>
 			<language type="it">itáliagiella</language>
 			<language type="kv">komigiella</language>
 			<language type="kw">kornagiella</language>
@@ -71,12 +52,9 @@
 			<language type="mk">makedoniagiella</language>
 			<language type="myv">ersagiella</language>
 			<language type="nb">girjedárogiella</language>
-			<language type="nb" alt="proposed-x1001">Girjedárugiela</language>
 			<language type="nl">hollánddagiella</language>
 			<language type="nn">ođđadárogiella</language>
-			<language type="nn" alt="proposed-x1001">Ođđadárogiela</language>
 			<language type="no">dárogiella</language>
-			<language type="no" alt="proposed-x1001">Norgga</language>
 			<language type="oc">oksitánagiella</language>
 			<language type="pl">polskkagiella</language>
 			<language type="pt">portugálagiella</language>
@@ -84,7 +62,6 @@
 			<language type="ro">romániagiella</language>
 			<language type="roa">románalaš gielat</language>
 			<language type="ru">ruoššagiela</language>
-			<language type="ru" alt="proposed-x1001">Ruoššagiela</language>
 			<language type="sc">sardigiella</language>
 			<language type="scn">sisiliagiella</language>
 			<language type="se">dávvisámegiella</language>
@@ -92,16 +69,13 @@
 			<language type="sk">slovákiagiella</language>
 			<language type="sl">slovenagiella</language>
 			<language type="sma">máttasámegiella</language>
-			<language type="sma" alt="proposed-x1001">Máttasámegiella</language>
 			<language type="smi">sámi gielat</language>
-			<language type="smi" alt="proposed-x1001">Sámi gielat</language>
 			<language type="smj">juvlevsámegiella</language>
 			<language type="smn">ánársámegiella</language>
 			<language type="sms">nuortálašgiella</language>
 			<language type="sq">albánagiella</language>
 			<language type="sr">serbiagiella</language>
 			<language type="sv">ruoŧagiella</language>
-			<language type="sv" alt="proposed-x1001">Ruoŧagiella</language>
 			<language type="udm">udmurtagiella</language>
 			<language type="uk">ukrainagiella</language>
 			<language type="wa">vallonagiella</language>
@@ -115,66 +89,35 @@
 		<territories>
 			<territory type="001">máilbmi</territory>
 			<territory type="002">Afrihkká</territory>
-			<territory type="002" alt="proposed-x1001">Afrihká</territory>
 			<territory type="003">dávvi-Amerihkká ja gaska-Amerihkká</territory>
-			<territory type="003" alt="proposed-x1001">dávvi-Ameriká ja gaska-Ameriká</territory>
-			<territory type="003" alt="proposed-x1002">dávvi-dávvi-Ameriká ja gaska-Ameriká ja gaska-dávvi-Amerihkká ja gaska-Amerihkká</territory>
 			<territory type="005">mátta-Amerihkká</territory>
-			<territory type="005" alt="proposed-x1001">mátta-Ameriká</territory>
 			<territory type="009">Oseania</territory>
-			<territory type="009" alt="proposed-x1001">Oceania</territory>
 			<territory type="011">oarji-Afrihkká</territory>
-			<territory type="011" alt="proposed-x1001">oarji-Afrihká</territory>
-			<territory type="011" alt="proposed-x1002">Oarji-Afrihká</territory>
 			<territory type="013">gaska-Amerihkká</territory>
-			<territory type="013" alt="proposed-x1001">gaska-Ameriká</territory>
 			<territory type="014">nuorta-Afrihkká</territory>
-			<territory type="014" alt="proposed-x1001">nuorta-Afrihká</territory>
-			<territory type="014" alt="proposed-x1002">Nuorta-Afrihká</territory>
 			<territory type="015">dávvi-Afrihkká</territory>
-			<territory type="015" alt="proposed-x1001">dávvi-Afrihká</territory>
 			<territory type="017">gaska-Afrihkká</territory>
-			<territory type="017" alt="proposed-x1001">Gaska-Afrihká</territory>
-			<territory type="017" alt="proposed-x1002">gaska-Afrihká</territory>
 			<territory type="018">mátta-Afrihkká</territory>
-			<territory type="018" alt="proposed-x1001">Mátta-Afrihká [018]</territory>
-			<territory type="018" alt="proposed-x1002">mátta-Afrihká</territory>
 			<territory type="019">Amerihkká</territory>
-			<territory type="019" alt="proposed-x1001">Ameriká</territory>
 			<territory type="021">dávvi-Amerihkká</territory>
-			<territory type="021" alt="proposed-x1001">Dávvi-Ameriká</territory>
-			<territory type="021" alt="proposed-x1002">dávvi-Ameriká</territory>
 			<territory type="029">Karibia</territory>
 			<territory type="030">nuorta-Ásia</territory>
-			<territory type="030" alt="proposed-x1001">Nuorta-Ásia</territory>
 			<territory type="034">mátta-Ásia</territory>
-			<territory type="034" alt="proposed-x1001">Mátta-Ásia</territory>
 			<territory type="035">mátta-nuorta-Ásia</territory>
 			<territory type="039">mátta-Eurohpá</territory>
-			<territory type="039" alt="proposed-x1001">mátta-Europa</territory>
-			<territory type="039" alt="proposed-x1002">Mátta-Europa</territory>
 			<territory type="053">Austrália ja Aotearoa</territory>
 			<territory type="054">Melanesia</territory>
 			<territory type="061">Polynesia</territory>
-			<territory type="061" alt="proposed-x1001">Polynesia</territory>
 			<territory type="062">mátta-gaska-Ásia</territory>
 			<territory type="142">Ásia</territory>
 			<territory type="143">gaska-Ásia</territory>
-			<territory type="143" alt="proposed-x1001">Gaska-Ásia</territory>
 			<territory type="145">oarji-Ásia</territory>
-			<territory type="145" alt="proposed-x1001">Oarji-Ásia</territory>
 			<territory type="150">Eurohpá</territory>
-			<territory type="150" alt="proposed-x1001">Europa</territory>
 			<territory type="151">nuorta-Eurohpá</territory>
-			<territory type="151" alt="proposed-x1001">nuorta-Europa</territory>
 			<territory type="154">dávvi-Eurohpá</territory>
-			<territory type="154" alt="proposed-x1001">dávvi-Europa</territory>
-			<territory type="154" alt="proposed-x1002">Dávvi-Europa</territory>
 			<territory type="155">oarji-Eurohpá</territory>
-			<territory type="155" alt="proposed-x1001">oarji-Europa</territory>
 			<territory type="419">Lulli-Amerihkká ja Karibia</territory>
 			<territory type="AD">Andorra</territory>
-			<territory type="AD" alt="proposed-x1001">Andorra</territory>
 			<territory type="AE">Ovttastuvvan Arábaemiráhtat</territory>
 			<territory type="AF">Afghanistan</territory>
 			<territory type="AG">Antigua ja Barbuda</territory>
@@ -228,7 +171,6 @@
 			<territory type="DZ">Algeria</territory>
 			<territory type="EC">Ecuador</territory>
 			<territory type="EE">Estlánda</territory>
-			<territory type="EE" alt="proposed-x1001">Estteeana</territory>
 			<territory type="EG">Egypta</territory>
 			<territory type="EH">Oarje-Sahára</territory>
 			<territory type="ER">Eritrea</territory>
@@ -260,7 +202,6 @@
 			<territory type="GW">Guinea-Bissau</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">Hong Kong</territory>
-			<territory type="HK" alt="short">Hongkong</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Kroátia</territory>
 			<territory type="HT">Haiti</territory>
@@ -271,7 +212,6 @@
 			<territory type="IN">India</territory>
 			<territory type="IQ">Irak</territory>
 			<territory type="IR">Iran</territory>
-			<territory type="IR" alt="proposed-x1001">Ir</territory>
 			<territory type="IS">Islánda</territory>
 			<territory type="IT">Itália</territory>
 			<territory type="JE">Jersey</territory>
@@ -285,7 +225,6 @@
 			<territory type="KM">Komorosullot</territory>
 			<territory type="KN">Saint Kitts ja Nevis</territory>
 			<territory type="KP">Dávvi-Korea</territory>
-			<territory type="KP" alt="proposed-x1001">Davvi-Korea</territory>
 			<territory type="KR">Mátta-Korea</territory>
 			<territory type="KW">Kuwait</territory>
 			<territory type="KZ">Kasakstan</territory>
@@ -311,11 +250,9 @@
 			<territory type="MM">Burma</territory>
 			<territory type="MN">Mongolia</territory>
 			<territory type="MO">Makáo</territory>
-			<territory type="MO" alt="short">Makáo</territory>
 			<territory type="MP">Dávvi-Mariánat</territory>
 			<territory type="MQ">Martinique</territory>
 			<territory type="MR">Mauretánia</territory>
-			<territory type="MR" alt="proposed-x1001">Mauretania</territory>
 			<territory type="MS">Montserrat</territory>
 			<territory type="MT">Málta</territory>
 			<territory type="MU">Mauritius</territory>
@@ -330,22 +267,18 @@
 			<territory type="NG">Nigeria</territory>
 			<territory type="NI">Nicaragua</territory>
 			<territory type="NL">Vuolleeatnamat</territory>
-			<territory type="NL" alt="proposed-x1001">Nederland</territory>
 			<territory type="NO">Norgga</territory>
 			<territory type="NP">Nepal</territory>
 			<territory type="NR">Nauru</territory>
 			<territory type="NU">Niue</territory>
 			<territory type="NZ">Ođđa-Selánda</territory>
-			<territory type="NZ" alt="proposed-x1001">Aotearoa</territory>
 			<territory type="OM">Oman</territory>
 			<territory type="PA">Panama</territory>
 			<territory type="PE">Peru</territory>
 			<territory type="PG">Papua-Ođđa-Guinea</territory>
 			<territory type="PH">Filippiinnat</territory>
-			<territory type="PH" alt="proposed-x1001">Filippinene</territory>
 			<territory type="PK">Pakistan</territory>
 			<territory type="PL">Polen</territory>
-			<territory type="PL" alt="proposed-x1001">Polska</territory>
 			<territory type="PM">Saint Pierre ja Miquelon</territory>
 			<territory type="PN">Pitcairn</territory>
 			<territory type="PR">Puerto Rico</territory>
@@ -367,10 +300,8 @@
 			<territory type="SG">Singapore</territory>
 			<territory type="SH">Saint Helena</territory>
 			<territory type="SI">Slovenia</territory>
-			<territory type="SI" alt="proposed-x1001">Šlovenia</territory>
 			<territory type="SJ">Svalbárdda ja Jan Mayen</territory>
 			<territory type="SK">Slovákia</territory>
-			<territory type="SK" alt="proposed-x1001">Šlovakia</territory>
 			<territory type="SL">Sierra Leone</territory>
 			<territory type="SM">San Marino</territory>
 			<territory type="SN">Senegal</territory>
@@ -419,7 +350,6 @@
 		</keys>
 		<measurementSystemNames>
 			<measurementSystemName type="metric">SI</measurementSystemName>
-			<measurementSystemName type="metric" alt="proposed-x1001">mehter</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<layout>
@@ -436,20 +366,13 @@
 	<characters>
 		<exemplarCharacters>[a á b c č d đ e-n ŋ o p r s š t ŧ u v z ž]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[à å ä æ ç é è ń ñ ó ò ö ø q ú ü w-y]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[ç ñ ü w]</exemplarCharacters>
 		<exemplarCharacters type="currencySymbol">[a á à å ä æ b c č d đ e é è f-n ń ŋ o ó ò ö ø p-s š t ŧ u ú v x-z ž]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a á å æ b c č d đ e-n ŋ o ø p-s š t ŧ u-z ž]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1002">[a á à å ä æ b c č d đ e é è f-n ń ŋ o ó ò ö ø p-s š t ŧ u ú v x-z ž]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>”</quotationStart>
-		<quotationStart alt="proposed-x1001">«</quotationStart>
 		<quotationEnd>”</quotationEnd>
-		<quotationEnd alt="proposed-x1001">»</quotationEnd>
 		<alternateQuotationStart>’</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">&quot;</alternateQuotationStart>
 		<alternateQuotationEnd>’</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">&quot;</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -458,83 +381,47 @@
 					<monthContext type="format">
 						<monthWidth type="abbreviated">
 							<month type="1">ođđj</month>
-							<month type="1" alt="proposed-x1001">1</month>
 							<month type="2">guov</month>
-							<month type="2" alt="proposed-x1001">2</month>
 							<month type="3">njuk</month>
-							<month type="3" alt="proposed-x1001">3</month>
 							<month type="4">cuo</month>
-							<month type="4" alt="proposed-x1001">4</month>
 							<month type="5">mies</month>
-							<month type="5" alt="proposed-x1001">5</month>
 							<month type="6">geas</month>
-							<month type="6" alt="proposed-x1001">6</month>
 							<month type="7">suoi</month>
-							<month type="7" alt="proposed-x1001">7</month>
 							<month type="8">borg</month>
-							<month type="8" alt="proposed-x1001">8</month>
 							<month type="9">čakč</month>
-							<month type="9" alt="proposed-x1001">9</month>
 							<month type="10">golg</month>
-							<month type="10" alt="proposed-x1001">10</month>
 							<month type="11">skáb</month>
-							<month type="11" alt="proposed-x1001">11</month>
 							<month type="12">juov</month>
-							<month type="12" alt="proposed-x1001">12</month>
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">ođđajagemánnu</month>
-							<month type="1" alt="proposed-x1001">tsiengele</month>
 							<month type="2">guovvamánnu</month>
-							<month type="2" alt="proposed-x1001">goevte</month>
 							<month type="3">njukčamánnu</month>
-							<month type="3" alt="proposed-x1001">njoktje</month>
 							<month type="4">cuoŋománnu</month>
-							<month type="4" alt="proposed-x1001">voerhtje</month>
 							<month type="5">miessemánnu</month>
-							<month type="5" alt="proposed-x1001">suehpede</month>
 							<month type="6">geassemánnu</month>
-							<month type="6" alt="proposed-x1001">ruffie</month>
 							<month type="7">suoidnemánnu</month>
-							<month type="7" alt="proposed-x1001">snaltje</month>
 							<month type="8">borgemánnu</month>
-							<month type="8" alt="proposed-x1001">mietske</month>
 							<month type="9">čakčamánnu</month>
-							<month type="9" alt="proposed-x1001">skierede</month>
 							<month type="10">golggotmánnu</month>
-							<month type="10" alt="proposed-x1001">rihkede</month>
 							<month type="11">skábmamánnu</month>
-							<month type="11" alt="proposed-x1001">rahka</month>
 							<month type="12">juovlamánnu</month>
-							<month type="12" alt="proposed-x1001">goeve</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
 						<monthWidth type="narrow">
 							<month type="1">O</month>
-							<month type="1" alt="proposed-x1001">1</month>
 							<month type="2">G</month>
-							<month type="2" alt="proposed-x1001">2</month>
 							<month type="3">N</month>
-							<month type="3" alt="proposed-x1001">3</month>
 							<month type="4">C</month>
-							<month type="4" alt="proposed-x1001">4</month>
 							<month type="5">M</month>
-							<month type="5" alt="proposed-x1001">5</month>
 							<month type="6">G</month>
-							<month type="6" alt="proposed-x1001">6</month>
 							<month type="7">S</month>
-							<month type="7" alt="proposed-x1001">7</month>
 							<month type="8">B</month>
-							<month type="8" alt="proposed-x1001">8</month>
 							<month type="9">Č</month>
-							<month type="9" alt="proposed-x1001">9</month>
 							<month type="10">G</month>
-							<month type="10" alt="proposed-x1001">10</month>
 							<month type="11">S</month>
-							<month type="11" alt="proposed-x1001">11</month>
 							<month type="12">J</month>
-							<month type="12" alt="proposed-x1001">12</month>
 						</monthWidth>
 					</monthContext>
 				</months>
@@ -542,53 +429,32 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">sotn</day>
-							<day type="sun" alt="proposed-x1001">1</day>
 							<day type="mon">vuos</day>
-							<day type="mon" alt="proposed-x1001">2</day>
 							<day type="tue">maŋ</day>
-							<day type="tue" alt="proposed-x1001">3</day>
 							<day type="wed">gask</day>
-							<day type="wed" alt="proposed-x1001">4</day>
 							<day type="thu">duor</day>
-							<day type="thu" alt="proposed-x1001">5</day>
 							<day type="fri">bear</day>
-							<day type="fri" alt="proposed-x1001">6</day>
 							<day type="sat">láv</day>
-							<day type="sat" alt="proposed-x1001">7</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">sotnabeaivi</day>
-							<day type="sun" alt="proposed-x1001">aejlege</day>
 							<day type="mon">vuossárga</day>
-							<day type="mon" alt="proposed-x1001">måanta</day>
 							<day type="tue">maŋŋebárga</day>
-							<day type="tue" alt="proposed-x1001">däjsta</day>
 							<day type="wed">gaskavahkku</day>
-							<day type="wed" alt="proposed-x1001">gaskevahkoe</day>
 							<day type="thu">duorasdat</day>
-							<day type="thu" alt="proposed-x1001">dåarsta</day>
 							<day type="fri">bearjadat</day>
-							<day type="fri" alt="proposed-x1001">bearjadahke</day>
 							<day type="sat">lávvardat</day>
-							<day type="sat" alt="proposed-x1001">laavadahke</day>
 						</dayWidth>
 					</dayContext>
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
 							<day type="sun">s</day>
-							<day type="sun" alt="proposed-x1001">1</day>
 							<day type="mon">v</day>
-							<day type="mon" alt="proposed-x1001">2</day>
 							<day type="tue">m</day>
-							<day type="tue" alt="proposed-x1001">3</day>
 							<day type="wed">g</day>
-							<day type="wed" alt="proposed-x1001">4</day>
 							<day type="thu">d</day>
-							<day type="thu" alt="proposed-x1001">5</day>
 							<day type="fri">b</day>
-							<day type="fri" alt="proposed-x1001">6</day>
 							<day type="sat">l</day>
-							<day type="sat" alt="proposed-x1001">7</day>
 						</dayWidth>
 					</dayContext>
 				</days>
@@ -613,11 +479,9 @@
 				<eras>
 					<eraNames>
 						<era type="0">Ovdal Kristtusa</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">OK</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">CE</era>
 					</eraAbbr>
 				</eras>
@@ -708,7 +572,6 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH:mm;−HH:mm</hourFormat>
-			<hourFormat alt="proposed-x1001">+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>GMT{0}</gmtFormat>
 			<regionFormat>{0}</regionFormat>
 		</timeZoneNames>
@@ -740,11 +603,9 @@
 			</currency>
 			<currency type="NOK">
 				<displayName>norga kruvdno</displayName>
-				<displayName alt="proposed-x1001">Norga kruvdno</displayName>
 			</currency>
 			<currency type="SEK">
 				<displayName>ruoŧŧa kruvdno</displayName>
-				<displayName alt="proposed-x1001">Ruoŧŧa kruvdno</displayName>
 			</currency>
 			<currency type="XAG">
 				<displayName>silba</displayName>

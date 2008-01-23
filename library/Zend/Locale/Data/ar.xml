@@ -94,7 +94,6 @@
 			<language type="cmc">اللغات التشاميكية</language>
 			<language type="co">الكورسيكية</language>
 			<language type="cop">قبطية</language>
-			<language type="cop" alt="proposed-x1001">القبطية</language>
 			<language type="cpe">الكرييولى و اللغات المبسطة الأخرى للتفاهم بين الشعوب على أساس الأنجليزية</language>
 			<language type="cpf">الكرييولى و اللغات المبسطة الأخرى للتفاهم بين الشعوب على أساس الفرنسية</language>
 			<language type="cpp">الكرييولى و اللغات المبسطة الأخرى للتفاهم بين الشعوب على أساس البرتغالية</language>
@@ -114,8 +113,6 @@
 			<language type="de">الألمانية</language>
 			<language type="de_AT">الألمانية النمساوية</language>
 			<language type="de_CH">الألمانية العليا السويسرية</language>
-			<language type="de_CH" alt="proposed-x1001">الألمانية العليا (سويسرا)‏</language>
-			<language type="de_CH" alt="proposed-x1002">الألمانية (سويسرا)‏</language>
 			<language type="del">الديلوير</language>
 			<language type="den">السلافية</language>
 			<language type="dgr">الدوجريب</language>
@@ -136,21 +133,14 @@
 			<language type="elx">الامايت</language>
 			<language type="en">الانجليزية</language>
 			<language type="en_AU">الانجليزية الأسترالية</language>
-			<language type="en_AU" alt="proposed-x1002">الانجليزية الأستراليا</language>
-			<language type="en_AU" alt="proposed-x1003">الإنجليزية (أستراليا)</language>
 			<language type="en_CA">الإنجليزية الكندية</language>
-			<language type="en_CA" alt="proposed-x1001">الإنجليزية (كندا)</language>
 			<language type="en_GB">الانجليزية البريطانية</language>
-			<language type="en_GB" alt="proposed-x1001">الإنجليزية (المملكة المتحدة)</language>
 			<language type="en_US">إنجليزية الولايات المتحدة</language>
-			<language type="en_US" alt="proposed-x1001">الانجليزية (الولايات المتحدة الأمريكية)‏</language>
 			<language type="enm">الانجليزية الوسطى</language>
 			<language type="eo">اسبرانتو</language>
 			<language type="es">الأسبانية</language>
 			<language type="es_419">أسبانية أمريكا اللاتينية</language>
-			<language type="es_419" alt="proposed-x1001">الأيبانية (أمريكا اللاتينية)‏</language>
 			<language type="es_ES">الأسبانية الأيبيرية</language>
-			<language type="es_ES" alt="proposed-x1001">الاسبانية (ايبريا)‏</language>
 			<language type="et">الأستونية</language>
 			<language type="eu">لغة الباسك</language>
 			<language type="ewo">الايوندو</language>
@@ -167,7 +157,6 @@
 			<language type="fr">الفرنسية</language>
 			<language type="fr_CA">الفرنسية الكندية</language>
 			<language type="fr_CH">الفرنسية السويسرية</language>
-			<language type="fr_CH" alt="proposed-x1001">الفرنسية (سويسرا)‏</language>
 			<language type="frm">الفرنسية الوسطى</language>
 			<language type="fro">الفرنسية القديمة</language>
 			<language type="frr">الفريزينية الشمالية</language>
@@ -192,7 +181,6 @@
 			<language type="grb">الجريبو</language>
 			<language type="grc">اليونانية القديمة</language>
 			<language type="gsw">الألمانية السويسرية</language>
-			<language type="gsw" alt="proposed-x1001">الألمانية (سويسرا)‏</language>
 			<language type="gu">الغوجاراتية</language>
 			<language type="gv">المنكية</language>
 			<language type="ha">الهوسا</language>
@@ -233,9 +221,7 @@
 			<language type="ja">اليابانية</language>
 			<language type="jbo">اللوجبان</language>
 			<language type="jpr">الجيدو الفارسى</language>
-			<language type="jpr" alt="proposed-x1001">اليهودية - الفارسية</language>
 			<language type="jrb">الجيدو العربى</language>
-			<language type="jrb" alt="proposed-x1001">اليهودية - العربية</language>
 			<language type="jv">الجاوية</language>
 			<language type="ka">الجورجية</language>
 			<language type="kaa">الكارا-كالباك</language>
@@ -284,9 +270,6 @@
 			<language type="ln">اللينجالا</language>
 			<language type="lo">اللاوية</language>
 			<language type="lol">منغولى</language>
-			<language type="lol" alt="proposed-x1001">المنغولية</language>
-			<language type="lol" alt="proposed-x1002">المنغولية [lol]</language>
-			<language type="lol" alt="proposed-x1003">المنجو</language>
 			<language type="loz">اللوزى</language>
 			<language type="lt">اللتوانية</language>
 			<language type="lu">اللبا-كاتانجا</language>
@@ -353,7 +336,6 @@
 			<language type="nog">النوجاى</language>
 			<language type="non">النورس القديم</language>
 			<language type="nqo">انكو</language>
-			<language type="nqo" alt="proposed-x1001">نكو</language>
 			<language type="nr">النديبيل الجنوبى</language>
 			<language type="nso">السوتو الشمالية</language>
 			<language type="nub">اللغات النوبية</language>
@@ -365,7 +347,6 @@
 			<language type="nyo">النيورو</language>
 			<language type="nzi">النزيما</language>
 			<language type="oc">الأوكيتانية</language>
-			<language type="oc" alt="proposed-x1001">الأوكيتان (بعد 1500)، بروفينسية</language>
 			<language type="oj">الأوجيبوا</language>
 			<language type="om">الأورومو</language>
 			<language type="or">الأورييا</language>
@@ -392,7 +373,6 @@
 			<language type="pt">البرتغالية</language>
 			<language type="pt_BR">البرتغالية البرازيلية</language>
 			<language type="pt_PT">البرتغالية الأيبيرية</language>
-			<language type="pt_PT" alt="proposed-x1001">البرتغالية (ايبريا)‏</language>
 			<language type="qu">الكويتشوا</language>
 			<language type="raj">الراجاسثانية</language>
 			<language type="rap">الرابانى</language>
@@ -451,7 +431,6 @@
 			<language type="ssa">النيلية الصحراوية - أخرى</language>
 			<language type="st">السوتو الجنوبية</language>
 			<language type="su">السودانية</language>
-			<language type="su" alt="proposed-x1001">السوندانية</language>
 			<language type="suk">السوكوما</language>
 			<language type="sus">السوسو</language>
 			<language type="sux">السومارية</language>
@@ -571,8 +550,6 @@
 			<script type="Hung">المجرية القديمة</script>
 			<script type="Inds">اندس - هارابان</script>
 			<script type="Ital">الايطالية القديمة</script>
-			<script type="Ital" alt="proposed-x1001">الأيطالية القديمة</script>
-			<script type="Ital" alt="proposed-x1002">اللأيطالية القديمة</script>
 			<script type="Java">الجاوية</script>
 			<script type="Jpan">اليبانية</script>
 			<script type="Kali">الكياه لى</script>
@@ -766,7 +743,6 @@
 			<territory type="GW">غينيا بيساو</territory>
 			<territory type="GY">غيانا</territory>
 			<territory type="HK">هونج كونج الصينية</territory>
-			<territory type="HK" alt="short">هونج كونج</territory>
 			<territory type="HM">جزيرة هيرد وماكدونالد</territory>
 			<territory type="HN">هندوراس</territory>
 			<territory type="HR">كرواتيا</territory>
@@ -783,7 +759,6 @@
 			<territory type="IS">أيسلندا</territory>
 			<territory type="IT">ايطاليا</territory>
 			<territory type="JE">جيرسى</territory>
-			<territory type="JE" alt="proposed-x1001">جرسي</territory>
 			<territory type="JM">جامايكا</territory>
 			<territory type="JO">الأردن</territory>
 			<territory type="JP">اليابان</territory>
@@ -820,7 +795,6 @@
 			<territory type="MM">ميانمار</territory>
 			<territory type="MN">منغوليا</territory>
 			<territory type="MO">ماكاو الصينية</territory>
-			<territory type="MO" alt="short">ماكاو</territory>
 			<territory type="MP">جزر ماريانا الشمالية</territory>
 			<territory type="MQ">مارتينيك</territory>
 			<territory type="MR">موريتانيا</territory>
@@ -848,8 +822,6 @@
 			<territory type="PA">بنما</territory>
 			<territory type="PE">بيرو</territory>
 			<territory type="PF">بولينيزيا [PF]</territory>
-			<territory type="PF" alt="proposed-x1001">بولينيزيا الفرنسية</territory>
-			<territory type="PF" alt="proposed-x1002">البولينيزية الفرنسية</territory>
 			<territory type="PG">بابوا غينيا الجديدة</territory>
 			<territory type="PH">الفيلبين</territory>
 			<territory type="PK">باكستان</territory>
@@ -863,7 +835,6 @@
 			<territory type="PY">باراجواي</territory>
 			<territory type="QA">قطر</territory>
 			<territory type="QO">أوقيانوسيا النائية</territory>
-			<territory type="QO" alt="proposed-x1001">اوقيانوسيا النائية</territory>
 			<territory type="QU">الاتحاد الاوروبي</territory>
 			<territory type="RE">روينيون</territory>
 			<territory type="RO">رومانيا</territory>
@@ -926,7 +897,6 @@
 			<territory type="ZM">زامبيا</territory>
 			<territory type="ZW">زيمبابوي</territory>
 			<territory type="ZZ">منطقة غير معرفة</territory>
-			<territory type="ZZ" alt="proposed-x1001">غير معروف</territory>
 		</territories>
 		<variants>
 			<variant type="1901">التهجئة الألمانية التقليدية</variant>
@@ -942,7 +912,6 @@
 		</variants>
 		<keys>
 			<key type="calendar">التقويم</key>
-			<key type="calendar" alt="proposed-x1001">تقويم</key>
 			<key type="collation">الترتيب</key>
 			<key type="currency">العملات</key>
 		</keys>
@@ -974,13 +943,9 @@
 	</characters>
 	<delimiters>
 		<quotationStart>”</quotationStart>
-		<quotationStart alt="proposed-x1001">‘</quotationStart>
 		<quotationEnd>“</quotationEnd>
-		<quotationEnd alt="proposed-x1001">’</quotationEnd>
 		<alternateQuotationStart>’</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">&quot;</alternateQuotationStart>
 		<alternateQuotationEnd>‘</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">&quot;</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
@@ -1007,11 +972,9 @@
 							<month type="2">بابه</month>
 							<month type="3">هاتور</month>
 							<month type="4">كيهك</month>
-							<month type="4" alt="proposed-x1001">كياهك</month>
 							<month type="5">طوبة</month>
 							<month type="6">أمشير</month>
 							<month type="7">برمهات</month>
-							<month type="7" alt="proposed-x1001">برامهات</month>
 							<month type="8">برمودة</month>
 							<month type="9">بشنس</month>
 							<month type="10">بؤونة</month>
@@ -1024,11 +987,9 @@
 							<month type="2">بابه</month>
 							<month type="3">هاتور</month>
 							<month type="4">كيهك</month>
-							<month type="4" alt="proposed-x1001">كياهك</month>
 							<month type="5">طوبة</month>
 							<month type="6">أمشير</month>
 							<month type="7">برمهات</month>
-							<month type="7" alt="proposed-x1001">برامهات</month>
 							<month type="8">برمودة</month>
 							<month type="9">بشنس</month>
 							<month type="10">بؤونة</month>
@@ -1128,19 +1089,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">ح</day>
-							<day type="sun" alt="proposed-x1001">أحد</day>
 							<day type="mon">ن</day>
-							<day type="mon" alt="proposed-x1001">اثنين</day>
 							<day type="tue">ث</day>
-							<day type="tue" alt="proposed-x1001">ثلاثاء</day>
 							<day type="wed">ر</day>
-							<day type="wed" alt="proposed-x1001">أربعاء</day>
 							<day type="thu">خ</day>
-							<day type="thu" alt="proposed-x1001">خميس</day>
 							<day type="fri">ج</day>
-							<day type="fri" alt="proposed-x1001">جمعة</day>
 							<day type="sat">س</day>
-							<day type="sat" alt="proposed-x1001">سبت</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">الأحد</day>
@@ -1213,27 +1167,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, d MMMM, yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>d MMMM, yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd‏/MM‏/yyyy</pattern>
-							<pattern alt="proposed-x1001">‮dd/MM/yyyy</pattern>
-							<pattern alt="proposed-x1002">dd/MM/yyyy</pattern>
-							<pattern alt="proposed-x1003">dd‏‏/MM‏/yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>d‏/M‏/yyyy</pattern>
-							<pattern alt="proposed-x1001">d/M/yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -1246,7 +1194,6 @@
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>z h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
@@ -1269,10 +1216,8 @@
 					<availableFormats>
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">dd‏/MM</dateFormatItem>
-						<dateFormatItem id="MMdd" alt="proposed-x1001">dd/MM</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyyyMM">MM‏/yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyMM" alt="proposed-x1001">MM/yyyy</dateFormatItem>
 						<dateFormatItem id="yyyyMMMM">MMMM, yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
@@ -1291,7 +1236,6 @@
 					</field>
 					<field type="day">
 						<displayName>يوم</displayName>
-						<displayName alt="proposed-x1001">اليوم</displayName>
 						<relative type="0">اليوم</relative>
 						<relative type="1">غدا</relative>
 						<relative type="2">بعد الغد</relative>
@@ -1325,14 +1269,12 @@
 							<month type="2">مرحشوان</month>
 							<month type="3">كيسلو</month>
 							<month type="4">طيفت</month>
-							<month type="4" alt="proposed-x1001">طيست</month>
 							<month type="5">شباط</month>
 							<month type="6">آذار الأول</month>
 							<month type="7">آذار الثاني</month>
 							<month type="8">نيسان</month>
 							<month type="9">أيار</month>
 							<month type="10">سيفان</month>
-							<month type="10" alt="proposed-x1001">سيوان</month>
 							<month type="11">تموز</month>
 							<month type="12">آب</month>
 							<month type="13">أيلول</month>
@@ -1342,14 +1284,12 @@
 							<month type="2">مرحشوان</month>
 							<month type="3">كيسلو</month>
 							<month type="4">طيفت</month>
-							<month type="4" alt="proposed-x1001">طيست</month>
 							<month type="5">شباط</month>
 							<month type="6">آذار الأول</month>
 							<month type="7">آذار الثاني</month>
 							<month type="8">نيسان</month>
 							<month type="9">أيار</month>
 							<month type="10">سيفان</month>
-							<month type="10" alt="proposed-x1001">سيوان</month>
 							<month type="11">تموز</month>
 							<month type="12">آب</month>
 						</monthWidth>
@@ -1636,14 +1576,11 @@
 					<monthContext type="format">
 						<monthWidth type="abbreviated">
 							<month type="1">فرفردن</month>
-							<month type="1" alt="proposed-x1001">فروردین</month>
 							<month type="2">أذربيهشت</month>
 							<month type="3">خرداد</month>
 							<month type="4">تار</month>
-							<month type="4" alt="proposed-x1001">تیر</month>
 							<month type="5">مرداد</month>
 							<month type="6">شهرفار</month>
-							<month type="6" alt="proposed-x1001">شهریار</month>
 							<month type="7">مهر</month>
 							<month type="8">آيان</month>
 							<month type="9">آذر</month>
@@ -1653,14 +1590,11 @@
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">فرفردن</month>
-							<month type="1" alt="proposed-x1001">فروردین</month>
 							<month type="2">أذربيهشت</month>
 							<month type="3">خرداد</month>
 							<month type="4">تار</month>
-							<month type="4" alt="proposed-x1001">تیر</month>
 							<month type="5">مرداد</month>
 							<month type="6">شهرفار</month>
-							<month type="6" alt="proposed-x1001">شهریار</month>
 							<month type="7">مهر</month>
 							<month type="8">آيان</month>
 							<month type="9">آذر</month>
@@ -1679,12 +1613,9 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH:mm;-HH:mm</hourFormat>
-			<gmtFormat alt="proposed-x1001">GMT{0}</gmtFormat>
-			<gmtFormat alt="proposed-x1002">توقيت جرينتش{0}</gmtFormat>
 			<regionFormat>{0}</regionFormat>
 			<zone type="Africa/Timbuktu">
 				<exemplarCity>تمبوكتو</exemplarCity>
-				<exemplarCity alt="proposed-x1001">تيمبيوكتو</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>كومودريفادافيا</exemplarCity>
@@ -1766,7 +1697,6 @@
 			</zone>
 			<zone type="Australia/Adelaide">
 				<exemplarCity>إستراليا (توقيت أدليادا)</exemplarCity>
-				<exemplarCity alt="proposed-x1001">أدليادا</exemplarCity>
 			</zone>
 			<zone type="Australia/Broken_Hill">
 				<exemplarCity>بروكن هيل</exemplarCity>
@@ -2172,7 +2102,6 @@
 			</zone>
 			<zone type="America/Adak">
 				<exemplarCity>أداك</exemplarCity>
-				<exemplarCity alt="proposed-x1001">الولايات المتحدة الأمريكية (توقيت أداك)</exemplarCity>
 			</zone>
 			<zone type="America/Nome">
 				<exemplarCity>نوم</exemplarCity>
@@ -2278,7 +2207,6 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤ #,##0.00;¤ #,##0.00-</pattern>
-					<pattern alt="proposed-x1001">#,##0.00 ¤</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -2352,14 +2280,12 @@
 			</currency>
 			<currency type="BEC">
 				<displayName>فرنك بلجيكى  - تحويلات</displayName>
-				<displayName alt="proposed-x1001">فرنك بلجيكى (تحويلات)‏</displayName>
 			</currency>
 			<currency type="BEF">
 				<displayName>فرنك بلجيكى</displayName>
 			</currency>
 			<currency type="BEL">
 				<displayName>فرنك بلجيكى - مالى</displayName>
-				<displayName alt="proposed-x1001">فرنك بلجيكى (مالي)‏</displayName>
 			</currency>
 			<currency type="BGL">
 				<displayName>ليف بلغارى</displayName>
@@ -2438,7 +2364,6 @@
 			<currency type="CNY">
 				<displayName>يوان صيني</displayName>
 				<symbol>ى.ص</symbol>
-				<symbol alt="proposed-x1001">.‏ي.ص</symbol>
 			</currency>
 			<currency type="COP">
 				<displayName>بيزو كولومبى</displayName>
@@ -2923,11 +2848,9 @@
 			</currency>
 			<currency type="USN">
 				<displayName>دولار أمريكي  - اليوم التالى</displayName>
-				<displayName alt="proposed-x1001">دولار أمريكي (اليوم التالي)‏</displayName>
 			</currency>
 			<currency type="USS">
 				<displayName>دولار أمريكى - نفس اليوم</displayName>
-				<displayName alt="proposed-x1001">دولار أمريكي (نفس اليوم)‏</displayName>
 			</currency>
 			<currency type="UYP">
 				<displayName>بيزو أوروجواى  - 1975-1993</displayName>
@@ -2978,7 +2901,6 @@
 			<currency type="XXX">
 				<displayName>بدون عملة</displayName>
 				<symbol>***</symbol>
-				<symbol alt="proposed-x1001">XXX‏</symbol>
 			</currency>
 			<currency type="YDD">
 				<displayName>دينار يمنى</displayName>

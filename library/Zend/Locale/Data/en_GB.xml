@@ -9,13 +9,9 @@
 	</identity>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
-		<quotationStart alt="proposed-x1001">“</quotationStart>
 		<quotationEnd>’</quotationEnd>
-		<quotationEnd alt="proposed-x1001">”</quotationEnd>
 		<alternateQuotationStart>“</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">‘</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -94,7 +90,6 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤#,##0.00</pattern>
-					<pattern alt="proposed-x1001">¤#,##0.00;(¤#,##0.00)</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>

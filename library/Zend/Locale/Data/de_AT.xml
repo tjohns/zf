@@ -15,7 +15,6 @@
 						<monthWidth type="abbreviated">
 							<month type="1">Jän</month>
 							<month type="3">Mär</month>
-							<month type="3" alt="proposed-x1001">Mrz</month>
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">Jänner</month>
@@ -37,7 +36,6 @@
 				<timeFormats>
 					<timeFormatLength type="full">
 						<timeFormat>
-							<pattern alt="proposed-x1001">HH:mm 'Uhr' v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>

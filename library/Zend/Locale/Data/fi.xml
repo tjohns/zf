@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
@@ -9,7 +8,6 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="aa">afar</language>
-			<language type="aa" alt="proposed-x1001">afari</language>
 			<language type="ab">abhaasi</language>
 			<language type="ace">aceh</language>
 			<language type="ach">atšoli</language>
@@ -18,54 +16,43 @@
 			<language type="ae">avesta</language>
 			<language type="af">afrikaans</language>
 			<language type="afa">afro-aasialainen kieli</language>
-			<language type="afa" alt="proposed-x1001">muut afroaasialaiset kielet</language>
 			<language type="afh">afrihili</language>
 			<language type="ain">ainu</language>
 			<language type="ak">akan</language>
 			<language type="akk">akkadi</language>
 			<language type="ale">aleutti</language>
 			<language type="alg">algonkin-kieli</language>
-			<language type="alg" alt="proposed-x1001">algonkin-kielet</language>
 			<language type="alt">altai</language>
 			<language type="am">amhara</language>
 			<language type="an">aragonia</language>
 			<language type="ang">muinaisenglanti</language>
 			<language type="anp">angika</language>
 			<language type="apa">apaššikieli</language>
-			<language type="apa" alt="proposed-x1001">apassi</language>
-			<language type="apa" alt="proposed-x1002">apaššikielet</language>
 			<language type="ar">arabia</language>
 			<language type="arc">aramea</language>
 			<language type="arn">araukaani</language>
 			<language type="arp">arapaho</language>
 			<language type="art">keinotekoinen kieli</language>
-			<language type="art" alt="proposed-x1001">muut keinotekoiset kielet</language>
 			<language type="arw">arawak</language>
 			<language type="as">assami</language>
 			<language type="ast">asturia</language>
 			<language type="ath">athabasca-kieli</language>
-			<language type="ath" alt="proposed-x1001">athabasca-kielet</language>
 			<language type="aus">australialainen kieli</language>
-			<language type="aus" alt="proposed-x1001">australialaiset kielet</language>
 			<language type="av">avaari</language>
 			<language type="awa">awadhi</language>
 			<language type="ay">aimara</language>
 			<language type="az">azeri</language>
 			<language type="ba">baškiiri</language>
-			<language type="ba" alt="proposed-x1001">baskiiri</language>
 			<language type="bad">banda</language>
 			<language type="bai">bamileke-kieli</language>
-			<language type="bai" alt="proposed-x1001">bamileke-kielet</language>
 			<language type="bal">belutši</language>
 			<language type="ban">bali</language>
 			<language type="bas">basa</language>
 			<language type="bat">balttilainen kieli</language>
-			<language type="bat" alt="proposed-x1001">muut balttilaiset kielet</language>
 			<language type="be">valkovenäjä</language>
 			<language type="bej">bedža</language>
 			<language type="bem">bemba</language>
 			<language type="ber">berberikieli</language>
-			<language type="ber" alt="proposed-x1001">muut berberikielet</language>
 			<language type="bg">bulgaria</language>
 			<language type="bh">bihari</language>
 			<language type="bho">bhodžpuri</language>
@@ -76,7 +63,6 @@
 			<language type="bm">bambara</language>
 			<language type="bn">bengali</language>
 			<language type="bnt">bantukieli</language>
-			<language type="bnt" alt="proposed-x1001">muut bantukielet</language>
 			<language type="bo">tiibet</language>
 			<language type="br">bretoni</language>
 			<language type="bra">bradž</language>
@@ -88,15 +74,12 @@
 			<language type="ca">katalaani</language>
 			<language type="cad">caddo</language>
 			<language type="cai">keskiamerikkalainen intiaanikieli</language>
-			<language type="cai" alt="proposed-x1001">muut Keski-Amerikan intiaanikielet</language>
 			<language type="car">karibi</language>
 			<language type="cau">kaukasialainen kieli</language>
-			<language type="cau" alt="proposed-x1001">muut kaukasialaiset kielet</language>
 			<language type="cch">atsam</language>
 			<language type="ce">tšetšeeni</language>
 			<language type="ceb">cebuano</language>
 			<language type="cel">kelttiläinen kieli</language>
-			<language type="cel" alt="proposed-x1001">muut kelttiläiset kielet</language>
 			<language type="ch">tšamorro</language>
 			<language type="chb">tšibtša</language>
 			<language type="chg">tšagatai</language>
@@ -108,26 +91,18 @@
 			<language type="chr">cherokee</language>
 			<language type="chy">cheyenne</language>
 			<language type="cmc">tšam-kieli</language>
-			<language type="cmc" alt="proposed-x1001">tšam-kielet</language>
 			<language type="co">korsika</language>
 			<language type="cop">kopti</language>
 			<language type="cpe">englantiin perustuva kreoli- tai pidgin-kieli</language>
-			<language type="cpe" alt="proposed-x1001">muut englantiin perustuvat kreolit ja pidginit</language>
 			<language type="cpf">ranskaan perustuva kreoli- tai pidgin-kieli</language>
-			<language type="cpf" alt="proposed-x1001">muut ranskaan perustuvat kreolit ja pidginit</language>
 			<language type="cpp">portugaliin perustuva kreoli- tai pidgin-kieli</language>
-			<language type="cpp" alt="proposed-x1001">muut portugaliin perustuvat kreolit ja pidginit</language>
 			<language type="cr">cree</language>
 			<language type="crh">krimintataari</language>
-			<language type="crh" alt="proposed-x1001">krimintataari; kriminturkki</language>
-			<language type="crh" alt="secondary">kriminturkki</language>
 			<language type="crp">kreoli- tai pidgin-kieli</language>
-			<language type="crp" alt="proposed-x1001">muut kreolit ja pidginit</language>
 			<language type="cs">tšekki</language>
 			<language type="csb">kašubi</language>
 			<language type="cu">kirkkoslaavi</language>
 			<language type="cus">kuušilainen kieli</language>
-			<language type="cus" alt="proposed-x1001">muut kuušilaiset kielet</language>
 			<language type="cv">tšuvassi</language>
 			<language type="cy">kymri</language>
 			<language type="da">tanska</language>
@@ -143,14 +118,12 @@
 			<language type="din">dinka</language>
 			<language type="doi">dogri</language>
 			<language type="dra">dravidakieli</language>
-			<language type="dra" alt="proposed-x1001">muut dravidakielet</language>
 			<language type="dsb">alasorbi</language>
 			<language type="dua">duala</language>
 			<language type="dum">keskihollanti</language>
 			<language type="dv">divehi</language>
 			<language type="dyu">djula</language>
 			<language type="dz">dzongkha</language>
-			<language type="dz" alt="proposed-x1001">bhutani</language>
 			<language type="ee">ewe</language>
 			<language type="efi">efik</language>
 			<language type="egy">muinaisegypti</language>
@@ -161,28 +134,22 @@
 			<language type="en_AU">australianenglanti</language>
 			<language type="en_CA">kanadanenglanti</language>
 			<language type="en_GB">britannianenglanti</language>
-			<language type="en_GB" alt="proposed-x1001">englanti (Iso-Britannia)</language>
 			<language type="en_US">amerikanenglanti</language>
 			<language type="enm">keskienglanti</language>
 			<language type="eo">esperanto</language>
 			<language type="es">espanja</language>
 			<language type="es_419">amerikanespanja</language>
 			<language type="es_ES">espanjanespanja</language>
-			<language type="es_ES" alt="proposed-x1002">iberianespanja</language>
 			<language type="et">viro</language>
 			<language type="eu">baski</language>
 			<language type="ewo">ewondo</language>
 			<language type="fa">farsi</language>
-			<language type="fa" alt="proposed-x1001">persia</language>
-			<language type="fa" alt="proposed-x1002">farsi; persia</language>
-			<language type="fa" alt="secondary">persia</language>
 			<language type="fan">fang</language>
 			<language type="fat">fanti</language>
 			<language type="ff">fulani</language>
 			<language type="fi">suomi</language>
 			<language type="fil">filipino</language>
 			<language type="fiu">suomalais-ugrilainen kieli</language>
-			<language type="fiu" alt="proposed-x1001">muut suomalais-ugrilaiset kielet</language>
 			<language type="fj">fidži</language>
 			<language type="fo">fääri</language>
 			<language type="fon">fon</language>
@@ -195,17 +162,12 @@
 			<language type="frs">itäfriisi</language>
 			<language type="fur">friuli</language>
 			<language type="fy">länsifriisi</language>
-			<language type="fy" alt="proposed-x1001">friisi</language>
 			<language type="ga">iiri</language>
-			<language type="ga" alt="proposed-x1001">gaeli</language>
 			<language type="gaa">ga</language>
 			<language type="gay">gajo</language>
 			<language type="gba">gbaja</language>
 			<language type="gd">gaeli</language>
-			<language type="gd" alt="proposed-x1001">skotlanningaeli</language>
-			<language type="gd" alt="proposed-x1002">skottilainen gaeli</language>
 			<language type="gem">germaaninen kieli</language>
-			<language type="gem" alt="proposed-x1001">muut germaaniset kielet</language>
 			<language type="gez">ge’ez</language>
 			<language type="gil">kiribati</language>
 			<language type="gl">galicia</language>
@@ -219,7 +181,6 @@
 			<language type="grc">muinaiskreikka</language>
 			<language type="gsw">sveitsinsaksa</language>
 			<language type="gu">gudžarati</language>
-			<language type="gu" alt="proposed-x1001">gujarati</language>
 			<language type="gv">manx</language>
 			<language type="gwi">gwitšin</language>
 			<language type="ha">hausa</language>
@@ -233,35 +194,27 @@
 			<language type="hmn">hmong</language>
 			<language type="ho">hiri-motu</language>
 			<language type="hr">kroatia</language>
-			<language type="hr" alt="proposed-x1001">kroaatti</language>
 			<language type="hsb">yläsorbi</language>
 			<language type="ht">haiti</language>
 			<language type="hu">unkari</language>
 			<language type="hup">hupa</language>
 			<language type="hy">armenia</language>
-			<language type="hy" alt="proposed-x1001">armeeni</language>
 			<language type="hz">herero</language>
 			<language type="ia">interlingua</language>
 			<language type="iba">iban</language>
 			<language type="id">indonesia</language>
 			<language type="ie">interlingue</language>
-			<language type="ie" alt="proposed-x1001">interlingua</language>
 			<language type="ig">igbo</language>
 			<language type="ii">sichuanin-yi</language>
 			<language type="ijo">idžo</language>
 			<language type="ik">inupiatun</language>
-			<language type="ik" alt="proposed-x1001">inupiak</language>
 			<language type="ilo">iloko</language>
 			<language type="inc">indoarjalainen kieli</language>
-			<language type="inc" alt="proposed-x1001">muut indoarjalaiset kielet</language>
 			<language type="ine">indoeurooppalainen kieli</language>
-			<language type="ine" alt="proposed-x1001">muut indoeurooppalaiset kielet</language>
 			<language type="inh">inguuši</language>
 			<language type="io">ido</language>
 			<language type="ira">iranilainen kieli</language>
-			<language type="ira" alt="proposed-x1001">muut iranilaiset kielet</language>
 			<language type="iro">irokeesikieli</language>
-			<language type="iro" alt="proposed-x1001">irokeesikielet</language>
 			<language type="is">islanti</language>
 			<language type="it">italia</language>
 			<language type="iu">inuktitut</language>
@@ -271,7 +224,6 @@
 			<language type="jrb">juutalaisarabia</language>
 			<language type="jv">jaava</language>
 			<language type="ka">georgia</language>
-			<language type="ka" alt="proposed-x1001">gruusia</language>
 			<language type="kaa">karakalpakki</language>
 			<language type="kab">kabyyli</language>
 			<language type="kac">kachin</language>
@@ -282,22 +234,15 @@
 			<language type="kbd">kabardi</language>
 			<language type="kcg">tyap</language>
 			<language type="kfo">norsunluurannikonkoro</language>
-			<language type="kfo" alt="proposed-x1001">Norsunluurannikon koro</language>
-			<language type="kfo" alt="proposed-x1002">koro</language>
 			<language type="kg">kongo</language>
 			<language type="kha">khasi</language>
 			<language type="khi">khoisan-kieli</language>
-			<language type="khi" alt="proposed-x1001">muut khoisan-kielet</language>
 			<language type="kho">khotani</language>
 			<language type="ki">kikuju</language>
 			<language type="kj">kuanjama</language>
 			<language type="kk">kazakki</language>
 			<language type="kl">kalaallisut</language>
-			<language type="kl" alt="proposed-x1001">kalaallisut; grönlanti</language>
-			<language type="kl" alt="proposed-x1002">grönlanti</language>
-			<language type="kl" alt="secondary">grönlanti</language>
 			<language type="km">khmer</language>
-			<language type="km" alt="proposed-x1001">khmeeri</language>
 			<language type="kmb">kimbundu</language>
 			<language type="kn">kannada</language>
 			<language type="ko">korea</language>
@@ -308,10 +253,8 @@
 			<language type="krc">karatšai-balkaari</language>
 			<language type="krl">karjala</language>
 			<language type="kro">kru-kieli</language>
-			<language type="kro" alt="proposed-x1001">kru-kielet</language>
 			<language type="kru">kurukh</language>
 			<language type="ks">kašmiri</language>
-			<language type="ks" alt="proposed-x1001">kasmiri</language>
 			<language type="ku">kurdi</language>
 			<language type="kum">kumykki</language>
 			<language type="kut">kutenai</language>
@@ -320,8 +263,6 @@
 			<language type="ky">kirgiisi</language>
 			<language type="la">latina</language>
 			<language type="lad">ladino</language>
-			<language type="lad" alt="proposed-x1001">ladino; juutalaisespanja</language>
-			<language type="lad" alt="secondary">juutalaisespanja</language>
 			<language type="lah">lahnda</language>
 			<language type="lam">lamba</language>
 			<language type="lb">luxemburg</language>
@@ -330,16 +271,11 @@
 			<language type="li">limburg</language>
 			<language type="ln">lingala</language>
 			<language type="lo">lao</language>
-			<language type="lo" alt="proposed-x1001">lathia</language>
 			<language type="lol">mongo</language>
 			<language type="loz">lozi</language>
 			<language type="lt">liettua</language>
 			<language type="lu">katanganluba</language>
-			<language type="lu" alt="proposed-x1001">luba (Katanga)</language>
-			<language type="lu" alt="proposed-x1002">Katangan luba</language>
 			<language type="lua">luluanluba</language>
-			<language type="lua" alt="proposed-x1001">Luluan luba</language>
-			<language type="lua" alt="proposed-x1002">luba (Lulua)</language>
 			<language type="lui">luiseño</language>
 			<language type="lun">lunda</language>
 			<language type="luo">luo</language>
@@ -351,33 +287,25 @@
 			<language type="mak">makassar</language>
 			<language type="man">mandingo</language>
 			<language type="map">austronesialainen kieli</language>
-			<language type="map" alt="proposed-x1001">muut austronesialaiset kielet</language>
 			<language type="mas">maasai</language>
 			<language type="mdf">mokša</language>
 			<language type="mdr">mandar</language>
 			<language type="men">mende</language>
 			<language type="mg">malagassi</language>
-			<language type="mg" alt="proposed-x1001">madagassi</language>
 			<language type="mga">keski-iiri</language>
 			<language type="mh">marshall</language>
 			<language type="mi">maori</language>
 			<language type="mic">micmac</language>
 			<language type="min">minangkabau</language>
 			<language type="mis">luokittelematon kieli</language>
-			<language type="mis" alt="proposed-x1001">luokittelemattomat kielet</language>
 			<language type="mk">makedonia</language>
 			<language type="mkh">mon-khmer-kieli</language>
-			<language type="mkh" alt="proposed-x1001">muut mon-khmer-kielet</language>
 			<language type="ml">malajalam</language>
-			<language type="ml" alt="proposed-x1001">malayalam</language>
 			<language type="mn">mongoli</language>
-			<language type="mn" alt="proposed-x1001">mongolia</language>
 			<language type="mnc">mantšu</language>
 			<language type="mni">manipuri</language>
 			<language type="mno">manobo-kieli</language>
-			<language type="mno" alt="proposed-x1001">manobo-kielet</language>
 			<language type="mo">moldavia</language>
-			<language type="mo" alt="proposed-x1001">moldova</language>
 			<language type="moh">mohawk</language>
 			<language type="mos">mossi</language>
 			<language type="mr">marathi</language>
@@ -385,52 +313,35 @@
 			<language type="mt">malta</language>
 			<language type="mul">monia kieliä</language>
 			<language type="mun">mundakieli</language>
-			<language type="mun" alt="proposed-x1001">mundakielet</language>
 			<language type="mus">creek</language>
 			<language type="mwl">mirandeesi</language>
 			<language type="mwr">marwari</language>
 			<language type="my">burma</language>
 			<language type="myn">maya-kieli</language>
-			<language type="myn" alt="proposed-x1001">maya-kielet</language>
 			<language type="myv">ersä</language>
 			<language type="na">nauru</language>
 			<language type="nah">nahuatl</language>
 			<language type="nai">pohjoisamerikkalainen intiaanikieli</language>
-			<language type="nai" alt="proposed-x1001">muut Pohjois-Amerikan intiaanikielet</language>
 			<language type="nap">napoli</language>
 			<language type="nb">norjan bokmål</language>
-			<language type="nb" alt="proposed-x1001">Norjan bokmål</language>
-			<language type="nb" alt="proposed-x1002">norja (bokmål)</language>
-			<language type="nb" alt="proposed-x1003">kirjanorja</language>
 			<language type="nd">pohjois-ndebele</language>
-			<language type="nd" alt="proposed-x1001">ndebele, pohjois-</language>
 			<language type="nds">alasaksa</language>
 			<language type="ne">nepali</language>
 			<language type="new">newari</language>
 			<language type="ng">ndonga</language>
 			<language type="nia">nias</language>
 			<language type="nic">nigeriläis-kongolainen kieli</language>
-			<language type="nic" alt="proposed-x1001">muut nigeriläis-kongolaiset kielet</language>
 			<language type="niu">niue</language>
 			<language type="nl">hollanti</language>
 			<language type="nl_BE">flaami</language>
-			<language type="nl_BE" alt="proposed-x1001">hollanti (flaami)</language>
 			<language type="nn">norjan nynorsk</language>
-			<language type="nn" alt="proposed-x1001">norja (nynorsk)</language>
-			<language type="nn" alt="proposed-x1002">Norjan nynorsk</language>
-			<language type="nn" alt="proposed-x1003">uusnorja (nynorsk)</language>
-			<language type="nn" alt="proposed-x1004">uusnorja</language>
 			<language type="no">norja</language>
 			<language type="nog">nogai</language>
 			<language type="non">muinaisnorja</language>
 			<language type="nqo">n’ko</language>
 			<language type="nr">etelä-ndebele</language>
-			<language type="nr" alt="proposed-x1001">ndebele, etelä-</language>
-			<language type="nr" alt="proposed-x1002">eteländebele</language>
 			<language type="nso">pohjoissotho</language>
-			<language type="nso" alt="proposed-x1001">sotho, pohjois-</language>
 			<language type="nub">nubialainen kieli</language>
-			<language type="nub" alt="proposed-x1001">nubialaiset kielet</language>
 			<language type="nv">navajo</language>
 			<language type="nwc">klassinen newari</language>
 			<language type="ny">njandža</language>
@@ -442,16 +353,12 @@
 			<language type="oj">odžibwa</language>
 			<language type="om">oromo</language>
 			<language type="or">orija</language>
-			<language type="or" alt="proposed-x1001">oriya</language>
 			<language type="os">osseetti</language>
 			<language type="osa">osage</language>
 			<language type="ota">osmani</language>
 			<language type="oto">otomi-kieli</language>
-			<language type="oto" alt="proposed-x1001">otomi-kielet</language>
 			<language type="pa">pandžabi</language>
-			<language type="pa" alt="proposed-x1001">punjabi</language>
 			<language type="paa">papualaiskieli</language>
-			<language type="paa" alt="proposed-x1001">muut papualaiskielet</language>
 			<language type="pag">pangasinan</language>
 			<language type="pal">pahlavi</language>
 			<language type="pam">pampanga</language>
@@ -459,22 +366,17 @@
 			<language type="pau">palau</language>
 			<language type="peo">muinaispersia</language>
 			<language type="phi">filippiiniläinen kieli</language>
-			<language type="phi" alt="proposed-x1001">muut filippiiniläiset kielet</language>
 			<language type="phn">foinikia</language>
 			<language type="pi">paali</language>
 			<language type="pl">puola</language>
 			<language type="pon">pohnpei</language>
 			<language type="pra">prakrit-kieli</language>
-			<language type="pra" alt="proposed-x1001">prakrit-kielet</language>
 			<language type="pro">muinaisprovensaali</language>
 			<language type="ps">paštu</language>
-			<language type="ps" alt="proposed-x1001">pashto</language>
 			<language type="pt">portugali</language>
 			<language type="pt_BR">brasilianportugali</language>
 			<language type="pt_PT">portugalinportugali</language>
-			<language type="pt_PT" alt="proposed-x1001">iberianportugali</language>
 			<language type="qu">ketšua</language>
-			<language type="qu" alt="proposed-x1001">ketsua</language>
 			<language type="raj">radžastani</language>
 			<language type="rap">rapanui</language>
 			<language type="rar">rarotonga</language>
@@ -482,20 +384,16 @@
 			<language type="rn">rundi</language>
 			<language type="ro">romania</language>
 			<language type="roa">romaaninen kieli</language>
-			<language type="roa" alt="proposed-x1001">muut romaaniset kielet</language>
 			<language type="rom">romani</language>
 			<language type="root">juuri</language>
 			<language type="ru">venäjä</language>
 			<language type="rup">aromania</language>
 			<language type="rw">ruanda</language>
 			<language type="sa">sanskrit</language>
-			<language type="sa" alt="proposed-x1001">sanskriitti</language>
 			<language type="sad">sandawe</language>
 			<language type="sah">jakuutti</language>
 			<language type="sai">eteläamerikkalainen intiaanikieli</language>
-			<language type="sai" alt="proposed-x1001">muut Etelä-Amerikan intiaanikielet</language>
 			<language type="sal">sališilainen kieli</language>
-			<language type="sal" alt="proposed-x1001">sališilaiset kielet</language>
 			<language type="sam">samarianaramea</language>
 			<language type="sas">sasak</language>
 			<language type="sat">santali</language>
@@ -504,42 +402,27 @@
 			<language type="sco">skotti</language>
 			<language type="sd">sindhi</language>
 			<language type="se">pohjoissaame</language>
-			<language type="se" alt="proposed-x1001">saame, pohjois-</language>
 			<language type="sel">selkuppi</language>
 			<language type="sem">seemiläinen kieli</language>
-			<language type="sem" alt="proposed-x1001">muut seemiläiset kielet</language>
 			<language type="sg">sango</language>
-			<language type="sg" alt="proposed-x1001">sangro</language>
 			<language type="sga">muinaisiiri</language>
 			<language type="sgn">viittomakieli</language>
-			<language type="sgn" alt="proposed-x1001">viittomakielet</language>
 			<language type="sh">serbokroaatti</language>
 			<language type="shn">shan</language>
 			<language type="si">sinhali</language>
-			<language type="si" alt="proposed-x1001">singaleesi</language>
 			<language type="sid">sidamo</language>
 			<language type="sio">sioux-kieli</language>
-			<language type="sio" alt="proposed-x1001">sioux-kielet</language>
 			<language type="sit">sinotiibetiläinen kieli</language>
-			<language type="sit" alt="proposed-x1001">muut sinotiibetiläiset kielet</language>
 			<language type="sk">slovakki</language>
-			<language type="sk" alt="proposed-x1001">slovakin kieli</language>
 			<language type="sl">sloveeni</language>
 			<language type="sla">slaavilainen kieli</language>
-			<language type="sla" alt="proposed-x1001">muut slaavilaiset kielet</language>
 			<language type="sm">samoa</language>
 			<language type="sma">eteläsaame</language>
-			<language type="sma" alt="proposed-x1001">saame, etelä-</language>
 			<language type="smi">saamelaiskieli</language>
-			<language type="smi" alt="proposed-x1001">muut saamelaiskielet</language>
 			<language type="smj">luulajansaame</language>
-			<language type="smj" alt="proposed-x1001">saame, luulajan-</language>
 			<language type="smn">inarinsaame</language>
-			<language type="smn" alt="proposed-x1001">saame, inarin-</language>
 			<language type="sms">koltansaame</language>
-			<language type="sms" alt="proposed-x1001">saame, koltan-</language>
 			<language type="sn">šona</language>
-			<language type="sn" alt="proposed-x1001">shona</language>
 			<language type="snk">soninke</language>
 			<language type="so">somali</language>
 			<language type="sog">sogdi</language>
@@ -549,14 +432,9 @@
 			<language type="srn">sranan</language>
 			<language type="srr">serer</language>
 			<language type="ss">swazi</language>
-			<language type="ss" alt="proposed-x1001">siswati</language>
 			<language type="ssa">niililäis-saharalainen kieli</language>
-			<language type="ssa" alt="proposed-x1001">muut niililäis-saharalaiset kielet</language>
 			<language type="st">eteläsotho</language>
-			<language type="st" alt="proposed-x1001">sesotho</language>
-			<language type="st" alt="proposed-x1002">sotho, etelä-</language>
 			<language type="su">sunda</language>
-			<language type="su" alt="proposed-x1001">sundaneesi</language>
 			<language type="suk">sukuma</language>
 			<language type="sus">susu</language>
 			<language type="sux">sumeri</language>
@@ -564,36 +442,25 @@
 			<language type="sw">swahili</language>
 			<language type="syr">syyria</language>
 			<language type="ta">tamil</language>
-			<language type="ta" alt="proposed-x1001">tamili</language>
 			<language type="tai">thaikieli</language>
-			<language type="tai" alt="proposed-x1001">muut thaikielet</language>
 			<language type="te">telugu</language>
 			<language type="tem">temne</language>
 			<language type="ter">tereno</language>
 			<language type="tet">tetum</language>
 			<language type="tg">tadžikki</language>
-			<language type="tg" alt="proposed-x1001">tadzikki</language>
 			<language type="th">thai</language>
 			<language type="ti">tigrinja</language>
 			<language type="tig">tigre</language>
 			<language type="tiv">tiv</language>
 			<language type="tk">turkmeeni</language>
-			<language type="tk" alt="proposed-x1001">turkki</language>
 			<language type="tkl">tokelau</language>
 			<language type="tl">tagalog</language>
 			<language type="tlh">klingon</language>
 			<language type="tli">tlingit</language>
 			<language type="tmh">tamašek</language>
 			<language type="tn">tswana</language>
-			<language type="tn" alt="proposed-x1001">setswana</language>
 			<language type="to">tongantonga</language>
-			<language type="to" alt="proposed-x1001">tonga (Tonga)</language>
-			<language type="to" alt="proposed-x1002">tonga</language>
-			<language type="to" alt="proposed-x1003">Tongan tonga</language>
 			<language type="tog">malawintonga</language>
-			<language type="tog" alt="proposed-x1001">Malawin tonga</language>
-			<language type="tog" alt="proposed-x1002">tonga</language>
-			<language type="tog" alt="proposed-x1003">tonga (Malawi)</language>
 			<language type="tpi">tok-pisin</language>
 			<language type="tr">turkki</language>
 			<language type="ts">tsonga</language>
@@ -601,9 +468,7 @@
 			<language type="tt">tataari</language>
 			<language type="tum">tumbuka</language>
 			<language type="tup">tupi-kieli</language>
-			<language type="tup" alt="proposed-x1001">tupi-kielet</language>
 			<language type="tut">altailainen kieli</language>
-			<language type="tut" alt="proposed-x1001">muut altailaiset kielet</language>
 			<language type="tvl">tuvalu</language>
 			<language type="tw">twi</language>
 			<language type="ty">tahiti</language>
@@ -623,30 +488,24 @@
 			<language type="vot">vatja</language>
 			<language type="wa">valloni</language>
 			<language type="wak">wakash-kieli</language>
-			<language type="wak" alt="proposed-x1001">wakash-kielet</language>
 			<language type="wal">walamo</language>
 			<language type="war">waray</language>
 			<language type="was">washo</language>
 			<language type="wen">sorbin kieli</language>
-			<language type="wen" alt="proposed-x1001">sorbin kielet</language>
 			<language type="wo">wolof</language>
 			<language type="xal">kalmukki</language>
 			<language type="xh">xhosa</language>
 			<language type="yao">jao</language>
 			<language type="yap">japi</language>
 			<language type="yi">jiddiš</language>
-			<language type="yi" alt="proposed-x1001">jiddi</language>
 			<language type="yo">joruba</language>
 			<language type="ypk">jupikkikieli</language>
-			<language type="ypk" alt="proposed-x1001">jupikkikielet</language>
 			<language type="za">zhuang</language>
 			<language type="zap">sapoteekki</language>
 			<language type="zen">zenaga</language>
 			<language type="zh">kiina</language>
 			<language type="zh_Hans">yksinkertaistettu kiina</language>
-			<language type="zh_Hans" alt="proposed-x1001">kiina (yksinkertaistettu)</language>
 			<language type="zh_Hant">perinteinen kiina</language>
-			<language type="zh_Hant" alt="proposed-x1001">kiina (perinteinen)</language>
 			<language type="znd">zande</language>
 			<language type="zu">zulu</language>
 			<language type="zun">zuni</language>
@@ -663,8 +522,6 @@
 			<script type="Bopo">bopomofo</script>
 			<script type="Brah">brahmi</script>
 			<script type="Brai">Braille-pistekirjoitus</script>
-			<script type="Brai" alt="proposed-x1001">pistekirjoitus (Braille)</script>
-			<script type="Brai" alt="proposed-x1002">pistekirjoitus</script>
 			<script type="Bugi">bugilainen</script>
 			<script type="Buhd">buhidilainen</script>
 			<script type="Cans">Kanadan alkuperäiskansojen yhtenäistetty tavukirjoitus</script>
@@ -676,22 +533,14 @@
 			<script type="Cprt">muinaiskyproslainen</script>
 			<script type="Cyrl">kyrillinen</script>
 			<script type="Cyrs">kyrillinen muinaiskirkkoslaavimuunnelma</script>
-			<script type="Cyrs" alt="proposed-x1001">kyrillinen (muinaiskirkkoslaavimuunnelma)</script>
-			<script type="Cyrs" alt="proposed-x1002">muinaiskirkkoslaavi-kyrillinen</script>
 			<script type="Deva">devanagari</script>
 			<script type="Dsrt">deseret</script>
 			<script type="Egyd">egyptiläinen demoottinen</script>
 			<script type="Egyh">egyptiläinen hieraattinen</script>
 			<script type="Egyp">egyptiläiset hieroglyfit</script>
 			<script type="Ethi">etiopialainen</script>
-			<script type="Ethi" alt="proposed-x1001">etiopialainen (ge’ez)</script>
-			<script type="Ethi" alt="secondary">ge’ez</script>
 			<script type="Geok">muinaisgeorgialainen</script>
-			<script type="Geok" alt="proposed-x1001">muinaisgeorgialainen (khutsuri)</script>
-			<script type="Geok" alt="secondary">khutsuri</script>
 			<script type="Geor">georgialainen</script>
-			<script type="Geor" alt="proposed-x1001">georgialainen (mkhedruli)</script>
-			<script type="Geor" alt="secondary">mkhedruli</script>
 			<script type="Glag">glagoliittinen</script>
 			<script type="Goth">goottilainen</script>
 			<script type="Grek">kreikkalainen</script>
@@ -699,21 +548,13 @@
 			<script type="Guru">gurmukhi</script>
 			<script type="Hang">hangul</script>
 			<script type="Hani">kiinalainen han</script>
-			<script type="Hani" alt="proposed-x1001">kiinalainen</script>
-			<script type="Hani" alt="proposed-x1002">kiinalainen (han)</script>
 			<script type="Hano">hanunoolainen</script>
 			<script type="Hans">kiinalainen yksinkertaistettu han</script>
-			<script type="Hans" alt="proposed-x1001">yksinkertaistettu kiinalainen</script>
-			<script type="Hans" alt="proposed-x1002">kiinalainen (han), yksinkertaistettu</script>
 			<script type="Hant">kiinalainen perinteinen han</script>
-			<script type="Hant" alt="proposed-x1001">perinteinen kiinalainen</script>
-			<script type="Hant" alt="proposed-x1002">kiinalainen (han), perinteinen</script>
 			<script type="Hebr">heprealainen</script>
-			<script type="Hebr" alt="proposed-x1001">heprea</script>
 			<script type="Hira">hiragana</script>
 			<script type="Hmng">pahawh hmong</script>
 			<script type="Hrkt">hiragana tai katakana</script>
-			<script type="Hrkt" alt="proposed-x1001">hiragana+katakana</script>
 			<script type="Hung">muinaisunkarilainen</script>
 			<script type="Inds">induslainen</script>
 			<script type="Ital">muinaisitalialainen</script>
@@ -722,17 +563,12 @@
 			<script type="Kali">kayah li</script>
 			<script type="Kana">katakana</script>
 			<script type="Khar">kharosthi</script>
-			<script type="Khar" alt="proposed-x1001">kharoshthi</script>
 			<script type="Khmr">khmeriläinen</script>
 			<script type="Knda">kannadalainen</script>
 			<script type="Lana">lanna</script>
 			<script type="Laoo">laolainen</script>
 			<script type="Latf">latinalainen fraktuuramuunnelma</script>
-			<script type="Latf" alt="proposed-x1001">latinalainen (fraktuuramuunnelma)</script>
-			<script type="Latf" alt="proposed-x1002">fraktuura-latinalainen</script>
 			<script type="Latg">latinalainen gaelimuunnelma</script>
-			<script type="Latg" alt="proposed-x1001">gaeli-latinalainen</script>
-			<script type="Latg" alt="proposed-x1002">latinalainen (gaelimuunnelma)</script>
 			<script type="Latn">latinalainen</script>
 			<script type="Lepc">lepchalainen</script>
 			<script type="Limb">limbulainen</script>
@@ -746,11 +582,7 @@
 			<script type="Mlym">malajalamilainen</script>
 			<script type="Mong">mongolilainen</script>
 			<script type="Moon">Moon-kohokirjoitus</script>
-			<script type="Moon" alt="proposed-x1001">Moonin</script>
 			<script type="Mtei">meitei</script>
-			<script type="Mtei" alt="proposed-x1001">meitei mayek</script>
-			<script type="Mtei" alt="proposed-x1002">Meitei Mayek</script>
-			<script type="Mtei" alt="secondary">meitei mayek</script>
 			<script type="Mymr">burmalainen</script>
 			<script type="Nkoo">n'ko</script>
 			<script type="Ogam">ogam</script>
@@ -771,45 +603,32 @@
 			<script type="Sgnw">SignWriting</script>
 			<script type="Shaw">shaw’lainen</script>
 			<script type="Sinh">sinhalilainen</script>
-			<script type="Sinh" alt="proposed-x1001">sinhala</script>
 			<script type="Sund">sundalainen</script>
 			<script type="Sylo">syloti nagri</script>
 			<script type="Syrc">syyrialainen</script>
 			<script type="Syre">syyrialainen estrangelo-muunnelma</script>
-			<script type="Syre" alt="proposed-x1001">syyrialainen (estrangelo-muunnelma)</script>
-			<script type="Syre" alt="proposed-x1002">estrangelo-syyrialainen</script>
 			<script type="Syrj">syyrialainen läntinen muunnelma</script>
-			<script type="Syrj" alt="proposed-x1001">läntinen syyrialainen</script>
-			<script type="Syrj" alt="proposed-x1002">syyrialainen (läntinen muunnelma)</script>
 			<script type="Syrn">syyrialainen itäinen muunnelma</script>
-			<script type="Syrn" alt="proposed-x1001">itäinen syyrialainen</script>
-			<script type="Syrn" alt="proposed-x1002">syyrialainen (itäinen muunnelma)</script>
 			<script type="Tagb">tagbanwalainen</script>
 			<script type="Tale">tailelainen</script>
 			<script type="Talu">uusi tailuelainen</script>
 			<script type="Taml">tamililainen</script>
 			<script type="Telu">telugulainen</script>
-			<script type="Telu" alt="proposed-x1001">telugu</script>
 			<script type="Teng">tengwar</script>
 			<script type="Tfng">tifinagh</script>
 			<script type="Tglg">tagalogilainen</script>
 			<script type="Thaa">thaana</script>
 			<script type="Thai">thailainen</script>
-			<script type="Thai" alt="proposed-x1001">thai</script>
 			<script type="Tibt">tiibetiläinen</script>
 			<script type="Ugar">ugaritilainen</script>
 			<script type="Vaii">vailainen</script>
 			<script type="Visp">näkyvä puhe</script>
-			<script type="Visp" alt="proposed-x1001">näkyvä puhe (Visible Speech)</script>
-			<script type="Visp" alt="secondary">Visible Speech</script>
 			<script type="Xpeo">muinaispersialainen</script>
 			<script type="Xsux">sumerilais-akkadilainen nuolenpääkirjoitus</script>
-			<script type="Xsux" alt="proposed-x1001">nuolenpääkirjoitus, sumerilais-akkadilainen</script>
 			<script type="Yiii">yiläinen</script>
 			<script type="Zxxx">kirjoittamaton</script>
 			<script type="Zyyy">määrittämätön</script>
 			<script type="Zzzz">tuntematon tai virheellinen kirjoitusjärjestelmä</script>
-			<script type="Zzzz" alt="proposed-x1001">määrittelemätön</script>
 		</scripts>
 		<territories>
 			<territory type="001">maailma</territory>
@@ -825,7 +644,6 @@
 			<territory type="018">eteläinen Afrikka</territory>
 			<territory type="019">Amerikka</territory>
 			<territory type="021">pohjoinen Amerikka</territory>
-			<territory type="021" alt="proposed-x1001">Pohjois-Amerikka</territory>
 			<territory type="029">Karibia</territory>
 			<territory type="030">Itä-Aasia</territory>
 			<territory type="034">Etelä-Aasia</territory>
@@ -836,8 +654,6 @@
 			<territory type="057">Mikronesia</territory>
 			<territory type="061">Polynesia</territory>
 			<territory type="062">Etelä- ja Keski-Aasia</territory>
-			<territory type="062" alt="proposed-x1001">Eteläinen Keski-Aasia</territory>
-			<territory type="062" alt="proposed-x1002">eteläinen Keski-Aasia</territory>
 			<territory type="142">Aasia</territory>
 			<territory type="143">Keski-Aasia</territory>
 			<territory type="145">Länsi-Aasia</territory>
@@ -864,11 +680,8 @@
 			<territory type="AU">Australia</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Ahvenanmaa</territory>
-			<territory type="AX" alt="proposed-x1001">Åland Islands</territory>
 			<territory type="AZ">Azerbaidžan</territory>
-			<territory type="AZ" alt="proposed-x1001">Azerbaidzan</territory>
 			<territory type="BA">Bosnia ja Hertsegovina</territory>
-			<territory type="BA" alt="proposed-x1001">Bosnia-Hertsegovina</territory>
 			<territory type="BB">Barbados</territory>
 			<territory type="BD">Bangladesh</territory>
 			<territory type="BE">Belgia</territory>
@@ -884,21 +697,14 @@
 			<territory type="BS">Bahama</territory>
 			<territory type="BT">Bhutan</territory>
 			<territory type="BV">Bouvet’nsaari</territory>
-			<territory type="BV" alt="proposed-x1001">Bouvet'nsaari</territory>
 			<territory type="BW">Botswana</territory>
 			<territory type="BY">Valko-Venäjä</territory>
 			<territory type="BZ">Belize</territory>
 			<territory type="CA">Kanada</territory>
 			<territory type="CC">Kookossaaret</territory>
 			<territory type="CD">Kongo-Kinshasa</territory>
-			<territory type="CD" alt="proposed-x1001">Kongo – Kinshasa</territory>
-			<territory type="CD" alt="proposed-x1002">Kongo (Kinshasa)</territory>
-			<territory type="CD" alt="proposed-x1003">Zaire</territory>
 			<territory type="CF">Keski-Afrikan tasavalta</territory>
 			<territory type="CG">Kongo-Brazzaville</territory>
-			<territory type="CG" alt="proposed-x1001">Kongo</territory>
-			<territory type="CG" alt="proposed-x1002">Kongo (Brazzaville)</territory>
-			<territory type="CG" alt="proposed-x1003">Kongo – Brazzaville</territory>
 			<territory type="CH">Sveitsi</territory>
 			<territory type="CI">Norsunluurannikko</territory>
 			<territory type="CK">Cookinsaaret</territory>
@@ -913,7 +719,6 @@
 			<territory type="CX">Joulusaari</territory>
 			<territory type="CY">Kypros</territory>
 			<territory type="CZ">Tšekki</territory>
-			<territory type="CZ" alt="proposed-x1001">Tsekin tasavalta</territory>
 			<territory type="DE">Saksa</territory>
 			<territory type="DJ">Djibouti</territory>
 			<territory type="DK">Tanska</territory>
@@ -931,16 +736,13 @@
 			<territory type="FJ">Fidži</territory>
 			<territory type="FK">Falklandinsaaret</territory>
 			<territory type="FM">Mikronesian liittovaltio</territory>
-			<territory type="FM" alt="proposed-x1001">Mikronesia</territory>
 			<territory type="FO">Färsaaret</territory>
 			<territory type="FR">Ranska</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Britannia</territory>
-			<territory type="GB" alt="proposed-x1001">Iso-Britannia</territory>
 			<territory type="GD">Grenada</territory>
 			<territory type="GE">Georgia</territory>
 			<territory type="GF">Ranskan Guayana</territory>
-			<territory type="GF" alt="proposed-x1001">Ranskan Guajana</territory>
 			<territory type="GG">Guernsey</territory>
 			<territory type="GH">Ghana</territory>
 			<territory type="GI">Gibraltar</territory>
@@ -956,11 +758,7 @@
 			<territory type="GW">Guinea-Bissau</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">Hongkong – Kiinan erityishallintoalue</territory>
-			<territory type="HK" alt="proposed-x1001">Kiinan erityishallintoalue Hongkong</territory>
-			<territory type="HK" alt="proposed-x1002">Hongkong, Kiinan erityishallintoalue</territory>
-			<territory type="HK" alt="short">Hongkong</territory>
 			<territory type="HM">Heard- ja McDonaldinsaaret</territory>
-			<territory type="HM" alt="proposed-x1001">Heard ja McDonaldsaaret</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Kroatia</territory>
 			<territory type="HT">Haiti</territory>
@@ -969,7 +767,6 @@
 			<territory type="IE">Irlanti</territory>
 			<territory type="IL">Israel</territory>
 			<territory type="IM">Mansaari</territory>
-			<territory type="IM" alt="proposed-x1001">Isle of Man</territory>
 			<territory type="IN">Intia</territory>
 			<territory type="IO">Brittiläinen Intian valtameren alue</territory>
 			<territory type="IQ">Irak</territory>
@@ -982,16 +779,12 @@
 			<territory type="JP">Japani</territory>
 			<territory type="KE">Kenia</territory>
 			<territory type="KG">Kirgisia</territory>
-			<territory type="KG" alt="proposed-x1001">Kirgiisia</territory>
 			<territory type="KH">Kambodža</territory>
-			<territory type="KH" alt="proposed-x1001">Kambodza</territory>
 			<territory type="KI">Kiribati</territory>
 			<territory type="KM">Komorit</territory>
 			<territory type="KN">Saint Kitts ja Nevis</territory>
 			<territory type="KP">Pohjois-Korea</territory>
-			<territory type="KP" alt="proposed-x1001">Korean demokraattinen kansantasavalta</territory>
 			<territory type="KR">Etelä-Korea</territory>
-			<territory type="KR" alt="proposed-x1001">Korean tasavalta</territory>
 			<territory type="KW">Kuwait</territory>
 			<territory type="KY">Caymansaaret</territory>
 			<territory type="KZ">Kazakstan</territory>
@@ -1006,7 +799,6 @@
 			<territory type="LU">Luxemburg</territory>
 			<territory type="LV">Latvia</territory>
 			<territory type="LY">Libya</territory>
-			<territory type="LY" alt="proposed-x1001">Libyan Arab Jamahiriya</territory>
 			<territory type="MA">Marokko</territory>
 			<territory type="MC">Monaco</territory>
 			<territory type="MD">Moldova</territory>
@@ -1014,15 +806,10 @@
 			<territory type="MG">Madagaskar</territory>
 			<territory type="MH">Marshallinsaaret</territory>
 			<territory type="MK">Makedonia</territory>
-			<territory type="MK" alt="proposed-x1001">Entinen Jugoslavian tasavalta Makedonia</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MM">Myanmar</territory>
 			<territory type="MN">Mongolia</territory>
 			<territory type="MO">Macao – Kiinan erityishallintoalue</territory>
-			<territory type="MO" alt="proposed-x1001">Kiinan erityishallintoalue Macao</territory>
-			<territory type="MO" alt="proposed-x1002">Macao</territory>
-			<territory type="MO" alt="proposed-x1003">Macao, Kiinan erityishallintoalue</territory>
-			<territory type="MO" alt="short">Macao</territory>
 			<territory type="MP">Pohjois-Mariaanit</territory>
 			<territory type="MQ">Martinique</territory>
 			<territory type="MR">Mauritania</territory>
@@ -1055,7 +842,6 @@
 			<territory type="PK">Pakistan</territory>
 			<territory type="PL">Puola</territory>
 			<territory type="PM">Saint-Pierre ja Miquelon</territory>
-			<territory type="PM" alt="proposed-x1001">Saint Pierre ja Miquelon</territory>
 			<territory type="PN">Pitcairn</territory>
 			<territory type="PR">Puerto Rico</territory>
 			<territory type="PS">Palestiina</territory>
@@ -1085,21 +871,16 @@
 			<territory type="SN">Senegal</territory>
 			<territory type="SO">Somalia</territory>
 			<territory type="SR">Surinam</territory>
-			<territory type="SR" alt="proposed-x1001">Suriname</territory>
 			<territory type="ST">São Tomé ja Príncipe</territory>
-			<territory type="ST" alt="proposed-x1001">Sao Tomé ja Principe</territory>
 			<territory type="SV">El Salvador</territory>
 			<territory type="SY">Syyria</territory>
 			<territory type="SZ">Swazimaa</territory>
 			<territory type="TC">Turks- ja Caicossaaret</territory>
 			<territory type="TD">Tšad</territory>
-			<territory type="TD" alt="proposed-x1001">Tsad</territory>
 			<territory type="TF">Ranskan ulkopuoliset eteläiset alueet</territory>
-			<territory type="TF" alt="proposed-x1001">Ranskan eteläiset alueet</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Thaimaa</territory>
 			<territory type="TJ">Tadžikistan</territory>
-			<territory type="TJ" alt="proposed-x1001">Tadzikistan</territory>
 			<territory type="TK">Tokelau</territory>
 			<territory type="TL">Itä-Timor</territory>
 			<territory type="TM">Turkmenistan</territory>
@@ -1113,12 +894,10 @@
 			<territory type="UA">Ukraina</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Yhdysvaltain pienet erillissaaret</territory>
-			<territory type="UM" alt="proposed-x1001">Yhdysvaltain Tyynenmeren pienet erillissaaret</territory>
 			<territory type="US">Yhdysvallat</territory>
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Vatikaani</territory>
-			<territory type="VA" alt="proposed-x1001">Pyhä istuin (Vatikaani)</territory>
 			<territory type="VC">Saint Vincent ja Grenadiinit</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Brittiläiset Neitsytsaaret</territory>
@@ -1126,7 +905,6 @@
 			<territory type="VN">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis ja Futuna</territory>
-			<territory type="WF" alt="proposed-x1001">Wallis- ja Futunasaaret</territory>
 			<territory type="WS">Samoa</territory>
 			<territory type="YE">Jemen</territory>
 			<territory type="YT">Mayotte</territory>
@@ -1141,23 +919,14 @@
 			<variant type="1606NICT">myöhäiskeskiranska</variant>
 			<variant type="1694ACAD">varhaisnykyranska</variant>
 			<variant type="AREVELA">itäarmenialainen</variant>
-			<variant type="AREVELA" alt="proposed-x1001">itä-armenialainen</variant>
 			<variant type="AREVMDA">länsiarmenialainen</variant>
-			<variant type="AREVMDA" alt="proposed-x1001">länsi-armenialainen</variant>
 			<variant type="BOONT">englannin boontling-murre</variant>
 			<variant type="FONIPA">kansainvälinen foneettinen aakkosto IPA</variant>
-			<variant type="FONIPA" alt="proposed-x1001">kansainvälinen foneettinen tarkekirjoitus IPA</variant>
-			<variant type="FONIPA" alt="proposed-x1002">kansainvälinen foneettinen aakkosto</variant>
 			<variant type="FONUPA">uralilainen foneettinen aakkosto UPA</variant>
-			<variant type="FONUPA" alt="proposed-x1001">suomalais-ugrilainen tarkekirjoitus UPA</variant>
-			<variant type="FONUPA" alt="proposed-x1002">uralilainen foneettinen aakkosto</variant>
-			<variant type="FONUPA" alt="secondary">suomalais-ugrilainen tarkekirjoitus</variant>
 			<variant type="MONOTON">monotoninen kreikka</variant>
-			<variant type="MONOTON" alt="proposed-x1001">monotoninen</variant>
 			<variant type="NEDIS">sloveenin natisone-murre</variant>
 			<variant type="POLYTON">polytoninen kreikka</variant>
 			<variant type="POSIX">tietokonemäärittely POSIX</variant>
-			<variant type="POSIX" alt="proposed-x1001">tietokone</variant>
 			<variant type="REVISED">uudistettu oikeinkirjoitus</variant>
 			<variant type="ROZAJ">sloveenin resia-murre</variant>
 			<variant type="SAAHO">afarin saho-murre</variant>
@@ -1171,14 +940,10 @@
 		</keys>
 		<types>
 			<type type="big5han" key="collation">perinteinen kiinalainen järjestys Big5</type>
-			<type type="big5han" key="collation" alt="proposed-x1001">perinteinen kiinalainen (Big5)</type>
-			<type type="big5han" key="collation" alt="proposed-x1002">perinteinen kiinalainen järjestys (Big5)</type>
 			<type type="buddhist" key="calendar">buddhalainen kalenteri</type>
 			<type type="chinese" key="calendar">kiinalainen kalenteri</type>
 			<type type="direct" key="collation">suora järjestys</type>
 			<type type="gb2312han" key="collation">yksinkertaistettu kiinalainen järjestys GB2312</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1001">yksinkertaistettu kiinalainen järjestys (GB2313)</type>
-			<type type="gb2312han" key="collation" alt="proposed-x1002">yksinkertaistettu kiinalainen (GB2312)</type>
 			<type type="gregorian" key="calendar">gregoriaaninen kalenteri</type>
 			<type type="hebrew" key="calendar">juutalainen kalenteri</type>
 			<type type="islamic" key="calendar">islamilainen kalenteri</type>
@@ -1202,10 +967,7 @@
 	<characters>
 		<exemplarCharacters>[a-s š t-z ž å ä ö]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[á à â ã č ç đ é è ë ǧ ǥ ȟ í ï ǩ ń ñ ŋ ô ř ŧ ú ü æ ø õ œ ʒ ǯ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[á à ã č ç é è ë í ï ñ ô ř ú ü æ ø õ œ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1002">[á à ă â ā ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ō ß ú ù ŭ û ū ÿ ü æ ø œ]</exemplarCharacters>
 		<exemplarCharacters type="currencySymbol">[a-z]</exemplarCharacters>
-		<exemplarCharacters type="currencySymbol" alt="proposed-x1001">[a-s š t-z ž å ä ö]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>”</quotationStart>
@@ -1306,7 +1068,6 @@
 							<quarter type="2">2. nelj.</quarter>
 							<quarter type="3">3. nelj.</quarter>
 							<quarter type="4">4. nelj.</quarter>
-							<quarter type="4" alt="proposed-x1001">4.nelj.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">1. neljännes</quarter>
@@ -1325,9 +1086,7 @@
 					</quarterContext>
 				</quarters>
 				<am>ap.</am>
-				<am alt="proposed-x1001">ap</am>
 				<pm>ip.</pm>
-				<pm alt="proposed-x1001">ip</pm>
 				<eras>
 					<eraNames>
 						<era type="0">ennen Kristuksen syntymää</era>
@@ -1342,7 +1101,6 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE d. MMMM'ta' yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE'na' d. MMMM'ta' yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
@@ -1358,7 +1116,6 @@
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>d.M.yyyy</pattern>
-							<pattern alt="proposed-x1001">d.M.yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -1371,7 +1128,6 @@
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>H.mm.ss z</pattern>
-							<pattern alt="proposed-x1001">'klo' H.mm.ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
@@ -1393,28 +1149,16 @@
 					</dateTimeFormatLength>
 					<availableFormats>
 						<dateFormatItem id="HHmm">HH.mm</dateFormatItem>
-						<dateFormatItem id="HHmm" alt="proposed-x1001">H.mm</dateFormatItem>
-						<dateFormatItem id="HHmm" alt="proposed-x1002">HH:mm</dateFormatItem>
 						<dateFormatItem id="HHmmss">HH.mm.ss</dateFormatItem>
-						<dateFormatItem id="HHmmss" alt="proposed-x1001">HH:mm:ss</dateFormatItem>
-						<dateFormatItem id="HHmmss" alt="proposed-x1002">H.mm.ss</dateFormatItem>
 						<dateFormatItem id="MMMMd">d. MMMM'ta'</dateFormatItem>
-						<dateFormatItem id="MMMMd" alt="proposed-x1001">MMMM d</dateFormatItem>
 						<dateFormatItem id="Md">d.M.</dateFormatItem>
-						<dateFormatItem id="Md" alt="proposed-x1001">d.M</dateFormatItem>
 						<dateFormatItem id="mmss">mm.ss</dateFormatItem>
-						<dateFormatItem id="mmss" alt="proposed-x1001">mm:ss</dateFormatItem>
 						<dateFormatItem id="yyMM">MM/yy</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">M/yy</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1002">yy-MM</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
 						<dateFormatItem id="yyQ">Q/yy</dateFormatItem>
-						<dateFormatItem id="yyQ" alt="proposed-x1001">Q yy</dateFormatItem>
 						<dateFormatItem id="yyyyM">M/yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyM" alt="proposed-x1001">M.yyyy</dateFormatItem>
 						<dateFormatItem id="yyyyMEEEd">EEE d.M.yyyy</dateFormatItem>
 						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" alt="proposed-x1001">MMMM'ta' yyyy</dateFormatItem>
 						<dateFormatItem id="yyyyQQQQ">QQQQ yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
@@ -1434,22 +1178,16 @@
 					<field type="day">
 						<displayName>päivä</displayName>
 						<relative type="0">tänään</relative>
-						<relative type="0" alt="proposed-x1001">Today</relative>
 						<relative type="1">huomenna</relative>
-						<relative type="1" alt="proposed-x1001">Tomorrow</relative>
 						<relative type="2">ylihuomenna</relative>
-						<relative type="2" alt="proposed-x1001">The day after tomorrow</relative>
 						<relative type="-1">eilen</relative>
-						<relative type="-1" alt="proposed-x1001">Yesterday</relative>
 						<relative type="-2">toissapäivänä</relative>
-						<relative type="-2" alt="proposed-x1001">The day before yesterday</relative>
 					</field>
 					<field type="weekday">
 						<displayName>viikonpäivä</displayName>
 					</field>
 					<field type="dayperiod">
 						<displayName>ap/ip</displayName>
-						<displayName alt="proposed-x1001">ap/ip-valinta</displayName>
 					</field>
 					<field type="hour">
 						<displayName>tunti</displayName>
@@ -1462,7 +1200,6 @@
 					</field>
 					<field type="zone">
 						<displayName>aikavyöhyke</displayName>
-						<displayName alt="proposed-x1001">vyöhyke</displayName>
 					</field>
 				</fields>
 			</calendar>
@@ -1530,9 +1267,7 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH.mm;-HH.mm</hourFormat>
-			<hourFormat alt="proposed-x1001">+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>UTC{0}</gmtFormat>
-			<gmtFormat alt="proposed-x1001">GMT{0}</gmtFormat>
 			<regionFormat>{0}</regionFormat>
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>Comodoro Rivadavia</exemplarCity>
@@ -1557,14 +1292,12 @@
 			</zone>
 			<zone type="Europe/Mariehamn">
 				<exemplarCity>Maarianhamina</exemplarCity>
-				<exemplarCity alt="secondary">Mariehamn</exemplarCity>
 			</zone>
 			<zone type="Europe/Brussels">
 				<exemplarCity>Bryssel</exemplarCity>
 			</zone>
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>São Paulo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sao Paulo</exemplarCity>
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity>St. Johns</exemplarCity>
@@ -1583,7 +1316,6 @@
 			</zone>
 			<zone type="Indian/Christmas">
 				<exemplarCity>Joulu</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Joulusaari</exemplarCity>
 			</zone>
 			<zone type="Asia/Nicosia">
 				<exemplarCity>Nikosia</exemplarCity>
@@ -1619,15 +1351,12 @@
 				<exemplarCity>Lontoo</exemplarCity>
 			</zone>
 			<zone type="America/Thule">
-				<exemplarCity alt="secondary">Qaanaaq</exemplarCity>
 			</zone>
 			<zone type="America/Godthab">
 				<exemplarCity>Nuuk</exemplarCity>
-				<exemplarCity alt="secondary">Godthåb</exemplarCity>
 			</zone>
 			<zone type="America/Scoresbysund">
 				<exemplarCity>Ittoqqortoormiit</exemplarCity>
-				<exemplarCity alt="secondary">Scoresbysund</exemplarCity>
 			</zone>
 			<zone type="Europe/Athens">
 				<exemplarCity>Ateena</exemplarCity>
@@ -1675,7 +1404,6 @@
 				<exemplarCity>Riika</exemplarCity>
 			</zone>
 			<zone type="Asia/Ulaanbaatar">
-				<exemplarCity alt="proposed-x1001">Ulan Bator</exemplarCity>
 			</zone>
 			<zone type="Asia/Macau">
 				<exemplarCity>Macao</exemplarCity>
@@ -1684,7 +1412,6 @@
 				<exemplarCity>Malediivit</exemplarCity>
 			</zone>
 			<zone type="America/Mexico_City">
-				<exemplarCity alt="proposed-x1001">Ciudad de México</exemplarCity>
 			</zone>
 			<zone type="America/Cancun">
 				<exemplarCity>Cancún</exemplarCity>
@@ -1730,7 +1457,6 @@
 			</zone>
 			<zone type="America/El_Salvador">
 				<exemplarCity>San Salvador</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Salvador</exemplarCity>
 			</zone>
 			<zone type="Asia/Damascus">
 				<exemplarCity>Damaskos</exemplarCity>
@@ -1748,15 +1474,12 @@
 				<exemplarCity>Zaporižžja</exemplarCity>
 			</zone>
 			<zone type="America/Anchorage">
-				<exemplarCity alt="proposed-x1001">Beringin aika</exemplarCity>
 			</zone>
 			<zone type="America/North_Dakota/Center">
 				<exemplarCity>keskinen Pohjois-Dakota</exemplarCity>
-				<exemplarCity alt="proposed-x1001">keskinen North Dakota</exemplarCity>
 			</zone>
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Tashkent</exemplarCity>
 			</zone>
 			<zone type="Europe/Vatican">
 				<exemplarCity>Vatikaani</exemplarCity>
@@ -1951,9 +1674,7 @@
 				</long>
 				<short>
 					<standard>CST (Kiina)</standard>
-					<standard alt="proposed-x1001">CTT</standard>
 					<daylight>CDT (Kiina)</daylight>
-					<daylight alt="proposed-x1001">CTT</daylight>
 				</short>
 				<commonlyUsed>false</commonlyUsed>
 			</metazone>
@@ -2006,9 +1727,7 @@
 				</long>
 				<short>
 					<standard>CET</standard>
-					<standard alt="proposed-x1001">CEST</standard>
 					<daylight>CEST</daylight>
-					<daylight alt="proposed-x1001">CEDT</daylight>
 				</short>
 				<commonlyUsed>false</commonlyUsed>
 			</metazone>
@@ -2044,7 +1763,6 @@
 			<metazone type="GMT">
 				<long>
 					<standard>Greenwichin normaaliaika</standard>
-					<standard alt="proposed-x1001">Greenwichin keskiaika</standard>
 				</long>
 				<short>
 					<standard>GMT</standard>
@@ -2238,7 +1956,6 @@
 				</long>
 				<short>
 					<standard>NST</standard>
-					<standard alt="proposed-x1001">CNT</standard>
 				</short>
 				<commonlyUsed>false</commonlyUsed>
 			</metazone>
@@ -2416,7 +2133,6 @@
 		<symbols>
 			<decimal>,</decimal>
 			<group> </group>
-			<list alt="proposed-x1001">,</list>
 			<nan>epäluku</nan>
 		</symbols>
 		<decimalFormats>
@@ -2444,7 +2160,6 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>#,##0.00 ¤</pattern>
-					<pattern alt="proposed-x1001">#,##0.00 ¤</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -2454,11 +2169,9 @@
 			</currency>
 			<currency type="AED">
 				<displayName>Arabiemiirikuntien dirhami</displayName>
-				<displayName alt="proposed-x1001">Arabiemiirikuntien dirham</displayName>
 			</currency>
 			<currency type="AFA">
 				<displayName>Afganistanin afgaani (1927–2002)</displayName>
-				<displayName alt="proposed-x1001">Afganistanin afgaani (1927-2002)</displayName>
 			</currency>
 			<currency type="AFN">
 				<displayName>Afganistanin afgaani</displayName>
@@ -2477,22 +2190,18 @@
 			</currency>
 			<currency type="AOK">
 				<displayName>Angolan kwanza (1977–1990)</displayName>
-				<displayName alt="proposed-x1001">Angolan kwanza (1977-1990)</displayName>
 			</currency>
 			<currency type="AON">
 				<displayName>Angolan uusi kwanza (1990–2000)</displayName>
-				<displayName alt="proposed-x1001">Angolan uusi kwanza (1990-2000)</displayName>
 			</currency>
 			<currency type="AOR">
 				<displayName>Angolan kwanza reajustado (1995–1999)</displayName>
-				<displayName alt="proposed-x1001">Angolan kwanza reajustado (1995-1999)</displayName>
 			</currency>
 			<currency type="ARA">
 				<displayName>Argentiinan austral</displayName>
 			</currency>
 			<currency type="ARP">
 				<displayName>Argentiinan peso (1983–1985)</displayName>
-				<displayName alt="proposed-x1001">Argentiinan peso (1983-1985)</displayName>
 			</currency>
 			<currency type="ARS">
 				<displayName>Argentiinan peso</displayName>
@@ -2508,7 +2217,6 @@
 			</currency>
 			<currency type="AZM">
 				<displayName>Azerbaidžanin manat (1993–2006)</displayName>
-				<displayName alt="proposed-x1001">Azerbaidžanin manat</displayName>
 			</currency>
 			<currency type="AZN">
 				<displayName>Azerbaidžanin manat</displayName>
@@ -2539,7 +2247,6 @@
 			</currency>
 			<currency type="BGN">
 				<displayName>Bulgarian uusi lev</displayName>
-				<displayName alt="proposed-x1001">Bulgarian leva</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>Bahrainin dinaari</displayName>
@@ -2561,18 +2268,15 @@
 			</currency>
 			<currency type="BOV">
 				<displayName>Bolivian mvdol</displayName>
-				<displayName alt="proposed-x1001">Bolivian MVDOL</displayName>
 			</currency>
 			<currency type="BRB">
 				<displayName>Brasilian uusi cruzeiro (1967–1986)</displayName>
-				<displayName alt="proposed-x1001">Brasilian uusi cruzeiro (1967-1986)</displayName>
 			</currency>
 			<currency type="BRC">
 				<displayName>Brasilian cruzado</displayName>
 			</currency>
 			<currency type="BRE">
 				<displayName>Brasilian cruzeiro (1990–1993)</displayName>
-				<displayName alt="proposed-x1001">Brasilian cruzeiro (1990-1993)</displayName>
 			</currency>
 			<currency type="BRL">
 				<displayName>Brasilian real</displayName>
@@ -2598,7 +2302,6 @@
 			</currency>
 			<currency type="BYB">
 				<displayName>Valko-Venäjän uusi rupla (1994–1999)</displayName>
-				<displayName alt="proposed-x1001">Valko-Venäjän uusi rupla (1994-1999)</displayName>
 			</currency>
 			<currency type="BYR">
 				<displayName>Valko-Venäjän rupla</displayName>
@@ -2629,7 +2332,6 @@
 			</currency>
 			<currency type="CNY">
 				<displayName>Kiinan yuan</displayName>
-				<displayName alt="proposed-x1001">Yuan renminbi</displayName>
 			</currency>
 			<currency type="COP">
 				<displayName>Kolumbian peso</displayName>
@@ -2642,7 +2344,6 @@
 			</currency>
 			<currency type="CSD">
 				<displayName>Serbian vanha dinaari</displayName>
-				<displayName alt="proposed-x1001">Serbian dinaari</displayName>
 			</currency>
 			<currency type="CSK">
 				<displayName>Tšekkoslovakian kova koruna</displayName>
@@ -2658,7 +2359,6 @@
 			</currency>
 			<currency type="CZK">
 				<displayName>Tšekin koruna</displayName>
-				<displayName alt="proposed-x1001">Tsekin koruna</displayName>
 			</currency>
 			<currency type="DDM">
 				<displayName>Itä-Saksan markka</displayName>
@@ -2672,7 +2372,6 @@
 			<currency type="DKK">
 				<displayName>Tanskan kruunu</displayName>
 				<symbol>Tkr</symbol>
-				<symbol alt="proposed-x1001">DKK</symbol>
 			</currency>
 			<currency type="DOP">
 				<displayName>Dominikaanisen tasavallan peso</displayName>
@@ -2694,7 +2393,6 @@
 			</currency>
 			<currency type="EQE">
 				<displayName>Päiväntasaajan Guinean ekwele (1986–1989)</displayName>
-				<displayName alt="proposed-x1001">Päiväntasaajan Guinean ekwele (1986-1989)</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>Eritrean nakfa</displayName>
@@ -2713,7 +2411,6 @@
 			</currency>
 			<currency type="EUR">
 				<displayName>euro</displayName>
-				<symbol alt="proposed-x1001">EUR</symbol>
 			</currency>
 			<currency type="FIM">
 				<displayName>Suomen markka</displayName>
@@ -2721,7 +2418,6 @@
 			</currency>
 			<currency type="FJD">
 				<displayName>Fidžin dollari</displayName>
-				<displayName alt="proposed-x1001">Fidzisaarten dollari</displayName>
 			</currency>
 			<currency type="FKP">
 				<displayName>Falklandinsaarten punta</displayName>
@@ -2732,7 +2428,6 @@
 			<currency type="GBP">
 				<displayName>Englannin punta</displayName>
 				<symbol>£</symbol>
-				<symbol alt="proposed-x1001">GBP</symbol>
 			</currency>
 			<currency type="GEK">
 				<displayName>Georgian kuponkilari</displayName>
@@ -2742,7 +2437,6 @@
 			</currency>
 			<currency type="GHC">
 				<displayName>Ghanan cedi (1979–2007)</displayName>
-				<displayName alt="proposed-x1001">Ghanan cedi</displayName>
 			</currency>
 			<currency type="GHS">
 				<displayName>Ghanan cedi</displayName>
@@ -2761,7 +2455,6 @@
 			</currency>
 			<currency type="GQE">
 				<displayName>Päiväntasaajan Guinean ekwele (–1986)</displayName>
-				<displayName alt="proposed-x1001">Päiväntasaajan Guinean ekwele (-1986)</displayName>
 			</currency>
 			<currency type="GRD">
 				<displayName>Kreikan drakma</displayName>
@@ -2807,7 +2500,6 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>Israelin uusi sekeli</displayName>
-				<displayName alt="proposed-x1001">Israelin shekel</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>Intian rupia</displayName>
@@ -2835,11 +2527,9 @@
 			<currency type="JPY">
 				<displayName>Japanin jeni</displayName>
 				<symbol>¥</symbol>
-				<symbol alt="proposed-x1001">JPY</symbol>
 			</currency>
 			<currency type="KES">
 				<displayName>Kenian šillinki</displayName>
-				<displayName alt="proposed-x1001">Kenian shillinki</displayName>
 			</currency>
 			<currency type="KGS">
 				<displayName>Kirgisian som</displayName>
@@ -2909,7 +2599,6 @@
 			</currency>
 			<currency type="MAD">
 				<displayName>Marokon dirhami</displayName>
-				<displayName alt="proposed-x1001">Marokon dirham</displayName>
 			</currency>
 			<currency type="MAF">
 				<displayName>Marokon frangi</displayName>
@@ -2961,7 +2650,6 @@
 			</currency>
 			<currency type="MXP">
 				<displayName>Meksikon hopeapeso (1861–1992)</displayName>
-				<displayName alt="proposed-x1001">Meksikon hopeapeso (1861-1992)</displayName>
 			</currency>
 			<currency type="MXV">
 				<displayName>Meksikon UDI</displayName>
@@ -2974,7 +2662,6 @@
 			</currency>
 			<currency type="MZM">
 				<displayName>Mosambikin metical (1980–2006)</displayName>
-				<displayName alt="proposed-x1001">Mosambikin metical</displayName>
 			</currency>
 			<currency type="MZN">
 				<displayName>Mosambikin metical</displayName>
@@ -2997,7 +2684,6 @@
 			<currency type="NOK">
 				<displayName>Norjan kruunu</displayName>
 				<symbol>Nkr</symbol>
-				<symbol alt="proposed-x1001">NOK</symbol>
 			</currency>
 			<currency type="NPR">
 				<displayName>Nepalin rupia</displayName>
@@ -3031,11 +2717,9 @@
 			</currency>
 			<currency type="PLN">
 				<displayName>Puolan zloty</displayName>
-				<displayName alt="proposed-x1001">Puolan uusi zloty</displayName>
 			</currency>
 			<currency type="PLZ">
 				<displayName>Puolan zloty (1950–1995)</displayName>
-				<displayName alt="proposed-x1001">Puolan zloty (1950-1995)</displayName>
 			</currency>
 			<currency type="PTE">
 				<displayName>Portugalin escudo</displayName>
@@ -3054,7 +2738,6 @@
 			</currency>
 			<currency type="RON">
 				<displayName>Romanian uusi leu</displayName>
-				<displayName alt="proposed-x1001">Uusi Romanian Leu</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Serbian dinaari</displayName>
@@ -3064,7 +2747,6 @@
 			</currency>
 			<currency type="RUR">
 				<displayName>Venäjän rupla (1991–1998)</displayName>
-				<displayName alt="proposed-x1001">Venäjän rupla (1991-1998)</displayName>
 			</currency>
 			<currency type="RWF">
 				<displayName>Ruandan frangi</displayName>
@@ -3086,12 +2768,10 @@
 			</currency>
 			<currency type="SDP">
 				<displayName>Sudanin punta (1957–1999)</displayName>
-				<displayName alt="proposed-x1001">Sudanin punta</displayName>
 			</currency>
 			<currency type="SEK">
 				<displayName>Ruotsin kruunu</displayName>
 				<symbol>Rkr</symbol>
-				<symbol alt="proposed-x1001">SEK</symbol>
 			</currency>
 			<currency type="SGD">
 				<displayName>Singaporen dollari</displayName>
@@ -3158,14 +2838,12 @@
 			</currency>
 			<currency type="TRY">
 				<displayName>Turkin uusi liira</displayName>
-				<displayName alt="proposed-x1001">Uusi Turkin liira</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>Trinidadin ja Tobagon dollari</displayName>
 			</currency>
 			<currency type="TWD">
 				<displayName>Taiwanin uusi dollari</displayName>
-				<displayName alt="proposed-x1001">Uusi Taiwanin Dollari</displayName>
 			</currency>
 			<currency type="TZS">
 				<displayName>Tansanian šillinki</displayName>
@@ -3178,16 +2856,13 @@
 			</currency>
 			<currency type="UGS">
 				<displayName>Ugandan šillinki (1966–1987)</displayName>
-				<displayName alt="proposed-x1001">Ugandan šillinki (1966-1987)</displayName>
 			</currency>
 			<currency type="UGX">
 				<displayName>Ugandan šillinki</displayName>
 			</currency>
 			<currency type="USD">
 				<displayName>Yhdysvaltain dollari</displayName>
-				<displayName alt="proposed-x1001">Yhdysvaltain dollaria</displayName>
 				<symbol>$</symbol>
-				<symbol alt="proposed-x1001">USD</symbol>
 			</currency>
 			<currency type="USN">
 				<displayName>Yhdysvaltain dollari (seuraava päivä)</displayName>
@@ -3200,7 +2875,6 @@
 			</currency>
 			<currency type="UYP">
 				<displayName>Uruguayn peso (1975–1993)</displayName>
-				<displayName alt="proposed-x1001">Uruguayn peso (1975-1993)</displayName>
 			</currency>
 			<currency type="UYU">
 				<displayName>Uruguayn peso</displayName>
@@ -3276,7 +2950,6 @@
 			</currency>
 			<currency type="XXX">
 				<displayName>tuntematon tai virheellinen rahayksikkö</displayName>
-				<displayName alt="proposed-x1001">ei rahayksikköä</displayName>
 			</currency>
 			<currency type="YDD">
 				<displayName>Jemenin dinaari</displayName>

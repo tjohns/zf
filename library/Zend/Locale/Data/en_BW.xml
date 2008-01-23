@@ -23,7 +23,6 @@
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern alt="proposed-x1001">MMM dd,yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -35,12 +34,10 @@
 				<timeFormats>
 					<timeFormatLength type="full">
 						<timeFormat>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
-							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>

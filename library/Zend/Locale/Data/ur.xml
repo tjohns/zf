@@ -27,7 +27,6 @@
 			<language type="el">يونانی</language>
 			<language type="en">انگريزی</language>
 			<language type="en_GB">برطانوی انگریزی</language>
-			<language type="en_GB" alt="proposed-x1001">انگلینڈ کی انگریزی</language>
 			<language type="en_US">امریکہ کی انگریزی</language>
 			<language type="eo">ايسپرانٹو</language>
 			<language type="es">ہسپانوی</language>
@@ -120,7 +119,6 @@
 			<language type="zu">زُولُو</language>
 		</languages>
 		<scripts>
-			<script type="Arab" alt="proposed-x1001">العربية</script>
 			<script type="Zxxx">Zxxx</script>
 			<script type="Zzzz">Zzzz</script>
 		</scripts>
@@ -206,7 +204,6 @@
 			<territory type="IE">آئر لینڈ</territory>
 			<territory type="IL">اسرائیل</territory>
 			<territory type="IN">بھارت</territory>
-			<territory type="IN" alt="proposed-x1001">انڈیا</territory>
 			<territory type="IO">بحرھند کا برٹش علاقہ</territory>
 			<territory type="IQ">عراق</territory>
 			<territory type="IR">ایران</territory>
@@ -327,9 +324,6 @@
 			<territory type="ZZ">Unknown or Invalid Region</territory>
 		</territories>
 		<keys>
-			<key type="calendar" alt="proposed-x1001">ur</key>
-			<key type="collation" alt="proposed-x1001">ur</key>
-			<key type="currency" alt="proposed-x1001">ur</key>
 		</keys>
 	</localeDisplayNames>
 	<layout>
@@ -337,8 +331,6 @@
 	</layout>
 	<characters>
 		<exemplarCharacters>[ء-ؤ ئ-ب ٻ پ ة-ث ٹ ٺ ټ ٽ ج چ ح-ذ ڈ ر ز ڑ ژ س-غ ف ق ک گ ل-ن ں ه ھ ہ و ي ی ے]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[ء-ؤ ئ-ب ٻ پ ة-ث ٹ ٺ ټ ٽ ج چ ح-ذ ڈ ر ز ڑ ژ س-غ ف ق ک گ ل-ن ں ه ھ و ی ے]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>
@@ -349,14 +341,10 @@
 							<month type="1">جنوری</month>
 							<month type="2">فروری</month>
 							<month type="3">مار چ</month>
-							<month type="3" alt="proposed-x1001">مارچ</month>
 							<month type="4">اپريل</month>
-							<month type="4" alt="proposed-x1001">اپریل</month>
 							<month type="5">مئی</month>
-							<month type="5" alt="proposed-x1001">مئ</month>
 							<month type="6">جون</month>
 							<month type="7">جولائی</month>
-							<month type="7" alt="proposed-x1001">جولائ</month>
 							<month type="8">اگست</month>
 							<month type="9">ستمبر</month>
 							<month type="10">اکتوبر</month>
@@ -369,28 +357,18 @@
 					<dayContext type="format">
 						<dayWidth type="narrow">
 							<day type="sun">ا</day>
-							<day type="sun" alt="proposed-x1001">اتوار</day>
 							<day type="mon">پ</day>
-							<day type="mon" alt="proposed-x1001">پیر</day>
 							<day type="tue">م</day>
-							<day type="tue" alt="proposed-x1001">منگل</day>
-							<day type="tue" alt="proposed-x1002">منگ</day>
 							<day type="wed">ب</day>
-							<day type="wed" alt="proposed-x1001">بدھ</day>
 							<day type="thu">ج</day>
-							<day type="thu" alt="proposed-x1001">جمعرات</day>
 							<day type="fri">ج</day>
-							<day type="fri" alt="proposed-x1001">جمعہ</day>
 							<day type="sat">ہ</day>
-							<day type="sat" alt="proposed-x1001">ہفتہ</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">اتوار</day>
 							<day type="mon">پير</day>
-							<day type="mon" alt="proposed-x1001">پیر</day>
 							<day type="tue">منگل</day>
 							<day type="wed">بدھ</day>
-							<day type="wed" alt="proposed-x1001">بده</day>
 							<day type="thu">جمعرات</day>
 							<day type="fri">جمعہ</day>
 							<day type="sat">ہفتہ</day>
@@ -449,7 +427,6 @@
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>yyyy-MM-dd</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -483,7 +460,6 @@
 					</dateTimeFormatLength>
 					<availableFormats>
 						<dateFormatItem id="yyQ">yy Q</dateFormatItem>
-						<dateFormatItem id="yyQ" alt="proposed-x1001">Q yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 				<fields>
@@ -501,63 +477,31 @@
 				<months>
 					<monthContext type="format">
 						<monthWidth type="wide">
-							<month type="1" alt="proposed-x1001">محرم</month>
-							<month type="2" alt="proposed-x1001">صفر</month>
-							<month type="3" alt="proposed-x1001">ر بيع الاول</month>
-							<month type="4" alt="proposed-x1001">ر بيع الثانی</month>
-							<month type="5" alt="proposed-x1001">جمادی الاول</month>
-							<month type="6" alt="proposed-x1001">جمادی الثانی</month>
-							<month type="7" alt="proposed-x1001">رجب</month>
-							<month type="8" alt="proposed-x1001">شعبان</month>
-							<month type="9" alt="proposed-x1001">رمضان</month>
-							<month type="10" alt="proposed-x1001">شوال</month>
-							<month type="11" alt="proposed-x1001">ذيقعدہ</month>
-							<month type="12" alt="proposed-x1001">دسمبر</month>
-							<month type="12" alt="proposed-x1002">ذی الحجہ</month>
 						</monthWidth>
 					</monthContext>
 				</months>
 				<days>
 					<dayContext type="format">
 						<dayWidth type="wide">
-							<day type="sun" alt="proposed-x1001">يکشنبہ</day>
-							<day type="mon" alt="proposed-x1001">دو شنبہ</day>
-							<day type="tue" alt="proposed-x1001">سہ شنبہ</day>
-							<day type="wed" alt="proposed-x1001">چہار شنبہ</day>
-							<day type="thu" alt="proposed-x1001">پنجشنبہ</day>
-							<day type="fri" alt="proposed-x1001">جمعہ</day>
-							<day type="sat" alt="proposed-x1001">شنبہ</day>
 						</dayWidth>
 					</dayContext>
 				</days>
 				<quarters>
 					<quarterContext type="format">
 						<quarterWidth type="wide">
-							<quarter type="1" alt="proposed-x1001">پہلی سہ ماہی</quarter>
-							<quarter type="2" alt="proposed-x1001">دوسری سہ ماہی</quarter>
-							<quarter type="3" alt="proposed-x1001">تيسری سہ ماہی</quarter>
-							<quarter type="4" alt="proposed-x1001">چوتهی سہ ماہی</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
 				<eras>
 					<eraNames>
-						<era type="0" alt="proposed-x1001">قبل مسيح</era>
-						<era type="1" alt="proposed-x1001">عيسوی سن</era>
 					</eraNames>
 					<eraAbbr>
-						<era type="0" alt="proposed-x1001">ق م</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraAbbr>
 				</eras>
 				<fields>
 					<field type="day">
-						<relative type="0" alt="proposed-x1001">آج</relative>
-						<relative type="1" alt="proposed-x1001">کل</relative>
-						<relative type="-1" alt="proposed-x1001">کل</relative>
 					</field>
 					<field type="dayperiod">
-						<displayName alt="proposed-x1001">رات/صبح</displayName>
 					</field>
 				</fields>
 			</calendar>
@@ -702,7 +646,6 @@
 		<currencyFormats>
 			<currencyFormatLength>
 				<currencyFormat>
-					<pattern alt="proposed-x1001">¤#,##0.00</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -760,7 +703,6 @@
 			</currency>
 			<currency type="FRF">
 				<displayName>فرانسیسی فرانک</displayName>
-				<displayName alt="proposed-x1001">فرانسیسی کرنسی</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>انگلستانی پاونڈ سٹرلنگ</displayName>
@@ -782,7 +724,6 @@
 			</currency>
 			<currency type="INR">
 				<displayName>انڈین روپیہ</displayName>
-				<displayName alt="proposed-x1001">روپيہ</displayName>
 			</currency>
 			<currency type="JPY">
 				<displayName>جاپانی ین</displayName>
@@ -801,7 +742,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>ملائیشین رنگٹ</displayName>
-				<displayName alt="proposed-x1001">ملائیشیا کا رنگٹ</displayName>
 			</currency>
 			<currency type="NOK">
 				<displayName>ناروے کرونر</displayName>
@@ -818,7 +758,6 @@
 			<currency type="PKR">
 				<displayName>پاکستانی روپیہ</displayName>
 				<symbol>روپے</symbol>
-				<symbol alt="proposed-x1001">Rs</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>پولش نیو زلوٹی</displayName>
@@ -855,7 +794,6 @@
 			</currency>
 			<currency type="TRY">
 				<displayName>نیا ترکی لیرا</displayName>
-				<displayName alt="proposed-x1001">نیا ترکی کا لیرا</displayName>
 			</currency>
 			<currency type="TWD">
 				<displayName>نیو تائیوان ڈالر</displayName>

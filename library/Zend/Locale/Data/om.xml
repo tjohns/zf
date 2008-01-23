@@ -11,7 +11,6 @@
 			<language type="af">Afrikoota</language>
 			<language type="am">Afaan Sidaamaa</language>
 			<language type="ar">Arabiffaa</language>
-			<language type="ar" alt="proposed-x1001">Arabic</language>
 			<language type="az">Afaan Azerbaijani</language>
 			<language type="be">Afaan Belarusia</language>
 			<language type="bg">Afaan Bulgariya</language>
@@ -23,13 +22,10 @@
 			<language type="cy">Welishiffaa</language>
 			<language type="da">Afaan Deenmaark</language>
 			<language type="de">Afaan Jarmanii</language>
-			<language type="de" alt="proposed-x1001">German</language>
 			<language type="el">Afaan Giriiki</language>
 			<language type="en">Ingliffa</language>
-			<language type="en" alt="proposed-x1001">English</language>
 			<language type="eo">Afaan Esperantoo</language>
 			<language type="es">Afaan Ispeen</language>
-			<language type="es" alt="proposed-x1001">Spanish</language>
 			<language type="et">Afaan Istooniya</language>
 			<language type="eu">Afaan Baskuu</language>
 			<language type="fa">Afaan Persia</language>
@@ -37,7 +33,6 @@
 			<language type="fil">Afaan Filippinii</language>
 			<language type="fo">Afaan Faroese</language>
 			<language type="fr">Afaan Faransaayii</language>
-			<language type="fr" alt="proposed-x1001">French</language>
 			<language type="fy">Afaan Firisiyaani</language>
 			<language type="ga">Afaan Ayirishii</language>
 			<language type="gd">Scots Gaelic</language>
@@ -46,16 +41,13 @@
 			<language type="gu">Afaan Gujarati</language>
 			<language type="he">Afaan Hebrew</language>
 			<language type="hi">Afaan Hindii</language>
-			<language type="hi" alt="proposed-x1001">Hindi</language>
 			<language type="hr">Afaan Croatian</language>
 			<language type="hu">Afaan Hangaari</language>
 			<language type="ia">Interlingua</language>
 			<language type="id">Afaan Indoneziya</language>
 			<language type="is">Ayiislandiffaa</language>
 			<language type="it">Afaan Xaaliyaani</language>
-			<language type="it" alt="proposed-x1001">Italian</language>
 			<language type="ja">Afaan Japanii</language>
-			<language type="ja" alt="proposed-x1001">Japanese</language>
 			<language type="jv">Afaan Java</language>
 			<language type="ka">Afaan Georgian</language>
 			<language type="kn">Afaan Kannada</language>
@@ -77,12 +69,10 @@
 			<language type="pa">Afaan Punjabii</language>
 			<language type="pl">Afaan Polandii</language>
 			<language type="pt">Afaan Porchugaal</language>
-			<language type="pt" alt="proposed-x1001">Portuguese</language>
 			<language type="pt_BR">Afaan Portugali (Braazil)</language>
 			<language type="pt_PT">Afaan Protuguese</language>
 			<language type="ro">Afaan Romaniyaa</language>
 			<language type="ru">Afaan Rushiyaa</language>
-			<language type="ru" alt="proposed-x1001">Russian</language>
 			<language type="si">Afaan Sinhalese</language>
 			<language type="sk">Afaan Slovak</language>
 			<language type="sl">Afaan Islovaniyaa</language>
@@ -228,9 +218,7 @@
 					</quarterContext>
 				</quarters>
 				<am>WD</am>
-				<am alt="proposed-x1001">AM</am>
 				<pm>WB</pm>
-				<pm alt="proposed-x1001">PM</pm>
 				<eras>
 					<eraAbbr>
 						<era type="0">KD</era>
@@ -241,25 +229,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, MMMM d, yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd-MMM-yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -267,25 +251,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>h:mm a</pattern>
-							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>

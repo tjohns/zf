@@ -44,17 +44,13 @@
 		</scripts>
 		<territories>
 			<territory type="IN">ਭਾਰਤ</territory>
-			<territory type="IN" alt="proposed-x1001">IN</territory>
 			<territory type="TO">TO</territory>
-			<territory type="TO" alt="proposed-x1001">ਤੋਨ੍ਗ</territory>
 			<territory type="ZZ">ਅਣਜਾਣ</territory>
-			<territory type="ZZ" alt="proposed-x1001">ZZ</territory>
 		</territories>
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[਼ ੰ ੱ ੦-੯ ੴ ੳ ਉ ਊ ਓ ਅ ਆ ਐ ਔ ੲ ਇ ਈ ਏ ਸ {ਸ਼} ਹ ਕ ਖ {ਖ਼} ਗ {ਗ਼} ਘ-ਜ {ਜ਼} ਝ-ਨ ਪ ਫ {ਫ਼} ਬ-ਰ ਲ ਵ ੜ ਾ-ੂ ੇ ੈ ੋ-੍]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[\u200C \u200D ਁ-ਃ {ਲ਼}]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[\u200C \u200D ਼ ਁ-ਃ ੰ ੱ ੦-੯ ੴ ੳ ਉ ਊ ਓ ਅ ਆ ਐ ਔ ੲ ਇ ਈ ਏ ਸ {ਸ਼} ਹ ਕ ਖ {ਖ਼} ਗ {ਗ਼} ਘ-ਜ {ਜ਼} ਝ-ਨ ਪ ਫ {ਫ਼} ਬ-ਰ ਲ {ਲ਼} ਵ ੜ ਾ-ੂ ੇ ੈ ੋ-੍]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>'</quotationStart>
@@ -99,29 +95,17 @@
 					<monthContext type="stand-alone">
 						<monthWidth type="narrow">
 							<month type="1">ਜ</month>
-							<month type="1" alt="proposed-x1001">1</month>
 							<month type="2">ਫ</month>
-							<month type="2" alt="proposed-x1001">2</month>
 							<month type="3">ਮਾ</month>
-							<month type="3" alt="proposed-x1001">3</month>
 							<month type="4">ਅ</month>
-							<month type="4" alt="proposed-x1001">4</month>
 							<month type="5">ਮ</month>
-							<month type="5" alt="proposed-x1001">5</month>
 							<month type="6">ਜੂ</month>
-							<month type="6" alt="proposed-x1001">6</month>
 							<month type="7">ਜੁ</month>
-							<month type="7" alt="proposed-x1001">7</month>
 							<month type="8">ਅ</month>
-							<month type="8" alt="proposed-x1001">8</month>
 							<month type="9">ਸ</month>
-							<month type="9" alt="proposed-x1001">9</month>
 							<month type="10">ਅ</month>
-							<month type="10" alt="proposed-x1001">10</month>
 							<month type="11">ਨ</month>
-							<month type="11" alt="proposed-x1001">11</month>
 							<month type="12">ਦ</month>
-							<month type="12" alt="proposed-x1001">12</month>
 						</monthWidth>
 					</monthContext>
 				</months>
@@ -132,12 +116,9 @@
 							<day type="mon">ਸੋਮ.</day>
 							<day type="tue">ਮੰਗਲ.</day>
 							<day type="wed">ਬੁਧ.</day>
-							<day type="wed" alt="proposed-x1001">ਬੁੱਧ.</day>
 							<day type="thu">ਵੀਰ.</day>
 							<day type="fri">ਸ਼ੁਕਰ.</day>
-							<day type="fri" alt="proposed-x1001">ਸ਼ੁੱਕਰ.</day>
 							<day type="sat">ਸ਼ਨੀ.</day>
-							<day type="sat" alt="proposed-x1001">ਸ਼ਨਿੱਚਰ.</day>
 						</dayWidth>
 						<dayWidth type="narrow">
 							<day type="sun">ਐ</day>
@@ -147,29 +128,20 @@
 							<day type="mon">ਸੋਮਵਾਰ</day>
 							<day type="tue">ਮੰਗਲਵਾਰ</day>
 							<day type="wed">ਬੁਧਵਾਰ</day>
-							<day type="wed" alt="proposed-x1001">ਬੁੱਧਵਾਰ</day>
 							<day type="thu">ਵੀਰਵਾਰ</day>
 							<day type="fri">ਸ਼ੁੱਕਰਵਾਰ</day>
 							<day type="sat">ਸ਼ਨੀਚਰਵਾਰ</day>
-							<day type="sat" alt="proposed-x1001">ਸ਼ਨਿੱਚਰਵਾਰ</day>
 						</dayWidth>
 					</dayContext>
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
 							<day type="sun">ਐ</day>
-							<day type="sun" alt="proposed-x1001">1</day>
 							<day type="mon">ਸੋ</day>
-							<day type="mon" alt="proposed-x1001">2</day>
 							<day type="tue">ਮੰ</day>
-							<day type="tue" alt="proposed-x1001">3</day>
 							<day type="wed">ਬੁੱ</day>
-							<day type="wed" alt="proposed-x1001">4</day>
 							<day type="thu">ਵੀ</day>
-							<day type="thu" alt="proposed-x1001">5</day>
 							<day type="fri">ਸ਼ੁੱ</day>
-							<day type="fri" alt="proposed-x1001">6</day>
 							<day type="sat">ਸ਼</day>
-							<day type="sat" alt="proposed-x1001">7</day>
 						</dayWidth>
 					</dayContext>
 				</days>
@@ -190,7 +162,6 @@
 					</quarterContext>
 				</quarters>
 				<am>ਸਵੇਰੇ</am>
-				<am alt="proposed-x1001">ਸਵੇਰ</am>
 				<pm>ਸ਼ਾਮ</pm>
 				<eras>
 					<eraNames>
@@ -206,7 +177,6 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
@@ -222,7 +192,6 @@
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yyy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -259,7 +228,6 @@
 						<dateFormatItem id="Md">d/M    14/9</dateFormatItem>
 						<dateFormatItem id="mmss">mm:ss 	25:59</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
-						<dateFormatItem id="yyMMM" alt="proposed-x1001">MMMM yy</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
@@ -278,7 +246,6 @@
 						<relative type="0">ਅੱਜ</relative>
 						<relative type="1">ਭਲਕ</relative>
 						<relative type="2">ਭਲਕ</relative>
-						<relative type="2" alt="proposed-x1001">ਪਰਸੋਂ</relative>
 						<relative type="3">ਤਿੰਨ ਦਿਨ ਬਾਅਦ</relative>
 						<relative type="-2">ਪਰਸੋਂ</relative>
 						<relative type="-3">ਤਿੰਨ ਦਿਨ ਪਹਿਲਾਂ</relative>
@@ -307,7 +274,6 @@
 	<numbers>
 		<symbols>
 			<nativeZeroDigit>੦</nativeZeroDigit>
-			<nativeZeroDigit alt="proposed-x1001">0</nativeZeroDigit>
 		</symbols>
 		<decimalFormats>
 			<decimalFormatLength>
@@ -339,7 +305,6 @@
 			</currency>
 			<currency type="INR">
 				<displayName>ਰੁਪਿਯ</displayName>
-				<displayName alt="proposed-x1001">ਰੁਪਈਆ</displayName>
 				<symbol>ਰੁ.</symbol>
 			</currency>
 			<currency type="XXX">

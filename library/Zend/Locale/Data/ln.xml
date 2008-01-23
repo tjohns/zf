@@ -9,198 +9,105 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="af">afrikánsi</language>
-			<language type="af" alt="proposed-x1001">afrikansi</language>
-			<language type="afh" alt="proposed-x1001">afríhili</language>
-			<language type="afh" alt="proposed-x1002">afrihili</language>
 			<language type="ak">akan</language>
 			<language type="am">liamariki</language>
-			<language type="am" alt="proposed-x1001">kiamariki</language>
 			<language type="ar">liarabu</language>
-			<language type="ar" alt="proposed-x1001">kiarabi</language>
 			<language type="as">liasame</language>
-			<language type="as" alt="proposed-x1001">ki-asame</language>
 			<language type="az">liazerbayani</language>
-			<language type="az" alt="proposed-x1001">kiazerbayani</language>
 			<language type="bai">nkótá ya Bamileke</language>
 			<language type="be">belarusi</language>
 			<language type="bg">kibulgaria</language>
 			<language type="bh">libiyari</language>
-			<language type="bh" alt="proposed-x1001">kibiyari</language>
 			<language type="bm">bambara</language>
 			<language type="bn">bengali</language>
 			<language type="br">breton</language>
 			<language type="bs">libosinia</language>
-			<language type="bs" alt="proposed-x1001">kibosinia</language>
 			<language type="ca">katalani</language>
 			<language type="cs">litshɛki</language>
-			<language type="cs" alt="proposed-x1001">kitseki</language>
 			<language type="cy">liwelesi</language>
-			<language type="cy" alt="proposed-x1001">kiwelesi</language>
 			<language type="da">lidanemark</language>
-			<language type="da" alt="proposed-x1001">kidanemark</language>
 			<language type="de">lialemani</language>
-			<language type="de" alt="proposed-x1001">kialemani</language>
-			<language type="de" alt="proposed-x1002">alemani</language>
 			<language type="el">ligreki</language>
-			<language type="el" alt="proposed-x1001">greki</language>
-			<language type="el" alt="proposed-x1002">kigrek</language>
 			<language type="en">lingɛlɛ́sa</language>
-			<language type="en" alt="proposed-x1001">lingɛlɛsi</language>
-			<language type="en" alt="proposed-x1002">ngɛlɛ́sa</language>
 			<language type="en_CA">lingɛlɛ́sa (CA)</language>
-			<language type="en_CA" alt="proposed-x1001">ngɛlɛ́sa (Kanadá)</language>
 			<language type="eo">lisipelanto</language>
-			<language type="eo" alt="proposed-x1001">kisipelanto</language>
 			<language type="es">lispanyola</language>
-			<language type="es" alt="proposed-x1001">kiespanyola</language>
 			<language type="et">liestonia</language>
-			<language type="et" alt="proposed-x1001">kiestonia</language>
 			<language type="eu">libaske</language>
-			<language type="eu" alt="proposed-x1001">kibaske</language>
 			<language type="fa">lipɛrsi</language>
-			<language type="fa" alt="proposed-x1001">kipersi</language>
 			<language type="fi">lifilandi</language>
-			<language type="fi" alt="proposed-x1001">lifelandi</language>
 			<language type="fil">litagalog</language>
-			<language type="fil" alt="proposed-x1001">kitagalog</language>
 			<language type="fo">lifarose</language>
-			<language type="fo" alt="proposed-x1001">kifarose</language>
 			<language type="fr">lifalansé</language>
-			<language type="fr" alt="proposed-x1001">falansé</language>
-			<language type="fr" alt="proposed-x1002">lifalansé</language>
 			<language type="fr_CA">lifalansé (CA)</language>
-			<language type="fr_CA" alt="proposed-x1001">falansé (Kanadá)</language>
-			<language type="fr_CH" alt="proposed-x1001">falansé (Swisi)</language>
 			<language type="fy">lifrisi</language>
-			<language type="fy" alt="proposed-x1001">kifrisi</language>
 			<language type="ga">lirlande</language>
-			<language type="ga" alt="proposed-x1001">kirlande</language>
 			<language type="gd">ligaeliki</language>
-			<language type="gd" alt="proposed-x1001">kigaeliki</language>
 			<language type="gl">ligalicia</language>
-			<language type="gl" alt="proposed-x1001">kigalicia</language>
 			<language type="gn">ligwarani</language>
-			<language type="gn" alt="proposed-x1001">guarani</language>
 			<language type="gu">liguzarati</language>
-			<language type="gu" alt="proposed-x1001">guyarati</language>
 			<language type="he">liyuda</language>
-			<language type="he" alt="proposed-x1001">kiyuda</language>
 			<language type="hi">lihindi</language>
-			<language type="hi" alt="proposed-x1001">kihindi</language>
 			<language type="hr">likroasia</language>
-			<language type="hr" alt="proposed-x1001">kikroasia</language>
 			<language type="hu">liungaria</language>
-			<language type="hu" alt="proposed-x1001">kiungaria</language>
 			<language type="hy">liarmenya</language>
-			<language type="hy" alt="proposed-x1001">kiarmenya</language>
 			<language type="ia">interlingua</language>
 			<language type="id">lindonesi</language>
-			<language type="id" alt="proposed-x1001">kindonesi</language>
 			<language type="ie">interlingue</language>
 			<language type="is">lislanda</language>
-			<language type="is" alt="proposed-x1001">kislanda</language>
 			<language type="it">litaliano</language>
-			<language type="it" alt="proposed-x1001">kitaliano</language>
 			<language type="ja">liyapani</language>
 			<language type="jv">lizava</language>
-			<language type="jv" alt="proposed-x1001">kiyava</language>
 			<language type="ka">lizorzi</language>
-			<language type="ka" alt="proposed-x1001">kizorzi</language>
 			<language type="kg">kikɔ́ngɔ</language>
 			<language type="km">likambodia</language>
-			<language type="km" alt="proposed-x1001">kikambodia</language>
 			<language type="kn">kanada</language>
 			<language type="ko">likorea</language>
 			<language type="ku">likurdi</language>
-			<language type="ku" alt="proposed-x1001">kurdish</language>
 			<language type="ky">kirgizi</language>
-			<language type="ky" alt="proposed-x1001">kyrgyz</language>
 			<language type="la">kilatini</language>
-			<language type="la" alt="proposed-x1001">lilatini</language>
-			<language type="la" alt="proposed-x1002">latɛ́</language>
 			<language type="ln">lingála</language>
-			<language type="ln" alt="proposed-x1001">lingala</language>
 			<language type="lo">lilao</language>
-			<language type="lo" alt="proposed-x1001">mutu ya laos</language>
 			<language type="lt">lituani</language>
-			<language type="lu" alt="proposed-x1001">ciluba ya Katanga</language>
-			<language type="lu" alt="proposed-x1002">tshiluba ya Katanga</language>
 			<language type="lua">ciluba</language>
-			<language type="lua" alt="proposed-x1001">tshiluba</language>
 			<language type="lun">lunda</language>
 			<language type="lv">lilativa</language>
-			<language type="lv" alt="proposed-x1001">kilatvia</language>
 			<language type="mk">limasedonia</language>
-			<language type="mk" alt="proposed-x1001">kimasedonia</language>
 			<language type="ml">limalayalami</language>
-			<language type="ml" alt="proposed-x1001">kimalayalami</language>
 			<language type="mn">limongoli</language>
-			<language type="mn" alt="proposed-x1001">mutu ya mongoli</language>
 			<language type="mr">limarati</language>
-			<language type="mr" alt="proposed-x1001">kimarati</language>
 			<language type="ms">limalasi</language>
-			<language type="ms" alt="proposed-x1001">kimalasi</language>
 			<language type="mt">limalta</language>
-			<language type="mt" alt="proposed-x1001">kimalta</language>
 			<language type="mul">nkótá míngi</language>
 			<language type="ne">linepali</language>
-			<language type="ne" alt="proposed-x1001">nepali</language>
 			<language type="nl">lifalamá</language>
-			<language type="nl" alt="proposed-x1001">falama</language>
-			<language type="nl" alt="proposed-x1002">lifalama</language>
-			<language type="nl_BE" alt="proposed-x1001">falama (Bɛ́ljika)</language>
 			<language type="nn">linovezi-nynorsk</language>
-			<language type="nn" alt="proposed-x1001">nynorsk</language>
 			<language type="no">linovezi</language>
-			<language type="no" alt="proposed-x1001">lisverige</language>
 			<language type="oc">liosita</language>
-			<language type="oc" alt="proposed-x1001">kiosita</language>
 			<language type="or">oriya</language>
 			<language type="pa">lipunzabi</language>
-			<language type="pa" alt="proposed-x1001">kipunzabi</language>
 			<language type="pl">lipoloni</language>
-			<language type="pl" alt="proposed-x1001">kipoloni</language>
 			<language type="ps">pashto</language>
 			<language type="pt">lipulutugɛ́si</language>
-			<language type="pt" alt="proposed-x1001">liportugesi</language>
 			<language type="pt_BR">lipulutugɛ́si (Brazil)</language>
-			<language type="pt_BR" alt="proposed-x1001">liputrugɛ́si</language>
-			<language type="pt_BR" alt="proposed-x1002">kiportugesa (brazil)</language>
-			<language type="pt_PT" alt="proposed-x1001">kiportugesa</language>
-			<language type="pt_PT" alt="proposed-x1002">lipulutugɛ́si</language>
 			<language type="ro">lirumani</language>
-			<language type="ro" alt="proposed-x1001">kirumani</language>
 			<language type="ru">lirusi</language>
-			<language type="ru" alt="proposed-x1001">kirusi</language>
 			<language type="sa">indu-ya-kala</language>
 			<language type="sd">lisindi</language>
-			<language type="sd" alt="proposed-x1001">kisindi</language>
 			<language type="sg">sango</language>
 			<language type="sh">liserbokroata</language>
-			<language type="sh" alt="proposed-x1001">serbo-kroatia</language>
 			<language type="si">lisinalɛ́si</language>
-			<language type="si" alt="proposed-x1001">sinalese</language>
 			<language type="sk">lisolovaki</language>
-			<language type="sk" alt="proposed-x1001">kisolovaki</language>
 			<language type="sl">lisoloveni</language>
-			<language type="sl" alt="proposed-x1001">kisoloveni</language>
 			<language type="so">lisomali</language>
-			<language type="so" alt="proposed-x1001">kisomali</language>
 			<language type="sq">lialbania</language>
-			<language type="sq" alt="proposed-x1001">kilabania</language>
 			<language type="sr">liserbia</language>
-			<language type="sr" alt="proposed-x1001">kiserbia</language>
 			<language type="st">Sotho ya Sidi</language>
-			<language type="st" alt="proposed-x1001">sesotho</language>
 			<language type="su">lisundanɛ́si</language>
-			<language type="su" alt="proposed-x1001">kisundanesi</language>
 			<language type="sv">liswédwa</language>
-			<language type="sv" alt="proposed-x1001">lisverge</language>
 			<language type="sw">kiswahili</language>
-			<language type="sw" alt="proposed-x1001">swahili</language>
 			<language type="ta">tamili</language>
 			<language type="te">litelegu</language>
-			<language type="te" alt="proposed-x1001">kitelugu</language>
 			<language type="th">thai</language>
 			<language type="ti">tigirinya</language>
 			<language type="tk">turkmen</language>
@@ -209,14 +116,10 @@
 			<language type="tw">twi</language>
 			<language type="ug">uighur</language>
 			<language type="uk">liukrenia</language>
-			<language type="uk" alt="proposed-x1001">kiukrenia</language>
 			<language type="und">lokótá eyébámí tɛ́</language>
 			<language type="ur">liurdu</language>
-			<language type="ur" alt="proposed-x1001">kiurdu</language>
 			<language type="uz">liusibeki</language>
-			<language type="uz" alt="proposed-x1001">kiusibeki</language>
 			<language type="vi">livietnami</language>
-			<language type="vi" alt="proposed-x1001">kivietnami</language>
 			<language type="xh">xhosa</language>
 			<language type="yi">yiddish</language>
 			<language type="zu">zulu</language>
@@ -229,23 +132,14 @@
 		</scripts>
 		<territories>
 			<territory type="001">mokili mobimba</territory>
-			<territory type="001" alt="proposed-x1001">mokili mobima</territory>
 			<territory type="002">Afríka</territory>
 			<territory type="005">Ameríka ya Sídi</territory>
-			<territory type="005" alt="proposed-x1001">Amérika ya Sudi</territory>
-			<territory type="005" alt="proposed-x1002">Amérika ya nsé</territory>
 			<territory type="011">Afríka ya límbe</territory>
 			<territory type="015">Afríka ya Nola</territory>
-			<territory type="015" alt="proposed-x1001">Afríka ya likoló</territory>
 			<territory type="018">Afríka ya Sídi</territory>
-			<territory type="018" alt="proposed-x1001">Nsé ya Afríka</territory>
-			<territory type="018" alt="proposed-x1002">Sudi ya Afríka</territory>
 			<territory type="142">Azía</territory>
-			<territory type="142" alt="proposed-x1001">Azia</territory>
 			<territory type="150">Erópa</territory>
-			<territory type="150" alt="proposed-x1001">Eropa</territory>
 			<territory type="155">Erópa ya límbe</territory>
-			<territory type="155" alt="proposed-x1001">Eropa ya límbe</territory>
 			<territory type="AO">Angóla</territory>
 			<territory type="BE">Bɛ́ljika</territory>
 			<territory type="BF">Burkina Faso</territory>
@@ -254,11 +148,8 @@
 			<territory type="BW">Botswana</territory>
 			<territory type="CA">Kanadá</territory>
 			<territory type="CD">Kongó-Kinsásá</territory>
-			<territory type="CD" alt="proposed-x1001">Kɔngɔ́ (Kinshasa)</territory>
 			<territory type="CF">Santrafríka</territory>
-			<territory type="CF" alt="proposed-x1001">Bê Afríka</territory>
 			<territory type="CG">Kongó-Brazzaville</territory>
-			<territory type="CG" alt="proposed-x1001">Kɔngɔ́ (Brazzaville)</territory>
 			<territory type="CH">Swisi</territory>
 			<territory type="CM">Kamerun</territory>
 			<territory type="DE">Alémanyi</territory>
@@ -277,10 +168,8 @@
 			<territory type="KE">Kenya</territory>
 			<territory type="LR">Liberia</territory>
 			<territory type="LY">Libíya</territory>
-			<territory type="LY" alt="proposed-x1001">Libîya</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MZ">Mozambíki</territory>
-			<territory type="MZ" alt="proposed-x1001">Mozambiki</territory>
 			<territory type="NA">Namibia</territory>
 			<territory type="NE">Nijé</territory>
 			<territory type="NG">Nijeria</territory>
@@ -288,14 +177,10 @@
 			<territory type="SD">Sudani</territory>
 			<territory type="SO">Somalia</territory>
 			<territory type="ST">Sǎo Tomé na Principe</territory>
-			<territory type="ST" alt="proposed-x1001">Sao Tomé na Prinsipe</territory>
-			<territory type="ST" alt="proposed-x1002">Santu Tomé mpé Príncipe</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TN">Tunizia</territory>
 			<territory type="US">Etazíni</territory>
 			<territory type="ZA">Sidafríka</territory>
-			<territory type="ZA" alt="proposed-x1001">Afríka ya Sudi</territory>
-			<territory type="ZA" alt="proposed-x1002">Afríka ya Nsé</territory>
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabwe</territory>
 			<territory type="ZZ">Esíká eyébámí tɛ́</territory>
@@ -316,7 +201,6 @@
 	<characters>
 		<exemplarCharacters>[a á â ǎ b-e é ê ě ɛ {ɛ́} {ɛ̂} {ɛ̌} f g {gb} h i í î ǐ k-m {mb} {mp} n {nd} {ng} {nk} {ns} {nt} {nz} o ó ô ǒ ɔ {ɔ́} {ɔ̂} {ɔ̌} p r-u ú û ǔ v w y z]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[j q x]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a á â ǎ b-e é ê ě ɛ {ɛ́} {ɛ̂} {ɛ̌} f g {gb} h i í î ǐ j-m {mb} {mp} n {nd} {ng} {ngb} {nk} {ns} {nt} {nz} o ó ô ǒ ɔ {ɔ́} {ɔ̂} {ɔ̌} p-u ú û ǔ v-z]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>«</quotationStart>
@@ -348,18 +232,14 @@
 							<month type="2">sánzá ya míbalé</month>
 							<month type="3">sánzá ya mísáto</month>
 							<month type="4">sánzá ya mínei</month>
-							<month type="4" alt="proposed-x1001">sánzá ya mínéi</month>
 							<month type="5">sánzá ya mítáno</month>
 							<month type="6">sánzá ya motóbá</month>
 							<month type="7">sánzá ya nsambo</month>
 							<month type="8">sánzá ya mwambe</month>
 							<month type="9">sánzá ya libwa</month>
 							<month type="10">sánzá ya zómi</month>
-							<month type="10" alt="proposed-x1001">sánzá ya zómí</month>
 							<month type="11">sánzá ya zómi na mɔ̌kɔ́</month>
-							<month type="11" alt="proposed-x1001">sánzá ya zómí na mɔ̌kɔ́</month>
 							<month type="12">sánzá ya zómi na míbalé</month>
-							<month type="12" alt="proposed-x1001">sánzá ya zómí na míbalé</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
@@ -425,7 +305,6 @@
 							<quarter type="2">sánzá mísáto ya míbalé</quarter>
 							<quarter type="3">sánzá mísáto ya mísáto</quarter>
 							<quarter type="4">sánzá mísáto ya mínei</quarter>
-							<quarter type="4" alt="proposed-x1001">sánzá mísáto ya mínéi</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
@@ -514,21 +393,16 @@
 				<exemplarCity>Santrafríka</exemplarCity>
 			</zone>
 			<zone type="Africa/Brazzaville">
-				<exemplarCity alt="proposed-x1001">Kongó-Brazzaville</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Brazzaville</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
 	<numbers>
 		<symbols>
 			<decimal>.</decimal>
-			<decimal alt="proposed-x1001">,</decimal>
 		</symbols>
 		<currencies>
 			<currency type="CDF">
 				<displayName>falánga kongolé</displayName>
-				<displayName alt="proposed-x1001">falánga</displayName>
-				<displayName alt="proposed-x1002">falánga ya Kongó-Kinsásá</displayName>
 				<symbol>FC</symbol>
 			</currency>
 			<currency type="XXX">

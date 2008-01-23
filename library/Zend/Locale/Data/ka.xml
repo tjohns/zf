@@ -18,12 +18,10 @@
 			<language type="ar">არაბული</language>
 			<language type="arc">არამეული</language>
 			<language type="art">ხელოვნური სხვა</language>
-			<language type="art" alt="proposed-x1001">ხელოვნური (სხვა)</language>
 			<language type="as">ასამური</language>
 			<language type="ast">ავსტრიული</language>
 			<language type="az">აზერბაიჯანული</language>
 			<language type="be">ბელორუსული</language>
-			<language type="be" alt="proposed-x1001">ბელარუსული</language>
 			<language type="bg">ბულგარული</language>
 			<language type="bh">ბიჰარი</language>
 			<language type="bo">ტიბეტური</language>
@@ -31,12 +29,9 @@
 			<language type="bs">ბოსნიური</language>
 			<language type="bua">ბურიატული</language>
 			<language type="ca">კატალანური</language>
-			<language type="ca" alt="proposed-x1001">კატალონიური</language>
 			<language type="cau">კავკასიური სხვა</language>
-			<language type="cau" alt="proposed-x1001">კავკასიური (სხვა)</language>
 			<language type="ce">ჩეჩნური</language>
 			<language type="cel">კელტური სხვა</language>
-			<language type="cel" alt="proposed-x1001">კელტური (სხვა)</language>
 			<language type="cs">ჩეხური</language>
 			<language type="cu">საეკლესიო სლავური</language>
 			<language type="cy">უელსური</language>
@@ -44,7 +39,6 @@
 			<language type="de">გერმანული</language>
 			<language type="de_AT">ავსტრიული გერმანული</language>
 			<language type="de_CH">შვეიცარიული მაღალი გერმანული</language>
-			<language type="de_CH" alt="proposed-x1001">შვეიცარიული გერმანული</language>
 			<language type="egy">ეგვიპტური</language>
 			<language type="el">ბერძნული</language>
 			<language type="en">ინგლისური</language>
@@ -56,13 +50,11 @@
 			<language type="es">ესპანური</language>
 			<language type="es_419">ლათინურ ამერიკული ესპანური</language>
 			<language type="es_ES">იბერიული ესპანური</language>
-			<language type="es_ES" alt="proposed-x1001">ესპანური</language>
 			<language type="et">ესტონური</language>
 			<language type="eu">ბასკური</language>
 			<language type="fa">სპარსული</language>
 			<language type="fi">ფინური</language>
 			<language type="fil">ფილიპინური</language>
-			<language type="fil" alt="proposed-x1001">ტაგალოგური</language>
 			<language type="fr">ფრანგული</language>
 			<language type="fr_CA">კანადური ფრანგული</language>
 			<language type="fr_CH">შვეიცარიული ფრანგული</language>
@@ -84,13 +76,11 @@
 			<language type="id">ინდონეზიური</language>
 			<language type="ie">ინტერლინგი</language>
 			<language type="ine">ინდო-ევროპული სხვა</language>
-			<language type="ine" alt="proposed-x1001">ინდო-ევროპული (სხვა)</language>
 			<language type="is">ისლანდიური</language>
 			<language type="it">იტალიური</language>
 			<language type="ja">იაპონური</language>
 			<language type="jv">იავანური</language>
 			<language type="ka">ქართული</language>
-			<language type="ka" alt="proposed-x1001">ქართულად</language>
 			<language type="kg">კონგო</language>
 			<language type="kk">ყაზახური</language>
 			<language type="km">კამბოჯიური</language>
@@ -113,7 +103,6 @@
 			<language type="nl">ჰოლანდიური</language>
 			<language type="nl_BE">ფლომანდიური</language>
 			<language type="nn">ნორვეგიული ნინორსკი</language>
-			<language type="nn" alt="proposed-x1001">ნორვეგიული</language>
 			<language type="no">ნორვეგიული</language>
 			<language type="oc">ოციტანური</language>
 			<language type="or">ორიული</language>
@@ -123,7 +112,6 @@
 			<language type="ps">პუშტუ</language>
 			<language type="pt">პორტუგალიური</language>
 			<language type="pt_PT">იბერიულ-პორტუგალიური</language>
-			<language type="pt_PT" alt="proposed-x1001">პორტუგალიური</language>
 			<language type="ro">რუმინული</language>
 			<language type="ru">რუსული</language>
 			<language type="sa">სანსკრიტი</language>
@@ -135,14 +123,11 @@
 			<language type="si">სინჰალური</language>
 			<language type="sk">სლოვაკური</language>
 			<language type="sl">სლოვენური</language>
-			<language type="sl" alt="proposed-x1001">სლოვენიური</language>
 			<language type="sla">სლავური სხვა</language>
-			<language type="sla" alt="proposed-x1001">სლავური (სხვა)</language>
 			<language type="so">სომალიური</language>
 			<language type="sq">ალბანური</language>
 			<language type="sr">სერბული</language>
 			<language type="st">st</language>
-			<language type="st" alt="proposed-x1001">სესოთოს ენა</language>
 			<language type="sux">შუმერული</language>
 			<language type="sv">შვედური</language>
 			<language type="sw">სუაჰილი</language>
@@ -157,7 +142,6 @@
 			<language type="uk">უკრაინული</language>
 			<language type="und">უცნობი ან არასწორი ენა</language>
 			<language type="ur">ურდუ</language>
-			<language type="ur" alt="proposed-x1001">ურდუს ენა</language>
 			<language type="uz">უზბეკური</language>
 			<language type="vi">ვიეტნამური</language>
 			<language type="xh">ქსოზა</language>
@@ -172,19 +156,16 @@
 			<script type="Batk">ბატაკი</script>
 			<script type="Beng">ბენგალური</script>
 			<script type="Brai">ბრაილი</script>
-			<script type="Brai" alt="proposed-x1001">ბრეილი</script>
 			<script type="Copt">კოპტური</script>
 			<script type="Cprt">კვიპროსული</script>
 			<script type="Cyrl">კირილიცა</script>
 			<script type="Cyrs">ძველი საეკლესიო კირილიცა</script>
-			<script type="Cyrs" alt="proposed-x1001">კირილიცა (ძველი საეკლესიო სახეობა)</script>
 			<script type="Deva">დევანაგარი</script>
 			<script type="Egyd">ეგვიპტური დემოტიკური</script>
 			<script type="Egyh">ეგვიპტური ჰიერატიკული</script>
 			<script type="Egyp">ეგვიპტური იეროგლიფური</script>
 			<script type="Ethi">ეთიოპური</script>
 			<script type="Geok">ხუცური</script>
-			<script type="Geok" alt="proposed-x1001">ხუცური (მრგლოვანი და ნუსხური)</script>
 			<script type="Geor">ქართული</script>
 			<script type="Glag">გლაგოლიცა</script>
 			<script type="Goth">გოთური</script>
@@ -225,7 +206,6 @@
 			<territory type="001">მსოფლიო</territory>
 			<territory type="002">აფრიკა</territory>
 			<territory type="003">ჩრდილოეთ ამერიკა</territory>
-			<territory type="003" alt="proposed-x1001">ჩრდილოეთი ამერიკა</territory>
 			<territory type="005">სამხრეთი ამერიკა</territory>
 			<territory type="009">ოკეანეთი</territory>
 			<territory type="011">დასავლეთი აფრიკა</territory>
@@ -262,7 +242,6 @@
 			<territory type="AI">ანტიგუა</territory>
 			<territory type="AL">ალბანეთი</territory>
 			<territory type="AM">სომხეთი</territory>
-			<territory type="AM" alt="proposed-x1001">სასომხეთი</territory>
 			<territory type="AN">ნიდერლანდების ანტილები</territory>
 			<territory type="AO">ანგოლა</territory>
 			<territory type="AQ">ანტარქტიკა</territory>
@@ -345,7 +324,6 @@
 			<territory type="GW">გვინეა-ბისაუ</territory>
 			<territory type="GY">გაიანა</territory>
 			<territory type="HK">ჰონგ კონგი</territory>
-			<territory type="HK" alt="short">ჰონგ კონგი</territory>
 			<territory type="HM">ჰერდის კუნძული და მაკდონალდის კუნძულები</territory>
 			<territory type="HN">ჰონდურასი</territory>
 			<territory type="HR">ჰორვატია</territory>
@@ -398,7 +376,6 @@
 			<territory type="MM">მიანმარი</territory>
 			<territory type="MN">მონღოლეთი</territory>
 			<territory type="MO">მაკაო</territory>
-			<territory type="MO" alt="short">მაკაო</territory>
 			<territory type="MQ">მარტინიკი</territory>
 			<territory type="MR">მავრიტანია</territory>
 			<territory type="MS">მონსერატი</territory>
@@ -491,7 +468,6 @@
 			<territory type="ZM">ზამბია</territory>
 			<territory type="ZW">ზიმბაბვე</territory>
 			<territory type="ZZ">უცნობი ან არასწორი რეგიონი</territory>
-			<territory type="ZZ" alt="proposed-x1001">უცნობი ან მცდარი რეგიონი</territory>
 		</territories>
 		<keys>
 			<key type="calendar">კალენდარი</key>
@@ -613,13 +589,9 @@
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">1-ლი კვარტალი</quarter>
-							<quarter type="1" alt="proposed-x1001">I კვარტალი</quarter>
 							<quarter type="2">მე-2 კვარტალი</quarter>
-							<quarter type="2" alt="proposed-x1001">II კვარტალი</quarter>
 							<quarter type="3">მე-3 კვარტალი</quarter>
-							<quarter type="3" alt="proposed-x1001">III კვარტალი</quarter>
 							<quarter type="4">მე-4 კვარტალი</quarter>
-							<quarter type="4" alt="proposed-x1001">IV კვარტალი</quarter>
 						</quarterWidth>
 					</quarterContext>
 					<quarterContext type="stand-alone">
@@ -632,23 +604,15 @@
 					</quarterContext>
 				</quarters>
 				<am>დილის</am>
-				<am alt="proposed-x1001">შუადღის</am>
-				<am alt="proposed-x1002">AM</am>
 				<pm>საღამოს</pm>
-				<pm alt="proposed-x1001">PM</pm>
-				<pm alt="proposed-x1002">ღამის</pm>
 				<eras>
 					<eraNames>
 						<era type="0">ჩვენს წელთაღრიცხვამდე</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">ჩვენი წელთაღრიცხვით</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">ჩვენს წელთაღრიცხვამდე</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">ჩვენი წელთაღრიცხვით</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0">ჩვენს წელთაღრიცხვამდე</era>
@@ -681,26 +645,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>HH:mm:ss v</pattern>
-							<pattern alt="proposed-x1001">სთ:წთ:წმ</pattern>
-							<pattern alt="proposed-x1002">სთ:წთ:წმ დროის სარტყელი</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>HH:mm:ss z</pattern>
-							<pattern alt="proposed-x1001">სთ:წთ:წმ</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>HH:mm:ss</pattern>
-							<pattern alt="proposed-x1001">სთ:წთ:წმ</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>HH:mm</pattern>
-							<pattern alt="proposed-x1001">სთ:წთ</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
@@ -1022,7 +981,6 @@
 		<symbols>
 			<decimal>,</decimal>
 			<group>.</group>
-			<group alt="proposed-x1001"> </group>
 		</symbols>
 		<decimalFormats>
 			<decimalFormatLength>
@@ -1099,7 +1057,6 @@
 			</currency>
 			<currency type="AZM">
 				<displayName>აზერბაიჯანული მანათი (1993-2006)</displayName>
-				<displayName alt="proposed-x1001">აზერბაიჯანული მანათი</displayName>
 			</currency>
 			<currency type="AZN">
 				<displayName>აზერბაიჯანული მანათი</displayName>

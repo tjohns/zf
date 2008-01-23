@@ -9,317 +9,154 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="af">Αφρικάανς</language>
-			<language type="af" alt="proposed-x1001">αφρικάανς</language>
 			<language type="am">Αμαρικά</language>
-			<language type="am" alt="proposed-x1001">αμαρικά</language>
 			<language type="ar">Αραβικά</language>
-			<language type="ar" alt="proposed-x1001">αραβικά</language>
 			<language type="arc">Αραμαϊκά</language>
-			<language type="arc" alt="proposed-x1001">αραμαϊκά</language>
 			<language type="as">Ασαμέζικα</language>
-			<language type="as" alt="proposed-x1001">ασαμέζικα</language>
 			<language type="ay">Αϊμάρα</language>
-			<language type="ay" alt="proposed-x1001">αϊμάρα</language>
 			<language type="az">Αζερμπαϊτζανικά</language>
-			<language type="az" alt="proposed-x1001">αζερμπαϊτζανικά</language>
 			<language type="be">Λευκορωσικά</language>
-			<language type="be" alt="proposed-x1001">λευκορωσικά</language>
 			<language type="bg">Βουλγαρικά</language>
-			<language type="bg" alt="proposed-x1001">βουλγαρικά</language>
 			<language type="bh">Μπιχάρι</language>
-			<language type="bh" alt="proposed-x1001">μπιχάρι</language>
 			<language type="bn">μπενγκάλι</language>
 			<language type="bo">Θιβετιανά</language>
-			<language type="bo" alt="proposed-x1001">θιβετιανά</language>
 			<language type="br">Βρετονικά</language>
-			<language type="br" alt="proposed-x1001">βρετονικά</language>
 			<language type="bs">Βοσνιακά</language>
-			<language type="bs" alt="proposed-x1001">βοσνιακά</language>
 			<language type="ca">Καταλανικά</language>
-			<language type="ca" alt="proposed-x1001">καταλανικά</language>
 			<language type="co">Κορσικανικά</language>
-			<language type="co" alt="proposed-x1001">κορσικανικά</language>
 			<language type="cop">Κοπτικά</language>
-			<language type="cop" alt="proposed-x1001">κοπτικά</language>
 			<language type="crh">Τουρκικά Κριμαίας</language>
 			<language type="cs">Τσεχικά</language>
-			<language type="cs" alt="proposed-x1001">τσέχικα</language>
-			<language type="cs" alt="proposed-x1002">τσεχικά</language>
 			<language type="cy">Ουαλικά</language>
-			<language type="cy" alt="proposed-x1001">ουαλικά</language>
 			<language type="da">δανικά</language>
-			<language type="da" alt="proposed-x1001">Δανικά</language>
-			<language type="da" alt="proposed-x1002">Δανέζικα</language>
 			<language type="de">Γερμανικά</language>
-			<language type="de" alt="proposed-x1001">γερμανικά</language>
 			<language type="de_AT">Γερμανικά Αυστρίας</language>
 			<language type="de_CH">Γερμανικά Ελβετίας</language>
 			<language type="egy">Αρχαία Αιγυπτιακά</language>
-			<language type="egy" alt="proposed-x1001">Αιγυπτιακά (Αρχαία)</language>
 			<language type="el">Ελληνικά</language>
-			<language type="el" alt="proposed-x1001">ελληνικά</language>
 			<language type="en">Αγγλικά</language>
-			<language type="en" alt="proposed-x1001">αγγλικά</language>
 			<language type="en_AU">Αγγλικά Αυστραλίας</language>
-			<language type="en_AU" alt="proposed-x1001">αγγλικά (αυστραλία)</language>
 			<language type="en_CA">Αγγλικά Καναδά</language>
 			<language type="en_GB">Αγγλικά Ηνωμένου Βασιλείου</language>
-			<language type="en_GB" alt="proposed-x1001">Αγγλικά</language>
-			<language type="en_GB" alt="proposed-x1002">αγγλικά (η.β.)</language>
 			<language type="en_US">Αγγλικά Ηνωμένων Πολιτειών</language>
-			<language type="en_US" alt="proposed-x1001">αγγλικά (ηπα)</language>
 			<language type="eo">Εσπεράντο</language>
-			<language type="eo" alt="proposed-x1001">εσπεράντο</language>
 			<language type="es">Ισπανικά</language>
-			<language type="es" alt="proposed-x1001">ισπανικά</language>
 			<language type="es_419">Ισπανικά Λατινικής Αμερικής</language>
 			<language type="es_ES">Ισπανικά Ιβηρικής</language>
-			<language type="es_ES" alt="proposed-x1001">Ισπανικά</language>
 			<language type="et">Εσθονικά</language>
-			<language type="et" alt="proposed-x1001">εσθονική</language>
-			<language type="et" alt="proposed-x1002">εσθονικά</language>
 			<language type="eu">Βασκικά</language>
-			<language type="eu" alt="proposed-x1001">βασκικά</language>
 			<language type="fa">Περσικά</language>
-			<language type="fa" alt="proposed-x1001">περσικά</language>
 			<language type="fi">Φινλανδικά</language>
-			<language type="fi" alt="proposed-x1001">φινλανδικά</language>
-			<language type="fi" alt="proposed-x1002">φιλανδικά</language>
 			<language type="fil">Φιλιππινέζικα</language>
-			<language type="fil" alt="proposed-x1001">φιλιπινέζικα</language>
 			<language type="fo">Φαρόε</language>
-			<language type="fo" alt="proposed-x1001">Φεροϊκά</language>
-			<language type="fo" alt="proposed-x1002">φαρόε</language>
 			<language type="fr">Γαλλικά</language>
-			<language type="fr" alt="proposed-x1001">γαλλικά</language>
 			<language type="fr_CA">Γαλλικά Καναδά</language>
 			<language type="fr_CH">Γαλλικά Ελβετίας</language>
 			<language type="fy">Φριζιανά</language>
-			<language type="fy" alt="proposed-x1001">φριζιανά</language>
-			<language type="fy" alt="proposed-x1002">fy</language>
 			<language type="ga">Ιρλανδικά</language>
-			<language type="ga" alt="proposed-x1001">ιρλανδικά</language>
 			<language type="gd">Σκωτικά Κελτικά</language>
-			<language type="gd" alt="proposed-x1001">κελτικά σκοτίας</language>
-			<language type="gd" alt="proposed-x1002">Κελτικά Σκωτίας</language>
 			<language type="gl">Γαλικιανά</language>
-			<language type="gl" alt="proposed-x1001">Γαλικικά</language>
-			<language type="gl" alt="proposed-x1002">γαλικιανά</language>
 			<language type="gn">Γκουαράνι</language>
-			<language type="gn" alt="proposed-x1001">γκουαράνι</language>
-			<language type="gn" alt="proposed-x1002">Γκουαρανί</language>
 			<language type="got">Γοτθικά</language>
 			<language type="grc">Αρχαία Ελληνικά</language>
-			<language type="grc" alt="proposed-x1001">Ελληνικά, Αρχαία (έως 1453)</language>
 			<language type="gu">Γκουγιαράτι</language>
-			<language type="gu" alt="proposed-x1001">γκουτζαράτι</language>
-			<language type="gu" alt="proposed-x1002">Γκουτζαράτι</language>
 			<language type="haw">Χαβανέζικα</language>
-			<language type="haw" alt="proposed-x1001">χαβανεζικά</language>
 			<language type="he">Εβραϊκά</language>
-			<language type="he" alt="proposed-x1001">εβραϊκά</language>
 			<language type="hi">Χίντι</language>
-			<language type="hi" alt="proposed-x1001">χίντι</language>
-			<language type="hi" alt="proposed-x1002">ινδικά</language>
 			<language type="hr">Κροατικά</language>
-			<language type="hr" alt="proposed-x1001">κροατικά</language>
 			<language type="hu">Ουγγρικά</language>
-			<language type="hu" alt="proposed-x1001">ουγγρικά</language>
 			<language type="hy">Αρμενικά</language>
-			<language type="hy" alt="proposed-x1001">αρμένικα</language>
-			<language type="hy" alt="proposed-x1002">αρμενικά</language>
 			<language type="ia">Ιντερλίνγκουα</language>
-			<language type="ia" alt="proposed-x1001">ιντερλίνγκουα</language>
 			<language type="id">Ινδονησιακά</language>
-			<language type="id" alt="proposed-x1001">ινδονησιακά</language>
 			<language type="ie">Ιντερλίνγκουε</language>
-			<language type="ie" alt="proposed-x1001">ιντερλίνγκουε</language>
 			<language type="ine">Ινδοευρωπαϊκά (¨Αλλη)</language>
-			<language type="ine" alt="proposed-x1001">Ινδοευρωπαϊκά</language>
-			<language type="ine" alt="proposed-x1002">Ινδοευρωπαϊκά (Άλλα)</language>
 			<language type="ira">ιρανικά</language>
 			<language type="is">Ισλανδικά</language>
-			<language type="is" alt="proposed-x1001">ισλανδικά</language>
 			<language type="it">Ιταλικά</language>
-			<language type="it" alt="proposed-x1001">ιταλικά</language>
 			<language type="ja">Ιαπωνικά</language>
-			<language type="ja" alt="proposed-x1001">ιαπωνικά</language>
 			<language type="jv">Ιαβανέζικα</language>
-			<language type="jv" alt="proposed-x1001">ιαβανέζικα</language>
-			<language type="jv" alt="proposed-x1002">Ιαβανικά</language>
 			<language type="ka">Γεωργιανά</language>
-			<language type="ka" alt="proposed-x1001">γεωργιανά</language>
 			<language type="km">Καμποτζιανά</language>
-			<language type="km" alt="proposed-x1001">καμποτζιανά</language>
 			<language type="kn">Κανάντα</language>
-			<language type="kn" alt="proposed-x1001">κανάντα</language>
 			<language type="ko">Κορεατικά</language>
-			<language type="ko" alt="proposed-x1001">κορεατικά</language>
-			<language type="ko" alt="proposed-x1002">κορεάτικα</language>
 			<language type="ks">Κασμίρι</language>
-			<language type="ks" alt="proposed-x1001">κασμίρι</language>
 			<language type="ku">Κουρδικά</language>
-			<language type="ku" alt="proposed-x1001">κουρδικά</language>
 			<language type="ky">Κιργκίζ</language>
-			<language type="ky" alt="proposed-x1001">κιργκίζ</language>
-			<language type="ky" alt="proposed-x1002">Κυργιζικά</language>
 			<language type="la">Λατινικά</language>
-			<language type="la" alt="proposed-x1001">λατινικά</language>
 			<language type="ln">Λινγκάλα</language>
-			<language type="ln" alt="proposed-x1001">λινγκάλα</language>
 			<language type="lo">Λαοθιανά</language>
-			<language type="lo" alt="proposed-x1001">λαοθιανά</language>
 			<language type="lt">Λιθουανικά</language>
-			<language type="lt" alt="proposed-x1001">λιθουανικά</language>
 			<language type="lv">Λετονικά</language>
-			<language type="lv" alt="proposed-x1001">λετονικά</language>
 			<language type="mk">Σλαβομακεδονικά</language>
-			<language type="mk" alt="proposed-x1001">σλαβομακεδονικά</language>
-			<language type="mk" alt="proposed-x1002">μακεδονικά</language>
 			<language type="ml">Μαλαγιαλάμ</language>
-			<language type="ml" alt="proposed-x1001">Μαλαϋαλάμ</language>
-			<language type="ml" alt="proposed-x1002">μαλαϋαλάμ</language>
 			<language type="mn">Μογγολικά</language>
-			<language type="mn" alt="proposed-x1001">μογγολικά</language>
-			<language type="mn" alt="proposed-x1002">μογκολικά</language>
 			<language type="mo">Μολδαβικά</language>
-			<language type="mo" alt="proposed-x1001">μολδαβικά</language>
 			<language type="mr">Μαράθι</language>
-			<language type="mr" alt="proposed-x1001">μαράθι</language>
-			<language type="mr" alt="proposed-x1002">Μαραθικά</language>
 			<language type="ms">Μαλάι</language>
-			<language type="ms" alt="proposed-x1001">μαλάι</language>
-			<language type="ms" alt="proposed-x1002">Μαλαϊκά</language>
 			<language type="mt">Μαλτέζικα</language>
-			<language type="mt" alt="proposed-x1001">μαλτέζικα</language>
-			<language type="mt" alt="proposed-x1002">μαλτεζικά</language>
 			<language type="mul">Πολλαπλές Γλώσσες</language>
 			<language type="nai">Ινδιανικά Βόρειας Αμερικής (Άλλα)</language>
 			<language type="ne">Νεπάλι</language>
-			<language type="ne" alt="proposed-x1001">νεπάλι</language>
 			<language type="nl">Ολλανδικά</language>
-			<language type="nl" alt="proposed-x1001">ολλανδικά</language>
 			<language type="nl_BE">Φλαμανδικά</language>
 			<language type="nn">Νορβηγικά Νινόρσκ</language>
-			<language type="nn" alt="proposed-x1001">νορβηγικά (νινόρσκ)</language>
 			<language type="no">Νορβηγικά</language>
-			<language type="no" alt="proposed-x1001">νορβηγικά</language>
 			<language type="oc">Οκσιτανικά</language>
-			<language type="oc" alt="proposed-x1001">οκσιτανικά</language>
 			<language type="or">Ορίγια</language>
-			<language type="or" alt="proposed-x1001">ορίγια</language>
 			<language type="ota">Τουρκικά Οθωμανικά</language>
-			<language type="ota" alt="proposed-x1001">Τουρκικά, Οθωμανικά (1500-1928)</language>
-			<language type="ota" alt="proposed-x1002">Οθωμανικά τουρκικά</language>
-			<language type="ota" alt="proposed-x1003">Τουρκικά, Οθωμανικά</language>
 			<language type="pa">Παντζαπικά</language>
-			<language type="pa" alt="proposed-x1001">πουντζάμπι</language>
-			<language type="pa" alt="proposed-x1002">Πουντζάμπι</language>
 			<language type="peo">Αρχαία Περσικά</language>
-			<language type="peo" alt="proposed-x1001">Αρχαία Περσικά (600-400 π.Χ.)</language>
 			<language type="phi">Φιλιππινέζικα (Άλλα)</language>
 			<language type="phn">Φοινικικά</language>
-			<language type="phn" alt="proposed-x1001">φοινικικά</language>
 			<language type="pl">Πολωνικά</language>
-			<language type="pl" alt="proposed-x1001">πολωνικά</language>
 			<language type="ps">Πάστο</language>
-			<language type="ps" alt="proposed-x1001">πάστο</language>
 			<language type="pt">Πορτογαλικά</language>
-			<language type="pt" alt="proposed-x1001">πορτογαλικά</language>
 			<language type="pt_BR">Πορτογαλικά Βραζιλίας</language>
-			<language type="pt_BR" alt="proposed-x1001">πορτογαλικά (βραζιλία)</language>
 			<language type="pt_PT">Πορτογαλικά Ιβηρικής</language>
-			<language type="pt_PT" alt="proposed-x1001">πορτογαλικά (πορτογαλία)</language>
-			<language type="pt_PT" alt="proposed-x1002">Πορτογαλικά</language>
 			<language type="ro">Ρουμανικά</language>
-			<language type="ro" alt="proposed-x1001">ρουμανικά</language>
 			<language type="rom">Ρωμανικά</language>
-			<language type="rom" alt="proposed-x1001">ρωμανικά</language>
 			<language type="ru">Ρωσικά</language>
-			<language type="ru" alt="proposed-x1001">ρωσικά</language>
 			<language type="sa">Σανσκριτικά</language>
-			<language type="sa" alt="proposed-x1001">σανσκριτικά</language>
 			<language type="sd">Σίντι</language>
-			<language type="sd" alt="proposed-x1001">σίντι</language>
 			<language type="sem">Σημιτικά (Άλλα)</language>
 			<language type="sh">Σερβοκροατικά</language>
-			<language type="sh" alt="proposed-x1001">σερβο-κροατικά</language>
-			<language type="sh" alt="proposed-x1002">σερβοκροατικά</language>
 			<language type="si">Σινχαλέζικα</language>
-			<language type="si" alt="proposed-x1001">σινχαλέζικα</language>
 			<language type="sk">Σλοβακικά</language>
-			<language type="sk" alt="proposed-x1001">σλοβακικά</language>
-			<language type="sk" alt="proposed-x1002">σλοβάκικα</language>
 			<language type="sl">Σλοβενικά</language>
-			<language type="sl" alt="proposed-x1001">σλοβένικα</language>
-			<language type="sl" alt="proposed-x1002">σλοβενικά</language>
 			<language type="sla">Σλαβικά (Άλλα)</language>
 			<language type="so">Σομάλι</language>
-			<language type="so" alt="proposed-x1001">σομάλι</language>
 			<language type="sq">Αλβανικά</language>
-			<language type="sq" alt="proposed-x1001">αλβανικά</language>
 			<language type="sr">Σερβικά</language>
-			<language type="sr" alt="proposed-x1001">σερβικά</language>
 			<language type="su">Σουδανικά</language>
-			<language type="su" alt="proposed-x1001">σουδανικά</language>
 			<language type="sv">Σουηδικά</language>
-			<language type="sv" alt="proposed-x1001">σουηδικά</language>
 			<language type="sw">Σουαχίλι</language>
-			<language type="sw" alt="proposed-x1001">σουαχίλι</language>
 			<language type="syr">Συριακά</language>
 			<language type="ta">Ταμίλ</language>
-			<language type="ta" alt="proposed-x1001">Ταμιλικά</language>
-			<language type="ta" alt="proposed-x1002">ταμίλ</language>
 			<language type="te">Τελούγκου</language>
-			<language type="te" alt="proposed-x1001">τελούγκου</language>
 			<language type="th">Ταϊλανδικά</language>
-			<language type="th" alt="proposed-x1001">ταϊλανδέζικα</language>
-			<language type="th" alt="proposed-x1002">ταϊλανδικά</language>
 			<language type="ti">Τιγκρίνυα</language>
-			<language type="ti" alt="proposed-x1001">τιγκρίνυα</language>
 			<language type="tk">Τουρκμενικά</language>
-			<language type="tk" alt="proposed-x1001">τουρκμενικά</language>
 			<language type="tlh">Κλίνγκον</language>
-			<language type="tlh" alt="proposed-x1001">κλίνγκον</language>
 			<language type="tr">Τουρκικά</language>
-			<language type="tr" alt="proposed-x1001">τούρκικα</language>
-			<language type="tr" alt="proposed-x1002">τουρκικά</language>
 			<language type="tw">Τούι</language>
-			<language type="tw" alt="proposed-x1001">τούι</language>
 			<language type="ug">Ουιγουρικά</language>
-			<language type="ug" alt="proposed-x1001">ουιγουρικά</language>
 			<language type="uk">Ουκρανικά</language>
-			<language type="uk" alt="proposed-x1001">ουκρανικά</language>
 			<language type="und">και</language>
 			<language type="ur">Ουρντού</language>
-			<language type="ur" alt="proposed-x1001">ουρντού</language>
 			<language type="uz">Ουζμπεκικά</language>
-			<language type="uz" alt="proposed-x1001">ουζμπέκικα</language>
-			<language type="uz" alt="proposed-x1002">Ουζμπέκικα</language>
 			<language type="vi">Βιετναμέζικα</language>
-			<language type="vi" alt="proposed-x1001">βιετναμεζικά</language>
-			<language type="vi" alt="proposed-x1002">βιετναμέζικα</language>
 			<language type="wo">Γουόλοφ</language>
-			<language type="wo" alt="proposed-x1001">γουόλοφ</language>
 			<language type="xh">Ζόσα</language>
-			<language type="xh" alt="proposed-x1001">ζόσα</language>
 			<language type="yi">Ιουδαϊκά</language>
-			<language type="yi" alt="proposed-x1001">ιουδαϊκά</language>
-			<language type="yi" alt="proposed-x1002">γίντις</language>
 			<language type="zh">Κινεζικά</language>
-			<language type="zh" alt="proposed-x1001">κινεζικά</language>
 			<language type="zh_Hans">Κινεζικά Απλοποιημένα</language>
-			<language type="zh_Hans" alt="proposed-x1001">κινέζικα (απλοποιημένα)</language>
 			<language type="zh_Hant">Κινεζικά Παραδοσιακά</language>
-			<language type="zh_Hant" alt="proposed-x1001">κινέζικα (παραδοσιακά)</language>
 			<language type="zu">Ζουλού</language>
-			<language type="zu" alt="proposed-x1001">ζουλού</language>
 		</languages>
 		<scripts>
 			<script type="Arab">Αραβικό</script>
 			<script type="Armn">Αρμενικό</script>
 			<script type="Beng">Βενγκάλι</script>
-			<script type="Beng" alt="proposed-x1001">Μπενγκάλι</script>
 			<script type="Brai">Μπράιγ</script>
 			<script type="Copt">Κοπτικό</script>
 			<script type="Cprt">Κυπριακό</script>
@@ -336,17 +173,12 @@
 			<script type="Hant">Κινεζικό Παραδοσιακό</script>
 			<script type="Hebr">Εβραϊκό</script>
 			<script type="Java">Ιαβανέζικο</script>
-			<script type="Java" alt="proposed-x1001">Τζαβανέζικο</script>
-			<script type="Java" alt="proposed-x1002">Ιαβανικό</script>
 			<script type="Jpan">Ιαπωνικό</script>
 			<script type="Knda">Καναδέζικο</script>
-			<script type="Knda" alt="proposed-x1001">Καναδικό</script>
-			<script type="Knda" alt="proposed-x1002">Καναντικό</script>
 			<script type="Latn">Λατινικό</script>
 			<script type="Lina">Γραμμική Α</script>
 			<script type="Linb">Γραμμική Β</script>
 			<script type="Mlym">Μαλαϊκό</script>
-			<script type="Mlym" alt="proposed-x1001">Μαλαϊκά</script>
 			<script type="Mong">Μογγολικό</script>
 			<script type="Phnx">Φοινικικό</script>
 			<script type="Syrc">Συριακό</script>
@@ -356,7 +188,6 @@
 			<script type="Zxxx">Zxxx</script>
 			<script type="Zyyy">Κοινό</script>
 			<script type="Zzzz">Άγνωστη ή Ακατάλληλη Γραφή</script>
-			<script type="Zzzz" alt="proposed-x1001">Άγνωστο ή Άκυρο Σενάριο</script>
 		</scripts>
 		<territories>
 			<territory type="001">Κόσμος</territory>
@@ -372,7 +203,6 @@
 			<territory type="018">Νότια Αφρική [018]</territory>
 			<territory type="019">Αμερική</territory>
 			<territory type="021">Βόρειος Αμερική</territory>
-			<territory type="021" alt="proposed-x1001">Βόρεια Αμερική</territory>
 			<territory type="029">Καραϊβική</territory>
 			<territory type="030">Ανατολική Ασία</territory>
 			<territory type="034">Νότια Ασία</territory>
@@ -402,7 +232,6 @@
 			<territory type="AM">Αρμενία</territory>
 			<territory type="AN">Ολλανδικές Αντίλλες</territory>
 			<territory type="AO">Ανγκόλα</territory>
-			<territory type="AO" alt="proposed-x1001">Αγκόλα</territory>
 			<territory type="AQ">Ανταρκτική</territory>
 			<territory type="AR">Αργεντινή</territory>
 			<territory type="AS">Αμερικανική Σαμόα</territory>
@@ -410,24 +239,18 @@
 			<territory type="AU">Αυστραλία</territory>
 			<territory type="AW">Αρούμπα</territory>
 			<territory type="AX">Νήσοι Άλαντ</territory>
-			<territory type="AX" alt="proposed-x1001">Νήσοι Aland</territory>
-			<territory type="AX" alt="proposed-x1002">Νησιά Άλαντ</territory>
 			<territory type="AZ">Αζερμπαϊτζάν</territory>
 			<territory type="BA">Βοσνία - Ερζεγοβίνη</territory>
-			<territory type="BA" alt="proposed-x1001">Βοσνία και Ερζεγοβίνη</territory>
 			<territory type="BB">Μπαρμπάντος</territory>
 			<territory type="BD">Μπανγκλαντές</territory>
-			<territory type="BD" alt="proposed-x1001">Μπαγκλαντές</territory>
 			<territory type="BE">Βέλγιο</territory>
 			<territory type="BF">Μπουρκίνα Φάσο</territory>
 			<territory type="BG">Βουλγαρία</territory>
 			<territory type="BH">Μπαχρέιν</territory>
 			<territory type="BI">Μπουρούντι</territory>
 			<territory type="BJ">Μπένιν</territory>
-			<territory type="BJ" alt="proposed-x1001">Μπενίν</territory>
 			<territory type="BM">Βερμούδες</territory>
 			<territory type="BN">Μπρουνέι Νταρουσαλάμ</territory>
-			<territory type="BN" alt="proposed-x1001">Μπρουνέι</territory>
 			<territory type="BO">Βολιβία</territory>
 			<territory type="BR">Βραζιλία</territory>
 			<territory type="BS">Μπαχάμες</territory>
@@ -438,17 +261,11 @@
 			<territory type="BZ">Μπελίζ</territory>
 			<territory type="CA">Καναδάς</territory>
 			<territory type="CC">Νήσοι Κόκος</territory>
-			<territory type="CC" alt="proposed-x1001">Νησιά Κόκος</territory>
-			<territory type="CC" alt="proposed-x1002">Νήσοι Κόκος (Κήλινγκ)</territory>
 			<territory type="CD">Κονγκό - Κινσάσα</territory>
-			<territory type="CD" alt="proposed-x1001">Κονγκό, Λαϊκή Δημοκρατία του</territory>
-			<territory type="CD" alt="proposed-x1002">Κονγκό, Δημοκρατία του</territory>
 			<territory type="CF">Κεντροαφρικανική Δημοκρατία</territory>
-			<territory type="CF" alt="proposed-x1001">Κεντρική Αφρικανική Δημοκρατία</territory>
 			<territory type="CG">Κονγκό</territory>
 			<territory type="CH">Ελβετία</territory>
 			<territory type="CI">Ακτή Ελεφαντοστού</territory>
-			<territory type="CI" alt="proposed-x1001">Ακτή Ελεφαντόδοντος</territory>
 			<territory type="CK">Νήσοι Κουκ</territory>
 			<territory type="CL">Χιλή</territory>
 			<territory type="CM">Καμερούν</territory>
@@ -458,7 +275,6 @@
 			<territory type="CS">Σερβία και Μαυροβούνιο</territory>
 			<territory type="CU">Κούβα</territory>
 			<territory type="CV">Πράσινο Ακρωτήριο</territory>
-			<territory type="CV" alt="proposed-x1001">Νήσοι Πράσινου Ακρωτηρίου</territory>
 			<territory type="CX">Νήσος Χριστουγέννων</territory>
 			<territory type="CY">Κύπρος</territory>
 			<territory type="CZ">Τσεχία</territory>
@@ -478,11 +294,8 @@
 			<territory type="FI">Φινλανδία</territory>
 			<territory type="FJ">Φίτζι</territory>
 			<territory type="FK">Νήσοι Φώκλαντ</territory>
-			<territory type="FK" alt="proposed-x1001">Νησιά Φώκλαντ</territory>
 			<territory type="FM">Μικρονησία</territory>
-			<territory type="FM" alt="proposed-x1001">Μικρονησία, Ομόσπονδες Πολιτείες της</territory>
 			<territory type="FO">Νήσοι Φερόες</territory>
-			<territory type="FO" alt="proposed-x1001">Νησιά Φαρόε</territory>
 			<territory type="FR">Γαλλία</territory>
 			<territory type="GA">Γκαμπόν</territory>
 			<territory type="GB">Ηνωμένο Βασίλειο</territory>
@@ -499,17 +312,12 @@
 			<territory type="GQ">Ισημερινή Γουινέα</territory>
 			<territory type="GR">Ελλάδα</territory>
 			<territory type="GS">Νότια Γεωργία και Νότιες Νήσοι Σάντουιτς</territory>
-			<territory type="GS" alt="proposed-x1001">Νότια Γεωργία και τα Νησιά του Νοτίου Σάντουιτς</territory>
-			<territory type="GS" alt="proposed-x1002">Νότια Γεωργία και Νήσοι Νότιες Σάντουιτς</territory>
 			<territory type="GT">Γουατεμάλα</territory>
 			<territory type="GU">Γκουάμ</territory>
 			<territory type="GW">Γουινέα-Μπισάου</territory>
-			<territory type="GW" alt="proposed-x1001">Γουινέα-Μπισσάου</territory>
 			<territory type="GY">Γουιάνα</territory>
 			<territory type="HK">Χονγκ Κονγκ, Ειδική Διοικητική Περιφέρεια της Κίνας</territory>
-			<territory type="HK" alt="short">Χονγκ Κονγκ</territory>
 			<territory type="HM">Νήσοι Χερντ και Μακντόναλντ</territory>
-			<territory type="HM" alt="proposed-x1001">Νήσος Χερντ και Νησιά Μακντόναλντ</territory>
 			<territory type="HN">Ονδούρα</territory>
 			<territory type="HR">Κροατία</territory>
 			<territory type="HT">Αϊτή</territory>
@@ -520,37 +328,26 @@
 			<territory type="IM">Νήσος Μαν</territory>
 			<territory type="IN">Ινδία</territory>
 			<territory type="IO">Βρετανικά Έδάφη Ινδικού Ωκεανού</territory>
-			<territory type="IO" alt="proposed-x1001">Έδαφος Βρετανικού Ινδικού Ωκεανού</territory>
 			<territory type="IQ">Ιράκ</territory>
 			<territory type="IR">Ιράν</territory>
-			<territory type="IR" alt="proposed-x1001">Ιράν, Ισλαμική Δημοκρατία του</territory>
 			<territory type="IS">Ισλανδία</territory>
 			<territory type="IT">Ιταλία</territory>
 			<territory type="JE">Υερσέη</territory>
-			<territory type="JE" alt="proposed-x1001">Τζέρσεϊ</territory>
 			<territory type="JM">Τζαμάικα</territory>
 			<territory type="JO">Ιορδανία</territory>
 			<territory type="JP">Ιαπωνία</territory>
 			<territory type="KE">Κένυα</territory>
 			<territory type="KG">Κιργιζία</territory>
-			<territory type="KG" alt="proposed-x1001">Κιργκιζστάν</territory>
-			<territory type="KG" alt="proposed-x1002">Κιργιστάν</territory>
 			<territory type="KH">Καμπότζη</territory>
 			<territory type="KI">Κιριμπάτι</territory>
 			<territory type="KM">Κομόρες</territory>
-			<territory type="KM" alt="proposed-x1001">Κομόρος</territory>
 			<territory type="KN">Σαιντ Κιτς και Νέβις</territory>
-			<territory type="KN" alt="proposed-x1001">Άγιος Κιτς και Νέβις</territory>
 			<territory type="KP">Βόρεια Κορέα</territory>
-			<territory type="KP" alt="proposed-x1001">Κορέα, Βόρεια</territory>
 			<territory type="KR">Νότια Κορέα</territory>
-			<territory type="KR" alt="proposed-x1001">Κορέα, Νότια</territory>
 			<territory type="KW">Κουβέιτ</territory>
 			<territory type="KY">Νήσοι Κέιμαν</territory>
-			<territory type="KY" alt="proposed-x1001">Νήσοι Κέυμαν</territory>
 			<territory type="KZ">Καζακστάν</territory>
 			<territory type="LA">Λάος</territory>
-			<territory type="LA" alt="proposed-x1001">Λατινική Αμερική</territory>
 			<territory type="LB">Λίβανος</territory>
 			<territory type="LC">Αγία Λουκία</territory>
 			<territory type="LI">Λιχτενστάιν</territory>
@@ -561,26 +358,18 @@
 			<territory type="LU">Λουξεμβούργο</territory>
 			<territory type="LV">Λετονία</territory>
 			<territory type="LY">Λιβύη</territory>
-			<territory type="LY" alt="proposed-x1001">Λιβυκή Αραβική Τζαμαχιρία</territory>
 			<territory type="MA">Μαρόκο</territory>
 			<territory type="MC">Μονακό</territory>
 			<territory type="MD">Μολδαβία</territory>
-			<territory type="MD" alt="proposed-x1001">Μολδαβία, Δημοκρατία της</territory>
 			<territory type="ME">Μαυροβούνιο</territory>
 			<territory type="MG">Μαδαγασκάρη</territory>
 			<territory type="MH">Νήσοι Μάρσαλ</territory>
-			<territory type="MH" alt="proposed-x1001">Νησιά Μάρσαλ</territory>
 			<territory type="MK">ΠΓΔ Μακεδονίας</territory>
-			<territory type="MK" alt="proposed-x1001">Π.Γ.Δ. Μακεδονίας</territory>
 			<territory type="ML">Μάλι</territory>
 			<territory type="MM">Μιανμάρ</territory>
-			<territory type="MM" alt="proposed-x1001">Μυανμάρ</territory>
 			<territory type="MN">Μογγολία</territory>
 			<territory type="MO">Μακάο, Ειδική Διοικητική Περιφέρεια της Κίνας</territory>
-			<territory type="MO" alt="proposed-x1001">Μακάο</territory>
-			<territory type="MO" alt="short">Μακάο</territory>
 			<territory type="MP">Νήσοι Βόρειες Μαριάνες</territory>
-			<territory type="MP" alt="proposed-x1001">Νήσοι Βόρειων Μαριάνα</territory>
 			<territory type="MQ">Μαρτινίκα</territory>
 			<territory type="MR">Μαυριτανία</territory>
 			<territory type="MS">Μονσεράτ</territory>
@@ -594,7 +383,6 @@
 			<territory type="NA">Ναμίμπια</territory>
 			<territory type="NC">Νέα Καληδονία</territory>
 			<territory type="NE">Νίγηρ</territory>
-			<territory type="NE" alt="proposed-x1001">Νίγηρας</territory>
 			<territory type="NF">Νήσος Νόρφολκ</territory>
 			<territory type="NG">Νιγηρία</territory>
 			<territory type="NI">Νικαράγουα</territory>
@@ -609,7 +397,6 @@
 			<territory type="PE">Περού</territory>
 			<territory type="PF">Γαλλική Πολυνησία</territory>
 			<territory type="PG">Παπούα - Νέα Γουινέα</territory>
-			<territory type="PG" alt="proposed-x1001">Παπούα Νέα Γουινέα</territory>
 			<territory type="PH">Φιλιππίνες</territory>
 			<territory type="PK">Πακιστάν</territory>
 			<territory type="PL">Πολωνία</territory>
@@ -617,7 +404,6 @@
 			<territory type="PN">Πίτκερν</territory>
 			<territory type="PR">Πουέρτο Ρίκο</territory>
 			<territory type="PS">Παλαιστινιακά Εδάφη</territory>
-			<territory type="PS" alt="proposed-x1001">Παλαιστίνη</territory>
 			<territory type="PT">Πορτογαλία</territory>
 			<territory type="PW">Παλάου</territory>
 			<territory type="PY">Παραγουάη</territory>
@@ -631,7 +417,6 @@
 			<territory type="RW">Ρουάντα</territory>
 			<territory type="SA">Σαουδική Αραβία</territory>
 			<territory type="SB">Νήσοι Σολομώντος</territory>
-			<territory type="SB" alt="proposed-x1001">Νησιά Σολομώντα</territory>
 			<territory type="SC">Σεϋχέλλες</territory>
 			<territory type="SD">Σουδάν</territory>
 			<territory type="SE">Σουηδία</territory>
@@ -639,7 +424,6 @@
 			<territory type="SH">Αγία Ελένη</territory>
 			<territory type="SI">Σλοβενία</territory>
 			<territory type="SJ">Σβαλμπάρντ και Γιαν Μαγιέν</territory>
-			<territory type="SJ" alt="proposed-x1001">Νήσοι Σβάλμπαρ και Γιαν Μαγιέν</territory>
 			<territory type="SK">Σλοβακία</territory>
 			<territory type="SL">Σιέρα Λεόνε</territory>
 			<territory type="SM">Άγιος Μαρίνος</territory>
@@ -647,14 +431,10 @@
 			<territory type="SO">Σομαλία</territory>
 			<territory type="SR">Σουρινάμ</territory>
 			<territory type="ST">Σάο Τομέ και Πρίνσιπε</territory>
-			<territory type="ST" alt="proposed-x1001">Άγιος Θωμάς και Πρίνσιπε</territory>
 			<territory type="SV">Ελ Σαλβαδόρ</territory>
 			<territory type="SY">Συρία</territory>
-			<territory type="SY" alt="proposed-x1001">Συρία, Αραβική Δημοκρατία της</territory>
 			<territory type="SZ">Ζουαζηλάνδη</territory>
-			<territory type="SZ" alt="proposed-x1001">Σουαζιλάνδη</territory>
 			<territory type="TC">Νήσοι Τερκς και Κάικος</territory>
-			<territory type="TC" alt="proposed-x1001">Νησιά Τουρκ και Κάικος</territory>
 			<territory type="TD">Τσαντ</territory>
 			<territory type="TF">Γαλλικά Νότια Εδάφη</territory>
 			<territory type="TG">Τόγκο</territory>
@@ -667,19 +447,16 @@
 			<territory type="TO">Τόνγκα</territory>
 			<territory type="TR">Τουρκία</territory>
 			<territory type="TT">Τρινιδάδ και Τομπάγκο</territory>
-			<territory type="TT" alt="proposed-x1001">Τρινιντάντ και Τομπάγκο</territory>
 			<territory type="TV">Τουβαλού</territory>
 			<territory type="TW">Ταϊβάν</territory>
 			<territory type="TZ">Τανζανία</territory>
 			<territory type="UA">Ουκρανία</territory>
 			<territory type="UG">Ουγκάντα</territory>
 			<territory type="UM">Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών</territory>
-			<territory type="UM" alt="proposed-x1001">Μικρά απομακρυσμένα νησιά Ηνωμένων Πολιτειών</territory>
 			<territory type="US">Ηνωμένες Πολιτείες</territory>
 			<territory type="UY">Ουρουγουάη</territory>
 			<territory type="UZ">Ουζμπεκιστάν</territory>
 			<territory type="VA">Βατικανό</territory>
-			<territory type="VA" alt="proposed-x1001">Αγία Έδρα (Βατικανό)</territory>
 			<territory type="VC">Άγιος Βικέντιος και Γρεναδίνες</territory>
 			<territory type="VE">Βενεζουέλα</territory>
 			<territory type="VG">Βρετανικές Παρθένοι Νήσοι</territory>
@@ -687,7 +464,6 @@
 			<territory type="VN">Βιετνάμ</territory>
 			<territory type="VU">Βανουάτου</territory>
 			<territory type="WF">Νήσοι Ουαλλίς και Φουτουνά</territory>
-			<territory type="WF" alt="proposed-x1001">Γουάλις και Φουτούνα</territory>
 			<territory type="WS">Σαμόα</territory>
 			<territory type="YE">Υεμένη</territory>
 			<territory type="YT">Μαγιότ</territory>
@@ -695,7 +471,6 @@
 			<territory type="ZM">Ζάμπια</territory>
 			<territory type="ZW">Ζιμπάμπουε</territory>
 			<territory type="ZZ">Άγνωστη ή Άκυρη Περιοχή</territory>
-			<territory type="ZZ" alt="proposed-x1001">Άγνωστη Περιοχή</territory>
 		</territories>
 		<variants>
 			<variant type="1901">Παραδοσιακή Γερμανική Ορθογραφία</variant>
@@ -707,8 +482,6 @@
 		<keys>
 			<key type="calendar">Ημερολόγιο</key>
 			<key type="collation">Τακτοποίηση</key>
-			<key type="collation" alt="proposed-x1001">Ταξινόμηση</key>
-			<key type="collation" alt="proposed-x1002">Συγκριτική αλληλουχία</key>
 			<key type="currency">Νόμισμα</key>
 		</keys>
 		<types>
@@ -726,7 +499,6 @@
 			<type type="pinyin" key="collation">Σειρά Pinyin</type>
 			<type type="stroke" key="collation">Σειρά Stroke</type>
 			<type type="traditional" key="collation">Παραδοσιακή Σειρά</type>
-			<type type="traditional" key="collation" alt="proposed-x1001">Παραδοσιακή</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">Αγγλοσαξωνικό</measurementSystemName>
@@ -741,13 +513,9 @@
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
-		<quotationStart alt="proposed-x1001">«</quotationStart>
 		<quotationEnd>’</quotationEnd>
-		<quotationEnd alt="proposed-x1001">»</quotationEnd>
 		<alternateQuotationStart>“</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">‘</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
@@ -776,21 +544,14 @@
 							<month type="1">Ιαν</month>
 							<month type="2">Φεβ</month>
 							<month type="3">Μαρ</month>
-							<month type="3" alt="proposed-x1001">Μάρ</month>
 							<month type="4">Απρ</month>
 							<month type="5">Μαϊ</month>
-							<month type="5" alt="proposed-x1001">Μάι</month>
 							<month type="6">Ιουν</month>
-							<month type="6" alt="proposed-x1001">Ιούν</month>
 							<month type="7">Ιουλ</month>
-							<month type="7" alt="proposed-x1001">Ιούλ</month>
 							<month type="8">Αυγ</month>
-							<month type="8" alt="proposed-x1001">Αύγ</month>
 							<month type="9">Σεπ</month>
-							<month type="9" alt="proposed-x1001">Σεπτ</month>
 							<month type="10">Οκτ</month>
 							<month type="11">Νοε</month>
-							<month type="11" alt="proposed-x1001">Νοέμ</month>
 							<month type="12">Δεκ</month>
 						</monthWidth>
 						<monthWidth type="narrow">
@@ -809,29 +570,17 @@
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">Ιανουαρίου</month>
-							<month type="1" alt="proposed-x1001">Ιανουάριος</month>
 							<month type="2">Φεβρουαρίου</month>
-							<month type="2" alt="proposed-x1001">Φεβρουάριος</month>
 							<month type="3">Μαρτίου</month>
-							<month type="3" alt="proposed-x1001">Μάρτιος</month>
 							<month type="4">Απριλίου</month>
-							<month type="4" alt="proposed-x1001">Απρίλιος</month>
 							<month type="5">Μαΐου</month>
-							<month type="5" alt="proposed-x1001">Μάιος</month>
 							<month type="6">Ιουνίου</month>
-							<month type="6" alt="proposed-x1001">Ιούνιος</month>
 							<month type="7">Ιουλίου</month>
-							<month type="7" alt="proposed-x1001">Ιούλιος</month>
 							<month type="8">Αυγούστου</month>
-							<month type="8" alt="proposed-x1001">Αύγουστος</month>
 							<month type="9">Σεπτεμβρίου</month>
-							<month type="9" alt="proposed-x1001">Σεπτέμβριος</month>
 							<month type="10">Οκτωβρίου</month>
-							<month type="10" alt="proposed-x1001">Οκτώβριος</month>
 							<month type="11">Νοεμβρίου</month>
-							<month type="11" alt="proposed-x1001">Νοέμβριος</month>
 							<month type="12">Δεκεμβρίου</month>
-							<month type="12" alt="proposed-x1001">Δεκέμβριος</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
@@ -885,10 +634,8 @@
 							<day type="sun">Κυρ</day>
 							<day type="mon">Δευ</day>
 							<day type="tue">Τρι</day>
-							<day type="tue" alt="proposed-x1001">Τρίτ</day>
 							<day type="wed">Τετ</day>
 							<day type="thu">Πεμ</day>
-							<day type="thu" alt="proposed-x1001">Πέμ</day>
 							<day type="fri">Παρ</day>
 							<day type="sat">Σαβ</day>
 						</dayWidth>
@@ -918,13 +665,9 @@
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
 							<quarter type="1">Τ1</quarter>
-							<quarter type="1" alt="proposed-x1001">Q1</quarter>
 							<quarter type="2">Τ2</quarter>
-							<quarter type="2" alt="proposed-x1001">Q2</quarter>
 							<quarter type="3">Τ3</quarter>
-							<quarter type="3" alt="proposed-x1001">Q3</quarter>
 							<quarter type="4">Τ4</quarter>
-							<quarter type="4" alt="proposed-x1001">Q4</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">1ο τρίμηνο</quarter>
@@ -947,9 +690,7 @@
 				<eras>
 					<eraNames>
 						<era type="0">π.Χ.</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
 						<era type="1">μ.Χ.</era>
-						<era type="1" alt="proposed-x1001">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">π.Χ.</era>
@@ -960,25 +701,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE, dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd MMM yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yyyy</pattern>
-							<pattern alt="proposed-x1001">d/MM/yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -1017,16 +754,12 @@
 						<dateFormatItem id="HHmmss">HH:mm:ss</dateFormatItem>
 						<dateFormatItem id="MMMEd">E d MMM</dateFormatItem>
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
-						<dateFormatItem id="MMMMd" alt="proposed-x1001">MMMM d</dateFormatItem>
 						<dateFormatItem id="MMMMdd">dd MMMM</dateFormatItem>
 						<dateFormatItem id="MMdd">dd/MM</dateFormatItem>
 						<dateFormatItem id="Md">d/M</dateFormatItem>
-						<dateFormatItem id="Md" alt="proposed-x1001">D/m</dateFormatItem>
 						<dateFormatItem id="mmss">mm:ss</dateFormatItem>
 						<dateFormatItem id="yyMM">MM/yy</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">yy-MM</dateFormatItem>
 						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
-						<dateFormatItem id="yyMMM" alt="proposed-x1001">yy MMM</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyQQQQ">QQQQ yy</dateFormatItem>
 						<dateFormatItem id="yyyy">yyyy</dateFormatItem>
@@ -1102,7 +835,6 @@
 			</zone>
 			<zone type="America/Antigua">
 				<exemplarCity>Αντίγκουα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Αντίγκουα και Μπαρμπούντα</exemplarCity>
 			</zone>
 			<zone type="America/Anguilla">
 				<exemplarCity>Ανγκουίλλα</exemplarCity>
@@ -1118,7 +850,6 @@
 			</zone>
 			<zone type="Africa/Luanda">
 				<exemplarCity>Αγκόλα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Λουάντα</exemplarCity>
 			</zone>
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>Ροθέρα</exemplarCity>
@@ -1185,7 +916,6 @@
 			</zone>
 			<zone type="Africa/Ouagadougou">
 				<exemplarCity>Μπουρκίνα Φάσο</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ουαγκαντούγκου</exemplarCity>
 			</zone>
 			<zone type="Europe/Sofia">
 				<exemplarCity>Σόφια</exemplarCity>
@@ -1195,11 +925,9 @@
 			</zone>
 			<zone type="Africa/Bujumbura">
 				<exemplarCity>Μπουρούντι</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μπουχουμπούρα</exemplarCity>
 			</zone>
 			<zone type="Africa/Porto-Novo">
 				<exemplarCity>Μπενίν</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Πόρτο-Νόβο</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Bermuda">
 				<exemplarCity>Βερμούδα</exemplarCity>
@@ -1221,7 +949,6 @@
 			</zone>
 			<zone type="America/Manaus">
 				<exemplarCity>Μανάος</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μανάους</exemplarCity>
 			</zone>
 			<zone type="America/Cuiaba">
 				<exemplarCity>Κουϊάμπα</exemplarCity>
@@ -1261,7 +988,6 @@
 			</zone>
 			<zone type="Africa/Gaborone">
 				<exemplarCity>Γκαμπορόνε</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μποτσουάνα</exemplarCity>
 			</zone>
 			<zone type="Europe/Minsk">
 				<exemplarCity>Μινσκ</exemplarCity>
@@ -1289,7 +1015,6 @@
 			</zone>
 			<zone type="Africa/Bangui">
 				<exemplarCity>Κεντροαφρικανική Δημοκρατία</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μπανγκούι</exemplarCity>
 			</zone>
 			<zone type="Africa/Brazzaville">
 				<exemplarCity>Μπράζαβιλ</exemplarCity>
@@ -1299,21 +1024,18 @@
 			</zone>
 			<zone type="Africa/Abidjan">
 				<exemplarCity>Ακτή Ελεφαντοστού</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Αμπιντζάν</exemplarCity>
 			</zone>
 			<zone type="Pacific/Rarotonga">
 				<exemplarCity>Ραροτόνγκα</exemplarCity>
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>Ανατολική Νήσος</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Νήσοι Πάσχα</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity>Σαντιάγκο</exemplarCity>
 			</zone>
 			<zone type="Africa/Douala">
 				<exemplarCity>Καμερούν</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ντουάλα</exemplarCity>
 			</zone>
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Σανγκάη</exemplarCity>
@@ -1329,7 +1051,6 @@
 			</zone>
 			<zone type="Indian/Christmas">
 				<exemplarCity>Νήσοι Χριστουγέννων</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Χριστούγεννα</exemplarCity>
 			</zone>
 			<zone type="Asia/Nicosia">
 				<exemplarCity>Λευκωσία</exemplarCity>
@@ -1351,7 +1072,6 @@
 			</zone>
 			<zone type="Africa/Algiers">
 				<exemplarCity>Αλγέρι</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Αλγερία</exemplarCity>
 			</zone>
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Γκαλαπάγκος</exemplarCity>
@@ -1364,19 +1084,15 @@
 			</zone>
 			<zone type="Africa/Cairo">
 				<exemplarCity>Αίγυπτος</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Κάιρο</exemplarCity>
 			</zone>
 			<zone type="Africa/El_Aaiun">
 				<exemplarCity>Δυτική Σαχάρα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ελ Ααίουν</exemplarCity>
 			</zone>
 			<zone type="Africa/Asmera">
 				<exemplarCity>Ασμέρα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ερυθραία</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Κανάρια</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Κανάρια Νησιά</exemplarCity>
 			</zone>
 			<zone type="Africa/Ceuta">
 				<exemplarCity>Κέουτα</exemplarCity>
@@ -1386,7 +1102,6 @@
 			</zone>
 			<zone type="Africa/Addis_Ababa">
 				<exemplarCity>Αιθιοπία</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Αντίς Αμπέμπα</exemplarCity>
 			</zone>
 			<zone type="Europe/Helsinki">
 				<exemplarCity>Ελσίνκι</exemplarCity>
@@ -1414,7 +1129,6 @@
 			</zone>
 			<zone type="Africa/Libreville">
 				<exemplarCity>Γκαμπόν</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Λίμπρεβιλ</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity>Λονδίνο</exemplarCity>
@@ -1430,7 +1144,6 @@
 			</zone>
 			<zone type="Africa/Accra">
 				<exemplarCity>Άκκρα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Γκάνα</exemplarCity>
 			</zone>
 			<zone type="Europe/Gibraltar">
 				<exemplarCity>Γιβραλτάρ</exemplarCity>
@@ -1449,18 +1162,15 @@
 			</zone>
 			<zone type="Africa/Banjul">
 				<exemplarCity>Γκάμπια</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μπανζούλ</exemplarCity>
 			</zone>
 			<zone type="Africa/Conakry">
 				<exemplarCity>Γουινέα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Κονακράι</exemplarCity>
 			</zone>
 			<zone type="America/Guadeloupe">
 				<exemplarCity>Γουαδελούπη</exemplarCity>
 			</zone>
 			<zone type="Africa/Malabo">
 				<exemplarCity>Ισημερινή Γουινέα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μαλάμπο</exemplarCity>
 			</zone>
 			<zone type="Europe/Athens">
 				<exemplarCity>Αθήνα</exemplarCity>
@@ -1476,7 +1186,6 @@
 			</zone>
 			<zone type="Africa/Bissau">
 				<exemplarCity>Γουινέα Μπισσάου</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μπισάου</exemplarCity>
 			</zone>
 			<zone type="America/Guyana">
 				<exemplarCity>Γουιάνα</exemplarCity>
@@ -1531,7 +1240,6 @@
 			</zone>
 			<zone type="Africa/Nairobi">
 				<exemplarCity>Κένυα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ναϊρόμπι</exemplarCity>
 			</zone>
 			<zone type="Asia/Bishkek">
 				<exemplarCity>Μπισχέκ</exemplarCity>
@@ -1589,11 +1297,9 @@
 			</zone>
 			<zone type="Africa/Monrovia">
 				<exemplarCity>Λιβερία</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μονρόβια</exemplarCity>
 			</zone>
 			<zone type="Africa/Maseru">
 				<exemplarCity>Λεσόθο</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μασερού</exemplarCity>
 			</zone>
 			<zone type="Europe/Vilnius">
 				<exemplarCity>Βίλνιους</exemplarCity>
@@ -1606,11 +1312,9 @@
 			</zone>
 			<zone type="Africa/Tripoli">
 				<exemplarCity>Λιβύη</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Τρίπολη</exemplarCity>
 			</zone>
 			<zone type="Africa/Casablanca">
 				<exemplarCity>Καζαμπλάνκα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μαρόκο</exemplarCity>
 			</zone>
 			<zone type="Europe/Monaco">
 				<exemplarCity>Μονακό</exemplarCity>
@@ -1626,7 +1330,6 @@
 			</zone>
 			<zone type="Africa/Bamako">
 				<exemplarCity>Μπαμάκο</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μάλι</exemplarCity>
 			</zone>
 			<zone type="Asia/Rangoon">
 				<exemplarCity>Ρανγκούν</exemplarCity>
@@ -1651,7 +1354,6 @@
 			</zone>
 			<zone type="Africa/Nouakchott">
 				<exemplarCity>Μαυριτανία</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Νουακτσότ</exemplarCity>
 			</zone>
 			<zone type="America/Montserrat">
 				<exemplarCity>Μονσεράτ</exemplarCity>
@@ -1667,7 +1369,6 @@
 			</zone>
 			<zone type="Africa/Blantyre">
 				<exemplarCity>Μαλάουι</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μπλαντύρ</exemplarCity>
 			</zone>
 			<zone type="America/Tijuana">
 				<exemplarCity>Τιχουάνα</exemplarCity>
@@ -1680,29 +1381,24 @@
 			</zone>
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>Κουάλα Λουμπούρ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Κουάλα Λαμπούρ</exemplarCity>
 			</zone>
 			<zone type="Africa/Maputo">
 				<exemplarCity>Μαπούτο</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Μοζαμβίκη</exemplarCity>
 			</zone>
 			<zone type="Africa/Windhoek">
 				<exemplarCity>Γουιντχόεκ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ναμίμπια</exemplarCity>
 			</zone>
 			<zone type="Pacific/Noumea">
 				<exemplarCity>Νουμέα</exemplarCity>
 			</zone>
 			<zone type="Africa/Niamey">
 				<exemplarCity>Νιαμέυ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Νίγηρας</exemplarCity>
 			</zone>
 			<zone type="Pacific/Norfolk">
 				<exemplarCity>Νόρφολκ</exemplarCity>
 			</zone>
 			<zone type="Africa/Lagos">
 				<exemplarCity>Λάγος</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Νιγηρία</exemplarCity>
 			</zone>
 			<zone type="America/Managua">
 				<exemplarCity>Μανάγκουα</exemplarCity>
@@ -1724,7 +1420,6 @@
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity>Όκλαντ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ώκλαντ</exemplarCity>
 			</zone>
 			<zone type="Asia/Muscat">
 				<exemplarCity>Μουσκάτ</exemplarCity>
@@ -1737,7 +1432,6 @@
 			</zone>
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>Αϊτή</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ταχίτι</exemplarCity>
 			</zone>
 			<zone type="Pacific/Marquesas">
 				<exemplarCity>Μαρκέσας</exemplarCity>
@@ -1777,7 +1471,6 @@
 			</zone>
 			<zone type="Europe/Lisbon">
 				<exemplarCity>Λισσαβώνα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Λισαβώνα</exemplarCity>
 			</zone>
 			<zone type="Pacific/Palau">
 				<exemplarCity>Παλάου</exemplarCity>
@@ -1790,7 +1483,6 @@
 			</zone>
 			<zone type="Indian/Reunion">
 				<exemplarCity>Ρεϋνιόν</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Συνένωση</exemplarCity>
 			</zone>
 			<zone type="Europe/Bucharest">
 				<exemplarCity>Βουκουρέστι</exemplarCity>
@@ -1818,7 +1510,6 @@
 			</zone>
 			<zone type="Africa/Kigali">
 				<exemplarCity>Κιγκάλι</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ρουάντα</exemplarCity>
 			</zone>
 			<zone type="Asia/Riyadh">
 				<exemplarCity>Ριάντ</exemplarCity>
@@ -1831,7 +1522,6 @@
 			</zone>
 			<zone type="Africa/Khartoum">
 				<exemplarCity>Σουδάν</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Χαρτούμ</exemplarCity>
 			</zone>
 			<zone type="Europe/Stockholm">
 				<exemplarCity>Στοκχόλμη</exemplarCity>
@@ -1844,22 +1534,18 @@
 			</zone>
 			<zone type="Africa/Freetown">
 				<exemplarCity>Σιέρα Λεόνε</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Φρήταουν</exemplarCity>
 			</zone>
 			<zone type="Africa/Dakar">
 				<exemplarCity>Ντακάρ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Σενεγάλη</exemplarCity>
 			</zone>
 			<zone type="Africa/Mogadishu">
 				<exemplarCity>Μογκαντίσου</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Σομαλία</exemplarCity>
 			</zone>
 			<zone type="America/Paramaribo">
 				<exemplarCity>Παραμαρίνμπο</exemplarCity>
 			</zone>
 			<zone type="Africa/Sao_Tome">
 				<exemplarCity>Σάο Τόμε</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Άγιος Θωμάς και Πρίγκιπας</exemplarCity>
 			</zone>
 			<zone type="America/El_Salvador">
 				<exemplarCity>Σαλβαδόρ</exemplarCity>
@@ -1869,22 +1555,18 @@
 			</zone>
 			<zone type="Africa/Mbabane">
 				<exemplarCity>Ζουαζιλάνδη</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Σουαζιλάνδη</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Μπαμπάνε</exemplarCity>
 			</zone>
 			<zone type="America/Grand_Turk">
 				<exemplarCity>Γραντ Τουρκ</exemplarCity>
 			</zone>
 			<zone type="Africa/Ndjamena">
 				<exemplarCity>Ντζαμένα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Τσαντ</exemplarCity>
 			</zone>
 			<zone type="Indian/Kerguelen">
 				<exemplarCity>Κέργκουελεν</exemplarCity>
 			</zone>
 			<zone type="Africa/Lome">
 				<exemplarCity>Λόμε</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Τόγκο</exemplarCity>
 			</zone>
 			<zone type="Asia/Bangkok">
 				<exemplarCity>Μπανγκόκ</exemplarCity>
@@ -1903,8 +1585,6 @@
 			</zone>
 			<zone type="Africa/Tunis">
 				<exemplarCity>Τυνησία</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Τύνιδα</exemplarCity>
-				<exemplarCity alt="proposed-x1002">Τυνισία</exemplarCity>
 			</zone>
 			<zone type="Pacific/Tongatapu">
 				<exemplarCity>Τονγκατάπου</exemplarCity>
@@ -1923,14 +1603,12 @@
 			</zone>
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity>Νταρ Ες Σαλάμ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Τανζανία</exemplarCity>
 			</zone>
 			<zone type="Europe/Kiev">
 				<exemplarCity>Κίεβο</exemplarCity>
 			</zone>
 			<zone type="Africa/Kampala">
 				<exemplarCity>Καμπάλα</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ουγκάντα</exemplarCity>
 			</zone>
 			<zone type="Pacific/Midway">
 				<exemplarCity>Μίντγουεϊ</exemplarCity>
@@ -1946,7 +1624,6 @@
 			</zone>
 			<zone type="America/Anchorage">
 				<exemplarCity>Άνκορατζ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Ώρα Αλάσκας</exemplarCity>
 			</zone>
 			<zone type="America/Los_Angeles">
 				<exemplarCity>Λος Άντζελες</exemplarCity>
@@ -2010,15 +1687,12 @@
 			</zone>
 			<zone type="Africa/Johannesburg">
 				<exemplarCity>Γιοχάνεσμπουργκ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Νότια Αφρική</exemplarCity>
 			</zone>
 			<zone type="Africa/Lusaka">
 				<exemplarCity>Ζάμπια</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Λουσάκα</exemplarCity>
 			</zone>
 			<zone type="Africa/Harare">
 				<exemplarCity>Ζιμπάμπουε</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Χαράρε</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -2040,7 +1714,6 @@
 			</currency>
 			<currency type="AED">
 				<displayName>Ντιράμ Ηνωμένων Αραβικών Εμιράτων</displayName>
-				<displayName alt="proposed-x1001">Ντιρχάμ Ενωμένων Αραβικών Εμιράτων</displayName>
 			</currency>
 			<currency type="ALL">
 				<displayName>Λεκ Αλβανίας</displayName>
@@ -2048,7 +1721,6 @@
 			</currency>
 			<currency type="AMD">
 				<displayName>Ντραμ Αρμενίας</displayName>
-				<displayName alt="proposed-x1001">Dram Αρμενίας</displayName>
 				<symbol>dram</symbol>
 			</currency>
 			<currency type="ANG">
@@ -2082,7 +1754,6 @@
 			</currency>
 			<currency type="AUD">
 				<displayName>Δολάριο Αυστραλίας</displayName>
-				<displayName alt="proposed-x1001">Δολάρια Αυστραλίας</displayName>
 				<symbol>$A</symbol>
 			</currency>
 			<currency type="AWG">
@@ -2122,16 +1793,13 @@
 			</currency>
 			<currency type="BGN">
 				<displayName>Νέο Λεβ Βουλγαρίας</displayName>
-				<displayName alt="proposed-x1001">Λέβα Βουλγαρίας</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>Δηνάριο Μπαχρέιν</displayName>
-				<displayName alt="proposed-x1001">Δηνάριο Bahraini</displayName>
 				<symbol>BD</symbol>
 			</currency>
 			<currency type="BIF">
 				<displayName>Φράγκο Μπουρούντι</displayName>
-				<displayName alt="proposed-x1001">Φράγκο Burundi</displayName>
 				<symbol>Fbu</symbol>
 			</currency>
 			<currency type="BMD">
@@ -2140,7 +1808,6 @@
 			</currency>
 			<currency type="BND">
 				<displayName>Δολάριο Μπρουνέι</displayName>
-				<displayName alt="proposed-x1001">Δολάριο Brunei</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>Μπολιβιάνο Βολιβίας</displayName>
@@ -2162,7 +1829,6 @@
 			</currency>
 			<currency type="BRL">
 				<displayName>Ρεάλ Βραζιλίας</displayName>
-				<displayName alt="proposed-x1001">Real Βραζιλίας</displayName>
 			</currency>
 			<currency type="BRN">
 				<displayName>Νέο Cruzado Βραζιλίας</displayName>
@@ -2175,7 +1841,6 @@
 			</currency>
 			<currency type="BTN">
 				<displayName>Νγκούλτρουμ Μπουτάν</displayName>
-				<displayName alt="proposed-x1001">Ngultrum Μπουτάν</displayName>
 				<symbol>Nu</symbol>
 			</currency>
 			<currency type="BUK">
@@ -2183,7 +1848,6 @@
 			</currency>
 			<currency type="BWP">
 				<displayName>Πούλα Μποτσουάνας</displayName>
-				<displayName alt="proposed-x1001">Pula Μποτσουάνα</displayName>
 			</currency>
 			<currency type="BYB">
 				<displayName>Νέο Ρούβλι Λευκορωσίας (1994-1999)</displayName>
@@ -2194,21 +1858,17 @@
 			</currency>
 			<currency type="BZD">
 				<displayName>Δολάριο Μπελίζ</displayName>
-				<displayName alt="proposed-x1001">Δολάριο Belize</displayName>
 				<symbol>BZ$</symbol>
 			</currency>
 			<currency type="CAD">
 				<displayName>Δολάριο Καναδά</displayName>
-				<displayName alt="proposed-x1001">Δολάρια Καναδά</displayName>
 				<symbol>Can$</symbol>
 			</currency>
 			<currency type="CDF">
 				<displayName>Φράγκο Κονγκό</displayName>
-				<displayName alt="proposed-x1001">Φράγκο Congolais Κονγκό</displayName>
 			</currency>
 			<currency type="CHF">
 				<displayName>Φράγκο Ελβετίας</displayName>
-				<displayName alt="proposed-x1001">Ελβετικά Φράγκα</displayName>
 				<symbol>SwF</symbol>
 			</currency>
 			<currency type="CLF">
@@ -2220,8 +1880,6 @@
 			</currency>
 			<currency type="CNY">
 				<displayName>Γιουάν Ρενμίμπι Κίνας</displayName>
-				<displayName alt="proposed-x1001">Γουάν Ρενμίνμπι</displayName>
-				<displayName alt="proposed-x1002">Yuan Renminbi Κίνας</displayName>
 				<symbol>Y</symbol>
 			</currency>
 			<currency type="COP">
@@ -2230,7 +1888,6 @@
 			</currency>
 			<currency type="CRC">
 				<displayName>Κολόν Κόστα Ρίκα</displayName>
-				<displayName alt="proposed-x1001">Colon Κόστα Ρίκα</displayName>
 				<symbol>C</symbol>
 			</currency>
 			<currency type="CSK">
@@ -2246,19 +1903,15 @@
 			<currency type="CYP">
 				<displayName>Λίρα Κύπρου</displayName>
 				<symbol>Κυπριακή Λίρα</symbol>
-				<symbol alt="proposed-x1001">£</symbol>
-				<symbol alt="proposed-x1002">C£</symbol>
 			</currency>
 			<currency type="CZK">
 				<displayName>Κορόνα Τσέχικης Δημοκρατίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Τσεχίας</displayName>
 			</currency>
 			<currency type="DDM">
 				<displayName>Ostmark Ανατολικής Γερμανίας</displayName>
 			</currency>
 			<currency type="DEM">
 				<displayName>Μάρκο Γερμανίας</displayName>
-				<displayName alt="proposed-x1001">Γερμανικά Μάρκα</displayName>
 			</currency>
 			<currency type="DJF">
 				<displayName>Φράγκο Τζιμπουτί</displayName>
@@ -2266,7 +1919,6 @@
 			</currency>
 			<currency type="DKK">
 				<displayName>Κορόνα Δανίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Δανίας</displayName>
 				<symbol>DKr</symbol>
 			</currency>
 			<currency type="DOP">
@@ -2279,29 +1931,24 @@
 			</currency>
 			<currency type="ECS">
 				<displayName>Σούκρε Εκουαδόρ</displayName>
-				<displayName alt="proposed-x1001">Sucre Ισημερινού</displayName>
 			</currency>
 			<currency type="ECV">
 				<displayName>Unidad de Valor Constante (UVC) Ισημερινού</displayName>
 			</currency>
 			<currency type="EEK">
 				<displayName>Κορόνα Εσθονίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Εσθονίας</displayName>
 			</currency>
 			<currency type="EGP">
 				<displayName>Λίρα Αιγύπτου</displayName>
-				<displayName alt="proposed-x1001">Αιγυπτιακή Λίρα</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>Νάκφα Ερυθραίας</displayName>
-				<displayName alt="proposed-x1001">Eritrean Nakfa</displayName>
 			</currency>
 			<currency type="ESP">
 				<displayName>Πεσέτα Ισπανίας</displayName>
 			</currency>
 			<currency type="ETB">
 				<displayName>Μπιρ Αιθιοπίας</displayName>
-				<displayName alt="proposed-x1001">Birr Αιθιοπίας</displayName>
 				<symbol>Br</symbol>
 			</currency>
 			<currency type="EUR">
@@ -2319,33 +1966,26 @@
 			</currency>
 			<currency type="FRF">
 				<displayName>Φράγκο Γαλλίας</displayName>
-				<displayName alt="proposed-x1001">Γαλλικά Φράγκα</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>Λίρα Στερλίνα Βρετανίας</displayName>
-				<displayName alt="proposed-x1001">Λίρες Μ. Βρετανίας</displayName>
-				<displayName alt="proposed-x1002">Λίρα Στερλίνα Μ. Βρετανίας</displayName>
 				<symbol>GBP</symbol>
 			</currency>
 			<currency type="GEK">
 				<displayName>Κούπον Λάρι Γεωργίας</displayName>
-				<displayName alt="proposed-x1001">Kupon Larit Γεωργίας</displayName>
 			</currency>
 			<currency type="GEL">
 				<displayName>Λάρι Γεωργίας</displayName>
-				<displayName alt="proposed-x1001">Lari Γεωργίας</displayName>
 				<symbol>lari</symbol>
 			</currency>
 			<currency type="GHC">
 				<displayName>Σέντι Γκάνας</displayName>
-				<displayName alt="proposed-x1001">Cedi Γκάνας</displayName>
 			</currency>
 			<currency type="GIP">
 				<displayName>Λίρα Γιβραλτάρ</displayName>
 			</currency>
 			<currency type="GMD">
 				<displayName>Νταλάσι Γκάμπιας</displayName>
-				<displayName alt="proposed-x1001">Dalasi Γκάμπια</displayName>
 			</currency>
 			<currency type="GNF">
 				<displayName>Φράγκο Γουινέας</displayName>
@@ -2366,7 +2006,6 @@
 			</currency>
 			<currency type="GTQ">
 				<displayName>Κουετσάλ Γουατεμάλας</displayName>
-				<displayName alt="proposed-x1001">Quetzal Γουατεμάλα</displayName>
 				<symbol>Q</symbol>
 			</currency>
 			<currency type="GWE">
@@ -2381,7 +2020,6 @@
 			</currency>
 			<currency type="HKD">
 				<displayName>Δολάριο Χονγκ Κονγκ</displayName>
-				<displayName alt="proposed-x1001">Δολάρια Χονγκ Κονγκ</displayName>
 				<symbol>HK$</symbol>
 			</currency>
 			<currency type="HRD">
@@ -2389,20 +2027,16 @@
 			</currency>
 			<currency type="HRK">
 				<displayName>Κούνα Κροατίας</displayName>
-				<displayName alt="proposed-x1001">Kuna Δηνάριο</displayName>
 			</currency>
 			<currency type="HTG">
 				<displayName>Γκουρντ Αϊτής</displayName>
-				<displayName alt="proposed-x1001">Gourde Αϊτής</displayName>
 			</currency>
 			<currency type="HUF">
 				<displayName>Φιορίνι Ουγγαρίας</displayName>
-				<displayName alt="proposed-x1001">Ουγγρικό Φιορίνι</displayName>
 				<symbol>Ft</symbol>
 			</currency>
 			<currency type="IDR">
 				<displayName>Ρούπια Ινδονησίας</displayName>
-				<displayName alt="proposed-x1001">Ρούπία Ινδονησίας</displayName>
 				<symbol>Rp</symbol>
 			</currency>
 			<currency type="IEP">
@@ -2414,12 +2048,9 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>Νέο Σέκελ Ισραήλ</displayName>
-				<displayName alt="proposed-x1001">Νέο Sheqel Ισραήλ</displayName>
-				<displayName alt="proposed-x1002">Σέκελ Ισραήλ</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>Ρούπια Ινδίας</displayName>
-				<displayName alt="proposed-x1001">Ρούπι Ινδίας</displayName>
 				<symbol>INR</symbol>
 			</currency>
 			<currency type="IQD">
@@ -2428,8 +2059,6 @@
 			</currency>
 			<currency type="IRR">
 				<displayName>Ριάλ Ιράν</displayName>
-				<displayName alt="proposed-x1001">Rial Ιράκ</displayName>
-				<displayName alt="proposed-x1002">Ριάλ Ιράκ</displayName>
 				<symbol>RI</symbol>
 			</currency>
 			<currency type="ISK">
@@ -2448,7 +2077,6 @@
 			</currency>
 			<currency type="JPY">
 				<displayName>Γιεν Ιαπωνίας</displayName>
-				<displayName alt="proposed-x1001">Γεν Ιαπωνίας</displayName>
 			</currency>
 			<currency type="KES">
 				<displayName>Σελίνι Κένυας</displayName>
@@ -2456,25 +2084,17 @@
 			</currency>
 			<currency type="KHR">
 				<displayName>Ρίελ Καμπότζης</displayName>
-				<displayName alt="proposed-x1001">Riel Καμπότζης</displayName>
 				<symbol>CR</symbol>
 			</currency>
 			<currency type="KMF">
 				<displayName>Φράγκο Comoro</displayName>
-				<displayName alt="proposed-x1001">Φράγκο Κομορών</displayName>
-				<displayName alt="proposed-x1002">Φράγκο Κομορών</displayName>
 				<symbol>CF</symbol>
 			</currency>
 			<currency type="KPW">
 				<displayName>Won Βόρειας Κορέας</displayName>
-				<displayName alt="proposed-x1001">Ουόν Βόρειας Κορέας</displayName>
-				<displayName alt="proposed-x1002">Ουόν Βόρειας Κορέας</displayName>
 			</currency>
 			<currency type="KRW">
 				<displayName>Won Νότιας Κορέας</displayName>
-				<displayName alt="proposed-x1001">Ουόν Νότιας Κορέας</displayName>
-				<displayName alt="proposed-x1002">Γουάν Νότιας Κορέας</displayName>
-				<displayName alt="proposed-x1003">Ουόν Νότιας Κορέας</displayName>
 			</currency>
 			<currency type="KWD">
 				<displayName>Δηνάριο Κουβέιτ</displayName>
@@ -2485,12 +2105,10 @@
 			</currency>
 			<currency type="KZT">
 				<displayName>Τένγκε Καζακστάν</displayName>
-				<displayName alt="proposed-x1001">Tenge Καζακστάν</displayName>
 				<symbol>T</symbol>
 			</currency>
 			<currency type="LAK">
 				<displayName>Κιπ Λάος</displayName>
-				<displayName alt="proposed-x1001">Kip Λάος</displayName>
 			</currency>
 			<currency type="LBP">
 				<displayName>Λίρα Λιβάνου</displayName>
@@ -2505,8 +2123,6 @@
 			</currency>
 			<currency type="LTL">
 				<displayName>Λίτα Λιθουανίας</displayName>
-				<displayName alt="proposed-x1001">Λίτας Λιθουανίας</displayName>
-				<displayName alt="proposed-x1002">Lita Λιθουανίας</displayName>
 			</currency>
 			<currency type="LTT">
 				<displayName>Talonas Λιθουανίας</displayName>
@@ -2516,8 +2132,6 @@
 			</currency>
 			<currency type="LVL">
 				<displayName>Lats Λετονίας</displayName>
-				<displayName alt="proposed-x1001">Λατς Λεττονίας</displayName>
-				<displayName alt="proposed-x1002">Λατς Λετονίας</displayName>
 			</currency>
 			<currency type="LVR">
 				<displayName>Ρούβλι Λετονίας</displayName>
@@ -2528,7 +2142,6 @@
 			</currency>
 			<currency type="MAD">
 				<displayName>Ντιράμ Μαρόκου</displayName>
-				<displayName alt="proposed-x1001">Ντιρχάμ Μαρόκου</displayName>
 			</currency>
 			<currency type="MAF">
 				<displayName>Φράγκο Μαρόκου</displayName>
@@ -2551,26 +2164,20 @@
 			</currency>
 			<currency type="MMK">
 				<displayName>Κυάτ Μιανμάρ</displayName>
-				<displayName alt="proposed-x1001">Kyat Μιανμάρ</displayName>
 			</currency>
 			<currency type="MNT">
 				<displayName>Τουγκρίκ Μογγολίας</displayName>
-				<displayName alt="proposed-x1001">Tugrik Μογγολίας</displayName>
 				<symbol>Tug</symbol>
 			</currency>
 			<currency type="MOP">
 				<displayName>Πατάκα Μακάο</displayName>
-				<displayName alt="proposed-x1001">Pataca Μακάο</displayName>
 			</currency>
 			<currency type="MRO">
 				<displayName>Ουγκουίγκα Μαυριτανίας</displayName>
-				<displayName alt="proposed-x1001">Ouguiya Μαυριτανίας</displayName>
 				<symbol>UM</symbol>
 			</currency>
 			<currency type="MTL">
 				<displayName>Λιρέτα Μάλτας</displayName>
-				<displayName alt="proposed-x1001">Λίρα Μάλτας</displayName>
-				<displayName alt="proposed-x1002">Μαλτέζικη λίρα</displayName>
 				<symbol>Lm</symbol>
 			</currency>
 			<currency type="MTP">
@@ -2581,11 +2188,9 @@
 			</currency>
 			<currency type="MVR">
 				<displayName>Ρουφίγια Νήσων Μαλδίβων</displayName>
-				<displayName alt="proposed-x1001">Rufiyaa Νήσων Μαλδίβων</displayName>
 			</currency>
 			<currency type="MWK">
 				<displayName>Κουάτσα Μαλάουι</displayName>
-				<displayName alt="proposed-x1001">Kwacha Μαλάουι</displayName>
 				<symbol>MK</symbol>
 			</currency>
 			<currency type="MXN">
@@ -2600,8 +2205,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>Ρινγκίτ Μαλαισίας</displayName>
-				<displayName alt="proposed-x1001">Ρίνγκιτ Μαλαισίας</displayName>
-				<displayName alt="proposed-x1002">Ringgit Μαλαισίας</displayName>
 				<symbol>RM</symbol>
 			</currency>
 			<currency type="MZE">
@@ -2609,7 +2212,6 @@
 			</currency>
 			<currency type="MZM">
 				<displayName>Μετικάλ Μοζαμβίκης</displayName>
-				<displayName alt="proposed-x1001">Metical Μοζαμβίκης</displayName>
 				<symbol>Mt</symbol>
 			</currency>
 			<currency type="NAD">
@@ -2618,7 +2220,6 @@
 			</currency>
 			<currency type="NGN">
 				<displayName>Νάιρα Νιγηρίας</displayName>
-				<displayName alt="proposed-x1001">Naira Νιγηρίας</displayName>
 			</currency>
 			<currency type="NIC">
 				<displayName>Κόρδοβα Νικαράγουας</displayName>
@@ -2631,7 +2232,6 @@
 			</currency>
 			<currency type="NOK">
 				<displayName>Κορόνα Νορβηγίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Νορβηγίας</displayName>
 				<symbol>NKr</symbol>
 			</currency>
 			<currency type="NPR">
@@ -2640,12 +2240,10 @@
 			</currency>
 			<currency type="NZD">
 				<displayName>Δολάριο Νέας Ζηλανδίας</displayName>
-				<displayName alt="proposed-x1001">Δολάρια Νέας Ζηλανδίας</displayName>
 				<symbol>$NZ</symbol>
 			</currency>
 			<currency type="OMR">
 				<displayName>Ριάλ Ομάν</displayName>
-				<displayName alt="proposed-x1001">Rial Ομάν</displayName>
 				<symbol>RO</symbol>
 			</currency>
 			<currency type="PAB">
@@ -2656,30 +2254,22 @@
 			</currency>
 			<currency type="PEN">
 				<displayName>Νέο Σολ Περού</displayName>
-				<displayName alt="proposed-x1001">Sol Nuevo Περού</displayName>
-				<displayName alt="proposed-x1002">Περουβιανό Νέο Σολ</displayName>
 			</currency>
 			<currency type="PES">
 				<displayName>Σολ Περού</displayName>
-				<displayName alt="proposed-x1001">Sol Περού</displayName>
 			</currency>
 			<currency type="PGK">
 				<displayName>Kina Παπούα Νέα Γουινέα</displayName>
-				<displayName alt="proposed-x1001">Κίνα Πάπουα-Νέας Γουϊνέας</displayName>
-				<displayName alt="proposed-x1002">Κίνα Παπούα Νέας Γουινέας</displayName>
 			</currency>
 			<currency type="PHP">
 				<displayName>Πέσο Φιλιππίνων</displayName>
 			</currency>
 			<currency type="PKR">
 				<displayName>Ρούπια Πακιστάν</displayName>
-				<displayName alt="proposed-x1001">Ρούπι Πακιστάν</displayName>
 				<symbol>Pra</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>Ζλότυ Πολωνίας</displayName>
-				<displayName alt="proposed-x1001">Νέο Πολωνικό Ζλότι</displayName>
-				<displayName alt="proposed-x1002">Ζλότι Πολωνίας</displayName>
 				<symbol>Zl</symbol>
 			</currency>
 			<currency type="PLZ">
@@ -2693,8 +2283,6 @@
 			</currency>
 			<currency type="QAR">
 				<displayName>Rial Κατάρ</displayName>
-				<displayName alt="proposed-x1001">Ριάλ Κατάρ</displayName>
-				<displayName alt="proposed-x1002">Ριάλ Κατάρ</displayName>
 				<symbol>QR</symbol>
 			</currency>
 			<currency type="ROL">
@@ -2703,14 +2291,12 @@
 			</currency>
 			<currency type="RON">
 				<displayName>Λεβ Ρουμανίας</displayName>
-				<displayName alt="proposed-x1001">Νέο Ρουμανικό Λέβ</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Δηνάριο Σερβίας</displayName>
 			</currency>
 			<currency type="RUB">
 				<displayName>Ρούβλι Ρωσίας</displayName>
-				<displayName alt="proposed-x1001">Ρωσικό Ρούβλι</displayName>
 			</currency>
 			<currency type="RUR">
 				<displayName>Ρούβλι Ρωσίας (1991-1998)</displayName>
@@ -2737,13 +2323,10 @@
 			</currency>
 			<currency type="SEK">
 				<displayName>Κορόνα Σουηδίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Σουηδίας</displayName>
-				<displayName alt="proposed-x1002">Σουηδική κορώνα</displayName>
 				<symbol>SKr</symbol>
 			</currency>
 			<currency type="SGD">
 				<displayName>Δολάριο Σιγκαπούρης</displayName>
-				<displayName alt="proposed-x1001">Δολάρια Σιγκαπούρης</displayName>
 				<symbol>S$</symbol>
 			</currency>
 			<currency type="SHP">
@@ -2751,17 +2334,13 @@
 			</currency>
 			<currency type="SIT">
 				<displayName>Τόλαρ Σλοβενίας</displayName>
-				<displayName alt="proposed-x1001">Τολάρ Σλοβενίας</displayName>
-				<displayName alt="proposed-x1002">Tolar Σλοβενίας</displayName>
 			</currency>
 			<currency type="SKK">
 				<displayName>Κορόνα Σλοβενίας</displayName>
-				<displayName alt="proposed-x1001">Κορώνα Σλοβακίας</displayName>
 				<symbol>Sk</symbol>
 			</currency>
 			<currency type="SLL">
 				<displayName>Λεόνε της Σιέρα Λεόνε</displayName>
-				<displayName alt="proposed-x1001">Leone Σιέρα Λεόνε</displayName>
 			</currency>
 			<currency type="SOS">
 				<displayName>Σελίνι Σομαλίας</displayName>
@@ -2776,7 +2355,6 @@
 			</currency>
 			<currency type="SVC">
 				<displayName>Κολόν Ελ Σαλβαδόρ</displayName>
-				<displayName alt="proposed-x1001">Colon Ελ Σαλβαδόρ</displayName>
 			</currency>
 			<currency type="SYP">
 				<displayName>Λίρα Συρίας</displayName>
@@ -2784,19 +2362,16 @@
 			</currency>
 			<currency type="SZL">
 				<displayName>Λιλανγκένι Σουαζιλάνδη</displayName>
-				<displayName alt="proposed-x1001">Lilangeni Ζουαζιλάνδη</displayName>
 				<symbol>E</symbol>
 			</currency>
 			<currency type="THB">
 				<displayName>Μπατ Ταϊλάνδης</displayName>
-				<displayName alt="proposed-x1001">Μπαχτ Ταϊλάνδης</displayName>
 			</currency>
 			<currency type="TJR">
 				<displayName>Ρούβλι Τατζικιστάν</displayName>
 			</currency>
 			<currency type="TJS">
 				<displayName>Σομόν Τατζικιστάν</displayName>
-				<displayName alt="proposed-x1001">Somoni Τατζικιστάν</displayName>
 			</currency>
 			<currency type="TMM">
 				<displayName>Μανάτ Τουρκμενιστάν</displayName>
@@ -2809,7 +2384,6 @@
 			</currency>
 			<currency type="TRL">
 				<displayName>Λίρα Τουρκίας</displayName>
-				<displayName alt="proposed-x1001">Τουρκική Λίρα</displayName>
 				<symbol>TL</symbol>
 			</currency>
 			<currency type="TRY">
@@ -2829,8 +2403,6 @@
 			</currency>
 			<currency type="UAH">
 				<displayName>Χρίφνα Ουκρανίας</displayName>
-				<displayName alt="proposed-x1001">Hryvnia Ουκρανίας</displayName>
-				<displayName alt="proposed-x1002">Γρίβνα Ουκρανίας</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>Karbovanetz Ουκρανίας</displayName>
@@ -2844,7 +2416,6 @@
 			</currency>
 			<currency type="USD">
 				<displayName>Δολάριο ΗΠΑ</displayName>
-				<displayName alt="proposed-x1001">Δολάρια ΗΠΑ</displayName>
 			</currency>
 			<currency type="USN">
 				<displayName>Δολάριο ΗΠΑ (Επόμενη Ημέρα)</displayName>
@@ -2864,13 +2435,10 @@
 			</currency>
 			<currency type="VEB">
 				<displayName>Μπολιβάρ Βενεζουέλας</displayName>
-				<displayName alt="proposed-x1001">Μπολιβάλ Βενεζουέλας</displayName>
 				<symbol>Be</symbol>
 			</currency>
 			<currency type="VND">
 				<displayName>Dong Βιετνάμ</displayName>
-				<displayName alt="proposed-x1001">Ντονγκ Βιετνάμ</displayName>
-				<displayName alt="proposed-x1002">Ντογκ Βιετνάμ</displayName>
 			</currency>
 			<currency type="WST">
 				<displayName>Tala Δυτικής Σαμόα</displayName>

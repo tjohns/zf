@@ -9,43 +9,27 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="bo">པོད་སྐད་</language>
-			<language type="bo" alt="proposed-x1001">བོད་སྐད།</language>
 			<language type="de">འཇར་མན་གྱི།</language>
-			<language type="de" alt="proposed-x1001">འཇར་མན་སྐད།</language>
 			<language type="dz">རྫོང་ཁ</language>
-			<language type="dz" alt="proposed-x1001">འབྲུག་པ་སྐད།</language>
-			<language type="dz" alt="proposed-x1002">རྫོང་ཁ།</language>
 			<language type="en">ཨིང་ལིཤ་སྐད།</language>
-			<language type="en" alt="proposed-x1001">ཨིང་ལིཤ།</language>
-			<language type="en_AU" alt="proposed-x1001">ཨིང་ལིཤ། (ཨསྟྲ་ལི་ཡ་)</language>
 			<language type="en_CA">ཨིང་ལིཤ་སྐད། (ཁེ་ན་ཌ་)</language>
-			<language type="en_CA" alt="proposed-x1001">ཨིང་ལིཤ། (ཁེ་ན་ཌ་)</language>
 			<language type="en_GB">ཨིང་ལིཤ་སྐད། (རྦི་རི་ཊིཤ་)</language>
-			<language type="en_GB" alt="proposed-x1001">ཨིང་ལིཤ། (རྦི་རི་ཊིཤ་)</language>
 			<language type="en_US">ཨིང་ལིཤ་སྐད། (ཨ་རི་)</language>
-			<language type="en_US" alt="proposed-x1001">ཨིང་ལིཤ། (ཨ་རི་)</language>
 			<language type="es">ཞི་པན་ཡའི།</language>
 			<language type="fr">ཧྥ་རན་སིའི་།</language>
-			<language type="fr" alt="proposed-x1001">ཧྥ་རན་སིའི་་སྐད།</language>
 			<language type="gaa">གཱ་སྐད།</language>
 			<language type="gu">གུཇ་རཱཏི་སྐད།</language>
 			<language type="hi">ཧིན་དི</language>
-			<language type="hi" alt="proposed-x1001">ཧིན་དི་སྐད།</language>
-			<language type="hi" alt="proposed-x1002">རྒྱ་སྐདི།</language>
 			<language type="it">དབྱི་ཏ་་ལའི་མི།</language>
-			<language type="it" alt="proposed-x1001">དབྱི་ཏ་་ལའི་སྐད།</language>
 			<language type="ja">རི་པིན་སྐད་</language>
-			<language type="ja" alt="proposed-x1001">རི་པིན་སྐད།</language>
 			<language type="la">ལེ་ཊིན་སྐད།</language>
 			<language type="ne">ནེ་པ་ལི</language>
-			<language type="ne" alt="proposed-x1001">ནེ་པཱལི་སྐད།</language>
 			<language type="pt">ཕི་ཐོ་ཡའི།</language>
 			<language type="pt_BR">པ་ཞའི་མི།  ཕི་ཐོ་ཡའི་མི།</language>
 			<language type="ru">ཨུ་རུ་སུ་སྐད་</language>
 			<language type="und">མིའི་ཤེས་རྟོགས་མ་བྱུང་བ། ཡང་ན་ཆད་ལྷག་ཅན་གྱི་སྐད་བརྡ།</language>
 			<language type="zen">ཟེ་ན་གཱ་སྐད།</language>
 			<language type="zh">རྒྱ་སྐད་</language>
-			<language type="zh" alt="proposed-x1001">རྒྱ་སྐད།</language>
 			<language type="zh_Hans">སྟབས་བརྡའི།  ཀྲུང་གོའི།</language>
 			<language type="zh_Hant">སྲོལ་རྒྱུན་གྱི།</language>
 			<language type="zu">ཟུ་ལུ་སྐད།</language>
@@ -59,103 +43,65 @@
 			<script type="Hant">གནའ་དུས་རྒྱའི་སྐད་ཡིག།</script>
 			<script type="Latn">ལ་ཏིན་སྐད་ཡིག་།</script>
 			<script type="Tibt">བོད་ཡིག་</script>
-			<script type="Tibt" alt="proposed-x1001">བོད་ཡིག།</script>
 			<script type="Zxxx">སྙན་བརྒྱུད།  ཡིག་རིགས་སུ་མ་བཀོད་པའི་ཟིན་ཐོ།་</script>
 			<script type="Zzzz">མིའི་ཤེས་རྟོགས་མ་བྱུང་བ། ཡང་ན་ཆད་ལྷག་ཅན་གྱི་ཟིན་བྲིས།</script>
 		</scripts>
 		<territories>
 			<territory type="001">འཛམ་གླིང་།</territory>
-			<territory type="001" alt="proposed-x1001">འཛམ་གླིང་།</territory>
 			<territory type="002">ཨཕྲི་ཀ།</territory>
-			<territory type="002" alt="proposed-x1001">002</territory>
-			<territory type="005" alt="proposed-x1001">005</territory>
 			<territory type="019">ཨ་མེ་རི་ཀ།</territory>
 			<territory type="053">ཨསྟྲེ་ལི་ཡ་དང་། ནིའུ་ཛི་ལན྄ཌ།</territory>
-			<territory type="053" alt="proposed-x1001">ཨསྟྲེ་ལི་ཡ་དང་། ནིའུ་ཛི་ལན྄ཌ།</territory>
 			<territory type="142">ཨེ་ཤི་ཡ།</territory>
 			<territory type="150">ཡུ་རོབ།</territory>
 			<territory type="AD">ཨེན་ཌོ་ར།</territory>
-			<territory type="AD" alt="proposed-x1001">ཨེན་ཌོ་ར།</territory>
 			<territory type="AE">ཨ་རབ། ཨི་མི་རཊ྄། ཆིག་སྒྲིལ་རྒྱལ་ཁབ།</territory>
-			<territory type="AE" alt="proposed-x1001">ཨ་རབ། ཨི་མི་རཊ྄། ཆིག་སྒྲིལ་རྒྱལ་ཁབ།</territory>
 			<territory type="AF">ཨཕ་ག་ནི་སྟཱན།</territory>
-			<territory type="AF" alt="proposed-x1001">ཨཕ་ག་ནི་སྟཱན།</territory>
 			<territory type="AG">ཨེན་ཊི་གུ་དང་། བྷར་བུ་ཌ།</territory>
-			<territory type="AG" alt="proposed-x1001">ཨེན་ཊི་གུ་དང་། བྷར་བུ་ཌ།</territory>
 			<territory type="AI">ཨང་གུའི་ལ།</territory>
-			<territory type="AI" alt="proposed-x1001">ཨང་གུའི་ལ།</territory>
 			<territory type="AL">ཨལ་བཱ་ནི་ཡ།</territory>
-			<territory type="AL" alt="proposed-x1001">ཨལ་བཱ་ནི་ཡ།</territory>
 			<territory type="AM">ཨར་མེ་ནི་ཡ།</territory>
 			<territory type="AO">ཨང་གཽ་ལ།</territory>
-			<territory type="AO" alt="proposed-x1001">AO</territory>
 			<territory type="AQ">ལྷོ་རྩེའི་མཐའ་གླིང་།</territory>
-			<territory type="AQ" alt="proposed-x1001">ལྷོ་རྩེའི་མཐའ་གླིང་།</territory>
 			<territory type="AR">ཨར་ཇེན་ཊི་ན།</territory>
-			<territory type="AR" alt="proposed-x1001">ཨར་ཇེན་ཊི་ན།</territory>
 			<territory type="AT">ཨསྟྲི་ཡ།</territory>
-			<territory type="AT" alt="proposed-x1001">ཨསྟྲི་ཡ།</territory>
 			<territory type="AU">ཨསྟྲེ་ལི་ཡ།</territory>
-			<territory type="AU" alt="proposed-x1001">ཨསྟྲེ་ལི་ཡ།</territory>
 			<territory type="AW">ཨ་རུ་བ།</territory>
 			<territory type="AZ">ཨཛར་བཡེ་ཇན།</territory>
 			<territory type="BA">བོསྣི་ཡ་དང་ཧརྫོ་གོ་ཝི་ན།</territory>
-			<territory type="BA" alt="proposed-x1001">བོསྣི་ཡ་དང་ཧརྫོ་གོ་ཝི་ན།</territory>
 			<territory type="BB">བཱརྦ་ཌོས྄།</territory>
 			<territory type="BD">བངྒ་ལ་དེཤ།</territory>
-			<territory type="BD" alt="proposed-x1001">བངྒ་ལ་དེཤ།</territory>
 			<territory type="BE">བེལ་ཇི་ཡམ།</territory>
-			<territory type="BE" alt="proposed-x1001">བེལ་ཇི་ཡམ།</territory>
 			<territory type="BF">བརཀི་ན། ཕསོ།</territory>
 			<territory type="BG">བུལ་ག་རི་ཡ།</territory>
-			<territory type="BG" alt="proposed-x1001">བུལ་ག་རི་ཡ།</territory>
 			<territory type="BH">བྷཱ་རེན།</territory>
 			<territory type="BI">བུ་རུན་ཌི།</territory>
 			<territory type="BJ">བཱེ་ནིན།</territory>
 			<territory type="BM">བར་མུ་ཌ།</territory>
 			<territory type="BN">བུ་རུ་ནེ།</territory>
 			<territory type="BO">བོ་ལི་ཝིཡ།</territory>
-			<territory type="BO" alt="proposed-x1001">བོ་ལི་ཝིཡ།</territory>
 			<territory type="BR">བ་རཱ་ཛིལ།</territory>
-			<territory type="BR" alt="proposed-x1001">བ་རཱ་ཛིལ།</territory>
 			<territory type="BS">བྷཱ་མས྄།</territory>
 			<territory type="BT">འབྲུག་ཡུལ།</territory>
-			<territory type="BT" alt="proposed-x1001">འབྲུག་ཡུལ།</territory>
 			<territory type="BW">བོཙ་ཝ་ན།</territory>
 			<territory type="BY">བེ་ལུ་རུ་སུ།</territory>
 			<territory type="BZ">བེ་ལིཛ།</territory>
 			<territory type="CA">ཁེ་ན་ཌ།</territory>
-			<territory type="CA" alt="proposed-x1001">CA</territory>
 			<territory type="CI">ཀོ་ཊེ་ཌི། ཨི་ཝོ་རེ།</territory>
 			<territory type="CK">ཀཱུག གླིང་ཕྲེན་རྒྱལ་ཁབ།</territory>
 			<territory type="CL">ཅི་ལི།</territory>
-			<territory type="CL" alt="proposed-x1001">ཅི་ལི་སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="CL" alt="proposed-x1002">ཅི་ལི་སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="CM">ཀ་མེ་རུན།</territory>
 			<territory type="CN">རྒྱ་ནག</territory>
-			<territory type="CN" alt="proposed-x1001">རྒྱ་ནག།</territory>
 			<territory type="CO">ཀོ་ལོམ་བི་ཡ།</territory>
-			<territory type="CO" alt="proposed-x1001">ཀོ་ལོམ་བི་ཡ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="CO" alt="proposed-x1002">ཀོ་ལོམ་བི་ཡ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="CO" alt="proposed-x1003">ཀོ་ལོམ་བི་ཡ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="CR">ཀོ་ས྄ཊ་རི་ཀ།</territory>
-			<territory type="CR" alt="proposed-x1001">ཀོ་ས྄ཊ་རི་ཀ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="CR" alt="proposed-x1002">ཀོ་ས྄ཊ་རི་ཀ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="CU">ཁྱུའུ་བ།</territory>
-			<territory type="CU" alt="proposed-x1001">ཁྱུའུ་བ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="CU" alt="proposed-x1002">ཁྱུའུ་བ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="CY">སཱཡེ་པ་རས྄།</territory>
 			<territory type="CZ">ཅཻག་སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="DE">འཇར་མན་</territory>
-			<territory type="DE" alt="proposed-x1001">འཇར་མནི།་</territory>
-			<territory type="DE" alt="proposed-x1002">འཇར་མནི།</territory>
 			<territory type="DJ">ཛི་བུ་ཏི།</territory>
 			<territory type="DK">ཌེན་མཱརྐ།</territory>
-			<territory type="DK" alt="proposed-x1001">ཌེན་མཱརྐ་རྒྱལ་ཁབ།</territory>
 			<territory type="DM">ཌོ་མིན་ནི་ཀ།</territory>
 			<territory type="DO">ཌོ་མིནནི་ཀན་སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="DZ">ཨལ་ཇི་རི་ཡ།</territory>
-			<territory type="DZ" alt="proposed-x1001">ཨལ་ཇི་རི་ཡ།</territory>
 			<territory type="EC">ཨི་ཁྭ་ཌོར།</territory>
 			<territory type="EE">ཨིསྟོ་ནི་ཡ།</territory>
 			<territory type="EG">ཨི་ཇིབྚ།</territory>
@@ -168,9 +114,6 @@
 			<territory type="FR">ཕ་རཱན་སི།</territory>
 			<territory type="GA">གེ་བཽན།</territory>
 			<territory type="GB">དབྱིན་ཇི་</territory>
-			<territory type="GB" alt="proposed-x1001">གྷ྄རེཊ྄་བྲཱི་ཊེན། དང༌། བྱང་ཨ་ཡར་ལན྄ད། ཆིག་སྒྲིལ་རྒྱལ་ཁབ།</territory>
-			<territory type="GB" alt="proposed-x1002">ཆིག་སྒྲིལ་རྒྱལ་ཁམས།</territory>
-			<territory type="GB" alt="proposed-x1003">གྷ྄རེཊ྄་བྲཱི་ཊེན།</territory>
 			<territory type="GD">གྷ་རི་ན་ཌ།</territory>
 			<territory type="GE">ཇོར་ཇི་ཡ།</territory>
 			<territory type="GH">གྷ་ན།</territory>
@@ -181,38 +124,27 @@
 			<territory type="GT">གྷོ་ཊེ་མ་ལ།</territory>
 			<territory type="GW">གྷི་ནི་ཡ་བིས྄་སོ།</territory>
 			<territory type="GY">གྷུ་ཡཱ་ན།</territory>
-			<territory type="HK" alt="short">ཧོང་ཀོང༌།</territory>
 			<territory type="HN">ཧོན་དུ་རས྄།</territory>
 			<territory type="HR">ཀུརོ་ཤི་ཡ།</territory>
-			<territory type="HR" alt="proposed-x1001">ཀུརོ་ཤི་ཡ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
-			<territory type="HR" alt="proposed-x1002">ཀུརོ་ཤི་ཡ། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="HT">ཧེ་ཏི།</territory>
 			<territory type="HU">ཧངྒ་རི།</territory>
 			<territory type="ID">ཨིན་ཌོ་ནེ་ཤི་ཡ།</territory>
 			<territory type="IE">ཨ་ཡར་ལནཌ།</territory>
 			<territory type="IL">ཨི་ཛ྄་རེལ།</territory>
 			<territory type="IN">རྒྱ་གར་</territory>
-			<territory type="IN" alt="proposed-x1001">རྒྱ་གར།</territory>
-			<territory type="IN" alt="proposed-x1002">རྒྱ་གར། སྤྱིན་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="IQ">ཨི་རག།</territory>
 			<territory type="IR">ཨི་རཱན།</territory>
 			<territory type="IS">ཨ་ཨི་སི་ལནད།</territory>
 			<territory type="IT">ཨི་ཀྲར་ལི་</territory>
-			<territory type="IT" alt="proposed-x1001">ཨི་ཊ་ལི།</territory>
-			<territory type="IT" alt="proposed-x1002">ཨི་ཊ་ལི།</territory>
 			<territory type="JM">ཛ་མེ་ཀ།</territory>
 			<territory type="JO">ཇོར་ཌན།</territory>
 			<territory type="JP">རི་པིན་</territory>
-			<territory type="JP" alt="proposed-x1001">ཉི་ཧོང༌།</territory>
-			<territory type="JP" alt="proposed-x1002">ཇ་པཱན།</territory>
 			<territory type="KE">ཁེན་ཉི་ཡ།</territory>
 			<territory type="KG">ཁིར་གིཛ་སྟཱན།</territory>
 			<territory type="KH">ཀམ་བོ་ཌི་ཡ།</territory>
-			<territory type="KH" alt="proposed-x1001">ཀམ་པུ་ཅི་ཡ།</territory>
 			<territory type="KI">ཀི་རི་བཱ་ཏི།</territory>
 			<territory type="KN">སེནྚ། ཀིཊྚས྄། དང༌། ནེ་བིས྄།</territory>
 			<territory type="KR">ཀོ་རི་ཡ། ལྷོ་མ།</territory>
-			<territory type="KR" alt="proposed-x1001">ཀོ་རི་ཡ། ལྷོ་མ།</territory>
 			<territory type="KW">ཀུ་ཝེད་རྒྱལ་ཁབ།</territory>
 			<territory type="KY">ཁེ་མེན་གླིང་ཕྲན།</territory>
 			<territory type="KZ">ཁ་ཛཱག་སྟཱན།</territory>
@@ -228,16 +160,12 @@
 			<territory type="LV">ལཏ་བི་ཡ།</territory>
 			<territory type="LY">ལི་བི་ཡ།</territory>
 			<territory type="MA">མོ་རོ་ཀྐོ།</territory>
-			<territory type="MA" alt="proposed-x1001">མོངྒོ་ལི་ཡ།</territory>
 			<territory type="MC">མོ་ན་ཀོ།</territory>
 			<territory type="MG">མ་དཱ་གྷསྐཱར།</territory>
 			<territory type="MH">མཱར་ཤལ་གླིང་ཕྲེན།</territory>
 			<territory type="ML">མ་ལི།</territory>
-			<territory type="ML" alt="proposed-x1001">མ་ལི། སྤྱི་མཐུན་རྒྱལ་ཁབ།</territory>
 			<territory type="MM">འབར་མ།</territory>
 			<territory type="MN">སོག་ཡུལ།</territory>
-			<territory type="MN" alt="proposed-x1001">མོངྒོ་ལི་ཡ།</territory>
-			<territory type="MO" alt="short">མེ་ཀའོ།</territory>
 			<territory type="MR">མཽ་རི་ཏ་ནི་ཡ།</territory>
 			<territory type="MT">མལ་ཊ།</territory>
 			<territory type="MU">མཽ་རིཤས྄།</territory>
@@ -253,13 +181,9 @@
 			<territory type="NL">ནེ་ཐར་ལནྜ།</territory>
 			<territory type="NO">ནོར་ཝེ།</territory>
 			<territory type="NP">བར་ཡུལ་</territory>
-			<territory type="NP" alt="proposed-x1001">བལ་ཡུལ།</territory>
-			<territory type="NP" alt="proposed-x1002">ནེ་པཱལ།</territory>
-			<territory type="NP" alt="proposed-x1003">བལ་ཡུལ།</territory>
 			<territory type="NR">ནཽ་རུ།</territory>
 			<territory type="NU">ནིའུ་ཝ།</territory>
 			<territory type="NZ">ནིའུ་ཛི་ལན྄ཌ།</territory>
-			<territory type="NZ" alt="proposed-x1001">ནིའུ་ཛི་ལན྄ཌ།</territory>
 			<territory type="OM">ཨོ་མན།</territory>
 			<territory type="PA">པ་ནཱ་མ།</territory>
 			<territory type="PE">པེ་རུ།</territory>
@@ -274,83 +198,53 @@
 			<territory type="RO">རོ་མཱ་ནིཡ།</territory>
 			<territory type="RS">སེར་བི་ཡ།</territory>
 			<territory type="RU">ཨུ་རུ་སུ་</territory>
-			<territory type="RU" alt="proposed-x1001">ཨུ་རུ་སུ།</territory>
-			<territory type="RU" alt="proposed-x1002">ཨུ་རུ་སུ།</territory>
 			<territory type="RW">རུ་ཝན་ཌ།</territory>
 			<territory type="SA">སཽ་དྷི་ཨ་རཱ་བི་ཡ།</territory>
 			<territory type="SB">སོ་ལོ་མོན། གླིང་ཕྲན་ཚོ་ཁག།</territory>
 			<territory type="SC">སཱ་ཤཻལ།</territory>
 			<territory type="SD">སུ་དཱན།</territory>
 			<territory type="SG">སིངྒ་པུར།</territory>
-			<territory type="SG" alt="proposed-x1001">སིངྒ་པུར།</territory>
 			<territory type="SH">སེནྚ། ཧེ་ལི་ན།</territory>
 			<territory type="SI">ས་ལཽ་ཝེ་ནི་ཡ།</territory>
 			<territory type="SK">ས་ལཽ་ཝཀྱ།</territory>
 			<territory type="SL">སེ་ཡར་ར། ལིའོན།</territory>
-			<territory type="SL" alt="proposed-x1001">སེ་ཡར་ར། ལིའོན།</territory>
 			<territory type="SM">སན་མེ་རི་ནོ།</territory>
 			<territory type="SN">སེ་ནི་གྷལ།</territory>
 			<territory type="SO">སོ་མཱལི་ཡ།</territory>
-			<territory type="SO" alt="proposed-x1001">སོ་མཱལི་ཡ།</territory>
 			<territory type="SR">སུ་རི་ནཱམ།</territory>
 			<territory type="ST">ས་འོ་ཏོད་མད། དང༌། པ྄རིན་སི་པེ།</territory>
 			<territory type="SV">ཨེལ། སཱལ་ཝ་ཌོར།</territory>
 			<territory type="TD">ཅཻཌ།</territory>
 			<territory type="TR">ཏུརཀི།</territory>
-			<territory type="TR" alt="proposed-x1001">ཏུརཀི།</territory>
 			<territory type="TV">ཐུ་ཝ་ལུ།</territory>
-			<territory type="TV" alt="proposed-x1001">ཐུ་ཝ་ལུ།</territory>
 			<territory type="UA">ཡུ་ཀརེན།</territory>
-			<territory type="UA" alt="proposed-x1001">ཡུ་ཀརེན།</territory>
 			<territory type="UG">ཡུ་གན་ཌ།</territory>
 			<territory type="US">ཨ་མེ་རི་ཀ་</territory>
-			<territory type="US" alt="proposed-x1001">ཨ་རི་ཆིག་སྒྲིལ་རྒྱལ་ཁབ།</territory>
-			<territory type="US" alt="proposed-x1002">ཨ་རི་ཆིག་སྒྲིལ་རྒྱལ་ཁབ།</territory>
 			<territory type="UY">ཨུ་རུ་གྷེ།</territory>
-			<territory type="UY" alt="proposed-x1001">ཨུ་རུ་གྷེ།</territory>
 			<territory type="UZ">ཨུཛ་བེ་ཀིསྟཱན།</territory>
-			<territory type="UZ" alt="proposed-x1001">ཨུཛ་བེ་ཀིསྟཱན།</territory>
 			<territory type="VA">ཝེ་ཊི་ཀན།</territory>
-			<territory type="VA" alt="proposed-x1001">དམ་པའི་རྒྱལ་ཁམས།</territory>
 			<territory type="VC">སེནྚ། ཝིན་སན། དང༌། གྷིརིན་ཌིན།</territory>
 			<territory type="VE">ཝེ་ནི་ཛུའེ་ལ།</territory>
-			<territory type="VE" alt="proposed-x1001">ཝེ་ནི་ཛུའེ་ལ།</territory>
 			<territory type="VN">ཝེད་ནམ།</territory>
-			<territory type="VN" alt="proposed-x1001">ཝེད་ནམ།</territory>
 			<territory type="VU">ཝ་ནུ་ཨ་ཐུ།</territory>
-			<territory type="VU" alt="proposed-x1001">ཝ་ནུ་ཨ་ཐུ།</territory>
 			<territory type="WS">ནུ་བ་ས་མོ་འ།</territory>
 			<territory type="YE">ཡེ་མེན།</territory>
-			<territory type="YE" alt="proposed-x1001">ཡེ་མེན།</territory>
 			<territory type="ZA">ལྷོ་ ཨཕྲི་ཀ།</territory>
-			<territory type="ZA" alt="proposed-x1001">ལྷོ་ ཨཕྲི་ཀ།</territory>
 			<territory type="ZM">ཛམ་བི་ཡ།</territory>
-			<territory type="ZM" alt="proposed-x1001">ཛམ་བི་ཡ།</territory>
 			<territory type="ZW">ཛིམ་བྷཱ་བེ།</territory>
-			<territory type="ZW" alt="proposed-x1001">ཛིམ་བྷཱ་བེ།</territory>
 			<territory type="ZZ">མིའི་ཤེས་རྟོགས་མ་བྱུང་བའི་ཁོར་ཡུག</territory>
-			<territory type="ZZ" alt="proposed-x1001">མི་ཤེས་པའམ་ཕན་མེད་ཀྱི་ས་ཁུལ།</territory>
 		</territories>
 		<types>
 			<type type="gregorian" key="calendar">gregorian</type>
-			<type type="gregorian" key="calendar" alt="proposed-x1001">ལི་ཐོ།</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">ཨ་མེ་རི་ཀའི།</measurementSystemName>
 			<measurementSystemName type="metric">Metric</measurementSystemName>
-			<measurementSystemName type="metric" alt="proposed-x1001">བཅུ་རྩིས་ཀྱི།</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[ཾ ཿ ་ ། ༎ ༠-༩ ཀ {ཀྵ} ྐ {ྐྵ} ཁ ྑ ག {གྷ} ྒ {ྒྷ} ང ྔ ཅ ྕ ཆ ྖ ཇ ྗ ཉ ྙ ཊ ྚ ཋ ྛ ཌ {ཌྷ} ྜ {ྜྷ} ཎ ྞ ཏ ྟ ཐ ྠ ད {དྷ} ྡ {ྡྷ} ན ྣ པ ྤ ཕ ྥ བ {བྷ} ྦ {ྦྷ} མ ྨ ཙ ྩ ཚ ྪ ཛ {ཛྷ} ྫ {ྫྷ} ཝ ྭ ྺ ཞ ྮ ཟ ྯ འ ྰ ཡ ྱ ྻ ར ཪ ྲ ྼ ལ ླ ཤ ྴ ཥ ྵ ས ྶ ཧ ྷ ཨ ྸ ཱ ི {ཱི} ྀ {ཱྀ} ུ {ཱུ} {ྲྀ} ཷ {ླྀ} ཹ-ཽ ྄ \u0F70]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[ༀ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[་ ། ཨ ི ུ ེ ོ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1002">[ྂ ྃ ྅ ༁ ྰ ༀ ྈ ྉ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1003">[༄-༇ ༁-༃ ༀ]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[ཾ ་ ། ༎ ༠-༩ ཀ {ཀྵ} ྐ {ྐྵ} ཁ ྑ ག {གྷ} ྒ {ྒྷ} ང ྔ ཅ ྕ ཆ ྖ ཇ ྗ ཉ ྙ ཊ ྚ ཋ ྛ ཌ {ཌྷ} ྜ {ྜྷ} ཎ ྞ ཏ ྟ ཐ ྠ ད {དྷ} ྡ {ྡྷ} ན ྣ པ ྤ ཕ ྥ བ {བྷ} ྦ {ྦྷ} མ ྨ ཙ ྩ ཚ ྪ ཛ {ཛྷ} ྫ {ྫྷ} ཝ ྭ ྺ ཞ ྮ ཟ ྯ འ ྰ ཡ ྱ ྻ ར ཪ ྲ ྼ ལ ླ ཤ ྴ ཥ ྵ ས ྶ ཧ ྷ ཨ ྸ ཱ ི ུ ེ-ཽ ྄ \u0F48 \u0F98]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1002">[ཾ ་ ། ༎ ༠-༩ ཀ {ཀྵ} ྐ {ྐྵ} ཁ ྑ ག {གྷ} ྒ {ྒྷ} ང ྔ ཅ ྕ ཆ ྖ ཇ ྗ ཉ ྙ ཊ ྚ ཋ ྛ ཌ {ཌྷ} ྜ {ྜྷ} ཎ ྞ ཏ ྟ ཐ ྠ ད {དྷ} ྡ {ྡྷ} ན ྣ པ ྤ ཕ ྥ བ {བྷ} ྦ {ྦྷ} མ ྨ ཙ ྩ ཚ ྪ ཛ {ཛྷ} ྫ {ྫྷ} ཝ ྭ ྺ ཞ ྮ ཟ ྯ འ ྰ ཡ ྱ ྻ ར ཪ ྲ ྼ ལ ླ ཤ ྴ ཥ ྵ ས ྶ ཧ ྷ ཨ ྸ ཱ ི ྀ ུ ཷ ཹ-ཽ ྄ \u0F48 \u0F98]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1003">[་ ཀ-ག ང-ཇ ཉ ཏ-ད ན-བ མ-ཛ ཝ-ཤ ས-ཨ]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1004">[ཾ ཿ ་-། ཀ {ཀྵ} ྐ {ྐྵ} ཁ ྑ ག {གྷ} ྒ {ྒྷ} ང ྔ ཅ ྕ ཆ ྖ ཇ ྗ ཉ ྙ ཊ ྚ ཋ ྛ ཌ {ཌྷ} ྜ {ྜྷ} ཎ ྞ ཏ ྟ ཐ ྠ ད {དྷ} ྡ {ྡྷ} ན ྣ པ ྤ ཕ ྥ བ {བྷ} ྦ {ྦྷ} མ ྨ ཙ ྩ ཚ ྪ ཛ {ཛྷ} ྫ {ྫྷ} ཝ ྭ ྺ ཞ ྮ ཟ ྯ འ ཡ ྱ ྻ ར ཪ ྲ ྼ ལ ླ ཤ ྴ ཥ ྵ ས ྶ ཧ ྷ ཨ ྸ ཱ ི {ཱི} ྀ ུ {ཱུ} ེ-ཽ ྄ \u0F48]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>
@@ -463,11 +357,6 @@
 							<quarter type="4">དུས་ཚིགས་བཞི་པ།</quarter>
 						</quarterWidth>
 						<quarterWidth type="narrow">
-							<quarter type="1" alt="proposed-x1001">དུས་ཚིགས་དང་པོ།</quarter>
-							<quarter type="2" alt="proposed-x1001">དུས་ཚིགས་གཉིས་པ།</quarter>
-							<quarter type="3" alt="proposed-x1001">་དུས་ཚིགས་གསུམ་པ།</quarter>
-							<quarter type="3" alt="proposed-x1002">དུས་ཚིགས་གསུམ་པ།</quarter>
-							<quarter type="4" alt="proposed-x1001">དུས་ཚིགས་བཞི་པ།</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">དུས་ཚིགས་དང་པོ།</quarter>
@@ -479,14 +368,9 @@
 					<quarterContext type="stand-alone">
 						<quarterWidth type="narrow">
 							<quarter type="1">1</quarter>
-							<quarter type="1" alt="proposed-x1001">དུས་ཚིགས་དང་པོ།</quarter>
 							<quarter type="2">2</quarter>
-							<quarter type="2" alt="proposed-x1001">དུས་ཚིགས་གཉིས་པ།</quarter>
 							<quarter type="3">3</quarter>
-							<quarter type="3" alt="proposed-x1001">དུས་ཚིགས་གསུམ་པ།</quarter>
-							<quarter type="3" alt="proposed-x1002">་དུས་ཚིགས་གསུམ་པ།</quarter>
 							<quarter type="4">4</quarter>
-							<quarter type="4" alt="proposed-x1001">དུས་ཚིགས་བཞི་པ།</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">དུས་ཚིགས་དང་པོ།</quarter>
@@ -541,24 +425,18 @@
 						<displayName>ཉིན།</displayName>
 						<relative type="0">དེ་རིང་</relative>
 						<relative type="1">སང་ཉིན་</relative>
-						<relative type="1" alt="proposed-x1001">གནང་ཁ་</relative>
 						<relative type="2">གནངས་ཉིན་ཀ་</relative>
-						<relative type="2" alt="proposed-x1001">གནང་ཉིན་</relative>
 						<relative type="-1">ཁས་ས་</relative>
-						<relative type="-1" alt="proposed-x1001">ཁ་སང་</relative>
 						<relative type="-2">ཁས་ཉིན་ཀ་</relative>
-						<relative type="-2" alt="proposed-x1001">ཁེ་ཉིན་མོ་</relative>
 					</field>
 					<field type="weekday">
 						<displayName>གཟའ་འཁོར་གཅིག</displayName>
 					</field>
 					<field type="dayperiod">
 						<displayName>སྔ་དྲོ།   ཕྱི་དྲོ།</displayName>
-						<displayName alt="proposed-x1001">སྔ་དྲོ།</displayName>
 					</field>
 					<field type="hour">
 						<displayName>ཆུ་ཙོ་</displayName>
-						<displayName alt="proposed-x1001">ཆུ་ཚོད་</displayName>
 					</field>
 					<field type="minute">
 						<displayName>སྐར་མ།</displayName>
@@ -575,8 +453,6 @@
 		<timeZoneNames>
 			<zone type="Etc/Unknown">
 				<exemplarCity>མ་རྟོགས་པ</exemplarCity>
-				<exemplarCity alt="proposed-x1001">མི་ཤེས་པའམ་ཕན་མེད་ཀྱི་ཤོག་དངུལ།</exemplarCity>
-				<exemplarCity alt="proposed-x1002">མི་ཤེས་པའི་དུས་ཁུལ།</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -585,7 +461,6 @@
 			<decimal>.</decimal>
 			<group>,</group>
 			<nativeZeroDigit>༠</nativeZeroDigit>
-			<nativeZeroDigit alt="proposed-x1001">贐繻︽贀纊︽</nativeZeroDigit>
 			<nan>ཨང་མེན་</nan>
 		</symbols>
 		<decimalFormats>
@@ -612,17 +487,13 @@
 		<currencies>
 			<currency type="CNY">
 				<displayName>ཡུ་ཨན་</displayName>
-				<displayName alt="proposed-x1001">ཡུ་ཨན།</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>རྒྱ་གར་སྒོར་མོ་</displayName>
-				<displayName alt="proposed-x1001">རྒྱ་གར་སྒོར་མོ།</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>མ་རྟོགས་པའི་ནུས་མེད་དངུལ་ལོར</displayName>
-				<displayName alt="proposed-x1001">མི་ཤེས་པའམ་ཕན་མེད་ཀྱི་ཤོག་དངུལ།</displayName>
 				<symbol>སྒོར་</symbol>
-				<symbol alt="proposed-x1001">སྒོར་མོ།</symbol>
 			</currency>
 		</currencies>
 	</numbers>

@@ -248,10 +248,8 @@
 	<delimiters>
 		<quotationStart>’</quotationStart>
 		<quotationEnd>”</quotationEnd>
-		<quotationEnd alt="proposed-x1001">’</quotationEnd>
 		<alternateQuotationStart>”</alternateQuotationStart>
 		<alternateQuotationEnd>’</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">”</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -425,7 +423,6 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH:mm;−HH:mm</hourFormat>
-			<hourFormat alt="proposed-x1001">+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat>GMT{0}</gmtFormat>
 			<regionFormat>{0}</regionFormat>
 		</timeZoneNames>
@@ -441,7 +438,6 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤#,##0.00;¤ -#,##0.00</pattern>
-					<pattern alt="proposed-x1001">¤ #,##0.00</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>

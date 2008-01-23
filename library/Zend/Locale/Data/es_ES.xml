@@ -14,22 +14,16 @@
 			<language type="eu">euskera</language>
 			<language type="fi">finlandés</language>
 			<language type="rom">caló</language>
-			<language type="rom" alt="proposed-x1001">caló</language>
 		</languages>
 		<scripts>
 			<script type="Egyp">jeroglíficos egipcios</script>
-			<script type="Egyp" alt="proposed-x1001">gerogríficos egipcios</script>
 			<script type="Ethi">etíope</script>
 			<script type="Hung">húngaro antiguo</script>
-			<script type="Hung" alt="proposed-x1001">Húngaro antiguo</script>
 			<script type="Ital">antigua itálica</script>
-			<script type="Latg" alt="proposed-x1001">Latín (variante gaélico)</script>
 			<script type="Lina">linear A</script>
 			<script type="Maya">jeroglíficos mayas</script>
-			<script type="Maya" alt="proposed-x1001">gerogríficos mayas</script>
 			<script type="Mong">mongol</script>
 			<script type="Phnx">fenicio</script>
-			<script type="Phnx" alt="proposed-x1001">Fenicio</script>
 		</scripts>
 		<territories>
 			<territory type="KG">Kirguistán</territory>
@@ -93,13 +87,10 @@
 		</currencyFormats>
 		<currencies>
 			<currency type="ARS">
-				<displayName alt="proposed-x1001">peso argentino</displayName>
 			</currency>
 			<currency type="AUD">
-				<displayName alt="proposed-x1001">dólar australiano</displayName>
 			</currency>
 			<currency type="BEF">
-				<displayName alt="proposed-x1001">franco belga</displayName>
 			</currency>
 			<currency type="ESP">
 				<pattern>#,##0 ¤;-#,##0 ¤</pattern>
@@ -108,7 +99,6 @@
 			</currency>
 			<currency type="NLG">
 				<displayName>florín holandés</displayName>
-				<displayName alt="proposed-x1001">florín neerlandés</displayName>
 			</currency>
 		</currencies>
 	</numbers>

@@ -13,7 +13,6 @@
 				<dateFormats>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern alt="proposed-x1001">dd-MMM-yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -31,8 +30,6 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMMdd" alt="proposed-x1001">dd-MMM</dateFormatItem>
-						<dateFormatItem id="yyMMM" alt="proposed-x1001">MMM-yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

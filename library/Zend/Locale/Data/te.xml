@@ -9,16 +9,13 @@
 	<localeDisplayNames>
 		<languages>
 			<language type="ar">అరబిక్</language>
-			<language type="ar" alt="proposed-x1001">అరబ్బీ</language>
 			<language type="bh">బీహారి</language>
 			<language type="bn">బెంగాలి</language>
 			<language type="cs">చెక్</language>
 			<language type="da">డానిష్</language>
 			<language type="de">ఙర్మన్</language>
-			<language type="de" alt="proposed-x1001">జర్మన్</language>
 			<language type="el">గ్రీకు</language>
 			<language type="en">ఆంగ్లం</language>
-			<language type="en" alt="proposed-x1001">ఆంగ్లము</language>
 			<language type="es">స్పానిష్</language>
 			<language type="et">ఈస్టోనియను</language>
 			<language type="fa">పార్శీ</language>
@@ -28,14 +25,11 @@
 			<language type="gu">గుజరాతి</language>
 			<language type="he">హీబ్రూ</language>
 			<language type="hi">హిందీ</language>
-			<language type="hi" alt="proposed-x1001">హింది</language>
 			<language type="hu">హంగేరియను</language>
 			<language type="id">ఇండొనేసియన్</language>
 			<language type="is">ఐస్ లాండు</language>
 			<language type="it">ఇటాలియన్ భాష</language>
-			<language type="it" alt="proposed-x1001">ఇటాలియన్</language>
 			<language type="ja">జపాను భాష</language>
-			<language type="ja" alt="proposed-x1001">జపనీస్</language>
 			<language type="kn">కన్నడ</language>
 			<language type="la">లాటిన్</language>
 			<language type="lt">లిథువేనియను</language>
@@ -51,7 +45,6 @@
 			<language type="pt">పొర్చుగల్ భాష</language>
 			<language type="ro">రొమేనియను</language>
 			<language type="ru">రష్యన్ భాష</language>
-			<language type="ru" alt="proposed-x1001">రష్యను</language>
 			<language type="si">సింహళీ</language>
 			<language type="sv">స్వీడిష్</language>
 			<language type="sw">స్వాహిలి</language>
@@ -216,25 +209,21 @@
 					<dateFormatLength type="full">
 						<dateFormat>
 							<pattern>EEEE d MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">EEEE, yyyy MMMM dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>d MMMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd-MM-yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy MMM d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd-MM-yy</pattern>
-							<pattern alt="proposed-x1001">yy/MM/dd</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -242,25 +231,21 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>h:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>h:mm:ss a z</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>h:mm:ss a</pattern>
-							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>h:mm a</pattern>
-							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>

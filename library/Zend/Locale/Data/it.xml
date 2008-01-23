@@ -17,7 +17,6 @@
 			<language type="ae">avestan</language>
 			<language type="af">afrikaans</language>
 			<language type="afa">afro-asiatica (altra lingua)</language>
-			<language type="afa" alt="proposed-x1001">altra lingua afroasiatica</language>
 			<language type="afh">afrihili</language>
 			<language type="ain">ainu</language>
 			<language type="ak">akan</language>
@@ -28,7 +27,6 @@
 			<language type="am">amarico</language>
 			<language type="an">aragonese</language>
 			<language type="ang">inglese, antico (ca.450-1100)</language>
-			<language type="ang" alt="proposed-x1001">inglese antico</language>
 			<language type="anp">angika</language>
 			<language type="apa">lingue apache</language>
 			<language type="ar">arabo</language>
@@ -36,7 +34,6 @@
 			<language type="arn">araucano</language>
 			<language type="arp">arapaho</language>
 			<language type="art">artificiale (altra lingua)</language>
-			<language type="art" alt="proposed-x1001">altra lingua artificiale</language>
 			<language type="arw">aruaco</language>
 			<language type="as">assamese</language>
 			<language type="ast">asturiano</language>
@@ -46,16 +43,13 @@
 			<language type="awa">awadhi</language>
 			<language type="ay">aymara</language>
 			<language type="az">azerbaigiano</language>
-			<language type="az" alt="proposed-x1001">azero</language>
 			<language type="ba">baschiro</language>
-			<language type="ba" alt="proposed-x1001">bashkir</language>
 			<language type="bad">banda</language>
 			<language type="bai">lingue bamileke</language>
 			<language type="bal">beluci</language>
 			<language type="ban">balinese</language>
 			<language type="bas">basa</language>
 			<language type="bat">baltica (altra lingua)</language>
-			<language type="bat" alt="proposed-x1001">altra lingua baltica</language>
 			<language type="be">bielorusso</language>
 			<language type="bej">begia</language>
 			<language type="bem">wemba</language>
@@ -69,7 +63,6 @@
 			<language type="bla">siksika</language>
 			<language type="bm">bambara</language>
 			<language type="bn">bengalese</language>
-			<language type="bn" alt="proposed-x1001">bengali</language>
 			<language type="bnt">bantu</language>
 			<language type="bo">tibetano</language>
 			<language type="br">bretone</language>
@@ -80,13 +73,10 @@
 			<language type="bug">bugi</language>
 			<language type="byn">blin</language>
 			<language type="ca">catalano</language>
-			<language type="ca" alt="proposed-x1001">catalan</language>
 			<language type="cad">caddo</language>
 			<language type="cai">indiana dell’America Centrale (altra lingua)</language>
-			<language type="cai" alt="proposed-x1001">altra lingua indiana dell'America Centrale</language>
 			<language type="car">caribico</language>
 			<language type="cau">caucasica (altra lingua)</language>
-			<language type="cau" alt="proposed-x1001">altra lingua caucasica</language>
 			<language type="cch">atsam</language>
 			<language type="ce">ceceno</language>
 			<language type="ceb">cebuano</language>
@@ -105,21 +95,15 @@
 			<language type="co">corso</language>
 			<language type="cop">copto</language>
 			<language type="cpe">creolo e pidgins, basato sull’inglese (altra lingua)</language>
-			<language type="cpe" alt="proposed-x1001">altre lingue creole e pidgin inglesi</language>
 			<language type="cpf">creolo e pidgins, basato sul francese (altra lingua)</language>
-			<language type="cpf" alt="proposed-x1001">altre lingue creole e pidgin francesi</language>
 			<language type="cpp">creolo e pidgins, basato sul portoghese (altra lingua)</language>
-			<language type="cpp" alt="proposed-x1001">altre lingue creole e pidgin portoghesi</language>
 			<language type="cr">cree</language>
 			<language type="crh">turco crimeo; tatar crimeo</language>
-			<language type="crh" alt="proposed-x1001">turco crimeo</language>
 			<language type="crp">creola e Pidgins (altra lingua)</language>
-			<language type="crp" alt="proposed-x1001">altre lingue creole e pidgin</language>
 			<language type="cs">ceco</language>
 			<language type="csb">kashubian</language>
 			<language type="cu">slavo della Chiesa</language>
 			<language type="cus">cuscitica (altra lingua)</language>
-			<language type="cus" alt="proposed-x1001">altra lingua cuscitica</language>
 			<language type="cv">chuvash</language>
 			<language type="cy">gallese</language>
 			<language type="da">danese</language>
@@ -135,32 +119,24 @@
 			<language type="din">dinca</language>
 			<language type="doi">dogri</language>
 			<language type="dra">dravidica (altra lingua)</language>
-			<language type="dra" alt="proposed-x1001">altra lingua dravidica</language>
 			<language type="dsb">basso sorabo</language>
 			<language type="dua">duala</language>
 			<language type="dum">olandese, medio (ca. 1050-1350)</language>
-			<language type="dum" alt="proposed-x1001">olandese medio</language>
 			<language type="dv">divehi</language>
 			<language type="dyu">diula</language>
 			<language type="dz">dzongkha</language>
-			<language type="dz" alt="proposed-x1001">bhutani</language>
 			<language type="ee">ewe</language>
 			<language type="efi">efik</language>
 			<language type="egy">egiziano (antico)</language>
-			<language type="egy" alt="proposed-x1001">egiziano antico</language>
 			<language type="eka">ekajuka</language>
 			<language type="el">greco</language>
 			<language type="elx">elamitico</language>
 			<language type="en">inglese</language>
 			<language type="en_AU">inglese australiano</language>
-			<language type="en_AU" alt="proposed-x1001">inglese (australia)</language>
 			<language type="en_CA">inglese canadese</language>
 			<language type="en_GB">inglese britannico</language>
-			<language type="en_GB" alt="proposed-x1001">inglese (uk)</language>
 			<language type="en_US">inglese americano</language>
-			<language type="en_US" alt="proposed-x1001">inglese (usa)</language>
 			<language type="enm">inglese, medio (1100-1500)</language>
-			<language type="enm" alt="proposed-x1001">inglese medio</language>
 			<language type="eo">esperanto</language>
 			<language type="es">spagnolo</language>
 			<language type="es_419">spagnolo latinoamericano</language>
@@ -175,51 +151,38 @@
 			<language type="fi">finlandese</language>
 			<language type="fil">filippino</language>
 			<language type="fiu">ugrofinnica (altra lingua)</language>
-			<language type="fiu" alt="proposed-x1001">altra lingua ungrofinnica</language>
 			<language type="fj">figiano</language>
 			<language type="fo">faroese</language>
-			<language type="fo" alt="proposed-x1001">faeroese</language>
 			<language type="fr">francese</language>
 			<language type="fr_CA">francese canadese</language>
 			<language type="fr_CH">svizzero-francese</language>
-			<language type="fr_CH" alt="proposed-x1001">francese svizzero</language>
 			<language type="frm">francese, medio (ca.1400-1600)</language>
-			<language type="frm" alt="proposed-x1001">francese medio</language>
 			<language type="fro">francese, antico (842-ca.1400)</language>
-			<language type="fro" alt="proposed-x1001">francese antico</language>
 			<language type="frr">frisone settentrionale</language>
 			<language type="fur">friulano</language>
 			<language type="fy">frisone</language>
 			<language type="ga">irlandese</language>
-			<language type="ga" alt="proposed-x1001">gaelico</language>
 			<language type="gaa">ga</language>
 			<language type="gay">gayo</language>
 			<language type="gba">gbaya</language>
 			<language type="gd">gaelico scozzese</language>
 			<language type="gem">germanica (altra lingua)</language>
-			<language type="gem" alt="proposed-x1001">altra lingua germanica</language>
 			<language type="gez">geez</language>
 			<language type="gil">gilbertese</language>
 			<language type="gl">galiziano</language>
 			<language type="gmh">tedesco, medio alto (ca.1050-1500)</language>
-			<language type="gmh" alt="proposed-x1001">tedesco medio alto</language>
 			<language type="gn">guarana</language>
-			<language type="gn" alt="proposed-x1001">guarani</language>
 			<language type="goh">tedesco, antico alto (ca.750-1050)</language>
-			<language type="goh" alt="proposed-x1001">tedesco antico alto</language>
 			<language type="gon">gondi</language>
 			<language type="gor">gorontalo</language>
 			<language type="got">gotico</language>
 			<language type="grb">gerbo</language>
 			<language type="grc">greco, antico (fino al 1453)</language>
-			<language type="grc" alt="proposed-x1001">greco antico</language>
 			<language type="gsw">svizzero-tedesco</language>
-			<language type="gsw" alt="proposed-x1001">tedesco svizzero</language>
 			<language type="gu">gujarati</language>
 			<language type="gv">manx</language>
 			<language type="gwi">gwichʼin</language>
 			<language type="ha">haussa</language>
-			<language type="ha" alt="proposed-x1001">hausa</language>
 			<language type="hai">haida</language>
 			<language type="haw">hawaiano</language>
 			<language type="he">ebraico</language>
@@ -245,9 +208,7 @@
 			<language type="ik">inupiak</language>
 			<language type="ilo">ilocano</language>
 			<language type="inc">indiana (altra lingua)</language>
-			<language type="inc" alt="proposed-x1001">altra lingua indiana</language>
 			<language type="ine">indoeuropea (altra lingua)</language>
-			<language type="ine" alt="proposed-x1001">altra lingua indoeuropea</language>
 			<language type="inh">ingush</language>
 			<language type="io">ido</language>
 			<language type="ira">iraniana</language>
@@ -274,16 +235,12 @@
 			<language type="kg">kongo</language>
 			<language type="kha">khasi</language>
 			<language type="khi">khoisan (altra lingua)</language>
-			<language type="khi" alt="proposed-x1001">altra lingua khoisan</language>
 			<language type="kho">khotanese</language>
 			<language type="ki">kikuyu</language>
 			<language type="kj">kuanyama</language>
 			<language type="kk">kazako</language>
-			<language type="kk" alt="proposed-x1001">kazaco</language>
 			<language type="kl">kalaallisut</language>
-			<language type="kl" alt="proposed-x1001">groenlandese</language>
 			<language type="km">khmer</language>
-			<language type="km" alt="proposed-x1001">cambogiano</language>
 			<language type="kmb">kimbundu</language>
 			<language type="kn">kannada</language>
 			<language type="ko">coreano</language>
@@ -302,7 +259,6 @@
 			<language type="kv">komi</language>
 			<language type="kw">cornico</language>
 			<language type="ky">kirghiso</language>
-			<language type="ky" alt="proposed-x1001">kirgizo</language>
 			<language type="la">latino</language>
 			<language type="lad">ladino</language>
 			<language type="lah">lahnda</language>
@@ -313,9 +269,7 @@
 			<language type="li">limburgese</language>
 			<language type="ln">lingala</language>
 			<language type="lo">lao</language>
-			<language type="lo" alt="proposed-x1001">laotiano</language>
 			<language type="lol">lolo (bantu)</language>
-			<language type="lol" alt="proposed-x1001">lolo bantu</language>
 			<language type="loz">lozi</language>
 			<language type="lt">lituano</language>
 			<language type="lu">luba-katanga</language>
@@ -323,7 +277,6 @@
 			<language type="lui">luiseno</language>
 			<language type="lun">lunda</language>
 			<language type="luo">luo (Kenia e Tanzania)</language>
-			<language type="luo" alt="proposed-x1001">luo</language>
 			<language type="lus">lushai</language>
 			<language type="lv">lettone</language>
 			<language type="mad">madurese</language>
@@ -338,7 +291,6 @@
 			<language type="men">mende</language>
 			<language type="mg">malgascio</language>
 			<language type="mga">irlandese medio (900-1200)</language>
-			<language type="mga" alt="proposed-x1001">irlandese medio</language>
 			<language type="mh">marshallese</language>
 			<language type="mi">maori</language>
 			<language type="mic">micmac</language>
@@ -346,7 +298,6 @@
 			<language type="mis">lingue diverse</language>
 			<language type="mk">macedone</language>
 			<language type="mkh">mon-khmer (altra lingua)</language>
-			<language type="mkh" alt="proposed-x1001">altra lingua mon-khmer</language>
 			<language type="ml">malayalam</language>
 			<language type="mn">mongolo</language>
 			<language type="mnc">manchu</language>
@@ -360,35 +311,28 @@
 			<language type="mt">maltese</language>
 			<language type="mul">multilingua</language>
 			<language type="mun">munda (altra lingua)</language>
-			<language type="mun" alt="proposed-x1001">lingue munda</language>
 			<language type="mus">creek</language>
 			<language type="mwl">mirandese</language>
 			<language type="mwr">marwari</language>
 			<language type="my">birmano</language>
-			<language type="my" alt="proposed-x1001">burmese</language>
 			<language type="myn">lingue maya</language>
 			<language type="myv">erzya</language>
 			<language type="na">nauru</language>
 			<language type="nah">nahuatl</language>
 			<language type="nai">indiano del Nord America (altra lingua)</language>
-			<language type="nai" alt="proposed-x1001">altra lingua indiana nordamericana</language>
-			<language type="nai" alt="proposed-x1002">altra lingua indiana del Nord America</language>
 			<language type="nap">napoletano</language>
 			<language type="nb">norvegese bokmal</language>
 			<language type="nd">ndebele del nord</language>
 			<language type="nds">basso tedesco; basso sassone</language>
-			<language type="nds" alt="proposed-x1001">basso tedesco</language>
 			<language type="ne">nepalese</language>
 			<language type="new">newari</language>
 			<language type="ng">ndonga</language>
 			<language type="nia">nias</language>
 			<language type="nic">niger - cordofan (altra lingua)</language>
-			<language type="nic" alt="proposed-x1001">altra lingua niger cordofan</language>
 			<language type="niu">niue</language>
 			<language type="nl">olandese</language>
 			<language type="nl_BE">fiammingo belga</language>
 			<language type="nn">norvegese nynorsk</language>
-			<language type="nn" alt="proposed-x1001">norvegese (nynorsk)</language>
 			<language type="no">norvegese</language>
 			<language type="nog">nogai</language>
 			<language type="non">norse antico</language>
@@ -399,56 +343,45 @@
 			<language type="nv">navajo</language>
 			<language type="nwc">newari classico</language>
 			<language type="ny">nyanja; chichewa; chewa</language>
-			<language type="ny" alt="proposed-x1001">nyanja</language>
 			<language type="nym">nyamwezi</language>
 			<language type="nyn">nyankole</language>
 			<language type="nyo">nyoro</language>
 			<language type="nzi">nzima</language>
 			<language type="oc">occitano</language>
-			<language type="oc" alt="proposed-x1001">occitano (post 1500); provenzale</language>
 			<language type="oj">ojibwa</language>
 			<language type="om">oromo</language>
 			<language type="or">oriya</language>
 			<language type="os">ossetico</language>
 			<language type="osa">osage</language>
 			<language type="ota">turco ottomano (1500-1928)</language>
-			<language type="ota" alt="proposed-x1001">turco ottomano</language>
 			<language type="oto">lingue otomi</language>
 			<language type="pa">punjabi</language>
 			<language type="paa">papuano-australiano (altra lingua)</language>
-			<language type="paa" alt="proposed-x1001">altra lingua papuano australiana</language>
 			<language type="pag">pangasinan</language>
 			<language type="pal">pahlavi</language>
 			<language type="pam">pampanga</language>
 			<language type="pap">papiamento</language>
 			<language type="pau">palau</language>
 			<language type="peo">antico persiano (600-400 A.C.)</language>
-			<language type="peo" alt="proposed-x1001">persiano antico</language>
 			<language type="phi">filippino (altra lingua)</language>
-			<language type="phi" alt="proposed-x1001">altra lingua filippina</language>
 			<language type="phn">fenicio</language>
 			<language type="pi">pali</language>
 			<language type="pl">polacco</language>
 			<language type="pon">ponape</language>
 			<language type="pra">pracrito</language>
 			<language type="pro">provenzale, antico (fino al 1500)</language>
-			<language type="pro" alt="proposed-x1001">provenzale antico</language>
 			<language type="ps">pashto</language>
 			<language type="pt">portoghese</language>
 			<language type="pt_BR">portoghese brasiliano</language>
-			<language type="pt_BR" alt="proposed-x1001">portoghese (brasile)</language>
 			<language type="pt_PT">portoghese del Portogallo</language>
-			<language type="pt_PT" alt="proposed-x1001">portoghese (portogallo)</language>
 			<language type="qu">quechua</language>
 			<language type="raj">rajasthani</language>
 			<language type="rap">rapanui</language>
 			<language type="rar">rarotonga</language>
 			<language type="rm">lingua rhaeto-romance</language>
-			<language type="rm" alt="proposed-x1001">retico-romanzo</language>
 			<language type="rn">rundi</language>
 			<language type="ro">rumeno</language>
 			<language type="roa">lingua romanza (altra lingua)</language>
-			<language type="roa" alt="proposed-x1001">altra lingua romanza</language>
 			<language type="rom">romani</language>
 			<language type="root">root</language>
 			<language type="ru">russo</language>
@@ -458,7 +391,6 @@
 			<language type="sad">sandawe</language>
 			<language type="sah">yakut</language>
 			<language type="sai">indiano del Sud America (altra lingua)</language>
-			<language type="sai" alt="proposed-x1001">altra lingua indiana del Sud America</language>
 			<language type="sal">lingue salish</language>
 			<language type="sam">aramaico samaritano</language>
 			<language type="sas">sasak</language>
@@ -470,28 +402,21 @@
 			<language type="se">sami del nord</language>
 			<language type="sel">selkup</language>
 			<language type="sem">semitico (altra lingua)</language>
-			<language type="sem" alt="proposed-x1001">altra lingua semitica</language>
 			<language type="sg">sango</language>
-			<language type="sg" alt="proposed-x1001">sangro</language>
 			<language type="sga">irlandese, antico (fino al ’900)</language>
-			<language type="sga" alt="proposed-x1001">irlandese antico</language>
 			<language type="sgn">lingue sign</language>
 			<language type="sh">serbo-croato</language>
 			<language type="shn">shan</language>
 			<language type="si">singalese</language>
-			<language type="si" alt="proposed-x1001">sinhalese</language>
 			<language type="sid">sidamo</language>
 			<language type="sio">lingue sioux</language>
 			<language type="sit">sino-tibetano (altra lingua)</language>
-			<language type="sit" alt="proposed-x1001">altra lingua sino-tibetana</language>
 			<language type="sk">slovacco</language>
 			<language type="sl">sloveno</language>
 			<language type="sla">slavo (altra lingua)</language>
-			<language type="sla" alt="proposed-x1001">altra lingua slava</language>
 			<language type="sm">samoano</language>
 			<language type="sma">sami del sud</language>
 			<language type="smi">lingue sami (altra lingua)</language>
-			<language type="smi" alt="proposed-x1001">altre lingue sami</language>
 			<language type="smj">sami lule</language>
 			<language type="smn">sami inari</language>
 			<language type="sms">sami skolt</language>
@@ -505,11 +430,8 @@
 			<language type="srn">sranan tongo</language>
 			<language type="srr">serer</language>
 			<language type="ss">swati</language>
-			<language type="ss" alt="proposed-x1001">siswati</language>
 			<language type="ssa">nilo-sahariana (altra lingua)</language>
-			<language type="ssa" alt="proposed-x1001">altra lingua nilo-sahariana</language>
 			<language type="st">sotho del sud</language>
-			<language type="st" alt="proposed-x1001">sesotho</language>
 			<language type="su">sundanese</language>
 			<language type="suk">sukuma</language>
 			<language type="sus">susu</language>
@@ -519,61 +441,48 @@
 			<language type="syr">siriaco</language>
 			<language type="ta">tamil</language>
 			<language type="tai">tailandese (altra lingua)</language>
-			<language type="tai" alt="proposed-x1001">altra lingua tailandese</language>
 			<language type="te">telugu</language>
 			<language type="tem">temne</language>
 			<language type="ter">tereno</language>
 			<language type="tet">tetum</language>
 			<language type="tg">tagicco</language>
-			<language type="tg" alt="proposed-x1001">tagikistano</language>
 			<language type="th">thai</language>
-			<language type="th" alt="proposed-x1001">tailandese</language>
 			<language type="ti">tigrinya</language>
 			<language type="tig">tigre</language>
 			<language type="tiv">tiv</language>
 			<language type="tk">turcomanno</language>
-			<language type="tk" alt="proposed-x1001">turkmeno</language>
 			<language type="tkl">tokelau</language>
 			<language type="tl">tagalog</language>
 			<language type="tlh">klingon</language>
 			<language type="tli">tlingit</language>
 			<language type="tmh">tamashek</language>
 			<language type="tn">tswana</language>
-			<language type="tn" alt="proposed-x1001">setswana</language>
 			<language type="to">tonga (Isole Tonga)</language>
-			<language type="to" alt="proposed-x1001">tonga</language>
 			<language type="tog">tonga (nyasa)</language>
-			<language type="tog" alt="proposed-x1001">nyasa del Tonga</language>
 			<language type="tpi">tok pisin</language>
 			<language type="tr">turco</language>
 			<language type="ts">tsonga</language>
 			<language type="tsi">tsimshian</language>
 			<language type="tt">tatarico</language>
-			<language type="tt" alt="proposed-x1001">tatar</language>
 			<language type="tum">tumbuka</language>
 			<language type="tup">lingue tupi</language>
 			<language type="tut">altaica (altra lingua)</language>
-			<language type="tut" alt="proposed-x1001">altra lingua altaica</language>
 			<language type="tvl">tuvalu</language>
 			<language type="tw">ci</language>
-			<language type="tw" alt="proposed-x1001">twi</language>
 			<language type="ty">taitiano</language>
 			<language type="tyv">tuvinian</language>
 			<language type="udm">udmurt</language>
 			<language type="ug">uigurico</language>
-			<language type="ug" alt="proposed-x1001">uighur</language>
 			<language type="uga">ugaritico</language>
 			<language type="uk">ucraino</language>
 			<language type="umb">mbundu</language>
 			<language type="und">lingua imprecisata</language>
 			<language type="ur">urdu</language>
 			<language type="uz">usbeco</language>
-			<language type="uz" alt="proposed-x1001">uzbeco</language>
 			<language type="vai">vai</language>
 			<language type="ve">venda</language>
 			<language type="vi">vietnamita</language>
 			<language type="vo">volapük</language>
-			<language type="vo" alt="proposed-x1001">volapuk</language>
 			<language type="vot">voto</language>
 			<language type="wa">vallone</language>
 			<language type="wak">lingue wakash</language>
@@ -582,12 +491,9 @@
 			<language type="was">washo</language>
 			<language type="wen">sorabo</language>
 			<language type="wo">volof</language>
-			<language type="wo" alt="proposed-x1001">wolof</language>
 			<language type="xal">kalmyk</language>
 			<language type="xh">xosa</language>
-			<language type="xh" alt="proposed-x1001">xhosa</language>
 			<language type="yao">yao (bantu)</language>
-			<language type="yao" alt="proposed-x1001">yao</language>
 			<language type="yap">yapese</language>
 			<language type="yi">yiddish</language>
 			<language type="yo">yoruba</language>
@@ -597,9 +503,7 @@
 			<language type="zen">zenaga</language>
 			<language type="zh">cinese</language>
 			<language type="zh_Hans">cinese semplificato</language>
-			<language type="zh_Hans" alt="proposed-x1001">cinese (semplificato)</language>
 			<language type="zh_Hant">cinese tradizionale</language>
-			<language type="zh_Hant" alt="proposed-x1001">cinese (tradizionale)</language>
 			<language type="znd">zande</language>
 			<language type="zu">zulu</language>
 			<language type="zun">zuni</language>
@@ -627,7 +531,6 @@
 			<script type="Cprt">cipriota</script>
 			<script type="Cyrl">cirillico</script>
 			<script type="Cyrs">cirillico (variante antica chiesa slavonica)</script>
-			<script type="Cyrs" alt="proposed-x1001">cirillico antica chiesa slavonica</script>
 			<script type="Deva">devanagari</script>
 			<script type="Dsrt">deseret</script>
 			<script type="Egyd">egiziano demotico</script>
@@ -663,9 +566,7 @@
 			<script type="Lana">lanna</script>
 			<script type="Laoo">lao</script>
 			<script type="Latf">latino (variante fraktur)</script>
-			<script type="Latf" alt="proposed-x1001">latino fraktur</script>
 			<script type="Latg">latino (variante gaelica)</script>
-			<script type="Latg" alt="proposed-x1001">latino gaelico</script>
 			<script type="Latn">latino</script>
 			<script type="Lepc">lepcha</script>
 			<script type="Limb">limbu</script>
@@ -724,10 +625,8 @@
 			<script type="Xsux">sumero-accadiano cuneiforme</script>
 			<script type="Yiii">yi</script>
 			<script type="Zxxx">Zxxx</script>
-			<script type="Zxxx" alt="proposed-x1001">non scritto</script>
 			<script type="Zyyy">comune</script>
 			<script type="Zzzz">Zzzz</script>
-			<script type="Zzzz" alt="proposed-x1001">ignoto o non valido</script>
 		</scripts>
 		<territories>
 			<territory type="001">Mondo</territory>
@@ -778,10 +677,8 @@
 			<territory type="AU">Australia</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Isole Aland</territory>
-			<territory type="AX" alt="proposed-x1001">Isole Falkland</territory>
 			<territory type="AZ">Azerbaigian</territory>
 			<territory type="BA">Bosnia Erzegovina</territory>
-			<territory type="BA" alt="proposed-x1001">Bosnia-Erzegovina</territory>
 			<territory type="BB">Barbados</territory>
 			<territory type="BD">Bangladesh</territory>
 			<territory type="BE">Belgio</territory>
@@ -797,22 +694,17 @@
 			<territory type="BS">Bahamas</territory>
 			<territory type="BT">Bhutan</territory>
 			<territory type="BV">Isola Bouvet</territory>
-			<territory type="BV" alt="proposed-x1001">Bouvet, isola</territory>
 			<territory type="BW">Botswana</territory>
 			<territory type="BY">Bielorussia</territory>
 			<territory type="BZ">Belize</territory>
 			<territory type="CA">Canada</territory>
 			<territory type="CC">Isole Cocos</territory>
-			<territory type="CC" alt="proposed-x1001">Isole Cocos (Keeling)</territory>
 			<territory type="CD">Repubblica Democratica del Congo</territory>
-			<territory type="CD" alt="proposed-x1001">Zaire</territory>
 			<territory type="CF">Repubblica Centrafricana</territory>
 			<territory type="CG">Congo</territory>
 			<territory type="CH">Svizzera</territory>
 			<territory type="CI">Costa d’Avorio</territory>
-			<territory type="CI" alt="proposed-x1001">Costa d'Avorio</territory>
 			<territory type="CK">Isole Cook</territory>
-			<territory type="CK" alt="proposed-x1001">Cook, isole</territory>
 			<territory type="CL">Cile</territory>
 			<territory type="CM">Camerun</territory>
 			<territory type="CN">Cina</territory>
@@ -822,7 +714,6 @@
 			<territory type="CU">Cuba</territory>
 			<territory type="CV">Capo Verde</territory>
 			<territory type="CX">Isola di Christmas</territory>
-			<territory type="CX" alt="proposed-x1001">Isole del Natale</territory>
 			<territory type="CY">Cipro</territory>
 			<territory type="CZ">Repubblica Ceca</territory>
 			<territory type="DE">Germania</territory>
@@ -841,11 +732,8 @@
 			<territory type="FI">Finlandia</territory>
 			<territory type="FJ">Figi</territory>
 			<territory type="FK">Isole Falkland</territory>
-			<territory type="FK" alt="proposed-x1001">Falkland, isole</territory>
 			<territory type="FM">Micronesia</territory>
-			<territory type="FM" alt="proposed-x1001">Micronesia, Stati Federati</territory>
 			<territory type="FO">Isole Faroe</territory>
-			<territory type="FO" alt="proposed-x1001">Faroe, isole</territory>
 			<territory type="FR">Francia</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Regno Unito</territory>
@@ -862,15 +750,12 @@
 			<territory type="GQ">Guinea Equatoriale</territory>
 			<territory type="GR">Grecia</territory>
 			<territory type="GS">Georgia del Sud e Isole Sandwich del Sud</territory>
-			<territory type="GS" alt="proposed-x1001">Georgia Meridionale e isole Sandwich del Sud</territory>
 			<territory type="GT">Guatemala</territory>
 			<territory type="GU">Guam</territory>
 			<territory type="GW">Guinea-Bissau</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">Regione Amministrativa Speciale di Hong Kong, Cina</territory>
-			<territory type="HK" alt="short">Hong-Kong</territory>
 			<territory type="HM">Isole Heard ed Isole McDonald</territory>
-			<territory type="HM" alt="proposed-x1001">Isole Heard e McDonald</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Croazia</territory>
 			<territory type="HT">Haiti</territory>
@@ -878,14 +763,11 @@
 			<territory type="ID">Indonesia</territory>
 			<territory type="IE">Irlanda</territory>
 			<territory type="IL">Israele</territory>
-			<territory type="IL" alt="proposed-x1001">Isola di Man</territory>
 			<territory type="IM">Isola di Man</territory>
 			<territory type="IN">India</territory>
 			<territory type="IO">Territorio Britannico dell’Oceano Indiano</territory>
-			<territory type="IO" alt="proposed-x1001">Territori Britannici dell'Oceano Indiano</territory>
 			<territory type="IQ">Iraq</territory>
 			<territory type="IR">Iran</territory>
-			<territory type="IR" alt="proposed-x1001">Iran (Repubblica Islamica)</territory>
 			<territory type="IS">Islanda</territory>
 			<territory type="IT">Italia</territory>
 			<territory type="JE">Jersey</territory>
@@ -899,19 +781,14 @@
 			<territory type="KM">Comore</territory>
 			<territory type="KN">Saint Kitts e Nevis</territory>
 			<territory type="KP">Corea del Nord</territory>
-			<territory type="KP" alt="proposed-x1001">Corea, Repubblica Popolare Democratica</territory>
 			<territory type="KR">Corea del Sud</territory>
-			<territory type="KR" alt="proposed-x1001">Corea (Repubblica)</territory>
 			<territory type="KW">Kuwait</territory>
 			<territory type="KY">Isole Cayman</territory>
-			<territory type="KY" alt="proposed-x1001">Cayman, isole</territory>
 			<territory type="KZ">Kazakistan</territory>
 			<territory type="LA">Laos</territory>
 			<territory type="LB">Libano</territory>
 			<territory type="LC">Saint Lucia</territory>
-			<territory type="LC" alt="proposed-x1001">Santa Lucia</territory>
 			<territory type="LI">Liechtenstein</territory>
-			<territory type="LI" alt="proposed-x1001">Lichtenstein</territory>
 			<territory type="LK">Sri Lanka</territory>
 			<territory type="LR">Liberia</territory>
 			<territory type="LS">Lesotho</territory>
@@ -919,25 +796,18 @@
 			<territory type="LU">Lussemburgo</territory>
 			<territory type="LV">Lettonia</territory>
 			<territory type="LY">Libia</territory>
-			<territory type="LY" alt="proposed-x1001">Libia, Repubblica Araba</territory>
 			<territory type="MA">Marocco</territory>
 			<territory type="MC">Monaco</territory>
 			<territory type="MD">Moldavia</territory>
 			<territory type="ME">Montenegro</territory>
 			<territory type="MG">Madagascar</territory>
 			<territory type="MH">Isole Marshall</territory>
-			<territory type="MH" alt="proposed-x1001">Marshall, isole</territory>
 			<territory type="MK">Macedonia, Repubblica</territory>
-			<territory type="MK" alt="proposed-x1001">Repubblica di Macedonia</territory>
-			<territory type="MK" alt="proposed-x1002">Macedonia, Ex Repubblica Jugoslava</territory>
 			<territory type="ML">Mali</territory>
 			<territory type="MM">Myanmar</territory>
 			<territory type="MN">Mongolia</territory>
 			<territory type="MO">Regione Amministrativa Speciale di Macao, Cina</territory>
-			<territory type="MO" alt="proposed-x1001">Macao</territory>
-			<territory type="MO" alt="short">Macao</territory>
 			<territory type="MP">Isole Marianne Settentrionali</territory>
-			<territory type="MP" alt="proposed-x1001">Marianne Settentrionali, isole</territory>
 			<territory type="MQ">Martinica</territory>
 			<territory type="MR">Mauritania</territory>
 			<territory type="MS">Montserrat</territory>
@@ -947,13 +817,11 @@
 			<territory type="MW">Malawi</territory>
 			<territory type="MX">Messico</territory>
 			<territory type="MY">Malesia</territory>
-			<territory type="MY" alt="proposed-x1001">Malaysia</territory>
 			<territory type="MZ">Mozambico</territory>
 			<territory type="NA">Namibia</territory>
 			<territory type="NC">Nuova Caledonia</territory>
 			<territory type="NE">Niger</territory>
 			<territory type="NF">Isola Norfolk</territory>
-			<territory type="NF" alt="proposed-x1001">Norfolk, isola</territory>
 			<territory type="NG">Nigeria</territory>
 			<territory type="NI">Nicaragua</territory>
 			<territory type="NL">Paesi Bassi</territory>
@@ -984,36 +852,29 @@
 			<territory type="RO">Romania</territory>
 			<territory type="RS">Serbia</territory>
 			<territory type="RU">Federazione Russa</territory>
-			<territory type="RU" alt="proposed-x1001">Russia</territory>
 			<territory type="RW">Ruanda</territory>
 			<territory type="SA">Arabia Saudita</territory>
 			<territory type="SB">Isole Solomon</territory>
-			<territory type="SB" alt="proposed-x1001">Salomone, isole</territory>
 			<territory type="SC">Seychelles</territory>
 			<territory type="SD">Sudan</territory>
 			<territory type="SE">Svezia</territory>
 			<territory type="SG">Singapore</territory>
 			<territory type="SH">Sant’Elena</territory>
-			<territory type="SH" alt="proposed-x1001">Sant'Elena</territory>
 			<territory type="SI">Slovenia</territory>
 			<territory type="SJ">Svalbard e Jan Mayen</territory>
 			<territory type="SK">Slovacchia</territory>
-			<territory type="SK" alt="proposed-x1001">Slovacchia (Repubblica Slovacca)</territory>
 			<territory type="SL">Sierra Leone</territory>
 			<territory type="SM">San Marino</territory>
 			<territory type="SN">Senegal</territory>
 			<territory type="SO">Somalia</territory>
 			<territory type="SR">Suriname</territory>
 			<territory type="ST">Sao Tomé e Príncipe</territory>
-			<territory type="ST" alt="proposed-x1001">Sao Tomè e Principe</territory>
 			<territory type="SV">El Salvador</territory>
 			<territory type="SY">Siria</territory>
 			<territory type="SZ">Swaziland</territory>
 			<territory type="TC">Isole Turks e Caicos</territory>
-			<territory type="TC" alt="proposed-x1001">Turks e Caicos</territory>
 			<territory type="TD">Ciad</territory>
 			<territory type="TF">Territori australi francesi</territory>
-			<territory type="TF" alt="proposed-x1001">Territori Francesi Meridionali</territory>
 			<territory type="TG">Togo</territory>
 			<territory type="TH">Tailandia</territory>
 			<territory type="TJ">Tagikistan</territory>
@@ -1030,19 +891,14 @@
 			<territory type="UA">Ucraina</territory>
 			<territory type="UG">Uganda</territory>
 			<territory type="UM">Isole Minori lontane dagli Stati Uniti</territory>
-			<territory type="UM" alt="proposed-x1001">Isole minori degli Stati Uniti</territory>
 			<territory type="US">Stati Uniti</territory>
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Vaticano</territory>
-			<territory type="VA" alt="proposed-x1001">Santa Sede (Città del Vaticano)</territory>
 			<territory type="VC">Saint Vincent e Grenadines</territory>
-			<territory type="VC" alt="proposed-x1001">Saint Vincent e Grenadine</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Isole Vergini Britanniche</territory>
-			<territory type="VG" alt="proposed-x1001">Isole Vergini (britanniche)</territory>
 			<territory type="VI">Isole Vergini Americane</territory>
-			<territory type="VI" alt="proposed-x1001">Isole Vergini (americane)</territory>
 			<territory type="VN">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis e Futuna</territory>
@@ -1053,7 +909,6 @@
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabwe</territory>
 			<territory type="ZZ">ZZ</territory>
-			<territory type="ZZ" alt="proposed-x1001">regione non valida o sconosciuta</territory>
 		</territories>
 		<variants>
 			<variant type="1901">ortografia tradizionale tedesca</variant>
@@ -1099,28 +954,18 @@
 	</localeDisplayNames>
 	<layout>
 		<inText type="keys">lowercase-words</inText>
-		<inText type="keys" alt="proposed-x1001">mixed</inText>
 		<inText type="languages">lowercase-words</inText>
-		<inText type="languages" alt="proposed-x1001">mixed</inText>
 		<inText type="types">lowercase-words</inText>
-		<inText type="types" alt="proposed-x1001">mixed</inText>
 	</layout>
 	<characters>
 		<exemplarCharacters>[a à b-e é è f-i ì j-o ó ò p-u ù v-z]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[í ï ú]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[à â é è í ì ï ò ù]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1002">[à â é è í ì ï ò ù]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001">[a-z]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
-		<quotationStart alt="proposed-x1001">“</quotationStart>
 		<quotationEnd>’</quotationEnd>
-		<quotationEnd alt="proposed-x1001">”</quotationEnd>
 		<alternateQuotationStart>“</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001">‘</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -1223,20 +1068,11 @@
 					</quarterContext>
 				</quarters>
 				<am>m.</am>
-				<am alt="proposed-x1001">AM</am>
 				<pm>p.</pm>
-				<pm alt="proposed-x1001">PM</pm>
 				<eras>
 					<eraNames>
 						<era type="0">A.C.</era>
-						<era type="0" alt="proposed-x1001">BCE</era>
-						<era type="0" alt="proposed-x1002">aC</era>
-						<era type="0" alt="proposed-x1003">a.C.</era>
 						<era type="1">D.C.</era>
-						<era type="1" alt="proposed-x1001">AD</era>
-						<era type="1" alt="proposed-x1002">A.D.</era>
-						<era type="1" alt="proposed-x1003">CE</era>
-						<era type="1" alt="proposed-x1004">d.C.</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">aC</era>
@@ -1257,9 +1093,6 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd/MMM/yyyy</pattern>
-							<pattern alt="proposed-x1001">d MMM yyyy</pattern>
-							<pattern alt="proposed-x1002">dd/MMM/yyyy</pattern>
-							<pattern alt="proposed-x1003">d/MMM/yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -1277,7 +1110,6 @@
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>HH:mm:ss z</pattern>
-							<pattern alt="proposed-x1001">H:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
@@ -1338,8 +1170,6 @@
 					</field>
 					<field type="dayperiod">
 						<displayName>periodo del giorno</displayName>
-						<displayName alt="proposed-x1001">m./p.</displayName>
-						<displayName alt="proposed-x1002">AM/PM</displayName>
 					</field>
 					<field type="hour">
 						<displayName>ora</displayName>
@@ -1365,7 +1195,6 @@
 			</zone>
 			<zone type="Etc/Unknown">
 				<exemplarCity>Sconosciuto</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Unknown</exemplarCity>
 			</zone>
 			<zone type="Europe/Tirane">
 				<exemplarCity>Tirana</exemplarCity>
@@ -1387,18 +1216,15 @@
 			</zone>
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>San Paolo</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Sao Paulo</exemplarCity>
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity>St. Johns</exemplarCity>
-				<exemplarCity alt="proposed-x1001">St. John's</exemplarCity>
 			</zone>
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zurigo</exemplarCity>
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>Pasqua</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Isola di Pasqua</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Cape_Verde">
 				<exemplarCity>Capo Verde</exemplarCity>
@@ -1420,7 +1246,6 @@
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canarie</exemplarCity>
-				<exemplarCity alt="proposed-x1001">Isole Canarie</exemplarCity>
 			</zone>
 			<zone type="Africa/Addis_Ababa">
 				<exemplarCity>Addis Abeba</exemplarCity>
@@ -1612,9 +1437,7 @@
 				<long>
 					<generic>Alaska Time</generic>
 					<standard>Ora Standard Alaska</standard>
-					<standard alt="proposed-x1001">Alaska Standard Time</standard>
 					<daylight>Ora Legale Alaska</daylight>
-					<daylight alt="proposed-x1001">Alaska Daylight Time</daylight>
 				</long>
 				<short>
 					<generic>AKT</generic>
@@ -1899,15 +1722,11 @@
 			<metazone type="China">
 				<long>
 					<standard>Ora Standard Cina</standard>
-					<standard alt="proposed-x1001">China Standard Time</standard>
 					<daylight>Ora Legale Cina</daylight>
-					<daylight alt="proposed-x1001">China Daylight Time</daylight>
 				</long>
 				<short>
 					<standard>CST (Cina)</standard>
-					<standard alt="proposed-x1001">CST Cina</standard>
 					<daylight>CDT (Cina)</daylight>
-					<daylight alt="proposed-x1001">CDT Cina</daylight>
 				</short>
 			</metazone>
 			<metazone type="Choibalsan">
@@ -1965,9 +1784,7 @@
 			<metazone type="Europe_Central">
 				<long>
 					<standard>Ora Standard Europa Centrale</standard>
-					<standard alt="proposed-x1001">Central European Time</standard>
 					<daylight>Ora Legale Europa Centrale</daylight>
-					<daylight alt="proposed-x1001">Central European Summer Time</daylight>
 				</long>
 				<short>
 					<standard>CET</standard>
@@ -1977,9 +1794,7 @@
 			<metazone type="Europe_Eastern">
 				<long>
 					<standard>Ora Standard Europa Orientale</standard>
-					<standard alt="proposed-x1001">Eastern European Time</standard>
 					<daylight>Ora Legale Europa Orientale</daylight>
-					<daylight alt="proposed-x1001">Eastern European Summer Time</daylight>
 				</long>
 				<short>
 					<standard>EET</standard>
@@ -2083,9 +1898,7 @@
 				<long>
 					<generic>Hawaii Time</generic>
 					<standard>Ora Standard Hawaii</standard>
-					<standard alt="proposed-x1001">Hawaii Standard Time</standard>
 					<daylight>Ora Legale Hawaii</daylight>
-					<daylight alt="proposed-x1001">Hawaii Daylight Time</daylight>
 				</long>
 				<short>
 					<generic>HT</generic>
@@ -2140,13 +1953,10 @@
 			<metazone type="Israel">
 				<long>
 					<standard>Ora Standard Israele</standard>
-					<standard alt="proposed-x1001">Israel Standard Time</standard>
 					<daylight>Ora Legale Israele</daylight>
-					<daylight alt="proposed-x1001">Israel Daylight Time</daylight>
 				</long>
 				<short>
 					<standard>IST</standard>
-					<standard alt="proposed-x1001">IST Israele</standard>
 					<daylight>IDT</daylight>
 				</short>
 			</metazone>
@@ -2548,7 +2358,6 @@
 			</currency>
 			<currency type="AED">
 				<displayName>Dirham degli Emirati Arabi Uniti</displayName>
-				<displayName alt="proposed-x1001">Dirham degli EAU</displayName>
 			</currency>
 			<currency type="AFA">
 				<displayName>Afgani (1927-2002)</displayName>
@@ -2603,7 +2412,6 @@
 			</currency>
 			<currency type="AZN">
 				<displayName>Manat azero</displayName>
-				<displayName alt="proposed-x1001">Azerbaijanian Manat</displayName>
 			</currency>
 			<currency type="BAD">
 				<displayName>Dinar Bosnia-Herzegovina</displayName>
@@ -2634,7 +2442,6 @@
 			</currency>
 			<currency type="BGN">
 				<displayName>Nuovo Lev Bulgaro</displayName>
-				<displayName alt="proposed-x1001">Lev bulgaro</displayName>
 				<symbol>lev</symbol>
 			</currency>
 			<currency type="BHD">
@@ -2651,11 +2458,9 @@
 			</currency>
 			<currency type="BND">
 				<displayName>Dollaro del Brunei</displayName>
-				<displayName alt="proposed-x1001">Dollaro Brunei</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>Boliviano</displayName>
-				<displayName alt="proposed-x1001">Boliviano della Bolivia</displayName>
 			</currency>
 			<currency type="BOP">
 				<displayName>Peso Boliviano</displayName>
@@ -2723,7 +2528,6 @@
 			</currency>
 			<currency type="CNY">
 				<displayName>Renmimbi Cinese</displayName>
-				<displayName alt="proposed-x1001">Yuan Renminbi</displayName>
 			</currency>
 			<currency type="COP">
 				<displayName>Peso Colombiano</displayName>
@@ -2735,7 +2539,6 @@
 			</currency>
 			<currency type="CSD">
 				<displayName>Antico Dinaro serbo</displayName>
-				<displayName alt="proposed-x1001">Dinaro serbo</displayName>
 			</currency>
 			<currency type="CSK">
 				<displayName>Corona forte cecoslovacca</displayName>
@@ -2782,7 +2585,6 @@
 			</currency>
 			<currency type="EEK">
 				<displayName>Corona dell’Estonia</displayName>
-				<displayName alt="proposed-x1001">Corona estone</displayName>
 			</currency>
 			<currency type="EGP">
 				<displayName>Sterlina Egiziana</displayName>
@@ -2811,7 +2613,6 @@
 			</currency>
 			<currency type="FJD">
 				<displayName>Dollaro delle Figi</displayName>
-				<displayName alt="proposed-x1001">Dollaro delle Fiji</displayName>
 				<symbol>F$</symbol>
 			</currency>
 			<currency type="FKP">
@@ -2878,7 +2679,6 @@
 			</currency>
 			<currency type="HRK">
 				<displayName>Kuna Croata</displayName>
-				<displayName alt="proposed-x1001">Kuna croato</displayName>
 			</currency>
 			<currency type="HTG">
 				<displayName>Gourde Haitiano</displayName>
@@ -2899,7 +2699,6 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>Nuovo sheqel israeliano</displayName>
-				<displayName alt="proposed-x1001">Shekel israeliano</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>Rupia Indiana</displayName>
@@ -2953,7 +2752,6 @@
 			</currency>
 			<currency type="KRW">
 				<displayName>Won Sudcoreano</displayName>
-				<displayName alt="proposed-x1001">Won Corea del Sud</displayName>
 			</currency>
 			<currency type="KWD">
 				<displayName>Dinaro Kuwaitiano</displayName>
@@ -2986,7 +2784,6 @@
 			</currency>
 			<currency type="LSM">
 				<displayName>Maloti</displayName>
-				<displayName alt="proposed-x1001">maloti</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>Lita Lituana</displayName>
@@ -2996,7 +2793,6 @@
 			</currency>
 			<currency type="LUC">
 				<displayName>Franco convertibile del Lussemburgo</displayName>
-				<displayName alt="proposed-x1001">franco convertibile del Lussemburgo</displayName>
 			</currency>
 			<currency type="LUF">
 				<displayName>Franco del Lussemburgo</displayName>
@@ -3079,7 +2875,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>Ringgit della Malesia</displayName>
-				<displayName alt="proposed-x1001">Ringgit malese</displayName>
 				<symbol>RM</symbol>
 			</currency>
 			<currency type="MZE">
@@ -3091,7 +2886,6 @@
 			</currency>
 			<currency type="MZN">
 				<displayName>Nuovo metical del Mozambico</displayName>
-				<displayName alt="proposed-x1001">Metical del Mozambico</displayName>
 			</currency>
 			<currency type="NAD">
 				<displayName>Dollaro Namibiano</displayName>
@@ -3132,7 +2926,6 @@
 			</currency>
 			<currency type="PEN">
 				<displayName>Sol Nuevo Peruviano</displayName>
-				<displayName alt="proposed-x1001">Nuovo Sol peruviano</displayName>
 			</currency>
 			<currency type="PES">
 				<displayName>Sol Peruviano</displayName>
@@ -3142,16 +2935,13 @@
 			</currency>
 			<currency type="PHP">
 				<displayName>Peso delle Filippine</displayName>
-				<displayName alt="proposed-x1001">Peso filippino</displayName>
 			</currency>
 			<currency type="PKR">
 				<displayName>Rupia del Pakistan</displayName>
-				<displayName alt="proposed-x1001">Rupia pakistana</displayName>
 				<symbol>Pra</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>Zloty Polacco</displayName>
-				<displayName alt="proposed-x1001">Nuovo zloty polacco</displayName>
 				<symbol>Zl</symbol>
 			</currency>
 			<currency type="PLZ">
@@ -3175,7 +2965,6 @@
 			</currency>
 			<currency type="RON">
 				<displayName>Leu rumeno</displayName>
-				<displayName alt="proposed-x1001">Nuovo Leu rumeno</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Dinaro serbo</displayName>
@@ -3191,7 +2980,6 @@
 			</currency>
 			<currency type="SAR">
 				<displayName>Ryal Saudita</displayName>
-				<displayName alt="proposed-x1001">Riyal saudita</displayName>
 			</currency>
 			<currency type="SBD">
 				<displayName>Dollaro delle Isole Solomon</displayName>
@@ -3279,7 +3067,6 @@
 			</currency>
 			<currency type="TRY">
 				<displayName>Nuova lira turca</displayName>
-				<displayName alt="proposed-x1001">Nuova Lira turca</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>Dollaro di Trinidad e Tobago</displayName>
@@ -3287,7 +3074,6 @@
 			</currency>
 			<currency type="TWD">
 				<displayName>Nuovo dollaro taiwanese</displayName>
-				<displayName alt="proposed-x1001">Nuovo Dollaro di Taiwan</displayName>
 				<symbol>NT$</symbol>
 			</currency>
 			<currency type="TZS">
@@ -3296,7 +3082,6 @@
 			</currency>
 			<currency type="UAH">
 				<displayName>Hrivna Ucraina</displayName>
-				<displayName alt="proposed-x1001">Hryvnia ucraina</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>Karbovanetz Ucraino</displayName>
@@ -3310,7 +3095,6 @@
 			</currency>
 			<currency type="USD">
 				<displayName>Dollaro Statunitense</displayName>
-				<displayName alt="proposed-x1001">Dollaro USA</displayName>
 			</currency>
 			<currency type="USN">
 				<displayName>Dollaro Statunitense (Next day)</displayName>

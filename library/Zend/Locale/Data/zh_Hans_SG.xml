@@ -14,49 +14,40 @@
 				<dateFormats>
 					<dateFormatLength type="full">
 						<dateFormat>
-							<pattern alt="proposed-x1001">dd MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMM yyyy</pattern>
-							<pattern alt="proposed-x1001">yyyy年M月d日</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern alt="proposed-x1001">dd-MMM-yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
-							<pattern alt="proposed-x1001">yy-M-d</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
 				<timeFormats>
 					<timeFormatLength type="full">
 						<timeFormat>
-							<pattern alt="proposed-x1001">a hh:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>a hh:mm:ss z</pattern>
-							<pattern alt="proposed-x1001">ahh时mm分ss秒</pattern>
-							<pattern alt="proposed-x1002">z ahh时mm分ss秒</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
-							<pattern alt="proposed-x1001">a hh:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>a hh:mm</pattern>
-							<pattern alt="proposed-x1001">ah:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
@@ -64,7 +55,6 @@
 					<availableFormats>
 						<dateFormatItem id="MMMMd">MMMM d</dateFormatItem>
 						<dateFormatItem id="Md">M月d日</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001">MM/yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

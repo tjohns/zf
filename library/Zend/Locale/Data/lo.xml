@@ -11,230 +11,144 @@
 			<language type="aa">ອາຟາ</language>
 			<language type="ab">ແອບຄາເຊຍ</language>
 			<language type="af">ອັຟຣິກາ</language>
-			<language type="af" alt="proposed-x1001">ອາຟິຼກກາ</language>
 			<language type="am">ອຳຫາຣິກ</language>
-			<language type="am" alt="proposed-x1001">ອຳຮາລິດ</language>
 			<language type="ar">ອາຣັບ</language>
-			<language type="ar" alt="proposed-x1001">ອາລາເບຍ</language>
 			<language type="as">ອັສສຳ</language>
-			<language type="as" alt="proposed-x1001">ອັດສຳມິດ</language>
 			<language type="ay">ໄອມາລາ</language>
 			<language type="az">ອາແຊກບາຍຊານ</language>
-			<language type="az" alt="proposed-x1001">ອາເຊີໄບຈານີ</language>
 			<language type="ba">ບາສສີ</language>
 			<language type="be">ເບລາລຸດຊີ</language>
-			<language type="be" alt="proposed-x1001">ບາຍໂລລັດເຊຍ</language>
 			<language type="bg">ບຸນກາຣີ</language>
-			<language type="bg" alt="proposed-x1001">ບັງກາເລຍ</language>
 			<language type="bh">ບີຮາຣີ</language>
-			<language type="bh" alt="proposed-x1001">ບິຮາລິ</language>
 			<language type="bi">ບິສລາມາ</language>
 			<language type="bn">ເບັງການ</language>
-			<language type="bn" alt="proposed-x1001">ບຸນກາລີ</language>
 			<language type="bo">ທິເບດ</language>
 			<language type="br">ບເຣີຕົງ</language>
-			<language type="br" alt="proposed-x1001">ບີທັນ</language>
 			<language type="bs">ບອສນີ</language>
 			<language type="ca">ກາຕາລັງ</language>
-			<language type="ca" alt="proposed-x1001">ແຄຕາແລນ</language>
 			<language type="co">ຄໍຊິກ້າ</language>
 			<language type="cs">ເຊັກ</language>
 			<language type="cy">ແວວ</language>
-			<language type="cy" alt="proposed-x1001">ເວວ</language>
 			<language type="da">ເດັນມາກ</language>
-			<language type="da" alt="proposed-x1001">ເດນໝາກ</language>
 			<language type="de">ເຍຍລະມັນ</language>
-			<language type="de" alt="proposed-x1001">ເຢຍລະມັນ</language>
 			<language type="dz">ພູຖານີ</language>
 			<language type="el">ກເຣັກ</language>
-			<language type="el" alt="proposed-x1001">ກີກ</language>
 			<language type="en">ອັງກິດ</language>
 			<language type="eo">ເອສເປຣັງໂຕ</language>
-			<language type="eo" alt="proposed-x1001">ເອສເປີລັນໂຕ</language>
 			<language type="es">ແອສປາໂຍນ</language>
-			<language type="es" alt="proposed-x1001">ສະເປນ</language>
 			<language type="et">ເອສໂຕນີ</language>
-			<language type="et" alt="proposed-x1001">ເອສໂຕເນຍ</language>
 			<language type="eu">ບັສເກີ</language>
-			<language type="eu" alt="proposed-x1001">ແບສ</language>
 			<language type="fa">ເປີເຊຍ</language>
 			<language type="fi">ແຟງລັງ</language>
-			<language type="fi" alt="proposed-x1001">ຟິນ</language>
 			<language type="fil">ຕາກາລ໊ອກ</language>
 			<language type="fj">ຟິຈິ</language>
 			<language type="fo">ຟາໂຣ</language>
-			<language type="fo" alt="proposed-x1001">ຟາໂລດ</language>
 			<language type="fr">ຝຣັ່ງ</language>
-			<language type="fr" alt="proposed-x1001">ຝັ່ລງເສດ</language>
 			<language type="fy">ຟຣີຊຽນ</language>
-			<language type="fy" alt="proposed-x1001">ຟິນແລນ</language>
 			<language type="ga">ໄອແລນ</language>
-			<language type="ga" alt="proposed-x1001">ໄອລິດ</language>
 			<language type="gd">ສະກັອດ ແກລິກ</language>
-			<language type="gd" alt="proposed-x1001">ສະກັອດເຄີດ</language>
 			<language type="gl">ກາລິດ</language>
-			<language type="gl" alt="proposed-x1001">ກະສິເຊຍ</language>
 			<language type="gn">ກົວຣານີ</language>
-			<language type="gn" alt="proposed-x1001">ກົວລານີ</language>
 			<language type="gu">ກູຊາຣາຕີ</language>
-			<language type="gu" alt="proposed-x1001">ກູຈາລາຕີ</language>
 			<language type="ha">ໂອຊາ</language>
 			<language type="he">ຍິວ</language>
-			<language type="he" alt="proposed-x1001">ຢິວ</language>
 			<language type="hi">ຮິນດູ</language>
-			<language type="hi" alt="proposed-x1001">ຮິນດິ</language>
 			<language type="hr">ໂກຣອາຊີ</language>
-			<language type="hr" alt="proposed-x1001">ໂຄເອເຊຍ</language>
 			<language type="hu">ຮັງກາຣີ</language>
-			<language type="hu" alt="proposed-x1001">ຮົງກາລີ</language>
 			<language type="hy">ອາກເມນີ</language>
-			<language type="hy" alt="proposed-x1001">ອາມິເນຍ</language>
 			<language type="ia">ອິນເຕີລິງກາ</language>
-			<language type="ia" alt="proposed-x1001">ອິນເຕີລິງກວາ</language>
 			<language type="id">ອິນໂດເນເຊຍ</language>
 			<language type="ie">ອິນເຕີລິງ</language>
 			<language type="ik">ໄອນູປຽກ</language>
 			<language type="is">ອິສລັງ</language>
-			<language type="is" alt="proposed-x1001">ໄອແລນດິດ</language>
 			<language type="it">ອີຕາລີ</language>
-			<language type="it" alt="proposed-x1001">ອິຕາສິ</language>
 			<language type="iu">ໄອນຸກຕິຕັກ</language>
 			<language type="ja">ຍີ່ປຸ່ນ</language>
 			<language type="jv">ຊວາ</language>
-			<language type="jv" alt="proposed-x1001">ຊະວາ</language>
 			<language type="ka">ຊອກຊີ</language>
-			<language type="ka" alt="proposed-x1001">ຈໍເຈຍ</language>
 			<language type="kk">ຄາຊັກ</language>
 			<language type="kl">ກຼີນແລນດິດ</language>
 			<language type="km">ກຳປູເຈຍ</language>
-			<language type="km" alt="proposed-x1001">ຂະເໝນ</language>
 			<language type="kn">ກັນນາດາ</language>
-			<language type="kn" alt="proposed-x1001">ການາດາ</language>
 			<language type="ko">ເກົາຫຼີ</language>
-			<language type="ko" alt="proposed-x1001">ເກົາຫລີ</language>
 			<language type="ks">ຄັດຊະມີລີ</language>
 			<language type="ku">ເຄີດິສ</language>
-			<language type="ku" alt="proposed-x1001">ເຄີດ</language>
 			<language type="ky">ເກຍກິສ</language>
-			<language type="ky" alt="proposed-x1001">ເຄວກິດ</language>
 			<language type="la">ລາແຕັງ</language>
-			<language type="la" alt="proposed-x1001">ລາຕິນ</language>
 			<language type="ln">ລິງກາລາ</language>
 			<language type="lo">ລາວ</language>
 			<language type="lt">ລີທົວນີ</language>
-			<language type="lt" alt="proposed-x1001">ລິທົວເນຍ</language>
 			<language type="lv">ລັດເວຍ</language>
-			<language type="lv" alt="proposed-x1001">ແລຕະເວຍ(ເລດທະວິດ)</language>
 			<language type="mg">ມາລາກາຊິ</language>
 			<language type="mi">ເມົາລີ</language>
 			<language type="mk">ມາເຊໂດນີ</language>
-			<language type="mk" alt="proposed-x1001">ແມັກຊິໂດເນຍ</language>
 			<language type="ml">ມາລາຢາລຳ</language>
-			<language type="ml" alt="proposed-x1001">ແມລະຢາລຳ</language>
 			<language type="mn">ມົງໂກນ</language>
-			<language type="mn" alt="proposed-x1001">ມອງໂກຼ</language>
 			<language type="mo">ໂມຄາເວຍ</language>
 			<language type="mr">ມາຣາທີ</language>
-			<language type="mr" alt="proposed-x1001">ມາລາທິ</language>
 			<language type="ms">ມາເລ</language>
-			<language type="ms" alt="proposed-x1001">ມາລາຢູ</language>
 			<language type="mt">ມານຕາ</language>
-			<language type="mt" alt="proposed-x1001">ມອນຕາ</language>
 			<language type="my">ພະມ່າ</language>
 			<language type="na">ນໍລູ</language>
 			<language type="ne">ເນປານ</language>
 			<language type="nl">ໂຮນລັງ</language>
-			<language type="nl" alt="proposed-x1001">ອໍລັນດາ</language>
 			<language type="nn">ນອກແວ (ນີນອກ)</language>
 			<language type="no">ນອກແວ</language>
-			<language type="no" alt="proposed-x1001">ນໍເວວ</language>
 			<language type="oc">ອົກຊີຕານ</language>
-			<language type="oc" alt="proposed-x1001">ອອັກຊິທັນ</language>
 			<language type="om">ໂອໂລໂມ(ອາຟານ)</language>
 			<language type="or">ໂອຣີຢາ</language>
-			<language type="or" alt="proposed-x1001">ໂອລິຍາ</language>
 			<language type="pa">ປັນຈາບ</language>
-			<language type="pa" alt="proposed-x1001">ປັນຈາ</language>
 			<language type="pl">ໂປໂລຍ</language>
-			<language type="pl" alt="proposed-x1001">ໂປແລນ</language>
 			<language type="ps">ປາສໂຕ</language>
-			<language type="ps" alt="proposed-x1001">ພາສໂຕ(ພຸດໂຕ)</language>
 			<language type="pt">ປອກຕຸຍການ</language>
-			<language type="pt" alt="proposed-x1001">ໂປຕຸເກດ</language>
 			<language type="pt_BR">ປອກຕຸຍການ (ບຣາຊີນ)</language>
 			<language type="pt_PT">ປອກຕຸຍການ (ປອກຕຸຍການ)</language>
 			<language type="qu">ຄິວຊົວ</language>
 			<language type="rm">ເລໂຕ-ໂລແມນ</language>
 			<language type="rn">ຄິລັນສີ</language>
 			<language type="ro">ໂຣມານີ</language>
-			<language type="ro" alt="proposed-x1001">ໂລມັນ</language>
 			<language type="ru">ລັດເຊຍ</language>
 			<language type="rw">ຄິນຍາວັນດາ</language>
 			<language type="sa">ສັນສະກິດ</language>
 			<language type="sd">ສິນທິ</language>
-			<language type="sd" alt="proposed-x1001">ຊິນດິ</language>
 			<language type="sg">ສັນໂຄ</language>
 			<language type="sh">ແຊັກໂບ-ໂກຣແອັດ</language>
-			<language type="sh" alt="proposed-x1001">ເຊີໂບ-ໂຄເອທຽນ</language>
 			<language type="si">ສິງຫານ</language>
-			<language type="si" alt="proposed-x1001">ສິງຫລໍ</language>
 			<language type="sk">ສະໂລວັກກີ</language>
-			<language type="sk" alt="proposed-x1001">ສະໂລວັກ</language>
 			<language type="sl">ສະໂລວານີ</language>
-			<language type="sl" alt="proposed-x1001">ສະໂລວາເນຍ</language>
 			<language type="sm">ຊາມົວ</language>
 			<language type="sn">ໂຊນາ</language>
 			<language type="so">ໂຊມາລີ</language>
-			<language type="so" alt="proposed-x1001">ໂຊມາສິ</language>
 			<language type="sq">ອານບານີ</language>
-			<language type="sq" alt="proposed-x1001">ແອລເບເນຍ</language>
 			<language type="sr">ແຊກບີ</language>
-			<language type="sr" alt="proposed-x1001">ເຊີເບຍ</language>
 			<language type="ss">ຊິສວາຕິ</language>
 			<language type="st">ເຊໂຊໂທ</language>
-			<language type="st" alt="proposed-x1001">ເຊໂສໂທ</language>
 			<language type="su">ຊັນດານ</language>
-			<language type="su" alt="proposed-x1001">ຊັນດານິສ</language>
 			<language type="sv">ຊູແອັດ</language>
-			<language type="sv" alt="proposed-x1001">ສະວີເດນ</language>
 			<language type="sw">ຊວາຮີລີ</language>
-			<language type="sw" alt="proposed-x1001">ຊະວາຮິລີ</language>
 			<language type="ta">ທະມິນ</language>
-			<language type="ta" alt="proposed-x1001">ທະມິບ</language>
 			<language type="te">ເຕລູກູ</language>
-			<language type="te" alt="proposed-x1001">ທິລູກູ</language>
 			<language type="tg">ທາຈິດ</language>
 			<language type="th">ໄທ</language>
 			<language type="ti">ຕີກຣິນຢາ</language>
-			<language type="ti" alt="proposed-x1001">ທິກິນຢາ</language>
 			<language type="tk">ຕວຽກເມນ</language>
-			<language type="tk" alt="proposed-x1001">ເຕີກເມນ</language>
 			<language type="tl">ຕາກາລັອກ</language>
 			<language type="tlh">ກລິງກອງ</language>
 			<language type="tn">ເຊຕະສະວານາ</language>
 			<language type="to">ທອງກ້າ</language>
 			<language type="tr">ຕວກກີ</language>
-			<language type="tr" alt="proposed-x1001">ຕຸລາກີ</language>
 			<language type="ts">ຊອງກາ</language>
 			<language type="tt">ຕາດ</language>
 			<language type="tw">ຕວີ</language>
-			<language type="tw" alt="proposed-x1001">ທະວີ</language>
 			<language type="ug">ອຸຍເຄີ</language>
-			<language type="ug" alt="proposed-x1001">ອຸຍກົວ</language>
 			<language type="uk">ອູແກຣນ</language>
-			<language type="uk" alt="proposed-x1001">ຢູເຄຼນ</language>
 			<language type="ur">ອູຣະດູ</language>
-			<language type="ur" alt="proposed-x1001">ອິນດູ</language>
 			<language type="uz">ອຸດຊະເບັກກິດສະຖານ</language>
-			<language type="uz" alt="proposed-x1001">ອຸດສະເບດ</language>
 			<language type="vi">ຫວຽດນາມ</language>
-			<language type="vi" alt="proposed-x1001">ວຽດນາມ</language>
 			<language type="vo">ໂວລາພຸກ</language>
 			<language type="wo">ວູບ</language>
 			<language type="xh">ໂຊຊາ</language>
-			<language type="xh" alt="proposed-x1001">ໂຊສາ</language>
 			<language type="yi">ຢິດດິສ</language>
-			<language type="yi" alt="proposed-x1001">ຢີຄິດ</language>
 			<language type="yo">ໂຢລູບາ</language>
 			<language type="za">ຈວງ</language>
 			<language type="zh">ຈີນ</language>
@@ -418,7 +332,6 @@
 			<territory type="TM">ເຕຣີກເມນິສະຖານ</territory>
 			<territory type="TN">ຕູນິເຊຍ</territory>
 			<territory type="TO">ຕອງກາ</territory>
-			<territory type="TO" alt="proposed-x1001">ທອງກ້າ</territory>
 			<territory type="TR">ຕຸນກີ</territory>
 			<territory type="TT">ທິນິແດດ</territory>
 			<territory type="TW">ໄຕ້ຫວັນ</territory>

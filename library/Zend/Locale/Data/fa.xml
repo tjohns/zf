@@ -16,8 +16,6 @@
 			<language type="ady">آدیجیایی</language>
 			<language type="ae">اوستایی</language>
 			<language type="af">آفریکان</language>
-			<language type="af" alt="proposed-x1001">آفریکانس</language>
-			<language type="af" alt="proposed-x1002">آفريقايي</language>
 			<language type="afa">افریقا و آسیایی (دیگر)</language>
 			<language type="akk">آکدی</language>
 			<language type="ale">آلئوتی</language>
@@ -25,7 +23,6 @@
 			<language type="am">امهری</language>
 			<language type="ang">انگلیسی باستان</language>
 			<language type="apa">زبانهای آپاچی</language>
-			<language type="apa" alt="proposed-x1001">زبانهای آپاچیایی</language>
 			<language type="ar">عربی</language>
 			<language type="arc">آرامی</language>
 			<language type="arn">آروکانیایی</language>
@@ -38,7 +35,6 @@
 			<language type="av">آواری</language>
 			<language type="ay">آیمارایی</language>
 			<language type="az">ترکی آذربایجانی</language>
-			<language type="az" alt="proposed-x1001">آذرباﻳﺠﺎﻧﻰ (ترکی)</language>
 			<language type="ba">باشغیری</language>
 			<language type="bad">باندایی</language>
 			<language type="bal">بلوچی</language>
@@ -46,13 +42,11 @@
 			<language type="bas">باسایی</language>
 			<language type="bat">بالتیکی (دیگر)</language>
 			<language type="be">بلوروسی</language>
-			<language type="be" alt="proposed-x1001">بلاروسي</language>
 			<language type="bej">بجایی</language>
 			<language type="bem">بمبایی</language>
 			<language type="ber">بربری (دیگر)</language>
 			<language type="bg">بلغاری</language>
 			<language type="bh">بیهاری</language>
-			<language type="bh" alt="proposed-x1001">بيهاری</language>
 			<language type="bho">بوجپوری</language>
 			<language type="bi">بیسلاما</language>
 			<language type="bik">بیکولی</language>
@@ -61,13 +55,11 @@
 			<language type="bnt">بانتویی (دیگر)</language>
 			<language type="bo">تبتی</language>
 			<language type="br">برتانیایی</language>
-			<language type="br" alt="proposed-x1001">برتون</language>
 			<language type="bs">بوسنیایی</language>
 			<language type="btk">باتاکی</language>
 			<language type="bua">بوریاتی</language>
 			<language type="bug">بوگیایی</language>
 			<language type="ca">کاتالونیایی</language>
-			<language type="ca" alt="proposed-x1001">کاتالاتی</language>
 			<language type="cad">کادویی</language>
 			<language type="cai">سرخپوستی امریکای مرکزی (دیگر)</language>
 			<language type="car">کاریبی</language>
@@ -80,7 +72,6 @@
 			<language type="cho">چوکتویی</language>
 			<language type="chp">چیپه‌ویه‌ای</language>
 			<language type="chr">چروکی</language>
-			<language type="chr" alt="proposed-x1001">چروکیایی</language>
 			<language type="chy">شایانی</language>
 			<language type="cop">قبطی</language>
 			<language type="cpe">کریول‌ها و پیجین‌های مبتنی بر انگلیسی (دیگر)</language>
@@ -90,13 +81,11 @@
 			<language type="crh">ترکی کریمه؛ تاتاری کریمه</language>
 			<language type="crp">کریول‌ها و پیجین‌ها (دیگر)</language>
 			<language type="cs">چک</language>
-			<language type="cs" alt="proposed-x1001">چکی</language>
 			<language type="csb">کاشوبی</language>
 			<language type="cu">اسلاوی کلیسایی</language>
 			<language type="cus">کوشی (دیگر)</language>
 			<language type="cv">چوواشی</language>
 			<language type="cy">ویلزی</language>
-			<language type="cy" alt="proposed-x1001">ولزی</language>
 			<language type="da">دانمارکی</language>
 			<language type="dak">داکوتایی</language>
 			<language type="de">آلمانی</language>
@@ -112,9 +101,7 @@
 			<language type="ee">اوه‌ای</language>
 			<language type="efi">افیکی</language>
 			<language type="egy">مصری کهن</language>
-			<language type="egy" alt="proposed-x1001">مصری (کهن)</language>
 			<language type="el">یونانی</language>
-			<language type="el" alt="proposed-x1001">يونانی</language>
 			<language type="elx">عیلامی</language>
 			<language type="en">انگلیسی</language>
 			<language type="en_AU">انگلیسی استرالیا</language>
@@ -124,14 +111,10 @@
 			<language type="enm">انگلیسی میانه</language>
 			<language type="eo">اسپرانتو</language>
 			<language type="es">اسپانیایی</language>
-			<language type="es" alt="proposed-x1001">اسپانيايی</language>
 			<language type="es_ES">اسپانیایی اسپانیا</language>
 			<language type="et">استونیایی</language>
-			<language type="et" alt="proposed-x1001">استونيايی</language>
 			<language type="eu">باسک</language>
-			<language type="eu" alt="proposed-x1001">باسکی</language>
 			<language type="fa">فارسی</language>
-			<language type="fa" alt="proposed-x1001">پارسی</language>
 			<language type="fan">فانکی</language>
 			<language type="fat">فانتیایی</language>
 			<language type="ff">فولایی</language>
@@ -139,9 +122,7 @@
 			<language type="fil">تاگالگی</language>
 			<language type="fiu">فین و اوگرایی (دیگر)</language>
 			<language type="fj">فیجی</language>
-			<language type="fj" alt="proposed-x1001">فیجیایی</language>
 			<language type="fo">فارویی</language>
-			<language type="fo" alt="proposed-x1001">جزاير فارو</language>
 			<language type="fon">فونی</language>
 			<language type="fr">فرانسوی</language>
 			<language type="fr_CA">فرانسوی کانادا</language>
@@ -149,35 +130,27 @@
 			<language type="fro">فرانسوی باستان</language>
 			<language type="fur">فریولیایی</language>
 			<language type="fy">فریزی</language>
-			<language type="fy" alt="proposed-x1001">فريسی</language>
 			<language type="ga">ایرلندی</language>
-			<language type="ga" alt="proposed-x1001">ايرلندی</language>
 			<language type="gaa">گایی</language>
 			<language type="gay">گایو</language>
 			<language type="gba">گبایایی</language>
 			<language type="gd">گیلی اسکاتلندی</language>
-			<language type="gd" alt="proposed-x1001">گاليک اسکاتلندی</language>
 			<language type="gem">ژرمنی (دیگر)</language>
 			<language type="gez">گی‌ئزی</language>
 			<language type="gil">گیلبرتی</language>
 			<language type="gl">گالیسیایی</language>
-			<language type="gl" alt="proposed-x1001">گا ليکيائی</language>
 			<language type="gmh">آلمانی علیای میانه</language>
 			<language type="gn">گوارانی</language>
-			<language type="gn" alt="proposed-x1001">زبان گراتی-زبان سرخپوستان امریکای جنوبی</language>
 			<language type="goh">آلمانی علیای باستان</language>
 			<language type="gon">گوندی</language>
 			<language type="got">گاتیک</language>
-			<language type="got" alt="proposed-x1001">گوتیک</language>
 			<language type="grb">گریبویی</language>
 			<language type="grc">یونانی کهن</language>
 			<language type="gu">گجراتی</language>
-			<language type="gu" alt="proposed-x1001">گجراتي</language>
 			<language type="gv">مانی</language>
 			<language type="ha">هوسیایی</language>
 			<language type="hai">هایدایی</language>
 			<language type="haw">هاوائی</language>
-			<language type="haw" alt="proposed-x1001">هاوائیایی</language>
 			<language type="he">عبری</language>
 			<language type="hi">هندی</language>
 			<language type="hil">هیلی‌گاینونی</language>
@@ -187,12 +160,9 @@
 			<language type="ht">هائیتیایی</language>
 			<language type="hu">مجاری</language>
 			<language type="hy">ارمنی</language>
-			<language type="hy" alt="proposed-x1001">ارمني</language>
 			<language type="hz">هریرویی</language>
 			<language type="ia">میان‌زبان</language>
-			<language type="ia" alt="proposed-x1001">اينترلينگوايی</language>
 			<language type="id">اندونزیایی</language>
-			<language type="id" alt="proposed-x1001">اندونزيايی</language>
 			<language type="ie">بین زبانی</language>
 			<language type="ig">ایگبویی</language>
 			<language type="ii">یی سیچوان</language>
@@ -205,15 +175,12 @@
 			<language type="ira">ایرانی (دیگر)</language>
 			<language type="iro">زبانهای ایروکوایی</language>
 			<language type="is">ایسلندی</language>
-			<language type="is" alt="proposed-x1001">ايسلندی</language>
 			<language type="it">ایتالیایی</language>
-			<language type="it" alt="proposed-x1001">ايتاليايی</language>
 			<language type="iu">اینوکتیتوت</language>
 			<language type="ja">ژاپنی</language>
 			<language type="jpr">فارسی یهودی</language>
 			<language type="jrb">عربی یهودی</language>
 			<language type="jv">جاوه‌ای</language>
-			<language type="jv" alt="proposed-x1001">جاوه ای</language>
 			<language type="ka">گرجی</language>
 			<language type="kaa">قره‌قالپاقی</language>
 			<language type="kab">قبایلی</language>
@@ -223,14 +190,12 @@
 			<language type="kbd">کاباردینی</language>
 			<language type="kg">کنگویی</language>
 			<language type="kha">خازی</language>
-			<language type="kha" alt="proposed-x1001">خازیایی</language>
 			<language type="khi">خواسی (دیگر)</language>
 			<language type="kho">ختنی</language>
 			<language type="ki">کیکویویی</language>
 			<language type="kk">قزاقی</language>
 			<language type="kl">گرینلندی</language>
 			<language type="km">خمری</language>
-			<language type="km" alt="proposed-x1001">كامبوجي</language>
 			<language type="kmb">کیمبوندویی</language>
 			<language type="kn">کاناده‌ای</language>
 			<language type="ko">کره‌ای</language>
@@ -246,10 +211,7 @@
 			<language type="kv">کومیایی</language>
 			<language type="kw">کرنوالی</language>
 			<language type="ky">قرقیزی</language>
-			<language type="ky" alt="proposed-x1001">قرقیزستانی</language>
 			<language type="la">لاتین</language>
-			<language type="la" alt="proposed-x1001">لاتين</language>
-			<language type="la" alt="proposed-x1002">لاتینی</language>
 			<language type="lad">لادینو</language>
 			<language type="lah">لاهندا</language>
 			<language type="lb">لوگزامبورگی</language>
@@ -258,18 +220,15 @@
 			<language type="li">لیمبورگی</language>
 			<language type="ln">لینگالا</language>
 			<language type="lo">لائوسی</language>
-			<language type="lo" alt="proposed-x1001">لوثین</language>
 			<language type="lol">مونگویی</language>
 			<language type="loz">لوزیایی</language>
 			<language type="lt">لیتوانیایی</language>
-			<language type="lt" alt="proposed-x1001">ليتوانيايی</language>
 			<language type="lu">لوبایی‐کاتانگا</language>
 			<language type="lua">لوبایی‐لولوا</language>
 			<language type="lun">لوندایی</language>
 			<language type="luo">لوئویی</language>
 			<language type="lus">لوشه‌ای</language>
 			<language type="lv">لتونیایی</language>
-			<language type="lv" alt="proposed-x1001">لتونيايی</language>
 			<language type="mad">مادورایی</language>
 			<language type="mag">ماگاهیایی</language>
 			<language type="mai">مایدیلی</language>
@@ -286,19 +245,15 @@
 			<language type="min">مینانگ‌کابویی</language>
 			<language type="mis">زبان‌های متفرقه</language>
 			<language type="mk">مقدونی</language>
-			<language type="mk" alt="proposed-x1001">مقدونيه اي</language>
 			<language type="mkh">مون‌خمری (دیگر)</language>
 			<language type="ml">مالایالامی</language>
-			<language type="ml" alt="proposed-x1001">مالايالامی</language>
 			<language type="mn">مغولی</language>
 			<language type="mnc">مانچویی</language>
 			<language type="mo">مولداویایی</language>
 			<language type="moh">موهاکی</language>
 			<language type="mos">ماسیایی</language>
 			<language type="mr">مراتی</language>
-			<language type="mr" alt="proposed-x1001">ماراثی</language>
 			<language type="ms">مالزیایی</language>
-			<language type="ms" alt="proposed-x1001">مالايی</language>
 			<language type="mt">مالتی</language>
 			<language type="mul">چندین زبان</language>
 			<language type="mun">زبانهای موندایی</language>
@@ -314,14 +269,12 @@
 			<language type="nd">انده‌بله‌ای شمالی</language>
 			<language type="nds">آلمانی سفلی</language>
 			<language type="ne">نپالی</language>
-			<language type="ne" alt="proposed-x1001">نپا لی</language>
 			<language type="new">نواریایی</language>
 			<language type="ng">ندونگایی</language>
 			<language type="niu">نیویی</language>
 			<language type="nl">هلندی</language>
 			<language type="nl_BE">هلندی بلژیک</language>
 			<language type="nn">نرس جدید نروژی</language>
-			<language type="nn" alt="proposed-x1001">نروژی</language>
 			<language type="no">نروژی</language>
 			<language type="nog">نغایی</language>
 			<language type="non">نرس باستان</language>
@@ -333,10 +286,8 @@
 			<language type="ny">نیانجایی؛ چوایی</language>
 			<language type="nyn">نیانکوله‌ای</language>
 			<language type="nyo">نیورویی</language>
-			<language type="oc" alt="proposed-x1001">فرانسوی</language>
 			<language type="oj">اوجیبوایی</language>
 			<language type="or">اوریه‌ای</language>
-			<language type="or" alt="proposed-x1001">اوریسایی</language>
 			<language type="os">آسی</language>
 			<language type="osa">اوسیجی</language>
 			<language type="ota">ترکی عثمانی</language>
@@ -357,23 +308,19 @@
 			<language type="ps">پشتو</language>
 			<language type="pt">پرتغالی</language>
 			<language type="pt_BR">پرتغالی برزیل</language>
-			<language type="pt_BR" alt="proposed-x1001">پرتغالي (برزيل)</language>
 			<language type="pt_PT">پرتغالی پرتغال</language>
-			<language type="pt_PT" alt="proposed-x1001">پرتغالي</language>
 			<language type="qu">کچوایی</language>
 			<language type="raj">راجستانی</language>
 			<language type="rar">راروتونگایی</language>
 			<language type="rm">رتو‐رومیایی</language>
 			<language type="rn">روندیایی</language>
 			<language type="ro">رومانیایی</language>
-			<language type="ro" alt="proposed-x1001">رومانيايی</language>
 			<language type="roa">رومیایی (دیگر)</language>
 			<language type="rom">رومانویی</language>
 			<language type="root">ریشه</language>
 			<language type="ru">روسی</language>
 			<language type="rw">کینیارواندایی</language>
 			<language type="sa">سنسکریت</language>
-			<language type="sa" alt="proposed-x1001">سانسکریت</language>
 			<language type="sad">سانداوه‌ای</language>
 			<language type="sah">یاقوتی</language>
 			<language type="sai">سرخپوستی امریکای جنوبی (دیگر)</language>
@@ -390,13 +337,11 @@
 			<language type="sh">صربستانی-کروات</language>
 			<language type="shn">شانی</language>
 			<language type="si">سینهالی</language>
-			<language type="si" alt="proposed-x1001">سينهالي</language>
 			<language type="sid">سیدامویی</language>
 			<language type="sio">زبانهای سویی</language>
 			<language type="sit">چین و تبتی (دیگر)</language>
 			<language type="sk">اسلواکی</language>
 			<language type="sl">اسلووینیایی</language>
-			<language type="sl" alt="proposed-x1001">اسلونیائي</language>
 			<language type="sla">اسلاوی (دیگر</language>
 			<language type="sm">ساموآیی</language>
 			<language type="sn">شونایی</language>
@@ -405,39 +350,29 @@
 			<language type="sog">سغدی</language>
 			<language type="son">سونغایی</language>
 			<language type="sq">آلبانیایی</language>
-			<language type="sq" alt="proposed-x1001">آلبانيايي</language>
 			<language type="sr">صربی</language>
 			<language type="srr">سریری</language>
 			<language type="ssa">نیلی و صحرایی (دیگر)</language>
 			<language type="st">سوتویی جنوبی</language>
-			<language type="st" alt="proposed-x1001">سسوتا - زبان غیررسمی که در افریقای جنوبی صحبت میشود</language>
 			<language type="su">سوندایی</language>
-			<language type="su" alt="proposed-x1001">سوداني</language>
 			<language type="suk">سوکومایی</language>
 			<language type="sus">سوسویی</language>
 			<language type="sux">سومری</language>
 			<language type="sv">سوئدی</language>
 			<language type="sw">سواحيلی</language>
-			<language type="sw" alt="proposed-x1001">سواحلی</language>
 			<language type="syr">سریانی</language>
 			<language type="ta">تامیلی</language>
-			<language type="ta" alt="proposed-x1001">تاميلی</language>
 			<language type="tai">تایی (دیگر)</language>
 			<language type="te">تلوگویی</language>
-			<language type="te" alt="proposed-x1001">تلوگويی</language>
 			<language type="tem">تیمنه‌ای</language>
 			<language type="tg">تاجیکی</language>
 			<language type="th">تایلندی</language>
-			<language type="th" alt="proposed-x1001">تايلندی</language>
 			<language type="ti">تیگرینیایی</language>
-			<language type="ti" alt="proposed-x1001">تيگرينيايي</language>
 			<language type="tig">تیگره‌ای</language>
 			<language type="tiv">تیوی</language>
 			<language type="tk">ترکمنی</language>
-			<language type="tk" alt="proposed-x1001">ترکمن - زبان ترکمنی</language>
 			<language type="tl">تاگالوگی</language>
 			<language type="tlh">کلینگون</language>
-			<language type="tlh" alt="proposed-x1001">کلينگايي</language>
 			<language type="tli">تلین‌گیتی</language>
 			<language type="tmh">تاماشقی</language>
 			<language type="tn">تسوانایی</language>
@@ -451,14 +386,11 @@
 			<language type="tup">زبانهای توپیایی</language>
 			<language type="tut">آلتاییک (دیگر)</language>
 			<language type="tw">توی‌یایی</language>
-			<language type="tw" alt="proposed-x1001">توای</language>
 			<language type="ty">تاهیتیایی</language>
 			<language type="tyv">تووایی</language>
 			<language type="udm">اودمورتی</language>
 			<language type="ug">اویغوری</language>
-			<language type="ug" alt="proposed-x1001">ايگوری</language>
 			<language type="uk">اوکراینی</language>
-			<language type="uk" alt="proposed-x1001">اکراينی</language>
 			<language type="umb">امبندویی</language>
 			<language type="und">نامشخص</language>
 			<language type="ur">اردو</language>
@@ -466,7 +398,6 @@
 			<language type="vai">ویایی</language>
 			<language type="ve">وندایی</language>
 			<language type="vi">ویتنامی</language>
-			<language type="vi" alt="proposed-x1001">ويتنامی</language>
 			<language type="vo">ولاپوک</language>
 			<language type="wa">والونی</language>
 			<language type="wak">زبانهای واکاشی</language>
@@ -474,11 +405,9 @@
 			<language type="wo">ولوفی</language>
 			<language type="xal">قلموقی</language>
 			<language type="xh">خوسایی</language>
-			<language type="xh" alt="proposed-x1001">خوزا</language>
 			<language type="yao">یائویی</language>
 			<language type="yap">یاپی</language>
 			<language type="yi">یدی</language>
-			<language type="yi" alt="proposed-x1001">ايديش</language>
 			<language type="yo">یوروبایی</language>
 			<language type="ypk">زبانهای یوپیکی</language>
 			<language type="za">چوانگی</language>
@@ -486,7 +415,6 @@
 			<language type="zh">چینی</language>
 			<language type="znd">زانده‌ای</language>
 			<language type="zu">زولویی</language>
-			<language type="zu" alt="proposed-x1001">زولو</language>
 			<language type="zun">زونیایی</language>
 		</languages>
 		<scripts>
@@ -499,12 +427,10 @@
 			<script type="Brai">بریل</script>
 			<script type="Bugi">بوگیایی</script>
 			<script type="Cher">چروکی</script>
-			<script type="Cher" alt="proposed-x1001">چروکیایی</script>
 			<script type="Copt">قبطی</script>
 			<script type="Cyrl">سیریلی</script>
 			<script type="Deva">دوناگری</script>
 			<script type="Egyp">هیروگلیف مصری</script>
-			<script type="Egyp" alt="proposed-x1001">هیروگلیفهای مصری</script>
 			<script type="Ethi">اتیوپیایی</script>
 			<script type="Geor">گرجی</script>
 			<script type="Goth">گوتیک</script>
@@ -525,9 +451,7 @@
 			<script type="Laoo">لائوسی</script>
 			<script type="Latg">لاتینی (گیلی)</script>
 			<script type="Latn">لاتین</script>
-			<script type="Latn" alt="proposed-x1001">لاتینی</script>
 			<script type="Maya">هیروگلیف مایای</script>
-			<script type="Maya" alt="proposed-x1001">هیروگلیفهای مایایی</script>
 			<script type="Mlym">مالایالامی</script>
 			<script type="Mong">مغولی</script>
 			<script type="Mymr">میانمار</script>
@@ -541,10 +465,8 @@
 			<script type="Syrj">سریانی (غربی)</script>
 			<script type="Syrn">سریانی (شرقی)</script>
 			<script type="Taml">تامیل</script>
-			<script type="Taml" alt="proposed-x1001">تامیلی</script>
 			<script type="Telu">تلوگویی</script>
 			<script type="Tglg">تاگالوگ</script>
-			<script type="Tglg" alt="proposed-x1001">تاگالوگی</script>
 			<script type="Thai">تایلندی</script>
 			<script type="Tibt">تبتی</script>
 			<script type="Vaii">ویایی</script>
@@ -563,8 +485,6 @@
 			<territory type="011">غرب افریقا</territory>
 			<territory type="013">امریکای مرکزی</territory>
 			<territory type="014">شرق افریقا</territory>
-			<territory type="014" alt="proposed-x1001">افریقا ی شرقی</territory>
-			<territory type="014" alt="proposed-x1002">افریقا ی شرقی</territory>
 			<territory type="015">شمال افریقا</territory>
 			<territory type="017">مرکز افریقا</territory>
 			<territory type="018">جنوب افریقا</territory>
@@ -572,8 +492,6 @@
 			<territory type="021">شمال امریکا</territory>
 			<territory type="029">کارائیب</territory>
 			<territory type="030">شرق آسیا</territory>
-			<territory type="030" alt="proposed-x1001">آسیای شرقی</territory>
-			<territory type="030" alt="proposed-x1002">آسیای  شرقی</territory>
 			<territory type="034">جنوب آسیا</territory>
 			<territory type="035">جنوب شرقی آسیا</territory>
 			<territory type="039">جنوب اروپا</territory>
@@ -584,73 +502,53 @@
 			<territory type="145">غرب آسیا</territory>
 			<territory type="150">اروپا</territory>
 			<territory type="151">شرق اروپا</territory>
-			<territory type="151" alt="proposed-x1001">اروپای شرقی</territory>
-			<territory type="151" alt="proposed-x1002">اروپای شرقی</territory>
 			<territory type="154">شمال اروپا</territory>
 			<territory type="155">غرب اروپا</territory>
 			<territory type="172">کشورهای مستقل مشترک‌المنافع</territory>
 			<territory type="419">امریکای لاتین و کارائیب</territory>
 			<territory type="AD">آندورا</territory>
 			<territory type="AE">امارات متحدهٔ عربی</territory>
-			<territory type="AE" alt="proposed-x1001">عمارات متحده ی عربی</territory>
 			<territory type="AF">افغانستان</territory>
 			<territory type="AG">آنتیگوا و باربودا</territory>
 			<territory type="AI">آنگیل</territory>
 			<territory type="AL">آلبانی</territory>
-			<territory type="AL" alt="proposed-x1001">آلبانیا</territory>
 			<territory type="AM">ارمنستان</territory>
 			<territory type="AN">آنتیل هلند</territory>
-			<territory type="AN" alt="proposed-x1001">انتیلس هلند</territory>
 			<territory type="AO">آنگولا</territory>
 			<territory type="AQ">جنوبگان</territory>
-			<territory type="AQ" alt="proposed-x1001">قطب جنوب</territory>
 			<territory type="AR">آرژانتین</territory>
 			<territory type="AS">ساموای امریکا</territory>
-			<territory type="AS" alt="proposed-x1001">ساموا ی آمریکا</territory>
 			<territory type="AT">اتریش</territory>
-			<territory type="AT" alt="proposed-x1001">اتريش</territory>
 			<territory type="AU">استرالیا</territory>
 			<territory type="AW">آروبا</territory>
 			<territory type="AZ">جمهوری آذربایجان</territory>
-			<territory type="AZ" alt="proposed-x1001">آذربایجان</territory>
 			<territory type="BA">بوسنی و هرزگوین</territory>
-			<territory type="BA" alt="proposed-x1001">بسنی و هرزگوین</territory>
 			<territory type="BB">باربادوس</territory>
 			<territory type="BD">بنگلادش</territory>
 			<territory type="BE">بلژیک</territory>
 			<territory type="BF">بورکینافاسو</territory>
-			<territory type="BF" alt="proposed-x1001">بورکینا فاسو</territory>
 			<territory type="BG">بلغارستان</territory>
 			<territory type="BH">بحرین</territory>
 			<territory type="BI">بوروندی</territory>
-			<territory type="BI" alt="proposed-x1001">بوراندی</territory>
 			<territory type="BJ">بنین</territory>
 			<territory type="BM">برمودا</territory>
 			<territory type="BN">برونئی</territory>
 			<territory type="BO">بولیوی</territory>
-			<territory type="BO" alt="proposed-x1001">بولیویا</territory>
 			<territory type="BR">برزیل</territory>
 			<territory type="BS">باهاما</territory>
 			<territory type="BT">بوتان</territory>
-			<territory type="BT" alt="proposed-x1001">باتان</territory>
 			<territory type="BV">جزیرهٔ بووت</territory>
-			<territory type="BV" alt="proposed-x1001">جزیره بوت</territory>
 			<territory type="BW">بوتسوانا</territory>
 			<territory type="BY">بیلوروسی</territory>
-			<territory type="BY" alt="proposed-x1001">بلاروس</territory>
-			<territory type="BY" alt="proposed-x1002">روسیه‌ سفید</territory>
-			<territory type="BY" alt="proposed-x1003">روسیه‌ سفید</territory>
 			<territory type="BZ">بلیز</territory>
 			<territory type="CA">کانادا</territory>
 			<territory type="CC">جزایر کوکوس</territory>
 			<territory type="CD">جمهوری دموکراتیک کنگو</territory>
 			<territory type="CF">جمهوری افریقای مرکزی</territory>
-			<territory type="CF" alt="proposed-x1001">جمهوری آفریقای مرکزی</territory>
 			<territory type="CG">کونگو</territory>
 			<territory type="CH">سوئیس</territory>
 			<territory type="CI">ساحل عاج</territory>
 			<territory type="CK">جزایر کوک</territory>
-			<territory type="CK" alt="proposed-x1001">جزیره های کوک</territory>
 			<territory type="CL">شیلی</territory>
 			<territory type="CM">کامرون</territory>
 			<territory type="CN">چین</territory>
@@ -660,146 +558,99 @@
 			<territory type="CU">کوبا</territory>
 			<territory type="CV">کیپ ورد</territory>
 			<territory type="CX">جزیرهٔ کریسمس</territory>
-			<territory type="CX" alt="proposed-x1001">جزیره ی کریستمس</territory>
 			<territory type="CY">قبرس</territory>
-			<territory type="CY" alt="proposed-x1001">سایپروس</territory>
 			<territory type="CZ">جمهوری چک</territory>
 			<territory type="DE">آلمان</territory>
 			<territory type="DJ">جیبوتی</territory>
 			<territory type="DK">دانمارک</territory>
 			<territory type="DM">دومینیک</territory>
-			<territory type="DM" alt="proposed-x1001">دومینیکا</territory>
 			<territory type="DO">جمهوری دومینیکن</territory>
-			<territory type="DO" alt="proposed-x1001">جمهوری دومونیکا</territory>
 			<territory type="DZ">الجزایر</territory>
-			<territory type="DZ" alt="proposed-x1001">الجزیره</territory>
 			<territory type="EC">اکوادر</territory>
 			<territory type="EE">استونی</territory>
-			<territory type="EE" alt="proposed-x1001">استونیا</territory>
 			<territory type="EG">مصر</territory>
 			<territory type="EH">صحرای غربی</territory>
-			<territory type="EH" alt="proposed-x1001">سحرای غربی</territory>
 			<territory type="ER">اریتره</territory>
-			<territory type="ER" alt="proposed-x1001">اریتریا</territory>
 			<territory type="ES">اسپانیا</territory>
 			<territory type="ET">اتیوپی</territory>
 			<territory type="FI">فنلاند</territory>
-			<territory type="FI" alt="proposed-x1001">فینلاند</territory>
 			<territory type="FJ">فیجی</territory>
 			<territory type="FK">جزایر فالکلند</territory>
 			<territory type="FM">میکرونزی</territory>
-			<territory type="FM" alt="proposed-x1001">میکرونزیا</territory>
 			<territory type="FO">جزایر فارو</territory>
-			<territory type="FO" alt="proposed-x1001">جزیره های فاروه</territory>
 			<territory type="FR">فرانسه</territory>
 			<territory type="GA">گابون</territory>
 			<territory type="GB">بریتانیا</territory>
-			<territory type="GB" alt="proposed-x1001">انگلستان</territory>
 			<territory type="GD">گرانادا</territory>
 			<territory type="GE">گرجستان</territory>
 			<territory type="GF">گویان فرانسه</territory>
-			<territory type="GF" alt="proposed-x1001">گوانا ی فرانسه</territory>
 			<territory type="GH">غنا</territory>
-			<territory type="GH" alt="proposed-x1001">قانا</territory>
 			<territory type="GI">گیبرالتار</territory>
 			<territory type="GL">گروئنلند</territory>
-			<territory type="GL" alt="proposed-x1001">گرینلاند</territory>
 			<territory type="GM">گامبیا</territory>
-			<territory type="GM" alt="proposed-x1001">گمبیا</territory>
 			<territory type="GN">گینه</territory>
-			<territory type="GN" alt="proposed-x1001">گوینیا</territory>
 			<territory type="GP">گوادلوپ</territory>
 			<territory type="GQ">گینهٔ استوایی</territory>
-			<territory type="GQ" alt="proposed-x1001">ایکواتریال گوینیا</territory>
 			<territory type="GR">یونان</territory>
 			<territory type="GS">جورجیای جنوبی و جزایر ساندویچ جنوبی</territory>
 			<territory type="GT">گواتمالا</territory>
 			<territory type="GU">گوام</territory>
 			<territory type="GW">گینهٔ بیسائو</territory>
-			<territory type="GW" alt="proposed-x1001">گوینیا-بیساو</territory>
 			<territory type="GY">گویان</territory>
 			<territory type="HK">هنگ‌کنگ، ناحیهٔ ویژهٔ حکومتی چین</territory>
 			<territory type="HM">جزیرهٔ هرد و جزایر مک‌دونالد</territory>
 			<territory type="HN">هندوراس</territory>
-			<territory type="HN" alt="proposed-x1001">هوندوراس</territory>
 			<territory type="HR">کرواسی</territory>
-			<territory type="HR" alt="proposed-x1001">کرواتیا</territory>
 			<territory type="HT">هاییتی</territory>
-			<territory type="HT" alt="proposed-x1001">هیتی</territory>
 			<territory type="HU">مجارستان</territory>
 			<territory type="ID">اندونزی</territory>
-			<territory type="ID" alt="proposed-x1001">اندوزی</territory>
 			<territory type="IE">ایرلند</territory>
 			<territory type="IL">اسرائیل</territory>
-			<territory type="IL" alt="proposed-x1001">اسراییل</territory>
 			<territory type="IN">هند</territory>
 			<territory type="IO">مستعمره‌های انگلستان در اقیانوس هند</territory>
-			<territory type="IO" alt="proposed-x1001">سرزمین دریای هندی انگلیسی</territory>
 			<territory type="IQ">عراق</territory>
 			<territory type="IR">ایران</territory>
 			<territory type="IS">ایسلند</territory>
 			<territory type="IT">ایتالیا</territory>
 			<territory type="JM">جامائیکا</territory>
 			<territory type="JO">اردن</territory>
-			<territory type="JO" alt="proposed-x1001">جردن</territory>
 			<territory type="JP">ژاپن</territory>
 			<territory type="KE">کنیا</territory>
 			<territory type="KG">قرقیزستان</territory>
 			<territory type="KH">کامبوج</territory>
-			<territory type="KH" alt="proposed-x1001">کمبودیا</territory>
 			<territory type="KI">کیریباتی</territory>
-			<territory type="KI" alt="proposed-x1001">کریباتی</territory>
 			<territory type="KM">کومورو</territory>
-			<territory type="KM" alt="proposed-x1001">کمورس</territory>
 			<territory type="KN">سنت کیتس و نویس</territory>
-			<territory type="KN" alt="proposed-x1001">سینت کیتس و نویس</territory>
 			<territory type="KP">کرهٔ شمالی</territory>
-			<territory type="KP" alt="proposed-x1001">کره ی شمالی</territory>
 			<territory type="KR">کرهٔ جنوبی</territory>
-			<territory type="KR" alt="proposed-x1001">کره ی جنوبی</territory>
 			<territory type="KW">کویت</territory>
 			<territory type="KY">جزایر کِیمن</territory>
-			<territory type="KY" alt="proposed-x1001">جزیره های کیمن</territory>
 			<territory type="KZ">قزاقستان</territory>
 			<territory type="LA">لائوس</territory>
 			<territory type="LB">لبنان</territory>
 			<territory type="LC">سنت لوسیا</territory>
-			<territory type="LC" alt="proposed-x1001">سیت لوسیا</territory>
 			<territory type="LI">لیختن‌اشتاین</territory>
-			<territory type="LI" alt="proposed-x1001">لیکتنستین</territory>
 			<territory type="LK">سری‌لانکا</territory>
-			<territory type="LK" alt="proposed-x1001">سری لانکا</territory>
 			<territory type="LR">لیبریا</territory>
 			<territory type="LS">لسوتو</territory>
 			<territory type="LT">لیتوانی</territory>
-			<territory type="LT" alt="proposed-x1001">لیتوانیا</territory>
 			<territory type="LU">لوکزامبورگ</territory>
 			<territory type="LV">لتونی</territory>
-			<territory type="LV" alt="proposed-x1001">لاتویا</territory>
 			<territory type="LY">لیبی</territory>
-			<territory type="LY" alt="proposed-x1001">لیبیا</territory>
 			<territory type="MA">مراکش</territory>
-			<territory type="MA" alt="proposed-x1001">مراکو</territory>
 			<territory type="MC">موناکو</territory>
 			<territory type="MD">مولدووا</territory>
-			<territory type="MD" alt="proposed-x1001">مولدوا</territory>
 			<territory type="ME">مونتونگرو</territory>
 			<territory type="MG">ماداگاسکار</territory>
 			<territory type="MH">جزایر مارشال</territory>
-			<territory type="MH" alt="proposed-x1001">جزیره های مارشال</territory>
 			<territory type="MK">مقدونیه</territory>
-			<territory type="MK" alt="proposed-x1001">مکدونیا</territory>
 			<territory type="ML">مالی</territory>
 			<territory type="MM">میانمار</territory>
-			<territory type="MM" alt="proposed-x1001">مایانمار</territory>
 			<territory type="MN">مغولستان</territory>
-			<territory type="MN" alt="proposed-x1001">مغلستان</territory>
 			<territory type="MO">ماکائو، ناحیهٔ ویژهٔ حکومتی چین</territory>
 			<territory type="MP">جزایر ماریانای شمالی</territory>
-			<territory type="MP" alt="proposed-x1001">جزیره های شمالی ماریانا</territory>
 			<territory type="MQ">مارتینیک</territory>
 			<territory type="MR">موریتانی</territory>
-			<territory type="MR" alt="proposed-x1001">ماوریتانیا</territory>
 			<territory type="MS">مونت‌سرات</territory>
 			<territory type="MT">مالت</territory>
 			<territory type="MU">موریتیوس</territory>
@@ -812,28 +663,22 @@
 			<territory type="NC">کالدونیای جدید</territory>
 			<territory type="NE">نیجر</territory>
 			<territory type="NF">جزیرهٔ نورفولک</territory>
-			<territory type="NF" alt="proposed-x1001">جزیره ی نورفلک</territory>
 			<territory type="NG">نیجریه</territory>
 			<territory type="NI">نیکاراگوئه</territory>
-			<territory type="NI" alt="proposed-x1001">نیکاراگوا</territory>
 			<territory type="NL">هلند</territory>
 			<territory type="NO">نروژ</territory>
 			<territory type="NP">نپال</territory>
 			<territory type="NR">نائورو</territory>
 			<territory type="NU">نیوئه</territory>
 			<territory type="NZ">زلاند نو</territory>
-			<territory type="NZ" alt="proposed-x1001">زیلاند جدید</territory>
 			<territory type="OM">عمان</territory>
 			<territory type="PA">پاناما</territory>
 			<territory type="PE">پرو</territory>
 			<territory type="PF">پلی‌نزی فرانسه</territory>
-			<territory type="PF" alt="proposed-x1001">پلینزی فرانسوی</territory>
 			<territory type="PG">پاپوا گینهٔ نو</territory>
-			<territory type="PG" alt="proposed-x1001">گوینیا ی جدید پاپوا</territory>
 			<territory type="PH">فیلیپین</territory>
 			<territory type="PK">پاکستان</territory>
 			<territory type="PL">لهستان</territory>
-			<territory type="PL" alt="proposed-x1001">اتریش</territory>
 			<territory type="PM">سنت پیر و میکلون</territory>
 			<territory type="PN">پیتکایرن</territory>
 			<territory type="PR">پورتو ریکو</territory>
@@ -841,33 +686,24 @@
 			<territory type="PT">پرتغال</territory>
 			<territory type="PW">پالائو</territory>
 			<territory type="PY">پاراگوئه</territory>
-			<territory type="PY" alt="proposed-x1001">پاراگویه</territory>
 			<territory type="QA">قطر</territory>
 			<territory type="QU">اتحادیه ا روبا</territory>
-			<territory type="QU" alt="proposed-x1001">اتحادیه ا روبا</territory>
-			<territory type="QU" alt="proposed-x1002">اتحادی</territory>
-			<territory type="QU" alt="proposed-x1003">اتحادy</territory>
 			<territory type="RE">ریونیون</territory>
 			<territory type="RO">رومانی</territory>
 			<territory type="RS">صربستان</territory>
 			<territory type="RU">روسیه</territory>
 			<territory type="RW">رواندا</territory>
-			<territory type="RW" alt="proposed-x1001">روواندا</territory>
 			<territory type="SA">عربستان سعودی</territory>
 			<territory type="SB">جزایر سلیمان</territory>
-			<territory type="SB" alt="proposed-x1001">جزیره های سالامون</territory>
 			<territory type="SC">سیشل</territory>
-			<territory type="SC" alt="proposed-x1001">سیچلز</territory>
 			<territory type="SD">سودان</territory>
 			<territory type="SE">سوئد</territory>
 			<territory type="SG">سنگاپور</territory>
 			<territory type="SH">سنت هلن</territory>
 			<territory type="SI">اسلوونی</territory>
-			<territory type="SI" alt="proposed-x1001">سلوانیا</territory>
 			<territory type="SJ">اسوالبارد و جان ماین</territory>
 			<territory type="SK">اسلواکی</territory>
 			<territory type="SL">سیرالئون</territory>
-			<territory type="SL" alt="proposed-x1001">سیرا لیون</territory>
 			<territory type="SM">سان مارینو</territory>
 			<territory type="SN">سنگال</territory>
 			<territory type="SO">سومالی</territory>
@@ -876,39 +712,30 @@
 			<territory type="SV">السالوادور</territory>
 			<territory type="SY">سوریه</territory>
 			<territory type="SZ">سوازیلند</territory>
-			<territory type="SZ" alt="proposed-x1001">سوازیلاند</territory>
 			<territory type="TC">جزایر ترک و کایکوس</territory>
-			<territory type="TC" alt="proposed-x1001">جزیره های ترکها و کیکوس</territory>
 			<territory type="TD">چاد</territory>
 			<territory type="TF">مستعمره‌های جنوبی فرانسه</territory>
-			<territory type="TF" alt="proposed-x1001">سرزمین های جنوبی فرانسه</territory>
 			<territory type="TG">توگو</territory>
 			<territory type="TH">تایلند</territory>
 			<territory type="TJ">تاجیکستان</territory>
 			<territory type="TK">توکلائو</territory>
-			<territory type="TK" alt="proposed-x1001">توکلاو</territory>
 			<territory type="TL">تیمور شرقی</territory>
-			<territory type="TL" alt="proposed-x1001">تیمر شرق</territory>
 			<territory type="TM">ترکمنستان</territory>
 			<territory type="TN">تونس</territory>
 			<territory type="TO">تونگا</territory>
 			<territory type="TR">ترکیه</territory>
 			<territory type="TT">ترینیداد و توباگو</territory>
-			<territory type="TT" alt="proposed-x1001">ترینیداد و تباکو</territory>
 			<territory type="TV">تووالو</territory>
-			<territory type="TV" alt="proposed-x1001">توالو</territory>
 			<territory type="TW">تایوان</territory>
 			<territory type="TZ">تانزانیا</territory>
 			<territory type="UA">اوکراین</territory>
 			<territory type="UG">اوگاندا</territory>
 			<territory type="UM">جزایر کوچک دورافتادهٔ ایالات متحده</territory>
 			<territory type="US">ایالات متحدهٔ امریکا</territory>
-			<territory type="US" alt="proposed-x1001">ایالات متحده</territory>
 			<territory type="UY">اوروگوئه</territory>
 			<territory type="UZ">ازبکستان</territory>
 			<territory type="VA">واتیکان</territory>
 			<territory type="VC">سنت وینسنت و گرنادین</territory>
-			<territory type="VC" alt="proposed-x1001">سینت وینسنت و گرنادینز</territory>
 			<territory type="VE">ونزوئلا</territory>
 			<territory type="VG">جزایر ویرجین انگلستان</territory>
 			<territory type="VI">جزایر ویرجین ایالات متحده</territory>
@@ -919,7 +746,6 @@
 			<territory type="YE">یمن</territory>
 			<territory type="YT">مایوت</territory>
 			<territory type="ZA">افریقای جنوبی</territory>
-			<territory type="ZA" alt="proposed-x1001">آفریقای جنوبی</territory>
 			<territory type="ZM">زامبیا</territory>
 			<territory type="ZW">زیمبابوه</territory>
 		</territories>
