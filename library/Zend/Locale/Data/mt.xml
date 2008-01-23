@@ -528,12 +528,12 @@
 		</languages>
 		<scripts>
 			<script type="Arab">Għarbi</script>
-			<script type="Grek" references="RP1">Grieg</script>
+			<script type="Grek">Grieg</script>
 			<script type="Hans">Ħan Sempliċi</script>
 			<script type="Hant">Ħan Tradizzjonali</script>
 			<script type="Latn">Latin</script>
 			<script type="Xpeo">Persjan Antik</script>
-			<script type="Zxxx" references="RP1">Mhux Miktub</script>
+			<script type="Zxxx">Mhux Miktub</script>
 			<script type="Zyyy">Komuni</script>
 			<script type="Zzzz">Skritt Mhux Magħruf jew Mhux Validu</script>
 		</scripts>
@@ -848,7 +848,7 @@
 		</measurementSystemNames>
 		<codePatterns>
 			<codePattern type="language">Lingwa: {0}</codePattern>
-			<codePattern type="script" references="RP1">Skritt: {0}</codePattern>
+			<codePattern type="script">Skritt: {0}</codePattern>
 			<codePattern type="territory">Reġjun: {0}</codePattern>
 		</codePatterns>
 	</localeDisplayNames>
@@ -931,7 +931,7 @@
 							<day type="sat">Sib</day>
 						</dayWidth>
 						<dayWidth type="wide">
-							<day type="sun" references="R200">Il-Ħadd</day>
+							<day type="sun">Il-Ħadd</day>
 							<day type="mon">It-Tnejn</day>
 							<day type="tue">It-Tlieta</day>
 							<day type="wed">L-Erbgħa</day>
@@ -1061,7 +1061,7 @@
 						<displayName>Jum</displayName>
 						<relative type="0">Illum</relative>
 						<relative type="1">Għada</relative>
-						<relative type="-1" references="RP1">Lbieraħ</relative>
+						<relative type="-1">Lbieraħ</relative>
 					</field>
 					<field type="weekday">
 						<displayName>Jum tal-Ġimgħa</displayName>

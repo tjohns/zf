@@ -411,7 +411,7 @@
 			<language type="pra">Prakrit Language</language>
 			<language type="pra" alt="proposed-x1001" draft="unconfirmed">Prakrit language</language>
 			<language type="pro">Old Provençal</language>
-			<language type="ps" references="R034">Pashto</language>
+			<language type="ps">Pashto</language>
 			<language type="ps" alt="variant">Pushto</language>
 			<language type="pt">Portuguese</language>
 			<language type="pt_BR">Brazilian Portuguese</language>
@@ -589,7 +589,7 @@
 			<script type="Cans">Unified Canadian Aboriginal Syllabics</script>
 			<script type="Cans" alt="proposed-x1001" draft="unconfirmed">Unified Canadian Aboriginal Symbols</script>
 			<script type="Cari">Carian</script>
-			<script type="Cham" references="R035">Cham</script>
+			<script type="Cham">Cham</script>
 			<script type="Cher">Cherokee</script>
 			<script type="Cirt">Cirth</script>
 			<script type="Copt">Coptic</script>
@@ -685,7 +685,7 @@
 			<script type="Tfng">Tifinagh</script>
 			<script type="Tglg">Tagalog</script>
 			<script type="Thaa">Thaana</script>
-			<script type="Thai" references="R035">Thai</script>
+			<script type="Thai">Thai</script>
 			<script type="Tibt">Tibetan</script>
 			<script type="Ugar">Ugaritic</script>
 			<script type="Vaii">Vai</script>
@@ -761,7 +761,7 @@
 			<territory type="BH">Bahrain</territory>
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benin</territory>
-			<territory type="BL">Saint Barthélemy</territory>			
+			<territory type="BL">Saint Barthélemy</territory>
 			<territory type="BM">Bermuda</territory>
 			<territory type="BN">Brunei</territory>
 			<territory type="BO">Bolivia</territory>

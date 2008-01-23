@@ -1027,7 +1027,7 @@
 			<territory type="830" alt="proposed-x1001" draft="unconfirmed">kanalöarna</territory>
 			<territory type="AD">Andorra</territory>
 			<territory type="AE">Förenade Arabemiraten</territory>
-			<territory type="AF" references="R222">Afghanistan</territory>
+			<territory type="AF">Afghanistan</territory>
 			<territory type="AG">Antigua och Barbuda</territory>
 			<territory type="AI">Anguilla</territory>
 			<territory type="AL">Albanien</territory>
@@ -1287,10 +1287,10 @@
 			<territory type="TZ">Tanzania</territory>
 			<territory type="UA">Ukraina</territory>
 			<territory type="UG">Uganda</territory>
-			<territory type="UM" references="R221">USA:s yttre öar</territory>
+			<territory type="UM">USA:s yttre öar</territory>
 			<territory type="UM" alt="proposed-x1001" draft="unconfirmed">Förenta staternas yttre öar</territory>
-			<territory type="UM" references="R221" alt="proposed-x1002" draft="unconfirmed">USAs yttre öar</territory>
-			<territory type="US" references="R217">USA</territory>
+			<territory type="UM" alt="proposed-x1002" draft="unconfirmed">USAs yttre öar</territory>
+			<territory type="US">USA</territory>
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Uzbekistan</territory>
 			<territory type="VA">Vatikanstaten</territory>
@@ -1509,25 +1509,25 @@
 				<days>
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
-							<day type="sun" references="R218">sön</day>
+							<day type="sun">sön</day>
 							<day type="sun" alt="proposed-x1001" draft="unconfirmed">sön</day>
 							<day type="sun" alt="proposed-x1002" draft="unconfirmed">sö</day>
-							<day type="mon" references="R218">mån</day>
+							<day type="mon">mån</day>
 							<day type="mon" alt="proposed-x1001" draft="unconfirmed">mån</day>
 							<day type="mon" alt="proposed-x1002" draft="unconfirmed">må</day>
-							<day type="tue" references="R218">tis</day>
+							<day type="tue">tis</day>
 							<day type="tue" alt="proposed-x1001" draft="unconfirmed">tis</day>
 							<day type="tue" alt="proposed-x1002" draft="unconfirmed">ti</day>
-							<day type="wed" references="R218">ons</day>
+							<day type="wed">ons</day>
 							<day type="wed" alt="proposed-x1001" draft="unconfirmed">ons</day>
 							<day type="wed" alt="proposed-x1002" draft="unconfirmed">on</day>
-							<day type="thu" references="R218">tors</day>
+							<day type="thu">tors</day>
 							<day type="thu" alt="proposed-x1001" draft="unconfirmed">tor</day>
 							<day type="thu" alt="proposed-x1002" draft="unconfirmed">to</day>
-							<day type="fri" references="R218">fre</day>
+							<day type="fri">fre</day>
 							<day type="fri" alt="proposed-x1001" draft="unconfirmed">fr</day>
 							<day type="fri" alt="proposed-x1002" draft="unconfirmed">fre</day>
-							<day type="sat" references="R218">lör</day>
+							<day type="sat">lör</day>
 							<day type="sat" alt="proposed-x1001" draft="unconfirmed">lör</day>
 							<day type="sat" alt="proposed-x1002" draft="unconfirmed">lö</day>
 						</dayWidth>
@@ -1605,14 +1605,14 @@
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>d MMMM yyyy</pattern>
-							<pattern references="R217" alt="proposed-x1001" draft="unconfirmed">EEEE d MMM yyyy</pattern>
-							<pattern references="R217" alt="proposed-x1002" draft="unconfirmed">EEE d MMM yyyy</pattern>
+							<pattern alt="proposed-x1001" draft="unconfirmed">EEEE d MMM yyyy</pattern>
+							<pattern alt="proposed-x1002" draft="unconfirmed">EEE d MMM yyyy</pattern>
 							<pattern alt="proposed-x1003" draft="unconfirmed">d:'e' MMMM, yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern references="R217">d MMM yyyy</pattern>
+							<pattern>d MMM yyyy</pattern>
 							<pattern alt="proposed-x1001" draft="unconfirmed">d MMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
@@ -2270,11 +2270,11 @@
 			</metazone>
 			<metazone type="Azerbaijan">
 				<long>
-					<generic references="RP1" draft="contributed">azerbajdzjansk tid</generic>
+					<generic draft="contributed">azerbajdzjansk tid</generic>
 					<generic alt="proposed-x1001" draft="unconfirmed">azerbadjansk tid</generic>
-					<standard references="RP1" draft="provisional">azerbajdzjansk normaltid</standard>
+					<standard draft="provisional">azerbajdzjansk normaltid</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">azerbadjansk normaltid</standard>
-					<daylight references="RP1" draft="provisional">azerbajdzjansk sommartid</daylight>
+					<daylight draft="provisional">azerbajdzjansk sommartid</daylight>
 					<daylight alt="proposed-x1001" draft="unconfirmed">azerbadjansk sommartid</daylight>
 					<daylight alt="proposed-x1002" draft="unconfirmed">azerbajdjansk sommartid</daylight>
 				</long>
@@ -2687,7 +2687,7 @@
 			<percentFormatLength>
 				<percentFormat>
 					<pattern>#,##0 %</pattern>
-					<pattern references="R217" alt="proposed-x1001" draft="unconfirmed">#,##0 %</pattern>
+					<pattern alt="proposed-x1001" draft="unconfirmed">#,##0 %</pattern>
 					<pattern alt="proposed-x1002" draft="unconfirmed">#,##0 %</pattern>
 				</percentFormat>
 			</percentFormatLength>
@@ -2791,13 +2791,13 @@
 			</currency>
 			<currency type="BAD">
 				<displayName>bosnisk-hercegovinsk dinar</displayName>
-				<displayName references="R219" alt="proposed-x1001" draft="unconfirmed">Bosnisk-hercegovinsk dinar</displayName>
-				<symbol references="R219">BAD</symbol>
+				<displayName alt="proposed-x1001" draft="unconfirmed">Bosnisk-hercegovinsk dinar</displayName>
+				<symbol>BAD</symbol>
 			</currency>
 			<currency type="BAM">
 				<displayName>bosnisk-hercegovinsk mark (konvertibel)</displayName>
-				<displayName references="R219" alt="proposed-x1001" draft="unconfirmed">Konvertibel bosnisk-hercegovinsk mark</displayName>
-				<symbol references="R219">KM</symbol>
+				<displayName alt="proposed-x1001" draft="unconfirmed">Konvertibel bosnisk-hercegovinsk mark</displayName>
+				<symbol>KM</symbol>
 			</currency>
 			<currency type="BBD">
 				<displayName>Barbados-dollar</displayName>
@@ -3275,8 +3275,8 @@
 				<symbol>KD</symbol>
 			</currency>
 			<currency type="KYD">
-				<displayName references="R219">Cayman-dollar</displayName>
-				<symbol references="R219">KYD</symbol>
+				<displayName>Cayman-dollar</displayName>
+				<symbol>KYD</symbol>
 			</currency>
 			<currency type="KZT">
 				<displayName>kazakisk tenge</displayName>

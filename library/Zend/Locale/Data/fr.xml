@@ -26,14 +26,14 @@
 			<language type="akk">akkadien</language>
 			<language type="ale">aléoute</language>
 			<language type="alg">langue algonquine</language>
-			<language type="alg" references="R057" alt="proposed-x1001" draft="unconfirmed">algonquines, langues</language>
-			<language type="alg" references="R057" alt="proposed-x1002" draft="unconfirmed">langues algonquines</language>
+			<language type="alg" alt="proposed-x1001" draft="unconfirmed">algonquines, langues</language>
+			<language type="alg" alt="proposed-x1002" draft="unconfirmed">langues algonquines</language>
 			<language type="alt">altaï du Sud</language>
 			<language type="alt" alt="proposed-x1001" draft="unconfirmed">altaï méridional</language>
 			<language type="am">amharique</language>
 			<language type="an">aragonais</language>
 			<language type="ang">anglo-saxon</language>
-			<language type="ang" references="R057" alt="proposed-x1001" draft="unconfirmed">anglo-saxon (vers 450-1100)</language>
+			<language type="ang" alt="proposed-x1001" draft="unconfirmed">anglo-saxon (vers 450-1100)</language>
 			<language type="anp">angika</language>
 			<language type="apa">langue apache</language>
 			<language type="apa" alt="proposed-x1001" draft="unconfirmed">apaches, langues</language>
@@ -50,9 +50,9 @@
 			<language type="ast">asturien</language>
 			<language type="ath">langue athapascane</language>
 			<language type="ath" alt="proposed-x1001" draft="unconfirmed">autre langue athapascane</language>
-			<language type="ath" references="R057" alt="proposed-x1002" draft="unconfirmed">athapascanes, langues</language>
+			<language type="ath" alt="proposed-x1002" draft="unconfirmed">athapascanes, langues</language>
 			<language type="aus">langue australienne</language>
-			<language type="aus" references="R057" alt="proposed-x1001" draft="unconfirmed">australiennes, langues</language>
+			<language type="aus" alt="proposed-x1001" draft="unconfirmed">australiennes, langues</language>
 			<language type="av">avar</language>
 			<language type="awa">awadhi</language>
 			<language type="ay">aymara</language>
@@ -86,7 +86,7 @@
 			<language type="bik">bikol</language>
 			<language type="bin">bini</language>
 			<language type="bla">siksika ; blackfoot</language>
-			<language type="bla" references="R057" alt="proposed-x1001" draft="unconfirmed">blackfoot</language>
+			<language type="bla" alt="proposed-x1001" draft="unconfirmed">blackfoot</language>
 			<language type="bla" alt="proposed-x1002" draft="unconfirmed">pieds-noirs</language>
 			<language type="bla" alt="proposed-x1003" draft="unconfirmed">siksika ; pied-noir</language>
 			<language type="bla" alt="proposed-x1004" draft="unconfirmed">siksika</language>
@@ -134,7 +134,7 @@
 			<language type="chm" alt="proposed-x1001" draft="unconfirmed">tchérémisse ; mari</language>
 			<language type="chm" alt="proposed-x1002" draft="unconfirmed">tchérémisse, mari</language>
 			<language type="chn">jargon chinook</language>
-			<language type="chn" references="R057" alt="proposed-x1001" draft="unconfirmed">chinook, jargon</language>
+			<language type="chn" alt="proposed-x1001" draft="unconfirmed">chinook, jargon</language>
 			<language type="chn" alt="proposed-x1002" draft="unconfirmed">chinook</language>
 			<language type="cho">choctaw</language>
 			<language type="chp">chipewyan</language>
@@ -142,7 +142,7 @@
 			<language type="chy">cheyenne</language>
 			<language type="cmc">langue chame</language>
 			<language type="cmc" alt="proposed-x1001" draft="unconfirmed">langues chames</language>
-			<language type="cmc" references="R057" alt="proposed-x1002" draft="unconfirmed">chames, langues</language>
+			<language type="cmc" alt="proposed-x1002" draft="unconfirmed">chames, langues</language>
 			<language type="co">corse</language>
 			<language type="cop">copte</language>
 			<language type="cpe">créole ou pidgin anglais</language>
@@ -199,7 +199,7 @@
 			<language type="dgr" alt="proposed-x1001" draft="unconfirmed">dogrib ; tlicho</language>
 			<language type="dgr" alt="proposed-x1002" draft="unconfirmed">dogrib, tlicho</language>
 			<language type="din">dinka</language>
-			<language type="doi" references="R063">dogri</language>
+			<language type="doi">dogri</language>
 			<language type="doi" alt="proposed-x1001" draft="unconfirmed">dogra</language>
 			<language type="dra">langue dravidienne</language>
 			<language type="dra" alt="proposed-x1001" draft="unconfirmed">autre langue dravidienne</language>
@@ -298,10 +298,10 @@
 			<language type="gor">gorontalo</language>
 			<language type="got">gotique</language>
 			<language type="grb">grebo</language>
-			<language type="grb" references="RP10" alt="proposed-x1001" draft="unconfirmed">grébo</language>
+			<language type="grb" alt="proposed-x1001" draft="unconfirmed">grébo</language>
 			<language type="grb" alt="proposed-x1002" draft="unconfirmed">grébo</language>
 			<language type="grc">grec ancien</language>
-			<language type="grc" references="R057" alt="proposed-x1001" draft="unconfirmed">grec ancien (jusqu'à 1453)</language>
+			<language type="grc" alt="proposed-x1001" draft="unconfirmed">grec ancien (jusqu'à 1453)</language>
 			<language type="gsw">alémanique</language>
 			<language type="gu">goudjarâtî</language>
 			<language type="gu" alt="proposed-x1001" draft="unconfirmed">goudjarâtî, gujarâtî</language>
@@ -310,11 +310,11 @@
 			<language type="gv">manx</language>
 			<language type="gv" alt="proposed-x1001" draft="unconfirmed">mannois ; manxois</language>
 			<language type="gv" alt="proposed-x1002" draft="unconfirmed">manx ; mannois</language>
-			<language type="gv" references="R063" alt="proposed-x1003" draft="unconfirmed">mannois</language>
+			<language type="gv" alt="proposed-x1003" draft="unconfirmed">mannois</language>
 			<language type="gwi">gwichʼin</language>
 			<language type="ha">haoussa</language>
 			<language type="hai">haida</language>
-			<language type="hai" references="RP9" alt="proposed-x1001" draft="unconfirmed">haïda</language>
+			<language type="hai" alt="proposed-x1001" draft="unconfirmed">haïda</language>
 			<language type="hai" alt="proposed-x1002" draft="unconfirmed">haïda</language>
 			<language type="haw">hawaïen</language>
 			<language type="he">hébreu</language>
@@ -333,7 +333,7 @@
 			<language type="hup">hupa</language>
 			<language type="hy">arménien</language>
 			<language type="hz">héréro</language>
-			<language type="hz" references="R057" alt="proposed-x1001" draft="unconfirmed">herero</language>
+			<language type="hz" alt="proposed-x1001" draft="unconfirmed">herero</language>
 			<language type="ia">interlingua</language>
 			<language type="iba">iban</language>
 			<language type="id">indonésien</language>
@@ -361,7 +361,7 @@
 			<language type="ira" alt="proposed-x1002" draft="unconfirmed">iranien</language>
 			<language type="iro">langue iroquoise</language>
 			<language type="iro" alt="proposed-x1001" draft="unconfirmed">langues iroquoiennes</language>
-			<language type="iro" references="R063" alt="proposed-x1002" draft="unconfirmed">iroquoises, langues</language>
+			<language type="iro" alt="proposed-x1002" draft="unconfirmed">iroquoises, langues</language>
 			<language type="iro" alt="proposed-x1003" draft="unconfirmed">langues iroquoises</language>
 			<language type="is">islandais</language>
 			<language type="it">italien</language>
@@ -401,7 +401,7 @@
 			<language type="kho">khotanais</language>
 			<language type="ki">kikuyu</language>
 			<language type="ki" alt="proposed-x1001" draft="unconfirmed">kikouyou</language>
-			<language type="ki" references="RP7" alt="proposed-x1002" draft="unconfirmed">kikouyou</language>
+			<language type="ki" alt="proposed-x1002" draft="unconfirmed">kikouyou</language>
 			<language type="ki" alt="proposed-x1003" draft="unconfirmed">kikouyou, gikuyu</language>
 			<language type="kj">kuanyama</language>
 			<language type="kk">kazakh</language>
@@ -443,7 +443,7 @@
 			<language type="lad">ladino</language>
 			<language type="lad" alt="proposed-x1001" draft="unconfirmed">judéo-espagnol ; ladino</language>
 			<language type="lad" alt="proposed-x1002" draft="unconfirmed">judéo-espagnol, ladino</language>
-			<language type="lad" references="R057" alt="proposed-x1003" draft="unconfirmed">judéo-espagnol</language>
+			<language type="lad" alt="proposed-x1003" draft="unconfirmed">judéo-espagnol</language>
 			<language type="lah">lahnda</language>
 			<language type="lam">lamba</language>
 			<language type="lb">luxembourgeois</language>
@@ -465,16 +465,16 @@
 			<language type="lus" alt="proposed-x1001" draft="unconfirmed">lushaï</language>
 			<language type="lv">letton</language>
 			<language type="mad">madurais</language>
-			<language type="mad" references="R057" alt="proposed-x1001" draft="unconfirmed">madourais</language>
+			<language type="mad" alt="proposed-x1001" draft="unconfirmed">madourais</language>
 			<language type="mag">magahi</language>
 			<language type="mag" alt="proposed-x1001" draft="unconfirmed">magahî</language>
 			<language type="mai">maithili</language>
 			<language type="mai" alt="proposed-x1001" draft="unconfirmed">maïthilî</language>
 			<language type="mak">makassar</language>
-			<language type="man" references="R057">mandingue</language>
+			<language type="man">mandingue</language>
 			<language type="map">malayo-polynésien</language>
 			<language type="mas">masai</language>
-			<language type="mas" references="R057" alt="proposed-x1001" draft="unconfirmed">massaï</language>
+			<language type="mas" alt="proposed-x1001" draft="unconfirmed">massaï</language>
 			<language type="mdf">moksa</language>
 			<language type="mdf" alt="proposed-x1001" draft="unconfirmed">mordve</language>
 			<language type="mdf" alt="proposed-x1002" draft="unconfirmed">moksha</language>
@@ -490,7 +490,7 @@
 			<language type="min">minangkabau</language>
 			<language type="mis">langue diverse</language>
 			<language type="mis" alt="proposed-x1001" draft="unconfirmed">langues diverses</language>
-			<language type="mis" references="R057" alt="proposed-x1002" draft="unconfirmed">diverses, langues</language>
+			<language type="mis" alt="proposed-x1002" draft="unconfirmed">diverses, langues</language>
 			<language type="mis" alt="proposed-x1003" draft="unconfirmed">autre langue</language>
 			<language type="mk">macédonien</language>
 			<language type="mkh">langue mon-khmère</language>
@@ -524,7 +524,7 @@
 			<language type="ms">malais</language>
 			<language type="ms" alt="proposed-x1001" draft="unconfirmed">malaisien</language>
 			<language type="mt">maltais</language>
-			<language type="mul" references="R057">multilingue</language>
+			<language type="mul">multilingue</language>
 			<language type="mul" alt="proposed-x1001" draft="unconfirmed">langues multiples</language>
 			<language type="mul" alt="proposed-x1002" draft="unconfirmed">(multilingue)</language>
 			<language type="mun">langue mounda</language>
@@ -532,7 +532,7 @@
 			<language type="mun" alt="proposed-x1002" draft="unconfirmed">mounda, langues</language>
 			<language type="mun" alt="proposed-x1003" draft="unconfirmed">langues moundas</language>
 			<language type="mus">creek</language>
-			<language type="mus" references="R057" alt="proposed-x1001" draft="unconfirmed">muskogee</language>
+			<language type="mus" alt="proposed-x1001" draft="unconfirmed">muskogee</language>
 			<language type="mus" alt="proposed-x1002" draft="unconfirmed">muskogee, creek</language>
 			<language type="mus" alt="proposed-x1003" draft="unconfirmed">muskogee ; creek</language>
 			<language type="mus" alt="proposed-x1004" draft="unconfirmed">creek ; muskogee</language>
@@ -585,7 +585,7 @@
 			<language type="nn" alt="proposed-x1004" draft="unconfirmed">néo-norvégien</language>
 			<language type="nn" alt="proposed-x1005" draft="unconfirmed">néo-norvégien (nynorsk)</language>
 			<language type="no">norvégien</language>
-			<language type="nog" references="R063">nogaï</language>
+			<language type="nog">nogaï</language>
 			<language type="nog" alt="proposed-x1001" draft="unconfirmed">nogaï, nogay</language>
 			<language type="non">vieux norrois</language>
 			<language type="nqo">n’ko</language>
@@ -657,7 +657,7 @@
 			<language type="pra" alt="proposed-x1002" draft="unconfirmed">prâkrit</language>
 			<language type="pra" alt="proposed-x1003" draft="unconfirmed">langues prâkrits</language>
 			<language type="pro">provençal ancien</language>
-			<language type="pro" references="R057" alt="proposed-x1001" draft="unconfirmed">provençal ancien (jusqu'à 1500)</language>
+			<language type="pro" alt="proposed-x1001" draft="unconfirmed">provençal ancien (jusqu'à 1500)</language>
 			<language type="pro" alt="proposed-x1002" draft="unconfirmed">provençal ancien (jusqu’à 1500)</language>
 			<language type="pro" alt="proposed-x1003" draft="unconfirmed">vieux provençal (jusqu’à 1500)</language>
 			<language type="ps">pachto</language>
@@ -677,37 +677,37 @@
 			<language type="rar">rarotongien</language>
 			<language type="rar" alt="proposed-x1001" draft="unconfirmed">Rarotonga</language>
 			<language type="rar" alt="proposed-x1002" draft="unconfirmed">rarotongien, maori des Îles Cook</language>
-			<language type="rar" references="R057" alt="proposed-x1003" draft="unconfirmed">rarotonga</language>
+			<language type="rar" alt="proposed-x1003" draft="unconfirmed">rarotonga</language>
 			<language type="rm">rhéto-roman</language>
 			<language type="rn">roundi</language>
 			<language type="ro">roumain</language>
 			<language type="roa">langue romane</language>
 			<language type="roa" alt="proposed-x1001" draft="unconfirmed">autre langue romane</language>
-			<language type="roa" references="R057" alt="proposed-x1002" draft="unconfirmed">langues romanes (autres)</language>
-			<language type="roa" references="R057" alt="proposed-x1003" draft="unconfirmed">romanes, autres langues</language>
+			<language type="roa" alt="proposed-x1002" draft="unconfirmed">langues romanes (autres)</language>
+			<language type="roa" alt="proposed-x1003" draft="unconfirmed">romanes, autres langues</language>
 			<language type="rom">tzigane</language>
 			<language type="rom" alt="proposed-x1001" draft="unconfirmed">rromani</language>
 			<language type="rom" alt="proposed-x1002" draft="unconfirmed">rom</language>
-			<language type="rom" references="R057" alt="proposed-x1003" draft="unconfirmed">tsigane</language>
+			<language type="rom" alt="proposed-x1003" draft="unconfirmed">tsigane</language>
 			<language type="root">racine</language>
 			<language type="root" alt="proposed-x1001" draft="unconfirmed">(racine)</language>
 			<language type="ru">russe</language>
 			<language type="rup">aroumain ; valaque ; macédo-roumain</language>
 			<language type="rup" alt="proposed-x1001" draft="unconfirmed">aroumain</language>
-			<language type="rup" references="R057" alt="proposed-x1002" draft="unconfirmed">aroumain, valaque, macédo-roumain</language>
-			<language type="rup" references="R057" alt="proposed-x1003" draft="unconfirmed">aroumain ; macédo-roumain</language>
+			<language type="rup" alt="proposed-x1002" draft="unconfirmed">aroumain, valaque, macédo-roumain</language>
+			<language type="rup" alt="proposed-x1003" draft="unconfirmed">aroumain ; macédo-roumain</language>
 			<language type="rw">rwanda</language>
 			<language type="rw" alt="proposed-x1001" draft="unconfirmed">kinyarwanda</language>
-			<language type="rw" references="RP8" alt="proposed-x1002" draft="unconfirmed">kinyarwanda</language>
+			<language type="rw" alt="proposed-x1002" draft="unconfirmed">kinyarwanda</language>
 			<language type="sa">sanskrit</language>
 			<language type="sad">sandawe</language>
 			<language type="sah">iakoute</language>
 			<language type="sai">langue amérindienne du Sud</language>
-			<language type="sai" references="R057" alt="proposed-x1001" draft="unconfirmed">indiennes d'Amérique du Sud, autres langues</language>
-			<language type="sai" references="R057" alt="proposed-x1002" draft="unconfirmed">langues amérindiennes du Sud (autres)</language>
+			<language type="sai" alt="proposed-x1001" draft="unconfirmed">indiennes d'Amérique du Sud, autres langues</language>
+			<language type="sai" alt="proposed-x1002" draft="unconfirmed">langues amérindiennes du Sud (autres)</language>
 			<language type="sai" alt="proposed-x1003" draft="unconfirmed">indiennes d’Amérique du Sud, autres langues</language>
 			<language type="sal">langue salishenne</language>
-			<language type="sal" references="R057" alt="proposed-x1001" draft="unconfirmed">salish, langues</language>
+			<language type="sal" alt="proposed-x1001" draft="unconfirmed">salish, langues</language>
 			<language type="sal" alt="proposed-x1002" draft="unconfirmed">langue salisha</language>
 			<language type="sal" alt="proposed-x1003" draft="unconfirmed">langues salishas</language>
 			<language type="sal" alt="proposed-x1004" draft="unconfirmed">langues salisha</language>
@@ -724,9 +724,9 @@
 			<language type="se">sami du Nord</language>
 			<language type="sel">selkoupe</language>
 			<language type="sem">langue sémitique</language>
-			<language type="sem" references="R057" alt="proposed-x1001" draft="unconfirmed">sémitiques, autres langues</language>
-			<language type="sem" references="R057" alt="proposed-x1002" draft="unconfirmed">langues sémitiques (autres)</language>
-			<language type="sg" references="RP3">sangho</language>
+			<language type="sem" alt="proposed-x1001" draft="unconfirmed">sémitiques, autres langues</language>
+			<language type="sem" alt="proposed-x1002" draft="unconfirmed">langues sémitiques (autres)</language>
+			<language type="sg">sangho</language>
 			<language type="sg" alt="proposed-x1001" draft="unconfirmed">sango</language>
 			<language type="sg" alt="proposed-x1002" draft="unconfirmed">sangho</language>
 			<language type="sga">irlandais ancien</language>
@@ -743,21 +743,21 @@
 			<language type="si" alt="proposed-x1001" draft="unconfirmed">cinghalais</language>
 			<language type="sid">sidamo</language>
 			<language type="sio">langue sioux</language>
-			<language type="sio" references="R057" alt="proposed-x1001" draft="unconfirmed">sioux, langues</language>
+			<language type="sio" alt="proposed-x1001" draft="unconfirmed">sioux, langues</language>
 			<language type="sit">langue sino-tibétaine</language>
 			<language type="sit" alt="proposed-x1001" draft="unconfirmed">autre langue sino-tibétaine</language>
-			<language type="sit" references="R057" alt="proposed-x1002" draft="unconfirmed">sino-tibétaines, autres langues</language>
-			<language type="sit" references="R057" alt="proposed-x1003" draft="unconfirmed">langues sino-tibétaines (autres)</language>
+			<language type="sit" alt="proposed-x1002" draft="unconfirmed">sino-tibétaines, autres langues</language>
+			<language type="sit" alt="proposed-x1003" draft="unconfirmed">langues sino-tibétaines (autres)</language>
 			<language type="sk">slovaque</language>
 			<language type="sl">slovène</language>
 			<language type="sla">langue slave</language>
-			<language type="sla" references="R057" alt="proposed-x1001" draft="unconfirmed">langues slaves (autres)</language>
-			<language type="sla" references="R057" alt="proposed-x1002" draft="unconfirmed">slaves, autres langues</language>
+			<language type="sla" alt="proposed-x1001" draft="unconfirmed">langues slaves (autres)</language>
+			<language type="sla" alt="proposed-x1002" draft="unconfirmed">slaves, autres langues</language>
 			<language type="sm">samoan</language>
 			<language type="sma">sami du Sud</language>
 			<language type="sma" alt="proposed-x1001" draft="unconfirmed">sami méridional</language>
 			<language type="smi">langue samie</language>
-			<language type="smi" references="R057" alt="proposed-x1001" draft="unconfirmed">sami, autres langues</language>
+			<language type="smi" alt="proposed-x1001" draft="unconfirmed">sami, autres langues</language>
 			<language type="smi" alt="proposed-x1002" draft="unconfirmed">autre langue samie</language>
 			<language type="smi" alt="proposed-x1003" draft="unconfirmed">sami (autre)</language>
 			<language type="smi" alt="proposed-x1004" draft="unconfirmed">langues samies (autres)</language>
@@ -773,7 +773,7 @@
 			<language type="son" alt="proposed-x1002" draft="unconfirmed">songhaï ; sonrhaï</language>
 			<language type="sq">albanais</language>
 			<language type="sr">serbe</language>
-			<language type="srn" references="R057">sranan tongo</language>
+			<language type="srn">sranan tongo</language>
 			<language type="srr">sérère</language>
 			<language type="ss">swati</language>
 			<language type="ss" alt="proposed-x1001" draft="unconfirmed">siswati</language>
@@ -782,7 +782,7 @@
 			<language type="ssa" alt="proposed-x1001" draft="unconfirmed">autre langue nilo-saharienne</language>
 			<language type="ssa" alt="proposed-x1002" draft="unconfirmed">langues nilo-sahariennes (autres)</language>
 			<language type="ssa" alt="proposed-x1003" draft="unconfirmed">nilo-sahariennes (autre)</language>
-			<language type="ssa" references="R057" alt="proposed-x1004" draft="unconfirmed">nilo-sahariennes, autres langues</language>
+			<language type="ssa" alt="proposed-x1004" draft="unconfirmed">nilo-sahariennes, autres langues</language>
 			<language type="st">sesotho</language>
 			<language type="st" alt="proposed-x1001" draft="unconfirmed">sotho méridional</language>
 			<language type="st" alt="proposed-x1002" draft="unconfirmed">sotho du Sud</language>
@@ -803,24 +803,24 @@
 			<language type="tem">temne</language>
 			<language type="ter">tereno</language>
 			<language type="tet">tetum</language>
-			<language type="tet" references="RP1" alt="proposed-x1001" draft="unconfirmed">tétoum</language>
+			<language type="tet" alt="proposed-x1001" draft="unconfirmed">tétoum</language>
 			<language type="tg">tadjik</language>
 			<language type="th">thaï</language>
 			<language type="ti">tigrigna</language>
 			<language type="ti" alt="proposed-x1001" draft="unconfirmed">tigrinya</language>
-			<language type="ti" references="RP6" alt="proposed-x1002" draft="unconfirmed">tigrigna</language>
+			<language type="ti" alt="proposed-x1002" draft="unconfirmed">tigrigna</language>
 			<language type="tig">tigré</language>
 			<language type="tiv">tiv</language>
 			<language type="tk">turkmène</language>
-			<language type="tkl" references="R057">tokelau</language>
-			<language type="tkl" references="RP4" alt="proposed-x1001" draft="unconfirmed">tokelauan</language>
+			<language type="tkl">tokelau</language>
+			<language type="tkl" alt="proposed-x1001" draft="unconfirmed">tokelauan</language>
 			<language type="tkl" alt="proposed-x1002" draft="unconfirmed">tokelauan</language>
 			<language type="tl">tagalog</language>
 			<language type="tlh">klingon</language>
 			<language type="tli">tlingit</language>
 			<language type="tmh">tamacheq</language>
 			<language type="tn">tswana</language>
-			<language type="tn" references="R063" alt="proposed-x1001" draft="unconfirmed">tswana</language>
+			<language type="tn" alt="proposed-x1001" draft="unconfirmed">tswana</language>
 			<language type="tn" alt="proposed-x1002" draft="unconfirmed">tswana ; setswana</language>
 			<language type="tn" alt="proposed-x1003" draft="unconfirmed">setswana</language>
 			<language type="to">tongan</language>
@@ -842,14 +842,14 @@
 			<language type="tum">tumbuka</language>
 			<language type="tup">langue tupi</language>
 			<language type="tup" alt="proposed-x1001" draft="unconfirmed">langues tupi</language>
-			<language type="tup" references="R057" alt="proposed-x1002" draft="unconfirmed">tupi, langues</language>
+			<language type="tup" alt="proposed-x1002" draft="unconfirmed">tupi, langues</language>
 			<language type="tup" alt="proposed-x1003" draft="unconfirmed">langues tupis</language>
 			<language type="tut">langue altaïque</language>
 			<language type="tut" alt="proposed-x1001" draft="unconfirmed">autre langue altaïque</language>
-			<language type="tut" references="R057" alt="proposed-x1002" draft="unconfirmed">langues altaïques (autres)</language>
-			<language type="tut" references="R057" alt="proposed-x1003" draft="unconfirmed">altaïques, autres langues</language>
-			<language type="tvl" references="R057">tuvalu</language>
-			<language type="tvl" references="R063" alt="proposed-x1001" draft="unconfirmed">tuvaluan</language>
+			<language type="tut" alt="proposed-x1002" draft="unconfirmed">langues altaïques (autres)</language>
+			<language type="tut" alt="proposed-x1003" draft="unconfirmed">altaïques, autres langues</language>
+			<language type="tvl">tuvalu</language>
+			<language type="tvl" alt="proposed-x1001" draft="unconfirmed">tuvaluan</language>
 			<language type="tw">twi</language>
 			<language type="ty">tahitien</language>
 			<language type="tyv">touva</language>
@@ -874,13 +874,13 @@
 			<language type="wa">wallon</language>
 			<language type="wak">langues wakashennes</language>
 			<language type="wak" alt="proposed-x1001" draft="unconfirmed">langue wakashenne</language>
-			<language type="wak" references="R057" alt="proposed-x1002" draft="unconfirmed">wakashennes, langues</language>
+			<language type="wak" alt="proposed-x1002" draft="unconfirmed">wakashennes, langues</language>
 			<language type="wal">walamo</language>
 			<language type="war">waray</language>
 			<language type="was">washo</language>
 			<language type="wen">langue sorabe</language>
 			<language type="wen" alt="proposed-x1001" draft="unconfirmed">langues sorabes</language>
-			<language type="wen" references="R057" alt="proposed-x1002" draft="unconfirmed">sorabes, langues</language>
+			<language type="wen" alt="proposed-x1002" draft="unconfirmed">sorabes, langues</language>
 			<language type="wo">wolof</language>
 			<language type="xal">kalmouk</language>
 			<language type="xh">xhosa</language>
@@ -889,7 +889,7 @@
 			<language type="yi">yiddish</language>
 			<language type="yo">yoruba</language>
 			<language type="ypk">langues yupik</language>
-			<language type="ypk" references="R057" alt="proposed-x1001" draft="unconfirmed">yupik, langues</language>
+			<language type="ypk" alt="proposed-x1001" draft="unconfirmed">yupik, langues</language>
 			<language type="ypk" alt="proposed-x1002" draft="unconfirmed">langue yupik</language>
 			<language type="ypk" alt="proposed-x1003" draft="unconfirmed">langues yupiks</language>
 			<language type="za">zhuang</language>
@@ -900,10 +900,10 @@
 			<language type="zh_Hans" alt="proposed-x1001" draft="unconfirmed">chinois (simplifié)</language>
 			<language type="zh_Hant">chinois traditionnel</language>
 			<language type="zh_Hant" alt="proposed-x1001" draft="unconfirmed">chinois (traditionnel)</language>
-			<language type="znd" references="R057">zandé</language>
+			<language type="znd">zandé</language>
 			<language type="zu">zoulou</language>
 			<language type="zun">zuni</language>
-			<language type="zun" references="RP5" alt="proposed-x1001" draft="unconfirmed">zuñi</language>
+			<language type="zun" alt="proposed-x1001" draft="unconfirmed">zuñi</language>
 			<language type="zxx">(sans contenu linguistique)</language>
 			<language type="zza">zazaki</language>
 		</languages>
@@ -914,29 +914,29 @@
 			<script type="Batk">batak</script>
 			<script type="Beng">bengâglî</script>
 			<script type="Beng" alt="proposed-x1001" draft="unconfirmed">bengalî</script>
-			<script type="Blis" references="R059">symboles Bliss</script>
+			<script type="Blis">symboles Bliss</script>
 			<script type="Bopo">bopomofo</script>
 			<script type="Brah">brâhmî</script>
 			<script type="Brai">braille</script>
-			<script type="Bugi" references="R059">bouguis</script>
+			<script type="Bugi">bouguis</script>
 			<script type="Buhd">bouhide</script>
-			<script type="Cans" references="R059">syllabaire autochtone canadien unifié</script>
+			<script type="Cans">syllabaire autochtone canadien unifié</script>
 			<script type="Cans" alt="proposed-x1001" draft="unconfirmed">syllabaire autochthone canadien unifié</script>
 			<script type="Cari" draft="contributed">carien</script>
 			<script type="Cham" draft="unconfirmed">cham</script>
 			<script type="Cher">tchérokî</script>
 			<script type="Cirt" draft="unconfirmed">cirth</script>
 			<script type="Copt">copte</script>
-			<script type="Cprt" references="R059">syllabaire chypriote</script>
+			<script type="Cprt">syllabaire chypriote</script>
 			<script type="Cyrl">cyrillique</script>
-			<script type="Cyrs" references="R059">cyrillique (variante slavonne)</script>
+			<script type="Cyrs">cyrillique (variante slavonne)</script>
 			<script type="Deva">dévanâgarî</script>
 			<script type="Dsrt">déséret</script>
 			<script type="Egyd">démotique égyptien</script>
 			<script type="Egyh">hiératique égyptien</script>
 			<script type="Egyp">hiéroglyphes égyptiens</script>
 			<script type="Ethi">éthiopique</script>
-			<script type="Ethi" references="R059" alt="proposed-x1001" draft="unconfirmed">éthiopien</script>
+			<script type="Ethi" alt="proposed-x1001" draft="unconfirmed">éthiopien</script>
 			<script type="Geok">géorgien khoutsouri</script>
 			<script type="Geok" alt="proposed-x1001" draft="unconfirmed">khoutsouri (assomtavrouli et nuskhuri)</script>
 			<script type="Geor">géorgien</script>
@@ -946,31 +946,31 @@
 			<script type="Gujr">goudjarâtî</script>
 			<script type="Guru">gourmoukhî</script>
 			<script type="Hang">hangûl</script>
-			<script type="Hani" references="R059">idéogrammes han</script>
+			<script type="Hani">idéogrammes han</script>
 			<script type="Hani" alt="proposed-x1001" draft="unconfirmed">sinogrammes han</script>
 			<script type="Hano">hanounóo</script>
 			<script type="Hano" alt="proposed-x1001" draft="unconfirmed">hanounoo</script>
-			<script type="Hans" references="R059">idéogrammes han (variante simplifiée)</script>
+			<script type="Hans">idéogrammes han (variante simplifiée)</script>
 			<script type="Hans" alt="proposed-x1001" draft="unconfirmed">sinogrammes simplifiés</script>
-			<script type="Hant" references="R059">idéogrammes han (variante traditionnelle)</script>
+			<script type="Hant">idéogrammes han (variante traditionnelle)</script>
 			<script type="Hant" alt="proposed-x1001" draft="unconfirmed">sinogrammes traditionnels</script>
 			<script type="Hebr">hébreu</script>
 			<script type="Hira">hiragana</script>
 			<script type="Hmng">pahawh hmong</script>
 			<script type="Hrkt">katakana ou hiragana</script>
-			<script type="Hung" references="R059">ancien hongrois</script>
+			<script type="Hung">ancien hongrois</script>
 			<script type="Inds" draft="unconfirmed">indus (harappan)</script>
 			<script type="Ital">ancien italique</script>
 			<script type="Java">javanais</script>
 			<script type="Jpan">japonais</script>
-			<script type="Kali" references="R059">kayah li</script>
+			<script type="Kali">kayah li</script>
 			<script type="Kana">katakana</script>
-			<script type="Khar" references="R059">kharochthî</script>
+			<script type="Khar">kharochthî</script>
 			<script type="Khmr">khmer</script>
 			<script type="Knda">kannara</script>
 			<script type="Lana" draft="contributed">lanna</script>
 			<script type="Laoo" draft="unconfirmed">lao</script>
-			<script type="Latf" references="R059">latin (variante brisée)</script>
+			<script type="Latf">latin (variante brisée)</script>
 			<script type="Latf" alt="proposed-x1001" draft="unconfirmed">latin variante brisée</script>
 			<script type="Latg">latin (variante gaélique)</script>
 			<script type="Latg" alt="proposed-x1001" draft="unconfirmed">latin variante gaélique</script>
@@ -997,7 +997,7 @@
 			<script type="Orya">oriyâ</script>
 			<script type="Osma">osmanais</script>
 			<script type="Perm">ancien permien</script>
-			<script type="Phag" references="R059" draft="contributed">phags pa</script>
+			<script type="Phag" draft="contributed">phags pa</script>
 			<script type="Phnx">phénicien</script>
 			<script type="Plrd">phonétique de Pollard</script>
 			<script type="Qaai">hérité</script>
@@ -1005,22 +1005,22 @@
 			<script type="Rjng">rejang</script>
 			<script type="Roro" draft="contributed">rongorongo</script>
 			<script type="Runr">runique</script>
-			<script type="Sara" references="R059">sarati</script>
+			<script type="Sara">sarati</script>
 			<script type="Saur">saurashtra</script>
 			<script type="Sgnw" draft="contributed">écriture des signes</script>
 			<script type="Shaw">shavien</script>
 			<script type="Sinh">singhalais</script>
 			<script type="Sinh" alt="proposed-x1001" draft="unconfirmed">cingalais</script>
 			<script type="Sund">sundanais</script>
-			<script type="Sylo" references="R059">sylotî nâgrî</script>
+			<script type="Sylo">sylotî nâgrî</script>
 			<script type="Syrc">syriaque</script>
-			<script type="Syre" references="R059" draft="contributed">syriaque (variante estranghélo)</script>
+			<script type="Syre" draft="contributed">syriaque (variante estranghélo)</script>
 			<script type="Syrj" draft="provisional">syriaque occidental</script>
 			<script type="Syrj" alt="proposed-x1001" draft="unconfirmed">syriaque (variante occidentale)</script>
 			<script type="Syrn" draft="contributed">syriaque (variante orientale)</script>
 			<script type="Tagb">tagbanoua</script>
 			<script type="Tale">taï-le</script>
-			<script type="Talu" references="R059" draft="contributed">nouveau taï-lue</script>
+			<script type="Talu" draft="contributed">nouveau taï-lue</script>
 			<script type="Taml">tamoul</script>
 			<script type="Telu">télougou</script>
 			<script type="Teng" draft="contributed">tengwar</script>
@@ -1032,9 +1032,9 @@
 			<script type="Tibt">tibétain</script>
 			<script type="Ugar">ougaritique</script>
 			<script type="Vaii">vaï</script>
-			<script type="Visp" references="R059">parole visible</script>
-			<script type="Xpeo" references="R059">cunéiforme persépolitain</script>
-			<script type="Xsux" references="R059">cunéiforme suméro-akkadien</script>
+			<script type="Visp">parole visible</script>
+			<script type="Xpeo">cunéiforme persépolitain</script>
+			<script type="Xsux">cunéiforme suméro-akkadien</script>
 			<script type="Yiii">yi</script>
 			<script type="Zxxx" draft="contributed">(langues non écrites)</script>
 			<script type="Zxxx" alt="proposed-x1001" draft="unconfirmed">(codet pour les langues non écrites)</script>
@@ -1043,7 +1043,7 @@
 			<script type="Zyyy" draft="contributed">(écriture commune)</script>
 			<script type="Zyyy" alt="proposed-x1001" draft="unconfirmed">(commun)</script>
 			<script type="Zzzz" draft="contributed">(écriture non codée)</script>
-			<script type="Zzzz" references="R059" alt="proposed-x1001" draft="unconfirmed">codet pour écriture non codée</script>
+			<script type="Zzzz" alt="proposed-x1001" draft="unconfirmed">codet pour écriture non codée</script>
 		</scripts>
 		<territories>
 			<territory type="001">Monde</territory>
@@ -1108,8 +1108,8 @@
 			<territory type="AU">Australie</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Îles Åland</territory>
-			<territory type="AX" references="R062" alt="proposed-x1001" draft="unconfirmed">Åland, îles</territory>
-			<territory type="AX" references="R062" alt="proposed-x1002" draft="unconfirmed">Iles Åland</territory>
+			<territory type="AX" alt="proposed-x1001" draft="unconfirmed">Åland, îles</territory>
+			<territory type="AX" alt="proposed-x1002" draft="unconfirmed">Iles Åland</territory>
 			<territory type="AX" alt="proposed-x1003" draft="unconfirmed">Aland (Îles)</territory>
 			<territory type="AX" alt="proposed-x1004" draft="unconfirmed">Åland</territory>
 			<territory type="AZ">Azerbaïdjan</territory>
@@ -1123,7 +1123,7 @@
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Bénin</territory>
 			<territory type="BM">Bermudes</territory>
-			<territory type="BN" references="R056">Brunéi Darussalam</territory>
+			<territory type="BN">Brunéi Darussalam</territory>
 			<territory type="BO">Bolivie</territory>
 			<territory type="BR">Brésil</territory>
 			<territory type="BS">Bahamas</territory>
@@ -1131,8 +1131,8 @@
 			<territory type="BT" alt="proposed-x1001" draft="unconfirmed">Bhutan</territory>
 			<territory type="BV">Île  Bouvet</territory>
 			<territory type="BV" alt="proposed-x1001" draft="unconfirmed">Bouvet (Île)</territory>
-			<territory type="BV" references="R062" alt="proposed-x1002" draft="unconfirmed">Bouvet, île</territory>
-			<territory type="BV" references="R062" alt="proposed-x1003" draft="unconfirmed">Ile Bouvet</territory>
+			<territory type="BV" alt="proposed-x1002" draft="unconfirmed">Bouvet, île</territory>
+			<territory type="BV" alt="proposed-x1003" draft="unconfirmed">Ile Bouvet</territory>
 			<territory type="BW">Botswana</territory>
 			<territory type="BY">Bélarus</territory>
 			<territory type="BY" alt="proposed-x1001" draft="unconfirmed">Biélorussie</territory>
@@ -1140,26 +1140,26 @@
 			<territory type="CA">Canada</territory>
 			<territory type="CC">Îles des Cocos (Keeling)</territory>
 			<territory type="CC" alt="proposed-x1001" draft="unconfirmed">Cocos (Îles)</territory>
-			<territory type="CC" references="R062" alt="proposed-x1002" draft="unconfirmed">Cocos (Keeling), îles</territory>
+			<territory type="CC" alt="proposed-x1002" draft="unconfirmed">Cocos (Keeling), îles</territory>
 			<territory type="CC" alt="proposed-x1003" draft="unconfirmed">Îles Cocos (Keeling)</territory>
-			<territory type="CC" references="R062" alt="proposed-x1004" draft="unconfirmed">Iles Cocos (Keeling)</territory>
+			<territory type="CC" alt="proposed-x1004" draft="unconfirmed">Iles Cocos (Keeling)</territory>
 			<territory type="CC" alt="proposed-x1005" draft="unconfirmed">Îles des Cocos</territory>
 			<territory type="CD">République démocratique du Congo</territory>
-			<territory type="CD" references="R056" alt="proposed-x1001" draft="unconfirmed">Congo, la république démocratique du</territory>
+			<territory type="CD" alt="proposed-x1001" draft="unconfirmed">Congo, la république démocratique du</territory>
 			<territory type="CD" alt="proposed-x1002" draft="unconfirmed">Zaïre</territory>
 			<territory type="CD" alt="proposed-x1003" draft="unconfirmed">Congo-Kinshasa</territory>
 			<territory type="CF">République centrafricaine</territory>
 			<territory type="CF" alt="proposed-x1001" draft="unconfirmed">République Centrafricaine</territory>
-			<territory type="CF" references="R056" alt="proposed-x1002" draft="unconfirmed">Centrafricaine, république</territory>
+			<territory type="CF" alt="proposed-x1002" draft="unconfirmed">Centrafricaine, république</territory>
 			<territory type="CG">Congo</territory>
 			<territory type="CG" alt="proposed-x1001" draft="unconfirmed">Congo-Brazzaville</territory>
 			<territory type="CH">Suisse</territory>
 			<territory type="CI">Côte d’Ivoire</territory>
 			<territory type="CI" alt="proposed-x1001" draft="unconfirmed">Côte-d'Ivoire</territory>
 			<territory type="CK">Îles Cook</territory>
-			<territory type="CK" references="R056" alt="proposed-x1001" draft="unconfirmed">Cook, îles</territory>
+			<territory type="CK" alt="proposed-x1001" draft="unconfirmed">Cook, îles</territory>
 			<territory type="CK" alt="proposed-x1002" draft="unconfirmed">Cook (Îles)</territory>
-			<territory type="CK" references="R056" alt="proposed-x1003" draft="unconfirmed">Iles Cook</territory>
+			<territory type="CK" alt="proposed-x1003" draft="unconfirmed">Iles Cook</territory>
 			<territory type="CL">Chili</territory>
 			<territory type="CM">Cameroun</territory>
 			<territory type="CN">Chine</territory>
@@ -1171,12 +1171,12 @@
 			<territory type="CV">Cap-Vert</territory>
 			<territory type="CV" alt="proposed-x1001" draft="unconfirmed">Cap Vert</territory>
 			<territory type="CX">Île Christmas</territory>
-			<territory type="CX" references="R056" alt="proposed-x1001" draft="unconfirmed">Ile Christmas</territory>
+			<territory type="CX" alt="proposed-x1001" draft="unconfirmed">Ile Christmas</territory>
 			<territory type="CX" alt="proposed-x1002" draft="unconfirmed">Christmas (Îles)</territory>
-			<territory type="CX" references="R056" alt="proposed-x1003" draft="unconfirmed">Christmas, île</territory>
+			<territory type="CX" alt="proposed-x1003" draft="unconfirmed">Christmas, île</territory>
 			<territory type="CY">Chypre</territory>
 			<territory type="CZ">République tchèque</territory>
-			<territory type="CZ" references="R056" alt="proposed-x1001" draft="unconfirmed">Tchèque, république</territory>
+			<territory type="CZ" alt="proposed-x1001" draft="unconfirmed">Tchèque, république</territory>
 			<territory type="CZ" alt="proposed-x1002" draft="unconfirmed">Tchéquie</territory>
 			<territory type="DE">Allemagne</territory>
 			<territory type="DJ">Djibouti</territory>
@@ -1185,7 +1185,7 @@
 			<territory type="DO">République dominicaine</territory>
 			<territory type="DO" alt="proposed-x1001" draft="unconfirmed">Republique dominicaine</territory>
 			<territory type="DO" alt="proposed-x1002" draft="unconfirmed">République Dominicaine</territory>
-			<territory type="DO" references="R056" alt="proposed-x1003" draft="unconfirmed">Dominicaine, république</territory>
+			<territory type="DO" alt="proposed-x1003" draft="unconfirmed">Dominicaine, république</territory>
 			<territory type="DZ">Algérie</territory>
 			<territory type="EC">Équateur</territory>
 			<territory type="EE">Estonie</territory>
@@ -1198,18 +1198,18 @@
 			<territory type="FI">Finlande</territory>
 			<territory type="FJ">Fidji</territory>
 			<territory type="FK">Îles Falkland (Malouines)</territory>
-			<territory type="FK" references="R056" alt="proposed-x1001" draft="unconfirmed">Iles Falkland (Malouines)</territory>
+			<territory type="FK" alt="proposed-x1001" draft="unconfirmed">Iles Falkland (Malouines)</territory>
 			<territory type="FK" alt="proposed-x1002" draft="unconfirmed">Malouines (Îles)</territory>
 			<territory type="FK" alt="proposed-x1003" draft="unconfirmed">Îles Falkland</territory>
-			<territory type="FK" references="R056" alt="proposed-x1004" draft="unconfirmed">Falkland, îles (Malvinas)</territory>
+			<territory type="FK" alt="proposed-x1004" draft="unconfirmed">Falkland, îles (Malvinas)</territory>
 			<territory type="FM">États fédérés de Micronésie</territory>
-			<territory type="FM" references="R056" alt="proposed-x1001" draft="unconfirmed">Micronésie, états fédérés de</territory>
-			<territory type="FM" references="R056" alt="proposed-x1002" draft="unconfirmed">Micronésie, États fédérés de</territory>
+			<territory type="FM" alt="proposed-x1001" draft="unconfirmed">Micronésie, états fédérés de</territory>
+			<territory type="FM" alt="proposed-x1002" draft="unconfirmed">Micronésie, États fédérés de</territory>
 			<territory type="FM" alt="proposed-x1003" draft="unconfirmed">Micronésie (États fédérés de)</territory>
 			<territory type="FO">Îles Féroé</territory>
 			<territory type="FO" alt="proposed-x1001" draft="unconfirmed">Faroe (Îles)</territory>
-			<territory type="FO" references="R056" alt="proposed-x1002" draft="unconfirmed">Féroé, îles</territory>
-			<territory type="FO" references="R056" alt="proposed-x1003" draft="unconfirmed">Iles Féroé</territory>
+			<territory type="FO" alt="proposed-x1002" draft="unconfirmed">Féroé, îles</territory>
+			<territory type="FO" alt="proposed-x1003" draft="unconfirmed">Iles Féroé</territory>
 			<territory type="FR">France</territory>
 			<territory type="GA">Gabon</territory>
 			<territory type="GB">Royaume-Uni</territory>
@@ -1225,23 +1225,23 @@
 			<territory type="GP">Guadeloupe</territory>
 			<territory type="GQ">Guinée équatoriale</territory>
 			<territory type="GR">Grèce</territory>
-			<territory type="GS" references="R056">Géorgie du Sud et les îles Sandwich du Sud</territory>
-			<territory type="GS" references="R056" alt="proposed-x1001" draft="unconfirmed">Géorgie du Sud et les iles Sandwich du Sud</territory>
+			<territory type="GS">Géorgie du Sud et les îles Sandwich du Sud</territory>
+			<territory type="GS" alt="proposed-x1001" draft="unconfirmed">Géorgie du Sud et les iles Sandwich du Sud</territory>
 			<territory type="GS" alt="proposed-x1002" draft="unconfirmed">Géorgie du Sud et îles Sandwich du Sud</territory>
 			<territory type="GT">Guatemala</territory>
 			<territory type="GU">Guam</territory>
 			<territory type="GW">Guinée-Bissau</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">R.A.S. de Hong Kong (Chine)</territory>
-			<territory type="HK" references="R056" alt="proposed-x1001" draft="unconfirmed">Hong-Kong</territory>
+			<territory type="HK" alt="proposed-x1001" draft="unconfirmed">Hong-Kong</territory>
 			<territory type="HK" alt="proposed-x1002" draft="unconfirmed">R.A.S. de Hong Kong - Chine</territory>
 			<territory type="HK" alt="short">Hong-Kong</territory>
 			<territory type="HK" alt="short-proposed-x1001" draft="unconfirmed">Hong Kong</territory>
 			<territory type="HM">Îles Heard et MacDonald</territory>
 			<territory type="HM" alt="proposed-x1001" draft="unconfirmed">Île Heard et les îles McDonald</territory>
 			<territory type="HM" alt="proposed-x1002" draft="unconfirmed">Heard et McDonald (Îles)</territory>
-			<territory type="HM" references="R056" alt="proposed-x1003" draft="unconfirmed">Heard, île et McDonald, îles</territory>
-			<territory type="HM" references="R056" alt="proposed-x1004" draft="unconfirmed">Iles Heard et McDonald</territory>
+			<territory type="HM" alt="proposed-x1003" draft="unconfirmed">Heard, île et McDonald, îles</territory>
+			<territory type="HM" alt="proposed-x1004" draft="unconfirmed">Iles Heard et McDonald</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Croatie</territory>
 			<territory type="HT">Haïti</territory>
@@ -1255,7 +1255,7 @@
 			<territory type="IN">Inde</territory>
 			<territory type="IO">Territoire britannique de l'océan Indien</territory>
 			<territory type="IO" alt="proposed-x1001" draft="unconfirmed">Territoire britannique de l’océan Indien</territory>
-			<territory type="IO" references="R056" alt="proposed-x1002" draft="unconfirmed">Océan indien, territoire britannique de l'</territory>
+			<territory type="IO" alt="proposed-x1002" draft="unconfirmed">Océan indien, territoire britannique de l'</territory>
 			<territory type="IO" alt="proposed-x1003" draft="unconfirmed">Territoires britanniques de l'Océan Indien</territory>
 			<territory type="IQ">Irak</territory>
 			<territory type="IQ" alt="proposed-x1001" draft="unconfirmed">Iraq</territory>
@@ -1273,8 +1273,8 @@
 			<territory type="KI">Kiribati</territory>
 			<territory type="KM">Comores</territory>
 			<territory type="KM" alt="proposed-x1001" draft="unconfirmed">Comores (Archipel)</territory>
-			<territory type="KN" references="R056">Saint-Kitts-et-Nevis</territory>
-			<territory type="KN" references="R056" alt="proposed-x1001" draft="unconfirmed">Saint-Christophe-et-Niévès</territory>
+			<territory type="KN">Saint-Kitts-et-Nevis</territory>
+			<territory type="KN" alt="proposed-x1001" draft="unconfirmed">Saint-Christophe-et-Niévès</territory>
 			<territory type="KP">Corée du Nord</territory>
 			<territory type="KP" alt="proposed-x1001" draft="unconfirmed">Corée (République populaire démocratique de)</territory>
 			<territory type="KR">Corée du Sud</territory>
@@ -1293,20 +1293,20 @@
 			<territory type="LR">Libéria</territory>
 			<territory type="LR" alt="proposed-x1001" draft="unconfirmed">Liberia</territory>
 			<territory type="LS">Lesotho</territory>
-			<territory type="LT" references="R056">Lituanie</territory>
+			<territory type="LT">Lituanie</territory>
 			<territory type="LU">Luxembourg</territory>
 			<territory type="LV">Lettonie</territory>
 			<territory type="LY">Libye</territory>
 			<territory type="LY" alt="proposed-x1001" draft="unconfirmed">Jamahiriya arabe libyenne</territory>
 			<territory type="MA">Maroc</territory>
 			<territory type="MC">Monaco</territory>
-			<territory type="MD" references="R062">Moldavie</territory>
+			<territory type="MD">Moldavie</territory>
 			<territory type="ME">Monténégro</territory>
 			<territory type="MG">Madagascar</territory>
 			<territory type="MH">Îles Marshall</territory>
 			<territory type="MH" alt="proposed-x1001" draft="unconfirmed">Marshall (Îles)</territory>
-			<territory type="MH" references="R056" alt="proposed-x1002" draft="unconfirmed">Iles Marshall</territory>
-			<territory type="MH" references="R056" alt="proposed-x1003" draft="unconfirmed">Marshall, îles</territory>
+			<territory type="MH" alt="proposed-x1002" draft="unconfirmed">Iles Marshall</territory>
+			<territory type="MH" alt="proposed-x1003" draft="unconfirmed">Marshall, îles</territory>
 			<territory type="MK">Macédoine</territory>
 			<territory type="MK" alt="proposed-x1001" draft="unconfirmed">Ancienne république yougoslave de Macédoine</territory>
 			<territory type="ML">Mali</territory>
@@ -1315,11 +1315,11 @@
 			<territory type="MN">Mongolie</territory>
 			<territory type="MO">R.A.S de Macao (Chine)</territory>
 			<territory type="MO" alt="proposed-x1001" draft="unconfirmed">R.A.S de Macao - Chine</territory>
-			<territory type="MO" references="R056" alt="proposed-x1002" draft="unconfirmed">Macao</territory>
+			<territory type="MO" alt="proposed-x1002" draft="unconfirmed">Macao</territory>
 			<territory type="MO" alt="short">Macao</territory>
 			<territory type="MP">Îles Mariannes du Nord</territory>
-			<territory type="MP" references="R056" alt="proposed-x1001" draft="unconfirmed">Mariannes du Nord, îles</territory>
-			<territory type="MP" references="R056" alt="proposed-x1002" draft="unconfirmed">Iles Mariannes du Nord</territory>
+			<territory type="MP" alt="proposed-x1001" draft="unconfirmed">Mariannes du Nord, îles</territory>
+			<territory type="MP" alt="proposed-x1002" draft="unconfirmed">Iles Mariannes du Nord</territory>
 			<territory type="MP" alt="proposed-x1003" draft="unconfirmed">Mariannes du Nord (Commonwealth des îles)</territory>
 			<territory type="MQ">Martinique</territory>
 			<territory type="MR">Mauritanie</territory>
@@ -1337,8 +1337,8 @@
 			<territory type="NF">Île Norfolk</territory>
 			<territory type="NF" alt="proposed-x1001" draft="unconfirmed">Norfolk (Île de)</territory>
 			<territory type="NF" alt="proposed-x1002" draft="unconfirmed">Norfolk</territory>
-			<territory type="NF" references="R056" alt="proposed-x1003" draft="unconfirmed">Ile Norfolk</territory>
-			<territory type="NF" references="R056" alt="proposed-x1004" draft="unconfirmed">Norfolk, île</territory>
+			<territory type="NF" alt="proposed-x1003" draft="unconfirmed">Ile Norfolk</territory>
+			<territory type="NF" alt="proposed-x1004" draft="unconfirmed">Norfolk, île</territory>
 			<territory type="NG">Nigéria</territory>
 			<territory type="NI">Nicaragua</territory>
 			<territory type="NL">Pays-Bas</territory>
@@ -1401,9 +1401,9 @@
 			<territory type="SY">Syrie</territory>
 			<territory type="SZ">Swaziland</territory>
 			<territory type="TC">Îles Turks et Caïques</territory>
-			<territory type="TC" references="R056" alt="proposed-x1001" draft="unconfirmed">Iles Turks et Caïques</territory>
+			<territory type="TC" alt="proposed-x1001" draft="unconfirmed">Iles Turks et Caïques</territory>
 			<territory type="TC" alt="proposed-x1002" draft="unconfirmed">Turks et Caïcos (Îles)</territory>
-			<territory type="TC" references="R056" alt="proposed-x1003" draft="unconfirmed">Turks et Caïques, îles</territory>
+			<territory type="TC" alt="proposed-x1003" draft="unconfirmed">Turks et Caïques, îles</territory>
 			<territory type="TD">Tchad</territory>
 			<territory type="TF">Terres australes françaises</territory>
 			<territory type="TF" alt="proposed-x1001" draft="unconfirmed">Territoires d’Outre-mer (France)</territory>
@@ -1428,7 +1428,7 @@
 			<territory type="UM">Îles Mineures Éloignées des États-Unis</territory>
 			<territory type="UM" alt="proposed-x1001" draft="unconfirmed">Iles mineures éloignées des États-Unis</territory>
 			<territory type="UM" alt="proposed-x1002" draft="unconfirmed">Dépendances américaines du Pacifique</territory>
-			<territory type="UM" references="R056" alt="proposed-x1003" draft="unconfirmed">Îles mineures éloignées des États-Unis</territory>
+			<territory type="UM" alt="proposed-x1003" draft="unconfirmed">Îles mineures éloignées des États-Unis</territory>
 			<territory type="US">États-Unis</territory>
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Ouzbékistan</territory>
@@ -1467,7 +1467,7 @@
 			<variant type="1606NICT">françoys de 1606</variant>
 			<variant type="1694ACAD">françois académique de 1694</variant>
 			<variant type="AREVELA">arménien oriental</variant>
-			<variant type="AREVMDA" references="R063">arménien occidental</variant>
+			<variant type="AREVMDA">arménien occidental</variant>
 			<variant type="BOONT">dialecte boontling</variant>
 			<variant type="FONIPA">alphabet phonétique international</variant>
 			<variant type="FONUPA">alphabet phonétique ouralique</variant>
@@ -2874,7 +2874,7 @@
 				<symbol>Af</symbol>
 			</currency>
 			<currency type="ALL">
-				<displayName references="R058">lek</displayName>
+				<displayName>lek</displayName>
 				<symbol>lek</symbol>
 			</currency>
 			<currency type="AMD">
@@ -2882,7 +2882,7 @@
 				<symbol>dram</symbol>
 			</currency>
 			<currency type="ANG">
-				<displayName references="R058">florin des Antilles</displayName>
+				<displayName>florin des Antilles</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">florin antillais</displayName>
 				<symbol draft="unconfirmed">f.NA</symbol>
 			</currency>
@@ -2899,7 +2899,7 @@
 				<displayName>kwanza angolais réajusté (1995-1999)</displayName>
 			</currency>
 			<currency type="ARA">
-				<displayName references="R060">austral argentin</displayName>
+				<displayName>austral argentin</displayName>
 			</currency>
 			<currency type="ARP">
 				<displayName>peso argentin (1983-1985)</displayName>
@@ -2934,7 +2934,7 @@
 				<displayName alt="proposed-x1002" draft="unconfirmed">dinar bosniaque</displayName>
 			</currency>
 			<currency type="BAM">
-				<displayName references="R064">mark bosniaque convertible</displayName>
+				<displayName>mark bosniaque convertible</displayName>
 				<symbol>KM</symbol>
 			</currency>
 			<currency type="BBD">
@@ -2961,13 +2961,13 @@
 				<symbol draft="unconfirmed">lev</symbol>
 			</currency>
 			<currency type="BGN">
-				<displayName references="R060">nouveau lev</displayName>
+				<displayName>nouveau lev</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">lev</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">lev bulgare</displayName>
 				<symbol>NB</symbol>
 			</currency>
 			<currency type="BHD">
-				<displayName references="R058">dinar de Bahreïn</displayName>
+				<displayName>dinar de Bahreïn</displayName>
 			</currency>
 			<currency type="BIF">
 				<displayName>franc du Burundi</displayName>
@@ -2991,7 +2991,7 @@
 				<displayName>peso bolivien</displayName>
 			</currency>
 			<currency type="BOV">
-				<displayName references="R064">mvdol</displayName>
+				<displayName>mvdol</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">unité à valeur maintenue par rapport au dollar</displayName>
 			</currency>
 			<currency type="BRB">
@@ -3159,11 +3159,11 @@
 				<symbol>£Eg</symbol>
 			</currency>
 			<currency type="EQE">
-				<displayName references="R060" alt="proposed-x1001" draft="unconfirmed">ekwele</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">ekwele</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>Eritrean Nakfa</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">nafka</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">nafka</displayName>
 			</currency>
 			<currency type="ESA">
 				<displayName>peseta espagnole (compte A)</displayName>
@@ -3177,7 +3177,7 @@
 			</currency>
 			<currency type="ETB">
 				<displayName>birr</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">birr éthiopien</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">birr éthiopien</displayName>
 				<symbol>Br</symbol>
 			</currency>
 			<currency type="EUR">
@@ -3194,7 +3194,7 @@
 			</currency>
 			<currency type="FKP">
 				<displayName>livre des Falkland (Malvinas)</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">livre de Falkland</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">livre de Falkland</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">livre des Falkland</displayName>
 				<symbol>£Fk</symbol>
 			</currency>
@@ -3220,7 +3220,7 @@
 			</currency>
 			<currency type="GHC">
 				<displayName>cédi</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">cedi</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">cedi</displayName>
 				<symbol draft="provisional">Cd</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">¢Gh</symbol>
 			</currency>
@@ -3230,7 +3230,7 @@
 			</currency>
 			<currency type="GMD">
 				<displayName>dalasie</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">dalasi</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">dalasi</displayName>
 				<symbol draft="contributed">Ds</symbol>
 			</currency>
 			<currency type="GNF">
@@ -3243,7 +3243,7 @@
 			</currency>
 			<currency type="GQE">
 				<displayName>ekwélé</displayName>
-				<displayName references="R060" alt="proposed-x1001" draft="unconfirmed">ekwele de Guinée équatoriale</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">ekwele de Guinée équatoriale</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">ekwélé de Guinée équatoriale</displayName>
 			</currency>
 			<currency type="GRD">
@@ -3255,7 +3255,7 @@
 				<symbol draft="unconfirmed">Q</symbol>
 			</currency>
 			<currency type="GWE">
-				<displayName references="R060">escudo de Guinée portugaise</displayName>
+				<displayName>escudo de Guinée portugaise</displayName>
 			</currency>
 			<currency type="GWP">
 				<displayName>peso de Guinée-Bissau</displayName>
@@ -3307,7 +3307,7 @@
 				<symbol draft="contributed">£IL</symbol>
 			</currency>
 			<currency type="ILS">
-				<displayName references="R061" draft="contributed">shekel</displayName>
+				<displayName draft="contributed">shekel</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">shekel israélien</displayName>
 				<symbol draft="unconfirmed">₪</symbol>
 			</currency>
@@ -3317,7 +3317,7 @@
 			</currency>
 			<currency type="IQD">
 				<displayName>dinar irakien</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">dinar iraquien</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">dinar iraquien</displayName>
 				<symbol draft="contributed">DI</symbol>
 			</currency>
 			<currency type="IRR">
@@ -3352,7 +3352,7 @@
 				<symbol draft="contributed">ShK</symbol>
 			</currency>
 			<currency type="KGS">
-				<displayName references="R058">som</displayName>
+				<displayName>som</displayName>
 				<symbol>som</symbol>
 			</currency>
 			<currency type="KHR">
@@ -3373,7 +3373,7 @@
 				<symbol>₩kr</symbol>
 			</currency>
 			<currency type="KWD">
-				<displayName references="R058" draft="contributed">dinar koweïtien</displayName>
+				<displayName draft="contributed">dinar koweïtien</displayName>
 				<symbol draft="contributed">DK</symbol>
 			</currency>
 			<currency type="KYD">
@@ -3384,7 +3384,7 @@
 			<currency type="KZT">
 				<displayName>tenge du Kazakhstan</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">tengé kazakh</displayName>
-				<displayName references="R058" alt="proposed-x1002" draft="unconfirmed">tenge</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">tenge</displayName>
 				<symbol>T</symbol>
 			</currency>
 			<currency type="LAK">
@@ -3404,21 +3404,21 @@
 				<symbol>$LR</symbol>
 			</currency>
 			<currency type="LSL">
-				<displayName references="R058">loti</displayName>
+				<displayName>loti</displayName>
 				<symbol>M</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">LSL</symbol>
 			</currency>
 			<currency type="LSM">
-				<displayName references="R060" draft="contributed">maloti</displayName>
+				<displayName draft="contributed">maloti</displayName>
 			</currency>
 			<currency type="LTL">
-				<displayName references="R058">litas lituanien</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">litas</displayName>
+				<displayName>litas lituanien</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">litas</displayName>
 				<symbol draft="provisional">LL</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">Lts</symbol>
 			</currency>
 			<currency type="LTT">
-				<displayName references="R060">talonas</displayName>
+				<displayName>talonas</displayName>
 			</currency>
 			<currency type="LUC">
 				<displayName>franc luxembourgeois convertible</displayName>
@@ -3439,7 +3439,7 @@
 				<displayName>rouble letton</displayName>
 			</currency>
 			<currency type="LYD">
-				<displayName references="R058">dinar lybien</displayName>
+				<displayName>dinar lybien</displayName>
 				<symbol>LD</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">DL</symbol>
 			</currency>
@@ -3455,7 +3455,7 @@
 				<symbol draft="unconfirmed">LM</symbol>
 			</currency>
 			<currency type="MGA">
-				<displayName references="R061">ariary</displayName>
+				<displayName>ariary</displayName>
 				<symbol draft="unconfirmed">Ar</symbol>
 			</currency>
 			<currency type="MGF">
@@ -3463,7 +3463,7 @@
 				<symbol draft="unconfirmed">FM</symbol>
 			</currency>
 			<currency type="MKD">
-				<displayName references="R058">denar</displayName>
+				<displayName>denar</displayName>
 				<symbol>MDen</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">DenM</symbol>
 			</currency>
@@ -3473,7 +3473,7 @@
 			</currency>
 			<currency type="MMK">
 				<displayName>Myanmar Kyat</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">kyat</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">kyat</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">kyat de Myanmar</displayName>
 				<symbol draft="unconfirmed">KMm</symbol>
 			</currency>
@@ -3498,22 +3498,22 @@
 				<symbol draft="unconfirmed">£Mt</symbol>
 			</currency>
 			<currency type="MUR">
-				<displayName references="R060">roupie mauricienne</displayName>
+				<displayName>roupie mauricienne</displayName>
 				<symbol draft="unconfirmed">RpMu</symbol>
 			</currency>
 			<currency type="MVR">
 				<displayName>roupie des Maldives</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">rufiyaa</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">rufiyaa</displayName>
 			</currency>
 			<currency type="MWK">
 				<displayName>kwacha [MWK]</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">kwacha malawite</displayName>
-				<displayName references="R064" alt="proposed-x1002" draft="unconfirmed">kwacha du Malawi</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">kwacha du Malawi</displayName>
 				<symbol draft="unconfirmed">KMw</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">KM</symbol>
 			</currency>
 			<currency type="MXN">
-				<displayName references="R058">peso mexicain</displayName>
+				<displayName>peso mexicain</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">peso du mexique</displayName>
 				<symbol>$Mex</symbol>
 			</currency>
@@ -3522,11 +3522,11 @@
 			</currency>
 			<currency type="MXV">
 				<displayName>unité de conversion mexicaine (UDI)</displayName>
-				<displayName references="R060" alt="proposed-x1001" draft="unconfirmed">unidad de inversion</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">unidad de inversion</displayName>
 			</currency>
 			<currency type="MYR">
 				<displayName>ringgit malais</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">ringgit de Malaisie</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">ringgit de Malaisie</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">ringgit</displayName>
 				<symbol draft="unconfirmed">RM</symbol>
 			</currency>
@@ -3537,7 +3537,7 @@
 			<currency type="MZM">
 				<displayName>métical</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">ancien metical</displayName>
-				<displayName references="R063" alt="proposed-x1002" draft="unconfirmed">metical</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">metical</displayName>
 				<symbol draft="unconfirmed">Mt</symbol>
 			</currency>
 			<currency type="MZN">
@@ -3546,7 +3546,7 @@
 				<symbol alt="proposed-x1001" draft="unconfirmed">MTn</symbol>
 			</currency>
 			<currency type="NAD">
-				<displayName references="R058">dollar namibien</displayName>
+				<displayName>dollar namibien</displayName>
 				<symbol>N$</symbol>
 				<symbol alt="proposed-x1001" draft="unconfirmed">$Na</symbol>
 			</currency>
@@ -3585,7 +3585,7 @@
 				<displayName>balboa</displayName>
 			</currency>
 			<currency type="PEI">
-				<displayName references="R060">inti péruvien</displayName>
+				<displayName>inti péruvien</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">inti</displayName>
 				<symbol draft="unconfirmed">I/.</symbol>
 			</currency>
@@ -3630,17 +3630,17 @@
 				<symbol draft="unconfirmed">RQ</symbol>
 			</currency>
 			<currency type="RHD">
-				<displayName references="R060">dollar rhodésien</displayName>
+				<displayName>dollar rhodésien</displayName>
 				<symbol draft="unconfirmed">$RH</symbol>
 			</currency>
 			<currency type="ROL">
-				<displayName references="R064">ancien leu roumain</displayName>
-				<displayName references="R064" alt="proposed-x1001" draft="unconfirmed">ancien leu</displayName>
+				<displayName>ancien leu roumain</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">ancien leu</displayName>
 			</currency>
 			<currency type="RON">
 				<displayName>leu roumain</displayName>
-				<displayName references="R064" alt="proposed-x1001" draft="unconfirmed">nouveau leu</displayName>
-				<displayName references="R064" alt="proposed-x1002" draft="unconfirmed">nouveau leu roumain</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">nouveau leu</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">nouveau leu roumain</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName draft="provisional">dinar serbe</displayName>
@@ -3655,16 +3655,16 @@
 				<symbol draft="unconfirmed">RuR</symbol>
 			</currency>
 			<currency type="RWF">
-				<displayName references="R064">franc rwandais</displayName>
+				<displayName>franc rwandais</displayName>
 				<symbol draft="unconfirmed">FrRw</symbol>
 			</currency>
 			<currency type="SAR">
-				<displayName references="R060">rial saoudien</displayName>
+				<displayName>rial saoudien</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">riyal saoudien</displayName>
 				<symbol draft="unconfirmed">Rls</symbol>
 			</currency>
 			<currency type="SBD">
-				<displayName references="R064">dollar des Îles Salomon</displayName>
+				<displayName>dollar des Îles Salomon</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">dollar des Salomon</displayName>
 				<symbol draft="unconfirmed">$SB</symbol>
 			</currency>
@@ -3692,7 +3692,7 @@
 				<symbol draft="unconfirmed">£SH</symbol>
 			</currency>
 			<currency type="SIT">
-				<displayName references="R058">tolar</displayName>
+				<displayName>tolar</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">tolar slovène</displayName>
 				<symbol draft="unconfirmed">TSi</symbol>
 			</currency>
@@ -3702,7 +3702,7 @@
 			</currency>
 			<currency type="SLL">
 				<displayName>léone</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">leone</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">leone</displayName>
 				<symbol draft="unconfirmed">Ln</symbol>
 			</currency>
 			<currency type="SOS">
@@ -3711,7 +3711,7 @@
 				<symbol draft="unconfirmed">ShSo</symbol>
 			</currency>
 			<currency type="SRD">
-				<displayName references="R064">dollar surinamais</displayName>
+				<displayName>dollar surinamais</displayName>
 				<symbol draft="unconfirmed">$SR</symbol>
 			</currency>
 			<currency type="SRG">
@@ -3726,7 +3726,7 @@
 				<displayName alt="proposed-x1001" draft="unconfirmed">rouble soviétique</displayName>
 			</currency>
 			<currency type="SVC">
-				<displayName references="R064">colon salvadorien</displayName>
+				<displayName>colon salvadorien</displayName>
 			</currency>
 			<currency type="SYP">
 				<displayName>livre syrienne</displayName>
@@ -3743,17 +3743,17 @@
 			</currency>
 			<currency type="TJR">
 				<displayName>rouble du Tadjikistan</displayName>
-				<displayName references="R060" alt="proposed-x1001" draft="unconfirmed">rouble tadjik</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">rouble tadjik</displayName>
 			</currency>
 			<currency type="TJS">
 				<displayName>somoni du Tadjikistan</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">somoni</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">somoni</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">somoni tadjik</displayName>
 			</currency>
 			<currency type="TMM">
 				<displayName>Turkmenistan Manat</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">manat turkmène</displayName>
-				<displayName references="R058" alt="proposed-x1002" draft="unconfirmed">manat</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">manat</displayName>
 			</currency>
 			<currency type="TND">
 				<displayName>dinar tunisien</displayName>
@@ -3774,17 +3774,17 @@
 				<symbol alt="proposed-x1001" draft="unconfirmed">TRL</symbol>
 			</currency>
 			<currency type="TRY">
-				<displayName references="R064">nouvelle livre turque</displayName>
+				<displayName>nouvelle livre turque</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">nouvelle lire turque</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>dollar de la Trinité</displayName>
-				<displayName references="R064" alt="proposed-x1001" draft="unconfirmed">dollar de Trinité-et-Tobago</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">dollar de Trinité-et-Tobago</displayName>
 			</currency>
 			<currency type="TWD">
 				<displayName>dollar taïwanais</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">nouveau dollar taïwanais</displayName>
-				<displayName references="R058" alt="proposed-x1002" draft="unconfirmed">nouveau dollar de Taïwan</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">nouveau dollar de Taïwan</displayName>
 			</currency>
 			<currency type="TZS">
 				<displayName>shilling de Tanzanie</displayName>
@@ -3852,31 +3852,31 @@
 				<displayName>franc CFA (BEAC)</displayName>
 			</currency>
 			<currency type="XAG">
-				<displayName references="R058">argent</displayName>
+				<displayName>argent</displayName>
 			</currency>
 			<currency type="XAU">
 				<displayName>or</displayName>
 			</currency>
 			<currency type="XBA">
-				<displayName references="R058">unité européenne composée</displayName>
+				<displayName>unité européenne composée</displayName>
 			</currency>
 			<currency type="XBB">
 				<displayName>unité monétaire européenne</displayName>
 			</currency>
 			<currency type="XBC">
 				<displayName>unité de compte européenne (XBC)</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">unité de compte 9</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">unité de compte 9</displayName>
 			</currency>
 			<currency type="XBD">
 				<displayName>unité de compte européenne (XBD)</displayName>
-				<displayName references="R058" alt="proposed-x1001" draft="unconfirmed">unité de compte 17</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">unité de compte 17</displayName>
 			</currency>
 			<currency type="XCD">
-				<displayName references="R058">dollar des Caraïbes orientales</displayName>
+				<displayName>dollar des Caraïbes orientales</displayName>
 				<symbol>$EC</symbol>
 			</currency>
 			<currency type="XDR">
-				<displayName references="R058">droit de tirage spécial</displayName>
+				<displayName>droit de tirage spécial</displayName>
 			</currency>
 			<currency type="XEU">
 				<displayName>unité de compte européenne (ECU)</displayName>
@@ -3891,7 +3891,7 @@
 				<displayName>franc CFA (BCEAO)</displayName>
 			</currency>
 			<currency type="XPD">
-				<displayName references="R058">palladium</displayName>
+				<displayName>palladium</displayName>
 			</currency>
 			<currency type="XPF">
 				<displayName>franc CFP</displayName>
@@ -3901,7 +3901,7 @@
 				<displayName>platine</displayName>
 			</currency>
 			<currency type="XRE">
-				<displayName references="R060">type de fonds RINET</displayName>
+				<displayName>type de fonds RINET</displayName>
 			</currency>
 			<currency type="XTS">
 				<displayName draft="unconfirmed">(devise de test)</displayName>
@@ -3940,7 +3940,7 @@
 			</currency>
 			<currency type="ZMK">
 				<displayName>kwacha</displayName>
-				<displayName references="R060" alt="proposed-x1001" draft="unconfirmed">kwacha de Zambie</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">kwacha de Zambie</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">kwacha zambien</displayName>
 				<symbol draft="unconfirmed">Kw</symbol>
 			</currency>

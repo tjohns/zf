@@ -7,8 +7,8 @@
 		<language type="ny"/>
 	</identity>
 	<characters>
-		<exemplarCharacters references="R209">[a-p r-u w ŵ y z]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" references="R209">[q v x]</exemplarCharacters>
+		<exemplarCharacters>[a-p r-u w ŵ y z]</exemplarCharacters>
+		<exemplarCharacters type="auxiliary">[q v x]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>

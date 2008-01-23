@@ -1630,7 +1630,7 @@
 				<displayName>Ecuadori sukre</displayName>
 			</currency>
 			<currency type="EEK">
-				<displayName references="R044">kroon</displayName>
+				<displayName>kroon</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">Eesti kroon</displayName>
 				<symbol>kr</symbol>
 				<decimal>.</decimal>

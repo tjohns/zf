@@ -202,7 +202,7 @@
 			<language type="gsw" draft="provisional">スイスドイツ語（スイス）</language>
 			<language type="gu">グジャラート語</language>
 			<language type="gu" alt="proposed-x1001" draft="unconfirmed">グジャラト語</language>
-			<language type="gu" references="R089" alt="proposed-x1002" draft="unconfirmed">グジャラーティー語</language>
+			<language type="gu" alt="proposed-x1002" draft="unconfirmed">グジャラーティー語</language>
 			<language type="gv">マン島語</language>
 			<language type="gwi">グウィッチン語</language>
 			<language type="ha">ハウサ語</language>
@@ -1391,7 +1391,7 @@
 						<dateFormatItem id="GGGGyMd">GGGGy年M月d日</dateFormatItem>
 						<dateFormatItem id="H">H 時</dateFormatItem>
 						<dateFormatItem id="H" alt="proposed-x1001" draft="unconfirmed">H</dateFormatItem>
-						<dateFormatItem id="MMMEd" references="RP1">MMM/d（E）</dateFormatItem>
+						<dateFormatItem id="MMMEd">MMM/d（E）</dateFormatItem>
 						<dateFormatItem id="MMMMd">MMMM d 日</dateFormatItem>
 						<dateFormatItem id="MMdd">MM/dd</dateFormatItem>
 						<dateFormatItem id="Md">M/d</dateFormatItem>
@@ -3248,7 +3248,7 @@
 			<currency type="BEC">
 				<displayName>ベルギー フラン (BEC)</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">ベルギー 貿易フラン</displayName>
-				<displayName references="RP1" alt="proposed-x1002" draft="unconfirmed">ベルギー 貿易フラン</displayName>
+				<displayName alt="proposed-x1002" draft="unconfirmed">ベルギー 貿易フラン</displayName>
 			</currency>
 			<currency type="BEF">
 				<displayName>ベルギー フラン</displayName>
@@ -3820,7 +3820,7 @@
 				<symbol draft="provisional">Pra</symbol>
 			</currency>
 			<currency type="PLN">
-				<displayName>ポーランド ズウォティ</displayName>
+				<displayName>ーランド ズウォティ</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">ニュー ズローティ (ポーランド)</displayName>
 				<symbol draft="provisional">Zl</symbol>
 			</currency>

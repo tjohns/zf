@@ -23,7 +23,7 @@
 		</languages>
 		<territories>
 			<territory type="UM">USA:s yttre öar</territory>
-			<territory type="UM" references="R221" alt="proposed-x1001" draft="unconfirmed">USAs yttre öar</territory>
+			<territory type="UM" alt="proposed-x1001" draft="unconfirmed">USAs yttre öar</territory>
 		</territories>
 	</localeDisplayNames>
 	<characters>

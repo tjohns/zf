@@ -157,7 +157,7 @@
 			<language type="crh" alt="proposed-x1001" draft="unconfirmed">ครีมีนเตอร์กี</language>
 			<language type="crp">ครีโอเลสและพิกกินส์ (อื่นๆ)</language>
 			<language type="crp" alt="proposed-x1001" draft="unconfirmed">คริโอลและพิดจิน (อื่นๆ)</language>
-			<language type="cs" references="R227">เช็ก</language>
+			<language type="cs">เช็ก</language>
 			<language type="cs" alt="proposed-x1001" draft="unconfirmed">ภาษาเช็คช์</language>
 			<language type="csb">คาซูเบียน</language>
 			<language type="cu">เชอร์ชสลาวิก</language>
@@ -314,7 +314,7 @@
 			<language type="hy" alt="proposed-x1002" draft="unconfirmed">อาร์มีเนีย</language>
 			<language type="hz">เฮเรโร</language>
 			<language type="hz" alt="proposed-x1001" draft="unconfirmed">เฮียร์โร</language>
-			<language type="ia" references="R226">ภาษากลางที่ใช้ในการสื่อสารระหว่างประเทศ</language>
+			<language type="ia">ภาษากลางที่ใช้ในการสื่อสารระหว่างประเทศ</language>
 			<language type="ia" alt="proposed-x1001" draft="unconfirmed">ภาษานานาชาติ</language>
 			<language type="iba">อิบาน</language>
 			<language type="id">อินโดนีเชีย</language>
@@ -359,11 +359,11 @@
 			<language type="ka" alt="proposed-x1002" draft="unconfirmed">ภาษาจอร์เจีย</language>
 			<language type="kaa">การา-กาลพาก</language>
 			<language type="kab">กาไบล</language>
-			<language type="kac" references="R227">กะฉิ่น</language>
+			<language type="kac">กะฉิ่น</language>
 			<language type="kac" alt="proposed-x1001" draft="unconfirmed">คะฉิ่น</language>
 			<language type="kam">คัมบา</language>
 			<language type="kam" alt="proposed-x1001" draft="unconfirmed">กามบา</language>
-			<language type="kar" references="R227">กะเหรี่ยง</language>
+			<language type="kar">กะเหรี่ยง</language>
 			<language type="kaw">กาวิ</language>
 			<language type="kaw" alt="proposed-x1001" draft="unconfirmed">กวิ</language>
 			<language type="kbd">คาร์บาเดีย</language>
@@ -466,7 +466,7 @@
 			<language type="mn" alt="proposed-x1001" draft="unconfirmed">มองโกเลีย</language>
 			<language type="mn" alt="proposed-x1002" draft="unconfirmed">ภาษามองโกเลีย</language>
 			<language type="mnc">แมนจู</language>
-			<language type="mnc" references="R226" alt="proposed-x1001" draft="unconfirmed">ชาวแมนจูเรีย</language>
+			<language type="mnc" alt="proposed-x1001" draft="unconfirmed">ชาวแมนจูเรีย</language>
 			<language type="mni">มณีปุริ</language>
 			<language type="mni" alt="proposed-x1001" draft="unconfirmed">มานิพูริ</language>
 			<language type="mno">ภาษามาโนโบ</language>
@@ -567,7 +567,7 @@
 			<language type="pap">พาเพียเมนโท</language>
 			<language type="pau">พาลาอวน</language>
 			<language type="peo">เปอร์เซียโบราณ</language>
-			<language type="phi" references="R227">ฟิลิปปินส์ (อื่นๆ)</language>
+			<language type="phi">ฟิลิปปินส์ (อื่นๆ)</language>
 			<language type="phi" alt="proposed-x1001" draft="unconfirmed">ฟิลิปปินส์ [PHI]</language>
 			<language type="phi" alt="proposed-x1002" draft="unconfirmed">ฟิลิปปินส์ (อื่นๆ)</language>
 			<language type="phn">ฟินิเชียน</language>
@@ -815,7 +815,7 @@
 		</languages>
 		<scripts>
 			<script type="Arab">อาหรับ</script>
-			<script type="Arab" alt="proposed-x1001" draft="unconfirmed">อารบิก</script>
+			<script type="Arab" alt="proposed-x1001" draft="unconfirmed">อาร££บิก</script>
 			<script type="Armn">อาร์เมเนีย</script>
 			<script type="Armn" alt="proposed-x1001" draft="unconfirmed">อาร์เมเนียน</script>
 			<script type="Bali">บาหลี</script>
@@ -1798,7 +1798,7 @@
 				<exemplarCity>โคมอดริวาดาเวีย</exemplarCity>
 			</zone>
 			<!-- <zone type="America/Indiana/Indianapolis">
-				 <exemplarCity references="RP3">อินเดียแนโพลิส</exemplarCity>
+				 <exemplarCity>อินเดียแนโพลิส</exemplarCity>
 				 </zone>
 				 <zone type="America/Kentucky/Louisville">
 				 <exemplarCity>หลุยส์วิลล์</exemplarCity>
@@ -1998,7 +1998,7 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ริโอบรังโก</exemplarCity>
 			</zone>
 			<zone type="America/Porto_Velho">
-				<exemplarCity references="R227">ปอร์ตูเวลโย</exemplarCity>
+				<exemplarCity>ปอร์ตูเวลโย</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ปอร์ตูเวลโย</exemplarCity>
 			</zone>
 			<zone type="America/Boa_Vista">
@@ -2026,7 +2026,7 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">เซา เปาโล</exemplarCity>
 			</zone>
 			<zone type="America/Bahia">
-				<exemplarCity references="R227">บาเยีย</exemplarCity>
+				<exemplarCity>บาเยีย</exemplarCity>
 			</zone>
 			<zone type="America/Fortaleza">
 				<exemplarCity>ฟอร์ตาเลซา</exemplarCity>
@@ -2135,7 +2135,7 @@
 				<exemplarCity>โคโคส</exemplarCity>
 			</zone>
 			<zone type="Africa/Kinshasa">
-				<exemplarCity references="R227">กินชาซา</exemplarCity>
+				<exemplarCity>กินชาซา</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>ลูบัมบาชิ</exemplarCity>
@@ -2154,7 +2154,7 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">หมู่เกาะอีสเตอร์</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
-				<exemplarCity references="R227">ซันติอาโก</exemplarCity>
+				<exemplarCity>ซันติอาโก</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ซานติเอโก</exemplarCity>
 			</zone>
 			<zone type="Asia/Kashgar">
@@ -2234,7 +2234,7 @@
 				<exemplarCity alt="proposed-x1002" draft="unconfirmed">หมู่เกาะคานารี</exemplarCity>
 			</zone>
 			<zone type="Africa/Ceuta">
-				<exemplarCity references="R227">เซวตา</exemplarCity>
+				<exemplarCity>เซวตา</exemplarCity>
 			</zone>
 			<!-- Ecuador
 				 Spain
@@ -2493,7 +2493,7 @@
 				<exemplarCity>ฮอฟด์</exemplarCity>
 			</zone>
 			<zone type="Asia/Ulaanbaatar">
-				<exemplarCity references="R227">อูลานบาตอร์</exemplarCity>
+				<exemplarCity>อูลานบาตอร์</exemplarCity>
 			</zone>
 			<zone type="Asia/Choibalsan">
 				<exemplarCity>โชบาลซาน</exemplarCity>
@@ -2717,7 +2717,7 @@
 				<exemplarCity>ซาคาลิน</exemplarCity>
 			</zone>
 			<zone type="Asia/Magadan">
-				<exemplarCity references="R227">มากาดาน</exemplarCity>
+				<exemplarCity>มากาดาน</exemplarCity>
 			</zone>
 			<zone type="Asia/Kamchatka">
 				<exemplarCity>คามชัตกา</exemplarCity>
@@ -2862,7 +2862,7 @@
 				<exemplarCity>ยากูทัต</exemplarCity>
 			</zone>
 			<zone type="America/Juneau">
-				<exemplarCity references="R227">จูโน</exemplarCity>
+				<exemplarCity>จูโน</exemplarCity>
 			</zone>
 			<zone type="America/Los_Angeles">
 				<exemplarCity>ลอสแองเจลิส</exemplarCity>

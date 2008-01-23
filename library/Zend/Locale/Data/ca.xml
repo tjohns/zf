@@ -19,7 +19,7 @@
 			<language type="az" alt="proposed-x1001" draft="unconfirmed">azerbaijani</language>
 			<language type="ba">baixkir</language>
 			<language type="be">bielorús</language>
-			<language type="ber" references="R012" draft="provisional">berber</language>
+			<language type="ber" draft="provisional">berber</language>
 			<language type="bg">búlgar</language>
 			<language type="bh">bihari</language>
 			<language type="bi">bislama</language>
@@ -28,7 +28,7 @@
 			<language type="br">bretó</language>
 			<language type="bs" draft="provisional">bosnià</language>
 			<language type="ca">català</language>
-			<language type="ca" references="R012" alt="proposed-x1001" draft="unconfirmed">cat</language>
+			<language type="ca" alt="proposed-x1001" draft="unconfirmed">cat</language>
 			<language type="co">cors</language>
 			<language type="cs">txec</language>
 			<language type="cy">gal·lès</language>
@@ -180,7 +180,7 @@
 			<language type="yo">ioruba</language>
 			<language type="za">zhuang</language>
 			<language type="zh">xinés</language>
-			<language type="zh" references="R012" alt="proposed-x1001" draft="unconfirmed">xinès</language>
+			<language type="zh" alt="proposed-x1001" draft="unconfirmed">xinès</language>
 			<language type="zh_Hans" draft="provisional">xinès (simplificat)</language>
 			<language type="zh_Hant" draft="provisional">xinès (tradicional)</language>
 			<language type="zu">zulu</language>
@@ -237,7 +237,7 @@
 			<territory type="CD" draft="provisional">Congo, República Democràtica del</territory>
 			<territory type="CF">República Centrafricana</territory>
 			<territory type="CF" alt="proposed-x1001" draft="unconfirmed">República Centreafricana</territory>
-			<territory type="CF" references="R012" alt="proposed-x1002" draft="unconfirmed">República Centreafricana</territory>
+			<territory type="CF" alt="proposed-x1002" draft="unconfirmed">República Centreafricana</territory>
 			<territory type="CG">Congo</territory>
 			<territory type="CH">Switzerland</territory>
 			<territory type="CH" alt="proposed-x1001" draft="unconfirmed">Suïssa</territory>
@@ -582,8 +582,8 @@
 				<pm draft="unconfirmed">PM</pm>
 				<eras>
 					<eraAbbr>
-						<era type="0" references="R012">aC</era>
-						<era type="1" references="R012">dC</era>
+						<era type="0">aC</era>
+						<era type="1">dC</era>
 					</eraAbbr>
 				</eras>
 				<dateFormats>
@@ -881,7 +881,7 @@
 				<displayName alt="proposed-x1001" draft="unconfirmed">Dòlar Australià</displayName>
 			</currency>
 			<currency type="BEF">
-				<displayName references="RP2" draft="provisional">Franc belga</displayName>
+				<displayName draft="provisional">Franc belga</displayName>
 			</currency>
 			<currency type="BGN">
 				<displayName draft="provisional">Lev búlgar</displayName>

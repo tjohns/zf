@@ -1161,9 +1161,9 @@
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US" draft="contributed">angloamerikanisch</measurementSystemName>
-			<measurementSystemName type="US" references="R019" alt="proposed-x1001" draft="unconfirmed">US-amerikanisch</measurementSystemName>
+			<measurementSystemName type="US" alt="proposed-x1001" draft="unconfirmed">US-amerikanisch</measurementSystemName>
 			<measurementSystemName type="US" alt="proposed-x1002" draft="unconfirmed">Angloamerikanisch</measurementSystemName>
-			<measurementSystemName type="metric" references="R021" draft="provisional">metrisch</measurementSystemName>
+			<measurementSystemName type="metric" draft="provisional">metrisch</measurementSystemName>
 			<measurementSystemName type="metric" alt="proposed-x1001" draft="unconfirmed">Metrisch</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
@@ -1902,11 +1902,11 @@
 			</currency>
 			<currency type="BGL">
 				<displayName>Lew (1962-1999)</displayName>
-				<displayName references="R021" alt="proposed-x1001" draft="unconfirmed">Bulgarischer Lew (1962-1999)</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">Bulgarischer Lew (1962-1999)</displayName>
 			</currency>
 			<currency type="BGN">
 				<displayName>Lew</displayName>
-				<displayName references="R021" alt="proposed-x1001" draft="unconfirmed">Bulgarischer Lew</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">Bulgarischer Lew</displayName>
 				<displayName alt="proposed-x1002" draft="unconfirmed">Neuer Bulgarischer Lew</displayName>
 				<displayName alt="proposed-x1003" draft="unconfirmed">Bulgarischer Lew</displayName>
 			</currency>
@@ -2071,10 +2071,10 @@
 				<displayName>Nakfa</displayName>
 			</currency>
 			<currency type="ESA">
-				<displayName references="R021" draft="provisional">Spanische Peseta (A-Konten)</displayName>
+				<displayName draft="provisional">Spanische Peseta (A-Konten)</displayName>
 			</currency>
 			<currency type="ESB">
-				<displayName references="R021" draft="provisional">Spanische Peseta (konvertibel)</displayName>
+				<displayName draft="provisional">Spanische Peseta (konvertibel)</displayName>
 			</currency>
 			<currency type="ESP">
 				<displayName>Spanische Pesete</displayName>
@@ -2129,7 +2129,7 @@
 				<displayName alt="proposed-x1001" draft="unconfirmed">Guinea-Franc</displayName>
 			</currency>
 			<currency type="GNS">
-				<displayName references="R021" draft="provisional">Guineischer Syli</displayName>
+				<displayName draft="provisional">Guineischer Syli</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">GNS</displayName>
 			</currency>
 			<currency type="GQE">
@@ -2440,7 +2440,7 @@
 			</currency>
 			<currency type="RON">
 				<displayName>Rumänischer Leu</displayName>
-				<displayName references="R021" alt="proposed-x1001" draft="unconfirmed">Neuer Rumänischer Leu</displayName>
+				<displayName alt="proposed-x1001" draft="unconfirmed">Neuer Rumänischer Leu</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>Serbischer Dinar</displayName>
@@ -2500,7 +2500,7 @@
 				<displayName alt="proposed-x1001" draft="unconfirmed">Somalia-Schilling</displayName>
 			</currency>
 			<currency type="SRD">
-				<displayName references="R021" draft="provisional">Surinamischer Dollar</displayName>
+				<displayName draft="provisional">Surinamischer Dollar</displayName>
 			</currency>
 			<currency type="SRG">
 				<displayName>Suriname Gulden</displayName>
@@ -2591,7 +2591,7 @@
 				<displayName alt="proposed-x1001" draft="unconfirmed">US-Dollar (Gleicher Tag)</displayName>
 			</currency>
 			<currency type="UYP">
-				<displayName references="R021" draft="provisional">Uruguayischer Neuer Peso (1975-1993)</displayName>
+				<displayName draft="provisional">Uruguayischer Neuer Peso (1975-1993)</displayName>
 			</currency>
 			<currency type="UYU">
 				<displayName>Uruguayischer Peso</displayName>

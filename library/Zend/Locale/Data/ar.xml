@@ -994,7 +994,7 @@
 				<dateFormats>
 					<dateFormatLength type="short">
 						<dateFormat>
-							<pattern references="RP1">M‏/d‏‏/yyyy</pattern>
+							<pattern>M‏/d‏‏/yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -2649,7 +2649,7 @@
 				<displayName>شلن كينيي</displayName>
 			</currency>
 			<currency type="KGS">
-				<displayName>سوم قيرغستانى</displayName>
+				<displayName>سوم قيرغس³تانى</displayName>
 			</currency>
 			<currency type="KHR">
 				<displayName>رييال كمبودى</displayName>

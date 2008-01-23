@@ -386,7 +386,7 @@
 		</territories>
 	</localeDisplayNames>
 	<characters>
-		<exemplarCharacters references="R224">[ஃ அ-ஊ எ-ஐ ஒ-க ங ச ஜ ஞ ட ண த ந-ப ம-வ ஷ-ஹ ா-ூ ெ-ை ொ-்]</exemplarCharacters>
+		<exemplarCharacters>[ஃ அ-ஊ எ-ஐ ஒ-க ங ச ஜ ஞ ட ண த ந-ப ம-வ ஷ-ஹ ா-ூ ெ-ை ொ-்]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart draft="unconfirmed">'</quotationStart>

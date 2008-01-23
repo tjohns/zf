@@ -63,7 +63,7 @@
 		</currencyFormats>
 		<currencies>
 			<currency type="XXX">
-				<symbol references="RP2">XXX</symbol>
+				<symbol>XXX</symbol>
 			</currency>
 		</currencies>
 	</numbers>

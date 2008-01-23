@@ -505,7 +505,7 @@
 			<language type="sid">시다모어</language>
 			<language type="sio">수족어</language>
 			<language type="sit">인도제언어 (기타)</language>
-			<language type="sit" references="RP1" alt="proposed-x1001" draft="unconfirmed">중국 티베트 어족</language>
+			<language type="sit" alt="proposed-x1001" draft="unconfirmed">중국 티베트 어족</language>
 			<language type="sk">슬로바키아어</language>
 			<language type="sl">슬로베니아어</language>
 			<language type="sla">슬라브어 (기타)</language>
@@ -631,7 +631,7 @@
 			<script type="Brah" draft="provisional">브라미</script>
 			<script type="Brai" draft="provisional">브라유 점자</script>
 			<script type="Brai" alt="proposed-x1001" draft="unconfirmed">브라유</script>
-			<script type="Bugi" references="RP2">부기 문자</script>
+			<script type="Bugi">부기 문자</script>
 			<script type="Bugi" alt="proposed-x1001" draft="unconfirmed">부기어</script>
 			<script type="Buhd">부히드 문자</script>
 			<script type="Buhd" alt="proposed-x1001" draft="unconfirmed">부히드어</script>

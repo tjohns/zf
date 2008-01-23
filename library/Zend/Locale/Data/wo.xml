@@ -23,8 +23,8 @@
 		</languages>
 	</localeDisplayNames>
 	<characters>
-		<exemplarCharacters references="R241" draft="unconfirmed">[a à b-e é ë f g i-n ñ ŋ o ó p-u w-y]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" references="R240" draft="unconfirmed">[ã h v z]</exemplarCharacters>
+		<exemplarCharacters draft="unconfirmed">[a à b-e é ë f g i-n ñ ŋ o ó p-u w-y]</exemplarCharacters>
+		<exemplarCharacters type="auxiliary" draft="unconfirmed">[ã h v z]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>

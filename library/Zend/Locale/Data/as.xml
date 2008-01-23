@@ -241,7 +241,7 @@
 		</currencyFormats>
 		<currencies>
 			<currency type="INR">
-				<symbol references="R006">টকা</symbol>
+				<symbol>টকা</symbol>
 			</currency>
 		</currencies>
 	</numbers>

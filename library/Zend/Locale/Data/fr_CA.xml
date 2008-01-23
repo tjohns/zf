@@ -13,7 +13,7 @@
 				<dateFormats>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern references="RP2">yyyy-MM-dd</pattern>
+							<pattern>yyyy-MM-dd</pattern>
 							<pattern alt="proposed-x1001" draft="unconfirmed">yy-MM-dd</pattern>
 							<pattern alt="proposed-x1002" draft="unconfirmed">d MMM yyyy</pattern>
 						</dateFormat>

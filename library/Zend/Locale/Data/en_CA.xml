@@ -19,7 +19,7 @@
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
-							<pattern references="RP1">yy-MM-dd</pattern>
+							<pattern>yy-MM-dd</pattern>
 							<pattern alt="proposed-x1001" draft="unconfirmed">dd/MM/yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
