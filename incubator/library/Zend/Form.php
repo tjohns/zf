@@ -622,7 +622,17 @@ class Zend_Form implements Iterator, Countable
                 throw new Zend_Form_Exception('Elements specified by string must have an accompanying name');
             }
             $class = $this->getPluginLoader(self::ELEMENT)->load($element);
-            $this->_elements[$name] = new $class($name, $options);
+            $this->_elements[$name] = new $class($name);
+            if (!empty($this->_elementPrefixPaths)) {
+                $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
+            }
+            if (null !== $options) {
+                if (is_array($options)) {
+                    $this->_elements[$name]->setOptions($options);
+                } elseif ($options instanceof Zend_Config) {
+                    $this->_elements[$name]->setConfig($options);
+                }
+            }
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
         } elseif ($element instanceof Zend_Form_Element) {
@@ -630,12 +640,11 @@ class Zend_Form implements Iterator, Countable
                 $name = $element->getName();
             }
             $this->_elements[$name] = $element;
+            if (!empty($this->_elementPrefixPaths)) {
+                $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
+            }
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
-        }
-
-        if (!empty($this->_elementPrefixPaths)) {
-            $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
         }
 
         $decoratorPaths = $this->getPluginLoader('decorator')->getPaths();
@@ -1076,12 +1085,17 @@ class Zend_Form implements Iterator, Countable
         require_once 'Zend/Form/DisplayGroup.php';
         $this->_displayGroups[$name] = new Zend_Form_DisplayGroup(
             $name, 
-            $this->getPluginLoader(self::DECORATOR), 
-            $options
+            $this->getPluginLoader(self::DECORATOR)
         );
 
         if (!empty($this->_displayGroupPrefixPaths)) {
             $this->_displayGroups[$name]->addPrefixPaths($this->_displayGroupPrefixPaths);
+        }
+
+        if (is_array($options)) {
+            $this->_displayGroups[$name]->setOptions($options);
+        } elseif ($options instanceof Zend_Config) {
+            $this->_displayGroups[$name]->setConfig($options);
         }
 
         $this->_order[$name] = $this->_displayGroups[$name]->getOrder();
