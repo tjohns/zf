@@ -2154,7 +2154,6 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 if (!empty($tmpdate)) {
                     $zone = $this->_findZone($tmpdate);
-print "\nDATE:$tmpdate:ZONE:$zone";
                     if ($zone != 0) {
                         $timematch[1] += $zone;
                     }
