@@ -571,20 +571,20 @@ user.login.method = "post"
 
 ; username element
 user.login.elements.username.type = "text"
-user.login.elements.username.validators.alnum.validator = "alnum"
-user.login.elements.username.validators.regex.validator = "regex"
-user.login.elements.username.validators.regex.options.pattern = "/^[a-z]/i"
-user.login.elements.username.validators.strlen.validator = "StringLength"
-user.login.elements.username.validators.strlen.options.min = "6"
-user.login.elements.username.validators.strlen.options.max = "20"
-user.login.elements.username.required = true
-user.login.elements.username.filters.lower.filter = "StringToLower"
+user.login.elements.username.options.validators.alnum.validator = "alnum"
+user.login.elements.username.options.validators.regex.validator = "regex"
+user.login.elements.username.options.validators.regex.options.pattern = "/^[a-z]/i"
+user.login.elements.username.options.validators.strlen.validator = "StringLength"
+user.login.elements.username.options.validators.strlen.options.min = "6"
+user.login.elements.username.options.validators.strlen.options.max = "20"
+user.login.elements.username.options.required = true
+user.login.elements.username.options.filters.lower.filter = "StringToLower"
 
 ; password element
 user.login.elements.password.type = "password"
-user.login.elements.password.validators.strlen.validator = "StringLength"
-user.login.elements.password.validators.strlen.options.min = "6"
-user.login.elements.password.required = true
+user.login.elements.password.options.validators.strlen.validator = "StringLength"
+user.login.elements.password.options.validators.strlen.options.min = "6"
+user.login.elements.password.options.required = true
 
 ; submit element
 user.login.elements.submit.type = "submit"
