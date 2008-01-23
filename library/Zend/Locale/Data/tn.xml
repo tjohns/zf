@@ -281,9 +281,4 @@
 			</currency>
 		</currencies>
 	</numbers>
-	<references>
-		<reference type="R229" uri="http://developer.mimer.com/charts/tswana.htm">Mimer Collation Charts - Tswana</reference>
-		<reference type="R230" uri="http://www.eki.ee/letter/chardata.cgi?lang=tn+Tswana&amp;amp;script=latin">Letter Database (non-ASCII-range) - Tswana</reference>
-		<reference type="R231" uri="http://www.ideography.co.uk/library/pdf/charsets.pdf">Character Sets for African Languages</reference>
-	</references>
 </ldml>

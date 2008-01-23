@@ -4392,10 +4392,4 @@
 			<nostr>ไม่</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R226" uri="http://lexitron.nectec.or.th">Lexitron English Thai Dictionary website</reference>
-		<reference type="R227" uri="http://www.royin.go.th/upload/246/FileUpload/419_1494.pdf">The Royal Institute's Country, Region and Capital name list</reference>
-		<reference type="R228">New Model English-Thai Dictionary ISBN:974-08-6456-2</reference>
-	</references>
 </ldml>
-

@@ -179,8 +179,4 @@
 			<regionFormat draft="unconfirmed">{0}</regionFormat>
 		</timeZoneNames>
 	</dates>
-	<references>
-		<reference type="RP1" uri="http://www.omniglot.com/writing/burmese.htm">Burmese Consonants and Vowels</reference>
-	</references>
 </ldml>
-

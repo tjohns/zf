@@ -302,9 +302,4 @@
 			</currency>
 		</currencies>
 	</numbers>
-	<references>
-		<reference type="R243" uri="http://www.learnyoruba.com/orthography_1.htm">Learn Yoruba - orthography</reference>
-		<reference type="R244" uri="http://www.omniglot.com/writing/yoruba.htm">Omniglot on Yoruba</reference>
-		<reference type="R245" uri="http://www.motherlandnigeria.com/languages.html">Nigerian languages - Yoruba</reference>
-	</references>
 </ldml>

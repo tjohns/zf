@@ -2122,35 +2122,4 @@
 			<nostr>nu:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="RP1" uri="http://www.secarica.ro/misc/InstitLingvTastatura-20031008.pdf" draft="contributed">Romanian Academy: &quot;1., 2. in the Romanian language the quotes are (as specified by the normative document actually valid in the field, the Romanian Academy, the Institute of Linguistics „Iorgu Iordan”, Guide of orthography, orthographic, and punctuation,  5th edition, published by Univers Enciclopedic, Bucharest, 1995), „...” [99 down, 99 up] or «...» (p. 79), with the specification that the quotes «...» are to be used inside the text contained already between the quotes „...” (p. 81);&quot;</reference>
-		<reference type="RP2" uri="http://dexonline.ro/" draft="unconfirmed">DEX online (Romanian dictionaries)</reference>
-		<reference type="RP3" uri="http://www.lingv.ro/noutati/Ce_e_nou_in_DOOM.pdf" draft="unconfirmed">What's new in DOOM (PDF)</reference>
-		<reference type="RP4" uri="http://www.acad.ro/alteInfo/nouDOOM.doc" draft="unconfirmed">What's new in DOOM (Word doc)</reference>
-		<reference type="RP5" uri="http://www.bnro.ro/Ro/Raportari/StatMon/Nomenclator_valute.pdf" draft="unconfirmed">Currencies</reference>
-		<reference type="RP6" uri="http://www.bnro.ro/Ro/Raportari/StatMon/Nomenclator_tari_v2.pdf" draft="unconfirmed">Territories and international organizations</reference>
-		<reference type="RP7" uri="http://www.bnro.ro/Ro/Raportari/StatMon/Nomenclator_UE.pdf" draft="unconfirmed">EU countries and organizations</reference>
-		<reference type="RP8" uri="http://www.unibuc.ro/eBooks/Filologie.htm" draft="unconfirmed">Linguistics texts (University of Bucharest)</reference>
-		<reference type="RP9" uri="http://www.seelrc.org:8080/grammar/pdf/stand_alone_romanian.pdf" draft="unconfirmed">Romanian grammar</reference>
-	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/ro.txt?only_with_tag=final-update-LDML
-
-IR { "Iran, Republica Islamic\u0103" }
-        KP { "Coreea de Nord" }    // alternate name { "Coreea, Republica Popular\u0103 Democratic\u0103" }
-        KR { "Coreea de Sud" }    // alternate name { "Coreea, Republica" }
-RO { "Romania" } // From translation center
-        SY { "Siria" }    // alternate name { "Republica Arab\u0103 Siria" }
-        TW { "Taiwan, Provincia Chinez\u0103" }    // alternate name { "Taiwan" }
-zh_cn { "Chinez\u0103 (Simplificat\u0103)" }
-zh_tw { "Chinez\u0103 (Tradi\u0163ional\u0103)" }
-        "Latn",  // ISO 15924 Name 
-Currency display names
-                1, // "Minimal Days in First Week" is unknown. Root value used instead
-
-Comments without bases
-
- See the National Bank of Romania for details http://www.bnro.ro/ 	 - was on: //ldml/numbers/currencies/currency[@type="RON"]/symbol[@alt="proposed"]
--->
-
