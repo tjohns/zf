@@ -1744,7 +1744,6 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity draft="provisional">Argel</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Galápagos</exemplarCity>
 			</zone>
@@ -1752,7 +1751,6 @@
 				<exemplarCity>Guaiaquil</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Guayaquil</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canárias</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ilhas Canárias</exemplarCity>
@@ -1793,7 +1791,6 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity draft="provisional">Budapeste</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Jacarta</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Jakarta</exemplarCity>
@@ -1879,7 +1876,6 @@
 			<zone type="America/Panama">
 				<exemplarCity draft="provisional">Panamá</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>Taiti</exemplarCity>
 			</zone>
@@ -1889,7 +1885,6 @@
 			<zone type="America/Puerto_Rico">
 				<exemplarCity draft="provisional">Porto Rico</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Açores</exemplarCity>
 			</zone>

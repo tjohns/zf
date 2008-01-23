@@ -701,7 +701,6 @@
 		</scripts>
 		<territories>
 			<territory type="001">World</territory>
-			<!-- UN codes -->
 			<territory type="002">Africa</territory>
 			<territory type="003">North America</territory>
 			<territory type="005">South America</territory>
@@ -3633,7 +3632,6 @@
 			</currency>
 			<currency type="ROL">
 				<displayName>Old Romanian Leu</displayName>
-				<!-- FYI Lei is the plural form of Leu. The currency symbol should be considered for change too. -->
 				<symbol choice="true">=0#Old lei|1#Old leu|1&lt;Old lei</symbol>
 			</currency>
 			<currency type="RON">

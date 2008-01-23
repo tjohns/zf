@@ -1509,7 +1509,6 @@
 			<hourFormat alt="proposed-x1001" draft="unconfirmed">+HH:mm;−HH:mm</hourFormat>
 			<gmtFormat draft="provisional">GMT{0}</gmtFormat>
 			<regionFormat draft="provisional">{0}</regionFormat>
-			<!-- Mali -->
 			<zone type="Africa/Timbuktu">
 				<exemplarCity>Timboektoe</exemplarCity>
 			</zone>
@@ -1534,9 +1533,6 @@
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Dumont d'Urville</exemplarCity>
 			</zone>
-			<!-- Antarctica
-				 Argentina
-			-->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>Río Gallegos</exemplarCity>
 			</zone>
@@ -1555,9 +1551,6 @@
 			<zone type="Asia/Bahrain">
 				<exemplarCity>Bahrein</exemplarCity>
 			</zone>
-			<!-- Australia
-				 Brazil
-			-->
 			<zone type="America/Porto_Velho">
 				<exemplarCity>Pôrto Velho</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Porto Velho</exemplarCity>
@@ -1577,7 +1570,6 @@
 			<zone type="America/Maceio">
 				<exemplarCity>Maceió</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Montreal">
 				<exemplarCity>Montréal</exemplarCity>
 			</zone>
@@ -1590,7 +1582,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Paaseiland</exemplarCity>
 			</zone>
@@ -1615,7 +1606,6 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity>Asmara</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canarische Eilanden</exemplarCity>
 			</zone>
@@ -1684,7 +1674,6 @@
 			<zone type="Europe/Luxembourg">
 				<exemplarCity>Luxemburg</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Ulaanbaatar">
 				<exemplarCity>Ulaanbaator</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ulaanbaatar</exemplarCity>
@@ -1692,7 +1681,6 @@
 			<zone type="Indian/Maldives">
 				<exemplarCity>Maldiven</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Mazatlan">
 				<exemplarCity>Mazatlán</exemplarCity>
 			</zone>
@@ -1705,17 +1693,6 @@
 			</zone>
 			<zone type="America/Cancun">
 				<exemplarCity>Cancún</exemplarCity>
-				<!-- Malaysia
-					 New Zealand
-					 French Polynesia
-					 Portugal
-					 Russia
-					 Svalbard and Jan Mayen
-					 Ukraine
-					 United States Minor Outlying Islands
-					 United States
-					 Uzbekistan
-				-->
 			</zone>
 			<zone type="Pacific/Noumea">
 				<exemplarCity>Nouméa</exemplarCity>
@@ -1735,7 +1712,6 @@
 			<zone type="Europe/Warsaw">
 				<exemplarCity>Warschau</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azoren</exemplarCity>
 			</zone>

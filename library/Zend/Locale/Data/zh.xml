@@ -1765,21 +1765,9 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>科摩罗（群岛）</exemplarCity>
 			</zone>
-			<!-- <zone type="America/Indiana/Indianapolis">
-				 <exemplarCity>印地安那州/印第安纳波利斯</exemplarCity>
-				 </zone>
-
-
-				 <zone type="America/Kentucky/Louisville">
-				 <exemplarCity>路易斯维尔</exemplarCity>
-				 </zone>
-
-				 United Kingdom
-			-->
 			<zone type="Europe/Belfast">
 				<exemplarCity>贝尔法斯特</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="provisional">雅浦</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">雅浦岛</exemplarCity>
@@ -1821,7 +1809,6 @@
 				<exemplarCity>罗安达</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">安哥拉</exemplarCity>
 			</zone>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>罗瑟拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">路德</exemplarCity>
@@ -1858,7 +1845,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity>马克默多</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>里奥加耶戈斯</exemplarCity>
 			</zone>
@@ -1896,7 +1882,6 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity>维也纳</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>佩思</exemplarCity>
 			</zone>
@@ -1986,7 +1971,6 @@
 				<exemplarCity>拉巴斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">玻利维亚</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="provisional">依伦尼贝</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">埃鲁内佩</exemplarCity>
@@ -2055,7 +2039,6 @@
 			<zone type="America/Belize">
 				<exemplarCity>伯利兹</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity>道森</exemplarCity>
 			</zone>
@@ -2138,7 +2121,6 @@
 				<exemplarCity>可可斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">可可群岛</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>金沙萨</exemplarCity>
 			</zone>
@@ -2165,7 +2147,6 @@
 				<exemplarCity>拉罗汤加</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">拉罗汤加岛</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>复活节岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">复活节</exemplarCity>
@@ -2177,7 +2158,6 @@
 				<exemplarCity>杜阿拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">喀麦隆</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>喀什葛尔</exemplarCity>
 			</zone>
@@ -2238,7 +2218,6 @@
 				<exemplarCity>阿尔及尔</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">阿尔及利亚</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>加拉帕哥斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">加拉帕哥</exemplarCity>
@@ -2262,7 +2241,6 @@
 				<exemplarCity>阿斯马拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">厄立特里亚</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>加那利</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">加那利群岛</exemplarCity>
@@ -2338,7 +2316,6 @@
 			<zone type="Europe/Gibraltar">
 				<exemplarCity>直布罗陀</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity>图勒</exemplarCity>
 			</zone>
@@ -2406,7 +2383,6 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity>布达佩斯</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>雅加达</exemplarCity>
 			</zone>
@@ -2476,7 +2452,6 @@
 			<zone type="Asia/Phnom_Penh">
 				<exemplarCity>金边</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity>恩德贝里</exemplarCity>
 			</zone>
@@ -2510,7 +2485,6 @@
 				<exemplarCity>开曼</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">开曼群岛</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity>阿克图</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">阿克套</exemplarCity>
@@ -2581,7 +2555,6 @@
 				<exemplarCity draft="unconfirmed">安塔那利佛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">安塔那那利佛</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>夸贾林</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">夸贾林岛</exemplarCity>
@@ -2593,14 +2566,12 @@
 			<zone type="Europe/Skopje">
 				<exemplarCity draft="provisional">斯科普里</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity>巴马科</exemplarCity>
 			</zone>
 			<zone type="Asia/Rangoon">
 				<exemplarCity>仰光</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity>科布多</exemplarCity>
 			</zone>
@@ -2641,7 +2612,6 @@
 				<exemplarCity>布兰太尔</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">马拉维</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity>提华纳</exemplarCity>
 			</zone>
@@ -2667,7 +2637,6 @@
 				<exemplarCity>坎昆</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">坎空</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>吉隆坡</exemplarCity>
 			</zone>
@@ -2715,7 +2684,6 @@
 			<zone type="Pacific/Niue">
 				<exemplarCity>纽埃</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>查塔姆</exemplarCity>
 			</zone>
@@ -2733,7 +2701,6 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">莱马</exemplarCity>
 				<exemplarCity alt="proposed-x1002" draft="unconfirmed">秘鲁</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>塔希提</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">塔希提岛</exemplarCity>
@@ -2774,7 +2741,6 @@
 			<zone type="Asia/Gaza">
 				<exemplarCity>加沙</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="unconfirmed">亚述尔群岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">亚速</exemplarCity>
@@ -2807,7 +2773,6 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="provisional">贝尔格莱德</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>加里宁格勒</exemplarCity>
 			</zone>
@@ -2888,7 +2853,6 @@
 			<zone type="Europe/Ljubljana">
 				<exemplarCity draft="provisional">卢布尔维</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="provisional">扬马延岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">扬马延</exemplarCity>
@@ -2990,7 +2954,6 @@
 				<exemplarCity>达累斯萨拉姆</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tanzania</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>乌日戈罗德</exemplarCity>
 			</zone>
@@ -3007,7 +2970,6 @@
 				<exemplarCity>坎帕拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">乌干达</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="provisional">中途岛</exemplarCity>
 			</zone>
@@ -3018,7 +2980,6 @@
 				<exemplarCity>威克</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">威克岛</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity>艾德克</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">艾德克岛</exemplarCity>
@@ -3103,7 +3064,6 @@
 				<exemplarCity>蒙得维的亚</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">乌拉圭</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>撒马尔罕</exemplarCity>
 			</zone>

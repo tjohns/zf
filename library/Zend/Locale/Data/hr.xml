@@ -910,7 +910,6 @@
 			<zone type="Europe/Andorra">
 				<exemplarCity draft="provisional">Andora</exemplarCity>
 			</zone>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
 			</zone>
@@ -926,7 +925,6 @@
 			<zone type="Asia/Bahrain">
 				<exemplarCity draft="provisional">Bahrein</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinšasa</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kinshasa</exemplarCity>
@@ -938,7 +936,6 @@
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="provisional">Uskrsni Otok</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Šangaj</exemplarCity>
 			</zone>
@@ -1035,7 +1032,6 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity draft="provisional">Bukurešt</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskva</exemplarCity>
 			</zone>
@@ -1057,7 +1053,6 @@
 			<zone type="America/El_Salvador">
 				<exemplarCity draft="provisional">Salvador</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uzgorod</exemplarCity>
 			</zone>
@@ -1070,7 +1065,6 @@
 			<zone type="America/Anchorage">
 				<exemplarCity draft="provisional">Alaska vremenska zona</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tashkent</exemplarCity>

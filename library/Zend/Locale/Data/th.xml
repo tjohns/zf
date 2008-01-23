@@ -1639,7 +1639,6 @@
 						<era type="1">คริสต์ศักราช</era>
 					</eraNames>
 					<eraAbbr>
-						<!-- Warning: BC looks like a full name, and not the abbreviated name. -->
 						<era type="0">ปีก่อน ค.ศ. ที่</era>
 						<era type="1">ค.ศ.</era>
 					</eraAbbr>
@@ -1797,16 +1796,6 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>โคมอดริวาดาเวีย</exemplarCity>
 			</zone>
-			<!-- <zone type="America/Indiana/Indianapolis">
-				 <exemplarCity>อินเดียแนโพลิส</exemplarCity>
-				 </zone>
-				 <zone type="America/Kentucky/Louisville">
-				 <exemplarCity>หลุยส์วิลล์</exemplarCity>
-				 </zone>
-
-				 Micronesia
-				 United Kingdom
-			-->
 			<zone type="Europe/Belfast">
 				<exemplarCity>เบลฟัสต์</exemplarCity>
 			</zone>
@@ -1845,7 +1834,6 @@
 				<exemplarCity>ปาล์มเมอร์</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">พาล์เมอร์</exemplarCity>
 			</zone>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>ขั้วโลกใต้</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">เซาท์โพล</exemplarCity>
@@ -1878,7 +1866,6 @@
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>ริโอกาลเลกอส</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Mendoza">
 				<exemplarCity>เมนดูซา</exemplarCity>
 			</zone>
@@ -1915,7 +1902,6 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity>เวียนนา</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>เพิิร์ท</exemplarCity>
 			</zone>
@@ -1992,7 +1978,6 @@
 			<zone type="America/Eirunepe">
 				<exemplarCity>เอรูเนเป</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Rio_Branco">
 				<exemplarCity>รีโอบรังโก</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ริโอบรังโก</exemplarCity>
@@ -2055,7 +2040,6 @@
 			<zone type="America/Dawson">
 				<exemplarCity>ดอว์สัน</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Whitehorse">
 				<exemplarCity>ไวต์ฮอร์ส</exemplarCity>
 			</zone>
@@ -2160,10 +2144,6 @@
 			<zone type="Asia/Kashgar">
 				<exemplarCity>กัชการ์</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo
-				 Chile
-				 China
-			-->
 			<zone type="Asia/Urumqi">
 				<exemplarCity>อุรุมชี</exemplarCity>
 			</zone>
@@ -2236,9 +2216,6 @@
 			<zone type="Africa/Ceuta">
 				<exemplarCity>เซวตา</exemplarCity>
 			</zone>
-			<!-- Ecuador
-				 Spain
-			-->
 			<zone type="Europe/Madrid">
 				<exemplarCity>มาดริด</exemplarCity>
 			</zone>
@@ -2337,9 +2314,6 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity>บูดาเปส</exemplarCity>
 			</zone>
-			<!-- Greenland
-				 Indonesia
-			-->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>จาการ์ตา</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">จาการ์ตาร์</exemplarCity>
@@ -2525,13 +2499,6 @@
 			<zone type="America/Tijuana">
 				<exemplarCity>ทิฮัวนา</exemplarCity>
 			</zone>
-			<!-- Kiribati
-				 Kazakhstan
-				 Marshall Islands
-				 Mali
-				 Mongolia
-				 Mexico
-			-->
 			<zone type="America/Hermosillo">
 				<exemplarCity>เอร์โมซีโย</exemplarCity>
 			</zone>
@@ -2553,7 +2520,6 @@
 			<zone type="America/Cancun">
 				<exemplarCity>แคนคุน</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>กัวลาลัมเปอร์</exemplarCity>
 			</zone>
@@ -2594,7 +2560,6 @@
 				<exemplarCity>แชแธม</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">แชแทม</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Auckland">
 				<exemplarCity>โอคแลนด์</exemplarCity>
 			</zone>
@@ -2673,10 +2638,6 @@
 				<exemplarCity>คาลินิงกราด</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">คาลินินกราด</exemplarCity>
 			</zone>
-			<!-- French Polynesia
-				 Portugal
-				 Russia
-			-->
 			<zone type="Europe/Moscow">
 				<exemplarCity>มอสโค</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">มอสโก</exemplarCity>
@@ -2830,10 +2791,6 @@
 			<zone type="Africa/Kampala">
 				<exemplarCity>คัมพาลา</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen
-				 Ukraine
-				 United States Minor Outlying Islands
-			-->
 			<zone type="Pacific/Midway">
 				<exemplarCity>มิดเวย์</exemplarCity>
 			</zone>
@@ -2850,7 +2807,6 @@
 			<zone type="America/Nome">
 				<exemplarCity>นอม</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="Pacific/Honolulu">
 				<exemplarCity>โฮโนลูลู</exemplarCity>
 			</zone>
@@ -2927,7 +2883,6 @@
 				<exemplarCity>ซามาร์กานด์</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ซามาร์คันด์</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>ทาชเคนต์</exemplarCity>
 			</zone>
@@ -3803,10 +3758,6 @@
 				<displayName>เควตซัลกัวเตมาลา</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">เกตซัลกัวเตมาลา</displayName>
 			</currency>
-			<!-- <currency type="GWE">
-				 <displayName>เอสคูโดโปรตุเกส</displayName>
-				 </currency>
-			-->
 			<currency type="GWP">
 				<displayName>เปโซกีนีบิสเซา</displayName>
 				<displayName alt="proposed-x1001" draft="unconfirmed">เปโซกินี-บิสเซา</displayName>

@@ -2129,12 +2129,10 @@
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Lubumbashi (rép. dém. du Congo)</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Île de Pâques</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Hanga Roa</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>Kachgar</exemplarCity>
 			</zone>
@@ -2190,7 +2188,6 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity draft="contributed">Asmara</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Îles Canaries</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Les Canaries</exemplarCity>
@@ -2323,7 +2320,6 @@
 				<exemplarCity draft="provisional">Caïmans</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">George Town</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Chevtchenko</exemplarCity>
 			</zone>
@@ -2443,7 +2439,6 @@
 				<exemplarCity>Porto Rico</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">San Juan</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Açores</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ponta Delgada</exemplarCity>
@@ -2554,7 +2549,6 @@
 			<zone type="America/Port_of_Spain">
 				<exemplarCity draft="unconfirmed">Port-d’Espagne</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Oujgorod</exemplarCity>
 			</zone>

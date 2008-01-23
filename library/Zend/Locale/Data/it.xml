@@ -1396,7 +1396,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zurigo</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Pasqua</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Isola di Pasqua</exemplarCity>
@@ -1419,7 +1418,6 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity>Algeri</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canarie</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Isole Canarie</exemplarCity>
@@ -1454,7 +1452,6 @@
 			<zone type="America/Guyana">
 				<exemplarCity>Guiana</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Giacarta</exemplarCity>
 			</zone>
@@ -1509,7 +1506,6 @@
 			<zone type="America/Puerto_Rico">
 				<exemplarCity>Portorico</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azzorre</exemplarCity>
 			</zone>
@@ -1549,7 +1545,6 @@
 			<zone type="America/Anchorage">
 				<exemplarCity>Fuso orario Alaska</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Samarcanda</exemplarCity>
 			</zone>

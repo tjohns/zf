@@ -538,7 +538,6 @@
 			<script type="Zzzz">Skritt Mhux Magħruf jew Mhux Validu</script>
 		</scripts>
 		<territories>
-			<!-- Territory codes 830 and IM left unchanged on purpose. -->
 			<territory type="001">Dinja</territory>
 			<territory type="002">Affrika</territory>
 			<territory type="003" draft="unconfirmed">Amerika ta’ Fuq</territory>
@@ -824,7 +823,6 @@
 		<keys>
 			<key type="calendar">Kalendarju</key>
 			<key type="collation">Kollazjoni</key>
-			<!-- or Ordni - order -->
 			<key type="currency">Munita</key>
 		</keys>
 		<types>

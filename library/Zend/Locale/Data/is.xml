@@ -1244,7 +1244,6 @@
 			<zone type="America/Anguilla">
 				<exemplarCity draft="unconfirmed">Angúilla</exemplarCity>
 			</zone>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity draft="unconfirmed">Suðurpóllinn</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Suðurpóll</exemplarCity>
@@ -1252,7 +1251,6 @@
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity draft="unconfirmed">Dumont D'Urville</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Buenos_Aires">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Búenos Aíres</exemplarCity>
 			</zone>
@@ -1283,10 +1281,6 @@
 			<zone type="America/Belize">
 				<exemplarCity draft="unconfirmed">Belís</exemplarCity>
 			</zone>
-			<!-- Australia
-				 Brazil
-				 Canada
-			-->
 			<zone type="America/Regina">
 				<exemplarCity draft="unconfirmed">Regína</exemplarCity>
 			</zone>
@@ -1296,9 +1290,6 @@
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="unconfirmed">Páskaeyja</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo
-				 Chile
-			-->
 			<zone type="America/Santiago">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Santíagó</exemplarCity>
 			</zone>
@@ -1326,10 +1317,6 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity draft="unconfirmed">Kaíró</exemplarCity>
 			</zone>
-			<!-- China
-				 Ecuador
-				 Spain
-			-->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="unconfirmed">Kanaríeyjar</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kanarí</exemplarCity>
@@ -1442,24 +1429,12 @@
 			<zone type="Indian/Maldives">
 				<exemplarCity draft="unconfirmed">Maldíveyjar</exemplarCity>
 			</zone>
-			<!-- Micronesia
-				 United Kingdom
-				 Greenland
-				 Indonesia
-				 Kiribati
-				 Kazakhstan
-				 Marshall Islands
-				 Mali
-				 Mongolia
-				 Mexico
-			-->
 			<zone type="America/Mexico_City">
 				<exemplarCity draft="unconfirmed">Mexíkóborg</exemplarCity>
 			</zone>
 			<zone type="America/Cancun">
 				<exemplarCity draft="unconfirmed">Kankún</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kúala Lúmpúr</exemplarCity>
 			</zone>
@@ -1472,9 +1447,6 @@
 			<zone type="Pacific/Niue">
 				<exemplarCity draft="unconfirmed">Níúe</exemplarCity>
 			</zone>
-			<!-- New Zealand
-				 French Polynesia
-			-->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tahítí</exemplarCity>
 			</zone>
@@ -1487,7 +1459,6 @@
 			<zone type="America/Puerto_Rico">
 				<exemplarCity draft="unconfirmed">Púertó Ríkó</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Asoreyjar</exemplarCity>
 			</zone>
@@ -1503,15 +1474,8 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity draft="unconfirmed">Búkarest</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity draft="unconfirmed">Moskva</exemplarCity>
-				<!-- Svalbard and Jan Mayen
-					 Ukraine
-					 United States Minor Outlying Islands
-					 United States
-					 Uzbekistan
-				-->
 			</zone>
 			<zone type="Europe/Stockholm">
 				<exemplarCity draft="unconfirmed">Stokkhólmur</exemplarCity>
@@ -2215,11 +2179,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/is.txt?only_with_tag=final-update-LDML
-
-CS { "Serb\u00eda og Svartfjallaland" } // TODO: if we allow this, then SP must go away
-MM { "B\u00farma" } // Burma? Should be Myanmar?
-        "Latn",  // ISO 15924 Name
--->
-

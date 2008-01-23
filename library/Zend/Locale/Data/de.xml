@@ -1514,7 +1514,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Osterinsel</exemplarCity>
 			</zone>
@@ -1545,7 +1544,6 @@
 			<zone type="Africa/El_Aaiun">
 				<exemplarCity>El Aaiún</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanaren</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kanarische Inseln</exemplarCity>
@@ -1725,7 +1723,6 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity>Daressalam</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uschgorod</exemplarCity>
 			</zone>

@@ -1572,7 +1572,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Pääsiäissaari</exemplarCity>
 			</zone>
@@ -1604,7 +1603,6 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kairo</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanariansaaret</exemplarCity>
 			</zone>
@@ -1697,7 +1695,6 @@
 			<zone type="Europe/Warsaw">
 				<exemplarCity>Varsova</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azorit</exemplarCity>
 			</zone>

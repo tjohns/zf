@@ -9,8 +9,3 @@
 	</identity>
 	<alias source="az_Latn_AZ" path="//ldml"/>
 </ldml>
-<!-- Comments without bases
-
- default script for Azeri is Latin 	 - was on: //ldml/alias 
--->
-

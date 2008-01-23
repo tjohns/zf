@@ -1446,7 +1446,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zúrich</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Isla de Pascua</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Pascua</exemplarCity>
@@ -1487,7 +1486,6 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity>El Cairo</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Islas Canarias</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Canarias</exemplarCity>
@@ -1631,7 +1629,6 @@
 			<zone type="America/Panama">
 				<exemplarCity>Panamá</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>Tahití</exemplarCity>
 			</zone>
@@ -1659,7 +1656,6 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity>Bucarest</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>Kaliningrado</exemplarCity>
 			</zone>

@@ -1689,18 +1689,15 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity draft="provisional">كومودريفادافيا</exemplarCity>
 			</zone>
-			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity draft="unconfirmed">بلفاست</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="unconfirmed">ياب</exemplarCity>
 			</zone>
 			<zone type="Etc/Unknown">
 				<exemplarCity draft="provisional">غير معروف</exemplarCity>
 			</zone>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="unconfirmed">روثيرا</exemplarCity>
 			</zone>
@@ -1731,7 +1728,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="unconfirmed">ماك موردو</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="provisional">ريو جالييوس</exemplarCity>
 			</zone>
@@ -1762,7 +1758,6 @@
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="unconfirmed">بوينوس أيرس</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity draft="unconfirmed">برثا</exemplarCity>
 			</zone>
@@ -1794,7 +1789,6 @@
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="unconfirmed">لورد هاو</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="unconfirmed">ايرونبي</exemplarCity>
 			</zone>
@@ -1840,7 +1834,6 @@
 			<zone type="America/Noronha">
 				<exemplarCity draft="unconfirmed">نوروناه</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity draft="unconfirmed">داوسان</exemplarCity>
 			</zone>
@@ -1916,21 +1909,18 @@
 			<zone type="America/St_Johns">
 				<exemplarCity draft="unconfirmed">عيد سانت جونس</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="provisional">كينشاسا</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="provisional">لومبباشا</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="unconfirmed">استر</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity draft="unconfirmed">سانتيجو</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="unconfirmed">كاشجار</exemplarCity>
 			</zone>
@@ -1946,14 +1936,12 @@
 			<zone type="Asia/Harbin">
 				<exemplarCity draft="unconfirmed">هاربين</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity draft="unconfirmed">جلاباجوس</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity draft="unconfirmed">جواياكيل</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="unconfirmed">كناري</exemplarCity>
 			</zone>
@@ -1978,7 +1966,6 @@
 			<zone type="Europe/Guernsey">
 				<exemplarCity draft="provisional">جيرونسى</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity draft="unconfirmed">ثيل</exemplarCity>
 			</zone>
@@ -1991,7 +1978,6 @@
 			<zone type="America/Danmarkshavn">
 				<exemplarCity draft="unconfirmed">دانمرك شافن</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="unconfirmed">جاكرتا</exemplarCity>
 			</zone>
@@ -2010,7 +1996,6 @@
 			<zone type="Europe/Jersey">
 				<exemplarCity draft="provisional">جيرسى</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity draft="unconfirmed">اندربيرج</exemplarCity>
 			</zone>
@@ -2020,7 +2005,6 @@
 			<zone type="Pacific/Tarawa">
 				<exemplarCity draft="unconfirmed">تاراوا</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="unconfirmed">أكتاو</exemplarCity>
 			</zone>
@@ -2039,18 +2023,15 @@
 			<zone type="Europe/Podgorica">
 				<exemplarCity draft="provisional">الجبل الأسود</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity draft="unconfirmed">كواجالين</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity draft="unconfirmed">ماجورو</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity draft="provisional">باماكو</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity draft="unconfirmed">هوفد</exemplarCity>
 			</zone>
@@ -2060,7 +2041,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="unconfirmed">تشوبالسان</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity draft="unconfirmed">تيجوانا</exemplarCity>
 			</zone>
@@ -2085,21 +2065,18 @@
 			<zone type="America/Cancun">
 				<exemplarCity draft="unconfirmed">كانكن</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity draft="unconfirmed">كوالالمبور</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="unconfirmed">كيشينج</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity draft="unconfirmed">تشاثام</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity draft="unconfirmed">أوكلاند</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="unconfirmed">تاهيتي</exemplarCity>
 			</zone>
@@ -2109,7 +2086,6 @@
 			<zone type="Pacific/Gambier">
 				<exemplarCity draft="unconfirmed">جامبير</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="unconfirmed">أزورس</exemplarCity>
 			</zone>
@@ -2122,7 +2098,6 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="provisional">صربيا</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity draft="unconfirmed">كالينجراد</exemplarCity>
 			</zone>
@@ -2168,14 +2143,12 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity draft="unconfirmed">أندير</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="unconfirmed">جان ماين</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
 				<exemplarCity draft="unconfirmed">لونجيربن</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="unconfirmed">أوزجرود</exemplarCity>
 			</zone>
@@ -2188,7 +2161,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity draft="unconfirmed">زابوروزي</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="unconfirmed">ميدواي</exemplarCity>
 			</zone>
@@ -2198,7 +2170,6 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="unconfirmed">واك</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity draft="provisional">أداك</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">الولايات المتحدة الأمريكية (توقيت أداك)</exemplarCity>
@@ -2278,7 +2249,6 @@
 			<zone type="America/New_York">
 				<exemplarCity draft="unconfirmed">نيويورك</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="unconfirmed">سمرقند</exemplarCity>
 			</zone>
@@ -2312,11 +2282,6 @@
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
-		<!-- Please note that the Arabic translated currency symbols include the Right to
-			 Left Marker <RLM> to position the dot properly on the boundary between
-			 Arabic
-			 and English XML tags.
-		-->
 		<currencies>
 			<currency type="ADP">
 				<displayName>بيستا أندورى</displayName>

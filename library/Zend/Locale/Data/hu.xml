@@ -1446,7 +1446,6 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>Comodoro Rivadavia</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity>Yap-szigetek</exemplarCity>
 			</zone>
@@ -1537,7 +1536,6 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Húsvét-szigetek</exemplarCity>
 			</zone>
@@ -1568,7 +1566,6 @@
 			<zone type="America/Dominica">
 				<exemplarCity>Dominika</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Galapagos-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Galapagos</exemplarCity>
@@ -1576,7 +1573,6 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kairó</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanári-szigetek</exemplarCity>
 			</zone>
@@ -1620,7 +1616,6 @@
 			<zone type="Atlantic/South_Georgia">
 				<exemplarCity>Dél-Georgia</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Dzsakarta</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Jakarta</exemplarCity>
@@ -1697,7 +1692,6 @@
 			<zone type="Europe/Podgorica">
 				<exemplarCity>Montenegró</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>Kwajalein-zátony</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kwajalein</exemplarCity>
@@ -1736,11 +1730,9 @@
 			<zone type="America/Cancun">
 				<exemplarCity>Cancún</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>Chatham-szigetek</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tahiti-sziget</exemplarCity>
 			</zone>
@@ -1758,7 +1750,6 @@
 			<zone type="Pacific/Pitcairn">
 				<exemplarCity>Pitcairn-szigetek</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azori-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Azóri-szigetek</exemplarCity>
@@ -1779,7 +1770,6 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="provisional">Szerbia</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>Kalinyingrád</exemplarCity>
 			</zone>
@@ -1825,7 +1815,6 @@
 			<zone type="Asia/Singapore">
 				<exemplarCity>Szingapúr</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="provisional">Jan Mayen-szigetek</exemplarCity>
 			</zone>
@@ -1844,7 +1833,6 @@
 			<zone type="Asia/Taipei">
 				<exemplarCity draft="provisional">Tajvan</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Ungvár</exemplarCity>
 			</zone>
@@ -1857,7 +1845,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Zaporozsje</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity>Midway-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Midway</exemplarCity>
@@ -1870,7 +1857,6 @@
 				<exemplarCity draft="unconfirmed">Alaszkai Idő</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Anchorage</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Szamarkand</exemplarCity>
 			</zone>
