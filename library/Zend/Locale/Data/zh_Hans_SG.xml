@@ -12,17 +12,9 @@
 		<calendars>
 			<calendar type="gregorian">
 				<dateFormats>
-					<dateFormatLength type="full">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
 							<pattern>dd MMM yyyy</pattern>
-						</dateFormat>
-					</dateFormatLength>
-					<dateFormatLength type="medium">
-						<dateFormat>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -32,17 +24,9 @@
 					</dateFormatLength>
 				</dateFormats>
 				<timeFormats>
-					<timeFormatLength type="full">
-						<timeFormat>
-						</timeFormat>
-					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>a hh:mm:ss z</pattern>
-						</timeFormat>
-					</timeFormatLength>
-					<timeFormatLength type="medium">
-						<timeFormat>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">

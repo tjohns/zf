@@ -971,18 +971,6 @@
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
 		<calendars>
-			<calendar type="buddhist">
-				<dateTimeFormats>
-					<availableFormats>
-					</availableFormats>
-				</dateTimeFormats>
-			</calendar>
-			<calendar type="chinese">
-				<dateTimeFormats>
-					<availableFormats>
-					</availableFormats>
-				</dateTimeFormats>
-			</calendar>
 			<calendar type="coptic">
 				<months>
 					<monthContext type="format">
@@ -1632,10 +1620,6 @@
 			<zone type="America/Anchorage">
 			</zone>
 			<zone type="America/Chicago">
-			</zone>
-			<zone type="America/Indianapolis">
-				<long>
-				</long>
 			</zone>
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Semerkand</exemplarCity>

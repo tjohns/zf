@@ -7,18 +7,6 @@
 		<language type="en"/>
 		<territory type="PH"/>
 	</identity>
-	<dates>
-		<calendars>
-			<calendar type="gregorian">
-				<dateFormats>
-					<dateFormatLength type="medium">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
-			</calendar>
-		</calendars>
-	</dates>
 	<numbers>
 		<currencies>
 			<currency type="PHP">

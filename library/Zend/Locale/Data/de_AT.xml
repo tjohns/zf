@@ -33,12 +33,6 @@
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
-				<timeFormats>
-					<timeFormatLength type="full">
-						<timeFormat>
-						</timeFormat>
-					</timeFormatLength>
-				</timeFormats>
 			</calendar>
 		</calendars>
 	</dates>
@@ -52,4 +46,3 @@
 		</currencyFormats>
 	</numbers>
 </ldml>
-

@@ -1014,10 +1014,6 @@
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
-				<dateTimeFormats>
-					<availableFormats>
-					</availableFormats>
-				</dateTimeFormats>
 			</calendar>
 			<calendar type="chinese">
 				<months>
@@ -1910,37 +1906,27 @@
 					<standard>Heure normale d’Acre</standard>
 					<daylight>Heure avancée d’Acre</daylight>
 				</long>
-				<short>
-				</short>
 			</metazone>
 			<metazone type="Africa_Central">
 				<long>
 					<standard>Heure normale d’Afrique centrale</standard>
 				</long>
-				<short>
-				</short>
 			</metazone>
 			<metazone type="Africa_Eastern">
 				<long>
 					<standard>Heure normale d’Afrique orientale</standard>
 				</long>
-				<short>
-				</short>
 			</metazone>
 			<metazone type="Africa_Southern">
 				<long>
 					<standard>Heure normale d’Afrique méridionale</standard>
 				</long>
-				<short>
-				</short>
 			</metazone>
 			<metazone type="Africa_Western">
 				<long>
 					<standard>Heure normale d’Afrique occidentale</standard>
 					<daylight>Heure avancée d’Afrique occidentale</daylight>
 				</long>
-				<short>
-				</short>
 			</metazone>
 			<metazone type="Alaska">
 				<long>

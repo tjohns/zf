@@ -41,10 +41,6 @@
 							<pattern>d MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
-					<dateFormatLength type="medium">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>d/MM/yy</pattern>

@@ -522,12 +522,6 @@
 	</delimiters>
 	<dates>
 		<calendars>
-			<calendar type="coptic">
-				<eras>
-					<eraAbbr>
-					</eraAbbr>
-				</eras>
-			</calendar>
 			<calendar type="ethiopic">
 				<months>
 					<monthContext type="format">

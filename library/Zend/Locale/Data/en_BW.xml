@@ -21,26 +21,12 @@
 							<pattern>dd MMMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
-					<dateFormatLength type="medium">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
-				<timeFormats>
-					<timeFormatLength type="full">
-						<timeFormat>
-						</timeFormat>
-					</timeFormatLength>
-					<timeFormatLength type="long">
-						<timeFormat>
-						</timeFormat>
-					</timeFormatLength>
-				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
 						<dateFormatItem id="MMdd">dd/MM</dateFormatItem>

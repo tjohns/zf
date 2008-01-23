@@ -965,22 +965,6 @@
 					</monthContext>
 				</months>
 			</calendar>
-			<calendar type="coptic">
-				<dateFormats>
-					<dateFormatLength type="short">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
-			</calendar>
-			<calendar type="ethiopic">
-				<dateFormats>
-					<dateFormatLength type="short">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
-			</calendar>
 			<calendar type="gregorian">
 				<months>
 					<monthContext type="format">
@@ -1222,22 +1206,6 @@
 						<displayName>区域</displayName>
 					</field>
 				</fields>
-			</calendar>
-			<calendar type="hebrew">
-				<dateFormats>
-					<dateFormatLength type="short">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
-			</calendar>
-			<calendar type="islamic">
-				<dateFormats>
-					<dateFormatLength type="short">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
 			</calendar>
 			<calendar type="islamic-civil">
 				<dateTimeFormats>
@@ -2542,8 +2510,6 @@
 					<standard>Almaty 标准时间</standard>
 					<daylight>Almaty 夏令时间</daylight>
 				</long>
-				<short>
-				</short>
 				<commonlyUsed>false</commonlyUsed>
 			</metazone>
 			<metazone type="Amazon">

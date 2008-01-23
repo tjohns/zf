@@ -970,8 +970,6 @@
 			<variant type="TARASK">Taraskievica orthography</variant>
 			<variant type="XIANG">Xiang or Hunanese</variant>
 		</variants>
-		<keys>
-		</keys>
 		<types>
 			<type type="big5han" key="collation">Traditional Chinese Sort Order - Big5</type>
 			<type type="buddhist" key="calendar">Buddhist Calendar</type>

@@ -323,8 +323,6 @@
 			<territory type="ZW">زمبابوے</territory>
 			<territory type="ZZ">Unknown or Invalid Region</territory>
 		</territories>
-		<keys>
-		</keys>
 	</localeDisplayNames>
 	<layout>
 		<orientation characters="right-to-left"/>
@@ -492,12 +490,6 @@
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
-				<eras>
-					<eraNames>
-					</eraNames>
-					<eraAbbr>
-					</eraAbbr>
-				</eras>
 				<fields>
 					<field type="day">
 					</field>
@@ -643,12 +635,6 @@
 			<decimal>.</decimal>
 			<group>,</group>
 		</symbols>
-		<currencyFormats>
-			<currencyFormatLength>
-				<currencyFormat>
-				</currencyFormat>
-			</currencyFormatLength>
-		</currencyFormats>
 		<currencies>
 			<currency type="AED">
 				<displayName>متحدہ عرب اماراتی درہم</displayName>

@@ -903,12 +903,6 @@
 						<era type="0">לבה&quot;ע</era>
 					</eraAbbr>
 				</eras>
-				<dateFormats>
-					<dateFormatLength type="medium">
-						<dateFormat>
-						</dateFormat>
-					</dateFormatLength>
-				</dateFormats>
 			</calendar>
 			<calendar type="islamic">
 				<months>

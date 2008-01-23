@@ -210,8 +210,6 @@
 			<variant type="SAAHO">Saho</variant>
 			<variant type="SCOUSE">Scouse</variant>
 		</variants>
-		<keys>
-		</keys>
 		<types>
 			<type type="big5han" key="collation">Ordem de Chinês Tradicional - Big5</type>
 			<type type="direct" key="collation">Ordem Directa</type>

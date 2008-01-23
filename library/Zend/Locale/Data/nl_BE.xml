@@ -38,10 +38,6 @@
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
-				<dateTimeFormats>
-					<availableFormats>
-					</availableFormats>
-				</dateTimeFormats>
 			</calendar>
 		</calendars>
 	</dates>
