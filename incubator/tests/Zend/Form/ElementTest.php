@@ -169,6 +169,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element->getRequired());
     }
 
+    public function testDescriptionInitiallyNull()
+    {
+        $this->assertNull($this->element->getDescription());
+    }
+
+    public function testCanSetDescription()
+    {
+        $this->testDescriptionInitiallyNull();
+        $this->element->setDescription('element hint');
+        $this->assertEquals('element hint', $this->element->getDescription());
+    }
+
     public function testGetTypeReturnsCurrentElementClass()
     {
         $this->assertEquals('Zend_Form_Element', $this->element->getType());

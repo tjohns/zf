@@ -441,6 +441,49 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
         return $this->_loader;
     }
 
+    /**
+     * Add a prefix path for the plugin loader
+     * 
+     * @param  string $prefix 
+     * @param  string $path 
+     * @return Zend_Form_DisplayGroup
+     */
+    public function addPrefixPath($prefix, $path)
+    {
+        $this->getPluginLoader()->addPrefixPath($prefix, $path);
+        return $this;
+    }
+
+    /**
+     * Add several prefix paths at once
+     * 
+     * @param  array $spec 
+     * @return Zend_Form_DisplayGroup
+     */
+    public function addPrefixPaths(array $spec)
+    {
+        if (isset($spec['prefix']) && isset($spec['path'])) {
+            return $this->addPrefixPath($spec['prefix'], $spec['path']);
+        } 
+        foreach ($spec as $prefix => $paths) {
+            if (is_numeric($prefix) && is_array($paths)) {
+                $prefix = null;
+                if (isset($paths['prefix']) && isset($paths['path'])) {
+                    $this->addPrefixPath($paths['prefix'], $paths['path']);
+                }
+            } elseif (!is_numeric($prefix)) {
+                if (is_string($paths)) {
+                    $this->addPrefixPath($prefix, $paths);
+                } elseif (is_array($paths)) {
+                    foreach ($paths as $path) {
+                        $this->addPrefixPath($prefix, $path);
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+
     // Decorators
 
     /**

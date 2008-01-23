@@ -58,10 +58,22 @@ class Zend_Form implements Iterator, Countable
     protected $_decorators = array();
 
     /**
+     * Display group prefix paths
+     * @var array
+     */
+    protected $_displayGroupPrefixPaths = array();
+
+    /**
      * Groups of elements grouped for display purposes
      * @var array
      */
     protected $_displayGroups = array();
+
+    /**
+     * Prefix paths to use when creating elements
+     * @var array
+     */
+    protected $_elementPrefixPaths = array();
 
     /**
      * Form elements
@@ -92,6 +104,12 @@ class Zend_Form implements Iterator, Countable
      * @var bool
      */
     protected $_orderUpdated = false;
+
+    /**
+     * Sub form prefix paths
+     * @var array
+     */
+    protected $_subFormPrefixPaths = array();
 
     /**
      * Sub forms
@@ -151,6 +169,16 @@ class Zend_Form implements Iterator, Countable
             unset($options['elements']);
         }
 
+        if (isset($options['elementDecorators'])) {
+            $elementDecorators = $options['elementDecorators'];
+            unset($options['elementDecorators']);
+        }
+
+        if (isset($options['displayGroupDecorators'])) {
+            $displayGroupDecorators = $options['displayGroupDecorators'];
+            unset($options['displayGroupDecorators']);
+        }
+
         $forbidden = array(
             'Options', 'Config', 'PluginLoader', 'SubForms', 'View', 'Translator',
             'Attrib', 'Default',
@@ -168,6 +196,15 @@ class Zend_Form implements Iterator, Countable
                 $this->setAttrib($key, $value);
             }
         }
+
+        if (isset($elementDecorators)) {
+            $this->setElementDecorators($elementDecorators);
+        }
+
+        if (isset($displayGroupDecorators)) {
+            $this->setDisplayGroupDecorators($displayGroupDecorators);
+        }
+
         return $this;
     }
 
@@ -318,6 +355,64 @@ class Zend_Form implements Iterator, Countable
                 $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
             }
         }
+        return $this;
+    }
+
+    /**
+     * Add prefix path for all elements
+     * 
+     * @param  string $prefix 
+     * @param  string $path 
+     * @param  string $type 
+     * @return Zend_Form
+     */
+    public function addElementPrefixPath($prefix, $path, $type = null)
+    {
+        $this->_elementPrefixPaths[] = array(
+            'prefix' => $prefix, 
+            'path'   => $path, 
+            'type'   => $type,
+        );
+
+        foreach ($this->getElements() as $element) {
+            $element->addPrefixPath($prefix, $path, $type);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add prefix paths for all elements
+     * 
+     * @param  array $spec 
+     * @return Zend_Form
+     */
+    public function addElementPrefixPaths(array $spec)
+    {
+        $this->_elementPrefixPaths[] = $this->_elementPrefixPaths + $spec;
+
+        foreach ($this->getElements() as $element) {
+            $element->addPrefixPaths($spec);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add prefix path for all display groups
+     * 
+     * @param  string $prefix 
+     * @param  string $path 
+     * @return Zend_Form
+     */
+    public function addDisplayGroupPrefixPath($prefix, $path)
+    {
+        $this->_displayGroupPrefixPaths[] = array($prefix, $path);
+
+        foreach ($this->getDisplayGroups() as $group) {
+            $group->addPrefixPath($prefix, $path);
+        }
+
         return $this;
     }
 
@@ -538,12 +633,18 @@ class Zend_Form implements Iterator, Countable
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
         }
+
+        if (!empty($this->_elementPrefixPaths)) {
+            $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
+        }
+
         $decoratorPaths = $this->getPluginLoader('decorator')->getPaths();
         foreach ($decoratorPaths as $prefix => $paths) {
             foreach ($paths as $path) {
                 $this->_elements[$name]->addPrefixPath($prefix, $path, 'decorator');
             }
         }
+
         return $this;
     }
 
@@ -793,6 +894,21 @@ class Zend_Form implements Iterator, Countable
                 }
             }
         }
+
+        if (!empty($this->_elementPrefixPaths)) {
+            foreach ($this->_elementPrefixPaths as $spec) {
+                list($prefix, $path, $type) = $spec;
+                $form->addElementPrefixPath($prefix, $path, $spec);
+            }
+        }
+
+        if (!empty($this->_displayGroupPrefixPaths)) {
+            foreach ($this->_displayGroupPrefixPaths as $spec) {
+                list($prefix, $path) = $spec;
+                $form->addDisplayGroupPrefixPath($prefix, $path);
+            }
+        }
+
         $this->_subForms[$name] = $form;
         $this->_order[$name]    = $order;
         $this->_orderUpdated    = true;
@@ -963,6 +1079,10 @@ class Zend_Form implements Iterator, Countable
             $this->getPluginLoader(self::DECORATOR), 
             $options
         );
+
+        if (!empty($this->_displayGroupPrefixPaths)) {
+            $this->_displayGroups[$name]->addPrefixPaths($this->_displayGroupPrefixPaths);
+        }
 
         $this->_order[$name] = $this->_displayGroups[$name]->getOrder();
         $this->_orderUpdated = true;
@@ -1445,6 +1565,51 @@ class Zend_Form implements Iterator, Countable
     public function clearDecorators()
     {
         $this->_decorators = array();
+        return $this;
+    }
+
+    /**
+     * Set all element decorators as specified
+     * 
+     * @param  array $decorators 
+     * @return Zend_Form
+     */
+    public function setElementDecorators(array $decorators)
+    {
+        foreach ($this->getElements() as $element) {
+            $element->setDecorators($decorators);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set all display group decorators as specified
+     * 
+     * @param  array $decorators 
+     * @return Zend_Form
+     */
+    public function setDisplayGroupDecorators(array $decorators)
+    {
+        foreach ($this->getDisplayGroups() as $group) {
+            $group->setDecorators($decorators);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set all subform decorators as specified
+     * 
+     * @param  array $decorators 
+     * @return Zend_Form
+     */
+    public function setSubFormDecorators(array $decorators)
+    {
+        foreach ($this->getSubForms() as $form) {
+            $form->setDecorators($decorators);
+        }
+
         return $this;
     }
 

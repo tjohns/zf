@@ -1652,6 +1652,158 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
         $this->assertEquals(3, count($this->form));
     }
+
+    // Element decorators and plugin paths
+
+    public function testCanSetAllElementDecoratorsAtOnce()
+    {
+        $this->setupElements();
+        $this->form->setElementDecorators(array(
+            array('ViewHelper'),
+            array('Label'),
+            array('Fieldset'),
+        ));
+        foreach ($this->form->getElements() as $element) {
+            $this->assertFalse($element->getDecorator('Errors'));
+            $this->assertFalse($element->getDecorator('HtmlTag'));
+            $decorator = $element->getDecorator('ViewHelper');
+            $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
+            $decorator = $element->getDecorator('Label');
+            $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+            $decorator = $element->getDecorator('Fieldset');
+            $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        }
+    }
+
+    public function testCanSetGlobalElementPrefixPath()
+    {
+        $this->setupElements();
+        $this->form->addElementPrefixPath('Zend_Foo', 'Zend/Foo/');
+        $this->form->addElement('text', 'prefixTest');
+        foreach ($this->form->getElements() as $element) {
+            $loader = $element->getPluginLoader('validate');
+            $paths  = $loader->getPaths('Zend_Foo_Validate');
+            $this->assertFalse(empty($paths), $element->getName() . ':' . var_export($loader->getPaths(), 1));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertContains('Validate', $paths[0]);
+
+            $paths = $element->getPluginLoader('filter')->getPaths('Zend_Foo_Filter');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertContains('Filter', $paths[0]);
+
+            $paths = $element->getPluginLoader('decorator')->getPaths('Zend_Foo_Decorator');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertContains('Decorator', $paths[0]);
+        }
+    }
+
+    public function testCanSetElementValidatorPrefixPath()
+    {
+        $this->setupElements();
+        $this->form->addElementPrefixPath('Zend_Foo', 'Zend/Foo/', 'validate');
+        $this->form->addElement('text', 'prefixTest');
+        foreach ($this->form->getElements() as $element) {
+            $loader = $element->getPluginLoader('validate');
+            $paths  = $loader->getPaths('Zend_Foo');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertNotContains('Validate', $paths[0]);
+        }
+    }
+
+    public function testCanSetElementFilterPrefixPath()
+    {
+        $this->setupElements();
+        $this->form->addElementPrefixPath('Zend_Foo', 'Zend/Foo/', 'filter');
+        $this->form->addElement('text', 'prefixTest');
+        foreach ($this->form->getElements() as $element) {
+            $loader = $element->getPluginLoader('filter');
+            $paths  = $loader->getPaths('Zend_Foo');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertNotContains('Filter', $paths[0]);
+        }
+    }
+
+    public function testCanSetElementDecoratorPrefixPath()
+    {
+        $this->setupElements();
+        $this->form->addElementPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
+        $this->form->addElement('text', 'prefixTest');
+        foreach ($this->form->getElements() as $element) {
+            $loader = $element->getPluginLoader('decorator');
+            $paths  = $loader->getPaths('Zend_Foo');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+            $this->assertNotContains('Decorator', $paths[0]);
+        }
+    }
+
+    // Display Group decorators and plugin paths
+
+    public function setupDisplayGroups()
+    {
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->addElements(array(
+            'test1' => 'text',
+            'test2' => 'text',
+            'test3' => 'text',
+            'test4' => 'text'
+        ));
+        $this->form->addDisplayGroup(array('bar', 'bat'), 'barbat');
+        $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
+    }
+
+    public function testCanSetAllDisplayGroupDecoratorsAtOnce()
+    {
+        $this->setupDisplayGroups();
+        $this->form->setDisplayGroupDecorators(array(
+            array('Callback', array('callback' => 'strip_tags')),
+        ));
+        foreach ($this->form->getDisplayGroups() as $element) {
+            $this->assertFalse($element->getDecorator('FormElements'));
+            $this->assertFalse($element->getDecorator('HtmlTag'));
+            $this->assertFalse($element->getDecorator('Fieldset'));
+            $this->assertFalse($element->getDecorator('DtDdWrapper'));
+
+            $decorator = $element->getDecorator('Callback');
+            $this->assertTrue($decorator instanceof Zend_Form_Decorator_Callback);
+        }
+    }
+
+    public function testCanSetDisplayGroupPrefixPath()
+    {
+        $this->setupDisplayGroups();
+        $this->form->addDisplayGroupPrefixPath('Zend_Foo', 'Zend/Foo/');
+        $this->form->addDisplayGroup(array('test1', 'test2'), 'testgroup');
+        foreach ($this->form->getDisplayGroups() as $group) {
+            $loader = $group->getPluginLoader();
+            $paths  = $loader->getPaths('Zend_Foo');
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+        }
+    }
+
+    // Subform decorators
+
+    public function testCanSetAllSubFormDecoratorsAtOnce()
+    {
+        $this->setupSubForm();
+        $this->form->setSubFormDecorators(array(
+            array('Callback', array('callback' => 'strip_tags')),
+        ));
+        foreach ($this->form->getSubForms() as $subForm) {
+            $this->assertFalse($subForm->getDecorator('FormElements'));
+            $this->assertFalse($subForm->getDecorator('HtmlTag'));
+            $this->assertFalse($subForm->getDecorator('Fieldset'));
+            $this->assertFalse($subForm->getDecorator('DtDdWrapper'));
+
+            $decorator = $subForm->getDecorator('Callback');
+            $this->assertTrue($decorator instanceof Zend_Form_Decorator_Callback);
+        }
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_FormTest::main') {

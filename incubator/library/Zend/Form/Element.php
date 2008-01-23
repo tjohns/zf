@@ -58,6 +58,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_defaultHelper = 'formText';
 
     /**
+     * Element description
+     * @var string
+     */
+    protected $_description;
+
+    /**
      * Validation errors
      * @var array
      */
@@ -379,6 +385,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getRequired()
     {
         return $this->_required;
+    }
+
+    /**
+     * Set element description
+     * 
+     * @param  string $description 
+     * @return Zend_Form_Element
+     */
+    public function setDescription($description)
+    {
+        $this->_description = (string) $description;
+        return $this;
+    }
+
+    /**
+     * Retrieve element description
+     * 
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->_description;
     }
 
     /**

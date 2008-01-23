@@ -30,12 +30,15 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/Crypt/AllTests.php';
-require_once 'Zend/Db/AllTests.php';
-require_once 'Zend/Json/AllTests.php';
-require_once 'Zend/Service/AllTests.php';
-require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/Validate/BarcodeTest.php';
+require_once 'Zend/Controller/AllTests.php';
+// require_once 'Zend/Crypt/AllTests.php';
+// require_once 'Zend/Db/AllTests.php';
+require_once 'Zend/Form/AllTests.php';
+// require_once 'Zend/Json/AllTests.php';
+// require_once 'Zend/Service/AllTests.php';
+// require_once 'Zend/TimeSyncTest.php';
+// require_once 'Zend/Validate/BarcodeTest.php';
+require_once 'Zend/View/AllTests.php';
 
 /**
  * @category   Zend
@@ -56,6 +59,11 @@ class Zend_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         /*
+         * Perform the tests for Zend_Controller component now.
+         */
+        $suite->addTest(Zend_Controller_AllTests::suite());
+
+        /*
          * Perform the tests for Zend_Crypt component now.
          *
          * Currenty there's a missing exception class; turning it off
@@ -65,27 +73,38 @@ class Zend_AllTests
         /*
          * Perform the tests for Zend_Db component now.
          */
-        $suite->addTest(Zend_Db_AllTests::suite());
+        // $suite->addTest(Zend_Db_AllTests::suite());
+
+        /*
+         * Perform the tests for Zend_Form component now.
+         */
+        $suite->addTest(Zend_Form_AllTests::suite());
 
         /*
          * Perform the tests for Zend_Json component now.
          */
-        $suite->addTest(Zend_Json_AllTests::suite());
+        // $suite->addTest(Zend_Json_AllTests::suite());
 
         /*
          * Perform the tests for Zend_Service component now.
          */
-        $suite->addTest(Zend_Service_AllTests::suite());
+        // $suite->addTest(Zend_Service_AllTests::suite());
 
         /*
          * Perform the tests for Zend_TimeSync component now.
          */
-        $suite->addTestSuite('Zend_TimeSyncTest');
+        // $suite->addTestSuite('Zend_TimeSyncTest');
 
         /*
          * Perform the tests for Zend_Validate_Barcode component now.
          */
-        $suite->addTestSuite('Zend_Validate_BarcodeTest');
+        // $suite->addTestSuite('Zend_Validate_BarcodeTest');
+
+        /*
+         * Perform the tests for Zend_View component now.
+         */
+        $suite->addTest(Zend_View_AllTests::suite());
+
 
         return $suite;
     }
