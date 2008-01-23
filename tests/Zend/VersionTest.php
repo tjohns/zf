@@ -17,15 +17,16 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
- * Zend_Version
+ * @see Zend_Version
  */
 require_once 'Zend/Version.php';
 
@@ -49,7 +50,7 @@ class Zend_VersionTest extends PHPUnit_Framework_TestCase
         for ($i=0; $i <= 1; $i++) {
             for ($j=0; $j < 10; $j++) {
                 for ($k=0; $k < 20; $k++) {
-                    foreach (array('dev', 'alpha', 'beta', 'RC', 'RC1', 'RC2', 'RC3', '', 'pl') as $rel) {
+                    foreach (array('PR', 'dev', 'alpha', 'beta', 'RC', 'RC1', 'RC2', 'RC3', '', 'pl') as $rel) {
                         $ver = "$i.$j.$k$rel";
                         if ($ver === Zend_Version::VERSION
                             || "$i.$j.$k-$rel" === Zend_Version::VERSION
