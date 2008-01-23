@@ -4972,45 +4972,4 @@
 			<nostr>nem:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R076" uri="http://www.cartographia.hu/">Földrajzi világatlasz, Cartographia Kft., Budapest, 2004, ISBN 963 352 570 5 CM</reference>
-		<reference type="R077">Helyesírási kéziszótár, Második kiadás, Akadémiai Kiadó, Budapest, 1991, ISBN 963 05 6040 2</reference>
-		<reference type="R078">Angol-magyar nagyszótár, Tizenegyedik kiadás (az ötödik, teljesen átdolgozott és bővített kiadás változatlan lenyomata), Akadémiai Kiadó, Budapest, 1992, ISBN 963 05 6349 5 (I-II. kötet)</reference>
-		<reference type="R079" uri="http://www.akademiaikiado.hu/">A magyar helyesírás szabályai, Tizenegyedik kiadás, Tizenkettedik (szótári anyagában bővített) lenyomat, Akadémiai Kiadó, Budapest, 2000, ISBN 963 05 7735 6</reference>
-		<reference type="R080" uri="http://web.tvnetwork.hu/~aguti/shufa.htm">Kalligráfia</reference>
-		<reference type="RP1" uri="http://hu.wikipedia.org/wiki/Írásjel">Wikipédia - Különleges írásjelek</reference>
-		<reference type="RP2" uri="http://hu.wikipedia.org/wiki/Magyar_helyesírás">Wikipédia - Magyar helyesírás</reference>
-		<reference type="RP3" uri="http://hu.wikipedia.org/wiki/Helyesírás">Wikipédia - Helyesírás</reference>
-		<reference type="RP4" uri="http://hu.wikipedia.org/wiki/Idézőjel">Wikipédia - Idézőjel</reference>
-	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/hu.txt?only_with_tag=final-update-LDML
-
-HK { "Hong Kong S.A.R. of China" }
-        KP { "Korea, \u00C9szak" }    // alternate name { "Korea, N\u00E9pi Demokratikus K\u00F6zt\u00E1rsas\u00E1g" }
-        KR { "Korea, D\u00E9l" }    // alternate name { "Koreai K\u00F6zt\u00E1rsas\u00E1g" }
-MO { "Macao S.A.R. of China" }
-        SY { "Sz\u00EDriai Arab K\u00F6zt\u00E1rsas\u00E1g" }    // alternate name { "Sz\u00EDria" }
-        "Latn",  // ISO 15924 Name
-
-Comments without bases
-
- Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
- Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
- United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
- Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
- Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
- Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
- Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
- Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
- Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
- Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
- Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
- United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
- Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
- Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
- Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
- China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
--->
-

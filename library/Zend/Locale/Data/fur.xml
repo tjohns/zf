@@ -893,8 +893,4 @@
 			<yesstr draft="unconfirmed">sì:si:s</yesstr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R069" uri="http://en.wikipedia.org/wiki/Friulian#Writing_systems">Wikipedia on Friulian writing</reference>
-	</references>
 </ldml>
-

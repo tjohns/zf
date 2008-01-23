@@ -1968,21 +1968,4 @@
 			<nostr>ne:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="RP1" draft="provisional">azerbajdžanski</reference>
-		<reference type="RP1" uri="http://kenny2.globalnet.hr/min-kulture2.hr/userdocsimages/dokumenti/suradnja/AZERBAJD%C5%BDANpotpisani%20sporaz.pdf" alt="proposed-x1001" draft="unconfirmed">Government of Republic of Croatia - Agreement on Cultural Cooperation</reference>
-	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/hr.txt?only_with_tag=final-update-LDML
-
-        KP { "Koreja, Sjeverna" } // alternate name { "Koreja, Demokratska Narodna Republika" }
-        KR { "Koreja, Ju\u017Ena" } // alternate name { "Koreja, Republika" }
-        SY { "Sirija" } // alternate name { "Sirijska Arapska Republika" }
-zh_cn { "kineski (pojednostavljeni)" }
-zh_tw { "kineski (tradicionalni)" }
-        "Latn"  // ISO 15924 Name 
-Currency display names
-                1, // "Minimal Days in First Week" is unknown. Root value used instead
--->
-
