@@ -10,135 +10,135 @@
 		<languages>
 			<language type="ab">абхазская</language>
 			<language type="af">афрыкаанс</language>
-			<language type="af" alt="proposed-x1001" draft="unconfirmed">афрыканс</language>
-			<language type="af" alt="proposed-x1002" draft="unconfirmed">афрыкаанская</language>
+			<language type="af" alt="proposed-x1001">афрыканс</language>
+			<language type="af" alt="proposed-x1002">афрыкаанская</language>
 			<language type="am">амхарская</language>
-			<language type="am" alt="proposed-x1001" draft="unconfirmed">амхарскі</language>
+			<language type="am" alt="proposed-x1001">амхарскі</language>
 			<language type="ang">стараанглійская</language>
-			<language type="ang" alt="proposed-x1001" draft="unconfirmed">стараангельская</language>
+			<language type="ang" alt="proposed-x1001">стараангельская</language>
 			<language type="ar">арабская</language>
-			<language type="ar" alt="proposed-x1001" draft="unconfirmed">арабскі</language>
-			<language type="ar" alt="proposed-x1002" draft="unconfirmed">арабскай</language>
+			<language type="ar" alt="proposed-x1001">арабскі</language>
+			<language type="ar" alt="proposed-x1002">арабскай</language>
 			<language type="as">асамская</language>
-			<language type="as" alt="proposed-x1001" draft="unconfirmed">ассамская</language>
-			<language type="as" alt="proposed-x1002" draft="unconfirmed">асамэц</language>
+			<language type="as" alt="proposed-x1001">ассамская</language>
+			<language type="as" alt="proposed-x1002">асамэц</language>
 			<language type="az">азербайджанская</language>
-			<language type="az" alt="proposed-x1001" draft="unconfirmed">азэрбайджанская</language>
-			<language type="az" alt="proposed-x1002" draft="unconfirmed">азербайжанская</language>
+			<language type="az" alt="proposed-x1001">азэрбайджанская</language>
+			<language type="az" alt="proposed-x1002">азербайжанская</language>
 			<language type="ba">башкірская</language>
 			<language type="be">беларуская</language>
-			<language type="be" alt="proposed-x1001" draft="unconfirmed">Беларускі</language>
+			<language type="be" alt="proposed-x1001">Беларускі</language>
 			<language type="bg">балгарская</language>
-			<language type="bg" alt="proposed-x1001" draft="unconfirmed">баўгарская</language>
-			<language type="bg" alt="proposed-x1002" draft="unconfirmed">баўгарскай</language>
+			<language type="bg" alt="proposed-x1001">баўгарская</language>
+			<language type="bg" alt="proposed-x1002">баўгарскай</language>
 			<language type="bh">біхары</language>
-			<language type="bh" alt="proposed-x1001" draft="unconfirmed">біхарская</language>
+			<language type="bh" alt="proposed-x1001">біхарская</language>
 			<language type="bn">бенгальская</language>
-			<language type="bn" alt="proposed-x1001" draft="unconfirmed">бэнгальская</language>
-			<language type="bn" alt="proposed-x1002" draft="unconfirmed">бянгальская</language>
+			<language type="bn" alt="proposed-x1001">бэнгальская</language>
+			<language type="bn" alt="proposed-x1002">бянгальская</language>
 			<language type="br">брэтонская</language>
-			<language type="br" alt="proposed-x1001" draft="unconfirmed">брэтонскай</language>
+			<language type="br" alt="proposed-x1001">брэтонскай</language>
 			<language type="bs">баснійская</language>
-			<language type="bs" alt="proposed-x1001" draft="unconfirmed">басьнійская</language>
+			<language type="bs" alt="proposed-x1001">басьнійская</language>
 			<language type="ca">каталонская</language>
-			<language type="ca" alt="proposed-x1001" draft="unconfirmed">каталёнская</language>
-			<language type="ca" alt="proposed-x1002" draft="unconfirmed">каталёнскай</language>
+			<language type="ca" alt="proposed-x1001">каталёнская</language>
+			<language type="ca" alt="proposed-x1002">каталёнскай</language>
 			<language type="ce">чачэнская</language>
 			<language type="cop">копцкая</language>
-			<language type="cop" alt="proposed-x1001" draft="unconfirmed">cop</language>
+			<language type="cop" alt="proposed-x1001">cop</language>
 			<language type="cs">чэшская</language>
-			<language type="cs" alt="proposed-x1001" draft="unconfirmed">чэскай</language>
-			<language type="cs" alt="proposed-x1002" draft="unconfirmed">чэская</language>
+			<language type="cs" alt="proposed-x1001">чэскай</language>
+			<language type="cs" alt="proposed-x1002">чэская</language>
 			<language type="cy">валійская</language>
 			<language type="da">дацкая</language>
-			<language type="da" alt="proposed-x1001" draft="unconfirmed">датская</language>
-			<language type="da" alt="proposed-x1002" draft="unconfirmed">дацкай</language>
+			<language type="da" alt="proposed-x1001">датская</language>
+			<language type="da" alt="proposed-x1002">дацкай</language>
 			<language type="de">нямецкая</language>
-			<language type="de" alt="proposed-x1001" draft="unconfirmed">нямецкі</language>
-			<language type="de" alt="proposed-x1002" draft="unconfirmed">нямецкай</language>
+			<language type="de" alt="proposed-x1001">нямецкі</language>
+			<language type="de" alt="proposed-x1002">нямецкай</language>
 			<language type="de_AT">нямецкая (аўстр.)</language>
 			<language type="de_CH">нямецкая (швейц.)</language>
 			<language type="el">грэцкая</language>
-			<language type="el" alt="proposed-x1001" draft="unconfirmed">грэцкай</language>
+			<language type="el" alt="proposed-x1001">грэцкай</language>
 			<language type="en">англійская</language>
-			<language type="en" alt="proposed-x1001" draft="unconfirmed">ангельскай</language>
-			<language type="en" alt="proposed-x1002" draft="unconfirmed">англійскі</language>
+			<language type="en" alt="proposed-x1001">ангельскай</language>
+			<language type="en" alt="proposed-x1002">англійскі</language>
 			<language type="en_AU">англійская (аўстрал.)</language>
 			<language type="en_CA">англійская (канад.)</language>
 			<language type="en_GB">англійская (Вялікабрытанія)</language>
-			<language type="en_GB" alt="proposed-x1001" draft="unconfirmed">англійская</language>
+			<language type="en_GB" alt="proposed-x1001">англійская</language>
 			<language type="en_US">англійская (ЗША)</language>
-			<language type="en_US" alt="proposed-x1001" draft="unconfirmed">англійская (амер.)</language>
+			<language type="en_US" alt="proposed-x1001">англійская (амер.)</language>
 			<language type="eo">эсперанта</language>
 			<language type="es">іспанская</language>
-			<language type="es" alt="proposed-x1001" draft="unconfirmed">гішпанскай</language>
-			<language type="es" alt="proposed-x1002" draft="unconfirmed">іспанскі</language>
+			<language type="es" alt="proposed-x1001">гішпанскай</language>
+			<language type="es" alt="proposed-x1002">іспанскі</language>
 			<language type="es_419">іспанская (лацінаамер.)</language>
-			<language type="es_ES" alt="proposed-x1001" draft="unconfirmed">іспанская</language>
+			<language type="es_ES" alt="proposed-x1001">іспанская</language>
 			<language type="et">эстонская</language>
-			<language type="et" alt="proposed-x1001" draft="unconfirmed">эстонскай</language>
+			<language type="et" alt="proposed-x1001">эстонскай</language>
 			<language type="eu">баскская</language>
-			<language type="eu" alt="proposed-x1001" draft="unconfirmed">басцкай</language>
+			<language type="eu" alt="proposed-x1001">басцкай</language>
 			<language type="fa">фарсі</language>
-			<language type="fa" alt="proposed-x1001" draft="unconfirmed">пэрсыдзкая</language>
+			<language type="fa" alt="proposed-x1001">пэрсыдзкая</language>
 			<language type="fi">фінская</language>
-			<language type="fi" alt="proposed-x1001" draft="unconfirmed">фінскай</language>
+			<language type="fi" alt="proposed-x1001">фінскай</language>
 			<language type="fil">тагальская</language>
 			<language type="fo">фарэрская</language>
 			<language type="fr">французская</language>
-			<language type="fr" alt="proposed-x1001" draft="unconfirmed">францускай</language>
-			<language type="fr" alt="proposed-x1002" draft="unconfirmed">французскі</language>
+			<language type="fr" alt="proposed-x1001">францускай</language>
+			<language type="fr" alt="proposed-x1002">французскі</language>
 			<language type="fr_CA">французская (канад.)</language>
 			<language type="fr_CH">французская (швейц.)</language>
 			<language type="fro">старафранцузская</language>
 			<language type="fy">фрызская</language>
 			<language type="ga">ірландская</language>
-			<language type="ga" alt="proposed-x1001" draft="unconfirmed">ірляндзкай</language>
+			<language type="ga" alt="proposed-x1001">ірляндзкай</language>
 			<language type="gd">шатландская гэльская</language>
 			<language type="gl">галісійская</language>
 			<language type="gn">гуарані</language>
 			<language type="gu">гуяраці</language>
 			<language type="he">іўрыт</language>
-			<language type="he" alt="proposed-x1001" draft="unconfirmed">габрэйскай</language>
+			<language type="he" alt="proposed-x1001">габрэйскай</language>
 			<language type="hi">хіндзі</language>
 			<language type="hr">харвацкая</language>
-			<language type="hr" alt="proposed-x1001" draft="unconfirmed">харвацкай</language>
+			<language type="hr" alt="proposed-x1001">харвацкай</language>
 			<language type="hu">венгерская</language>
-			<language type="hu" alt="proposed-x1001" draft="unconfirmed">вугорская</language>
-			<language type="hu" alt="proposed-x1002" draft="unconfirmed">вянгерская</language>
-			<language type="hu" alt="proposed-x1003" draft="unconfirmed">вугорскай</language>
+			<language type="hu" alt="proposed-x1001">вугорская</language>
+			<language type="hu" alt="proposed-x1002">вянгерская</language>
+			<language type="hu" alt="proposed-x1003">вугорскай</language>
 			<language type="hy">армянская</language>
-			<language type="hy" alt="proposed-x1001" draft="unconfirmed">армянскай</language>
+			<language type="hy" alt="proposed-x1001">армянскай</language>
 			<language type="ia">інтэрлінгва</language>
 			<language type="id">інданезійская</language>
-			<language type="id" alt="proposed-x1001" draft="unconfirmed">інданэзійская</language>
+			<language type="id" alt="proposed-x1001">інданэзійская</language>
 			<language type="ie">інтэрлінгве</language>
 			<language type="is">ісландская</language>
-			<language type="is" alt="proposed-x1001" draft="unconfirmed">ісьляндзкай</language>
+			<language type="is" alt="proposed-x1001">ісьляндзкай</language>
 			<language type="it">італьянская</language>
-			<language type="it" alt="proposed-x1001" draft="unconfirmed">італьянскай</language>
-			<language type="it" alt="proposed-x1002" draft="unconfirmed">італьянскі</language>
+			<language type="it" alt="proposed-x1001">італьянскай</language>
+			<language type="it" alt="proposed-x1002">італьянскі</language>
 			<language type="ja">японская</language>
-			<language type="ja" alt="proposed-x1001" draft="unconfirmed">японскай</language>
-			<language type="ja" alt="proposed-x1002" draft="unconfirmed">японскі</language>
+			<language type="ja" alt="proposed-x1001">японскай</language>
+			<language type="ja" alt="proposed-x1002">японскі</language>
 			<language type="jv">яванская</language>
 			<language type="ka">грузінская</language>
 			<language type="kk">казахская</language>
 			<language type="kn">каннада</language>
 			<language type="ko">карэйская</language>
-			<language type="ko" alt="proposed-x1001" draft="unconfirmed">карэйскай</language>
+			<language type="ko" alt="proposed-x1001">карэйскай</language>
 			<language type="ku">курдская</language>
-			<language type="ku" alt="proposed-x1001" draft="unconfirmed">курдскай</language>
+			<language type="ku" alt="proposed-x1001">курдскай</language>
 			<language type="la">лацінская</language>
-			<language type="la" alt="proposed-x1001" draft="unconfirmed">лаціне</language>
+			<language type="la" alt="proposed-x1001">лаціне</language>
 			<language type="ln">лінгала</language>
 			<language type="lo">лаоская</language>
 			<language type="lt">літоўская</language>
-			<language type="lt" alt="proposed-x1001" draft="unconfirmed">летувіскай</language>
+			<language type="lt" alt="proposed-x1001">летувіскай</language>
 			<language type="lv">латышская</language>
-			<language type="lv" alt="proposed-x1001" draft="unconfirmed">латвійскай</language>
+			<language type="lv" alt="proposed-x1001">латвійскай</language>
 			<language type="mk">македонская</language>
-			<language type="mk" alt="proposed-x1001" draft="unconfirmed">македонскай</language>
+			<language type="mk" alt="proposed-x1001">македонскай</language>
 			<language type="ml">малаяламская</language>
 			<language type="mn">мангольская</language>
 			<language type="mo">малдаўская</language>
@@ -146,96 +146,96 @@
 			<language type="ms">малайская</language>
 			<language type="mt">мальтыйская</language>
 			<language type="ne">непальская</language>
-			<language type="ne" alt="proposed-x1001" draft="unconfirmed">непальскай</language>
+			<language type="ne" alt="proposed-x1001">непальскай</language>
 			<language type="nl">галандская</language>
-			<language type="nl" alt="proposed-x1001" draft="unconfirmed">галяндзкая</language>
-			<language type="nl" alt="proposed-x1002" draft="unconfirmed">галяндзкай</language>
+			<language type="nl" alt="proposed-x1001">галяндзкая</language>
+			<language type="nl" alt="proposed-x1002">галяндзкай</language>
 			<language type="nl_BE">фламандская</language>
 			<language type="nn">нарвежская (нюнорск)</language>
-			<language type="nn" alt="proposed-x1001" draft="unconfirmed">нарвэская (нованарвэская: нюнорск)</language>
+			<language type="nn" alt="proposed-x1001">нарвэская (нованарвэская: нюнорск)</language>
 			<language type="no">нарвежская</language>
-			<language type="no" alt="proposed-x1001" draft="unconfirmed">нарвэскай</language>
+			<language type="no" alt="proposed-x1001">нарвэскай</language>
 			<language type="oc">правансальская</language>
 			<language type="pa">панджабі</language>
 			<language type="pl">польская</language>
-			<language type="pl" alt="proposed-x1001" draft="unconfirmed">польскай</language>
+			<language type="pl" alt="proposed-x1001">польскай</language>
 			<language type="ps">пушту</language>
 			<language type="pt">партугальская</language>
-			<language type="pt" alt="proposed-x1001" draft="unconfirmed">партугальскі</language>
-			<language type="pt" alt="proposed-x1002" draft="unconfirmed">партугальскай</language>
+			<language type="pt" alt="proposed-x1001">партугальскі</language>
+			<language type="pt" alt="proposed-x1002">партугальскай</language>
 			<language type="pt_BR">партугальская (бразіл.)</language>
-			<language type="pt_BR" alt="proposed-x1001" draft="unconfirmed">партугальская (бразылія)</language>
-			<language type="pt_PT" alt="proposed-x1001" draft="unconfirmed">партугальская</language>
+			<language type="pt_BR" alt="proposed-x1001">партугальская (бразылія)</language>
+			<language type="pt_PT" alt="proposed-x1001">партугальская</language>
 			<language type="ro">румынская</language>
-			<language type="ro" alt="proposed-x1001" draft="unconfirmed">румынскай</language>
+			<language type="ro" alt="proposed-x1001">румынскай</language>
 			<language type="ru">руская</language>
-			<language type="ru" alt="proposed-x1001" draft="unconfirmed">расейскай</language>
-			<language type="ru" alt="proposed-x1002" draft="unconfirmed">рускі</language>
+			<language type="ru" alt="proposed-x1001">расейскай</language>
+			<language type="ru" alt="proposed-x1002">рускі</language>
 			<language type="sa">санскрыт</language>
 			<language type="sah">якуцкая</language>
 			<language type="sd">сіндхі</language>
 			<language type="sh">сербска-харвацкая</language>
-			<language type="sh" alt="proposed-x1001" draft="unconfirmed">сэрбска-харвацкай</language>
+			<language type="sh" alt="proposed-x1001">сэрбска-харвацкай</language>
 			<language type="si">сінгальская</language>
-			<language type="si" alt="proposed-x1001" draft="unconfirmed">сынгальская</language>
+			<language type="si" alt="proposed-x1001">сынгальская</language>
 			<language type="sk">славацкая</language>
-			<language type="sk" alt="proposed-x1001" draft="unconfirmed">славацкай</language>
+			<language type="sk" alt="proposed-x1001">славацкай</language>
 			<language type="sl">славенская</language>
-			<language type="sl" alt="proposed-x1001" draft="unconfirmed">славенскай</language>
+			<language type="sl" alt="proposed-x1001">славенскай</language>
 			<language type="so">самалійская</language>
 			<language type="sq">албанская</language>
-			<language type="sq" alt="proposed-x1001" draft="unconfirmed">альбанскай</language>
+			<language type="sq" alt="proposed-x1001">альбанскай</language>
 			<language type="sr">сербская</language>
-			<language type="sr" alt="proposed-x1001" draft="unconfirmed">сербскай</language>
-			<language type="sr" alt="proposed-x1002" draft="unconfirmed">сэрбская</language>
+			<language type="sr" alt="proposed-x1001">сербскай</language>
+			<language type="sr" alt="proposed-x1002">сэрбская</language>
 			<language type="su">суданская</language>
 			<language type="sv">шведская</language>
-			<language type="sv" alt="proposed-x1001" draft="unconfirmed">швэдская</language>
-			<language type="sv" alt="proposed-x1002" draft="unconfirmed">швэдзкай</language>
+			<language type="sv" alt="proposed-x1001">швэдская</language>
+			<language type="sv" alt="proposed-x1002">швэдзкай</language>
 			<language type="sw">суахілі</language>
 			<language type="ta">тамільская</language>
 			<language type="te">тэлугу</language>
 			<language type="th">тайская</language>
-			<language type="th" alt="proposed-x1001" draft="unconfirmed">тайландзкія</language>
+			<language type="th" alt="proposed-x1001">тайландзкія</language>
 			<language type="ti">тыгрынья</language>
 			<language type="tk">туркменская</language>
-			<language type="tk" alt="proposed-x1001" draft="unconfirmed">туркменскай</language>
+			<language type="tk" alt="proposed-x1001">туркменскай</language>
 			<language type="tlh">клінгон</language>
 			<language type="tr">турэцкая</language>
-			<language type="tr" alt="proposed-x1001" draft="unconfirmed">турэцкай</language>
+			<language type="tr" alt="proposed-x1001">турэцкай</language>
 			<language type="tt">татарская</language>
 			<language type="ug">уйгурская</language>
 			<language type="uk">украінская</language>
-			<language type="uk" alt="proposed-x1001" draft="unconfirmed">украінскай</language>
+			<language type="uk" alt="proposed-x1001">украінскай</language>
 			<language type="und">невядомая мова</language>
 			<language type="ur">урду</language>
 			<language type="uz">узбекская</language>
-			<language type="uz" alt="proposed-x1001" draft="unconfirmed">узбэцкая</language>
+			<language type="uz" alt="proposed-x1001">узбэцкая</language>
 			<language type="vi">в'етнамская</language>
-			<language type="vi" alt="proposed-x1001" draft="unconfirmed">віетнамскай</language>
+			<language type="vi" alt="proposed-x1001">віетнамскай</language>
 			<language type="xh">хоса</language>
 			<language type="zh">кітайская</language>
-			<language type="zh" alt="proposed-x1001" draft="unconfirmed">кітайскі</language>
+			<language type="zh" alt="proposed-x1001">кітайскі</language>
 			<language type="zh_Hans">спрошчаная кітайская</language>
-			<language type="zh_Hans" alt="proposed-x1001" draft="unconfirmed">кітайская (спрошчаная)</language>
+			<language type="zh_Hans" alt="proposed-x1001">кітайская (спрошчаная)</language>
 			<language type="zh_Hant">традыцыйная кітайская</language>
-			<language type="zh_Hant" alt="proposed-x1001" draft="unconfirmed">кітайская (традыц.)</language>
+			<language type="zh_Hant" alt="proposed-x1001">кітайская (традыц.)</language>
 			<language type="zu">зулу</language>
 		</languages>
 		<scripts>
 			<script type="Cyrl">кірылічны</script>
 			<script type="Latn">лацінскі</script>
 			<script type="Zxxx">чысты</script>
-			<script type="Zxxx" alt="proposed-x1001" draft="unconfirmed">Zxxx</script>
+			<script type="Zxxx" alt="proposed-x1001">Zxxx</script>
 			<script type="Zzzz">невядомы або недапушчальны пераклад</script>
-			<script type="Zzzz" alt="proposed-x1001" draft="unconfirmed">Невядомы або недапушчальны пераклад</script>
-			<script type="Zzzz" alt="proposed-x1002" draft="unconfirmed">Zzzz</script>
+			<script type="Zzzz" alt="proposed-x1001">Невядомы або недапушчальны пераклад</script>
+			<script type="Zzzz" alt="proposed-x1002">Zzzz</script>
 		</scripts>
 		<territories>
 			<territory type="001">Свет</territory>
 			<territory type="002">Афрыка</territory>
 			<territory type="003">Паўночная Амэрыка</territory>
-			<territory type="003" alt="proposed-x1001" draft="unconfirmed">Паўночная Амерыка</territory>
+			<territory type="003" alt="proposed-x1001">Паўночная Амерыка</territory>
 			<territory type="005">Паўднёвая Амэрыка</territory>
 			<territory type="009">Акіянія</territory>
 			<territory type="011">Заходняя Афрыка</territory>
@@ -244,10 +244,10 @@
 			<territory type="015">Паўночная Афрыка</territory>
 			<territory type="017">Цэнтральная Афрыка</territory>
 			<territory type="018">Паўднёвая Афрыка</territory>
-			<territory type="018" alt="proposed-x1001" draft="unconfirmed">018</territory>
+			<territory type="018" alt="proposed-x1001">018</territory>
 			<territory type="019">Паўночная і Паўднёвая Амерыкі</territory>
 			<territory type="021">ЗША і Канада</territory>
-			<territory type="021" alt="proposed-x1001" draft="unconfirmed">Паўночная Амерыка</territory>
+			<territory type="021" alt="proposed-x1001">Паўночная Амерыка</territory>
 			<territory type="029">Карыбскія астравы</territory>
 			<territory type="030">Усходняя Азія</territory>
 			<territory type="034">Паўднёвая Азія</territory>
@@ -255,7 +255,7 @@
 			<territory type="039">Паўднёвая Еўропа</territory>
 			<territory type="053">Аўстралія і Новая Зэландыя</territory>
 			<territory type="061">Палінезія</territory>
-			<territory type="061" alt="proposed-x1001" draft="unconfirmed">Палінэзія</territory>
+			<territory type="061" alt="proposed-x1001">Палінэзія</territory>
 			<territory type="062">Паўднёва-Цэнтральная Азія</territory>
 			<territory type="142">Азія</territory>
 			<territory type="143">Цэнтральная Азія</territory>
@@ -268,7 +268,7 @@
 			<territory type="AD">Андора</territory>
 			<territory type="AE">Аб'яднаныя Арабскія Эміраты</territory>
 			<territory type="AF">Афганістан</territory>
-			<territory type="AF" alt="proposed-x1001" draft="unconfirmed">Аўганістан</territory>
+			<territory type="AF" alt="proposed-x1001">Аўганістан</territory>
 			<territory type="AG">Антыгуа і Барбуда</territory>
 			<territory type="AI">Ангуілля</territory>
 			<territory type="AL">Албанія</territory>
@@ -277,31 +277,31 @@
 			<territory type="AO">Ангола</territory>
 			<territory type="AQ">Антарктыка</territory>
 			<territory type="AR">Аргенціна</territory>
-			<territory type="AR" alt="proposed-x1001" draft="unconfirmed">Аргентына</territory>
+			<territory type="AR" alt="proposed-x1001">Аргентына</territory>
 			<territory type="AS">Амерыканскае Самоа</territory>
 			<territory type="AT">Аўстрыя</territory>
 			<territory type="AU">Аўстралія</territory>
 			<territory type="AW">Аруба</territory>
 			<territory type="AX">Аландскія астравы</territory>
 			<territory type="AZ">Азербайджан</territory>
-			<territory type="AZ" alt="proposed-x1001" draft="unconfirmed">Азербайжан</territory>
+			<territory type="AZ" alt="proposed-x1001">Азербайжан</territory>
 			<territory type="BA">Боснія і Герцагавіна</territory>
 			<territory type="BB">Барбадас</territory>
 			<territory type="BD">Бангладэш</territory>
 			<territory type="BE">Бельгія</territory>
 			<territory type="BF">Буркіна-Фасо</territory>
 			<territory type="BG">Балгарыя</territory>
-			<territory type="BG" alt="proposed-x1001" draft="unconfirmed">Баўгарыя</territory>
+			<territory type="BG" alt="proposed-x1001">Баўгарыя</territory>
 			<territory type="BH">Бахрэйн</territory>
 			<territory type="BI">Бурундзі</territory>
 			<territory type="BJ">Бенін</territory>
 			<territory type="BM">Бермудскія астравы</territory>
 			<territory type="BN">Бруней-Дарусалам</territory>
-			<territory type="BN" alt="proposed-x1001" draft="unconfirmed">Брунэй</territory>
+			<territory type="BN" alt="proposed-x1001">Брунэй</territory>
 			<territory type="BO">Балівія</territory>
 			<territory type="BR">Бразілія</territory>
 			<territory type="BS">Багамскія Астравы</territory>
-			<territory type="BS" alt="proposed-x1001" draft="unconfirmed">Багамскія астравы</territory>
+			<territory type="BS" alt="proposed-x1001">Багамскія астравы</territory>
 			<territory type="BT">Бутан</territory>
 			<territory type="BV">Бувэ востраў</territory>
 			<territory type="BW">Батсвана</territory>
@@ -309,15 +309,15 @@
 			<territory type="BZ">Беліз</territory>
 			<territory type="CA">Канада</territory>
 			<territory type="CC">Какосавыя астравы</territory>
-			<territory type="CC" alt="proposed-x1001" draft="unconfirmed">Какосавыя Астравы</territory>
+			<territory type="CC" alt="proposed-x1001">Какосавыя Астравы</territory>
 			<territory type="CD">Конга, Дэмакратычная Рэспубліка</territory>
 			<territory type="CF">Цэнтральна-Афрыканская Рэспубліка</territory>
 			<territory type="CG">Конга</territory>
 			<territory type="CH">Швейцарыя</territory>
 			<territory type="CK">Кука астравы</territory>
-			<territory type="CK" alt="proposed-x1001" draft="unconfirmed">Кука, Астравы</territory>
+			<territory type="CK" alt="proposed-x1001">Кука, Астравы</territory>
 			<territory type="CL">Чылі</territory>
-			<territory type="CL" alt="proposed-x1001" draft="unconfirmed">Чілі</territory>
+			<territory type="CL" alt="proposed-x1001">Чілі</territory>
 			<territory type="CM">Камерун</territory>
 			<territory type="CN">Кітай</territory>
 			<territory type="CO">Калумбія</territory>
@@ -328,7 +328,7 @@
 			<territory type="CY">Кіпр</territory>
 			<territory type="CZ">Чэхія</territory>
 			<territory type="DE">Германія</territory>
-			<territory type="DE" alt="proposed-x1001" draft="unconfirmed">Нямеччына</territory>
+			<territory type="DE" alt="proposed-x1001">Нямеччына</territory>
 			<territory type="DJ">Джыбуці</territory>
 			<territory type="DK">Данія</territory>
 			<territory type="DM">Дамініка</territory>
@@ -348,8 +348,8 @@
 			<territory type="FR">Францыя</territory>
 			<territory type="GA">Габон</territory>
 			<territory type="GB">Велікабрытанія</territory>
-			<territory type="GB" alt="proposed-x1001" draft="unconfirmed">Аб'яднанае Каралеўства</territory>
-			<territory type="GB" alt="proposed-x1002" draft="unconfirmed">Вялікая Брытанія</territory>
+			<territory type="GB" alt="proposed-x1001">Аб'яднанае Каралеўства</territory>
+			<territory type="GB" alt="proposed-x1002">Вялікая Брытанія</territory>
 			<territory type="GD">Грэнада</territory>
 			<territory type="GE">Грузія</territory>
 			<territory type="GF">Французская Гвіяна</territory>
@@ -379,7 +379,7 @@
 			<territory type="IO">Брытанская тэрыторыя Індыйскага акіяну</territory>
 			<territory type="IQ">Ірак</territory>
 			<territory type="IR">Іран, Ісламская Рэспубліка</territory>
-			<territory type="IR" alt="proposed-x1001" draft="unconfirmed">Іран</territory>
+			<territory type="IR" alt="proposed-x1001">Іран</territory>
 			<territory type="IS">Ісландыя</territory>
 			<territory type="IT">Італія</territory>
 			<territory type="JM">Ямайка</territory>
@@ -394,11 +394,11 @@
 			<territory type="KP">Паўночная Карэя</territory>
 			<territory type="KR">Паўднёвая Карэя</territory>
 			<territory type="KW">Кувейт</territory>
-			<territory type="KW" alt="proposed-x1001" draft="unconfirmed">Кувэйт</territory>
+			<territory type="KW" alt="proposed-x1001">Кувэйт</territory>
 			<territory type="KY">Кайманавы астравы</territory>
 			<territory type="KZ">Казахстан</territory>
 			<territory type="LA">Лаоская Народна-Дэмакратычная Рэспубліка</territory>
-			<territory type="LA" alt="proposed-x1001" draft="unconfirmed">Лаос</territory>
+			<territory type="LA" alt="proposed-x1001">Лаос</territory>
 			<territory type="LB">Ліван</territory>
 			<territory type="LC">Сэнт-Люсія</territory>
 			<territory type="LI">Ліхтэнштэйн</territory>
@@ -412,12 +412,12 @@
 			<territory type="MA">Марока</territory>
 			<territory type="MC">Манака</territory>
 			<territory type="MD">Малдова</territory>
-			<territory type="MD" alt="proposed-x1001" draft="unconfirmed">Малдова, Рэспубліка</territory>
+			<territory type="MD" alt="proposed-x1001">Малдова, Рэспубліка</territory>
 			<territory type="ME">Чарнагорыя</territory>
 			<territory type="MG">Мадагаскар</territory>
 			<territory type="MH">Маршалавы Астравы</territory>
 			<territory type="MK">Македонія, БЮР</territory>
-			<territory type="MK" alt="proposed-x1001" draft="unconfirmed">Македонія</territory>
+			<territory type="MK" alt="proposed-x1001">Македонія</territory>
 			<territory type="ML">Малі</territory>
 			<territory type="MM">М'янма</territory>
 			<territory type="MN">Манголія</territory>
@@ -454,7 +454,7 @@
 			<territory type="PH">Філіпіны</territory>
 			<territory type="PK">Пакістан</territory>
 			<territory type="PL">Польшча</territory>
-			<territory type="PL" alt="proposed-x1001" draft="unconfirmed">Польша</territory>
+			<territory type="PL" alt="proposed-x1001">Польша</territory>
 			<territory type="PS">Палестынскія тэрыторыі</territory>
 			<territory type="PT">Партугалія</territory>
 			<territory type="PW">Палаў</territory>
@@ -465,9 +465,9 @@
 			<territory type="RE">Рэюньён</territory>
 			<territory type="RO">Румынія</territory>
 			<territory type="RS">Сербія</territory>
-			<territory type="RS" alt="proposed-x1001" draft="unconfirmed">Сэрбія</territory>
+			<territory type="RS" alt="proposed-x1001">Сэрбія</territory>
 			<territory type="RU">Расія</territory>
-			<territory type="RU" alt="proposed-x1001" draft="unconfirmed">Расійская Федэрацыя</territory>
+			<territory type="RU" alt="proposed-x1001">Расійская Федэрацыя</territory>
 			<territory type="RW">Руанда</territory>
 			<territory type="SA">Саудаўская Аравія</territory>
 			<territory type="SB">Саламонавы Астравы</territory>
@@ -498,7 +498,7 @@
 			<territory type="TM">Туркменістан</territory>
 			<territory type="TN">Туніс</territory>
 			<territory type="TO">Тангійская</territory>
-			<territory type="TO" alt="proposed-x1001" draft="unconfirmed">Тонга</territory>
+			<territory type="TO" alt="proposed-x1001">Тонга</territory>
 			<territory type="TR">Турцыя</territory>
 			<territory type="TT">Трынідад і Табага</territory>
 			<territory type="TV">Тувалу</territory>
@@ -507,11 +507,11 @@
 			<territory type="UA">Украіна</territory>
 			<territory type="UG">Уганда</territory>
 			<territory type="US">Злучаныя Штаты</territory>
-			<territory type="US" alt="proposed-x1001" draft="unconfirmed">Злучаныя Штаты Амерыкі</territory>
+			<territory type="US" alt="proposed-x1001">Злучаныя Штаты Амерыкі</territory>
 			<territory type="UY">Уругвай</territory>
 			<territory type="UZ">Узбекістан</territory>
 			<territory type="VA">Ватыкан</territory>
-			<territory type="VA" alt="proposed-x1001" draft="unconfirmed">Вацікан</territory>
+			<territory type="VA" alt="proposed-x1001">Вацікан</territory>
 			<territory type="VC">Сэнт-Вінсэнт і Грэнадыны</territory>
 			<territory type="VE">Венесуэла</territory>
 			<territory type="VG">Віргінскія астравы</territory>
@@ -536,31 +536,31 @@
 			<type type="chinese" key="calendar">кітайскі каляндар</type>
 			<type type="gregorian" key="calendar">грэгарыянскі каляндар</type>
 			<type type="hebrew" key="calendar">іудэйскі каляндар</type>
-			<type type="hebrew" key="calendar" alt="proposed-x1001" draft="unconfirmed">гебрайскі каляндар</type>
+			<type type="hebrew" key="calendar" alt="proposed-x1001">гебрайскі каляндар</type>
 			<type type="islamic" key="calendar">мусульманскі каляндар</type>
 			<type type="islamic-civil" key="calendar">мусульманскі свецкі каляндар</type>
 			<type type="japanese" key="calendar">японскі каляндар</type>
 		</types>
 		<measurementSystemNames>
 			<measurementSystemName type="US">ЗША</measurementSystemName>
-			<measurementSystemName type="US" alt="proposed-x1001" draft="unconfirmed">амерыканская</measurementSystemName>
+			<measurementSystemName type="US" alt="proposed-x1001">амерыканская</measurementSystemName>
 			<measurementSystemName type="metric">метрычная</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<characters>
 		<exemplarCharacters>[’ а-д {дж} {дз} е ё ж з й і к-у ў ф-ш ы-я]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001" draft="unconfirmed">[']</exemplarCharacters>
+		<exemplarCharacters type="auxiliary" alt="proposed-x1001">[']</exemplarCharacters>
 		<exemplarCharacters type="currencySymbol">[a-z]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001" draft="unconfirmed">[’ а-г ґ д е ё ж з й і к-у ў ф-ш ы-я]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1002" draft="unconfirmed">[’ а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1003" draft="unconfirmed">[' а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1004" draft="unconfirmed">[' а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
+		<exemplarCharacters alt="proposed-x1001">[’ а-г ґ д е ё ж з й і к-у ў ф-ш ы-я]</exemplarCharacters>
+		<exemplarCharacters alt="proposed-x1002">[’ а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
+		<exemplarCharacters alt="proposed-x1003">[' а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
+		<exemplarCharacters alt="proposed-x1004">[' а-г ґ д е ё ж з і к-ш ы-я]</exemplarCharacters>
 	</characters>
 	<delimiters>
-		<quotationEnd draft="unconfirmed">”</quotationEnd>
-		<alternateQuotationStart draft="unconfirmed">‘</alternateQuotationStart>
-		<alternateQuotationEnd draft="unconfirmed">’</alternateQuotationEnd>
+		<quotationEnd>”</quotationEnd>
+		<alternateQuotationStart>‘</alternateQuotationStart>
+		<alternateQuotationEnd>’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GanjkHmsSEDFwWxhKzAeugXZvcL</localizedPatternChars>
@@ -569,58 +569,58 @@
 				<days>
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
-							<day type="sun" draft="unconfirmed">нд</day>
-							<day type="mon" draft="unconfirmed">пн</day>
-							<day type="tue" draft="unconfirmed">аў</day>
-							<day type="wed" draft="unconfirmed">ср</day>
-							<day type="thu" draft="unconfirmed">чц</day>
-							<day type="fri" draft="unconfirmed">пт</day>
-							<day type="sat" draft="unconfirmed">сб</day>
+							<day type="sun">нд</day>
+							<day type="mon">пн</day>
+							<day type="tue">аў</day>
+							<day type="wed">ср</day>
+							<day type="thu">чц</day>
+							<day type="fri">пт</day>
+							<day type="sat">сб</day>
 						</dayWidth>
 					</dayContext>
 				</days>
 				<quarters>
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
-							<quarter type="1" draft="unconfirmed">1-шы кв.</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі кв.</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці кв.</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты кв.</quarter>
+							<quarter type="1">1-шы кв.</quarter>
+							<quarter type="2">2-гі кв.</quarter>
+							<quarter type="3">3-ці кв.</quarter>
+							<quarter type="4">4-ты кв.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
-							<quarter type="1" draft="unconfirmed">1-шы квартал</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі квартал</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці квартал</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты квартал</quarter>
+							<quarter type="1">1-шы квартал</quarter>
+							<quarter type="2">2-гі квартал</quarter>
+							<quarter type="3">3-ці квартал</quarter>
+							<quarter type="4">4-ты квартал</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
 				<dateFormats>
 					<dateFormatLength type="full">
 						<dateFormat>
-							<pattern draft="unconfirmed">EEEE, d MMMM yyyy G</pattern>
+							<pattern>EEEE, d MMMM yyyy G</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
-							<pattern draft="unconfirmed">d MMMM yyyy G</pattern>
+							<pattern>d MMMM yyyy G</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern draft="unconfirmed">d MMM yyyy G</pattern>
+							<pattern>d MMM yyyy G</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
-							<pattern draft="unconfirmed">dd.MM.yyyy</pattern>
+							<pattern>dd.MM.yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="Md" draft="unconfirmed">dd.MM</dateFormatItem>
-						<dateFormatItem id="yyyyM" draft="unconfirmed">MM.yyyy</dateFormatItem>
+						<dateFormatItem id="Md">dd.MM</dateFormatItem>
+						<dateFormatItem id="yyyyM">MM.yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
@@ -628,37 +628,37 @@
 				<days>
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
-							<day type="sun" draft="unconfirmed">нд</day>
-							<day type="mon" draft="unconfirmed">пн</day>
-							<day type="tue" draft="unconfirmed">аў</day>
-							<day type="wed" draft="unconfirmed">ср</day>
-							<day type="thu" draft="unconfirmed">чц</day>
-							<day type="fri" draft="unconfirmed">пт</day>
-							<day type="sat" draft="unconfirmed">сб</day>
+							<day type="sun">нд</day>
+							<day type="mon">пн</day>
+							<day type="tue">аў</day>
+							<day type="wed">ср</day>
+							<day type="thu">чц</day>
+							<day type="fri">пт</day>
+							<day type="sat">сб</day>
 						</dayWidth>
 					</dayContext>
 				</days>
 				<quarters>
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
-							<quarter type="1" draft="unconfirmed">1-шы кв.</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі кв.</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці кв.</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты кв.</quarter>
+							<quarter type="1">1-шы кв.</quarter>
+							<quarter type="2">2-гі кв.</quarter>
+							<quarter type="3">3-ці кв.</quarter>
+							<quarter type="4">4-ты кв.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
-							<quarter type="1" draft="unconfirmed">1-шы квартал</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі квартал</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці квартал</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты квартал</quarter>
+							<quarter type="1">1-шы квартал</quarter>
+							<quarter type="2">2-гі квартал</quarter>
+							<quarter type="3">3-ці квартал</quarter>
+							<quarter type="4">4-ты квартал</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="Md" draft="unconfirmed">dd.MM</dateFormatItem>
-						<dateFormatItem id="yyMM" draft="unconfirmed">MM.yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyM" draft="unconfirmed">MM.yyyy</dateFormatItem>
+						<dateFormatItem id="Md">dd.MM</dateFormatItem>
+						<dateFormatItem id="yyMM">MM.yyyy</dateFormatItem>
+						<dateFormatItem id="yyyyM">MM.yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
@@ -666,49 +666,49 @@
 				<days>
 					<dayContext type="stand-alone">
 						<dayWidth type="narrow">
-							<day type="sun" draft="unconfirmed">нд</day>
-							<day type="mon" draft="unconfirmed">пн</day>
-							<day type="tue" draft="unconfirmed">аў</day>
-							<day type="wed" draft="unconfirmed">ср</day>
-							<day type="thu" draft="unconfirmed">чц</day>
-							<day type="fri" draft="unconfirmed">пт</day>
-							<day type="sat" draft="unconfirmed">сб</day>
+							<day type="sun">нд</day>
+							<day type="mon">пн</day>
+							<day type="tue">аў</day>
+							<day type="wed">ср</day>
+							<day type="thu">чц</day>
+							<day type="fri">пт</day>
+							<day type="sat">сб</day>
 						</dayWidth>
 					</dayContext>
 				</days>
 				<quarters>
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
-							<quarter type="1" draft="unconfirmed">1-шы кв.</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі кв.</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці кв.</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты кв.</quarter>
+							<quarter type="1">1-шы кв.</quarter>
+							<quarter type="2">2-гі кв.</quarter>
+							<quarter type="3">3-ці кв.</quarter>
+							<quarter type="4">4-ты кв.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
-							<quarter type="1" draft="unconfirmed">1-шы квартал</quarter>
-							<quarter type="2" draft="unconfirmed">2-гі квартал</quarter>
-							<quarter type="3" draft="unconfirmed">3-ці квартал</quarter>
-							<quarter type="4" draft="unconfirmed">4-ты квартал</quarter>
+							<quarter type="1">1-шы квартал</quarter>
+							<quarter type="2">2-гі квартал</quarter>
+							<quarter type="3">3-ці квартал</quarter>
+							<quarter type="4">4-ты квартал</quarter>
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
 				<dateFormats>
 					<dateFormatLength type="medium">
 						<dateFormat>
-							<pattern draft="unconfirmed">dd.MM.yyyy</pattern>
+							<pattern>dd.MM.yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
-							<pattern draft="unconfirmed">dd.MM.yy</pattern>
+							<pattern>dd.MM.yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="Md" draft="unconfirmed">dd.MM</dateFormatItem>
-						<dateFormatItem id="yyMMM" draft="unconfirmed">MMM yy</dateFormatItem>
-						<dateFormatItem id="yyyyM" draft="unconfirmed">MM.yyyy</dateFormatItem>
+						<dateFormatItem id="Md">dd.MM</dateFormatItem>
+						<dateFormatItem id="yyMMM">MMM yy</dateFormatItem>
+						<dateFormatItem id="yyyyM">MM.yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
@@ -721,7 +721,7 @@
 							<month type="3">сак</month>
 							<month type="4">кра</month>
 							<month type="5">май</month>
-							<month type="5" alt="proposed-x1001" draft="unconfirmed">тра</month>
+							<month type="5" alt="proposed-x1001">тра</month>
 							<month type="6">чэр</month>
 							<month type="7">ліп</month>
 							<month type="8">жні</month>
@@ -735,30 +735,30 @@
 						</monthWidth>
 						<monthWidth type="wide">
 							<month type="1">студзень</month>
-							<month type="1" alt="proposed-x1001" draft="unconfirmed">студзеня</month>
+							<month type="1" alt="proposed-x1001">студзеня</month>
 							<month type="2">люты</month>
-							<month type="2" alt="proposed-x1001" draft="unconfirmed">лютага</month>
+							<month type="2" alt="proposed-x1001">лютага</month>
 							<month type="3">сакавік</month>
-							<month type="3" alt="proposed-x1001" draft="unconfirmed">сакавіка</month>
+							<month type="3" alt="proposed-x1001">сакавіка</month>
 							<month type="4">красавік</month>
-							<month type="4" alt="proposed-x1001" draft="unconfirmed">красавіка</month>
+							<month type="4" alt="proposed-x1001">красавіка</month>
 							<month type="5">май</month>
-							<month type="5" alt="proposed-x1001" draft="unconfirmed">травень</month>
-							<month type="5" alt="proposed-x1002" draft="unconfirmed">травня</month>
+							<month type="5" alt="proposed-x1001">травень</month>
+							<month type="5" alt="proposed-x1002">травня</month>
 							<month type="6">чэрвень</month>
-							<month type="6" alt="proposed-x1001" draft="unconfirmed">чэрвеня</month>
+							<month type="6" alt="proposed-x1001">чэрвеня</month>
 							<month type="7">ліпень</month>
-							<month type="7" alt="proposed-x1001" draft="unconfirmed">ліпеня</month>
+							<month type="7" alt="proposed-x1001">ліпеня</month>
 							<month type="8">жнівень</month>
-							<month type="8" alt="proposed-x1001" draft="unconfirmed">жнівеня</month>
+							<month type="8" alt="proposed-x1001">жнівеня</month>
 							<month type="9">верасень</month>
-							<month type="9" alt="proposed-x1001" draft="unconfirmed">верасня</month>
+							<month type="9" alt="proposed-x1001">верасня</month>
 							<month type="10">кастрычнік</month>
-							<month type="10" alt="proposed-x1001" draft="unconfirmed">кастрычніка</month>
+							<month type="10" alt="proposed-x1001">кастрычніка</month>
 							<month type="11">лістапад</month>
-							<month type="11" alt="proposed-x1001" draft="unconfirmed">лістапада</month>
+							<month type="11" alt="proposed-x1001">лістапада</month>
 							<month type="12">снежань</month>
-							<month type="12" alt="proposed-x1001" draft="unconfirmed">снежня</month>
+							<month type="12" alt="proposed-x1001">снежня</month>
 						</monthWidth>
 					</monthContext>
 					<monthContext type="stand-alone">
@@ -771,7 +771,7 @@
 							<month type="3">с</month>
 							<month type="4">к</month>
 							<month type="5">м</month>
-							<month type="5" alt="proposed-x1001" draft="unconfirmed">т</month>
+							<month type="5" alt="proposed-x1001">т</month>
 							<month type="6">ч</month>
 							<month type="7">л</month>
 							<month type="8">ж</month>
@@ -822,23 +822,23 @@
 					<quarterContext type="format">
 						<quarterWidth type="abbreviated">
 							<quarter type="1">1-шы кв.</quarter>
-							<quarter type="1" alt="proposed-x1001" draft="unconfirmed">1-ы кв.</quarter>
+							<quarter type="1" alt="proposed-x1001">1-ы кв.</quarter>
 							<quarter type="2">2-гі кв.</quarter>
-							<quarter type="2" alt="proposed-x1001" draft="unconfirmed">2-ы кв.</quarter>
+							<quarter type="2" alt="proposed-x1001">2-ы кв.</quarter>
 							<quarter type="3">3-ці кв.</quarter>
-							<quarter type="3" alt="proposed-x1001" draft="unconfirmed">3-ы кв.</quarter>
+							<quarter type="3" alt="proposed-x1001">3-ы кв.</quarter>
 							<quarter type="4">4-ты кв.</quarter>
-							<quarter type="4" alt="proposed-x1001" draft="unconfirmed">4-ы кв.</quarter>
+							<quarter type="4" alt="proposed-x1001">4-ы кв.</quarter>
 						</quarterWidth>
 						<quarterWidth type="wide">
 							<quarter type="1">1-шы квартал</quarter>
-							<quarter type="1" alt="proposed-x1001" draft="unconfirmed">1-ы квартал</quarter>
+							<quarter type="1" alt="proposed-x1001">1-ы квартал</quarter>
 							<quarter type="2">2-гі квартал</quarter>
-							<quarter type="2" alt="proposed-x1001" draft="unconfirmed">2-ы квартал</quarter>
+							<quarter type="2" alt="proposed-x1001">2-ы квартал</quarter>
 							<quarter type="3">3-ці квартал</quarter>
-							<quarter type="3" alt="proposed-x1001" draft="unconfirmed">3-ы квартал</quarter>
+							<quarter type="3" alt="proposed-x1001">3-ы квартал</quarter>
 							<quarter type="4">4-ты квартал</quarter>
-							<quarter type="4" alt="proposed-x1001" draft="unconfirmed">4-ы квартал</quarter>
+							<quarter type="4" alt="proposed-x1001">4-ы квартал</quarter>
 						</quarterWidth>
 					</quarterContext>
 					<quarterContext type="stand-alone">
@@ -863,22 +863,22 @@
 					</quarterContext>
 				</quarters>
 				<am>да палудня</am>
-				<am alt="proposed-x1001" draft="unconfirmed">AM</am>
+				<am alt="proposed-x1001">AM</am>
 				<pm>пасля палудня</pm>
-				<pm alt="proposed-x1001" draft="unconfirmed">PM</pm>
+				<pm alt="proposed-x1001">PM</pm>
 				<eras>
 					<eraNames>
 						<era type="0">да н.э.</era>
-						<era type="0" alt="proposed-x1001" draft="unconfirmed">д.н.э.</era>
-						<era type="0" alt="proposed-x1002" draft="unconfirmed">BCE</era>
+						<era type="0" alt="proposed-x1001">д.н.э.</era>
+						<era type="0" alt="proposed-x1002">BCE</era>
 						<era type="1">н.э.</era>
-						<era type="1" alt="proposed-x1001" draft="unconfirmed">CE</era>
+						<era type="1" alt="proposed-x1001">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">да н.е.</era>
-						<era type="0" alt="proposed-x1001" draft="unconfirmed">да н.э.</era>
+						<era type="0" alt="proposed-x1001">да н.э.</era>
 						<era type="1">н.е.</era>
-						<era type="1" alt="proposed-x1001" draft="unconfirmed">н.э.</era>
+						<era type="1" alt="proposed-x1001">н.э.</era>
 					</eraAbbr>
 					<eraNarrow>
 						<era type="0">да н.э.</era>
@@ -911,43 +911,43 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>HH.mm.ss v</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">HH:mm:ss v</pattern>
+							<pattern alt="proposed-x1001">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
 							<pattern>HH.mm.ss z</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">HH:mm:ss z</pattern>
+							<pattern alt="proposed-x1001">HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
 							<pattern>HH.mm.ss</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">HH:mm:ss</pattern>
+							<pattern alt="proposed-x1001">HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
 							<pattern>HH.mm</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">HH:mm</pattern>
+							<pattern alt="proposed-x1001">HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
 				<dateTimeFormats>
 					<dateTimeFormatLength>
 						<dateTimeFormat>
-							<pattern draft="unconfirmed">{1} {0}</pattern>
+							<pattern>{1} {0}</pattern>
 						</dateTimeFormat>
 					</dateTimeFormatLength>
 					<availableFormats>
 						<dateFormatItem id="HHmm">HH:mm</dateFormatItem>
 						<dateFormatItem id="HHmmss">HH:mm:ss</dateFormatItem>
-						<dateFormatItem id="MMMMd" draft="unconfirmed">d MMMM</dateFormatItem>
-						<dateFormatItem id="Md" draft="unconfirmed">d.M</dateFormatItem>
-						<dateFormatItem id="mmss" draft="unconfirmed">mm.ss</dateFormatItem>
-						<dateFormatItem id="yyQ" draft="unconfirmed">Q yy</dateFormatItem>
-						<dateFormatItem id="yyyyM" draft="unconfirmed">M.yyyy</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" draft="unconfirmed">MMMM yyyy</dateFormatItem>
+						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
+						<dateFormatItem id="Md">d.M</dateFormatItem>
+						<dateFormatItem id="mmss">mm.ss</dateFormatItem>
+						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
+						<dateFormatItem id="yyyyM">M.yyyy</dateFormatItem>
+						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 				<fields>
@@ -987,12 +987,12 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<hourFormat draft="unconfirmed">+HH:mm;-HH:mm</hourFormat>
-			<gmtFormat draft="unconfirmed">GMT{0}</gmtFormat>
-			<regionFormat draft="unconfirmed">{0}</regionFormat>
+			<hourFormat>+HH:mm;-HH:mm</hourFormat>
+			<gmtFormat>GMT{0}</gmtFormat>
+			<regionFormat>{0}</regionFormat>
 			<zone type="Etc/Unknown">
 				<exemplarCity>Невядомы</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Unknown</exemplarCity>
+				<exemplarCity alt="proposed-x1001">Unknown</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -1004,21 +1004,21 @@
 		<decimalFormats>
 			<decimalFormatLength>
 				<decimalFormat>
-					<pattern draft="unconfirmed">#,##0.###</pattern>
+					<pattern>#,##0.###</pattern>
 				</decimalFormat>
 			</decimalFormatLength>
 		</decimalFormats>
 		<scientificFormats>
 			<scientificFormatLength>
 				<scientificFormat>
-					<pattern draft="unconfirmed">#E0</pattern>
+					<pattern>#E0</pattern>
 				</scientificFormat>
 			</scientificFormatLength>
 		</scientificFormats>
 		<percentFormats>
 			<percentFormatLength>
 				<percentFormat>
-					<pattern draft="unconfirmed">#,##0%</pattern>
+					<pattern>#,##0%</pattern>
 				</percentFormat>
 			</percentFormatLength>
 		</percentFormats>
@@ -1026,8 +1026,8 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤#,##0.00</pattern>
-					<pattern alt="proposed-x1001" draft="unconfirmed">¤ #,##0.00</pattern>
-					<pattern alt="proposed-x1002" draft="unconfirmed">#,##0.00 ¤</pattern>
+					<pattern alt="proposed-x1001">¤ #,##0.00</pattern>
+					<pattern alt="proposed-x1002">#,##0.00 ¤</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -1064,7 +1064,7 @@
 			</currency>
 			<currency type="XXX">
 				<displayName>невядомая або недапушчальная валюта</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">невядомая валюта</displayName>
+				<displayName alt="proposed-x1001">невядомая валюта</displayName>
 			</currency>
 		</currencies>
 	</numbers>

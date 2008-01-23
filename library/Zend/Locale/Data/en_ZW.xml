@@ -24,7 +24,7 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd MMM,yyyy</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">dd MMM,yy</pattern>
+							<pattern alt="proposed-x1001">dd MMM,yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -36,19 +36,19 @@
 				<timeFormats>
 					<timeFormatLength type="full">
 						<timeFormat>
-							<pattern alt="proposed-x1001" draft="unconfirmed">h:mm:ss a</pattern>
+							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
-							<pattern alt="proposed-x1001" draft="unconfirmed">h:mm:ss a</pattern>
+							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="Md" draft="unconfirmed">d/M</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" draft="unconfirmed">MMMM yyyy</dateFormatItem>
+						<dateFormatItem id="Md">d/M</dateFormatItem>
+						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

@@ -17,34 +17,34 @@
 			<language type="ae">Avestan</language>
 			<language type="af">Afrikaans</language>
 			<language type="afa">Afro-Asiatic Language</language>
-			<language type="afa" alt="proposed-x1001" draft="unconfirmed">other Afro-Asiatic language</language>
+			<language type="afa" alt="proposed-x1001">other Afro-Asiatic language</language>
 			<language type="afh">Afrihili</language>
 			<language type="ain">Ainu</language>
 			<language type="ak">Akan</language>
 			<language type="akk">Akkadian</language>
 			<language type="ale">Aleut</language>
 			<language type="alg">Algonquian Language</language>
-			<language type="alg" alt="proposed-x1001" draft="unconfirmed">Algonquian language</language>
+			<language type="alg" alt="proposed-x1001">Algonquian language</language>
 			<language type="alt">Southern Altai</language>
 			<language type="am">Amharic</language>
 			<language type="an">Aragonese</language>
 			<language type="ang">Old English</language>
 			<language type="anp">Angika</language>
 			<language type="apa">Apache Language</language>
-			<language type="apa" alt="proposed-x1001" draft="unconfirmed">Apache language</language>
+			<language type="apa" alt="proposed-x1001">Apache language</language>
 			<language type="ar">Arabic</language>
 			<language type="arc">Aramaic</language>
 			<language type="arn">Araucanian</language>
 			<language type="arp">Arapaho</language>
 			<language type="art">Artificial Language</language>
-			<language type="art" alt="proposed-x1001" draft="unconfirmed">other artificial language</language>
+			<language type="art" alt="proposed-x1001">other artificial language</language>
 			<language type="arw">Arawak</language>
 			<language type="as">Assamese</language>
 			<language type="ast">Asturian</language>
 			<language type="ath">Athapascan Language</language>
-			<language type="ath" alt="proposed-x1001" draft="unconfirmed">other Athapascan language</language>
+			<language type="ath" alt="proposed-x1001">other Athapascan language</language>
 			<language type="aus">Australian Language</language>
-			<language type="aus" alt="proposed-x1001" draft="unconfirmed">Australian language</language>
+			<language type="aus" alt="proposed-x1001">Australian language</language>
 			<language type="av">Avaric</language>
 			<language type="awa">Awadhi</language>
 			<language type="ay">Aymara</language>
@@ -52,12 +52,12 @@
 			<language type="ba">Bashkir</language>
 			<language type="bad">Banda</language>
 			<language type="bai">Bamileke Language</language>
-			<language type="bai" alt="proposed-x1001" draft="unconfirmed">Bamileke language</language>
+			<language type="bai" alt="proposed-x1001">Bamileke language</language>
 			<language type="bal">Baluchi</language>
 			<language type="ban">Balinese</language>
 			<language type="bas">Basa</language>
 			<language type="bat">Baltic Language</language>
-			<language type="bat" alt="proposed-x1001" draft="unconfirmed">other Baltic language</language>
+			<language type="bat" alt="proposed-x1001">other Baltic language</language>
 			<language type="be">Belarusian</language>
 			<language type="bej">Beja</language>
 			<language type="bem">Bemba</language>
@@ -83,15 +83,15 @@
 			<language type="ca">Catalan</language>
 			<language type="cad">Caddo</language>
 			<language type="cai">Central American Indian Language</language>
-			<language type="cai" alt="proposed-x1001" draft="unconfirmed">other Central American Indian language</language>
+			<language type="cai" alt="proposed-x1001">other Central American Indian language</language>
 			<language type="car">Carib</language>
 			<language type="cau">Caucasian Language</language>
-			<language type="cau" alt="proposed-x1001" draft="unconfirmed">other Caucasian language</language>
+			<language type="cau" alt="proposed-x1001">other Caucasian language</language>
 			<language type="cch">Atsam</language>
 			<language type="ce">Chechen</language>
 			<language type="ceb">Cebuano</language>
 			<language type="cel">Celtic Language</language>
-			<language type="cel" alt="proposed-x1001" draft="unconfirmed">other Celtic language</language>
+			<language type="cel" alt="proposed-x1001">other Celtic language</language>
 			<language type="ch">Chamorro</language>
 			<language type="chb">Chibcha</language>
 			<language type="chg">Chagatai</language>
@@ -103,24 +103,24 @@
 			<language type="chr">Cherokee</language>
 			<language type="chy">Cheyenne</language>
 			<language type="cmc">Chamic Language</language>
-			<language type="cmc" alt="proposed-x1001" draft="unconfirmed">Chamic language</language>
+			<language type="cmc" alt="proposed-x1001">Chamic language</language>
 			<language type="co">Corsican</language>
 			<language type="cop">Coptic</language>
 			<language type="cpe">English-based Creole or Pidgin</language>
-			<language type="cpe" alt="proposed-x1001" draft="unconfirmed">other English-based creole or pidgin language</language>
+			<language type="cpe" alt="proposed-x1001">other English-based creole or pidgin language</language>
 			<language type="cpf">French-based Creole or Pidgin</language>
-			<language type="cpf" alt="proposed-x1001" draft="unconfirmed">other French-based creole or pidgin language</language>
+			<language type="cpf" alt="proposed-x1001">other French-based creole or pidgin language</language>
 			<language type="cpp">Portuguese-based Creole or Pidgin</language>
-			<language type="cpp" alt="proposed-x1001" draft="unconfirmed">other Portuguese-based creole or pidgin language</language>
+			<language type="cpp" alt="proposed-x1001">other Portuguese-based creole or pidgin language</language>
 			<language type="cr">Cree</language>
 			<language type="crh">Crimean Turkish</language>
 			<language type="crp">Creole or Pidgin</language>
-			<language type="crp" alt="proposed-x1001" draft="unconfirmed">other creole or pidgin language</language>
+			<language type="crp" alt="proposed-x1001">other creole or pidgin language</language>
 			<language type="cs">Czech</language>
 			<language type="csb">Kashubian</language>
 			<language type="cu">Church Slavic</language>
 			<language type="cus">Cushitic Language</language>
-			<language type="cus" alt="proposed-x1001" draft="unconfirmed">other Cushitic language</language>
+			<language type="cus" alt="proposed-x1001">other Cushitic language</language>
 			<language type="cv">Chuvash</language>
 			<language type="cy">Welsh</language>
 			<language type="da">Danish</language>
@@ -136,7 +136,7 @@
 			<language type="din">Dinka</language>
 			<language type="doi">Dogri</language>
 			<language type="dra">Dravidian Language</language>
-			<language type="dra" alt="proposed-x1001" draft="unconfirmed">other Dravidian language</language>
+			<language type="dra" alt="proposed-x1001">other Dravidian language</language>
 			<language type="dsb">Lower Sorbian</language>
 			<language type="dua">Duala</language>
 			<language type="dum">Middle Dutch</language>
@@ -169,7 +169,7 @@
 			<language type="fi">Finnish</language>
 			<language type="fil">Filipino</language>
 			<language type="fiu">Finno-Ugrian Language</language>
-			<language type="fiu" alt="proposed-x1001" draft="unconfirmed">other Finno-Ugrian language</language>
+			<language type="fiu" alt="proposed-x1001">other Finno-Ugrian language</language>
 			<language type="fj">Fijian</language>
 			<language type="fo">Faroese</language>
 			<language type="fon">Fon</language>
@@ -188,7 +188,7 @@
 			<language type="gba">Gbaya</language>
 			<language type="gd">Scottish Gaelic</language>
 			<language type="gem">Germanic Language</language>
-			<language type="gem" alt="proposed-x1001" draft="unconfirmed">other Germanic language</language>
+			<language type="gem" alt="proposed-x1001">other Germanic language</language>
 			<language type="gez">Geez</language>
 			<language type="gil">Gilbertese</language>
 			<language type="gl">Galician</language>
@@ -231,15 +231,15 @@
 			<language type="ik">Inupiaq</language>
 			<language type="ilo">Iloko</language>
 			<language type="inc">Indic Language</language>
-			<language type="inc" alt="proposed-x1001" draft="unconfirmed">other Indic langauge</language>
+			<language type="inc" alt="proposed-x1001">other Indic langauge</language>
 			<language type="ine">Indo-European Language</language>
-			<language type="ine" alt="proposed-x1001" draft="unconfirmed">other Indo-European language</language>
+			<language type="ine" alt="proposed-x1001">other Indo-European language</language>
 			<language type="inh">Ingush</language>
 			<language type="io">Ido</language>
 			<language type="ira">Iranian Language</language>
-			<language type="ira" alt="proposed-x1001" draft="unconfirmed">other Iranian language</language>
+			<language type="ira" alt="proposed-x1001">other Iranian language</language>
 			<language type="iro">Iroquoian Language</language>
-			<language type="iro" alt="proposed-x1001" draft="unconfirmed">Iroquoian language</language>
+			<language type="iro" alt="proposed-x1001">Iroquoian language</language>
 			<language type="is">Icelandic</language>
 			<language type="it">Italian</language>
 			<language type="iu">Inuktitut</language>
@@ -262,7 +262,7 @@
 			<language type="kg">Kongo</language>
 			<language type="kha">Khasi</language>
 			<language type="khi">Khoisan Language</language>
-			<language type="khi" alt="proposed-x1001" draft="unconfirmed">other Khoisan language</language>
+			<language type="khi" alt="proposed-x1001">other Khoisan language</language>
 			<language type="kho">Khotanese</language>
 			<language type="ki">Kikuyu</language>
 			<language type="kj">Kuanyama</language>
@@ -324,16 +324,16 @@
 			<language type="mic">Micmac</language>
 			<language type="min">Minangkabau</language>
 			<language type="mis">Miscellaneous Language</language>
-			<language type="mis" alt="proposed-x1001" draft="unconfirmed">other language</language>
+			<language type="mis" alt="proposed-x1001">other language</language>
 			<language type="mk">Macedonian</language>
 			<language type="mkh">Mon-Khmer Language</language>
-			<language type="mkh" alt="proposed-x1001" draft="unconfirmed">other Mon-Khmer language</language>
+			<language type="mkh" alt="proposed-x1001">other Mon-Khmer language</language>
 			<language type="ml">Malayalam</language>
 			<language type="mn">Mongolian</language>
 			<language type="mnc">Manchu</language>
 			<language type="mni">Manipuri</language>
 			<language type="mno">Manobo Language</language>
-			<language type="mno" alt="proposed-x1001" draft="unconfirmed">Manobo language</language>
+			<language type="mno" alt="proposed-x1001">Manobo language</language>
 			<language type="mo">Moldavian</language>
 			<language type="moh">Mohawk</language>
 			<language type="mos">Mossi</language>
@@ -341,20 +341,20 @@
 			<language type="ms">Malay</language>
 			<language type="mt">Maltese</language>
 			<language type="mul">Multiple Languages</language>
-			<language type="mul" alt="proposed-x1001" draft="unconfirmed">multiple languages</language>
+			<language type="mul" alt="proposed-x1001">multiple languages</language>
 			<language type="mun">Munda Language</language>
-			<language type="mun" alt="proposed-x1001" draft="unconfirmed">Munda language</language>
+			<language type="mun" alt="proposed-x1001">Munda language</language>
 			<language type="mus">Creek</language>
 			<language type="mwl">Mirandese</language>
 			<language type="mwr">Marwari</language>
 			<language type="my">Burmese</language>
 			<language type="myn">Mayan Language</language>
-			<language type="myn" alt="proposed-x1001" draft="unconfirmed">Mayan language</language>
+			<language type="myn" alt="proposed-x1001">Mayan language</language>
 			<language type="myv">Erzya</language>
 			<language type="na">Nauru</language>
 			<language type="nah">Nahuatl</language>
 			<language type="nai">North American Indian Language</language>
-			<language type="nai" alt="proposed-x1001" draft="unconfirmed">other North American Indian language</language>
+			<language type="nai" alt="proposed-x1001">other North American Indian language</language>
 			<language type="nap">Neapolitan</language>
 			<language type="nb">Norwegian Bokmål</language>
 			<language type="nd">North Ndebele</language>
@@ -364,7 +364,7 @@
 			<language type="ng">Ndonga</language>
 			<language type="nia">Nias</language>
 			<language type="nic">Niger-Kordofanian Language</language>
-			<language type="nic" alt="proposed-x1001" draft="unconfirmed">other Niger-Kordofanian language</language>
+			<language type="nic" alt="proposed-x1001">other Niger-Kordofanian language</language>
 			<language type="niu">Niuean</language>
 			<language type="nl">Dutch</language>
 			<language type="nl_BE">Flemish</language>
@@ -376,7 +376,7 @@
 			<language type="nr">South Ndebele</language>
 			<language type="nso">Northern Sotho</language>
 			<language type="nub">Nubian Language</language>
-			<language type="nub" alt="proposed-x1001" draft="unconfirmed">Nubian language</language>
+			<language type="nub" alt="proposed-x1001">Nubian language</language>
 			<language type="nv">Navajo</language>
 			<language type="nwc">Classical Newari</language>
 			<language type="ny">Nyanja</language>
@@ -392,10 +392,10 @@
 			<language type="osa">Osage</language>
 			<language type="ota">Ottoman Turkish</language>
 			<language type="oto">Otomian Language</language>
-			<language type="oto" alt="proposed-x1001" draft="unconfirmed">Otomian language</language>
+			<language type="oto" alt="proposed-x1001">Otomian language</language>
 			<language type="pa">Punjabi</language>
 			<language type="paa">Papuan Language</language>
-			<language type="paa" alt="proposed-x1001" draft="unconfirmed">other Papuan language</language>
+			<language type="paa" alt="proposed-x1001">other Papuan language</language>
 			<language type="pag">Pangasinan</language>
 			<language type="pal">Pahlavi</language>
 			<language type="pam">Pampanga</language>
@@ -403,13 +403,13 @@
 			<language type="pau">Palauan</language>
 			<language type="peo">Old Persian</language>
 			<language type="phi">Philippine Language</language>
-			<language type="phi" alt="proposed-x1001" draft="unconfirmed">other Philippine language</language>
+			<language type="phi" alt="proposed-x1001">other Philippine language</language>
 			<language type="phn">Phoenician</language>
 			<language type="pi">Pali</language>
 			<language type="pl">Polish</language>
 			<language type="pon">Pohnpeian</language>
 			<language type="pra">Prakrit Language</language>
-			<language type="pra" alt="proposed-x1001" draft="unconfirmed">Prakrit language</language>
+			<language type="pra" alt="proposed-x1001">Prakrit language</language>
 			<language type="pro">Old Provençal</language>
 			<language type="ps">Pashto</language>
 			<language type="ps" alt="variant">Pushto</language>
@@ -424,10 +424,10 @@
 			<language type="rn">Rundi</language>
 			<language type="ro">Romanian</language>
 			<language type="roa">Romance Language</language>
-			<language type="roa" alt="proposed-x1001" draft="unconfirmed">other Romance language</language>
+			<language type="roa" alt="proposed-x1001">other Romance language</language>
 			<language type="rom">Romany</language>
 			<language type="root">Root</language>
-			<language type="root" alt="proposed-x1001" draft="unconfirmed">root</language>
+			<language type="root" alt="proposed-x1001">root</language>
 			<language type="ru">Russian</language>
 			<language type="rup">Aromanian</language>
 			<language type="rw">Kinyarwanda</language>
@@ -435,9 +435,9 @@
 			<language type="sad">Sandawe</language>
 			<language type="sah">Yakut</language>
 			<language type="sai">South American Indian Language</language>
-			<language type="sai" alt="proposed-x1001" draft="unconfirmed">other South American Indian language</language>
+			<language type="sai" alt="proposed-x1001">other South American Indian language</language>
 			<language type="sal">Salishan Language</language>
-			<language type="sal" alt="proposed-x1001" draft="unconfirmed">Salishan language</language>
+			<language type="sal" alt="proposed-x1001">Salishan language</language>
 			<language type="sam">Samaritan Aramaic</language>
 			<language type="sas">Sasak</language>
 			<language type="sat">Santali</language>
@@ -448,27 +448,27 @@
 			<language type="se">Northern Sami</language>
 			<language type="sel">Selkup</language>
 			<language type="sem">Semitic Language</language>
-			<language type="sem" alt="proposed-x1001" draft="unconfirmed">other Semitic language</language>
+			<language type="sem" alt="proposed-x1001">other Semitic language</language>
 			<language type="sg">Sango</language>
 			<language type="sga">Old Irish</language>
 			<language type="sgn">Sign Language</language>
-			<language type="sgn" alt="proposed-x1001" draft="unconfirmed">sign language</language>
+			<language type="sgn" alt="proposed-x1001">sign language</language>
 			<language type="sh">Serbo-Croatian</language>
 			<language type="shn">Shan</language>
 			<language type="si">Sinhalese</language>
 			<language type="sid">Sidamo</language>
 			<language type="sio">Siouan Language</language>
-			<language type="sio" alt="proposed-x1001" draft="unconfirmed">Siouan language</language>
+			<language type="sio" alt="proposed-x1001">Siouan language</language>
 			<language type="sit">Sino-Tibetan Language</language>
-			<language type="sit" alt="proposed-x1001" draft="unconfirmed">other Sino-Tibetan language</language>
+			<language type="sit" alt="proposed-x1001">other Sino-Tibetan language</language>
 			<language type="sk">Slovak</language>
 			<language type="sl">Slovenian</language>
 			<language type="sla">Slavic Language</language>
-			<language type="sla" alt="proposed-x1001" draft="unconfirmed">other Slavic language</language>
+			<language type="sla" alt="proposed-x1001">other Slavic language</language>
 			<language type="sm">Samoan</language>
 			<language type="sma">Southern Sami</language>
 			<language type="smi">Sami Language</language>
-			<language type="smi" alt="proposed-x1001" draft="unconfirmed">other Sami language</language>
+			<language type="smi" alt="proposed-x1001">other Sami language</language>
 			<language type="smj">Lule Sami</language>
 			<language type="smn">Inari Sami</language>
 			<language type="sms">Skolt Sami</language>
@@ -483,7 +483,7 @@
 			<language type="srr">Serer</language>
 			<language type="ss">Swati</language>
 			<language type="ssa">Nilo-Saharan Language</language>
-			<language type="ssa" alt="proposed-x1001" draft="unconfirmed">other Nilo-Saharan language</language>
+			<language type="ssa" alt="proposed-x1001">other Nilo-Saharan language</language>
 			<language type="st">Southern Sotho</language>
 			<language type="su">Sundanese</language>
 			<language type="suk">Sukuma</language>
@@ -495,7 +495,7 @@
 			<language type="syr">Syriac</language>
 			<language type="ta">Tamil</language>
 			<language type="tai">Tai Language</language>
-			<language type="tai" alt="proposed-x1001" draft="unconfirmed">other Tai language</language>
+			<language type="tai" alt="proposed-x1001">other Tai language</language>
 			<language type="te">Telugu</language>
 			<language type="tem">Timne</language>
 			<language type="ter">Tereno</language>
@@ -521,7 +521,7 @@
 			<language type="tt">Tatar</language>
 			<language type="tum">Tumbuka</language>
 			<language type="tup">Tupi Language</language>
-			<language type="tup" alt="proposed-x1001" draft="unconfirmed">Tupi language</language>
+			<language type="tup" alt="proposed-x1001">Tupi language</language>
 			<language type="tut">Altaic Language</language>
 			<language type="tvl">Tuvalu</language>
 			<language type="tw">Twi</language>
@@ -534,7 +534,7 @@
 			<language type="uk">Ukrainian</language>
 			<language type="umb">Umbundu</language>
 			<language type="und">Unknown or Invalid Language</language>
-			<language type="und" alt="proposed-x1001" draft="unconfirmed">unknown or invalid language</language>
+			<language type="und" alt="proposed-x1001">unknown or invalid language</language>
 			<language type="ur">Urdu</language>
 			<language type="uz">Uzbek</language>
 			<language type="vai">Vai</language>
@@ -544,12 +544,12 @@
 			<language type="vot">Votic</language>
 			<language type="wa">Walloon</language>
 			<language type="wak">Wakashan Language</language>
-			<language type="wak" alt="proposed-x1001" draft="unconfirmed">Wakashan language</language>
+			<language type="wak" alt="proposed-x1001">Wakashan language</language>
 			<language type="wal">Walamo</language>
 			<language type="war">Waray</language>
 			<language type="was">Washo</language>
 			<language type="wen">Sorbian Language</language>
-			<language type="wen" alt="proposed-x1001" draft="unconfirmed">Sorbian language</language>
+			<language type="wen" alt="proposed-x1001">Sorbian language</language>
 			<language type="wo">Wolof</language>
 			<language type="xal">Kalmyk</language>
 			<language type="xh">Xhosa</language>
@@ -558,7 +558,7 @@
 			<language type="yi">Yiddish</language>
 			<language type="yo">Yoruba</language>
 			<language type="ypk">Yupik Language</language>
-			<language type="ypk" alt="proposed-x1001" draft="unconfirmed">Yupik language</language>
+			<language type="ypk" alt="proposed-x1001">Yupik language</language>
 			<language type="za">Zhuang</language>
 			<language type="zap">Zapotec</language>
 			<language type="zbl">Blissymbols</language>
@@ -570,7 +570,7 @@
 			<language type="zu">Zulu</language>
 			<language type="zun">Zuni</language>
 			<language type="zxx">No linguistic content</language>
-			<language type="zxx" alt="proposed-x1001" draft="unconfirmed">no linguistic content</language>
+			<language type="zxx" alt="proposed-x1001">no linguistic content</language>
 			<language type="zza">Zaza</language>
 		</languages>
 		<scripts>
@@ -587,7 +587,7 @@
 			<script type="Bugi">Buginese</script>
 			<script type="Buhd">Buhid</script>
 			<script type="Cans">Unified Canadian Aboriginal Syllabics</script>
-			<script type="Cans" alt="proposed-x1001" draft="unconfirmed">Unified Canadian Aboriginal Symbols</script>
+			<script type="Cans" alt="proposed-x1001">Unified Canadian Aboriginal Symbols</script>
 			<script type="Cari">Carian</script>
 			<script type="Cham">Cham</script>
 			<script type="Cher">Cherokee</script>
@@ -694,10 +694,10 @@
 			<script type="Xsux">Sumero-Akkadian Cuneiform</script>
 			<script type="Yiii">Yi</script>
 			<script type="Zxxx">Unwritten</script>
-			<script type="Zxxx" alt="proposed-x1001" draft="unconfirmed">unwritten</script>
+			<script type="Zxxx" alt="proposed-x1001">unwritten</script>
 			<script type="Zyyy">Common</script>
 			<script type="Zzzz">Unknown or Invalid Script</script>
-			<script type="Zzzz" alt="proposed-x1001" draft="unconfirmed">unknown or invalid script</script>
+			<script type="Zzzz" alt="proposed-x1001">unknown or invalid script</script>
 		</scripts>
 		<territories>
 			<territory type="001">World</territory>
@@ -1035,9 +1035,9 @@
 			<variant type="XIANG">Xiang or Hunanese</variant>
 		</variants>
 		<keys>
-			<key type="calendar" alt="proposed-x1001" draft="unconfirmed">Calendar</key>
-			<key type="collation" alt="proposed-x1001" draft="unconfirmed">Collation</key>
-			<key type="currency" alt="proposed-x1001" draft="unconfirmed">Currency</key>
+			<key type="calendar" alt="proposed-x1001">Calendar</key>
+			<key type="collation" alt="proposed-x1001">Collation</key>
+			<key type="currency" alt="proposed-x1001">Currency</key>
 		</keys>
 		<types>
 			<type type="big5han" key="collation">Traditional Chinese Sort Order - Big5</type>
@@ -1226,18 +1226,18 @@
 						<dateFormatItem id="HHmm">HH:mm</dateFormatItem>
 						<dateFormatItem id="HHmmss">HH:mm:ss</dateFormatItem>
 						<dateFormatItem id="MMMMd">MMMM d</dateFormatItem>
-						<dateFormatItem id="MMMMdd" draft="unconfirmed">dd MMMM</dateFormatItem>
-						<dateFormatItem id="MMMd" draft="unconfirmed">d-MMM</dateFormatItem>
-						<dateFormatItem id="MMMdd" draft="unconfirmed">dd MMM</dateFormatItem>
-						<dateFormatItem id="MMd" draft="unconfirmed">d/MM</dateFormatItem>
+						<dateFormatItem id="MMMMdd">dd MMMM</dateFormatItem>
+						<dateFormatItem id="MMMd">d-MMM</dateFormatItem>
+						<dateFormatItem id="MMMdd">dd MMM</dateFormatItem>
+						<dateFormatItem id="MMd">d/MM</dateFormatItem>
 						<dateFormatItem id="Md">M/d</dateFormatItem>
-						<dateFormatItem id="hhmm" draft="unconfirmed">hh:mm a</dateFormatItem>
-						<dateFormatItem id="hhmmss" draft="unconfirmed">hh:mm:ss a</dateFormatItem>
+						<dateFormatItem id="hhmm">hh:mm a</dateFormatItem>
+						<dateFormatItem id="hhmmss">hh:mm:ss a</dateFormatItem>
 						<dateFormatItem id="mmss">mm:ss</dateFormatItem>
 						<dateFormatItem id="yyMM">MM/yy</dateFormatItem>
 						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyQQQQ">QQQQ yy</dateFormatItem>
-						<dateFormatItem id="yyyyM" draft="unconfirmed">M/yyyy</dateFormatItem>
+						<dateFormatItem id="yyyyM">M/yyyy</dateFormatItem>
 						<dateFormatItem id="yyyyMMM">MMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
@@ -1551,16 +1551,16 @@
 			<metazone type="Australia_CentralWestern">
 				<long>
 					<generic>Australian Central Western Time</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Central West Time</generic>
+					<generic alt="proposed-x1001">Central West Time</generic>
 					<standard>Australian Central Western Standard Time</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Western Central Standard Time</standard>
+					<standard alt="proposed-x1001">Western Central Standard Time</standard>
 					<daylight>Australian Central Western Daylight Time</daylight>
 				</long>
 				<short>
 					<generic>ACWT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">CWT</generic>
+					<generic alt="proposed-x1001">CWT</generic>
 					<standard>ACWST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">CWST</standard>
+					<standard alt="proposed-x1001">CWST</standard>
 					<daylight>ACWDT</daylight>
 				</short>
 			</metazone>
@@ -2305,7 +2305,7 @@
 				<short>
 					<generic>LHT</generic>
 					<standard>LHST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">LHDT</standard>
+					<standard alt="proposed-x1001">LHDT</standard>
 					<daylight>LHDT</daylight>
 				</short>
 			</metazone>
@@ -2985,7 +2985,7 @@
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤#,##0.00;(¤#,##0.00)</pattern>
-					<pattern alt="proposed-x1001" draft="unconfirmed">¤#,##0.00</pattern>
+					<pattern alt="proposed-x1001">¤#,##0.00</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
@@ -3338,7 +3338,7 @@
 			</currency>
 			<currency type="HNL">
 				<displayName>Honduras Lempira</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">Hoduras Lempira</displayName>
+				<displayName alt="proposed-x1001">Hoduras Lempira</displayName>
 				<symbol>L</symbol>
 			</currency>
 			<currency type="HRD">

@@ -13,9 +13,9 @@
 				<months>
 					<monthContext type="format">
 						<monthWidth type="wide">
-							<month type="2" draft="unconfirmed">Naharsi Kudo</month>
-							<month type="4" draft="unconfirmed">Agda Baxisso</month>
-							<month type="8" draft="unconfirmed">Leqeeni</month>
+							<month type="2">Naharsi Kudo</month>
+							<month type="4">Agda Baxisso</month>
+							<month type="8">Leqeeni</month>
 						</monthWidth>
 					</monthContext>
 				</months>
@@ -25,7 +25,7 @@
 	<numbers>
 		<currencies>
 			<currency type="ERN">
-				<symbol draft="unconfirmed">$</symbol>
+				<symbol>$</symbol>
 			</currency>
 			<currency type="ETB">
 				<symbol>ETB</symbol>

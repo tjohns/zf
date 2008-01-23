@@ -65,7 +65,7 @@
 	</dates>
 	<numbers>
 		<symbols>
-			<exponential draft="provisional">E</exponential>
+			<exponential>E</exponential>
 		</symbols>
 	</numbers>
 </ldml>

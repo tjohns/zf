@@ -14,8 +14,8 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>yyyy-MM-dd</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">yy-MM-dd</pattern>
-							<pattern alt="proposed-x1002" draft="unconfirmed">d MMM yyyy</pattern>
+							<pattern alt="proposed-x1001">yy-MM-dd</pattern>
+							<pattern alt="proposed-x1002">d MMM yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
@@ -33,10 +33,10 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">MM-dd</dateFormatItem>
-						<dateFormatItem id="MMdd" alt="proposed-x1001" draft="unconfirmed">dd/MM</dateFormatItem>
-						<dateFormatItem id="yyMM" draft="unconfirmed">yy-MM</dateFormatItem>
-						<dateFormatItem id="yyMM" alt="proposed-x1001" draft="unconfirmed">MM/yy</dateFormatItem>
+						<dateFormatItem id="MMdd">MM-dd</dateFormatItem>
+						<dateFormatItem id="MMdd" alt="proposed-x1001">dd/MM</dateFormatItem>
+						<dateFormatItem id="yyMM">yy-MM</dateFormatItem>
+						<dateFormatItem id="yyMM" alt="proposed-x1001">MM/yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

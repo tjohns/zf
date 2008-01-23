@@ -46,7 +46,7 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="Md" draft="unconfirmed">M/d</dateFormatItem>
+						<dateFormatItem id="Md">M/d</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

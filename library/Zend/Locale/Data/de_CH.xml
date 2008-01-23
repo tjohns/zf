@@ -23,17 +23,17 @@
 		</territories>
 	</localeDisplayNames>
 	<delimiters>
-		<quotationStart draft="contributed">«</quotationStart>
-		<quotationEnd draft="contributed">»</quotationEnd>
-		<alternateQuotationStart draft="contributed">‹</alternateQuotationStart>
-		<alternateQuotationEnd draft="contributed">›</alternateQuotationEnd>
+		<quotationStart>«</quotationStart>
+		<quotationEnd>»</quotationEnd>
+		<alternateQuotationStart>‹</alternateQuotationStart>
+		<alternateQuotationEnd>›</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
 			<calendar type="gregorian">
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">MM-dd</dateFormatItem>
+						<dateFormatItem id="MMdd">MM-dd</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
@@ -42,14 +42,14 @@
 	<numbers>
 		<symbols>
 			<decimal>.</decimal>
-			<decimal alt="proposed-x1001" draft="unconfirmed">,</decimal>
+			<decimal alt="proposed-x1001">,</decimal>
 			<group>'</group>
 		</symbols>
 		<currencyFormats>
 			<currencyFormatLength>
 				<currencyFormat>
 					<pattern>¤ #,##0.00;¤-#,##0.00</pattern>
-					<pattern alt="proposed-x1001" draft="unconfirmed">#,##0.00 ¤</pattern>
+					<pattern alt="proposed-x1001">#,##0.00 ¤</pattern>
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>

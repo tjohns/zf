@@ -35,20 +35,20 @@
 				<timeFormats>
 					<timeFormatLength type="full">
 						<timeFormat>
-							<pattern alt="proposed-x1001" draft="unconfirmed">h:mm:ss a</pattern>
+							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
-							<pattern alt="proposed-x1001" draft="unconfirmed">h:mm:ss a</pattern>
+							<pattern alt="proposed-x1001">h:mm:ss a</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">MM/dd</dateFormatItem>
-						<dateFormatItem id="yyyyMM" draft="unconfirmed">yyyy/MM</dateFormatItem>
-						<dateFormatItem id="yyyyMMMM" draft="unconfirmed">MMMM yyyy</dateFormatItem>
+						<dateFormatItem id="MMdd">MM/dd</dateFormatItem>
+						<dateFormatItem id="yyyyMM">yyyy/MM</dateFormatItem>
+						<dateFormatItem id="yyyyMMMM">MMMM yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
@@ -70,8 +70,8 @@
 	</dates>
 	<numbers>
 		<symbols>
-			<decimal draft="provisional">,</decimal>
-			<group draft="provisional"> </group>
+			<decimal>,</decimal>
+			<group> </group>
 		</symbols>
 		<currencyFormats>
 			<currencyFormatLength>

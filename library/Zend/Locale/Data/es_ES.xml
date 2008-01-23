@@ -9,38 +9,38 @@
 	</identity>
 	<localeDisplayNames>
 		<languages>
-			<language type="ast" draft="provisional">bable</language>
-			<language type="chg" draft="unconfirmed">chagatai</language>
-			<language type="eu" draft="provisional">euskera</language>
-			<language type="fi" draft="provisional">finlandés</language>
-			<language type="rom" draft="provisional">caló</language>
-			<language type="rom" alt="proposed-x1001" draft="unconfirmed">caló</language>
+			<language type="ast">bable</language>
+			<language type="chg">chagatai</language>
+			<language type="eu">euskera</language>
+			<language type="fi">finlandés</language>
+			<language type="rom">caló</language>
+			<language type="rom" alt="proposed-x1001">caló</language>
 		</languages>
 		<scripts>
-			<script type="Egyp" draft="provisional">jeroglíficos egipcios</script>
-			<script type="Egyp" alt="proposed-x1001" draft="unconfirmed">gerogríficos egipcios</script>
+			<script type="Egyp">jeroglíficos egipcios</script>
+			<script type="Egyp" alt="proposed-x1001">gerogríficos egipcios</script>
 			<script type="Ethi">etíope</script>
-			<script type="Hung" draft="provisional">húngaro antiguo</script>
-			<script type="Hung" alt="proposed-x1001" draft="unconfirmed">Húngaro antiguo</script>
-			<script type="Ital" draft="unconfirmed">antigua itálica</script>
-			<script type="Latg" alt="proposed-x1001" draft="unconfirmed">Latín (variante gaélico)</script>
-			<script type="Lina" draft="unconfirmed">linear A</script>
-			<script type="Maya" draft="provisional">jeroglíficos mayas</script>
-			<script type="Maya" alt="proposed-x1001" draft="unconfirmed">gerogríficos mayas</script>
-			<script type="Mong" draft="provisional">mongol</script>
-			<script type="Phnx" draft="provisional">fenicio</script>
-			<script type="Phnx" alt="proposed-x1001" draft="unconfirmed">Fenicio</script>
+			<script type="Hung">húngaro antiguo</script>
+			<script type="Hung" alt="proposed-x1001">Húngaro antiguo</script>
+			<script type="Ital">antigua itálica</script>
+			<script type="Latg" alt="proposed-x1001">Latín (variante gaélico)</script>
+			<script type="Lina">linear A</script>
+			<script type="Maya">jeroglíficos mayas</script>
+			<script type="Maya" alt="proposed-x1001">gerogríficos mayas</script>
+			<script type="Mong">mongol</script>
+			<script type="Phnx">fenicio</script>
+			<script type="Phnx" alt="proposed-x1001">Fenicio</script>
 		</scripts>
 		<territories>
-			<territory type="KG" draft="provisional">Kirguistán</territory>
-			<territory type="VA" draft="provisional">Vaticano</territory>
+			<territory type="KG">Kirguistán</territory>
+			<territory type="VA">Vaticano</territory>
 		</territories>
 		<measurementSystemNames>
-			<measurementSystemName type="metric" draft="provisional">métrico</measurementSystemName>
+			<measurementSystemName type="metric">métrico</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<characters>
-		<exemplarCharacters draft="provisional">[a á b-e é f-i í j-n ñ o ó p-u ú ü v-z]</exemplarCharacters>
+		<exemplarCharacters>[a á b-e é f-i í j-n ñ o ó p-u ú ü v-z]</exemplarCharacters>
 	</characters>
 	<dates>
 		<calendars>
@@ -64,22 +64,22 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">dd/MM</dateFormatItem>
+						<dateFormatItem id="MMdd">dd/MM</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 				<fields>
 					<field type="day">
-						<relative type="2" draft="provisional">pasado mañana</relative>
-						<relative type="3" draft="provisional">dentro de tres días</relative>
-						<relative type="-2" draft="provisional">anteayer</relative>
-						<relative type="-3" draft="provisional">hace tres días</relative>
+						<relative type="2">pasado mañana</relative>
+						<relative type="3">dentro de tres días</relative>
+						<relative type="-2">anteayer</relative>
+						<relative type="-3">hace tres días</relative>
 					</field>
 				</fields>
 			</calendar>
 		</calendars>
 		<timeZoneNames>
 			<zone type="Atlantic/Canary">
-				<exemplarCity draft="provisional">Canarias</exemplarCity>
+				<exemplarCity>Canarias</exemplarCity>
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -93,13 +93,13 @@
 		</currencyFormats>
 		<currencies>
 			<currency type="ARS">
-				<displayName alt="proposed-x1001" draft="unconfirmed">peso argentino</displayName>
+				<displayName alt="proposed-x1001">peso argentino</displayName>
 			</currency>
 			<currency type="AUD">
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólar australiano</displayName>
+				<displayName alt="proposed-x1001">dólar australiano</displayName>
 			</currency>
 			<currency type="BEF">
-				<displayName alt="proposed-x1001" draft="unconfirmed">franco belga</displayName>
+				<displayName alt="proposed-x1001">franco belga</displayName>
 			</currency>
 			<currency type="ESP">
 				<pattern>#,##0 ¤;-#,##0 ¤</pattern>
@@ -107,8 +107,8 @@
 				<group>.</group>
 			</currency>
 			<currency type="NLG">
-				<displayName draft="provisional">florín holandés</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">florín neerlandés</displayName>
+				<displayName>florín holandés</displayName>
+				<displayName alt="proposed-x1001">florín neerlandés</displayName>
 			</currency>
 		</currencies>
 	</numbers>

@@ -9,27 +9,27 @@
 	</identity>
 	<localeDisplayNames>
 		<languages>
-			<language type="arn" draft="unconfirmed">mapudungun</language>
-			<language type="ira" draft="unconfirmed">iraníes</language>
+			<language type="arn">mapudungun</language>
+			<language type="ira">iraníes</language>
 		</languages>
 		<scripts>
 			<script type="Bali">balinés</script>
 		</scripts>
 		<territories>
 			<territory type="005">Sudamérica</territory>
-			<territory type="AN" draft="unconfirmed">Antillas Holandesas</territory>
-			<territory type="AZ" draft="unconfirmed">Azerbayán</territory>
+			<territory type="AN">Antillas Holandesas</territory>
+			<territory type="AZ">Azerbayán</territory>
 			<territory type="EH">Sahara Occidental</territory>
-			<territory type="PS" draft="unconfirmed">Territorio Palestino</territory>
-			<territory type="RO" draft="unconfirmed">Rumania</territory>
-			<territory type="SA" draft="unconfirmed">Arabia Saudita</territory>
-			<territory type="TZ" draft="unconfirmed">Tanzanía</territory>
+			<territory type="PS">Territorio Palestino</territory>
+			<territory type="RO">Rumania</territory>
+			<territory type="SA">Arabia Saudita</territory>
+			<territory type="TZ">Tanzanía</territory>
 		</territories>
 		<variants>
 			<variant type="1996">Ortografía alemana de 1996</variant>
 		</variants>
 		<keys>
-			<key type="currency" draft="unconfirmed">divisa</key>
+			<key type="currency">divisa</key>
 		</keys>
 		<types>
 			<type type="phonebook" key="collation">orden de directorio telefónico</type>
