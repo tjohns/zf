@@ -1974,23 +1974,4 @@
 			</currency>
 		</currencies>
 	</numbers>
-	<references>
-		<reference type="R045" uri="isbn:964-01-0835-9">زبانهای جهان</reference>
-		<reference type="R046">نیازهای شرایط محلی برای زبان فارسی ایران</reference>
-		<reference type="R047">شیوه‌نامه</reference>
-		<reference type="R048">ISIRI 6219:2002</reference>
-		<reference type="R049" uri="isbn:964-303-044-X">دایرةالمعارف فارسی</reference>
-		<reference type="R050" uri="isbn:964-7531-13-3">دستور خط فارسی</reference>
-		<reference type="R051" uri="isbn:964-342-147-3">اطلس جامع گیتاشناسی</reference>
-		<reference type="R445" uri="http://www.evertype.com/standards/af/">Computer Locale Requirements for Afghanistan</reference>
-	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/fa.txt?only_with_tag=final-update-LDML
-
-Created by Roozbeh Pournader <roozbeh@sharif.edu>
-Currency display names
-The Afghani symbol doesn't exist in Unicode. So we use the long name
-ZR { "\u0632\u0626\u06cc\u0631" } // Zaire is now the Democratic Republic of Congo (CD)
--->
-

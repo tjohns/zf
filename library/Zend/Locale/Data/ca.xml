@@ -1084,11 +1084,4 @@
 			<nostr draft="provisional">no:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R012" uri="http://www.termcat.net">l'Institut d'Estudis Catalans</reference>
-		<reference type="RP1" uri="http://www.termcat.net" draft="provisional">Termcat</reference>
-		<reference type="RP2" uri="http://dlc.iec.cat/" draft="provisional">Diccionari de la Llengua Catalana de l'Institut d'Estudis Catalans</reference>
-		<reference type="RP3" uri="http://www.grec.net/home/cel/dicc.htm" draft="provisional">Diccionari d'Enciclopèdia Catalana</reference>
-	</references>
 </ldml>
-

@@ -1442,17 +1442,4 @@
 			<nostr draft="unconfirmed">አይ:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R005">አምሳሉ አክሊሉ, አማርኛ - እንግሊዝኛ መዝገበ ቃላት Amharic-English Dictionary, ኩራዝ አሳታሚ ድርጅት, አዲስ አበባ, ሰኔ 1979EC</reference>
-	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-* Amharic language.
-* Contributed by Daniel Yacob <yacob@geez.org>, Ge'ez Frontier Foundation
-
-Comments without bases
-
- <territory type="KR">ሰሜን ኮሪያ</territory> 	 - was on: //ldml/localeDisplayNames/territories/territory[@type="KR"][@alt="proposed-u121-1"]
- <territory type="KP">ደቡብ ኮሪያ</territory> 	 - was on: //ldml/localeDisplayNames/territories/territory[@type="KP"][@alt="proposed-u121-1"]
--->
-

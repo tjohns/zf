@@ -1514,6 +1514,7 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Osterinsel</exemplarCity>
 			</zone>
@@ -1544,6 +1545,7 @@
 			<zone type="Africa/El_Aaiun">
 				<exemplarCity>El Aaiún</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanaren</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kanarische Inseln</exemplarCity>
@@ -1723,6 +1725,7 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity>Daressalam</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uschgorod</exemplarCity>
 			</zone>
@@ -2721,21 +2724,4 @@
 			<nostr>nein:n</nostr>
 		</messages>
 	</posix>
-	<references>
-		<reference type="R019" uri="http://de.wikipedia.org/wiki/Angloamerikanisches_Ma%C3%9Fsystem">US measurement system in German</reference>
-		<reference type="R020" uri="http://www.allegro-c.de/formate/sprachen.htm">Languages 2</reference>
-		<reference type="R021" uri="http://www.ids-mannheim.de/reform/regelwerk.pdf">German spelling, official new rules (for capitalization see pp. 51, 64-67 = §§ 60-64)</reference>
-		<reference type="R022" uri="http://www.oenb.at/ebusinesscodes/isocodes?lang=de&amp;amp;mode=isocodes">Currencies</reference>
-		<reference type="R023" uri="http://de.wikipedia.org/wiki/Prozent">Prozent</reference>
-		<reference type="R024" uri="http://www.metatab.de/meta_tags/sprachenkuerzel2.htm">Languages 3</reference>
-		<reference type="R025" uri="http://de.wikipedia.org/wiki/Liste_der_Unicode-Blöcke">Scripts</reference>
-		<reference type="R026" uri="http://www2.bibliothek.uni-augsburg.de/kfe/kkb_mab_037.html">Languages</reference>
-		<reference type="R027" uri="http://afrika.heim.at">Territories of Africa in German</reference>
-		<reference type="R028" uri="http://de.wikipedia.org/wiki/ISO_4217">Currencies 2</reference>
-		<reference type="R029" uri="http://www.auswaertiges-amt.de/www/de/infoservice/download/pdf/publikationen/staatennamen.pdf">Territories</reference>
-		<reference type="RP1" uri="http://de.wikipedia.org/wiki/Zeitzone" draft="provisional">Time Zones</reference>
-		<reference type="RP2" uri="http://www.hebis.de/bib/arbeitshilfen/bereich_arbeitshilfen.php?we_objectID=6538" draft="unconfirmed">Sprachcodes nach ISO 639-2</reference>
-		<reference type="RP3" uri="http://de.wikipedia.org/wiki/Sprachgebrauch_in_%C3%96sterreich" draft="unconfirmed">Österreichisches Deutsch</reference>
-		<reference type="RP4" uri="http://de.wikipedia.org/wiki/Anführungszeichen#Schweiz" draft="contributed">Quotation marks in Swiss German/French/Italian</reference>
-	</references>
 </ldml>
