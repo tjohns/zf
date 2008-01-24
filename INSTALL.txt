@@ -1,58 +1,49 @@
 INSTALLATION
 ------------
 
-The Zend Framework requires no special installation steps. Simply get
-a copy of the framework and ensure that the /library directory is in
-your PHP include_path.
-
+Zend Framework requires no special installation steps. Simply download the framework,
+extract it to the folder you would like to keep it in, and add the /library directory
+to your PHP include_path.
 
 SYSTEM REQUIREMENTS
 -------------------
 
-Zend Framework is built with object-oriented PHP 5 and requires
-PHP 5.1.4 or later. Please see the system requirements appendix for
-more detailed information:
+Zend Framework requires PHP 5.1.4 or later. Please see the system requirements
+appendix for more detailed information:
 
 http://framework.zend.com/manual/en/requirements.html
 
 
-GETTING ZEND FRAMEWORK
-----------------------
+DEVELOPMENT VERSIONS
+--------------------
 
-Once an appropriate PHP environment is available, the next step is to
-get a copy of the Zend Framework, which may be officially obtained by
-any of the following methods:
+If you would like to preview enhancements or bug fixes that have not yet been
+released, you can obtain the current development version of Zend Framework using one
+of the following methods:
 
-* Download the latest stable release. This version, available in both
-  .zip and .tar.gz formats, is a good choice for those who are new to
-  Zend Framework.
-
-  http://framework.zend.com/download/stable
-
-* Download the latest nightly snapshot. For those who would brave the
-  cutting edge, the nightly snapshots represent the latest progress of
-  Zend Framework development. Snapshots are bundled with documentation
-  either in English only or in all available languages. If you
-  anticipate working with the latest Zend Framework developments,
-  consider using a Subversion (SVN) client.
+* Download the latest nightly snapshot. For those who care to brave the
+  cutting (often bleeding) edge, the nightly snapshots represent the latest single-
+  download development version of Zend Framework development. Snapshots are bundled
+  with documentation in English only or in all available languages. If you anticipate
+  updating to the latest development version of Zend Framework often, consider using
+  Subversion as described below.
 
   http://framework.zend.com/download/snapshot
 
-* Using a Subversion (SVN) client. Zend Framework is open source
-  software, and the Subversion repository used for its development is
-  publicly available. Consider using SVN to get the Zend Framework if
-  you already use SVN for your application development, want to
-  contribute back to the framework, or need to upgrade your framework
-  version more often than releases occur.
+* Using a Subversion (SVN) client. Zend Framework is open source software, and
+  the Subversion repository used for its development is publicly available. Consider
+  using SVN to get Zend Framework if you already use SVN for your application
+  development, want to contribute back to the framework, or need to upgrade your
+  framework version very often.
 
-  Exporting is useful if you want to get a particular framework
-  revision without the .svn  directories as created in a working copy.
+  Exporting is useful if you want to get a particular framework revision without the
+  .svn  directories as created in a working copy.
 
-  Checking out a working copy is good when you might contribute to Zend
-  Framework, and a working copy can be updated any time with svn update.
+  Checking out a working copy is necessary if you would like to directly contribute
+  to Zend Framework; a working copy can be updated any time with svn update.
 
-  An externals definition is highly convenient for developers already
-  using SVN to manage their application working copies.
+  An externals definition is highly convenient for developers already using SVN to
+  manage their application working copies.
 
   The URL for the trunk of the Zend Framework SVN repository is:
 
@@ -62,28 +53,30 @@ any of the following methods:
 
   http://subversion.tigris.org
 
+CONFIGURING THE INCLUDE PATH
+----------------------------
 
-USING ZEND FRAMEWORK
---------------------
-
-Once you have a copy of the Zend Framework available, your application
-needs to be able to access the framework classes. Though there are several
-ways to achieve this, your PHP include_path needs to contain the path to
-the Zend Framework library.
-
-About the PHP include_path configuration directive:
+Once you have a copy of the Zend Framework available, your application needs to be
+able to access the framework classes. Though there are several ways to achieve this,
+your PHP include_path needs to contain the path to the Zend Framework classes under
+the /library directory in this distribution. You can find out more about the PHP
+include_path configuration directive here:
 
 http://www.php.net/manual/en/ini.core.php#ini.include-path
 
-How to change PHP configuration directives:
+Instructions on how to change PHP configuration directives can be found here:
 
 http://www.php.net/manual/en/configuration.changes.php
 
-One of the Zend Framework's most useful features is its implementation of
-the Front Controller and Model-View-Controller (MVC) patterns. Get started
-with Zend Framework MVC with the Zend_Controller Quick Start:
+GETTING STARTED
+---------------
+
+One of the Zend Framework's most useful features is its implementation of the Front
+Controller and Model-View-Controller (MVC) design patterns. The Zend_Controller Quick
+Start is a great place to get started building MVC applications:
 
 http://framework.zend.com/manual/en/zend.controller.html#zend.controller.quickstart
 
-Since Zend Framework components are rather loosely coupled, various
-components may be selected for independent use as needed.
+Since Zend Framework is designed with a use-at-will architecture and components are
+loosely coupled, you can select and use only those components that are needed for
+your project.

@@ -1,4 +1,0 @@
-When building product releases, replace this file with generated text:
-[PRODUCT NAME] [RELEASE TYPE] [VERSION] (build [SVN TAG])
-For example:
-Zend Framework Preview Release 0.2.0 (build 1406)
