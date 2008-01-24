@@ -157,7 +157,7 @@ if ($response->getStatus() == 200) {
             <note>
                 <title>Vérifier toujours la valeur retournée</title>
                 <para>
-                    Puisqu'une réponse peut contenir plusieurs exemplaires du même entête, la méthode <code>getHeader()<code> et la méthode <code>getHeaders()<code> peuvent renvoyer l'un comme l'autre soit une chaîne seule, soit un tableau de chaînes pour chaque entête. Vous devez donc toujours vérifier si la valeur retournée est une chaîne ou un tableau.
+                    Puisqu'une réponse peut contenir plusieurs exemplaires du même entête, la méthode <code>getHeader()</code> et la méthode <code>getHeaders()</code> peuvent renvoyer l'un comme l'autre soit une chaîne seule, soit un tableau de chaînes pour chaque entête. Vous devez donc toujours vérifier si la valeur retournée est une chaîne ou un tableau.
                 </para>
             </note>
             <example id="zend.http.response.acessors.example-2">
