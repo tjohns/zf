@@ -26,7 +26,7 @@
 #      stage-docs - build and stage the DocBook and PHP API documentation in one step.
 #        docbook - build and stage manual from DocBook sources.
 #        phpdoc - build and stage API doc using phpDocumentor.
-#      stage-version - create staged VERSION.txt for the release packages.
+#      stage-version - add SVN revision number and release date to README.txt
 #    zip - produce zip packages from staged tree.
 #    tar - produce tar.gz packages from staged tree.
 #  clean - remove staged files.
@@ -46,8 +46,8 @@ PHPDOC=phpdoc
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
 # location (e.g., tag/release-1.0.3)
-ZF_SVN_REVISION=6986
-ZF_SVN_DIR=tag/release-1.0.3
+ZF_SVN_REVISION=7627
+ZF_SVN_DIR=branch/release-1.5PR
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
@@ -149,9 +149,15 @@ phpdoc-core:
 	@echo "...Done building and staging PHP API documentation."
 
 stage-version:
-	@echo "Staging VERSION.txt..."
-	@echo "$(ZF_PRODUCT_NAME) Release $(ZF_VERSION) (revision $(ZF_SVN_REVISION))" > $(ZF_STAGE_DIR)/VERSION.txt
-	@echo "...Done staging VERSION.txt."
+	@echo "Adding SVN revision and release date to release notes..."
+	@sed -e 's/\[INSERT REV NUMBER HERE\]/$(ZF_SVN_REVISION)/' \
+	    < $(ZF_STAGE_DIR)/README.txt \
+	    > $(ZF_STAGE_DIR)/README.txt.new
+	@ZF_RELEASE_DATE=`date +%Y-%m-%d` ; sed -e "s/\[INSERT DATE HERE\]/$$ZF_RELEASE_DATE/" \
+	    < $(ZF_STAGE_DIR)/README.txt.new \
+	    > $(ZF_STAGE_DIR)/README.txt
+	@rm $(ZF_STAGE_DIR)/README.txt.new
+	@echo "...Done adding SVN revision and release date to release notes."
 
 zip:
 	@echo "Creating ZIP archives..."
