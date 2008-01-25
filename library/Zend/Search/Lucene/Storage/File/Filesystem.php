@@ -191,12 +191,12 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      * Lock type may be a LOCK_SH (shared lock) or a LOCK_EX (exclusive lock)
      *
      * @param integer $lockType
-     * @param boolean $nonBlockinLock
+     * @param boolean $nonBlockingLock
      * @return boolean
      */
-    public function lock($lockType, $nonBlockinLock = false)
+    public function lock($lockType, $nonBlockingLock = false)
     {
-        if ($nonBlockinLock) {
+        if ($nonBlockingLock) {
             return flock($this->_fileHandle, $lockType | LOCK_NB);
         } else {
             return flock($this->_fileHandle, $lockType);

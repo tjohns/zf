@@ -28,7 +28,7 @@ require_once 'Zend/Search/Lucene/Document.php';
 /** Zend_Search_Lucene_Document_Html */
 require_once 'Zend/Search/Lucene/Document/Html.php';
 
-/** Zend_Search_Lucene_Storage_Directory */
+/** Zend_Search_Lucene_Storage_Directory_Filesystem */
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 
 /** Zend_Search_Lucene_Storage_File_Memory */
@@ -60,6 +60,10 @@ require_once 'Zend/Search/Lucene/Search/Similarity.php';
 
 /** Zend_Search_Lucene_Index_SegmentInfoPriorityQueue */
 require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
+
+/** Zend_Search_Lucene_LockManager */
+require_once 'Zend/Search/Lucene/LockManager.php';
+
 
 
 /** Zend_Search_Lucene_Interface */
@@ -159,6 +163,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     private $_generation;
 
+    
     /**
      * Create index
      *
@@ -256,37 +261,6 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         return -1;
     }
 
-    /**
-     * Obtain exclusive write lock on the index
-     *
-     * @param Zend_Search_Lucene_Storage_Directory $defaultLockDirectory
-     * @return Zend_Search_Lucene_Storage_File
-     * @throws Zend_Search_Lucene_Exception
-     */
-    public static function obtainWriteLock(Zend_Search_Lucene_Storage_Directory $defaultLockDirectory)
-    {
-        $lock = $defaultLockDirectory->createFile('write.lock');
-        if (!$lock->lock(LOCK_EX)) {
-            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
-        }
-    	
-        return $lock;
-    }
-    
-    /**
-     * Free exclusive write lock on the index
-     * 
-     * @param Zend_Search_Lucene_Storage_Directory $defaultLockDirectory
-     * @param Zend_Search_Lucene_Storage_File      $lock
-     */
-    public static function releaseWriteLock(Zend_Search_Lucene_Storage_Directory $defaultLockDirectory,
-                                            Zend_Search_Lucene_Storage_File $lock)
-    {
-        $lock->unlock();
-        unset($lock);
-        $defaultLockDirectory->deleteFile('write.lock');
-    }
-    
     /**
      * Get segments file name
      *
@@ -432,11 +406,18 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         $this->_segmentInfos = array();
 
+        // Mark index as "under processing" to prevent other processes from premature index cleaning
+        Zend_Search_Lucene_LockManager::obtainReadLock($this->_directory);
+        
+        // Escalate read lock to prevent current generation index files to be deleted while opening process is not done 
+//        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
+        
+        
         $this->_generation = self::getActualGeneration($this->_directory);
-
+        
         if ($create) {
         	try {
-        		$lock = Zend_Search_Lucene::obtainWriteLock($this->_directory);
+        		Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
         	} catch (Zend_Search_Lucene_Exception $e) {
         		if (strpos($e->getMessage(), 'Can\'t obtain exclusive index lock') === false) {
         			throw $e;
@@ -460,7 +441,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
             Zend_Search_Lucene_Index_Writer::createIndex($this->_directory, $this->_generation, $nameCounter);
 
-            Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
+            Zend_Search_Lucene_LockManager::releaseWriteLock($this->_directory);
         }
 
         if ($this->_generation == -1) {
@@ -470,6 +451,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         } else {
             $this->_readSegmentsFile();
         }
+        
+        // De-escalate read lock to prevent current generation index files to be deleted while opening process is not done 
+//        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
     }
 
     /**
@@ -484,6 +468,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         $this->commit();
 
+        // Release "under processing" flag
+        Zend_Search_Lucene_LockManager::releaseReadLock($this->_directory);
+                
         if ($this->_closeDirOnExit) {
             $this->_directory->close();
         }

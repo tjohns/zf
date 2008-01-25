@@ -26,6 +26,9 @@ require_once 'Zend/Search/Lucene/Index/DictionaryLoader.php';
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';
 
+/** Zend_Search_Lucene_LockManager */
+require_once 'Zend/Search/Lucene/LockManager.php';
+
 
 /**
  * @category   Zend
@@ -540,6 +543,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Load terms dictionary index
+     * 
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _loadDictionaryIndex()
     {
@@ -550,20 +555,25 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $stiFileData = $stiFile->readBytes($this->_directory->fileLength($this->_name . '.sti'));
 
             // Load dictionary index data
-            list($this->_termDictionary, $this->_termDictionaryInfos) = unserialize($stiFileData);
-        } else {
-            // Prefetch dictionary index data
-            $tiiFile = $this->openCompoundFile('.tii');
-            $tiiFileData = $tiiFile->readBytes($this->compoundFileLength('.tii'));
-
-            // Load dictionary index data
-            list($this->_termDictionary, $this->_termDictionaryInfos) =
-                        Zend_Search_Lucene_Index_DictionaryLoader::load($tiiFileData);
-
-            $stiFileData = serialize(array($this->_termDictionary, $this->_termDictionaryInfos));
-            $stiFile = $this->_directory->createFile($this->_name . '.sti');
-            $stiFile->writeBytes($stiFileData);
+            if (($unserializedData = @unserialize($stiFileData)) !== false) {
+                list($this->_termDictionary, $this->_termDictionaryInfos) = $unserializedData;
+                return;
+            }
         }
+
+        // Load data from .tii file and generate .sti file
+
+        // Prefetch dictionary index data
+        $tiiFile = $this->openCompoundFile('.tii');
+        $tiiFileData = $tiiFile->readBytes($this->compoundFileLength('.tii'));
+
+        // Load dictionary index data
+        list($this->_termDictionary, $this->_termDictionaryInfos) =
+                    Zend_Search_Lucene_Index_DictionaryLoader::load($tiiFileData);
+
+        $stiFileData = serialize(array($this->_termDictionary, $this->_termDictionaryInfos));
+        $stiFile = $this->_directory->createFile($this->_name . '.sti');
+        $stiFile->writeBytes($stiFileData);
     }
 
     /**
@@ -958,7 +968,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
         // Get new generation number
-        $lock = Zend_Search_Lucene::obtainWriteLock($this->_directory);
+        Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
 
         $delFileList = array();
         foreach ($this->_directory->fileList() as $file) {
@@ -983,7 +993,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
 
-        Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
+        Zend_Search_Lucene_LockManager::releaseWriteLock($this->_directory);
 
 
         $delFile->writeInt($this->_docCount);

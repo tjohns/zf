@@ -212,11 +212,29 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $trackErrors = ini_get('track_errors'); ini_set('track_errors', '1');
         if (!@unlink($this->_dirPath . '/' . $filename)) {
             ini_set('track_errors', $trackErrors);
+            throw $e;
+            
             throw new Zend_Search_Lucene_Exception('Can\'t delete file: ' . $php_errormsg);
         }
         ini_set('track_errors', $trackErrors);
     }
 
+    /**
+     * Purge file if it's cached by directory object
+     * 
+     * Method is used to prevent 'too many open files' error
+     *
+     * @param string $filename
+     * @return void
+     */
+    public function purgeFile($filename)
+    {
+        if (isset($this->_fileHandlers[$filename])) {
+            $this->_fileHandlers[$filename]->close();
+        }
+        unset($this->_fileHandlers[$filename]);
+    }
+    
 
     /**
      * Returns true if a file with the given $filename exists.

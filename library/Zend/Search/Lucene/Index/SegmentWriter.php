@@ -260,6 +260,16 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
     }
 
     /**
+     * Return segment name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
+    
+    /**
      * Dump Field Info (.fnm) segment file
      */
     protected function _dumpFNM()
