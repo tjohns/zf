@@ -6,12 +6,21 @@ particular, *your* feedback could help make the Zend Framework 1.5 production re
 a success, so please post your comments and questions to the appropriate mailing list
 and bring bugs to our attention by creating an issue in our issue tracker:
 
-http://framework.zend.com/issues.
+http://framework.zend.com/issues
 
 RELEASE INFORMATION
 ---------------
 Zend Framework Preview Release 1.5 (revision [INSERT REV NUMBER HERE]). Released on
 [INSERT DATE HERE].
+
+SPECIAL NOTICE FOR LUCENE SEARCH USERS
+--------------------------------------
+
+In the 1.5 preview release, the Zend_Search_Lucene works with Apache Lucene 2.1 index
+file format. Conversion from the previous format (1.9) is performed automatically during
+the first index update after the 1.5 PR is installed. THIS CONVERSION CANNOT BE UNDONE.
+Please make a backup copy of your Lucene index if you plan to rollback to previous
+versions of Zend Framework and wish to continue using this index.
 
 NEW FEATURES
 ------------
@@ -51,12 +60,11 @@ ENHANCEMENTS AND BUGFIXES
 A detailed list of all features and bug fixes in this release may be found at:
 
 http://framework.zend.com/issues/secure/IssueNavigator.jspa?mode=hide&requestId=10661
-.
 
 INTENDED USE
 ------------
 
-The code in this release provides a 'sneak peek' at features to be released in the
+The code in this release provides a 'sneak peek' at features to be included in the
 upcoming Zend Framework 1.5 release and is not intended for production use. Please be
 aware that the API's introduced in this release may not be final, and that the Zend
 Framework team does not guarantee backwards compatibility to this release in future

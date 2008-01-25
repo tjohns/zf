@@ -21,8 +21,8 @@ If you would like to preview enhancements or bug fixes that have not yet been
 released, you can obtain the current development version of Zend Framework using one
 of the following methods:
 
-* Download the latest nightly snapshot. For those who care to brave the
-  cutting (often bleeding) edge, the nightly snapshots represent the latest single-
+* Download the latest nightly snapshot. For those who care to brave the cutting
+  (often bleeding) edge, the nightly snapshots represent the latest single-
   download development version of Zend Framework development. Snapshots are bundled
   with documentation in English only or in all available languages. If you anticipate
   updating to the latest development version of Zend Framework often, consider using
@@ -56,10 +56,10 @@ of the following methods:
 CONFIGURING THE INCLUDE PATH
 ----------------------------
 
-Once you have a copy of the Zend Framework available, your application needs to be
-able to access the framework classes. Though there are several ways to achieve this,
-your PHP include_path needs to contain the path to the Zend Framework classes under
-the /library directory in this distribution. You can find out more about the PHP
+Once you have a copy of the Zend Framework available, your application will need to
+access the framework classes. Though there are several ways to achieve this, your
+PHP include_path needs to contain the path to the Zend Framework classes under the
+/library directory in this distribution. You can find out more about the PHP
 include_path configuration directive here:
 
 http://www.php.net/manual/en/ini.core.php#ini.include-path
