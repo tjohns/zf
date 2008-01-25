@@ -506,7 +506,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         try {
             $currency = new Zend_Currency('USD');
-            $this->assertTrue(is_string($currency->getRegionList()));
+            $this->assertTrue(is_array($currency->getRegionList()));
         } catch (Zend_Currency_Exception $e) {
             $this->assertContains('No region found within the locale', $e->getMessage());
         }
