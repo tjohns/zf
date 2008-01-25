@@ -881,6 +881,19 @@ class Zend_Form implements Iterator, Countable
         return $values;
     }
 
+    /**
+     * Set all elements' filters
+     * 
+     * @param  array $filters 
+     * @return Zend_Form
+     */
+    public function setElementFilters(array $filters)
+    {
+        foreach ($this->getElements() as $element) {
+            $element->setFilters($filters);
+        }
+        return $this;
+    }
  
     // Element groups: 
 

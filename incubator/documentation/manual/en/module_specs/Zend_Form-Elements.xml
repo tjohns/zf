@@ -769,8 +769,194 @@ $element->class = 'text; // set 'class' attribute to 'text'
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.form.elements.methods">
+        <title>Zend_Form_Element Methods</title>
+
+        <para>
+            <code>Zend_Form_Element</code> has many, many methods. What follows
+            is a quick summary of their signatures, grouped by type:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>Configuration:</para>
+                <itemizedlist>
+                    <listitem><para><code>setOptions(array $options)</code></para></listitem>
+                    <listitem><para><code>setConfig(Zend_Config $config)</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>I18N:</para>
+                <itemizedlist>
+                    <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
+                    <listitem><para><code>getTranslator()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>Properties:</para>
+                <itemizedlist>
+                    <listitem><para><code>setName($name)</code></para></listitem>
+                    <listitem><para><code>getName()</code></para></listitem>
+                    <listitem><para><code>setValue($value)</code></para></listitem>
+                    <listitem><para><code>getValue()</code></para></listitem>
+                    <listitem><para><code>getUnfilteredValue()</code></para></listitem>
+                    <listitem><para><code>setLabel($label)</code></para></listitem>
+                    <listitem><para><code>getLabel()</code></para></listitem>
+                    <listitem><para><code>setOrder($order)</code></para></listitem>
+                    <listitem><para><code>getOrder()</code></para></listitem>
+                    <listitem><para><code>setRequired($flag)</code></para></listitem>
+                    <listitem><para><code>getRequired()</code></para></listitem>
+                    <listitem><para><code>setDescription($description)</code></para></listitem>
+                    <listitem><para><code>getDescription()</code></para></listitem>
+                    <listitem><para><code>getType()</code></para></listitem>
+                    <listitem><para><code>setAttrib($name, $value)</code></para></listitem>
+                    <listitem><para><code>setAttribs(array $attribs)</code></para></listitem>
+                    <listitem><para><code>getAttrib($name)</code></para></listitem>
+                    <listitem><para><code>getAttribs()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>Plugin loaders and paths:</para>
+                <itemizedlist>
+                    <listitem><para><code>setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type)</code></para></listitem>
+                    <listitem><para><code>getPluginLoader($type)</code></para></listitem>
+                    <listitem><para><code>addPrefixPath($prefix, $path, $type = null)</code></para></listitem>
+                    <listitem><para><code>addPrefixPaths(array $spec)</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>Validation:</para>
+                <itemizedlist>
+                    <listitem><para><code>addValidator($validator, $breakChainOnFailure = false, $options = array())</code></para></listitem>
+                    <listitem><para><code>addValidators(array $validators)</code></para></listitem>
+                    <listitem><para><code>setValidators(array $validators)</code></para></listitem>
+                    <listitem><para><code>getValidator($name)</code></para></listitem>
+                    <listitem><para><code>getValidators()</code></para></listitem>
+                    <listitem><para><code>removeValidator($name)</code></para></listitem>
+                    <listitem><para><code>clearValidators()</code></para></listitem>
+                    <listitem><para><code>isValid($value, $context = null)</code></para></listitem>
+                    <listitem><para><code>getErrors()</code></para></listitem>
+                    <listitem><para><code>getMessages()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>Filters:</para>
+                <itemizedlist>
+                    <listitem><para><code>addFilter($filter, $options = array())</code></para></listitem>
+                    <listitem><para><code>addFilters(array $filters)</code></para></listitem>
+                    <listitem><para><code>setFilters(array $filters)</code></para></listitem>
+                    <listitem><para><code>getFilter($name)</code></para></listitem>
+                    <listitem><para><code>getFilters()</code></para></listitem>
+                    <listitem><para><code>removeFilter($name)</code></para></listitem>
+                    <listitem><para><code>clearFilters()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem><para>Rendering:</para>
+                <itemizedlist>
+                    <listitem><para><code>setView(Zend_View_Interface $view = null)</code></para></listitem>
+                    <listitem><para><code>getView()</code></para></listitem>
+                    <listitem><para><code>addDecorator($decorator, $options = null)</code></para></listitem>
+                    <listitem><para><code>addDecorators(array $decorators)</code></para></listitem>
+                    <listitem><para><code>setDecorators(array $decorators)</code></para></listitem>
+                    <listitem><para><code>getDecorator($name)</code></para></listitem>
+                    <listitem><para><code>getDecorators()</code></para></listitem>
+                    <listitem><para><code>removeDecorator($name)</code></para></listitem>
+                    <listitem><para><code>clearDecorators()</code></para></listitem>
+                    <listitem><para><code>render(Zend_View_Interface $view = null)</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.form.elements.config">
+        <title>Configuration</title>
+
+        <para>
+            <code>Zend_Form_Element</code>'s constructor accepts either an
+            array of options or a <code>Zend_Config</code> object containing
+            options, and it can also be configured using either
+            <code>setOptions()</code> or <code>setConfig()</code>. Generally
+            speaking, keys are named as follows:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                If 'set' + key refers to a <code>Zend_Form_Element</code>
+                method, then the value provided will be passed to that method.
+            </para></listitem>
+
+            <listitem><para>
+                Otherwise, the value will be used to set an attribute.
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            Exceptions to the rule include the following:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <code>prefixPath</code> will be passed to
+                <code>addPrefixPaths()</code>
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    The following setters cannot be set in this way:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setAttrib</code> (though
+                            <code>setAttribs</code> <emphasis>will</emphasis>
+                            work)
+                    </para></listitem>
+
+                    <listitem><para><code>setConfig</code></para></listitem>
+
+                    <listitem><para><code>setOptions</code></para></listitem>
+
+                    <listitem><para><code>setPluginLoader</code></para></listitem>
+
+                    <listitem><para><code>setTranslator</code></para></listitem>
+                    
+                    <listitem><para><code>setView</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            As an example, here is a config file that passes configuration for
+            every type of configurable data:
+        </para>
+
+        <programlisting role="ini"><![CDATA[
+[element]
+name = "foo"
+value = "foobar"
+label = "Foo:"
+order = 10
+required = true
+description = "Foo elements are for examples"
+attribs.id = "foo"
+attribs.class = "element"
+onclick = "autoComplete(this, '/form/autocomplete/element')" ; sets 'onclick' attribute
+prefixPaths.decorator.prefix = "My_Decorator"
+prefixPaths.decorator.path = "My/Decorator/"
+validators.required.validator = "NotEmpty"
+validators.required.breakChainOnFailure = true
+validators.alpha.validator = "alpha"
+validators.regex.validator = "regex"
+validators.regex.options.pattern = "/^[a-f].*/i$"
+filters.ucase.filter = "StringToUpper"
+decorators.element.decorator = "ViewHelper"
+decorators.element.options.helper = "FormText"
+decorators.label.decorator = "Label"
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.form.elements.custom">
-        <title>Custom elements</title>
+        <title>Custom Elements</title>
 
         <para>
             You can create your own custom elements by simply extending the

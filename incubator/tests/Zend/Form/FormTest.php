@@ -1675,6 +1675,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testCanSetAllElementFiltersAtOnce()
+    {
+        $this->setupElements();
+        $this->form->setElementFilters(array(
+            'Alnum',
+            'StringToLower'
+        ));
+        foreach ($this->form->getElements() as $element) {
+            $filter = $element->getFilter('Alnum');
+            $this->assertTrue($filter instanceof Zend_Filter_Alnum);
+            $filter = $element->getFilter('StringToLower');
+            $this->assertTrue($filter instanceof Zend_Filter_StringToLower);
+        }
+    }
+
     public function testCanSetGlobalElementPrefixPath()
     {
         $this->setupElements();
