@@ -15,7 +15,7 @@
         <para>
             Die Zend_Db_Table Lösung ist eine Implementation des
             <ulink url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</ulink>
-            Patterns. Die Lösung schließt außerdem eine Klasee ein, welche das
+            Patterns. Die Lösung schließt außerdem eine Klasse ein, welche das
             <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>
             Pattern implementiert.
         </para>
@@ -149,12 +149,12 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');]]><
             <para>
                 Jede Tabelle muss einen Primärschlüssel haben. Die Spalte des Primärschlüssels kann mit der
                 protected Variablen <code>$_primary</code> angegeben werden. Sie enthält entweder einen String,
-                welcher die einzelen Spalte benennt, oder ein Array von Spaltennamen, wenn der Primärschlüssel ein
-                zusammengesetzter Schlüssel ist.
+                welcher die einzelen Spalte benennt, oder ein Array von Spaltennamen, wenn der Primärschlüssel
+                ein zusammengesetzter Schlüssel ist.
             </para>
 
             <example id="zend.db.table.defining.primary-key.example">
-                <title>Beispiel für das angeben eines Primärschlüssels</title>
+                <title>Beispiel für das spezifizieren eines Primärschlüssels</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class Bugs extends Zend_Db_Table_Abstract
@@ -246,6 +246,38 @@ class Bugs extends Zend_Db_Table_Abstract
 
         </sect3>
 
+        <sect3>
+            <title>Tabellen Initialisierung</title>
+
+            <para>
+                Wenn Anwendungs-spezifische Logik initialisiert werden soll wenn eine Tabellenklasse
+                erstellt wird, kann man entscheiden die Aufgaben in die <code>init()</code> Methode zu
+                verschieben, die aufgerufen wird nachdem alle Tabellen Metadaten bearbeitet wurden. Das
+                ist besser als die <code>__construct</code> Methode wenn die Metadaten nicht
+                programmtechnisch verändert werden sollen.
+                
+                <example id="zend.db.table.defining.setup.example">
+                    <title>Beispielverwendung der init() Methode</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_observer;
+
+    protected function init()
+    {
+        $this->_observer = new MyObserverClass();
+    }
+}]]>
+                    </programlisting>
+
+                </example>
+
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.db.table.constructing">
@@ -314,7 +346,6 @@ $table = new Bugs();]]></programlisting>
 
         </sect3>
 
-
         <sect3 id="zend.db.table.constructing.registry">
 
             <title>Speichern eines Datenbankadapters in der Registry</title>
@@ -327,7 +358,7 @@ $table = new Bugs();]]></programlisting>
             </para>
 
             <example id="zend.db.table.constructing.registry.example">
-                <title>Beispiel für das erzeugen von Table mit einem Registry Schlüssel</title>
+                <title>Beispiel für das Erzeugen von Table mit einem Registry Schlüssel</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db = Zend_Db::factory('PDO_MYSQL', $options);
@@ -715,59 +746,193 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]></programlisting
 
     <sect2 id="zend.db.table.fetch-all">
 
-        <title>Ein Set von Zeilen abfragen</title>
+        <sect3 id="zend.db.table.fetch-all.select">
 
-        <para>
-            Ein Set von Zeilen kann abgefragt werden indem irgendein Kriterium verwendet wird, das anders als
-            die Werte des Primärschlüssels sind, indem die <code>fetchAll()</code> Methode der Tabellen
-            Klasse verwendet wird. Diese Methode gibt ein Objekt vom Typ Zend_Db_Table_Rowset_Abstract
-            zurück.
-        </para>
+            <title>Select API</title>
 
-        <example id="zend.db.table.fetch-all.example1a">
-            <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
-            <programlisting role="php"><![CDATA[<?php
+            <para>
+                <warning>
+                    <para>
+                        Die API für die Hol-Operationen wurde ausgeweitet um einem
+                        <code>Zend_Db_Table_Select</code> Objekt zu erlauben die Abfrage zu modifizieren.
+                        Trotzdem wird die veraltete Verwendung der <code>fetchRow()</code> und
+                        <code>fetchAll()</code> Methoden weiterhin ohne Änderungen funktionieren.
+                    </para>
+
+                    <para>
+                        Die folgenden Ausdrücke sind gültig und funktionell identisch, trotzdem wird
+                        empfohlen den Code zu aktualisieren um Vorteil aus der neuen Verwendung zu
+                        ziehen wo das möglich ist.
+                    </para>
+
+                    <para>
+                        <programlisting role="php"><![CDATA[// Ein Rowset holen
+    $rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
+    $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
+                                             ->order('bug_id ASC')
+                                             ->limit(10, 0));
+
+    // Eine einzelne Zeile holen
+    $row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
+    $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
+                                            ->order('bug_id ASC'));]]>
+                        </programlisting>
+                    </para>
+                </warning>
+            </para>
+
+            <para>
+                Das <classname>Zend_Db_Table_Select</classname> Objekt ist eine Erweiterung des
+                <classname>Zend_Db_Select</classname> Objekts das spezielle Einschränkungen zu einer
+                Abfrage hinzufügt. Die Verbesserungen und Einschränkungen sind folgende:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Man <emphasis>kann</emphasis> sich entscheiden ein Subset von Zeilen einer
+                        fetchRow oder fetchAll Abfrage zurückzuerhalten. Dann kann Vorteile durch
+                        Optimierung bieten, wenn die Rückgabe eines großes Sets an Ergebnissen für
+                        alle Zeilen nicht gewünscht wird.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Man <emphasis>kann</emphasis> Zeilen spezifizieren die Ausdrücke innerhalb der
+                        ausgewählten Tabelle evaluieren. Trotzdem bedeutet das, das die zurückgegebene Zeile
+                        oder Zeilenset <property>readOnly</property> (nur lesbar) ist und nicht für
+                        save() Operationen verwendet werden kann. Eine <code>Zend_Db_Table_Row</code>
+                        mit <property>readOnly</property> Status wird eine Exception werfen wenn eine
+                        <code>save()</code> Operation versucht wird.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Man <emphasis>can</emphasis> JOIN Klauseln auf einer Auswahl erlauben um
+                        Mehrfach-Tabellen Lookups zu erlauben.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Man <emphasis>kann nicht</emphasis> Spalten von einer geJOINten Tabelle
+                        spezifizieren damit Sie in einer Zeile/Zeilenset zurückgegeben werden. Wenn
+                        das versucht wird, wird eine Exception geworfen. Das wurde getan um Sicherzustellen
+                        das die Integrität von <code>Zend_Db_Table gewahrt bleibt</code>. z.B. ein
+                        <code>Zend_Db_Table_Row</code> sollte nur Spalten referenzieren die von seiner
+                        Elterntabelle abgeleitet sind.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                Die <classname>Zend_Db_Table_Select</classname> Klasse bietet keine andere nützliche
+                öffentliche Methode für Entwickler als die <code>isReadOnly()</code> Methode welche
+                evaluiert wird nachdem eine Abfrage in einen SQL Abfragestring transformiert wurde. Dessen
+                primäre Aufgabe ist die Verschränkung und Prüfung sodas es die Kriterien für eine legale
+                SQL Abfrage sichergestellt werden.
+
+                <example id="zend.db.table.fetch-all.example1a">
+
+                    <title>Einfache Verwendung</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$select = $table->select();
+$select->where('bug_status = ?', 'NEW');
+
+$rows = $table->fetchAll($select);]]>
+                    </programlisting>
+                </example>
+            </para>
+
+            <para>
+                Flüssige Interfaces sind über alle Komponenten hinweg implementiert, sodas das zu einer
+                mehr abgekürzteren Form umgeschrieben werden kann.
+            </para>
+
+            <para>
+
+                <example id="zend.db.table.fetch-all.example1a">
+
+                    <title>Example of fluent interface</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));]]>
+                    </programlisting>
+
+                </example>
+
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.fetch-all.usage">
+
+            <title>Ein Set von Zeilen abfragen</title>
+
+            <para>
+                Ein Set von Zeilen kann abgefragt werden indem irgendein Kriterium verwendet wird, das anders als
+                die Werte des Primärschlüssels sind, indem die <code>fetchAll()</code> Methode der Tabellen
+                Klasse verwendet wird. Diese Methode gibt ein Objekt vom Typ 
+                <code>Zend_Db_Table_Rowset_Abstract</code> zurück.
+            </para>
+
+            <example id="zend.db.table.fetch-all.example1a">
+
+                <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
+
+                <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($where);]]></programlisting>
-        </example>
+$rows = $table->fetchAll($where);]]>
+                </programlisting>
 
-        <para>
-            Das erste Argument dieser Methode ist ein SQL Ausdruck der in einer <code>WHERE</code> Klausel
-            verwendet wird, wie die die in den <code>update()</code> und <code>delete()</code> Methoden
-            verwendet werden die vorher beschrieben wurden.
-        </para>
+            </example>
 
-        <para>
-            Das Argument für die <code>WHERE</code> Klausel kann ein String sein, wie in den vorhergehenden
-            Beispielen gezeigt, oder es kann ein Array sein. Für jedes Element des Arrays ist der Schlüssel
-            des Array Elements ein SQL Ausdruck, wenn der Schlüssel ein String ist, der einen Platzhalter
-            enthält und der Wert des Array Elements ist ein Wert der in den Ausdruck interpoliert wird, anstelle
-            des Platzhalters.
-        </para>
+            <para>
+                Das Argument für die <code>WHERE</code> Klausel kann ein String sein, wie in den vorhergehenden
+                Beispielen gezeigt, oder es kann ein Array sein. Für jedes Element des Arrays ist der Schlüssel
+                des Array Elements ein SQL Ausdruck, wenn der Schlüssel ein String ist, der einen Platzhalter
+                enthält und der Wert des Array Elements ist ein Wert der in den Ausdruck interpoliert wird, anstelle
+                des Platzhalters.
+            </para>
 
-        <example id="zend.db.table.fetch-all.example1b">
-            <title>Beispiel für das Finden von Zeilen durch ein Array von Ausdrücken</title>
-            <programlisting role="php"><![CDATA[<?php
+            <example id="zend.db.table.fetch-all.example1b">
+
+                <title>Beispiel für das Finden von Zeilen durch ein Array von Ausdrücken</title>
+
+                <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
 $where = array('bug_status = ?' => 'NEW');
 
-$rows = $table->fetchAll($where);]]></programlisting>
-        </example>
+$rows = $table->fetchAll($where);]]>
+                </programlisting>
 
-        <para>
-            Wenn das Array mehrere Elemente hat, werden die Elemente in der Abfrage durch <code>AND</code>
-            Ausdrücke kombiniert.
-        </para>
+            </example>
 
-        <example id="zend.db.table.fetch-all.example1c">
-            <title>Beispiel für das Finden von Zeilen durch ein Array von Ausdrücken mit mehreren Termen</title>
-            <programlisting role="php"><![CDATA[<?php
+            <para>
+                Wenn das Array mehrere Elemente hat, werden die Elemente in der Abfrage durch <code>AND</code>
+                Ausdrücke kombiniert.
+            </para>
+
+            <example id="zend.db.table.fetch-all.example1c">
+
+                <title>Beispiel für das Finden von Zeilen durch ein Array von Ausdrücken mit mehreren Termen</title>
+
+                <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
@@ -778,35 +943,24 @@ $where = array(
 
 $rows = $table->fetchAll($where);
 // das erstellte SQL enthält:
-// WHERE bug_status = 'NEU' AND reported_by = 'dduck'
-]]></programlisting>
-        </example>
+// WHERE bug_status = 'NEU' AND reported_by = 'dduck']]>
+                </programlisting>
 
-        <note>
+            </example>
+
             <para>
-                Die Werte und Identifizierer im SQL Ausdruck werden nicht in Anführungszeichen gesetzt.
-                Wenn Werte oder Identifizierer vorhanden sind die das Setzen in Anführungszeichen
-                benötigen, ist man selbst dafür zuständig das das getan wird. Die <code>quote()</code>,
-                <code>quoteInto()</code> und <code>quoteIdentifier()</code> Methoden des Datenbank Adapters
-                können dafür verwendet werden.
+                Es können auch Sortierkriterien in einem <code>ORDER BY</code> Kriterium
+                übergeben werden, genauso wie Count und Offset Ganzzahlwerte, die verwendet
+                 werden damit eine Abfrage ein spezielles Subset von Zeilen zurückgibt.
+                 Diese Werte werden in der <code>LIMIT</code> Klausel verwendet oder in einer
+                 äquivalenten Logik für RDBMS Marken die die <code>LIMIT</code> Syntax nicht unterstützen.
             </para>
-        </note>
 
-        <para>
-            Das zweite Argument ist ein Ausdruck oder ein Array von Ausdrücken die als Sortier-Kriterium
-            in der <code>ORDER BY</code> Klausel verwendet werden.
-        </para>
+            <example id="zend.db.table.fetch-all.example2">
 
-        <para>
-            Das dritte und vierte Argument sind Anzahl und Offset Integer Werte, die verwendet werden um aus
-            der Anfrage ein spezielles Subset von Zeilen zurückzugeben. Diese Werte werden in der
-            <code>LIMIT</code> Klausel verwendet oder in einer äquivalenten Logik für RDBMS Marken die die
-            <code>LIMIT</code> Syntax nicht unterstützen.
-        </para>
+                <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
 
-        <example id="zend.db.table.fetch-all.example2">
-            <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
-            <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
@@ -818,13 +972,116 @@ $order  = 'bug_id';
 $count  = 10;
 $offset = 20;
 
-$rows = $table->fetchAll($where, $order, $count, $offset);]]></programlisting>
-        </example>
+$rows = $table->fetchAll($where, $order, $count, $offset);]]>
+                </programlisting>
 
-        <para>
-            Alle der obigen Argumente sind optional. Wenn diese Argumente unterdrückt werden, beinhaltet das
-            Ergebnis Set alle Zeilen der Tabelle in einer unvorhersagbaren Reihenfolge. 
-        </para>
+            </example>
+
+            <para>
+                Alle der obigen Argumente sind optional. Wenn diese Argumente unterdrückt werden,
+                beinhaltet das Ergebnis Set alle Zeilen der Tabelle in einer unvorhersagbaren Reihenfolge.
+                Wenn keine LIMIT Klausel gesetzt wurde, empfängt man jede Zeile in der Tabelle die der WHERE
+                Klausel entspricht. 
+            </para>
+
+        </sect3>
+    
+        <sect3>
+
+            <title>Fortgeschrittene Verwendung</title>
+
+            <para>
+                Für speziellere und optimiertere Anfragen kann es gewünscht sein die Anzahl an
+                zurückgegebenen Zeilen in einer Zeile/Zeilenset zu limitieren. Das kann durch die
+                Übergabe einer FRML Klausel an das Select Objekt erreicht werden. Der erste Argument
+                in der FROM Klausel ist identisch mit dem des Zend_Db_Select Objektes mit dem
+                Zusatz das es möglich ist eine Instanz von Zend_Db_Table_Abstract zu übergeben und
+                mit dieser den Tabellennamen automatisch er erkennen.
+            </para>
+
+            <para>
+                <example id="zend.db.table.fetch-all.example1a">
+
+                    <title>Retrieving specific columns</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$select = $table->select();
+$select->from($table, array('bug_id', 'bug_description'))
+       ->where('bug_status = ?', 'NEW');
+
+$rows = $table->fetchAll($select);]]>
+                    </programlisting>
+
+                </example>
+
+            </para>
+
+            <para>
+                <important>
+                    <para>
+                        Das Zeilenset enthält Zeile die immer noch 'gültig' sind - Sie enthalten einfach ein
+                        Subset von Spalten einer Tabelle. Wenn eine save() Methode aufgerufen auf einer
+                        partiellen Spalte aufgerufen wird, dann werden nur die vorhandenen Felder verändert.
+                    </para>
+                </important>
+
+                Es können auch Ausdrücke innerhalb einer FROM Klausel spezifiziert werden und diese als nur
+                lesbare Zeile/Zeilenset zurückgegeben bekommen. In diesem Beispiel wird eine Zeile von der
+                Bugs Tabelle zurückgegeben die eine Sammlung der Nummer von neuen Bugs zeigen die von Individuen
+                gemeldet wurden. Beachte die GROUP Klausel. Die 'count' Spalte wird der Zeile zur Prüfung
+                verfügbar gemacht und es kann auf Sie zugegriffen werden wie wenn Sie ein Teil des Schemas wäre.
+            </para>
+
+            <para>
+                <example id="zend.db.table.fetch-all.example1a">
+
+                    <title>Ausdrücke als Spalten empfangen</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$select = $table->select();
+$select->from($table, array('COUNT(reported_by) as `count`', 'reported_by'))
+       ->where('bug_status = ?', 'NEW')
+       ->group('reported_by');
+
+$rows = $table->fetchAll($select);]]>
+                    </programlisting>
+
+                </example>
+
+                Es kann auch ein Lookup als Teil der Abfrage verwendet werden um die Abrufoperation weiter zu
+                verfeinern. In diesem Beispiel wird die Accounts Tabelle als Teil einer Suche nach allen neuen
+                von 'Bob' gemeldeten Fehlern abgefragt.
+            </para>
+
+            <para>
+
+                <example id="zend.db.table.fetch-all.example1a">
+
+                    <title>Eine Lookup Tabelle verwenden um die Ergebnisse von fetchAll() zu verfeinern</title>
+
+                    <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$select = $table->select();
+$select->where('bug_status = ?', 'NEW')
+       ->join('accounts', 'accounts.account_id = bugs.reported_by')
+       ->where('accounts.account_name = ?', 'Bob');
+
+$rows = $table-&gt;fetchAll($select);]]>
+                    </programlisting>
+
+                </example>
+
+            </para>
+
+        </sect3>
 
     </sect2>
 
@@ -833,10 +1090,8 @@ $rows = $table->fetchAll($where, $order, $count, $offset);]]></programlisting>
         <title>Eine einzelne Zeilen abfragen</title>
 
         <para>
-            Eine einzelne Zeile kann abgefragt werden indem irgendein Kriterium verwendet wird das anders als
-            die Werte des Primärschlüssels sind, indem die <code>fetchRow()</code> Methode der Tabellen
-            Klasse verwendet wird. Die Verwendung dieser Methode ist ähnlich der <code>fetchAll()</code>
-            Methode, da dessen Argumente den <code>WHERE</code> Ausdruck und die Sortier-Kriterien inkludiert.
+            Eine einzelne Zeile kann abgefragt werden indem Kriterien verwendet werden die ähnlich denen
+            der <code>fetchAll()</code> Methode sind.
         </para>
 
         <example id="zend.db.table.fetch-row.example1">
@@ -871,7 +1126,7 @@ $row = $table->fetchRow($where, $order);]]></programlisting>
         </para>
 
         <example id="zend.db.table.info.example">
-            <title>Beispiel für das erhalten des Namens einer Tabelle</title>
+            <title>Beispiel für das Erhalten des Namens einer Tabelle</title>
             <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
