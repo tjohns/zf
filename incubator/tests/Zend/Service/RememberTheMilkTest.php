@@ -267,16 +267,21 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
             'u' => '1'
         );
 
+        $config = array(
+            //'strictredirects' => true,
+            'useragent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
+        );
+
         $http = new Zend_Http_Client();
         $http->setCookieJar();
         $http->setMethod(Zend_Http_Client::POST);
-        $http->setConfig(array('strictredirects' => true));
-
+        $http->setConfig($config);
         $http->setUri('https://www.rememberthemilk.com/auth.rtm');
+        $http->setHeaders('Referer', $url);
         $http->setParameterPost($params);
         $response = $http->request();
 
-        if (!$response->isSuccessful()) {
+        /*if (!$response->isSuccessful()) {
             throw new Zend_Service_Exception('Authentication failed');
         }
 
@@ -288,7 +293,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
         $http->setUri('http://www.rememberthemilk.com/services/auth/?' . $query);
         $http->setParameterPost($params);
-        $response = $http->request();
+        $response = $http->request();*/
 
         if (!$response->isSuccessful()
             || !strpos($response->getBody(), 'Application successfully authorized')) {
