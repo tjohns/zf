@@ -87,6 +87,14 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      */
     private $_cachedEntity = null;
 
+     /**
+      * The class name of the cached object or cached abstract class
+      * 
+      * Used to differentiate between different classes with the same method calls.
+      *
+      * @var string
+      */
+     private $_cachedEntityLabel = ''; 
 
     // ----------------------
     // --- Public methods ---
@@ -110,6 +118,12 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
             }
         }
         $this->_cachedEntity = $this->_specificOptions['cached_entity'];
+        if(is_string($this->_cachedEntity)){
+            $this->_cachedEntityLabel = $this->_cachedEntity;         
+        } else {
+            $ro = new ReflectionObject($this->_cachedEntity);
+            $this->_cachedEntityLabel = $ro->getName();
+        }
         $this->setOption('automatic_serialization', true);
     }
 
@@ -184,7 +198,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      */
     private function _makeId($name, $parameters)
     {
-        return md5($name . serialize($parameters));
+        return md5($this->_cachedEntityLabel . '__' . $name . '__' . serialize($parameters));
     }
 
 }

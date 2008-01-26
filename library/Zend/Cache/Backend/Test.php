@@ -116,6 +116,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
         if (($id=='71769f39054f75894288e397df04e445') or ($id=='615d222619fb20b527168340cebd0578')) {
             return serialize(array('foo', 'bar'));
         }
+        if (($id=='8a02d218a5165c467e7a5747cc6bd4b6') or ($id=='648aca1366211d17cbf48e65dc570bee')) {
+            return serialize(array('foo', 'bar'));
+        }
         return 'foo';
     }
 
@@ -135,6 +138,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
             return false;
         }
         if (($id=='d8523b3ee441006261eeffa5c3d3a0a7') or ($id=='3c439c922209e2cb0b54d6deffccd75a')) {
+            return false;
+        }
+        if (($id=='40f649b94977c0a6e76902e2a0b43587') or ($id=='e83249ea22178277d5befc2c5e2e9ace')) {
             return false;
         }
         return 123456;
