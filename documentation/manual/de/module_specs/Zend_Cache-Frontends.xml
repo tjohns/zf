@@ -247,7 +247,7 @@ echo 'Hier wird nie gecached ('.time().').';]]>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -255,7 +255,7 @@ echo 'Hier wird nie gecached ('.time().').';]]>
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedFunctions</code></entry>
+                              <entry><code>cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -263,7 +263,7 @@ echo 'Hier wird nie gecached ('.time().').';]]>
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedFunctions</code></entry>
+                              <entry><code>non_cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -325,7 +325,7 @@ $cache->call('veryExpensiveFunc', $params);
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cachedEntity</code> (Notwendig)</entry>
+                              <entry><code>cached_entity</code> (Notwendig)</entry>
                               <entry><code>mixed</code></entry>
                               <entry></entry>
                               <entry>
@@ -335,7 +335,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -343,7 +343,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedMethods</code></entry>
+                              <entry><code>cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -351,7 +351,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedMethods</code></entry>
+                              <entry><code>non_cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -381,7 +381,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => 'test' // Der Name der Klasse
+    'cached_entity' => 'test' // Der Name der Klasse
 );
 // [...]
 
@@ -406,7 +406,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => new test() // Eine Instanz der Klasse
+    'cached_entity' => new test() // Eine Instanz der Klasse
 );
 // [...]
 
