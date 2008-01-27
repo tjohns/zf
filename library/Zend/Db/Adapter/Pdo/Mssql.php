@@ -138,6 +138,44 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
+     * Begin a transaction.
+     *
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
+     */
+    protected function _beginTransaction()
+    {
+        $this->_connect();
+        $this->_connection->exec('BEGIN TRANSACTION');
+        return true;
+    }
+
+    /**
+     * Commit a transaction.
+     *
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
+     */
+    protected function _commit()
+    {
+        $this->_connect();
+        $this->_connection->exec('COMMIT TRANSACTION');
+        return true;
+    }
+
+    /**
+     * Roll-back a transaction.
+     *
+     * It is necessary to override the abstract PDO transaction functions here, as
+     * the PDO driver for MSSQL does not support transactions.
+     */
+    protected function _rollBack() {
+        $this->_connect();
+        $this->_connection->exec('ROLLBACK TRANSACTION');
+        return true;
+    }
+
+    /**
      * Returns a list of the tables in the database.
      *
      * @return array

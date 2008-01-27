@@ -36,16 +36,6 @@ class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
         $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products OFF");
     }
 
-    public function testStatementBindParamByInteger()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        // Make IDENTITY column accept explicit value.
-        // This can be done in only one table in a given session.
-        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
-        parent::testStatementBindParamByInteger();
-        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products OFF");
-    }
-
     public function testStatementBindParamByPosition()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -63,6 +53,26 @@ class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
         // This can be done in only one table in a given session.
         $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
         parent::testStatementBindParamByName();
+        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products OFF");
+    }
+
+    public function testStatementBindValueByPosition()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        // Make IDENTITY column accept explicit value.
+        // This can be done in only one table in a given session.
+        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
+        parent::testStatementBindValueByPosition();
+        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products OFF");
+    }
+
+    public function testStatementBindValueByName()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        // Make IDENTITY column accept explicit value.
+        // This can be done in only one table in a given session.
+        $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products ON");
+        parent::testStatementBindValueByName();
         $this->_db->getConnection()->exec("SET IDENTITY_INSERT $products OFF");
     }
 
