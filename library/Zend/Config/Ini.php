@@ -130,7 +130,11 @@ class Zend_Config_Ini extends Zend_Config
         if (null === $section) {
             $dataArray = array();
             foreach ($preProcessedArray as $sectionName => $sectionData) {
-                $dataArray[$sectionName] = $this->_processExtends($preProcessedArray, $sectionName);
+                if(!is_array($sectionData)) {
+                    $dataArray = array_merge_recursive($dataArray, $this->_processKey($config, $sectionName, $sectionData));
+                } else {
+                    $dataArray[$sectionName] = $this->_processExtends($preProcessedArray, $sectionName);
+                }
             }
             parent::__construct($dataArray, $allowModifications);
         } elseif (is_array($section)) {
