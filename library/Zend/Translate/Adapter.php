@@ -101,11 +101,14 @@ abstract class Zend_Translate_Adapter {
 
                     // filename as locale
                     if ($options['scan'] === self::LOCALE_FILENAME) {
-                        if (Zend_Locale::isLocale((string) $info)) {
+                        $filename = explode('.', (string) $info);
+                        array_pop($filename);
+                        $filename = implode('.', $filename);
+                        if (Zend_Locale::isLocale($filename)) {
                             $locale = (string) $info;
                         } else {
                             $found = false;
-                            $parts = explode('.', (string) $info);
+                            $parts = explode('.', $filename);
                             foreach($parts as $token) {
                                 $parts = array_merge(explode('_', $token), $parts);
                             }
