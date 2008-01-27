@@ -81,7 +81,8 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertNull($row3);
 
         // rewind to beginning
-        $rows->rewind();
+        $result = $rows->rewind();
+        $this->assertEquals($result, $rows);
         $this->assertEquals(0, $rows->key());
         $this->assertTrue($rows->valid());
 
