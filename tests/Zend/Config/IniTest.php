@@ -50,6 +50,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->_iniFileMultipleInheritanceConfig = dirname(__FILE__) . '/_files/multipleinheritance.ini';
         $this->_iniFileSeparatorConfig = dirname(__FILE__) . '/_files/separator.ini';
         $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.ini';
+        $this->_iniFileNoSectionsConfig = dirname(__FILE__) . '/_files/nosections.ini';
     }
 
     public function testLoadSingleSection()
@@ -228,6 +229,16 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('all', $config->hostname);
         $this->assertEquals('live', $config->db->name);
         $this->assertEquals('multi', $config->one->two->three);
+    }
+    
+    public function testZF2508NoSections()
+    {
+        $config = new Zend_Config_Ini($this->_iniFileNoSectionsConfig);
+        
+        $this->assertEquals('all', $config->hostname);
+        $this->assertEquals('two', $config->one->two);
+        $this->assertEquals('4', $config->one->three->four);
+        $this->assertEquals('5', $config->one->three->five);
     }
     
 }
