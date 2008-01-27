@@ -156,10 +156,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         if ($this->_stmt_result) {
             return ibase_num_fields($this->_stmt_result);
         }
-        if ($this->_stmt_prepared) {
-            return ibase_num_fields($this->_stmt_prepared);
-        }		
-        return 0;
+        return false;
     }
 
     /**
@@ -272,7 +269,6 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
-
         if (!$this->_stmt_result) {
             return false;
         }
@@ -385,5 +381,5 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
 
         return $num_rows;
     }	
-
+	
 }
