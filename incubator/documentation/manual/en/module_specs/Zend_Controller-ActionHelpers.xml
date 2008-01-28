@@ -213,16 +213,19 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Zend Framework includes several action helpers by default:
-            <code>ContextSwitch</code> and <code>AjaxContext</code> for serving
-            alternate response formats for your actions; a
-            <code>FlashMessenger</code> for handling session flash messages;
-            <code>Json</code> for encoding and sending JSON responses; a
-            <code>Redirector</code>, to provide different implementations for
-            redirecting to internal and external pages from your application;
-            and a <code>ViewRenderer</code> to automate the process of setting
-            up the view object in your controllers and rendering views.
+            <code>AutoComplete</code> for automating responses for AJAX
+            autocompletion; <code>ContextSwitch</code> and
+            <code>AjaxContext</code> for serving alternate response formats for
+            your actions; a <code>FlashMessenger</code> for handling session
+            flash messages; <code>Json</code> for encoding and sending JSON
+            responses; a <code>Redirector</code>, to provide different
+            implementations for redirecting to internal and external pages from
+            your application; and a <code>ViewRenderer</code> to automate the
+            process of setting up the view object in your controllers and
+            rendering views.
         </para>
 
+        <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Json.xml" />
     </sect2>
