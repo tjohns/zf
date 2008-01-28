@@ -1,0 +1,18 @@
+<sect1 id="zend.json.introduction">
+    <title>简介</title>
+    <para>
+        <code>Zend_Json</code> 提供一个方便的方式来串联(native的)PHP(的变量)和JSON，并将JSON(对象)解码到PHP中
+        . 关于JSON的更多信息, <ulink url="http://www.json.org/">请参考 JSON
+        项目网站</ulink>.
+    </para>
+    <para>
+        JSON, JavaScript Object Notation,  可以被应用于JS和其他语言的轻量级数据交换
+        . 因为JSON(对象)可以直接被Javascript执行,
+        对于web2.0接口来说,它是一种理想的格式
+        ; 它是使用XML作为AJAX接口的一个更简单的替换方案
+        .
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
