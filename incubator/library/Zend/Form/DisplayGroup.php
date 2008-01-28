@@ -813,7 +813,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     {
         if ($this->_groupUpdated || !is_array($this->_elementOrder)) {
             $elementOrder = array();
-            foreach ($this->_elements as $key => $element) {
+            foreach ($this->getElements() as $key => $element) {
                 $elementOrder[$key] = $element->getOrder();
             }
 
