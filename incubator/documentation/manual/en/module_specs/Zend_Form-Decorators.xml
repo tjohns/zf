@@ -318,8 +318,7 @@ class Util
 
         <para>
             If you find your rendering needs are complex or need heavy
-            customization, or if you need to use multiple decorators of the same
-            type, you should consider creating a custom decorator.
+            customization, you should consider creating a custom decorator.
         </para>
 
         <para>

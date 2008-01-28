@@ -232,6 +232,21 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->group->getDecorator('HtmlTag'));
     }
 
+    public function testCanAddDecoratorAliasesToAllowMultipleDecoratorsOfSameType()
+    {
+        $this->group->setDecorators(array(
+            array('HtmlTag', array('tag' => 'fieldset')),
+            array('decorator' => array('FooBar' => 'HtmlTag'), 'options' => array('tag' => 'dd')),
+        ));
+        $decorator = $this->group->getDecorator('FooBar');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_HtmlTag);
+        $this->assertEquals('dd', $decorator->getOption('tag'));
+
+        $decorator = $this->group->getDecorator('HtmlTag');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_HtmlTag);
+        $this->assertEquals('fieldset', $decorator->getOption('tag'));
+    }
+
     public function testRenderingRendersAllElementsWithinFieldsetByDefault()
     {
         $foo  = new Zend_Form_Element_Text('foo');

@@ -603,6 +603,55 @@ $this->addDecorators(array(
                 section</link>.
         </para>
 
+        <note>
+            <title>Using Multiple Decorators of the Same Type</title>
+
+            <para>
+                Internally, <code>Zend_Form_Element</code> uses a decorator's
+                class as the lookup mechanism when retrieving decorators. As a
+                result, you cannot register multiple decorators of the same
+                type; subsequent decorators will simply overwrite those that
+                existed before.
+            </para>
+
+            <para>
+                To get around this, you can use aliases. Instead of passing a
+                decorator or decorator name as the first argument to
+                <code>addDecorator()</code>, pass an array with a single
+                element, with the alias pointing to the decorator object or
+                name:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Alias to 'FooBar':
+$element->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
+
+// And retrieve later:
+$decorator = $element->getDecorator('FooBar');
+?>]]></programlisting>
+
+            <para>
+                In the <code>addDecorators()</code> and
+                <code>setDecorators()</code> methods, you will need to pass
+                the 'decorator' option in the array representing the decorator:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Add two 'HtmlTag' decorators, aliasing one to 'FooBar':
+$element->addDecorators(
+    array('HtmlTag', array('tag' => 'div')),
+    array(
+        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'options' => array('tag' => 'dd')
+    ),
+);
+
+// And retrieve later:
+$htmlTag = $element->getDecorator('HtmlTag');
+$fooBar  = $element->getDecorator('FooBar');
+?>]]></programlisting>
+        </note>
+
         <para>
             Methods associated with decorators include:
         </para>

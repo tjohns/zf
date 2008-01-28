@@ -869,6 +869,55 @@ $form->setDecorators(array(
             attributes of the <code>&lt;form&gt;</code> tag.
         </para>
 
+        <note>
+            <title>Using Multiple Decorators of the Same Type</title>
+
+            <para>
+                Internally, <code>Zend_Form</code> uses a decorator's
+                class as the lookup mechanism when retrieving decorators. As a
+                result, you cannot register multiple decorators of the same
+                type; subsequent decorators will simply overwrite those that
+                existed before.
+            </para>
+
+            <para>
+                To get around this, you can use aliases. Instead of passing a
+                decorator or decorator name as the first argument to
+                <code>addDecorator()</code>, pass an array with a single
+                element, with the alias pointing to the decorator object or
+                name:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Alias to 'FooBar':
+$form->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
+
+// And retrieve later:
+$form = $element->getDecorator('FooBar');
+?>]]></programlisting>
+
+            <para>
+                In the <code>addDecorators()</code> and
+                <code>setDecorators()</code> methods, you will need to pass
+                the 'decorator' option in the array representing the decorator:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Add two 'HtmlTag' decorators, aliasing one to 'FooBar':
+$form->addDecorators(
+    array('HtmlTag', array('tag' => 'div')),
+    array(
+        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'options' => array('tag' => 'dd')
+    ),
+);
+
+// And retrieve later:
+$htmlTag = $form->getDecorator('HtmlTag');
+$fooBar  = $form->getDecorator('FooBar');
+?>]]></programlisting>
+        </note>
+
         <para>
             You may create your own decorators for generating the form. One
             common use case is if you know the exact HTML you wish to use; your

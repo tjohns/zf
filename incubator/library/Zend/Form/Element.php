@@ -1060,6 +1060,26 @@ class Zend_Form_Element implements Zend_Validate_Interface
     }
 
     /**
+     * Instantiate a decorator based on class name or class name fragment
+     * 
+     * @param  string $name 
+     * @param  null|array $options 
+     * @return Zend_Form_Decorator_Interface
+     */
+    protected function _getDecorator($name, $options)
+    {
+        $class = $this->getPluginLoader(self::DECORATOR)->load($name);
+        if (null === $options) {
+            $decorator = new $class;
+        } else {
+            $r = new ReflectionClass($class);
+            $decorator = $r->newInstance($options);
+        }
+
+        return $decorator;
+    }
+
+    /**
      * Add a decorator for rendering the element
      * 
      * @param  string|Zend_Form_Decorator_Interface $decorator 
@@ -1071,12 +1091,20 @@ class Zend_Form_Element implements Zend_Validate_Interface
         if ($decorator instanceof Zend_Form_Decorator_Interface) {
             $name = get_class($decorator);
         } elseif (is_string($decorator)) {
-            $name = $this->getPluginLoader(self::DECORATOR)->load($decorator);
-            if (null === $options) {
-                $decorator = new $name;
-            } else {
-                $r = new ReflectionClass($name);
-                $decorator = $r->newInstance($options);
+            $decorator = $this->_getDecorator($decorator, $options);
+            $name = get_class($decorator);
+        } elseif (is_array($decorator)) {
+            foreach ($decorator as $name => $spec) {
+                break;
+            }
+            if (is_numeric($name)) {
+                require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception('Invalid alias provided to addDecorator; must be alphanumeric string');
+            }
+            if (is_string($spec)) {
+                $decorator = $this->_getDecorator($spec, $options);
+            } elseif ($spec instanceof Zend_Form_Decorator_Interface) {
+                $decorator = $spec;
             }
         } else {
             require_once 'Zend/Form/Exception.php';
