@@ -76,7 +76,7 @@ if (!isset($_SESSION['cal_token'])) {
         // Zeigt einen Link zur Erstellung eines einmal-verwendbaren Tokens
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
-            $my_calendar, 0, 1)
+            $my_calendar, 0, 1);
         echo "Klicke <a href='$googleUri'>hier</a> um diese Anwendung zu authorisieren.";
         exit();
     }
