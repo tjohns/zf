@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7658 -->
 <sect1 id="zend.gdata.authsub">
     <title>AuthSub による認証</title>
 
@@ -84,7 +85,7 @@ if (!isset($_SESSION['cal_token'])) {
         // single-use トークンを生成するためのリンクを表示します
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
-            $my_calendar, 0, 1)
+            $my_calendar, 0, 1);
         echo "<a href='$googleUri'>ここ</a> をクリックして認証を行います。";
         exit();
     }
