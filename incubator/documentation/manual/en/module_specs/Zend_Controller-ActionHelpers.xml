@@ -215,7 +215,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             Zend Framework includes several action helpers by default:
             <code>ContextSwitch</code> and <code>AjaxContext</code> for serving
             alternate response formats for your actions; a
-            <code>FlashMessenger</code> for handling session flash messages; a
+            <code>FlashMessenger</code> for handling session flash messages;
+            <code>Json</code> for encoding and sending JSON responses; a
             <code>Redirector</code>, to provide different implementations for
             redirecting to internal and external pages from your application;
             and a <code>ViewRenderer</code> to automate the process of setting
@@ -223,6 +224,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-Json.xml" />
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.writingyourown">
