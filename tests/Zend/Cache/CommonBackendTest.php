@@ -31,7 +31,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     public function setUp($notag = false)
     {
-        @mkdir($this->getTmpDir());
+        $this->mkdir();
         $this->_instance->setDirectives(array('logging' => true));
         if ($notag) {
             $this->_instance->save('bar : data to cache', 'bar');
@@ -44,6 +44,16 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
         }
     }
     
+    public function mkdir()
+    {
+        @mkdir($this->getTmpDir());
+    }
+    
+    public function rmdir()
+    {
+        @rmdir($this->getTmpDir());
+    }
+    
     public function getTmpDir()
     {
         return $this->_root . DIRECTORY_SEPARATOR . 'zend_cache_tmp_dir';
@@ -52,7 +62,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     public function tearDown()
     {
         $this->_instance->clean();
-        @rmdir($this->getTmpDir());
+        $this->rmdir();
     }
        
     public function testConstructorCorrectCall()
