@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7160 --> 
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout の高度な使用法</title>
 
@@ -235,7 +236,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
 
             <para>
                 ほとんどの場合は、既存のインフレクタを修正するだけで十分でしょう。
-                ｈしかし、さまざまな場所で別の形式のオブジェクトを使い分けたいこともあります。
+                しかし、さまざまな場所で別の形式のオブジェクトを使い分けたいこともあります。
                 <code>Zend_Layout</code> はそんな場合にも対応しています。
             </para>
 
