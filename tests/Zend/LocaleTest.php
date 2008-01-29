@@ -330,7 +330,12 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testgetTranslation()
     {
         $value = new Zend_Locale('de_DE');
-        $this->assertFalse($value->getTranslation('xx'));
+        try {
+            $temp = $value->getTranslation('xx');
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains('Unknown detail (', $e->getMessage());
+        }
 
         $this->assertEquals('Deutsch', $value->getTranslation('de', 'language'));
         $this->assertEquals('German',  $value->getTranslation('de', 'language', 'en'));
@@ -354,7 +359,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('Jan', $value->getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month'));
         $this->assertEquals('Jan', $value->getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month', 'en'));
-        $this->assertFalse($value->getTranslation(array('gregorian', 'format', 'abbreviated', 'x'), 'month_short'));
+        $this->assertFalse($value->getTranslation(array('gregorian', 'format', 'abbreviated', 'x'), 'month'));
 
         $this->assertEquals('J', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month'));
         $this->assertEquals('J', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month', 'en'));
@@ -374,15 +379,15 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('EEEE, d. MMMM yyyy', $value->getTranslation('full', 'date'));
         $this->assertEquals('EEEE, MMMM d, yyyy', $value->getTranslation('full', 'date', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'dateformat'));
+        $this->assertFalse($value->getTranslation('xxxx', 'date'));
 
         $this->assertEquals("HH:mm:ss v",  $value->getTranslation('full', 'time'));
         $this->assertEquals('h:mm:ss a v', $value->getTranslation('full', 'time', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'timeformat'));
+        $this->assertFalse($value->getTranslation('xxxx', 'time'));
 
         $this->assertEquals('Wien',       $value->getTranslation('Europe/Vienna', 'citytotimezone'));
         $this->assertEquals('St. John’s', $value->getTranslation('America/St_Johns', 'citytotimezone', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'timezone'));
+        $this->assertFalse($value->getTranslation('xxxx', 'citytotimezone'));
 
         $this->assertEquals('Euro', $value->getTranslation('EUR', 'nametocurrency'));
         $this->assertEquals('Euro', $value->getTranslation('EUR', 'nametocurrency', 'en'));
@@ -417,7 +422,12 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testgetTranslationList()
     {
         $value = new Zend_Locale('de_DE');
-        $this->assertFalse(is_array($value->getTranslationList()));
+        try {
+            $temp = $value->getTranslationList();
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains('Unknown list (', $e->getMessage());
+        }
 
         $this->assertTrue(in_array('Deutsch', $value->getTranslationList('language')));
         $this->assertTrue(in_array('German', $value->getTranslationList('language', 'en')));

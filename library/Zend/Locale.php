@@ -518,11 +518,7 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        try {
-            $result = Zend_Locale_Data::getList($locale, $path, $value);
-        } catch(Zend_Locale_Exception $e) {
-            return false;
-        }
+        $result = Zend_Locale_Data::getList($locale, $path, $value);
         if (empty($result)) {
             return false;
         }
@@ -610,11 +606,7 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        try {
-            $result = Zend_Locale_Data::getContent($locale, $path, $value);
-        } catch(Zend_Locale_Exception $e) {
-            return false;
-        }
+        $result = Zend_Locale_Data::getContent($locale, $path, $value);
         if (empty($result)) {
             return false;
         }
