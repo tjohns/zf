@@ -489,15 +489,6 @@ class Zend_Locale {
     /**
      * Returns localized informations as array, supported are several
      * types of informations.
-     * Supported types are:
-     * 'language', 'script', 'territory', 'variant', 'key', 'type', 'calendar', 'collation',
-     * 'currency', 'layout', 'characters', 'delimiters', 'measurement', 'months', 'month',
-     * 'days', 'day', 'week', 'quarters', 'quarter', 'eras', 'era', 'date', 'time', 'datetime',
-     * 'field', 'relative', 'symbols', 'currency', 'currencysymbol', 'question',
-     * 'currencyfraction', 'currencyrounding', 'currencytoregion', 'regiontocurrency',
-     * 'regiontoterritory', 'territorytoregion', 'scripttolanguage', 'languagetoscript',
-     * 'territorytolanguage', 'languagetoterritory', 'timezonetowindows', 'timezonetowindows',
-     * 'territorytotimezone', 'timezonetoterritory', 'citytotimezone', 'timezonetocity'
      * For detailed information about the types look into the documentation
      *
      * @param  string         $path    OPTIONAL Type of information to return
@@ -590,22 +581,12 @@ class Zend_Locale {
 
     /**
      * Returns a localized information string, supported are several types of informations.
-     *
-     * Supported types are:
-     * 'language', 'script', 'country', 'territory', 'variant', 'key', 'datechars', 'defaultcalendar',
-     * 'monthcontext', 'defaultmonth', 'month', 'daycontext', 'defaultday', 'quarter', 'am', 'pm', 'era',
-     * 'defaultdate', 'date', 'defaulttime', 'time', 'datetime', 'field', 'relative', 'decimalnumber',
-     * 'scientificnumber', 'percentnumber', 'currencynumber', 'currency', 'currencysymbol', 'question',
-     * 'currencyfraction', 'currencyrounding', 'currencytoregion', 'regiontocurrency', 'regiontoterritory',
-     * 'territorytoregion', 'scripttolanguage', 'languagetoscript', 'territorytolanguage',
-     * 'languagetoterritory', 'timezonetowindows', 'windowstotimezone', 'territorytotimezone',
-     * 'timezonetoterritory', 'citytotimezone', 'timezonetocity'
      * For detailed information about the types look into the documentation
      *
      * @param  string         $value   Name to get detailed information about
      * @param  string         $path    OPTIONAL Type of information to return
      * @param  string|locale  $locale  OPTIONAL Locale|Language for which this informations should be returned
-     * @return string|array            Array with the wished information in the given language
+     * @return string                  The wished information in the given language
      */
     public function getTranslation($value = null, $path = null, $locale = null)
     {
