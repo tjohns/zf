@@ -187,6 +187,16 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support transactions or concurrency');
     }
 
+    /**
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-2293
+     */
+    public function testAdapterSupportsLengthInTableMetadataForVarcharFields()
+    {
+        $metadata = $this->_db->describeTable('zfbugs');
+        $this->assertEquals(100, $metadata['bug_description']['LENGTH']);
+        $this->assertEquals(20, $metadata['bug_status']['LENGTH']);
+    }
 
     public function getDriver()
     {

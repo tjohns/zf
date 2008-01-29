@@ -220,7 +220,11 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 
         $p = 1;
         foreach ($result as $key => $row) {
-            list($primary, $primaryPosition, $identity) = array(false, null, false);
+            list($length, $primary, $primaryPosition, $identity) = array(null, false, null, false);
+            if (preg_match('/^((?:var)?char)\((\d+)\)/i', $row[$type], $matches)) {
+                $row[$type] = $matches[1];
+                $length = $matches[2];
+            }
             if ((bool) $row[$pk]) {
                 $primary = true;
                 $primaryPosition = $p;
@@ -238,7 +242,7 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
                 'DATA_TYPE'        => $row[$type],
                 'DEFAULT'          => $row[$dflt_value],
                 'NULLABLE'         => ! (bool) $row[$notnull],
-                'LENGTH'           => null, // @todo
+                'LENGTH'           => $length,
                 'SCALE'            => null, // @todo
                 'PRECISION'        => null, // @todo
                 'UNSIGNED'         => null, // @todo
