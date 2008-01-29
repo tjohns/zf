@@ -168,6 +168,14 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
      */
     public function __construct(array $config)
     {
+        if (!extension_loaded('hash')) {
+            /**
+             * @see Zend_Auth_Adapter_Exception
+             */
+            require_once 'Zend/Auth/Adapter/Exception.php';
+            throw new Zend_Auth_Adapter_Exception(__CLASS__  . ' requires the \'hash\' extension');
+        }
+
         $this->_request  = null;
         $this->_response = null;
         $this->_ieNoOpaque = false;
