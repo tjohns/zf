@@ -169,7 +169,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Row_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
-            $this->assertEquals('At least one error occurred including "nonexistant/class.php"; see includeErrors property', $e->getMessage());
+            $this->assertEquals('At least one error occurred including "nonexistant' . DIRECTORY_SEPARATOR . 'class.php"; see includeErrors property', $e->getMessage());
         }
 
         try {
@@ -271,7 +271,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('At least one error occurred including "nonexistant/class.php"; see includeErrors property', $e->getMessage());
+            $this->assertEquals('At least one error occurred including "nonexistant' . DIRECTORY_SEPARATOR . 'class.php"; see includeErrors property', $e->getMessage());
         }
 
         // Use stdClass instead of table class for destination table
@@ -291,7 +291,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('At least one error occurred including "nonexistant/class.php"; see includeErrors property', $e->getMessage());
+            $this->assertEquals('At least one error occurred including "nonexistant' . DIRECTORY_SEPARATOR . 'class.php"; see includeErrors property', $e->getMessage());
         }
 
         // Use stdClass instead of table class for intersection table
@@ -418,7 +418,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
-            $this->assertEquals('At least one error occurred including "nonexistant/class.php"; see includeErrors property', $e->getMessage());
+            $this->assertEquals('At least one error occurred including "nonexistant' . DIRECTORY_SEPARATOR . 'class.php"; see includeErrors property', $e->getMessage());
         }
 
         try {

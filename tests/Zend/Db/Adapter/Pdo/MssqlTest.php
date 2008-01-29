@@ -92,7 +92,7 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
         $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
         $this->assertFalse(                      $desc['product_name']['NULLABLE'], 'Expected product_name not to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE'], 'scale is not 0');
+        $this->assertNull(                       $desc['product_name']['SCALE'], 'scale is not 0');
         // MS SQL Server reports varchar length in the PRECISION field.  Whaaa?!?
         $this->assertEquals(100,                 $desc['product_name']['PRECISION'], 'precision is not 100');
         $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
@@ -294,6 +294,29 @@ class Zend_Db_Adapter_Pdo_MssqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $count = $this->_db->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 4)');
     }
+
+    /**
+      * Test the Adapter's insert() method.
+      * This requires providing an associative array of column=>value pairs.
+      */
+     public function testAdapterInsert()
+     {
+         $row = array (
+             'bug_description' => 'New bug',
+             'bug_status'      => 'NEW',
+             'created_on'      => '2007-04-02',
+             'updated_on'      => '2007-04-02',
+             'reported_by'     => 'micky',
+             'assigned_to'     => 'goofy',
+             'verified_by'     => 'dduck'
+         );
+         $rowsAffected = $this->_db->insert('zfbugs', $row);
+         $this->assertEquals(1, $rowsAffected);
+         $lastInsertId = $this->_db->lastInsertId();
+         $this->assertType('integer', $lastInsertId);
+         $this->assertEquals('5', (string) $lastInsertId,
+             'Expected new id to be 5');
+     }
 
     public function getDriver()
     {
