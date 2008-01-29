@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7676 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1220,7 +1221,7 @@ SELECT * FROM atable WHERE intColumn = '123']]>
                 <programlisting role="php"><![CDATA[<?php
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
-     . $db->quoteType($value, 'INTEGER');
+     . $db->quote($value, 'INTEGER');
 ]]>
                 </programlisting>
             </example>
