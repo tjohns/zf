@@ -147,15 +147,15 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     public function setCacheDir($value, $trailingSeparator = true)
     {
-        if ($trailingSeparator) {
-            // add a trailing DIRECTORY_SEPARATOR if necessary
-            $value = rtrim(realpath($value), '\\/') . DIRECTORY_SEPARATOR;
-        }
         if (!is_dir($value)) {
             Zend_Cache::throwException('cache_dir must be a directory');
         }
         if (!is_writable($value)) {
             Zend_Cache::throwException('cache_dir is not writable');
+        }
+        if ($trailingSeparator) {
+            // add a trailing DIRECTORY_SEPARATOR if necessary
+            $value = rtrim(realpath($value), '\\/') . DIRECTORY_SEPARATOR;
         }
         $this->_options['cache_dir'] = $value;
     }
