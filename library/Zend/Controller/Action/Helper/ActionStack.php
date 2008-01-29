@@ -86,7 +86,7 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
         if ($action instanceof Zend_Controller_Request_Abstract) {
             return $this->pushStack($action);
         } elseif (!is_string($action)) {
-            require_once 'Zend/Controller/Action/Exception';
+            require_once 'Zend/Controller/Action/Exception.php';
             throw new Zend_Controller_Action_Exception('ActionStack requires either a request object or minimally a string action');
         }
 
