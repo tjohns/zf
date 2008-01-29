@@ -26,6 +26,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Statement_Pdo_MssqlTest extends Zend_Db_Statement_Pdo_TestCommon
 {
 
+    public function testStatementGetColumnMeta()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support meta data.');
+    }
+
     public function testStatementExecuteWithParams()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
