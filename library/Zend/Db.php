@@ -54,7 +54,7 @@ class Zend_Db
     const AUTO_QUOTE_IDENTIFIERS = 'autoQuoteIdentifiers';
 
     /**
-     * Use the INT_TYPE, BIGINT_TYPE, and FLOAT_TYPE with the quoteType() method.
+     * Use the INT_TYPE, BIGINT_TYPE, and FLOAT_TYPE with the quote() method.
      */
     const INT_TYPE    = 0;
     const BIGINT_TYPE = 1;

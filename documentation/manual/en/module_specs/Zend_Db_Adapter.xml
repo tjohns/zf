@@ -25,7 +25,8 @@
     <itemizedlist>
         <listitem>
             <para>
-                IBM DB2 and Informix Dynamic Server (IDS), using the <ulink url="http://www.php.net/pdo-ibm">pdo_ibm</ulink> PHP extension
+                IBM DB2 and Informix Dynamic Server (IDS), using the
+                <ulink url="http://www.php.net/pdo-ibm">pdo_ibm</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
@@ -35,7 +36,8 @@
         </listitem>
         <listitem>
             <para>
-                Microsoft SQL Server, using the <ulink url="http://www.php.net/pdo-mssql">pdo_mssql</ulink> PHP extension
+                Microsoft SQL Server, using the <ulink url="http://www.php.net/pdo-mssql">pdo_mssql</ulink> PHP
+                extension
             </para>
         </listitem>
         <listitem>
@@ -1244,7 +1246,7 @@ SELECT * FROM atable WHERE intColumn = '123']]>
                 <programlisting role="php"><![CDATA[<?php
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
-     . $db->quoteType($value, 'INTEGER');
+     . $db->quote($value, 'INTEGER');
 ]]>
                 </programlisting>
             </example>
