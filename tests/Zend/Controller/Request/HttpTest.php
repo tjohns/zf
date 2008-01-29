@@ -487,4 +487,13 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($params['foo']));
         $this->assertTrue(isset($params['bar']));
     }
+
+    public function testGetAliasedParamZF2455()
+    {
+        $this->_request->setParam('controller', 'value');
+        $this->_request->setAlias('var1', 'controller');
+        
+        $this->assertEquals('value', $this->_request->getParam('controller'));
+        $this->assertEquals('value', $this->_request->getParam('var1'));
+    }
 }
