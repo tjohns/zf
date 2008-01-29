@@ -58,7 +58,7 @@ ZF_VERSION=1.5.0PR
 # If you want to build one language, use one of the names of language
 # directories (e.g., 'en', 'de').  You also can use any file-globbing
 # pattern.
-ZF_LANG=de en fr ja ru zh
+ZF_LANG=de en fr ja ru
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_HOST=framework.zend.com
@@ -111,7 +111,7 @@ stage-files:
 	    echo "Staging directory already exists ($(ZF_STAGE_DIR))" ; \
 	else \
 	    mkdir -p $(ZF_STAGE_DIR) ; \
-	    (pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR)) ; \
+	    (cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR)) ; \
 	fi
 	@echo "...Done staging files."
 
