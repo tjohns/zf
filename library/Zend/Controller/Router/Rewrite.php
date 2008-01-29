@@ -85,6 +85,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
      */
     public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
         $this->_routes[$name] = $route;
+        return $this;
     }
 
     /**
@@ -96,6 +97,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         foreach ($routes as $name => $route) {
             $this->addRoute($name, $route);
         }
+        return $this;
     }
 
     /**
@@ -155,6 +157,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
             throw new Zend_Controller_Router_Exception("Route $name is not defined");
         }
         unset($this->_routes[$name]);
+        return $this;
     }
 
     /**
@@ -164,6 +167,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
      */
     public function removeDefaultRoutes() {
         $this->_useDefaultRoutes = false;
+        return $this;
     }
 
     /**
