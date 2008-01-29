@@ -143,12 +143,7 @@ class Zend_Form implements Iterator, Countable
             $this->setConfig($options);
         }
 
-        $decorators = $this->getDecorators();
-        if (empty($decorators)) {
-            $this->addDecorator('FormElements')
-                 ->addDecorator('HtmlTag', array('tag' => 'dl', 'class' => 'zend_form'))
-                 ->addDecorator('Form');
-        }
+        $this->_loadDefaultDecorators();
     }
 
     /**
@@ -1886,6 +1881,21 @@ class Zend_Form implements Iterator, Countable
     public function count()
     {
         return count($this->_order);
+    }
+
+    /**
+     * Load the default decorators
+     * 
+     * @return void
+     */
+    protected function _loadDefaultDecorators()
+    {
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('FormElements')
+                 ->addDecorator('HtmlTag', array('tag' => 'dl', 'class' => 'zend_form'))
+                 ->addDecorator('Form');
+        }
     }
 
     /**

@@ -33,18 +33,18 @@ require_once 'Zend/Form.php';
 class Zend_Form_SubForm extends Zend_Form
 {
     /**
-     * Constructor
+     * Load the default decorators
      * 
-     * @param  array|Zend_Config $options 
      * @return void
      */
-    public function __construct($options = null)
+    protected function _loadDefaultDecorators()
     {
-        $this->addDecorator('FormElements')
-             ->addDecorator('HtmlTag', array('tag' => 'dl'))
-             ->addDecorator('Fieldset')
-             ->addDecorator('DtDdWrapper');
-
-        parent::__construct($options);
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('FormElements')
+                 ->addDecorator('HtmlTag', array('tag' => 'dl'))
+                 ->addDecorator('Fieldset')
+                 ->addDecorator('DtDdWrapper');
+        }
     }
 }
