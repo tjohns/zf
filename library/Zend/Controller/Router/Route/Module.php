@@ -240,4 +240,25 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
         return ltrim($url, self::URI_DELIMITER);
     }
 
+    /**
+     * Return a single parameter of route's defaults
+     *
+     * @param string $name Array key of the parameter
+     * @return string Previously set default
+     */
+    public function getDefault($name) {
+        if (isset($this->_defaults[$name])) {
+            return $this->_defaults[$name];
+        }
+    }
+
+    /**
+     * Return an array of defaults
+     *
+     * @return array Route defaults
+     */
+    public function getDefaults() {
+        return $this->_defaults;
+    }
+
 }
