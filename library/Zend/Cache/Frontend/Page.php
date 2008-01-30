@@ -45,6 +45,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      *
      * ====> (boolean) debug_header :
      * - if true, a debug text is added before each cached pages
+     * 
+     * ====> (boolean) content_type_memorization :
+     * - if the Content-Type header is sent after the cache was started, the
+     *   corresponding value can be memorized and replayed when the cache is hit
+     *   (if false (default), the frontend doesn't take care of Content-Type header)
      *
      * ====> (array) default_options :
      * - an associative array of default options :
@@ -68,6 +73,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     protected $_specificOptions = array(
         'http_conditional' => false,
         'debug_header' => false,
+        'content_type_memorization' => false,
         'default_options' => array(
             'cache_with_get_variables' => false,
             'cache_with_post_variables' => false,
@@ -117,6 +123,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
                 Zend_Cache::throwException('http_conditional is not implemented for the moment !');
             }
         }
+        $this->setOption('automatic_serialization', true);
     }
 
     /**
@@ -195,10 +202,19 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
                 return false;
             }
         }
-        $data = $this->load($id);
-        if ($data !== false) {
+        $array = $this->load($id);
+        if ($array !== false) {
+            $data = $array['data'];
+            $contentType = $array['contentType'];
             if ($this->_specificOptions['debug_header']) {
                 echo 'DEBUG HEADER : This is a cached page !';
+            }
+            if ($this->_specificOptions['content_type_memorization']) {
+                if (!is_null($contentType)) {
+                    if (!headers_sent()) {
+                        header("Content-Type: $contentType");
+                    }
+                }
             }
             echo $data;
             if ($doNotDie) {
@@ -220,7 +236,23 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      */
     public function _flush($data)
     {
-        $this->save($data);
+        $contentType = null;
+        if ($this->_specificOptions['content_type_memorization']) {
+            if (headers_sent()) {
+                $headersList = headers_list();
+                foreach ($headersList as $header) {
+                    $tmp = split(':', $header);
+                    if (strtolower(trim($tmp[0])) == 'content-type') {
+                        $contentType = trim($tmp[1]);
+                    }
+                }
+            }
+        }
+        $array = array(
+            'data' => $data,
+            'contentType' => $contentType
+        );
+        $this->save($array);
         return $data;
     }
 
