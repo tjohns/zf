@@ -92,6 +92,82 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $this->assertContains('for="foobar"', $test);
     }
 
+    public function testRenderAddsOptionalClassForNonRequiredElements()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setView($this->getView())
+                ->setLabel('My Label');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*optional/', $test, $test);
+
+        $element->class = "foo";
+        $test = $this->decorator->render($content);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*optional/', $test, $test);
+    }
+
+    public function testRenderAddsRequiredClassForNonRequiredElements()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setRequired(true)
+                ->setView($this->getView())
+                ->setLabel('My Label');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
+
+        $element->class = "foo";
+        $test = $this->decorator->render($content);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
+    }
+
+    public function testRenderUtilizesOptionalSuffixesAndPrefixesWhenRequested()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setAttribs(array(
+                    'optionalPrefix' => '-opt-prefix-',
+                    'optionalSuffix' => '-opt-suffix-',
+                    'requiredPrefix' => '-req-prefix-',
+                    'requiredSuffix' => '-req-suffix-',
+                  ))
+                ->setView($this->getView())
+                ->setLabel('My Label');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertNotContains('-req-prefix-', $test, $test);
+        $this->assertNotContains('-req-suffix-', $test, $test);
+        $this->assertContains('-opt-prefix-', $test, $test);
+        $this->assertContains('-opt-suffix-', $test, $test);
+        $this->assertRegexp('/-opt-prefix-[^-]*?My Label[^-]*-opt-suffix-/s', $test, $test);
+    }
+
+    public function testRenderUtilizesRequiredSuffixesAndPrefixesWhenRequested()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setAttribs(array(
+                    'optionalPrefix' => '-opt-prefix-',
+                    'optionalSuffix' => '-opt-suffix-',
+                    'requiredPrefix' => '-req-prefix-',
+                    'requiredSuffix' => '-req-suffix-',
+                  ))
+                ->setRequired(true)
+                ->setView($this->getView())
+                ->setLabel('My Label');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertNotContains('-opt-prefix-', $test, $test);
+        $this->assertNotContains('-opt-suffix-', $test, $test);
+        $this->assertContains('-req-prefix-', $test, $test);
+        $this->assertContains('-req-suffix-', $test, $test);
+        $this->assertRegexp('/-req-prefix-[^-]*?My Label[^-]*-req-suffix-/s', $test, $test);
+    }
+
     public function testRenderRendersLabel()
     {
         $element = new Zend_Form_Element('foo');
