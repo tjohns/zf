@@ -25,69 +25,34 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_Db_Statement_FirebirdTest extends Zend_Db_Statement_TestCommon
 {
-    public function testStatementColumnCountForDelete()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }
-
-    public function testStatementExecuteWithParams()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }
-    
-    public function testStatementSetFetchModeBoth()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }        
-    
-    public function testStatementFetchAllStyleBoth()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }   
-    
     public function testStatementBindParamByName()
     {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }   
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by name');
+    }
 
     public function testStatementBindValueByName()
     {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }      
-    
-    public function testStatementBindColumnByPositionAndName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }      
-    
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }     
-    
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by name');
+    }
+
     public function testStatementGetColumnMeta()
     {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }    
-    
-    public function testStatementRowCount()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }       
-    
-    public function testStatementBindParamByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }      
-    
-    public function testStatementBindValueByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' TODO');    
-    }         
-    
+        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+    }
+
+	public function testStatementClose()
+	{
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $stmt = $this->_db->prepare("select $product_id, $product_name from $products");
+		$stmt->execute();
+        $this->assertTrue($stmt->close(), 'Expected close() to return true');
+	}
+
     public function getDriver()
     {
         return 'Firebird';
     }
-
 }

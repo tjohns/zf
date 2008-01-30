@@ -42,14 +42,18 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
 {
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        $this->_db = $db;
-        $this->createSequence('zfbugs_seq');
-        $this->_rawQuery('SET GENERATOR "zfbugs_seq" TO 4');
-        $this->createSequence('zfproducts_seq');
-        $this->_rawQuery('SET GENERATOR "zfproducts_seq" TO 3');
         parent::setUp($db);
-    }
 
+        $this->createSequence('zfbugs_seq');
+        $this->createSequence('zfproducts_seq');
+
+		$zfbugs_seq = $this->_db->quoteIdentifier('zfbugs_seq');
+		$zfproducts_seq = $this->_db->quoteIdentifier('zfproducts_seq');
+
+        $this->_rawQuery("SET GENERATOR $zfbugs_seq TO 4");
+        $this->_rawQuery("SET GENERATOR $zfproducts_seq TO 3");		
+    }
+	
     protected function _getDataProducts()
     {
         return array(
@@ -57,8 +61,8 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
             array('product_id' => 2, 'product_name' => 'Linux'),
             array('product_id' => 3, 'product_name' => 'OS X'),
         );
-    }	
-	
+    }
+
     protected function _getColumnsBugs()
     {
         return array(
@@ -71,8 +75,8 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
             'assigned_to'     => 'VARCHAR(100)',
             'verified_by'     => 'VARCHAR(100)'
         );
-    }	
-	
+    }
+
     protected function _getDataBugs()
     {
         return array(
@@ -87,7 +91,7 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
                 'verified_by'     => 'dduck'
             ),
             array(
-				'bug_id'		  => 2,			
+				'bug_id'		  => 2,
                 'bug_description' => 'Implement Do What I Mean function',
                 'bug_status'      => 'VERIFIED',
                 'created_on'      => '2007-04-02',
@@ -97,7 +101,7 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
                 'verified_by'     => 'dduck'
             ),
             array(
-				'bug_id'		  => 3,			
+				'bug_id'		  => 3,
                 'bug_description' => 'Where are my keys?',
                 'bug_status'      => 'FIXED',
                 'created_on'      => '2007-04-03',
@@ -107,7 +111,7 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
                 'verified_by'     => 'dduck'
             ),
             array(
-				'bug_id'		  => 4,			
+				'bug_id'		  => 4,
                 'bug_description' => 'Bug no product',
                 'bug_status'      => 'INCOMPLETE',
                 'created_on'      => '2007-04-04',
@@ -117,8 +121,8 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
                 'verified_by'     => 'dduck'
             )
         );
-    }	
-	
+    }
+
     protected function _getColumnsDocuments()
     {
         return array(
@@ -128,14 +132,15 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
             'PRIMARY KEY'  => 'doc_id'
             );
     }
-	
+
     public function getParams(array $constants = array())
     {
         $constants = array(
             'host'     => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_HOSTNAME',
             'username' => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_USERNAME',
             'password' => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_PASSWORD',
-            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_DATABASE'
+            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_DATABASE',
+			'port' 	   => 'TESTS_ZEND_DB_ADAPTER_FIREBIRD_PORT'			
         );
         return parent::getParams($constants);
     }
@@ -147,29 +152,32 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
         }
         return $type;
     }
-	
+
     protected function _getSqlCreateSequence($sequenceName)
     {
-        return "CREATE GENERATOR \"$sequenceName\"";
+		$sequenceName = $this->_db->quoteIdentifier($sequenceName);
+        return "CREATE GENERATOR $sequenceName";
     }
 
     protected function _getSqlDropSequence($sequenceName)
     {
-        return "DROP GENERATOR \"$sequenceName\"";
-    }	
+		$sequenceName = $this->_db->quoteIdentifier($sequenceName);
+        return "DROP GENERATOR $sequenceName";
+    }
 
     protected function _rawQuery($sql)
     {
-        $conn = $this->_db->getConnection();		
+        $conn = $this->_db->getConnection();
         try {
 		  ibase_query($conn, $sql);
 		  ibase_commit($conn);
 		} catch (Exception $e) {
-            $e = ibase_errmsg();
-            require_once 'Zend/Db/Exception.php';
-			if (!stripos(' '.$sql, 'drop'))
+			if (!stripos(' '.$sql, 'drop')){
+				$e = ibase_errmsg();
+				require_once 'Zend/Db/Exception.php';
 				throw new Zend_Db_Exception("SQL parse error for \"$sql\": ".$e);
+			}
         }
     }
-    
+
 }

@@ -41,18 +41,32 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
 {
 
     /**
-     * The firebird_stmt_prepared resource.
+     * The firebird_stmtPrepared resource.
      *
-     * @var firebird_stmt_prepared
+     * @var firebird_stmtPrepared
      */
-    protected $_stmt_prepared;
+    protected $_stmtPrepared;
 
     /**
-     * The firebird_stmt_result resource.
+     * The firebird_stmtResult resource.
      *
      * @var firebird_result
      */
-    protected $_stmt_result;
+    protected $_stmtResult;
+
+    /**
+     * The firebird_stmtResult resource.
+     *
+     * @var firebird_result
+     */
+    protected $_stmtRowCount;
+
+    /**
+     * The firebird_stmtResult resource.
+     *
+     * @var firebird_result
+     */
+    protected $_stmtColumnCount;
 
     /**
      * Column names.
@@ -80,14 +94,17 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function _prepare($sql)
     {
+		$this->_stmtRowCount = 0;
+		$this->_stmtColumnCount = 0;
+
         $connection = $this->_adapter->getConnection();
 
 		if ($trans = $this->_adapter->getTransaction())
-			$this->_stmt_prepared = @ibase_prepare($connection, $trans, $sql);
+			$this->_stmtPrepared = @ibase_prepare($connection, $trans, $sql);
 		else
-			$this->_stmt_prepared = @ibase_prepare($connection, $sql);
+			$this->_stmtPrepared = @ibase_prepare($connection, $sql);
 
-        if ($this->_stmt_prepared === false || ibase_errcode()) {
+        if ($this->_stmtPrepared === false || ibase_errcode()) {
             /**
              * @see Zend_Db_Statement_Firebird_Exception
              */
@@ -119,14 +136,14 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function close()
     {
-        if ($stmt = $this->_stmt_result) {
-            @ibase_free_result($this->_stmt_result);
-            $this->_stmt_result = null;
+        if ($stmt = $this->_stmtResult) {
+            @ibase_free_result($this->_stmtResult);
+            $this->_stmtResult = null;
         }
 
-        if ($this->_stmt_prepared) {
-            $r = @ibase_free_query($this->_stmt_prepared);
-            $this->_stmt_prepared = null;
+        if ($this->_stmtPrepared) {
+            $r = @ibase_free_query($this->_stmtPrepared);
+            $this->_stmtPrepared = null;
             return $r;
         }
         return false;
@@ -139,8 +156,8 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function closeCursor()
     {
-        if ($stmt = $this->_stmt_result) {
-            return @ibase_free_result($this->_stmt_result);
+        if ($stmt = $this->_stmtResult) {
+            return @ibase_free_result($this->_stmtResult);
         }
         return false;
     }
@@ -153,10 +170,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function columnCount()
     {
-        if ($this->_stmt_result) {
-            return ibase_num_fields($this->_stmt_result);
-        }
-        return false;
+		return $this->_stmtColumnCount ? $this->_stmtColumnCount : 0;
     }
 
     /**
@@ -167,10 +181,10 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function errorCode()
     {
-        if (!$this->_stmt_prepared) {
-            return false;
+        if ($this->_stmtPrepared || $this->_stmtResult) {
+            return ibase_errcode();			
         }
-        return ibase_errcode();
+		return false;        
     }
 
     /**
@@ -181,7 +195,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function errorInfo()
     {
-        if (!$this->_stmt_prepared) {
+        if (!$this->_stmtPrepared) {
             return false;
         }
         return array(
@@ -199,7 +213,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function _execute(array $params = null)
     {
-        if (!$this->_stmt_prepared) {
+        if (!$this->_stmtPrepared) {
             return false;
         }
 
@@ -210,25 +224,31 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         }
         // send $params as input parameters to the statement
         if ($params) {
-            array_unshift($params, $this->_stmt_prepared);
+            array_unshift($params, $this->_stmtPrepared);
             $retval = @call_user_func_array(
                 'ibase_execute',
                 $params
             );
         } else
 			// execute the statement
-			$retval = ibase_execute($this->_stmt_prepared);
-        $this->_stmt_result = $retval;
+			$retval = @ibase_execute($this->_stmtPrepared);
+        $this->_stmtResult = $retval;
 
+
+		//Firebird php ibase extension, auto-commit is not after each call, but at
+		//end of script. Disabled when transsaction is active
+		if (!$this->_adapter->getTransaction())
+			ibase_commit_ret();
 
         // statements that have no result set do not return metadata
-        if (is_resource($this->_stmt_result)) {
+        if (is_resource($this->_stmtResult)) {
 
             // get the column names that will result
             $this->_keys = array();
-            $coln = ibase_num_fields($this->_stmt_result);
+            $coln = ibase_num_fields($this->_stmtResult);
+			$this->_stmtColumnCount = $coln;
             for ($i = 0; $i < $coln; $i++) {
-                $col_info = ibase_field_info($this->_stmt_result, $i);
+                $col_info = ibase_field_info($this->_stmtResult, $i);
                 $this->_keys[] = $this->_adapter->foldCase($col_info['name']);
             }
 
@@ -251,11 +271,12 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Firebird/Exception.php';
             throw new Zend_Db_Statement_Firebird_Exception("Firebird statement execute error : " . ibase_errmsg());
         }
-		
-		if ($trans = $this->_adapter->getTransaction())		
-			return ibase_affected_rows($trans);
+
+		if ($trans = $this->_adapter->getTransaction())
+			$this->_stmtRowCount = ibase_affected_rows($trans);
 		else
-			return ibase_affected_rows($this->_adapter->getConnection());		
+			$this->_stmtRowCount = ibase_affected_rows($this->_adapter->getConnection());
+		return true;
     }
 
     /**
@@ -269,7 +290,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
-        if (!$this->_stmt_result) {
+        if (!$this->_stmtResult) {
             return false;
         }
 
@@ -280,31 +301,25 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         // @todo, respect the foldCase for column names
         switch ($style) {
             case Zend_Db::FETCH_NUM:
-                $row = ibase_fetch_row($this->_stmt_result, IBASE_TEXT);
+                $row = ibase_fetch_row($this->_stmtResult, IBASE_TEXT);
                 break;
             case Zend_Db::FETCH_ASSOC:
-                $row = ibase_fetch_assoc($this->_stmt_result, IBASE_TEXT);
+                $row = ibase_fetch_assoc($this->_stmtResult, IBASE_TEXT);
                 break;
             case Zend_Db::FETCH_BOTH:
-                $row = ibase_fetch_assoc($this->_stmt_result, IBASE_TEXT);
-                $values = array_values($row);
-                foreach ($values as $val) {
-                  $row[] = $val;
-                }
+                $row = ibase_fetch_assoc($this->_stmtResult, IBASE_TEXT);
+				if ($row !== false)
+					$row = array_merge($row, array_values($row));
                 break;
             case Zend_Db::FETCH_OBJ:
-                $row = ibase_fetch_object($this->_stmt_result, IBASE_TEXT);
+                $row = ibase_fetch_object($this->_stmtResult, IBASE_TEXT);
                 break;
             case Zend_Db::FETCH_BOUND:
-                $row = ibase_fetch_assoc($this->_stmt_result, IBASE_TEXT);
-                $values = array_values($row);
-                foreach ($values as $val) {
-                  $row[] = $val;
-                }
-
-                if ($row !== false) {
-                    return $this->_fetchBound($row);
-                }
+                $row = ibase_fetch_assoc($this->_stmtResult, IBASE_TEXT);
+				if ($row !== false){
+					$row = array_merge($row, array_values($row));
+					$row = $this->_fetchBound($row);
+				}
                 break;
             default:
                 /**
@@ -366,20 +381,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function rowCount()
     {
-		if ($trans = $this->_adapter->getTransaction())		
-			$num_rows = ibase_affected_rows($trans);
-		else
-			$num_rows = ibase_affected_rows($this->_adapter->getConnection());
+        return $this->_stmtRowCount ? $this->_stmtRowCount : 0;
+    }
 
-        if ($num_rows === false) {
-            /**
-             * @see Zend_Db_Adapter_Firebird_Exception
-             */
-            require_once 'Zend/Db/Statement/Frebird/Exception.php';
-            throw new Zend_Db_Statement_Firebird_Exception(ibase_errmsg());
-        }
-
-        return $num_rows;
-    }	
-	
 }

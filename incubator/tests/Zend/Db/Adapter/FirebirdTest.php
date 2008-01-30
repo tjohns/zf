@@ -196,7 +196,28 @@ class Zend_Db_Adapter_FirebirdTest extends Zend_Db_Adapter_TestCommon
         $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(2, $count);
     }
+	
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * Firebird, DB2 and Oracle return identifiers in uppercase naturally,
+     * so those test suites will override this method.
+     */
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
+    {
+        return 'CASE_FOLDED_IDENTIFIER';
+    }
 
+    public function testAdapterOptionCaseFoldingLower()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support case-folding array keys yet.');
+    }	
+	
+	public function testAdapterSupportsParameters()
+	{
+		$this->assertTrue($this->_db->supportsParameters('positional'));
+		$this->assertFalse($this->_db->supportsParameters('named'));	
+	}
+	
     public function getDriver()
     {
         return 'Firebird';

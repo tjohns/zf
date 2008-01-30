@@ -38,7 +38,7 @@ class Zend_Db_Table_Row_FirebirdTest extends Zend_Db_Table_Row_TestCommon
         $this->assertTrue($row1->isReadOnly());
 
         $data = array(
-            'bug_id'          => new Zend_Db_Expr('GEN_ID("zfbugs_seq", 1)'),
+            'bug_id'          => $table->getAdapter()->nextSequenceId("zfbugs_seq"),
             'bug_description' => 'New Description',
             'bug_status'      => 'INVALID'
         );
