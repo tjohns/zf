@@ -353,6 +353,23 @@ $messages = $element->getMessages();
 
         <itemizedlist>
             <listitem><para>
+                    <code>setRequired($flag)</code> and
+                    <code>getRequired()</code> allow you to set and retrieve the
+                    'required' flag. When set to boolean <code>true</code>, this
+                    flag requires that the element be in the data processed by
+                    <code>Zend_Form</code>.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>setAllowEmpty($flag)</code> and
+                    <code>getAllowEmpty()</code> allow you to modify the
+                    behaviour of optional elements (i.e., elements where the
+                    required flag is false). When the 'allow empty' flag is
+                    true, empty values will not be passed to the validator
+                    chain.
+            </para></listitem>
+
+            <listitem><para>
                 <code>addValidator($nameOrValidator, $breakChainOnFailure = false, array $options = null)</code>
             </para></listitem>
 
@@ -714,14 +731,23 @@ $fooBar  = $element->getDecorator('FooBar');
 
             <listitem><para>
                 <emphasis>value</emphasis>: the current element value. Uses the
-                <code>setValue()</code> and <code>getValue()</code> accessors
+                <code>setValue()</code> and <code>getValue()</code> accessors.
             </para></listitem>
 
             <listitem><para>
                 <emphasis>required</emphasis>: flag indicating whether or not
                 the element is required when performing form validation. Uses
                 the <code>setRequired()</code> and <code>getRequired()</code>
-                accessors
+                accessors. This flag is false by default.
+            </para></listitem>.
+
+            <listitem><para>
+                <emphasis>allowEmpty</emphasis>: flag indicating whether or not
+                a non-required (optional) element should attempt to validate
+                empty values. When true, and the required flag is false, empty
+                values are not passed to the validator chain, and presumed true.
+                Uses the <code>setAllowEmpty()</code> and <code>getAllowEmpty()</code>
+                accessors. This flag is true by default.
             </para></listitem>
         </itemizedlist>
 
@@ -854,6 +880,8 @@ $element->class = 'text; // set 'class' attribute to 'text'
                     <listitem><para><code>getOrder()</code></para></listitem>
                     <listitem><para><code>setRequired($flag)</code></para></listitem>
                     <listitem><para><code>getRequired()</code></para></listitem>
+                    <listitem><para><code>setAllowEmpty($flag)</code></para></listitem>
+                    <listitem><para><code>getAllowEmpty()</code></para></listitem>
                     <listitem><para><code>setDescription($description)</code></para></listitem>
                     <listitem><para><code>getDescription()</code></para></listitem>
                     <listitem><para><code>getType()</code></para></listitem>

@@ -578,6 +578,33 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(0 < count($messages));
     }
 
+    public function testOptionalElementDoesNotPerformValidationsOnEmptyValuesByDefault()
+    {
+        $this->element->addValidator(new Zend_Validate_EmailAddress());
+
+        $result = $this->element->isValid('');
+        if (!$result) {
+            $this->fail('Empty data should not fail validations');
+        }
+        $errors = $this->element->getErrors();
+        $this->assertTrue(is_array($errors));
+        $this->assertTrue(empty($errors));
+    }
+
+    public function testOptionalElementDoesPerformValidationsWhenAllowEmptyIsFalse()
+    {
+        $this->element->setAllowEmpty(false)
+                      ->addValidator(new Zend_Validate_EmailAddress());
+
+        $result = $this->element->isValid('');
+        if ($result) {
+            $this->fail('Empty data should fail validations when AllowEmpty is false');
+        }
+        $errors = $this->element->getErrors();
+        $this->assertTrue(is_array($errors));
+        $this->assertTrue(0 < count($errors));
+    }
+
     public function testAddingInvalidFilterTypeThrowsException()
     {
         try {
@@ -833,8 +860,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testRenderElementRendersErrorsWhenProvided()
     {
-        $this->element->setView($this->getView());
-        $this->element->setName('foo')
+        $this->element->setView($this->getView())
+                      ->setRequired(true)
+                      ->setName('foo')
                       ->addValidator('NotEmpty');
         $this->element->isValid('');
 

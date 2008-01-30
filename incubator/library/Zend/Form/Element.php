@@ -46,6 +46,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     /**#@-*/
 
     /**
+     * 'Allow empty' flag
+     * @var bool
+     */
+    protected $_allowEmpty = true;
+
+    /**
      * Element decorators 
      * @var array
      */
@@ -410,6 +416,31 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getDescription()
     {
         return $this->_description;
+    }
+
+    /**
+     * Set 'allow empty' flag
+     *
+     * When the allow empty flag is enabled and the required flag is false, the
+     * element will validate with empty values.
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setAllowEmpty($flag)
+    {
+        $this->_allowEmpty = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get 'allow empty' flag
+     * 
+     * @return bool
+     */
+    public function getAllowEmpty()
+    {
+        return $this->_allowEmpty;
     }
 
     /**
@@ -838,6 +869,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function isValid($value, $context = null)
     {
         $this->setValue($value);
+        if (empty($value) && !$this->getRequired() && $this->getAllowEmpty()) {
+            return true;
+        }
+
         $this->_messages = array();
         $this->_errors   = array();
         $result          = true;
