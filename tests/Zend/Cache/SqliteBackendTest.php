@@ -46,9 +46,10 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
     
     public function tearDown()
     {
-        $this->_instance->___dropDatabaseFile();
         parent::tearDown();
         unset($this->_instance);
+        @unlink($this->_cache_dir . 'cache.db');
+        $this->rmdir();
     }
     
     public function testConstructorCorrectCall()
