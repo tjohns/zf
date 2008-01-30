@@ -31,6 +31,10 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (isset($this->error)) {
+            unset($this->error);
+        }
+
         $this->element = new Zend_Form_Element('foo');
         Zend_Controller_Action_HelperBroker::resetHelpers();
     }
@@ -855,6 +859,35 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(empty($html));
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
+    }
+
+    public function raiseDecoratorException($content, $element, $options)
+    {
+        throw new Exception('Raising exception in decorator callback');
+    }
+
+    public function handleDecoratorErrors($errno, $errstr, $errfile = '', $errline = 0, array $errcontext = array())
+    {
+        $this->error = $errstr;
+    }
+
+    public function testToStringRaisesErrorWhenExceptionCaught()
+    {
+        $this->element->setDecorators(array(
+            array(
+                'decorator' => 'Callback', 
+                'options'   => array('callback' => array($this, 'raiseDecoratorException'))
+            ),
+        ));
+        $origErrorHandler = set_error_handler(array($this, 'handleDecoratorErrors'), E_USER_WARNING);
+
+        $text = $this->element->__toString();
+
+        set_error_handler($origErrorHandler);
+
+        $this->assertTrue(empty($text));
+        $this->assertTrue(isset($this->error));
+        $this->assertEquals('Raising exception in decorator callback', $this->error);
     }
 
     public function getOptions()

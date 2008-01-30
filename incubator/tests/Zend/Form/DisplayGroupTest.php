@@ -31,6 +31,10 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (isset($this->error)) {
+            unset($this->error);
+        }
+
         Zend_Controller_Action_HelperBroker::resetHelpers();
         $this->loader = new Zend_Loader_PluginLoader(
             array('Zend_Form_Decorator' => 'Zend/Form/Decorator')
@@ -272,6 +276,35 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
+    }
+
+    public function raiseDecoratorException($content, $element, $options)
+    {
+        throw new Exception('Raising exception in decorator callback');
+    }
+
+    public function handleDecoratorErrors($errno, $errstr, $errfile = '', $errline = 0, array $errcontext = array())
+    {
+        $this->error = $errstr;
+    }
+
+    public function testToStringRaisesErrorWhenExceptionCaught()
+    {
+        $this->group->setDecorators(array(
+            array(
+                'decorator' => 'Callback', 
+                'options'   => array('callback' => array($this, 'raiseDecoratorException'))
+            ),
+        ));
+        $origErrorHandler = set_error_handler(array($this, 'handleDecoratorErrors'), E_USER_WARNING);
+
+        $text = $this->group->__toString();
+
+        set_error_handler($origErrorHandler);
+
+        $this->assertTrue(empty($text));
+        $this->assertTrue(isset($this->error));
+        $this->assertEquals('Raising exception in decorator callback', $this->error);
     }
 
     public function testNoTranslatorByDefault()

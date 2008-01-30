@@ -30,6 +30,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (isset($this->error)) {
+            unset($this->error);
+        }
+
         Zend_Controller_Action_HelperBroker::resetHelpers();
         $this->form = new Zend_Form();
     }
@@ -1574,6 +1578,35 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->setView($this->getView());
         $html = $this->form->__toString();
         $this->checkMarkup($html);
+    }
+
+    public function raiseDecoratorException($content, $element, $options)
+    {
+        throw new Exception('Raising exception in decorator callback');
+    }
+
+    public function handleDecoratorErrors($errno, $errstr, $errfile = '', $errline = 0, array $errcontext = array())
+    {
+        $this->error = $errstr;
+    }
+
+    public function testToStringRaisesErrorWhenExceptionCaught()
+    {
+        $this->form->setDecorators(array(
+            array(
+                'decorator' => 'Callback', 
+                'options'   => array('callback' => array($this, 'raiseDecoratorException'))
+            ),
+        ));
+        $origErrorHandler = set_error_handler(array($this, 'handleDecoratorErrors'), E_USER_WARNING);
+
+        $text = $this->form->__toString();
+
+        set_error_handler($origErrorHandler);
+
+        $this->assertTrue(empty($text));
+        $this->assertTrue(isset($this->error));
+        $this->assertEquals('Raising exception in decorator callback', $this->error);
     }
 
     // Localization
