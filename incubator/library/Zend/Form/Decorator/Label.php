@@ -48,6 +48,81 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
     protected $_placement = 'PREPEND';
 
     /**
+     * HTML tag with which to surround label
+     * @var string
+     */
+    protected $_tag;
+
+    /**
+     * Set element ID
+     * 
+     * @param  string $id 
+     * @return Zend_Form_Decorator_Label
+     */
+    public function setId($id)
+    {
+        $this->setOption('id', $id);
+        return $this;
+    }
+
+    /**
+     * Retrieve element ID (used in 'for' attribute)
+     *
+     * If none set in decorator, looks first for element 'id' attribute, and 
+     * defaults to element name.
+     * 
+     * @return string
+     */
+    public function getId()
+    {
+        $id = $this->getOption('id');
+        if (null === $id) {
+            if (null !== ($element = $this->getElement())) {
+                if (isset($element->id)) {
+                    $id = $element->id;
+                    $this->setId($id);
+                } else {
+                    $id = $element->getName();
+                    $this->setId($id);
+                }
+            }
+        }
+
+        return $id;
+    }
+
+    /**
+     * Set HTML tag with which to surround label
+     * 
+     * @param  string $tag 
+     * @return Zend_Form_Decorator_Label
+     */
+    public function setTag($tag)
+    {
+        $this->_tag = (string) $tag;
+        return $this;
+    }
+
+    /**
+     * Get HTML tag, if any, with which to surround label
+     * 
+     * @return void
+     */
+    public function getTag()
+    {
+        if (null === $this->_tag) {
+            $tag = $this->getOption('tag');
+            if (null !== $tag) {
+                $this->removeOption('tag');
+                $this->setTag($tag);
+            }
+            return $tag;
+        }
+
+        return $this->_tag;
+    }
+
+    /**
      * Render a label
      * 
      * @param  string $content 
@@ -70,19 +145,16 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
+        $tag       = $this->getTag();
+        $id        = $this->getId();
         $options   = $this->getOptions();
-        $tag       = null;
-        if (isset($options['tag'])) {
-            $tag = $options['tag'];
-            unset($options['tag']);
-        }
 
         if (empty($label) && empty($tag)) {
             return $content;
         }
 
         if (!empty($label)) {
-            $label     = $view->formLabel($element->getName(), $label, $options); 
+            $label = $view->formLabel($element->getName(), $label, $options); 
         }
 
         if (null !== $tag) {

@@ -80,6 +80,18 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $this->assertSame($content, $this->decorator->render($content));
     }
 
+    public function testRenderUsesElementIdIfSet()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setAttrib('id', 'foobar')
+                ->setView($this->getView())
+                ->setLabel('My Label');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertContains('for="foobar"', $test);
+    }
+
     public function testRenderRendersLabel()
     {
         $element = new Zend_Form_Element('foo');
