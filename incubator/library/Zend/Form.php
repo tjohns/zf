@@ -902,7 +902,7 @@ class Zend_Form implements Iterator, Countable
      */
     public function addSubForm(Zend_Form $form, $name, $order = null)
     {
-        $name                   = (string) $name;
+        $name = (string) $name;
         foreach ($this->_loaders as $type => $loader) {
             $loaderPaths = $loader->getPaths();
             foreach ($loaderPaths as $prefix => $paths) {
@@ -926,6 +926,7 @@ class Zend_Form implements Iterator, Countable
             }
         }
 
+        $form->setName($name);
         $this->_subForms[$name] = $form;
         $this->_order[$name]    = $order;
         $this->_orderUpdated    = true;

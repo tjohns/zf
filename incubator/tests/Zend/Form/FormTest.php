@@ -784,7 +784,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    // Element groups
+    // Sub forms
 
     public function testCanAddAndRetrieveSingleSubForm()
     {
@@ -793,6 +793,14 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->addSubForm($subForm, 'page1');
         $test = $this->form->getSubForm('page1');
         $this->assertSame($subForm, $test);
+    }
+
+    public function testAddingSubFormSetsSubFormName()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $this->form->addSubForm($subForm, 'page1');
+        $this->assertEquals('page1', $subForm->getName());
     }
 
     public function testGetSubFormReturnsNullForUnregisteredSubForm()
