@@ -694,7 +694,7 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        $quest = Zend_Locale_Data::getContent($locale, 'question');
+        $quest = Zend_Locale_Data::getList($locale, 'question');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
         $quest['yes']      = $yes[0];

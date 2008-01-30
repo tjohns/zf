@@ -529,7 +529,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($list['yes']));
 
         $list = $value->getQuestion('de');
-        $this->assertTrue(isset($list['yes']));
+        $this->assertEquals('ja', $list['yes']);
 
         $this->assertTrue(is_array($value->getQuestion('auto')));
         $this->assertTrue(is_array($value->getQuestion('browser')));
