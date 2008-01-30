@@ -508,6 +508,40 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->element->removeValidator('bogus'));
     }
 
+    public function testPassingMessagesOptionToAddValidatorSetsValidatorMessages()
+    {
+        $messageTemplates = array(
+            Zend_Validate_Digits::NOT_DIGITS   => 'Value should only contain digits',
+            Zend_Validate_Digits::STRING_EMPTY => 'Value needs some digits',
+        );
+        $this->element->setAllowEmpty(false)
+                      ->addValidator('digits', false, array('messages' => $messageTemplates));
+
+        $this->element->isValid('');
+        $messages = $this->element->getMessages();
+        $found    = false;
+        foreach ($messages as $key => $message) {
+            if ($key == Zend_Validate_Digits::STRING_EMPTY) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'Empty string message not found: ' . var_export($messages, 1));
+        $this->assertEquals($messageTemplates[Zend_Validate_Digits::STRING_EMPTY], $message);
+
+        $this->element->isValid('abc');
+        $messages = $this->element->getMessages();
+        $found    = false;
+        foreach ($messages as $key => $message) {
+            if ($key == Zend_Validate_Digits::NOT_DIGITS) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'Not digits message not found');
+        $this->assertEquals($messageTemplates[Zend_Validate_Digits::NOT_DIGITS], $message);
+    }
+
     public function testCanRemoveValidator()
     {
         $this->assertFalse($this->element->getValidator('Zend_Validate_Digits'));

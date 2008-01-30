@@ -725,6 +725,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 } else {
                     $validator = $r->newInstance();
                 }
+
+                if (isset($options['messages']) && is_array($options['messages'])) {
+                    $validator->setMessages($options['messages']);
+                }
             }
         } else {
             require_once 'Zend/Form/Exception.php';

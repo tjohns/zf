@@ -198,6 +198,28 @@ $element->addValidator('StringLength', false, array(6, 20));
 $validator = new Zend_Validate_StringLength(6, 20);
 ?>]]></programlisting>
 
+        <note>
+            <title>Providing Custom Validator Error Messages</title>
+
+            <para>
+                Some developers may wish to provide custom error messages for a
+                validator. <code>Zend_Form_Element::addValidator()</code>'s
+                <code>$options</code> argument allows you to do so by providing
+                the key 'messages' and setting it to an array of key/value pairs
+                for setting the message templates. You will need to know the
+                error codes of the various validation error types for the
+                particular validator.
+            </para>
+
+            <para>
+                A better option is to use a <code>Zend_Translate_Adapter</code>
+                with your form. Error codes are automatically passed to the
+                adapter by the default Errors decorator; you can then specify
+                your own error message strings by setting up translations for
+                the various error codes of your validators.
+            </para>
+        </note>
+
         <para>
             You can also set many validators at once, using
             <code>addValidators()</code>. The basic usage is to pass an array
