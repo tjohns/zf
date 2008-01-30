@@ -546,7 +546,11 @@ class Zend_OpenId
     static protected function bigNumToBin($bn)
     {
         if (extension_loaded('gmp')) {
-            return pack("H*", gmp_strval($bn, 16));
+        	$s = gmp_strval($bn, 16);
+        	if (strlen($s) % 2 != 0) {
+        		$s = '0' . $s;
+        	}
+            return pack("H*", $s);
         } else if (extension_loaded('bcmath')) {
             $cmp = bccomp($bn, 0);
             if ($cmp == 0) {
