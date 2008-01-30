@@ -232,17 +232,6 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         $this->_query("UPDATE cache SET lastModified=$time, expire=$time WHERE id='$id'");
     }
 
-    /**
-     * PUBLIC METHOD FOR UNIT TESTING ONLY !
-     *
-     * Unlink the database file
-     */
-    public function ___dropDatabaseFile()
-    {
-        @sqlite_close($this->_getConnection());
-        @unlink($this->_options['cache_db_complete_path']);
-    }
-
     // -----------------------
     // --- Private methods ---
     // -----------------------
