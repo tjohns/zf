@@ -489,12 +489,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function getAttribs()
     {
-        $r = new ReflectionObject($this);
-        $properties = $r->getProperties();
-        $attribs = array();
-        foreach ($properties as $property) {
-            if ($property->isPublic()) {
-                $attribs[$property->getName()] = $property->getValue($this);
+        $attribs = get_object_vars($this);
+        foreach ($attribs as $key => $value) {
+            if ('_' == substr($key, 0, 1)) {
+                unset($attribs[$key]);
             }
         }
 
