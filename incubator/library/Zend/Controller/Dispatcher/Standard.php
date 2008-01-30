@@ -114,7 +114,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
             
         }
         
-        $controller = new $fullControllerName($request, $response);
+        $controller = new $fullControllerName($request, $response, $this->getParams());
         
         if (!$controller instanceof Zend_Controller_Action) {
             require_once 'Zend/Controller/Dispatcher/Exception.php';
