@@ -56,6 +56,6 @@ class Zend_OpenId_AllTests
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Soap_AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'Zend_OpenId_AllTests::main') {
     Zend_OpenId_AllTests::main();
 }
