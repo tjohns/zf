@@ -38,16 +38,22 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Empty cache
-     */
+
+    private $_cache = null;
+
     public function setUp()
     {
         require_once 'Zend/Cache.php';
-        $cache = Zend_Cache::factory('Core', 'File',
+        $this->_cache = Zend_Cache::factory('Core', 'File',
                  array('lifetime' => 1, 'automatic_serialization' => true),
                  array('cache_dir' => dirname(__FILE__) . '/_files/'));
-        Zend_Locale_Data::setCache($cache);
+        Zend_Locale_Data::setCache($this->_cache);
+    }
+
+
+    public function tearDown()
+    {
+        $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
     /**

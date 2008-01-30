@@ -59,14 +59,21 @@ require_once 'Zend/Date/Cities.php';
 class Zend_DateTest extends PHPUnit_Framework_TestCase
 {
 
+    private $_cache = null;
+
     public function setUp()
     {
         date_default_timezone_set('Indian/Maldives');
         require_once 'Zend/Cache.php';
-        $cache = Zend_Cache::factory('Core', 'File',
+        $this->_cache = Zend_Cache::factory('Core', 'File',
                  array('lifetime' => 120, 'automatic_serialization' => true),
                  array('cache_dir' => dirname(__FILE__) . '/_files/'));
-        Zend_Date::setOptions(array('cache' => $cache));
+        Zend_Date::setOptions(array('cache' => $this->_cache));
+    }
+
+    public function tearDown()
+    {
+        $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
     /**
