@@ -41,6 +41,7 @@ NEW FEATURES
 ENHANCEMENTS AND BUGFIXES
 -------------------------
 
+* Zend_Json has been augmented to convert from XML to JSON format
 * New Zend_TimeSync component supporting the Network Time Protocol (NTP)
 * Improved performance of Zend_Translate with new caching option
 * addRoute(), addRoutes(), addConfig(), removeRoute(), removeDefaultRoutes() methods
