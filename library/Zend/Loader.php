@@ -30,13 +30,6 @@
 class Zend_Loader
 {
     /**
-     * An array of stdClass objects used for tracking PHP errors from including a file
-     *
-     * @var array
-     */
-    protected static $_errors = array();
-
-    /**
      * Loads a class from a PHP file.  The filename must be formatted
      * as "$class.php".
      *
@@ -87,10 +80,7 @@ class Zend_Loader
             self::loadFile($file, $dirs, true);
         } else {
             self::_securityCheck($file);
-            set_error_handler(array('Zend_Loader', 'errorHandler'));
             include_once $file;
-            restore_error_handler();
-            self::_throwIncludeErrors($file);
         }
 
         if (!class_exists($class, false) && !interface_exists($class, false)) {
@@ -141,13 +131,11 @@ class Zend_Loader
         /**
          * Try finding for the plain filename in the include_path.
          */
-        set_error_handler(array('Zend_Loader', 'errorHandler'));
         if ($once) {
             include_once $filename;
         } else {
             include $filename;
         }
-        restore_error_handler();
 
         /**
          * If searching in directories, reset include_path
@@ -156,38 +144,7 @@ class Zend_Loader
             set_include_path($incPath);
         }
 
-        self::_throwIncludeErrors($filename);
-
-        /**
-         * @todo deprecate this behavior
-         *
-         * if it doesn't work, throw an exception;
-         * if it works, no need to return true
-         */
         return true;
-    }
-
-    /**
-     * Stores the information from an error for later examination
-     *
-     * @param  integer $errno
-     * @param  string  $errstr
-     * @param  string  $errfile
-     * @param  integer $errline
-     * @param  array   $errcontext
-     * @return void
-     */
-    public static function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
-    {
-        $error = new stdClass();
-
-        $error->errno      = $errno;
-        $error->errstr     = $errstr;
-        $error->errfile    = $errfile;
-        $error->errline    = $errline;
-        $error->errcontext = $errcontext;
-
-        self::$_errors[] = $error;
     }
 
     /**
@@ -274,39 +231,6 @@ class Zend_Loader
             require_once 'Zend/Exception.php';
             throw new Zend_Exception('Security check: Illegal character in filename');
         }
-    }
-
-    /**
-     * Throws an exception with any PHP errors from including $fileIncluded.
-     * The static $_errors property is cleared prior to throwing the exception.
-     * If there are no errors to report, then this method does nothing.
-     *
-     * @param  string $fileIncluded
-     * @return void
-     * @throws Zend_Exception
-     */
-    protected static function _throwIncludeErrors($fileIncluded)
-    {
-        if (self::$_errors === array()) {
-            return;
-        }
-
-        $message = "At least one error occurred including \"$fileIncluded\"; see includeErrors property";
-
-        /**
-         * @see Zend_Exception
-         */
-        require_once 'Zend/Exception.php';
-        $exception = new Zend_Exception($message);
-
-        $exception->includeErrors = array();
-        foreach (self::$_errors as $error) {
-            $exception->includeErrors[] = $error;
-        }
-
-        self::$_errors = array();
-
-        throw $exception;
     }
 
     /**

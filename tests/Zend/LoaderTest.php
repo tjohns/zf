@@ -103,27 +103,6 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests that an exception is thrown when the file is not found.
-     */
-    public function testLoaderClassFileNotFound()
-    {
-        try {
-            Zend_Loader::loadClass('Zend_File_Not_Found', '');
-            $this->fail('Zend_Exception was expected but never thrown.');
-        } catch (Zend_Exception $e) {
-            $this->assertEquals(2, count($e->includeErrors));
-            $this->assertRegExp(
-                '~include([^)]+).+failed to open stream: No such file or directory~',
-                $e->includeErrors[0]->errstr
-                );
-            $this->assertRegExp(
-                '~include().+Failed opening.+for inclusion~',
-                $e->includeErrors[1]->errstr
-                );
-        }
-    }
-
-    /**
      * Tests that an exception is thrown if the $dirs argument is
      * not a string or an array.
      */
@@ -187,27 +166,7 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $saveIncludePath = get_include_path();
         set_include_path(implode(array($saveIncludePath, implode(array(dirname(__FILE__), '_files', '_testDir1'), DIRECTORY_SEPARATOR)), PATH_SEPARATOR));
 
-        /**
-         * @todo deprecate this behavior
-         *
-         * there is no need to return true upon success, since upon failure, an exception is thrown
-         */
         $this->assertTrue(Zend_Loader::loadFile('Class3.php', null));
-
-        try {
-            $result = Zend_Loader::loadFile('Nonexistent.php', null);
-            $this->fail('Zend_Exception was expected but never thrown.');
-        } catch (Zend_Exception $e) {
-            $this->assertEquals(2, count($e->includeErrors));
-            $this->assertRegExp(
-                '~include([^)]+).+failed to open stream: No such file or directory~',
-                $e->includeErrors[0]->errstr
-                );
-            $this->assertRegExp(
-                '~include().+Failed opening.+for inclusion~',
-                $e->includeErrors[1]->errstr
-                );
-        }
 
         set_include_path($saveIncludePath);
     }
@@ -221,11 +180,6 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $saveIncludePath = get_include_path();
         set_include_path(implode(array($saveIncludePath, implode(array(dirname(__FILE__), '_files', '_testDir1'), DIRECTORY_SEPARATOR)), PATH_SEPARATOR));
 
-        /**
-         * @todo deprecate this behavior
-         *
-         * there is no need to return true upon success, since upon failure, an exception is thrown
-         */
         $this->assertTrue(Zend_Loader::loadFile('Class4.php', implode(PATH_SEPARATOR, array('foo', 'bar'))));
 
         set_include_path($saveIncludePath);
@@ -400,23 +354,6 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             . ' Zend/Loader/AutoloadDoesNotHideParseError.php 2>&1';
         $output = shell_exec($command);
         $this->assertRegexp('/error, unexpected T_STRING, expecting T_FUNCTION/i', $output, $output);
-    }
-
-    /**
-     * @return void
-     * @see    http://framework.zend.com/issues/browse/ZF-2463
-     */
-    public function testLoaderLoadfileMethodExposesErrorsFromIncludedFile()
-    {
-        try {
-            Zend_Loader::loadFile('Zend/Loader/RunErrorProducer.php');
-            $this->fail('Expected Zend_Exception not thrown');
-        } catch (Zend_Exception $e) {
-            $this->assertEquals(3, count($e->includeErrors));
-            $this->assertEquals(E_WARNING, $e->includeErrors[0]->errno);
-            $this->assertEquals(E_WARNING, $e->includeErrors[1]->errno);
-            $this->assertEquals(E_NOTICE, $e->includeErrors[2]->errno);
-        }
     }
 }
 
