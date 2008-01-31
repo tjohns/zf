@@ -220,10 +220,15 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 
         $p = 1;
         foreach ($result as $key => $row) {
-            list($length, $primary, $primaryPosition, $identity) = array(null, false, null, false);
+            list($length, $scale, $precision, $primary, $primaryPosition, $identity) =
+                array(null, null, null, false, null, false);
             if (preg_match('/^((?:var)?char)\((\d+)\)/i', $row[$type], $matches)) {
                 $row[$type] = $matches[1];
                 $length = $matches[2];
+            } else if (preg_match('/^decimal\((\d+),(\d+)\)/i', $row[$type], $matches)) {
+                $row[$type] = 'DECIMAL';
+                $precision = $matches[1];
+                $scale = $matches[2];
             }
             if ((bool) $row[$pk]) {
                 $primary = true;
@@ -243,9 +248,9 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
                 'DEFAULT'          => $row[$dflt_value],
                 'NULLABLE'         => ! (bool) $row[$notnull],
                 'LENGTH'           => $length,
-                'SCALE'            => null, // @todo
-                'PRECISION'        => null, // @todo
-                'UNSIGNED'         => null, // @todo
+                'SCALE'            => $scale,
+                'PRECISION'        => $precision,
+                'UNSIGNED'         => null, // Sqlite3 does not support unsigned data
                 'PRIMARY'          => $primary,
                 'PRIMARY_POSITION' => $primaryPosition,
                 'IDENTITY'         => $identity
