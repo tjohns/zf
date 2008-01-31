@@ -135,6 +135,12 @@ class Zend_Form implements Iterator, Countable
     protected $_translator;
 
     /**
+     * Global default translation adapter
+     * @var Zend_Translate
+     */
+    protected static $_translatorDefault;
+
+    /**
      * @var Zend_View_Interface
      */
     protected $_view;
@@ -1776,13 +1782,38 @@ class Zend_Form implements Iterator, Countable
     }
 
     /**
+     * Set global default translator object
+     * 
+     * @param  Zend_Translate_Adapter $translator 
+     * @return void
+     */
+    public static function setDefaultTranslator(Zend_Translate_Adapter $translator = null)
+    {
+        self::$_translatorDefault = $translator;
+    }
+
+    /**
      * Retrieve translator object
      * 
      * @return Zend_Translate_Adapter
      */
     public function getTranslator()
     {
+        if ((null === $this->_translator) && (null !== self::$_translatorDefault)) {
+            return self::$_translatorDefault;
+        }
+
         return $this->_translator;
+    }
+
+    /**
+     * Get global default translator object
+     * 
+     * @return null|Zend_Translate_Adapter
+     */
+    public static function getDefaultTranslator()
+    {
+        return self::$_translatorDefault;
     }
 
     /**

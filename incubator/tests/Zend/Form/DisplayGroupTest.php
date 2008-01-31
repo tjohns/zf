@@ -13,6 +13,7 @@ require_once 'Zend/Form/DisplayGroup.php';
 
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Form.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
@@ -31,6 +32,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        Zend_Form::setDefaultTranslator(null);
+
         if (isset($this->error)) {
             unset($this->error);
         }
@@ -322,6 +325,15 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testNoTranslatorByDefault()
     {
         $this->assertNull($this->group->getTranslator());
+    }
+
+    public function testGetTranslatorRetrievesGlobalDefaultWhenAvailable()
+    {
+        $this->testNoTranslatorByDefault();
+        $translator = new Zend_Translate_Adapter_Array(array());
+        Zend_Form::setDefaultTranslator($translator);
+        $received = $this->group->getTranslator();
+        $this->assertSame($translator, $received);
     }
 
     public function testTranslatorAccessorsWorks()

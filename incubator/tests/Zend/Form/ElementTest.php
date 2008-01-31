@@ -13,6 +13,7 @@ require_once 'Zend/Form/Element.php';
 
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
 require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Translate/Adapter/Array.php';
@@ -31,6 +32,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        Zend_Form::setDefaultTranslator(null);
+
         if (isset($this->error)) {
             unset($this->error);
         }
@@ -102,6 +105,15 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testNoTranslatorByDefault()
     {
         $this->assertNull($this->element->getTranslator());
+    }
+
+    public function testGetTranslatorRetrievesGlobalDefaultWhenAvailable()
+    {
+        $this->testNoTranslatorByDefault();
+        $translator = new Zend_Translate_Adapter_Array(array());
+        Zend_Form::setDefaultTranslator($translator);
+        $received = $this->element->getTranslator();
+        $this->assertSame($translator, $received);
     }
 
     public function testTranslatorAccessorsWork()
