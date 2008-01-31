@@ -228,7 +228,7 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
                 $row[$type] = $matches[1];
                 $length = $matches[2];
             } else if (preg_match('/^decimal\((\d+),(\d+)\)/i', $row[$type], $matches)) {
-                $row[$type] = 'decimal';
+                $row[$type] = 'DECIMAL';
                 $precision = $matches[1];
                 $scale = $matches[2];
             }
