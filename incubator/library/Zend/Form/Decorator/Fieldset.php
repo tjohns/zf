@@ -37,6 +37,12 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
 {
     /**
+     * Fieldset legend
+     * @var string
+     */
+    protected $_legend;
+
+    /**
      * Default placement: surround content
      * @var string
      */
@@ -61,6 +67,40 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
     }
 
     /**
+     * Set legend
+     * 
+     * @param  string $value 
+     * @return Zend_Form_Decorator_Fieldset
+     */
+    public function setLegend($value)
+    {
+        $this->_legend = (string) $value;
+        return $this;
+    }
+
+    /**
+     * Get legend
+     * 
+     * @return string
+     */
+    public function getLegend()
+    {
+        $legend = $this->_legend;
+        if ((null === $legend) && (null !== ($element = $this->getElement()))) {
+            if (method_exists($element, 'getLegend')) {
+                $legend = $element->getLegend();
+                $this->setLegend($legend);
+            }
+        }
+        if ((null === $legend) && (null !== ($legend = $this->getOption('legend')))) {
+            $this->setLegend($legend);
+            $this->removeOption('legend');
+        }
+
+        return $legend;
+    }
+
+    /**
      * Render a fieldset
      * 
      * @param  string $content 
@@ -74,17 +114,17 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $legend  = null;
-        if (method_exists($element, 'getLegend')) {
-            $legend = $element->getLegend();
-        }
-
-        if ((null !== $legend) && (null !== ($translator = $element->getTranslator()))) {
-            $legend = $translator->translate($legend);
-        }
-
+        $legend  = $this->getLegend();
         $attribs = $this->getOptions();
-        $attribs['legend'] = $legend;
+
+        if (null !== $legend) {
+            if (null !== ($translator = $element->getTranslator())) {
+                $legend = $translator->translate($legend);
+            }
+
+            $attribs['legend'] = $legend;
+        }
+
         return $view->fieldset($element->getName(), $content, $attribs);
     }
 }

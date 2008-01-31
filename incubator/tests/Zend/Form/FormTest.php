@@ -437,6 +437,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testLegendInitiallyNull()
+    {
+        $this->assertNull($this->form->getLegend());
+    }
+
+    public function testCanSetLegend()
+    {
+        $this->testLegendInitiallyNull();
+        $legend = "This is a legend";
+        $this->form->setLegend($legend);
+        $this->assertEquals($legend, $this->form->getLegend());
+    }
+
     public function testDescriptionInitiallyNull()
     {
         $this->assertNull($this->form->getDescription());

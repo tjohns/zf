@@ -88,6 +88,12 @@ class Zend_Form implements Iterator, Countable
     protected $_elements = array();
 
     /**
+     * Form legend
+     * @var string
+     */
+    protected $_legend;
+
+    /**
      * Plugin loaders
      * @var array
      */
@@ -595,6 +601,28 @@ class Zend_Form implements Iterator, Countable
     public function getName()
     {
         return $this->getAttrib('name');
+    }
+
+    /**
+     * Set form legend
+     * 
+     * @param  string $value 
+     * @return Zend_Form
+     */
+    public function setLegend($value)
+    {
+        $this->_legend = (string) $value;
+        return $this;
+    }
+
+    /**
+     * Get form legend
+     * 
+     * @return string
+     */
+    public function getLegend()
+    {
+        return $this->_legend;
     }
 
     /**
