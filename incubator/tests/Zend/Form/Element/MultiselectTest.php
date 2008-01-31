@@ -80,6 +80,12 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('formSelect', $options['helper']);
     }
 
+    public function testMultipleOptionSetByDefault()
+    {
+        $this->assertNotNull($this->element->multiple);
+        $this->assertEquals('multiple', $this->element->multiple);
+    }
+
     public function testHasDefaultSeparator()
     {
         $this->assertEquals('<br />', $this->element->getSeparator());

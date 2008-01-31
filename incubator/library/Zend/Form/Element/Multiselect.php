@@ -35,6 +35,12 @@ require_once 'Zend/Form/Element/Select.php';
 class Zend_Form_Element_Multiselect extends Zend_Form_Element_Select
 {
     /**
+     * 'multiple' attribute
+     * @var string
+     */
+    public $multiple = 'multiple';
+
+    /**
      * Use formSelect view helper by default
      * @var string
      */
