@@ -518,6 +518,9 @@
         <xi:include href="module_specs/Zend_Pdf-Save.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Save.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Pdf-Pages.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Pages.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Pdf-Drawing.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Drawing.xml" /></xi:fallback>
         </xi:include>

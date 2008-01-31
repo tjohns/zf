@@ -45,6 +45,18 @@ try {
         <para>
             Die selbe Technik sollte für die find() Methode des Zend_Search_Lucene Objektes verwendet werden.
         </para>
+
+        <para>
+            Beginnend mit 1.5 werden Abfrageparser Exceptions standardmäßig unterdrückt. Wenn eine Abfrage
+            nicht konform mit der Abfragesprache ist, dann wird Sie mithilfe des aktuellen Standardanalysators
+            gestückelt und alle Begriffsstücke werden für die Suche verwendet.
+            Die <code>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</code> Methode
+            kann verwendet werden um Exceptions einzuschalten. Die
+            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> und 
+            <code>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</code> Methoden
+            sind auch dazu gedacht das Verhalten der Exceptionsbehandlung zu verwalten. 
+        </para>
+        
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.term-query">
