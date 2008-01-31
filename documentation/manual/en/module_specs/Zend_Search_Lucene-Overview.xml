@@ -40,6 +40,7 @@
             For more information on Lucene, visit <ulink url="http://lucene.apache.org/java/docs/"/> (<ulink url="http://lucene.apache.org/java/2_2_0/"/>).
         </para>
         <note>
+            <title/>
             <para>
                 Previous Zend_Search_Lucene implementations support the Lucene 1.9 index format. 
             </para>
