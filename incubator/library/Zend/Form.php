@@ -755,7 +755,7 @@ class Zend_Form implements Iterator, Countable
         $name = (string) $name;
         if (isset($this->_elements[$name])) {
             unset($this->_elements[$name]);
-            if (isset($this->_order[$name])) {
+            if (array_key_exists($name, $this->_order)) {
                 unset($this->_order[$name]);
                 $this->_orderUpdated = true;
             } else {
@@ -1018,9 +1018,9 @@ class Zend_Form implements Iterator, Countable
     public function removeSubForm($name)
     {
         $name = (string) $name;
-        if (isset($this->_subForms[$name])) {
+        if (array_key_exists($name, $this->_subForms)) {
             unset($this->_subForms[$name]);
-            if (isset($this->_order[$name])) {
+            if (array_key_exists($name, $this->_order)) {
                 unset($this->_order[$name]);
                 $this->_orderUpdated = true;
             }
@@ -1215,16 +1215,16 @@ class Zend_Form implements Iterator, Countable
     public function removeDisplayGroup($name)
     {
         $name = (string) $name;
-        if (isset($this->_displayGroups[$name])) {
+        if (array_key_exists($name, $this->_displayGroups)) {
             foreach ($this->_displayGroups[$name] as $key => $element) {
-                if (isset($this->_elements[$key])) {
+                if (array_key_exists($key, $this->_elements)) {
                     $this->_order[$key]  = $element->getOrder();
                     $this->_orderUpdated = true;
                 }
             }
             unset($this->_displayGroups[$name]);
 
-            if (isset($this->_order[$name])) {
+            if (array_key_exists($name, $this->_order)) {
                 unset($this->_order[$name]);
                 $this->_orderUpdated = true;
             }

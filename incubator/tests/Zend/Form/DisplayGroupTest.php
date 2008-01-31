@@ -355,6 +355,20 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testRemovingElementsShouldNotRaiseExceptionsDuringIteration()
+    {
+        $this->setupIteratorElements();
+        $bar = $this->group->getElement('bar');
+        $this->group->removeElement('bar');
+
+        try {
+            foreach ($this->group as $item) {
+            }
+        } catch (Exception $e) {
+            $this->fail('Exceptions should not be raised by iterator when elements are removed; error message: ' . $e->getMessage());
+        }
+    }
+
     // Countable
 
     public function testCanCountDisplayGroup()

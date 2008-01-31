@@ -232,7 +232,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
      */
     public function removeAttrib($key)
     {
-        if (isset($this->_attribs[$key])) {
+        if (array_key_exists($key, $this->_attribs)) {
             unset($this->_attribs[$key]);
             return true;
         }
@@ -396,7 +396,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     public function removeElement($name)
     {
         $name = (string) $name;
-        if (isset($this->_elements[$name])) {
+        if (array_key_exists($name, $this->_elements)) {
             unset($this->_elements[$name]);
             $this->_groupUpdated = true;
             return true;

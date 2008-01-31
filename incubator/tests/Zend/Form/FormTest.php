@@ -1687,6 +1687,43 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testRemovingFormItemsShouldNotRaiseExceptionsDuringIteration()
+    {
+        $this->setupElements();
+        $bar = $this->form->bar;
+        $this->form->removeElement('bar');
+
+        try {
+            foreach ($this->form as $item) {
+            }
+        } catch (Exception $e) {
+            $this->fail('Exceptions should not be raised by iterator when elements are removed; error message: ' . $e->getMessage());
+        }
+
+        $this->form->addElement($bar);
+        $this->form->addDisplayGroup(array('baz', 'bar'), 'bazbar');
+        $this->form->removeDisplayGroup('bazbar');
+
+        try {
+            foreach ($this->form as $item) {
+            }
+        } catch (Exception $e) {
+            $this->fail('Exceptions should not be raised by iterator when elements are removed; error message: ' . $e->getMessage());
+        }
+
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $this->form->addSubForm($subForm, 'page1');
+        $this->form->removeSubForm('page1');
+
+        try {
+            foreach ($this->form as $item) {
+            }
+        } catch (Exception $e) {
+            $this->fail('Exceptions should not be raised by iterator when elements are removed; error message: ' . $e->getMessage());
+        }
+    }
+
     // Countable
 
     public function testCanCountFormObject()

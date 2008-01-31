@@ -71,7 +71,8 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
         if (null === $this->_helper) {
             $options = $this->getOptions();
             if (isset($options['helper'])) {
-                $this->_helper = (string) $options['helper'];
+                $this->setHelper($options['helper']);
+                $this->removeOption('helper');
             } else {
                 $element = $this->getElement();
                 if (null !== $element) {
@@ -79,7 +80,7 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
                     if ($pos = strrpos($type, '_')) {
                         $type = substr($type, $pos + 1);
                     }
-                    $this->_helper = 'form' . ucfirst($type);
+                    $this->setHelper('form' . ucfirst($type));
                 }
             }
         }
