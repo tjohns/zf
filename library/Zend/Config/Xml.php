@@ -149,7 +149,7 @@ class Zend_Config_Xml extends Zend_Config
                     $value = (string) $value;
                 }
                 if (array_key_exists($key, $config)) {
-                    if (!is_array($config[$key]) || count($config[$key]) == 1) {
+                    if (!is_array($config[$key]) || !array_key_exists(0, $config[$key])) {
                         $config[$key] = array($config[$key]);
                     }
                     $config[$key][] = $value;
