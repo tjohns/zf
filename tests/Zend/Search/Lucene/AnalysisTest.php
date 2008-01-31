@@ -135,6 +135,11 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
 
     public function testUtf8()
     {
+        if (@preg_match('/\pL/u', 'a') != 1) {
+            // PCRE unicode support is turned off
+            return;
+        }
+                
         $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8();
 
         // UTF-8 text with a cyrillic symbols
@@ -154,12 +159,17 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($tokenList[2]->getTermText(),         'ДругоеСлово');
         $this->assertEquals($tokenList[2]->getStartOffset(),       14);
-        $this->assertEquals($tokenList[2]->getEndOffset(),         24);
+        $this->assertEquals($tokenList[2]->getEndOffset(),         25);
         $this->assertEquals($tokenList[2]->getPositionIncrement(), 1);
     }
 
     public function testUtf8Num()
     {
+        if (@preg_match('/\pL/u', 'a') != 1) {
+            // PCRE unicode support is turned off
+            return;
+        }
+
         $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num();
 
         // UTF-8 text with a cyrillic symbols
@@ -179,7 +189,75 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($tokenList[2]->getTermText(),         'ДругоеСлово');
         $this->assertEquals($tokenList[2]->getStartOffset(),       14);
-        $this->assertEquals($tokenList[2]->getEndOffset(),         24);
+        $this->assertEquals($tokenList[2]->getEndOffset(),         25);
+        $this->assertEquals($tokenList[2]->getPositionIncrement(), 1);
+    }
+
+    public function testUtf8CaseInsensitive()
+    {
+        if (@preg_match('/\pL/u', 'a') != 1) {
+            // PCRE unicode support is turned off
+            return;
+        }
+        if (!function_exists('mb_strtolower')) {
+            // mbstring extension is disabled
+            return;
+        }
+
+        $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive();
+
+        // UTF-8 text with a cyrillic symbols
+        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово', 'UTF-8');
+
+        $this->assertEquals(count($tokenList), 3);
+
+        $this->assertEquals($tokenList[0]->getTermText(),         'слово');
+        $this->assertEquals($tokenList[0]->getStartOffset(),       0);
+        $this->assertEquals($tokenList[0]->getEndOffset(),         5);
+        $this->assertEquals($tokenList[0]->getPositionIncrement(), 1);
+
+        $this->assertEquals($tokenList[1]->getTermText(),         'слово');
+        $this->assertEquals($tokenList[1]->getStartOffset(),       7);
+        $this->assertEquals($tokenList[1]->getEndOffset(),         12);
+        $this->assertEquals($tokenList[1]->getPositionIncrement(), 1);
+
+        $this->assertEquals($tokenList[2]->getTermText(),         'другоеслово');
+        $this->assertEquals($tokenList[2]->getStartOffset(),       14);
+        $this->assertEquals($tokenList[2]->getEndOffset(),         25);
+        $this->assertEquals($tokenList[2]->getPositionIncrement(), 1);
+    }
+
+    public function testUtf8NumCaseInsensitive()
+    {
+        if (@preg_match('/\pL/u', 'a') != 1) {
+            // PCRE unicode support is turned off
+            return;
+        }
+        if (!function_exists('mb_strtolower')) {
+            // mbstring extension is disabled
+            return;
+        }
+        
+        $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive();
+
+        // UTF-8 text with a cyrillic symbols
+        $tokenList = $analyzer->tokenize('Слово1 Слово2 ДругоеСлово', 'UTF-8');
+
+        $this->assertEquals(count($tokenList), 3);
+
+        $this->assertEquals($tokenList[0]->getTermText(),         'слово1');
+        $this->assertEquals($tokenList[0]->getStartOffset(),       0);
+        $this->assertEquals($tokenList[0]->getEndOffset(),         6);
+        $this->assertEquals($tokenList[0]->getPositionIncrement(), 1);
+
+        $this->assertEquals($tokenList[1]->getTermText(),         'слово2');
+        $this->assertEquals($tokenList[1]->getStartOffset(),       7);
+        $this->assertEquals($tokenList[1]->getEndOffset(),         13);
+        $this->assertEquals($tokenList[1]->getPositionIncrement(), 1);
+
+        $this->assertEquals($tokenList[2]->getTermText(),         'другоеслово');
+        $this->assertEquals($tokenList[2]->getStartOffset(),       14);
+        $this->assertEquals($tokenList[2]->getEndOffset(),         25);
         $this->assertEquals($tokenList[2]->getPositionIncrement(), 1);
     }
 
@@ -204,7 +282,7 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($tokenList[2]->getTermText(),         'ДругоеСлово');
         $this->assertEquals($tokenList[2]->getStartOffset(),       14);
-        $this->assertEquals($tokenList[2]->getEndOffset(),         24);
+        $this->assertEquals($tokenList[2]->getEndOffset(),         25);
         $this->assertEquals($tokenList[2]->getPositionIncrement(), 1);
     }
 
