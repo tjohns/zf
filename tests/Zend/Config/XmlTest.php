@@ -183,8 +183,16 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config_Xml($this->_xmlFileSameNameKeysConfig, null);
         $this->assertEquals('2a', $config->one->two->{0});
         $this->assertEquals('2b', $config->one->two->{1});
-        $this->assertEquals('4', $config->three->four->{0});
-        $this->assertEquals('5', $config->three->four->five);
+        $this->assertEquals('4', $config->three->four->{1});
+        $this->assertEquals('5', $config->three->four->{0}->five);
+    }
+    
+    public function testZF2437_Arrays()
+    {
+        $config = new Zend_Config_Xml($this->_xmlFileSameNameKeysConfig, null);
+        $this->assertEquals('1', $config->six->seven->{0}->eight);
+        $this->assertEquals('2', $config->six->seven->{1}->eight);
+        $this->assertEquals('3', $config->six->seven->{2}->eight);
     }
 
 }

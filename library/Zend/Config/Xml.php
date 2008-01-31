@@ -139,6 +139,7 @@ class Zend_Config_Xml extends Zend_Config
      */
     protected function _toArray($xmlObject)
     {
+        
         $config = array();
         if (count($xmlObject->children())) {
             foreach ($xmlObject->children() as $key => $value) {
@@ -148,7 +149,7 @@ class Zend_Config_Xml extends Zend_Config
                     $value = (string) $value;
                 }
                 if (array_key_exists($key, $config)) {
-                    if (!is_array($config[$key])) {
+                    if (!is_array($config[$key]) || count($config[$key]) == 1) {
                         $config[$key] = array($config[$key]);
                     }
                     $config[$key][] = $value;
