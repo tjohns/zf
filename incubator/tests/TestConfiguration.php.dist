@@ -47,7 +47,7 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_ODBC_DATABASE', null);
  * Zend_Db_Adapter_Firebird and Zend_Db_Adapter_Pdo_Firebird
  *
  */
-define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_ENABLED',  true);
+define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_ENABLED',  false);
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_HOSTNAME', '127.0.0.1');
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_USERNAME', 'sysdba');
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_PASSWORD', 'masterkey');
