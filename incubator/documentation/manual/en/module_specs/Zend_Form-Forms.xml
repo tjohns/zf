@@ -202,12 +202,12 @@ $value = $form->getValue('foo');
             <para>
                 Sometimes you'll want to populate the form with specified values
                 prior to rendering. This can be done with either the
-                <code>setDefaultValues()</code> or <code>populate()</code>
+                <code>setDefaults()</code> or <code>populate()</code>
                 methods:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$form->setDefaultValues($data);
+$form->setDefaults($data);
 $form->populate($data);
 ?>]]></programlisting>
         </sect3>
