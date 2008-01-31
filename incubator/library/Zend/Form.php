@@ -177,6 +177,11 @@ class Zend_Form implements Iterator, Countable
             unset($options['prefixPath']);
         }
 
+        if (isset($options['elementPrefixPath'])) {                          
+            $this->addElementPrefixPaths($options['elementPrefixPath']);      
+            unset($options['elementPrefixPath']);                             
+        }
+
         if (isset($options['elements'])) {
             $this->setElements($options['elements']);
             unset($options['elements']);
@@ -402,7 +407,7 @@ class Zend_Form implements Iterator, Countable
      */
     public function addElementPrefixPaths(array $spec)
     {
-        $this->_elementPrefixPaths[] = $this->_elementPrefixPaths + $spec;
+        $this->_elementPrefixPaths = $this->_elementPrefixPaths + $spec;
 
         foreach ($this->getElements() as $element) {
             $element->addPrefixPaths($spec);
