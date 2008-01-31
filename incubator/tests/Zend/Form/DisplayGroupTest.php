@@ -76,6 +76,18 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(50, $this->group->getOrder());
     }
 
+    public function testDescriptionInitiallyNull()
+    {
+        $this->assertNull($this->group->getDescription());
+    }
+
+    public function testCanSetDescription()
+    {
+        $this->testDescriptionInitiallyNull();
+        $description = "this is a description";
+        $this->group->setDescription($description);
+        $this->assertEquals($description, $this->group->getDescription());
+    }
 
     // Elements
 

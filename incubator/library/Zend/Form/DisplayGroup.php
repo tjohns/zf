@@ -42,6 +42,12 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     protected $_decorators = array();
 
     /**
+     * Description
+     * @var string
+     */
+    protected $_description;
+
+    /**
      * Element order
      * @var array
      */
@@ -292,6 +298,28 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     public function getLegend()
     {
         return $this->getAttrib('legend');
+    }
+
+    /**
+     * Set description
+     * 
+     * @param  string $value 
+     * @return Zend_Form_DisplayGroup
+     */
+    public function setDescription($value)
+    {
+        $this->_description = (string) $value;
+        return $this;
+    }
+
+    /**
+     * Get description
+     * 
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->_description;
     }
 
     /**

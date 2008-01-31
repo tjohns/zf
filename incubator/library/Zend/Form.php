@@ -58,6 +58,12 @@ class Zend_Form implements Iterator, Countable
     protected $_decorators = array();
 
     /**
+     * Form description
+     * @var string
+     */
+    protected $_description;
+
+    /**
      * Display group prefix paths
      * @var array
      */
@@ -589,6 +595,28 @@ class Zend_Form implements Iterator, Countable
     public function getName()
     {
         return $this->getAttrib('name');
+    }
+
+    /**
+     * Set form description
+     * 
+     * @param  string $value 
+     * @return Zend_Form
+     */
+    public function setDescription($value)
+    {
+        $this->_description = (string) $value;
+        return $this;
+    }
+
+    /**
+     * Retrieve form description
+     * 
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->_description;
     }
  
     // Element interaction: 

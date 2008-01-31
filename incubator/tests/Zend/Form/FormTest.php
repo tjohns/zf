@@ -437,6 +437,18 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testDescriptionInitiallyNull()
+    {
+        $this->assertNull($this->form->getDescription());
+    }
+
+    public function testCanSetDescription()
+    {
+        $this->testDescriptionInitiallyNull();
+        $description = "This is a description";
+        $this->form->setDescription($description);
+        $this->assertEquals($description, $this->form->getDescription());
+    }
 
     // Plugin loaders
 
