@@ -136,25 +136,16 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      */
     public function getClass()
     {
+        $class = $this->getOption('class');
+        if (null === $class) {
+            $class = '';
+        }
+
         if (null === ($element = $this->getElement())) {
-            $class = $this->getOption('class');
-            if (null === $class) {
-                $class = '';
-            }
             return $class;
         }
 
-        $class = $element->getAttrib('class');
-
-        switch ($element->getRequired()) {
-            case true:
-                $type = 'required';
-                break;
-            case false:
-            default:
-                $type = 'optional';
-                break;
-        }
+        $type  = $element->getRequired() ? 'required' : 'optional';
 
         if (!strstr($class, $type)) {
             $class .= ' ' . $type;

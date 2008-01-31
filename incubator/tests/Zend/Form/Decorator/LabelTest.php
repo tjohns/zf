@@ -102,8 +102,10 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render($content);
         $this->assertRegexp('/<label[^>]*?class="[^"]*optional/', $test, $test);
 
-        $element->class = "foo";
+        $element->class = "bar";
+        $this->decorator->setOption('class', 'foo');
         $test = $this->decorator->render($content);
+        $this->assertNotContains('bar', $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*optional/', $test, $test);
     }
@@ -119,8 +121,10 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render($content);
         $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
 
-        $element->class = "foo";
+        $element->class = "bar";
+        $this->decorator->setOption('class', 'foo');
         $test = $this->decorator->render($content);
+        $this->assertNotContains('bar', $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
     }
