@@ -1807,6 +1807,15 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testCustomGlobalElementPrefixPathUsedInNewlyCreatedElements()
+    {
+        $this->form->addElementPrefixPath('My_Decorator', dirname(__FILE__) . '/_files/decorators', 'decorator');
+        $this->form->addElement('text', 'prefixTest');
+        $element = $this->form->prefixTest;
+        $label   = $element->getDecorator('Label');
+        $this->assertTrue($label instanceof My_Decorator_Label, get_class($label));
+    }
+
     public function testCanSetElementValidatorPrefixPath()
     {
         $this->setupElements();

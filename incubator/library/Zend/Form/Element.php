@@ -689,9 +689,21 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 }
             } elseif (!is_numeric($type)) {
                 if (!isset($paths['prefix']) || !isset($paths['path'])) {
-                    continue;
+                    foreach ($paths as $prefix => $spec) {
+                        if (is_array($spec)) {
+                            foreach ($spec as $path) {
+                                if (!is_string($path)) {
+                                    continue;
+                                }
+                                $this->addPrefixPath($prefix, $path, $type);
+                            }
+                        } elseif (is_string($spec)) {
+                            $this->addPrefixPath($prefix, $spec, $type);
+                        }
+                    }
+                } else {
+                    $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
                 }
-                $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
             }
         }
         return $this;

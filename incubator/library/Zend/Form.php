@@ -611,23 +611,34 @@ class Zend_Form implements Iterator, Countable
      */
     public function addElement($element, $name = null, $options = null)
     {
+        $prefixPaths              = array();
+        $prefixPaths['decorator'] = $this->getPluginLoader('decorator')->getPaths();
+        if (!empty($this->_elementPrefixPaths)) {
+            $prefixPaths = array_merge($prefixPaths, $this->_elementPrefixPaths);
+        }
+
         if (is_string($element)) {
             if (null === $name) {
                 require_once 'Zend/Form/Exception.php';
                 throw new Zend_Form_Exception('Elements specified by string must have an accompanying name');
             }
-            $class = $this->getPluginLoader(self::ELEMENT)->load($element);
-            $this->_elements[$name] = new $class($name);
-            if (!empty($this->_elementPrefixPaths)) {
-                $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
+
+            if ($options instanceof Zend_Config) {
+                $options = $options->toArray();
             }
-            if (null !== $options) {
-                if (is_array($options)) {
-                    $this->_elements[$name]->setOptions($options);
-                } elseif ($options instanceof Zend_Config) {
-                    $this->_elements[$name]->setConfig($options);
+
+            if ((null === $options) || !is_array($options)) {
+                $options = array('prefixPath' => $prefixPaths);
+            } elseif (is_array($options)) {
+                if (array_key_exists('prefixPath', $options)) {
+                    $options['prefixPath'] = array_merge($prefixPaths, $options['prefixPath']);
+                } else {
+                    $options['prefixPath'] = $prefixPaths;
                 }
             }
+
+            $class = $this->getPluginLoader(self::ELEMENT)->load($element);
+            $this->_elements[$name] = new $class($name, $options);
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
         } elseif ($element instanceof Zend_Form_Element) {
@@ -635,18 +646,9 @@ class Zend_Form implements Iterator, Countable
                 $name = $element->getName();
             }
             $this->_elements[$name] = $element;
-            if (!empty($this->_elementPrefixPaths)) {
-                $this->_elements[$name]->addPrefixPaths($this->_elementPrefixPaths);
-            }
+            $this->_elements[$name]->addPrefixPaths($prefixPaths);
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
-        }
-
-        $decoratorPaths = $this->getPluginLoader('decorator')->getPaths();
-        foreach ($decoratorPaths as $prefix => $paths) {
-            foreach ($paths as $path) {
-                $this->_elements[$name]->addPrefixPath($prefix, $path, 'decorator');
-            }
         }
 
         return $this;
