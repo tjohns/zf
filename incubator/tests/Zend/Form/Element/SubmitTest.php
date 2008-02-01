@@ -37,7 +37,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->element = new Zend_Form_Element_Submit('foo', array('value' => 'foo'));
+        $this->element = new Zend_Form_Element_Submit('foo');
     }
 
     /**
@@ -68,24 +68,9 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('formSubmit', $options['helper']);
     }
 
-    public function testSubmitElementRequiresValueByDefault()
+    public function testGetValueReturnsNameIfNoValuePresent()
     {
-        try {
-            $element = new Zend_Form_Element_Submit('foo');
-            $this->fail('Creating a submit element without a value should fail');
-        } catch (Zend_Form_Exception $e) {
-            $this->assertContains('require a value', $e->getMessage());
-        }
-    }
-
-    public function testConstructorInterpretsStringSecondArgumentAsElementValue()
-    {
-        try {
-            $element = new Zend_Form_Element_Submit('foo', 'foo');
-        } catch (Zend_Form_Exception $e) {
-            $this->fail('Passing a string argument as a second parameter should set the value');
-        }
-        $this->assertEquals('foo', $element->getValue());
+        $this->assertEquals($this->element->getName(), $this->element->getValue());
     }
 
     public function testGetValueReturnsTranslatedValueIfTranslatorIsRegistered()

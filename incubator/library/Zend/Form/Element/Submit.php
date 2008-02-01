@@ -64,6 +64,8 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
     /**
      * Return value
      *
+     * If no value is present, returns the currently set name.
+     *
      * If a translator is present, returns the translated value. Otherwise, 
      * returns the filtered value.
      * 
@@ -71,10 +73,16 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
      */
     public function getValue()
     {
-        if (null !== ($translator = $this->getTranslator())) {
-            return $translator->translate($this->_value);
+        $value = parent::getValue();
+
+        if (null === $value) {
+            $value = $this->getName();
         }
 
-        return parent::getValue();
+        if (null !== ($translator = $this->getTranslator())) {
+            return $translator->translate($value);
+        }
+
+        return $value;
     }
 }

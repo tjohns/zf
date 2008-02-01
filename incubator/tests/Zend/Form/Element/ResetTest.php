@@ -36,7 +36,7 @@ class Zend_Form_Element_ResetTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->element = new Zend_Form_Element_Reset('foo', 'Foo');
+        $this->element = new Zend_Form_Element_Reset('foo');
     }
 
     /**
