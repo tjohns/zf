@@ -59,12 +59,10 @@ class Zend_Form_Element_ImageTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element instanceof Zend_Form_Element);
     }
 
-    public function testImageElementUsesImageHelperInViewHelperDecoratorByDefault()
+    public function testImageElementUsesImageDecoratorByDefault()
     {
-        $decorator = $this->element->getDecorator('viewHelper');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $options = $decorator->getOptions();
-        $this->assertEquals('formImage', $options['helper']);
+        $decorator = $this->element->getDecorator('Image');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Image);
     }
 }
 

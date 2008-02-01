@@ -187,6 +187,16 @@ class Zend_Form_Element implements Zend_Validate_Interface
         /**
          * Register ViewHelper decorator by default
          */
+        $this->_loadDefaultDecorators();
+    }
+
+    /**
+     * Load default decorators
+     * 
+     * @return void
+     */
+    protected function _loadDefaultDecorators()
+    {
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper', array('helper' => $this->_defaultHelper))

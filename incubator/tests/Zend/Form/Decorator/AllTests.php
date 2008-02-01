@@ -10,7 +10,11 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 // error_reporting(E_ALL);
 
 require_once 'Zend/Form/Decorator/AbstractTest.php';
+require_once 'Zend/Form/Decorator/CallbackTest.php';
 require_once 'Zend/Form/Decorator/ErrorsTest.php';
+require_once 'Zend/Form/Decorator/HtmlTagTest.php';
+require_once 'Zend/Form/Decorator/FieldsetTest.php';
+require_once 'Zend/Form/Decorator/ImageTest.php';
 require_once 'Zend/Form/Decorator/LabelTest.php';
 require_once 'Zend/Form/Decorator/ViewHelperTest.php';
 
@@ -26,7 +30,11 @@ class Zend_Form_Decorator_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Form_Decorator');
 
         $suite->addTestSuite('Zend_Form_Decorator_AbstractTest');
+        $suite->addTestSuite('Zend_Form_Decorator_CallbackTest');
         $suite->addTestSuite('Zend_Form_Decorator_ErrorsTest');
+        $suite->addTestSuite('Zend_Form_Decorator_FieldsetTest');
+        $suite->addTestSuite('Zend_Form_Decorator_HtmlTagTest');
+        $suite->addTestSuite('Zend_Form_Decorator_ImageTest');
         $suite->addTestSuite('Zend_Form_Decorator_LabelTest');
         $suite->addTestSuite('Zend_Form_Decorator_ViewHelperTest');
 

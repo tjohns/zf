@@ -39,4 +39,20 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
      * @var string
      */
     protected $_defaultHelper = 'formImage';
+
+    /**
+     * Load default decorators
+     * 
+     * @return void
+     */
+    protected function _loadDefaultDecorators()
+    {
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('Image')
+                ->addDecorator('Errors')
+                ->addDecorator('HtmlTag', array('tag' => 'dd'))
+                ->addDecorator('Label', array('tag' => 'dt'));
+        }
+    }
 }
