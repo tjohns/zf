@@ -99,21 +99,27 @@ class Zend_Service_Technorati_Utils
          * @see Zend_Date
          */
         require_once 'Zend/Date.php';
+        /**
+         * @see Zend_Locale
+         */
+        require_once 'Zend/Locale.php';
         
         // allow null as value and return valid Zend_Date objects
         if (($input === null) || ($input instanceof Zend_Date)) {
             return $input;
         }
         
-        if (!Zend_Date::isDate($input)) {
+        // due to a BC break as of ZF 1.5 it's not safe to use Zend_Date::isDate() here
+        // see ZF-2524, ZF-2334
+        if (@strtotime($input) !== FALSE) {
+            return new Zend_Date($input);
+        } else {
             /**
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception("'$input' is not a valid Date/Time");
         }
-
-        return new Zend_Date($input);
     }
     
     /**
