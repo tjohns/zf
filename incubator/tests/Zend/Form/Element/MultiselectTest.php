@@ -9,6 +9,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Multiselect.php';
+require_once 'Zend/Translate.php';
 
 /**
  * Test class for Zend_Form_Element_Multiselect
@@ -137,6 +138,27 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $html = $this->element->render($this->getView());
         foreach ($options as $value => $label) {
             $this->assertRegexp('/<option.*value="' . $value . '"[^>]*>' . $label . '/s', $html, $html);
+        }
+    }
+
+    public function testOptionValuesAreTranslatedWhenTranslateAdapterIsPresent()
+    {
+        $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
+        $translate    = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $options = array(
+            'foovalue' => 'Foo',
+            'barvalue' => 'Bar'
+        );
+        $this->element->addMultiOptions($options)
+                      ->setTranslator($translate->getAdapter());
+        $test = $this->element->getMultiOption('barvalue');
+        $this->assertEquals($translations['barvalue'], $test);
+
+        $test = $this->element->getMultiOptions();
+        foreach ($test as $key => $value) {
+            $this->assertEquals($translations[$key], $value);
         }
     }
 }

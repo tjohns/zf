@@ -133,6 +133,13 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
         $option  = (string) $option;
         $this->_getMultiOptions();
         if (isset($this->options[$option])) {
+            if (null !== ($translator = $this->getTranslator())) {
+                $translated = $translator->translate($option);
+                if ($translated !== $option) {
+                    return $translated;
+                }
+            }
+
             return $this->options[$option];
         }
 
@@ -146,7 +153,21 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function getMultiOptions()
     {
-        return $this->_getMultiOptions();
+        $this->_getMultiOptions();
+        if (null === ($translator = $this->getTranslator())) {
+            return $this->options;
+        }
+
+        $options = array();
+        foreach ($this->options as $key => $value) {
+            $translated = $translator->translate($key);
+            if ($key === $translated) {
+                $options[$key] = $value;
+            } else {
+                $options[$key] = $translated;
+            }
+        }
+        return $options;
     }
 
     /**
