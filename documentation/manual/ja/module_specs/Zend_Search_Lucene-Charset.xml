@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7745 -->
 <sect1 id="zend.search.lucene.charset">
     <title>文字セット</title>
 
@@ -57,14 +58,30 @@
                </para>
             </footnote>
         </para>
+
+        <note>
+            <title/>
+            <para>
+                デフォルトの解析器は、数字は単語の一部として扱いません。
+                数字で単語を分断されたくない場合は、'Num' 解析器を使用しましょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.search.lucene.charset.utf_analyzer">
         <title>UTF-8 互換のテキスト解析器</title>
 
         <para>
-            Zend_Search_Lucene には、機能を絞り込んだ UTF-8 解析器も含まれています。
-            これを有効にするには、以下のようなコードを使用します。
+            Zend_Search_Lucene には、
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>、
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>、
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>、
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>
+            といった UTF-8 解析器も含まれています。
+        </para>
+
+        <para>
+             これを有効にするには、以下のようなコードを使用します。
 
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
@@ -73,31 +90,40 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            これは、データを UTF-8 モードでトークン化してインデックスを作成し、
-            UTF-8 互換の文字で何の問題もなく動作します。
+            これらの解析器を使用するには、PCRE (Perl 互換正規表現)
+            ライブラリを UTF-8 サポート込みでコンパイルしておく必要があります。
+            PHP のソースコードに同梱されている PCRE ライブラリのソースでは
+            PCRE の UTF-8 サポートは有効になっているのですが、
+            バンドル版でなく共有ライブラリを使用している場合などは、
+            OS によって UTF-8 サポートの状態が異なるかもしれません。
         </para>
 
         <para>
-            この解析器には、次のふたつの制限事項があります。
-            <itemizedlist>
-                <listitem>
-                    <para>非 ascii 文字を、すべて文字として扱う (常にそうだというわけではありません)</para>
-                </listitem>
-                <listitem>
-                    <para>大文字小文字を区別する</para>
-                </listitem>
-            </itemizedlist>
-        </para>
+             PCRE が UTF-8 に対応しているかどうかを調べるには、次のコードを使用します。
 
-        <para>
-            これらの制限があるためにこの解析器はデフォルトにはなっていません。
-            しかし、これが便利に使えるかたもいることでしょう。
-        </para>
-
-        <para>
-            大文字小文字を区別しないようにさせるには、
-            <code>strtolower()</code> による変換を使用します。
             <programlisting role="php"><![CDATA[<?php
+if (@preg_match('/\pL/u', 'a') == 1) {
+    echo "PCRE は unicode をサポートしています。\n";
+} else {
+    echo "PCRE は unicode をサポートしていません。\n";
+}]]>
+            </programlisting>
+        </para>
+        
+        <para>
+            大文字小文字を区別しないバージョンの UTF-8 互換解析器を使用する場合は、さらに
+            <ulink url="http://www.php.net/manual/en/ref.mbstring.php">mbstring</ulink>
+            拡張モジュールが必要です。
+        </para>
+        
+        <para>
+            「mbstring 拡張モジュールは使いたくないけれど、大文字小文字を区別しない検索はしたい」
+            という場合は、次のようにします。
+            まず、インデックス化の前に元データを正規化し、
+            検索の際にはクエリ文字列を小文字に変換します。
+        
+            <programlisting role="php"><![CDATA[<?php
+// インデックス化
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
 ...
@@ -117,11 +143,9 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
 // 取得用の Title フィールド (インデックス化せず、保存します)
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
             </programlisting>
-        </para>
 
-        <para>
-            同様の変換を、クエリ文字列でも行う必要があります。
             <programlisting role="php"><![CDATA[<?php
+// 検索
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
 ...

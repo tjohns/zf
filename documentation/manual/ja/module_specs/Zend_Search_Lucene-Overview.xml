@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7745 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -52,6 +53,7 @@
             を参照ください。
         </para>
         <note>
+            <title/>
             <para>
                 以前の Zend_Search_Lucene の実装は Lucene 1.9 インデックスフォーマットに対応しています。
             </para>
