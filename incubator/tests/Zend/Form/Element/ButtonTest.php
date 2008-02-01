@@ -36,7 +36,7 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->element = new Zend_Form_Element_Button('foo');
+        $this->element = new Zend_Form_Element_Button('foo', 'Foo');
     }
 
     /**
@@ -47,6 +47,11 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+    }
+
+    public function testButtonElementSubclassesSubmitElement()
+    {
+        $this->assertTrue($this->element instanceof Zend_Form_Element_Submit);
     }
 
     public function testButtonElementSubclassesXhtmlElement()

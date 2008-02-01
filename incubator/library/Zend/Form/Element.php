@@ -903,10 +903,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function isValid($value, $context = null)
     {
-        $this->setValue($value);
         if (empty($value) && !$this->getRequired() && $this->getAllowEmpty()) {
             return true;
         }
+
+        $this->setValue($value);
 
         $this->_messages = array();
         $this->_errors   = array();

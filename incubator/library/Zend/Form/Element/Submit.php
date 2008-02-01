@@ -39,4 +39,42 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
      * @var string
      */
     protected $_defaultHelper = 'formSubmit';
+
+    /**
+     * Constructor
+     * 
+     * @param  string|array|Zend_Config $spec Element name or configuration
+     * @param  string|array|Zend_Config $options Element value or configuration
+     * @return void
+     */
+    public function __construct($spec, $options = null)
+    {
+        if (is_string($spec) && ((null !== $options) && is_string($options))) {
+            $options = array('value' => $options);
+        }
+
+        parent::__construct($spec, $options);
+
+        if (null === $this->getValue()) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Submit elements require a value; no value provided');
+        }
+    }
+
+    /**
+     * Return value
+     *
+     * If a translator is present, returns the translated value. Otherwise, 
+     * returns the filtered value.
+     * 
+     * @return string
+     */
+    public function getValue()
+    {
+        if (null !== ($translator = $this->getTranslator())) {
+            return $translator->translate($this->_value);
+        }
+
+        return parent::getValue();
+    }
 }

@@ -36,7 +36,7 @@ class Zend_Form_Element_ResetTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->element = new Zend_Form_Element_Reset('foo');
+        $this->element = new Zend_Form_Element_Reset('foo', 'Foo');
     }
 
     /**
@@ -47,6 +47,11 @@ class Zend_Form_Element_ResetTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+    }
+
+    public function testResetElementSubclassesSubmitElement()
+    {
+        $this->assertTrue($this->element instanceof Zend_Form_Element_Submit);
     }
 
     public function testResetElementSubclassesXhtmlElement()

@@ -9,6 +9,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Submit.php';
+require_once 'Zend/Translate.php';
 
 /**
  * Test class for Zend_Form_Element_Submit
@@ -36,7 +37,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->element = new Zend_Form_Element_Submit('foo');
+        $this->element = new Zend_Form_Element_Submit('foo', array('value' => 'foo'));
     }
 
     /**
@@ -65,6 +66,36 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
         $options = $decorator->getOptions();
         $this->assertEquals('formSubmit', $options['helper']);
+    }
+
+    public function testSubmitElementRequiresValueByDefault()
+    {
+        try {
+            $element = new Zend_Form_Element_Submit('foo');
+            $this->fail('Creating a submit element without a value should fail');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('require a value', $e->getMessage());
+        }
+    }
+
+    public function testConstructorInterpretsStringSecondArgumentAsElementValue()
+    {
+        try {
+            $element = new Zend_Form_Element_Submit('foo', 'foo');
+        } catch (Zend_Form_Exception $e) {
+            $this->fail('Passing a string argument as a second parameter should set the value');
+        }
+        $this->assertEquals('foo', $element->getValue());
+    }
+
+    public function testGetValueReturnsTranslatedValueIfTranslatorIsRegistered()
+    {
+        $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $this->element->setTranslator($translate->getAdapter())
+                      ->setValue('submit');
+        $test = $this->element->getValue();
+        $this->assertEquals($translations['submit'], $test);
     }
 }
 
