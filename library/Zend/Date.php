@@ -1177,7 +1177,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * @param  integer  $value year number
      * @return integer  Number of year
      */
-    private function _century($value)
+    private static function _century($value)
     {
         if ($value >= 0) {
             if ($value < 70) {
@@ -2152,12 +2152,14 @@ class Zend_Date extends Zend_Date_DateObject {
                 if (!empty($timematch)) {
                     $tmpdate = substr($tmpdate, strlen($timematch[0])); 
                 }
+/* @todo: AUTOMATIC TIMEZONE 
                 if (!empty($tmpdate)) {
                     $zone = $this->_findZone($tmpdate);
                     if ($zone != 0) {
-//                        $timematch[1] += $zone;
+                        $timematch[1] += $zone;
                     }
                 }
+*/
                 if (empty($datematch)) {
                     $datematch[1] = 1970;
                     $datematch[2] = 1;
@@ -2595,6 +2597,9 @@ class Zend_Date extends Zend_Date_DateObject {
                             $part .= Zend_Locale_Format::getTimeFormat($locale);
                         }
                         $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fix_date' => true, 'format_type' => 'iso'));
+                        if ((strpos(strtoupper($part), 'YY') !== false) and (strpos(strtoupper($part), 'YYYY') === false)) {
+                            $parsed['year'] = self::_century($parsed['year']);
+                        }
                         if ($calc == 'set') {
                             if (isset($parsed['month'])) {
                                 --$parsed['month'];
@@ -2894,6 +2899,9 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 try {
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'locale' => $locale, 'format_type' => 'iso'));
+                    if ((strpos(strtoupper($format), 'YY') !== false) and (strpos(strtoupper($format), 'YYYY') === false)) {
+                        $parsed['year'] = self::_century($parsed['year']);
+                    }
                 } catch (Zend_Locale_Exception $e) {
                     require_once 'Zend/Date/Exception.php';
                     throw new Zend_Date_Exception($e->getMessage());
@@ -4592,7 +4600,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
     /**
      * Checks if the given date is a real date or datepart.
-     * Returns false is a expected datepart is missing or a datepart exceeds its possible border.
+     * Returns false if a expected datepart is missing or a datepart exceeds its possible border.
      * But the check will only be done for the expected dateparts which are given by format.
      * If no format is given the standard dateformat for the actual locale is used.
      * f.e. 30.February.2007 will return false if format is 'dd.MMMM.YYYY'
@@ -4622,6 +4630,9 @@ class Zend_Date extends Zend_Date_DateObject {
 
         try {
             $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'date_format' => $format, 'format_type' => 'iso', 'fix_date' => false));
+            if ((strpos(strtoupper($format), 'YY') !== false) and (strpos(strtoupper($format), 'YYYY') === false)) {
+                $parsed['year'] = self::_century($parsed['year']);
+            }
         } catch (Zend_Locale_Exception $e) {
             // date can not be parsed
             return false;
@@ -4674,7 +4685,6 @@ class Zend_Date extends Zend_Date_DateObject {
         $date = new self($locale);
         $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                    $parsed['month'], $parsed['day'], $parsed['year']);
-
         if ($parsed['year'] != $date->date('Y', $timestamp)) {
             // given year differs from parsed year
             return false;
