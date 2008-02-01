@@ -891,6 +891,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
     /**
      * Validate element value
+     *
+     * If a translation adapter is registered, any error messages will be 
+     * translated according to the current locale, using the given error code; 
+     * if no matching translation is found, the original message will be 
+     * utilized.
      * 
      * @param  mixed $value 
      * @param  mixed $context 
@@ -919,6 +924,16 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 break;
             }
         }
+
+        if (null !== ($translator = $this->getTranslator())) {
+            foreach ($this->_messages as $key => $message) {
+                $translated = $translator->translate($key);
+                if ($translated !== $key) {
+                    $this->_messages[$key] = $translated;
+                }
+            }
+        }
+
         return $result;
     }
 

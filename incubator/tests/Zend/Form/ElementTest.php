@@ -16,6 +16,7 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
 require_once 'Zend/Loader/PluginLoader.php';
+require_once 'Zend/Translate.php';
 require_once 'Zend/Translate/Adapter/Array.php';
 require_once 'Zend/Validate/NotEmpty.php';
 require_once 'Zend/Validate/EmailAddress.php';
@@ -552,6 +553,42 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue($found, 'Not digits message not found');
         $this->assertEquals($messageTemplates[Zend_Validate_Digits::NOT_DIGITS], $message);
+    }
+
+    public function testMessagesAreTranslatedForCurrentLocale()
+    {
+        $localeFile   = dirname(__FILE__) . '/_files/locale/array.php';
+        $translations = include($localeFile);
+        $translator   = new Zend_Translate('array', $translations, 'en');
+        $translator->setLocale('en');
+
+        $this->element->setAllowEmpty(false)
+                      ->setTranslator($translator->getAdapter())
+                      ->addValidator('digits');
+
+        $this->element->isValid('');
+        $messages = $this->element->getMessages();
+        $found    = false;
+        foreach ($messages as $key => $message) {
+            if ($key == 'stringEmpty') {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'String Empty message not found: ' . var_export($messages, 1));
+        $this->assertEquals($translations['stringEmpty'], $message);
+
+        $this->element->isValid('abc');
+        $messages = $this->element->getMessages();
+        $found    = false;
+        foreach ($messages as $key => $message) {
+            if ($key == 'notDigits') {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'Not Digits message not found');
+        $this->assertEquals($translations['notDigits'], $message);
     }
 
     public function testCanRemoveValidator()
