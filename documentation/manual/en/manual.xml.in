@@ -291,8 +291,10 @@
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-BundledServices.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-AdvancedUses.xml" />
+        <xi:include href="module_specs/Zend_Service_Technorati.xml" />
         <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
     </chapter>
+
     <chapter id="zend.session">
         <title>Zend_Session</title>
         <xi:include href="module_specs/Zend_Session-Introduction.xml" />
