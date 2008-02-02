@@ -241,7 +241,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-        $date   = new Zend_Date(10000000);
+        try {
+            $date   = new Zend_Date(10000000);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertSame(10000000, $date->getTimestamp());
     }
 
@@ -251,7 +255,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testgetUnixTimestamp2()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(-100000000);
+        try {
+            $date = new Zend_Date(-100000000);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertSame(-100000000, $date->getTimestamp());
     }
 
@@ -3174,7 +3182,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->setTime(Zend_Date::now());
+        try {
+            $result = $date->setTime(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setTime('10:20:30');
         $this->assertSame('2009-02-14T10:20:30+05:00', $result->get(Zend_Date::W3C));
@@ -3201,7 +3213,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->addTime(Zend_Date::now());
+        try {
+            $result = $date->addTime(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
@@ -3227,7 +3243,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->subTime(Zend_Date::now());
+        try {
+            $result = $date->subTime(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
@@ -3301,7 +3321,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->setDate(Zend_Date::now());
+        try {
+            $result = $date->setDate(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setDate('11.05.2008');
         // Hint: the hour changes from 0 to 1 because of DST...
@@ -3328,7 +3352,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->addDate(Zend_Date::now());
+        try {
+            $result = $date->addDate(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
@@ -3359,7 +3387,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->subDate(Zend_Date::now());
+        try {
+            $result = $date->subDate(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
@@ -3420,7 +3452,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->setIso(Zend_Date::now());
+        try {
+            $result = $date->setIso(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setIso('2002-01-04T00:00:00+0000');
         $this->assertSame('2002-01-04T00:00:00+05:00', $result->get(Zend_Date::W3C));
@@ -3438,7 +3474,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,$locale);
         $d2   = new Zend_Date(1234567899,$locale);
 
-        $result = $date->addIso(Zend_Date::now());
+        try {
+            $result = $date->addIso(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
     }
 
@@ -3478,7 +3518,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,null,$locale);
         $d2   = new Zend_Date(1234567899,null,$locale);
 
-        $result = $date->subIso(Zend_Date::now());
+        try {
+            $result = $date->subIso(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
     }
 
@@ -3551,7 +3595,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1234567899,$locale);
         $date->setTimezone('Indian/Maldives');
 
-        $result = $date->setArpa(Zend_Date::now());
+        try {
+            $result = $date->setArpa(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->setArpa('Sat, 03 May 01 00:00:00 +0500');
         $this->assertSame('Thu, 03 May 01 00:00:00 +0500', $result->get(Zend_Date::RFC_822));
@@ -3574,7 +3622,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,$locale);
         $d2   = new Zend_Date(1234567899,$locale);
 
-        $result = $date->addArpa(Zend_Date::now());
+        try {
+            $result = $date->addArpa(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,$locale);
@@ -3605,7 +3657,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(1234567890,$locale);
         $d2   = new Zend_Date(1234567899,$locale);
 
-        $result = $date->subArpa(Zend_Date::now());
+        try {
+            $result = $date->subArpa(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue($result instanceof Zend_Date);
 
         $date = new Zend_Date(1234567890,null,$locale);
@@ -3824,7 +3880,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = new Zend_Date(Zend_Date::now());
+        try {
+            $date = new Zend_Date(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $d2 = new Zend_Date(1010101010,$locale);
 
         $this->assertFalse($d2->isToday());
@@ -3838,7 +3898,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = new Zend_Date(Zend_Date::now());
+        try {
+            $date = new Zend_Date(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $d2 = new Zend_Date(1010101010,$locale);
         $date->subDay(1);
         $this->assertFalse($d2->isYesterday());
@@ -3852,7 +3916,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = new Zend_Date(Zend_Date::now());
+        try {
+            $date = new Zend_Date(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $d2 = new Zend_Date(1010101010,$locale);
 
         $date->addDay(1);
@@ -3903,7 +3971,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $locale = new Zend_Locale('de_AT');
 
-        $date = Zend_Date::now();
+        try {
+            $date = Zend_Date::now();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
 
         $reference = date('U');
         $this->assertTrue(($reference - $date->get(Zend_Date::TIMESTAMP)) < 2);
@@ -3935,7 +4007,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date(1577833200,$locale);
-        $date2 = new Zend_Date(2006, Zend_Date::YEAR);
+        try {
+            $date2 = new Zend_Date(2006, Zend_Date::YEAR);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $date->setTimeZone(date_default_timezone_get());
 
         $date->setYear(2000);
@@ -4099,7 +4175,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date(1577833200,$locale);
-        $date2 = new Zend_Date(2006, Zend_Date::YEAR);
+        try {
+            $date2 = new Zend_Date(2006, Zend_Date::YEAR);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $date->setTimeZone(date_default_timezone_get());
 
         $date->setMonth(3);
@@ -4147,7 +4227,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2020-11-01T00:00:00+01:00', $date->get(Zend_Date::W3C));
 
         Zend_Date::setOptions(array('fix_dst' => true));
-        $date = new Zend_Date('2007-10-01 00:00:00', Zend_Date::ISO_8601);
+        try {
+            $date = new Zend_Date('2007-10-01 00:00:00', Zend_Date::ISO_8601);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertSame('2007-10-01 00:00:00', $date->toString('yyyy-MM-dd HH:mm:ss'));
         $date->addMonth(1);
         $this->assertSame('2007-11-01 00:00:00', $date->toString('yyyy-MM-dd HH:mm:ss'));
@@ -4245,7 +4329,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testLocale()
     {
-        $date = new Zend_Date(Zend_Date::now());
+        try {
+            $date = new Zend_Date(Zend_Date::now());
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $locale = new Zend_Locale('en_Us');
         $set = $date->setLocale($locale);
         $this->assertSame($set, $date->getLocale());
@@ -4825,6 +4913,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             }
         } catch (Zend_TimeSync_Exception $e) {
             $this->markTestIncomplete('NTP timeserver not available.');
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
         }
     }
 
@@ -4838,7 +4928,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date1->getTimestamp(), $date2->getTimestamp());
 
         date_default_timezone_set('GMT');
-        $date = new Zend_Date(0); // 1970-01-01 is a Thursday (should be 4 for 'w' format specifier)
+        try {
+            $date = new Zend_Date(0); // 1970-01-01 is a Thursday (should be 4 for 'w' format specifier)
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertSame(gmdate('w',$date->getTimestamp()), $date->toString(                    'eee'));
         $this->assertSame(gmdate('d',$date->getTimestamp()), $date->toString(                     'dd'));
         $this->assertSame(gmdate('D',$date->getTimestamp()), $date->toString(              'EEE', 'en'));
@@ -5043,7 +5137,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
     public function testDaylightsaving()
     {
-        $date = new Zend_Date('2007.03.25', Zend_Date::DATES);
+        try {
+            $date = new Zend_Date('2007.03.25', Zend_Date::DATES);
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $date->set('16:00:00', Zend_Date::TIMES);
         $this->assertEquals('2007-03-25T16:00:00+05:00', $date->get(Zend_Date::W3C));
         $date->set('01:00:00', Zend_Date::TIMES);
@@ -5096,7 +5194,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
     public function testIsDate()
     {
-        $this->assertTrue(Zend_Date::isDate('25.03.2007', 'de_AT'));
+        try {
+            $this->assertTrue(Zend_Date::isDate('25.03.2007', 'de_AT'));
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertTrue(Zend_Date::isDate('2007.03.25', 'YYYY.MM.dd'));
         $this->assertTrue(Zend_Date::isDate('25.Mai.2007', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertTrue(Zend_Date::isDate('25.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
@@ -5126,8 +5228,12 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         date_default_timezone_set('UTC');
 
-        $date = new Zend_Date(array('year' => 2007, 'month' => 1, 'day' => 1,
-                                    'hour' => 20, 'minute' => 45, 'second' => 37, 'en_US'));
+        try {
+            $date = new Zend_Date(array('year' => 2007, 'month' => 1, 'day' => 1,
+                                        'hour' => 20, 'minute' => 45, 'second' => 37, 'en_US'));
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $this->assertSame('2007-01-01T20:45:37+00:00', $date->getIso());
 
         date_default_timezone_set('CET');

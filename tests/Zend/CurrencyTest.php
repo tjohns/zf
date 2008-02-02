@@ -265,6 +265,8 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
             $this->fail("exception expected");
         } catch (Zend_Currency_Exception $e) {
             // success
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
         }
 
         $currency = new Zend_Currency('EUR', 'de_AT');
