@@ -984,7 +984,7 @@ class Zend_Form implements Iterator, Countable
         if (!empty($this->_elementPrefixPaths)) {
             foreach ($this->_elementPrefixPaths as $spec) {
                 list($prefix, $path, $type) = $spec;
-                $form->addElementPrefixPath($prefix, $path, $spec);
+                $form->addElementPrefixPath($prefix, $path, $type);
             }
         }
 
