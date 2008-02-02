@@ -68,7 +68,7 @@ class Zend_Locale {
         'ug'    => true, 'uk_UA' => true, 'uk'    => true, 'und_ZZ'=> true, 'und'   => true, 'ur_IN' => true, 'ur_PK' => true, 'ur'    => true, 'uz_AF' => true, 'uz_UZ' => true,
         'uz'    => true, 've_ZA' => true, 've'    => true, 'vi_VN' => true, 'vi'    => true, 'wal_ET'=> true, 'wal'   => true, 'wo_SN' => true, 'wo'    => true, 'xh_ZA' => true,
         'xh'    => true, 'yo_NG' => true, 'yo'    => true, 'zh_CN' => true, 'zh_HK' => true, 'zh_MO' => true, 'zh_SG' => true, 'zh_TW' => true, 'zh'    => true, 'zu_ZA' => true,
-        'zu'    => true, 
+        'zu'    => true,
         'auto'  => false, 'browser' => false, 'environment' => false
     );
 
@@ -99,8 +99,6 @@ class Zend_Locale {
     private static $_browser;
     private static $_environment;
 
-    private static $_Default;
-
     /**
      * Generates a locale object
      * If no locale is given a automatic search is done
@@ -120,8 +118,7 @@ class Zend_Locale {
             self::$_auto        = $this->getDefault(null, false);
             self::$_browser     = $this->getDefault(self::BROWSER, false);
             self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
-            if (empty($locale) and empty(self::$_auto) and empty(self::$_Default)) {
-                require_once 'Zend/Locale/Exception.php';
+            if (empty($locale) and empty(self::$_auto)) {
                 throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
             }
         }
@@ -215,38 +212,7 @@ class Zend_Locale {
             }
 
         }
-
-        if (!array_key_exists(self::$_Default, $languages)) {
-            $languages[self::$_Default] = 0.1;
-        }
         return $languages;
-    }
-
-
-    /**
-     * Sets a new default locale
-     *
-     * @param String $locale
-     */
-    public static function setDefault($locale)
-    {
-        if (($locale == "auto") or ($locale == "root") or 
-            ($locale == "environment") or ($locale == "browser")) {
-            require_once 'Zend/Locale/Exception.php';
-            throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
-        }
-        if (array_key_exists($locale, self::$_localeData)) {
-            self::$_Default = $locale;
-            return true;
-        } else {
-            $locale = explode('_', $locale);
-            if (array_key_exists($locale[0], self::$_localeData)) {
-                self::$_Default = $locale[0];
-                return true;
-            }
-        }
-        require_once 'Zend/Locale/Exception.php';
-        throw new Zend_Locale_Exception("Unknown locale '$locale' can not be set as default!");
     }
 
 
@@ -265,38 +231,31 @@ class Zend_Locale {
 
         $language = setlocale(LC_ALL, 0);
         $languages = explode(';', $language);
-
         $languagearray = array();
 
-        foreach ($languages as $locale) {
+        foreach ($languages as $locale)
+        {
 
-            if (strpos($locale, '=') !== false) {
-                $language = substr($locale, strpos($locale, '='));
-                $language = substr($language, 1);
-            }
+            $language = substr($locale, strpos($locale, '='));
+            if ($language != '=C') {
 
-            if ($language != 'C') {
-                if (strpos($language, '.') !== false) {
-                    $language = substr($language, 0, strpos($language, '.') - 1);
-                } else if (strpos($language, '@') !== false) {
-                    $language = substr($language, 0, strpos($language, '@') - 1);
-                }
-                $splitted = explode('_', $language);
-                if (array_key_exists((string) $language, self::$_localeData)) {
-                    $languagearray[$language] = 1;
-                    if (strlen($language) > 4) {
-                        $languagearray[substr($language, 0, 2)] = 1;
-                    }
-                    continue;
-                }
+               $language = substr($language, 1, strpos($language, '.') - 1);
+               $splitted = explode('_', $language);
+               if (array_key_exists((string) $language, self::$_localeData)) {
+                   $languagearray[$language] = 1;
+                   if (strlen($language) > 4) {
+                       $languagearray[substr($language, 0, 2)] = 1;
+                   }
+                   continue;
+               }
 
-                if (!empty(Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]])) {
-                    if (!empty(Zend_Locale_Data_Translation::$localeTranslation[$splitted[1]])) {
-                        $languagearray[Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]] . '_'
-                      . Zend_Locale_Data_Translation::$localeTranslation[$splitted[1]]] = 1;
-                    }
-                    $languagearray[Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]]] = 1;
-                }
+               if (!empty(Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]])) {
+                   if (!empty(Zend_Locale_Data_Translation::$localeTranslation[$splitted[1]])) {
+                       $languagearray[Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]] . '_'
+                     . Zend_Locale_Data_Translation::$localeTranslation[$splitted[1]]] = 1;
+                   }
+                   $languagearray[Zend_Locale_Data_Translation::$localeTranslation[$splitted[0]]] = 1;
+               }
             }
         }
         return $languagearray;
@@ -493,7 +452,7 @@ class Zend_Locale {
      * 'language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
      * 'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
      * 'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail'
-     * 'language_detail', 'characters', 'month_complete'
+     * 'language_detail', 'characters'
      * For detailed information about the types look into the documentation
      *
      * @param  string         $type    OPTIONAL Type of information to return
@@ -557,15 +516,6 @@ class Zend_Locale {
                 break;
             case 'month_narrow' :
                 return Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
-                break;
-            case 'month_complete' :
-                $month['format']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
-                $month['format']['narrow']      = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'narrow'));
-                $month['format']['wide']        = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
-                $month['standalone']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'abbreviated'));
-                $month['standalone']['narrow']  = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
-                $month['standalone']['wide']    = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'wide'));
-                return $month;
                 break;
             case 'day' :
                 return Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
@@ -836,7 +786,7 @@ class Zend_Locale {
                 break;
             case 'characters' :
                 $list = Zend_Locale_Data::getContent($locale, 'characters');
-                return $list['characters'];
+                return $list[0];
                 break;
             default :
                 return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
@@ -931,54 +881,12 @@ class Zend_Locale {
         $quest = Zend_Locale_Data::getContent($locale, 'questionstrings');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
-        $quest['yes']      = $yes[0];
-        $quest['yesarray'] = $yes;
-        $quest['no']       = $no[0];
-        $quest['noarray']  = $no;
-        $quest['yesexpr']  = $this->_getRegex($yes);
-        $quest['noexpr']   = $this->_getRegex($no);
+        $quest['yes']     = $yes[0];
+        $quest['yesabbr'] = $yes[1];
+        $quest['no']      = $no[0];
+        $quest['noabbr']  = $no[1];
 
         return $quest;
-    }
-
-
-    /**
-     * Internal function for creating a regex
-     *
-     * @param string  $input
-     * @return string
-     */
-    private function _getRegex($input)
-    {
-        $regex = "";
-        if (is_array($input)) {
-            $regex = "^";
-            $start = true;
-            foreach($input as $row) {
-                if ($start === false) {
-                    $regex .= "|";
-                }
-                $start = false;
-                $regex .= "(";
-                $one = null;
-                if (strlen($row) > 2) {
-                    $one = true;
-                }
-                foreach (str_split($row, 1) as $char) {
-                    $regex .= "[" . $char;
-                    $regex .= strtoupper($char) . "]";
-                    if ($one === true) {
-                        $one = false;
-                        $regex .= "(";
-                    }
-                }
-                if ($one === false) {
-                    $regex .= ")";
-                }
-                $regex .= "?)";
-            }
-        }
-        return $regex;
     }
 
 
@@ -995,7 +903,7 @@ class Zend_Locale {
     public static function isLocale($locale, $create = false)
     {
         if (empty($locale) and ($create === true)) {
-            $locale = new self();
+            $locale = new Zend_Locale();
         }
         if ($locale instanceof Zend_Locale) {
             return $locale->toString();
@@ -1004,7 +912,7 @@ class Zend_Locale {
             return false;
         }
         if (empty(self::$_auto)) {
-            $temp = new self($locale);
+            $temp = new Zend_Locale($locale);
             self::$_auto        = $temp->getDefault(null, false);
             self::$_browser     = $temp->getDefault(self::BROWSER, false);
             self::$_environment = $temp->getDefault(self::ENVIRONMENT, false);
@@ -1054,6 +962,7 @@ class Zend_Locale {
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
+
         Zend_Locale_Data::setCache($cache);
     }
 }
