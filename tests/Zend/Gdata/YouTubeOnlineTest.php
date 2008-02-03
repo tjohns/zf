@@ -23,6 +23,7 @@
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube.php';
+require_once 'Zend/Gdata/YouTube/VideoQuery.php';
 
 /**
  * @package Zend_Gdata
@@ -68,13 +69,42 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getUserUploads($this->ytAccount);
         $this->assertEquals('Zfgdata\'s Videos', $feed->title->text);
-        $this->assertTrue(count($feed->entry) === 0);
+        $this->assertTrue(count($feed->entry) === 1);
+    }
+
+    public function testRetrieveVideoFeed()
+    {
+        $feed = $this->gdata->getVideoFeed();
+
+        $query = new Zend_Gdata_YouTube_VideoQuery();
+        $query->setVideoQuery('puppy');
+        $feed = $this->gdata->getVideoFeed($query);
+
+        $feed = $this->gdata->getVideoFeed($query->getQueryUrl());
+    }
+
+    public function testRetrieveVideoEntry()
+    {
+        $entry = $this->gdata->getVideoEntry('66wj2g5yz0M');
+        $this->assertEquals('TestMovie', $entry->title->text);
+
+        $entry = $this->gdata->getVideoEntry(null, 'http://gdata.youtube.com/feeds/videos/66wj2g5yz0M');
+        $this->assertEquals('TestMovie', $entry->title->text);
+    }
+
+    public function testRetrieveOtherFeeds()
+    {
+        $feed = $this->gdata->getRelatedVideoFeed('66wj2g5yz0M');
+        $feed = $this->gdata->getVideoResponseFeed('66wj2g5yz0M');
+        $feed = $this->gdata->getVideoCommentFeed('66wj2g5yz0M');
+        $feed = $this->gdata->getWatchOnMobileVideoFeed();
+        $feed = $this->gdata->getUserFavorites('zfgdata');
     }
 
     public function testRetrieveUserProfile()
     {
         $entry = $this->gdata->getUserProfile($this->ytAccount);
-        $this->assertEquals('Lonely TestAccount (zfgdata)', $entry->title->text);
+        $this->assertEquals('zfgdata Channel', $entry->title->text);
         $this->assertEquals('zfgdata', $entry->username->text);
         $this->assertEquals('I\'m a lonely test account, with little to do but sit around and wait for people to use me.  I get bored in between releases and often sleep to pass the time.  Please use me more often, as I love to show off my talent in breaking your code.',
                 $entry->description->text);
