@@ -22,36 +22,41 @@
 require_once 'Zend/Gdata/Calendar.php';
 require_once 'Zend/Gdata/Calendar/EventQuery.php';
 require_once 'Zend/Http/Client.php';
-require_once 'PHPUnit/Extensions/ExceptionTestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package Zend_Gdata
  * @subpackage UnitTests
  */
-class Zend_Gdata_Calendar_EventQueryExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
+class Zend_Gdata_Calendar_EventQueryExceptionTest extends PHPUnit_Framework_TestCase
 {
     
     const GOOGLE_DEVELOPER_CALENDAR = 'developer-calendar@google.com';
+
     public function setUp()
     {
         $this->query = new Zend_Gdata_Calendar_EventQuery();
     }
 
+    /**
+     * @expectedException Zend_Gdata_App_Exception
+     */
     public function testSingleEventsThrowsExceptionOnSetInvalidValue()
     {
         $this->query->resetParameters();
         $singleEvents = 'puppy';        
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
-        $this->setExpectedException("Zend_Gdata_App_Exception");
         $this->query->setSingleEvents($singleEvents);
     }
 
+    /**
+     * @expectedException Zend_Gdata_App_Exception
+     */
     public function testFutureEventsThrowsExceptionOnSetInvalidValue()
     {
         $this->query->resetParameters();
         $futureEvents = 'puppy';        
         $this->query->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
-        $this->setExpectedException("Zend_Gdata_App_Exception");
         $this->query->setFutureEvents($futureEvents);
     }
     
