@@ -309,14 +309,12 @@ abstract class Zend_Date_DateObject {
             date_default_timezone_set($this->_timezone);
         }
         if ($timestamp === null) {
-
             $result = ($gmt) ? @gmdate($format) : @date($format);
             date_default_timezone_set($oldzone);
             return $result;
         }
 
         if (abs($timestamp) <= 0x7FFFFFFF) {
-
             $result = ($gmt) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
             date_default_timezone_set($oldzone);
             return $result;

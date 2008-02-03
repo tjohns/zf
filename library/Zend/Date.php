@@ -171,10 +171,6 @@ class Zend_Date extends Zend_Date_DateObject {
 
         $this->setLocale($locale);
 
-        // set the timezone and offset for $this
-        $zone = @date_default_timezone_get();
-        $this->setTimezone($zone);
-
         if (is_string($date) && defined("self::".$date)) {
             $part = $date;
             $date = null;
@@ -194,6 +190,14 @@ class Zend_Date extends Zend_Date_DateObject {
         } else if (parent::$_defaultOffset != 0) {
             $date = $this->_getTime(parent::$_defaultOffset);
         }
+
+        // set the timezone and offset for $this
+        $zone = @date_default_timezone_get();
+        $this->setTimezone($zone);
+
+        // try to get timezone from date-string
+        $zone = $this->getTimezoneFromString($date);
+        $this->setTimezone($zone);
 
         // set datepart
         if (($part !== null && $part !== Zend_Date::TIMESTAMP) or (!is_numeric($date))) {
@@ -1204,6 +1208,9 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function set($date, $part = null, $locale = null)
     {
+        $zone = $this->getTimezoneFromString($date);
+        $this->setTimezone($zone);
+
         $result = $this->_calculate('set', $date, $part, $locale);
         return $result;
     }
@@ -1309,22 +1316,29 @@ class Zend_Date extends Zend_Date_DateObject {
      * @param string $zone
      * @return integer
      */
-    protected function _findZone($zone)
+    public function getTimezoneFromString($zone)
     {
-        preg_match('/[+-](\d{2}):{0,1}(\d{2})/', $zone, $match);
-        if (!empty($match)) {
-            $offset = $this->getGmtOffset() / 3600;
-            return ($match[1] + $offset);
+        if (is_array($zone)) {
+            return $this->getTimezone();
         }
-        $zone = trim($zone);
-        $tz = new DateTimeZone($zone);
-        $zone = $tz->getOffset($zone);
-        if ($zone === false) {
-            return 0;
+        preg_match('/([+-]\d{2}):{0,1}\d{2}/', $zone, $match);
+        if (!empty($match) and ($match[count($match) - 1] <= 12) and ($match[count($match) - 1] >= -12)) {
+            $zone = "Etc/GMT";
+            $zone .= ($match[count($match) - 1] < 0) ? "+" : "-";
+            $zone .= (int) abs($match[count($match) - 1]);
+            return $zone;
         }
-        $offset = $this->getGmtOffset() / 3600;
-        return ($zone + $offset);
-    }
+        preg_match('/(\w{3,30})/', $zone, $match);
+        try {
+            $tz = new DateTimeZone($match[count($match) - 1]);
+            if ($tz !== false) {
+                return ($match[count($match) - 1]);
+            }
+        } catch (Exception $e) {
+            // fall through
+        }
+        return $this->getTimezone();
+   }
 
     /**
      * Calculates the date or object
@@ -2152,14 +2166,6 @@ class Zend_Date extends Zend_Date_DateObject {
                 if (!empty($timematch)) {
                     $tmpdate = substr($tmpdate, strlen($timematch[0])); 
                 }
-/* @todo: AUTOMATIC TIMEZONE 
-                if (!empty($tmpdate)) {
-                    $zone = $this->_findZone($tmpdate);
-                    if ($zone != 0) {
-                        $timematch[1] += $zone;
-                    }
-                }
-*/
                 if (empty($datematch)) {
                     $datematch[1] = 1970;
                     $datematch[2] = 1;
