@@ -52,6 +52,7 @@
         </para>
 
         <note>
+            <title/>
             <para>
                 Frühere Zend_Search_Lucene Implementationen unterstützen das Lucene 1.9 Index Format. 
             </para>
