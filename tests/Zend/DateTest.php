@@ -5249,7 +5249,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testExtendedDst()
     {
         Zend_Date::setOptions(array('format_type' => 'iso'));
-        $date = new Zend_Date();
+        try {
+            $date = new Zend_Date();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of Locale failed');
+        }
         $date->setTimezone('UTC');
         $date->set('25-05-2050 12:00:00');
         $this->assertSame('2050-05-25 12:00:00', $date->get('YYYY-MM-dd HH:mm:ss'));
