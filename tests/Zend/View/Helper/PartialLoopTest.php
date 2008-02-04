@@ -197,6 +197,12 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
             $this->assertContains($string, $result);
         }
     }
+
+    public function testPassingNoArgsReturnsHelperInstance()
+    {
+        $test = $this->helper->partialLoop();
+        $this->assertSame($this->helper, $test);
+    }
 }
 
 class Zend_View_Helper_PartialLoop_IteratorTest implements Iterator

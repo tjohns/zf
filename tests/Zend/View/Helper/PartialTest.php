@@ -204,6 +204,58 @@ class Zend_View_Helper_PartialTest extends PHPUnit_Framework_TestCase
             $this->assertContains($string, $return);
         }
     }
+
+    public function testObjectModelSetInObjectKeyWhenKeyPresent()
+    {
+        $this->helper->setObjectKey('foo');
+        $model = new stdClass();
+        $model->footest = 'bar';
+        $model->bartest = 'baz';
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+        $return = $this->helper->partial('partialObj.phtml', $model);
+
+        $this->assertNotContains('No object model passed', $return);
+
+        foreach (get_object_vars($model) as $key => $value) {
+            $string = sprintf('%s: %s', $key, $value);
+            $this->assertContains($string, $return);
+        }
+    }
+
+    public function testPassingNoArgsReturnsHelperInstance()
+    {
+        $test = $this->helper->partial();
+        $this->assertSame($this->helper, $test);
+    }
+
+    public function testObjectKeyIsNullByDefault()
+    {
+        $this->assertNull($this->helper->getObjectKey());
+    }
+
+    public function testCanSetObjectKey()
+    {
+        $this->testObjectKeyIsNullByDefault();
+        $this->helper->setObjectKey('foo');
+        $this->assertEquals('foo', $this->helper->getObjectKey());
+    }
+
+    public function testCanSetObjectKeyToNullValue()
+    {
+        $this->testCanSetObjectKey();
+        $this->helper->setObjectKey(null);
+        $this->assertNull($this->helper->getObjectKey());
+    }
+
+    public function testSetObjectKeyImplementsFluentInterface()
+    {
+        $test = $this->helper->setObjectKey('foo');
+        $this->assertSame($this->helper, $test);
+    }
 }
 
 class Zend_View_Helper_PartialTest_Aggregate

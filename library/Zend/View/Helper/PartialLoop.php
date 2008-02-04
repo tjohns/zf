@@ -38,6 +38,8 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
      * Renders a template fragment within a variable scope distinct from the
      * calling View object.
      *
+     * If no arguments are provided, returns object instance.
+     *
      * @param  string $name Name of view script
      * @param  string|array $module If $model is empty, and $module is an array,
      *                              these are the variables to populate in the 
@@ -46,8 +48,12 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
      * @param  array $model Variables to populate in the view
      * @return string 
      */
-    public function partialLoop($name, $module = null, $model = null)
+    public function partialLoop($name = null, $module = null, $model = null)
     {
+        if (0 == func_num_args()) {
+            return $this;
+        }
+
         if ((null == $model) && (null !== $module)) {
             $model  = $module;
             $module = null;
