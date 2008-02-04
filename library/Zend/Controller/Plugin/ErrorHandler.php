@@ -229,7 +229,11 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
                     $error->type = self::EXCEPTION_NO_CONTROLLER;
                     break;
                 case 'Zend_Controller_Action_Exception':
-                    $error->type = self::EXCEPTION_NO_ACTION;
+                    if (404 == $exception->getCode()) {
+                        $error->type = self::EXCEPTION_NO_ACTION;
+                    } else {
+                        $error->type = self::EXCEPTION_OTHER;
+                    }
                     break;
                 default:
                     $error->type = self::EXCEPTION_OTHER;

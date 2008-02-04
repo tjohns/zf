@@ -139,7 +139,7 @@ class Zend_Controller_Plugin_ErrorHandlerTest extends PHPUnit_Framework_TestCase
 
     public function testPostDispatchNoActionException() 
     {
-        $this->response->setException(new Zend_Controller_Action_Exception('Testing action exception'));
+        $this->response->setException(new Zend_Controller_Action_Exception('Testing action exception', 404));
         $this->request->setModuleName('foo')
                       ->setControllerName('bar')
                       ->setActionName('baz');
@@ -254,4 +254,4 @@ if (PHPUnit_MAIN_METHOD == "Zend_Controller_Plugin_ErrorHandlerTest::main")
 {
     Zend_Controller_Plugin_ErrorHandlerTest::main();
 }
-?>
+

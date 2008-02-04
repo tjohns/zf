@@ -38,7 +38,8 @@ class FooController extends Zend_Controller_Action
         // do something
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The above <code>FooController</code> class (controller
@@ -82,8 +83,8 @@ class FooController extends Zend_Controller_Action
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 <code>initView()</code>, <code>getViewScript()</code>,
@@ -107,8 +108,8 @@ class FooController extends Zend_Controller_Action
         // disable autorendering for this action only:
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 The primary reasons to disable the <code>ViewRenderer</code> are
@@ -155,7 +156,8 @@ class FooController extends Zend_Controller_Action
         ));
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
@@ -198,7 +200,8 @@ class FooController extends Zend_Controller_Action
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
 $this->getResponse()->appendBody($content);
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -246,8 +249,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}
-?>]]></programlisting>
+}]]>
+                    </programlisting>
                 </note>
             </listitem>
         </itemizedlist>
@@ -294,7 +297,8 @@ applicationOrModule/
                 index.phtml
         helpers/
         filters/
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 In other words, view scripts are assumed to be in the
@@ -315,8 +319,8 @@ applicationOrModule/
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);
-?>]]></programlisting>
+string render(string $action = null, string $name = null, bool $noController = false);]]>
+            </programlisting>
 
             <para>
                 <code>render()</code> renders a view script. If no arguments are
@@ -378,8 +382,8 @@ class MyController extends Zend_Controller_Action
         // Renders my/baz-bat.phtml
         $this->render();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -481,7 +485,7 @@ class MyController extends Zend_Controller_Action
             <code>Zend_Controller_Action</code> could solve such redundancy.
         </para>
 
-        <sect3 id="zend.controller.action.subclassing.call">
+        <example id="zend.controller.action.subclassing.example-call">
             <title>How to Handle Non-Existent Actions</title>
 
             <para>
@@ -494,14 +498,19 @@ class MyController extends Zend_Controller_Action
             <para>
                 By default, this method throws a
                 <code>Zend_Controller_Action_Exception</code> indicating the
-                requested action was not found in the controller. You should
-                override this functionality if you wish to perform other
-                operations.
+                requested method was not found in the controller. If the method
+                requested ends in 'Action', the assumption is that an action was
+                requested and does not exist; such errors result in an exception
+                with a code of 404. All other methods result in an exception
+                with a code of 500. This allows you to easily differentiate
+                between page not found and application errors in your error
+                handler.
             </para>
-
+                
             <para>
-                For instance, if you wish to display an error message, you might
-                write something like this:
+                You should override this functionality if you wish to perform
+                other operations.  For instance, if you wish to display an error
+                message, you might write something like this:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -515,10 +524,10 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 Another possibility is that you may want to forward on to a
@@ -541,11 +550,11 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
-}
-?>]]></programlisting>
-        </sect3>
+}]]>
+            </programlisting>
+        </example>
 
         <para>
             Besides overriding <code>__call()</code>, each of the
@@ -572,8 +581,8 @@ abstract class My_Base_Controller extends Zend_Controller_Action
 
         return $this->view;
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Hopefully, from the information in this chapter, you can see the

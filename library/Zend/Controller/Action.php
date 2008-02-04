@@ -471,15 +471,14 @@ abstract class Zend_Controller_Action
      */
     public function __call($methodName, $args)
     {
-        if (empty($methodName)) {
-            $msg = 'No action specified and no default action has been defined in __call() for '
-                 . get_class($this);
-        } else {
-            $msg = get_class($this) . '::' . $methodName
-                 .'() does not exist and was not trapped in __call()';
+        if ('Action' == substr($methodName, -6)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            $action = substr($methodName, 0, strlen($methodName) - 6);
+            throw new Zend_Controller_Action_Exception(sprintf('Action "%s" does not exist and was not trapped in __call()', $action), 404);
         }
 
-        throw new Zend_Controller_Action_Exception($msg);
+        require_once 'Zend/Controller/Action/Exception.php';
+        throw new Zend_Controller_Action_Exception(sprintf('Method "%s" does not exist and was not trapped in __call()', $methodName), 500);
     }
 
     /**
