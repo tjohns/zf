@@ -398,7 +398,8 @@ $bugs = new Bugs(array('rowClass' =&gt; 'MyRow'));</programlisting>
       <code>init()</code> method, which is called after all row metadata has
       been processed. This is recommended over the <code>__construct</code>
       method if you do not need to alter the metadata in any programmatic
-      way.<example id="zend.db.table.defining.setup.example">
+      way.
+      <example id="zend.db.table.row.init.usage.example">
           <title>Example usage of init() method</title>
 
           <programlisting role="php">&lt;?php
