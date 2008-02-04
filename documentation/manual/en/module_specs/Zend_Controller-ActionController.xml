@@ -498,14 +498,19 @@ class MyController extends Zend_Controller_Action
             <para>
                 By default, this method throws a
                 <code>Zend_Controller_Action_Exception</code> indicating the
-                requested action was not found in the controller. You should
-                override this functionality if you wish to perform other
-                operations.
+                requested method was not found in the controller. If the method
+                requested ends in 'Action', the assumption is that an action was
+                requested and does not exist; such errors result in an exception
+                with a code of 404. All other methods result in an exception
+                with a code of 500. This allows you to easily differentiate
+                between page not found and application errors in your error
+                handler.
             </para>
-
+                
             <para>
-                For instance, if you wish to display an error message, you might
-                write something like this:
+                You should override this functionality if you wish to perform
+                other operations.  For instance, if you wish to display an error
+                message, you might write something like this:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -519,7 +524,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
@@ -545,7 +550,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
