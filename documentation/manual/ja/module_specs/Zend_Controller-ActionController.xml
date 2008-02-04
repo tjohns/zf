@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7783 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -503,10 +504,16 @@ class MyController extends Zend_Controller_Action
                 デフォルトでは、このメソッドは
                 <code>Zend_Controller_Action_Exception</code>
                 をスローして、コントローラの中にアクションが見つからなかったことを示します。
-                もし別の動作をさせたい場合は、これをオーバーライドしましょう。
+                メソッド名の最後が 'Action' であった場合は、
+                おそらく存在しないアクションをリクエストしたのであろうとみなします。
+                そして、コード 404 で例外を返します。その他のメソッドの場合は
+                コード 500 で例外を返します。
+                これにより、単にページが見つからないだけなのか
+                アプリケーションエラーなのかをエラーハンドラで区別できるようになります。
             </para>
 
             <para>
+                もし別の動作をさせたい場合は、これをオーバーライドしましょう。
                 たとえば、エラーメッセージを表示させたい場合は次のようになります。
             </para>
 
@@ -521,7 +528,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // その他のメソッドの場合は例外をスローします
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
@@ -547,7 +554,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // その他のメソッドの場合は例外をスローします
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>

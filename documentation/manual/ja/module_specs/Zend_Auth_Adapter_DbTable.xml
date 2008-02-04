@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7477 -->
+<!-- EN-Revision: 7785 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>データベースのテーブルを用いた認証</title>
@@ -190,7 +190,7 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // 認証情報をオブジェクトとして保存し、username と real_name のみを返します
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // 認証情報をオブジェクトとして保存し、password のみを省略します
     $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));

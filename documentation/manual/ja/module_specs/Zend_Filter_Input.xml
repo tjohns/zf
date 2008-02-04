@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7792 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -125,7 +126,8 @@ $validators = array(
         </programlisting>
 
         <para>
-            上の配列の各キーは、特定のデータフィールドにフィルタを適用するルールの名前となります。
+            <code>$filters</code> 配列の各キーは、
+            特定のデータフィールドにフィルタを適用するルールの名前となります。
             デフォルトでは、ルールの名前とそのルールを適用する入力フィールドの名前が等しくなります。
         </para>
 
