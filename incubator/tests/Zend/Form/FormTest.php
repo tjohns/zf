@@ -18,6 +18,7 @@ require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/Loader/PluginLoader.php';
+require_once 'Zend/Translate.php';
 
 class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 {
@@ -1381,6 +1382,145 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(empty($codes));
         $keys     = array('subfoo', 'subbar', 'subbaz');
         $this->assertEquals($keys, array_keys($codes));
+    }
+
+    public function testErrorMessagesAreLocalizedWhenTranslateAdapterPresent()
+    {
+        $translations = include dirname(__FILE__) . '/_files/locale/array.php';
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $this->form->addElements(array(
+            'foo' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('NotEmpty')
+                )
+            ),
+            'bar' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('Digits')
+                )
+            ),
+        ))
+        ->setTranslator($translate->getAdapter());
+
+        $data = array(
+            'foo' => '',
+            'bar' => 'abc',
+        );
+        if ($this->form->isValid($data)) {
+            $this->fail('Form should not validate');
+        }
+
+        $messages = $this->form->getMessages();
+        $this->assertTrue(isset($messages['foo']));
+        $this->assertTrue(isset($messages['bar']));
+
+        foreach ($messages['foo'] as $key => $message) {
+            if (array_key_exists($key, $translations)) {
+                $this->assertEquals($translations[$key], $message);
+            } else {
+                $this->fail('Translation for ' . $key . ' does not exist?');
+            }
+        }
+        foreach ($messages['bar'] as $key => $message) {
+            if (array_key_exists($key, $translations)) {
+                $this->assertEquals($translations[$key], $message);
+            } else {
+                $this->fail('Translation for ' . $key . ' does not exist?');
+            }
+        }
+    }
+
+    public function testErrorMessagesFromPartialValidationAreLocalizedWhenTranslateAdapterPresent()
+    {
+        $translations = include dirname(__FILE__) . '/_files/locale/array.php';
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $this->form->addElements(array(
+            'foo' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('NotEmpty')
+                )
+            ),
+            'bar' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('Digits')
+                )
+            ),
+        ))
+        ->setTranslator($translate->getAdapter());
+
+        $data = array(
+            'foo' => '',
+        );
+        if ($this->form->isValidPartial($data)) {
+            $this->fail('Form should not validate');
+        }
+
+        $messages = $this->form->getMessages();
+        $this->assertTrue(isset($messages['foo']));
+        $this->assertFalse(isset($messages['bar']));
+
+        foreach ($messages['foo'] as $key => $message) {
+            if (array_key_exists($key, $translations)) {
+                $this->assertEquals($translations[$key], $message);
+            } else {
+                $this->fail('Translation for ' . $key . ' does not exist?');
+            }
+        }
+    }
+
+    public function testErrorMessagesFromProcessAjaxAreLocalizedWhenTranslateAdapterPresent()
+    {
+        $translations = include dirname(__FILE__) . '/_files/locale/array.php';
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $this->form->addElements(array(
+            'foo' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('NotEmpty')
+                )
+            ),
+            'bar' => array(
+                'type' => 'text',
+                'options' => array(
+                    'required'   => true,
+                    'validators' => array('Digits')
+                )
+            ),
+        ))
+        ->setTranslator($translate->getAdapter());
+
+        $data = array(
+            'foo' => '',
+        );
+        $return = $this->form->processAjax($data);
+        $messages = Zend_Json::decode($return);
+        $this->assertTrue(is_array($messages));
+
+        $this->assertTrue(isset($messages['foo']));
+        $this->assertFalse(isset($messages['bar']));
+
+        foreach ($messages['foo'] as $key => $message) {
+            if (array_key_exists($key, $translations)) {
+                $this->assertEquals($translations[$key], $message);
+            } else {
+                $this->fail('Translation for ' . $key . ' does not exist?');
+            }
+        }
     }
 
     // View object
