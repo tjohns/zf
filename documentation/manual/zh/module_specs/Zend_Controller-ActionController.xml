@@ -353,11 +353,11 @@ class MyController extends Zend_Controller_Action
             </para>
 
             <para>
-                缺省地，这个方法抛出一个<code>Zend_Controller_Action_Exception</code> 来表明在控制器里没有发现要求的动作。如果你想让它执行其它操作，应该重写它。
+                缺省地，这个方法抛出一个<code>Zend_Controller_Action_Exception</code> 来表明在控制器里没有发现要求的方法。如果要求的方法以'Action'结尾，就假设一个动作被请求并且不存在；这样的错误导致带有代码为 404 的异常。所有其它方法导致带有代码为 500 的异常。这使你很容易地在错误句柄里区分是页面没有发现还是程序错误。
             </para>
 
             <para>
-                例如，如果你想显示错误信息，可以象下面这样来写：
+                如果想执行其它操作，你应该重写这个函数。例如，如果你想显示错误信息，可以象下面这样来写：
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -371,7 +371,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
@@ -396,7 +396,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
