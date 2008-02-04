@@ -144,8 +144,8 @@ class Zend_Filter_Input
     protected $_processed = false;
 
     /**
-     * @param array $filters
-     * @param array $validators
+     * @param array $filterRules
+     * @param array $validatorRules
      * @param array $data       OPTIONAL
      * @param array $options    OPTIONAL
      */
@@ -166,7 +166,7 @@ class Zend_Filter_Input
     /**
      * @param mixed $namespaces
      * @return Zend_Filter_Input
-     * @deprecated since 1.0.3 - use addFilterPrefixPath() or addValidatorPrefixPath instead.
+     * @deprecated since 1.5.0RC1 - use addFilterPrefixPath() or addValidatorPrefixPath instead.
      */
     public function addNamespace($namespaces)
     {
@@ -189,7 +189,6 @@ class Zend_Filter_Input
      *
      * @param  string $prefix
      * @param  string $path
-     * @param  string $type
      * @return Zend_Filter_Input
      */
     public function addFilterPrefixPath($prefix, $path)
@@ -204,7 +203,6 @@ class Zend_Filter_Input
      *
      * @param  string $prefix
      * @param  string $path
-     * @param  string $type
      * @return Zend_Filter_Input
      */
     public function addValidatorPrefixPath($prefix, $path)
@@ -218,11 +216,11 @@ class Zend_Filter_Input
      * Set plugin loaders for use with decorators and elements
      *
      * @param  Zend_Loader_PluginLoader_Interface $loader
-     * @param  string $type 'decorator' or 'element'
+     * @param  string $type 'filter' or 'validate'
      * @return Zend_Filter_Input
      * @throws Zend_Filter_Exception on invalid type
      */
-    public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type = null)
+    public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type)
     {
         $type = strtolower($type);
         switch ($type) {
@@ -248,10 +246,11 @@ class Zend_Filter_Input
      * If a plugin loader does not exist for the given type, defaults are
      * created.
      *
-     * @param  string $type
+     * @param  string $type 'filter' or 'validate'
      * @return Zend_Loader_PluginLoader_Interface
+     * @throws Zend_Filter_Exception on invalid type
      */
-    public function getPluginLoader($type = null)
+    public function getPluginLoader($type)
     {
         $type = strtolower($type);
         if (!isset($this->_loaders[$type])) {
@@ -891,9 +890,9 @@ class Zend_Filter_Input
     }
 
     /**
-     * @param string $interface
+     * @param string $type
      * @param mixed $classBaseName
-     * @return mixed object implementing Zend_Filter_Interface or Zend_Validate_Interface
+     * @return Zend_Filter_Interface|Zend_Validate_Interface
      * @throws Zend_Filter_Exception
      */
     protected function _getFilterOrValidator($type, $classBaseName)
@@ -918,7 +917,7 @@ class Zend_Filter_Input
         if ($class->hasMethod('__construct')) {
             $object = $class->newInstanceArgs($args);
         } else {
-                $object = $class->newInstance();
+            $object = $class->newInstance();
         }
 
         return $object;

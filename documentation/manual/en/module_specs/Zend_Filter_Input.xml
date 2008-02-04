@@ -122,7 +122,7 @@ $validators = array(
         </programlisting>
 
         <para>
-            Each key in the array above is the name of a rule for applying a
+            Each key in the <code>$filters</code> array above is the name of a rule for applying a
             filter to a specific data field.  By default, the name of the rule
             is also the name of the input data field to which to apply the
             rule.
