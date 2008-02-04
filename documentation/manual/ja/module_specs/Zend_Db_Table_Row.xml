@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7576 -->
+<!-- EN-Revision: 7778 -->
 <sect1 id="zend.db.table.row">
   <title>Zend_Db_Table_Row</title>
 
@@ -446,7 +446,7 @@ $bugs = new Bugs(array('rowClass' =&gt; 'MyRow'));</programlisting>
         このメソッドは、行のメタデータの処理がすべて終わった後にコールされます。
         メタデータを変更するつもりがないのなら、
         <code>__construct</code> メソッドを使うよりもこちらのほうを推奨します。
-        <example id="zend.db.table.defining.setup.example">
+        <example id="zend.db.table.row.init.usage.example">
           <title>init() メソッドの使用例</title>
 
           <programlisting role="php">&lt;?php
