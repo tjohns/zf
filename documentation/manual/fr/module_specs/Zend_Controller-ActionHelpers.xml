@@ -163,9 +163,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             Le Zend Framework inclue trois aides d'action par défaut : un  <code>FlashMessenger</code> pour gérer des messages entre les sessions ; un <code>Redirector</code>, qui fournit différentes implémentations pour rediriger vers des pages internes ou externes à votre application ; et un <code>ViewRenderer</code> pour automatiser le processus de paramétrage de vos objets de vues dans votre contrôleur et du rendu de ces vues.
         </para>
 
-        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ActionStack.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml">

@@ -353,11 +353,11 @@ class MonController extends Zend_Controller_Action
             </para>
 
             <para>
-                Par défaut, cette méthode lève une <code>Zend_Controller_Action_Exception</code> indiquant que l'action requêtée n'a pas été trouvée dans le contrôleur. Vous pouvez surcharger cette fonctionnalité si vous souhaitez exécuter d'autres opérations.
+                Par défaut, cette méthode lève une <code>Zend_Controller_Action_Exception</code> indiquant que la méthode requêtée n'a pas été trouvée dans le contrôleur. Si la méthode requêtée se termine par "Action", on considère qu'une action était requêtée et qu'elle n'existe pas ; un telle erreur entraîne une exception ayant un code 404. Tout autre appel de méthode entraîne une exception ayant un code 500. Ceci vous permet de facilement différencier une page inconnue et une erreur de l'application dans votre gestionnaire d'erreur.
             </para>
 
             <para>
-                Par exemple, si vous souhaitez afficher un message d'erreur, vous pouvez écrire quelquechose comme ceci :
+                Vous pouvez surcharger cette fonctionnalité si vous souhaitez exécuter d'autres opérations. Par exemple, si vous souhaitez afficher un message d'erreur, vous pouvez écrire quelquechose comme ceci :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -370,8 +370,8 @@ class MonController extends Zend_Controller_Action
             return $this->render('error');
         }
 
-        // pour tout autre méthode, lever d'une exception
-        throw new Exception('Méthode invalide "' . $method . '" appelée');
+        // pour tout autre méthode, levée d'une exception
+        throw new Exception('Méthode invalide "' . $method . '" appelée', 500);
     }
 }]]>
             </programlisting>
@@ -395,8 +395,8 @@ class MyController extends Zend_Controller_Action
             return $this->_forward('index');
         }
 
-        // pour tout autre méthode, lever d'une exception
-        throw new Exception('Méthode invalide "' . $method . '" appelée');
+        // pour tout autre méthode, levée d'une exception
+        throw new Exception('Méthode invalide "' . $method . '" appelée', 500);
     }
 }]]>
             </programlisting>
