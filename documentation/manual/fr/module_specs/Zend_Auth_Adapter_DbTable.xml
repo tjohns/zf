@@ -150,7 +150,7 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // stocke l'identité comme objet dans lequel seulement username et real_name sont retournés
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // stocke l'identité comme objet dans lequel la colonne password a été omis
 	$this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
