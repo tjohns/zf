@@ -35,6 +35,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 require 'TechnoratiTest.php';
 require 'ResultSetTest.php';
+require 'ResultTest.php';
 require 'AuthorTest.php';
 require 'WeblogTest.php';
 require 'BlogInfoResultTest.php';
@@ -77,6 +78,7 @@ class Zend_Service_Technorati_AllTests
 
         $suite->addTestSuite('Zend_Service_Technorati_TechnoratiTest');
         $suite->addTestSuite('Zend_Service_Technorati_ResultSetTest');
+        $suite->addTestSuite('Zend_Service_Technorati_ResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_AuthorTest');
         $suite->addTestSuite('Zend_Service_Technorati_WeblogTest');
         $suite->addTestSuite('Zend_Service_Technorati_BlogInfoResultTest');

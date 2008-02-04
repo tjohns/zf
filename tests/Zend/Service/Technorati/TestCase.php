@@ -87,6 +87,50 @@ class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
         }
     }
 
+    protected function _testResultSetSerialization($resultSet)
+    {
+        $unobject = unserialize(serialize($resultSet));
+        $unresult = null;
+
+        $this->assertType(get_class($resultSet), $unobject);
+
+        foreach ($resultSet as $index => $result) {
+            try {
+                $unobject->seek($index);
+                $unresult = $unobject->current();
+            } catch(OutOfBoundsException $e) {
+                $this->fail("Missing result index $index");
+            }
+            $this->assertEquals($result, $unresult);
+        }
+    }
+
+    protected function _testResultSerialization($result)
+    {
+        /**
+         * Both Result and ResultSet objects includes variables
+         * that references special objects such as DomDocuments.
+         * 
+         * Unlike ResultSet(s), Result instances uses Dom fragments
+         * only to construct the instance itself, then both Dom and Xpath objects
+         * are no longer required.
+         * 
+         * It means serializing a Result is not a painful job.
+         * We don't need to implement any __wakeup or _sleep function
+         * because PHP is able to create a perfect serialized snapshot
+         * of current object status.
+         * 
+         * Thought this situation makes our life easier, it's not safe
+         * to assume things will not change in the future.
+         * Testing each object now against a serialization request
+         * makes this library more secure in the future!
+         */
+        $unresult = unserialize(serialize($result));
+
+        $this->assertType(get_class($result), $unresult);
+        $this->assertEquals($result, $unresult);
+    }
+
     public static function getTestFilePath($file)
     {
         return dirname(__FILE__) . '/_files/' . $file;
@@ -120,4 +164,5 @@ class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
         // instead of a catchable Exception (ZF-2334)
         return version_compare(phpversion(), "5.2.0", "<");
     }
+
 }

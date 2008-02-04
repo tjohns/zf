@@ -46,12 +46,12 @@ class Zend_Service_Technorati_DailyCountsResultTest extends Zend_Service_Technor
     {
         $this->domElements = self::getTestFileElementsAsDom('TestDailyCountsResultSet.xml');
     }
-    
+
     public function testConstruct()
     {
         $this->_testConstruct('Zend_Service_Technorati_CosmosResult', array($this->domElements->item(0)));
     }
-    
+
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_DailyCountsResult', 'DOMElement');
@@ -66,5 +66,10 @@ class Zend_Service_Technorati_DailyCountsResultTest extends Zend_Service_Technor
         $this->assertEquals(new Zend_Date(strtotime('2007-11-13')), $object->getDate());
         $this->assertType('integer', $object->getCount());
         $this->assertEquals(54414, $object->getCount());
+    }
+
+    public function testDailyCountsResultSerialization()
+    {
+        $this->_testResultSerialization(new Zend_Service_Technorati_DailyCountsResult($this->domElements->item(0)));
     }
 }

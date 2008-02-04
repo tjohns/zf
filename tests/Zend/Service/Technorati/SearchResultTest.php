@@ -76,6 +76,11 @@ class Zend_Service_Technorati_SearchResultTest extends Zend_Service_Technorati_T
         $this->assertContains('Mi otro blog', $object->getWeblog()->getName());
     }
 
+    public function testSearchResultSerialization()
+    {
+        $this->_testResultSerialization(new Zend_Service_Technorati_SearchResult($this->domElements->item(0)));
+    }
+
     public function testSearchResultSpecialEncoding()
     {
         $object = new Zend_Service_Technorati_SearchResult($this->domElements->item(1));

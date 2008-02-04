@@ -56,8 +56,13 @@ class Zend_Service_Technorati_CosmosResultTest extends Zend_Service_Technorati_T
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_CosmosResult', 'DOMElement');
     }
- 
-    public function testSearchResultSiteLink()
+
+    public function testCosmosResultSerialization()
+    {
+        $this->_testResultSerialization(new Zend_Service_Technorati_CosmosResult($this->domElements->item(0)));
+    }
+
+    public function testCosmosResultSiteLink()
     {
         $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(0));
@@ -86,15 +91,15 @@ class Zend_Service_Technorati_CosmosResultTest extends Zend_Service_Technorati_T
         $this->assertEquals(Zend_Uri::factory('http://www.simonecarletti.com/blog/2007/04/google-yahoo-ask-nofollow.php'), $object->getLinkUrl());
     }
 
-    public function testSearchResultSiteLinkNearestPermalinkIsNull()
+    public function testCosmosResultSiteLinkNearestPermalinkIsNull()
     {
         $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(2));
         $this->assertContains('Controrete', $object->getWeblog()->getName());
         $this->assertNull($object->getNearestPermalink());
     }
-    
-    public function testSearchResultSiteWeblog()
+
+    public function testCosmosResultSiteWeblog()
     {
         $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteWeblog.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(0));
@@ -110,13 +115,13 @@ class Zend_Service_Technorati_CosmosResultTest extends Zend_Service_Technorati_T
         $this->assertContains('Gioxx', $object->getWeblog()->getName());
         $this->assertEquals(Zend_Uri::factory('http://www.simonecarletti.com'), $object->getLinkUrl());
     }
-    
-    public function testSearchResultBlogLink()
+
+    public function testCosmosResultBlogLink()
     {
         // same as testSearchResultSiteLink
     }
-        
-    public function testSearchResultBlogWeblog()
+
+    public function testCosmosResultBlogWeblog()
     {
         // same as testSearchResultSiteWeblog
     }

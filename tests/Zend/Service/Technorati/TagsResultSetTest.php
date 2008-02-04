@@ -47,12 +47,12 @@ class Zend_Service_Technorati_TagsResultSetTest extends Zend_Service_Technorati_
         $this->dom = self::getTestFileContentAsDom('TestTagsResultSet.xml');
         $this->object = new Zend_Service_Technorati_TagsResultSet($this->dom);
     }
-    
+
     public function testConstruct()
     {
         $this->_testConstruct('Zend_Service_Technorati_TagsResultSet', array($this->dom));
     }
-    
+
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_TagsResultSet', 'DOMDocument');
@@ -68,12 +68,17 @@ class Zend_Service_Technorati_TagsResultSetTest extends Zend_Service_Technorati_
         $this->assertType('integer', $object->totalResultsAvailable());
         $this->assertEquals(3, $object->totalResultsAvailable());
     }
-    
+
     public function testTagsResultSetItemsInstanceOfResult() 
     {
         $this->_testResultSetItemsInstanceOfResult(
                     'Zend_Service_Technorati_TagsResultSet', 
                     array($this->dom), 
                     'Zend_Service_Technorati_TagsResult');
+    }
+
+    public function testTagsResultSetSerialization()
+    {
+        $this->_testResultSetSerialization(new Zend_Service_Technorati_TagsResultSet($this->dom));
     }
 }

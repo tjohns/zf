@@ -46,12 +46,12 @@ class Zend_Service_Technorati_TagResultTest extends Zend_Service_Technorati_Test
     {
         $this->domElements = self::getTestFileElementsAsDom('TestTagResultSet.xml');
     }
-    
+
     public function testConstruct()
     {
         $this->_testConstruct('Zend_Service_Technorati_TagResult', array($this->domElements->item(0)));
     }
-    
+
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_TagResult', 'DOMElement');
@@ -76,5 +76,10 @@ class Zend_Service_Technorati_TagResultTest extends Zend_Service_Technorati_Test
         // check weblog
         $this->assertType('Zend_Service_Technorati_Weblog', $object->getWeblog());
         $this->assertEquals(' ScienceRoll', $object->getWeblog()->getName());
+    }
+
+    public function testTagResultSerialization()
+    {
+        $this->_testResultSerialization(new Zend_Service_Technorati_TagResult($this->domElements->item(0)));
     }
 }

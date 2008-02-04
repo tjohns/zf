@@ -49,7 +49,7 @@ class Zend_Service_Technorati_ResultSetTest extends Zend_Service_Technorati_Test
 {
     /**
      * Even if Zend_Service_Technorati_ResultSet is an abstract class
-     * it's usefult to check whether it correctly implements
+     * it's useful to check whether it correctly implements
      * SeekableIterator interface as requested.
      * 
      * Any *ResultSet class should be a child of ResultSet
@@ -60,7 +60,7 @@ class Zend_Service_Technorati_ResultSetTest extends Zend_Service_Technorati_Test
         $this->ref = new ReflectionClass('Zend_Service_Technorati_ResultSet');
         $this->dom = self::getTestFileContentAsDom('TestSearchResultSet.xml');
         $this->object = new Zend_Service_Technorati_SearchResultSet($this->dom);
-        $this->objectref = new ReflectionObject($this->object);
+        $this->objectRef = new ReflectionObject($this->object);
     }
 
     public function testResultSetIsAbstract()
@@ -78,7 +78,7 @@ class Zend_Service_Technorati_ResultSetTest extends Zend_Service_Technorati_Test
      */
     public function testResultSetIsParentOfThisObjectClass()
     {
-        $this->assertTrue($this->objectref->isSubclassOf($this->ref));
+        $this->assertTrue($this->objectRef->isSubclassOf($this->ref));
     }
     
 
@@ -121,5 +121,10 @@ class Zend_Service_Technorati_ResultSetTest extends Zend_Service_Technorati_Test
         $this->object->seek(2);
         $this->assertTrue($this->object->rewind());
         $this->assertEquals(0, $this->object->key());
+    }
+    
+    public function testResultSetSerialization()
+    {
+        $this->_testResultSetSerialization($this->object);
     }
 }

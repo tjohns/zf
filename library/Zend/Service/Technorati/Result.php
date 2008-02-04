@@ -56,7 +56,6 @@ abstract class Zend_Service_Technorati_Result
      *
      * @var     DOMXpath
      * @access  protected
-     * @todo    XPath and DOM elements cannot be serialized, don't cache them
      */
     protected $_xpath;
 
@@ -107,5 +106,16 @@ abstract class Zend_Service_Technorati_Result
         } else {
             $this->_weblog = null;
         }
+    }
+
+    /**
+     * Returns the document fragment for this object as XML string.
+     *
+     * @return string   the document fragment for this object
+     *                  converted into XML format
+     */
+    public function getXml()
+    {
+        return $this->_dom->ownerDocument->saveXML($this->_dom);
     }
 }

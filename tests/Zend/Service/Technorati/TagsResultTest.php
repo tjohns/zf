@@ -46,12 +46,12 @@ class Zend_Service_Technorati_TagsResultTest extends Zend_Service_Technorati_Tes
     {
         $this->domElements = self::getTestFileElementsAsDom('TestTagsResultSet.xml');
     }
-    
+
     public function testConstruct()
     {
         $this->_testConstruct('Zend_Service_Technorati_TagsResult', array($this->domElements->item(0)));
     }
-    
+
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_TagsResult', 'DOMElement');
@@ -67,7 +67,12 @@ class Zend_Service_Technorati_TagsResultTest extends Zend_Service_Technorati_Tes
         $this->assertType('integer', $object->getPosts());
         $this->assertEquals(8336350, $object->getPosts());
     }
-    
+
+    public function testTagsResultSerialization()
+    {
+        $this->_testResultSerialization(new Zend_Service_Technorati_TagsResult($this->domElements->item(0)));
+    }
+
     public function testTagsResultSpecialEncoding()
     {
         $object = new Zend_Service_Technorati_TagsResult($this->domElements->item(0));

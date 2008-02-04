@@ -46,12 +46,12 @@ class Zend_Service_Technorati_SearchResultSetTest extends Zend_Service_Technorat
     {
         $this->dom = self::getTestFileContentAsDom('TestSearchResultSet.xml');
     }
-    
+
     public function testConstruct()
     {
         $this->_testConstruct('Zend_Service_Technorati_SearchResultSet', array($this->dom));
     }
-    
+
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_SearchResultSet', 'DOMDocument');
@@ -67,12 +67,17 @@ class Zend_Service_Technorati_SearchResultSetTest extends Zend_Service_Technorat
         $this->assertType('integer', $object->totalResultsAvailable());
         $this->assertEquals(4298362, $object->totalResultsAvailable());
     }
-    
+
     public function testSearchResultSetItemsInstanceOfResult() 
     {
         $this->_testResultSetItemsInstanceOfResult(
                     'Zend_Service_Technorati_SearchResultSet', 
                     array($this->dom), 
                     'Zend_Service_Technorati_SearchResult');
+    }
+
+    public function testSearchResultSetSerialization()
+    {
+        $this->_testResultSetSerialization(new Zend_Service_Technorati_SearchResultSet($this->dom));
     }
 }
