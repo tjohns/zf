@@ -52,6 +52,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_allowEmpty = true;
 
     /**
+     * Array to which element belongs
+     * @var string
+     */
+    protected $_belongsTo;
+
+    /**
      * Element decorators 
      * @var array
      */
@@ -287,6 +293,17 @@ class Zend_Form_Element implements Zend_Validate_Interface
     // Metadata
 
     /**
+     * Filter a name to only allow valid variable characters
+     * 
+     * @param  string $value 
+     * @return string
+     */
+    public function filterName($value)
+    {
+        return preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '', (string) $value);
+    }
+
+    /**
      * Set element name
      * 
      * @param  string $name 
@@ -294,7 +311,13 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function setName($name)
     {
-        $this->_name = (string) $name;
+        $name = $this->filtername($name);
+        if (empty($name)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid name provided; must contain only valid variable characters and be non-empty');
+        }
+
+        $this->_name = $name;
         return $this;
     }
 
@@ -455,6 +478,32 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getAllowEmpty()
     {
         return $this->_allowEmpty;
+    }
+
+    /**
+     * Set array to which element belongs
+     * 
+     * @param  string $array 
+     * @return Zend_Form_Element
+     */
+    public function setBelongsTo($array)
+    {
+        $array = $this->filterName($array);
+        if (!empty($array)) {
+            $this->_belongsTo = $array;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Return array name to which element belongs
+     * 
+     * @return string
+     */
+    public function getBelongsTo()
+    {
+        return $this->_belongsTo;
     }
 
     /**

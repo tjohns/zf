@@ -89,6 +89,69 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
     }
 
     /**
+     * Get name
+     *
+     * If element is a Zend_Form_Element, will attempt to namespace it if the 
+     * element belongs to an array.
+     * 
+     * @return string
+     */
+    public function getName()
+    {
+        if (null === ($element = $this->getElement())) {
+            return '';
+        }
+
+        $name = $element->getName();
+
+        if (!$element instanceof Zend_Form_Element) {
+            return $name;
+        }
+
+        if (null !== ($belongsTo = $element->getBelongsTo())) {
+            $name = $belongsTo . '['
+                  . $name
+                  . ']';
+        }
+
+        return $name;
+    }
+
+    /**
+     * Retrieve element attributes
+     *
+     * Set id to element name and/or array item.
+     * 
+     * @return array
+     */
+    public function getElementAttribs()
+    {
+        if (null === ($element = $this->getElement())) {
+            return null;
+        }
+
+        $id = $element->getAttrib('id');
+
+        if (null !== $id) {
+            return $element->getAttribs();
+        }
+
+        if (null === $id) {
+            $id = $element->getName();
+        } 
+
+        if ($element instanceof Zend_Form_Element) {
+            if (null !== ($belongsTo = $element->getBelongsTo())) {
+                $id = $belongsTo . '.' . $id;
+            }
+        }
+
+        $element->setAttrib('id', $id);
+
+        return $element->getAttribs();
+    }
+
+    /**
      * Render an element using a view helper
      *
      * Determine view helper from 'viewHelper' option, or, if none set, from 
@@ -111,7 +174,7 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 
         $helper         = $this->getHelper();
         $separator      = $this->getSeparator();
-        $elementContent = $view->$helper($element->getName(), $element->getValue(), $element->getAttribs(), $element->options);
+        $elementContent = $view->$helper($this->getName(), $element->getValue(), $this->getElementAttribs(), $element->options);
         switch ($this->getPlacement()) {
             case self::APPEND:
                 return $content . $separator . $elementContent;

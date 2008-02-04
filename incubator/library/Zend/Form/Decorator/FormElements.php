@@ -54,6 +54,7 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
+        $belongsTo      = ($form instanceof Zend_Form) ? $form->getElementsBelongTo() : null;
         $elementContent = '';
         $separator      = $this->getSeparator();
         $translator     = $form->getTranslator();
@@ -62,6 +63,9 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
         foreach ($form as $item) {
             $item->setView($view)
                  ->setTranslator($translator);
+            if ($item instanceof Zend_Form_Element) {
+                $item->setBelongsTo($belongsTo);
+            }
             $items[] = $item->render();
         }
         $elementContent = implode($separator, $items);

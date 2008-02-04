@@ -125,6 +125,19 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator, $received);
     }
 
+    public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()
+    {
+        $this->element->setName('f%\o^&*)o\(%$b#@!.a}{;-,r');
+        $this->assertEquals('foobar', $this->element->getName());
+
+        try {
+            $this->element->setName('%\^&*)\(%$#@!.}{;-,');
+            $this->fail('Empty names should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid name provided', $e->getMessage());
+        }
+    }
+
     public function testElementValueInitiallyNull()
     {
         $this->assertNull($this->element->getValue());
@@ -196,6 +209,25 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->testDescriptionInitiallyNull();
         $this->element->setDescription('element hint');
         $this->assertEquals('element hint', $this->element->getDescription());
+    }
+
+    public function testElementBelongsToNullByDefault()
+    {
+        $this->assertNull($this->element->getBelongsTo());
+    }
+
+    public function testCanSetArrayElementBelongsTo()
+    {
+        $this->testElementBelongsToNullByDefault();
+        $this->element->setBelongsTo('foo');
+        $this->assertEquals('foo', $this->element->getBelongsTo());
+    }
+
+    public function testArrayElementBelongsToNormalizedToValidVariableCharactersOnly()
+    {
+        $this->testElementBelongsToNullByDefault();
+        $this->element->setBelongsTo('f%\o^&*)o\(%$b#@!.a}{;-,r');
+        $this->assertEquals('foobar', $this->element->getBelongsTo());
     }
 
     public function testGetTypeReturnsCurrentElementClass()

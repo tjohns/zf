@@ -258,6 +258,17 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     }
 
     /**
+     * Filter a name to only allow valid variable characters
+     * 
+     * @param  string $value 
+     * @return string
+     */
+    public function filterName($value)
+    {
+        return preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '', (string) $value);
+    }
+
+    /**
      * Set group name
      * 
      * @param  string $name 
@@ -265,7 +276,13 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
      */
     public function setName($name)
     {
-        $this->_name = (string) $name;
+        $name = $this->filtername($name);
+        if (empty($name)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid name provided; must contain only valid variable characters and be non-empty');
+        }
+
+        $this->_name = $name;
         return $this;
     }
 

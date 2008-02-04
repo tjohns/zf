@@ -402,6 +402,31 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($attribs));
     }
 
+    public function testNameIsInitiallyNull()
+    {
+        $this->assertNull($this->form->getName());
+    }
+
+    public function testCanSetName()
+    {
+        $this->testNameIsInitiallyNull();
+        $this->form->setName('foo');
+        $this->assertEquals('foo', $this->form->getName());
+    }
+
+    public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()
+    {
+        $this->form->setName('f%\o^&*)o\(%$b#@!.a}{;-,r');
+        $this->assertEquals('foobar', $this->form->getName());
+
+        try {
+            $this->form->setName('%\^&*)\(%$#@!.}{;-,');
+            $this->fail('Empty names should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid name provided', $e->getMessage());
+        }
+    }
+
     public function testActionDefaultsToEmptyString()
     {
         $this->assertSame('', $this->form->getAction());
@@ -810,6 +835,32 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Only form elements and groups may be overloaded', $e->getMessage());
             $this->assertContains('Zend_Config', $e->getMessage());
         }
+    }
+
+    public function testElementsInitiallyBelongToNoArrays()
+    {
+        $this->assertNull($this->form->getElementsBelongTo());
+    }
+
+    public function testCanSetArrayToWhichElementsBelong()
+    {
+        $this->testElementsInitiallyBelongToNoArrays();
+        $this->form->setElementsBelongTo('foo');
+        $this->assertEquals('foo', $this->form->getElementsBelongTo());
+    }
+
+    public function testArrayToWhichElementsBelongCanConsistOfValidVariableCharsOnly()
+    {
+        $this->testElementsInitiallyBelongToNoArrays();
+        $this->form->setElementsBelongTo('f%\o^&*)o\(%$b#@!.a}{;-,r');
+        $this->assertEquals('foobar', $this->form->getElementsBelongTo());
+    }
+
+    public function testSettingArrayToWhichElementsBelongEmptyClearsIt()
+    {
+        $this->testCanSetArrayToWhichElementsBelong();
+        $this->form->setElementsBelongTo('');
+        $this->assertNull($this->form->getElementsBelongTo());
     }
 
     // Sub forms
@@ -1745,6 +1796,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(1, count($matches));
         $this->assertEquals(1, count($matches[0]));
+    }
+
+    public function testElementsRenderAsArrayMembersWhenElementsBelongToAnArray()
+    {
+        $this->setupElements();
+        $this->form->setElementsBelongTo('anArray');
+        $html = $this->form->render($this->getView());
+        $this->assertContains('name="anArray[foo]"', $html);
+        $this->assertContains('name="anArray[bar]"', $html);
+        $this->assertContains('name="anArray[baz]"', $html);
+        $this->assertContains('id="anArray.foo"', $html);
+        $this->assertContains('id="anArray.bar"', $html);
+        $this->assertContains('id="anArray.baz"', $html);
     }
 
     public function testToStringProxiesToRender()

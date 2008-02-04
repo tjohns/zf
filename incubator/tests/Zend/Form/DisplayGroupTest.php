@@ -67,6 +67,20 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->loader, $this->group->getPluginLoader());
     }
 
+    public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()
+    {
+        $this->group->setName('f%\o^&*)o\(%$b#@!.a}{;-,r');
+        $this->assertEquals('foobar', $this->group->getName());
+
+        try {
+            $this->group->setName('%\^&*)\(%$#@!.}{;-,');
+            $this->fail('Empty names should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid name provided', $e->getMessage());
+        }
+    }
+
+
     public function testOrderNullByDefault()
     {
         $this->assertNull($this->group->getOrder());

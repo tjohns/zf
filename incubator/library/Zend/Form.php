@@ -88,6 +88,12 @@ class Zend_Form implements Iterator, Countable
     protected $_elements = array();
 
     /**
+     * Array to which elements belong (if any)
+     * @var string
+     */
+    protected $_elementsBelongTo;
+
+    /**
      * Form legend
      * @var string
      */
@@ -594,6 +600,17 @@ class Zend_Form implements Iterator, Countable
     }
 
     /**
+     * Filter a name to only allow valid variable characters
+     * 
+     * @param  string $value 
+     * @return string
+     */
+    public function filterName($value)
+    {
+        return preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '', (string) $value);
+    }
+
+    /**
      * Set form name
      * 
      * @param  string $name 
@@ -601,7 +618,13 @@ class Zend_Form implements Iterator, Countable
      */
     public function setName($name)
     {
-        return $this->setAttrib('name', (string) $name);
+        $name = $this->filterName($name);
+        if (empty($name)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid name provided; must contain only valid variable characters and be non-empty');
+        }
+
+        return $this->setAttrib('name', $name);
     }
 
     /**
@@ -957,6 +980,32 @@ class Zend_Form implements Iterator, Countable
             $element->setFilters($filters);
         }
         return $this;
+    }
+
+    /**
+     * Set name of array elements belong to
+     * 
+     * @param  string $array 
+     * @return Zend_Form
+     */
+    public function setElementsBelongTo($array)
+    {
+        $name = $this->filterName($array);
+        if (empty($name)) {
+            $name = null;
+        }
+        $this->_elementsBelongTo = $name;
+        return $this;
+    }
+
+    /**
+     * Get name of array elements belong to
+     * 
+     * @return string|null
+     */
+    public function getElementsBelongTo()
+    {
+        return $this->_elementsBelongTo;
     }
  
     // Element groups: 
