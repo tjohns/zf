@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7815 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie および Zend_Http_CookieJar</title>
 
@@ -194,7 +195,7 @@ echo $cookie;]]>
                 <title>Zend_Http_Cookie のゲッターメソッドの使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 // まずクッキーを作成します
-$cookie = Zend_Http_Client('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // これは 'foo' を表示します
 echo $cookie->getValue();  // これは 'two words' を表示します
@@ -254,7 +255,7 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
                 <title>クッキーがマッチするかどうかの確認</title>
                 <programlisting role="php"><![CDATA[<?php
 // まずクッキーオブジェクトを作成します。これはセキュアなセッションクッキーです。
-$cookie = Zend_Http_Client('foo=two+words; domain=.example.com; path=/somedir; secure;');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
 // これは true を返します。
@@ -275,7 +276,7 @@ $cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // これは true を返します。
 
 // 別のクッキーオブジェクトを作成します。今度はセキュアではなく、二時間で有効期限切れとなります。
-$cookie = Zend_Http_Client('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200);
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200));
 
 $cookie->match('http://www.example.com/');
 // これは true を返します。

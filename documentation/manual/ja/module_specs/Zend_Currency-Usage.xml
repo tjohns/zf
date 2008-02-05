@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7504 -->
+<!-- EN-Revision: 7807 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -274,7 +274,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">display</emphasis>:
                     通貨を表す際に、通貨のどの部分を使用するのかを定義します。
                     使用できる表示形式は 4 通りです。
-                    <link linkend="zend.currency.usage.setformat.constantsdescription">this table</link>
+                    <link linkend="zend.currency.usage.setformat.constantsdescription">この表</link>
                     を参照ください。
                 </para>
             </listitem>
