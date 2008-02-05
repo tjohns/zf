@@ -190,7 +190,7 @@ print $locale->getRegion();]]>
 
         <para>
             <code>getTranslationList()</code> gives you access to localized informations of several types. These
-            information are usefull if you want to display localized data to a customer without the need
+            information are useful if you want to display localized data to a customer without the need
             of translating it. They are already avaiable for your usage.
         </para>
 

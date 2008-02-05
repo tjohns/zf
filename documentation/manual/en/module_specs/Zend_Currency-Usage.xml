@@ -98,7 +98,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
     <para>
         So you can supress any of these parameters if you want to use the default ones. This has no negative effect
-        on handling the currencies. It can be usefull f.e. if you dont know the default currency for a region.
+        on handling the currencies. It can be useful f.e. if you dont know the default currency for a region.
     </para>
 
     <note>

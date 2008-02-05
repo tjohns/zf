@@ -37,7 +37,7 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  enable / disable caching (can be very usefull for the debug of
+                                  enable / disable caching (can be very useful for the debug of
                                   cached scripts)
                               </entry>
                           </row>

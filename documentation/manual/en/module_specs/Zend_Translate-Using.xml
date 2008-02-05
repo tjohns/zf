@@ -610,7 +610,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         <title>Handling languages</title>
 
         <para>
-            When working with different languages there are a few methods which will be usefull.
+            When working with different languages there are a few methods which will be useful.
         </para>
 
         <para>
@@ -978,7 +978,7 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <title>Access to the source data</title>
 
         <para>
-            Of course sometimes it is usefull to have access to the translation source data. Therefor two
+            Of course sometimes it is useful to have access to the translation source data. Therefor two
             functions exist.
         </para>
 
