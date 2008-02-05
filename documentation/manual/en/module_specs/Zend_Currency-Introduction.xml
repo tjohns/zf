@@ -23,7 +23,7 @@
                     <emphasis role="strong">Complete Locale support</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> works with all avaiable locales and has therefor the ability to
+                    <code>Zend_Currency</code> works with all available locales and has therefor the ability to
                     know about over 100 different localized currency informations. This includes for example
                     currency names, abbreviations, money signs and more.
                 </para>

@@ -1011,14 +1011,14 @@ abstract class Zend_Date_DateObject {
             $zone = $oldzone;
         }
 
-        // throw an error on false input, but only if the new date extension is avaiable
+        // throw an error on false input, but only if the new date extension is available
         if (function_exists('timezone_open')) {
             if (!@timezone_open($zone)) {
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", $zone);
             }
         }
-        // this can generate an error if the date extension is not avaiable and a false timezone is given
+        // this can generate an error if the date extension is not available and a false timezone is given
         $result = date_default_timezone_set($zone);
         if ($result === true) {
             $this->_offset   = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);

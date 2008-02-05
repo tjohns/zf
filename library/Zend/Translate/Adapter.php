@@ -223,7 +223,7 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Returns the avaiable languages from this adapter
+     * Returns the available languages from this adapter
      *
      * @return array
      */
@@ -241,7 +241,7 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Returns all avaiable message ids from this adapter
+     * Returns all available message ids from this adapter
      * If no locale is given, the actual language will be used
      *
      * @param  $locale  String|Zend_Locale  Language to return the message ids from
@@ -257,7 +257,7 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Returns all avaiable translations from this adapter
+     * Returns all available translations from this adapter
      * If no locale is given, the actual language will be used
      * If 'all' is given the complete translation dictionary will be returned
      *
@@ -277,7 +277,7 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Is the wished language avaiable ?
+     * Is the wished language available ?
      *
      * @param  string|Zend_Locale  $locale  Language to search for, identical with locale identifier,
      *                                      see Zend_Locale for more information

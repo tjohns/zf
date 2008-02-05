@@ -97,7 +97,7 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
                 <para>
                     Although PHP 5.2 docs state, "The valid range of a timestamp is typically from Fri, 13 Dec 1901
                     20:45:54 GMT to Tue, 19 Jan 2038 03:14:07 GMT," <code>Zend_Date</code> supports a nearly unlimited
-                    range, with the help of the BCMath extension. If BCMath is not avaiable, then Zend_Date will have
+                    range, with the help of the BCMath extension. If BCMath is not available, then Zend_Date will have
                     reduced support only for timestamps within the range of the <code>float</code> type supported by
                     your server. "The size of a float is platform-dependent, although a maximum of ~1.8e308 with a
                     precision of roughly 14 decimal digits is a common value (that's 64 bit IEEE format)." [

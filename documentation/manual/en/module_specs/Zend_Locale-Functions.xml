@@ -81,7 +81,7 @@ if ($locale->equals($mylocale)) {
             <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
             </link>
             first. The second parameter toggles between returning all matching locales or only the first/best match.
-            Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
+            Locale-aware components normally use only the first locale. A quality rating is included, when available.
         </para>
 
         <example id="zend.locale.getdefault.example-1">
@@ -191,7 +191,7 @@ print $locale->getRegion();]]>
         <para>
             <code>getTranslationList()</code> gives you access to localized informations of several types. These
             information are useful if you want to display localized data to a customer without the need
-            of translating it. They are already avaiable for your usage.
+            of translating it. They are already available for your usage.
         </para>
 
         <para>
@@ -221,7 +221,7 @@ print $locale->getTranslation('de', 'language', 'zh');
 
         <para>
             You can receive this informations for all languages. But not all of the informations are completly
-            avaiable for all languages. Some of these types are also avaiable through an own function for
+            available for all languages. Some of these types are also available through an own function for
             simplicity. See this list for detailed informations.
         </para>
 
@@ -529,7 +529,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">CityToTimezone</emphasis></entry>
                         <entry>Returns a localized list of cities which can be used as translation for a
-                            related timezone. Not for all timezones is a translation avaiable, but for a
+                            related timezone. Not for all timezones is a translation available, but for a
                             user is the real city written in his languages more accurate than the ISO name
                             of this timezone. The ISO timezone is used as array key and the translated
                             city as array value</entry>
@@ -1128,7 +1128,7 @@ Array
         <note>
             <para>
                 Until 1.0.3 <emphasis role="strong">yesabbr</emphasis> from the underlaying locale data was also
-                avaiable. Since 1.1 this information is no longer standalone avaiable, but you will find the
+                available. Since 1.1 this information is no longer standalone available, but you will find the
                 information from it within <emphasis role="strong">yesarray</emphasis>.
             </para>
         </note>

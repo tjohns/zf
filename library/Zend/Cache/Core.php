@@ -49,7 +49,7 @@ class Zend_Cache_Core
      *
      * ====> (boolean) caching :
      * - Enable / disable caching
-     * (can be very usefull for the debug of cached scripts)
+     * (can be very useful for the debug of cached scripts)
      *
      * ====> (boolean) automatic_serialization :
      * - Enable / disable automatic serialization

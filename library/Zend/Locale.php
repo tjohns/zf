@@ -421,7 +421,7 @@ class Zend_Locale {
 
 
     /**
-     * Returns the region part of the locale if avaiable
+     * Returns the region part of the locale if available
      *
      * @return region
      */

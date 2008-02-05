@@ -3791,7 +3791,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         try {
             $result = $date->setTimezone('unknown');
-            // if function timezone_identifiers_list is not avaiable false should be returned
+            // if function timezone_identifiers_list is not available false should be returned
             $this->assertFalse($result);
         } catch (Zend_Date_Exception $e) {
             // success

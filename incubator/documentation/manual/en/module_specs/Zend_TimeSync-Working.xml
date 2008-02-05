@@ -10,7 +10,7 @@
 
     <note>
         <para>
-            In all examples within this chapter we are using one of the avaiable public generic timeservers.
+            In all examples within this chapter we are using one of the available public generic timeservers.
             In our case <emphasis role="strong">0.europe.pool.ntp.org</emphasis>. For your environment
             it is recommended that you are using a public generic timeserver which is nearly to the location
             of your server. See <link linkend="http://www.pool.ntp.org">http://www.pool.ntp.org</link> for
@@ -57,14 +57,14 @@ print $server->getDate()->getIso();]]>
         <title>Multiple timeservers</title>
 
         <para>
-            Not all timeservers are always avaiable and will return their time. Servers will have a time
+            Not all timeservers are always available and will return their time. Servers will have a time
             where they can not be reached, for example when having a maintenance. In such cases, when the
             time can not be requested from the timeserver, you would get an exception.
         </para>
 
         <para>
             As simple solution <code>Zend_TimeSync</code> can handle multiple timeservers and supports a
-            automatic fallback machanism. There are two supported ways. You can eighter give an array
+            automatic fallback machanism. There are two supported ways. You can either give an array
             of timeservers when creating the instance. Or you can add additionally timeservers afterwards
             with the <code>addServer()</code> method.
         </para>
@@ -87,7 +87,7 @@ print $server->getDate()->getIso();]]>
 
         <para>
             When you give more than one timeserver, which should be your default behaviour, you should name
-            your servers. You can eighter name your servers with the array key, but also with the second
+            your servers. You can either name your servers with the array key, but also with the second
             parameter at initiation or addition of an other timeserver.
         </para>
 
@@ -116,7 +116,7 @@ print $server->getDate()->getIso();]]>
         <para>
             There are different types of timeservers. The most public timeservers are using
             <emphasis role="strong">NTP</emphasis> as protocol. But there are different other
-            protocols avaiable.
+            protocols available.
         </para>
 
         <para>
@@ -192,7 +192,7 @@ print $server->getDate()->getIso();]]>
             With the <code>setOptions()</code> method, you can set any option. If accepts an array where the
             key is the option to set and the value is the value of that option. Any previous set option will
             be overwritten by the new value. If you want to know which options are set, use the
-            <code>getOptions()</code> method. It accepts eighter a key which returns the given option if set
+            <code>getOptions()</code> method. It accepts either a key which returns the given option if set
             or, if no key is set, it will return all set options.
         </para>
 
@@ -222,7 +222,7 @@ print "Timeout = " . Zend_TimeSync::getOptions('timeout');]]>
 
         <para>
             The default behaviour for requesting a time is to request it from the first given server.
-            But sometimes it is usefull to set a different timeserver from which to request the time.
+            But sometimes it is useful to set a different timeserver from which to request the time.
             This can be done with the <code>setServer()</code> method. To define the used timeserver
             just set the alias as parameter within the method. And to get the actual used timeserver
             just call the <code>getServer()</code> method. It accepts an alias as parameter which

@@ -3,7 +3,7 @@
     <title>Working examples</title>
 
     <para>
-        Within this chapter, we will describe several additional functions which are also avaiable through
+        Within this chapter, we will describe several additional functions which are also available through
         <code>Zend_Date</code>. Of course all described functions have additional examples to show the
         expexted working and the simple API for the proper using of them.
     </para>
@@ -99,15 +99,15 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <para>
             For creating a listbox and choosing a special city the function <code>Zend_Date_Cities::getCityList</code>
-            can be used. It returns the names of all avaiable predefined cities for the helper class.
+            can be used. It returns the names of all available predefined cities for the helper class.
         </para>
 
         <example id="zend.date.additional.sunrise-sunset.example-1">
-            <title>Getting all avaiable cities</title>
+            <title>Getting all available cities</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
 
-// Output the complete list of avaiable cities
+// Output the complete list of available cities
 print_r (Zend_Date_Cities::getCityList());]]>
             </programlisting>
         </example>
@@ -183,9 +183,9 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
 
         <para>
             As now all needed data can be set the next is to create a <code>Zend_Date</code> object with the day where
-            sunset or sunrise should be calculated. For the calculation there are 3 functions avaiable. It is possible
+            sunset or sunrise should be calculated. For the calculation there are 3 functions available. It is possible
             to calculate sunset with '<code>getSunset()</code>', sunrise with '<code>getSunrise()</code>' and all
-            avaiable informations related to the sun with '<code>getSunInfo()</code>'. After the calculation the
+            available informations related to the sun with '<code>getSunInfo()</code>'. After the calculation the
             <code>Zend_Date</code> object will be returned with the calculated time.
         </para>
 

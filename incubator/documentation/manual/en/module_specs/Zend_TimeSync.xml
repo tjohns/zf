@@ -38,7 +38,7 @@
         <para>
             Normally every server within a multiserver farm will have a service running which syncronises
             the own time with a timeserver. So within a standard environment it should not be necessary to
-            use <code>Zend_TimeSync</code>. But it can become handy if there is no service avaiable and if
+            use <code>Zend_TimeSync</code>. But it can become handy if there is no service available and if
             you don't have the right to install such a service.
         </para>
 
@@ -182,7 +182,7 @@
             a timeserver within you LAN or any public timeserver you know. If you decide to use a public
             timeserver you should use a server pool. Serverpools are public addresses where you will get
             a random timeserver from the pool if you request the time. This way you will not have to split your
-            requests. There are public serverpools avaiable for different regions so you will not have any of the
+            requests. There are public serverpools available for different regions so you will not have any of the
             problems mentioned above.
         </para>
 

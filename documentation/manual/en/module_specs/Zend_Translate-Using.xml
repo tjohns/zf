@@ -518,7 +518,7 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 
         <para>
             Options can be used with all adapters. Of course the options are different for all adapters.
-            You can set options when you create the adapter. Actually there is one option which is avaiable
+            You can set options when you create the adapter. Actually there is one option which is available
             to all adapters. '<code>clear</code>' decides if translation data shold be added to existing
             one or not. Standard behaviour is to add new translation data to existing one. But the
             translation data is only cleared for the selected language. So all other languages will not be
@@ -547,7 +547,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         </example>
 
         <para>
-            Here you can find all avaiable options for the different adapters with a description of their usage:
+            Here you can find all available options for the different adapters with a description of their usage:
         </para>
 
         <table id="zend.translate.using.options.alloptions">
@@ -621,14 +621,14 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         <para>
             The <code>setLocale()</code> method sets a new standard language for translation. This prevents the
             need of setting the optional language parameter more than once to the <code>translate()</code> method.
-            If the given language does not exist, or no translation data is avaiable for the language,
+            If the given language does not exist, or no translation data is available for the language,
             <code>setLocale()</code> tries to downgrade to the language without the region if any was given.
             A language of <code>en_US</code> would be downgraded to <code>en</code>. When also the downgraded
             language can not be found an exception will be thrown.
         </para>
 
         <para>
-            The <code>isAvaiable()</code> method checks if a given language is already avaiable. It returns
+            The <code>isAvaiable()</code> method checks if a given language is already available. It returns
             <code>true</code> if data for the given language exist.
         </para>
 
@@ -734,7 +734,7 @@ $translate->addTranslation("\my_de.mo","de");
 
         <note>
             <para>
-                Automatic source detection is avaiable since Zend Framework version 1.1 .
+                Automatic source detection is available since Zend Framework version 1.1 .
             </para>
         </note>
 
@@ -963,7 +963,7 @@ if ($translate->isTranslated('message1')) {
     print "'message1' can be translated";
 }
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' can not be translated in 'de' as it's only avaiable in 'de_AT'";
+    print "'message1' can not be translated in 'de' as it's only available in 'de_AT'";
 }
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' can be translated in 'de_AT' falls back to 'de'";
@@ -994,13 +994,13 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <para>
             Both methods accept an optional parameter <code>$locale</code> which, when set, returns the
             translation data for the specified language. If this parameter is not given, the actual set
-            language will be used. Keep in mind that normally all translations should be avaiable in all
+            language will be used. Keep in mind that normally all translations should be available in all
             languages. Which means that in a normal situation you will not have to set this parameter.
         </para>
 
         <para>
             Additionally the <code>getMessages()</code> method is able to return the complete
-            translation dictionary with the pseudo-locale 'all'. This will return all avaiable
+            translation dictionary with the pseudo-locale 'all'. This will return all available
             translation data for each added locale.
         </para>
 

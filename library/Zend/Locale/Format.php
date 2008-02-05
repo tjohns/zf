@@ -346,7 +346,7 @@ class Zend_Locale_Format
                 }
             }
         } else {
-            // seperate negative format pattern when avaiable
+            // seperate negative format pattern when available
             if (iconv_strpos($format, ';') !== false) {
                 if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
                     $format = iconv_substr($format, iconv_strpos($format, ';') + 1);

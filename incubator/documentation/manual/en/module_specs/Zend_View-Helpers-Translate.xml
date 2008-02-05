@@ -3,7 +3,7 @@
     <title>Translate Helper</title>
 
     <para>
-        Often web sites are avaiable in several languages. To translate the content
+        Often web sites are available in several languages. To translate the content
         of a site you should simply use
         <link linkend="zend.translate.introduction">Zend Translate</link> and to
         integrate <code>Zend Translate</code> within your view you should use the
@@ -122,7 +122,7 @@ print $translate->translate('simple'); // this returns 'einfach'
     <para>
         As already seen the <code>translate()</code> method is used to return the translation. Just call it
         with the needed messageid of your translation adapter. But it can also replace parameters within
-        the translation string. Therefor it accepts variable parameters in two ways. Eighter as list of
+        the translation string. Therefor it accepts variable parameters in two ways. either as list of
         parameters, or as array of parameters. See the following examples for details:
     </para>
 
@@ -187,7 +187,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
     </example>
 
     <para>
-        Sometimes it is needed to change the locale of the translation. This can be done eighter dynamic
+        Sometimes it is needed to change the locale of the translation. This can be done either dynamic
         per translation or static for all following translations. And you can use it with both, the
         parameterlist and the array of parameters. In both cases the locale must be given as last single
         parameter.
