@@ -83,8 +83,8 @@ final class Zend_InfoCard_Xml_Assertion
 		foreach($namespaces as $namespace) {
 			switch($namespace) {
 				case self::TYPE_SAML:
-					include_once 'Zend/InfoCard/Xml/Assertion/SAML.php';
-					return simplexml_load_string($strXmlData, 'Zend_InfoCard_Xml_Assertion_SAML', null);
+					include_once 'Zend/InfoCard/Xml/Assertion/Saml.php';
+					return simplexml_load_string($strXmlData, 'Zend_InfoCard_Xml_Assertion_Saml', null);
 			}
 		}
 		

@@ -63,15 +63,17 @@ class Zend_InfoCard_AssertionTest extends PHPUnit_Framework_TestCase
 
     public function testAssertionProcess() 
     {
+    	date_default_timezone_set("America/Los_Angeles");
+    	
 		$assertions = Zend_InfoCard_Xml_Assertion::getInstance($this->_xmlDocument);
 		
-		$this->assertTrue($assertions instanceof Zend_InfoCard_Xml_Assertion_SAML);
+		$this->assertTrue($assertions instanceof Zend_InfoCard_Xml_Assertion_Saml);
 		
 		$this->assertSame($assertions->getMajorVersion(), 1);
 		$this->assertSame($assertions->getMinorversion(), 1);
 		$this->assertSame($assertions->getAssertionID(), "uuid:5cf2cd76-acf6-45ef-9059-a811801b80cc");
 		$this->assertSame($assertions->getIssuer(), "http://schemas.xmlsoap.org/ws/2005/05/identity/issuer/self");
-		$this->assertSame($assertions->getConfirmationMethod(), Zend_InfoCard_Xml_Assertion_SAML::CONFIRMATION_BEARER);
+		$this->assertSame($assertions->getConfirmationMethod(), Zend_InfoCard_Xml_Assertion_Saml::CONFIRMATION_BEARER);
 		$this->assertSame($assertions->getIssuedTimestamp(), 1190153823);
 		
 	}

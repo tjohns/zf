@@ -151,7 +151,13 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 			$decoded = "";
 			switch($this->getKeyThumbprintEncodingType()) {
 				case self::ENCODING_BASE64BIN:
-					$decoded = base64_decode($encoded, true);
+					
+					if(version_compare(PHP_VERSION, "5.2.0", ">=")) {
+						$decoded = base64_decode($encoded, true);
+					} else {
+						$decoded = base64_decode($encoded);
+					}
+					
 					break;
 				default:
 					throw new Zend_InfoCard_Xml_Exception("Unknown Key Reference Encoding Type: {$this->getKeyThumbprintEncodingType()}");

@@ -89,7 +89,7 @@ class Zend_InfoCard_Cipher
 				return new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc();
 			
 			case self::ENC_RSA_OAEP_MGF1P:
-				include_once 'Zend/InfoCard/Cipher/Pki/Adapter/RSA.php';
+				include_once 'Zend/InfoCard/Cipher/Pki/Adapter/Rsa.php';
 				return new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Rsa::OAEP_PADDING);
 				break;
 

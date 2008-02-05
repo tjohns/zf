@@ -148,13 +148,13 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 		
 		$claims = $infoCard->process($this->_xmlDocument);
 
-		$pki_object = new Zend_InfoCard_Cipher_PKI_Adapter_RSA(Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING);
+		$pki_object = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
 		
-		$infoCard->setPKICipherObject($pki_object);
+		$infoCard->setPkiCipherObject($pki_object);
 		
-		$this->assertTrue($pki_object === $infoCard->getPKICipherObject());
+		$this->assertTrue($pki_object === $infoCard->getPkiCipherObject());
 		
-		$sym_object = new Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC();
+		$sym_object = new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes256cbc();
 		
 		$infoCard->setSymCipherObject($sym_object);
 		
@@ -219,11 +219,6 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_null($adapter->removeAssertion(1, 2)));
 	}
 
-    public function testConditionValidation() 
-    {
-        $this->markTestIncomplete();
-	}
-	
 	public function testTransforms() 
 	{
 		$trans = new Zend_InfoCard_Xml_Security_Transform();

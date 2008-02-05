@@ -29,21 +29,21 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/InfoCard.php';
-require_once 'Zend/InfoCard/Cipher/PKI/Adapter/RSA.php';
+require_once 'Zend/InfoCard/Cipher/Pki/Adapter/Rsa.php';
 
 class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 {
 
-	public function testPKIPadding() 
+	public function testPkiPadding() 
 	{
 		try {
-			$obj = new Zend_InfoCard_Cipher_PKI_Adapter_RSA("thiswillbreak");
+			$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa("thiswillbreak");
 			$this->fail("Exception not thrown as expected");
 		} catch(Exception $e) {
 			/* yay */
 		}
 
-		$obj = new Zend_InfoCard_Cipher_PKI_Adapter_RSA();
+		$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
 		
 		$prv_key = file_get_Contents(dirname(__FILE__) . "/_files/ssl_private.cert");
 		
@@ -54,7 +54,7 @@ class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 			/* yay */
 		}
 		
-		$result = $obj->decrypt("foo", $prv_key, null, Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING);
+		$result = $obj->decrypt("foo", $prv_key, null, Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
 		
 		// This is sort of werid, but since we don't have a real PK-encrypted string to test against for NO_PADDING
 		// mode we decrypt the string "foo" instead. Mathmatically we will always arrive at the same resultant
@@ -65,7 +65,7 @@ class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 	public function testPKIDecryptBadKey() 
 	{
 		
-		$obj = new Zend_InfoCard_Cipher_PKI_Adapter_RSA();
+		$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
 		
 		try {
 			$obj->decrypt("Foo", "bar");	
@@ -79,9 +79,9 @@ class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 	public function testCipherFactory() 
 	{
 		$this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_AES128CBC) 
-						  instanceof Zend_InfoCard_Cipher_Symmetric_Adapter_AES128CBC);
+						  instanceof Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc);
 		$this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_RSA)
-		                  instanceof Zend_InfoCard_Cipher_PKI_Adapter_RSA);
+		                  instanceof Zend_InfoCard_Cipher_Pki_Adapter_Rsa);
 		                  
 		try {
 			Zend_InfoCard_Cipher::getInstanceByURI("Broken");
