@@ -78,7 +78,7 @@
 
     <div id="nav"><?= $this->placeholder('nav') ?></div>
 
-    <div id="content"><= $this->layout()->content ?></div>
+    <div id="content"><?= $this->layout()->content ?></div>
 
     <?= $this->render('footer.phtml') ?>
 </body>
