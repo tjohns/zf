@@ -81,6 +81,9 @@ require_once 'Zend/Pdf/Resource/Font/Simple/Standard/TimesRoman.php';
 /** Zend_Pdf_Resource_Font_Simple_Standard_ZapfDingbats */
 require_once 'Zend/Pdf/Resource/Font/Simple/Standard/ZapfDingbats.php';
 
+/** Zend_Pdf_Resource_Font_Extracted */
+require_once 'Zend/Pdf/Resource/Font/Extracted.php';
+
 
 /**
  * Abstract factory class which vends {@link Zend_Pdf_Resource_Font} objects.

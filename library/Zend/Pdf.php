@@ -570,7 +570,50 @@ class Zend_Pdf
         return $this->_namedActions;
     }
 
+    /**
+     * Extract fonts attached to the document
+     *
+     * returns array of Zend_Pdf_Resource_Font_Extracted objects
+     * 
+     * @return array
+     */
+    public function extractFonts()
+    {
+        $fonts = array();
+        
+        foreach ($this->pages as $page) {
+            $pageFonts = $page->extractFonts();
+            
+            foreach ($pageFonts as $extractedFont) {
+                $fonts[$extractedFont->getResource()->toString()] = $extractedFont;
+            }
+        }
 
+        return $fonts;
+    } 
+
+    /**
+     * Extract font attached to the page by specific font name
+     * 
+     * $fontName should be specified in UTF-8 encoding
+     *
+     * @return Zend_Pdf_Resource_Font_Extracted|null
+     */
+    public function extractFont($fontName)
+    {
+        foreach ($this->pages as $page) {
+            $pageFonts = $page->extractFonts();
+            
+            foreach ($pageFonts as $extractedFont) {
+                if ($extractedFont->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') == $fontName) {
+                    return $extractedFont; 
+                }
+            }
+        }
+
+        return null;
+    } 
+    
     /**
      * Render the completed PDF to a string.
      * If $newSegmentOnly is true, then only appended part of PDF is returned.

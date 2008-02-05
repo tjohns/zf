@@ -384,7 +384,7 @@ class Zend_Pdf_Page
 
         return $newResName;
     }
-
+    
     /**
      * Add procedureSet to the Page description
      *
@@ -623,6 +623,88 @@ class Zend_Pdf_Page
     {
         return $this->_font;
     }
+
+    /**
+     * Extract fonts attached to the page
+     *
+     * returns array of Zend_Pdf_Resource_Font_Extracted objects
+     * 
+     * @return array
+     */
+    public function extractFonts()
+    {
+        if ($this->_pageDictionary->Resources->Font === null) {
+            // Page doesn't have any font attached
+            // Return empty array
+            return array();
+        }
+        
+        $fontResources = $this->_pageDictionary->Resources->Font;
+
+        $fonts = array();
+        foreach ($fontResources->getKeys() as $fontResourceName) {
+            $fontDictionary = $fontResources->$fontResourceName;
+            
+            if (! ($fontDictionary instanceof Zend_Pdf_Element_Reference  ||
+                   $fontDictionary instanceof Zend_Pdf_Element_Object) ) {
+                // Font dictionary has to be an indirect object or object reference
+                continue;
+            }
+            
+            try {
+                // Try to extract font
+                $fonts[$fontDictionary->toString($this->_objFactory)] = new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
+            } catch (Zend_Pdf_Exception $e) {
+                if ($e->getMessage() != 'Unsupported font type.') {
+                    throw $e;
+                }
+            }
+        }
+        
+        return $fonts;
+    } 
+
+    /**
+     * Extract font attached to the page by specific font name
+     * 
+     * $fontName should be specified in UTF-8 encoding
+     *
+     * @return Zend_Pdf_Resource_Font_Extracted|null
+     */
+    public function extractFont($fontName)
+    {
+        if ($this->_pageDictionary->Resources->Font === null) {
+            // Page doesn't have any font attached
+            return null;
+        }
+        
+        $fontResources = $this->_pageDictionary->Resources->Font;
+
+        foreach ($fontResources->getKeys() as $fontResourceName) {
+            $fontDictionary = $fontResources->$fontResourceName;
+            
+            if (! ($fontDictionary instanceof Zend_Pdf_Element_Reference  ||
+                   $fontDictionary instanceof Zend_Pdf_Element_Object) ) {
+                // Font dictionary has to be an indirect object or object reference
+                continue;
+            }
+            
+            try {
+                // Try to extract font
+                $font = new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
+                
+                if ($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') == $fontName) {
+                    return $font; 
+                }
+            } catch (Zend_Pdf_Exception $e) {
+                if ($e->getMessage() != 'Unsupported font type.') {
+                    throw $e;
+                }
+            }
+        }
+        
+        return null;
+    } 
 
     /**
      * Get current font size
