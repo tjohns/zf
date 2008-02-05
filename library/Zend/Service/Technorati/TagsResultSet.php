@@ -17,7 +17,7 @@
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TagsResult.php 7243 2007-12-23 20:55:55Z weppos $
+ * @version    $Id$
  */
 
 

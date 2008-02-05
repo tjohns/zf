@@ -17,8 +17,8 @@
  * @package    Zend_Service_Technorati
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: TagsResultTest.php 7253 2007-12-24 13:34:35Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
