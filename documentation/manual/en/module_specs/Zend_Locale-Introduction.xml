@@ -314,7 +314,7 @@ $date = new Zend_Date('auto');]]>
         <para>
             In such cases <code>Zend_Locale</code> will normally throw an exception with a message that
             the automatic detection of any locale was not successfull. You have two options to handle such
-            a situation. Eighter through setting a new locale per hand, or defining a default locale.
+            a situation. Either through setting a new locale per hand, or defining a default locale.
         </para>
 
         <example id="zend.locale.defaultlocale.example-1">

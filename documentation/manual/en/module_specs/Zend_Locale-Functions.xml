@@ -787,7 +787,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Question</emphasis></entry>
                         <entry>Returns a localized string for acceptance ('yes') and
-                            negotation ('no'). You have to give eighter 'yes' or 'no' as value to receive the
+                            negotation ('no'). You have to give either 'yes' or 'no' as value to receive the
                             expected string. Use
                             <link linkend="zend.locale.getquestion">Zend_Locale's getQuestion method</link>
                             for simplicity</entry>
