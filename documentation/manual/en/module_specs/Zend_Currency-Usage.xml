@@ -1,4 +1,4 @@
-<sect1 id="zend.currency.useage">
+<sect1 id="zend.currency.usage">
 
     <title>How to work with currencies</title>
 
@@ -8,7 +8,7 @@
         the currency which has to be used for this locale.
     </para>
 
-    <example id="zend.currency.useage.example1">
+    <example id="zend.currency.usage.example1">
 
         <title>Creating an instance of Zend_Currency from the actual locale</title>
 
@@ -76,7 +76,7 @@ $currency = new Zend_Currency();]]>
         </listitem>
     </itemizedlist>
 
-    <example id="zend.currency.useage.example2">
+    <example id="zend.currency.usage.example2">
 
         <title>Other examples for creating an instance of Zend_Currency</title>
 
@@ -112,7 +112,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
         </para>
     </note>
 
-    <sect2 id="zend.currency.useage.tocurrency">
+    <sect2 id="zend.currency.usage.tocurrency">
 
         <title>Create output from an currency</title>
 
@@ -131,10 +131,10 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
         <para>
             <code>toCurrency(array $options)</code> accepts an array with options which can be used to temporary set another
             format or currency represenation. For details about which options can be used see 
-            <link linkend="zend.currency.useage.setformat">Changing the format of a currency</link>.
+            <link linkend="zend.currency.usage.setformat">Changing the format of a currency</link>.
         </para>
 
-        <example id="zend.currency.useage.tocurrency.example">
+        <example id="zend.currency.usage.tocurrency.example">
 
             <title>Creating output for an currency</title>
 
@@ -157,7 +157,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.setformat">
+    <sect2 id="zend.currency.usage.setformat">
 
         <title>Changing the format of a currency</title>
 
@@ -195,7 +195,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                 </para>
                 <para>
                     The script which shall be used to display digits. Detailed information about scripts and their
-                    useage can be found in the documentation of <code>Zend_Locale</code> in
+                    usage can be found in the documentation of <code>Zend_Locale</code> in
                     <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
                 </para>
             </listitem>
@@ -204,7 +204,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">Number formatting</emphasis>:
                 </para>
                 <para>
-                    The amount of currency (formally known as value of money) is formatted by the useage of
+                    The amount of currency (formally known as value of money) is formatted by the usage of
                     formatting rules within the locale. For example is in english the ',' sign used as seperator for
                     thousands, and in german the '.' sign.
                 </para>
@@ -223,7 +223,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                 <para>
                     <emphasis role="strong">position</emphasis>: Defines the position at which the currency
                     description should be displayed. The supported position can be found in
-                    <link linkend="zend.currency.useage.setformat.constantsposition">this table</link>.
+                    <link linkend="zend.currency.usage.setformat.constantsposition">this table</link>.
                 </para>
             </listitem>
             <listitem>
@@ -247,7 +247,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">display</emphasis>: Defines which part of the currency has to be
                     used for displaying the currency representation. There are 4 representations which can be
                     used and which are all described in
-                    <link linkend="zend.currency.useage.setformat.constantsdescription">this table</link>.
+                    <link linkend="zend.currency.usage.setformat.constantsdescription">this table</link>.
                 </para>
             </listitem>
             <listitem>
@@ -279,7 +279,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </listitem>
         </itemizedlist>
 
-        <table id="zend.currency.useage.setformat.constantsdescription">
+        <table id="zend.currency.usage.setformat.constantsdescription">
 
             <title>Constants for the selecting the currency description</title>
 
@@ -312,7 +312,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <table id="zend.currency.useage.setformat.constantsposition">
+        <table id="zend.currency.usage.setformat.constantsposition">
 
             <title>Constants for the selecting the currency position</title>
 
@@ -341,7 +341,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <example id="zend.currency.useage.setformat.example">
+        <example id="zend.currency.usage.setformat.example">
 
             <title>Changing the displayed format of a currency</title>
 
@@ -366,7 +366,7 @@ echo $currency->toCurrency(1000);]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.informational">
+    <sect2 id="zend.currency.usage.informational">
 
         <title>Informational methods for Zend_Currency</title>
 
@@ -435,7 +435,7 @@ echo $currency->toCurrency(1000);]]>
             locale the data should be read. If no locale is given, the actual set locale is used.
         </para>
 
-        <example id="zend.currency.useage.informational.example">
+        <example id="zend.currency.usage.informational.example">
 
             <title>Getting informations from currencies</title>
 
@@ -465,7 +465,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.setlocale">
+    <sect2 id="zend.currency.usage.setlocale">
 
         <title>Settings new default values</title>
 
@@ -476,7 +476,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
             abbreviation and symbol.
         </para>
 
-        <example id="zend.currency.useage.setlocale.example">
+        <example id="zend.currency.usage.setlocale.example">
 
             <title>Setting a new locale</title>
 
@@ -496,18 +496,18 @@ print $currency->toCurrency(1000);
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.cache">
+    <sect2 id="zend.currency.usage.cache">
 
         <title>Speed up Zend_Currency</title>
 
         <para>
-            The work of <code>Zend_Currency</code> can be speed up by the useage of <code>Zend_Cache</code>.
+            The work of <code>Zend_Currency</code> can be speed up by the usage of <code>Zend_Cache</code>.
             By using the static method <code>Zend_Currency::setCache($cache)</code> which accepts one option, an
             <code>Zend_Cache</code> adapter. When you set it, the localization data of the methods from
             Zend_Currency are cached.
         </para>
 
-        <example id="zend.currency.useage.cache.example">
+        <example id="zend.currency.usage.cache.example">
 
             <title>Caching currencies</title>
 

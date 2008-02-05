@@ -547,7 +547,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         </example>
 
         <para>
-            Here you can find all avaiable options for the different adapters with a description of their useage:
+            Here you can find all avaiable options for the different adapters with a description of their usage:
         </para>
 
         <table id="zend.translate.using.options.alloptions">
@@ -739,7 +739,7 @@ $translate->addTranslation("\my_de.mo","de");
         </note>
 
         <para>
-            The useage is quite the same as initiating a single translation source with one difference.
+            The usage is quite the same as initiating a single translation source with one difference.
             You must give a directory which has to be scanned instead a file.
         </para>
 

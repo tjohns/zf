@@ -9,7 +9,7 @@
         to migrate your scripts to the new API.
     </para>
 
-    <sect2 id="zend.currency.useage.migration.fromonezerotwo">
+    <sect2 id="zend.currency.usage.migration.fromonezerotwo">
 
         <title>Migrating from 1.0.2 to 1.0.3 or newer</title>
 

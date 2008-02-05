@@ -265,7 +265,7 @@
         </para>
 
         <para>
-            The useage of the prefix "Zend" should be limited to the Zend_Framework.
+            The usage of the prefix "Zend" should be limited to the Zend_Framework.
             If you extend Zend_Translate with your own adapter, you should name it
             like "Company_Translate_Adapter_MyFormat". The following code shows an
             example of how a self written adapter class could be implemented:

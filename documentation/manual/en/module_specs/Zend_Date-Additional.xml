@@ -131,7 +131,7 @@ print_r (Zend_Date_Cities::getCityList());]]>
                     <row>
                         <entry>Horizon</entry>
                         <entry>Description</entry>
-                        <entry>Useage</entry>
+                        <entry>Usage</entry>
                     </row>
                 </thead>
                 <tbody>

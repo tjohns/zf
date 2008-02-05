@@ -402,7 +402,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
 
         <para>
             Use <code>checkDateFormat()</code> to check if a given string contains a proper time.
-            The useage is exact the same as with checking Dates, only <code>date_format</code>
+            The usage is exact the same as with checking Dates, only <code>date_format</code>
             should contain the parts which you expect to have.
         </para>
 
