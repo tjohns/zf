@@ -74,28 +74,28 @@ class Zend_InfoCard_Cipher
 	 *
 	 * @throws Zend_InfoCard_Cipher_Exception
 	 * @param string $uri The URI of the encryption method wantde
-	 * @return mixed an Instance of Zend_InfoCard_Cipher_Symmetric_Interface or Zend_InfoCard_Cipher_PKI_Interface
+	 * @return mixed an Instance of Zend_InfoCard_Cipher_Symmetric_Interface or Zend_InfoCard_Cipher_Pki_Interface
 	 *               depending on URI
 	 */
     static public function getInstanceByURI($uri) 
     {
 		switch($uri) {
 			case self::ENC_AES256CBC:
-				include_once 'Zend/InfoCard/Cipher/Symmetric/Adapter/AES256CBC.php';
-				return new Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC();
+				include_once 'Zend/InfoCard/Cipher/Symmetric/Adapter/Aes256cbc.php';
+				return new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes256cbc();
 
 			case self::ENC_AES128CBC:
-				include_once 'Zend/InfoCard/Cipher/Symmetric/Adapter/AES128CBC.php';
-				return new Zend_InfoCard_Cipher_Symmetric_Adapter_AES128CBC();
+				include_once 'Zend/InfoCard/Cipher/Symmetric/Adapter/Aes128cbc.php';
+				return new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc();
 			
 			case self::ENC_RSA_OAEP_MGF1P:
-				include_once 'Zend/InfoCard/Cipher/PKI/Adapter/RSA.php';
-				return new Zend_InfoCard_Cipher_PKI_Adapter_RSA(Zend_InfoCard_Cipher_PKI_Adapter_RSA::OAEP_PADDING);
+				include_once 'Zend/InfoCard/Cipher/Pki/Adapter/RSA.php';
+				return new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Rsa::OAEP_PADDING);
 				break;
 
 			case self::ENC_RSA:
-				include_once 'Zend/InfoCard/Cipher/PKI/Adapter/RSA.php';
-				return new Zend_InfoCard_Cipher_PKI_Adapter_RSA(Zend_InfoCard_Cipher_PKI_Adapter_RSA::NO_PADDING);
+				include_once 'Zend/InfoCard/Cipher/Pki/Adapter/Rsa.php';
+				return new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Rsa::NO_PADDING);
 				break;
 			
 			default:

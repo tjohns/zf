@@ -81,7 +81,7 @@ class Zend_InfoCard
 	/**
 	 * The instance to use to decrypt public-key encrypted data
 	 *
-	 * @var Zend_InfoCard_Cipher_PKI_Interface
+	 * @var Zend_InfoCard_Cipher_Pki_Interface
 	 */
 	protected $_pkiCipherObj;
 	
@@ -151,9 +151,9 @@ class Zend_InfoCard
 	/**
 	 * Gets the Public Key Cipher object used in this instance
 	 *
-	 * @return Zend_InfoCard_Cipher_PKI_Interface
+	 * @return Zend_InfoCard_Cipher_Pki_Interface
 	 */
-	public function getPKICipherObject() 
+	public function getPkiCipherObject() 
     {
 		return $this->_pkiCipherObj;
 	}
@@ -161,10 +161,10 @@ class Zend_InfoCard
 	/**
 	 * Sets the Public Key Cipher Object used in this instance
 	 *
-	 * @param Zend_InfoCard_Cipher_PKI_Interface $cipherObj
+	 * @param Zend_InfoCard_Cipher_Pki_Interface $cipherObj
 	 * @return Zend_InfoCard
 	 */
-	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) 
+	public function setPkiCipherObject(Zend_InfoCard_Cipher_Pki_Interface $cipherObj) 
     {
 		$this->_pkiCipherObj = $cipherObj;	
 		return $this;

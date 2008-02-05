@@ -22,14 +22,14 @@
  */
 
 /**
- * Zend_InfoCard_Cipher_PKI_Adapter_Abstract
+ * Zend_InfoCard_Cipher_Pki_Adapter_Abstract
  */
-require_once 'Zend/InfoCard/Cipher/PKI/Adapter/Abstract.php';
+require_once 'Zend/InfoCard/Cipher/Pki/Adapter/Abstract.php';
 
 /**
- * Zend_InfoCard_Cipher_PKI_RSA_Interface
+ * Zend_InfoCard_Cipher_Pki_Rsa_Interface
  */
-require_once 'Zend/InfoCard/Cipher/PKI/RSA/Interface.php';
+require_once 'Zend/InfoCard/Cipher/Pki/Rsa/Interface.php';
 
 /**
  * RSA Public Key Encryption Cipher Object for the InfoCard component. Relies on OpenSSL
@@ -42,9 +42,9 @@ require_once 'Zend/InfoCard/Cipher/PKI/RSA/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Cipher_PKI_Adapter_RSA 
-    extends Zend_InfoCard_Cipher_PKI_Adapter_Abstract
-    implements Zend_InfoCard_Cipher_PKI_RSA_Interface 
+class Zend_InfoCard_Cipher_Pki_Adapter_Rsa 
+    extends Zend_InfoCard_Cipher_Pki_Adapter_Abstract
+    implements Zend_InfoCard_Cipher_Pki_Rsa_Interface 
 {
 
 	/**
@@ -52,7 +52,7 @@ class Zend_InfoCard_Cipher_PKI_Adapter_RSA
 	 *
 	 * @param integer $padding The type of Padding to use
 	 */
-    public function __construct($padding = Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING) 
+    public function __construct($padding = Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING) 
     {
     	// Can't test this..
     	// @codeCoverageIgnoreStart

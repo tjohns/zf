@@ -22,9 +22,9 @@
  */
 
 /**
- * Zend_InfoCard_Cipher_PKI_Interface
+ * Zend_InfoCard_Cipher_Pki_Interface
  */
-require_once 'Zend/InfoCard/Cipher/PKI/Interface.php';
+require_once 'Zend/InfoCard/Cipher/Pki/Interface.php';
 
 /**
  * Zend_InfoCard_Cipher_Exception
@@ -41,7 +41,7 @@ require_once 'Zend/InfoCard/Cipher/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-abstract class Zend_InfoCard_Cipher_PKI_Adapter_Abstract implements Zend_InfoCard_Cipher_PKI_Interface 
+abstract class Zend_InfoCard_Cipher_Pki_Adapter_Abstract implements Zend_InfoCard_Cipher_Pki_Interface 
 {
 	/**
 	 * OAEP Padding public key encryption
@@ -65,7 +65,7 @@ abstract class Zend_InfoCard_Cipher_PKI_Adapter_Abstract implements Zend_InfoCar
      *
      * @throws Zend_InfoCard_Cipher_Exception
      * @param integer $padding One of the constnats in this class
-     * @return Zend_InfoCard_PKI_Adapter_Abstract
+     * @return Zend_InfoCard_Pki_Adapter_Abstract
      */
     public function setPadding($padding) 
     {

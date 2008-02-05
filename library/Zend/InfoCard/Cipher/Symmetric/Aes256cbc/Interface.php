@@ -29,7 +29,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_Symmetric_AES256CBC_Interface 
+interface Zend_InfoCard_Cipher_Symmetric_Aes256cbc_Interface 
 {
 	public function decrypt($encryptedData, $decryptionKey, $iv_length = null);
 }

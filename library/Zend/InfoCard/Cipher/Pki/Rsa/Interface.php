@@ -24,7 +24,7 @@
 /**
  * Zend_InfoCard_Cipher_PKI_Adapter_Abstract
  */
-require_once 'Zend/InfoCard/Cipher/PKI/Adapter/Abstract.php';
+require_once 'Zend/InfoCard/Cipher/Pki/Adapter/Abstract.php';
 
 /**
  * The interface which defines the RSA Public-key encryption object
@@ -36,7 +36,7 @@ require_once 'Zend/InfoCard/Cipher/PKI/Adapter/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_PKI_RSA_Interface 
+interface Zend_InfoCard_Cipher_Pki_Rsa_Interface 
 {
 	/**
      * Decrypts RSA encrypted data using the given private key
@@ -48,5 +48,5 @@ interface Zend_InfoCard_Cipher_PKI_RSA_Interface
      * @param integer $padding The padding to use during decryption (of not provided object value will be used)
      * @return string The decrypted data
      */	
-	public function decrypt($encryptedData, $privateKey, $password = null, $padding = Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING);
+	public function decrypt($encryptedData, $privateKey, $password = null, $padding = Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
 }

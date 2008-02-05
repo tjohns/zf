@@ -22,9 +22,9 @@
  */
 
 /**
- * Zend_InfoCard_Cipher_Symmetric_AES256CBC_Interface
+ * Zend_InfoCard_Cipher_Symmetric_Aes256cbc_Interface
  */
-require_once 'Zend/InfoCard/Cipher/Symmetric/AES256CBC/Interface.php';
+require_once 'Zend/InfoCard/Cipher/Symmetric/Aes256cbc/Interface.php';
 
 /**
  * @category   Zend
@@ -34,7 +34,7 @@ require_once 'Zend/InfoCard/Cipher/Symmetric/AES256CBC/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_Symmetric_AES128CBC_Interface 
-    extends Zend_InfoCard_Cipher_Symmetric_AES256CBC_Interface 
+interface Zend_InfoCard_Cipher_Symmetric_Aes128cbc_Interface 
+    extends Zend_InfoCard_Cipher_Symmetric_Aes256cbc_Interface 
 {
 }
