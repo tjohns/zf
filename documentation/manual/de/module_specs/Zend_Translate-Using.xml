@@ -629,7 +629,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         </para>
 
         <para>
-            Die <code>isAvaiable()</code> Methode prüft ob eine angegebene Sprache bereits vorhanden ist. Es wird
+            Die <code>isAvailable()</code> Methode prüft ob eine angegebene Sprache bereits vorhanden ist. Es wird
             <code>true</code> zurückgegeben wenn Daten für die angegebene Sprache existieren.
         </para>
 
@@ -657,7 +657,7 @@ echo $translate->_("mein_Text");
 
 ...
 // Prüft ob die Sprache existiert
-if ($translate->isAvaiable("fr")) {
+if ($translate->isAvailable("fr")) {
     // Sprache existiert
 }]]>
             </programlisting>

@@ -522,7 +522,7 @@ $translate->setLocale("fr_CH");
 echo $translate->_("my_text");
 ...
 // check if this language exist
-if ($translate->isAvaiable("fr")) {
+if ($translate->isAvailable("fr")) {
     // language exists
 }]]>
             </programlisting>
