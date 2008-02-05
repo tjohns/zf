@@ -1,4 +1,4 @@
-<sect1 id="zend.currency.useage">
+<sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
 
@@ -9,7 +9,7 @@
         verwendet wird.
     </para>
 
-    <example id="zend.currency.useage.example1">
+    <example id="zend.currency.usage.example1">
 
         <title>Eine Instanz von Zend_Currency anhand des aktuellen Gebietsschemas erstellen</title>
 
@@ -87,7 +87,7 @@ $currency = new Zend_Currency();]]>
         </listitem>
     </itemizedlist>
 
-    <example id="zend.currency.useage.example2">
+    <example id="zend.currency.usage.example2">
 
         <title>Andere Beispiele für die Erstellung einer Instanz von Zend_Currency</title>
 
@@ -125,7 +125,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
         </para>
     </note>
 
-    <sect2 id="zend.currency.useage.tocurrency">
+    <sect2 id="zend.currency.usage.tocurrency">
 
         <title>Eine Ausgabe von einer Währung erstellen</title>
 
@@ -146,10 +146,10 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
             <code>toCurrency(array $options)</code> akzeptiert ein Array mit Optionen welche gesetzt werden
             können um temporär ein Format oder eine Darstellung einer Währung zu setzen. Für Details darüber,
             welche Optionen gesetzt werden können, siehe
-            <link linkend="zend.currency.useage.setformat">Ändern des Formats einer Währung</link>.
+            <link linkend="zend.currency.usage.setformat">Ändern des Formats einer Währung</link>.
         </para>
 
-        <example id="zend.currency.useage.tocurrency.example">
+        <example id="zend.currency.usage.tocurrency.example">
 
             <title>Eine Ausgabe für eine Währung erstellen</title>
 
@@ -172,7 +172,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.setformat">
+    <sect2 id="zend.currency.usage.setformat">
 
         <title>Das Format einer Währung ändern</title>
 
@@ -245,7 +245,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                 <para>
                     <emphasis role="strong">position</emphasis>: Definiert die Position an der die Beschreibung
                     der Währung angezeigt werden soll. Die unterstützten Positionen können in
-                    <link linkend="zend.currency.useage.setformat.constantsposition">dieser Tabelle</link>
+                    <link linkend="zend.currency.usage.setformat.constantsposition">dieser Tabelle</link>
                     gefunden werden.
                 </para>
             </listitem>
@@ -273,7 +273,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">display</emphasis>: Definiert welcher Teil der Währung verwendet
                     werden soll um die Währung darzustellen. Es gibt 4 Darstellungen welche verwendet werden
                     können. Sie werden in
-                    <link linkend="zend.currency.useage.setformat.constantsdescription">dieser Tabelle</link>
+                    <link linkend="zend.currency.usage.setformat.constantsdescription">dieser Tabelle</link>
                     beschrieben.
                 </para>
             </listitem>
@@ -307,7 +307,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </listitem>
         </itemizedlist>
 
-        <table id="zend.currency.useage.setformat.constantsdescription">
+        <table id="zend.currency.usage.setformat.constantsdescription">
 
             <title>Konstanten für die Auswahl der Beschreibung einer Währung</title>
 
@@ -340,7 +340,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <table id="zend.currency.useage.setformat.constantsposition">
+        <table id="zend.currency.usage.setformat.constantsposition">
 
             <title>Konstanten für die Auswahl der Position der Währung</title>
 
@@ -369,7 +369,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <example id="zend.currency.useage.setformat.example">
+        <example id="zend.currency.usage.setformat.example">
 
             <title>Das Anzeigeformat der Währung ändern</title>
 
@@ -395,7 +395,7 @@ echo $currency->toCurrency(1000);]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.informational">
+    <sect2 id="zend.currency.usage.informational">
 
         <title>Informative Methoden von Zend_Currency</title>
 
@@ -465,7 +465,7 @@ echo $currency->toCurrency(1000);]]>
             Wenn kein Gebietsschema angegeben wird, wird das aktuelle Gebietsschema verwendet. 
         </para>
 
-        <example id="zend.currency.useage.informational.example">
+        <example id="zend.currency.usage.informational.example">
 
             <title>Informationen von Währungen erhalten</title>
 
@@ -496,7 +496,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.setlocale">
+    <sect2 id="zend.currency.usage.setlocale">
 
         <title>Neue Standardwerte setzen</title>
 
@@ -506,7 +506,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
             Währung überschrieben. Das beinhaltet den Namen der Währung, die Abkürzung und das Symbol.
         </para>
 
-        <example id="zend.currency.useage.setlocale.example">
+        <example id="zend.currency.usage.setlocale.example">
 
             <title>Ein neues Gebietsschema setzen</title>
 
@@ -526,7 +526,7 @@ print $currency->toCurrency(1000);
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.cache">
+    <sect2 id="zend.currency.usage.cache">
 
         <title>Zend_Currency schneller machen</title>
 
@@ -537,7 +537,7 @@ print $currency->toCurrency(1000);
             gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached.
         </para>
 
-        <example id="zend.currency.useage.cache.example">
+        <example id="zend.currency.usage.cache.example">
 
             <title>Cachen von Währungen</title>
 

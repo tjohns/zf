@@ -605,7 +605,7 @@ $translate->addTranslation("\my_de.mo","de");
         </note>
 
         <para>
-            The useage is quite the same as initiating a single translation source with one difference.
+            The usage is quite the same as initiating a single translation source with one difference.
             You must give a directory which has to be scanned instead a file.
         </para>
 

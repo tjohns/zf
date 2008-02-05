@@ -1,5 +1,5 @@
 <!-- EN-Revision: 7504 -->
-<sect1 id="zend.currency.useage">
+<sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
 
@@ -11,7 +11,7 @@
         そのロケールで使用する通貨が定義されています。
     </para>
 
-    <example id="zend.currency.useage.example1">
+    <example id="zend.currency.usage.example1">
 
         <title>実際のロケールからの Zend_Currency のインスタンスの作成</title>
 
@@ -87,7 +87,7 @@ $currency = new Zend_Currency();]]>
         </listitem>
     </itemizedlist>
 
-    <example id="zend.currency.useage.example2">
+    <example id="zend.currency.usage.example2">
 
         <title>Zend_Currency のインスタンスを作成する別の例</title>
 
@@ -129,7 +129,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
         </para>
     </note>
 
-    <sect2 id="zend.currency.useage.tocurrency">
+    <sect2 id="zend.currency.usage.tocurrency">
 
         <title>通貨形式での出力の作成</title>
 
@@ -151,11 +151,11 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
             <code>toCurrency()</code> にはオプションで配列を指定することができます。
             この配列では、一時的なフォーマットや通貨表現を設定します。
             使用できるオプションについての詳細は
-            <link linkend="zend.currency.useage.setformat">通貨の表示形式の変更</link>
+            <link linkend="zend.currency.usage.setformat">通貨の表示形式の変更</link>
             を参照ください。
         </para>
 
-        <example id="zend.currency.useage.tocurrency.example">
+        <example id="zend.currency.usage.tocurrency.example">
 
             <title>通貨形式での出力の作成</title>
 
@@ -178,7 +178,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.setformat">
+    <sect2 id="zend.currency.usage.setformat">
 
         <title>通貨の表示形式の変更</title>
 
@@ -246,7 +246,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                 <para>
                     <emphasis role="strong">position</emphasis>:
                     通貨記号をどの位置に表示するのかを定義します。サポートしている位置は
-                    <link linkend="zend.currency.useage.setformat.constantsposition">この表</link>
+                    <link linkend="zend.currency.usage.setformat.constantsposition">この表</link>
                     を参照ください。
                 </para>
             </listitem>
@@ -274,7 +274,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">display</emphasis>:
                     通貨を表す際に、通貨のどの部分を使用するのかを定義します。
                     使用できる表示形式は 4 通りです。
-                    <link linkend="zend.currency.useage.setformat.constantsdescription">this table</link>
+                    <link linkend="zend.currency.usage.setformat.constantsdescription">this table</link>
                     を参照ください。
                 </para>
             </listitem>
@@ -311,7 +311,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </listitem>
         </itemizedlist>
 
-        <table id="zend.currency.useage.setformat.constantsdescription">
+        <table id="zend.currency.usage.setformat.constantsdescription">
 
             <title>通貨記号の設定を指定するための定数</title>
 
@@ -344,7 +344,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <table id="zend.currency.useage.setformat.constantsposition">
+        <table id="zend.currency.usage.setformat.constantsposition">
 
             <title>表示する場所を指定するための定数</title>
 
@@ -373,7 +373,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
         </table>
 
-        <example id="zend.currency.useage.setformat.example">
+        <example id="zend.currency.usage.setformat.example">
 
             <title>通貨の表示形式の変更</title>
 
@@ -398,7 +398,7 @@ echo $currency->toCurrency(1000);]]>
         </example>
     </sect2>
 
-    <sect2 id="zend.currency.useage.informational">
+    <sect2 id="zend.currency.usage.informational">
 
         <title>Zend_Currency の情報取得用メソッド</title>
 
@@ -476,7 +476,7 @@ echo $currency->toCurrency(1000);]]>
             これを省略した場合は、現在実際に設定されているロケールを使用します。
         </para>
 
-        <example id="zend.currency.useage.informational.example">
+        <example id="zend.currency.usage.informational.example">
 
             <title>通貨に関する情報の取得</title>
 
@@ -506,7 +506,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.setlocale">
+    <sect2 id="zend.currency.usage.setlocale">
 
         <title>新しいデフォルト値の設定</title>
 
@@ -517,7 +517,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
             つまり、通貨名や略称、記号などが上書きされるということです。
         </para>
 
-        <example id="zend.currency.useage.setlocale.example">
+        <example id="zend.currency.usage.setlocale.example">
 
             <title>新しいロケールの設定</title>
 
@@ -537,7 +537,7 @@ print $currency->toCurrency(1000);
 
     </sect2>
 
-    <sect2 id="zend.currency.useage.cache">
+    <sect2 id="zend.currency.usage.cache">
 
         <title>Zend_Currency の高速化</title>
 
@@ -549,7 +549,7 @@ print $currency->toCurrency(1000);
             Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
         </para>
 
-        <example id="zend.currency.useage.cache.example">
+        <example id="zend.currency.usage.cache.example">
 
             <title>通貨のキャッシュ処理</title>
 

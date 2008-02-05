@@ -10,7 +10,7 @@
         API zu migrieren.
     </para>
 
-    <sect2 id="zend.currency.useage.migration.fromonezerotwo">
+    <sect2 id="zend.currency.usage.migration.fromonezerotwo">
 
         <title>Von 1.0.2 zu 1.0.3 oder neuer migrieren</title>
 

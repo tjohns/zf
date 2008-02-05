@@ -9,7 +9,7 @@
         スクリプトを新しい API に対応させてください。
     </para>
 
-    <sect2 id="zend.currency.useage.migration.fromonezerotwo">
+    <sect2 id="zend.currency.usage.migration.fromonezerotwo">
 
         <title>1.0.2 から 1.0.3 以降への移行</title>
 
