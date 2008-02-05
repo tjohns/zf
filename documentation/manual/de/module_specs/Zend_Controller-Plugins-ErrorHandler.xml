@@ -284,7 +284,7 @@ class ErrorController extends Zend_Controller_Action
 EOH;
                 break;
             default:
-                // Anendungsfehler
+                // Anwendungsfehler
                 $content =<<<EOH
 <h1>Fehler!</h1>
 <p>Ein unerwarteter Fehler trat in der Anfrage auf. Bitte versuchen Sie es etwas später nocheinmal.</p>
