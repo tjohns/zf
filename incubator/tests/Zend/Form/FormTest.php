@@ -672,6 +672,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testCreateElementReturnsNewElement()
+    {
+        $element = $this->form->createElement('text', 'foo');
+        $this->assertTrue($element instanceof Zend_Form_Element);
+    }
+
+    public function testCreateElementDoesNotAttachElementToForm()
+    {
+        $element = $this->form->createElement('text', 'foo');
+        $this->assertTrue($element instanceof Zend_Form_Element);
+        $this->assertNull($this->form->foo);
+    }
+
     public function testCanAddAndRetrieveMultipleElements()
     {
         $this->form->addElements(array(

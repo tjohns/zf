@@ -701,47 +701,83 @@ class Zend_Form implements Iterator, Countable
      */
     public function addElement($element, $name = null, $options = null)
     {
-        $prefixPaths              = array();
-        $prefixPaths['decorator'] = $this->getPluginLoader('decorator')->getPaths();
-        if (!empty($this->_elementPrefixPaths)) {
-            $prefixPaths = array_merge($prefixPaths, $this->_elementPrefixPaths);
-        }
-
         if (is_string($element)) {
             if (null === $name) {
                 require_once 'Zend/Form/Exception.php';
                 throw new Zend_Form_Exception('Elements specified by string must have an accompanying name');
             }
 
-            if ($options instanceof Zend_Config) {
-                $options = $options->toArray();
-            }
-
-            if ((null === $options) || !is_array($options)) {
-                $options = array('prefixPath' => $prefixPaths);
-            } elseif (is_array($options)) {
-                if (array_key_exists('prefixPath', $options)) {
-                    $options['prefixPath'] = array_merge($prefixPaths, $options['prefixPath']);
-                } else {
-                    $options['prefixPath'] = $prefixPaths;
-                }
-            }
-
-            $class = $this->getPluginLoader(self::ELEMENT)->load($element);
-            $this->_elements[$name] = new $class($name, $options);
-            $this->_order[$name] = $this->_elements[$name]->getOrder();
-            $this->_orderUpdated = true;
+            $this->_elements[$name] = $this->createElement($element, $name, $options);
         } elseif ($element instanceof Zend_Form_Element) {
+            $prefixPaths              = array();
+            $prefixPaths['decorator'] = $this->getPluginLoader('decorator')->getPaths();
+            if (!empty($this->_elementPrefixPaths)) {
+                $prefixPaths = array_merge($prefixPaths, $this->_elementPrefixPaths);
+            }
+
             if (null === $name) {
                 $name = $element->getName();
             }
+
             $this->_elements[$name] = $element;
             $this->_elements[$name]->addPrefixPaths($prefixPaths);
-            $this->_order[$name] = $this->_elements[$name]->getOrder();
-            $this->_orderUpdated = true;
         }
 
+        $this->_order[$name] = $this->_elements[$name]->getOrder();
+        $this->_orderUpdated = true;
+
         return $this;
+    }
+
+    /**
+     * Create an element
+     *
+     * Acts as a factory for creating elements. Elements created with this 
+     * method will not be attached to the form, but will contain element 
+     * settings as specified in the form object (including plugin loader 
+     * prefix paths, default decorators, etc.).
+     * 
+     * @param  string $type 
+     * @param  string $name 
+     * @param  array|Zend_Config $options 
+     * @return Zend_Form_Element
+     */
+    public function createElement($type, $name, $options = null)
+    {
+        if (!is_string($type)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Element type must be a string indicating type');
+        }
+
+        if (!is_string($name)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Element name must be a string');
+        }
+
+        $prefixPaths              = array();
+        $prefixPaths['decorator'] = $this->getPluginLoader('decorator')->getPaths();
+        if (!empty($this->_elementPrefixPaths)) {
+            $prefixPaths = array_merge($prefixPaths, $this->_elementPrefixPaths);
+        }
+
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+
+        if ((null === $options) || !is_array($options)) {
+            $options = array('prefixPath' => $prefixPaths);
+        } elseif (is_array($options)) {
+            if (array_key_exists('prefixPath', $options)) {
+                $options['prefixPath'] = array_merge($prefixPaths, $options['prefixPath']);
+            } else {
+                $options['prefixPath'] = $prefixPaths;
+            }
+        }
+
+        $class = $this->getPluginLoader(self::ELEMENT)->load($type);
+        $element = new $class($name, $options);
+
+        return $element;
     }
 
     /**
