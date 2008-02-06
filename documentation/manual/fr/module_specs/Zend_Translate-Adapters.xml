@@ -3,7 +3,7 @@
     <title>Adaptateurs pour Zend_Translate</title>
 
     <para>
-        Zend_Translate peut manipuler différents adaptateurs pour la traduction. Chaque adaptateur a ses propres avantages et inconvénients. Ci-dessous vous trouverez une liste complète de tous les adaptateurs supportés pour la traduction des fichiers sources.
+        <code>Zend_Translate</code> peut manipuler différents adaptateurs pour la traduction. Chaque adaptateur a ses propres avantages et inconvénients. Ci-dessous vous trouverez la liste complète de tous les adaptateurs supportés pour la traduction des fichiers sources.
     </para>
 
     <table id="zend.translate.adapter.table">
