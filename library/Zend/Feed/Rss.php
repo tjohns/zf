@@ -457,7 +457,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
      *
      * @return string
      */
-    public function saveXML()
+    public function saveXml()
     {
         // Return a complete document including XML prologue.
         $doc = new DOMDocument($this->_element->ownerDocument->version,
@@ -498,7 +498,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
 
         header('Content-type: application/rss+xml; charset: ' . $this->_element->ownerDocument->actualEncoding);
 
-        echo $this->saveXML();
+        echo $this->saveXml();
     }
 
 }

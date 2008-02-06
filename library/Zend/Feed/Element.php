@@ -126,7 +126,7 @@ class Zend_Feed_Element implements ArrayAccess
      *
      * @return string
      */
-    public function saveXML()
+    public function saveXml()
     {
         // Return a complete document including XML prologue.
         $doc = new DOMDocument($this->_element->ownerDocument->version,
@@ -143,7 +143,7 @@ class Zend_Feed_Element implements ArrayAccess
      *
      * @return string
      */
-    public function saveXMLFragment()
+    public function saveXmlFragment()
     {
         return $this->_element->ownerDocument->saveXML($this->_element);
     }

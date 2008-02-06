@@ -23,6 +23,11 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Feed_Entry_Atom
  */
 require_once 'Zend/Feed/Entry/Atom.php';
@@ -128,7 +133,7 @@ class TestClient extends Zend_Http_Client
                 $doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
                 $doc2 = new DOMDocument();
                 $doc2->loadXML($this->raw_post_data);
-                if ($doc1->saveXML() == $doc2->saveXML()) {
+                if ($doc1->saveXml() == $doc2->saveXml()) {
                     $code = 200;
                     $body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-updated-entry.xml');
                 }

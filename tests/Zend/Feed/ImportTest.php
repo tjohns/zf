@@ -272,7 +272,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
     {
         $feed = Zend_Feed::importBuilder(new Zend_Feed_Builder($this->_getFullArray()), 'atom');
         
-        $feed = Zend_Feed::importString($feed->saveXML());
+        $feed = Zend_Feed::importString($feed->saveXml());
         $this->assertType('Zend_Feed_Atom', $feed);
     }
 
@@ -283,7 +283,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
     {
         $feed = Zend_Feed::importBuilder(new Zend_Feed_Builder($this->_getFullArray()), 'rss');
         $this->assertType('Zend_Feed_Rss', $feed);
-        $feed = Zend_Feed::importString($feed->saveXML());
+        $feed = Zend_Feed::importString($feed->saveXml());
         $this->assertType('Zend_Feed_Rss', $feed);
     }
 
@@ -294,7 +294,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
     {
         $feed = Zend_Feed::importBuilder(new Zend_Feed_Builder($this->_getFullArray()), 'atom');
         $this->assertType('Zend_Feed_Atom', $feed);
-        $feed = Zend_Feed::importString($feed->saveXML());
+        $feed = Zend_Feed::importString($feed->saveXml());
         $this->assertType('Zend_Feed_Atom', $feed);
         $href = $feed->link('self');
         $this->assertEquals('http://www.example.com', $href);

@@ -23,6 +23,11 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Feed_Entry_Atom
  */
 require_once 'Zend/Feed/Entry/Atom.php';
@@ -55,7 +60,7 @@ class Zend_Feed_ElementTest extends PHPUnit_Framework_TestCase
             // This should not create an element in the actual tree.
         }
 
-        $xml = $e->saveXML();
+        $xml = $e->saveXml();
 
         $this->assertFalse(strpos($xml, 'pants'), '<pants> should not be in the xml output');
         $this->assertTrue(strpos($xml, 'marina.horde.org') !== false, 'the url attribute should be set');

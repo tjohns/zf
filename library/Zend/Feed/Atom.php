@@ -356,7 +356,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
      *
      * @return string
      */
-    public function saveXML()
+    public function saveXml()
     {
         // Return a complete document including XML prologue.
         $doc = new DOMDocument($this->_element->ownerDocument->version,
