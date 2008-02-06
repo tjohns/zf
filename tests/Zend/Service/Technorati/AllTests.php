@@ -31,30 +31,30 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  */
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
+/**
+ * Exclude from code coverage report
+ */
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-require 'TechnoratiTest.php';
-require 'ResultSetTest.php';
-require 'ResultTest.php';
-require 'AuthorTest.php';
-require 'WeblogTest.php';
-require 'BlogInfoResultTest.php';
-require 'GetInfoResultTest.php';
-require 'KeyInfoResultTest.php';
-require 'CosmosResultTest.php';
-require 'CosmosResultSetTest.php';
-require 'DailyCountsResultTest.php';
-require 'DailyCountsResultSetTest.php';
-require 'SearchResultTest.php';
-require 'SearchResultSetTest.php';
-require 'TagResultTest.php';
-require 'TagResultSetTest.php';
-require 'TagsResultTest.php';
-require 'TagsResultSetTest.php';
 
-/**
- * @see Zend_Service_Technorati_UtilsTest
- */
+require_once 'Zend/Service/Technorati/TechnoratiTest.php';
+require_once 'Zend/Service/Technorati/ResultSetTest.php';
+require_once 'Zend/Service/Technorati/ResultTest.php';
+require_once 'Zend/Service/Technorati/AuthorTest.php';
+require_once 'Zend/Service/Technorati/WeblogTest.php';
+require_once 'Zend/Service/Technorati/BlogInfoResultTest.php';
+require_once 'Zend/Service/Technorati/GetInfoResultTest.php';
+require_once 'Zend/Service/Technorati/KeyInfoResultTest.php';
+require_once 'Zend/Service/Technorati/CosmosResultTest.php';
+require_once 'Zend/Service/Technorati/CosmosResultSetTest.php';
+require_once 'Zend/Service/Technorati/DailyCountsResultTest.php';
+require_once 'Zend/Service/Technorati/DailyCountsResultSetTest.php';
+require_once 'Zend/Service/Technorati/SearchResultTest.php';
+require_once 'Zend/Service/Technorati/SearchResultSetTest.php';
+require_once 'Zend/Service/Technorati/TagResultTest.php';
+require_once 'Zend/Service/Technorati/TagResultSetTest.php';
+require_once 'Zend/Service/Technorati/TagsResultTest.php';
+require_once 'Zend/Service/Technorati/TagsResultSetTest.php';
 require_once 'Zend/Service/Technorati/UtilsTest.php';
 
 
