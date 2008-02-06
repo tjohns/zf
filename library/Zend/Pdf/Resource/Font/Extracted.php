@@ -69,17 +69,20 @@ class Zend_Pdf_Resource_Font_Extracted extends Zend_Pdf_Resource_Font
         switch ($fontDictionary->Subtype->value) {
             case 'Type0':
                 // Composite type 0 font
-                if ($fontDictionary->DescendantFonts->items->count() != 0) {
+                if ($fontDictionary->DescendantFonts->items->count() != 1) {
                     // Multiple descendant fonts are not supported
                     throw new Zend_Pdf_Exception('Unsupported font type.');
                 }
                 
-                $descendantFont = $fontDictionary->DescendantFonts->items->rewind();
+                $descFontsArrayItems = $fontDictionary->DescendantFonts->items; 
+                $descFontsArrayItems->rewind();
+                
+                $descendantFont = $descFontsArrayItems->current();
                 $fontDescriptor = $descendantFont->FontDescriptor;
                 break;
                 
             case 'Type1':
-                if ($fontDictionary->FontDescriptor == null) {
+                if ($fontDictionary->FontDescriptor === null) {
                     // That's one of the standard fonts
                     $standardFont = Zend_Pdf_Font::fontWithName($fontDictionary->BaseFont->value);
                     
@@ -110,7 +113,7 @@ class Zend_Pdf_Resource_Font_Extracted extends Zend_Pdf_Resource_Font
                 throw new Zend_Pdf_Exception('Unsupported font type.'); 
         }
 
-        $this->_fontNames[Zend_Pdf_Font::NAME_POSTSCRIPT]['en'] = iconv('UTF-8', 'UTF-16BE', $fontDescriptor->BaseFont->value);
+        $this->_fontNames[Zend_Pdf_Font::NAME_POSTSCRIPT]['en'] = iconv('UTF-8', 'UTF-16BE', $fontDictionary->BaseFont->value);
         
         $this->_isBold             = false; // this property is actually not used anywhere 
         $this->_isItalic           = ( ($fontDescriptor->Flags->value & (1 << 6)) != 0 ); // Bit-7 is set
