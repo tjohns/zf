@@ -135,12 +135,12 @@ class Zend_Form_Element_Hash extends Zend_Form_Element_Xhtml
     /**
      * Salt for CSRF token
      *
-     * @param  string $_salt
+     * @param  string $salt
      * @return Zend_Form_Element_Hash
      */
-    public function setSalt($_salt)
+    public function setSalt($salt)
     {
-        $this->_salt = (string) $_salt;
+        $this->_salt = (string) $salt;
         return $this;
     }
 
