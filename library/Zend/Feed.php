@@ -197,6 +197,15 @@ class Zend_Feed
         @ini_restore('track_errors');
 
         if (!$success) {
+            // prevent the class to generate an undefined variable notice (ZF-2590)
+            if (!isset($php_errormsg)) {
+                if (function_exists('xdebug_is_enabled')) {
+                    $php_errormsg = '(error message not available, when XDebug is running)';
+                } else {
+                    $php_errormsg = '(error message not available)';
+                }
+            }
+            
             /**
              * @see Zend_Feed_Exception
              */
