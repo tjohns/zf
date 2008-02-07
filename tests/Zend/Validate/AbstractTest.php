@@ -82,6 +82,13 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator, $this->validator->getTranslator());
     }
 
+    public function testCanSetTranslatorToNull()
+    {
+        $this->testCanSetTranslator();
+        $this->validator->setTranslator(null);
+        $this->assertNull($this->validator->getTranslator());
+    }
+
     public function testGlobalDefaultTranslatorNullByDefault()
     {
         $this->assertNull(Zend_Validate_Abstract::getDefaultTranslator());

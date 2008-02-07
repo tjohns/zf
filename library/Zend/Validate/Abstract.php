@@ -244,7 +244,7 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
      * @param  Zend_Translate $translator 
      * @return Zend_Validate_Abstract
      */
-    public function setTranslator(Zend_Translate $translator)
+    public function setTranslator(Zend_Translate $translator = null)
     {
         $this->_translator = $translator;
         return $this;
