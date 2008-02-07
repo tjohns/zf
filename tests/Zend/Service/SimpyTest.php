@@ -25,19 +25,12 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Service_Simpy
  */
 require_once 'Zend/Service/Simpy.php';
-
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

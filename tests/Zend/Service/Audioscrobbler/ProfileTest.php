@@ -23,14 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+/**
  * @see Zend_Service_Audioscrobbler
  */
 require_once 'Zend/Service/Audioscrobbler.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

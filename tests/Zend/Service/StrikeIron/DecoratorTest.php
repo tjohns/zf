@@ -17,13 +17,20 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/** Zend_Service_StrikeIron_Decorator */
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+/**
+ * @see Zend_Service_StrikeIron_Decorator
+ */
 require_once 'Zend/Service/StrikeIron/Decorator.php';
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

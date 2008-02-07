@@ -23,14 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+/**
  * @see Zend_Service_Delicious
  */
 require_once 'Zend/Service/Delicious.php';
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

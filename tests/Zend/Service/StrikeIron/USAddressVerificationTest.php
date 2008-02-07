@@ -17,16 +17,25 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/** Zend_Service_StrikeIron_USAddressVerification */
-require_once 'Zend/Service/StrikeIron/USAddressVerification.php';
 
-/** Zend_Service_StrikeIron */
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+/**
+ * @see Zend_Service_StrikeIron
+ */
 require_once 'Zend/Service/StrikeIron.php';
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+/**
+ * @see Zend_Service_StrikeIron_USAddressVerification
+ */
+require_once 'Zend/Service/StrikeIron/USAddressVerification.php';
+
 
 /**
  * @category   Zend

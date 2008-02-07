@@ -26,12 +26,15 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_AllTests::main');
 }
 
-
 /**
  * Test helper
  */
 require_once dirname(__FILE__) . '/../../TestHelper.php';
 
+/**
+ * Exclude from code coverage report
+ */
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @see Zend_Service_AkismetTest

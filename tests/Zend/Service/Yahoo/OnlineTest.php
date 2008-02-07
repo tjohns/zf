@@ -23,16 +23,14 @@
 
 
 /**
- * PHPUnit_Framework_TestCase
+ * Test helper
  */
-require_once 'PHPUnit/Framework/TestCase.php';
-
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Service_Yahoo
  */
 require_once 'Zend/Service/Yahoo.php';
-
 
 /**
  * @see Zend_Http_Client_Adapter_Socket

@@ -17,41 +17,63 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
  
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_StrikeIron_AllTests::main');
 }
 
-/** PHPUnit_Framework_TestSuite */
-require_once 'PHPUnit/Framework/TestSuite.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
-/** PHPUnit_TextUI_TestRunner */
-require_once 'PHPUnit/TextUI/TestRunner.php';
+/**
+ * Exclude from code coverage report
+ */
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-/** Zend_Service_StrikeIron_StrikeIronTest */
+/**
+ * @see Zend_Service_StrikeIron_StrikeIronTest
+ */
 require_once 'Zend/Service/StrikeIron/StrikeIronTest.php';
 
-/** Zend_Service_StrikeIron_BaseTest */
+/**
+ * @see Zend_Service_StrikeIron_BaseTest
+ */
 require_once 'Zend/Service/StrikeIron/BaseTest.php';
 
-/** Zend_Service_StrikeIron_DecoratorTest */
+/**
+ * @see Zend_Service_StrikeIron_DecoratorTest
+ */
 require_once 'Zend/Service/StrikeIron/DecoratorTest.php';
 
-/** Zend_Service_StrikeIron_ExceptionTest */
+/**
+ * @see Zend_Service_StrikeIron_ExceptionTest
+ */
 require_once 'Zend/Service/StrikeIron/ExceptionTest.php';
 
-/** Zend_Service_StrikeIron_SalesUseTaxBasicTest */
+/**
+ * @see Zend_Service_StrikeIron_SalesUseTaxBasicTest
+ */
 require_once 'Zend/Service/StrikeIron/SalesUseTaxBasicTest.php';
 
-/** Zend_Service_StrikeIron_USAddressVerificationBasicTest */
+/**
+ * @see Zend_Service_StrikeIron_USAddressVerificationBasicTest
+ */
 require_once 'Zend/Service/StrikeIron/USAddressVerificationTest.php';
 
-/** Zend_Service_StrikeIron_ZipCodeInfoTest.php */
+/**
+ * @see Zend_Service_StrikeIron_ZipCodeInfoTest.php
+ */
 require_once 'Zend/Service/StrikeIron/ZipCodeInfoTest.php';
 
-/** Zend_Service_StrikeIron_NoSoapTest.php */
+/**
+ * @see Zend_Service_StrikeIron_NoSoapTest.php
+ */
 require_once 'Zend/Service/StrikeIron/NoSoapTest.php';
+
 
 /**
  * @category   Zend

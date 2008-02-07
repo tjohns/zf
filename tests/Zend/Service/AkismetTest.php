@@ -20,14 +20,21 @@
  */
 
 
-/** Zend_Service_Akismet */
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
+ * @see Zend_Service_Akismet
+ */
 require_once 'Zend/Service/Akismet.php';
 
-/** Zend_Http_Client_Adapter_Test */
+/**
+ * @see Zend_Http_Client_Adapter_Test
+ */
 require_once 'Zend/Http/Client/Adapter/Test.php';
 
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package 	Zend_Service

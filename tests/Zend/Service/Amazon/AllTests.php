@@ -26,30 +26,20 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_Amazon_AllTests::main');
 }
 
-
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-
-/**
- * PHPUnit_Framework_TestSuite
- */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
- * PHPUnit_TextUI_TestRunner
+ * Exclude from code coverage report
  */
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @see Zend_Service_Amazon_OfflineTest
  */
 require_once 'Zend/Service/Amazon/OfflineTest.php';
-
 
 /**
  * @see Zend_Service_Amazon_OnlineTest
