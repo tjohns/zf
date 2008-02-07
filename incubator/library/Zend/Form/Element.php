@@ -963,7 +963,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $result          = true;
         $translator      = $this->getTranslator();
         foreach ($this->getValidators() as $validator) {
-            $validator->setTranslator($translator);
+            if (method_exists($validator, 'setTranslator')) {
+                $validator->setTranslator($translator);
+            }
+
             if ($validator->isValid($value, $context)) {
                 continue;
             }
