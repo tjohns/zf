@@ -1,5 +1,5 @@
 <sect1 id="zend.layout.quickstart">
-    <title>Zend_Layout démarrage rapide</title>
+    <title>Zend_Layout dmarrage rapide</title>
 
     <para>
         Il y a deux modes d'utilisation de <code>Zend_Layout</code>: avec
@@ -10,12 +10,12 @@
         <title>Scripts de layout</title>
 
         <para>
-            Dans tous les cas, un script de layout est nécéssaire.
+            Dans tous les cas, un script de layout est ncssaire.
             Les scripts de layout utilisent simplement Zend_View (ou une 
-            implémentation particulière personnalisée). Les variables de layout sont enregistrées
+            implmentation particulire personnalise). Les variables de layout sont enregistres
             dans le <link linkend="zend.view.helpers.initial.placeholder">placeholder</link> 
-            <code>Layout</code>, et peuvent être accédées via l'aide de vue placeholder
-            ou directement en tant que propriétés de l'objet layout.
+            <code>Layout</code>, et peuvent tre accdes via l'aide de vue placeholder
+            ou directement en tant que proprits de l'objet layout.
         </para>
 
         <para>
@@ -33,13 +33,13 @@
 </head>
 <body>
 <?php 
-    // récupère la clé 'content' via l'aide de vue layout:
+    // rcupre la cl 'content' via l'aide de vue layout:
     echo $this->layout()->content; 
 
-    // récupère la clé 'foo' via l'aide de vue placeholder:
+    // rcupre la cl 'foo' via l'aide de vue placeholder:
     echo $this->placeholder('Zend_Layout')->foo;
 
-    // récupère l'objet layout, et accède à diverses clés:
+    // rcupre l'objet layout, et accde  diverses cls:
     $layout = $this->layout();
     echo $layout->bar;
     echo $layout->baz;
@@ -49,11 +49,11 @@
 ]]></programlisting>
 
         <para>
-            Toutes les aides de vue enregistrées sont accessibles dans 
+            Toutes les aides de vue enregistres sont accessibles dans 
 			<code>Zend_Layout</code> car il utilise <code>Zend_View</code> pour
-            son propre rendu. Vous pouvez aussi accéder aux variables de la vue.
+            son propre rendu. Vous pouvez aussi accder aux variables de la vue.
 			Les aides <link linkend="zend.view.helpers.initial.placeholder">placeholder
-            </link> sont très pratiques pour l'accès aux éléments tels que &lt;head&gt;,
+            </link> sont trs pratiques pour l'accs aux lments tels que &lt;head&gt;,
 			les scripts, les meta, etc.:
         </para>
 
@@ -82,26 +82,26 @@
     </sect2>
 
     <sect2 id="zend.layout.quickstart.mvc">
-        <title>Utilisation de Zend_Layout avec le système MVC de Zend Framework</title>
+        <title>Utilisation de Zend_Layout avec le systme MVC de Zend Framework</title>
 
         <para>
-            <code>Zend_Controller</code> propose une manière d'étendre ses fonctionnalités
+            <code>Zend_Controller</code> propose une manire d'tendre ses fonctionnalits
 			au travers de <link linkend="zend.controller.plugins">plugins de 
-			contrôleur frontal</link> et <link
+			contrleur frontal</link> et <link
             linkend="zend.controller.actionhelpers">d'aides d'action</link>.
 			<code>Zend_View</code> propose aussi des <link
             linkend="zend.view.helpers">aides</link>. <code>Zend_Layout</code>
-            utilise toutes ces possibilités lorsqu'employé avec les composants MVC.
+            utilise toutes ces possibilits lorsqu'employ avec les composants MVC.
         </para>
 
         <para>
-            <code>Zend_Layout::startMvc()</code> crée une instance de
-            <code>Zend_Layout</code> avec des paramètres de configuration optionnels.
-			Cette méthode enregistre aussi un plugin de contrôleur frontal qui s'occupe 
-			du rendu du layout rempli, lorsque la boucle de dispatching est terminée.
-			Elle enregistre également une aide d'action qui permet aux actions 
-			d'accéder à l'objet <code>layout</code>.
-			Enfin, l'aide de vue layout, elle, donne accès à l'objet layout depuis 
+            <code>Zend_Layout::startMvc()</code> cre une instance de
+            <code>Zend_Layout</code> avec des paramtres de configuration optionnels.
+			Cette mthode enregistre aussi un plugin de contrleur frontal qui s'occupe 
+			du rendu du layout rempli, lorsque la boucle de dispatching est termine.
+			Elle enregistre galement une aide d'action qui permet aux actions 
+			d'accder  l'objet <code>layout</code>.
+			Enfin, l'aide de vue layout, elle, donne accs  l'objet layout depuis 
 			la vue.
         </para>
 
@@ -111,18 +111,18 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Dans le fichier de démarrage (bootstrap)
+// Dans le fichier de dmarrage (bootstrap)
 Zend_Layout::startMvc();
 ?>]]></programlisting>
         
         <para>
-            <code>startMvc()</code> peut prendre en paramètre un tableau d'options ou 
+            <code>startMvc()</code> peut prendre en paramtre un tableau d'options ou 
 			un objet <code>Zend_Config</code> pour personnaliser l'instance.
-			Ces options sont détaillées dans <xref linkend="zend.layout.options" />.
+			Ces options sont dtailles dans <xref linkend="zend.layout.options" />.
         </para>
 
         <para>
-            Dans le contrôleur d'action, vous pouvez donc accéder à l'instance de 
+            Dans le contrleur d'action, vous pouvez donc accder  l'instance de 
 			layout via l'aide d'action :
         </para>
 
@@ -131,13 +131,13 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // désactive les layouts pour cette action
+        // dsactive les layouts pour cette action
         $this->_helper->layout->disableLayout();
     }
 
     public function bazAction()
     {
-        // utilise un script de layout différent pour
+        // utilise un script de layout diffrent pour
 		// cette action
         $this->_helper->layout->setLayout('foobaz');
     };
@@ -146,31 +146,31 @@ class FooController extends Zend_Controller_Action
 
         <para>
             Dans vos scripts de vue, utiliser l'aide <code>layout</code> pour 
-			accéder à l'instance de <code>Zend_Layout</code>. Notez que cette aide est différente
+			accder  l'instance de <code>Zend_Layout</code>. Notez que cette aide est diffrente
 			des autres car elle ne retourne pas une chaine, mais bien un objet.
-			Vous pouvez donc enchainer une méthode immédiatement :
+			Vous pouvez donc enchainer une mthode immdiatement :
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php $this->layout()->setLayout('foo'); // utilise un script de layout spécifique?>
+<?php $this->layout()->setLayout('foo'); // utilise un script de layout spcifique?>
 ]]></programlisting>
 
         <para>
-            Autrement, vous pouvez n'importe où accéder à votre instance de 
-			<code>Zend_Layout</code> via la méthode statique 
+            Autrement, vous pouvez n'importe o accder  votre instance de 
+			<code>Zend_Layout</code> via la mthode statique 
 			<code>getMvcInstance()</code> :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Retourne null si startMvc() n'a pas été appelée auparavant
+// Retourne null si startMvc() n'a pas t appele auparavant
 $layout = Zend_Layout::getMvcInstance(); 
 ?>]]></programlisting>
 
         <para>
-            Enfin, le plugin de contrôleur frontal <code>Zend_Layout</code> dispose
+            Enfin, le plugin de contrleur frontal <code>Zend_Layout</code> dispose
 			d'une caracteristique annexe au rendu automatique du layout : il analyse
-			les segments de l'objet de réponse et les assigne en tant que variables de 
-			layout dans vos scripts de layout. Le segment 'default' est assigné à la 
+			les segments de l'objet de rponse et les assigne en tant que variables de 
+			layout dans vos scripts de layout. Le segment 'default' est assign  la 
 			variable 'content'. Ceci permet de mettre la main sur le contenu rendu 
 			dans l'action principale.
         </para>
@@ -178,13 +178,13 @@ $layout = Zend_Layout::getMvcInstance();
         <para>
             Par exemple, supposons que votre code rencontre d'abord 
 			<code>FooController::indexAction()</code>, qui va rendre du contenu dans le 
-			segment par défaut de la réponse. Ensuite il forward vers 
+			segment par dfaut de la rponse. Ensuite il forward vers 
             <code>NavController::menuAction()</code>, qui rend son contenu dans un segment 
-			nommé 'nav'. Enfin, vous forwardez vers 
-			<code>CommentController::fetchAction()</code> pour récupérer des 
-			commentaires, mais vous les rendez aussi dans le segment par defaut de la résponse
+			nomm 'nav'. Enfin, vous forwardez vers 
+			<code>CommentController::fetchAction()</code> pour rcuprer des 
+			commentaires, mais vous les rendez aussi dans le segment par defaut de la rsponse
 			(ce qui va rajouter du contenu). Votre script de layout peut alors rendre chaque 
-			segment de manière séparée :
+			segment de manire spare :
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -198,20 +198,20 @@ $layout = Zend_Layout::getMvcInstance();
 ]]></programlisting>
         
         <para>
-            Cette approche est particulièrement utile avec 
+            Cette approche est particulirement utile avec 
 			<link linkend="zend.controller.actionhelpers.actionstack">l'aide d'action</link> 
 			ActionStack et son <link linkend="zend.controller.plugins.standard.actionstack">
-			plugin</link> du même nom. Vous pouvez les utiliser pour gérer une pile d'actions 
-			et ainsi décomposer vos processus.
+			plugin</link> du mme nom. Vous pouvez les utiliser pour grer une pile d'actions 
+			et ainsi dcomposer vos processus.
         </para>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.standalone">
-        <title>Utilisation de Zend_Layout en composant indépendant</title>
+        <title>Utilisation de Zend_Layout en composant indpendant</title>
 
         <para>
-            Pris indépendament des composants MVC, Zend_Layout n'offre pas tout à fait les mêmes 
-			possibilités et la même fléxibilité. Cependant, vous bénéficiez de deux avantages :
+            Pris indpendament des composants MVC, Zend_Layout n'offre pas tout  fait les mmes 
+			possibilits et la mme flxibilit. Cependant, vous bnficiez de deux avantages :
         </para>
 
         <itemizedlist>
@@ -225,15 +225,15 @@ $layout = Zend_Layout::getMvcInstance();
         </itemizedlist>
 
         <para>
-            En tant que composant indépendant, instanciez un objet <code>Zend_Layout</code>, 
-			configurez le au moyen d'accesseurs, passez vos variables comme des propriétés de 
+            En tant que composant indpendant, instanciez un objet <code>Zend_Layout</code>, 
+			configurez le au moyen d'accesseurs, passez vos variables comme des proprits de 
 			l'objet, et rendez la layout :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $layout = new Zend_Layout();
 
-// Spécification du chemin des scripts layout:
+// Spcification du chemin des scripts layout:
 $layout->setLayoutPath('/path/to/layouts');
 
 // passage de quelques variables :
@@ -252,7 +252,7 @@ echo $layout->render();
         <title>Layout d'exemple</title>
 
         <para>
-            Une image vallant mieux qu'un paragraphe, voyez donc celle-ci qui décrit l'utilisation :
+            Une image vallant mieux qu'un paragraphe, voyez donc celle-ci qui dcrit l'utilisation :
         </para>
 
          <para>
@@ -261,12 +261,9 @@ echo $layout->render();
         </para>
 
         <para>
-            Avec cette approche, vous pouvez régler vos mises en forme css.
+            Avec cette approche, vous pouvez rgler vos mises en forme css.
 			En positionnement absolu, par exemple, vous pourriez rendre la barre de navigation 
-			plus tard, en fin. Le mécanisme d'obtention du contenu reste le même cependant.
+			plus tard, en fin. Le mcanisme d'obtention du contenu reste le mme cependant.
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

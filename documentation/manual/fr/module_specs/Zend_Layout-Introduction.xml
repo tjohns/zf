@@ -4,46 +4,43 @@
     <para>
         <code>Zend_Layout</code> utilise le design pattern Two Step View,
         ce qui permet d'encapsuler le contenu d'une vue dans une autre,
-        généralement appelée template. D'autres projets les appellent aussi 
+        gÃ©nÃ©ralement appelÃ©e template. D'autres projets les appellent aussi 
         <emphasis>layouts</emphasis> , ainsi Zend Framework utilise ce terme.
     </para>
 
     <para>
-        Les principales caractéristiques de <code>Zend_Layout</code> sont:
+        Les principales caractÃ©ristiques de <code>Zend_Layout</code> sont:
     </para>
 
     <itemizedlist>
         <listitem><para>
-                Automatiser le rendu des layouts lorsqu'elles sont utilisées avec les
+                Automatiser le rendu des layouts lorsqu'elles sont utilisÃ©es avec les
 				composants MVC du Zend Framework.
         </para></listitem>
 
         <listitem><para>
-                Fournir un cadre à part entière pour des variables de layout, au même 
+                Fournir un cadre Ã  part entiÃ¨re pour des variables de layout, au mÃªme 
 				titre que les variables de vue.
         </para></listitem>
 
         <listitem><para>
                 Permettre la configuration du nom des layouts, la recherche
-				des scripts leurs correspondant (inflection), ainsi que leurs chemins d'accès.
+				des scripts leurs correspondant (inflection), ainsi que leurs chemins d'accÃ¨s.
         </para></listitem>
 
         <listitem><para>
-                Permettre de désactiver les layouts temporairement, changer leur configuration;
-				tout ceci depuis les contrôleurs ou les scripts de vue.
+                Permettre de dÃ©sactiver les layouts temporairement, changer leur configuration;
+				tout ceci depuis les contrÃ´leurs ou les scripts de vue.
         </para></listitem>
 
         <listitem><para>
-                Utiliser les mêmes règles de résolution (inflection) que le<link
+                Utiliser les mÃªmes rÃ¨gles de rÃ©solution (inflection) que le<link
                 linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>,
-                mais sans empêcher de les personnaliser à part.
+                mais sans empÃªcher de les personnaliser Ã  part.
         </para></listitem>
 
         <listitem><para>
-                Une intégration sous forme d'aides/plugin dans le modèle MVC de Zend Framework.
+                Une intÃ©gration sous forme d'aides/plugin dans le modÃ¨le MVC de Zend Framework.
         </para></listitem>
     </itemizedlist>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
