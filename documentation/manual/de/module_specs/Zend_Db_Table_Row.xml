@@ -438,7 +438,7 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
                 wird empfohlen statt der <code>__construct</code> Methode wenn die Metadaten nicht
                 programtechnisch verändert werden müssen.
                 
-                <example id="zend.db.table.defining.setup.example">
+                <example id="zend.db.table.row.init.usage.example">
 
                     <title>Beispiel der Verwendung der init() Methode</title>
 
