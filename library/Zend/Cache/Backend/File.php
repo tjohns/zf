@@ -657,7 +657,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     private function _fileGetContents($file)
     {
-        if ($this->_options['file_locking']) @flock($f, LOCK_SH);
+        if ($this->_options['file_locking']) @flock($file, LOCK_SH);
         if (!is_file($file)) {
             return false;
         }
@@ -665,7 +665,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         set_magic_quotes_runtime(0);
         $result = @file_get_contents($file);
         set_magic_quotes_runtime($mqr);
-        if ($this->_options['file_locking']) @flock($fp, LOCK_UN);
+        if ($this->_options['file_locking']) @flock($file, LOCK_UN);
         return $result;
     }
     
@@ -678,9 +678,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */    
     private function _filePutContents($file, $string)
     {
-        if ($this->_options['file_locking']) @flock($f, LOCK_EX);
+        if ($this->_options['file_locking']) @flock($file, LOCK_EX);
         $result = @file_put_contents($file, $string);
-        if ($this->_options['file_locking']) @flock($fp, LOCK_UN);
+        if ($this->_options['file_locking']) @flock($file, LOCK_UN);
         if (!$result) {
             return false;
         }
