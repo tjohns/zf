@@ -95,7 +95,7 @@ div.figure-float {
 div.revinfo {
 	text-align: center;
 	font-size: 0.7em;
-	text-decoration: italic;
+	font-style: italic;
 }
 
 code.code {
