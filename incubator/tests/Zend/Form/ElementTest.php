@@ -17,7 +17,6 @@ require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
 require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Translate.php';
-require_once 'Zend/Translate/Adapter/Array.php';
 require_once 'Zend/Validate/NotEmpty.php';
 require_once 'Zend/Validate/EmailAddress.php';
 require_once 'Zend/View.php';
@@ -111,7 +110,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testGetTranslatorRetrievesGlobalDefaultWhenAvailable()
     {
         $this->testNoTranslatorByDefault();
-        $translator = new Zend_Translate_Adapter_Array(array());
+        $translator = new Zend_Translate('array', array());
         Zend_Form::setDefaultTranslator($translator);
         $received = $this->element->getTranslator();
         $this->assertSame($translator, $received);
@@ -119,7 +118,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testTranslatorAccessorsWork()
     {
-        $translator = new Zend_Translate_Adapter_Array(array());
+        $translator = new Zend_Translate('array', array());
         $this->element->setTranslator($translator);
         $received = $this->element->getTranslator($translator);
         $this->assertSame($translator, $received);
@@ -595,7 +594,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $translator->setLocale('en');
 
         $this->element->setAllowEmpty(false)
-                      ->setTranslator($translator->getAdapter())
+                      ->setTranslator($translator)
                       ->addValidator('digits');
 
         $this->element->isValid('');
@@ -621,6 +620,33 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue($found, 'Not Digits message not found');
         $this->assertEquals($translations['notDigits'], $message);
+    }
+
+    /** ZF-2568 */
+    public function testTranslatedMessagesCanContainVariableSubstitution()
+    {
+        $localeFile   = dirname(__FILE__) . '/_files/locale/array.php';
+        $translations = include($localeFile);
+        $translations['notDigits'] .= ' "%value%"';
+        $translator   = new Zend_Translate('array', $translations, 'en');
+        $translator->setLocale('en');
+
+        $this->element->setAllowEmpty(false)
+                      ->setTranslator($translator)
+                      ->addValidator('digits');
+
+        $this->element->isValid('abc');
+        $messages = $this->element->getMessages();
+        $found    = false;
+        foreach ($messages as $key => $message) {
+            if ($key == 'notDigits') {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, 'String Empty message not found: ' . var_export($messages, 1));
+        $this->assertContains(' "abc"', $message);
+        $this->assertContains('Translating the notDigits string', $message);
     }
 
     public function testCanRemoveValidator()
@@ -986,11 +1012,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(empty($html));
         $this->assertContains('error', $html);
         $this->assertRegexp('/empty/i', $html);
-    }
-
-    public function testRenderElementRendersWithCurrentLocale()
-    {
-        $this->markTestIncomplete();
     }
 
     public function testToStringProxiesToRender()

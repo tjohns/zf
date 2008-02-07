@@ -124,7 +124,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_required = false;
 
     /**
-     * @var Zend_Translate_Adapter
+     * @var Zend_Translate
      */
     protected $_translator;
 
@@ -266,10 +266,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
     /**
      * Set translator object for localization
      * 
-     * @param  Zend_Translate_Adapter $translator 
+     * @param  Zend_Translate|null $translator 
      * @return Zend_Form_Element
      */
-    public function setTranslator(Zend_Translate_Adapter $translator = null)
+    public function setTranslator(Zend_Translate $translator = null)
     {
         $this->_translator = $translator;
         return $this;
@@ -278,7 +278,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     /**
      * Retrieve localization translator object
      * 
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate|null
      */
     public function getTranslator()
     {
@@ -961,7 +961,9 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $this->_messages = array();
         $this->_errors   = array();
         $result          = true;
+        $translator      = $this->getTranslator();
         foreach ($this->getValidators() as $validator) {
+            $validator->setTranslator($translator);
             if ($validator->isValid($value, $context)) {
                 continue;
             }
@@ -972,15 +974,6 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
             if ($validator->zfBreakChainOnFailure) {
                 break;
-            }
-        }
-
-        if (null !== ($translator = $this->getTranslator())) {
-            foreach ($this->_messages as $key => $message) {
-                $translated = $translator->translate($key);
-                if ($translated !== $key) {
-                    $this->_messages[$key] = $translated;
-                }
             }
         }
 

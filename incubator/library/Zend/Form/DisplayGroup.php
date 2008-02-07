@@ -767,10 +767,10 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     /**
      * Set translator object
      * 
-     * @param  Zend_Translate_Adapter $translator 
+     * @param  Zend_Translate|null $translator 
      * @return Zend_Form_DisplayGroup
      */
-    public function setTranslator(Zend_Translate_Adapter $translator = null)
+    public function setTranslator(Zend_Translate $translator = null)
     {
         $this->_translator = $translator;
         return $this;
@@ -779,7 +779,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     /**
      * Retrieve translator object
      * 
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate|null
      */
     public function getTranslator()
     {
