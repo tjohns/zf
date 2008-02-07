@@ -72,6 +72,18 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     protected $_errors = array();
 
     /**
+     * Translation object
+     * @var Zend_Translate
+     */
+    protected $_translator;
+
+    /**
+     * Default translation object for all validate objects
+     * @var Zend_Translate
+     */
+    protected static $_defaultTranslator;
+
+    /**
      * Returns array of validation failure messages
      *
      * @return array
@@ -167,6 +179,13 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         }
 
         $message = $this->_messageTemplates[$messageKey];
+
+        if (null !== ($translator = $this->getTranslator())) {
+            if ($translator->isTranslated($messageKey)) {
+                $message = $translator->translate($messageKey);
+            }
+        }
+
         $message = str_replace('%value%', (string) $value, $message);
         foreach ($this->_messageVariables as $ident => $property) {
             $message = str_replace("%$ident%", $this->$property, $message);
@@ -214,5 +233,52 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function getErrors()
     {
         return $this->_errors;
+    }
+
+    /**
+     * Set translation object
+     * 
+     * @param  Zend_Translate $translator 
+     * @return Zend_Validate_Abstract
+     */
+    public function setTranslator(Zend_Translate $translator)
+    {
+        $this->_translator = $translator;
+        return $this;
+    }
+
+    /**
+     * Return translation object
+     * 
+     * @return Zend_Translate
+     */
+    public function getTranslator()
+    {
+        if (null === $this->_translator) {
+            return self::$_defaultTranslator;
+        }
+
+        return $this->_translator;
+    }
+
+    /**
+     * Set default translation object for all validate objects
+     * 
+     * @param  Zend_Translate $translator 
+     * @return void
+     */
+    public static function setDefaultTranslator(Zend_Translate $translator = null)
+    {
+        self::$_defaultTranslator = $translator;
+    }
+
+    /**
+     * Get default translation object for all validate objects
+     * 
+     * @return Zend_Translate
+     */
+    public static function getDefaultTranslator()
+    {
+        return self::$_defaultTranslator;
     }
 }

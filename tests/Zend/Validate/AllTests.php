@@ -33,6 +33,11 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
+ * @see Zend_Validate_AbstractTest
+ */
+require_once 'Zend/Validate/AbstractTest.php';
+
+/**
  * @see Zend_Validate_AlnumTest
  */
 require_once 'Zend/Validate/AlnumTest.php';
@@ -156,6 +161,7 @@ class Zend_Validate_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Validate');
 
+        $suite->addTestSuite('Zend_Validate_AbstractTest');
         $suite->addTestSuite('Zend_Validate_AlnumTest');
         $suite->addTestSuite('Zend_Validate_AlphaTest');
         $suite->addTestSuite('Zend_Validate_BetweenTest');
