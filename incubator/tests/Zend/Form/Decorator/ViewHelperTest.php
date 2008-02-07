@@ -67,7 +67,15 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
         return $element;
     }
 
-    public function testGetHelperWillUseElementClassInAbsenceOfHelper()
+    public function testGetHelperWillUseElementHelperAttributeInAbsenceOfHelper()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->helper = 'formTextarea';
+        $this->decorator->setElement($element);
+        $this->assertEquals('formTextarea', $this->decorator->getHelper());
+    }
+
+    public function testGetHelperWillUseElementTypeInAbsenceOfHelper()
     {
         $element = new Zend_Form_Decorator_ViewHelperTest_Textarea('foo');
         $this->decorator->setElement($element);
@@ -123,6 +131,7 @@ class Zend_Form_Decorator_ViewHelperTest_Textarea extends Zend_Form_Element
         } elseif ($options instanceof Zend_Config) {
             $this->setConfig($options);
         }
+        $this->helper = null;
     }
 }
 

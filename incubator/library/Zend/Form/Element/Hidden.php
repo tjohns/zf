@@ -38,5 +38,5 @@ class Zend_Form_Element_Hidden extends Zend_Form_Element_Xhtml
      * Use formHidden view helper by default
      * @var string
      */
-    protected $_defaultHelper = 'formHidden';
+    public $helper = 'formHidden';
 }

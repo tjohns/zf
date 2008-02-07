@@ -44,5 +44,5 @@ class Zend_Form_Element_Multiselect extends Zend_Form_Element_Select
      * Use formSelect view helper by default
      * @var string
      */
-    protected $_defaultHelper = 'formSelect';
+    public $helper = 'formSelect';
 }

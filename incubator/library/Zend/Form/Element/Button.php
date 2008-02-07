@@ -38,5 +38,5 @@ class Zend_Form_Element_Button extends Zend_Form_Element_Submit
      * Use formButton view helper by default
      * @var string
      */
-    protected $_defaultHelper = 'formButton';
+    public $helper = 'formButton';
 }

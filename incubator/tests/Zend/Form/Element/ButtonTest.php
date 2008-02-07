@@ -64,12 +64,18 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element instanceof Zend_Form_Element);
     }
 
+    public function testHelperAttributeSetToFormButtonByDefault()
+    {
+        $this->assertEquals('formButton', $this->element->getAttrib('helper'));
+    }
+
     public function testButtonElementUsesButtonHelperInViewHelperDecoratorByDefault()
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $options = $decorator->getOptions();
-        $this->assertEquals('formButton', $options['helper']);
+        $decorator->setElement($this->element);
+        $helper = $decorator->getHelper();
+        $this->assertEquals('formButton', $helper);
     }
 }
 

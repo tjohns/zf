@@ -64,8 +64,9 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $options = $decorator->getOptions();
-        $this->assertEquals('formSubmit', $options['helper']);
+        $decorator->setElement($this->element);
+        $helper = $decorator->getHelper();
+        $this->assertEquals('formSubmit', $helper);
     }
 
     public function testGetValueReturnsNameIfNoValuePresent()
@@ -77,7 +78,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
     {
         $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
         $translate = new Zend_Translate('array', $translations, 'en');
-        $this->element->setTranslator($translate->getAdapter())
+        $this->element->setTranslator($translate)
                       ->setValue('submit');
         $test = $this->element->getValue();
         $this->assertEquals($translations['submit'], $test);

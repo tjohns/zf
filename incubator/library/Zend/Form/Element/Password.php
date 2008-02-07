@@ -38,5 +38,5 @@ class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
      * Use formPassword view helper by default
      * @var string
      */
-    protected $_defaultHelper = 'formPassword';
+    public $helper = 'formPassword';
 }

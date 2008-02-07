@@ -76,11 +76,15 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             } else {
                 $element = $this->getElement();
                 if (null !== $element) {
-                    $type = $element->getType();
-                    if ($pos = strrpos($type, '_')) {
-                        $type = substr($type, $pos + 1);
+                    if (null !== ($helper = $element->getAttrib('helper'))) {
+                        $this->setHelper($helper);
+                    } else {
+                        $type = $element->getType();
+                        if ($pos = strrpos($type, '_')) {
+                            $type = substr($type, $pos + 1);
+                        }
+                        $this->setHelper('form' . ucfirst($type));
                     }
-                    $this->setHelper('form' . ucfirst($type));
                 }
             }
         }
@@ -130,15 +134,16 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             return null;
         }
 
-        $id = $element->getAttrib('id');
-
-        if (null !== $id) {
-            return $element->getAttribs();
+        $attribs = $element->getAttribs();
+        if (isset($attribs['helper'])) {
+            unset($attribs['helper']);
         }
 
-        if (null === $id) {
-            $id = $element->getName();
-        } 
+        if (isset($attribs['id'])) {
+            return $attribs;
+        }
+
+        $id = $element->getName();
 
         if ($element instanceof Zend_Form_Element) {
             if (null !== ($belongsTo = $element->getBelongsTo())) {
@@ -147,8 +152,9 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
         }
 
         $element->setAttrib('id', $id);
+        $attribs['id'] = $id;
 
-        return $element->getAttribs();
+        return $attribs;
     }
 
     /**

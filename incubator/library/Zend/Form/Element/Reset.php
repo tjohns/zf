@@ -38,5 +38,5 @@ class Zend_Form_Element_Reset extends Zend_Form_Element_Submit
      * Use formReset view helper by default
      * @var string
      */
-    protected $_defaultHelper = 'formReset';
+    public $helper = 'formReset';
 }

@@ -290,8 +290,10 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         );
         $this->element->setAttribs($attribs);
 
+        $attribs['helper'] = 'formText';
+
         $received = $this->element->getAttribs();
-        $this->assertSame($attribs, $received);
+        $this->assertEquals($attribs, $received);
     }
 
     public function testPassingNullValuesToSetAttribsUnsetsAttribs()

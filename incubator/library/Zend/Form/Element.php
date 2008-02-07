@@ -46,6 +46,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     /**#@-*/
 
     /**
+     * Default view helper to use
+     * @var string
+     */
+    public $helper = 'formText';
+
+    /**
      * 'Allow empty' flag
      * @var bool
      */
@@ -62,12 +68,6 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @var array
      */
     protected $_decorators = array();
-
-    /**
-     * Default view helper to use
-     * @var string
-     */
-    protected $_defaultHelper = 'formText';
 
     /**
      * Element description
@@ -205,7 +205,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     {
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('ViewHelper', array('helper' => $this->_defaultHelper))
+            $this->addDecorator('ViewHelper')
                 ->addDecorator('Errors')
                 ->addDecorator('HtmlTag', array('tag' => 'dd'))
                 ->addDecorator('Label', array('tag' => 'dt'));

@@ -58,6 +58,15 @@ class Zend_Form_Element_TextTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element);
     }
+
+    public function testTextElementUsesTextHelperInViewHelperDecoratorByDefault()
+    {
+        $decorator = $this->element->getDecorator('viewHelper');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
+        $decorator->setElement($this->element);
+        $helper = $decorator->getHelper();
+        $this->assertEquals('formText', $helper);
+    }
 }
 
 // Call Zend_Form_Element_TextTest::main() if this source file is executed directly.

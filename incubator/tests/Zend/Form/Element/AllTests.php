@@ -15,6 +15,8 @@ require_once 'Zend/Form/Element/HashTest.php';
 require_once 'Zend/Form/Element/HiddenTest.php';
 require_once 'Zend/Form/Element/ImageTest.php';
 require_once 'Zend/Form/Element/MultiselectTest.php';
+require_once 'Zend/Form/Element/PasswordTest.php';
+require_once 'Zend/Form/Element/RadioTest.php';
 require_once 'Zend/Form/Element/ResetTest.php';
 require_once 'Zend/Form/Element/SelectTest.php';
 require_once 'Zend/Form/Element/SubmitTest.php';
@@ -38,6 +40,8 @@ class Zend_Form_Element_AllTests
         $suite->addTestSuite('Zend_Form_Element_HiddenTest');
         $suite->addTestSuite('Zend_Form_Element_ImageTest');
         $suite->addTestSuite('Zend_Form_Element_MultiselectTest');
+        $suite->addTestSuite('Zend_Form_Element_PasswordTest');
+        $suite->addTestSuite('Zend_Form_Element_RadioTest');
         $suite->addTestSuite('Zend_Form_Element_ResetTest');
         $suite->addTestSuite('Zend_Form_Element_SelectTest');
         $suite->addTestSuite('Zend_Form_Element_SubmitTest');

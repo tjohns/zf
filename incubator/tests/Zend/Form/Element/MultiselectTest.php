@@ -77,8 +77,9 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $options = $decorator->getOptions();
-        $this->assertEquals('formSelect', $options['helper']);
+        $decorator->setElement($this->element);
+        $helper = $decorator->getHelper();
+        $this->assertEquals('formSelect', $helper);
     }
 
     public function testMultipleOptionSetByDefault()
@@ -152,7 +153,7 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
             'barvalue' => 'Bar'
         );
         $this->element->addMultiOptions($options)
-                      ->setTranslator($translate->getAdapter());
+                      ->setTranslator($translate);
         $test = $this->element->getMultiOption('barvalue');
         $this->assertEquals($translations['barvalue'], $test);
 

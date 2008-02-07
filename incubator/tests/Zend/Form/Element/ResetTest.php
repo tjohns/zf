@@ -68,8 +68,9 @@ class Zend_Form_Element_ResetTest extends PHPUnit_Framework_TestCase
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $options = $decorator->getOptions();
-        $this->assertEquals('formReset', $options['helper']);
+        $decorator->setElement($this->element);
+        $helper = $decorator->getHelper();
+        $this->assertEquals('formReset', $helper);
     }
 }
 

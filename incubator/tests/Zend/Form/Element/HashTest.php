@@ -165,7 +165,7 @@ class Zend_Form_Element_HashTest extends PHPUnit_Framework_TestCase
     public function testHiddenInputRenderedByDefault()
     {
         $html = $this->element->render($this->getView());
-        $this->assertRegexp('/<input[^>]*?type="hidden"/', $html);
+        $this->assertRegexp('/<input[^>]*?type="hidden"/', $html, $html);
     }
 }
 
