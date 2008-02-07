@@ -33,7 +33,7 @@
 
         <listitem><para>
                 <emphasis>mvcSuccessfulActionOnly</emphasis>: Si une action envoie une 
-                exception et que cette option vaut true, alors la layout ne sera pas rendue.
+                exception et que cette option vaut true, alors le layout ne sera pas rendue.
 				(Ceci évite un double rendu alors que le plugin 
                 <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
 				est activé). Par défaut cette option est à true. Ses accesseurs :
@@ -43,7 +43,7 @@
 
         <listitem><para>
                 <emphasis>view</emphasis>: L'objet de vue (<code>Zend_View</code>) utilisée par 
-				la layout pour rendre son script. Utilisé avec MVC, <code>Zend_Layout</code> 
+				le layout pour rendre son script. Utilisé avec MVC, <code>Zend_Layout</code> 
 				cherchera à récupérer la vue via l'aide <link
                     linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>,
 				si aucun objet de vue ne lui est passé explicitement. Les accesseurs sont 

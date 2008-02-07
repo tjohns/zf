@@ -227,7 +227,7 @@ $layout = Zend_Layout::getMvcInstance();
         <para>
             En tant que composant indpendant, instanciez un objet <code>Zend_Layout</code>, 
 			configurez le au moyen d'accesseurs, passez vos variables comme des proprits de 
-			l'objet, et rendez la layout :
+			l'objet, et rendez le layout :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -243,7 +243,7 @@ $layout->nav     = $nav;
 // Utilisation d'un script de layout 'foo' :
 $layout->setLayout('foo');
 
-// rendu de la layout :
+// rendu de le layout :
 echo $layout->render();
 ?>]]></programlisting>
     </sect2>

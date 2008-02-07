@@ -19,7 +19,7 @@
         <listitem><para>
                 <emphasis>Plugin contrôleur frontal personnalisé.</emphasis>
                 <code>Zend_Layout</code> est livré avec un plugin qui rend
-				la layout automatiquement avant de renvoyer la réponse (utilisation
+				le layout automatiquement avant de renvoyer la réponse (utilisation
 				MVC). Vous pouvez injecter votre propre plugin.
         </para></listitem>
 
@@ -44,7 +44,7 @@
 
         <para>
             <code>Zend_Layout</code> accepte des objets de vue implémentant
-            <code>Zend_View_Interface</code> ou étandant
+            <code>Zend_View_Interface</code> ou étendant
             <code>Zend_View_Abstract</code> pour le rendu du script de layout.
             Passez le en paramètre au constructeur ou à <code>startMvc()</code>,
 			ou utilisez l'accesseur <code>setView()</code>:
@@ -75,12 +75,12 @@ $layout->setView($view);
 				l'objet <code>Zend_Layout</code> et en rédéfinissant la méthode
 				<code>render()</code> en passant des variables à la vue.
 				Aussi, vous pouvez créer votre propre plugin qui s'occupe de passer ces
-				variables avant le rendu de la layout.
+				variables avant le rendu de le layout.
             </para>
 
             <para>
                 De même, si votre implémentation de la vue permet l'extension via des
-				plugins, vous pouvez à tout moment accéder aux variables de la layout
+				plugins, vous pouvez à tout moment accéder aux variables de le layout
 				grâce à l'aide
 				<link linkend="zend.view.helpers.initial.placeholder">placeholder</link>
 				en utilisant la clé 'Zend_Layout':

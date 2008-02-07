@@ -335,6 +335,19 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $db = $table->getAdapter();
         $this->assertSame($this->_db, $db);
     }
+    
+    public function testTableWithNoAdapterAndNoDefaultAdapter()
+    {
+        Zend_Db_Table_Abstract::setDefaultAdapter(null);
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());     
+        try {
+            $table = new Zend_Db_Table_TableBugs();
+            $this->fail('Zend_Db_Table_Exception should be thrown');
+        }catch(Zend_Exception $e) {
+         $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
+        }
+    }
 
     public function testTableSetDefaultAdapterNull()
     {

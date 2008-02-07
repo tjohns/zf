@@ -376,7 +376,7 @@ abstract class Zend_Db_Table_Abstract
      */
     public static final function setDefaultAdapter($db = null)
     {
-        Zend_Db_Table_Abstract::$_defaultDb = self::_setupAdapter($db);
+        self::$_defaultDb = self::_setupAdapter($db);
     }
 
     /**
@@ -544,6 +544,9 @@ abstract class Zend_Db_Table_Abstract
     {
         if (! $this->_db) {
             $this->_db = self::getDefaultAdapter();
+            if (!$this->_db instanceof Zend_Db_Adapter_Abstract) {
+            	throw new Zend_Db_Table_Exception('No adapter found for ' . get_class($this));
+            }
         }
     }
 
