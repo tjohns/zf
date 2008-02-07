@@ -20,10 +20,10 @@ Installation steps for Cygwin:
      [Next]
   4. Select your way of connecting to the Internet. Click [Next]
   5. Choose the most suitable mirror in the mirrorlist. Click [Next]
-  6. Select the following packages to install:
-     * Devel > automake1.9
-     * Devel > libxslt
-     * Devel > make
+  6. Select the following packages from Devel or Libs to install:
+     * automake1.9
+     * libxslt
+     * make
      All dependent packages will automatically be selected for you.
      Click [Next]
   7. Sit back and relax while Cygwin and the selected packages are being
