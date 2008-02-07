@@ -75,6 +75,20 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             </programlisting>
         </para>
 
+        <warning>
+            <title/>
+            <para>
+                Die UTF-8 kompatiblen Analysatoren wurden in ZF 1.5 verbessert. Frühere Versionen der
+                Analysatoren nahmen an das alle nicht-Ascii Zeichen Buchstaben sind. Die neuen Analysatoren 
+                haben ein genaueres Verhalten.
+            </para>
+            <para>
+                Deswegen kann es notwendig sein den Index neu zu erstellen um Daten und Suchanfragen auf die
+                gleiche Art und Weise in Ausdrücke zerlegt zu haben, weil sonst andererseits die Suchmaschine
+                falsche Ergebnissets zurückgeben könnte.
+            </para>
+        </warning>
+
         <para>
             Alle diese Analysatoren benötigen die PCRE (Perl-kompatible reguläre Ausdrücke) Bibliothek
             kompiliert mit eingeschalteter UTF-8 Unterstützung. PCRE UTF-8 Unterstützung ist für die PCRE

@@ -433,6 +433,3 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
