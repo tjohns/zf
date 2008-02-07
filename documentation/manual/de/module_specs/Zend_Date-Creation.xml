@@ -202,6 +202,3 @@ $date = new Zend_Date($datearray);]]>
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

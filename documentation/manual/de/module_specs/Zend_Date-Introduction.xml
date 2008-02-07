@@ -144,6 +144,3 @@ date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland]]
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

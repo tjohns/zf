@@ -448,12 +448,16 @@ class MyController extends Zend_Controller_Action
 
             <para>
                 Standardmäßig wirft diese Methode eine <code>Zend_Controller_Action_Exception</code> die anzeigt
-                das die angefragte Aktion nicht im Kontroller gefunden werden konnte. Diese Funktionalität kann
-                überschrieben werden wenn andere Operationen ausgeführt werden sollen.
+                das die angefragte Aktion nicht im Kontroller gefunden werden konnte. Wenn die angefragte
+                Methode mit 'Action' endet, wird angenommen das eine Aktion angefragt wurde die nicht existiert;
+                solch ein Fehler resultiert in einer Ausnahme mit dem Code 404. Alle anderen Methoden resultieren
+                in einer Ausnahme mit dem Code 500. Das erlaubt die einfache Differenzierung zwischen Seiten
+                die nicht gefunden wurden und Anwendungsfehlern in der Fehlerbehandlung.
             </para>
 
             <para>
-                Wenn zum Beispiel eine Fehlermeldung angezeigt werden soll kann etwas die das folgende
+                Diese Funktionalität sollte überschrieben werden wenn eine andere Operation ausgeführt werden
+                soll. Wenn zum Beispiel eine Fehlermeldung angezeigt werden soll kann etwas die das folgende
                 geschrieben werden:
             </para>
 
@@ -468,7 +472,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // Alle anderen Methoden werfen eine Ausnahme
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
@@ -493,7 +497,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // Alle anderen Methoden werden eine Ausnahme
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>

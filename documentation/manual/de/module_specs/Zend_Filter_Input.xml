@@ -109,9 +109,9 @@ $validators = array(
         </programlisting>
 
         <para>
-            Jeder Schlüssel im obigen Array ist der Name einer Regel die auf einen Filter für ein spezielles
-            Datenfeld angewendet wird. Standardmäßig, ist der Name der Regel auch der Name des Feldes der
-            Eingabedaten auf die die Regel angewendet werden soll.
+            Jeder Schlüssel im obigen <code>$filters</code> Array ist der Name einer Regel die auf einen Filter
+            für ein spezielles Datenfeld angewendet wird. Standardmäßig, ist der Name der Regel auch der Name des
+            Feldes der Eingabedaten auf die die Regel angewendet werden soll.
         </para>
 
         <para>
