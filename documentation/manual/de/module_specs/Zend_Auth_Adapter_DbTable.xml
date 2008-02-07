@@ -185,7 +185,7 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // Die Identität als Objekt speichern wobei nur der Benutzername und der echte Name zurückgegeben werden
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // Die Identität als Objekt speichern wobei die Passwort Spalte unterdrückt wird
     $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
