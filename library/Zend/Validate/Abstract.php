@@ -168,6 +168,9 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
      *
      * Returns null if and only if $messageKey does not correspond to an existing template.
      *
+     * If a translator is available and a translation exists for $messageKey, 
+     * the translation will be used.
+     *
      * @param  string $messageKey
      * @param  string $value
      * @return string
@@ -250,7 +253,7 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     /**
      * Return translation object
      * 
-     * @return Zend_Translate
+     * @return Zend_Translate|null
      */
     public function getTranslator()
     {
@@ -275,7 +278,7 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     /**
      * Get default translation object for all validate objects
      * 
-     * @return Zend_Translate
+     * @return Zend_Translate|null
      */
     public static function getDefaultTranslator()
     {
