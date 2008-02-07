@@ -114,6 +114,16 @@ class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase
         }
         $this->assertContains('</dl>', $html);
     }
+
+    public function testFormErrorsPreventsXssAttacks()
+    {
+        $errors = array(
+            'bad' => '\"><script>alert("xss");</script>',
+        );
+        $html = $this->helper->formErrors($errors);
+        $this->assertNotContains($errors['bad'], $html);
+        $this->assertContains('&', $html);
+    }
 }
 
 // Call Zend_View_Helper_FormErrorsTest::main() if this source file is executed directly.

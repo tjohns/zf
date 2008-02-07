@@ -64,6 +64,10 @@ class Zend_View_Helper_FormErrors extends Zend_View_Helper_FormElement
             $start   = sprintf($start, $attribs);
         }
 
+        foreach ($errors as $key => $error) {
+            $errors[$key] = $this->view->escape($error);
+        }
+
         $html  = $start
                . implode($this->getElementSeparator(), (array) $errors)
                . $this->getElementEnd();
