@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7860 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -398,6 +399,111 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
             </programlisting>
         </example>
     </sect2>
+
+
+    <sect2 id="zend.pdf.drawing.extracting-fonts">
+        <title>1.5 以降で使用できる、フォントの抽出</title>
+        <para>
+            <code>Zend_Pdf</code> モジュールを使用すると、読み込んだドキュメントからフォントを抽出できるようになります。
+        </para>
+
+        <para>
+            これは、ドキュメントをインクリメンタルに更新する際に便利です。
+            この機能がなければ、ドキュメントを更新するたびにフォントをアタッチしたり
+            ドキュメントに埋め込んだりしなければならなくなります。
+        </para>
+        
+        <para>
+            <code>Zend_Pdf</code> オブジェクトおよび <code>Zend_Pdf_Page</code> オブジェクトには、
+            ドキュメントやページ内のすべてのフォントを抽出するためのメソッドが用意されています。
+        </para>
+        <example id="zend.pdf.drawing.extracting-fonts.example-1">
+            <title>読み込んだドキュメントからのフォントの抽出</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($documentPath);
+...
+// ドキュメントのすべてのフォントを取得します
+$fontList = $pdf->extractFonts();
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+$yPosition = 700;
+foreach ($fontList as $font) {
+    $page->setFont($font, 15);
+    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
+                  . ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $yPosition -= 30;
+}
+...
+// ドキュメントの最初のページで用いられているフォントを取得します
+$firstPage = reset($pdf->pages);
+$firstPageFonts = $firstPage->extractFonts();
+...]]>
+            </programlisting>
+        </example>
+        <example id="zend.pdf.drawing.extracting-fonts.example-2">
+            <title>フォント名の指定による、読み込んだドキュメントからのフォントの抽出</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = new Zend_Pdf();
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = Zend_Pdf_Font::fontWithPath($fontPath);
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+// フォント名をどこかに保存しておきます...
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+...
+$pdf->save($docPath);
+...]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($docPath);
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) としてもかまいません */
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+$pdf->save($docPath, true /* インクリメンタル更新モード */);
+...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            フォントの抽出はどこででもできますが、次のような制限があります。
+            <itemizedlist>
+                <listitem><para>抽出したフォントは、そのフォントの抽出元と同じドキュメント内でしか使用できません。</para></listitem>
+                <listitem>
+                    <para>
+                        埋め込まれたフォントプログラムは実際には抽出されません。
+                        つまり、抽出されたフォントは元のフォントメトリクス
+                        (テキストの幅の計算に使用するもの) と同じものになりません。
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = $pdf->extractFont($fontName);
+$originalFont = Zend_Pdf_Font::fontWithPath($fontPath);
+
+$page->setFont($font /* 描画用に抽出したフォント */, $fontSize);
+$xPosition = $x;
+for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
+    $page->drawText($text[$charIndex], xPosition, $y);
+
+    // テキストの幅の計算には元のフォントを使用します
+    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+}
+...]]>
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist> 
+        </para>
+    </sect2>
+
+
 
     <sect2 id="zend.pdf.drawing.image-drawing">
         <title>画像の描画</title>
