@@ -27,6 +27,7 @@ require_once 'Zend/View/Helper/PlaceholderTest.php';
 require_once 'Zend/View/Helper/Placeholder/ContainerTest.php';
 require_once 'Zend/View/Helper/Placeholder/RegistryTest.php';
 require_once 'Zend/View/Helper/Placeholder/StandaloneContainerTest.php';
+require_once 'Zend/View/Helper/TranslateTest.php';
 require_once 'Zend/View/Helper/UrlTest.php';
 
 
@@ -69,6 +70,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_Placeholder_ContainerTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_RegistryTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_StandaloneContainerTest');
+        $suite->addTestSuite('Zend_View_Helper_TranslateTest');
         $suite->addTestSuite('Zend_View_Helper_UrlTest');
         
         return $suite;
