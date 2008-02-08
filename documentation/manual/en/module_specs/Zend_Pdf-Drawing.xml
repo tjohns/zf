@@ -385,6 +385,109 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
         </example>
     </sect2>
 
+
+    <sect2 id="zend.pdf.drawing.extracting-fonts">
+        <title>Starting in 1.5, Extracting fonts.</title>
+        <para>
+            <code>Zend_Pdf</code> module provides a possibility to extract fonts from loaded documents. 
+        </para>
+
+        <para>
+            It may be useful for incremental document updates. Without this functionality you have to attach and possibly embed 
+            font into a document each time you want to update it. 
+        </para>
+        
+        <para>
+            <code>Zend_Pdf</code> and <code>Zend_Pdf_Page</code> objects provide special methods to extract all fonts mentioned within 
+            a document or a page:
+        </para>
+        <example id="zend.pdf.drawing.extracting-fonts.example-1">
+            <title>Extracting fonts from a loaded document.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($documentPath);
+...
+// Get all document fonts
+$fontList = $pdf->extractFonts();
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+$yPosition = 700;
+foreach ($fontList as $font) {
+    $page->setFont($font, 15);
+    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
+                  . ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $yPosition -= 30;
+}
+...
+// Get fonts referenced within the first document page
+$firstPage = reset($pdf->pages);
+$firstPageFonts = $firstPage->extractFonts();
+...]]>
+            </programlisting>
+        </example>
+        <example id="zend.pdf.drawing.extracting-fonts.example-2">
+            <title>Extracting font from a loaded document by specifying font name.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = new Zend_Pdf();
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = Zend_Pdf_Font::fontWithPath($fontPath);
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+// This font name should be stored somewhere...
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+...
+$pdf->save($docPath);
+...]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($docPath);
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) can also be used here */
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+$pdf->save($docPath, true /* incremental update mode */);
+...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Extracted fonts can be used in the place of any other font with the following limitations:
+            <itemizedlist>
+                <listitem><para>Extracted font can be used only in the context of the document from which it was extracted.</para></listitem>
+                <listitem>
+                    <para>
+                        Possibly embedded font program is actually not extracted. So extracted font can't provide 
+                        correct font metrics and original font has to be used for text width calculations: 
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = $pdf->extractFont($fontName);
+$originalFont = Zend_Pdf_Font::fontWithPath($fontPath);
+
+$page->setFont($font /* use extracted font for drawing */, $fontSize);
+$xPosition = $x;
+for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
+    $page->drawText($text[$charIndex], xPosition, $y);
+
+    // Use original font for text width calculation
+    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+}
+...]]>
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist> 
+        </para>
+    </sect2>
+
+
+
     <sect2 id="zend.pdf.drawing.image-drawing">
         <title>Image Drawing.</title>
         <para>
