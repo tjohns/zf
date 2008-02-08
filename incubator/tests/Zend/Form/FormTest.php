@@ -491,6 +491,36 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($description, $this->form->getDescription());
     }
 
+    public function testElementsInArrayFlagIsInitiallyFalse()
+    {
+        $this->assertFalse($this->form->getElementsInArray());
+    }
+
+    public function testSettingElementsInArrayFlagFailsIfFormHasNoName()
+    {
+        $this->testElementsInArrayFlagIsInitiallyFalse();
+        $this->form->setElementsInArray();
+        $this->assertFalse($this->form->getElementsInArray());
+    }
+
+    public function testCanSetElementsInArrayFlagWhenFormHasName()
+    {
+        $this->testElementsInArrayFlagIsInitiallyFalse();
+        $this->form->setName('foo')
+                   ->setElementsInArray();
+        $this->assertTrue($this->form->getElementsInArray());
+        $this->form->setElementsInArray(false);
+        $this->assertFalse($this->form->getElementsInArray());
+    }
+
+    public function testSettingElementsInArrayFlagToTrueSetsBelongsToValueToFormName()
+    {
+        $this->assertNull($this->form->getElementsBelongTo());
+        $this->form->setName('someName')
+                   ->setElementsInArray();
+        $this->assertEquals('someName', $this->form->getElementsBelongTo());
+    }
+
     // Plugin loaders
 
     public function testGetPluginLoaderRetrievesDefaultDecoratorPluginLoader()
@@ -966,6 +996,98 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $subform = $this->form->bar;
         $this->assertSame($bar, $subform);
     }
+
+    public function testCanSetDefaultsForSubFormElementsFromForm()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $this->form->addSubForm($subForm, 'page1');
+
+        $data = array('foo' => 'foo value', 'bar' => 'bar value');
+        $this->form->setDefaults($data);
+        $this->assertEquals($data['foo'], $subForm->foo->getValue());
+        $this->assertEquals($data['bar'], $subForm->bar->getValue());
+    }
+
+    public function testCanSetDefaultsForSubFormElementsFromFormWithArray()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $this->form->addSubForm($subForm, 'page1');
+
+        $data = array( 'page1' => array(
+            'foo' => 'foo value', 
+            'bar' => 'bar value'
+        ));
+        $this->form->setDefaults($data);
+        $this->assertEquals($data['page1']['foo'], $subForm->foo->getValue());
+        $this->assertEquals($data['page1']['bar'], $subForm->bar->getValue());
+    }
+
+    public function testGetValuesReturnsSubFormValues()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $subForm->foo->setValue('foo value');
+        $subForm->bar->setValue('bar value');
+        $this->form->addSubForm($subForm, 'page1');
+
+        $values = $this->form->getValues();
+        $this->assertTrue(isset($values['page1']));
+        $this->assertTrue(isset($values['page1']['foo']));
+        $this->assertTrue(isset($values['page1']['bar']));
+        $this->assertEquals($subForm->foo->getValue(), $values['page1']['foo']);
+        $this->assertEquals($subForm->bar->getValue(), $values['page1']['bar']);
+    }
+
+    public function testGetValuesReturnsSubFormValuesFromArrayToWhichElementsBelong()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'))
+                ->setElementsBelongTo('subform');
+        $subForm->foo->setValue('foo value');
+        $subForm->bar->setValue('bar value');
+        $this->form->addSubForm($subForm, 'page1');
+
+        $values = $this->form->getValues();
+        $this->assertTrue(isset($values['subform']));
+        $this->assertTrue(isset($values['subform']['foo']));
+        $this->assertTrue(isset($values['subform']['bar']));
+        $this->assertEquals($subForm->foo->getValue(), $values['subform']['foo']);
+        $this->assertEquals($subForm->bar->getValue(), $values['subform']['bar']);
+    }
+
+    public function testGetValueCanReturnSubFormValues()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $subForm->foo->setValue('foo value');
+        $subForm->bar->setValue('bar value');
+        $this->form->addSubForm($subForm, 'page1');
+
+        $values = $this->form->getValue('page1');
+        $this->assertTrue(isset($values['foo']));
+        $this->assertTrue(isset($values['bar']));
+        $this->assertEquals($subForm->foo->getValue(), $values['foo']);
+        $this->assertEquals($subForm->bar->getValue(), $values['bar']);
+    }
+
+    public function testGetValueCanReturnSubFormValuesFromArrayToWhichElementsBelong()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'))
+                ->setElementsBelongTo('subform');
+        $subForm->foo->setValue('foo value');
+        $subForm->bar->setValue('bar value');
+        $this->form->addSubForm($subForm, 'page1');
+
+        $values = $this->form->getValue('subform');
+        $this->assertTrue(isset($values['foo']));
+        $this->assertTrue(isset($values['bar']));
+        $this->assertEquals($subForm->foo->getValue(), $values['foo']);
+        $this->assertEquals($subForm->bar->getValue(), $values['bar']);
+    }
+
 
     // Display groups
 
@@ -1819,9 +1941,23 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('name="anArray[foo]"', $html);
         $this->assertContains('name="anArray[bar]"', $html);
         $this->assertContains('name="anArray[baz]"', $html);
-        $this->assertContains('id="anArray.foo"', $html);
-        $this->assertContains('id="anArray.bar"', $html);
-        $this->assertContains('id="anArray.baz"', $html);
+        $this->assertContains('id="anArray-foo"', $html);
+        $this->assertContains('id="anArray-bar"', $html);
+        $this->assertContains('id="anArray-baz"', $html);
+    }
+
+    public function testElementsRenderAsArrayMembersWhenRenderAsArrayToggled()
+    {
+        $this->setupElements();
+        $this->form->setName('data')
+                   ->setElementsInArray();
+        $html = $this->form->render($this->getView());
+        $this->assertContains('name="data[foo]"', $html);
+        $this->assertContains('name="data[bar]"', $html);
+        $this->assertContains('name="data[baz]"', $html);
+        $this->assertContains('id="data-foo"', $html);
+        $this->assertContains('id="data-bar"', $html);
+        $this->assertContains('id="data-baz"', $html);
     }
 
     public function testToStringProxiesToRender()

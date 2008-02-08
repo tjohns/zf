@@ -147,7 +147,7 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 
         if ($element instanceof Zend_Form_Element) {
             if (null !== ($belongsTo = $element->getBelongsTo())) {
-                $id = $belongsTo . '.' . $id;
+                $id = $belongsTo . '-' . $id;
             }
         }
 

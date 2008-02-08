@@ -94,6 +94,12 @@ class Zend_Form implements Iterator, Countable
     protected $_elementsBelongTo;
 
     /**
+     * Whether or not elements belong to an array
+     * @var string
+     */
+    protected $_elementsInArray = false;
+
+    /**
      * Form legend
      * @var string
      */
@@ -203,10 +209,16 @@ class Zend_Form implements Iterator, Countable
             unset($options['displayGroupDecorators']);
         }
 
+        if (isset($options['elementsInArray'])) {
+            $elementsInArray = $options['elementsInArray'];
+            unset($options['elementsInArray']);
+        }
+
         $forbidden = array(
             'Options', 'Config', 'PluginLoader', 'SubForms', 'View', 'Translator',
             'Attrib', 'Default',
         );
+
         foreach ($options as $key => $value) {
             $normalized = ucfirst($key);
             if (in_array($normalized, $forbidden)) {
@@ -227,6 +239,10 @@ class Zend_Form implements Iterator, Countable
 
         if (isset($displayGroupDecorators)) {
             $this->setDisplayGroupDecorators($displayGroupDecorators);
+        }
+
+        if (isset($elementsInArray)) {
+            $this->setElementsInArray($elementsInArray);
         }
 
         return $this;
@@ -942,6 +958,14 @@ class Zend_Form implements Iterator, Countable
         $name = (string) $name;
         if ($element = $this->getElement($name)) {
             $element->setValue($value);
+        } else {
+            if (is_scalar($value)) {
+                foreach ($this->getSubForms() as $subForm) {
+                    $subForm->setDefault($name, $value);
+                }
+            } elseif (is_array($value) && ($subForm = $this->getSubForm($name))) {
+                $subForm->setDefaults($value);
+            } 
         }
         return $this;
     }
@@ -956,6 +980,16 @@ class Zend_Form implements Iterator, Countable
     {
         if ($element = $this->getElement($name)) {
             return $element->getValue();
+        } 
+        
+        if ($subForm = $this->getSubForm($name)) {
+            return $subForm->getValues();
+        } 
+
+        foreach ($this->getSubForms() as $subForm) {
+            if ($name == $subForm->getElementsBelongTo()) {
+                return $subForm->getValues();
+            }
         }
         return null;
     }
@@ -970,6 +1004,13 @@ class Zend_Form implements Iterator, Countable
         $values = array();
         foreach ($this->getElements() as $key => $element) {
             $values[$key] = $element->getValue();
+        }
+        foreach ($this->getSubForms() as $key => $subForm) {
+            if (null !== ($array = $subForm->getElementsBelongTo())) {
+                $values[$array] = $subForm->getValues();
+            } else {
+                $values[$key] = $subForm->getValues();
+            }
         }
 
         return $values;
@@ -1031,6 +1072,9 @@ class Zend_Form implements Iterator, Countable
             $name = null;
         }
         $this->_elementsBelongTo = $name;
+
+        (null !== $name) ? $this->setElementsInArray(true, false) : $this->setElementsInArray(false, false);
+
         return $this;
     }
 
@@ -1042,6 +1086,32 @@ class Zend_Form implements Iterator, Countable
     public function getElementsBelongTo()
     {
         return $this->_elementsBelongTo;
+    }
+
+    /**
+     * Set flag indicating elements belong to array
+     * 
+     * @param  bool $flag Value of flag
+     * @param  bool $setName Whether or not to set the name the elements belong to
+     * @return Zend_Form
+     */
+    public function setElementsInArray($flag = true, $setName = true)
+    {
+        $this->_elementsInArray = (bool) $flag;
+        if ($setName && $this->_elementsInArray && !$this->getElementsBelongTo()) {
+            $this->setElementsBelongTo($this->getName());
+        }
+        return $this;
+    }
+
+    /**
+     * Get flag indicating if elements belong to an array
+     * 
+     * @return bool
+     */
+    public function getElementsInArray()
+    {
+        return $this->_elementsInArray;
     }
  
     // Element groups: 
