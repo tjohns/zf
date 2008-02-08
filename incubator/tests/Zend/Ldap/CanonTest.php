@@ -105,6 +105,11 @@ class Zend_Ldap_CanonTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(strstr($msg, 'Invalid credentials') || strstr($msg, 'No such object'));
         }
     }
+    public function testDnCanon()
+    {
+		$ldap = new Zend_Ldap($this->_options);
+		$name = $ldap->getCanonicalAccountName(TESTS_ZEND_LDAP_ALT_DN, Zend_Ldap::ACCTNAME_FORM_DN);
+    }
     public function testBindCanon()
     {
         /**

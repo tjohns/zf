@@ -49,20 +49,8 @@ class Zend_Ldap
      */
     protected $_resource = null;
 
-    protected $_host;
-    protected $_port;
-    protected $_useSsl;
-    protected $_username;
-    protected $_password;
-    protected $_bindRequiresDn;
-    protected $_baseDn;
-    protected $_accountCanonicalForm;
-    protected $_accountDomainName;
-    protected $_accountDomainNameShort;
-    protected $_accountFilterFormat;
-
     /**
-     * @param  string The string to escape.
+     * @param  string $str The string to escape.
      * @return string The escaped string
      */
     public static function filterEscape($str)
@@ -78,6 +66,62 @@ class Zend_Ldap
             $ret .= $ch;
         }
         return $ret;
+    }
+
+    /**
+     * @param  string $dn   The DN to parse
+     * @param  array  $keys An optional array to receive DN keys (e.g. CN, OU, DC, ...)
+     * @param  array  $vals An optional array to receive DN values
+     * @return bool   True if the DN was successfully parsed or false if the string is not a valid DN.
+     */
+    public static function explodeDn($dn, array &$keys = null, array &$vals = null)
+    {
+        /* This is a classic state machine parser. Each iteration of the
+         * loop processes one character. State 1 collects the key. When equals (=)
+         * is encountered the state changes to 2 where the value is collected
+         * until a comma (,) or semicolon (;) is encountered after which we switch back
+         * to state 1. If a backslash (\) is encountered, state 3 is used to collect the
+         * following character without engaging the logic of other states.
+         */
+        $key = null;
+        $slen = strlen($dn);
+        $state = 1;
+        $ko = $vo = 0;
+        for ($di = 0; $di <= $slen; $di++) {
+            $ch = $di == $slen ? 0 : $dn[$di];
+            switch ($state) {
+                case 1: // collect key
+                    if ($ch === '=') {
+                        $key = trim(substr($dn, $ko, $di - $ko));
+                        if ($keys !== null) {
+                            $keys[] = $key; 
+                        }
+                        $state = 2;
+                        $vo = $di + 1;
+                    } else if ($ch === ',' || $ch === ';') {
+                        return false;
+                    }
+                    break;
+                case 2: // collect value
+                    if ($ch === '\\') {
+                        $state = 3;
+                    } else if ($ch === ',' || $ch === ';' || $ch === 0) {
+                        if ($vals !== null) {
+                            $vals[] = trim(substr($dn, $vo, $di - $vo));
+                        }
+                        $state = 1;
+                        $ko = $di + 1;
+                    } else if ($ch === '=') {
+                        return false;
+                    }
+                    break;
+                case 3: // escaped
+                    $state = 2;
+                    break;
+            }
+        }
+
+        return $state === 1 && strtoupper($key) === 'DC'; 
     }
 
     /**
@@ -125,33 +169,30 @@ class Zend_Ldap
             'accountFilterFormat'       => null,
         );
 
-        foreach ($options as $optionKey => $optionValue) {
-            if (!array_key_exists($optionKey, $permittedOptions)) {
-                /**
-                 * @see Zend_Ldap_Exception
-                 */
-                require_once 'Zend/Ldap/Exception.php';
-                throw new Zend_Ldap_Exception(null, "Unknown Zend_Ldap option: $optionKey");
-            }
-            $this->{"_$optionKey"} = $optionValue;
+        $diff = array_diff_key($options, $permittedOptions);
+        if ($diff) {
+            list($key, $val) = each($diff);
+            require_once 'Zend/Ldap/Exception.php';
+            throw new Zend_Ldap_Exception(null, "Unknown Zend_Ldap option: $key");
         }
 
-        /* Account names should always be qualified with a domain. In some scenarios
-         * using non-qualified account names can lead to security vulnerbilities. If
-         * no account canonical form is specified, we guess based in what domain
-         * names have been supplied.
-         */
-        if (!$this->_accountCanonicalForm) {
-            if ($this->_accountDomainNameShort) {
-                $this->_accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_BACKSLASH;
-            } else if ($this->_accountDomainName) {
-                $this->_accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_PRINCIPAL;
-            } else {
-                $this->_accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_USERNAME;
+        foreach ($permittedOptions as $key => $val) {
+            if (!array_key_exists($key, $options)) {
+                $options[$key] = null;
             }
         }
+
+        $this->_options = $options;
 
         return $this;
+    }
+
+    /**
+     * @return array The current options.
+     */
+    public function getOptions()
+    {
+        return $this->_options;
     }
 
     /**
@@ -170,7 +211,7 @@ class Zend_Ldap
      */
     protected function _getHost()
     {
-        return $this->_host;
+        return $this->_options['host'];
     }
 
     /**
@@ -178,8 +219,8 @@ class Zend_Ldap
      */
     protected function _getPort()
     {
-        if ($this->_port)
-            return $this->_port;
+        if ($this->_options['port'])
+            return $this->_options['port'];
         return 0;
     }
 
@@ -188,7 +229,7 @@ class Zend_Ldap
      */
     protected function _getUsername()
     {
-        return $this->_username;
+        return $this->_options['username'];
     }
 
     /**
@@ -196,7 +237,7 @@ class Zend_Ldap
      */
     protected function _getPassword()
     {
-        return $this->_password;
+        return $this->_options['password'];
     }
 
     /**
@@ -204,7 +245,7 @@ class Zend_Ldap
      */
     protected function _getUseSsl()
     {
-        return $this->_useSsl;
+        return $this->_options['useSsl'];
     }
 
     /**
@@ -212,15 +253,43 @@ class Zend_Ldap
      */
     protected function _getBaseDn()
     {
-        return $this->_baseDn;
+        return $this->_options['baseDn'];
     }
+
+    /**
+     * @return string Either ACCTNAME_FORM_BACKSLASH, ACCTNAME_FORM_PRINCIPAL or ACCTNAME_FORM_USERNAME indicating the form usernames should be canonicalized to.
+     */
+    protected function _getAccountCanonicalForm()
+    {
+        /* Account names should always be qualified with a domain. In some scenarios
+         * using non-qualified account names can lead to security vulnerabilities. If
+         * no account canonical form is specified, we guess based in what domain
+         * names have been supplied.
+         */
+
+        $accountCanonicalForm = $this->_options['accountCanonicalForm'];
+        if (!$accountCanonicalForm) {
+            $accountDomainName = $this->_options['accountDomainName'];
+            $accountDomainNameShort = $this->_options['accountDomainNameShort'];
+            if ($accountDomainNameShort) {
+                $accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_BACKSLASH;
+            } else if ($accountDomainName) {
+                $accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_PRINCIPAL;
+            } else {
+                $accountCanonicalForm = Zend_Ldap::ACCTNAME_FORM_USERNAME;
+            }
+        }
+
+        return $accountCanonicalForm;
+    }
+
 
     /**
      * @return string A format string for building an LDAP search filter to match an account
      */
     protected function _getAccountFilterFormat()
     {
-        return $this->_accountFilterFormat;
+        return $this->_options['accountFilterFormat'];
     }
 
     /**
@@ -233,7 +302,7 @@ class Zend_Ldap
         $aname = Zend_Ldap::filterEscape($aname);
         if ($accountFilterFormat)
             return sprintf($accountFilterFormat, $aname);
-        if (!$this->_bindRequiresDn) {
+        if (!$this->_options['bindRequiresDn']) {
             // is there a better way to detect this?
             return "(&(objectClass=user)(sAMAccountName=$aname))";
         }
@@ -270,7 +339,7 @@ class Zend_Ldap
      */
     protected function _getAccountDn($acctname)
     {
-        if ($this->_isDnString($acctname))
+        if (Zend_Ldap::explodeDn($acctname))
             return $acctname;
         $acctname = $this->getCanonicalAccountName($acctname, Zend_Ldap::ACCTNAME_FORM_USERNAME);
         $acct = $this->_getAccount($acctname, array('dn'));
@@ -285,11 +354,13 @@ class Zend_Ldap
     {
         if ($dname === null)
             return true;
-        if ($this->_accountDomainName === null && $this->_accountDomainNameShort === null)
+        $accountDomainName = $this->_options['accountDomainName'];
+        $accountDomainNameShort = $this->_options['accountDomainNameShort'];
+        if ($accountDomainName === null && $accountDomainNameShort === null)
             return true;
-        if (strcasecmp($dname, $this->_accountDomainName) == 0)
+        if (strcasecmp($dname, $accountDomainName) == 0)
             return true;
-        if (strcasecmp($dname, $this->_accountDomainNameShort) == 0)
+        if (strcasecmp($dname, $accountDomainNameShort) == 0)
             return true;
         return false;
     }
@@ -328,29 +399,31 @@ class Zend_Ldap
         $uname = strtolower($uname);
 
         if ($form === 0)
-            $form = $this->_accountCanonicalForm;
+            $form = $this->_getAccountCanonicalForm();
 
         switch ($form) {
             case Zend_Ldap::ACCTNAME_FORM_USERNAME:
                 return $uname;
             case Zend_Ldap::ACCTNAME_FORM_BACKSLASH:
-                if (!$this->_accountDomainNameShort) {
+                $accountDomainNameShort = $this->_options['accountDomainNameShort'];
+                if (!$accountDomainNameShort) {
                     /**
                      * @see Zend_Ldap_Exception
                      */
                     require_once 'Zend/Ldap/Exception.php';
                     throw new Zend_Ldap_Exception(null, 'Option required: accountDomainNameShort');
                 }
-                return "$this->_accountDomainNameShort\\$uname";
+                return "$accountDomainNameShort\\$uname";
             case Zend_Ldap::ACCTNAME_FORM_PRINCIPAL:
-                if (!$this->_accountDomainName) {
+                $accountDomainName = $this->_options['accountDomainName'];
+                if (!$accountDomainName) {
                     /**
                      * @see Zend_Ldap_Exception
                      */
                     require_once 'Zend/Ldap/Exception.php';
                     throw new Zend_Ldap_Exception(null, 'Option required: accountDomainName');
                 }
-                return "$uname@$this->_accountDomainName";
+                return "$uname@$accountDomainName";
             default:
                 /**
                  * @see Zend_Ldap_Exception
@@ -365,7 +438,7 @@ class Zend_Ldap
      * @return array An array of the attributes representing the account
      * @throws Zend_Ldap_Exception
      */
-    private function _getAccount($acctname, $attrs = null)
+    private function _getAccount($acctname, array $attrs = null)
     {
         $baseDn = $this->_getBaseDn();
         if (!$baseDn) {
@@ -542,11 +615,6 @@ class Zend_Ldap
         throw new Zend_Ldap_Exception("Failed to connect to LDAP server: $host:$port");
     }
 
-    protected function _isDnString($str)
-    {
-        return $str && stristr($str, ',DC=');
-    }
-
     /**
      * @param string $username The username for authenticating the bind
      * @param string $password The password for authenticating the bind
@@ -573,8 +641,8 @@ class Zend_Ldap
 
         /* Check to make sure the username is in DN form.
          */
-        if (!$this->_isDnString($username)) {
-            if ($this->_bindRequiresDn) {
+        if (!Zend_Ldap::explodeDn($username)) {
+            if ($this->_options['bindRequiresDn']) {
                 /* moreCreds stops an infinite loop if _getUsername does not
                  * return a DN and the bind requires it
                  */

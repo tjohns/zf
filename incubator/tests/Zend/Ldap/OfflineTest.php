@@ -84,4 +84,34 @@ class Zend_Ldap_OfflineTest extends PHPUnit_Framework_TestCase
             $this->assertEquals("Unknown Zend_Ldap option: $optionName", $e->getMessage());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testExplodeDnOperation()
+    {
+		$inputs = array(
+			'CN=Alice Baker,CN=Users,DC=example,DC=com' => true,
+			'CN=Baker\\, Alice,CN=Users,DC=example,DC=com' => true,
+			'OU=Sales,DC=local' => true,
+			'OU=Sales;DC=local' => true,
+			'OU=Sales ,DC=local' => true,
+			'OU=Sales, dC=local' => true,
+			'ou=Sales , DC=local' => true,
+			'OU=Sales ; dc=local' => true,
+			'DC=local' => true,
+			' DC=local' => true,
+			'DC= local  ' => true,
+			'username' => false,
+			'username@example.com' => false,
+			'EXAMPLE\\username' => false,
+			'CN=,Alice Baker,CN=Users,DC=example,DC=com' => false,
+			'CN=Users,DC==example,DC=com' => false,
+		);
+
+		foreach ($inputs as $dn => $expected) {
+			$ret = Zend_Ldap::explodeDn($dn);
+			$this->assertTrue($ret === $expected);
+		}
+	}
 }
