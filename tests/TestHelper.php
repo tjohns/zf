@@ -69,7 +69,7 @@ if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
  * in the code coverage report and that all production code source files, even
  * those that are not covered by a test yet, are processed.
  */
-if (TESTS_GENERATE_REPORT === true &&
+if (defined('TESTS_GENERATE_REPORT') && TESTS_GENERATE_REPORT === true &&
     version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
     PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
 }
