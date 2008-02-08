@@ -146,7 +146,9 @@ class Zend_Db_Select
         $columns = array();
         foreach ($this->_parts[self::COLUMNS] as $columnEntry) {
             list($correlationName, $column, $alias) = $columnEntry;
-            if ($column instanceof Zend_Db_Expr) {
+            if (is_null($column)) {
+                $column[] = 'NULL';
+            } else if ($column instanceof Zend_Db_Expr) {
                 $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
             } else {
                 if ($column == '*') {
