@@ -864,6 +864,31 @@ $element->class = 'text; // set 'class' attribute to 'text'
 
             <listitem><para><emphasis>Textarea</emphasis>: Zend_Form_Element_Textarea</para></listitem>
         </itemizedlist>
+        
+        <para>
+            Besides these, Zend_Form also provides additional utility elements 
+            providing more advanced functionality:
+        </para>
+        
+        <itemizedlist>
+            <listitem>
+            <para><emphasis>Hash</emphasis>: Zend_Form_Element_Hash</para>
+            <simpara>
+              This element provides protection from CSRF attacks on forms, ensuring
+              the data is submitted by the user session that generated the form and
+              not by a rogue script. Protection is achieved by adding a hash element
+              to a form and verifying it when the form is submitted.
+            </simpara>
+            <para>
+              The name of the hash element should be unique. It is recommended to use
+              the <literal>salt</literal> option for the element, two hashes with 
+              same names and different salts would not collide:  
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+$form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique')); 
+?>]]></programlisting>
+            </listitem>
+        </itemizedlist>
     </sect2>
 
     <sect2 id="zend.form.elements.methods">
