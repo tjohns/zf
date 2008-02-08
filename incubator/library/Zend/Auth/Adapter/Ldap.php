@@ -239,12 +239,12 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     {
         $str = '';
         foreach ($options as $key => $val) {
+            if ($key === 'password')
+                $val = '*****';
             if ($str)
                 $str .= ',';
             $str .= $key . '=' . $val;
         }
-        if ($this->_password)
-            $str = str_replace($this->_password, '*****', $str);
         return $str;
     }
 }
