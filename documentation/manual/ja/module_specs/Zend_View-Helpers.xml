@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 7863 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -208,6 +208,7 @@
         <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
+        <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">
