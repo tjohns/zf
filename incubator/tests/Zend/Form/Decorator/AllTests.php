@@ -11,6 +11,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Form/Decorator/AbstractTest.php';
 require_once 'Zend/Form/Decorator/CallbackTest.php';
+require_once 'Zend/Form/Decorator/DescriptionTest.php';
 require_once 'Zend/Form/Decorator/ErrorsTest.php';
 require_once 'Zend/Form/Decorator/HtmlTagTest.php';
 require_once 'Zend/Form/Decorator/FieldsetTest.php';
@@ -31,6 +32,7 @@ class Zend_Form_Decorator_AllTests
 
         $suite->addTestSuite('Zend_Form_Decorator_AbstractTest');
         $suite->addTestSuite('Zend_Form_Decorator_CallbackTest');
+        $suite->addTestSuite('Zend_Form_Decorator_DescriptionTest');
         $suite->addTestSuite('Zend_Form_Decorator_ErrorsTest');
         $suite->addTestSuite('Zend_Form_Decorator_FieldsetTest');
         $suite->addTestSuite('Zend_Form_Decorator_HtmlTagTest');
