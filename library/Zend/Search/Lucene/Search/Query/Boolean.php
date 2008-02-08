@@ -39,7 +39,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
     /**
      * Subqueries
-     * Array of Zend_Search_Lucene_Query
+     * Array of Zend_Search_Lucene_Search_Query
      *
      * @var array
      */
@@ -105,7 +105,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
 
     /**
-     * Add a $subquery (Zend_Search_Lucene_Query) to this query.
+     * Add a $subquery (Zend_Search_Lucene_Search_Query) to this query.
      *
      * The sign is specified as:
      *     TRUE  - subquery is required
