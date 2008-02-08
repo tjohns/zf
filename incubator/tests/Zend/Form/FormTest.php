@@ -1379,6 +1379,52 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->form->isValid($data));
     }
 
+    public function testCanValidateNestedFormsWithElementsBelongingToArrays()
+    {
+        $form = new Zend_Form();
+        $form->setElementsBelongTo('foobar');
+
+        $form->addElement('text', 'firstName')
+             ->getElement('firstName')
+             ->setRequired(true);
+
+        $form->addElement('text', 'lastName')
+             ->getElement('lastName')
+             ->setRequired(true);
+
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setElementsBelongTo('foobar[baz]');
+        $subForm->addElement('text', 'email')
+                ->getElement('email')->setRequired(true);
+
+        $subSubForm = new Zend_Form_SubForm();
+        $subSubForm->setElementsBelongTo('foobar[baz][bat]');
+        $subSubForm->addElement('checkbox', 'home')
+                   ->getElement('home')->setRequired(true);
+
+        $subForm->addSubForm($subSubForm, 'subSub');
+
+        $form->addSubForm($subForm, 'sub')
+             ->addElement('submit', 'save', array('value' => 'submit'));
+
+
+        $data = array('foobar' => array(
+            'firstName' => 'Mabel',
+            'lastName'  => 'Cow',
+            'baz'    => array(  
+                'email' => 'mabel@cow.org',
+                'bat'   => array(
+                    'home' => 1,
+                )
+            )
+        ));
+        $this->assertTrue($form->isValid($data));
+        $this->assertEquals('Mabel', $form->firstName->getValue());
+        $this->assertEquals('Cow', $form->lastName->getValue());
+        $this->assertEquals('mabel@cow.org', $form->sub->email->getValue());
+        $this->assertEquals(1, $form->sub->subSub->home->getValue());
+    }
+
     public function testCanValidatePartialFormContainingSubForms()
     {
         $this->setupElements();
@@ -1408,6 +1454,62 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             )
         );
         $this->assertFalse($this->form->isValidPartial($data));
+    }
+
+    public function testCanValidatePartialNestedFormsWithElementsBelongingToArrays()
+    {
+        $form = new Zend_Form();
+        $form->setElementsBelongTo('foobar');
+
+        $form->addElement('text', 'firstName')
+             ->getElement('firstName')
+             ->setRequired(false);
+
+        $form->addElement('text', 'lastName')
+             ->getElement('lastName')
+             ->setRequired(true);
+
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setElementsBelongTo('foobar[baz]');
+        $subForm->addElement('text', 'email')
+                ->getElement('email')
+                ->setRequired(true)
+                ->addValidator('NotEmpty');
+
+        $subSubForm = new Zend_Form_SubForm();
+        $subSubForm->setElementsBelongTo('foobar[baz][bat]');
+        $subSubForm->addElement('checkbox', 'home')
+                   ->getElement('home')
+                   ->setRequired(true)
+                   ->addValidator('NotEmpty');
+
+        $subForm->addSubForm($subSubForm, 'subSub');
+
+        $form->addSubForm($subForm, 'sub')
+             ->addElement('submit', 'save', array('value' => 'submit'));
+
+
+        $data = array('foobar' => array(
+            'lastName'  => 'Cow',
+        ));
+        $this->assertTrue($form->isValidPartial($data));
+        $this->assertEquals('Cow', $form->lastName->getValue());
+        $firstName = $form->firstName->getValue();
+        $email     = $form->sub->email->getValue();
+        $home      = $form->sub->subSub->home->getValue();
+        $this->assertTrue(empty($firstName));
+        $this->assertTrue(empty($email));
+        $this->assertTrue(empty($home));
+
+        $form->sub->subSub->home->addValidator('StringLength', false, array(4, 6));
+        $data['foobar']['baz'] = array('bat' => array('home' => 'ab'));
+
+        $this->assertFalse($form->isValidPartial($data), var_export($form->sub->subSub->home, 1));
+        $this->assertEquals('ab', $form->sub->subSub->home->getValue());
+        $messages = $form->getMessages();
+        $this->assertFalse(empty($messages));
+        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']), var_export($messages, 1));
+        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']['stringLengthTooShort']));
     }
 
     public function testValidatingFormWithDisplayGroupsDoesSameAsWithout()
@@ -1944,6 +2046,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('id="anArray-foo"', $html);
         $this->assertContains('id="anArray-bar"', $html);
         $this->assertContains('id="anArray-baz"', $html);
+    }
+
+    public function testElementsRenderAsSubArrayMembersWhenElementsBelongToASubArray()
+    {
+        $this->setupElements();
+        $this->form->setElementsBelongTo('data[foo]');
+        $html = $this->form->render($this->getView());
+        $this->assertContains('name="data[foo][foo]"', $html);
+        $this->assertContains('name="data[foo][bar]"', $html);
+        $this->assertContains('name="data[foo][baz]"', $html);
+        $this->assertContains('id="data-foo-foo"', $html);
+        $this->assertContains('id="data-foo-bar"', $html);
+        $this->assertContains('id="data-foo-baz"', $html);
     }
 
     public function testElementsRenderAsArrayMembersWhenRenderAsArrayToggled()

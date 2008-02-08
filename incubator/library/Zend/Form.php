@@ -619,11 +619,16 @@ class Zend_Form implements Iterator, Countable
      * Filter a name to only allow valid variable characters
      * 
      * @param  string $value 
+     * @param  bool $allowBrackets
      * @return string
      */
-    public function filterName($value)
+    public function filterName($value, $allowBrackets = false)
     {
-        return preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '', (string) $value);
+        $charset = '^a-zA-Z0-9_\x7f-\xff';
+        if ($allowBrackets) {
+            $charset .= '\[\]';
+        }
+        return preg_replace('/[' . $charset . ']/', '', (string) $value);
     }
 
     /**
@@ -1067,7 +1072,7 @@ class Zend_Form implements Iterator, Countable
      */
     public function setElementsBelongTo($array)
     {
-        $name = $this->filterName($array);
+        $name = $this->filterName($array, true);
         if (empty($name)) {
             $name = null;
         }
@@ -1498,6 +1503,34 @@ class Zend_Form implements Iterator, Countable
     }
 
     /**
+     * Determine array key name from given value
+     *
+     * Given a value such as foo[bar][baz], returns the last element (in this case, 'baz').
+     * 
+     * @param  string $value 
+     * @return string
+     */
+    protected function _getArrayName($value)
+    {
+        if (empty($value) || !is_string($value)) {
+            return $value;
+        }
+
+        if (!strstr($value, '[')) {
+            return $value;
+        }
+
+        $endPos = strlen($value) - 1;
+        if (']' != $value[$endPos]) {
+            return $value;
+        }
+
+        $start = strrpos($value, '[') + 1;
+        $name = substr($value, $start, $endPos - $start);
+        return $name;
+    }
+
+    /**
      * Validate the form
      * 
      * @param  array $data 
@@ -1507,6 +1540,14 @@ class Zend_Form implements Iterator, Countable
     {
         $translator = $this->getTranslator();
         $valid      = true;
+
+        if ($this->getElementsInArray()) {
+            $key = $this->_getArrayName($this->getElementsBelongTo());
+            if (isset($data[$key])) {
+                $data = $data[$key];
+            }
+        }
+
         foreach ($this->getElements() as $key => $element) {
             $element->setTranslator($translator);
             if (!isset($data[$key])) {
@@ -1522,7 +1563,12 @@ class Zend_Form implements Iterator, Countable
             if (isset($data[$key])) {
                 $valid = $form->isValid($data[$key]) && $valid;
             } else {
-                $valid = $form->isValid($data) && $valid;
+                $array = $this->_getArrayName($form->getElementsBelongTo());
+                if (empty($array) || !isset($data[$array])) {
+                    $valid = $form->isValid($data) && $valid;
+                } else {
+                    $valid = $form->isValid($data[$array]) && $valid;
+                }
             }
         }
         return $valid;
@@ -1538,9 +1584,17 @@ class Zend_Form implements Iterator, Countable
      */
     public function isValidPartial(array $data)
     {
+        if ($this->getElementsInArray()) {
+            $key = $this->_getArrayName($this->getElementsBelongTo());
+            if (isset($data[$key])) {
+                $data = $data[$key];
+            }
+        }
+
         $translator        = $this->getTranslator();
         $valid             = true;
         $validatedSubForms = array();
+
         foreach ($data as $key => $value) {
             if (null !== ($element = $this->getElement($key))) {
                 if (null !== $translator) {
@@ -1560,7 +1614,12 @@ class Zend_Form implements Iterator, Countable
                 if (null !== $translator) {
                     $subForm->setTranslator($translator);
                 }
-                $valid = $subForm->isValidPartial($data) && $valid;
+                $array = $this->_getArrayName($subForm->getElementsBelongTo());
+                if (empty($array) || !isset($data[$array])) {
+                    $valid = $subForm->isValidPartial($data) && $valid;
+                } else {
+                    $valid = $subForm->isValidPartial($data[$array]) && $valid;
+                }
             }
         }
         return $valid;
@@ -1608,7 +1667,12 @@ class Zend_Form implements Iterator, Countable
                 $errors[$key] = $element->getErrors();
             }
             foreach ($this->getSubForms() as $key => $subForm) {
-                $errors[$key] = $subForm->getErrors();
+                $array = $this->_getArrayName($subForm->getElementsBelongTo());
+                if (empty($array) || !isset($data[$array])) {
+                    $errors[$key] = $subForm->getErrors();
+                } else {
+                    $errors[$array] = $subForm->getErrors();
+                }
             }
         }
         return $errors;
@@ -1618,9 +1682,10 @@ class Zend_Form implements Iterator, Countable
      * Retrieve error messages from elements failing validations
      * 
      * @param  string $name 
+     * @param  bool $suppressArrayNotation
      * @return array
      */
-    public function getMessages($name = null)
+    public function getMessages($name = null, $suppressArrayNotation = false)
     {
         if ((null !== $name) && isset($this->_elements[$name])) {
             return $this->getElement($name)->getMessages();
@@ -1629,6 +1694,17 @@ class Zend_Form implements Iterator, Countable
         if ((null !== $name) && isset($this->_subForms[$name])) {
             return $this->getSubForm($name)->getMessages();
         } 
+
+        $arrayKeys = array();
+        foreach ($this->getSubForms() as $key => $subForm) {
+            $array = $this->_getArrayName($subForm->getElementsBelongTo());
+            if (!empty($array)) {
+                if ($name == $array) {
+                    return $subForm->getMessages(null, true);
+                }
+                $arrayKeys[$key] = $array;
+            }
+        }
 
         $messages = array();
 
@@ -1640,10 +1716,20 @@ class Zend_Form implements Iterator, Countable
         }
 
         foreach ($this->getSubForms() as $key => $subForm) {
-            $fMessages = $subForm->getMessages();
+            $fMessages = $subForm->getMessages(null, true);
             if (!empty($fMessages)) {
-                $messages[$key] = $fMessages;
+                if (array_key_exists($key, $arrayKeys)) {
+                    $messages[$arrayKeys[$key]] = $fMessages;
+                } else {
+                    $messages[$key] = $fMessages;
+                }
             }
+        }
+
+        if (!$suppressArrayNotation && $this->getElementsInArray()) {
+            $messages = array(
+                $this->getElementsBelongTo() => $messages
+            );
         }
 
         return $messages;

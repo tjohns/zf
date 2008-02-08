@@ -296,11 +296,16 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * Filter a name to only allow valid variable characters
      * 
      * @param  string $value 
+     * @param  bool $allowBrackets
      * @return string
      */
-    public function filterName($value)
+    public function filterName($value, $allowBrackets = false)
     {
-        return preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '', (string) $value);
+        $charset = '^a-zA-Z0-9_\x7f-\xff';
+        if ($allowBrackets) {
+            $charset .= '\[\]';
+        }
+        return preg_replace('/[' . $charset . ']/', '', (string) $value);
     }
 
     /**
@@ -488,7 +493,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function setBelongsTo($array)
     {
-        $array = $this->filterName($array);
+        $array = $this->filterName($array, true);
         if (!empty($array)) {
             $this->_belongsTo = $array;
         }
@@ -962,7 +967,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $this->_errors   = array();
         $result          = true;
         $translator      = $this->getTranslator();
-        foreach ($this->getValidators() as $validator) {
+        foreach ($this->getValidators() as $key => $validator) {
             if (method_exists($validator, 'setTranslator')) {
                 $validator->setTranslator($translator);
             }
