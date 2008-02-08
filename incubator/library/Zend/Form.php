@@ -993,7 +993,7 @@ class Zend_Form implements Iterator, Countable
 
         foreach ($this->getSubForms() as $subForm) {
             if ($name == $subForm->getElementsBelongTo()) {
-                return $subForm->getValues();
+                return $subForm->getValues(true);
             }
         }
         return null;
@@ -1002,20 +1002,28 @@ class Zend_Form implements Iterator, Countable
     /**
      * Retrieve all form element values
      * 
+     * @param  bool $suppressArrayNotation
      * @return array
      */
-    public function getValues()
+    public function getValues($suppressArrayNotation = false)
     {
         $values = array();
         foreach ($this->getElements() as $key => $element) {
             $values[$key] = $element->getValue();
         }
         foreach ($this->getSubForms() as $key => $subForm) {
-            if (null !== ($array = $subForm->getElementsBelongTo())) {
-                $values[$array] = $subForm->getValues();
+            $array = $this->_getArrayName($subForm->getElementsBelongTo());
+            if (empty($array)) {
+                $values[$key] = $subForm->getValues(true);
             } else {
-                $values[$key] = $subForm->getValues();
+                $values[$array] = $subForm->getValues(true);
             }
+        }
+
+        if (!$suppressArrayNotation && $this->getElementsInArray()) {
+            $values = array(
+                $this->getElementsBelongTo() => $values
+            );
         }
 
         return $values;

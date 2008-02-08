@@ -1050,11 +1050,57 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->addSubForm($subForm, 'page1');
 
         $values = $this->form->getValues();
-        $this->assertTrue(isset($values['subform']));
+        $this->assertTrue(isset($values['subform']), var_export($values, 1));
         $this->assertTrue(isset($values['subform']['foo']));
         $this->assertTrue(isset($values['subform']['bar']));
         $this->assertEquals($subForm->foo->getValue(), $values['subform']['foo']);
         $this->assertEquals($subForm->bar->getValue(), $values['subform']['bar']);
+    }
+
+    public function testGetValuesReturnsNestedSubFormValuesFromArraysToWhichElementsBelong()
+    {
+        $form = new Zend_Form();
+        $form->setElementsBelongTo('foobar');
+
+        $form->addElement('text', 'firstName')
+             ->getElement('firstName')
+             ->setRequired(true);
+
+        $form->addElement('text', 'lastName')
+             ->getElement('lastName')
+             ->setRequired(true);
+
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setElementsBelongTo('foobar[baz]');
+        $subForm->addElement('text', 'email')
+                ->getElement('email')->setRequired(true);
+
+        $subSubForm = new Zend_Form_SubForm();
+        $subSubForm->setElementsBelongTo('foobar[baz][bat]');
+        $subSubForm->addElement('checkbox', 'home')
+                   ->getElement('home')->setRequired(true);
+
+        $subForm->addSubForm($subSubForm, 'subSub');
+
+        $form->addSubForm($subForm, 'sub')
+             ->addElement('submit', 'save', array('value' => 'submit'));
+
+
+        $data = array('foobar' => array(
+            'firstName' => 'Mabel',
+            'lastName'  => 'Cow',
+            'baz'    => array(  
+                'email' => 'mabel@cow.org',
+                'bat'   => array(
+                    'home' => 1,
+                )
+            )
+        ));
+        $this->assertTrue($form->isValid($data));
+
+        $values = $form->getValues();
+        $data['foobar']['save'] = 'submit';
+        $this->assertEquals($data, $values);
     }
 
     public function testGetValueCanReturnSubFormValues()
@@ -1082,7 +1128,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->addSubForm($subForm, 'page1');
 
         $values = $this->form->getValue('subform');
-        $this->assertTrue(isset($values['foo']));
+        $this->assertTrue(isset($values['foo']), var_export($values, 1));
         $this->assertTrue(isset($values['bar']));
         $this->assertEquals($subForm->foo->getValue(), $values['foo']);
         $this->assertEquals($subForm->bar->getValue(), $values['bar']);
