@@ -184,9 +184,9 @@ $index->find($query);]]>   </programlisting>
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
 $pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
-$pathQuery = new Zend_Search_Lucene_Query_Term($pathTerm);
+$pathQuery = new Zend_Search_Lucene_Search_Query_Term($pathTerm);
 
-$query = new Zend_Search_Lucene_Query_Boolean();
+$query = new Zend_Search_Lucene_Search_Query_Boolean();
 $query->addSubquery($userQuery, true /* required */);
 $query->addSubquery($pathQuery, true /* required */);
 
