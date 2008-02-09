@@ -3,7 +3,7 @@
     <title>简介</title>
 
     <para>
-        Zend_Auth 为认证（authentication）提供了一个API并包括了一些通用用例情景的具体认证适配器。
+        Zend_Auth 为认证（authentication）和一些通用用例情景的具体认证适配器提供了一个API。
     </para>
 
     <para>

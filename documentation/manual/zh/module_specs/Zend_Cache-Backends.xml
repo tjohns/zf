@@ -53,8 +53,9 @@
                           <entry><code>'crc32'</code></entry>
                           <entry>
                             读控制类型 (仅在读控制启用时). 可用的值有: 'md5' (最好但最慢),
-                            'crc32' (安全性稍差,但更快,更好的选择), 'strlen' for a
-                            length only test (最快).
+                            'crc32' (安全性稍差,但更快,更好的选择), 
+                            'adler32' (新选择，比 crc32 快),
+                            'strlen' for a length only test (最快).
                         </entry>
                       </row>
                       <row>
