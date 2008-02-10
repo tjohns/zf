@@ -50,6 +50,14 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
     {
     }
 
+    public function getView()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper/');
+        return $view;
+    }
+
     public function testSubmitElementSubclassesXhtmlElement()
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element_Xhtml);
@@ -82,6 +90,16 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
                       ->setValue('submit');
         $test = $this->element->getValue();
         $this->assertEquals($translations['submit'], $test);
+    }
+
+    public function testTranslatedValueIsRendered()
+    {
+        $this->testGetValueReturnsTranslatedValueIfTranslatorIsRegistered();
+        $this->element->setView($this->getView());
+        $decorator = $this->element->getDecorator('ViewHelper');
+        $decorator->setElement($this->element);
+        $html = $decorator->render('');
+        $this->assertRegexp('/<(input|button)[^>]*?value="Submit Button"/', $html);
     }
 }
 
