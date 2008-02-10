@@ -18,9 +18,7 @@ echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";
 foreach ($feed as $entry) {
     echo '标题: ' . $entry->title() . "\n";
     echo '摘要: ' . $entry->summary() . "\n\n";
-}
-
-?>]]>   </programlisting>
+}]]></programlisting>
     </example>
 
     <para>
