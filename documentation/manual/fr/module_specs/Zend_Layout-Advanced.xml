@@ -2,7 +2,7 @@
     <title>Zend_Layout, utilisation avancée</title>
 
     <para>
-        <code>Zend_Layout</code> permet d'être utilisée de manière plus pointue.
+        <code>Zend_Layout</code> permet d'être utilisé de manière plus pointu.
     </para>
 
     <para>
@@ -26,8 +26,8 @@
         <listitem><para>
                 <emphasis>Aide d'action personnalisée.</emphasis>
                 <code>Zend_Layout</code> est livrée avec une aide d'action
-				qui devrait en théorie suffir dans la majorité des cas. C'est un
-				proxy vers l'objet de <code>Zend_Layout</code>. Vous pouvez
+				qui devrait en théorie suffire dans la majorité des cas. C'est un
+				proxy vers l'objet <code>Zend_Layout</code>. Vous pouvez
 				cependant utiliser votre propre classe d'aide.
         </para></listitem>
 
@@ -47,7 +47,7 @@
             <code>Zend_View_Interface</code> ou étendant
             <code>Zend_View_Abstract</code> pour le rendu du script de layout.
             Passez le en paramètre au constructeur ou à <code>startMvc()</code>,
-			ou utilisez l'accesseur <code>setView()</code>:
+			ou utilisez l'accesseur <code>setView()</code> :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -62,8 +62,8 @@ $layout->setView($view);
                 Même si <code>Zend_Layout</code> vous permet d'utiliser votre
 				propre objet de vue (implémentant <code>Zend_View_Interface</code>),
 				vous pouvez rencontrer des problèmes si votre vue n'a pas accès à
-				certaines aides de vue, en particulier les aides 'layout' et
-                <link linkend="zend.view.helpers.initial.placeholder">'placeholder'</link>.
+				certaines aides de vue, en particulier les aides "layout" et
+                <link linkend="zend.view.helpers.initial.placeholder">"placeholder"</link>.
                 <code>Zend_Layout</code> effectue des affectations de variables
 				sur la vue via ces aides.
             </para>
@@ -71,19 +71,19 @@ $layout->setView($view);
             <para>
                 Si vous avez besoin d'un objet <code>Zend_View</code> personnalisé
                 qui ne supporte pas ces aides de vue, vous devrez alors trouver un moyen
-				de passer les variables de layout à la vue. Par exemple, en étendant
+				de passer les variables du layout à la vue. Par exemple, en étendant
 				l'objet <code>Zend_Layout</code> et en rédéfinissant la méthode
 				<code>render()</code> en passant des variables à la vue.
 				Aussi, vous pouvez créer votre propre plugin qui s'occupe de passer ces
-				variables avant le rendu de le layout.
+				variables avant le rendu du layout.
             </para>
 
             <para>
                 De même, si votre implémentation de la vue permet l'extension via des
-				plugins, vous pouvez à tout moment accéder aux variables de le layout
+				plugins, vous pouvez à tout moment accéder aux variables du layout
 				grâce à l'aide
 				<link linkend="zend.view.helpers.initial.placeholder">placeholder</link>
-				en utilisant la clé 'Zend_Layout':
+				en utilisant la clé "Zend_Layout" :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -98,7 +98,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             Lorsqu'utilisé avec les composants MVC, <code>Zend_Layout</code>
-            enregistre un plugin de contrôleur frontal qui se charge du rendu de la
+            enregistre un plugin de contrôleur frontal qui se charge du rendu du
 			layout juste avant la fin de la boucle de dispatching. Ceci convient à la
 			majorité des cas, si cependant vous avez besoin de construire votre propre
 			plugin, passez son nom dans l'option <code>pluginClass</code> de la méthode
@@ -137,41 +137,41 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
     </sect2>
 
     <sect2 id="zend.layout.advanced.inflector">
-        <title>Résolution de chemin de script personnalisée (inflecteur)</title>
+        <title>Résolution de chemin de script personnalisé (inflecteur)</title>
 
         <para>
             <code>Zend_Layout</code> utilise <code>Zend_Filter_Inflector</code>
-			pour établir une chaine de filtre permettant la résolution du nom de la
+			pour établir une chaine de filtre permettant la résolution du nom du
 			layout, vers le fichier y correspondant. Par défaut, les règles
-			'CamelCaseToDash' suivie de 'StringToLower' sont utilisées. Le suffixe
-			'phtml' est ensuite ajouté:
+			"CamelCaseToDash" suivie de "StringToLower" sont utilisées. Le suffixe
+			"phtml" est ensuite ajouté :
         </para>
 
         <itemizedlist>
             <listitem><para>
-                    'foo' sera transformé en 'foo.phtml'.
+                    "foo" sera transformé en "foo.phtml".
             </para></listitem>
 
             <listitem><para>
-                    'FooBarBaz' sera transformé vers 'foo-bar-baz.phtml'.
+                    "FooBarBaz" sera transformé vers "foo-bar-baz.phtml".
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Vous pouvez personnaliser l'inflecteur de 3 manières différentes:
+            Vous pouvez personnaliser l'inflecteur de 3 manières différentes :
 			Modifier la cible et/ou le suffixe grâce à des accesseurs dans
-			<code>Zend_Layout</code>; Modifier les règles de l'inflecteur
-			associé à <code>Zend_Layout</code>; Ou encore créer votre propre
+			<code>Zend_Layout</code> ; Modifier les règles de l'inflecteur
+			associé à <code>Zend_Layout</code> ; Ou encore créer votre propre
 			inflecteur et le passer à <code>Zend_Layout::setInflector()</code>.
         </para>
 
         <example id="zend.layout.advanced.inflector.accessors">
-            <title>Ustilisation des accesseurs pour modifier l'inflecteur</title>
+            <title>Utilisation des accesseurs pour modifier l'inflecteur</title>
 
             <para>
                 L'inflecteur par défaut de <code>Zend_Layout</code> utilise des
 				marqueurs statiques pour la cible et le suffixe. 2 accesseurs
-				vous sont donc proposés:
+				vous sont donc proposés :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -189,15 +189,15 @@ $layout->setViewSuffix('php');
             <para>
                 Les inflecteurs fonctionnent avec un cible et plusieurs règles.
 				La cible par défaut utilisée pour <code>Zend_Layout</code> est
-				':script.:suffix'; ':script' représente la nom du script de layout,
-				et ':suffix' est une règle statique.
+				":script.:suffix" ; ":script" représente le nom du script de layout,
+				et ":suffix" est une règle statique.
             </para>
 
             <para>
                 Imaginons que vous vouliez que le suffixe du script de layout soit
-                'html', et que vous vouliez séparer les mots en CamelCase avec des
+                "html", et que vous vouliez séparer les mots en CamelCase avec des
 				underscores au lieu des tirets. De plus, vous voulez chercher vos
-				scripts dans un sousdossier 'layouts':
+				scripts dans un sous-dossier "layouts" :
             </para>
 
             <programlisting role="php"><![CDATA[<?php

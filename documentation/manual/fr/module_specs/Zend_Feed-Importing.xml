@@ -146,7 +146,7 @@ array(
                                                            ) // liste des pièces jointes à l'item // optionel
                                    ),
                              array(
-                                   //données de le second item et ainsi de suite
+                                   //données du second item et ainsi de suite
                                    )
                              )
        );]]>

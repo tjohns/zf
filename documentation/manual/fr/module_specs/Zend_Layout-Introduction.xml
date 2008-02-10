@@ -4,22 +4,22 @@
     <para>
         <code>Zend_Layout</code> utilise le design pattern Two Step View,
         ce qui permet d'encapsuler le contenu d'une vue dans une autre,
-        généralement appelée template. D'autres projets les appellent aussi 
-        <emphasis>layouts</emphasis> , ainsi Zend Framework utilise ce terme.
+        généralement appelée template. D'autres projets les appellent aussi
+        <emphasis>layouts</emphasis>, ainsi Zend Framework utilise ce terme.
     </para>
 
     <para>
-        Les principales caractéristiques de <code>Zend_Layout</code> sont:
+        Les principales caractéristiques de <code>Zend_Layout</code> sont :
     </para>
 
     <itemizedlist>
         <listitem><para>
-                Automatiser le rendu des layouts lorsqu'elles sont utilisées avec les
+                Automatiser le rendu des layouts lorsqu'ils sont utilisés avec les
 				composants MVC du Zend Framework.
         </para></listitem>
 
         <listitem><para>
-                Fournir un cadre à part entière pour des variables de layout, au même 
+                Fournir un cadre à part entière pour les variables du layout, au même
 				titre que les variables de vue.
         </para></listitem>
 
@@ -29,12 +29,12 @@
         </para></listitem>
 
         <listitem><para>
-                Permettre de désactiver les layouts temporairement, changer leur configuration;
+                Permettre de désactiver les layouts temporairement, changer leur configuration ;
 				tout ceci depuis les contrôleurs ou les scripts de vue.
         </para></listitem>
 
         <listitem><para>
-                Utiliser les mêmes règles de résolution (inflection) que le<link
+                Utiliser les mêmes règles de résolution (inflection) que le <link
                 linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>,
                 mais sans empêcher de les personnaliser à part.
         </para></listitem>

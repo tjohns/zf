@@ -25,7 +25,7 @@
         </itemizedlist>
 
         <para>
-            En fonction du type de requête, il peut y avoir plus de méthodes disponibles. La requête par défaut utilisée, <code>Zend_Controller_Request_Http</code>, par exemple, a des méthodes pour rechercher l'URI de le requête, l'information sur le chemin, les paramètres <code>$_GET</code> et <code>$_POST</code>, etc.
+            En fonction du type de requête, il peut y avoir plus de méthodes disponibles. La requête par défaut utilisée, <code>Zend_Controller_Request_Http</code>, par exemple, a des méthodes pour rechercher l'URI de la requête, l'information sur le chemin, les paramètres <code>$_GET</code> et <code>$_POST</code>, etc.
         </para>
 
         <para>
