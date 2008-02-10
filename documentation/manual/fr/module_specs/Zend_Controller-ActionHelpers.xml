@@ -166,9 +166,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
-        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ViewRenderer.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.writingyourown">

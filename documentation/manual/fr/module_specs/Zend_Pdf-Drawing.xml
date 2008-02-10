@@ -387,6 +387,103 @@ $font = Zend_Pdf_Font::fontWithPath($cheminVersPoliceQuelconque,
         </example>
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.extracting-fonts">
+        <title>A partir de ZF 1.5, extraction des polices.</title>
+        <para>
+            Depuis la version 1.5, <code>Zend_Pdf</code> fournit la possibilité d'extraire les polices des documents chargés.
+        </para>
+
+        <para>
+            Ceci peut être utile lors des mises à jour de document avec ajout de texte. Sans cette fonctionnalité vous devez attacher et probablement intégrer la police dans le document chaque fois que vous voulez le mettre à jour.
+        </para>
+
+        <para>
+            Les objets <code>Zend_Pdf</code> et <code>Zend_Pdf_Page</code> fournissent une méthode spéciale pour extraire toutes les polices mentionnés à l'intérieur d'un document ou d'une page :
+        </para>
+        <example id="zend.pdf.drawing.extracting-fonts.example-1">
+            <title>Extraction de polices à partir d'un document chargé.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($cheminVersDocument);
+...
+// Récupère toutes les polices du document
+$listePolice = $pdf->extractFonts();
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+$yPosition = 700;
+foreach ($listePolice as $police) {
+    $page->setFont($police, 15);
+    $page->drawText($police->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'fr', 'UTF-8')
+                  . ': Le renard brun rapide saute par-dessus le chien paresseux', 100, $yPosition, 'UTF-8');
+    $yPosition -= 30;
+}
+...
+// Récupère toutes les polices référencées dans la première page du document
+$firstPage = reset($pdf->pages);
+$firstPageFonts = $firstPage->extractFonts();
+...]]>
+            </programlisting>
+        </example>
+        <example id="zend.pdf.drawing.extracting-fonts.example-2">
+            <title>Extraction d'une police à partir d'un document chargé en spécifiant le nom de police.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = new Zend_Pdf();
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$police = Zend_Pdf_Font::fontWithPath($cheminVersPolices);
+$page->setFont($police, $taillePolice);
+$page->drawText($texte, $x, $y);
+...
+// Ce nom de police peut être stocké quelquepart...
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'fr', 'UTF-8');
+...
+$pdf->save($cheminVersDocument);
+...]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($cheminVersDocument);
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$police = $pdf->extractFont($nomPolice);  /* $pageSource->extractFont($nomPolice) peut aussi être utilisé ici */
+$page->setFont($police, $taillePolice);
+$page->drawText($texte, $x, $y);
+...
+$pdf->save($cheminVersDocument, true /* mise à jour de type incrémental */);
+...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Les polices extraites peuvent être utilisées à la place de n'importe quelle autre police avec les limitations suivantes :
+            <itemizedlist>
+                <listitem><para>La police extraite peut être employée seulement dans le cadre du document à partir duquel elle a été extraite.</para></listitem>
+                <listitem>
+                    <para>
+                        Les possibles programmes de polices incorporées ne sont pas extraits réellement. La police ainsi extraite ne peut pas fournir la métrique correcte de police et la police originale doit être utilisée pour les calculs de largeur des textes :
+            <programlisting role="php"><![CDATA[<?php
+...
+$police = $pdf->extractFont($fontName);
+$policeOriginal = Zend_Pdf_Font::fontWithPath($cheminVersPolices);
+
+$page->setFont($police /* utilisation d'une police extraite */, $taillePolice);
+$xPosition = $x;
+for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
+    $page->drawText($text[$charIndex], $xPosition, $y);
+
+    // Use original font for text width calculation
+    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$taillePolice;
+}
+...]]>
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </sect2>
+
     <sect2 id="zend.pdf.drawing.image-drawing">
         <title>Insertion d'images</title>
         <para>

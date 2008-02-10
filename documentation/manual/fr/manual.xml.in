@@ -43,9 +43,7 @@
         <xi:include href="module_specs/Zend_Auth.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_DbTable.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Digest.xml" />
-        <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_Http.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml" />
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
@@ -83,15 +81,9 @@
         <xi:include href="module_specs/Zend_Controller-Response.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Response.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Controller-Plugins.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Plugins.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Controller-Modular.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Modular.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Controller-Exceptions.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Exceptions.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Controller-Plugins.xml" parse="xml" />
+        <xi:include href="module_specs/Zend_Controller-Modular.xml" />
+        <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
         <xi:include href="module_specs/Zend_Controller-Migration.xml" />
     </chapter>
     <chapter id="zend.currency">
@@ -252,9 +244,7 @@
     <chapter id="zend.loader">
         <title>Zend_Loader</title>
         <xi:include href="module_specs/Zend_Loader.xml" />
-        <xi:include href="module_specs/Zend_Loader-PluginLoader.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Loader-PluginLoader.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Loader-PluginLoader.xml" />
     </chapter>
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
