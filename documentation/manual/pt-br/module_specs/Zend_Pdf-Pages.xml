@@ -19,7 +19,7 @@
             <footnote>
                 <para>
                 Esta é uma limitação da versão 1.0 do módulo Zend_Pdf. Esta limitação será eliminada nas versões futuras, mas
-				páginas não anexadas sempre terão um desempenho melhor quanso se trata de compartilhar páginas entre diversos
+				páginas não anexadas sempre terão um desempenho melhor no compartilhamento de páginas entre diversos
 				documentos.
                 </para>
             </footnote>. A escolha sobre qual abordagem utilizar é sua.
@@ -27,7 +27,7 @@
 
         <para>
         O método <code>Zend_Pdf::newPage()</code> e o construtor <code>Zend_Pdf_Page</code> recebem o mesmo conjunto de
-		parâmetros de efinição do tamanhao da página. Os parâmetros são ou o tamanho da página ($x, $y) em pontos(1/72 inch),
+		parâmetros de definição do tamanho da página. Os parâmetros são ou o tamanho da página ($x, $y) em pontos (1/72 inch),
 		ou uma constante prédefinida, que é tratada como um tipo de página:
             <itemizedlist>
                 <listitem>
@@ -47,7 +47,7 @@
 
         <para>
             As páginas de um documento são armazenadas na variável pública <code>$pages</code> da classe <code>Zend_Pdf</code>.
-			Este atributo é sempre um array de objetos <code>Zend_Pdf_Page</code>. Ele define completamente o conunto e a ordem
+			Este atributo é sempre um array de objetos <code>Zend_Pdf_Page</code>. Ele define completamente o conjunto e a ordem
 			das páginas do documento e pode ser manipulado como qualquer array:
         </para>
 
