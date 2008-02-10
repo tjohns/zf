@@ -2,11 +2,11 @@
     <title>Criando e Carregando documentos PDF.</title>
     <para>
      A classe <code>Zend_Pdf</code> representa o próprio documento PDF e provê
-	 funcionalidades do nível de documento.
+	 funcionalidades para manupulação do documento.
     </para>
 
     <para>
-    Para criar um novo documento um objeto <code>Zend_Pdf</code> deve ser instanciado.
+    Para criar um novo documento, um objeto <code>Zend_Pdf</code> deve ser instanciado.
     </para>
 
     <para>
@@ -32,7 +32,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </example>
 
     <para>
-    O formato de arquivo PDF suporta atualização incremental do documento. Dessa forma, toda vez que um documento,
+    O formato de arquivo PDF suporta a atualização incremental do documento. Dessa forma, toda vez que um documento
 	é atualizado uma nova revisão do documento é criada.
     O módulo Zend_Pdf suporta a recuperação da revisão especificada.
     </para>
@@ -41,16 +41,16 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <code>Zend_Pdf::parse()</code> ou solicitada através de <code>Zend_Pdf::rollback()</code>
         <footnote>
             <para>
-            O método <code>Zend_Pdf::rollback()</code> deve ser chamado antes que qualquer mudança 
+            O método <code>Zend_Pdf::rollback()</code> deve ser chamado antes que qualquer mudança seja
 			aplicada ao documento.
-            De outra forma o coportamento é indefinido.
+            De outra forma o coportamento do método é indefinido.
             </para>
         </footnote>
     call.
     </para>
 
     <example id="zend.pdf.create.example-2">
-        <title>Solicitano a revisão especificada do documento PDF.</title>
+        <title>Solicitando uma revisão específica do documento PDF.</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Load PDF previouse revision of the document.
