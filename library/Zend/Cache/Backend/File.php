@@ -657,15 +657,21 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     private function _fileGetContents($file)
     {
-        if ($this->_options['file_locking']) @flock($file, LOCK_SH);
+        $result = false;
         if (!is_file($file)) {
             return false;
         }
         $mqr = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);
-        $result = @file_get_contents($file);
+        set_magic_quotes_runtime(0);       
+        $f = @fopen($file, 'rb');
+        if ($f) {
+            if ($this->_options['file_locking']) @flock($f, LOCK_SH);
+            $fsize = @filesize($file);
+            $result = fread($f, $fsize);
+            if ($this->_options['file_locking']) @flock($f, LOCK_UN);
+            @fclose($f);
+        }
         set_magic_quotes_runtime($mqr);
-        if ($this->_options['file_locking']) @flock($file, LOCK_UN);
         return $result;
     }
     
@@ -678,14 +684,19 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */    
     private function _filePutContents($file, $string)
     {
-        if ($this->_options['file_locking']) @flock($file, LOCK_EX);
-        $result = @file_put_contents($file, $string);
-        if ($this->_options['file_locking']) @flock($file, LOCK_UN);
-        if (!$result) {
-            return false;
+        $result = false;   
+        $f = @fopen($file, 'wb');
+        if ($f) {
+            if ($this->_options['file_locking']) @flock($f, LOCK_EX);
+            $tmp = @fwrite($f, $string);
+            if (!($tmp === FALSE)) {
+                $result = true;
+            }    
+            if ($this->_options['file_locking']) @flock($f, LOCK_UN);
+            @fclose($f);
         }
         @chmod($file, $this->_options['cache_file_umask']);
-        return true;
+        return $result;
     }
     
     /**
