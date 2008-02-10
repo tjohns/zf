@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -37,18 +38,18 @@
 class Zend_Service_Technorati
 {
     /** Base Technorati API URI */
-    const URI_BASE = 'http://api.technorati.com';
+    const API_URI_BASE = 'http://api.technorati.com';
     
     /** Query paths */
-    const PATH_COSMOS           = '/cosmos';
-    const PATH_SEARCH           = '/search';
-    const PATH_TAG              = '/tag';
-    const PATH_DAILYCOUNTS      = '/dailycounts';
-    const PATH_TOPTAGS          = '/toptags';
-    const PATH_BLOGINFO         = '/bloginfo';
-    const PATH_BLOGPOSTTAGS     = '/blogposttags';
-    const PATH_GETINFO          = '/getinfo';
-    const PATH_KEYINFO          = '/keyinfo';
+    const API_PATH_COSMOS           = '/cosmos';
+    const API_PATH_SEARCH           = '/search';
+    const API_PATH_TAG              = '/tag';
+    const API_PATH_DAILYCOUNTS      = '/dailycounts';
+    const API_PATH_TOPTAGS          = '/toptags';
+    const API_PATH_BLOGINFO         = '/bloginfo';
+    const API_PATH_BLOGPOSTTAGS     = '/blogposttags';
+    const API_PATH_GETINFO          = '/getinfo';
+    const API_PATH_KEYINFO          = '/keyinfo';
         
     /** Prevent magic numbers */
     const PARAM_LIMIT_MIN_VALUE = 1;
@@ -152,7 +153,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateCosmos($options);
-        $response = $this->_makeRequest(self::PATH_COSMOS, $options);
+        $response = $this->_makeRequest(self::API_PATH_COSMOS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -214,7 +215,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateSearch($options);
-        $response = $this->_makeRequest(self::PATH_SEARCH, $options);
+        $response = $this->_makeRequest(self::API_PATH_SEARCH, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -262,7 +263,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateTag($options);
-        $response = $this->_makeRequest(self::PATH_TAG, $options);
+        $response = $this->_makeRequest(self::API_PATH_TAG, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -298,7 +299,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateDailyCounts($options);
-        $response = $this->_makeRequest(self::PATH_DAILYCOUNTS, $options);
+        $response = $this->_makeRequest(self::API_PATH_DAILYCOUNTS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -336,7 +337,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateTopTags($options);
-        $response = $this->_makeRequest(self::PATH_TOPTAGS, $options);
+        $response = $this->_makeRequest(self::API_PATH_TOPTAGS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -365,7 +366,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateBlogInfo($options);
-        $response = $this->_makeRequest(self::PATH_BLOGINFO, $options);
+        $response = $this->_makeRequest(self::API_PATH_BLOGINFO, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -408,7 +409,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateBlogPostTags($options);
-        $response = $this->_makeRequest(self::PATH_BLOGPOSTTAGS, $options);
+        $response = $this->_makeRequest(self::API_PATH_BLOGPOSTTAGS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -442,7 +443,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateGetInfo($options);
-        $response = $this->_makeRequest(self::PATH_GETINFO, $options);
+        $response = $this->_makeRequest(self::API_PATH_GETINFO, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -470,7 +471,7 @@ class Zend_Service_Technorati
         // you don't need to validate this request
         // because key is the only mandatory element 
         // and it's already set in #_prepareOptions
-        $response = $this->_makeRequest(self::PATH_KEYINFO, $options);
+        $response = $this->_makeRequest(self::API_PATH_KEYINFO, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -506,7 +507,7 @@ class Zend_Service_Technorati
              * @see Zend_Rest_Client
              */
             require_once 'Zend/Rest/Client.php';
-            $this->_restClient = new Zend_Rest_Client(self::URI_BASE);
+            $this->_restClient = new Zend_Rest_Client(self::API_URI_BASE);
         }
 
         return $this->_restClient;

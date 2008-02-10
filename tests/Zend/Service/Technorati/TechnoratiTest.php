@@ -58,7 +58,7 @@ class Zend_Service_Technorati_TechnoratiTest extends Zend_Service_Technorati_Tes
          * @see Zend_Http_Client
          */
         require_once 'Zend/Http/Client.php';
-        $client = new Zend_Http_Client(Zend_Service_Technorati::URI_BASE, array(
+        $client = new Zend_Http_Client(Zend_Service_Technorati::API_URI_BASE, array(
             'adapter' => $adapter
         ));
         
