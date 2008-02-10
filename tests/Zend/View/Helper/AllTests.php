@@ -9,6 +9,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/View/Helper/ActionTest.php';
 require_once 'Zend/View/Helper/DeclareVarsTest.php';
 require_once 'Zend/View/Helper/DoctypeTest.php';
+require_once 'Zend/View/Helper/FormButtonTest.php';
 require_once 'Zend/View/Helper/FormCheckboxTest.php';
 require_once 'Zend/View/Helper/FormLabelTest.php';
 require_once 'Zend/View/Helper/FormSelectTest.php';
@@ -52,6 +53,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_ActionTest');
         $suite->addTestSuite('Zend_View_Helper_DeclareVarsTest');
         $suite->addTestSuite('Zend_View_Helper_DoctypeTest');
+        $suite->addTestSuite('Zend_View_Helper_FormButtonTest');
         $suite->addTestSuite('Zend_View_Helper_FormCheckboxTest');
         $suite->addTestSuite('Zend_View_Helper_FormLabelTest');
         $suite->addTestSuite('Zend_View_Helper_FormSelectTest');
