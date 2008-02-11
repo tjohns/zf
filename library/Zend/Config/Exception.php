@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,36 +13,21 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build
+ * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+/**
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build
+ * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+class Zend_Config_Exception extends Zend_Exception {}
 
-/**
- * Include the console files we need
- */
-require_once 'Zend/Console/Exception.php';
-require_once 'Zend/Console/ErrorCodes.php';
-
-/**
- * Include the build files we need
- */
-require_once 'Zend/Build/Factory.php';
-
-class Zend_Console_Context
-{
-	static protected $_configurable = null;
-	
-    public static function configure(Zend_Build_Configurable $configurable)
-    {
-        self::$_configurable = $configurable;
-    }
-
-}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -13,21 +14,21 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Console
+ * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+
+/**
  * @category   Zend
- * @package    Zend_Console
+ * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Console_ErrorCodes
-{    
-    const TASK_NOT_FOUND               = 2;
-    const RESOURCE_NOT_FOUND           = 3;
-    const INVALID_TASK_CLASS           = 4;
-    const INVALID_RESOURCE_CLASS       = 5;
-}
+class Zend_Build_Exception extends Zend_Exception
+{}
