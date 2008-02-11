@@ -14,6 +14,7 @@ require_once 'Zend/Form.php';
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form/Decorator/Form.php';
+require_once 'Zend/Form/DisplayGroup.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Form/SubForm.php';
@@ -1225,6 +1226,34 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $group = $this->form->barbaz;
         $expected = array('bar' => $this->form->bar, 'baz' => $this->form->baz);
         $this->assertSame($expected, $group->getElements());
+    }
+
+    public function testDefaultDisplayGroupClassExists()
+    {
+        $this->assertEquals('Zend_Form_DisplayGroup', $this->form->getDefaultDisplayGroupClass());
+    }
+
+    public function testCanSetDefaultDisplayGroupClass()
+    {
+        $this->testDefaultDisplayGroupClassExists();
+        $this->form->setDefaultDisplayGroupClass('Zend_Form_FormTest_DisplayGroup');
+        $this->assertEquals('Zend_Form_FormTest_DisplayGroup', $this->form->getDefaultDisplayGroupClass());
+    }
+
+    public function testDefaultDisplayGroupClassUsedForNewDisplayGroups()
+    {
+        $this->form->setDefaultDisplayGroupClass('Zend_Form_FormTest_DisplayGroup');
+        $this->setupElements();
+        $this->form->addDisplayGroup(array('foo', 'bar'), 'foobar');
+        $displayGroup = $this->form->getDisplayGroup('foobar');
+        $this->assertTrue($displayGroup instanceof Zend_Form_FormTest_DisplayGroup);
+    }
+
+    public function testCanPassDisplayGroupClassWhenAddingDisplayGroup()
+    {
+        $this->setupElements();
+        $this->form->addDisplayGroup(array('foo', 'bar'), 'foobar', array('displayGroupClass' => 'Zend_Form_FormTest_DisplayGroup'));
+        $this->assertTrue($this->form->foobar instanceof Zend_Form_FormTest_DisplayGroup);
     }
 
     // Processing
@@ -2495,6 +2524,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($decorator instanceof Zend_Form_Decorator_Callback);
         }
     }
+}
+
+class Zend_Form_FormTest_DisplayGroup extends Zend_Form_DisplayGroup
+{
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_FormTest::main') {

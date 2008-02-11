@@ -58,6 +58,12 @@ class Zend_Form implements Iterator, Countable
     protected $_decorators = array();
 
     /**
+     * Default display group class
+     * @var string
+     */
+    protected $_defaultDisplayGroupClass = 'Zend_Form_DisplayGroup';
+
+    /**
      * Form description
      * @var string
      */
@@ -202,6 +208,11 @@ class Zend_Form implements Iterator, Countable
         if (isset($options['elementDecorators'])) {
             $elementDecorators = $options['elementDecorators'];
             unset($options['elementDecorators']);
+        }
+
+        if (isset($options['defaultDisplayGroupClass'])) {
+            $this->setDefaultDisplayGroupClass($options['defaultDisplayGroupClass']);
+            unset($options['defaultDisplayGroupClass']);
         }
 
         if (isset($options['displayGroupDecorators'])) {
@@ -1288,6 +1299,28 @@ class Zend_Form implements Iterator, Countable
     // Display groups:
 
     /**
+     * Set default display group class 
+     * 
+     * @param  string $class 
+     * @return Zend_Form
+     */
+    public function setDefaultDisplayGroupClass($class)
+    {
+        $this->_defaultDisplayGroupClass = (string) $class;
+        return $this;
+    }
+
+    /**
+     * Retrieve default display group class
+     * 
+     * @return string
+     */
+    public function getDefaultDisplayGroupClass()
+    {
+        return $this->_defaultDisplayGroupClass;
+    }
+
+    /**
      * Add a display group
      *
      * Groups named elements for display purposes.
@@ -1328,8 +1361,18 @@ class Zend_Form implements Iterator, Countable
             $options = array('elements' => $group);
         }
 
-        require_once 'Zend/Form/DisplayGroup.php';
-        $this->_displayGroups[$name] = new Zend_Form_DisplayGroup(
+        if (isset($options['displayGroupClass'])) {
+            $class = $options['displayGroupClass'];
+            unset($options['displayGroupClass']);
+        } else {
+            $class = $this->getDefaultDisplayGroupClass();
+        }
+
+        if (!class_exists($class)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($class);
+        }
+        $this->_displayGroups[$name] = new $class(
             $name, 
             $this->getPluginLoader(self::DECORATOR)
         );
