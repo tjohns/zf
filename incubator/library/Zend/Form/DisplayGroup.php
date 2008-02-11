@@ -767,19 +767,26 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     /**
      * Set translator object
      * 
-     * @param  Zend_Translate|null $translator 
+     * @param  Zend_Translate|Zend_Translate_Adapter|null $translator 
      * @return Zend_Form_DisplayGroup
      */
-    public function setTranslator(Zend_Translate $translator = null)
+    public function setTranslator($translator = null)
     {
-        $this->_translator = $translator;
+        if ((null === $translator) || ($translator instanceof Zend_Translate_Adapter)) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid translator specified');
+        }
         return $this;
     }
 
     /**
      * Retrieve translator object
      * 
-     * @return Zend_Translate|null
+     * @return Zend_Translate_Adapter|null
      */
     public function getTranslator()
     {

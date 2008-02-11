@@ -347,7 +347,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $translator = new Zend_Translate('array', array());
         Zend_Form::setDefaultTranslator($translator);
         $received = $this->group->getTranslator();
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     public function testTranslatorAccessorsWorks()
@@ -355,7 +355,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $translator = new Zend_Translate('array', array());
         $this->group->setTranslator($translator);
         $received = $this->group->getTranslator($translator);
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     // Iteration

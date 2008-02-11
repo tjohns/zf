@@ -269,16 +269,25 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @param  Zend_Translate|null $translator 
      * @return Zend_Form_Element
      */
-    public function setTranslator(Zend_Translate $translator = null)
+    public function setTranslator($translator = null)
     {
-        $this->_translator = $translator;
+        if (null === $translator) {
+            $this->_translator = null;
+        } elseif ($translator instanceof Zend_Translate_Adapter) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid translator specified');
+        }
         return $this;
     }
 
     /**
      * Retrieve localization translator object
      * 
-     * @return Zend_Translate|null
+     * @return Zend_Translate_Adapter|null
      */
     public function getTranslator()
     {

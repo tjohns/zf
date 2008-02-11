@@ -2039,24 +2039,43 @@ class Zend_Form implements Iterator, Countable
     /**
      * Set translator object
      * 
-     * @param  Zend_Translate|null $translator 
+     * @param  Zend_Translate|Zend_Translate_Adapter|null $translator 
      * @return Zend_Form
      */
-    public function setTranslator(Zend_Translate $translator = null)
+    public function setTranslator($translator = null)
     {
-        $this->_translator = $translator;
+        if (null === $translator) {
+            $this->_translator = null;
+        } elseif ($translator instanceof Zend_Translate_Adapter) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid translator specified');
+        }
+
         return $this;
     }
 
     /**
      * Set global default translator object
      * 
-     * @param  Zend_Translate|null $translator 
+     * @param  Zend_Translate|Zend_Translate_Adapter|null $translator 
      * @return void
      */
-    public static function setDefaultTranslator(Zend_Translate $translator = null)
+    public static function setDefaultTranslator($translator = null)
     {
-        self::$_translatorDefault = $translator;
+        if (null === $translator) {
+            self::$_translatorDefault = null;
+        } elseif ($translator instanceof Zend_Translate_Adapter) {
+            self::$_translatorDefault = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            self::$_translatorDefault = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid translator specified');
+        }
     }
 
     /**

@@ -113,7 +113,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $translator = new Zend_Translate('array', array());
         Zend_Form::setDefaultTranslator($translator);
         $received = $this->element->getTranslator();
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     public function testTranslatorAccessorsWork()
@@ -121,7 +121,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $translator = new Zend_Translate('array', array());
         $this->element->setTranslator($translator);
         $received = $this->element->getTranslator($translator);
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()

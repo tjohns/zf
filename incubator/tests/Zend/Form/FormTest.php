@@ -2171,7 +2171,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $translator = new Zend_Translate('array', array());
         $this->form->setTranslator($translator);
         $received = $this->form->getTranslator($translator);
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     public function testCanSetDefaultGlobalTranslator()
@@ -2181,14 +2181,14 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         Zend_Form::setDefaultTranslator($translator);
 
         $received = Zend_Form::getDefaultTranslator();
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
 
         $received = $this->form->getTranslator();
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
 
         $form = new Zend_Form();
         $received = $form->getTranslator($translator);
-        $this->assertSame($translator, $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     public function testLocalTranslatorPreferredOverDefaultGlobalTranslator()
@@ -2198,13 +2198,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         Zend_Form::setDefaultTranslator($translatorDefault);
 
         $received = $this->form->getTranslator();
-        $this->assertSame($translatorDefault, $received);
+        $this->assertSame($translatorDefault->getAdapter(), $received);
 
         $translator = new Zend_Translate('array', array());
         $this->form->setTranslator($translator);
         $received = $this->form->getTranslator();
-        $this->assertNotSame($translatorDefault, $received);
-        $this->assertSame($translator, $received);
+        $this->assertNotSame($translatorDefault->getAdapter(), $received);
+        $this->assertSame($translator->getAdapter(), $received);
     }
 
     // Iteration
