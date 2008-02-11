@@ -86,6 +86,15 @@ class Zend_View_Helper_FormLabelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('<label for="id">value</label>', $label);
     }
     
+    public function testCanDisableEscapingLabelValue()
+    {
+        $label = $this->helper->formLabel('foo', '<b>Label This!</b>', array('escape' => false));
+        $this->assertContains('<b>Label This!</b>', $label);
+        $label = $this->helper->formLabel(array('name' => 'foo', 'value' => '<b>Label This!</b>', 'escape' => false));
+        $this->assertContains('<b>Label This!</b>', $label);
+        $label = $this->helper->formLabel(array('name' => 'foo', 'value' => '<b>Label This!</b>', 'attribs' => array('escape' => false)));
+        $this->assertContains('<b>Label This!</b>', $label);
+    }
 }
 
 // Call Zend_View_Helper_FormLabelTest::main() if this source file is executed directly.

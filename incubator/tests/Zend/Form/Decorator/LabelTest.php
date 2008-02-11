@@ -197,6 +197,17 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render($content);
         $this->assertRegexp('#' . $content . '.*?<label#s', $test);
     }
+
+    public function testCanChooseNotToEscapeLabel()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setView($this->getView())
+                ->setLabel('<b>My Label</b>');
+        $this->decorator->setElement($element)
+                        ->setOptions(array('escape' => false));
+        $test = $this->decorator->render('');
+        $this->assertContains($element->getLabel(), $test);
+    }
 }
 
 // Call Zend_Form_Decorator_LabelTest::main() if this source file is executed directly.

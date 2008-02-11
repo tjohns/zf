@@ -72,7 +72,7 @@ abstract class Zend_View_Helper_FormElement
      * @access protected
      *
      * @return array An element info array with keys for name, value,
-     * attribs, options, listsep, and disable.
+     * attribs, options, listsep, disable, and escape.
      */
     protected function _getInfo($name, $value = null, $attribs = null,
         $options = null, $listsep = null)
@@ -89,6 +89,7 @@ abstract class Zend_View_Helper_FormElement
             'options' => $options,
             'listsep' => $listsep,
             'disable' => false,
+            'escape'  => true,
         );
 
         // override with named args
@@ -122,6 +123,11 @@ abstract class Zend_View_Helper_FormElement
             $info['id'] = (string) $info['attribs']['id'];
         } elseif (!isset($info['attribs']['id']) && !empty($info['name'])) {
             $info['id'] = $info['name'];
+        }
+
+        // Determine escaping from attributes
+        if (isset($info['attribs']['escape'])) {
+            $info['escape'] = (bool) $info['attribs']['escape'];
         }
 
         // remove attribs that might overwrite the other keys.
