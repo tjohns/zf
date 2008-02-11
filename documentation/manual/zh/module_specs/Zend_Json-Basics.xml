@@ -9,8 +9,8 @@
 $phpNative = Zend_Json::decode($encodedValue);
 
 // 编码并返回给客户端:
-$json = Zend_Json::encode($phpNative);
-?>]]></programlisting>
+$json = Zend_Json::encode($phpNative);]]>
+    </programlisting>
     </para>
 </sect1>
 <!--
