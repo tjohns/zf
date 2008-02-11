@@ -1,36 +1,50 @@
 <sect1 id="zend.mail.attachments">
-    <title>é™„ä»¶</title>
+    <title> ¸½¼ş </title>
     <para>
-        ä½¿ç”¨<code>addAttachment()</code>æ–¹æ³•å¯ä»¥å°†æ–‡ä»¶é™„åŠ åˆ°é‚®ä»¶ä¸­ã€‚
-       <code>Zend_Mail</code>ä¼šç¼ºçœåœ°è®¤ä¸ºè¯¥æ–‡ä»¶æ˜¯äºŒè¿›åˆ¶å¯¹è±¡(application/octet-stream)ï¼Œä»¥ base64ç¼–ç ä¼ è¾“, å¹¶ä¸”ä½œä¸ºé‚®ä»¶çš„é™„ä»¶å¤„ç†ã€‚
-        é€šè¿‡ä¼ é€’é¢å¤–çš„å‚æ•°ç»™<code>addAttachment()</code>æ–¹æ³•å¯ä»¥è¦†ç›–ä¸Šè¿°ç¼ºçœè®¾å®šï¼š
+        Ê¹ÓÃ<code>createAttachment()</code>·½·¨¿ÉÒÔ½«ÎÄ¼ş¸½¼Óµ½ÓÊ¼şÖĞ¡£<code>Zend_Mail</code>»áÈ±Ê¡µØÈÏÎª¸ÃÎÄ¼şÊÇ¶ş½øÖÆ¶ÔÏó(application/octet-stream)£¬ÒÔ base64±àÂë´«Êä, ²¢ÇÒ×÷ÎªÓÊ¼şµÄ¸½¼ş´¦Àí¡£Í¨¹ı´«µİ¶îÍâµÄ²ÎÊı¸ø<code>createAttachment()</code>·½·¨¿ÉÒÔ¸²¸ÇÉÏÊöÈ±Ê¡Éè¶¨£º
     </para>
-    <example>
-        <title>å¸¦é™„ä»¶çš„é‚®ä»¶</title>
-        <programlisting role="php"><![CDATA[
-<?php
+    <example id="zend.mail.attachments.example-1">
+        <title> ´ø¸½¼şµÄÓÊ¼ş </title>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // build message...
-$mail->addAttachment($someBinaryString);
-$mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
-?>]]>   </programlisting>
+$mail->createAttachment($someBinaryString);
+$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]>
+        </programlisting>
     </example>
-    <para>å¦‚æœä½ æƒ³å¾—åˆ°å¯¹æ­¤é™„ä»¶MIMEæ®µäº§ç”Ÿçš„æ›´å¤šæ§åˆ¶ï¼Œä½ å¯ä»¥ä½¿ç”¨<code>addAttachment()</code>æ–¹æ³•çš„è¿”å›å€¼æ¥ä¿®æ”¹å®ƒçš„å±æ€§ã€‚
-     æ–¹æ³•<code>addAttachment()</code>è¿”å›äº†ä¸€ä¸ª<code>Zend_Mime_Part</code>å¯¹è±¡ï¼š</para>
-    <programlisting role="php"><![CDATA[
-<?php
+    <para>
+        Èç¹ûÄãÏëµÃµ½¶Ô´Ë¸½¼şMIME¶Î²úÉúµÄ¸ü¶à¿ØÖÆ£¬Äã¿ÉÒÔÊ¹ÓÃ<code>createAttachment()</code>·½·¨µÄ·µ»ØÖµÀ´ĞŞ¸ÄËüµÄÊôĞÔ¡£·½·¨<code>createAttachment()</code>·µ»ØÁËÒ»¸ö<code>Zend_Mime_Part</code>¶ÔÏó£º
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 
-$at = $mail->addAttachment($myImage);
+$at = $mail->createAttachment($myImage);
 $at->type        = 'image/gif';
 $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();
-?>]]></programlisting>
+$mail->send();]]>
+    </programlisting>
+    <para>
+        ´´½¨ <code>Zend_Mime_Part</code> ÊµÀıºÍÓÃ <code>addAttachment()</code> Ìí¼ÓËüµÄÌæ´ú·½°¸£º
+    </para>
+    <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+
+$at = new Zend_Mime_Part($myImage);
+$at->type        = 'image/gif';
+$at->disposition = Zend_Mime::DISPOSITION_INLINE;
+$at->encoding    = Zend_Mime::ENCODING_8BIT;
+$at->filename    = 'test.gif';
+
+$mail->addAttachment($at);
+
+$mail->send();]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
