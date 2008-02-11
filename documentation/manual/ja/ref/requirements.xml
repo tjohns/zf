@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7927 -->
 <appendix id="requirements">
 
     <title>システム要件</title>
@@ -597,7 +598,7 @@
                             <ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>sqlite</code></ulink>
                             ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Sqlite</code></ulink> / 依存 )
                             <ulink url="http://www.php.net/manual/ja/ref.zlib.php"><code>zlib</code></ulink>
-                            ( <ulink url="http://framework.zend.com/manual/ja/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / 依存 )
+                            ( <ulink url="http://framework.zend.com/manual/ja/zend.cache.backends.html"><code>Zend_Cache_Backend_Zlib</code></ulink> / 依存 )
                         </entry>
                     </row>
                     <row>
