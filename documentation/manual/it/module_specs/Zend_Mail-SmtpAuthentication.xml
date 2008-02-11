@@ -32,8 +32,8 @@ $mail->send($transport);]]>
     <title>Tipi di autenticazione</title>
 
     <para>
-        Il tipo di autenticazione fa distinzione tra maiuscole e minuscole ma non contiene punteggiatura.
-        Es. per usare CRAM-MD5 passare <code>'auth' =&gt; 'crammd5'</code> nel costruttore di <code>Zend_Mail_Transport_Smtp</code>.
+        Il tipo di autenticazione distingue maiuscole e minuscole ma non contiene punteggiatura.
+        Es. per usare CRAM-MD5 passare <code>'auth' => 'crammd5'</code> nel costruttore di <code>Zend_Mail_Transport_Smtp</code>.
     </para>
   </note>
 </sect1>
