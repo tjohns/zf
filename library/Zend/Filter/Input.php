@@ -52,7 +52,7 @@ class Zend_Filter_Input
     const FIELDS            = 'fields';
     const FILTER_CHAIN      = 'filterChain';
     const MISSING_MESSAGE   = 'missingMessage';
-    const NAMESPACE         = 'namespace';
+    const INPUT_NAMESPACE   = 'inputNamespace';
     const NOT_EMPTY_MESSAGE = 'notEmptyMessage';
     const PRESENCE          = 'presence';
     const PRESENCE_OPTIONAL = 'optional';
@@ -408,7 +408,7 @@ class Zend_Filter_Input
                 case self::ESCAPE_FILTER:
                     $this->setDefaultEscapeFilter($value);
                     break;
-                case self::NAMESPACE:
+                case self::INPUT_NAMESPACE:
                     $this->addNamespace($value);
                     break;
                 case self::ALLOW_EMPTY:
