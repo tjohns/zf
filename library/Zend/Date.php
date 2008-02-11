@@ -1333,9 +1333,11 @@ class Zend_Date extends Zend_Date_DateObject {
         }
         preg_match('/(\w{3,30})/', $zone, $match);
         try {
-            $tz = new DateTimeZone($match[count($match) - 1]);
-            if ($tz !== false) {
-                return ($match[count($match) - 1]);
+            $oldzone = $this->getTimezone();
+            $result = $this->setTimezone($match[count($match) - 1]);
+            $this->setTimezone($oldzone);
+            if ($result !== $oldzone) {
+                return $match[count($match) - 1];
             }
         } catch (Exception $e) {
             // fall through

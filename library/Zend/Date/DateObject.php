@@ -340,8 +340,8 @@ abstract class Zend_Date_DateObject {
                 if ($dst === 1) {
                     $timestamp += 3600;
                 }
-                $temp = new DateTime('@'.$tempstamp);
-                $timestamp += $temp->getOffset();
+                $temp = date('Z', $tempstamp);
+                $timestamp += $temp;
             }
 
             if (isset(self::$_cache)) {
@@ -1019,7 +1019,7 @@ abstract class Zend_Date_DateObject {
             }
         }
         // this can generate an error if the date extension is not available and a false timezone is given
-        $result = date_default_timezone_set($zone);
+        $result = @date_default_timezone_set($zone);
         if ($result === true) {
             $this->_offset   = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);
             $this->_timezone = $zone;
