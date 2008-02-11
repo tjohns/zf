@@ -120,6 +120,34 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
         $this->assertContains($content, $test);
         $this->assertRegexp('#<input.*?name="foo"#s', $test);
     }
+
+    public function testMultiOptionsPassedToViewHelperAreTranslated()
+    {
+        require_once 'Zend/Form/Element/Select.php';
+        require_once 'Zend/Translate.php';
+        $element = new Zend_Form_Element_Select('foo');
+        $options = array(
+            'foo' => 'This Foo Will Not Be Displayed',
+            'bar' => 'This Bar Will Not Be Displayed',
+            'baz' => 'This Baz Will Not Be Displayed',
+        );
+        $element->setMultiOptions($options);
+
+        $translations = array(
+            'foo' => 'This is the Foo Value',
+            'bar' => 'This is the Bar Value',
+            'baz' => 'This is the Baz Value',
+        );
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $element->setTranslator($translate);
+        $test = $element->render($this->getView());
+        foreach ($options as $key => $value) {
+            $this->assertNotContains($value, $test);
+            $this->assertContains($translations[$key], $test);
+        }
+    }
 }
 
 class Zend_Form_Decorator_ViewHelperTest_Textarea extends Zend_Form_Element

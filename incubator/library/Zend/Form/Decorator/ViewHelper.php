@@ -179,6 +179,10 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             throw new Zend_Form_Decorator_Exception('ViewHelper decorator cannot render without a registered view object');
         }
 
+        if (method_exists($element, 'getMultiOptions')) {
+            $element->getMultiOptions();
+        }
+
         $helper         = $this->getHelper();
         $separator      = $this->getSeparator();
         $elementContent = $view->$helper($this->getName(), $element->getValue(), $this->getElementAttribs(), $element->options);
