@@ -19,7 +19,8 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());
 
 // Filter the username
-$username = $filterChain->filter($_POST['username']);]]></programlisting>
+$username = $filterChain->filter($_POST['username']);]]>
+        </programlisting>
 
        过滤器按照他们被添加到<code>Zend_Filter</code>中去的顺序依次执行。上面的例子中，用户名首先被移除任何非英文字母的字符，然后将所有大写字符转化为小写字符。
 
