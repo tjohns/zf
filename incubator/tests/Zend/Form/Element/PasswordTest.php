@@ -72,6 +72,21 @@ class Zend_Form_Element_PasswordTest extends PHPUnit_Framework_TestCase
         $helper = $decorator->getHelper();
         $this->assertEquals('formPassword', $helper);
     }
+
+    public function testPasswordValueMaskedByGetMessages()
+    {
+        $this->element->addValidators(array(
+            'Alpha',
+            'Alnum'
+        ));
+        $value  = 'abc-123';
+        $expect = '*******';
+        $this->assertFalse($this->element->isValid($value));
+        foreach ($this->element->getMessages() as $message) {
+            $this->assertNotContains($value, $message);
+            $this->assertContains($expect, $message, $message);
+        }
+    }
 }
 
 // Call Zend_Form_Element_PasswordTest::main() if this source file is executed directly.

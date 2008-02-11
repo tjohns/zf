@@ -39,4 +39,24 @@ class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
      * @var string
      */
     public $helper = 'formPassword';
+
+    /**
+     * Override getMessages()
+     *
+     * Mask value in error messages
+     * 
+     * @return array
+     */
+    public function getMessages()
+    {
+        foreach ($this->getValidators() as $validator) {
+            $value = $validator->value;
+            break;
+        }
+        $masked = str_repeat('*', strlen($value));
+        foreach ($this->_messages as $code => $message) {
+            $this->_messages[$code] = str_replace($value, $masked, $message);
+        }
+        return $this->_messages;
+    }
 }
