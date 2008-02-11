@@ -515,6 +515,18 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $controllerDirs['bar']);
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
     }
+    
+        public function testAddModuleDirectoryThrowsExceptionForInvalidDirectory()
+    {
+        $moduleDir = 'doesntexist';
+        try {
+            $this->_controller->addModuleDirectory($moduleDir);
+            $this->fail('Exception expected but not thrown');
+        }catch(Exception $e){
+            $this->assertType('Zend_Exception',$e);
+            $this->assertRegExp('/Directory \w+ not readable/',$e->getMessage());
+        }
+    }
 
     public function testGetControllerDirectoryByModuleName()
     {

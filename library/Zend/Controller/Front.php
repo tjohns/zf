@@ -310,7 +310,11 @@ class Zend_Controller_Front
      */
     public function addModuleDirectory($path)
     {
-        $dir = new DirectoryIterator($path);
+        try{
+            $dir = new DirectoryIterator($path);
+        }catch(Exception $e){
+            throw new Zend_Controller_Exception("Directory $path not readable");
+        }
         foreach ($dir as $file) {
             if ($file->isDot() || !$file->isDir()) {
                 continue;
