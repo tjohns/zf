@@ -142,6 +142,31 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testTranslatedOptionsAreRenderedInFinalMarkupWhenTranslatorPresent()
+    {
+        $translations = array(
+            'foovalue' => 'Foo Value',
+            'barvalue' => 'Bar Value'
+        );
+        require_once 'Zend/Translate.php';
+        $translate = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $options = array(
+            'foovalue' => 'ThisShouldNotShow',
+            'barvalue' => 'ThisShouldNeverShow'
+        );
+
+        $this->element->setTranslator($translate)
+                      ->addMultiOptions($options);
+
+        $html = $this->element->render($this->getView());
+        foreach ($options as $value => $label) {
+            $this->assertNotContains($label, $html, $html);
+            $this->assertRegexp('/<option.*value="' . $value . '"[^>]*>' . $translations[$value] . '/s', $html, $html);
+        }
+    }
+
     public function testOptionValuesAreTranslatedWhenTranslateAdapterIsPresent()
     {
         $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
