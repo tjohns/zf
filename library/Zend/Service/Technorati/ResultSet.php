@@ -21,26 +21,26 @@
  */
 
 
-/** 
- * @see Zend_Service_Technorati_Result 
+/**
+ * @see Zend_Service_Technorati_Result
  */
 require_once 'Zend/Service/Technorati/Result.php';
 
 
 /**
- * This is the most essential result set. 
- * The scope of this class is to be extended by a query-specific child result set class, 
- * and it should never be used to initialize a standalone object. 
- * 
+ * This is the most essential result set.
+ * The scope of this class is to be extended by a query-specific child result set class,
+ * and it should never be used to initialize a standalone object.
+ *
  * Each of the specific result sets represents a collection of query-specific
  * Zend_Service_Technorati_Result objects.
- * 
+ *
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @abstract 
+ * @abstract
  */
 abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
 {
@@ -125,14 +125,14 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
         // to display start and limit.
         // The value is printed out in XML using many different tag names,
         // too hard to get it from XML
-        
+
         // Additionally, the following tags should be always available
         // according to API documentation but... this is not the truth!
         // - querytime
         // - limit
         // - start (sometimes rankingstart)
-        
-        // query tag is only available for some requests, the same for url. 
+
+        // query tag is only available for some requests, the same for url.
         // For now ignore them.
 
         //$start = isset($options['start']) ? $options['start'] : 1;
@@ -142,17 +142,17 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
     /**
      * Initializes this object from a DomDocument response.
-     * 
+     *
      * Because __construct and __wakeup shares some common executions,
      * it's useful to group them in a single initialization method.
      * This method is called once each time a new instance is created
      * or a serialized object is unserialized.
-     * 
+     *
      * @param   DomDocument $dom    the ReST fragment for this object
      * @param   array $options      query options as associative array
      *      * @return  void
      */
-    protected function _init(DomDocument $dom, $options = array()) 
+    protected function _init(DomDocument $dom, $options = array())
     {
         $this->_dom     = $dom;
         $this->_xpath   = new DOMXPath($dom);
@@ -186,7 +186,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
      *
      * @return  void
      * @throws  Zend_Service_Exception
-     * @abstract 
+     * @abstract
      */
     // abstract public function current();
 
@@ -220,7 +220,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
         $this->_currentIndex = 0;
         return true;
     }
-    
+
     /**
      * Implement SeekableIterator::seek().
      *
@@ -260,25 +260,25 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
     /**
      * Overwrites standard __sleep method to make this object serializable.
-     * 
+     *
      * DomDocument and DOMXpath objects cannot be serialized.
      * This method converts them back to an XML string.
-     * 
+     *
      * @return void
      */
     public function __sleep() {
         $this->_xml     = $this->getXml();
-        $vars = array_keys(get_object_vars(&$this));
+        $vars = array_keys(get_object_vars($this));
         return array_diff($vars, array('_dom', '_xpath'));
     }
 
     /**
      * Overwrites standard __wakeup method to make this object unserializable.
-     * 
+     *
      * Restores object status before serialization.
      * Converts XML string into a DomDocument object and creates a valid
      * DOMXpath instance for given DocDocument.
-     * 
+     *
      * @return void
      */
     public function __wakeup() {
