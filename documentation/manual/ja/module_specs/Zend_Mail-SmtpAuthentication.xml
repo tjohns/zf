@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7908 -->
 <sect1 id="zend.mail.smtp-authentication">
   <title>SMTP 認証</title>
 
@@ -33,10 +34,11 @@ $mail->send($transport);]]>
   <note>
     <title>認証方式</title>
 
-    <para>認証方式は大文字小文字を区別しませんが、区切り文字は含めません。
-    たとえば CRAM-MD5 を使用する場合は、
-    <code>Zend_Mail_Transport_Smtp</code> のコンストラクタに渡す値は
-    'auth' =&gt; 'crammd5' となります。</para>
+    <para>
+        認証方式は大文字小文字を区別しませんが、区切り文字は含めません。
+        たとえば CRAM-MD5 を使用する場合は、
+        <code>Zend_Mail_Transport_Smtp</code> のコンストラクタに渡す値は
+        'auth' => 'crammd5' となります。</para>
   </note>
 </sect1>
 <!--
