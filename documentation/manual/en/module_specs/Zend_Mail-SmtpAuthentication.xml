@@ -32,9 +32,10 @@ $mail->send($transport);]]>
   <note>
     <title>Authentication types</title>
 
-    <para>The authentication type is case-insensitive but has no punctuation.
-    E.g. to use CRAM-MD5 you would pass 'auth' =&gt; 'crammd5' in the
-    <code>Zend_Mail_Transport_Smtp</code> constructor.</para>
+    <para>
+        The authentication type is case-insensitive but has no punctuation.
+        E.g. to use CRAM-MD5 you would pass 'auth' => 'crammd5' in the
+        <code>Zend_Mail_Transport_Smtp</code> constructor.</para>
   </note>
 </sect1>
 <!--
