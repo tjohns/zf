@@ -79,7 +79,7 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->testTranslatorNullByDefault();
         $translator = new Zend_Translate('array', array(), 'en');
         $this->validator->setTranslator($translator);
-        $this->assertSame($translator, $this->validator->getTranslator());
+        $this->assertSame($translator->getAdapter(), $this->validator->getTranslator());
     }
 
     public function testCanSetTranslatorToNull()
@@ -99,7 +99,7 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->testGlobalDefaultTranslatorNullByDefault();
         $translator = new Zend_Translate('array', array(), 'en');
         Zend_Validate_Abstract::setDefaultTranslator($translator);
-        $this->assertSame($translator, Zend_Validate_Abstract::getDefaultTranslator());
+        $this->assertSame($translator->getAdapter(), Zend_Validate_Abstract::getDefaultTranslator());
     }
 
     public function testGlobalDefaultTranslatorUsedWhenNoLocalTranslatorSet()

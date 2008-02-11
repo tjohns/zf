@@ -241,19 +241,26 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     /**
      * Set translation object
      * 
-     * @param  Zend_Translate $translator 
+     * @param  Zend_Translate|Zend_Translate_Adapter|null $translator 
      * @return Zend_Validate_Abstract
      */
-    public function setTranslator(Zend_Translate $translator = null)
+    public function setTranslator($translator = null)
     {
-        $this->_translator = $translator;
+        if ((null === $translator) || ($translator instanceof Zend_Translate_Adapter)) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid translator specified');
+        }
         return $this;
     }
 
     /**
      * Return translation object
      * 
-     * @return Zend_Translate|null
+     * @return Zend_Translate_Adapter|null
      */
     public function getTranslator()
     {
@@ -267,18 +274,25 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     /**
      * Set default translation object for all validate objects
      * 
-     * @param  Zend_Translate $translator 
+     * @param  Zend_Translate|Zend_Translate_Adapter|null $translator 
      * @return void
      */
-    public static function setDefaultTranslator(Zend_Translate $translator = null)
+    public static function setDefaultTranslator($translator = null)
     {
-        self::$_defaultTranslator = $translator;
+        if ((null === $translator) || ($translator instanceof Zend_Translate_Adapter)) {
+            self::$_defaultTranslator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            self::$_defaultTranslator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid translator specified');
+        }
     }
 
     /**
      * Get default translation object for all validate objects
      * 
-     * @return Zend_Translate|null
+     * @return Zend_Translate_Adapter|null
      */
     public static function getDefaultTranslator()
     {
