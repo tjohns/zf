@@ -80,7 +80,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     /**
      * Normalize tag
      *
-     * Ensures tag is alphabetical characters only, and all lowercase.
+     * Ensures tag is alphanumeric characters only, and all lowercase.
      * 
      * @param  string $tag 
      * @return string
@@ -89,10 +89,10 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     {
         if (!isset($this->_tagFilter)) {
             require_once 'Zend/Filter.php';
-            require_once 'Zend/Filter/Alpha.php';
+            require_once 'Zend/Filter/Alnum.php';
             require_once 'Zend/Filter/StringToLower.php';
             $this->_filter = new Zend_Filter();
-            $this->_filter->addFilter(new Zend_Filter_Alpha())
+            $this->_filter->addFilter(new Zend_Filter_Alnum())
                           ->addFilter(new Zend_Filter_StringToLower());
         }
         return $this->_filter->filter($tag);
