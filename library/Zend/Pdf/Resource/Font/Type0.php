@@ -112,22 +112,22 @@ class Zend_Pdf_Resource_Font_Type0 extends Zend_Pdf_Resource_Font
         $this->_descendantFont = $descendantFont;
 
 
-        $this->_fontNames = $descendantFont->_fontNames;
+        $this->_fontNames    = $descendantFont->getFontNames();
 
-        $this->_isBold       = $descendantFont->_isBold;
-        $this->_isItalic     = $descendantFont->_isItalic;
-        $this->_isMonospaced = $descendantFont->_isMonospaced;
+        $this->_isBold       = $descendantFont->isBold();
+        $this->_isItalic     = $descendantFont->isItalic();
+        $this->_isMonospaced = $descendantFont->isMonospace();
 
-        $this->_underlinePosition  = $descendantFont->_underlinePosition;
-        $this->_underlineThickness = $descendantFont->_underlineThickness;
-        $this->_strikePosition     = $descendantFont->_strikePosition;
-        $this->_strikeThickness    = $descendantFont->_strikeThickness;
+        $this->_underlinePosition  = $descendantFont->getUnderlinePosition();
+        $this->_underlineThickness = $descendantFont->getUnderlineThickness();
+        $this->_strikePosition     = $descendantFont->getStrikePosition();
+        $this->_strikeThickness    = $descendantFont->getStrikeThickness();
 
-        $this->_unitsPerEm = $descendantFont->_unitsPerEm;
+        $this->_unitsPerEm = $descendantFont->getUnitsPerEm();
 
-        $this->_ascent  = $descendantFont->_ascent;
-        $this->_descent = $descendantFont->_descent;
-        $this->_lineGap = $descendantFont->_lineGap;
+        $this->_ascent  = $descendantFont->getAscent();
+        $this->_descent = $descendantFont->getDescent();
+        $this->_lineGap = $descendantFont->getLineGap();
         
         
         $this->_resource->Subtype         = new Zend_Pdf_Element_Name('Type0');

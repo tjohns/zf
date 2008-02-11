@@ -86,18 +86,18 @@ class Zend_Pdf_Resource_Font_Extracted extends Zend_Pdf_Resource_Font
                     // That's one of the standard fonts
                     $standardFont = Zend_Pdf_Font::fontWithName($fontDictionary->BaseFont->value);
                     
-                    $this->_fontNames          = $standardFont->_fontNames;
-                    $this->_isBold             = $standardFont->_isBold;  
-                    $this->_isItalic           = $standardFont->_isItalic;
-                    $this->_isMonospace        = $standardFont->_isMonospace;
-                    $this->_underlinePosition  = $standardFont->_underlinePosition;
-                    $this->_underlineThickness = $standardFont->_underlineThickness;
-                    $this->_strikePosition     = $standardFont->_strikePosition;
-                    $this->_strikeThickness    = $standardFont->_strikeThickness;
-                    $this->_unitsPerEm         = $standardFont->_unitsPerEm;
-                    $this->_ascent             = $standardFont->_ascent;
-                    $this->_descent            = $standardFont->_descent;
-                    $this->_lineGap            = $standardFont->_lineGap;
+                    $this->_fontNames          = $standardFont->getFontNames();
+                    $this->_isBold             = $standardFont->isBold();  
+                    $this->_isItalic           = $standardFont->isItalic();
+                    $this->_isMonospace        = $standardFont->isMonospace();
+                    $this->_underlinePosition  = $standardFont->getUnderlinePosition();
+                    $this->_underlineThickness = $standardFont->getUnderlineThickness();
+                    $this->_strikePosition     = $standardFont->getStrikePosition();
+                    $this->_strikeThickness    = $standardFont->getStrikeThickness();
+                    $this->_unitsPerEm         = $standardFont->getUnitsPerEm();
+                    $this->_ascent             = $standardFont->getAscent();
+                    $this->_descent            = $standardFont->getDescent();
+                    $this->_lineGap            = $standardFont->getLineGap();
 
                     return;
                 }

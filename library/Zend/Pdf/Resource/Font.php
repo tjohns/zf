@@ -236,7 +236,8 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
         /* If the preferred language could not be found, use whatever is first.
          */
         if (is_null($name)) {
-            $name = reset($this->_fontNames[$nameType]);
+            $names = $this->_fontNames[$nameType];
+            $name  = reset($names);
         }
         /* Convert the character set if requested.
          */
@@ -244,6 +245,46 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
             $name = iconv('UTF-16BE', $characterSet, $name);
         }
         return $name;
+    }
+
+    /**
+     * Returns whole set of font names.
+     * 
+     * @return array
+     */
+    public function getFontNames()
+    {
+        return $this->_fontNames;
+    }
+    
+    /**
+     * Returns true if font is bold.
+     *
+     * @return boolean
+     */
+    public function isBold()
+    {
+        return $this->_isBold;
+    }
+
+    /**
+     * Returns true if font is italic.
+     *
+     * @return boolean
+     */
+    public function isItalic()
+    {
+        return $this->_isItalic;
+    }
+    
+    /**
+     * Returns true if font is monospace.
+     *
+     * @return boolean
+     */
+    public function isMonospace()
+    {
+        return $this->_isMonospace;
     }
 
     /**
