@@ -70,9 +70,15 @@
 				<emphasis role="strong">
 					用户的标准语言检测:
 				</emphasis>
-				用户访问站点的首选语言能够通过被检测并被Zend_Translate使用.
+				用户访问站点的首选语言能够通过被检测并被Zend_Translate使用。
 			</para>
 		</listitem>
+		<listitem>
+                        <para>
+                                <emphasis role="strong"> 自动源文检测：</emphasis>
+                                Zend_Translate 能够检测和集成多个源文件并根据文件名或目录另外地检测哪个地方（locale）在用。
+                        </para> 
+                </listitem>
 	</itemizedlist>
 
 	<sect2 id="zend.translate.introduction.adapters">
