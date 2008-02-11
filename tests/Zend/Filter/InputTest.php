@@ -397,7 +397,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             )
         );
         $options = array(
-            Zend_Filter_Input::NAMESPACE => 'TestNamespace'
+            Zend_Filter_Input::INPUT_NAMESPACE => 'TestNamespace'
         );
 
         $ip = get_include_path();
@@ -1028,7 +1028,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field3' => 'digits'
         );
         $options = array(
-            Zend_Filter_Input::NAMESPACE => 'TestNamespace'
+            Zend_Filter_Input::INPUT_NAMESPACE => 'TestNamespace'
         );
 
         $ip = get_include_path();
@@ -1212,7 +1212,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field3' => 'digits'
         );
         $options = array(
-            Zend_Filter_Input::NAMESPACE => 'TestNamespace'
+            Zend_Filter_Input::INPUT_NAMESPACE => 'TestNamespace'
         );
 
         $ip = get_include_path();
