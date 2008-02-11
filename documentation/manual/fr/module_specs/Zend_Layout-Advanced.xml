@@ -220,7 +220,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
             <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
-    'script' => array('CamelCaseToUnderscore'),
+    ':script' => array('CamelCaseToUnderscore'),
     'suffix'  => 'html'
 ));
 $layout->setInflector($inflector);

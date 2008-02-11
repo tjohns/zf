@@ -407,7 +407,7 @@ array(
 
             <listitem>
                 <para>
-                    <code>getException(Exception $e)</code> returns the entire
+                    <code>getException()</code> returns the entire
                     exception stack.
                 </para>
             </listitem>
