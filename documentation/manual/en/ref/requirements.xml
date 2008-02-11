@@ -595,7 +595,7 @@
                             <ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>sqlite</code></ulink>
                             ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Sqlite</code></ulink> / Dependency )
                             <ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink>
-                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Dependency )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Zlib</code></ulink> / Dependency )
                         </entry>
                     </row>
                     <row>

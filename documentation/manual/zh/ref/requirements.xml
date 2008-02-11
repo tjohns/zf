@@ -436,6 +436,11 @@
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>	
+                        <entry>依赖</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html">Zend_Cache_Backend_Sqlite</ulink></entry>
+                    </row>
+                    <row>
                         <entry><code>standard</code></entry>
                         <entry>依赖</entry>
                         <entry>Virtually all components</entry>
@@ -527,9 +532,7 @@
         <title>Zend Framework 组件</title>
 
         <para>
-            下面的表格列出了所有可用的 Zend Framework 组件，以及其所需的 PHP 扩展。
-            这可以帮助了解哪些扩展对于应用来说是必须的。
-            并不是每个应用都需要所有 Zend Framework 使用到的扩展。
+            下面的表格列出了所有可用的 Zend Framework 组件，以及其所需的 PHP 扩展。这可以帮助了解哪些扩展对于应用来说是必须的。并不是每个应用都需要所有 Zend Framework 使用到的扩展。
         </para>
 
         <table frame='all' id="requirements.zendcomponents.table-1">
@@ -574,9 +577,11 @@
                             <ulink url="http://www.php.net/manual/zh/ref.apc.php"><code>apc</code></ulink>
                             ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / 依赖 )
                             <ulink url="http://www.php.net/manual/zh/ref.memcache.php"><code>memcache</code></ulink>
-                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / 依赖 )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcache</code></ulink> / 依赖 )
+                            <ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>sqlite</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Sqlite</code></ulink> / 依赖 )
                             <ulink url="http://www.php.net/manual/zh/ref.zlib.php"><code>zlib</code></ulink>
-                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / 依赖 )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Zlib</code></ulink> / 依赖 )
                         </entry>
                     </row>
                     <row>
