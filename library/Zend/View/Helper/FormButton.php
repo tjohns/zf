@@ -54,30 +54,36 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
      */
     public function formButton($name, $value = null, $attribs = null)
     {
-        $info = $this->_getInfo($name, $value, $attribs);
+        $content = '';
+        $info    = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, id, value, attribs, options, listsep, disable
+
+        if (isset($attribs['content'])) {
+            $content = $attribs['content'];
+            unset($attribs['content']);
+        }
 
         // build the element
         if ($disable) {
-
-            // disabled. no hidden value because it can't be clicked.
-            $xhtml = '[' . $this->view->escape($value) . ']';
-
-        } else {
-
-            // enabled
-            $xhtml = '<button type="button"'
-                   . ' name="' . $this->view->escape($name) . '"'
-                   . ' id="' . $this->view->escape($id) . '"';
-
-            // add a value if one is given
-            if (! empty($value)) {
-                $xhtml .= ' value="' . $this->view->escape($value) . '"';
-            }
-
-            // add attributes and close
-            $xhtml .= $this->_htmlAttribs($attribs) . ' />';
+            $attribs['disabled'] = 'disabled';
         }
+
+        $content = ($escape) ? $this->view->escape($content) : $content;
+
+        $xhtml = '<button type="button"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"';
+
+        // add a value if one is given
+        if (!empty($value)) {
+            $xhtml .= ' value="' . $this->view->escape($value) . '"';
+        }
+
+        // add attributes and close start tag
+        $xhtml .= $this->_htmlAttribs($attribs) . '>';
+
+        // add content and end tag
+        $xhtml .= $content . '</button>';
 
         return $xhtml;
     }

@@ -57,6 +57,29 @@ class Zend_View_Helper_FormButtonTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('/<button[^>]*?value="bar"/', $button);
         $this->assertRegexp('/<button[^>]*?name="foo"/', $button);
         $this->assertRegexp('/<button[^>]*?id="foo"/', $button);
+        $this->assertContains('</button>', $button);
+    }
+
+    public function testCanPassContentViaContentAttribKey()
+    {
+        $button = $this->helper->formButton('foo', 'bar', array('content' => 'Display this'));
+        $this->assertContains('>Display this<', $button);
+        $this->assertContains('<button', $button);
+        $this->assertContains('</button>', $button);
+    }
+
+    public function testCanDisableContentEscaping()
+    {
+        $button = $this->helper->formButton('foo', 'bar', array('content' => '<b>Display this</b>', 'escape' => false));
+        $this->assertContains('><b>Display this</b><', $button);
+
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'attribs' => array('content' => '<b>Display this</b>', 'escape' => false)));
+        $this->assertContains('><b>Display this</b><', $button);
+
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'escape' => false, 'attribs' => array('content' => '<b>Display this</b>')));
+        $this->assertContains('><b>Display this</b><', $button);
+        $this->assertContains('<button', $button);
+        $this->assertContains('</button>', $button);
     }
 }
 
