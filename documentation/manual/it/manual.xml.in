@@ -135,6 +135,7 @@
         <xi:include href="module_specs/Zend_Filter-FilterChains.xml" />
         <xi:include href="module_specs/Zend_Filter-WritingFilters.xml" />
         <xi:include href="module_specs/Zend_Filter_Input.xml" />
+        <xi:include href="module_specs/Zend_Filter-Inflector.xml" />
     </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
@@ -158,6 +159,10 @@
         <xi:include href="module_specs/Zend_Http_Cookie-Handling.xml" />
         <xi:include href="module_specs/Zend_Http_Response.xml" />
     </chapter>
+    <chapter id="zend.infocard">
+        <title>Zend_InfoCard</title>
+        <xi:include href="module_specs/Zend_InfoCard-Basics.xml" />
+    </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
         <xi:include href="module_specs/Zend_Json-Introduction.xml" />
@@ -165,9 +170,17 @@
         <xi:include href="module_specs/Zend_Json-Objects.xml" />
         <xi:include href="module_specs/Zend_Json-xml2json.xml" />
     </chapter>
+    <chapter id="zend.layout">
+        <title>Zend_Layout</title>
+        <xi:include href="module_specs/Zend_Layout-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Layout-QuickStart.xml" />
+        <xi:include href="module_specs/Zend_Layout-Options.xml" />
+        <xi:include href="module_specs/Zend_Layout-Advanced.xml" />
+    </chapter>
     <chapter id="zend.loader">
         <title>Zend_Loader</title>
         <xi:include href="module_specs/Zend_Loader.xml" />
+        <xi:include href="module_specs/Zend_Loader-PluginLoader.xml" />
     </chapter>
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
@@ -234,6 +247,7 @@
         <xi:include href="module_specs/Zend_Pdf-Create.xml" />
         <xi:include href="module_specs/Zend_Pdf-Save.xml" />
         <xi:include href="module_specs/Zend_Pdf-Pages.xml" />
+        <xi:include href="module_specs/Zend_Pdf-Drawing.xml" />
         <xi:include href="module_specs/Zend_Pdf-Properties.xml" />
         <xi:include href="module_specs/Zend_Pdf-Usage.xml" />
     </chapter>
@@ -277,8 +291,10 @@
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-BundledServices.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-AdvancedUses.xml" />
+        <xi:include href="module_specs/Zend_Service_Technorati.xml" />
         <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
     </chapter>
+
     <chapter id="zend.session">
         <title>Zend_Session</title>
         <xi:include href="module_specs/Zend_Session-Introduction.xml" />
@@ -312,7 +328,7 @@
         <xi:include href="module_specs/Zend_View-Introduction.xml" />
         <xi:include href="module_specs/Zend_View-Controllers.xml" />
         <xi:include href="module_specs/Zend_View-Scripts.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers.xml" />
+        <xi:include href="module_specs/Zend_View-Helpers.xml" parse="xml" />
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
