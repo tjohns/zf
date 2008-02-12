@@ -87,6 +87,24 @@ class Zend_View_Helper_FormButtonTest extends PHPUnit_Framework_TestCase
         $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar'));
         $this->assertRegexp('#<button[^>]*?value="bar"[^>]*>bar</button>#', $button);
     }
+
+    public function testButtonTypeIsButtonByDefault()
+    {
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar'));
+        $this->assertContains('type="button"', $button);
+    }
+
+    public function testButtonTypeMayOnlyBeValidXhtmlButtonType()
+    {
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'attribs' => array('type' => 'submit')));
+        $this->assertContains('type="submit"', $button);
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'attribs' => array('type' => 'reset')));
+        $this->assertContains('type="reset"', $button);
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'attribs' => array('type' => 'button')));
+        $this->assertContains('type="button"', $button);
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar', 'attribs' => array('type' => 'bogus')));
+        $this->assertContains('type="button"', $button);
+    }
 }
 
 // Call Zend_View_Helper_FormButtonTest::main() if this source file is executed directly.

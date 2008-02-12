@@ -54,15 +54,26 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
      */
     public function formButton($name, $value = null, $attribs = null)
     {
-        $content = '';
         $info    = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, id, value, attribs, options, listsep, disable
 
+        // Get content
+        $content = '';
         if (isset($attribs['content'])) {
             $content = $attribs['content'];
             unset($attribs['content']);
         } else {
             $content = $value;
+        }
+
+        // Ensure type is sane
+        $type = 'button';
+        if (isset($attribs['type'])) {
+            $attribs['type'] = strtolower($attribs['type']);
+            if (in_array($attribs['type'], array('submit', 'reset', 'button'))) {
+                $type = $attribs['type'];
+            }
+            unset($attribs['type']);
         }
 
         // build the element
@@ -72,9 +83,10 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
 
         $content = ($escape) ? $this->view->escape($content) : $content;
 
-        $xhtml = '<button type="button"'
+        $xhtml = '<button'
                 . ' name="' . $this->view->escape($name) . '"'
-                . ' id="' . $this->view->escape($id) . '"';
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' type="' . $type . '"';
 
         // add a value if one is given
         if (!empty($value)) {
