@@ -19,7 +19,7 @@
         </listitem>
         <listitem>
             <para>
-                后来地，通过不固定的接口
+                后来地，通过 fluent interface （流利的接口？我还没有找到合适的词汇，by Jason Qi）
             </para>
         </listitem>
         <listitem>
@@ -44,7 +44,7 @@
         <title> 已注册的实例 </title>
 
         <para>
-            为使用已注册的实例就是创建一个 <code>Zend_Translate</code> 或者 <code>Zend_Translate_Adapter</code> 的实例并在 <code>Zend_Registry</code> 里用 <code>Zend_Translate</code> 作为键注册它。   
+            为使用已注册的实例就是创建一个 <code>Zend_Translate</code> 或者 <code>Zend_Translate_Adapter</code> 的实例并在 <code>Zend_Registry</code> 里用 <code>Zend_Translate</code> 作为它的键。   
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -53,14 +53,14 @@ $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 Zend_Registry::set('Zend_Translate', $adapter);
 
 // 在视图中
-$this->translate('simple');
+echo $this->translate('simple');
 // this returns 'einfach'
 ?>]]></programlisting>
 
     </example>
 
     <para>
-        如果你熟悉不固定的（fluid）接口，那么也可以在视图里创建一个实例然后实例化这个助手。
+        如果你熟悉 fluent interface ，那么也可以在视图里创建一个实例然后实例化这个助手。
     </para>
 
     <example id="zend.view.helpers.initial.translate.afterwards">
@@ -68,13 +68,13 @@ $this->translate('simple');
         <title> 在视图里 </title>
 
         <para>
-            为了使用不固定的（fluid）的接口，创建一个 <code>Zend_Translate</code> 或者 <code>Zend_Translate_Adapter</code> 的实例，调用不带参数的助手并调用 <code>setTranslate</code> 方法。
+            为了使用 fluent interface ，创建一个 <code>Zend_Translate</code> 或者 <code>Zend_Translate_Adapter</code> 的实例，调用不带参数的助手并调用 <code>setTranslator</code> 方法。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 // 在视图里
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
-$this->translate()->setTranslate($adapter)->translate('simple');
+$this->translate()->setTranslator($adapter)->translate('simple');
 // 返回 'einfach'
 ?>]]></programlisting>
 
@@ -104,7 +104,7 @@ print $translate->translate('simple'); // this returns 'einfach'
     </example>
 
     <para>
-        就象已经知道 <code>translate()</code> 方法用来返回翻译。用需要的翻译适配器的信息 id 来调用它。但它也可以在翻译字符串里替换参数。因此，它有两个方法接受变量参数。或者是参数类表，或者是参数数组。详细请看下面的例子：
+        就象已经知道，<code>translate()</code> 方法用来返回翻译。用需要的翻译适配器的信息 id 来调用它。但它也可以在翻译字符串里替换参数。因此，它有两个方法接受变量参数。或者是参数类表，或者是参数数组。如下例：
     </para>
 
     <example id="zend.view.helpers.initial.translate.parameter">
@@ -126,7 +126,7 @@ $this->translate('Today is %1\$s', $date);
 
     <note>
         <para>
-            记住如果使用的参数也是文本，你也要翻译这个参数。
+            记住如果使用的参数也是文本，你可能也要翻译这些参数。
         </para>
     </note>
 
@@ -167,7 +167,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
     </example>
 
     <para>
-        有时候需要修改翻译的地点。可以通过动态翻译或者把所有的静态翻译来完成。并且你可以使用参数类表和参数数组。在这两种情况下，地点被当作最后一个单个参数给出。
+        有时候必需要修改翻译的地点。可以通过动态翻译或者把所有的静态翻译来完成。并且你可以使用参数类表和参数数组。在这两种情况下，地点被当作最后一个单个参数给出。
     </para>
 
     <example id="zend.view.helpers.initial.translate.dynamic">
@@ -183,7 +183,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
     </example>
 
     <para>
-        这个例子为信息 id 返回意大利语的翻译。但它将只能用一次。下个翻译将从适配器里设置地点。通常地在添加它到注册表之前你将在翻译适配器里设置希望的地点。但你也可以从助手里设置地点：
+        这个例子为 messageid 返回意大利语的翻译。但它将只能用一次。下个翻译将从适配器里设置地点。通常地在添加它到注册表之前你将在翻译适配器里设置期望的地点。但你也可以从助手里设置地点：
     </para>
 
     <example id="zend.view.helpers.initial.translate.static">
@@ -203,13 +203,12 @@ $this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s',
     </para>
 
     <para>
-        Of course there is also a <code>getLocale()</code> method to get the actual set locale. 
-        当然，还有 <code>getLocale()</code> 方法来设置实际的地点。
+        当然，还有 <code>getLocale()</code> 方法来获得当前设置的地点。
     </para>
 
     <example id="zend.view.helpers.initial.translate.getlocale">
 
-        <title> 设置实际的地点 </title>
+        <title> 获得当前设置的地点 </title>
 
         <programlisting role="php"><![CDATA[<?php
 // 在视图里
