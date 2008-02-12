@@ -125,7 +125,7 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $translate = new Zend_Translate('array', array());
         Zend_Registry::set('Zend_Translate', $translate);
-        $this->assertSame($translate, $this->validator->getTranslator());
+        $this->assertSame($translate->getAdapter(), $this->validator->getTranslator());
     }
 
     public function testLocalTranslatorPreferredOverGlobalTranslator()
