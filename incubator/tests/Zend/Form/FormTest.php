@@ -19,6 +19,7 @@ require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/Loader/PluginLoader.php';
+require_once 'Zend/Registry.php';
 require_once 'Zend/Translate.php';
 
 class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
@@ -30,8 +31,17 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
+    public function clearRegistry()
+    {
+        if (Zend_Registry::isRegistered('Zend_Translate')) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry['Zend_Translate']);
+        }
+    }
+
     public function setUp()
     {
+        $this->clearRegistry();
         Zend_Form::setDefaultTranslator(null);
 
         if (isset($this->error)) {
@@ -44,6 +54,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        $this->clearRegistry();
     }
 
     // Configuration
@@ -2216,7 +2227,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator->getAdapter(), $received);
 
         $form = new Zend_Form();
-        $received = $form->getTranslator($translator);
+        $received = $form->getTranslator();
         $this->assertSame($translator->getAdapter(), $received);
     }
 
@@ -2233,6 +2244,23 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->setTranslator($translator);
         $received = $this->form->getTranslator();
         $this->assertNotSame($translatorDefault->getAdapter(), $received);
+        $this->assertSame($translator->getAdapter(), $received);
+    }
+
+    public function testTranslatorFromRegistryUsedWhenNoneRegistered()
+    {
+        $this->assertNull($this->form->getTranslator());
+        $translator = new Zend_Translate('array', array());
+        Zend_Registry::set('Zend_Translate', $translator);
+
+        $received = Zend_Form::getDefaultTranslator();
+        $this->assertSame($translator->getAdapter(), $received);
+
+        $received = $this->form->getTranslator();
+        $this->assertSame($translator->getAdapter(), $received);
+
+        $form = new Zend_Form();
+        $received = $form->getTranslator();
         $this->assertSame($translator->getAdapter(), $received);
     }
 

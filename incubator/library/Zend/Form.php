@@ -2128,8 +2128,8 @@ class Zend_Form implements Iterator, Countable
      */
     public function getTranslator()
     {
-        if ((null === $this->_translator) && (null !== self::$_translatorDefault)) {
-            return self::$_translatorDefault;
+        if (null === $this->_translator) {
+            return self::getDefaultTranslator();
         }
 
         return $this->_translator;
@@ -2142,6 +2142,17 @@ class Zend_Form implements Iterator, Countable
      */
     public static function getDefaultTranslator()
     {
+        if (null === self::$_translatorDefault) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Translate')) {
+                $translator = Zend_Registry::get('Zend_Translate');
+                if ($translator instanceof Zend_Translate_Adapter) {
+                    return $translator;
+                } elseif ($translator instanceof Zend_Translate) {
+                    return $translator->getAdapter();
+                }
+            }
+        }
         return self::$_translatorDefault;
     }
 
