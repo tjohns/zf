@@ -61,13 +61,17 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
                     $tmp = "/tmp";
                 }
             }
+            $user = get_current_user();
+            if (is_string($user) && !empty($user)) {
+            	$tmp .= '/' . $user;
+			}
             $dir = $tmp . '/openid/consumer';
         }
         $this->_dir = $dir;
         if (!is_dir($this->_dir)) {
             if (!@mkdir($this->_dir, 0700, 1)) {
                 throw new Zend_OpenId_Exception(
-                    'Cannot access storage directory',
+                    'Cannot access storage directory ' . $dir,
                     Zend_OpenId_Exception::ERROR_STORAGE);
             }
         }
