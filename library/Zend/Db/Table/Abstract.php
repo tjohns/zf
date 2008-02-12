@@ -814,6 +814,7 @@ abstract class Zend_Db_Table_Abstract
          */
         $pkData = array_intersect_key($data, array_flip($primary));
         if (count($primary) == 1) {
+            reset($pkData);
             return current($pkData);
         }
 
@@ -917,17 +918,17 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Fetches rows by primary key.  The argument specifies one or more primary 
-     * key value(s).  To find multiple rows by primary key, the argument must 
+     * Fetches rows by primary key.  The argument specifies one or more primary
+     * key value(s).  To find multiple rows by primary key, the argument must
      * be an array.
      *
-     * This method accepts a variable number of arguments.  If the table has a 
-     * multi-column primary key, the number of arguments must be the same as 
-     * the number of columns in the primary key.  To find multiple rows in a 
-     * table with a multi-column primary key, each argument must be an array 
+     * This method accepts a variable number of arguments.  If the table has a
+     * multi-column primary key, the number of arguments must be the same as
+     * the number of columns in the primary key.  To find multiple rows in a
+     * table with a multi-column primary key, each argument must be an array
      * with the same number of elements.
      *
-     * The find() method always returns a Rowset object, even if only one row 
+     * The find() method always returns a Rowset object, even if only one row
      * was found.
      *
      * @param  mixed $key The value(s) of the primary keys.
@@ -1003,7 +1004,7 @@ abstract class Zend_Db_Table_Abstract
     {
         if (!($where instanceof Zend_Db_Table_Select)) {
             $select = $this->select();
-            
+
             if ($where !== null) {
                 $this->_where($select, $where);
             }
@@ -1019,7 +1020,7 @@ abstract class Zend_Db_Table_Abstract
         } else {
             $select = $where;
         }
-        
+
         $rows = $this->_fetch($select);
 
         $data  = array(
@@ -1047,7 +1048,7 @@ abstract class Zend_Db_Table_Abstract
     {
         if (!($where instanceof Zend_Db_Table_Select)) {
             $select = $this->select();
-            
+
             if ($where !== null) {
                 $this->_where($select, $where);
             }
@@ -1113,7 +1114,7 @@ abstract class Zend_Db_Table_Abstract
         Zend_Loader::loadClass($this->_rowClass);
         return new $this->_rowClass($config);
     }
-    
+
     /**
      * Generate WHERE clause from user-supplied string or array
      *
