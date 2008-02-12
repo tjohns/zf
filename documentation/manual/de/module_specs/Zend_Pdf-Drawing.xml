@@ -405,6 +405,111 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
 
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.extracting-fonts">
+        <title>Beginnend mit 1.5, Schriften extrahieren</title>
+        <para>
+            Das <code>Zend_Pdf</code> Modul bietet die Möglichkeit Schriften von geladenen Dokumenten zu
+            extrahieren.
+        </para>
+
+        <para>
+            Das kann für aufsteigende Dokumenten Updates nützlich sein. Ohne diese Funktionalität müssen Schriften
+            jedes Mal in ein Dokument hinzugefügt und möglicherweise eingebetten werden, wenn es aktualisiert
+            werden soll.
+        </para>
+        
+        <para>
+            Die <code>Zend_Pdf</code> und <code>Zend_Pdf_Page</code> Objekte bieten spezielle Methoden um alle
+            genannten Schriften innerhalb eines Dokuments oder einer Seite zu extrahieren:
+        </para>
+        <example id="zend.pdf.drawing.extracting-fonts.example-1">
+            <title>Schriften von einem geladenen Dokument extrahieren</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($documentPath);
+...
+// Alle Schriften des Dokuments bekommen
+$fontList = $pdf->extractFonts();
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+$yPosition = 700;
+foreach ($fontList as $font) {
+    $page->setFont($font, 15);
+    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
+                  . ':  Der schnelle braune Fuchs springt über den lahmen Hund', 100, $yPosition, 'UTF-8');
+    $yPosition -= 30;
+}
+...
+// Alle Schriften die in der ersten Seite des Dokuments referenziert sind erhalten
+$firstPage = reset($pdf->pages);
+$firstPageFonts = $firstPage->extractFonts();
+...]]>
+            </programlisting>
+        </example>
+        <example id="zend.pdf.drawing.extracting-fonts.example-2">
+            <title>Eine Schrift von einem geladenen Dokument extrahieren durch die Angabe des Schriftnamens</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = new Zend_Pdf();
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = Zend_Pdf_Font::fontWithPath($fontPath);
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+// Diese Schrift sollte woanders gespeichert werden...
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+...
+$pdf->save($docPath);
+...]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($docPath);
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) kann auch hier verwendet werden */
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+$pdf->save($docPath, true /* aufsteigender Update Modus */);
+...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Extrahierte Schriften können statt jeder anderen Schrift mit den folgenden Einschränkungen
+            verwendet werden:
+            <itemizedlist>
+                <listitem><para>Eine extrahierte Schrift kann nur im Kontext des Dokuments verwendet werden
+                von dem es extrahiert wurde.</para></listitem>
+                <listitem>
+                    <para>
+                        Ein möglicherweise eingebettetes Schriftprogramm wird aktuell nicht extrahiert. Deswegen
+                        können extrahierte Schriften keine richtigen Schriftmaße bieten und die originale
+                        Schrift wird für die Berechnung der Breite verwendet:
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = $pdf->extractFont($fontName);
+$originalFont = Zend_Pdf_Font::fontWithPath($fontPath);
+
+$page->setFont($font /* Die extrahierte Schrift für das Zeichnen verwenden */, $fontSize);
+$xPosition = $x;
+for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
+    $page->drawText($text[$charIndex], xPosition, $y);
+
+    // Die originale Schrift für die Berechnung der Breite des Textes verwenden
+    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+}
+...]]>
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist> 
+        </para>
+    </sect2>
+
     <sect2 id="zend.pdf.drawing.image-drawing">
         <title>Zeichnen von Grafiken</title>
         <para>
