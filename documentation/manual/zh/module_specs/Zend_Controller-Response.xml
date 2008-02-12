@@ -304,7 +304,7 @@ array(
 
             <listitem>
                 <para>
-                    <code>getException(Exception $e)</code> 返回整个异常堆。
+                    <code>getException()</code> 返回整个异常堆。
                 </para>
             </listitem>
 
