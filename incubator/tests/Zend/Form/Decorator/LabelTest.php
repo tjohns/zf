@@ -208,6 +208,31 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render('');
         $this->assertContains($element->getLabel(), $test);
     }
+
+    public function testRetrievingLabelRetrievesLabelWithTranslationAndPrefixAndSuffix()
+    {
+        require_once 'Zend/Translate.php';
+        $translate = new Zend_Translate('array', array('My Label' => 'Translation'), 'en');
+        $translate->setLocale('en');
+
+        $element = new Zend_Form_Element('foo');
+        $element->setView($this->getView())
+                ->setLabel('My Label')
+                ->setTranslator($translate);
+        $this->decorator->setElement($element)
+                        ->setOptions(array(
+                            'optionalPrefix' => '> ',
+                            'optionalSuffix' => ':',
+                            'requiredPrefix' => '! ',
+                            'requiredSuffix' => '*:',
+                        ));
+        $label = $this->decorator->getLabel();
+        $this->assertEquals('> Translation:', $label);
+
+        $element->setRequired(true);
+        $label = $this->decorator->getLabel();
+        $this->assertEquals('! Translation*:', $label);
+    }
 }
 
 // Call Zend_Form_Decorator_LabelTest::main() if this source file is executed directly.
