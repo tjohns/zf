@@ -68,7 +68,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>结果</title>
 
         <para>
-            为了表示一个认证尝试的结果，Zend_Auth适配器返回一个带有<code>authenticate()</code>的<code>Zend_Auth_Result</code>的实例。适配器基于结构组成<code>Zend_Auth_Result</code>对象，下面三个方法提供了一组基本的用户面临的通用Zend_Auth适配器结果的操作：
+            为了表示一个认证尝试的结果，Zend_Auth适配器返回一个带有<code>authenticate()</code>的<code>Zend_Auth_Result</code>的实例。适配器基于结构组成<code>Zend_Auth_Result</code>对象，下面四个方法提供了一组基本的用户面临的通用Zend_Auth适配器结果的操作：
             <itemizedlist>
                 <listitem>
                     <para>

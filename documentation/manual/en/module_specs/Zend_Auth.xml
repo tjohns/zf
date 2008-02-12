@@ -94,7 +94,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <para>
             Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
             <code>authenticate()</code> in order to represent the results of an authentication attempt. Adapters
-            populate the <code>Zend_Auth_Result</code> object upon construction, so that the following three methods
+            populate the <code>Zend_Auth_Result</code> object upon construction, so that the following four methods
             provide a basic set of user-facing operations that are common to the results of Zend_Auth adapters:
             <itemizedlist>
                 <listitem>
