@@ -58,9 +58,6 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         );
         $input = new Zend_Filter_Input($filters, null, $data);
 
-        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
-        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
-        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
         $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
 
         $month = $input->month;
@@ -526,7 +523,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $input = new Zend_Filter_Input($filters, $validators, $data);
 
         if ($input->hasInvalid()) {
-            $message = $input->getMessages();
+            $input->getMessages();
         }
 
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
@@ -581,7 +578,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field5'   => array('presence' => 'required', 'allowEmpty' => false, 'default' => 'field5default'),
             'field6'   => array('presence' => 'optional', 'allowEmpty' => false, 'default' => 'field6default'),
             'field7'   => array('presence' => 'required', 'allowEmpty' => true, 'default' => 'field7default'),
-            'field8'   => array('presence' => 'optional', 'allowEmpty' => true, 'default' => 'field8default'),
+            'field8'   => array('presence' => 'optional', 'allowEmpty' => true, 'default' => array('field8default', 'field8default2')),
         );
         $data = array();
         $input = new Zend_Filter_Input(null, $validators, $data);
@@ -1053,6 +1050,52 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertThat($messages, $this->arrayHasKey('field1'));
         $this->assertEquals("'abc' contains not only digit characters", current($messages['field1']));
     }
+    
+    public function testGetPluginLoader()
+    {
+    	$input = new Zend_Filter_Input(null, null);
+    	
+    	$loader = $input->getPluginLoader(Zend_Filter_Input::VALIDATE);
+        $this->assertType('Zend_Loader_PluginLoader', $loader,
+            'Expected object of type Zend_Loader_PluginLoader, got ' , get_class($loader));    	
+
+        try {
+    		$loader = $input->getPluginLoader('foo');
+            $this->fail('Expected to catch Zend_Filter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Filter_Exception', $e,
+                'Expected object of type Zend_Filter_Exception, got '.get_class($e));
+            $this->assertEquals('Invalid type "foo" provided to getPluginLoader()',
+                $e->getMessage());
+        }
+
+    }
+
+    public function testSetPluginLoader()
+    {
+    	$input = new Zend_Filter_Input(null, null);
+    	
+    	$loader = new Zend_Loader_PluginLoader();
+    	
+    	$input->setPluginLoader($loader, Zend_Filter_Input::VALIDATE);
+    }
+
+    public function testSetPluginLoaderInvalidType()
+    {
+    	$input = new Zend_Filter_Input(null, null);
+    	
+    	$loader = new Zend_Loader_PluginLoader();
+    	
+        try {
+        	$input->setPluginLoader($loader, 'foo');
+            $this->fail('Expected to catch Zend_Filter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Filter_Exception', $e,
+                'Expected object of type Zend_Filter_Exception, got '.get_class($e));
+            $this->assertEquals('Invalid type "foo" provided to setPluginLoader()',
+                $e->getMessage());
+        }
+    }
 
     public function testNamespaceExceptionClassNotFound()
     {
@@ -1068,9 +1111,9 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
             $this->fail('Expected to catch Zend_Filter_Exception');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Filter_Exception', $e,
+            $this->assertType('Zend_Loader_PluginLoader_Exception', $e,
                 'Expected object of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertEquals("Unable to find the implementation of the 'MyDigits' class",
+            $this->assertEquals("Plugin by name MyDigits was not found in the registry.",
                 $e->getMessage());
         }
     }
