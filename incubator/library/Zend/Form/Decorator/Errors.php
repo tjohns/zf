@@ -55,12 +55,6 @@ class Zend_Form_Decorator_Errors extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        if (null !== ($translator = $element->getTranslator())) {
-            foreach ($errors as $code => $message) {
-                $errors[$code] = $translator->translate($code);
-            }
-        }
-
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
         $errors    = $view->formErrors($errors, $this->getOptions()); 
