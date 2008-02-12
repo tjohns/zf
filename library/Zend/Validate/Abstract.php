@@ -265,7 +265,7 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function getTranslator()
     {
         if (null === $this->_translator) {
-            return self::$_defaultTranslator;
+            return self::getDefaultTranslator();
         }
 
         return $this->_translator;
@@ -296,6 +296,12 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
      */
     public static function getDefaultTranslator()
     {
+        if (null === self::$_defaultTranslator) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Translate')) {
+                return Zend_Registry::get('Zend_Translate');
+            }
+        }
         return self::$_defaultTranslator;
     }
 }

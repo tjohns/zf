@@ -33,6 +33,9 @@ require_once 'Zend/Validate/Abstract.php';
 /** Zend_Translate */
 require_once 'Zend/Translate.php';
 
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
+
 /**
  * @category   Zend
  * @package    Zend_Validate
@@ -53,6 +56,14 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
+    public function clearRegistry()
+    {
+        if (Zend_Registry::isRegistered('Zend_Translate')) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry['Zend_Translate']);
+        }
+    }
+
     /**
      * Creates a new validation object for each test method
      *
@@ -60,12 +71,14 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->clearRegistry();
         Zend_Validate_Abstract::setDefaultTranslator(null);
         $this->validator = new Zend_Validate_AbstractTest_Concrete();
     }
 
     public function tearDown()
     {
+        $this->clearRegistry();
         Zend_Validate_Abstract::setDefaultTranslator(null);
     }
 
@@ -106,6 +119,13 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $this->testCanSetGlobalDefaultTranslator();
         $this->assertSame(Zend_Validate_Abstract::getDefaultTranslator(), $this->validator->getTranslator());
+    }
+
+    public function testGlobalTranslatorFromRegistryUsedWhenNoLocalTranslatorSet()
+    {
+        $translate = new Zend_Translate('array', array());
+        Zend_Registry::set('Zend_Translate', $translate);
+        $this->assertSame($translate, $this->validator->getTranslator());
     }
 
     public function testLocalTranslatorPreferredOverGlobalTranslator()
