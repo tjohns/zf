@@ -146,7 +146,7 @@ class Zend_OpenId_Consumer
      *  object to perform HTTP or HTML form redirection
      * @return bool
      */
-    public function check($id, $returnTo=null, $root=null, $extensions,
+    public function check($id, $returnTo=null, $root=null, $extensions = null,
                           Zend_Controller_Response_Abstract $response = null)
 
     {
