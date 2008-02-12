@@ -44,6 +44,9 @@
         <xi:include href="module_specs/Zend_Auth_Adapter_DbTable.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Digest.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml" />
+        <xi:include href="module_specs/Zend_Auth_Adapter_OpenId.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_OpenId.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
@@ -78,9 +81,7 @@
         <xi:include href="module_specs/Zend_Controller-Dispatcher.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" />
-        <xi:include href="module_specs/Zend_Controller-Response.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Response.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Controller-Response.xml" />
         <xi:include href="module_specs/Zend_Controller-Plugins.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Controller-Modular.xml" />
         <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
