@@ -30,7 +30,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /**
  * Zend_OpenId_ResponseHelper
  */
-require_once 'Zend/Auth/Adapter/OpenId/ResponseHelper.php';
+require_once 'Zend/OpenId/ResponseHelper.php';
 
 
 /**
