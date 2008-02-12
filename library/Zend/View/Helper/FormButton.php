@@ -61,6 +61,8 @@ class Zend_View_Helper_FormButton extends Zend_View_Helper_FormElement
         if (isset($attribs['content'])) {
             $content = $attribs['content'];
             unset($attribs['content']);
+        } else {
+            $content = $value;
         }
 
         // build the element

@@ -81,6 +81,12 @@ class Zend_View_Helper_FormButtonTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<button', $button);
         $this->assertContains('</button>', $button);
     }
+
+    public function testValueUsedForContentWhenNoContentProvided()
+    {
+        $button = $this->helper->formButton(array('name' => 'foo', 'value' => 'bar'));
+        $this->assertRegexp('#<button[^>]*?value="bar"[^>]*>bar</button>#', $button);
+    }
 }
 
 // Call Zend_View_Helper_FormButtonTest::main() if this source file is executed directly.
