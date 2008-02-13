@@ -4,12 +4,13 @@
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>文件格式</title>
         <para>
-          Zend_Search_Lucene 的索引文件格式和 1.4 或更高版本的 Lucene 二进制兼容。
+          Zend_Search_Lucene 的索引文件格式和 1.4 或更高版本的 Java Lucene 二进制兼容。
         </para>
 
         <para>
           关于文件格式的更详细的描述在这里：
-          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>。
+          <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>。
+          <footnote><para> 当前支持的 Lucene 索引文件格式版本是 v2.1.</para></footnote>
         </para>
     </sect2>
 
@@ -17,7 +18,7 @@
         <title>索引目录</title>
 
         <para>
-        在创建了索引之后，索引目录中将包含下列文件：
+            在创建了索引之后，索引目录中将包含下列文件：
         </para>
 
         <itemizedlist>
@@ -74,47 +75,6 @@ doc.add(Field.Text("contents", reader));
 
 indexWriter.addDocument(doc);]]>
         </programlisting>
-    </sect2>
-
-    <sect2 id="zend.search.lucene.java-lucene.jar">
-        <title>使用 LuceneIndexCreation.jar</title>
-
-        <para>
-            为了更快的开始使用 Zend_Search_Lucene，人们创建了一个基于 Java 的 JAR 文件用以通过命令行生成索引。要了解 JAR 文件的详情，请访问：
-         <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>。
-        </para>
-
-        <para>
-            LuceneIndexCreation.jar 读取文本文件并从它们创建索引。用法是：
-        <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
-    -c   - force index to be case sensitive
-    -s   - store content in the index
-    ]]></programlisting>
-            这个命令读取目录 <code>&lt;document_dir&gt;</code>，包括它的子目录，并产生 Lucene 索引。索引是一组保存在由 <code>&lt;index_dir&gt;</code>指定的独立目录中的文件。
-        </para>
-
-        <para>
-            对于每一个被索引的文档，LuceneIndexCreation 创建一个包含三个字段的文档对象：一个 <emphasis>contents</emphasis>
-            内容字段包含文档内容，一个 <emphasis>modified</emphasis> 修改字段包含文档的修改时间，以及一个
-          <emphasis>path</emphasis> 路径字段包含完整的路径和文件名。
-        </para>
-
-        <para>
-            如果声明了 <option>-c</option> 选项，则索引被强制为大小写相关。否则所有搜索项在加入索引之前被转化为小写。
-        </para>
-
-        <para>
-            如果声明了 <option>-s</option> 那么文档的内容也被保存在索引中，可以通过 <code>path</code> 和 <code>modified</code> 字段直接获取。
-        </para>
-
-        <para>
-            否则，只有 <code>path</code> 和 <code>modified</code> 字段被保存，而 <code>contents</code> 字段仅进行索引。这种情况下文档内容只能通过其路径字段从原始文件中获取。
-        </para>
-
-        <para>
-            请小心，使用 <option>-s</option> 选项会让索引的大小扩大近五倍。
-        </para>
     </sect2>
 
 </sect1>
