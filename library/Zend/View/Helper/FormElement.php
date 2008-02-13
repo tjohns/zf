@@ -147,9 +147,13 @@ abstract class Zend_View_Helper_FormElement
             $info['escape'] = (bool) $info['attribs']['escape'];
         }
 
-        // remove attribs that might overwrite the other keys.
-        // we do this LAST because we needed the other attribs
-        // values earlier.
+        // Determine listsetp from attributes
+        if (isset($info['attribs']['listsep'])) {
+            $info['listsep'] = (string) $info['attribs']['listsep'];
+        }
+
+        // Remove attribs that might overwrite the other keys. We do this LAST 
+        // because we needed the other attribs values earlier.
         foreach ($info as $key => $val) {
             if (isset($info['attribs'][$key])) {
                 unset($info['attribs'][$key]);

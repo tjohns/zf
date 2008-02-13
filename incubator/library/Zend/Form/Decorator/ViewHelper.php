@@ -139,6 +139,12 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             unset($attribs['helper']);
         }
 
+        if (method_exists($element, 'getSeparator')) {
+            if (null !== ($listsep = $element->getSeparator())) {
+                $attribs['listsep'] = $listsep;
+            }
+        }
+
         if (isset($attribs['id'])) {
             return $attribs;
         }

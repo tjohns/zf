@@ -110,6 +110,22 @@ class Zend_Form_Element_RadioTest extends PHPUnit_Framework_TestCase
             $this->assertNotRegexp('/<input[^>]*?(disabled="disabled")/', $m[1], var_export($m, 1));
         }
     }
+
+    public function testSpecifiedSeparatorIsUsedWhenRendering()
+    {
+        $this->element->setMultiOptions(array(
+                'foo'  => 'Foo',
+                'bar'  => 'Bar',
+                'baz'  => 'Baz',
+                'bat'  => 'Bat',
+                'test' => 'Test',
+            ))
+            ->setSeparator('--FooBarFunSep--');
+        $html = $this->element->render($this->getView());
+        $this->assertContains($this->element->getSeparator(), $html);
+        $count = substr_count($html, $this->element->getSeparator());
+        $this->assertEquals(4, $count);
+    }
 }
 
 // Call Zend_Form_Element_RadioTest::main() if this source file is executed directly.
