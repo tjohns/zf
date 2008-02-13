@@ -273,7 +273,7 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
 
             // Create new Document from a file
             $doc = new Zend_Search_Lucene_Document();
-            $doc->addField(Zend_Search_Lucene_Field::Text('path', 'IndexSource/' . $file));
+            $doc->addField(Zend_Search_Lucene_Field::Keyword('path', 'IndexSource/' . $file));
             $doc->addField(Zend_Search_Lucene_Field::Keyword( 'modified', filemtime($indexSourceDir . '/' . $file) ));
 
             $f = fopen($indexSourceDir . '/' . $file,'rb');
@@ -296,8 +296,13 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
 
         $index1 = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_index');
         $this->assertTrue($index1 instanceof Zend_Search_Lucene_Interface);
-        $index1->delete(6);
+        $pathTerm = new Zend_Search_Lucene_Index_Term('IndexSource/contributing.html', 'path');
+        $contributingDocs = $index1->termDocs($pathTerm);
+        foreach ($contributingDocs as $id) {
+            $index1->delete($id);
+        }
         $index1->optimize();
+        unset($index1);
 
         $index2 = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_index');
         $this->assertTrue($index2 instanceof Zend_Search_Lucene_Interface);
