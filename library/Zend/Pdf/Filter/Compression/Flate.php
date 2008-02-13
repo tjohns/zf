@@ -56,7 +56,7 @@ class Zend_Pdf_Filter_Compression_Flate extends Zend_Pdf_Filter_Compression
 
             ini_set('track_errors', $trackErrors);
         } else {
-            throw new Zend_Pdf_Exception('Not implemented yet');
+            throw new Zend_Pdf_Exception('Not implemented yet. You have to use zlib extension.');
         }
 
         return $output;
