@@ -1020,7 +1020,9 @@ class Zend_Form implements Iterator, Countable
     {
         $values = array();
         foreach ($this->getElements() as $key => $element) {
-            $values[$key] = $element->getValue();
+            if (!$element->getIgnore()) {
+                $values[$key] = $element->getValue();
+            }
         }
         foreach ($this->getSubForms() as $key => $subForm) {
             $array = $this->_getArrayName($subForm->getElementsBelongTo());

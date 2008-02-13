@@ -825,6 +825,25 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testRetrievingAllElementValuesSkipsThoseFlaggedAsIgnore()
+    {
+        $this->form->addElements(array(
+            'foo' => 'text',
+            'bar' => 'text',
+            'baz' => 'text'
+        ));
+        $this->form->setDefaults(array(
+            'foo' => 'Foo Value',
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+        ));
+        $this->form->bar->setIgnore(true);
+        $test = $this->form->getValues();
+        $this->assertFalse(array_key_exists('bar', $test));
+        $this->assertTrue(array_key_exists('foo', $test));
+        $this->assertTrue(array_key_exists('baz', $test));
+    }
+
     public function testCanRetrieveSingleUnfilteredElementValue()
     {
         $foo = new Zend_Form_Element_Text('foo');

@@ -88,6 +88,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_filters = array();
 
     /**
+     * Ignore flag (used when retrieving values at form level)
+     * @var bool
+     */
+    protected $_ignore = false;
+
+    /**
      * Element label
      * @var string
      */
@@ -492,6 +498,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getAllowEmpty()
     {
         return $this->_allowEmpty;
+    }
+
+    /**
+     * Set ignore flag (used when retrieving values at form level)
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setIgnore($flag)
+    {
+        $this->_ignore = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get ignore flag (used when retrieving values at form level)
+     * 
+     * @return bool
+     */
+    public function getIgnore()
+    {
+        return $this->_ignore;
     }
 
     /**
