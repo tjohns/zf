@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 7980 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>標準のルータ: Zend_Controller_Router_Rewrite</title>
     <sect2 id="zend.controller.router.introduction">
@@ -212,7 +212,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 $ctrl->setControllerDirectory(
     array(
         'default' => '/path/to/default/controllers',
-        'news'    => '/path/to/blog/controllers',
+        'news'    => '/path/to/news/controllers',
         'blog'    => '/path/to/blog/controllers'
     )
 );
