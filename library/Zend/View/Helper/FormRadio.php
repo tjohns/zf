@@ -62,77 +62,86 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         $info = $this->_getInfo($name, $value, $attribs, $options, $listsep);
         extract($info); // name, value, attribs, options, listsep, disable
 
-        // retrieve attributes for labels (prefixed with 'label_')
+        // retrieve attributes for labels (prefixed with 'label_' or 'label')
         $label_attribs = array('style' => 'white-space: nowrap;');
         foreach ($attribs as $key => $val) {
-            if (substr($key, 0, 6) == 'label_') {
+            $tmp    = false;
+            $keyLen = strlen($key);
+            if ((6 < $keyLen) && (substr($key, 0, 6) == 'label_')) {
                 $tmp = substr($key, 6);
+            } elseif ((5 < $keyLen) && (substr($key, 0, 5) == 'label')) {
+                $tmp = substr($key, 5);
+            }
+
+            if ($tmp) {
+                // make sure first char is lowercase
+                $tmp[0] = strtolower($tmp[0]);
                 $label_attribs[$tmp] = $val;
                 unset($attribs[$key]);
             }
         }
 
-        // the radio button values and labels
-        settype($options, 'array');
+        $labelPlacement = 'append';
+        foreach ($label_attribs as $key => $value) {
+            switch (strtolower($key)) {
+                case 'placement':
+                    unset($label_attribs[$key]);
+                    $value = strtolower($value);
+                    if (in_array($value, array('prepend', 'append'))) {
+                        $labelPlacement = $value;
+                    }
+                    break;
+            }
+        }
 
-        // default value if none are checked
-        $xhtml = $this->_hidden($name, null);
+        // the radio button values and labels
+        $options = (array) $options;
 
         // build the element
-        if ($disable) {
+        $xhtml = '';
+        $list  = array();
 
-            // disabled.
-            // show the radios as a plain list.
-            $list = array();
+        // add radio buttons to the list.
+        foreach ($options as $opt_value => $opt_label) {
 
-            // create the list of radios.
-            foreach ($options as $opt_value => $opt_label) {
-                if ($opt_value == $value) {
-                    // add a return value, and a checked text.
-                    $opt = $this->_hidden($name, $opt_value) . '[x]';
-                } else {
-                    // not checked
-                    $opt = '[&nbsp;]';
-                }
-                $list[] = $opt . '&nbsp;' . $opt_label;
+            // Should the label be escaped?
+            if ($escape) {
+                $opt_label = $this->view->escape($opt_label);
             }
 
-            $xhtml .= implode($listsep, $list);
-
-        } else {
-
-            // enabled.
-            // the array of all radios.
-            $list = array();
-
-            // add radio buttons to the list.
-            foreach ($options as $opt_value => $opt_label) {
-
-                // begin the label wrapper
-                $radio = '<label'
-                       . $this->_htmlAttribs($label_attribs) . '>'
-                       . '<input type="radio"'
-                       . ' name="' . $this->view->escape($name) . '"'
-                       . ' value="' . $this->view->escape($opt_value) . '"';
-
-                // is it checked?
-                if ($opt_value == $value) {
-                    $radio .= ' checked="checked"';
-                }
-
-                // add attribs, end the radio, end the label
-                $radio .= $this->_htmlAttribs($attribs) .
-                          ' />' .
-                          $this->view->escape($opt_label) .
-                          '</label>';
-
-                // add to the array of radio buttons
-                $list[] = $radio;
+            // is it disabled?
+            $disabled = '';
+            if (true === $disable) {
+                $disabled = ' disabled="disabled"';
+            } elseif (is_array($disable) && in_array($opt_value, $disable)) {
+                $disabled = ' disabled="disabled"';
             }
 
-            // done!
-            $xhtml .= implode($listsep, $list);
+            // is it checked?
+            $checked = '';
+            if ($opt_value == $value) {
+                $checked = ' checked="checked"';
+            }
+
+            // Wrap the radios in labels
+            $radio = '<label'
+                    . $this->_htmlAttribs($label_attribs) . '>'
+                    . (('prepend' == $labelPlacement) ? $opt_label : '')
+                    . '<input type="radio"'
+                    . ' name="' . $this->view->escape($name) . '"'
+                    . ' value="' . $this->view->escape($opt_value) . '"'
+                    . $checked
+                    . $disabled
+                    . $this->_htmlAttribs($attribs) .  ' />' 
+                    . (('append' == $labelPlacement) ? $opt_label : '')
+                    . '</label>';
+
+            // add to the array of radio buttons
+            $list[] = $radio;
         }
+
+        // done!
+        $xhtml .= implode($listsep, $list);
 
         return $xhtml;
     }

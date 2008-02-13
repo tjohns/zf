@@ -58,19 +58,19 @@ class Zend_View_Helper_FormText extends Zend_View_Helper_FormElement
         extract($info); // name, value, attribs, options, listsep, disable
 
         // build the element
+        $disabled = '';
         if ($disable) {
             // disabled
-            $xhtml = $this->_hidden($name, $value)
-                   . $this->view->escape($value);
-        } else {
-            // enabled
-            $xhtml = '<input type="text"'
-                   . ' name="' . $this->view->escape($name) . '"'
-                   . ' id="' . $this->view->escape($id) . '"'
-                   . ' value="' . $this->view->escape($value) . '"'
-                   . $this->_htmlAttribs($attribs)
-                   . ' />';
+            $disabled = ' disabled="disabled"';
         }
+        
+        $xhtml = '<input type="text"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' value="' . $this->view->escape($value) . '"'
+                . $disabled
+                . $this->_htmlAttribs($attribs)
+                . ' />';
 
         return $xhtml;
     }

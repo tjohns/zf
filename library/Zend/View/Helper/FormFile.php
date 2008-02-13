@@ -57,18 +57,19 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, id, value, attribs, options, listsep, disable
 
-        // build the element
+        // is it disabled?
+        $disabled = '';
         if ($disable) {
-            // disabled
-            $xhtml = $this->_hidden($name, $value) . $this->view->escape($value);
-        } else {
-            // enabled
-            $xhtml = '<input type="file"'
-                   . ' name="' . $this->view->escape($name) . '"'
-                   . ' id="' . $this->view->escape($id) . '"'
-                   . ' value="' . $this->view->escape($value) . '"'
-                   . $this->_htmlAttribs($attribs) . ' />';
-        }
+            $disabled = ' disabled="disabled"';
+        } 
+        
+        // build the element
+        $xhtml = '<input type="file"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' value="' . $this->view->escape($value) . '"'
+                . $disabled
+                . $this->_htmlAttribs($attribs) . ' />';
 
         return $xhtml;
     }

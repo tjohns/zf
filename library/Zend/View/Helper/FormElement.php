@@ -105,16 +105,24 @@ abstract class Zend_View_Helper_FormElement
         // force attribs to an array, per note from Orjan Persson.
         settype($info['attribs'], 'array');
 
-        // disable if readonly
-        if (isset($info['attribs']['readonly']) &&
-            $info['attribs']['readonly'] == 'readonly') {
+        // Normalize readonly tag
+        if (isset($info['attribs']['readonly']) 
+            && $info['attribs']['readonly'] != 'readonly') 
+        {
+            $info['attribs']['readonly'] = 'readonly';
         }
 
-        // normal disable, overrides readonly
-        if (isset($info['attribs']['disable']) &&
-            $info['attribs']['disable']) {
+        // Disable attribute
+        if (isset($info['attribs']['disable']) 
+            && is_scalar($info['attribs']['disable'])) 
+        {
             // disable the element
             $info['disable'] = true;
+            unset($info['attribs']['disable']);
+        } elseif (isset($info['attribs']['disable'])
+            && is_array($info['attribs']['disable']))
+        {
+            $info['disable'] = $info['attribs']['disable'];
             unset($info['attribs']['disable']);
         }
 
@@ -122,7 +130,16 @@ abstract class Zend_View_Helper_FormElement
         if (isset($info['attribs']['id'])) {
             $info['id'] = (string) $info['attribs']['id'];
         } elseif (!isset($info['attribs']['id']) && !empty($info['name'])) {
-            $info['id'] = $info['name'];
+            $id = $info['name'];
+            if (substr($id, -2) == '[]') {
+                $id = substr($id, 0, strlen($id) - 2);
+            }
+            if (strstr($id, ']')) {
+                $id = trim($id, ']');
+                $id = str_replace('][', '-', $id);
+                $id = str_replace('[', '-', $id);
+            }
+            $info['id'] = $id;
         }
 
         // Determine escaping from attributes

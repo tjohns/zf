@@ -4,9 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormTextTest::main");
 }
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View.php';
 require_once 'Zend/View/Helper/FormText.php';
@@ -73,6 +71,34 @@ class Zend_View_Helper_FormTextTest extends PHPUnit_Framework_TestCase
     {
         $element = $this->helper->formText('foo', null, array('readonly' => 'readonly'));
         $this->assertContains('readonly="readonly"', $element);
+    }
+
+    /**
+     * ZF-1666
+     */
+    public function testCanDisableElement()
+    {
+        $html = $this->helper->formText(array(
+            'name'    => 'foo',
+            'value'   => 'bar',
+            'attribs' => array('disable' => true)
+        ));
+
+        $this->assertRegexp('/<input[^>]*?(disabled="disabled")/', $html);
+    }
+
+    /**
+     * ZF-1666
+     */
+    public function testDisablingElementDoesNotRenderHiddenElements()
+    {
+        $html = $this->helper->formText(array(
+            'name'    => 'foo',
+            'value'   => 'bar',
+            'attribs' => array('disable' => true)
+        ));
+
+        $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
     }
 }
 

@@ -4,9 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormSelectTest::main");
 }
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormSelect.php';
 require_once 'Zend/View.php';
@@ -99,6 +97,194 @@ class Zend_View_Helper_FormSelectTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->formSelect('foo', 0, null, array('foo' => 'Foobar', 0 => 'Bazbat'));
         $this->assertRegExp('#<option[^>]+value="0"[^>]*selected.*?>Bazbat</option>#', $html);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableEntireSelect()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar'
+            ), 
+            'attribs' => array(
+               'disable' => true
+            ),
+        ));
+        $this->assertRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertNotRegexp('/<option[^>]*?disabled="disabled"/', $html, $html);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableIndividualSelectOptionsOnly()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar'
+            ), 
+            'attribs' => array(
+               'disable' => array('bar')
+            ),
+        ));
+        $this->assertNotRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertRegexp('/<option value="bar"[^>]*?disabled="disabled"/', $html, $html);
+
+        $html = $this->helper->formSelect(
+            'baz', 
+            'foo',
+            array(
+               'disable' => array('bar')
+            ),
+            array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar'
+            )
+        );
+        $this->assertNotRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertRegexp('/<option value="bar"[^>]*?disabled="disabled"/', $html, $html);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableMultipleSelectOptions()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar',
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'disable' => array('foo', 'baz')
+            ),
+        ));
+        $this->assertNotRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertRegexp('/<option value="foo"[^>]*?disabled="disabled"/', $html, $html);
+        $this->assertRegexp('/<option value="baz"[^>]*?disabled="disabled"/', $html, $html);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableOptGroups()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => array(
+                    '1' => 'one',
+                    '2' => 'two'
+                ),
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'disable' => array('bar')
+            ),
+        ));
+        $this->assertNotRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertRegexp('/<optgroup[^>]*?disabled="disabled"[^>]*?"bar"[^>]*?/', $html, $html);
+        $this->assertNotRegexp('/<option value="1"[^>]*?disabled="disabled"/', $html, $html);
+        $this->assertNotRegexp('/<option value="2"[^>]*?disabled="disabled"/', $html, $html);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableOptGroupOptions()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => array(
+                    '1' => 'one',
+                    '2' => 'two'
+                ),
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'disable' => array('2')
+            ),
+        ));
+        $this->assertNotRegexp('/<select[^>]*?disabled/', $html, $html);
+        $this->assertNotRegexp('/<optgroup[^>]*?disabled="disabled"[^>]*?"bar"[^>]*?/', $html, $html);
+        $this->assertNotRegexp('/<option value="1"[^>]*?disabled="disabled"/', $html, $html);
+        $this->assertRegexp('/<option value="2"[^>]*?disabled="disabled"/', $html, $html);
+    }
+
+    public function testCanSpecifySelectMultipleThroughAttribute()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar',
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'multiple' => true
+            ),
+        ));
+        $this->assertRegexp('/<select[^>]*?(multiple="multiple")/', $html, $html);
+    }
+
+    public function testSpecifyingSelectMultipleThroughAttributeAppendsNameWithBrackets()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar',
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'multiple' => true
+            ),
+        ));
+        $this->assertRegexp('/<select[^>]*?(name="baz\[\]")/', $html, $html);
+    }
+
+    public function testCanSpecifySelectMultipleThroughName()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz[]', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar',
+                'baz' => 'Baz,'
+            ), 
+        ));
+        $this->assertRegexp('/<select[^>]*?(multiple="multiple")/', $html, $html);
+    }
+
+    /**
+     * ZF-1639
+     */
+    public function testNameCanContainBracketsButNotBeMultiple()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz[]', 
+            'options' => array(
+                'foo' => 'Foo', 
+                'bar' => 'Bar',
+                'baz' => 'Baz,'
+            ), 
+            'attribs' => array(
+               'multiple' => false
+            ),
+        ));
+        $this->assertRegexp('/<select[^>]*?(name="baz\[\]")/', $html, $html);
+        $this->assertNotRegexp('/<select[^>]*?(multiple="multiple")/', $html, $html);
     }
 }
 

@@ -4,9 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormCheckboxTest::main");
 }
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormCheckbox.php';
 require_once 'Zend/View.php';
@@ -17,7 +15,6 @@ require_once 'Zend/View.php';
  * Tests formCheckbox helper
  * 
  * @uses PHPUnit_Framework_TestCase
- * @version $Id$
  */
 class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase 
 {
@@ -54,6 +51,67 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
         $element = $this->helper->formCheckbox('foo', null, array('id' => 'bar'));
         $this->assertContains('name="foo"', $element);
         $this->assertContains('id="bar"', $element);
+    }
+
+    /**
+     * ZF-2513
+     */
+    public function testCanDisableCheckbox()
+    {
+        $html = $this->helper->formCheckbox(array(
+            'name'   => 'foo',
+            'value'  => 'bar',
+            'attribs'=> array('disable' => true)
+        ));
+        $this->assertRegexp('/<input[^>]*?(disabled="disabled")/', $html);
+    }
+
+    public function testCanSelectCheckbox()
+    {
+        $html = $this->helper->formCheckbox(array(
+            'name'   => 'foo',
+            'value'  => 'bar',
+            'attribs'=> array('checked' => true)
+        ));
+        $this->assertRegexp('/<input[^>]*?(checked="checked")/', $html);
+        $count = substr_count($html, 'checked');
+        $this->assertEquals(2, $count);
+    }
+
+    /**
+     * ZF-1955
+     */
+    public function testNameBracketsStrippedWhenCreatingId()
+    {
+        $html = $this->helper->formCheckbox(array(
+            'name'  => 'foo[]',
+            'value' => 'bar'
+        ));
+        $this->assertRegexp('/<input[^>]*?(id="foo")/', $html);
+
+        $html = $this->helper->formCheckbox(array(
+            'name'  => 'foo[bar]',
+            'value' => 'bar'
+        ));
+        $this->assertRegexp('/<input[^>]*?(id="foo-bar")/', $html);
+
+        $html = $this->helper->formCheckbox(array(
+            'name'  => 'foo[bar][baz]',
+            'value' => 'bar'
+        ));
+        $this->assertRegexp('/<input[^>]*?(id="foo-bar-baz")/', $html);
+    }
+
+    /**
+     * ZF-2230
+     */
+    public function testDoesNotRenderHiddenElements()
+    {
+        $html = $this->helper->formCheckbox(array(
+            'name'  => 'foo[]',
+            'value' => 'bar'
+        ));
+        $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
     }
 }
 

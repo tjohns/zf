@@ -57,18 +57,20 @@ class Zend_View_Helper_FormSubmit extends Zend_View_Helper_FormElement
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
 
+        // check if disabled
+        $disabled = '';
+        if ($disable) {
+            $disabled = ' disabled="disabled"';
+        }
+
         // ignore disable/enable, always show the button.
         $xhtml = '<input type="submit"'
                . ' name="' . $this->view->escape($name) . '"'
-               . ' id="' . $this->view->escape($id) . '"';
+               . ' id="' . $this->view->escape($id) . '"'
+               . ' value="' . $this->view->escape($value) . '"'
+               . $disabled
+               . $this->_htmlAttribs($attribs) . ' />';
 
-        // add a value if one is given
-        if (! empty($value)) {
-            $xhtml .= ' value="' . $this->view->escape($value) . '"';
-        }
-
-        // add attributes, close, and return
-        $xhtml .= $this->_htmlAttribs($attribs) . ' />';
         return $xhtml;
     }
 }
