@@ -538,7 +538,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * Set element attribute
      * 
      * @param  string $name 
-     * @param  string $value 
+     * @param  mixed $value 
      * @return Zend_Form_Element
      * @throws Zend_Form_Exception for invalid $name values
      */
@@ -553,7 +553,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         if (null === $value) {
             unset($this->$name);
         } else {
-            $this->$name = (string) $value;
+            $this->$name = $value;
         }
 
         return $this;

@@ -49,6 +49,14 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     {
     }
 
+    public function getView()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper');
+        return $view;
+    }
+
     public function testSelectElementSubclassesXhtmlElement()
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element_Xhtml);
@@ -66,6 +74,33 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
         $decorator->setElement($this->element);
         $helper = $decorator->getHelper();
         $this->assertEquals('formSelect', $helper);
+    }
+
+    public function testCanDisableIndividualSelectOptions()
+    {
+        $this->element->setMultiOptions(array(
+                'foo' => 'foo',
+                'bar' => array(
+                    'baz' => 'Baz',
+                    'bat' => 'Bat'
+                ),
+                'test' => 'Test',
+            ))
+            ->setAttrib('disable', array('baz', 'test'));
+        $html = $this->element->render($this->getView());
+        $this->assertNotRegexp('/<select[^>]*?(disabled="disabled")/', $html, $html);
+        foreach (array('baz', 'test') as $test) {
+            if (!preg_match('/(<option[^>]*?(value="' . $test . '")[^>]*>)/', $html, $m)) {
+                $this->fail('Unable to find matching disabled option for ' . $test);
+            }
+            $this->assertRegexp('/<option[^>]*?(disabled="disabled")/', $m[1]);
+        }
+        foreach (array('foo', 'bat') as $test) {
+            if (!preg_match('/(<option[^>]*?(value="' . $test . '")[^>]*>)/', $html, $m)) {
+                $this->fail('Unable to find matching option for ' . $test);
+            }
+            $this->assertNotRegexp('/<option[^>]*?(disabled="disabled")/', $m[1], var_export($m, 1));
+        }
     }
 }
 

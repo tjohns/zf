@@ -49,6 +49,14 @@ class Zend_Form_Element_RadioTest extends PHPUnit_Framework_TestCase
     {
     }
 
+    public function getView()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper');
+        return $view;
+    }
+
     public function testRadioElementSubclassesMultiElement()
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element_Multi);
@@ -76,6 +84,31 @@ class Zend_Form_Element_RadioTest extends PHPUnit_Framework_TestCase
         $decorator->setElement($this->element);
         $helper = $decorator->getHelper();
         $this->assertEquals('formRadio', $helper);
+    }
+
+    public function testCanDisableIndividualRadioOptions()
+    {
+        $this->element->setMultiOptions(array(
+                'foo'  => 'Foo',
+                'bar'  => 'Bar',
+                'baz'  => 'Baz',
+                'bat'  => 'Bat',
+                'test' => 'Test',
+            ))
+            ->setAttrib('disable', array('baz', 'test'));
+        $html = $this->element->render($this->getView());
+        foreach (array('baz', 'test') as $test) {
+            if (!preg_match('/(<input[^>]*?(value="' . $test . '")[^>]*>)/', $html, $m)) {
+                $this->fail('Unable to find matching disabled option for ' . $test);
+            }
+            $this->assertRegexp('/<input[^>]*?(disabled="disabled")/', $m[1]);
+        }
+        foreach (array('foo', 'bar', 'bat') as $test) {
+            if (!preg_match('/(<input[^>]*?(value="' . $test . '")[^>]*>)/', $html, $m)) {
+                $this->fail('Unable to find matching option for ' . $test);
+            }
+            $this->assertNotRegexp('/<input[^>]*?(disabled="disabled")/', $m[1], var_export($m, 1));
+        }
     }
 }
 
