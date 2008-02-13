@@ -46,19 +46,105 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
     const INVALID        = 'dateInvalid';
 
     /**
-     * Validation failure message template definitions
+     * Validation failure message key for when the value does not fit the given dateformat or locale
+     */
+    const FALSEFORMAT    = 'dateFalseFormat';
+
+    /**
+     *      * Validation failure message template definitions
      *
      * @var array
      */
     protected $_messageTemplates = array(
         self::NOT_YYYY_MM_DD => "'%value%' is not of the format YYYY-MM-DD",
-        self::INVALID        => "'%value%' does not appear to be a valid date"
-    );
+        self::INVALID        => "'%value%' does not appear to be a valid date",
+        self::FALSEFORMAT    => "'%value%' does not fit given date format"
+        );
+
+    /**
+     * Optional format
+     *
+     * @var mixed
+     */
+    protected $_format;
+
+    /**
+     * Optional locale
+     *
+     * @var mixed
+     */
+    protected $_locale;
+
+    /**
+     * Sets validator options
+     *
+     * @param  string             $format OPTIONAL
+     * @param  string|Zend_Locale $locale OPTIONAL
+     * @return void
+     */
+    public function __construct($format = null, $locale = null)
+    {
+        $this->setFormat($format);
+        $this->setLocale($locale);
+    }
+
+    /**
+     * Returns the locale option
+     *
+     * @return string||null
+     */
+    public function getLocale()
+    {
+        return $this->_locale;
+    }
+
+    /**
+     * Sets the locale option
+     *
+     * @param  string|Zend_Locale $locale
+     * @return Zend_Validate_Date provides a fluent interface
+     */
+    public function setLocale($locale = null)
+    {
+        if ($locale !== null) {
+            require_once 'Zend/Locale.php';
+            if (!Zend_Locale::isLocale($locale)) {
+                require_once 'Zend/Validate/Exception.php';
+                throw new Zend_Validate_Exception("The locale '$locale' is no known locale");
+            }
+        }
+        $this->_locale = $locale;
+        return $this;
+    }
+
+    /**
+     * Returns the locale option
+     *
+     * @return string||null
+     */
+    public function getFormat()
+    {
+        return $this->_format;
+    }
+
+    /**
+     * Sets the format option
+     *
+     * @param  string $format
+     * @return Zend_Validate_Date provides a fluent interface
+     */
+    public function setFormat($format = null)
+    {
+        $this->_format = $format;
+        return $this;
+    }
 
     /**
      * Defined by Zend_Validate_Interface
      *
-     * Returns true if and only if $value is a valid date of the format YYYY-MM-DD
+     * Returns true if $value is a valid date of the format YYYY-MM-DD
+     * If optional $format or $locale is set the date format is checked
+     * according to Zend_Date, see Zend_Date::isDate()
      *
      * @param  string $value
      * @return boolean
@@ -69,16 +155,24 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $valueString)) {
-            $this->_error(self::NOT_YYYY_MM_DD);
-            return false;
-        }
+        if (($this->_format !== null) or ($this->_locale !== null)) {
+            require_once 'Zend/Date.php';
+            if (!Zend_Date::isDate($value, $this->_format, $this->_locale)) {
+                $this->_error(self::FALSEFORMAT);
+                return false;
+            }
+        } else {
+            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $valueString)) {
+                $this->_error(self::NOT_YYYY_MM_DD);
+                return false;
+            }
 
-        list($year, $month, $day) = sscanf($valueString, '%d-%d-%d');
+            list($year, $month, $day) = sscanf($valueString, '%d-%d-%d');
 
-        if (!checkdate($month, $day, $year)) {
-            $this->_error(self::INVALID);
-            return false;
+            if (!checkdate($month, $day, $year)) {
+                $this->_error(self::INVALID);
+                return false;
+            }
         }
 
         return true;
