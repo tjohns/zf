@@ -124,13 +124,9 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
      */
     public function testSelectForJoinZendDbTable()
     {
-        try {
-            $select = $this->_selectForJoinZendDbTable();
-            $query = $select->__toString();
-            $this->fail('Expected to catch Zend_Db_Table_Select_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Table_Select_Exception', $e);
-        }
+        $select = $this->_selectForJoinZendDbTable();
+        $query = $select->__toString();
+        $this->assertEquals('',$query);
     }
 
     /**

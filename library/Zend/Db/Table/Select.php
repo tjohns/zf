@@ -185,8 +185,8 @@ class Zend_Db_Table_Select extends Zend_Db_Select
                 // Check each column to ensure it only references the primary table
                 if ($column) {
                     if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
-                        require_once 'Zend/Db/Table/Select/Exception.php';
-                        throw new Zend_Db_Table_Select_Exception("Select query cannot join with another table");
+                        trigger_error("Select query cannot join with another table", E_USER_WARNING);
+                        return '';
                     }
                 }
             }
