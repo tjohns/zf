@@ -923,14 +923,16 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
                     <listitem><para><code>getUnfilteredValue()</code></para></listitem>
                     <listitem><para><code>setLabel($label)</code></para></listitem>
                     <listitem><para><code>getLabel()</code></para></listitem>
+                    <listitem><para><code>setDescription($description)</code></para></listitem>
+                    <listitem><para><code>getDescription()</code></para></listitem>
                     <listitem><para><code>setOrder($order)</code></para></listitem>
                     <listitem><para><code>getOrder()</code></para></listitem>
                     <listitem><para><code>setRequired($flag)</code></para></listitem>
                     <listitem><para><code>getRequired()</code></para></listitem>
                     <listitem><para><code>setAllowEmpty($flag)</code></para></listitem>
                     <listitem><para><code>getAllowEmpty()</code></para></listitem>
-                    <listitem><para><code>setDescription($description)</code></para></listitem>
-                    <listitem><para><code>getDescription()</code></para></listitem>
+                    <listitem><para><code>setIgnore($flag)</code></para></listitem>
+                    <listitem><para><code>getIgnore()</code></para></listitem>
                     <listitem><para><code>getType()</code></para></listitem>
                     <listitem><para><code>setAttrib($name, $value)</code></para></listitem>
                     <listitem><para><code>setAttribs(array $attribs)</code></para></listitem>
@@ -1062,6 +1064,7 @@ label = "Foo:"
 order = 10
 required = true
 description = "Foo elements are for examples"
+ignore = false
 attribs.id = "foo"
 attribs.class = "element"
 onclick = "autoComplete(this, '/form/autocomplete/element')" ; sets 'onclick' attribute
