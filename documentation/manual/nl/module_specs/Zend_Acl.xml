@@ -41,7 +41,7 @@
         <para>
             In Zend_Acl is het maken van een bron heel simpel. Zend_Acl heeft een 
             <code>Zend_Acl_Resource_Interface</code> om het ontwikkelaars makkelijk te maken bij het 
-            maken van Bronnen. Een class hoeft deze interface alleen maar te implementeren, en bestaat 
+            maken van Bronnen. Een klasse hoeft deze interface alleen maar te implementeren, en bestaat 
             uit een enkele methode, <code>getResourceId()</code>, om Zend_Acl het object als een Bron 
             te laten beschouwen. Verder wordt <code>Zend_Acl_Resource</code>gebruikt binnen Zend_Acl 
             als een standaard Bron implementatie voor ontwikkelaars die uitgebreid kan worden waar wenselijk.
@@ -70,7 +70,7 @@
         <para>
             Net als bij Bronnen, is het aanmaken van een Rol ook heel simpel. Zend_Acl levert 
             <code>Zend_Acl_Role_Interface</code> om het ontwikkelaars makkelijk te maken bij het maken 
-            van een Rol. Een class hoeft deze interface alleen maar te implementeren, en bestaat 
+            van een Rol. Een klasse hoeft deze interface alleen maar te implementeren, en bestaat 
             uit een enkele methode, <code>getRoleId()</code>, om Zend_Acl het object als een Rol 
             te laten beschouwen. Verder wordt <code>Zend_Acl_Role</code>gebruikt binnen Zend_Acl 
             als een standaard Rol implementatie voor ontwikkelaars die uitgebreid kan worden waar wenselijk.
@@ -342,7 +342,7 @@ echo $acl->istoegestaan('administrator') ?
      "toegestaan" : "geweigerd"; // toegestaan want administrator is alles toegestaan
 
 echo $acl->istoegestaan('administrator', null, 'update') ?
-     "toegestaan" : "geweigerd"; // toegestaan toegestaan want administrator is alles toegestaan]]>
+     "toegestaan" : "geweigerd"; // toegestaan want administrator is alles toegestaan]]>
         </programlisting>
 
     </sect2>
