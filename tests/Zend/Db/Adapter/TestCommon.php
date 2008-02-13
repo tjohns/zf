@@ -1170,6 +1170,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'Incorrect quoteInto() result for CHAR');
     }
 
+    public function testAdapterQuoteIntoCount() 
+    { 
+        $value = $this->_db->quoteInto('foo = ? and bar = ?', 1234, null, 1); 
+        $this->assertType('string', $value); 
+        $this->assertEquals('foo = 1234 and bar = ?', $value, 
+            'Incorrect quoteInto() result for count'); 
+    } 
+
     public function testAdapterQuoteTypeInt()
     {
         foreach ($this->_numericDataTypes as $typeName => $type) {

@@ -299,7 +299,43 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test adding an OR WHERE clause to a Zend_Db_Select object.
+     * Test support for where() with count, 
+     * e.g. where("id = ? and name='O?'", 1, Zend_Db::INT_TYPE). 
+     */ 
+  
+    public function testSelectWhereWithCount() 
+    { 
+        $select = $this->_selectWhereWithCount(); 
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
+    } 
+  
+    /** 
+     * Test support for where() with parameter array, 
+     * e.g. where('id = ? and id= ?', array(1, 6)). 
+     */ 
+  
+    public function testSelectWhereWithParmArray() 
+    { 
+        $select = $this->_selectWhereWithParmArray(); 
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
+    } 
+  
+    /** 
+     * Test support for where() with parameter array, 
+     * e.g. where('id = :id1 and id= :id2', array('id1' => 1, 'id2' => 6)). 
+     */ 
+  
+    public function testSelectWhereWithParmId() 
+    { 
+        $select = $this->_selectWhereWithParmId(); 
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
+    } 
+  
+    /** 
+     *      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
 
     public function testSelectWhereOr()

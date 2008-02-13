@@ -797,14 +797,25 @@ abstract class Zend_Db_Adapter_Abstract
      * // $safe = "WHERE date < '2005-01-02'"
      * </code>
      *
-     * @param string $text  The text with a placeholder.
-     * @param mixed  $value The value to quote.
-     * @param string $type  OPTIONAL SQL datatype
+     * @param string  $text  The text with a placeholder.
+     * @param mixed   $value The value to quote.
+     * @param string  $type  OPTIONAL SQL datatype
+     * @param integer $count OPTIONAL count of placeholders to replace
      * @return string An SQL-safe quoted value placed into the orignal text.
      */
-    public function quoteInto($text, $value, $type = null)
+    public function quoteInto($text, $value, $type = null, $count = null)
     {
-        return str_replace('?', $this->quote($value, $type), $text);
+        if ($count === null) {
+            return str_replace('?', $this->quote($value, $type), $text);
+        } else {
+            while ($count > 0) {
+                if (strpos($text, '?') != false) {
+                    $text = substr_replace($text, $this->quote($value), strpos($text, '?'), 1);
+                }
+                --$count;
+            }
+            return $text;
+        }
     }
 
     /**
