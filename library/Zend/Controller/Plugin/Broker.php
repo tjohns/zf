@@ -127,7 +127,6 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
      */
     public function hasPlugin($class)
     {
-        $found = array();
         foreach ($this->_plugins as $plugin) {
             $type = get_class($plugin);
             if ($class == $type) {
