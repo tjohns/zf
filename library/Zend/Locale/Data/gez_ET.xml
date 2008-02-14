@@ -13,7 +13,7 @@
 				<symbol>ERN</symbol>
 			</currency>
 			<currency type="ETB">
-				<symbol draft="unconfirmed">$</symbol>
+				<symbol>$</symbol>
 			</currency>
 		</currencies>
 	</numbers>

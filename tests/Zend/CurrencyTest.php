@@ -265,8 +265,6 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
             $this->fail("exception expected");
         } catch (Zend_Currency_Exception $e) {
             // success
-        } catch (Zend_Locale_Exception $e) {
-            $this->markTestSkipped('Autodetection of Locale failed');
         }
 
         $currency = new Zend_Currency('EUR', 'de_AT');
@@ -508,7 +506,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         try {
             $currency = new Zend_Currency('USD');
-            $this->assertTrue(in_array('US', $currency->getRegionList()));
+            $this->assertTrue(is_array($currency->getRegionList()));
         } catch (Zend_Currency_Exception $e) {
             $this->assertContains('No region found within the locale', $e->getMessage());
         }
@@ -516,14 +514,15 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $currency = new Zend_Currency('USD', 'en_US');
         $currency->setFormat(array('currency' => null));
         try {
-            $this->assertTrue(in_array('US', $currency->getRegionList()));
+            $this->assertEquals('US', $currency->getRegionList());
             $this->fail("Exception expected");
         } catch (Zend_Currency_Exception $e) {
             $this->assertContains("No currency defined", $e->getMessage());
         }
 
         $currency = new Zend_Currency('USD', 'en_US');
-        $this->assertTrue(in_array('US', $currency->getRegionList()));
+        $this->assertEquals(array(0 => 'AS', 1 => 'EC', 2 => 'FM', 3 => 'GU', 4 => 'IO', 5 => 'MH', 6 => 'MP',
+            7 => 'PR', 8 => 'PW', 9 => 'TC', 10 => 'TL', 11 => 'UM', 12 => 'US', 13 => 'VG', 14 => 'VI'), $currency->getRegionList());
     }
 
 
@@ -552,7 +551,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     public function testToString()
     {
         $USD = new Zend_Currency('USD','en_US');
-        $this->assertSame('US Dollar', $USD->toString()  );
+        $this->assertSame('US Dollar', $USD->toString());
         $this->assertSame('US Dollar', $USD->__toString());
     }
 }

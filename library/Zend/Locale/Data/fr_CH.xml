@@ -8,8 +8,8 @@
 		<territory type="CH"/>
 	</identity>
 	<delimiters>
-		<alternateQuotationStart draft="unconfirmed">‹</alternateQuotationStart>
-		<alternateQuotationEnd draft="unconfirmed">›</alternateQuotationEnd>
+		<alternateQuotationStart>‹</alternateQuotationStart>
+		<alternateQuotationEnd>›</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<calendars>
@@ -35,8 +35,8 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">dd.MM</dateFormatItem>
-						<dateFormatItem id="yyMM" draft="unconfirmed">MM.yy</dateFormatItem>
+						<dateFormatItem id="MMdd">dd.MM</dateFormatItem>
+						<dateFormatItem id="yyMM">MM.yy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

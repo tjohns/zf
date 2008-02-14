@@ -14,12 +14,12 @@
 				<dateFormats>
 					<dateFormatLength type="full">
 						<dateFormat>
-							<pattern references="R698">yyyy年M月d日 EEEE</pattern>
+							<pattern>yyyy年M月d日 EEEE</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="long">
 						<dateFormat>
-							<pattern references="R698">yyyy年M月d日</pattern>
+							<pattern>yyyy年M月d日</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="medium">
@@ -47,7 +47,7 @@
 				</timeFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="yyyyM" draft="provisional">yyyy/M</dateFormatItem>
+						<dateFormatItem id="yyyyM">yyyy/M</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>

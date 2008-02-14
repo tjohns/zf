@@ -33,7 +33,7 @@ require_once 'PHPUnit/Util/Filter.php';
 error_reporting( E_ALL | E_STRICT );
 
 /*
- * Determine the root, library, and tests directories of the framework 
+ * Determine the root, library, and tests directories of the framework
  * distribution.
  */
 $zfRoot        = dirname(dirname(__FILE__));
@@ -54,7 +54,7 @@ $path = array(
 set_include_path(implode(PATH_SEPARATOR, $path));
 
 /*
- * Load the user-defined test configuration file, if it exists; otherwise, load 
+ * Load the user-defined test configuration file, if it exists; otherwise, load
  * the default configuration.
  */
 if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
@@ -64,12 +64,12 @@ if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
 }
 
 /*
- * Add Zend Framework library/ directory to the PHPUnit code coverage 
- * whitelist. This has the effect that only production code source files appear 
- * in the code coverage report and that all production code source files, even 
+ * Add Zend Framework library/ directory to the PHPUnit code coverage
+ * whitelist. This has the effect that only production code source files appear
+ * in the code coverage report and that all production code source files, even
  * those that are not covered by a test yet, are processed.
  */
-if (TESTS_GENERATE_REPORT === true &&
+if (defined('TESTS_GENERATE_REPORT') && TESTS_GENERATE_REPORT === true &&
     version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
     PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
 }

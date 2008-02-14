@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.51 $"/>
-		<generation date="$Date: 2007/07/21 21:12:28 $"/>
+		<version number="$Revision: 1.52 $"/>
+		<generation date="$Date: 2007/11/19 23:42:54 $"/>
 		<language type="es"/>
 		<territory type="PR"/>
 	</identity>
@@ -24,14 +24,18 @@
 				</dateFormats>
 				<dateTimeFormats>
 					<availableFormats>
-						<dateFormatItem id="MMdd" draft="unconfirmed">MM/dd</dateFormatItem>
+						<dateFormatItem id="MMdd">MM/dd</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
 	</dates>
 	<numbers>
-		<currencies>
+		<symbols>
+			<decimal>.</decimal>
+			<group>,</group>
+		</symbols>
+        <currencies>
 			<currency type="USD">
 				<symbol>$</symbol>
 			</currency>

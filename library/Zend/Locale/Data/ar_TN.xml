@@ -34,7 +34,7 @@
 	<numbers>
 		<symbols>
 			<nativeZeroDigit>0</nativeZeroDigit>
-			<exponential draft="provisional">E</exponential>
+			<exponential>E</exponential>
 		</symbols>
 		<decimalFormats>
 			<decimalFormatLength>

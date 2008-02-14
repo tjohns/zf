@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.98 $"/>
-		<generation date="$Date: 2007/07/20 18:19:17 $"/>
+		<version number="$Revision: 1.99 $"/>
+		<generation date="$Date: 2007/11/14 16:26:57 $"/>
 		<language type="es"/>
 	</identity>
 	<localeDisplayNames>
 		<languages>
 			<language type="aa">afar</language>
 			<language type="ab">abjasio</language>
-			<language type="ab" alt="proposed-x1001" draft="unconfirmed">abjaso</language>
 			<language type="ace">acehnés</language>
 			<language type="ach">acoli</language>
 			<language type="ada">adangme</language>
@@ -18,26 +16,23 @@
 			<language type="ae">avéstico</language>
 			<language type="af">afrikaans</language>
 			<language type="afa">afroasiáticas (otras)</language>
-			<language type="afa" alt="proposed-x1001" draft="unconfirmed">lengua afroasiática</language>
 			<language type="afh">afrihili</language>
-			<language type="ain" references="R039">ainu</language>
+			<language type="ain">ainu</language>
 			<language type="ak">akan</language>
 			<language type="akk">acadio</language>
 			<language type="ale">aleutiano</language>
 			<language type="alg">lenguas algonquinas</language>
-			<language type="alt" references="R040">altái meridional</language>
+			<language type="alt">altái meridional</language>
 			<language type="am">amárico</language>
 			<language type="an">aragonés</language>
 			<language type="ang">inglés antiguo (450-1100 aprox.)</language>
-			<language type="ang" references="RP1" alt="proposed-x1001" draft="unconfirmed">inglés antiguo</language>
-			<language type="anp" references="R039" draft="provisional">angika</language>
+			<language type="anp">angika</language>
 			<language type="apa">lenguas apache</language>
 			<language type="ar">árabe</language>
 			<language type="arc">arameo</language>
 			<language type="arn">araucano</language>
 			<language type="arp">arapaho</language>
 			<language type="art">artificiales (otras)</language>
-			<language type="art" alt="proposed-x1001" draft="unconfirmed">lengua artificial</language>
 			<language type="arw">arahuaco</language>
 			<language type="as">asamés</language>
 			<language type="ast">asturiano</language>
@@ -46,9 +41,7 @@
 			<language type="av">avar</language>
 			<language type="awa">avadhi</language>
 			<language type="ay">aimara</language>
-			<language type="ay" alt="proposed-x1001" draft="unconfirmed">aymara</language>
 			<language type="az">azerí</language>
-			<language type="az" alt="proposed-x1001" draft="unconfirmed">azerbaiyano</language>
 			<language type="ba">bashkir</language>
 			<language type="bad">banda</language>
 			<language type="bai">lenguas bamileke</language>
@@ -56,12 +49,10 @@
 			<language type="ban">balinés</language>
 			<language type="bas">basa</language>
 			<language type="bat">bálticas (otras)</language>
-			<language type="bat" alt="proposed-x1001" draft="unconfirmed">lengua báltica</language>
 			<language type="be">bielorruso</language>
 			<language type="bej">beja</language>
 			<language type="bem">bemba</language>
 			<language type="ber">bereberes (otras)</language>
-			<language type="ber" alt="proposed-x1001" draft="unconfirmed">bereber</language>
 			<language type="bg">búlgaro</language>
 			<language type="bh">bihari</language>
 			<language type="bho">bhojpuri</language>
@@ -78,21 +69,17 @@
 			<language type="bs">bosnio</language>
 			<language type="btk">batak</language>
 			<language type="bua">buriat</language>
-			<language type="bua" alt="proposed-x1001" draft="unconfirmed">buriato</language>
 			<language type="bug">buginés</language>
 			<language type="byn">blin</language>
 			<language type="ca">catalán</language>
 			<language type="cad">caddo</language>
 			<language type="cai">indias centroamericanas (otras)</language>
-			<language type="cai" alt="proposed-x1001" draft="unconfirmed">lengua india centroamericana</language>
 			<language type="car">caribe</language>
 			<language type="cau">caucásicas (otras)</language>
-			<language type="cau" alt="proposed-x1001" draft="unconfirmed">lengua caucásica</language>
-			<language type="cch" references="R040" draft="provisional">atsam</language>
+			<language type="cch">atsam</language>
 			<language type="ce">checheno</language>
 			<language type="ceb">cebuano</language>
 			<language type="cel">celtas (otras)</language>
-			<language type="cel" alt="proposed-x1001" draft="unconfirmed">lengua celta</language>
 			<language type="ch">chamorro</language>
 			<language type="chb">chibcha</language>
 			<language type="chg">chagatái</language>
@@ -107,20 +94,15 @@
 			<language type="co">corso</language>
 			<language type="cop">copto</language>
 			<language type="cpe">criollas y pidgins, basadas en el inglés (otras)</language>
-			<language type="cpe" alt="proposed-x1001" draft="unconfirmed">lengua criolla o pidgin basada en el inglés</language>
 			<language type="cpf">criollas y pidgins, basadas en el francés (otras)</language>
-			<language type="cpf" alt="proposed-x1001" draft="unconfirmed">lengua criolla o pidgin basada en el francés</language>
 			<language type="cpp">criollas y pidgins, basadas en el portugués (otras)</language>
-			<language type="cpp" alt="proposed-x1001" draft="unconfirmed">lengua criolla o pidgin basada en el portugués</language>
 			<language type="cr">cree</language>
 			<language type="crh">tártaro de Crimea</language>
 			<language type="crp">criollas y pidgins (otras)</language>
-			<language type="crp" alt="proposed-x1001" draft="unconfirmed">lengua criolla o pidgin</language>
 			<language type="cs">checo</language>
 			<language type="csb">casubio</language>
 			<language type="cu">eslavo eclesiástico</language>
 			<language type="cus">cusitas (otras)</language>
-			<language type="cus" alt="proposed-x1001" draft="unconfirmed">lengua cusita</language>
 			<language type="cv">chuvash</language>
 			<language type="cy">galés</language>
 			<language type="da">danés</language>
@@ -128,79 +110,64 @@
 			<language type="dar">dargva</language>
 			<language type="day">dayak</language>
 			<language type="de">alemán</language>
-			<language type="de_AT" references="R040" draft="provisional">alemán de Austria</language>
-			<language type="de_CH" references="R040" draft="provisional">alto alemán de Suiza</language>
+			<language type="de_AT">alemán de Austria</language>
+			<language type="de_CH">alto alemán de Suiza</language>
 			<language type="del">delaware</language>
 			<language type="den">slave (atabasca)</language>
-			<language type="den" references="RP1" alt="proposed-x1001" draft="unconfirmed">slave</language>
 			<language type="dgr">dogrib</language>
 			<language type="din">dinka</language>
 			<language type="doi">dogri</language>
 			<language type="dra">dravídicas (otras)</language>
-			<language type="dra" alt="proposed-x1001" draft="unconfirmed">lengua dravídica</language>
 			<language type="dsb">sorbio inferior</language>
 			<language type="dua">duala</language>
 			<language type="dum">neerlandés medieval</language>
 			<language type="dv">divehi</language>
 			<language type="dyu">diula</language>
-			<language type="dz" references="R039">dzongkha</language>
-			<language type="dz" alt="proposed-x1001" draft="unconfirmed">butanés</language>
+			<language type="dz">dzongkha</language>
 			<language type="ee">ewe</language>
 			<language type="efi">efik</language>
 			<language type="egy">egipcio (antiguo)</language>
-			<language type="egy" references="R039" alt="proposed-x1001" draft="unconfirmed">egipcio antiguo</language>
 			<language type="eka">ekajuk</language>
 			<language type="el">griego</language>
 			<language type="elx">elamita</language>
 			<language type="en">inglés</language>
-			<language type="en_AU" references="R039">inglés australiano</language>
-			<language type="en_AU" alt="proposed-x1001" draft="unconfirmed">inglés (australia)</language>
-			<language type="en_CA" references="R039" draft="provisional">inglés canadiense</language>
-			<language type="en_GB" references="R039">inglés británico</language>
-			<language type="en_GB" alt="proposed-x1001" draft="unconfirmed">inglés (reino unido)</language>
-			<language type="en_US" references="R039">inglés estadounidense</language>
-			<language type="en_US" alt="proposed-x1001" draft="unconfirmed">inglés (ee.uu.)</language>
+			<language type="en_AU">inglés australiano</language>
+			<language type="en_CA">inglés canadiense</language>
+			<language type="en_GB">inglés británico</language>
+			<language type="en_US">inglés estadounidense</language>
 			<language type="enm">inglés medieval</language>
 			<language type="eo">esperanto</language>
 			<language type="es">español</language>
-			<language type="es_419" references="R040" draft="provisional">español latinoamericano</language>
-			<language type="es_ES" references="R040" draft="provisional">español de España</language>
+			<language type="es_419">español latinoamericano</language>
+			<language type="es_ES">español de España</language>
 			<language type="et">estonio</language>
 			<language type="eu">vasco</language>
 			<language type="ewo">ewondo</language>
 			<language type="fa">persa</language>
-			<language type="fa" alt="proposed-x1001" draft="unconfirmed">farsi</language>
 			<language type="fan">fang</language>
 			<language type="fat">fanti</language>
 			<language type="ff">fula</language>
 			<language type="fi">finés</language>
-			<language type="fi" alt="proposed-x1001" draft="unconfirmed">finlandés</language>
 			<language type="fil">filipino</language>
 			<language type="fiu">finougrias (otras)</language>
-			<language type="fiu" alt="proposed-x1001" draft="unconfirmed">lengua finougria</language>
-			<language type="fj" references="R039">fidjiano</language>
+			<language type="fj">fidjiano</language>
 			<language type="fo">feroés</language>
-			<language type="fo" alt="proposed-x1001" draft="unconfirmed">feroe</language>
-			<language type="fon" draft="provisional">fon</language>
+			<language type="fon">fon</language>
 			<language type="fr">francés</language>
-			<language type="fr_CA" references="R040" draft="provisional">francés canadiense</language>
-			<language type="fr_CH" references="R039" draft="provisional">francés de Suiza</language>
+			<language type="fr_CA">francés canadiense</language>
+			<language type="fr_CH">francés de Suiza</language>
 			<language type="frm">francés medieval</language>
 			<language type="fro">francés antiguo</language>
-			<language type="frr" references="RP1" draft="provisional">frisón septentrional</language>
-			<language type="frs" references="RP1" draft="provisional">frisón oriental</language>
+			<language type="frr">frisón septentrional</language>
+			<language type="frs">frisón oriental</language>
 			<language type="fur">friulano</language>
 			<language type="fy">frisón</language>
-			<language type="fy" references="RP1" alt="proposed-x1001" draft="unconfirmed">frisón occidental</language>
 			<language type="ga">irlandés</language>
-			<language type="ga" alt="proposed-x1001" draft="unconfirmed">gaélico</language>
 			<language type="gaa">ga</language>
 			<language type="gay">gayo</language>
-			<language type="gay" references="R040" alt="proposed-x1001" draft="unconfirmed">gayón</language>
 			<language type="gba">gbaya</language>
 			<language type="gd">gaélico escocés</language>
 			<language type="gem">germánicas (otras)</language>
-			<language type="gem" alt="proposed-x1001" draft="unconfirmed">lengua germánica</language>
 			<language type="gez">geez</language>
 			<language type="gil">gilbertés</language>
 			<language type="gl">gallego</language>
@@ -213,7 +180,6 @@
 			<language type="grb">grebo</language>
 			<language type="grc">griego antiguo</language>
 			<language type="gsw">alemán suizo</language>
-			<language type="gsw" references="R039" alt="proposed-x1001" draft="unconfirmed">alemán de Suiza</language>
 			<language type="gu">gujarati</language>
 			<language type="gv">gaélico manés</language>
 			<language type="gwi">kutchin</language>
@@ -240,18 +206,14 @@
 			<language type="ie">interlingue</language>
 			<language type="ig">igbo</language>
 			<language type="ii">sichuan yi</language>
-			<language type="ijo" draft="provisional">ijo</language>
+			<language type="ijo">ijo</language>
 			<language type="ik">inupiaq</language>
-			<language type="ik" alt="proposed-x1001" draft="unconfirmed">inupiak</language>
 			<language type="ilo">ilocano</language>
 			<language type="inc">índicas (otras)</language>
-			<language type="inc" alt="proposed-x1001" draft="unconfirmed">lengua índica</language>
 			<language type="ine">indoeuropeas (otras)</language>
-			<language type="ine" alt="proposed-x1001" draft="unconfirmed">lengua indoeuropea</language>
 			<language type="inh">ingush</language>
 			<language type="io">ido</language>
 			<language type="ira">iranias (otras)</language>
-			<language type="ira" alt="proposed-x1001" draft="unconfirmed">lengua irania</language>
 			<language type="iro">lenguas iroquesas</language>
 			<language type="is">islandés</language>
 			<language type="it">italiano</language>
@@ -265,48 +227,40 @@
 			<language type="kaa">karakalpako</language>
 			<language type="kab">cabila</language>
 			<language type="kac">kachin</language>
-			<language type="kaj" references="R040" draft="provisional">jju</language>
+			<language type="kaj">jju</language>
 			<language type="kam">kamba</language>
 			<language type="kar">karen</language>
 			<language type="kaw">kawi</language>
 			<language type="kbd">kabardiano</language>
-			<language type="kcg" references="R040" draft="provisional">tyap</language>
-			<language type="kcg" references="R040" alt="proposed-x1001" draft="unconfirmed">tiap</language>
-			<language type="kfo" references="R040" draft="provisional">koro</language>
+			<language type="kcg">tyap</language>
+			<language type="kfo">koro</language>
 			<language type="kg">kongo</language>
 			<language type="kha">khasi</language>
 			<language type="khi">khoisan (otras)</language>
-			<language type="khi" alt="proposed-x1001" draft="unconfirmed">lengua joisana</language>
 			<language type="kho">kotanés</language>
 			<language type="ki">kikuyu</language>
 			<language type="kj">kuanyama</language>
 			<language type="kk">kazajo</language>
-			<language type="kk" alt="proposed-x1001" draft="unconfirmed">kazaco</language>
 			<language type="kl">groenlandés</language>
 			<language type="km">jemer</language>
-			<language type="km" alt="proposed-x1001" draft="unconfirmed">camboyano</language>
 			<language type="kmb">kimbundu</language>
 			<language type="kn">canarés</language>
-			<language type="kn" alt="proposed-x1001" draft="unconfirmed">kannada</language>
 			<language type="ko">coreano</language>
 			<language type="kok">konkani</language>
 			<language type="kos">kosraeano</language>
 			<language type="kpe">kpelle</language>
 			<language type="kr">kanuri</language>
 			<language type="krc">karachay-balkar</language>
-			<language type="krl" references="RP1" draft="provisional">carelio</language>
+			<language type="krl">carelio</language>
 			<language type="kro">kru</language>
 			<language type="kru">kurukh</language>
 			<language type="ks">cachemiro</language>
-			<language type="ks" alt="proposed-x1001" draft="unconfirmed">cachemir</language>
 			<language type="ku">kurdo</language>
 			<language type="kum">kumyk</language>
 			<language type="kut">kutenai</language>
 			<language type="kv">komi</language>
 			<language type="kw">córnico</language>
 			<language type="ky">kirghiz</language>
-			<language type="ky" alt="proposed-x1001" draft="unconfirmed">kirguizo</language>
-			<language type="ky" references="R039" alt="proposed-x1002" draft="unconfirmed">kirguís</language>
 			<language type="la">latín</language>
 			<language type="lad">ladino</language>
 			<language type="lah">lahnda</language>
@@ -317,7 +271,6 @@
 			<language type="li">limburgués</language>
 			<language type="ln">lingala</language>
 			<language type="lo">laosiano</language>
-			<language type="lo" alt="proposed-x1001" draft="unconfirmed">letón</language>
 			<language type="lol">mongo</language>
 			<language type="loz">lozi</language>
 			<language type="lt">lituano</language>
@@ -325,16 +278,15 @@
 			<language type="lua">luba-lulua</language>
 			<language type="lui">luiseño</language>
 			<language type="lun">lunda</language>
-			<language type="luo" draft="provisional">luo</language>
+			<language type="luo">luo</language>
 			<language type="lus">lushai</language>
-			<language type="lv" draft="provisional">letón</language>
+			<language type="lv">letón</language>
 			<language type="mad">madurés</language>
 			<language type="mag">magahi</language>
 			<language type="mai">maithili</language>
 			<language type="mak">macasar</language>
 			<language type="man">mandingo</language>
 			<language type="map">austronesias (otras)</language>
-			<language type="map" alt="proposed-x1001" draft="unconfirmed">lengua austronesia</language>
 			<language type="mas">masai</language>
 			<language type="mdf">moksha</language>
 			<language type="mdr">mandar</language>
@@ -348,7 +300,6 @@
 			<language type="mis">lenguas varias</language>
 			<language type="mk">macedonio</language>
 			<language type="mkh">mon-jemer (otras)</language>
-			<language type="mkh" alt="proposed-x1001" draft="unconfirmed">lengua mon-jemer</language>
 			<language type="ml">malayalam</language>
 			<language type="mn">mongol</language>
 			<language type="mnc">manchú</language>
@@ -363,7 +314,7 @@
 			<language type="mul">lenguas múltiples</language>
 			<language type="mun">lenguas munda</language>
 			<language type="mus">creek</language>
-			<language type="mwl" references="R039">mirandés</language>
+			<language type="mwl">mirandés</language>
 			<language type="mwr">marwari</language>
 			<language type="my">birmano</language>
 			<language type="myn">maya</language>
@@ -371,7 +322,6 @@
 			<language type="na">nauruano</language>
 			<language type="nah">náhuatl</language>
 			<language type="nai">indias norteamericanas (otras)</language>
-			<language type="nai" alt="proposed-x1001" draft="unconfirmed">lengua india norteamericana</language>
 			<language type="nap">napolitano</language>
 			<language type="nb">bokmal noruego</language>
 			<language type="nd">ndebele septentrional</language>
@@ -381,31 +331,25 @@
 			<language type="ng">ndonga</language>
 			<language type="nia">nias</language>
 			<language type="nic">níger-kordofanianas (otras)</language>
-			<language type="nic" alt="proposed-x1001" draft="unconfirmed">lengua níger-cordofana</language>
 			<language type="niu">niueano</language>
 			<language type="nl">neerlandés</language>
-			<language type="nl" alt="proposed-x1001" draft="unconfirmed">holandés</language>
-			<language type="nl_BE" references="R039" draft="provisional">flamenco</language>
+			<language type="nl_BE">flamenco</language>
 			<language type="nn">nynorsk noruego</language>
-			<language type="nn" alt="proposed-x1001" draft="unconfirmed">noruego (nynorsk)</language>
-			<language type="nn" alt="proposed-x1002" draft="unconfirmed">noruego nynorsk</language>
 			<language type="no">noruego</language>
 			<language type="nog">nogai</language>
 			<language type="non">nórdico antiguo</language>
-			<language type="nqo" references="R039" draft="provisional">n’ko</language>
+			<language type="nqo">n’ko</language>
 			<language type="nr">ndebele meridional</language>
 			<language type="nso">sotho septentrional</language>
 			<language type="nub">lenguas nubias</language>
 			<language type="nv">navajo</language>
-			<language type="nwc" references="R040">newari clásico</language>
+			<language type="nwc">newari clásico</language>
 			<language type="ny">nyanja</language>
 			<language type="nym">nyamwezi</language>
 			<language type="nyn">nyankole</language>
 			<language type="nyo">nyoro</language>
 			<language type="nzi">nzima</language>
 			<language type="oc">occitano (después del 1500)</language>
-			<language type="oc" alt="proposed-x1001" draft="unconfirmed">occitano</language>
-			<language type="oc" references="RP1" alt="proposed-x1002" draft="unconfirmed">occitano</language>
 			<language type="oj">ojibwa</language>
 			<language type="om">oromo</language>
 			<language type="or">oriya</language>
@@ -419,79 +363,65 @@
 			<language type="pal">pahlavi</language>
 			<language type="pam">pampanga</language>
 			<language type="pap">papiamento</language>
-			<language type="pau" references="R039">palauano</language>
+			<language type="pau">palauano</language>
 			<language type="peo">persa antiguo</language>
 			<language type="phi">filipinas (otras)</language>
-			<language type="phi" alt="proposed-x1001" draft="unconfirmed">lengua filipina</language>
 			<language type="phn">fenicio</language>
 			<language type="pi">pali</language>
 			<language type="pl">polaco</language>
 			<language type="pon">pohnpeiano</language>
-			<language type="pra" references="R039">lenguas prácritas</language>
+			<language type="pra">lenguas prácritas</language>
 			<language type="pro">provenzal antiguo</language>
 			<language type="ps">pashto</language>
-			<language type="ps" alt="proposed-x1001" draft="unconfirmed">pastún</language>
 			<language type="pt">portugués</language>
-			<language type="pt_BR" references="R040">portugués de Brasil</language>
-			<language type="pt_BR" alt="proposed-x1001" draft="unconfirmed">portugués (brasil)</language>
-			<language type="pt_PT" references="R040">portugués de Portugal</language>
-			<language type="pt_PT" alt="proposed-x1001" draft="unconfirmed">portugués (portugal)</language>
+			<language type="pt_BR">portugués de Brasil</language>
+			<language type="pt_PT">portugués de Portugal</language>
 			<language type="qu">quechua</language>
 			<language type="raj">rajasthani</language>
 			<language type="rap">rapanui</language>
 			<language type="rar">rarotongano</language>
 			<language type="rm">retorrománico</language>
-			<language type="rm" alt="proposed-x1001" draft="unconfirmed">reto-romance</language>
 			<language type="rn">kiroundi</language>
 			<language type="ro">rumano</language>
 			<language type="roa">románicas (otras)</language>
-			<language type="roa" alt="proposed-x1001" draft="unconfirmed">lengua romance</language>
 			<language type="rom">romaní</language>
 			<language type="root">raíz</language>
 			<language type="ru">ruso</language>
-			<language type="rup" references="R039">arrumano</language>
+			<language type="rup">arrumano</language>
 			<language type="rw">kinyarwanda</language>
-			<language type="rw" alt="proposed-x1001" draft="unconfirmed">kinyarruandés</language>
 			<language type="sa">sánscrito</language>
 			<language type="sad">sandawe</language>
 			<language type="sah">yakut</language>
 			<language type="sai">indias sudamericanas (otras)</language>
-			<language type="sai" alt="proposed-x1001" draft="unconfirmed">lengua india sudamericana</language>
 			<language type="sal">lenguas salish</language>
 			<language type="sam">arameo samaritano</language>
 			<language type="sas">sasak</language>
 			<language type="sat">santali</language>
 			<language type="sc">sardo</language>
-			<language type="scn" references="R039">siciliano</language>
+			<language type="scn">siciliano</language>
 			<language type="sco">escocés</language>
 			<language type="sd">sindhi</language>
 			<language type="se">sami septentrional</language>
 			<language type="sel">selkup</language>
 			<language type="sem">semíticas (otras)</language>
-			<language type="sem" alt="proposed-x1001" draft="unconfirmed">lengua semítica</language>
 			<language type="sg">sango</language>
-			<language type="sg" alt="proposed-x1001" draft="unconfirmed">sangro</language>
 			<language type="sga">irlandés antiguo</language>
 			<language type="sgn">lenguajes de signos</language>
 			<language type="sh">serbocroata</language>
-			<language type="sh" alt="proposed-x1001" draft="unconfirmed">serbo-croata</language>
 			<language type="shn">shan</language>
-			<language type="si" references="R040">cingalés</language>
+			<language type="si">cingalés</language>
 			<language type="sid">sidamo</language>
 			<language type="sio">lenguas sioux</language>
 			<language type="sit">sino-tibetanas (otras)</language>
-			<language type="sit" alt="proposed-x1001" draft="unconfirmed">lengua sino-tibetana</language>
 			<language type="sk">eslovaco</language>
 			<language type="sl">esloveno</language>
 			<language type="sla">eslavas (otras)</language>
-			<language type="sla" alt="proposed-x1001" draft="unconfirmed">lengua eslava</language>
 			<language type="sm">samoano</language>
 			<language type="sma">sami meridional</language>
 			<language type="smi">lenguas sami (otras)</language>
-			<language type="smi" alt="proposed-x1001" draft="unconfirmed">lengua sami</language>
 			<language type="smj">sami lule</language>
 			<language type="smn">sami inari</language>
-			<language type="sms" references="R040">sami skolt</language>
+			<language type="sms">sami skolt</language>
 			<language type="sn">shona</language>
 			<language type="snk">soninké</language>
 			<language type="so">somalí</language>
@@ -499,14 +429,11 @@
 			<language type="son">songhai</language>
 			<language type="sq">albanés</language>
 			<language type="sr">serbio</language>
-			<language type="srn" references="R039">sranan tongo</language>
+			<language type="srn">sranan tongo</language>
 			<language type="srr">serer</language>
 			<language type="ss">siswati</language>
-			<language type="ss" alt="proposed-x1001" draft="unconfirmed">sisuati</language>
 			<language type="ssa">nilosaharianas (otras)</language>
-			<language type="ssa" alt="proposed-x1001" draft="unconfirmed">lengua nilo-sahariana</language>
 			<language type="st">sesotho</language>
-			<language type="st" alt="proposed-x1001" draft="unconfirmed">sesoto</language>
 			<language type="su">sundanés</language>
 			<language type="suk">sukuma</language>
 			<language type="sus">susu</language>
@@ -516,123 +443,105 @@
 			<language type="syr">siriaco</language>
 			<language type="ta">tamil</language>
 			<language type="tai">tai (otras)</language>
-			<language type="tai" alt="proposed-x1001" draft="unconfirmed">lengua tai</language>
 			<language type="te">telugu</language>
 			<language type="tem">temne</language>
 			<language type="ter">tereno</language>
 			<language type="tet">tetún</language>
-			<language type="tet" references="R039" alt="proposed-x1001" draft="unconfirmed">tetun</language>
 			<language type="tg">tayiko</language>
 			<language type="th">tailandés</language>
-			<language type="ti" references="R039">tigriña</language>
-			<language type="ti" alt="proposed-x1001" draft="unconfirmed">tigrinya</language>
+			<language type="ti">tigriña</language>
 			<language type="tig">tigré</language>
-			<language type="tiv" draft="provisional">tiv</language>
-			<language type="tk" references="R039">turcomano</language>
-			<language type="tk" alt="proposed-x1001" draft="unconfirmed">turkmeno</language>
+			<language type="tiv">tiv</language>
+			<language type="tk">turcomano</language>
 			<language type="tkl">tokelauano</language>
 			<language type="tl">tagalo</language>
 			<language type="tlh">klingon</language>
 			<language type="tli">tlingit</language>
 			<language type="tmh">tamashek</language>
 			<language type="tn">setchwana</language>
-			<language type="tn" references="RP1" alt="proposed-x1001" draft="unconfirmed">setswana</language>
-			<language type="tn" references="R040" alt="proposed-x1002" draft="unconfirmed">sechuanés</language>
-			<language type="tn" alt="proposed-x1003" draft="unconfirmed">setsuana</language>
 			<language type="to">tonga (Islas Tonga)</language>
-			<language type="to" references="RP1" alt="proposed-x1001" draft="unconfirmed">tongano</language>
 			<language type="tog">tonga (Niasa)</language>
-			<language type="tog" references="RP1" alt="proposed-x1001" draft="unconfirmed">tonga del Nyasa</language>
 			<language type="tpi">tok pisin</language>
 			<language type="tr">turco</language>
 			<language type="ts">tsonga</language>
 			<language type="tsi">tsimshiano</language>
-			<language type="tt" references="R039">tártaro</language>
+			<language type="tt">tártaro</language>
 			<language type="tum">tumbuka</language>
 			<language type="tup">lenguas tupí</language>
 			<language type="tut">altaicas (otras)</language>
-			<language type="tut" alt="proposed-x1001" draft="unconfirmed">lengua altaica</language>
 			<language type="tvl">tuvaluano</language>
 			<language type="tw">twi</language>
 			<language type="ty">tahitiano</language>
 			<language type="tyv">tuviniano</language>
 			<language type="udm">udmurt</language>
 			<language type="ug">uigur</language>
-			<language type="ug" alt="proposed-x1001" draft="unconfirmed">uiguro</language>
 			<language type="uga">ugarítico</language>
 			<language type="uk">ucraniano</language>
 			<language type="umb">umbundu</language>
 			<language type="und">indeterminada</language>
 			<language type="ur">urdu</language>
 			<language type="uz">uzbeko</language>
-			<language type="vai" draft="provisional">vai</language>
+			<language type="vai">vai</language>
 			<language type="ve">venda</language>
 			<language type="vi">vietnamita</language>
-			<language type="vo" references="R039">volapük</language>
-			<language type="vo" alt="proposed-x1001" draft="unconfirmed">volapuk</language>
+			<language type="vo">volapük</language>
 			<language type="vot">vótico</language>
 			<language type="wa">valón</language>
 			<language type="wak">lenguas wakasha</language>
-			<language type="wak" alt="proposed-x1001" draft="unconfirmed">lengua wakashan</language>
 			<language type="wal">walamo</language>
 			<language type="war">waray</language>
 			<language type="was">washo</language>
 			<language type="wen">lenguas sorbias</language>
 			<language type="wo">uolof</language>
-			<language type="wo" alt="proposed-x1001" draft="unconfirmed">wolof</language>
-			<language type="wo" references="R040" alt="proposed-x1002" draft="unconfirmed">wolof</language>
 			<language type="xal">kalmyk</language>
 			<language type="xh">xhosa</language>
-			<language type="yao" draft="provisional">yao</language>
+			<language type="yao">yao</language>
 			<language type="yap">yapés</language>
-			<language type="yi" references="R039">yídish</language>
-			<language type="yi" alt="proposed-x1001" draft="unconfirmed">yiddish</language>
+			<language type="yi">yídish</language>
 			<language type="yo">yoruba</language>
 			<language type="ypk">lenguas yupik</language>
 			<language type="za">zhuang</language>
 			<language type="zap">zapoteco</language>
 			<language type="zen">zenaga</language>
 			<language type="zh">chino</language>
-			<language type="zh_Hans" references="R039">chino simplificado</language>
-			<language type="zh_Hans" alt="proposed-x1001" draft="unconfirmed">chino (simplificado)</language>
-			<language type="zh_Hant" references="R039">chino tradicional</language>
-			<language type="zh_Hant" alt="proposed-x1001" draft="unconfirmed">chino (tradicional)</language>
+			<language type="zh_Hans">chino simplificado</language>
+			<language type="zh_Hant">chino tradicional</language>
 			<language type="znd">zande</language>
 			<language type="zu">zulú</language>
 			<language type="zun">zuni</language>
-			<language type="zxx" draft="provisional">sin contenido lingüístico</language>
-			<language type="zza" references="R039" draft="provisional">zazaki</language>
+			<language type="zxx">sin contenido lingüístico</language>
+			<language type="zza">zazaki</language>
 		</languages>
 		<scripts>
 			<script type="Arab">árabe</script>
 			<script type="Armn">armenio</script>
-			<script type="Bali" references="RP1" draft="provisional">balinés</script>
+			<script type="Bali">balinés</script>
 			<script type="Batk">batak</script>
 			<script type="Beng">bengalí</script>
 			<script type="Blis">símbolos blis</script>
 			<script type="Bopo">bopomofo</script>
 			<script type="Brah">brahmi</script>
 			<script type="Brai">braille</script>
-			<script type="Bugi" references="RP1" draft="provisional">bugi</script>
+			<script type="Bugi">bugi</script>
 			<script type="Buhd">buhid</script>
 			<script type="Cans">símbolos aborígenes canadienses unificados</script>
-			<script type="Cari" references="RP1" draft="provisional">cario</script>
-			<script type="Cham" references="RP1" draft="provisional">cham</script>
+			<script type="Cari">cario</script>
+			<script type="Cham">cham</script>
 			<script type="Cher">cherokee</script>
 			<script type="Cirt">cirth</script>
 			<script type="Copt">copto</script>
 			<script type="Cprt">chipriota</script>
 			<script type="Cyrl">cirílico</script>
-			<script type="Cyrs" draft="provisional">cirílico del antiguo eslavo eclesiástico</script>
+			<script type="Cyrs">cirílico del antiguo eslavo eclesiástico</script>
 			<script type="Deva">devanagari</script>
 			<script type="Dsrt">deseret</script>
 			<script type="Egyd">egipcio demótico</script>
 			<script type="Egyh">egipcio hierático</script>
-			<script type="Egyp" references="R041">jeroglíficos egipcios</script>
-			<script type="Ethi" references="R040">etiópico</script>
-			<script type="Geok" references="RP1" draft="provisional">georgiano jutsuri</script>
+			<script type="Egyp">jeroglíficos egipcios</script>
+			<script type="Ethi">etiópico</script>
+			<script type="Geok">georgiano jutsuri</script>
 			<script type="Geor">georgiano</script>
-			<script type="Glag" references="RP1" draft="provisional">glagolítico</script>
+			<script type="Glag">glagolítico</script>
 			<script type="Goth">gótico</script>
 			<script type="Grek">griego</script>
 			<script type="Gujr">gujarati</script>
@@ -645,92 +554,86 @@
 			<script type="Hebr">hebreo</script>
 			<script type="Hira">hiragana</script>
 			<script type="Hmng">pahawh hmong</script>
-			<script type="Hrkt" references="R039">katakana o hiragana</script>
-			<script type="Hung" references="R040">húngaro antiguo</script>
+			<script type="Hrkt">katakana o hiragana</script>
+			<script type="Hung">húngaro antiguo</script>
 			<script type="Inds">Indio (harappan)</script>
-			<script type="Inds" references="R039" alt="proposed-x1001" draft="unconfirmed">Indo</script>
-			<script type="Inds" alt="proposed-x1002" draft="unconfirmed">del Indo</script>
 			<script type="Ital">antigua bastardilla</script>
-			<script type="Java" references="R039">javanés</script>
-			<script type="Jpan" references="RP1" draft="provisional">japonés</script>
-			<script type="Kali" references="R040" draft="provisional">kayah li</script>
+			<script type="Java">javanés</script>
+			<script type="Jpan">japonés</script>
+			<script type="Kali">kayah li</script>
 			<script type="Kana">katakana</script>
-			<script type="Khar" references="R040" draft="provisional">kharosthi</script>
+			<script type="Khar">kharosthi</script>
 			<script type="Khmr">jemer</script>
 			<script type="Knda">canarés</script>
-			<script type="Lana" references="R040" draft="provisional">lanna</script>
+			<script type="Lana">lanna</script>
 			<script type="Laoo">lao</script>
 			<script type="Latf">latín (variante fraktur)</script>
-			<script type="Latf" alt="proposed-x1001" draft="unconfirmed">latino fraktur</script>
 			<script type="Latg">latín (variante gaélica)</script>
-			<script type="Latg" alt="proposed-x1001" draft="unconfirmed">latino gaélico</script>
 			<script type="Latn">latín</script>
-			<script type="Lepc" references="RP1" draft="provisional">lepcha</script>
+			<script type="Lepc">lepcha</script>
 			<script type="Limb">limbu</script>
 			<script type="Lina">lineal A</script>
-			<script type="Linb" references="R040">lineal B</script>
-			<script type="Lyci" references="RP1" draft="provisional">licio</script>
-			<script type="Lydi" references="RP1" draft="provisional">lidio</script>
-			<script type="Mand" references="RP1" draft="provisional">mandeo</script>
-			<script type="Maya" references="R041">jeroglíficos mayas</script>
+			<script type="Linb">lineal B</script>
+			<script type="Lyci">licio</script>
+			<script type="Lydi">lidio</script>
+			<script type="Mand">mandeo</script>
+			<script type="Maya">jeroglíficos mayas</script>
 			<script type="Mero">meroítico</script>
 			<script type="Mlym">malayálam</script>
-			<script type="Mong" references="R039">mongol</script>
-			<script type="Moon" draft="provisional">moon</script>
-			<script type="Moon" alt="proposed-x1001" draft="unconfirmed">Moon</script>
-			<script type="Mtei" references="RP1" draft="provisional">manipuri</script>
-			<script type="Mymr" references="R040">birmano</script>
-			<script type="Nkoo" references="R039" draft="provisional">n’ko</script>
+			<script type="Mong">mongol</script>
+			<script type="Moon">moon</script>
+			<script type="Mtei">manipuri</script>
+			<script type="Mymr">birmano</script>
+			<script type="Nkoo">n’ko</script>
 			<script type="Ogam">ogham</script>
-			<script type="Olck" references="RP1" draft="provisional">ol ciki</script>
-			<script type="Orkh" references="R039" draft="provisional">orkhon</script>
+			<script type="Olck">ol ciki</script>
+			<script type="Orkh">orkhon</script>
 			<script type="Orya">oriya</script>
 			<script type="Osma">osmaniya</script>
-			<script type="Perm" draft="provisional">permiano antiguo</script>
-			<script type="Phag" references="RP1" draft="provisional">phags-pa</script>
-			<script type="Phnx" references="R040">fenicio</script>
-			<script type="Plrd" references="R040" draft="provisional">Pollard Miao</script>
+			<script type="Perm">permiano antiguo</script>
+			<script type="Phag">phags-pa</script>
+			<script type="Phnx">fenicio</script>
+			<script type="Plrd">Pollard Miao</script>
 			<script type="Qaai">heredado</script>
-			<script type="Rjng" references="RP1" draft="provisional">rejang</script>
-			<script type="Roro" references="RP1" draft="provisional">rongo-rongo</script>
+			<script type="Rjng">rejang</script>
+			<script type="Roro">rongo-rongo</script>
 			<script type="Runr">rúnico</script>
-			<script type="Sara" references="R039" draft="provisional">sarati</script>
-			<script type="Saur" references="R040" draft="provisional">saurashtra</script>
-			<script type="Sgnw" references="R040" draft="provisional">SignWriting</script>
-			<script type="Shaw" references="R039">shaviano</script>
+			<script type="Sara">sarati</script>
+			<script type="Saur">saurashtra</script>
+			<script type="Sgnw">SignWriting</script>
+			<script type="Shaw">shaviano</script>
 			<script type="Sinh">binhala</script>
-			<script type="Sund" references="R039" draft="provisional">sundanés</script>
-			<script type="Sylo" references="R040" draft="provisional">syloti nagri</script>
+			<script type="Sund">sundanés</script>
+			<script type="Sylo">syloti nagri</script>
 			<script type="Syrc">siriaco</script>
-			<script type="Syre" references="R040" draft="provisional">siriaco estrangelo</script>
-			<script type="Syrj" references="RP1" draft="provisional">siriaco occidental</script>
-			<script type="Syrn" references="RP1" draft="provisional">siriaco oriental</script>
+			<script type="Syre">siriaco estrangelo</script>
+			<script type="Syrj">siriaco occidental</script>
+			<script type="Syrn">siriaco oriental</script>
 			<script type="Tagb">tagbanúa</script>
 			<script type="Tale">tai le</script>
-			<script type="Talu" draft="provisional">nuevo tai lue</script>
+			<script type="Talu">nuevo tai lue</script>
 			<script type="Taml">tamil</script>
 			<script type="Telu">telugu</script>
-			<script type="Teng" references="R040" draft="provisional">tengwar</script>
-			<script type="Tfng" references="RP1" draft="provisional">tifinagh</script>
+			<script type="Teng">tengwar</script>
+			<script type="Tfng">tifinagh</script>
 			<script type="Tglg">tagalo</script>
 			<script type="Thaa">thaana</script>
 			<script type="Thai">tailandés</script>
 			<script type="Tibt">tibetano</script>
 			<script type="Ugar">ugarítico</script>
-			<script type="Vaii" references="RP1" draft="provisional">vai</script>
-			<script type="Visp" references="R040" draft="provisional">lenguaje visible</script>
-			<script type="Xpeo" references="RP1" draft="provisional">persa antiguo</script>
-			<script type="Xsux" references="R040" draft="provisional">cuneiforme sumerio-acadio</script>
+			<script type="Vaii">vai</script>
+			<script type="Visp">lenguaje visible</script>
+			<script type="Xpeo">persa antiguo</script>
+			<script type="Xsux">cuneiforme sumerio-acadio</script>
 			<script type="Yiii">yi</script>
-			<script type="Zxxx" draft="provisional">no escrito</script>
+			<script type="Zxxx">no escrito</script>
 			<script type="Zyyy">común</script>
-			<script type="Zzzz" draft="provisional">escritura desconocida o no válida</script>
+			<script type="Zzzz">escritura desconocida o no válida</script>
 		</scripts>
 		<territories>
 			<territory type="001">Mundo</territory>
 			<territory type="002">África</territory>
-			<territory type="003" references="R039" draft="provisional">América del Norte</territory>
-			<territory type="003" references="R039" alt="proposed-x1001" draft="unconfirmed">Norteamérica</territory>
+			<territory type="003">América del Norte</territory>
 			<territory type="005">Suramérica</territory>
 			<territory type="009">Oceanía</territory>
 			<territory type="011">África occidental</territory>
@@ -750,7 +653,7 @@
 			<territory type="054">Melanesia</territory>
 			<territory type="057">Micronesia [057]</territory>
 			<territory type="061">Polinesia</territory>
-			<territory type="062" references="R040" draft="provisional">Asia centromeridional</territory>
+			<territory type="062">Asia centromeridional</territory>
 			<territory type="142">Asia</territory>
 			<territory type="143">Asia central</territory>
 			<territory type="145">Asia occidental</territory>
@@ -758,7 +661,7 @@
 			<territory type="151">Europa oriental</territory>
 			<territory type="154">Europa septentrional</territory>
 			<territory type="155">Europa occidental</territory>
-			<territory type="172" draft="provisional">Commonwealth de Estados Independientes</territory>
+			<territory type="172">Commonwealth de Estados Independientes</territory>
 			<territory type="419">Latinoamérica y el Caribe</territory>
 			<territory type="AD">Andorra</territory>
 			<territory type="AE">Emiratos Árabes Unidos</territory>
@@ -776,16 +679,14 @@
 			<territory type="AU">Australia</territory>
 			<territory type="AW">Aruba</territory>
 			<territory type="AX">Islas Åland</territory>
-			<territory type="AX" alt="proposed-x1001" draft="unconfirmed">Islas �</territory>
 			<territory type="AZ">Azerbaiyán</territory>
 			<territory type="BA">Bosnia-Herzegovina</territory>
-			<territory type="BA" alt="proposed-x1001" draft="unconfirmed">Bosnia y Herzegovina</territory>
 			<territory type="BB">Barbados</territory>
 			<territory type="BD">Bangladesh</territory>
 			<territory type="BE">Bélgica</territory>
 			<territory type="BF">Burkina Faso</territory>
 			<territory type="BG">Bulgaria</territory>
-			<territory type="BH" references="R042">Bahréin</territory>
+			<territory type="BH">Bahréin</territory>
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benín</territory>
 			<territory type="BM">Bermudas</territory>
@@ -800,9 +701,7 @@
 			<territory type="BZ">Belice</territory>
 			<territory type="CA">Canadá</territory>
 			<territory type="CC">Islas Cocos</territory>
-			<territory type="CC" alt="proposed-x1001" draft="unconfirmed">Islas Cocos (Keeling)</territory>
 			<territory type="CD">República Democrática del Congo</territory>
-			<territory type="CD" alt="proposed-x1001" draft="unconfirmed">Zaire</territory>
 			<territory type="CF">República Centroafricana</territory>
 			<territory type="CG">Congo</territory>
 			<territory type="CH">Suiza</territory>
@@ -817,8 +716,6 @@
 			<territory type="CU">Cuba</territory>
 			<territory type="CV">Cabo Verde</territory>
 			<territory type="CX">Isla Christmas</territory>
-			<territory type="CX" references="R042" alt="proposed-x1001" draft="unconfirmed">Isla Christmas</territory>
-			<territory type="CX" alt="proposed-x1002" draft="unconfirmed">Isla Navidad</territory>
 			<territory type="CY">Chipre</territory>
 			<territory type="CZ">República Checa</territory>
 			<territory type="DE">Alemania</territory>
@@ -837,9 +734,7 @@
 			<territory type="FI">Finlandia</territory>
 			<territory type="FJ">Fiyi</territory>
 			<territory type="FK">Islas Malvinas</territory>
-			<territory type="FK" alt="proposed-x1001" draft="unconfirmed">Islas Falkland (Malvinas)</territory>
 			<territory type="FM">Micronesia</territory>
-			<territory type="FM" alt="proposed-x1001" draft="unconfirmed">Micronesia, Estados Federados de</territory>
 			<territory type="FO">Islas Feroe</territory>
 			<territory type="FR">Francia</territory>
 			<territory type="GA">Gabón</territory>
@@ -862,8 +757,6 @@
 			<territory type="GW">Guinea-Bissau</territory>
 			<territory type="GY">Guyana</territory>
 			<territory type="HK">Hong-Kong, Región administrativa especial de China</territory>
-			<territory type="HK" references="R039" alt="proposed-x1001" draft="unconfirmed">Región Administrativa Especial de Hong Kong de la República Popular China</territory>
-			<territory type="HK" references="RP2" alt="short" draft="provisional">Hong Kong</territory>
 			<territory type="HM">Islas Heard y McDonald</territory>
 			<territory type="HN">Honduras</territory>
 			<territory type="HR">Croacia</territory>
@@ -874,10 +767,9 @@
 			<territory type="IL">Israel</territory>
 			<territory type="IM">Isla de Man</territory>
 			<territory type="IN">India</territory>
-			<territory type="IO" references="R042">Territorio Británico del Océano Índico</territory>
+			<territory type="IO">Territorio Británico del Océano Índico</territory>
 			<territory type="IQ">Iraq</territory>
 			<territory type="IR">Irán</territory>
-			<territory type="IR" alt="proposed-x1001" draft="unconfirmed">Irán (República Islámica)</territory>
 			<territory type="IS">Islandia</territory>
 			<territory type="IT">Italia</territory>
 			<territory type="JE">Jersey</territory>
@@ -885,52 +777,39 @@
 			<territory type="JO">Jordania</territory>
 			<territory type="JP">Japón</territory>
 			<territory type="KE">Kenia</territory>
-			<territory type="KG" references="R042">Kirguistán</territory>
-			<territory type="KG" alt="proposed-x1001" draft="unconfirmed">Kirguizistán</territory>
+			<territory type="KG">Kirguistán</territory>
 			<territory type="KH">Camboya</territory>
 			<territory type="KI">Kiribati</territory>
 			<territory type="KM">Comoras</territory>
 			<territory type="KN">San Cristóbal y Nieves</territory>
 			<territory type="KP">Corea del Norte</territory>
-			<territory type="KP" alt="proposed-x1001" draft="unconfirmed">Corea, República Popular Democrática</territory>
 			<territory type="KR">Corea del Sur</territory>
-			<territory type="KR" alt="proposed-x1001" draft="unconfirmed">Corea, República de</territory>
 			<territory type="KW">Kuwait</territory>
 			<territory type="KY">Islas Caimán</territory>
 			<territory type="KZ">Kazajistán</territory>
-			<territory type="KZ" alt="proposed-x1001" draft="unconfirmed">Kazajstán</territory>
 			<territory type="LA">Laos</territory>
 			<territory type="LB">Líbano</territory>
 			<territory type="LC">Santa Lucía</territory>
-			<territory type="LC" alt="proposed-x1001" draft="unconfirmed">Saint Lucia</territory>
 			<territory type="LI">Liechtenstein</territory>
 			<territory type="LK">Sri Lanka</territory>
 			<territory type="LR">Liberia</territory>
 			<territory type="LS">Lesoto</territory>
-			<territory type="LS" alt="proposed-x1001" draft="unconfirmed">Lesotho</territory>
 			<territory type="LT">Lituania</territory>
 			<territory type="LU">Luxemburgo</territory>
 			<territory type="LV">Letonia</territory>
 			<territory type="LY">Libia</territory>
-			<territory type="LY" alt="proposed-x1001" draft="unconfirmed">Libia, República Árabe</territory>
 			<territory type="MA">Marruecos</territory>
 			<territory type="MC">Mónaco</territory>
-			<territory type="MD" references="R039">Moldavia</territory>
+			<territory type="MD">Moldavia</territory>
 			<territory type="ME">Montenegro</territory>
 			<territory type="MG">Madagascar</territory>
 			<territory type="MH">Islas Marshall</territory>
 			<territory type="MK">Macedonia</territory>
-			<territory type="MK" alt="proposed-x1001" draft="unconfirmed">Macedonia, Antigua República Yugoslava</territory>
 			<territory type="ML">Mali</territory>
-			<territory type="ML" alt="proposed-x1001" draft="unconfirmed">Malí</territory>
 			<territory type="MM">Myanmar</territory>
 			<territory type="MN">Mongolia</territory>
 			<territory type="MO">Macao, Región administrativa especial de China</territory>
-			<territory type="MO" alt="proposed-x1001" draft="unconfirmed">Macao</territory>
-			<territory type="MO" references="R040" alt="proposed-x1002" draft="unconfirmed">Región Administrativa Especial de Macao de la República Popular China</territory>
-			<territory type="MO" references="RP2" alt="short" draft="provisional">Macao</territory>
 			<territory type="MP">Islas Marianas del Norte</territory>
-			<territory type="MP" alt="proposed-x1001" draft="unconfirmed">Islas Mariana del Norte</territory>
 			<territory type="MQ">Martinica</territory>
 			<territory type="MR">Mauritania</territory>
 			<territory type="MS">Montserrat</territory>
@@ -938,7 +817,6 @@
 			<territory type="MU">Mauricio</territory>
 			<territory type="MV">Maldivas</territory>
 			<territory type="MW">Malaui</territory>
-			<territory type="MW" alt="proposed-x1001" draft="unconfirmed">Malawi</territory>
 			<territory type="MX">México</territory>
 			<territory type="MY">Malasia</territory>
 			<territory type="MZ">Mozambique</territory>
@@ -959,7 +837,6 @@
 			<territory type="PE">Perú</territory>
 			<territory type="PF">Polinesia Francesa</territory>
 			<territory type="PG">Papúa Nueva Guinea</territory>
-			<territory type="PG" alt="proposed-x1001" draft="unconfirmed">Papúa-Nueva Guinea</territory>
 			<territory type="PH">Filipinas</territory>
 			<territory type="PK">Pakistán</territory>
 			<territory type="PL">Polonia</territory>
@@ -967,7 +844,6 @@
 			<territory type="PN">Pitcairn</territory>
 			<territory type="PR">Puerto Rico</territory>
 			<territory type="PS">Territorios Palestinos</territory>
-			<territory type="PS" alt="proposed-x1001" draft="unconfirmed">Palestina</territory>
 			<territory type="PT">Portugal</territory>
 			<territory type="PW">Palau</territory>
 			<territory type="PY">Paraguay</territory>
@@ -976,7 +852,6 @@
 			<territory type="QU">Unión Europea</territory>
 			<territory type="RE">Reunión</territory>
 			<territory type="RO">Rumanía</territory>
-			<territory type="RO" alt="proposed-x1001" draft="unconfirmed">Rumania</territory>
 			<territory type="RS">Serbia</territory>
 			<territory type="RU">Rusia</territory>
 			<territory type="RW">Ruanda</territory>
@@ -989,14 +864,12 @@
 			<territory type="SH">Santa Elena</territory>
 			<territory type="SI">Eslovenia</territory>
 			<territory type="SJ">Svalbard y Jan Mayen</territory>
-			<territory type="SJ" alt="proposed-x1001" draft="unconfirmed">Islas Svalbard y Jan Mayen</territory>
 			<territory type="SK">Eslovaquia</territory>
-			<territory type="SK" alt="proposed-x1001" draft="unconfirmed">Eslovaquia (República Eslovaca)</territory>
 			<territory type="SL">Sierra Leona</territory>
 			<territory type="SM">San Marino</territory>
 			<territory type="SN">Senegal</territory>
 			<territory type="SO">Somalia</territory>
-			<territory type="SR" references="R042">Surinam</territory>
+			<territory type="SR">Surinam</territory>
 			<territory type="ST">Santo Tomé y Príncipe</territory>
 			<territory type="SV">El Salvador</territory>
 			<territory type="SY">Siria</territory>
@@ -1008,14 +881,12 @@
 			<territory type="TH">Tailandia</territory>
 			<territory type="TJ">Tayikistán</territory>
 			<territory type="TK">Tokelau</territory>
-			<territory type="TK" alt="proposed-x1001" draft="unconfirmed">Islas Tokelau</territory>
 			<territory type="TL">Timor Oriental</territory>
 			<territory type="TM">Turkmenistán</territory>
 			<territory type="TN">Túnez</territory>
 			<territory type="TO">Tonga</territory>
 			<territory type="TR">Turquía</territory>
 			<territory type="TT">Trinidad y Tobago</territory>
-			<territory type="TT" alt="proposed-x1001" draft="unconfirmed">Trinidad y Tabago</territory>
 			<territory type="TV">Tuvalu</territory>
 			<territory type="TW">Taiwán</territory>
 			<territory type="TZ">Tanzania</territory>
@@ -1026,12 +897,10 @@
 			<territory type="UY">Uruguay</territory>
 			<territory type="UZ">Uzbekistán</territory>
 			<territory type="VA">Ciudad del Vaticano</territory>
-			<territory type="VA" alt="proposed-x1001" draft="unconfirmed">Santa Sede (Estado de la Ciudad del Vaticano)</territory>
 			<territory type="VC">San Vicente y las Granadinas</territory>
 			<territory type="VE">Venezuela</territory>
 			<territory type="VG">Islas Vírgenes Británicas</territory>
 			<territory type="VI">Islas Vírgenes de los Estados Unidos</territory>
-			<territory type="VI" alt="proposed-x1001" draft="unconfirmed">Islas Vírgenes, EE.UU.</territory>
 			<territory type="VN">Vietnam</territory>
 			<territory type="VU">Vanuatu</territory>
 			<territory type="WF">Wallis y Futuna</territory>
@@ -1041,11 +910,11 @@
 			<territory type="ZA">Sudáfrica</territory>
 			<territory type="ZM">Zambia</territory>
 			<territory type="ZW">Zimbabue</territory>
-			<territory type="ZZ" draft="provisional">Región desconocida o no válida</territory>
+			<territory type="ZZ">Región desconocida o no válida</territory>
 		</territories>
 		<variants>
-			<variant type="FONIPA" draft="provisional">alfabeto fonético internacional IPA</variant>
-			<variant type="REVISED" references="R040">Ortografía revisada</variant>
+			<variant type="FONIPA">alfabeto fonético internacional IPA</variant>
+			<variant type="REVISED">Ortografía revisada</variant>
 		</variants>
 		<keys>
 			<key type="calendar">calendario</key>
@@ -1053,11 +922,11 @@
 			<key type="currency">moneda</key>
 		</keys>
 		<types>
-			<type type="big5han" key="collation" draft="provisional">orden del chino tradicional - Big5</type>
+			<type type="big5han" key="collation">orden del chino tradicional - Big5</type>
 			<type type="buddhist" key="calendar">calendario budista</type>
 			<type type="chinese" key="calendar">calendario chino</type>
 			<type type="direct" key="collation">orden directo</type>
-			<type type="gb2312han" key="collation" draft="provisional">orden del chino simplificado - GB2312</type>
+			<type type="gb2312han" key="collation">orden del chino simplificado - GB2312</type>
 			<type type="gregorian" key="calendar">calendario gregoriano</type>
 			<type type="hebrew" key="calendar">calendario hebreo</type>
 			<type type="islamic" key="calendar">calendario islámico</type>
@@ -1065,42 +934,32 @@
 			<type type="japanese" key="calendar">calendario japonés</type>
 			<type type="phonebook" key="collation">orden de listín telefónico</type>
 			<type type="pinyin" key="collation">orden pinyin</type>
-			<type type="stroke" key="collation" references="R040">orden de los trazos</type>
+			<type type="stroke" key="collation">orden de los trazos</type>
 			<type type="traditional" key="collation">orden tradicional</type>
 		</types>
 		<measurementSystemNames>
-			<measurementSystemName type="US" references="R040">estadounidense</measurementSystemName>
-			<measurementSystemName type="metric" references="R040">métrico</measurementSystemName>
+			<measurementSystemName type="US">estadounidense</measurementSystemName>
+			<measurementSystemName type="metric">métrico</measurementSystemName>
 		</measurementSystemNames>
 	</localeDisplayNames>
 	<layout>
-		<inList draft="provisional">titlecase-firstword</inList>
-		<inText type="currency" draft="provisional">lowercase-words</inText>
-		<inText type="fields" alt="proposed-x1001" draft="unconfirmed">lowercase-words</inText>
-		<inText type="keys" draft="provisional">lowercase-words</inText>
-		<inText type="languages" draft="provisional">lowercase-words</inText>
-		<inText type="long" draft="provisional">lowercase-words</inText>
-		<inText type="measurementSystemNames" draft="provisional">lowercase-words</inText>
-		<inText type="quarterWidth" alt="proposed-x1001" draft="unconfirmed">lowercase-words</inText>
-		<inText type="scripts" alt="proposed-x1001" draft="unconfirmed">lowercase-words</inText>
-		<inText type="types" draft="provisional">lowercase-words</inText>
+		<inList>titlecase-firstword</inList>
+		<inText type="currency">lowercase-words</inText>
+		<inText type="keys">lowercase-words</inText>
+		<inText type="languages">lowercase-words</inText>
+		<inText type="long">lowercase-words</inText>
+		<inText type="measurementSystemNames">lowercase-words</inText>
+		<inText type="types">lowercase-words</inText>
 	</layout>
 	<characters>
 		<exemplarCharacters>[a á b-e é f-i í j-n ñ o ó p-u ú v-z]</exemplarCharacters>
 		<exemplarCharacters type="auxiliary">[ü]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1001" draft="unconfirmed">[à ă â å ä ã ā æ-è ĕ ê ë ē ì ĭ î ï ī ò ŏ ô ö ø ō œ ß ù ŭ û ū ÿ]</exemplarCharacters>
-		<exemplarCharacters type="auxiliary" alt="proposed-x1002" draft="unconfirmed">[ç]</exemplarCharacters>
-		<exemplarCharacters alt="proposed-x1001" draft="unconfirmed">[a á b-e é f-i í j-n ñ o ó p-u ú ü v-z]</exemplarCharacters>
 	</characters>
 	<delimiters>
 		<quotationStart>‘</quotationStart>
-		<quotationStart alt="proposed-x1001" draft="unconfirmed">“</quotationStart>
 		<quotationEnd>’</quotationEnd>
-		<quotationEnd alt="proposed-x1001" draft="unconfirmed">”</quotationEnd>
 		<alternateQuotationStart>“</alternateQuotationStart>
-		<alternateQuotationStart alt="proposed-x1001" draft="unconfirmed">‘</alternateQuotationStart>
 		<alternateQuotationEnd>”</alternateQuotationEnd>
-		<alternateQuotationEnd alt="proposed-x1001" draft="unconfirmed">’</alternateQuotationEnd>
 	</delimiters>
 	<dates>
 		<localizedPatternChars>GuMtkHmsSEDFwWahKzUeygAZvcL</localizedPatternChars>
@@ -1158,19 +1017,12 @@
 					<dayContext type="format">
 						<dayWidth type="abbreviated">
 							<day type="sun">dom</day>
-							<day type="sun" alt="proposed-x1001" draft="unconfirmed">dom.</day>
 							<day type="mon">lun</day>
-							<day type="mon" alt="proposed-x1001" draft="unconfirmed">lun.</day>
 							<day type="tue">mar</day>
-							<day type="tue" alt="proposed-x1001" draft="unconfirmed">mar.</day>
 							<day type="wed">mié</day>
-							<day type="wed" alt="proposed-x1001" draft="unconfirmed">mié.</day>
 							<day type="thu">jue</day>
-							<day type="thu" alt="proposed-x1001" draft="unconfirmed">jue.</day>
 							<day type="fri">vie</day>
-							<day type="fri" alt="proposed-x1001" draft="unconfirmed">vie.</day>
 							<day type="sat">sáb</day>
-							<day type="sat" alt="proposed-x1001" draft="unconfirmed">sáb.</day>
 						</dayWidth>
 						<dayWidth type="wide">
 							<day type="sun">domingo</day>
@@ -1210,17 +1062,12 @@
 						</quarterWidth>
 					</quarterContext>
 				</quarters>
-				<am references="R039">a.m.</am>
-				<pm references="R039">p.m.</pm>
+				<am>a.m.</am>
+				<pm>p.m.</pm>
 				<eras>
 					<eraNames>
 						<era type="0">antes de Cristo</era>
-						<era type="0" alt="proposed-x1001" draft="unconfirmed">BCE</era>
-						<era type="0" alt="proposed-x1002" draft="unconfirmed">a. C.</era>
 						<era type="1">anno Dómini</era>
-						<era type="1" alt="proposed-x1001" draft="unconfirmed">d. C.</era>
-						<era type="1" alt="proposed-x1002" draft="unconfirmed">. C.</era>
-						<era type="1" alt="proposed-x1003" draft="unconfirmed">CE</era>
 					</eraNames>
 					<eraAbbr>
 						<era type="0">a.C.</era>
@@ -1241,15 +1088,11 @@
 					<dateFormatLength type="medium">
 						<dateFormat>
 							<pattern>dd/MM/yyyy</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">dd-MMM-yy</pattern>
-							<pattern alt="proposed-x1002" draft="unconfirmed">d-MMM-yyyy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 					<dateFormatLength type="short">
 						<dateFormat>
 							<pattern>dd/MM/yy</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">d/MM/yy</pattern>
-							<pattern alt="proposed-x1002" draft="unconfirmed">d/M/yy</pattern>
 						</dateFormat>
 					</dateFormatLength>
 				</dateFormats>
@@ -1257,53 +1100,46 @@
 					<timeFormatLength type="full">
 						<timeFormat>
 							<pattern>hh:mm:ss a v</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">HH'H'mm''ss&quot; v</pattern>
-							<pattern alt="proposed-x1002" draft="unconfirmed">HH:mm:ss v</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="long">
 						<timeFormat>
-							<pattern draft="provisional">HH:mm:ss z</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">hh:mm:ss a z</pattern>
+							<pattern>HH:mm:ss z</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">
 						<timeFormat>
-							<pattern draft="provisional">HH:mm:ss</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">hh:mm:ss a</pattern>
+							<pattern>HH:mm:ss</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="short">
 						<timeFormat>
-							<pattern draft="provisional">HH:mm</pattern>
-							<pattern alt="proposed-x1001" draft="unconfirmed">hh:mm a</pattern>
+							<pattern>HH:mm</pattern>
 						</timeFormat>
 					</timeFormatLength>
 				</timeFormats>
 				<dateTimeFormats>
 					<dateTimeFormatLength>
 						<dateTimeFormat>
-							<pattern draft="unconfirmed">{1} {0}</pattern>
+							<pattern>{1} {0}</pattern>
 						</dateTimeFormat>
 					</dateTimeFormatLength>
 					<availableFormats>
-						<dateFormatItem id="HHmm" draft="unconfirmed">HH:mm</dateFormatItem>
-						<dateFormatItem id="HHmmss" draft="unconfirmed">HH:mm:ss</dateFormatItem>
-						<dateFormatItem id="MMMMd" draft="provisional">d 'de' MMMM</dateFormatItem>
-						<dateFormatItem id="MMMd" draft="unconfirmed">MMM d</dateFormatItem>
-						<dateFormatItem id="MMMdd" draft="unconfirmed">dd-MMM</dateFormatItem>
-						<dateFormatItem id="MMd" draft="unconfirmed">d/MM</dateFormatItem>
-						<dateFormatItem id="Md" draft="provisional">d/M</dateFormatItem>
-						<dateFormatItem id="hhmm" draft="unconfirmed">hh:mm a</dateFormatItem>
-						<dateFormatItem id="hhmmss" draft="unconfirmed">hh:mm:ss a</dateFormatItem>
-						<dateFormatItem id="mmss" draft="provisional">mm:ss</dateFormatItem>
-						<dateFormatItem id="yyMM" draft="provisional">MM/yy</dateFormatItem>
-						<dateFormatItem id="yyMMM" draft="provisional">MMM-yy</dateFormatItem>
-						<dateFormatItem id="yyQ" draft="provisional">Q yy</dateFormatItem>
+						<dateFormatItem id="HHmm">HH:mm</dateFormatItem>
+						<dateFormatItem id="HHmmss">HH:mm:ss</dateFormatItem>
+						<dateFormatItem id="MMMMd">d 'de' MMMM</dateFormatItem>
+						<dateFormatItem id="MMMd">MMM d</dateFormatItem>
+						<dateFormatItem id="MMMdd">dd-MMM</dateFormatItem>
+						<dateFormatItem id="MMd">d/MM</dateFormatItem>
+						<dateFormatItem id="Md">d/M</dateFormatItem>
+						<dateFormatItem id="hhmm">hh:mm a</dateFormatItem>
+						<dateFormatItem id="hhmmss">hh:mm:ss a</dateFormatItem>
+						<dateFormatItem id="mmss">mm:ss</dateFormatItem>
+						<dateFormatItem id="yyMM">MM/yy</dateFormatItem>
+						<dateFormatItem id="yyMMM">MMM-yy</dateFormatItem>
+						<dateFormatItem id="yyQ">Q yy</dateFormatItem>
 						<dateFormatItem id="yyQQQQ">QQQQ 'de' yy</dateFormatItem>
-						<dateFormatItem id="yyQQQQ" alt="proposed-x1001" draft="unconfirmed">QQQQ 'de' yyyy</dateFormatItem>
-						<dateFormatItem id="yyQQQQ" alt="proposed-x1002" draft="unconfirmed">QQQQ yy</dateFormatItem>
-						<dateFormatItem id="yyyyMM" draft="unconfirmed">MM/yyyy</dateFormatItem>
+						<dateFormatItem id="yyyyMM">MM/yyyy</dateFormatItem>
 					</availableFormats>
 				</dateTimeFormats>
 				<fields>
@@ -1325,14 +1161,13 @@
 						<relative type="1">mañana</relative>
 						<relative type="2">pasado mañana</relative>
 						<relative type="-1">ayer</relative>
-						<relative type="-2" draft="provisional">antes de ayer</relative>
+						<relative type="-2">antes de ayer</relative>
 					</field>
 					<field type="weekday">
 						<displayName>día de la semana</displayName>
 					</field>
 					<field type="dayperiod">
 						<displayName>periodo del día</displayName>
-						<displayName alt="proposed-x1001" draft="unconfirmed">a.m./p.m.</displayName>
 					</field>
 					<field type="hour">
 						<displayName>hora</displayName>
@@ -1350,12 +1185,11 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<hourFormat draft="provisional">+HH:mm;-HH:mm</hourFormat>
-			<gmtFormat draft="provisional">GMT{0}</gmtFormat>
-			<regionFormat draft="provisional">Hora de {0}</regionFormat>
-			<regionFormat alt="proposed-x1001" draft="unconfirmed">{0}</regionFormat>
+			<hourFormat>+HH:mm;-HH:mm</hourFormat>
+			<gmtFormat>GMT{0}</gmtFormat>
+			<regionFormat>Hora de {0}</regionFormat>
 			<zone type="Etc/Unknown">
-				<exemplarCity draft="provisional">Desconocida</exemplarCity>
+				<exemplarCity>Desconocida</exemplarCity>
 			</zone>
 			<zone type="America/Anguilla">
 				<exemplarCity>Anguila</exemplarCity>
@@ -1370,14 +1204,13 @@
 				<exemplarCity>Polo Sur</exemplarCity>
 			</zone>
 			<zone type="Antarctica/DumontDUrville">
-				<exemplarCity references="R039">Dumont d'Urville</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Dumont D'Urville</exemplarCity>
+				<exemplarCity>Dumont d'Urville</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Rio_Gallegos">
-				<exemplarCity references="R040">Río Gallegos</exemplarCity>
+				<exemplarCity>Río Gallegos</exemplarCity>
 			</zone>
 			<zone type="America/Argentina/Tucuman">
-				<exemplarCity references="R040">Tucumán</exemplarCity>
+				<exemplarCity>Tucumán</exemplarCity>
 			</zone>
 			<zone type="America/Cordoba">
 				<exemplarCity>Córdoba</exemplarCity>
@@ -1386,10 +1219,10 @@
 				<exemplarCity>Viena</exemplarCity>
 			</zone>
 			<zone type="Australia/Adelaide">
-				<exemplarCity references="RP3" draft="provisional">Adelaida</exemplarCity>
+				<exemplarCity>Adelaida</exemplarCity>
 			</zone>
 			<zone type="Australia/Sydney">
-				<exemplarCity references="R041" draft="provisional">Sídney</exemplarCity>
+				<exemplarCity>Sídney</exemplarCity>
 			</zone>
 			<zone type="Asia/Baku">
 				<exemplarCity>Bakú</exemplarCity>
@@ -1413,7 +1246,7 @@
 				<exemplarCity>Brunéi</exemplarCity>
 			</zone>
 			<zone type="America/Eirunepe">
-				<exemplarCity references="R040" draft="provisional">Eirunepé</exemplarCity>
+				<exemplarCity>Eirunepé</exemplarCity>
 			</zone>
 			<zone type="America/Rio_Branco">
 				<exemplarCity>Río Branco</exemplarCity>
@@ -1422,36 +1255,34 @@
 				<exemplarCity>Cuiabá</exemplarCity>
 			</zone>
 			<zone type="America/Belem">
-				<exemplarCity references="RP3" draft="provisional">Belém</exemplarCity>
+				<exemplarCity>Belém</exemplarCity>
 			</zone>
 			<zone type="America/Araguaina">
-				<exemplarCity references="RP3" draft="provisional">Araguaína</exemplarCity>
+				<exemplarCity>Araguaína</exemplarCity>
 			</zone>
 			<zone type="America/Sao_Paulo">
-				<exemplarCity references="RP3" draft="provisional">São Paulo</exemplarCity>
+				<exemplarCity>São Paulo</exemplarCity>
 			</zone>
 			<zone type="America/Bahia">
 				<exemplarCity>Bahía</exemplarCity>
 			</zone>
 			<zone type="America/Maceio">
-				<exemplarCity references="RP3" draft="provisional">Maceió</exemplarCity>
+				<exemplarCity>Maceió</exemplarCity>
 			</zone>
 			<zone type="America/Belize">
 				<exemplarCity>Belice</exemplarCity>
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity>St. Johns</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">St. John’s</exemplarCity>
 			</zone>
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zúrich</exemplarCity>
 			</zone>
 			<zone type="Pacific/Easter">
 				<exemplarCity>Isla de Pascua</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Pascua</exemplarCity>
 			</zone>
 			<zone type="Asia/Urumqi">
-				<exemplarCity references="RP3" draft="provisional">Ürümqi</exemplarCity>
+				<exemplarCity>Ürümqi</exemplarCity>
 			</zone>
 			<zone type="America/Bogota">
 				<exemplarCity>Bogotá</exemplarCity>
@@ -1463,7 +1294,7 @@
 				<exemplarCity>Cabo Verde</exemplarCity>
 			</zone>
 			<zone type="Europe/Prague">
-				<exemplarCity draft="provisional">Praga</exemplarCity>
+				<exemplarCity>Praga</exemplarCity>
 			</zone>
 			<zone type="Europe/Berlin">
 				<exemplarCity>Berlín</exemplarCity>
@@ -1478,7 +1309,7 @@
 				<exemplarCity>Argelia</exemplarCity>
 			</zone>
 			<zone type="Pacific/Galapagos">
-				<exemplarCity references="R040">Galápagos</exemplarCity>
+				<exemplarCity>Galápagos</exemplarCity>
 			</zone>
 			<zone type="Europe/Tallinn">
 				<exemplarCity>Tallin</exemplarCity>
@@ -1488,7 +1319,6 @@
 			</zone>
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Islas Canarias</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Canarias</exemplarCity>
 			</zone>
 			<zone type="Africa/Addis_Ababa">
 				<exemplarCity>Addis Abeba</exemplarCity>
@@ -1497,7 +1327,7 @@
 				<exemplarCity>Fiyi</exemplarCity>
 			</zone>
 			<zone type="Pacific/Truk">
-				<exemplarCity references="R040" draft="provisional">Chuuk</exemplarCity>
+				<exemplarCity>Chuuk</exemplarCity>
 			</zone>
 			<zone type="Atlantic/Faeroe">
 				<exemplarCity>Islas Feroe</exemplarCity>
@@ -1530,11 +1360,10 @@
 				<exemplarCity>Puerto Príncipe</exemplarCity>
 			</zone>
 			<zone type="Asia/Jakarta">
-				<exemplarCity references="RP3">Yakarta</exemplarCity>
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Yakarta</exemplarCity>
+				<exemplarCity>Yakarta</exemplarCity>
 			</zone>
 			<zone type="Asia/Makassar">
-				<exemplarCity references="RP3" draft="provisional">Makasar</exemplarCity>
+				<exemplarCity>Makasar</exemplarCity>
 			</zone>
 			<zone type="Europe/Dublin">
 				<exemplarCity>Dublín</exemplarCity>
@@ -1570,10 +1399,10 @@
 				<exemplarCity>Caimán</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtau">
-				<exemplarCity references="R040" draft="provisional">Aktau</exemplarCity>
+				<exemplarCity>Aktau</exemplarCity>
 			</zone>
 			<zone type="Asia/Aqtobe">
-				<exemplarCity references="R040" draft="provisional">Aktobe</exemplarCity>
+				<exemplarCity>Aktobe</exemplarCity>
 			</zone>
 			<zone type="Asia/Vientiane">
 				<exemplarCity>Vientián</exemplarCity>
@@ -1612,7 +1441,7 @@
 				<exemplarCity>Maldivas</exemplarCity>
 			</zone>
 			<zone type="America/Mazatlan">
-				<exemplarCity references="RP3" draft="provisional">Mazatlán</exemplarCity>
+				<exemplarCity>Mazatlán</exemplarCity>
 			</zone>
 			<zone type="America/Mexico_City">
 				<exemplarCity>Ciudad de México</exemplarCity>
@@ -1663,13 +1492,13 @@
 				<exemplarCity>Moscú</exemplarCity>
 			</zone>
 			<zone type="Europe/Volgograd">
-				<exemplarCity references="R039" draft="provisional">Volgogrado</exemplarCity>
+				<exemplarCity>Volgogrado</exemplarCity>
 			</zone>
 			<zone type="Asia/Yekaterinburg">
 				<exemplarCity>Yekaterinburgo</exemplarCity>
 			</zone>
 			<zone type="Asia/Sakhalin">
-				<exemplarCity references="R039" draft="provisional">Sajalín</exemplarCity>
+				<exemplarCity>Sajalín</exemplarCity>
 			</zone>
 			<zone type="Asia/Riyadh">
 				<exemplarCity>Riad</exemplarCity>
@@ -1690,7 +1519,6 @@
 				<exemplarCity>Santo Tomé</exemplarCity>
 			</zone>
 			<zone type="America/El_Salvador">
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Salvador</exemplarCity>
 			</zone>
 			<zone type="Asia/Damascus">
 				<exemplarCity>Damasco</exemplarCity>
@@ -1711,16 +1539,15 @@
 				<exemplarCity>Puerto España</exemplarCity>
 			</zone>
 			<zone type="Pacific/Honolulu">
-				<exemplarCity references="R039" draft="provisional">Honolulú</exemplarCity>
+				<exemplarCity>Honolulú</exemplarCity>
 			</zone>
 			<zone type="America/Anchorage">
-				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Hora de Alaska</exemplarCity>
 			</zone>
 			<zone type="America/Los_Angeles">
 				<exemplarCity>Los Ángeles</exemplarCity>
 			</zone>
 			<zone type="America/North_Dakota/Center">
-				<exemplarCity draft="provisional">Centro</exemplarCity>
+				<exemplarCity>Centro</exemplarCity>
 			</zone>
 			<zone type="America/Indianapolis">
 				<exemplarCity>Indianápolis</exemplarCity>
@@ -1729,7 +1556,7 @@
 				<exemplarCity>Nueva York</exemplarCity>
 			</zone>
 			<zone type="Asia/Samarkand">
-				<exemplarCity references="RP3" draft="provisional">Samarcanda</exemplarCity>
+				<exemplarCity>Samarcanda</exemplarCity>
 			</zone>
 			<zone type="America/St_Vincent">
 				<exemplarCity>San Vicente</exemplarCity>
@@ -1739,40 +1566,40 @@
 			</zone>
 			<metazone type="Acre">
 				<long>
-					<standard draft="provisional">Hora de Acre</standard>
-					<daylight draft="provisional">Hora de verano de Acre</daylight>
+					<standard>Hora de Acre</standard>
+					<daylight>Hora de verano de Acre</daylight>
 				</long>
 			</metazone>
 			<metazone type="Africa_Central">
 				<long>
-					<standard draft="provisional">Hora de África Central</standard>
+					<standard>Hora de África Central</standard>
 				</long>
 			</metazone>
 			<metazone type="Africa_Eastern">
 				<long>
-					<standard draft="provisional">Hora de África Oriental</standard>
+					<standard>Hora de África Oriental</standard>
 				</long>
 			</metazone>
 			<metazone type="Africa_Southern">
 				<long>
-					<standard draft="provisional">Hora estándar de África Meridional</standard>
+					<standard>Hora estándar de África Meridional</standard>
 				</long>
 			</metazone>
 			<metazone type="Africa_Western">
 				<long>
-					<standard draft="provisional">Hora de África Occidental</standard>
-					<daylight draft="provisional">Hora de verano de África Occidental</daylight>
+					<standard>Hora de África Occidental</standard>
+					<daylight>Hora de verano de África Occidental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Aktyubinsk">
 				<long>
-					<standard draft="provisional">Hora de Aktyubinsk</standard>
-					<daylight draft="provisional">Hora de verano de Aktyubinsk</daylight>
+					<standard>Hora de Aktyubinsk</standard>
+					<daylight>Hora de verano de Aktyubinsk</daylight>
 				</long>
 			</metazone>
 			<metazone type="Alaska">
 				<long>
-					<generic draft="provisional">Hora de Alaska</generic>
+					<generic>Hora de Alaska</generic>
 					<standard>Hora estándar de Alaska</standard>
 					<daylight>Hora de verano de Alaska</daylight>
 				</long>
@@ -1784,21 +1611,20 @@
 			</metazone>
 			<metazone type="Alaska_Hawaii">
 				<long>
-					<standard draft="provisional">Hora estándar de Alaska-Hawái</standard>
-					<daylight draft="provisional">Hora de verano de Alaska-Hawái</daylight>
+					<standard>Hora estándar de Alaska-Hawái</standard>
+					<daylight>Hora de verano de Alaska-Hawái</daylight>
 				</long>
 				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Amazon">
 				<long>
-					<standard draft="provisional">Hora del Amazonas</standard>
-					<daylight draft="provisional">Hora de verano del Amazonas</daylight>
+					<standard>Hora del Amazonas</standard>
+					<daylight>Hora de verano del Amazonas</daylight>
 				</long>
 			</metazone>
 			<metazone type="America_Central">
 				<long>
 					<generic>Hora central</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Hora central</generic>
 					<standard>Hora estándar central</standard>
 					<daylight>Hora de verano central</daylight>
 				</long>
@@ -1811,7 +1637,6 @@
 			<metazone type="America_Eastern">
 				<long>
 					<generic>Hora oriental</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Hora oriental</generic>
 					<standard>Hora estándar oriental</standard>
 					<daylight>Hora de verano oriental</daylight>
 				</long>
@@ -1823,11 +1648,9 @@
 			</metazone>
 			<metazone type="America_Mountain">
 				<long>
-					<generic draft="provisional">Hora de las Montañas</generic>
+					<generic>Hora de las Montañas</generic>
 					<standard>Hora estándar de Montaña</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora de verano de las Montañas</standard>
 					<daylight>Hora de verano de Montaña</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Hora de verano de las Montañas</daylight>
 				</long>
 				<short>
 					<standard>MST</standard>
@@ -1837,7 +1660,7 @@
 			</metazone>
 			<metazone type="America_Pacific">
 				<long>
-					<generic draft="provisional">Hora del Pacífico</generic>
+					<generic>Hora del Pacífico</generic>
 					<standard>Hora estándar del Pacífico</standard>
 					<daylight>Hora de verano del Pacífico</daylight>
 				</long>
@@ -1849,62 +1672,61 @@
 			</metazone>
 			<metazone type="Aqtau">
 				<long>
-					<standard draft="provisional">Hora de Aktau</standard>
-					<daylight draft="provisional">Hora de verano de Aktau</daylight>
+					<standard>Hora de Aktau</standard>
+					<daylight>Hora de verano de Aktau</daylight>
 				</long>
 				<short>
-					<standard draft="provisional">AQTST (Aktau)</standard>
-					<daylight draft="provisional">AQTST (Aktau)</daylight>
+					<standard>AQTT (Aktau)</standard>
+					<daylight>AQTST (Aktau)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Aqtobe">
 				<long>
-					<standard draft="provisional">Hora de Aktobe</standard>
-					<daylight draft="provisional">Hora de verano de Aktobe</daylight>
+					<standard>Hora de Aktobe</standard>
+					<daylight>Hora de verano de Aktobe</daylight>
 				</long>
 				<short>
-					<standard draft="provisional">AQTT (Aktobe)</standard>
-					<daylight draft="provisional">AQTST (Aktau)</daylight>
+					<standard>AQTT (Aktobe)</standard>
+					<daylight>AQTST (Aktobe)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Arabian">
 				<long>
-					<generic draft="provisional">Hora de Arabia</generic>
-					<standard draft="provisional">Hora estándar de Arabia</standard>
-					<daylight draft="provisional">Hora de verano de Arabia</daylight>
+					<generic>Hora de Arabia</generic>
+					<standard>Hora estándar de Arabia</standard>
+					<daylight>Hora de verano de Arabia</daylight>
 				</long>
 				<short>
-					<standard draft="provisional">AST (Arabia)</standard>
-					<daylight draft="provisional">ADT (Arabia)</daylight>
+					<standard>AST (Arabia)</standard>
+					<daylight>ADT (Arabia)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Argentina">
 				<long>
-					<standard draft="provisional">Hora de Argentina</standard>
-					<daylight draft="provisional">Hora de verano de Argentina</daylight>
+					<standard>Hora de Argentina</standard>
+					<daylight>Hora de verano de Argentina</daylight>
 				</long>
 			</metazone>
 			<metazone type="Argentina_Western">
 				<long>
-					<standard draft="provisional">Hora de Argentina occidental</standard>
+					<standard>Hora de Argentina occidental</standard>
 				</long>
 			</metazone>
 			<metazone type="Armenia">
 				<long>
-					<standard draft="provisional">Hora de Armenia</standard>
-					<daylight draft="provisional">Hora de verano de Armenia</daylight>
+					<standard>Hora de Armenia</standard>
+					<daylight>Hora de verano de Armenia</daylight>
 				</long>
 			</metazone>
 			<metazone type="Ashkhabad">
 				<long>
-					<standard draft="provisional">Hora de Asjabad</standard>
-					<daylight draft="provisional">Hora de verano de Asjabad</daylight>
+					<standard>Hora de Asjabad</standard>
+					<daylight>Hora de verano de Asjabad</daylight>
 				</long>
 			</metazone>
 			<metazone type="Atlantic">
 				<long>
-					<generic draft="provisional">Hora del Atlántico</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Hora del Atlántico</generic>
+					<generic>Hora del Atlántico</generic>
 					<standard>Hora estándar del Atlántico</standard>
 					<daylight>Hora de verano del Atlántico</daylight>
 				</long>
@@ -1915,87 +1737,80 @@
 			</metazone>
 			<metazone type="Australia_Central">
 				<long>
-					<generic draft="provisional">Hora de Australia central</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Hora de Australia Central</generic>
-					<standard draft="provisional">Hora estándar de Australia central</standard>
-					<daylight draft="provisional">Hora de verano de Australia central</daylight>
+					<generic>Hora de Australia central</generic>
+					<standard>Hora estándar de Australia central</standard>
+					<daylight>Hora de verano de Australia central</daylight>
 				</long>
 			</metazone>
 			<metazone type="Australia_Eastern">
 				<long>
-					<generic draft="provisional">Hora de Australia oriental</generic>
-					<standard draft="provisional">Hora estándar de Australia oriental</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora estándar del Este de Australia</standard>
-					<daylight draft="provisional">Hora de verano de Australia oriental</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Hora de verano del Este de Australia</daylight>
-					<daylight alt="proposed-x1002" draft="unconfirmed">Hora de verano del Este de Australia</daylight>
+					<generic>Hora de Australia oriental</generic>
+					<standard>Hora estándar de Australia oriental</standard>
+					<daylight>Hora de verano de Australia oriental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Australia_Western">
 				<long>
-					<generic draft="provisional">Hora de Australia occidental</generic>
-					<standard draft="provisional">Hora estándar de Australia occidental</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora estándar del Oeste de Australia</standard>
-					<standard alt="proposed-x1002" draft="unconfirmed">Hora estándar del Oeste de Australia</standard>
-					<daylight draft="provisional">Hora de verano de Australia occidental</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Hora de verano del Oeste de Australia</daylight>
+					<generic>Hora de Australia occidental</generic>
+					<standard>Hora estándar de Australia occidental</standard>
+					<daylight>Hora de verano de Australia occidental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Azores">
 				<long>
-					<standard draft="provisional">Hora de las Azores</standard>
-					<daylight draft="provisional">Hora de verano de las Azores</daylight>
+					<standard>Hora de las Azores</standard>
+					<daylight>Hora de verano de las Azores</daylight>
 				</long>
 			</metazone>
 			<metazone type="Baku">
 				<long>
-					<standard draft="provisional">Hora de Bakú</standard>
-					<daylight draft="provisional">Hora de verano de Bakú</daylight>
+					<standard>Hora de Bakú</standard>
+					<daylight>Hora de verano de Bakú</daylight>
 				</long>
 			</metazone>
 			<metazone type="Bangladesh">
 				<long>
-					<standard draft="provisional">Hora de Bangladesh</standard>
+					<standard>Hora de Bangladesh</standard>
 				</long>
 			</metazone>
 			<metazone type="Bering">
 				<long>
-					<generic draft="provisional">Hora de Bering</generic>
-					<standard draft="provisional">Hora estándar de Bering</standard>
-					<daylight draft="provisional">Hora de verano de Bering</daylight>
+					<generic>Hora de Bering</generic>
+					<standard>Hora estándar de Bering</standard>
+					<daylight>Hora de verano de Bering</daylight>
 				</long>
 			</metazone>
 			<metazone type="Bhutan">
 				<long>
-					<standard draft="provisional">Hora de Bután</standard>
+					<standard>Hora de Bután</standard>
 				</long>
 			</metazone>
 			<metazone type="Borneo">
 				<long>
-					<standard draft="provisional">Hora de Borneo</standard>
-					<daylight draft="provisional">Hora de verano de Borneo</daylight>
+					<standard>Hora de Borneo</standard>
+					<daylight>Hora de verano de Borneo</daylight>
 				</long>
 			</metazone>
 			<metazone type="Brasilia">
 				<long>
-					<standard draft="provisional">Hora de Brasilia</standard>
-					<daylight draft="provisional">Hora de verano de Brasilia</daylight>
+					<standard>Hora de Brasilia</standard>
+					<daylight>Hora de verano de Brasilia</daylight>
 				</long>
 			</metazone>
 			<metazone type="Chamorro">
 				<long>
-					<standard draft="provisional">Hora estándar de Chamorro</standard>
+					<standard>Hora estándar de Chamorro</standard>
 				</long>
 			</metazone>
 			<metazone type="Changbai">
 				<long>
-					<standard draft="provisional">Hora de Changbai</standard>
+					<standard>Hora de Changbai</standard>
 				</long>
 			</metazone>
 			<metazone type="Chile">
 				<long>
-					<standard draft="provisional">Hora de Chile</standard>
-					<daylight draft="provisional">Hora de verano de Chile</daylight>
+					<standard>Hora de Chile</standard>
+					<daylight>Hora de verano de Chile</daylight>
 				</long>
 			</metazone>
 			<metazone type="China">
@@ -2004,39 +1819,39 @@
 					<daylight>Hora de verano de China</daylight>
 				</long>
 				<short>
-					<standard>CTT</standard>
+					<standard>CST (China)</standard>
 				</short>
 			</metazone>
 			<metazone type="Choibalsan">
 				<long>
-					<standard draft="provisional">Hora de Choibalsan</standard>
-					<daylight draft="provisional">Hora de verano de Choibalsan</daylight>
+					<standard>Hora de Choibalsan</standard>
+					<daylight>Hora de verano de Choibalsan</daylight>
 				</long>
 			</metazone>
 			<metazone type="Dacca">
 				<long>
-					<standard draft="provisional">Hora de Dacca</standard>
+					<standard>Hora de Dacca</standard>
 				</long>
 			</metazone>
 			<metazone type="Dushanbe">
 				<long>
-					<standard draft="provisional">Hora de Dusambé</standard>
-					<daylight draft="provisional">Hora de verano de Dusambé</daylight>
+					<standard>Hora de Dusambé</standard>
+					<daylight>Hora de verano de Dusambé</daylight>
 				</long>
 			</metazone>
 			<metazone type="Dutch_Guiana">
 				<long>
-					<standard draft="provisional">Hora de la Guayana Holandesa</standard>
+					<standard>Hora de la Guayana Holandesa</standard>
 				</long>
 			</metazone>
 			<metazone type="East_Timor">
 				<long>
-					<standard draft="provisional">Hora de Timor Oriental</standard>
+					<standard>Hora de Timor Oriental</standard>
 				</long>
 			</metazone>
 			<metazone type="Ecuador">
 				<long>
-					<standard draft="provisional">Hora de Ecuador</standard>
+					<standard>Hora de Ecuador</standard>
 				</long>
 			</metazone>
 			<metazone type="Europe_Central">
@@ -2061,14 +1876,14 @@
 			</metazone>
 			<metazone type="Europe_Western">
 				<long>
-					<standard draft="provisional">Hora de Europa Occidental</standard>
-					<daylight draft="provisional">Hora de verano de Europa Occidental</daylight>
+					<standard>Hora de Europa Occidental</standard>
+					<daylight>Hora de verano de Europa Occidental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Frunze">
 				<long>
-					<standard draft="provisional">Hora de Frunze</standard>
-					<daylight draft="provisional">Hora de verano de Frunze</daylight>
+					<standard>Hora de Frunze</standard>
+					<daylight>Hora de verano de Frunze</daylight>
 				</long>
 			</metazone>
 			<metazone type="GMT">
@@ -2081,82 +1896,72 @@
 			</metazone>
 			<metazone type="Galapagos">
 				<long>
-					<standard draft="provisional">Hora de Galápagos</standard>
+					<standard>Hora de Galápagos</standard>
 				</long>
 			</metazone>
 			<metazone type="Georgia">
 				<long>
-					<standard draft="provisional">Hora de Georgia</standard>
-					<daylight draft="provisional">Hora de verano de Georgia</daylight>
+					<standard>Hora de Georgia</standard>
+					<daylight>Hora de verano de Georgia</daylight>
 				</long>
 			</metazone>
 			<metazone type="Greenland_Central">
 				<long>
-					<standard draft="provisional">Hora de Groenlandia central</standard>
-					<daylight draft="provisional">Hora de verano de Groenlandia central</daylight>
+					<standard>Hora de Groenlandia central</standard>
+					<daylight>Hora de verano de Groenlandia central</daylight>
 				</long>
 			</metazone>
 			<metazone type="Greenland_Eastern">
 				<long>
-					<standard draft="provisional">Hora de Groenlandia oriental</standard>
-					<daylight draft="provisional">Hora de verano de Groenlandia oriental</daylight>
+					<standard>Hora de Groenlandia oriental</standard>
+					<daylight>Hora de verano de Groenlandia oriental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Greenland_Western">
 				<long>
-					<standard draft="provisional">Hora de Groenlandia occidental</standard>
-					<daylight draft="provisional">Hora de verano de Groenlandia occidental</daylight>
+					<standard>Hora de Groenlandia occidental</standard>
+					<daylight>Hora de verano de Groenlandia occidental</daylight>
 				</long>
 			</metazone>
 			<metazone type="Guam">
 				<long>
-					<standard draft="provisional">Hora estándar de Guam</standard>
+					<standard>Hora estándar de Guam</standard>
 				</long>
 			</metazone>
 			<metazone type="Gulf">
 				<long>
-					<standard draft="provisional">Hora estándar del Golfo</standard>
+					<standard>Hora estándar del Golfo</standard>
 				</long>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic draft="provisional">Hora de Hawái</generic>
-					<standard>Hora estándar de Hawai</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora estándar de Hawái</standard>
-					<daylight>Hora de verano de Hawai</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Hora de verano de Hawái</daylight>
-				</long>
-				<short>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
-					<generic draft="provisional">Hora de Hawái-Aleutianas</generic>
-					<standard draft="provisional">Hora estándar de Hawái-Aleutianas</standard>
-					<daylight draft="provisional">Hora de verano de Hawái-Aleutianas</daylight>
+					<generic>Hora de Hawái-Aleutianas</generic>
+					<standard>Hora estándar de Hawái-Aleutianas</standard>
+					<daylight>Hora de verano de Hawái-Aleutianas</daylight>
 				</long>
+				<short>
+					<standard>HST</standard>
+				</short>
+				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="India">
 				<long>
-					<standard draft="provisional">Hora estándar de la India</standard>
+					<standard>Hora estándar de la India</standard>
 				</long>
 			</metazone>
 			<metazone type="Indonesia_Central">
 				<long>
-					<standard draft="provisional">Hora de Indonesia central</standard>
+					<standard>Hora de Indonesia central</standard>
 				</long>
 			</metazone>
 			<metazone type="Indonesia_Eastern">
 				<long>
-					<standard draft="provisional">Hora de Indonesia oriental</standard>
+					<standard>Hora de Indonesia oriental</standard>
 				</long>
 			</metazone>
 			<metazone type="Indonesia_Western">
 				<long>
-					<standard draft="provisional">Hora de Indonesia occidental</standard>
+					<standard>Hora de Indonesia occidental</standard>
 				</long>
 			</metazone>
 			<metazone type="Israel">
@@ -2181,243 +1986,239 @@
 			</metazone>
 			<metazone type="Karachi">
 				<long>
-					<standard draft="provisional">Hora de Karachi</standard>
+					<standard>Hora de Karachi</standard>
 				</long>
 			</metazone>
 			<metazone type="Kashgar">
 				<long>
-					<standard draft="provisional">Hora de Kashgar</standard>
+					<standard>Hora de Kashgar</standard>
 				</long>
 			</metazone>
 			<metazone type="Kazakhstan_Eastern">
 				<long>
-					<standard draft="provisional">Hora estándar de Kazajistán oriental</standard>
+					<standard>Hora estándar de Kazajistán oriental</standard>
 				</long>
 			</metazone>
 			<metazone type="Kazakhstan_Western">
 				<long>
-					<standard draft="provisional">Hora estándar de Kazajistán occidental</standard>
+					<standard>Hora estándar de Kazajistán occidental</standard>
 				</long>
 			</metazone>
 			<metazone type="Kizilorda">
 				<long>
-					<standard draft="provisional">Hora de Kizil Orda</standard>
-					<daylight draft="provisional">Hora de verano de Kizil Orda</daylight>
+					<standard>Hora de Kizil Orda</standard>
+					<daylight>Hora de verano de Kizil Orda</daylight>
 				</long>
 			</metazone>
 			<metazone type="Korea">
 				<long>
-					<generic draft="provisional">Hora de Corea</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">Hora de Corea</generic>
-					<standard draft="provisional">Hora estándar de Corea</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora estándar de Corea</standard>
-					<daylight draft="provisional">Hora de verano de Corea</daylight>
+					<generic>Hora de Corea</generic>
+					<standard>Hora estándar de Corea</standard>
+					<daylight>Hora de verano de Corea</daylight>
 				</long>
 			</metazone>
 			<metazone type="Kuybyshev">
 				<long>
-					<standard draft="provisional">Hora de Kuibishev</standard>
-					<daylight draft="provisional">Hora de verano de Kuibishev</daylight>
+					<standard>Hora de Kuibishev</standard>
+					<daylight>Hora de verano de Kuibishev</daylight>
 				</long>
 			</metazone>
 			<metazone type="Kwajalein">
 				<long>
-					<standard draft="provisional">Hora de Kwajalein</standard>
+					<standard>Hora de Kwajalein</standard>
 				</long>
 			</metazone>
 			<metazone type="Kyrgystan">
 				<long>
-					<standard draft="provisional">Hora de Kirguistán</standard>
+					<standard>Hora de Kirguistán</standard>
 				</long>
 			</metazone>
 			<metazone type="Lanka">
 				<long>
-					<standard draft="provisional">Hora de Sri Lanka</standard>
+					<standard>Hora de Sri Lanka</standard>
 				</long>
 			</metazone>
 			<metazone type="Long_Shu">
 				<long>
-					<standard draft="provisional">Hora de Long-Shu</standard>
+					<standard>Hora de Long-Shu</standard>
 				</long>
 			</metazone>
 			<metazone type="Lord_Howe">
 				<long>
-					<generic draft="provisional">Hora de Lord Howe</generic>
-					<standard draft="provisional">Hora estándar de Lord Howe</standard>
-					<daylight draft="provisional">Hora de verano de Lord Howe</daylight>
+					<generic>Hora de Lord Howe</generic>
+					<standard>Hora estándar de Lord Howe</standard>
+					<daylight>Hora de verano de Lord Howe</daylight>
 				</long>
 			</metazone>
 			<metazone type="Macau">
 				<long>
-					<standard draft="provisional">Hora de Macao</standard>
-					<daylight draft="provisional">Hora de verano de Macao</daylight>
+					<standard>Hora de Macao</standard>
+					<daylight>Hora de verano de Macao</daylight>
 				</long>
 			</metazone>
 			<metazone type="Malaya">
 				<long>
-					<standard draft="provisional">Hora de Malaya</standard>
+					<standard>Hora de Malaya</standard>
 				</long>
 			</metazone>
 			<metazone type="Malaysia">
 				<long>
-					<standard draft="provisional">Hora de Malasia</standard>
+					<standard>Hora de Malasia</standard>
 				</long>
 			</metazone>
 			<metazone type="Marshall_Islands">
 				<long>
-					<standard draft="provisional">Hora de las Islas Marshall</standard>
+					<standard>Hora de las Islas Marshall</standard>
 				</long>
 			</metazone>
 			<metazone type="Mongolia">
 				<long>
-					<standard draft="provisional">Hora de Ulán Bator</standard>
-					<daylight draft="provisional">Hora de verano de Ulán Bator</daylight>
+					<standard>Hora de Ulán Bator</standard>
+					<daylight>Hora de verano de Ulán Bator</daylight>
 				</long>
 			</metazone>
 			<metazone type="New_Zealand">
 				<long>
-					<generic draft="provisional">Hora de Nueva Zelanda</generic>
-					<standard draft="provisional">Hora estándar de Nueva Zelanda</standard>
-					<daylight draft="provisional">Hora de verano de Nueva Zelanda</daylight>
+					<generic>Hora de Nueva Zelanda</generic>
+					<standard>Hora estándar de Nueva Zelanda</standard>
+					<daylight>Hora de verano de Nueva Zelanda</daylight>
 				</long>
 			</metazone>
 			<metazone type="Newfoundland">
 				<long>
-					<generic draft="provisional">Hora de Terranova</generic>
+					<generic>Hora de Terranova</generic>
 					<standard>Hora estándar de Newfoundland</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">Hora estándar de Terranova</standard>
 					<daylight>Hora de verano de Newfoundland</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Hora de verano de Terranova</daylight>
 				</long>
 				<short>
-					<standard>CNT</standard>
+					<standard>NST</standard>
 				</short>
 			</metazone>
 			<metazone type="North_Mariana">
 				<long>
-					<standard draft="provisional">Hora de las Islas Marianas del Norte</standard>
+					<standard>Hora de las Islas Marianas del Norte</standard>
 				</long>
 			</metazone>
 			<metazone type="Pakistan">
 				<long>
-					<standard draft="provisional">Hora de Pakistán</standard>
-					<daylight draft="provisional">Hora de verano de Pakistán</daylight>
+					<standard>Hora de Pakistán</standard>
+					<daylight>Hora de verano de Pakistán</daylight>
 				</long>
 			</metazone>
 			<metazone type="Pierre_Miquelon">
 				<long>
-					<generic draft="provisional">Hora de San Pedro y Miquelón</generic>
-					<standard draft="provisional">Hora estándar de San Pedro y Miquelón</standard>
-					<daylight draft="provisional">Hora de verano de San Pedro y Miquelón</daylight>
+					<generic>Hora de San Pedro y Miquelón</generic>
+					<standard>Hora estándar de San Pedro y Miquelón</standard>
+					<daylight>Hora de verano de San Pedro y Miquelón</daylight>
 				</long>
 			</metazone>
 			<metazone type="Qyzylorda">
 				<long>
-					<standard draft="provisional">Hora de Qyzylorda</standard>
-					<daylight draft="provisional">Hora de verano de Qyzylorda</daylight>
+					<standard>Hora de Qyzylorda</standard>
+					<daylight>Hora de verano de Qyzylorda</daylight>
 				</long>
 			</metazone>
 			<metazone type="Samara">
 				<long>
-					<standard draft="provisional">Hora de Samara</standard>
-					<daylight draft="provisional">Hora de verano de Samara</daylight>
+					<standard>Hora de Samara</standard>
+					<daylight>Hora de verano de Samara</daylight>
 				</long>
 			</metazone>
 			<metazone type="Samarkand">
 				<long>
-					<standard draft="provisional">Hora de Samarcanda</standard>
-					<daylight draft="provisional">Hora de verano de Samarcanda</daylight>
+					<standard>Hora de Samarcanda</standard>
+					<daylight>Hora de verano de Samarcanda</daylight>
 				</long>
 				<short>
-					<standard draft="provisional">SAMT (Samarcanda)</standard>
-					<daylight draft="provisional">SAMST (Samarcanda)</daylight>
+					<standard>SAMT (Samarcanda)</standard>
+					<daylight>SAMST (Samarcanda)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Samoa">
 				<long>
-					<standard draft="provisional">Hora estándar de Samoa</standard>
+					<standard>Hora estándar de Samoa</standard>
 				</long>
 			</metazone>
 			<metazone type="Shevchenko">
 				<long>
-					<standard draft="provisional">Hora de Shevchenko</standard>
-					<daylight draft="provisional">Hora de verano de Shevchenko</daylight>
+					<standard>Hora de Shevchenko</standard>
+					<daylight>Hora de verano de Shevchenko</daylight>
 				</long>
 			</metazone>
 			<metazone type="Suriname">
 				<long>
-					<standard draft="provisional">Hora de Surinam</standard>
+					<standard>Hora de Surinam</standard>
 				</long>
 			</metazone>
 			<metazone type="Sverdlovsk">
 				<long>
-					<standard draft="provisional">Hora de Sverdlovsk</standard>
-					<daylight draft="provisional">Hora de verano de Sverdlovsk</daylight>
+					<standard>Hora de Sverdlovsk</standard>
+					<daylight>Hora de verano de Sverdlovsk</daylight>
 				</long>
 			</metazone>
 			<metazone type="Tajikistan">
 				<long>
-					<standard draft="provisional">Hora de Tayikistán</standard>
+					<standard>Hora de Tayikistán</standard>
 				</long>
 			</metazone>
 			<metazone type="Tashkent">
 				<long>
-					<standard draft="provisional">Hora de Tashkent</standard>
-					<daylight draft="provisional">Hora de verano de Tashkent</daylight>
+					<standard>Hora de Tashkent</standard>
+					<daylight>Hora de verano de Tashkent</daylight>
 				</long>
 			</metazone>
 			<metazone type="Tbilisi">
 				<long>
-					<standard draft="provisional">Hora de Tbilisi</standard>
-					<daylight draft="provisional">Hora de verano de Tbilisi</daylight>
+					<standard>Hora de Tbilisi</standard>
+					<daylight>Hora de verano de Tbilisi</daylight>
 				</long>
 			</metazone>
 			<metazone type="Turkey">
 				<long>
-					<standard draft="provisional">Hora de Turquía</standard>
-					<daylight draft="provisional">Hora de verano de Turquía</daylight>
+					<standard>Hora de Turquía</standard>
+					<daylight>Hora de verano de Turquía</daylight>
 				</long>
 			</metazone>
 			<metazone type="Turkmenistan">
 				<long>
-					<standard draft="provisional">Hora de Turkmenistán</standard>
-					<daylight draft="provisional">Hora de verano de Turkmenistán</daylight>
+					<standard>Hora de Turkmenistán</standard>
+					<daylight>Hora de verano de Turkmenistán</daylight>
 				</long>
 			</metazone>
 			<metazone type="Uralsk">
 				<long>
-					<standard draft="provisional">Hora de Oral</standard>
-					<daylight draft="provisional">Hora de verano de Oral</daylight>
+					<standard>Hora de Oral</standard>
+					<daylight>Hora de verano de Oral</daylight>
 				</long>
 			</metazone>
 			<metazone type="Urumqi">
 				<long>
-					<standard draft="provisional">Hora de Ürümqi</standard>
+					<standard>Hora de Ürümqi</standard>
 				</long>
 			</metazone>
 			<metazone type="Uzbekistan">
 				<long>
-					<standard draft="provisional">Hora de Uzbekistán</standard>
-					<daylight draft="provisional">Hora de verano de Uzbekistán</daylight>
+					<standard>Hora de Uzbekistán</standard>
+					<daylight>Hora de verano de Uzbekistán</daylight>
 				</long>
 			</metazone>
 			<metazone type="Yekaterinburg">
 				<long>
-					<standard draft="provisional">Hora de Yekaterinburgo</standard>
-					<daylight draft="provisional">Hora de verano de Yekaterinburgo</daylight>
+					<standard>Hora de Yekaterinburgo</standard>
+					<daylight>Hora de verano de Yekaterinburgo</daylight>
 				</long>
 			</metazone>
 			<metazone type="Yerevan">
 				<long>
-					<standard draft="provisional">Hora de Ereván</standard>
-					<daylight draft="provisional">Hora de verano de Ereván</daylight>
+					<standard>Hora de Ereván</standard>
+					<daylight>Hora de verano de Ereván</daylight>
 				</long>
 			</metazone>
 			<metazone type="Yukon">
 				<long>
-					<generic draft="provisional">Hora del Yukón</generic>
-					<standard draft="provisional">Hora estándar del Yukón</standard>
-					<daylight draft="provisional">Hora de verano del Yukón</daylight>
+					<generic>Hora del Yukón</generic>
+					<standard>Hora estándar del Yukón</standard>
+					<daylight>Hora de verano del Yukón</daylight>
 				</long>
 			</metazone>
 		</timeZoneNames>
@@ -2487,7 +2288,6 @@
 			</currency>
 			<currency type="AUD">
 				<displayName>dólar australiano</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares australianos</displayName>
 				<symbol>$A</symbol>
 			</currency>
 			<currency type="AWG">
@@ -2495,16 +2295,15 @@
 			</currency>
 			<currency type="AZM">
 				<displayName>manat azerí (1993-2006)</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">manat azerí</displayName>
 			</currency>
 			<currency type="AZN">
-				<displayName references="R039">manat azerí</displayName>
+				<displayName>manat azerí</displayName>
 			</currency>
 			<currency type="BAD">
 				<displayName>dinar bosnio</displayName>
 			</currency>
 			<currency type="BAM">
-				<displayName references="R039">marco convertible de Bosnia-Herzegovina</displayName>
+				<displayName>marco convertible de Bosnia-Herzegovina</displayName>
 				<symbol>KM</symbol>
 			</currency>
 			<currency type="BBD">
@@ -2531,7 +2330,6 @@
 			</currency>
 			<currency type="BGN">
 				<displayName>nuevo lev búlgaro</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">leva búlgara</displayName>
 			</currency>
 			<currency type="BHD">
 				<displayName>dinar bahreiní</displayName>
@@ -2547,7 +2345,6 @@
 			</currency>
 			<currency type="BND">
 				<displayName>dólar de Brunéi</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólar de brunei</displayName>
 			</currency>
 			<currency type="BOB">
 				<displayName>boliviano</displayName>
@@ -2603,23 +2400,20 @@
 			</currency>
 			<currency type="CAD">
 				<displayName>dólar canadiense</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares canadienses</displayName>
 				<symbol>Can$</symbol>
 			</currency>
 			<currency type="CDF">
 				<displayName>franco congoleño</displayName>
 			</currency>
 			<currency type="CHE">
-				<displayName draft="provisional">euro WIR</displayName>
+				<displayName>euro WIR</displayName>
 			</currency>
 			<currency type="CHF">
 				<displayName>franco suizo</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">francos suizos</displayName>
 				<symbol>SwF</symbol>
 			</currency>
 			<currency type="CHW">
-				<displayName draft="provisional">franco WIR</displayName>
-				<displayName references="R040" alt="proposed-x1001" draft="unconfirmed">WIR franc</displayName>
+				<displayName>franco WIR</displayName>
 			</currency>
 			<currency type="CLF">
 				<displayName>unidad de fomento chilena</displayName>
@@ -2630,7 +2424,6 @@
 			</currency>
 			<currency type="CNY">
 				<displayName>yuan renminbi chino</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">yuan o renminbi</displayName>
 				<symbol>Y</symbol>
 			</currency>
 			<currency type="COP">
@@ -2638,7 +2431,7 @@
 				<symbol>Col$</symbol>
 			</currency>
 			<currency type="COU">
-				<displayName references="R039">unidad de valor real colombiana</displayName>
+				<displayName>unidad de valor real colombiana</displayName>
 			</currency>
 			<currency type="CRC">
 				<displayName>colón costarricense</displayName>
@@ -2646,14 +2439,13 @@
 			</currency>
 			<currency type="CSD">
 				<displayName>antiguo dinar serbio</displayName>
-				<displayName references="R039" alt="proposed-x1001" draft="unconfirmed">dinar serbio</displayName>
 			</currency>
 			<currency type="CSK">
 				<displayName>corona fuerte checoslovaca</displayName>
 			</currency>
 			<currency type="CUP">
 				<displayName>peso cubano</displayName>
-				<symbol draft="provisional">CUP</symbol>
+				<symbol>CUP</symbol>
 			</currency>
 			<currency type="CVE">
 				<displayName>escudo de Cabo Verde</displayName>
@@ -2671,7 +2463,6 @@
 			</currency>
 			<currency type="DEM">
 				<displayName>marco alemán</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">marcos alemanes</displayName>
 			</currency>
 			<currency type="DJF">
 				<displayName>franco de Yibuti</displayName>
@@ -2702,7 +2493,7 @@
 				<displayName>libra egipcia</displayName>
 			</currency>
 			<currency type="EQE">
-				<displayName draft="provisional">ekwele</displayName>
+				<displayName>ekwele</displayName>
 			</currency>
 			<currency type="ERN">
 				<displayName>nakfa eritreo</displayName>
@@ -2723,14 +2514,12 @@
 			</currency>
 			<currency type="EUR">
 				<displayName>euro</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">euros</displayName>
 			</currency>
 			<currency type="FIM">
 				<displayName>marco finlandés</displayName>
 			</currency>
 			<currency type="FJD">
 				<displayName>dólar de las Islas Fiyi</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólar de fiyi</displayName>
 				<symbol>F$</symbol>
 			</currency>
 			<currency type="FKP">
@@ -2738,11 +2527,9 @@
 			</currency>
 			<currency type="FRF">
 				<displayName>franco francés</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">francos franceses</displayName>
 			</currency>
 			<currency type="GBP">
 				<displayName>libra esterlina británica</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">libras esterlinas británicas</displayName>
 			</currency>
 			<currency type="GEK">
 				<displayName>kupon larit georgiano</displayName>
@@ -2761,7 +2548,7 @@
 				<displayName>dalasi gambiano</displayName>
 			</currency>
 			<currency type="GNF">
-				<displayName references="R039">franco guineano</displayName>
+				<displayName>franco guineano</displayName>
 				<symbol>GF</symbol>
 			</currency>
 			<currency type="GNS">
@@ -2789,7 +2576,6 @@
 			</currency>
 			<currency type="HKD">
 				<displayName>dólar de Hong Kong</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares de hong kong</displayName>
 				<symbol>HK$</symbol>
 			</currency>
 			<currency type="HNL">
@@ -2822,11 +2608,9 @@
 			</currency>
 			<currency type="ILS">
 				<displayName>nuevo sheqel israelí</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">shekel israelí</displayName>
 			</currency>
 			<currency type="INR">
 				<displayName>rupia india</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">rupia hindú</displayName>
 			</currency>
 			<currency type="IQD">
 				<displayName>dinar iraquí</displayName>
@@ -2855,7 +2639,6 @@
 			</currency>
 			<currency type="KES">
 				<displayName>chelín keniata</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">chelín keniano</displayName>
 				<symbol>K Sh</symbol>
 			</currency>
 			<currency type="KGS">
@@ -2875,7 +2658,6 @@
 			</currency>
 			<currency type="KRW">
 				<displayName>won surcoreano</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">won de corea del sur</displayName>
 			</currency>
 			<currency type="KWD">
 				<displayName>dinar kuwaití</displayName>
@@ -2907,8 +2689,7 @@
 				<symbol>M</symbol>
 			</currency>
 			<currency type="LSM">
-				<displayName draft="provisional">maloti</displayName>
-				<displayName references="R039" alt="proposed-x1001" draft="unconfirmed">maloti lesothense</displayName>
+				<displayName>maloti</displayName>
 			</currency>
 			<currency type="LTL">
 				<displayName>litas lituano</displayName>
@@ -2990,8 +2771,6 @@
 			</currency>
 			<currency type="MXN">
 				<displayName>peso mexicano</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">pesos mexicanos</displayName>
-				<displayName alt="proposed-x1002" draft="unconfirmed">MXN</displayName>
 				<symbol>MEX$</symbol>
 			</currency>
 			<currency type="MXP">
@@ -3002,7 +2781,6 @@
 			</currency>
 			<currency type="MYR">
 				<displayName>ringgit malasio</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">ringgit malayo</displayName>
 				<symbol>RM</symbol>
 			</currency>
 			<currency type="MZE">
@@ -3010,11 +2788,10 @@
 			</currency>
 			<currency type="MZM">
 				<displayName>antiguo metical mozambiqueño</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">metical mozambiqueño</displayName>
 				<symbol>Mt</symbol>
 			</currency>
 			<currency type="MZN">
-				<displayName references="R039">metical mozambiqueño</displayName>
+				<displayName>metical mozambiqueño</displayName>
 			</currency>
 			<currency type="NAD">
 				<displayName>dólar de Namibia</displayName>
@@ -3028,7 +2805,7 @@
 			</currency>
 			<currency type="NIO">
 				<displayName>córdoba oro nicaragüense</displayName>
-				<symbol references="R038">C$</symbol>
+				<symbol>C$</symbol>
 			</currency>
 			<currency type="NLG">
 				<displayName>florín neerlandés</displayName>
@@ -3043,7 +2820,6 @@
 			</currency>
 			<currency type="NZD">
 				<displayName>dólar neozelandés</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares de nueva zelandia</displayName>
 				<symbol>$NZ</symbol>
 			</currency>
 			<currency type="OMR">
@@ -3052,16 +2828,14 @@
 			</currency>
 			<currency type="PAB">
 				<displayName>balboa panameño</displayName>
-				<symbol draft="provisional">PAB</symbol>
-				<symbol alt="proposed-x1001" draft="unconfirmed">B</symbol>
+				<symbol>PAB</symbol>
 			</currency>
 			<currency type="PEI">
 				<displayName>inti peruano</displayName>
 			</currency>
 			<currency type="PEN">
 				<displayName>nuevo sol peruano</displayName>
-				<symbol draft="provisional">PEN</symbol>
-				<symbol alt="proposed-x1001" draft="unconfirmed">S/</symbol>
+				<symbol>PEN</symbol>
 			</currency>
 			<currency type="PES">
 				<displayName>sol peruano</displayName>
@@ -3071,16 +2845,14 @@
 			</currency>
 			<currency type="PHP">
 				<displayName>peso filipino</displayName>
-				<symbol draft="provisional">PHP</symbol>
+				<symbol>PHP</symbol>
 			</currency>
 			<currency type="PKR">
 				<displayName>rupia pakistaní</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">rupia paquistaní</displayName>
 				<symbol>Pra</symbol>
 			</currency>
 			<currency type="PLN">
 				<displayName>zloty polaco</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">nuevo zloty polaco</displayName>
 				<symbol>Zl</symbol>
 			</currency>
 			<currency type="PLZ">
@@ -3091,31 +2863,28 @@
 			</currency>
 			<currency type="PYG">
 				<displayName>guaraní paraguayo</displayName>
-				<symbol draft="provisional">PYG</symbol>
-				<symbol alt="proposed-x1001" draft="unconfirmed">G</symbol>
-				<symbol references="R043" alt="variant" draft="unconfirmed">₲</symbol>
+				<symbol>PYG</symbol>
 			</currency>
 			<currency type="QAR">
 				<displayName>riyal de Qatar</displayName>
 				<symbol>QR</symbol>
 			</currency>
 			<currency type="RHD">
-				<displayName references="R040">dólar rodesiano</displayName>
+				<displayName>dólar rodesiano</displayName>
 			</currency>
 			<currency type="ROL">
-				<displayName references="R040">antiguo leu rumano</displayName>
+				<displayName>antiguo leu rumano</displayName>
 				<symbol>leu</symbol>
 			</currency>
 			<currency type="RON">
-				<displayName references="R039">leu rumano</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">nuevo leu rumano</displayName>
+				<displayName>leu rumano</displayName>
 			</currency>
 			<currency type="RSD">
 				<displayName>dinar serbio</displayName>
 			</currency>
 			<currency type="RUB">
 				<displayName>rublo ruso</displayName>
-				<symbol draft="provisional">RUB</symbol>
+				<symbol>RUB</symbol>
 			</currency>
 			<currency type="RUR">
 				<displayName>rublo ruso (1991-1998)</displayName>
@@ -3125,7 +2894,6 @@
 			</currency>
 			<currency type="SAR">
 				<displayName>riyal saudí</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">rial saudí</displayName>
 				<symbol>SRl</symbol>
 			</currency>
 			<currency type="SBD">
@@ -3148,7 +2916,6 @@
 			</currency>
 			<currency type="SGD">
 				<displayName>dólar singapurense</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares de singapur</displayName>
 				<symbol>S$</symbol>
 			</currency>
 			<currency type="SHP">
@@ -3156,7 +2923,6 @@
 			</currency>
 			<currency type="SIT">
 				<displayName>tólar esloveno</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">tolar esloveno</displayName>
 			</currency>
 			<currency type="SKK">
 				<displayName>corona eslovaca</displayName>
@@ -3170,7 +2936,7 @@
 				<symbol>So. Sh.</symbol>
 			</currency>
 			<currency type="SRD">
-				<displayName references="R039">dólar surinamés</displayName>
+				<displayName>dólar surinamés</displayName>
 			</currency>
 			<currency type="SRG">
 				<displayName>florín surinamés</displayName>
@@ -3185,7 +2951,7 @@
 			</currency>
 			<currency type="SVC">
 				<displayName>colón salvadoreño</displayName>
-				<symbol draft="provisional">SVC</symbol>
+				<symbol>SVC</symbol>
 			</currency>
 			<currency type="SYP">
 				<displayName>libra siria</displayName>
@@ -3222,7 +2988,7 @@
 				<symbol>TL</symbol>
 			</currency>
 			<currency type="TRY">
-				<displayName references="R039">nueva lira turca</displayName>
+				<displayName>nueva lira turca</displayName>
 			</currency>
 			<currency type="TTD">
 				<displayName>dólar de Trinidad y Tobago</displayName>
@@ -3230,7 +2996,6 @@
 			</currency>
 			<currency type="TWD">
 				<displayName>nuevo dólar taiwanés</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">nuevo dólar de taiwan</displayName>
 				<symbol>NT$</symbol>
 			</currency>
 			<currency type="TZS">
@@ -3239,7 +3004,6 @@
 			</currency>
 			<currency type="UAH">
 				<displayName>grivna ucraniana</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">jrivnia ucraniana</displayName>
 			</currency>
 			<currency type="UAK">
 				<displayName>karbovanet ucraniano</displayName>
@@ -3253,8 +3017,6 @@
 			</currency>
 			<currency type="USD">
 				<displayName>dólar estadounidense</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">dólares estadounidenses</displayName>
-				<displayName alt="proposed-x1002" draft="unconfirmed">Dólar Americano</displayName>
 			</currency>
 			<currency type="USN">
 				<displayName>dólar estadounidense (día siguiente)</displayName>
@@ -3292,10 +3054,10 @@
 			</currency>
 			<currency type="XAF">
 				<displayName>franco CFA BEAC</displayName>
-				<symbol draft="provisional">XAF</symbol>
+				<symbol>XAF</symbol>
 			</currency>
 			<currency type="XAG">
-				<displayName references="R039">plata</displayName>
+				<displayName>plata</displayName>
 			</currency>
 			<currency type="XAU">
 				<displayName>oro</displayName>
@@ -3332,26 +3094,24 @@
 				<displayName>franco CFA BCEAO</displayName>
 			</currency>
 			<currency type="XPD">
-				<displayName references="R039">paladio</displayName>
+				<displayName>paladio</displayName>
 			</currency>
 			<currency type="XPF">
 				<displayName>franco CFP</displayName>
 				<symbol>CFPF</symbol>
 			</currency>
 			<currency type="XPT">
-				<displayName references="R039">platino</displayName>
+				<displayName>platino</displayName>
 			</currency>
 			<currency type="XRE">
-				<displayName references="R040">fondos RINET</displayName>
+				<displayName>fondos RINET</displayName>
 			</currency>
 			<currency type="XTS">
-				<displayName references="R039">código reservado para pruebas</displayName>
+				<displayName>código reservado para pruebas</displayName>
 			</currency>
 			<currency type="XXX">
 				<displayName>Sin divisa</displayName>
-				<displayName alt="proposed-x1001" draft="unconfirmed">Divisa desconocida o no válida</displayName>
-				<displayName alt="proposed-x1002" draft="unconfirmed">divisa desconocida o no válida</displayName>
-				<symbol draft="provisional">XXX</symbol>
+				<symbol>XXX</symbol>
 			</currency>
 			<currency type="YDD">
 				<displayName>dinar yemení</displayName>
