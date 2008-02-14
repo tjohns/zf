@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8008 -->
 <sect1 id="zend.feed.custom-feed">
     <title>独自のフィードクラスおよびエントリクラス</title>
 
@@ -57,6 +58,17 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
+    public function __call($var, $unused)
+    {
+        switch ($var) {
+            case 'myUpdated':
+                // myUpdated を myns:updated に変換します
+                return parent::__call('myns:updated', $unused);
+
+            default:
+                return parent::__call($var, $unused);
+        }
+    }
 }]]>
         </programlisting>
         <para>
@@ -65,7 +77,12 @@ class MyEntry extends Zend_Feed_Entry_Atom
         </para>
         <programlisting role="php"><![CDATA[<?php
 $entry = new MyEntry();
-$entry->myUpdated = '2005-04-19T15:30';]]>
+$entry->myUpdated = '2005-04-19T15:30';
+
+// メソッド型のコールは __call 関数が処理します
+$entry->myUpdated();  
+// プロパティ型のコールは __get 関数が処理します
+$entry->myUpdated;]]>
         </programlisting>
     </example>
 
