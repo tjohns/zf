@@ -114,7 +114,7 @@ $client->setConfig(array(
             Performing simple HTTP requests is very easily done using the
             request() method, and rarely needs more than three lines of code:
             <example id="zend.http.client.basic-requests.example-1">
-                <title>Preforming a Simple GET Request</title>
+                <title>Performing a Simple GET Request</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
 
