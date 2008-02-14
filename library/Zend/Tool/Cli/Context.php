@@ -25,7 +25,7 @@ class Zend_Tool_Cli_Context
         
 	}
 	
-	public function parse(Array $arguements)
+	public function parse(Array $arguments)
 	{
 		$this->_globalContext->setArguments($arguments);
 		$this->_globalContext->parse();

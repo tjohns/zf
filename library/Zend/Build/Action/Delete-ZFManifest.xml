@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <configdata>
-    <context type="action" name = "create" alias = "c" class="Zend_Build_Action_Create">
+    <context type="action" name="delete" alias="c" class="Zend_Build_Action_Delete">
         <attribute getopt="apple|a">
             <usage>
                 This is how you use apple with create.

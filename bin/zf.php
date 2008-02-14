@@ -5,6 +5,11 @@
  */
 set_include_path('.:/usr/lib/php');
 set_include_path(get_include_path() . PATH_SEPARATOR . '../library/' . PATH_SEPARATOR . '../../repo-trunk/library');
+require_once 'Zend/Loader.php';
+Zend_Loader::registerAutoload();
+/**
+ * DEV ONLY STOP
+ */
 
 require_once 'Zend/Tool/Cli.php';
 

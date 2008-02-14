@@ -18,25 +18,26 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Build/Manifest/Context.php';
+
 /*
  * This is a singleton class which provides access to all the manifest files found on the classpath via
  * a constant-time-read data structure.
  */
 class Zend_Build_Manifest
 {
+    protected static $_instance = null;
     protected $_manifestPattern        = '/^[A-Z][0-9a-z].+-ZFManifest(....)$/';
     protected $_configPrefix           = 'Zend_Config_';
-    //const CONSOLE_CONTEXT_CONFIG_NAME  = 'context';
-
-    
-    private static $_instance = null;
+    protected $_contexts = array();
     
     /**
      * var Serves as a simple index in to the config array for this manifest instance.
      */
+    /*
     private $_configIndex = array();
     private $_configArray = array(); 
-
+    */
 
     public static function getInstance()
     {
@@ -97,14 +98,28 @@ class Zend_Build_Manifest
 
     }
 
+    /**
+     * getContextsByType
+     *
+     * @param string $type
+     * @return array
+     */
+    public function getContextsByType($type)
+    {
+        return (isset($this->_contexts[$type])) ? $this->_contexts[$type] : array();
+    }
 
     public function getContext($type, $name)
     {
+        return (isset($this->_contexts[$type][$name])) ? $this->_contexts[$type][$name] : null; 
+        
+        /*
         if (array_key_exists($type, $this->_configIndex) && array_key_exists($name, $this->_configIndex[$type])) {
             return $this->_configIndex[$type][$name];
         } else {
             return null;
         }
+        */
     }
     
     public function toConfig($allowModifications = true)
@@ -144,70 +159,16 @@ class Zend_Build_Manifest
                                            "Extension '$extension' is invalid.");
         }
         
-        $configClass = $this->_configPrefix . ucfirst(strtolower($extension));
+        $manifest = Zend_Build_Manifest_Context::fromXmlFile($file);
         
-        if (!class_exists($configClass, false)) {
-	        try {
-	            require_once 'Zend/Loader.php';
-	            Zend_Loader::loadClass($configClass, explode(PATH_SEPARATOR, get_include_path()));
-	        } catch(Zend_Exception $e) {
-	            // Problem with loading the config class
-	            require_once 'Zend/Build/Exception.php';
-	            throw new Zend_Build_Exception("Config class '$configClass' could not be found.");
-	        }
+        foreach($manifest as $context) {
+            if (!isset($this->_contextsByType[$context->getType()])) {
+                $this->_contextsByType[$context->getType()] = array();
+            }
+            $this->_contexts[$context->getType()][$context->getName()] = $context;
+            /* TODO - other indexes here? */
         }
         
-        $configs =  new $configClass($file);
-        
-        foreach($configs as $key => $value) {
-            if($key != 'context') {
-                continue;
-            } else {
-                $consoleContext = $value;
-            }
-            
-            // Check that 'name' is set first
-            $name = $consoleContext->name;
-            if(!isset($name)) {
-                require_once 'Zend/Build/Exception.php';
-                throw new Zend_Build_Exception("Console context in '$file' does not have required 'name' attribute.");
-            }
-            
-            // Create separate sections in the index so that different kinds of contexts can live in different namespaces
-            // and still be efficiently accessed.
-            
-            $type = $consoleContext->type;
-            //Index it under key for 'name' after testing it to see if we've already added it
-            if (isset($this->_configIndex[$type])) {
-                if (isset($this->_configIndex[$type][$name])) {
-                    // Problem with loading the class
-                    require_once 'Zend/Build/Exception.php';
-                    throw new Zend_Build_Exception(
-                        "Manifest already contains a context with name '$name' and type '$type'."
-                    );
-                } else {
-                    // Do nothing. Type already maps to an array in the index.
-                }
-            } else {
-                // Need to create an array for type to map to.
-                $this->_configIndex[$type] = array();
-            }
-            
-            $this->_configArray[] = $consoleContext;
-            $this->_configIndex[$type][$name] = $consoleContext;
-            
-            $alias = $consoleContext->alias;
-            
-            // Also index it under 'alias' for instant access
-            if(isset($alias)) {
-                if (isset($this->_configIndex[$type]) && isset($this->_configIndex[$type][$alias])) {
-                    require_once 'Zend/Build/Exception.php';
-                    throw new Zend_Build_Exception("Manifest already contains a console context with alias '$alias'");
-                } else {
-                    // Type must map to an array after handling the name above.
-                    $this->_configIndex[$type][$alias] = $consoleContext;
-                }
-            }
-        }
     }
+
 }
