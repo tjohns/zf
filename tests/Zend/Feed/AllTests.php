@@ -44,6 +44,7 @@ require_once 'Zend/Feed/CountTest.php';
 require_once 'Zend/Feed/ElementTest.php';
 require_once 'Zend/Feed/ImportTest.php';
 require_once 'Zend/Feed/IteratorTest.php';
+require_once 'Zend/Feed/Entry/RssTest.php';
 
 
 /**
@@ -71,6 +72,7 @@ class Zend_Feed_AllTests
         $suite->addTestSuite('Zend_Feed_ElementTest');
         $suite->addTestSuite('Zend_Feed_ImportTest');
         $suite->addTestSuite('Zend_Feed_IteratorTest');
+        $suite->addTestSuite('Zend_Feed_Entry_RssTest');
 
         return $suite;
     }
