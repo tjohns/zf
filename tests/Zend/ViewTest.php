@@ -19,10 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_ViewTest::main');
+}
+
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_View
@@ -43,8 +47,15 @@ require_once 'Zend/View/Interface.php';
  */
 class Zend_ViewTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_ViewTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
+        $this->notices = array();
         $this->errorReporting = error_reporting();
         $this->displayErrors  = ini_get('display_errors');
     }
@@ -83,7 +94,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
      */
     public function testDefaultFilterPath()
     {
-        $this->_testDefaultPath('filter');
+        $this->_testDefaultPath('filter', false);
     }
 
     /**
@@ -139,7 +150,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($prefix, $item['prefix']);
 
             if ($testReadability) {
-                $this->assertTrue(is_dir($item['dir']));
+                $this->assertTrue(is_dir($item['dir']), var_export($item, 1));
                 $this->assertTrue(is_readable($item['dir']));
             }
         }
@@ -738,14 +749,27 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function handleNotices($errno, $errstr, $errfile, $errline)
+    {
+        if (!isset($this->notices)) {
+            $this->notices = array();
+        }
+        if ($errno === E_USER_NOTICE) {
+            $this->notices[] = $errstr;
+        }
+    }
+
     public function testStrictVars()
     {
         $view = new Zend_View();
         $view->setScriptPath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR . '_templates');
         $view->strictVars(true);
+        set_error_handler(array($this, 'handleNotices'), E_USER_NOTICE);
         $content = $view->render('testStrictVars.phtml');
-        $this->assertContains('Key "foo" does not exist', $content, $content);
-        $this->assertContains('Key "bar" does not exist', $content);
+        restore_error_handler();
+        foreach (array('foo', 'bar') as $key) {
+            $this->assertContains('Key "' . $key . '" does not exist', $this->notices);
+        }
     }
 
     public function testGetScriptPath()
@@ -870,4 +894,9 @@ class Zend_ViewTest_Extension extends Zend_View
         $this->assign('foo', 'bar');
         $this->setScriptPath(dirname(__FILE__) . '/View/_templates');
     }
+}
+
+// Call Zend_ViewTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_ViewTest::main") {
+    Zend_ViewTest::main();
 }
