@@ -359,6 +359,11 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function start($options = false)
     {
+        if (self::$_sessionStarted && self::$_destroyed) {
+            require_once 'Zend/Session/Exception.php';
+            throw new Zend_Session_Exception('The session was explicitly destroyed during this request, attempting to re-start is not allowed.');
+        }
+        
         if (self::$_sessionStarted) {
             return; // already started
         }
