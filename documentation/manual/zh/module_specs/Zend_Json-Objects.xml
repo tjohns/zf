@@ -16,6 +16,7 @@
 // 解码JSON对象作为PHP对象
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
+    <para>
         这样任何解码后的对象将被作为一个<code>StdClass</code>的对象来返回，对象带有根据JSON对象的key/value对生成的一系列属性。
     </para>
     <para>

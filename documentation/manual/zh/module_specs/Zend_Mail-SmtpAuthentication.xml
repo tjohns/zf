@@ -24,7 +24,8 @@
             $mail->setFrom('sender@test.com', 'Some Sender');
             $mail->addTo('recipient@test.com', 'Some Recipient');
             $mail->setSubject('TestSubject');
-            $mail->send($transport);</programlisting>
+            $mail->send($transport);]]>
+        </programlisting>
     </example>
 
     <note>
