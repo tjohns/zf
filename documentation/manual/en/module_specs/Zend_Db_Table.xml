@@ -223,7 +223,7 @@ class Bugs extends Zend_Db_Table_Abstract
       </itemizedlist>
     </sect3>
 
-    <sect3>
+    <sect3 id="zend.db.table.initialization">
       <title>Table initialization</title>
 
       <para>If application-specific logic needs to be initialized when a Table
@@ -853,7 +853,7 @@ $rows = $table-&gt;fetchAll($select);</programlisting>
       that matches the WHERE clause.</para>
     </sect3>
 
-    <sect3>
+    <sect3 id="zend.db.table.advanced.usage">
       <title>Advanced usage</title>
 
       <para>For more specific and optimized requests, you may wish to limit
