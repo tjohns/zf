@@ -24,17 +24,18 @@
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Feed_AllTests::main');
-
-    /**
-     * Prepend library/ to the include_path.  This allows the tests to run out of the box and
-     * helps prevent finding other copies of the framework that might be present.
-     */
-    set_include_path(dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library'
-                     . PATH_SEPARATOR . get_include_path());
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
+ * Exclude from code coverage report
+ */
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 
 require_once 'Zend/Feed/ArrayAccessTest.php';
 require_once 'Zend/Feed/AtomEntryOnlyTest.php';

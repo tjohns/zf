@@ -23,6 +23,11 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Feed
  */
 require_once 'Zend/Feed.php';

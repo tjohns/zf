@@ -23,6 +23,11 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Feed
  */
 require_once 'Zend/Feed.php';
@@ -76,12 +81,12 @@ class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase
     public function testCurrent()
     {
         foreach ($this->_feed as $f) {
-            $this->assertTrue($f instanceof Zend_Feed_Entry_Atom, 'Each feed entry should be an instance of Zend_Feed_Entry_Atom');
+            $this->assertType('Zend_Feed_Entry_Atom', $f, 'Each feed entry should be an instance of Zend_Feed_Entry_Atom');
             break;
         }
 
         foreach ($this->_nsfeed as $f) {
-            $this->assertTrue($f instanceof Zend_Feed_Entry_Atom, 'Each feed entry should be an instance of Zend_Feed_Entry_Atom');
+            $this->assertType('Zend_Feed_Entry_Atom', $f, 'Each feed entry should be an instance of Zend_Feed_Entry_Atom');
             break;
         }
     }
