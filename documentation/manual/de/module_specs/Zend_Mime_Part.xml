@@ -37,13 +37,13 @@ public $charset;]]>
   <sect2 id="zend.mime.part.methods">
     <title>Methoden für das übertragen der des Teils der Nachricht zu einem String</title>
 
-    <para><code>-&gt;getContent()</code> gibt den verschlüsselten Inhalt des MimeParts als
+    <para><code>getContent()</code> gibt den verschlüsselten Inhalt des MimeParts als
     String zurück, wobei die Verschlüsselung verwendet wird welche im Attribut
     $encoding definiert wurde. Gültige Werte sind ZMime::ENCODING_* Zeichensatz Konvertierungen
     werden nicht durchgeführt.</para>
 
     <para>
-        <code>-&gt;getHeaders()</code> gibt den Mime-Headers für den
+        <code>getHeaders()</code> gibt den Mime-Headers für den
         MimePart zurück, erzeugt anhand der Informationen der öffentlich
         zugänglichen Attribute. Die Attribute des Objektes müssen korrekt gesetzt sein,
         bevor diese Methode aufgerufen wird.
