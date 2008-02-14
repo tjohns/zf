@@ -267,7 +267,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $this->_inflector->addRules(array(
                      ':module'     => array('Word_CamelCaseToDash', 'stringToLower'),
                      ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator(DIRECTORY_SEPARATOR), 'StringToLower'),
-                     ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('#[^a-z0-9' . DIRECTORY_SEPARATOR . ']+#i', '-'), 'StringToLower'),
+                     ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('#[^a-z0-9' . preg_quote(DIRECTORY_SEPARATOR, '#') . ']+#i', '-'), 'StringToLower'),
                  ))
                  ->setStaticRuleReference('suffix', $this->_viewSuffix)
                  ->setStaticRuleReference('moduleDir', $this->_moduleDir)
