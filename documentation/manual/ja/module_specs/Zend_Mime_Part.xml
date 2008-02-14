@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7990 -->
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
 
@@ -36,14 +37,14 @@ public $charset;]]>
   <sect2 id="zend.mime.part.methods">
     <title>メッセージパートを文字列にレンダリングするためのメソッド</title>
 
-    <para><code>-&gt;getContent()</code> は、MimePart
+    <para><code>getContent()</code> は、MimePart
     の内容をエンコードし、文字列で返します。
     使用するエンコーディングは属性 $encoding で指定します。
     使用可能な値は ZMime::ENCODING_* です。
     文字セットの変換は行いません。</para>
 
     <para>
-        <code>-&gt;getHeaders()</code> は、アクセス可能な属性の情報から生成した
+        <code>getHeaders()</code> は、アクセス可能な属性の情報から生成した
         MimePart の Mime ヘッダを返します。
         このメソッドをコールする前に、オブジェクトの属性を正しく設定しておく必要があります。
         <itemizedlist>
