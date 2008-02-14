@@ -110,11 +110,19 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
     public function __wakeup()
     {
         @ini_set('track_errors', 1);
-        $doc = new DOMDocument();
-        $success = @$doc->loadXML($this->_element);
+        $doc = @DOMDocument::loadXML($this->_element);
         @ini_restore('track_errors');
 
-        if (!$success) {
+        if (!$doc) {
+            // prevent the class to generate an undefined variable notice (ZF-2590)
+            if (!isset($php_errormsg)) {
+                if (function_exists('xdebug_is_enabled')) {
+                    $php_errormsg = '(error message not available, when XDebug is running)';
+                } else {
+                    $php_errormsg = '(error message not available)';
+                }
+            }
+            
             /** 
              * @see Zend_Feed_Exception
              */

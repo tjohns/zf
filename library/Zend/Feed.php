@@ -192,11 +192,10 @@ class Zend_Feed
     {
         // Load the feed as an XML DOMDocument object
         @ini_set('track_errors', 1);
-        $doc = new DOMDocument();
-        $success = @$doc->loadXML($string);
+        $doc = @DOMDocument::loadXML($string);
         @ini_restore('track_errors');
 
-        if (!$success) {
+        if (!$doc) {
             // prevent the class to generate an undefined variable notice (ZF-2590)
             if (!isset($php_errormsg)) {
                 if (function_exists('xdebug_is_enabled')) {
@@ -205,7 +204,7 @@ class Zend_Feed
                     $php_errormsg = '(error message not available)';
                 }
             }
-            
+
             /**
              * @see Zend_Feed_Exception
              */
