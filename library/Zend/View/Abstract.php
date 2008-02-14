@@ -18,14 +18,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend
- */
+/** Zend_Loader */
 require_once 'Zend/Loader.php';
 
-/**
- * Zend_View_Interface
- */
+/** Zend_View_Interface */
 require_once 'Zend/View/Interface.php';
 
 /**
@@ -971,8 +967,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         // check to see if name => class mapping exists for helper/filter
         $classLoaded = '_' . $type . 'Loaded';
         $classAccess = '_set' . ucfirst($type) . 'Class';
-        if (isset($this->$classLoaded[$name])) {
-            return $this->$classLoaded[$name];
+        if (isset($this->{$classLoaded}[$name])) {
+            return $this->{$classLoaded}[$name];
         }
 
         // only look for "$Name.php"
