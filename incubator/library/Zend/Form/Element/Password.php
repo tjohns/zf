@@ -49,10 +49,16 @@ class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
      */
     public function getMessages()
     {
-        foreach ($this->getValidators() as $validator) {
-            $value = $validator->value;
-            break;
+        $value = '';
+
+        $validators = $this->getValidators();
+        if (!empty($validators)) {
+            foreach ($validators as $validator) {
+                $value = $validator->value;
+                break;
+            }
         }
+
         $masked = str_repeat('*', strlen($value));
         foreach ($this->_messages as $code => $message) {
             $this->_messages[$code] = str_replace($value, $masked, $message);

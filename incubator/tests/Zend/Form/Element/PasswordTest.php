@@ -36,6 +36,7 @@ class Zend_Form_Element_PasswordTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->errors = array();
         $this->element = new Zend_Form_Element_Password('foo');
     }
 
@@ -86,6 +87,26 @@ class Zend_Form_Element_PasswordTest extends PHPUnit_Framework_TestCase
             $this->assertNotContains($value, $message);
             $this->assertContains($expect, $message, $message);
         }
+    }
+
+    public function handleErrors($errno, $errmsg, $errfile, $errline, $errcontext)
+    {
+        if (!isset($this->errors)) {
+            $this->errors = array();
+        }
+        $this->errors[] = $errmsg;
+    }
+
+    /**
+     * ZF-2656
+     */
+    public function testGetMessagesReturnsEmptyArrayWhenNoMessagesRegistered()
+    {
+        set_error_handler(array($this, 'handleErrors'));
+        $messages = $this->element->getMessages();
+        restore_error_handler();
+        $this->assertSame(array(), $messages);
+        $this->assertTrue(empty($this->errors));
     }
 }
 
