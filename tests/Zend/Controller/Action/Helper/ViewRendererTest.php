@@ -731,6 +731,17 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $body = $this->response->getBody();
         $this->assertContains('Rendered index/test.phtml in bar module', $body);
     }
+    
+    public function testStockInflectorAllowsSubDirectoryViewScripts()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('layout/admin');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $expected   = 'index/layout/admin.phtml';
+        $this->assertEquals($expected, $this->helper->getViewScript());
+    }
+    
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
