@@ -156,6 +156,13 @@ class Zend_Session extends Zend_Session_Abstract
      */
     private static $_defaultOptionsSet = false;
 
+    /**
+     * A reference to the set session save handler
+     *
+     * @var Zend_Session_SaveHandler_Interface
+     */
+    private static $_saveHandler = null;
+
 
     /**
      * Constructor overriding - make sure that a developer cannot instantiate
@@ -212,18 +219,30 @@ class Zend_Session extends Zend_Session_Abstract
      * @param Zend_Session_SaveHandler_Interface $interface
      * @return void
      */
-    public static function setSaveHandler(Zend_Session_SaveHandler_Interface $interface)
+    public static function setSaveHandler(Zend_Session_SaveHandler_Interface $saveHandler)
     {
         session_set_save_handler(
-            array(&$interface, 'open'),
-            array(&$interface, 'close'),
-            array(&$interface, 'read'),
-            array(&$interface, 'write'),
-            array(&$interface, 'destroy'),
-            array(&$interface, 'gc')
+            array(&$saveHandler, 'open'),
+            array(&$saveHandler, 'close'),
+            array(&$saveHandler, 'read'),
+            array(&$saveHandler, 'write'),
+            array(&$saveHandler, 'destroy'),
+            array(&$saveHandler, 'gc')
             );
+        self::$_saveHandler = $saveHandler;
     }
 
+
+    /**
+     * getSaveHandler() - Get the session Save Handler
+     *
+     * @return Zend_Session_SaveHandler_Interface
+     */
+    public static function getSaveHandler()
+    {
+        return self::$_saveHandler;
+    }
+    
 
     /**
      * regenerateId() - Regenerate the session id.  Best practice is to call this after
