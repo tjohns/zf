@@ -106,6 +106,12 @@ class Zend_Form implements Iterator, Countable
     protected $_elementsInArray = false;
 
     /**
+     * Form order
+     * @var int|null
+     */
+    protected $_formOrder;
+
+    /**
      * Form legend
      * @var string
      */
@@ -712,6 +718,28 @@ class Zend_Form implements Iterator, Countable
     {
         return $this->_description;
     }
+
+    /**
+     * Set form order
+     * 
+     * @param  int $index 
+     * @return Zend_Form
+     */
+    public function setOrder($index)
+    {
+        $this->_formOrder = (int) $index;
+        return $this;
+    }
+
+    /**
+     * Get form order
+     * 
+     * @return int|null
+     */
+    public function getOrder()
+    {
+        return $this->_formOrder;
+    }
  
     // Element interaction: 
 
@@ -1174,6 +1202,10 @@ class Zend_Form implements Iterator, Countable
                 list($prefix, $path) = array_values($spec);
                 $form->addDisplayGroupPrefixPath($prefix, $path);
             }
+        }
+
+        if (null !== $order) {
+            $form->setOrder($order);
         }
 
         $form->setName($name);
