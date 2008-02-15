@@ -461,7 +461,7 @@ class MyApplicationRow extends Zend_Db_Table_Row_Abstract
 
         </sect3>
 
-    <sect3>
+        <sect3 id="zend.db.table.row.extending.insert-update">
 
             <title>Eigene Logik für INSERT, UPDATE und DELETE in Zend_Db_Table_Row definieren</title>
 

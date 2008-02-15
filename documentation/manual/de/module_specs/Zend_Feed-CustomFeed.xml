@@ -57,6 +57,17 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
+    public function __call($var, $unused)
+    {
+        switch ($var) {
+            case 'myUpdated':
+                // Übersetze myUpdated zu myns:updated.
+                return parent::__call('myns:updated', $unused);
+
+            default:
+                return parent::__call($var, $unused);
+        }
+    }
 }]]>
         </programlisting>
         <para>
@@ -65,7 +76,12 @@ class MyEntry extends Zend_Feed_Entry_Atom
         </para>
         <programlisting role="php"><![CDATA[<?php
 $entry = new MyEntry();
-$entry->myUpdated = '2005-04-19T15:30';]]>
+$entry->myUpdated = '2005-04-19T15:30';
+
+// Methoden-Stil Aufruf wird von der _call Methode gehandhabt
+$entry->myUpdated();  
+// Eigenschaften-Stil Aufruf wurd von der __get Methode gehandhabt
+$entry->myUpdated;]]>
         </programlisting>
     </example>
 

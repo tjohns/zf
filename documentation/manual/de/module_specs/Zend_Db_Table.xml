@@ -246,7 +246,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
         </sect3>
 
-        <sect3>
+        <sect3 id="zend.db.table.initialization">
             <title>Tabellen Initialisierung</title>
 
             <para>
@@ -986,7 +986,7 @@ $rows = $table->fetchAll($where, $order, $count, $offset);]]>
 
         </sect3>
     
-        <sect3>
+        <sect3 id="zend.db.table.advanced.usage">
 
             <title>Fortgeschrittene Verwendung</title>
 
