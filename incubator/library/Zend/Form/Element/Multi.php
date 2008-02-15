@@ -99,11 +99,10 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     {
         $option  = (string) $option;
         $this->_getMultiOptions();
-        if (null !== ($translator = $this->getTranslator())) {
-            $value = $translator->translate($option);
-            $this->_translated[$option] = true;
+        if (!$this->_translateOption($option, $value)) {
+            $this->options[$option] = $value;
         }
-        $this->options[$option] = $value;
+
         return $this;
     }
 
@@ -144,7 +143,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
         $option  = (string) $option;
         $this->_getMultiOptions();
         if (isset($this->options[$option])) {
-            $this->_translateOption($option);
+            $this->_translateOption($option, $this->options[$option]);
             return $this->options[$option];
         }
 
@@ -159,8 +158,8 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     public function getMultiOptions()
     {
         $this->_getMultiOptions();
-        foreach (array_keys($this->options) as $option) {
-            $this->_translateOption($option);
+        foreach ($this->options as $option => $value) {
+            $this->_translateOption($option, $value);
         }
         return $this->options;
     }
@@ -202,16 +201,20 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      * Translate an option
      * 
      * @param  string $option 
-     * @return void
+     * @param  string $value
+     * @return bool
      */
-    protected function _translateOption($option)
+    protected function _translateOption($option, $value)
     {
         if (!isset($this->_translated[$option]) 
             && (null !== ($translator = $this->getTranslator()))
-            && $translator->isTranslated($option)) 
+            && $translator->isTranslated($value)) 
         {
-            $this->options[$option] = $translator->translate($option);
+            $this->options[$option] = $translator->translate($value);
             $this->_translated[$option] = true;
-        }
+            return true;
+        } 
+
+        return false;
     }
 }

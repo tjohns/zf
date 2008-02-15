@@ -145,8 +145,8 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
     public function testTranslatedOptionsAreRenderedInFinalMarkupWhenTranslatorPresent()
     {
         $translations = array(
-            'foovalue' => 'Foo Value',
-            'barvalue' => 'Bar Value'
+            'ThisShouldNotShow'   => 'Foo Value',
+            'ThisShouldNeverShow' => 'Bar Value'
         );
         require_once 'Zend/Translate.php';
         $translate = new Zend_Translate('array', $translations, 'en');
@@ -163,11 +163,11 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $html = $this->element->render($this->getView());
         foreach ($options as $value => $label) {
             $this->assertNotContains($label, $html, $html);
-            $this->assertRegexp('/<option.*value="' . $value . '"[^>]*>' . $translations[$value] . '/s', $html, $html);
+            $this->assertRegexp('/<option.*value="' . $value . '"[^>]*>' . $translations[$label] . '/s', $html, $html);
         }
     }
 
-    public function testOptionValuesAreTranslatedWhenTranslateAdapterIsPresent()
+    public function testOptionLabelsAreTranslatedWhenTranslateAdapterIsPresent()
     {
         $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
         $translate    = new Zend_Translate('array', $translations, 'en');
@@ -180,12 +180,29 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $this->element->addMultiOptions($options)
                       ->setTranslator($translate);
         $test = $this->element->getMultiOption('barvalue');
-        $this->assertEquals($translations['barvalue'], $test);
+        $this->assertEquals($translations[$options['barvalue']], $test);
 
         $test = $this->element->getMultiOptions();
         foreach ($test as $key => $value) {
-            $this->assertEquals($translations[$key], $value);
+            $this->assertEquals($translations[$options[$key]], $value);
         }
+    }
+
+    public function testOptionLabelsAreUntouchedIfTranslatonDoesNotExistInnTranslateAdapter()
+    {
+        $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
+        $translate    = new Zend_Translate('array', $translations, 'en');
+        $translate->setLocale('en');
+
+        $options = array(
+            'foovalue' => 'Foo',
+            'barvalue' => 'Bar',
+            'testing'  => 'Test Value',
+        );
+        $this->element->addMultiOptions($options)
+                      ->setTranslator($translate);
+        $test = $this->element->getMultiOption('testing');
+        $this->assertEquals($options['testing'], $test);
     }
 }
 

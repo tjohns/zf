@@ -7,4 +7,6 @@ return array(
     'submit'      => 'Submit Button',
     'foovalue'    => 'Foo Value',
     'barvalue'    => 'Bar Value',
+    'Foo'         => 'Foo Translation',
+    'Bar'         => 'Bar Translation',
 );
