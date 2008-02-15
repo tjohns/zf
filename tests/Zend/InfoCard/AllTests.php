@@ -46,7 +46,7 @@ class Zend_InfoCard_AllTests
         $suite->addTestSuite('Zend_InfoCard_AssertionTest');
         $suite->addTestSuite('Zend_InfoCard_ProcessTest');
         $suite->addTestSuite('Zend_InfoCard_XmlParsingTest');
-	$suite->addTestSuite('Zend_InfoCard_CipherTest');
+    $suite->addTestSuite('Zend_InfoCard_CipherTest');
 
         return $suite;
     }

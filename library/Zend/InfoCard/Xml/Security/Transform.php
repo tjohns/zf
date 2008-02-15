@@ -17,7 +17,7 @@
  * @subpackage Zend_InfoCard_Xml_Security
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
@@ -29,7 +29,7 @@ require_once 'Zend/Loader.php';
 /**
  * A class to create a transform rule set based on XML URIs and then apply those rules
  * in the correct order to a given XML input
- * 
+ *
  * @category   Zend
  * @package    Zend_InfoCard
  * @subpackage Zend_InfoCard_Xml_Security
@@ -37,82 +37,82 @@ require_once 'Zend/Loader.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform 
+class Zend_InfoCard_Xml_Security_Transform
 {
-	/**
-	 * A list of transforms to apply
-	 *
-	 * @var array
-	 */
-	protected $_transformList = array();
-	
-	/**
-	 * Returns the name of the transform class based on a given URI
-	 *
-	 * @throws Zend_InfoCard_Xml_Security_Exception
-	 * @param string $uri The transform URI
-	 * @return string The transform implementation class name
-	 */
-	protected function _findClassbyURI($uri) 
-    {
-		switch($uri) {
-			case 'http://www.w3.org/2000/09/xmldsig#enveloped-signature':
-				return 'Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature';
-			case 'http://www.w3.org/2001/10/xml-exc-c14n#':
-				return 'Zend_InfoCard_Xml_Security_Transform_XmlExcC14N';
-			default:
-				throw new Zend_InfoCard_Xml_Security_Exception("Unknown or Unsupported Transformation Requested");
-		}
-	}
-	
-	/**
-	 * Add a Transform URI to the list of transforms to perform
-	 *
-	 * @param string $uri The Transform URI
-	 * @return Zend_InfoCard_Xml_Security_Transform
-	 */
-	public function addTransform($uri) 
-    {
-		$class = $this->_findClassbyURI($uri);
-		
-		$this->_transformList[] = array('uri' => $uri,
-		                                'class' => $class);
-		return $this;		                                
-	}
+    /**
+     * A list of transforms to apply
+     *
+     * @var array
+     */
+    protected $_transformList = array();
 
-	/**
-	 * Return the list of transforms to perform
-	 *
-	 * @return array The list of transforms
-	 */
-	public function getTransformList() 
+    /**
+     * Returns the name of the transform class based on a given URI
+     *
+     * @throws Zend_InfoCard_Xml_Security_Exception
+     * @param string $uri The transform URI
+     * @return string The transform implementation class name
+     */
+    protected function _findClassbyURI($uri)
     {
-		return $this->_transformList;
-	}
-	
-	/**
-	 * Apply the transforms in the transform list to the input XML document
-	 *
-	 * @param string $strXmlDocument The input XML
-	 * @return string The XML after the transformations have been applied
-	 */
-	public function applyTransforms($strXmlDocument) 
-    {
-		foreach($this->_transformList as $transform) {
-			Zend_Loader::loadClass($transform['class']);			
-			
-			$transformer = new $transform['class'];
+        switch($uri) {
+            case 'http://www.w3.org/2000/09/xmldsig#enveloped-signature':
+                return 'Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature';
+            case 'http://www.w3.org/2001/10/xml-exc-c14n#':
+                return 'Zend_InfoCard_Xml_Security_Transform_XmlExcC14N';
+            default:
+                throw new Zend_InfoCard_Xml_Security_Exception("Unknown or Unsupported Transformation Requested");
+        }
+    }
 
-			// We can't really test this check because it would require logic changes in the component itself
-			// @codeCoverageIgnoreStart
-			if(!($transformer instanceof Zend_InfoCard_Xml_Security_Transform_Interface)) {
-				throw new Zend_InfoCard_Xml_Security_Exception("Transforms must implement the Transform Interface");
-			}
-			// @codeCoverageIgnoreEnd
-			
-			$strXmlDocument = $transformer->transform($strXmlDocument);
-		}
-		
-		return $strXmlDocument;
-	}
+    /**
+     * Add a Transform URI to the list of transforms to perform
+     *
+     * @param string $uri The Transform URI
+     * @return Zend_InfoCard_Xml_Security_Transform
+     */
+    public function addTransform($uri)
+    {
+        $class = $this->_findClassbyURI($uri);
+
+        $this->_transformList[] = array('uri' => $uri,
+                                        'class' => $class);
+        return $this;
+    }
+
+    /**
+     * Return the list of transforms to perform
+     *
+     * @return array The list of transforms
+     */
+    public function getTransformList()
+    {
+        return $this->_transformList;
+    }
+
+    /**
+     * Apply the transforms in the transform list to the input XML document
+     *
+     * @param string $strXmlDocument The input XML
+     * @return string The XML after the transformations have been applied
+     */
+    public function applyTransforms($strXmlDocument)
+    {
+        foreach($this->_transformList as $transform) {
+            Zend_Loader::loadClass($transform['class']);
+
+            $transformer = new $transform['class'];
+
+            // We can't really test this check because it would require logic changes in the component itself
+            // @codeCoverageIgnoreStart
+            if(!($transformer instanceof Zend_InfoCard_Xml_Security_Transform_Interface)) {
+                throw new Zend_InfoCard_Xml_Security_Exception("Transforms must implement the Transform Interface");
+            }
+            // @codeCoverageIgnoreEnd
+
+            $strXmlDocument = $transformer->transform($strXmlDocument);
+        }
+
+        return $strXmlDocument;
+    }
 }

@@ -17,7 +17,7 @@
  * @subpackage Zend_InfoCard_Xml_Security
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
@@ -33,7 +33,7 @@ require_once 'Zend/InfoCard/Xml/Security/Transform/Exception.php';
 
 /**
  * A Transform to perform C14n XML Exclusive Canonicalization
- * 
+ *
  * @category   Zend
  * @package    Zend_InfoCard
  * @subpackage Zend_InfoCard_Xml_Security
@@ -41,25 +41,25 @@ require_once 'Zend/InfoCard/Xml/Security/Transform/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform_XmlExcC14N 
-    implements Zend_InfoCard_Xml_Security_Transform_Interface 
+class Zend_InfoCard_Xml_Security_Transform_XmlExcC14N
+    implements Zend_InfoCard_Xml_Security_Transform_Interface
 {
-	/**
-	 * Transform the input XML based on C14n XML Exclusive Canonicalization rules
-	 *
-	 * @throws Zend_InfoCard_Xml_Security_Transform_Exception
-	 * @param string $strXMLData The input XML
-	 * @return string The output XML
-	 */
-    public function transform($strXMLData) 
+    /**
+     * Transform the input XML based on C14n XML Exclusive Canonicalization rules
+     *
+     * @throws Zend_InfoCard_Xml_Security_Transform_Exception
+     * @param string $strXMLData The input XML
+     * @return string The output XML
+     */
+    public function transform($strXMLData)
     {
-		$dom = new DOMDocument();
-		$dom->loadXML($strXMLData);
+        $dom = new DOMDocument();
+        $dom->loadXML($strXMLData);
 
-		if(method_exists($dom, 'C14N')) {
-			return $dom->C14N(true, false);
-		}
-		
-		throw new Zend_InfoCard_Xml_Security_Transform_Exception("This transform requires the C14N() method to exist in the DOM extension");
-	}
+        if(method_exists($dom, 'C14N')) {
+            return $dom->C14N(true, false);
+        }
+
+        throw new Zend_InfoCard_Xml_Security_Transform_Exception("This transform requires the C14N() method to exist in the DOM extension");
+    }
 }

@@ -17,29 +17,29 @@
  * @subpackage Zend_InfoCard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
 if (class_exists("Zend_Exception")) {
-    abstract class Zend_InfoCard_Exception_Abstract extends Zend_Exception 
+    abstract class Zend_InfoCard_Exception_Abstract extends Zend_Exception
     {
-	}
+    }
 } else {
-    abstract class Zend_InfoCard_Exception_Abstract extends Exception 
+    abstract class Zend_InfoCard_Exception_Abstract extends Exception
     {
-	}
+    }
 }
 
 /**
  * Base Exception class for the InfoCard component
- * 
+ *
  * @category   Zend
  * @package    Zend_InfoCard
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Exception extends Zend_InfoCard_Exception_Abstract 
+class Zend_InfoCard_Exception extends Zend_InfoCard_Exception_Abstract
 {
 }

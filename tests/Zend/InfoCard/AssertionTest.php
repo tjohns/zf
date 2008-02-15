@@ -32,8 +32,8 @@ require_once 'Zend/InfoCard.php';
 
 class Zend_InfoCard_AssertionTest extends PHPUnit_Framework_TestCase
 {
-	protected $_xmlDocument;
-	
+    protected $_xmlDocument;
+
     /**
      * Runs the test methods of this class.
      *
@@ -48,54 +48,54 @@ class Zend_InfoCard_AssertionTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
-    public function setUp() 
+    public function setUp()
     {
         $this->tokenDocument = dirname(__FILE__) . '/_files/signedToken.xml';
         $this->sslPubKey     = dirname(__FILE__) . '/_files/ssl_pub.cert';
         $this->sslPrvKey     = dirname(__FILE__) . '/_files/ssl_private.cert';
-		$this->loadXmlDocument();
-	}
-	
-    public function loadXmlDocument() 
-    {
-		$this->_xmlDocument = file_get_contents($this->tokenDocument);
-	}
+        $this->loadXmlDocument();
+    }
 
-    public function testAssertionProcess() 
+    public function loadXmlDocument()
     {
-    	date_default_timezone_set("America/Los_Angeles");
-    	
-		$assertions = Zend_InfoCard_Xml_Assertion::getInstance($this->_xmlDocument);
-		
-		$this->assertTrue($assertions instanceof Zend_InfoCard_Xml_Assertion_Saml);
-		
-		$this->assertSame($assertions->getMajorVersion(), 1);
-		$this->assertSame($assertions->getMinorversion(), 1);
-		$this->assertSame($assertions->getAssertionID(), "uuid:5cf2cd76-acf6-45ef-9059-a811801b80cc");
-		$this->assertSame($assertions->getIssuer(), "http://schemas.xmlsoap.org/ws/2005/05/identity/issuer/self");
-		$this->assertSame($assertions->getConfirmationMethod(), Zend_InfoCard_Xml_Assertion_Saml::CONFIRMATION_BEARER);
-		$this->assertSame($assertions->getIssuedTimestamp(), 1190153823);
-		
-	}
+        $this->_xmlDocument = file_get_contents($this->tokenDocument);
+    }
 
-	public function testAssertionErrors() 
-	{
-		try {
-			Zend_InfoCard_Xml_Assertion::getInstance(10);
-			$this->fail("Exception Not Thrown as Expected");
-		} catch(Exception $e) {
-			/* yay */
-		}
-		
-		$doc = file_get_contents(dirname(__FILE__) . '/_files/signedToken_bad_type.xml');
-		
-		try {
-			$assertions = Zend_InfoCard_Xml_Assertion::getInstance($doc);
-			$this->fail("Exception Not thrown as expected");
-		} catch(Exception $e) {
-			/* yay */
-		}
-	}
+    public function testAssertionProcess()
+    {
+        date_default_timezone_set("America/Los_Angeles");
+
+        $assertions = Zend_InfoCard_Xml_Assertion::getInstance($this->_xmlDocument);
+
+        $this->assertTrue($assertions instanceof Zend_InfoCard_Xml_Assertion_Saml);
+
+        $this->assertSame($assertions->getMajorVersion(), 1);
+        $this->assertSame($assertions->getMinorversion(), 1);
+        $this->assertSame($assertions->getAssertionID(), "uuid:5cf2cd76-acf6-45ef-9059-a811801b80cc");
+        $this->assertSame($assertions->getIssuer(), "http://schemas.xmlsoap.org/ws/2005/05/identity/issuer/self");
+        $this->assertSame($assertions->getConfirmationMethod(), Zend_InfoCard_Xml_Assertion_Saml::CONFIRMATION_BEARER);
+        $this->assertSame($assertions->getIssuedTimestamp(), 1190153823);
+
+    }
+
+    public function testAssertionErrors()
+    {
+        try {
+            Zend_InfoCard_Xml_Assertion::getInstance(10);
+            $this->fail("Exception Not Thrown as Expected");
+        } catch(Exception $e) {
+            /* yay */
+        }
+
+        $doc = file_get_contents(dirname(__FILE__) . '/_files/signedToken_bad_type.xml');
+
+        try {
+            $assertions = Zend_InfoCard_Xml_Assertion::getInstance($doc);
+            $this->fail("Exception Not thrown as expected");
+        } catch(Exception $e) {
+            /* yay */
+        }
+    }
 }
 
 // Call Zend_InfoCard_AssertionTest::main() if this source file is executed directly.

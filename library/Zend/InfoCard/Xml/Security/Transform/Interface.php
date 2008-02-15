@@ -17,13 +17,13 @@
  * @subpackage Zend_InfoCard_Xml_Security
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
 /**
  * Interface for XML Security Transforms
- * 
+ *
  * @category   Zend
  * @package    Zend_InfoCard
  * @subpackage Zend_InfoCard_Xml_Security
@@ -31,15 +31,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Xml_Security_Transform_Interface 
+interface Zend_InfoCard_Xml_Security_Transform_Interface
 {
-	/**
-	 * Transform the given XML string according to the transform rules
-	 * implemented by the object using this interface
-	 *
-	 * @throws Zend_InfoCard_Xml_Security_Transform_Exception
-	 * @param string $strXmlData the input XML
-	 * @return string the output XML
-	 */
-	public function transform($strXmlData);
+    /**
+     * Transform the given XML string according to the transform rules
+     * implemented by the object using this interface
+     *
+     * @throws Zend_InfoCard_Xml_Security_Transform_Exception
+     * @param string $strXmlData the input XML
+     * @return string the output XML
+     */
+    public function transform($strXmlData);
 }

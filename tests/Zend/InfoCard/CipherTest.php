@@ -34,60 +34,60 @@ require_once 'Zend/InfoCard/Cipher/Pki/Adapter/Rsa.php';
 class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 {
 
-	public function testPkiPadding() 
-	{
-		try {
-			$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa("thiswillbreak");
-			$this->fail("Exception not thrown as expected");
-		} catch(Exception $e) {
-			/* yay */
-		}
+    public function testPkiPadding()
+    {
+        try {
+            $obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa("thiswillbreak");
+            $this->fail("Exception not thrown as expected");
+        } catch(Exception $e) {
+            /* yay */
+        }
 
-		$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
-		
-		$prv_key = file_get_Contents(dirname(__FILE__) . "/_files/ssl_private.cert");
-		
-		try {
-			$obj->decrypt("Foo", $prv_key, null, "foo");
-			$this->fail("Expected Exception Not Thrown");
-		} catch(Exception $e) {
-			/* yay */
-		}
-		
-		$result = $obj->decrypt("foo", $prv_key, null, Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
-		
-		// This is sort of werid, but since we don't have a real PK-encrypted string to test against for NO_PADDING
-		// mode we decrypt the string "foo" instead. Mathmatically we will always arrive at the same resultant
-		// string so if our hash doesn't match then something broke.
-		$this->assertSame(md5($result), "286c1991e1f7040229a6f223065b91b5");
-	}
-	
-	public function testPKIDecryptBadKey() 
-	{
-		
-		$obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
-		
-		try {
-			$obj->decrypt("Foo", "bar");	
-			$this->fail("Exception not thrown as expected");
-		} catch(Exception $e) {
-			/* yay */
-		}
-		
-	}
-	
-	public function testCipherFactory() 
-	{
-		$this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_AES128CBC) 
-						  instanceof Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc);
-		$this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_RSA)
-		                  instanceof Zend_InfoCard_Cipher_Pki_Adapter_Rsa);
-		                  
-		try {
-			Zend_InfoCard_Cipher::getInstanceByURI("Broken");
-			$this->fail("Exception not thrown as expected");
-		} catch(Exception $e) {
-			/* yay */
-		}
-	}
+        $obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
+
+        $prv_key = file_get_Contents(dirname(__FILE__) . "/_files/ssl_private.cert");
+
+        try {
+            $obj->decrypt("Foo", $prv_key, null, "foo");
+            $this->fail("Expected Exception Not Thrown");
+        } catch(Exception $e) {
+            /* yay */
+        }
+
+        $result = $obj->decrypt("foo", $prv_key, null, Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
+
+        // This is sort of werid, but since we don't have a real PK-encrypted string to test against for NO_PADDING
+        // mode we decrypt the string "foo" instead. Mathmatically we will always arrive at the same resultant
+        // string so if our hash doesn't match then something broke.
+        $this->assertSame(md5($result), "286c1991e1f7040229a6f223065b91b5");
+    }
+
+    public function testPKIDecryptBadKey()
+    {
+
+        $obj = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa();
+
+        try {
+            $obj->decrypt("Foo", "bar");
+            $this->fail("Exception not thrown as expected");
+        } catch(Exception $e) {
+            /* yay */
+        }
+
+    }
+
+    public function testCipherFactory()
+    {
+        $this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_AES128CBC)
+                          instanceof Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc);
+        $this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_RSA)
+                          instanceof Zend_InfoCard_Cipher_Pki_Adapter_Rsa);
+
+        try {
+            Zend_InfoCard_Cipher::getInstanceByURI("Broken");
+            $this->fail("Exception not thrown as expected");
+        } catch(Exception $e) {
+            /* yay */
+        }
+    }
 }

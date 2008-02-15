@@ -17,7 +17,7 @@
  * @subpackage Zend_InfoCard_Cipher
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Exception.php 2794 2007-01-16 01:29:51Z bkarwin $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
@@ -29,7 +29,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_Symmetric_Aes256cbc_Interface 
+interface Zend_InfoCard_Cipher_Symmetric_Aes256cbc_Interface
 {
-	public function decrypt($encryptedData, $decryptionKey, $iv_length = null);
+    public function decrypt($encryptedData, $decryptionKey, $iv_length = null);
 }

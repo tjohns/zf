@@ -33,8 +33,8 @@ require_once 'Zend/InfoCard/Adapter/Default.php';
 
 class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 {
-	protected $_xmlDocument;
-	
+    protected $_xmlDocument;
+
     /**
      * Runs the test methods of this class.
      *
@@ -49,216 +49,216 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
-    public function setUp() 
+    public function setUp()
     {
         $this->tokenDocument = dirname(__FILE__) . '/_files/encryptedtoken.xml';
         $this->sslPubKey     = dirname(__FILE__) . '/_files/ssl_pub.cert';
         $this->sslPrvKey     = dirname(__FILE__) . '/_files/ssl_private.cert';
-		$this->loadXmlDocument();
-	}
-	
-    public function loadXmlDocument() 
+        $this->loadXmlDocument();
+    }
+
+    public function loadXmlDocument()
     {
-		$this->_xmlDocument = file_get_contents($this->tokenDocument);
-	}
-	
-    public function testCertificatePairs() 
+        $this->_xmlDocument = file_get_contents($this->tokenDocument);
+    }
+
+    public function testCertificatePairs()
     {
-		$infoCard = new Zend_InfoCard();
-		
-		$key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
+        $infoCard = new Zend_InfoCard();
 
-		$this->assertTrue((bool)$key_id);
-		
-		$key_pair = $infoCard->getCertificatePair($key_id);
-		
-		$this->assertTrue(!empty($key_pair['public']));
-		$this->assertTrue(!empty($key_pair['private']));
-		$this->assertTrue(!empty($key_pair['type_uri']));
-		
-		$infoCard->removeCertificatePair($key_id);
-		
-		$failed = false;
-		
-		try {
-			$key_pair = $infoCard->getCertificatePair($key_id);
-		} catch(Zend_InfoCard_Exception $e) {
-			$failed = true;
-		}
-		
-		$this->assertTrue($failed);
-		
-		try {
-			$infoCard->addCertificatePair("I don't exist", "I don't exist");
-		} catch(Zend_InfoCard_Exception $e) {
-			$this->assertTrue(true);
-		} catch(Exception $e) {
-			$this->assertFalse(true);
-		}
+        $key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
 
-		$key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
-		
-		try {
-			$key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
-		} catch(Zend_InfoCard_Exception $e) {
-			$this->assertTrue(true);
-		} catch(Exception $e) {
-			$this->assertFalse(true);
-		}
-		
-		$this->assertTrue(!empty($key_id));
-		
-		try {
-			$infoCard->removeCertificatePair($key_id);
-			$infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, "Doesn't Exist", "foo");
-		} catch(Zend_InfoCard_Exception $e) {
-			$this->assertTrue(true);
-		} catch(Exception $e) {
-			$this->assertFalse(true);
-		}
-	} 
-	
-    public function testStandAloneProcess() 
+        $this->assertTrue((bool)$key_id);
+
+        $key_pair = $infoCard->getCertificatePair($key_id);
+
+        $this->assertTrue(!empty($key_pair['public']));
+        $this->assertTrue(!empty($key_pair['private']));
+        $this->assertTrue(!empty($key_pair['type_uri']));
+
+        $infoCard->removeCertificatePair($key_id);
+
+        $failed = false;
+
+        try {
+            $key_pair = $infoCard->getCertificatePair($key_id);
+        } catch(Zend_InfoCard_Exception $e) {
+            $failed = true;
+        }
+
+        $this->assertTrue($failed);
+
+        try {
+            $infoCard->addCertificatePair("I don't exist", "I don't exist");
+        } catch(Zend_InfoCard_Exception $e) {
+            $this->assertTrue(true);
+        } catch(Exception $e) {
+            $this->assertFalse(true);
+        }
+
+        $key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
+
+        try {
+            $key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
+        } catch(Zend_InfoCard_Exception $e) {
+            $this->assertTrue(true);
+        } catch(Exception $e) {
+            $this->assertFalse(true);
+        }
+
+        $this->assertTrue(!empty($key_id));
+
+        try {
+            $infoCard->removeCertificatePair($key_id);
+            $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey, "Doesn't Exist", "foo");
+        } catch(Zend_InfoCard_Exception $e) {
+            $this->assertTrue(true);
+        } catch(Exception $e) {
+            $this->assertFalse(true);
+        }
+    }
+
+    public function testStandAloneProcess()
     {
-		$_SERVER['SERVER_NAME'] = "192.168.1.105";
-		$_SERVER['SERVER_PORT'] = 80;
-		
-		$infoCard = new Zend_InfoCard();
-		
-		$infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
+        $_SERVER['SERVER_NAME'] = "192.168.1.105";
+        $_SERVER['SERVER_PORT'] = 80;
 
-		$claims = $infoCard->process($this->_xmlDocument);
-		
-		$this->assertTrue($claims instanceof Zend_InfoCard_Claims);
-	}
-	
-    public function testPlugins() 
+        $infoCard = new Zend_InfoCard();
+
+        $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
+
+        $claims = $infoCard->process($this->_xmlDocument);
+
+        $this->assertTrue($claims instanceof Zend_InfoCard_Claims);
+    }
+
+    public function testPlugins()
     {
-		$adapter  = new _Zend_InfoCard_Test_Adapter();
-		$infoCard = new Zend_InfoCard();
-		
-		$infoCard->setAdapter($adapter);
+        $adapter  = new _Zend_InfoCard_Test_Adapter();
+        $infoCard = new Zend_InfoCard();
 
-		$result = $infoCard->getAdapter() instanceof Zend_InfoCard_Adapter_Interface;
-		
-		$this->assertTrue($result);
-		$this->assertTrue($infoCard->getAdapter() instanceof _Zend_InfoCard_Test_Adapter);
-				
-		$infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
-		
-		$claims = $infoCard->process($this->_xmlDocument);
+        $infoCard->setAdapter($adapter);
 
-		$pki_object = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
-		
-		$infoCard->setPkiCipherObject($pki_object);
-		
-		$this->assertTrue($pki_object === $infoCard->getPkiCipherObject());
-		
-		$sym_object = new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes256cbc();
-		
-		$infoCard->setSymCipherObject($sym_object);
-		
-		$this->assertTrue($sym_object === $infoCard->getSymCipherObject());
-	}
-	
-    public function testClaims() 
+        $result = $infoCard->getAdapter() instanceof Zend_InfoCard_Adapter_Interface;
+
+        $this->assertTrue($result);
+        $this->assertTrue($infoCard->getAdapter() instanceof _Zend_InfoCard_Test_Adapter);
+
+        $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
+
+        $claims = $infoCard->process($this->_xmlDocument);
+
+        $pki_object = new Zend_InfoCard_Cipher_Pki_Adapter_Rsa(Zend_InfoCard_Cipher_Pki_Adapter_Abstract::NO_PADDING);
+
+        $infoCard->setPkiCipherObject($pki_object);
+
+        $this->assertTrue($pki_object === $infoCard->getPkiCipherObject());
+
+        $sym_object = new Zend_InfoCard_Cipher_Symmetric_Adapter_Aes256cbc();
+
+        $infoCard->setSymCipherObject($sym_object);
+
+        $this->assertTrue($sym_object === $infoCard->getSymCipherObject());
+    }
+
+    public function testClaims()
     {
-		$infoCard = new Zend_InfoCard();
-		
-		$infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
+        $infoCard = new Zend_InfoCard();
 
-		$claims = $infoCard->process($this->_xmlDocument);
-		
-		$this->assertTrue($claims instanceof Zend_InfoCard_Claims);
+        $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
 
-		$this->assertFalse($claims->isValid());
-		
-		$this->assertSame($claims->getCode(), Zend_InfoCard_Claims::RESULT_VALIDATION_FAILURE);
-		
-		$errormsg = $claims->getErrorMsg();
-		$this->assertTrue(!empty($errormsg));
-		
-		
-		@$claims->forceValid();
-		
-		$this->assertTrue($claims->isValid());
-		
-		$this->assertSame($claims->emailaddress, "john@zend.com");
-		$this->assertSame($claims->givenname, "John");
-		$this->assertSame($claims->surname, "Coggeshall");
-		$this->assertSame($claims->getCardID(), "rW1/y9BuncoBK4WSipF2hHYParxxgMHk6ANBrhz1Zr4=");
-		$this->assertSame($claims->getClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"), "john@zend.com");
-		$this->assertSame($claims->getDefaultNamespace(), "http://schemas.xmlsoap.org/ws/2005/05/identity/claims");
-		
-		try {
-			unset($claims->givenname);
-		} catch(Zend_InfoCard_Exception $e) {
-			
-		} catch(Exception $e) {
-			$this->assertFalse(true);
-		}
-		
-		
-		try {
-			$claims->givenname = "Test";
-		} catch(Zend_InfoCard_Exception $e) {
-			
-		} catch(Exception $e) {
-			$this->assertFalse(true);
-		}
-		
-		$this->assertTrue(isset($claims->givenname));
-	}
-	
-    public function testDefaultAdapter() 
+        $claims = $infoCard->process($this->_xmlDocument);
+
+        $this->assertTrue($claims instanceof Zend_InfoCard_Claims);
+
+        $this->assertFalse($claims->isValid());
+
+        $this->assertSame($claims->getCode(), Zend_InfoCard_Claims::RESULT_VALIDATION_FAILURE);
+
+        $errormsg = $claims->getErrorMsg();
+        $this->assertTrue(!empty($errormsg));
+
+
+        @$claims->forceValid();
+
+        $this->assertTrue($claims->isValid());
+
+        $this->assertSame($claims->emailaddress, "john@zend.com");
+        $this->assertSame($claims->givenname, "John");
+        $this->assertSame($claims->surname, "Coggeshall");
+        $this->assertSame($claims->getCardID(), "rW1/y9BuncoBK4WSipF2hHYParxxgMHk6ANBrhz1Zr4=");
+        $this->assertSame($claims->getClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"), "john@zend.com");
+        $this->assertSame($claims->getDefaultNamespace(), "http://schemas.xmlsoap.org/ws/2005/05/identity/claims");
+
+        try {
+            unset($claims->givenname);
+        } catch(Zend_InfoCard_Exception $e) {
+
+        } catch(Exception $e) {
+            $this->assertFalse(true);
+        }
+
+
+        try {
+            $claims->givenname = "Test";
+        } catch(Zend_InfoCard_Exception $e) {
+
+        } catch(Exception $e) {
+            $this->assertFalse(true);
+        }
+
+        $this->assertTrue(isset($claims->givenname));
+    }
+
+    public function testDefaultAdapter()
     {
-		$adapter = new Zend_InfoCard_Adapter_Default();
-		
-		$this->assertTrue($adapter->storeAssertion(1, 2, array(3)));
-		$this->assertFalse($adapter->retrieveAssertion(1, 2));
-		$this->assertTrue(is_null($adapter->removeAssertion(1, 2)));
-	}
+        $adapter = new Zend_InfoCard_Adapter_Default();
 
-	public function testTransforms() 
-	{
-		$trans = new Zend_InfoCard_Xml_Security_Transform();
+        $this->assertTrue($adapter->storeAssertion(1, 2, array(3)));
+        $this->assertFalse($adapter->retrieveAssertion(1, 2));
+        $this->assertTrue(is_null($adapter->removeAssertion(1, 2)));
+    }
 
-		try {
-			$trans->addTransform("foo");
-			$this->fail("Expected Exception Not Thrown");
-		} catch(Exception $e) {
-			/* yay */
-		}
-		
-		$this->assertTrue(is_array($trans->getTransformList()));
-		
-	}
+    public function testTransforms()
+    {
+        $trans = new Zend_InfoCard_Xml_Security_Transform();
+
+        try {
+            $trans->addTransform("foo");
+            $this->fail("Expected Exception Not Thrown");
+        } catch(Exception $e) {
+            /* yay */
+        }
+
+        $this->assertTrue(is_array($trans->getTransformList()));
+
+    }
 }
 
-class _Zend_InfoCard_Test_Adapter 
-    extends PHPUnit_Framework_TestCase 
-    implements Zend_InfoCard_Adapter_Interface 
+class _Zend_InfoCard_Test_Adapter
+    extends PHPUnit_Framework_TestCase
+    implements Zend_InfoCard_Adapter_Interface
 {
-    public function storeAssertion($assertionURI, $assertionID, $conditions) 
+    public function storeAssertion($assertionURI, $assertionID, $conditions)
     {
-		$this->assertTrue(!empty($assertionURI));
-		$this->assertTrue(!empty($assertionID));
-		$this->assertTrue(!empty($conditions));
-		return true;
-	}
-	
-    public function retrieveAssertion($assertionURI, $assertionID) 
+        $this->assertTrue(!empty($assertionURI));
+        $this->assertTrue(!empty($assertionID));
+        $this->assertTrue(!empty($conditions));
+        return true;
+    }
+
+    public function retrieveAssertion($assertionURI, $assertionID)
     {
-		$this->assertTrue(!empty($assertionURI));
-		$this->assertTrue(!empty($assertionID));
-		return false;
-	}
-	
-    public function removeAssertion($asserionURI, $assertionID) 
+        $this->assertTrue(!empty($assertionURI));
+        $this->assertTrue(!empty($assertionID));
+        return false;
+    }
+
+    public function removeAssertion($asserionURI, $assertionID)
     {
-		$this->assertTrue(!empty($assertionURI));
-		$this->asserTrue(!empty($assertionID));
-	}
+        $this->assertTrue(!empty($assertionURI));
+        $this->asserTrue(!empty($assertionID));
+    }
 }
 
 // Call Zend_InfoCard_ProcessTest::main() if this source file is executed directly.
