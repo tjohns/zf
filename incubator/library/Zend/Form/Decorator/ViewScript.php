@@ -32,6 +32,13 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * - placement: whether to append or prepend view script content to provided content (defaults to prepend)
  * - viewScript: view script to use
  *
+ * The view script is rendered as a partial; the element being decorated is 
+ * passed in as the 'element' variable:
+ * <code>
+ * // in view script:
+ * echo $this->element->getLabel();
+ * </code>
+ *
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
@@ -112,7 +119,7 @@ class Zend_Form_Decorator_ViewScript extends Zend_Form_Decorator_Abstract
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
 
-        $renderedContent = $view->render($viewScript);
+        $renderedContent = $view->partial($viewScript, array('element' => $element));
 
         switch ($placement) {
             case self::PREPEND:
