@@ -135,6 +135,64 @@ class Zend_Form_Decorator_HtmlTagTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+
+    public function testArrayAttributesAreRenderedAsSpaceSeparatedLists()
+    {
+        $element = new Zend_Form_Element('foo');
+        $options = array('tag' => 'div', 'class' => array('foobar', 'bazbat'), 'id' => 'foo');
+        $this->decorator->setElement($element)
+                        ->setOptions($options);
+        $html = $this->decorator->render('');
+        $this->assertContains('class="foobar bazbat"', $html);
+    }
+
+    public function testAppendPlacementWithCloseOnlyRendersClosingTagFollowingContent()
+    {
+        $options = array(
+            'closeOnly' => true,
+            'tag'       => 'div',
+            'placement' => 'append'
+        );
+        $this->decorator->setOptions($options);
+        $html = $this->decorator->render('content');
+        $this->assertRegexp('#(content).*?(</div>)#', $html, $html);
+    }
+
+    public function testAppendPlacementWithOpenOnlyRendersOpeningTagFollowingContent()
+    {
+        $options = array(
+            'openOnly'  => true,
+            'tag'       => 'div',
+            'placement' => 'append'
+        );
+        $this->decorator->setOptions($options);
+        $html = $this->decorator->render('content');
+        $this->assertRegexp('#(content).*?(<div>)#', $html, $html);
+    }
+
+    public function testPrependPlacementWithCloseOnlyRendersClosingTagBeforeContent()
+    {
+        $options = array(
+            'closeOnly' => true,
+            'tag'       => 'div',
+            'placement' => 'prepend'
+        );
+        $this->decorator->setOptions($options);
+        $html = $this->decorator->render('content');
+        $this->assertRegexp('#(</div>).*?(content)#', $html, $html);
+    }
+
+    public function testPrependPlacementWithOpenOnlyRendersOpeningTagBeforeContent()
+    {
+        $options = array(
+            'openOnly'  => true,
+            'tag'       => 'div',
+            'placement' => 'prepend'
+        );
+        $this->decorator->setOptions($options);
+        $html = $this->decorator->render('content');
+        $this->assertRegexp('#(<div>).*?(content)#', $html, $html);
+    }
 }
 
 // Call Zend_Form_Decorator_HtmlTagTest::main() if this source file is executed directly.
