@@ -54,11 +54,6 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
         }
 
         parent::__construct($spec, $options);
-
-        if (null === $this->getValue()) {
-            require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception('Submit elements require a value; no value provided');
-        }
     }
 
     /**

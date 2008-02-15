@@ -92,6 +92,16 @@ class Zend_Form_Decorator_DescriptionTest extends PHPUnit_Framework_TestCase
         $this->html = $html;
     }
 
+    public function testCanSpecifyAlternateTagViaOption()
+    {
+        $this->decorator->setOption('tag', 'quote');
+        $html = $this->decorator->render('');
+        $this->assertContains('<quote', $html, $html);
+        $this->assertContains('</quote>', $html);
+        $this->assertContains($this->element->getDescription(), $html);
+        $this->html = $html;
+    }
+
     public function testAlternateTagContainsHintClass()
     {
         $this->testCanSpecifyAlternateTag();
@@ -125,6 +135,28 @@ class Zend_Form_Decorator_DescriptionTest extends PHPUnit_Framework_TestCase
         $this->assertContains($description, $html);
         $this->assertNotContains('&lt;', $html);
         $this->assertNotContains('&gt;', $html);
+    }
+
+    public function testCanSetEscapeFlagViaOption()
+    {
+        $description = '<span>some spanned text</span>';
+        $this->element->setDescription($description);
+        $this->decorator->setOption('escape', false);
+        $html = $this->decorator->render('');
+        $this->assertContains($description, $html);
+        $this->assertNotContains('&lt;', $html);
+        $this->assertNotContains('&gt;', $html);
+    }
+
+    public function testDescriptionIsTranslatedWhenTranslationAvailable()
+    {
+        require_once 'Zend/Translate.php';
+        $translations = array('description' => 'This is the description');
+        $translate = new Zend_Translate('array', $translations);
+        $this->element->setDescription('description')
+                      ->setTranslator($translate);
+        $html = $this->decorator->render('');
+        $this->assertContains($translations['description'], $html);
     }
 }
 

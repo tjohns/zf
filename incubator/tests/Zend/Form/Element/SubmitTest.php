@@ -101,6 +101,29 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $html = $decorator->render('');
         $this->assertRegexp('/<(input|button)[^>]*?value="Submit Button"/', $html);
     }
+
+    public function testConstructorSetsValueToNameIfNoValueProvided()
+    {
+        $submit = new Zend_Form_Element_Submit('foo');
+        $this->assertEquals('foo', $submit->getName());
+        $this->assertEquals('foo', $submit->getValue());
+    }
+
+    public function testCanPassValueAsParameterToConstructor()
+    {
+        $submit = new Zend_Form_Element_Submit('foo', 'Label');
+        $this->assertEquals('Label', $submit->getValue());
+    }
+
+    public function testValueIsTranslatedWhenTranslationAvailable()
+    {
+        require_once 'Zend/Translate.php';
+        $translations = array('Label' => 'This is the Submit Label');
+        $translate = new Zend_Translate('array', $translations);
+        $submit = new Zend_Form_Element_Submit('foo', 'Label');
+        $submit->setTranslator($translate);
+        $this->assertEquals($translations['Label'], $submit->getValue());
+    }
 }
 
 // Call Zend_Form_Element_SubmitTest::main() if this source file is executed directly.

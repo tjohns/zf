@@ -127,6 +127,30 @@ class Zend_Form_Decorator_ImageTest extends PHPUnit_Framework_TestCase
         $this->assertContains('name="foo"', $image);
         $this->assertContains('type="image"', $image);
     }
+
+    public function testCanRenderImageWithinAdditionalTag()
+    {
+        $element = new Zend_Form_Element_Image('foo');
+        $element->setValue('foobar')
+                ->setView($this->getView());
+        $this->decorator->setElement($element)
+                        ->setOption('tag', 'div');
+
+        $image = $this->decorator->render('');
+        $this->assertRegexp('#<div>.*?<input[^>]*>.*?</div>#s', $image, $image);
+    }
+
+    public function testCanPrependImageToContent()
+    {
+        $element = new Zend_Form_Element_Image('foo');
+        $element->setValue('foobar')
+                ->setView($this->getView());
+        $this->decorator->setElement($element)
+                        ->setOption('placement', 'prepend');
+
+        $image = $this->decorator->render('content');
+        $this->assertRegexp('#<input[^>]*>.*?(content)#s', $image, $image);
+    }
 }
 
 // Call Zend_Form_Decorator_ImageTest::main() if this source file is executed directly.
