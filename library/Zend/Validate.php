@@ -145,15 +145,17 @@ class Zend_Validate implements Zend_Validate_Interface
             $className = $namespace . '_' . ucfirst($classBaseName);
             try {
                 require_once 'Zend/Loader.php';
-                Zend_Loader::loadClass($className);
-                $class = new ReflectionClass($className);
-                if ($class->implementsInterface('Zend_Validate_Interface')) {
-                    if ($class->hasMethod('__construct')) {
-                        $object = $class->newInstanceArgs($args);
-                    } else {
-                        $object = $class->newInstance();
+                @Zend_Loader::loadClass($className);
+                if (class_exists($className, false)) {
+                    $class = new ReflectionClass($className);
+                    if ($class->implementsInterface('Zend_Validate_Interface')) {
+                        if ($class->hasMethod('__construct')) {
+                            $object = $class->newInstanceArgs($args);
+                        } else {
+                            $object = $class->newInstance();
+                        }
+                        return $object->isValid($value);
                     }
-                    return $object->isValid($value);
                 }
             } catch (Zend_Exception $ze) {
                 // fallthrough and continue
