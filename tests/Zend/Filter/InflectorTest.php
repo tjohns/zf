@@ -330,7 +330,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
 
         try {
             $filtered = $this->inflector->filter(array('controller' => 'FooBar'));
-            $this->fail();
+            $this->fail('Exception was not thrown when it was suppose to be.');
         } catch (Exception $e) {
             $this->assertTrue($e instanceof Zend_Filter_Exception);
         }
@@ -353,7 +353,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
             $filtered = $this->inflector->filter(array('controller' => 'FooBar', 'action' => 'MooToo'));
             $this->assertEquals($filtered, 'e:\path\to\foo-bar\Moo-Too.phtml');
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage());
         }
     }
 
@@ -429,6 +429,39 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $inflector->setConfig($config);
         $this->_testOptions($inflector);
     }
+    
+    /**
+     * Added str_replace('\\', '\\\\', ..) to all processedParts values to disable backreferences
+     * 
+     * @issue ZF-2538 Zend_Filter_Inflector::filter() fails with all numeric folder on Windows
+     */
+    public function testCheckInflectorWithPregBackreferenceLikeParts()
+    {
+        
+        $this->inflector = new Zend_Filter_Inflector(
+            ':moduleDir' . DIRECTORY_SEPARATOR . ':controller' . DIRECTORY_SEPARATOR . ':action.:suffix',
+            array(
+                ':controller' => array('Word_CamelCaseToDash', 'StringToLower'),
+                ':action'     => array('Word_CamelCaseToDash'),
+                'suffix'      => 'phtml'
+                ),
+            true,
+            ':'
+            );
+
+        $this->inflector->setStaticRule('moduleDir', 'C:\htdocs\public\cache\00\01\42\app\modules');
+        
+        try {
+            $filtered = $this->inflector->filter(array(
+                'controller' => 'FooBar', 
+                'action' => 'MooToo'
+                ));
+            $this->assertEquals($filtered, 'C:\htdocs\public\cache\00\01\42\app\modules' . DIRECTORY_SEPARATOR . 'foo-bar' . DIRECTORY_SEPARATOR . 'Moo-Too.phtml');
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
+    
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
