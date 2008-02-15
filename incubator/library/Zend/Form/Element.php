@@ -370,6 +370,20 @@ class Zend_Form_Element implements Zend_Validate_Interface
     }
 
     /**
+     * Filter a value
+     * 
+     * @param  string $value 
+     * @param  string $key 
+     * @return void
+     */
+    protected function _filterValue(&$value, &$key)
+    {
+        foreach ($this->_filters as $filter) {
+            $value = $filter->filter($value);
+        }
+    }
+
+    /**
      * Retrieve filtered element value
      * 
      * @return mixed
@@ -377,9 +391,13 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getValue()
     {
         $valueFiltered = $this->_value;
-        foreach ($this->_filters as $filter) {
-            $valueFiltered = $filter->filter($valueFiltered);
+
+        if (is_array($valueFiltered)) {
+            array_walk_recursive($valueFiltered, array($this, '_filterValue'));
+        } else {
+            $this->_filterValue($valueFiltered, $valueFiltered);
         }
+
         return $valueFiltered;
     }
 

@@ -157,6 +157,27 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('THIS0IS1A2TEST', $test);
     }
 
+    public function checkFilterValues($item, $key)
+    {
+        $this->assertRegexp('/^[A-Z]+$/', $item);
+    }
+
+    public function testRetrievingArrayValueFiltersAllArrayValues()
+    {
+        $this->element->setValue(array(
+                    'foo',
+                    array(
+                        'bar',
+                        'baz'
+                    ),
+                    'bat'
+                ))
+             ->addFilter('StringToUpper');
+        $test = $this->element->getValue();
+        $this->assertTrue(is_array($test));
+        array_walk_recursive($test, array($this, 'checkFilterValues'));
+    }
+
     public function testGetUnfilteredValueRetrievesOriginalValue()
     {
         $this->element->setValue('bar');
