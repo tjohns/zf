@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7946 -->
+<!-- EN-Revision: 8039 -->
 <sect1 id="zend.auth.adapter.openid">
 
     <title>Open ID 認証</title>
@@ -24,7 +24,7 @@
         </para>
         <para>
             <code>Zend_Auth_Adapter_OpenId</code> クラスは
-            <code>>Zend_OpenId_Consumer</code> コンポーネントのラッパーで、
+            <code>Zend_OpenId_Consumer</code> コンポーネントのラッパーで、
             OpenID の認証プロトコルを実装しています。
         </para>
     </sect2>
