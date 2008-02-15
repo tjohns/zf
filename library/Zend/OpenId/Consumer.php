@@ -18,7 +18,7 @@
  * @subpackage Zend_OpenId_Consumer
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 /**
@@ -726,7 +726,10 @@ class Zend_OpenId_Consumer
         $params['openid.return_to'] = Zend_OpenId::absoluteUrl($returnTo);
 
         if (empty($root)) {
-            $root = dirname(Zend_OpenId::selfUrl());
+            $root = Zend_OpenId::selfUrl();
+            if ($root[strlen($root)-1] != '/') {
+            	$root = dirname(root);
+            }
         }
         if ($version >= 2.0) {
             $params['openid.realm'] = $root;
