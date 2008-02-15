@@ -100,16 +100,16 @@ class Zend_Form implements Iterator, Countable
     protected $_elementsBelongTo;
 
     /**
-     * Whether or not elements belong to an array
-     * @var string
-     */
-    protected $_elementsInArray = false;
-
-    /**
      * Form order
      * @var int|null
      */
     protected $_formOrder;
+
+    /**
+     * Whether or not form elements are members of an array
+     * @var bool
+     */
+    protected $_isArray = false;
 
     /**
      * Form legend
@@ -1027,7 +1027,7 @@ class Zend_Form implements Iterator, Countable
         } 
         
         if ($subForm = $this->getSubForm($name)) {
-            return $subForm->getValues();
+            return $subForm->getValues(true);
         } 
 
         foreach ($this->getSubForms() as $subForm) {
@@ -1061,7 +1061,7 @@ class Zend_Form implements Iterator, Countable
             }
         }
 
-        if (!$suppressArrayNotation && $this->getElementsInArray()) {
+        if (!$suppressArrayNotation && $this->isArray()) {
             $values = array(
                 $this->getElementsBelongTo() => $values
             );
@@ -1127,7 +1127,9 @@ class Zend_Form implements Iterator, Countable
         }
         $this->_elementsBelongTo = $name;
 
-        (null !== $name) ? $this->setElementsInArray(true, false) : $this->setElementsInArray(false, false);
+        (null !== $name) 
+            ? $this->setIsArray(true) 
+            : $this->setIsArray(false);
 
         return $this;
     }
@@ -1139,6 +1141,12 @@ class Zend_Form implements Iterator, Countable
      */
     public function getElementsBelongTo()
     {
+        if ((null === $this->_elementsBelongTo) && $this->isArray()) {
+            $name = $this->getName();
+            if (!empty($name)) {
+                return $name;
+            }
+        }
         return $this->_elementsBelongTo;
     }
 
@@ -1149,12 +1157,9 @@ class Zend_Form implements Iterator, Countable
      * @param  bool $setName Whether or not to set the name the elements belong to
      * @return Zend_Form
      */
-    public function setElementsInArray($flag = true, $setName = true)
+    public function setIsArray($flag)
     {
-        $this->_elementsInArray = (bool) $flag;
-        if ($setName && $this->_elementsInArray && !$this->getElementsBelongTo()) {
-            $this->setElementsBelongTo($this->getName());
-        }
+        $this->_isArray = (bool) $flag;
         return $this;
     }
 
@@ -1163,9 +1168,9 @@ class Zend_Form implements Iterator, Countable
      * 
      * @return bool
      */
-    public function getElementsInArray()
+    public function isArray()
     {
-        return $this->_elementsInArray;
+        return $this->_isArray;
     }
  
     // Element groups: 
@@ -1626,7 +1631,7 @@ class Zend_Form implements Iterator, Countable
         $translator = $this->getTranslator();
         $valid      = true;
 
-        if ($this->getElementsInArray()) {
+        if ($this->isArray()) {
             $key = $this->_getArrayName($this->getElementsBelongTo());
             if (isset($data[$key])) {
                 $data = $data[$key];
@@ -1669,7 +1674,7 @@ class Zend_Form implements Iterator, Countable
      */
     public function isValidPartial(array $data)
     {
-        if ($this->getElementsInArray()) {
+        if ($this->isArray()) {
             $key = $this->_getArrayName($this->getElementsBelongTo());
             if (isset($data[$key])) {
                 $data = $data[$key];
@@ -1777,7 +1782,7 @@ class Zend_Form implements Iterator, Countable
         } 
 
         if ((null !== $name) && isset($this->_subForms[$name])) {
-            return $this->getSubForm($name)->getMessages();
+            return $this->getSubForm($name)->getMessages(null, true);
         } 
 
         $arrayKeys = array();
@@ -1811,7 +1816,7 @@ class Zend_Form implements Iterator, Countable
             }
         }
 
-        if (!$suppressArrayNotation && $this->getElementsInArray()) {
+        if (!$suppressArrayNotation && $this->isArray()) {
             $messages = array(
                 $this->getElementsBelongTo() => $messages
             );

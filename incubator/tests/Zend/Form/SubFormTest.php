@@ -44,6 +44,18 @@ class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
         $tag = $htmlTag->getOption('tag');
         $this->assertEquals('dl', $tag);
     }
+
+    public function testSubFormIsArrayByDefault()
+    {
+        $this->assertTrue($this->form->isArray());
+    }
+
+    public function testElementsBelongToSubFormNameByDefault()
+    {
+        $this->testSubFormIsArrayByDefault();
+        $this->form->setName('foo');
+        $this->assertEquals($this->form->getName(), $this->form->getElementsBelongTo());
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_SubFormTest::main') {

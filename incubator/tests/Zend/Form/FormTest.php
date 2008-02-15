@@ -503,36 +503,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($description, $this->form->getDescription());
     }
 
-    public function testElementsInArrayFlagIsInitiallyFalse()
-    {
-        $this->assertFalse($this->form->getElementsInArray());
-    }
-
-    public function testSettingElementsInArrayFlagFailsIfFormHasNoName()
-    {
-        $this->testElementsInArrayFlagIsInitiallyFalse();
-        $this->form->setElementsInArray();
-        $this->assertFalse($this->form->getElementsInArray());
-    }
-
-    public function testCanSetElementsInArrayFlagWhenFormHasName()
-    {
-        $this->testElementsInArrayFlagIsInitiallyFalse();
-        $this->form->setName('foo')
-                   ->setElementsInArray();
-        $this->assertTrue($this->form->getElementsInArray());
-        $this->form->setElementsInArray(false);
-        $this->assertFalse($this->form->getElementsInArray());
-    }
-
-    public function testSettingElementsInArrayFlagToTrueSetsBelongsToValueToFormName()
-    {
-        $this->assertNull($this->form->getElementsBelongTo());
-        $this->form->setName('someName')
-                   ->setElementsInArray();
-        $this->assertEquals('someName', $this->form->getElementsBelongTo());
-    }
-
     // Plugin loaders
 
     public function testGetPluginLoaderRetrievesDefaultDecoratorPluginLoader()
@@ -911,6 +881,27 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testFormIsNotAnArrayByDefault()
+    {
+        $this->assertFalse($this->form->isArray());
+    }
+
+    public function testCanSetArrayFlag()
+    {
+        $this->testFormIsNotAnArrayByDefault();
+        $this->form->setIsArray(true);
+        $this->assertTrue($this->form->isArray());
+        $this->form->setIsArray(false);
+        $this->assertFalse($this->form->isArray());
+    }
+
+    public function testElementsBelongToReturnsFormNameWhenFormIsArray()
+    {
+        $this->form->setName('foo')
+                   ->setIsArray(true);
+        $this->assertEquals('foo', $this->form->getElementsBelongTo());
+    }
+
     public function testElementsInitiallyBelongToNoArrays()
     {
         $this->assertNull($this->form->getElementsBelongTo());
@@ -921,6 +912,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->testElementsInitiallyBelongToNoArrays();
         $this->form->setElementsBelongTo('foo');
         $this->assertEquals('foo', $this->form->getElementsBelongTo());
+    }
+
+    public function testSettingArrayToWhichElementsBelongSetsArrayFlag()
+    {
+        $this->testFormIsNotAnArrayByDefault();
+        $this->testCanSetArrayToWhichElementsBelong();
+        $this->assertTrue($this->form->isArray());
     }
 
     public function testArrayToWhichElementsBelongCanConsistOfValidVariableCharsOnly()
@@ -935,6 +933,12 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->testCanSetArrayToWhichElementsBelong();
         $this->form->setElementsBelongTo('');
         $this->assertNull($this->form->getElementsBelongTo());
+    }
+
+    public function testSettingArrayToWhichElementsBelongEmptySetsArrayFlagToFalse()
+    {
+        $this->testSettingArrayToWhichElementsBelongEmptyClearsIt();
+        $this->assertFalse($this->form->isArray());
     }
 
     // Sub forms
@@ -1143,7 +1147,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->addSubForm($subForm, 'page1');
 
         $values = $this->form->getValue('page1');
-        $this->assertTrue(isset($values['foo']));
+        $this->assertTrue(isset($values['foo']), var_export($values, 1));
         $this->assertTrue(isset($values['bar']));
         $this->assertEquals($subForm->foo->getValue(), $values['foo']);
         $this->assertEquals($subForm->bar->getValue(), $values['bar']);
@@ -1774,7 +1778,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($codes));
         $this->assertFalse(empty($codes));
         $keys     = array('subfoo', 'subbar', 'subbaz');
-        $this->assertEquals($keys, array_keys($codes));
+        $this->assertEquals($keys, array_keys($codes), var_export($codes, 1));
     }
 
     public function testErrorMessagesAreLocalizedWhenTranslateAdapterPresent()
@@ -2090,7 +2094,8 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->assertFalse(empty($key));
             $this->assertFalse(is_numeric($key));
             $this->assertContains('<input', $html);
-            $this->assertRegexp('/<input type="text" name="' . $key . '"/', $html, $html);
+            $pattern = '/<input type="text" name="sub\[' . $key . '\]"/';
+            $this->assertRegexp($pattern, $html, 'Pattern: ' . $pattern . "\nHTML:\n" . $html);
         }
     }
 
@@ -2170,7 +2175,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $this->setupElements();
         $this->form->setName('data')
-                   ->setElementsInArray();
+                   ->setIsArray(true);
         $html = $this->form->render($this->getView());
         $this->assertContains('name="data[foo]"', $html);
         $this->assertContains('name="data[bar]"', $html);

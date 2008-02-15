@@ -65,6 +65,13 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
                  ->setTranslator($translator);
             if ($item instanceof Zend_Form_Element) {
                 $item->setBelongsTo($belongsTo);
+            } elseif (!empty($belongsTo) && ($item instanceof Zend_Form)) {
+                if ($item->isArray()) {
+                    $name = $belongsTo . '[' . $item->getName() . ']';
+                    $item->setElementsBelongTo($name, true);
+                } else {
+                    $item->setElementsBelongTo($belongsTo, true);
+                }
             }
             $items[] = $item->render();
         }

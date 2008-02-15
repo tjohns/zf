@@ -33,6 +33,12 @@ require_once 'Zend/Form.php';
 class Zend_Form_SubForm extends Zend_Form
 {
     /**
+     * Whether or not form elements are members of an array
+     * @var bool
+     */
+    protected $_isArray = true;
+
+    /**
      * Load the default decorators
      * 
      * @return void
