@@ -46,7 +46,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         require_once 'Zend/Cache.php';
         $this->_cache = Zend_Cache::factory('Core', 'File',
                  array('lifetime' => 1, 'automatic_serialization' => true),
-                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+                 array('cache_dir' => dirname(__FILE__) . '/../_files/'));
         Zend_Locale_Data::setCache($this->_cache);
     }
 
