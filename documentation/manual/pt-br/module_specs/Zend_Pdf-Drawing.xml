@@ -4,8 +4,8 @@
     <sect2 id="zend.pdf.drawing.geometry">
         <title>Geometria.</title>
         <para>
-        PDF usa a mesma geometria do PostScript. A geometria começa no canto inferior esquerdo da página e por padrão
-        é medida em pontos (1/72 de uma polegada).
+        O formato de arquivo PDF usa a mesma geometria do PostScript. A geometria começa no canto inferior esquerdo da página 
+		e, por padrão, é medida em pontos (1/72 polegada).
         </para>
         <para>
         O tamanho da página pode ser recuperado de um objeto página:
@@ -184,9 +184,9 @@ $pdfPage->drawText('Hello world!', 72, 720);
         </example>
         <para>
         Por padrão, as strings de texto são interpretadas usando o método de decodificação e caracteres local. Se você tiver
-        uma string que use um mpetodo de codificação diferente (como uma string UTF-8 sendo lida de um arquivo no disco,
-        ou uma string MacRomanobtida de um bando de dados legado), você pode a codificação na hora de desenhar e a Zend_Pdf
-		irá tratar a comunação para você. Você pode fornecer as strings em qualquer método de codificação suportada pela função        <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> do PHP:
+        uma string que use um método de codificação diferente (como uma string UTF-8 sendo lida de um arquivo no disco,
+        ou uma string MacRoman obtida de um bando de dados legado), você pode a codificação na hora de desenhar e a Zend_Pdf
+		irá tratar a comunicação para você. Você pode fornecer as strings em qualquer método de codificação suportada pela função        <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> do PHP:
         </para>
         <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Desenhar uma string codificada em UTF-8 em uma página.</title>
@@ -310,8 +310,8 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             </programlisting>
         </example>
         <para>
-        Por padrão, fontes personalizadas serão embarcadas no documento PDF resultante. Isso permite que 
-		os as pessoas que receberem o arquivo poderão visualiza-lo corretamente, mesmo que não possuam as fontes apropriadas
+        Por padrão, fontes personalizadas serão embarcadas no documento PDF resultante. Isso permite que as
+		pessoas que receberem o arquivo poderão visualiza-lo corretamente, mesmo que não possuam as fontes apropriadas
 		instaladas em seus sistemas. Se você estiver preocupado com o tamanho do arquivo você pode solicitar que a fonte não
 		seja incluída através de uma opção 'não embarque' do método fábrica:
         </para>
@@ -329,8 +329,8 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             </programlisting>
         </example>
         <para>
-        Se o programa da fonte não for embarcado mas o recebedor do arquivo PDF tiver a fonte instalada em seu sistema
-		ele irá ver o documento corretamente. Caso ele não possua a fonte correta instalada, o visualizaor PDF fará o melhor
+        Se o programa da fonte não for embarcado, mas o recebedor do arquivo PDF tiver a fonte instalada em seu sistema
+		ele irá ver o documento corretamente. Caso ele não possua a fonte correta instalada, o visualizador PDF fará o melhor
 		para sintetizar uma substituição.
         </para>
         <para>
@@ -356,7 +356,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
         que podem ser embarcadas no documento PDF vão ser; aquelas que não puderem, não serão.
         </para>
         <para>
-        Programas de fonte podem ser um tanto grandes, alguns alcançam dezenas e megabytes. Por padrão tododas as fontes
+        Programas de fonte podem ser um tanto grandes, alguns alcançam dezenas e megabytes. Por padrão todas as fontes
 		embarcadas são comprimidas usando o esquema de compressão Flate, resultando, em média, em uma economia de espaço de
 		50%. Se, por alguma razão, você não quer comprimir o programa da fonte, você pode desabilitar isso através de uya opção: 
         </para>
@@ -370,7 +370,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
             </programlisting>
         </example>
         <para>
-        Finalmente, quando necesssário, você pode combinar as opções de embarque usando o operador binário OR:
+        Finalmente, quando necessário, você pode combinar as opções de embarque usando o operador binário OR:
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Combinando opções de embarque de fonte.</title>
@@ -433,7 +433,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         <title>Estilo de desenho de linhas.</title>
         <para>
         O desenho de linhas é definido pela largura, cor e padrão de traços.
-        Todos estes parâmetros podem ser atribuídos pelos seguinte smétodos da classe <code>Zend_Pdf_Page</code>:
+        Todos estes parâmetros podem ser atribuídos pelos seguintes métodos da classe <code>Zend_Pdf_Page</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php
 /** Set line color. */
@@ -485,29 +485,29 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 A <citetitle>PDF reference</citetitle> escreve esta regra como:
                 <blockquote>
                     <para>
-The nonzero winding number rule determines whether a given point is inside a
-path by conceptually drawing a ray from that point to infinity in any direction
-and then examining the places where a segment of the path crosses the ray. Starting
-with a count of 0, the rule adds 1 each time a path segment crosses the ray
-from left to right and subtracts 1 each time a segment crosses from right to left.
-After counting all the crossings, if the result is 0 then the point is outside the path;
-otherwise it is inside.
+					A regra "nonzero winding number" determina se um dado ponto está dentro de um caminho por
+					conceitualmente desenhar um raio a partir desse ponto até o infinito em qualquer direção e,
+					em seguida, analisar os lugares onde um segmento do caminho atravessa o raio. Começando a
+					contagem do 0, a regra acrescenta 1 cada vez que um segmento cruza o raio da esquerda para
+					a direita e subtrai 1 cada vez que um segmento cruza da direita para a esquerda. Após a
+					contagem de todos os cruzamentos, se o resultado for 0 então o ponto está fora do caminho;
+					de outra forma está dentro.
+					
+					Nota: O método descrito não especifica o que fazer se um caminho segmento coincide
+					ou é tangente ao escolhido raio. Uma vez que a direcção do raio é arbitrária,
+					a regra simplesmente escolhe um raio que não encontra tais problemas de interseção	.
+					Para simples caminhos convexos, a regra "nonzero winding number" define o interior
+					e o exterior como esperado intuitivamente. Os casos mais interessantes são os envolvem
+					caminhos complexos ou com auto-intersecção, como os que são apresentados na Figura 4.10
+					(Em uma Referência PDF).
 
-Note: The method just described does not specify what to do if a path segment coincides
-with or is tangent to the chosen ray. Since the direction of the ray is arbitrary,
-the rule simply chooses a ray that does not encounter such problem intersections.
-For simple convex paths, the nonzero winding number rule defines the inside
-and outside as one would intuitively expect. The more interesting cases are those
-involving complex or self-intersecting paths like the ones shown in Figure 4.10
-(in a PDF Reference).
-
-For a path consisting of a five-pointed star, drawn with five connected straight
-line segments intersecting each other, the rule considers the inside to be the entire
-area enclosed by the star, including the pentagon in the center. For a path composed
-of two concentric circles, the areas enclosed by both circles are considered
-to be inside, provided that both are drawn in the same direction. If the circles are
-drawn in opposite directions, only the "doughnut" shape between them is inside,
-according to the rule; the "doughnut hole" is outside.
+					Para um caminho que consiste em uma estrela de cinco pontas, desenhada com cinco linhas retas
+					conectadas interseccionando-se, a regra considera como sendo o interior toda a área delimitada
+					pela estrela, incluindo o pentágono no centro. Para um caminho composto de dois círculos 
+					concêntricos, as áreas delimitadas por ambos os círculos são consideradas como sendo o interior,
+					desde que ambos os círculos sejam desenhados na mesma direção. Se os círculos forem desenhados
+					em direções opostas, apenas a forma do "donut" entre eles está no interior, de acordo
+					com a regra; o "buraco do donut" está no exterior.
                 </para>
             </blockquote>
             </para>
@@ -518,19 +518,19 @@ according to the rule; the "doughnut hole" is outside.
                 <citetitle>PDF reference</citetitle> describes this rule as follows:
                 <blockquote>
                     <para>
-An alternative to the nonzero winding number rule is the even-odd rule. This rule
-determines the "insideness" of a point by drawing a ray from that point in any
-direction and simply counting the number of path segments that cross the ray,
-regardless of direction. If this number is odd, the point is inside; if even, the point
-is outside. This yields the same results as the nonzero winding number rule for
-paths with simple shapes, but produces different results for more complex
-shapes.
-
-Figure 4.11 (in a PDF Reference) shows the effects of applying the even-odd rule
-to complex paths. For the five-pointed star, the rule considers the triangular
-points to be inside the path, but not the pentagon in the center. For the two
-concentric circles, only the "doughnut" shape between the two circles is considered inside,
-regardless of the directions in which the circles are drawn.
+					Uma alternativa à regra "nonzero winding number" é a regra "even-odd". Esta regra
+					determina a "interiorização" de um ponto através do desenho de um raio daquele ponto
+					em qualquer direção  e simplesmente contando a quantidade de segmentos de caminhos que
+					cruzam o raio, independentemente da direção.  Se a quantidade for impar, o ponto está
+					no interior; se for par está no exterior. Isto gera os mesmos resultados da regra 
+					"nonzero winding number" para caminhos com formas simples, mas produz resultados 
+					diferentes para os mais de forma mais complexa.
+					
+					A Figura 4.11 (em uma Referência PDF) mostra os efeitos da aplicação da regra "even-odd"
+					para caminhos complexos. Para a estrela de cinco pontas, a regra considera os pontos 
+					triangulares como estando no interior do caminho, mas não o pentágono no centro. Para os
+					dois círculos concântricos, apenas a forma do "donut" entre os círculos é considerada como 
+					interior, independentemente das direções em que eles foram desenhados.
                     </para>
                 </blockquote>
             </para>
@@ -539,10 +539,10 @@ regardless of the directions in which the circles are drawn.
     </sect2>
 
     <sect2 id="zend.pdf.drawing.rotations">
-        <title>Rotations.</title>
+        <title>Rotações.</title>
         <para>
-        PDF page can be rotated before applying any draw operation.
-        It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
+        A página PDF pode ser rotacionada antes do uso de qualquer operação de desenho.
+        Isso pode ser feito pelo método <code>Zend_Pdf_Page::rotate()</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php
 /**
@@ -555,14 +555,14 @@ public function rotate($x, $y, $angle);]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
-        <title>Save/restore graphics state.</title>
+        <title>Salvar/restaurar estados gráficos.</title>
         <para>
-        At any time page graphics state (current font, font size, line color, fill color,
-        line style, page rotation, clip area) can be saved and then restored. Save operation puts
-        data to a graphics state stack, restore operation retrieves it from there.
+        A qualquer hora os estados gráficos de uma págiuna (fonte atual, tamanho da fonte, cor das linhas, cor de
+		preenchimento, estilo de linha, rotação da página, e área de clip) podem ser salvos e então restaurados.
+		Operações "Salvar" colocam os dados em uma pilha, as restaurações recuperam os estados da pilha.
         </para>
         <para>
-        There are two methods in <code>Zend_Pdf_Page</code> class for these operations:
+        Existem dois métodos na classe  <code>Zend_Pdf_Page</code> para essas operações:
         </para>
         <programlisting role="php"><![CDATA[<?php
 /**
@@ -580,13 +580,13 @@ public function restoreGS();]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
-        <title>Clipping draw area.</title>
+        <title>Recorte de área de desenho .</title>
         <para>
-        PDF and Zend_Pdf module support clipping of draw area.
-        Current clip area limits the regions of the page affected by painting operators. It's a whole page initially.
+        O PDF e o módulo Zend_Pdf dão suporte ao recorte de áreas de desenho. O recorte da área atual
+		limita as regiões da página que serão afetadas por operações de pintura. Inicialmente é a página toda.
         </para>
         <para>
-        <code>Zend_Pdf_Page</code> class provides a set of methods for clipping operations.
+        A classe <code>Zend_Pdf_Page</code> fornece um conjunto de métodos para operações de recorte.
         </para>
         <programlisting role="php"><![CDATA[<?php
 /**
@@ -643,12 +643,13 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
     </sect2>
 
     <sect2 id="zend.pdf.drawing.styles">
-        <title>Styles.</title>
+        <title>Estilos.</title>
         <para>
-        <code>Zend_Pdf_Style</code> class provides styles functionality.
+        A classe <code>Zend_Pdf_Style</code> fornece funcionalidades de estilo.
         </para>
         <para>
-        Styles can be used to store a set of graphic state parameters and apply it to a PDF page by one operation:
+        Estilos podem ser usados para o armazenamento de um conjunto de parâmetros do estado gráfico e 
+		aplicá-los à uma página PDF com uma operação:
         </para>
         <programlisting role="php"><![CDATA[<?php
 /**
@@ -667,7 +668,8 @@ public function getStyle();]]>
         </programlisting>
 
         <para>
-        <code>Zend_Pdf_Style</code> class provides a set of methods to set or get different graphics state parameters:
+        A classe <code>Zend_Pdf_Style</code> fornece um conjunto de métodos para configurar ou recuperar
+		diferentes parâmetros do estado gráfico:
         </para>
         <programlisting role="php"><![CDATA[<?php
 /**
