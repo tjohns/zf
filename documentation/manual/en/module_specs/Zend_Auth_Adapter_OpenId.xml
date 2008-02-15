@@ -57,7 +57,7 @@
             is called two times. First time - after submitting of HTML form when
             <code>$_POST['openid_action']</code> is set to <code>"login"</code>,
             and the second time after HTTP redirection from OpenID server when
-            <code>$_GET['openid_mode']</code> or <code>$_POSTT['openid_mode']</code>
+            <code>$_GET['openid_mode']</code> or <code>$_POST['openid_mode']</code>
             is set.
         </para>
 
