@@ -38,6 +38,18 @@ require_once 'Zend/View/Helper/FormElement.php';
 class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
 {
     /**
+     * Input type to use
+     * @var string
+     */
+    protected $_inputType = 'radio';
+
+    /**
+     * Whether or not this element represents an array collection by default
+     * @var bool
+     */
+    protected $_isArray = false;
+
+    /**
      * Generates a set of radio button elements.
      *
      * @access public
@@ -100,6 +112,12 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         // build the element
         $xhtml = '';
         $list  = array();
+        
+        // should the name affect an array collection?
+        $name = $this->view->escape($name);
+        if ($this->_isArray) {
+            $name .= '[]';
+        }
 
         // add radio buttons to the list.
         foreach ($options as $opt_value => $opt_label) {
@@ -127,8 +145,8 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
             $radio = '<label'
                     . $this->_htmlAttribs($label_attribs) . '>'
                     . (('prepend' == $labelPlacement) ? $opt_label : '')
-                    . '<input type="radio"'
-                    . ' name="' . $this->view->escape($name) . '"'
+                    . '<input type="' . $this->_inputType . '"'
+                    . ' name="' . $name . '"'
                     . ' value="' . $this->view->escape($opt_value) . '"'
                     . $checked
                     . $disabled
