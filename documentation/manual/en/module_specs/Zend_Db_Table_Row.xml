@@ -394,7 +394,7 @@ $bugs = new Bugs(array('rowClass' =&gt; 'MyRow'));</programlisting>
       <title>Row initialization</title>
 
       <para>If application-specific logic needs to be initialized when a row
-      is constructed, you can elect to move your tasks to the
+      is constructed, you can select to move your tasks to the
       <code>init()</code> method, which is called after all row metadata has
       been processed. This is recommended over the <code>__construct</code>
       method if you do not need to alter the metadata in any programmatic

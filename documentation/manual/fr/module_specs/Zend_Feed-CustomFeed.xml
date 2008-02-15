@@ -39,7 +39,7 @@ class MonEntree extends Zend_Feed_Entry_Atom
     {
         switch ($var) {
             case 'maMiseAJour':
-                // On traduit monPrenom en monen:maj
+                // On traduit maMiseAJour en monen:maj
                 return parent::__get('monen:maj');
 
             default:
