@@ -215,6 +215,9 @@
         <xi:include href="Zend_View-Helpers-InlineScript.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-InlineScript.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="Zend_View-Helpers-Translate.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Translate.xml" /></xi:fallback>
+        </xi:include>
 
     </sect2>
 
