@@ -667,7 +667,11 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         if ($f) {
             if ($this->_options['file_locking']) @flock($f, LOCK_SH);
             $fsize = @filesize($file);
-            $result = fread($f, $fsize);
+            if ($fsize == 0) {
+                $result = '';
+            } else {
+                $result = fread($f, $fsize);
+            }
             if ($this->_options['file_locking']) @flock($f, LOCK_UN);
             @fclose($f);
         }
