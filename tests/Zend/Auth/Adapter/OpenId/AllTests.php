@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 6130 2007-08-18 19:40:53Z bkarwin $
+ * @version    $Id$
  */
 
 
@@ -28,16 +28,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 /**
- * PHPUnit_Framework_TestSuite
+ * Test helper
  */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /**
  * Zend_Auth_Adapter_OpenIdTest

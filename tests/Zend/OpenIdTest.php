@@ -17,8 +17,14 @@
  * @package    Zend_OpenId
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
+
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_OpenId
@@ -165,7 +171,7 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
 
         $_SERVER['SCRIPT_NAME'] = '/test.php';
         $this->assertSame( 'http://www.test.com/a/b.php', Zend_OpenId::absoluteUrl("/a/b.php") );
-    
+
         $this->assertSame( 'http://www.test.com/a/b.php', Zend_OpenId::absoluteUrl("a/b.php") );
     }
 
