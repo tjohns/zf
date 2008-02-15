@@ -55,6 +55,7 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
                 ++$count;
             }
             closedir($dh);
+
             if ($count != 2) {
                 $this->markTestSkipped('Are you sure your tmp dir is a valid empty dir?');
                 return;
@@ -83,6 +84,7 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
                 }
                 closedir($dh);
             }
+            copy($this->_originalDir . 'maildirsize', $this->_tmpdir . 'maildirsize');
         }
     }
 
@@ -111,6 +113,7 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
                 rmdir($this->_tmpdir . $dir);
             }
         }
+        @unlink($this->_tmpdir . 'maildirsize');
     }
 
     public function testCreateFolder()
@@ -414,5 +417,174 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
         }
 
         $this->fail('should not be able to remove message which is already removed in fs');
+    }
+
+	public function testCheckQuota()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertFalse($mail->checkQuota());
+	}
+
+	public function testCheckQuotaDetailed()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $quotaResult = array(
+        	'size'  => 2596,
+        	'count' => 6, 
+        	'quota' => array(
+        			'count' => 10,
+        			'L'     => 1,
+        			'size'  => 3000
+        		),
+        	'over_quota' => false
+        );
+        $this->assertEquals($mail->checkQuota(true), $quotaResult);
+	}
+	
+	public function testSetQuota()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertNull($mail->getQuota());
+
+        $mail->setQuota(true);
+        $this->assertTrue($mail->getQuota());
+
+        $mail->setQuota(false);
+        $this->assertFalse($mail->getQuota());
+
+        $mail->setQuota(array('size' => 100, 'count' => 2, 'X' => 0));
+        $this->assertEquals($mail->getQuota(), array('size' => 100, 'count' => 2, 'X' => 0));
+        $this->assertEquals($mail->getQuota(true), array('size' => 3000, 'L' => 1, 'count' => 10));
+
+        $quotaResult = array(
+        	'size'  => 2596,
+        	'count' => 6, 
+        	'quota' => array(
+        			'size'  => 100,
+        			'count' => 2,
+        			'X'     => 0
+        		),
+        	'over_quota' => true
+        );
+        $this->assertEquals($mail->checkQuota(true, true), $quotaResult);
+
+        $this->assertEquals($mail->getQuota(true), array('size' => 100, 'count' => 2, 'X' => 0));
+	}
+
+	public function testMissingMaildirsize()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertEquals($mail->getQuota(true), array('size' => 3000, 'L' => 1, 'count' => 10));
+
+        unlink($this->_tmpdir . 'maildirsize');
+
+        $this->assertNull($mail->getQuota());
+
+		try {
+	        $mail->getQuota(true);
+		} catch(Zend_Mail_Exception $e) {
+			// ok
+			return;
+		}        
+        $this->fail('get quota from file should fail if file is missing');
+	}
+	
+	public function testMissingMaildirsizeWithFixedQuota()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        unlink($this->_tmpdir . 'maildirsize');
+        $mail->setQuota(array('size' => 100, 'count' => 2, 'X' => 0));
+
+        $quotaResult = array(
+        	'size'  => 2596,
+        	'count' => 6, 
+        	'quota' => array(
+        			'size'  => 100,
+        			'count' => 2,
+        			'X'     => 0
+        		),
+        	'over_quota' => true
+        );
+        $this->assertEquals($mail->checkQuota(true), $quotaResult);
+
+        $this->assertEquals($mail->getQuota(true), $quotaResult['quota']);
+	}
+
+	public function testAppendMessage()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $mail->setQuota(array('size' => 3000, 'count' => 6, 'X' => 0));
+        $this->assertFalse($mail->checkQuota(false, true));
+        $mail->appendMessage("Subject: test\r\n\r\n");
+        $quotaResult = array(
+        	'size'  => 2613,
+        	'count' => 7, 
+        	'quota' => array(
+        			'size'  => 3000,
+        			'count' => 6,
+        			'X'     => 0
+        		),
+        	'over_quota' => true
+        );
+        $this->assertEquals($mail->checkQuota(true), $quotaResult);
+
+		$mail->setQuota(false);
+        $this->assertTrue($mail->checkQuota());
+		try {
+	        $mail->appendMessage("Subject: test\r\n\r\n");
+		} catch(Zend_Mail_Exception $e) {
+	        $this->fail('appending should not fail if quota check is not active');
+		}        
+
+		$mail->setQuota(true);
+        $this->assertTrue($mail->checkQuota());
+		try {
+	        $mail->appendMessage("Subject: test\r\n\r\n");
+		} catch(Zend_Mail_Exception $e) {
+			// ok
+			return;
+		}        
+        $this->fail('appending after being over quota should fail');
+	}
+
+	public function testRemoveMessage()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $mail->setQuota(array('size' => 3000, 'count' => 5, 'X' => 0));
+        $this->assertTrue($mail->checkQuota(false, true));
+        
+        $mail->removeMessage(1);
+        $this->assertFalse($mail->checkQuota());
+	}	
+
+	public function testCopyMessage()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $mail->setQuota(array('size' => 3000, 'count' => 6, 'X' => 0));
+        $this->assertFalse($mail->checkQuota(false, true));
+        $mail->copyMessage(1, 'subfolder');
+        $quotaResult = array(
+        	'size'  => 2993,
+        	'count' => 7, 
+        	'quota' => array(
+        			'size'  => 3000,
+        			'count' => 6,
+        			'X'     => 0
+        		),
+        	'over_quota' => true
+        );
+        $this->assertEquals($mail->checkQuota(true), $quotaResult);
+	}
+
+	public function testAppendStream()
+	{
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $fh = fopen('php://memory', 'rw');
+        fputs($fh, "Subject: test\r\n\r\n");
+        fseek($fh, 0);
+        $mail->appendMessage($fh);
+        fclose($fh);
+        
+        $this->assertEquals($mail->getMessage($mail->countMessages())->subject, 'test');
     }
 }
