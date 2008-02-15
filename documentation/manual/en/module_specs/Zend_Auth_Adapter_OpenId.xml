@@ -22,7 +22,7 @@
         </para>
         <para>
             The <code>Zend_Auth_Adapter_OpenId</code> class is a wrapper on top
-            of <code>>Zend_OpenId_Consumer</code> component which implements the
+            of <code>Zend_OpenId_Consumer</code> component which implements the
             OpenID authentication protocol itself.
         </para>
     </sect2>
