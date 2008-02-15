@@ -15,7 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Environment
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Interface.php 2794 2007-01-16 01:29:51Z bkarwin $
  */
@@ -24,7 +24,7 @@
 /**
  * @category   Zend
  * @package    Zend_Environment
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 interface Zend_Environment_Module_Interface

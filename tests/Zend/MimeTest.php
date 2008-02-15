@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Mime
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -40,7 +40,7 @@ require_once dirname(__FILE__) . '/MailTest.php';
  * @category   Zend
  * @package    Zend_Mime
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_MimeTest extends PHPUnit_Framework_TestCase
@@ -61,7 +61,7 @@ class Zend_MimeTest extends PHPUnit_Framework_TestCase
 
     public function testIsPrintable_notPrintable()
     {
-        $this->assertFalse(Zend_Mime::isPrintable('Test with special chars: äüßöÖ'));
+        $this->assertFalse(Zend_Mime::isPrintable('Test with special chars: ï¿½ï¿½ï¿½ï¿½ï¿½'));
     }
 
 	public function testIsPrintable_isPrintable()
@@ -71,12 +71,12 @@ class Zend_MimeTest extends PHPUnit_Framework_TestCase
 
     public function testQP()
     {
-        $text = "This is a cool Test Text with special chars: äöüß\n"
-              . "and with multiple linesäöüß some of the Lines are long, long"
+        $text = "This is a cool Test Text with special chars: ï¿½ï¿½ï¿½ï¿½\n"
+              . "and with multiple linesï¿½ï¿½ï¿½ï¿½ some of the Lines are long, long"
               . ", long, long, long, long, long, long, long, long, long, long"
               . ", long, long, long, long, long, long, long, long, long, long"
               . ", long, long, long, long, long, long, long, long, long, long"
-              . ", long, long, long, long and with äöüß";
+              . ", long, long, long, long and with ï¿½ï¿½ï¿½ï¿½";
 
         $qp = Zend_Mime::encodeQuotedPrintable($text);
         $this->assertEquals(quoted_printable_decode($qp), $text);
