@@ -3,7 +3,7 @@
 
     <para>
     	Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
-vous souhaitez créer votre propre format ou implémenter des gâteries
+vous souhaitez créer votre propre format ou implémenter des améliorations
 comme par exemple la gestion automatique des éléments situés dans un
 espace de noms personnalisé.
     </para>
@@ -38,9 +38,9 @@ class MonEntree extends Zend_Feed_Entry_Atom
     public function __get($var)
     {
         switch ($var) {
-            case 'monPrenom':
-                // On traduit monPrenom en monen:prenom
-                return parent::__get('monen:prenom');
+            case 'maMiseAJour':
+                // On traduit monPrenom en monen:maj
+                return parent::__get('monen:maj');
 
             default:
                 return parent::__get($var);
@@ -50,9 +50,9 @@ class MonEntree extends Zend_Feed_Entry_Atom
     public function __set($var, $valeur)
     {
         switch ($var) {
-            case 'monPrenom':
-                // On traduit monPrenom en monen:prenom
-                parent::__set('monen:prenom', $valeur);
+            case 'maMiseAJour':
+                // On traduit maMiseAJour en monen:maj
+                parent::__set('monen:maj', $valeur);
                 break;
 
             default:
@@ -60,13 +60,30 @@ class MonEntree extends Zend_Feed_Entry_Atom
         }
     }
 
+    public function __call($var, $unused)
+    {
+        switch ($var) {
+            case 'maMiseAJour':
+                // On traduit maMiseAJour en monen:maMiseAJour.
+                return parent::__call('monen:maMiseAJour', $unused);
+
+            default:
+                return parent::__call($var, $unused);
+        }
+    }
 }]]>
     	</programlisting>
         <para>
-            Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété <code>monPrenom</code> :
+            Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété <code>maMiseAJour</code> :
             <programlisting role="php"><![CDATA[<?php
 $entree = new MonEntree();
-$entree->monPrenom = 'Martin';]]>
+$entree->maMiseAJour = '2005-04-19T15:30';
+
+// appel de type méthode géré par __call
+$entree->maMiseAJour();
+
+// appel de type propriété géré par __get
+$entree->maMiseAJour;]]>
     		</programlisting>
         </para>
     </example>
