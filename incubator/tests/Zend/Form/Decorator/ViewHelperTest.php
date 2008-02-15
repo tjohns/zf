@@ -99,6 +99,15 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('formSubmit', $this->decorator->getHelper());
     }
 
+    public function testAppendsBracketsIfElementIsAnArray()
+    {
+        $element = $this->getElement();
+        $element->setArray(true);
+        $name = $this->decorator->getName();
+        $expect = $element->getName() . '[]';
+        $this->assertEquals($expect, $name);
+    }
+
     public function testRenderThrowsExceptionIfNoViewSetInElement()
     {
         $element = $this->getElement();
@@ -134,9 +143,9 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
         $element->setMultiOptions($options);
 
         $translations = array(
-            'foo' => 'This is the Foo Value',
-            'bar' => 'This is the Bar Value',
-            'baz' => 'This is the Baz Value',
+            'This Foo Will Not Be Displayed' => 'This is the Foo Value',
+            'This Bar Will Not Be Displayed' => 'This is the Bar Value',
+            'This Baz Will Not Be Displayed' => 'This is the Baz Value',
         );
         $translate = new Zend_Translate('array', $translations, 'en');
         $translate->setLocale('en');
@@ -145,7 +154,7 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
         $test = $element->render($this->getView());
         foreach ($options as $key => $value) {
             $this->assertNotContains($value, $test);
-            $this->assertContains($translations[$key], $test);
+            $this->assertContains($translations[$value], $test);
         }
     }
 }

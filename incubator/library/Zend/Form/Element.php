@@ -94,6 +94,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_ignore = false;
 
     /**
+     * Does the element represent an array?
+     * @var bool
+     */
+    protected $_isArray = false;
+
+    /**
      * Element label
      * @var string
      */
@@ -444,11 +450,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
     }
 
     /**
-     * Get required flag
+     * Is the element required?
      * 
      * @return bool
      */
-    public function getRequired()
+    public function isRequired()
     {
         return $this->_required;
     }
@@ -520,6 +526,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getIgnore()
     {
         return $this->_ignore;
+    }
+
+    /**
+     * Set flag indicating if element represents an array
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setArray($flag)
+    {
+        $this->_isArray = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is the element representing an array?
+     * 
+     * @return bool
+     */
+    public function isArray()
+    {
+        return $this->_isArray;
     }
 
     /**
@@ -994,7 +1022,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function isValid($value, $context = null)
     {
-        if (empty($value) && !$this->getRequired() && $this->getAllowEmpty()) {
+        if (empty($value) && !$this->isRequired() && $this->getAllowEmpty()) {
             return true;
         }
 

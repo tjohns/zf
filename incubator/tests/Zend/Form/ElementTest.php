@@ -188,14 +188,14 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testRequiredFlagFalseByDefault()
     {
-        $this->assertFalse($this->element->getRequired());
+        $this->assertFalse($this->element->isRequired());
     }
 
     public function testRequiredAcccessorsWork()
     {
-        $this->assertFalse($this->element->getRequired());
+        $this->assertFalse($this->element->isRequired());
         $this->element->setRequired(true);
-        $this->assertTrue($this->element->getRequired());
+        $this->assertTrue($this->element->isRequired());
     }
 
     public function testDescriptionInitiallyNull()
@@ -208,6 +208,20 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->testDescriptionInitiallyNull();
         $this->element->setDescription('element hint');
         $this->assertEquals('element hint', $this->element->getDescription());
+    }
+
+    public function testElementIsNotArrayByDefault()
+    {
+        $this->assertFalse($this->element->isArray());
+    }
+
+    public function testCanSetArrayFlag()
+    {
+        $this->testElementIsNotArrayByDefault();
+        $this->element->setArray(true);
+        $this->assertTrue($this->element->isArray());
+        $this->element->setArray(false);
+        $this->assertFalse($this->element->isArray());
     }
 
     public function testElementBelongsToNullByDefault()
@@ -1078,7 +1092,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->element->getValue());
         $this->assertEquals('bar', $this->element->getLabel());
         $this->assertEquals(50, $this->element->getOrder());
-        $this->assertFalse($this->element->getRequired());
+        $this->assertFalse($this->element->isRequired());
         $this->assertEquals('bar', $this->element->foo);
         $this->assertEquals('bat', $this->element->baz);
     }
@@ -1318,7 +1332,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->element->getValue());
         $this->assertEquals('bar', $this->element->getLabel());
         $this->assertEquals(50, $this->element->getOrder());
-        $this->assertFalse($this->element->getRequired());
+        $this->assertFalse($this->element->isRequired());
         $this->assertEquals('bar', $this->element->foo);
         $this->assertEquals('bat', $this->element->baz);
     }
@@ -1331,7 +1345,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $element->getValue());
         $this->assertEquals('bar', $element->getLabel());
         $this->assertEquals(50, $element->getOrder());
-        $this->assertFalse($element->getRequired());
+        $this->assertFalse($element->isRequired());
         $this->assertEquals('bar', $element->foo);
         $this->assertEquals('bat', $element->baz);
     }

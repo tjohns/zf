@@ -1636,7 +1636,7 @@ class Zend_Form implements Iterator, Countable
         foreach ($this->getElements() as $key => $element) {
             $element->setTranslator($translator);
             if (!isset($data[$key])) {
-                if ($element->getRequired()) {
+                if ($element->isRequired()) {
                     $valid = $element->isValid(null, $data) && $valid;
                 }
             } else {

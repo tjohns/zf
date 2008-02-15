@@ -145,7 +145,7 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
             return $class;
         }
 
-        $type  = $element->getRequired() ? 'required' : 'optional';
+        $type  = $element->isRequired() ? 'required' : 'optional';
 
         if (!strstr($class, $type)) {
             $class .= ' ' . $type;
@@ -253,7 +253,7 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
         $separator = $this->getSeparator();
 
         if (!empty($label)) {
-            if ($element->getRequired()) {
+            if ($element->isRequired()) {
                 $label = $reqPrefix . $label . $reqSuffix;
             } else {
                 $label = $optPrefix . $label . $optSuffix;

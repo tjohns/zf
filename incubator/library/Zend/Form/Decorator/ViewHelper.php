@@ -118,6 +118,10 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
                   . ']';
         }
 
+        if ($element->isArray()) {
+            $name .= '[]';
+        }
+
         return $name;
     }
 
