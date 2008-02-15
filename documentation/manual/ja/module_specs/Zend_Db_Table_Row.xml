@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7778 -->
+<!-- EN-Revision: 8020 -->
 <sect1 id="zend.db.table.row">
   <title>Zend_Db_Table_Row</title>
 
@@ -463,7 +463,7 @@ class MyApplicationRow extends Zend_Db_Table_Row_Abstract
         </example></para>
     </sect3>
 
-    <sect3>
+    <sect3 id="zend.db.table.row.extending.insert-update">
       <title>Zend_Db_Table_Row における Insert、Update および Delete の独自ロジックの定義</title>
 
       <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7778 -->
+<!-- EN-Revision: 8020 -->
 <sect1 id="zend.db.table">
   <title>Zend_Db_Table</title>
 
@@ -257,7 +257,7 @@ class Bugs extends Zend_Db_Table_Abstract
       </itemizedlist>
     </sect3>
 
-    <sect3>
+    <sect3 id="zend.db.table.initialization">
       <title>テーブルの初期化</title>
 
       <para>
@@ -967,7 +967,7 @@ $rows = $table-&gt;fetchAll($select);</programlisting>
       </para>
     </sect3>
 
-    <sect3>
+    <sect3 id="zend.db.table.advanced.usage">
       <title>高度な使用法</title>
 
       <para>
