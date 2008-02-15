@@ -728,7 +728,7 @@ class Zend_OpenId_Consumer
         if (empty($root)) {
             $root = Zend_OpenId::selfUrl();
             if ($root[strlen($root)-1] != '/') {
-            	$root = dirname(root);
+            	$root = dirname($root);
             }
         }
         if ($version >= 2.0) {
