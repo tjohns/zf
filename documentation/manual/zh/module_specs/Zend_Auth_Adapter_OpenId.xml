@@ -12,7 +12,7 @@
             OpenID 身份只是个指向一些 web 页面的  HTTP URL，在 URL 中带有适当的用户和特别标签的信息，在标签中描述使用哪个服务器和提交哪个身份到那里。关于 OpenID 请参考 <ulink url="http://www.openid.net/">OpenID 官方网站 </ulink>.
         </para>
         <para>
-            <code>Zend_Auth_Adapter_OpenId</code> 类是 <code>>Zend_OpenId_Consumer</code> 组件的封装，而 <code>>Zend_OpenId_Consumer</code> 组件实现 OpenID 认证协议自己。
+            <code>Zend_Auth_Adapter_OpenId</code> 类是 <code>Zend_OpenId_Consumer</code> 组件的封装，而 <code>>Zend_OpenId_Consumer</code> 组件实现 OpenID 认证协议自己。
         </para>
     </sect2>
 
@@ -27,7 +27,7 @@
         </para>
 
         <para>
-            下面的例子展示 <code>Zend_Auth_Adapter_OpenId</code> 的用法。正如前面所说，<code>Zend_Auth_Adapter_OpenId::authenticate()</code> 被调用两次。第一次 － 在提交 HTML 表单之后，当 <code>$_POST['openid_action']</code> 设置给 <code>"login"</code>时；第二次 － 在从 OpenID 服务器重定向 HTTP 之后，当 <code>$_GET['openid_mode']</code> 或 <code>$_POSTT['openid_mode']</code> 被设置。
+            下面的例子展示 <code>Zend_Auth_Adapter_OpenId</code> 的用法。正如前面所说，<code>Zend_Auth_Adapter_OpenId::authenticate()</code> 被调用两次。第一次 － 在提交 HTML 表单之后，当 <code>$_POST['openid_action']</code> 设置给 <code>"login"</code>时；第二次 － 在从 OpenID 服务器重定向 HTTP 之后，当 <code>$_GET['openid_mode']</code> 或 <code>$_POST['openid_mode']</code> 被设置。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
