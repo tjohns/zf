@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -55,7 +55,7 @@ require_once 'Zend/Date.php';
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
@@ -87,7 +87,7 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
@@ -114,7 +114,7 @@ class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_MailTest extends PHPUnit_Framework_TestCase
@@ -171,11 +171,11 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', 'äüößÄÖÜ');
-        $mail->addTo('testmail2@example.com', 'äüößÄÖÜ');
-        $mail->addCc('testmail3@example.com', 'äüößÄÖÜ');
-        $mail->setSubject('äüößÄÖÜ');
-        $mail->addHeader('X-MyTest', 'Test-äüößÄÖÜ', true);
+        $mail->setFrom('mymail@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addTo('testmail2@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addCc('testmail3@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->setSubject('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addHeader('X-MyTest', 'Test-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', true);
 
         $mock = new Zend_Mail_Transport_Mock();
         $mail->send($mock);
@@ -205,11 +205,11 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', 'äüößÄÖÜ');
-        $mail->addTo('testmail2@example.com', 'äüößÄÖÜ');
-        $mail->addCc('testmail3@example.com', 'äüößÄÖÜ');
-        $mail->setSubject('äüößÄÖÜ');
-        $mail->addHeader('X-MyTest', 'Test-äüößÄÖÜ', true);
+        $mail->setFrom('mymail@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addTo('testmail2@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addCc('testmail3@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->setSubject('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+        $mail->addHeader('X-MyTest', 'Test-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', true);
 
         $mock = new Zend_Mail_Transport_Sendmail_Mock();
         $mail->send($mock);

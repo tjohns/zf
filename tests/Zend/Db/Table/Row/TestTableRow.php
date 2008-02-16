@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: TestTableRow.php 7508 2008-01-19 03:12:38Z peptolab $
  */
@@ -33,7 +33,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Table_Row_TestTableRow extends Zend_Db_Table_Row_Abstract

@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Session
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: AllTests.php 4773 2007-05-09 19:33:10Z darby $
  */
@@ -45,7 +45,7 @@ ob_start();
  * @category   Zend
  * @package    Zend_Session_SaveHandler
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Session_SaveHandler_AllTests

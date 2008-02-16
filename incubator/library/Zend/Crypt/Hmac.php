@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage Hmac
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id: DiffieHellman.php 127 2007-09-17 13:48:20Z padraic $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -26,7 +26,7 @@
  *
  * @package    Zend_Crypt
  * @subpackage Hmac
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Crypt_Hmac

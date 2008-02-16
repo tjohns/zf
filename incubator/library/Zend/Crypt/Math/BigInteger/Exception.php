@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage Math
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Exception.php 126 2007-09-17 13:35:55Z padraic $
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Crypt/Math/Exception.php';
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage Math
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Math_BigInteger_Exception extends Zend_Math_Exception

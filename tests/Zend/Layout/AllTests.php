@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Layout
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -37,7 +37,7 @@ require_once 'Zend/Layout/PluginTest.php';
  * @category   Zend
  * @package    Zend_Layout
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Layout_AllTests

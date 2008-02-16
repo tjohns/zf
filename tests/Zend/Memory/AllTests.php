@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: AllTests.php 3980 2007-03-15 21:38:38Z mike $
  */
@@ -38,7 +38,7 @@ require_once 'Zend/Memory/MemoryManagerTest.php';
  * @category   Zend
  * @package    Zend_Memory
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Memory_AllTests

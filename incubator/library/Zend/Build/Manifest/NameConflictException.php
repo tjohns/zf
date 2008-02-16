@@ -15,7 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Build_Manifest
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -27,7 +27,7 @@ require_once 'Zend/Build/Exception.php';
 /**
  * @category   Zend
  * @package    Zend_Build
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Manifest_NameConflictException extends Zend_Build_Exception

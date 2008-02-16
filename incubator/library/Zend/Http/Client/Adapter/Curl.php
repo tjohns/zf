@@ -17,7 +17,7 @@
  * @package    Zend_Http
  * @subpackage Client_Adapter
  * @version    $Id$
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -32,7 +32,7 @@ require_once 'Zend/Http/Client/Adapter/Exception.php';
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interface

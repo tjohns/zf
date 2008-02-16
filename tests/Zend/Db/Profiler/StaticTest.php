@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: StaticTest.php 6556 2007-10-01 20:37:03Z darby $
  */
@@ -35,7 +35,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup

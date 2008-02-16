@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Firebird.php 5906 2007-07-28 02:58:20Z bkarwin $
  */
@@ -34,7 +34,7 @@ require_once 'Zend/Db/Statement.php';
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Statement_Firebird extends Zend_Db_Statement

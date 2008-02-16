@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: MysqliTest.php 6923 2007-11-25 02:00:06Z peptolab $
  */
@@ -40,7 +40,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @category   Zend
  * @package    Zend_Db
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon

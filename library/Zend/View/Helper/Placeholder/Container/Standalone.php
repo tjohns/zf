@@ -14,7 +14,7 @@
  *
  * @package    Zend_View
  * @subpackage Helpers
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -27,7 +27,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Abstract.php';
  *
  * @package    Zend_View
  * @subpackage Helpers
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 abstract class Zend_View_Helper_Placeholder_Container_Standalone extends Zend_View_Helper_Placeholder_Container_Abstract

@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -37,7 +37,7 @@ require_once 'Zend/Validate/EmailAddress.php';
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
@@ -333,7 +333,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
         // Check no IDN matching
         $validator->hostnameValidator->setValidateIdn(false);
         $valuesExpected = array(
-            array(false, array('name@bürger.de', 'name@hãllo.de', 'name@hållo.se'))
+            array(false, array('name@bï¿½rger.de', 'name@hï¿½llo.de', 'name@hï¿½llo.se'))
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {

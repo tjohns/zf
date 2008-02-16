@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Config
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: IniTest.php 6932 2007-11-25 20:53:26Z rob $
  */
@@ -34,7 +34,7 @@ require_once 'Zend/Config/Ini.php';
  * @category   Zend
  * @package    Zend_Config
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Config_IniTest extends PHPUnit_Framework_TestCase

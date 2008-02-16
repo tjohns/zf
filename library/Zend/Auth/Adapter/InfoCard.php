@@ -41,7 +41,7 @@ require_once 'Zend/InfoCard.php';
  *
  * @category   Zend
  * @package    Zend_Auth
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */

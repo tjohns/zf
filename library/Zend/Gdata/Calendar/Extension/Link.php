@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Entry.php 3941 2007-03-14 21:36:13Z darby $
  */
@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Calendar/Extension/WebContent.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Calendar_Extension_Link extends Zend_Gdata_App_Extension_Link

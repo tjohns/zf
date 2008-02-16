@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Service_RememberTheMilk
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: RememberTheMilkTest.php 5393 2007-06-20 21:16:06Z darby $
  */
@@ -47,7 +47,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @category   Zend
  * @package    Zend_Service_RememberTheMilk
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
