@@ -140,7 +140,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             if ($error) {
                 throw new Zend_Db_Adapter_Exception("PDO_IBM driver extension is downlevel.  Please use driver release version 1.2.1 or later");
             } else {
-                throw new Zend_Db_Adapter_Exception($e->getMessage());
+                throw new Zend_Db_Adapter_Exception($e->getMessage(), $e->getCode());
             }
         }
     }
