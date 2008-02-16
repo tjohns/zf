@@ -6,7 +6,7 @@
         <para>
             Zend_Http_Client basiert auf einem Design mit Verbindungsadaptern. Der
             Verbindungsadapter ist das Objekt, welches für die Ausführung der aktuellen Verbindung
-            zum Server sowie für das Schreiben der Anfragen und Antworten verantwortlich ist.
+            zum Server sowie für das Schreiben der Anfragen und Lesen von Antworten verantwortlich ist.
             Dieser Verbindungsadapter kann ersetzt werden und man kann den Standard
             Verbindungsadapter durch seinen eigenen Adapter erweitern, um ihn mit dem selben
             Interface auf seine eigenen Bedürfnisse anzupassen, ohne dass man die gesamte HTTP
