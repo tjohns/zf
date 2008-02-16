@@ -261,6 +261,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      *
      * @param int $mode A PDO fetch mode.
      * @return void
+     * @throws Zend_Db_Adapter_Exception
      */
     public function setFetchMode($mode)
     {

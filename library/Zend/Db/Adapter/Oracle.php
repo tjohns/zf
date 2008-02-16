@@ -406,7 +406,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * @param integer $mode A fetch mode.
      * @return void
-     * @throws Zend_Db_Adapter_Exception
+     * @throws Zend_Db_Adapter_Oracle_Exception
      */
     public function setFetchMode($mode)
     {

@@ -1085,6 +1085,8 @@ abstract class Zend_Db_Adapter_Abstract
      * Set the fetch mode.
      *
      * @param integer $mode
+     * @return void
+     * @throws Zend_Db_Adapter_Exception
      */
     abstract public function setFetchMode($mode);
 

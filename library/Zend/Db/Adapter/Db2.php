@@ -520,6 +520,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @param integer $mode
      * @return void
+     * @throws Zend_Db_Adapter_Db2_Exception
      */
     public function setFetchMode($mode)
     {

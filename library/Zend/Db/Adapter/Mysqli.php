@@ -398,6 +398,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      *
      * @param int $mode
      * @return void
+     * @throws Zend_Db_Adapter_Mysqli_Exception
      */
     public function setFetchMode($mode)
     {
