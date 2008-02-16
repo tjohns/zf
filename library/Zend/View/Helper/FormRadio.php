@@ -94,13 +94,13 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         }
 
         $labelPlacement = 'append';
-        foreach ($label_attribs as $key => $value) {
+        foreach ($label_attribs as $key => $val) {
             switch (strtolower($key)) {
                 case 'placement':
                     unset($label_attribs[$key]);
-                    $value = strtolower($value);
-                    if (in_array($value, array('prepend', 'append'))) {
-                        $labelPlacement = $value;
+                    $value = strtolower($val);
+                    if (in_array($val, array('prepend', 'append'))) {
+                        $labelPlacement = $val;
                     }
                     break;
             }
@@ -118,6 +118,9 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         if ($this->_isArray) {
             $name .= '[]';
         }
+
+        // ensure value is an array to allow matching multiple times
+        $value = (array) $value;
 
         // add radio buttons to the list.
         foreach ($options as $opt_value => $opt_label) {
@@ -137,7 +140,7 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
 
             // is it checked?
             $checked = '';
-            if ($opt_value == $value) {
+            if (in_array($opt_value, $value)) {
                 $checked = ' checked="checked"';
             }
 

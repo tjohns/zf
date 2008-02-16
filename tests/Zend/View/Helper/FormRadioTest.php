@@ -238,6 +238,46 @@ class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
     }
+
+    public function testSpecifyingAValueThatMatchesAnOptionChecksIt()
+    {
+        $options = array(
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+            'baz' => 'Baz'
+        );
+        $html = $this->helper->formRadio(array(
+            'name'    => 'foo',
+            'value'   => 'bar',
+            'options' => $options,
+        ));
+
+        if (!preg_match('/(<input[^>]*?(value="bar")[^>]*>)/', $html, $matches)) {
+            $this->fail('Radio for a given option was not found?');
+        }
+        $this->assertContains('checked="checked"', $matches[1], var_export($matches, 1));
+    }
+
+    public function testOptionsWithMatchesInAnArrayOfValuesAreChecked()
+    {
+        $options = array(
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+            'baz' => 'Baz'
+        );
+        $html = $this->helper->formRadio(array(
+            'name'    => 'foo',
+            'value'   => array('foo', 'baz'),
+            'options' => $options,
+        ));
+
+        foreach (array('foo', 'baz') as $value) {
+            if (!preg_match('/(<input[^>]*?(value="' . $value . '")[^>]*>)/', $html, $matches)) {
+                $this->fail('Radio for a given option was not found?');
+            }
+            $this->assertContains('checked="checked"', $matches[1], var_export($matches, 1));
+        }
+    }
 }
 
 // Call Zend_View_Helper_FormRadioTest::main() if this source file is executed directly.
