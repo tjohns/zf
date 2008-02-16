@@ -7,7 +7,7 @@
             Zend_Http_Client is based on a connection adapter design. The
             connection adapter is the object in charge of performing the
             actual connection to the server, as well as writing requests
-            and writing responses.
+            and reading responses.
             This connection adapter can be replaced, and you can create and
             extend the default connection adapters to suite your special needs,
             without the need to extend or replace the entire HTTP client
