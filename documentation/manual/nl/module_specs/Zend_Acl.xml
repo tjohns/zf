@@ -43,11 +43,11 @@
             <code>Zend_Acl_Resource_Interface</code> om het ontwikkelaars makkelijk te maken bij het 
             maken van Bronnen. Een klasse hoeft deze interface alleen maar te implementeren, en bestaat 
             uit een enkele methode, <code>getResourceId()</code>, om Zend_Acl het object als een Bron 
-            te laten beschouwen. Verder wordt <code>Zend_Acl_Resource</code>gebruikt binnen Zend_Acl 
+            te laten beschouwen. Verder wordt <code>Zend_Acl_Resource</code> gebruikt binnen Zend_Acl 
             als een standaard Bron implementatie voor ontwikkelaars die uitgebreid kan worden waar wenselijk.
         </para>
         <para>
-			Zend_Acl verleent een boom structuur waaraan meerdere Bronnen( of "gebieden onder toegangscontrole" ) 
+			Zend_Acl levert een boom structuur waaraan meerdere Bronnen ( of "gebieden onder toegangscontrole" ) 
 			aan toegevoegd kunnen worden. Omdat Bronnen opgeslagen worden in zo'n boom structuur, kunnen ze 
 			algemeen ( tot aan de top van de boom ) tot specifiek ( tot de blaadjes van de boom ) geregeld worden. 
 			Vragen aan een specifieke Bron zullen automatisch de Bronnen hiërarchie doorzoeken naar regels 
@@ -72,7 +72,7 @@
             <code>Zend_Acl_Role_Interface</code> om het ontwikkelaars makkelijk te maken bij het maken 
             van een Rol. Een klasse hoeft deze interface alleen maar te implementeren, en bestaat 
             uit een enkele methode, <code>getRoleId()</code>, om Zend_Acl het object als een Rol 
-            te laten beschouwen. Verder wordt <code>Zend_Acl_Role</code>gebruikt binnen Zend_Acl 
+            te laten beschouwen. Verder wordt <code>Zend_Acl_Role</code> gebruikt binnen Zend_Acl 
             als een standaard Rol implementatie voor ontwikkelaars die uitgebreid kan worden waar wenselijk.
         </para>
         <para>
@@ -94,7 +94,7 @@
                 "<code>admin</code>" - waarvan andere Rollen kunnen erven. Vervolgens, wordt er een Rol, 
                 met de identiteit "<code>eenGebruiker</code>" aangemaakt die van alle drie de Rollen erft.
                 De volgorde waarin deze rollen staan in de <code>$ouders</code> array is van belang.
-                Als het nodig is,zoekt Zend_Acl niet alleen naar toegangsregels voor de geraadpleegde Rol 
+                Als het nodig is, zoekt Zend_Acl niet alleen naar toegangsregels voor de geraadpleegde Rol 
                 ( in dit voorbeeld "<code>eenGebruiker</code>"), maar ook in de Rollen waar de geraadpleegde 
                 Rol van erft (in dit voorbeeld "<code>gast</code>", "<code>lid</code>", en "<code>admin</code>"):
             </para>
@@ -119,11 +119,11 @@ $acl->allow('lid', 'eenBron');
 echo $acl->isAllowed('eenGebruiker', 'eenBron') ? 'toegestaan' : 'weigeren';]]>
             </programlisting>
             <para>
-                Omdat er geen regel is gespecificieerd voor de "<code>eenGebruiker</code>" Rol en 
+                Omdat er geen regel is gespecificeerd voor de "<code>eenGebruiker</code>" Rol en 
                 "<code>eenBron</code>", gaat Zend_Acl opzoek naar regels die mogelijk gedefineerd zijn 
                 voor Rollen waar "<code>eenGebruiker</code>" van erft. Als eerste wordt de "<code>admin</code>"
-                Rol geraadpleegd, hiervoor is geen toestaan regel gedefineerd. Daarna wordt de 
-                "<code>lid</code>" geraadpleegd, en Zend_Acl vindt hier een regel dat "<code>lid</code>"
+                Rol geraadpleegd, hiervoor is geen toegang regel gedefineerd. Daarna wordt de 
+                "<code>lid</code>" Rol geraadpleegd, en Zend_Acl vindt hier een regel dat "<code>lid</code>"
                 toegestaan is om "<code>eenBron</code>" te gebruiken.
             </para>
             <para>
@@ -164,7 +164,7 @@ $acl = new Zend_Acl();]]>
 
         <note>
             <para>
-                Totdat een ontwikkelaar een toestaan regel specificieerd, zal Zend_Acl toegang tot iedere privilege
+                Totdat een ontwikkelaar een toestaan regel specificeerd, zal Zend_Acl toegang tot iedere privilege
                 van iedere Bron verbieden voor elke Rol.
             </para>
         </note>
@@ -262,14 +262,14 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             Nu de ACL de relevante Rollen bevat, kunnen de regels worden opgesteld die defineren hoe
             Bronnen kunnen worden gebruikt door Rollen. Het is je misschien opgevallen dat we geen Bronnen
             hebben gespecificeerd in dit voorbeeld, wat erop neer komt dat de regels gelden voor alle Bronnen.
-            Zend_Acl levert een inplementatie waarbij regels enkel te hoeven toegekend van algemeen tot specifiek,
-            dit verkleint het aantal regels wat nodig is, want Bronnen en Rollen erven regels die zijn gedefineerd door
+            Zend_Acl levert een inplementatie waarbij regels enkel te worden toegekend van algemeen tot specifiek,
+            dit verkleint het aantal regels wat nodig is, want Bronnen en Rollen erven regels die zijn gedefineerd voor
             hun ouders.
         </para>
 
         <para>
             We kunnen dus een redelijke complexe groep van regels defineren met een kleine hoeveelheid code.
-            Om de basisregels toe te passen zoals hierboven staat beschreven:
+            Om de basisregels toe te passen zoals hierboven staan beschreven:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -320,28 +320,28 @@ $acl->allow('administrator');]]>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-echo $acl->istoegestaan('gast', null, 'bekijk') ?
+echo $acl->isAllowed('gast', null, 'bekijk') ?
      "toegestaan" : "geweigerd"; // toegestaan
 
-echo $acl->istoegestaan('medewerker', null, 'publiseer') ?
+echo $acl->isAllowed('medewerker', null, 'publiseer') ?
      "toegestaan" : "geweigerd"; // geweigerd
 
-echo $acl->istoegestaan('medewerker', null, 'herzien') ?
+echo $acl->isAllowed('medewerker', null, 'herzien') ?
      "toegestaan" : "geweigerd"; // toegestaan
 
-echo $acl->istoegestaan('redacteur', null, 'bekijk') ?
+echo $acl->isAllowed('redacteur', null, 'bekijk') ?
      "toegestaan" : "geweigerd"; // toegestaan vanwege de overerving van gast
 
-echo $acl->istoegestaan('redacteur', null, 'update') ?
+echo $acl->isAllowed('redacteur', null, 'update') ?
      "toegestaan" : "geweigerd"; // geweigerd want er is geen toestaan regel voor 'update'
 
-echo $acl->istoegestaan('administrator', null, 'bekijk') ?
+echo $acl->isAllowed('administrator', null, 'bekijk') ?
      "toegestaan" : "geweigerd"; // toegestaan want administrator is alles toegestaan
 
-echo $acl->istoegestaan('administrator') ?
+echo $acl->isAllowed('administrator') ?
      "toegestaan" : "geweigerd"; // toegestaan want administrator is alles toegestaan
 
-echo $acl->istoegestaan('administrator', null, 'update') ?
+echo $acl->isAllowed('administrator', null, 'update') ?
      "toegestaan" : "geweigerd"; // toegestaan want administrator is alles toegestaan]]>
         </programlisting>
 
