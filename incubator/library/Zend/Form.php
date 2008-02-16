@@ -226,9 +226,9 @@ class Zend_Form implements Iterator, Countable
             unset($options['displayGroupDecorators']);
         }
 
-        if (isset($options['elementsInArray'])) {
-            $elementsInArray = $options['elementsInArray'];
-            unset($options['elementsInArray']);
+        if (isset($options['elementsBelongTo'])) {
+            $elementsBelongTo = $options['elementsBelongTo'];
+            unset($options['elementsBelongTo']);
         }
 
         $forbidden = array(
@@ -258,8 +258,8 @@ class Zend_Form implements Iterator, Countable
             $this->setDisplayGroupDecorators($displayGroupDecorators);
         }
 
-        if (isset($elementsInArray)) {
-            $this->setElementsInArray($elementsInArray);
+        if (isset($elementsBelongTo)) {
+            $this->setElementsBelongTo($elementsBelongTo);
         }
 
         return $this;
