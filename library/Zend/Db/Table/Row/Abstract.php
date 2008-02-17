@@ -60,6 +60,14 @@ abstract class Zend_Db_Table_Row_Abstract
     protected $_cleanData = array();
 
     /**
+     * Tracks columns where data has been updated. Allows more specific insert and
+     * update operations.
+     *
+     * @var array
+     */
+    protected $_modifiedFields = array();
+
+    /**
      * Zend_Db_Table_Abstract parent class or instance.
      *
      * @var Zend_Db_Table_Abstract
@@ -193,6 +201,7 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Specified column \"$columnName\" is not in the row");
         }
         $this->_data[$columnName] = $value;
+        $this->_modifiedFields[$columnName] = true;
     }
 
     /**
@@ -214,7 +223,7 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function __sleep()
     {
-        return array('_tableClass', '_primary', '_data', '_cleanData', '_readOnly');
+        return array('_tableClass', '_primary', '_data', '_cleanData', '_readOnly' ,'_modifiedFields');
     }
 
     /**
@@ -389,7 +398,8 @@ abstract class Zend_Db_Table_Row_Abstract
         /**
          * Execute the INSERT (this may throw an exception)
          */
-        $primaryKey = $this->_getTable()->insert($this->_data);
+        $data = array_intersect_key($this->_data, $this->_modifiedFields);
+        $primaryKey = $this->_getTable()->insert($data);
 
         /**
          * Normalize the result to an array indexed by primary key column(s).
@@ -398,7 +408,7 @@ abstract class Zend_Db_Table_Row_Abstract
         if (is_array($primaryKey)) {
             $newPrimaryKey = $primaryKey;
         } else {
-            $newPrimaryKey = array(current((array)$this->_primary) => $primaryKey);
+            $newPrimaryKey = array(current((array) $this->_primary) => $primaryKey);
         }
 
         /**
@@ -448,10 +458,10 @@ abstract class Zend_Db_Table_Row_Abstract
         $this->_update();
 
         /**
-         * Compare the data to the clean data to discover
+         * Compare the data to the modified fields array to discover
          * which columns have been changed.
          */
-        $diffData = array_diff_assoc($this->_data, $this->_cleanData);
+        $diffData = array_intersect_key($this->_data, $this->_modifiedFields);
 
         /**
          * Were any of the changed columns part of the primary key?
@@ -688,6 +698,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         $this->_data = $row->toArray();
         $this->_cleanData = $this->_data;
+        $this->_modifiedFields = array();
     }
 
     /**

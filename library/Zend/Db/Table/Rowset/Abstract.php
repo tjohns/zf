@@ -322,7 +322,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements SeekableIterator, Counta
      */
     public function seek($position)
     {
-        $position = (int)$position;
+        $position = (int) $position;
         if ($position < 0 || $position > $this->_count) {
             require_once 'Zend/Db/Table/Rowset/Exception.php';
             throw new Zend_Db_Table_Rowset_Exception("Illegal index $position");
@@ -342,7 +342,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements SeekableIterator, Counta
     public function getRow($position, $seek = false)
     {
         $key = $this->key();
-        try{
+        try {
             $this->seek($position);
             $row = $this->current();
         } catch (Zend_Db_Table_Rowset_Exception $e) {

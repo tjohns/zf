@@ -1115,19 +1115,18 @@ abstract class Zend_Db_Table_Abstract
     public function createRow(array $data = array())
     {
         $defaults = array_combine($this->_cols, array_fill(0, count($this->_cols), null));
-        $keys = array_flip($this->_cols);
-        $data = array_intersect_key($data, $keys);
-        $data = array_merge($defaults, $data);
-
+        $data = array_intersect_key($data, $defaults);
         $config = array(
             'table'    => $this,
-            'data'     => $data,
+            'data'     => $defaults,
             'readOnly' => false,
             'stored'   => false
         );
 
         @Zend_Loader::loadClass($this->_rowClass);
-        return new $this->_rowClass($config);
+        $row = new $this->_rowClass($config);
+        $row->setFromArray($data);
+        return $row;
     }
 
     /**
