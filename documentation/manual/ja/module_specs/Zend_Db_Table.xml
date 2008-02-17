@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8020 -->
+<!-- EN-Revision: 8085 -->
 <sect1 id="zend.db.table">
   <title>Zend_Db_Table</title>
 
@@ -835,12 +835,7 @@ $rows = $table-&gt;find(array(1234, 5678), array('ABC', 'DEF'));</programlisting
         </listitem>
       </itemizedlist>
 
-      <para>
-        <classname>Zend_Db_Table_Select</classname> が開発者向けに提供するメソッドは
-        <code>isReadOnly()</code> だけです。これは、select
-        が SQL クエリ文字列に変換された後で評価されます。
-        主な目的は、SELECT クエリの条件が正しい形式であるかどうかを確認することです。
-        <example id="zend.db.table.qry.rows.set.simple.usage.example">
+      <para><example id="zend.db.table.qry.rows.set.simple.usage.example">
           <title>単純な使用法</title>
 
           <programlisting role="php">&lt;?php
@@ -889,47 +884,6 @@ $table = new Bugs();
 $select = $table-&gt;select()-&gt;where('bug_status = ?', 'NEW');
 
 $rows = $table-&gt;fetchAll($select);</programlisting>
-      </example>
-
-      <para>
-        <code>WHERE</code> 句の引数は、上の例のような文字列以外にも配列となることもあります。
-        配列の各要素について、もしキーが文字列なら
-        「キーはプレースホルダを含む SQL の式、
-        そして値はプレースホルダを置き換える値」
-        として扱われます。
-      </para>
-
-      <example id="zend.db.table.fetch-all.example1b">
-        <title>式の配列から行を取得する例</title>
-
-        <programlisting role="php">&lt;?php
-
-$table = new Bugs();
-
-$select = $table-&gt;select()-&gt;where(array('bug_status = ?' =&gt; 'NEW'));
-
-$rows = $table-&gt;fetchAll($select);</programlisting>
-      </example>
-
-      <para>
-        配列に複数の要素が含まれる場合は、それらを
-        <code>AND</code> で連結して使用します。
-      </para>
-
-      <example id="zend.db.table.fetch-all.example1c">
-        <title>複数の式の配列から行を取得する例</title>
-
-        <programlisting role="php">&lt;?php
-
-$table = new Bugs();
-
-$select = $table-&gt;select()-&gt;where(array('bug_status = ?' =&gt; 'NEW',
-                                        'reported_by = ?' =&gt; 'dduck'));
-
-$rows = $table-&gt;fetchAll($select);
-// 作成される SQL は、次のようになります
-// WHERE bug_status = 'NEW' AND reported_by = 'dduck'
-</programlisting>
       </example>
 
       <para>
@@ -1047,6 +1001,33 @@ $select-&gt;where('bug_status = ?', 'NEW')
 $rows = $table-&gt;fetchAll($select);</programlisting>
         </example>
       </para>
+
+      <para>
+        <classname>Zend_Db_Table_Select</classname> の主な使用目的は、
+        制約を強要して正しい形式の SELECT クエリを作成することです。
+        しかし時には、Zend_Db_Table_Row の柔軟性が必要であって
+        行を更新したり削除したりすることはないということもあります。
+        そんな場合には、setIntegrityCheck に false
+        を渡して行/行セットを取得することができます。
+        この場合に返される行/行セットは 'ロックされた' 行
+        (save()、delete() やフィールドの設定用メソッドを実行すると例外が発生する)
+        となります。
+      </para>
+
+      <example id="zend.db.table.qry.rows.set.integrity.example">
+        <title>Zend_Db_Select の整合性チェックを削除し、JOIN した行を許可する</title>
+
+        <programlisting>&lt;?php
+
+$table = new Bugs();
+
+$select = $table-&gt;select()-&gt;setIntegrityCheck(false);
+$select-&gt;where('bug_status = ?', 'NEW')
+       -&gt;join('accounts', 'accounts.account_id = bugs.reported_by', 'account_name')
+       -&gt;where('accounts.account_name = ?', 'Bob');
+
+$rows = $table-&gt;fetchAll($select);</programlisting>
+      </example>
     </sect3>
   </sect2>
 
