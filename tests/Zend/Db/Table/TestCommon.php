@@ -107,6 +107,17 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(1, count($info['primary']));
         $pk = array('bug_id');
         $this->assertEquals($pk, array_values($info['primary']));
+
+        $name = $bugs->info(Zend_Db_Table_Abstract::NAME);
+        $this->assertEquals('zfbugs', $name);
+
+        try {
+            $value = $bugs->info('_non_existent_');
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e);
+            $this->assertEquals('There is no table information for the key "_non_existent_"', $e->getMessage());
+        }
     }
 
     /**

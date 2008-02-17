@@ -153,6 +153,9 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         if ($name instanceof Zend_Db_Table_Abstract) {
             $info = $name->info();
             $name = $info[Zend_Db_Table_Abstract::NAME];
+            if (isset($info[Zend_Db_Table_Abstract::SCHEMA])) {
+                $schema = $info[Zend_Db_Table_Abstract::SCHEMA];
+            }
         }
 
         return $this->joinInner($name, null, $cols, $schema);

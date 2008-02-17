@@ -730,11 +730,15 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Returns table information.
      *
-     * @return array
+     * You can elect to return only a part of this information by supplying its key name,
+     * otherwise all information is returned as an array.
+     *
+     * @param  $key The specific info part to return OPTIONAL
+     * @return mixed
      */
-    public function info()
+    public function info($key = null)
     {
-        return array(
+        $info = array(
             self::SCHEMA           => $this->_schema,
             self::NAME             => $this->_name,
             self::COLS             => (array) $this->_cols,
@@ -746,6 +750,17 @@ abstract class Zend_Db_Table_Abstract
             self::DEPENDENT_TABLES => $this->_dependentTables,
             self::SEQUENCE         => $this->_sequence
         );
+        
+        if ($key === null) {
+            return $info;
+        }
+        
+        if (!array_key_exists($key, $info)) {
+            require_once 'Zend/Db/Table/Exception.php';
+            throw new Zend_Db_Table_Exception('There is no table information for the key "' . $key . '"');
+        }
+        
+        return $info[$key];
     }
 
     /**
