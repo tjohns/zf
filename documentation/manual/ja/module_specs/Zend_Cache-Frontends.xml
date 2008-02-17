@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7807 -->
+<!-- EN-Revision: 8105 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -42,6 +42,21 @@
                               <entry>
                                   キャッシングを有効/無効にします
                                   (キャッシュされたスクリプトのデバッグ時に有用です)。
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>cache_id_prefix</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>null</code></entry>
+                              <entry>
+                                すべてのキャッシュ ID のプレフィックス。<code>null</code> を指定すると、
+                                プレフィックスは使用しません。
+                                キャッシュ ID のプレフィックスは、いわばキャッシュ内での名前空間です。
+                                これによって、複数のアプリケーションやウェブサイトで
+                                キャッシュを共用できるようになります。
+                                個々のアプリケーションやウェブサイトで
+                                それぞれ異なるキャッシュ ID プレフィックスを用いるようにすれば、
+                                特定のキャッシュ ID をそれぞれの環境で使用できるようになります。
                               </entry>
                           </row>
                           <row>
