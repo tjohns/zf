@@ -27,6 +27,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     {
         $this->_className = $className;
         $this->_root = dirname(__FILE__);
+        date_default_timezone_set('UTC');
     }
     
     public function setUp($notag = false)
