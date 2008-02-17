@@ -38,6 +38,14 @@
                               </entry>
                           </row>
                           <row>
+                          <entry><code>cache_id_prefix</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>null</code></entry>
+                              <entry>
+                                所有缓存 id 的前缀，如果设置为 <code>null</code> ，没有缓存 id 前缀使用。 缓存 id 前缀在缓存里创建一个命名空间，允许多个程序和网上共享缓存。 每个程序或网站可以使用不同的缓存 id 前缀，所以特定的缓存 id 可以使用多次。
+                              </entry>
+                          </row>
+                          <row>
                               <entry><code>lifetime</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
