@@ -1,17 +1,16 @@
-﻿<sect1 id="zend.db.select">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="zend.db.select">
     <title>Zend_Db_Select</title>
 
     <sect2 id="zend.db.select.introduction">
-
         <title>Vue d'ensemble de l'objet Select</title>
 
         <para>
-            L'objet Zend_Db_Select représente une instruction de requête SQL de type <code>SELECT</code>. La classe a des méthodes pour ajouter différentes parties à la requête. Vous pouvez indiquer quelques parties de la requête en utilisant des structures de données et des méthodes de PHP, et la classe forme la syntaxe correcte de SQL pour vous. Après avoir construit une requête, vous pouvez l'exécuter comme si vous l'aviez écrite comme une chaîne de caractère.
+            L'objet <code>Zend_Db_Select</code> représente une instruction de requête SQL de type <code>SELECT</code>. La classe a des méthodes pour ajouter différentes parties à la requête. Vous pouvez indiquer quelques parties de la requête en utilisant des structures de données et des méthodes de PHP, et la classe forme la syntaxe correcte de SQL pour vous. Après avoir construit une requête, vous pouvez l'exécuter comme si vous l'aviez écrite comme une chaîne de caractères.
         </para>
 
         <para>
-            Les possibilités offertes par Zend_Db_Select inclut :
+            Les possibilités offertes par <code>Zend_Db_Select</code> inclut :
         </para>
 
         <itemizedlist>
@@ -27,7 +26,7 @@
             </listitem>
             <listitem>
                 <para>
-                    l'échappement automatique des identificateurs de méta-données dans la plupart des cas, pour supporter les identificateurs contenant les mots réservés SQL et les caratères spéciaux ;
+                    l'échappement automatique des identificateurs de méta-données dans la plupart des cas, pour supporter les identificateurs contenant les mots réservés SQL et les caractères spéciaux ;
                 </para>
             </listitem>
             <listitem>
@@ -38,16 +37,15 @@
         </itemizedlist>
 
         <para>
-            L'utilisation de Zend_Db_Select n'est pas obligatoire. Pour de très simple requêtes SELECT , il est d'habitude plus simple de spécifier la requête SQL entière comme une chaîne et l'exécuter en utilisant des méthodes de l'adaptateur comme <code>query()</code> ou <code>fetchAll()</code>. L'utilisation de Zend_Db_Select est utile si vous devez assembler une requête SELECT par procédure, ou basé sur une logique conditionnelle dans votre application.
+            L'utilisation de <code>Zend_Db_Select</code> n'est pas obligatoire. Pour de très simple requêtes SELECT , il est d'habitude plus simple de spécifier la requête SQL entière comme une chaîne et l'exécuter en utilisant des méthodes de l'adaptateur comme <code>query()</code> ou <code>fetchAll()</code>. L'utilisation de <code>Zend_Db_Select</code> est utile si vous devez assembler une requête SELECT par procédure, ou basé sur une logique conditionnelle dans votre application.
         </para>
     </sect2>
 
     <sect2 id="zend.db.select.creating">
-
         <title>Créer un objet Select</title>
 
         <para>
-            Vous pouvez créer une instance d'un objet Zend_Db_Select en utilisant la méthode <code>select()</code> de l'objet Zend_Db_Adapter_Abstract.
+            Vous pouvez créer une instance d'un objet <code>Zend_Db_Select</code> en utilisant la méthode <code>select()</code> de l'objet <code>Zend_Db_Adapter_Abstract</code>.
         </para>
 
         <example id="zend.db.select.creating.example-db">
@@ -55,11 +53,11 @@
             <programlisting role="php"><![CDATA[<?php
 $db = Zend_Db::factory( ...options... );
 $select = $db->select();]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>
-            Une autre manière de créer un objet Zend_Db_Select est avec son constructeur, en indiquant l'adaptateur de base de données comme argument.
+            Une autre manière de créer un objet <code>Zend_Db_Select</code> est avec son constructeur, en indiquant l'adaptateur de base de données comme argument.
         </para>
 
         <example id="zend.db.select.creating.example-new">
@@ -67,7 +65,7 @@ $select = $db->select();]]>
             <programlisting role="php"><![CDATA[<?php
 $db = Zend_Db::factory( ...options... );
 $select = new Zend_Db_Select($db);]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -77,7 +75,7 @@ $select = new Zend_Db_Select($db);]]>
         <title>Construction de requêtes Select</title>
 
         <para>
-            En construisant la requête, vous pouvez ajouter des clauses à la requête un par un. Il y a une méthode séparée pour ajouter chaque clause à l'objet Zend_Db_Select.
+            En construisant la requête, vous pouvez ajouter des clauses à la requête une par une. Il y a une méthode séparée pour ajouter chaque clause à l'objet <code>Zend_Db_Select</code>.
         </para>
 
         <example id="zend.db.select.building.example">
@@ -94,7 +92,7 @@ $select->where( ...spécifiez des critères de recherche... )
 
 // Ajouter une clause ORDER BY
 $select->order( ...spécifiez des critères de tri... );]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -108,19 +106,18 @@ $select = $db->select()
     ->from( ...spécifiez une table et des colonnes... )
     ->where( ...spécifiez des critères de recherche... )
     ->order( ...spécifiez des critères de tri... );]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>
-            Les exemples de cette section montrent l'utilisation de l'interface fluide, mais vous pouvez employer l'interface non-fluide dans tous les cas. Il est souvent nécessaire d'employer l'interface non-fluide, par exemple, si votre application doit exécuter de la logique avant d'ajouter une clause à une requête.
+            Les exemples de cette section montrent l'utilisation de l'interface fluide, mais vous pouvez employer une interface non-fluide dans tous les cas. Il est souvent nécessaire d'employer l'interface non-fluide, par exemple, si votre application doit exécuter de la logique avant d'ajouter une clause à une requête.
         </para>
 
         <sect3 id="zend.db.select.building.from">
-
             <title>Ajouter une clause FROM</title>
 
             <para>
-                Indiquez la table pour la requête en utilisant la méthode <code>from()</code>. Vous pouvez indiquer le nom de table comme une chaîne de caractères. Zend_Db_Select applique l'échappement des identificateurs autour du nom de table, ainsi vous pouvez employer les caractères spéciaux.
+                Indiquez la table pour la requête en utilisant la méthode <code>from()</code>. Vous pouvez indiquer le nom de table comme une chaîne de caractères. <code>Zend_Db_Select</code> applique l'échappement des identificateurs autour du nom de table, ainsi vous pouvez employer les caractères spéciaux.
             </para>
 
             <example id="zend.db.select.building.from.example">
@@ -131,12 +128,12 @@ $select = $db->select()
 //   FROM "produits"
 
 $select = $db->select()
-    ->from( 'produits' );]]>
-			    </programlisting>
+             ->from( 'produits' );]]>
+                </programlisting>
             </example>
 
             <para>
-                Vous pouvez également indiquer le nom de corrélation (parfois appelé "l'alias de table") pour une table. Au lieu d'une chaîne de caractère simple, employez un tableau associatif faisant correspondre le nom de corrélation au nom de table. Dans d'autres clauses de la requête SQL, employez ce nom de corrélation. Si votre requête réalise des jointures sur plus d'une table, Zend_Db_Select produit des noms uniques de corrélation basés sur les noms de table, pour chaque table pour lesquelles vous n'indiquez pas le nom de corrélation.
+                Vous pouvez également indiquer le nom de corrélation (parfois appelé "l'alias de table") pour une table. Au lieu d'une chaîne de caractère simple, employez un tableau associatif faisant correspondre le nom de corrélation au nom de table. Dans d'autres clauses de la requête SQL, employez ce nom de corrélation. Si votre requête réalise des jointures sur plus d'une table, <code>Zend_Db_Select</code> produit des noms uniques de corrélation basés sur les noms de table, pour chaque table pour lesquelles vous n'indiquez pas le nom de corrélation.
             </para>
 
             <example id="zend.db.select.building.from.example-cname">
@@ -147,12 +144,12 @@ $select = $db->select()
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'produits') );]]>
-			    </programlisting>
+             ->from( array('p' => 'produits') );]]>
+                </programlisting>
             </example>
 
             <para>
-                Certaines marques de SGBDR supportent un spécificateur de schéma principal pour une table. Vous pouvez spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>", où Zend_Db_Select échappera chaque partie individuellement, ou vous pouvez spécifier le nom du schéma séparément. Un nom de schéma spécifié dans le nom de table sera prioritaire sur un schéma fourni séparément dans les cas où les deux seraient fournis.
+                Certaines marques de SGBDR supportent un spécificateur de schéma principal pour une table. Vous pouvez spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>", où <code>Zend_Db_Select</code> échappera chaque partie individuellement, ou vous pouvez spécifier le nom du schéma séparément. Un nom de schéma spécifié dans le nom de table sera prioritaire sur un schéma fourni séparément dans les cas où les deux seraient fournis.
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
@@ -163,13 +160,13 @@ $select = $db->select()
 //   FROM "monschema"."produits"
 
 $select = $db->select()
-    ->from( 'monschema.produits' );
+             ->from( 'monschema.produits' );
 
-// or
+// ou
 
 $select = $db->select()
-    ->from('produits', '*', 'monschema');]]>
-			    </programlisting>
+             ->from('produits', '*', 'monschema');]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -195,51 +192,50 @@ $select = $db->select()
             </para>
 
             <example id="zend.db.select.building.columns.example">
-                <title>Exemples de spécification de collones</title>
+                <title>Exemples de spécification de colonnes</title>
                 <programlisting role="php"><![CDATA[<?php
 // Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'produit_nom'));
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'produit_nom'));
 
 // Construire la même requête, en spécifiant l'alias de table :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('p.produit_id', 'p.produit_nom'));
+             ->from(array('p' => 'produits'),
+                    array('p.produit_id', 'p.produit_nom'));
 
 // Construire cette requête avec un alias pour une colonne :
 //   SELECT p."produit_id" AS prodno, p."produit_nom"
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('prodno' => 'produit_id', 'produit_nom'));]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                   array('prodno' => 'produit_id', 'produit_nom'));]]>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.columns-expr">
-
             <title>Ajouter une expression de colonne</title>
 
             <para>
-                Les colonnes dans les requêtes SQL sont parfois des expressions, pas simplement des noms de colonnes d'une table. Les expressions peuvent avoir des noms d'alias ou peuvent nécessiter d'être échappées. Si la chaîne de caractère designant votre colonne contient des parenthèses, Zend_Db_Select la reconnait comme une expression.
+                Les colonnes dans les requêtes SQL sont parfois des expressions, pas simplement des noms de colonnes d'une table. Les expressions peuvent avoir des noms d'alias ou peuvent nécessiter d'être échappées. Si la chaîne de caractère désignant votre colonne contient des parenthèses, <code>Zend_Db_Select</code> la reconnait comme une expression.
             </para>
 
             <para>
-                Vous pouvez aussi créer un objet de type Zend_Db_Expr explicitement, pour éviter qu'une chaîne soit traitée comme un nom de colonne. Zend_Db_Expr est une classe minimale qui contient une unique chaîne de caractère. Zend_Db_Select reconnait les objets de type Zend_Db_Expr et les convertit en chaînes de caractère, mais n'applique aucun changement, tel qu'un échappement ou un alias.
+                Vous pouvez aussi créer un objet de type <code>Zend_Db_Expr</code> explicitement, pour éviter qu'une chaîne soit traitée comme un nom de colonne. <code>Zend_Db_Expr</code> est une classe minimale qui contient une unique chaîne de caractère. <code>Zend_Db_Select</code> reconnait les objets de type <code>Zend_Db_Expr</code> et les convertit en chaînes de caractères, mais n'applique aucun changement, tel qu'un échappement ou un alias.
             </para>
 
             <note>
                 <para>
-                    Utiliser Zend_Db_Expr pour les noms de colonnes n'est pas nécessaire si votre expression de colonne contient des parenthèses ; Zend_Db_Select reconnait les parenthèses et traite la chaîne comme une expression en ommettant l'échappement et les alias.
+                    Utiliser <code>Zend_Db_Expr</code> pour les noms de colonnes n'est pas nécessaire si votre expression de colonne contient des parenthèses ; <code>Zend_Db_Select</code> reconnait les parenthèses et traite la chaîne comme une expression en omettant l'échappement et les alias.
                 </para>
             </note>
 
@@ -253,29 +249,29 @@ $select = $db->select()
 // un objet Zend_Db_Expr.
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'LOWER(produit_nom)'));
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'LOWER(produit_nom)'));
 
 // Construire cette requête :
 //   SELECT p."produit_id", (p.prix * 1.08) AS prix_avec_taxe
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'prix_avec_taxe' => '(p.prix * 1.08)'));
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'prix_avec_taxe' => '(p.prix * 1.08)'));
 
 // Construire cette requête en utilisant explicitement Zend_Db_Expr :
 //   SELECT p."produit_id", p.prix * 1.08 AS prix_avec_taxe
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'prix_avec_taxe' => new Zend_Db_Expr('p.prix * 1.08')));]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'prix_avec_taxe' => new Zend_Db_Expr('p.prix * 1.08')));]]>
+                </programlisting>
             </example>
 
             <para>
-                Dans les cas ci-dessus, Zend_Db_Select ne change pas la chaîne pour appliquer des alias ou échapper les identificateurs. Si ces changements sont nécessaires pour résoudre l'ambiguïté, vous devez faire manuellement les changements dans la chaîne de caractères.
+                Dans les cas ci-dessus, <code>Zend_Db_Select</code> ne change pas la chaîne pour appliquer des alias ou échapper les identificateurs. Si ces changements sont nécessaires pour résoudre l'ambiguïté, vous devez faire manuellement les changements dans la chaîne de caractères.
             </para>
 
             <para>
@@ -294,15 +290,14 @@ $select = $db->select()
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('origine' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('origine' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.join">
-
             <title>Ajouter une autre table à la requête avec JOIN</title>
 
             <para>
@@ -318,11 +313,11 @@ $select = $db->select()
 //     ON p.produit_id = l.produit_id
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'produit_nom'))
-    ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id');]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'produit_nom'))
+            ->join(array('l' => 'ligne_items'),
+                   'p.produit_id = l.produit_id');]]>
+                </programlisting>
             </example>
 
             <para>
@@ -336,7 +331,7 @@ $select = $db->select()
             </note>
 
             <para>
-                Le troisième argument de <code>join()</code> est un tableau des noms de colonnes, comme c'est utilisé dans la méthode <code>from()</code>. La valeur par défaut est "<code>*</code>",  la méthode supporte les alias, les expressions, et les objets Zend_Db_Expr de la même manière que le tableau de noms de colonnes de la méthode <code>from()</code>.
+                Le troisième argument de <code>join()</code> est un tableau des noms de colonnes, comme c'est utilisé dans la méthode <code>from()</code>. La valeur par défaut est "<code>*</code>",  la méthode supporte les alias, les expressions, et les objets <code>Zend_Db_Expr</code> de la même manière que le tableau de noms de colonnes de la méthode <code>from()</code>.
             </para>
 
             <para>
@@ -352,19 +347,19 @@ $select = $db->select()
 //     ON p.produit_id = l.produit_id
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id', 'produit_name'))
-    ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id',
-        array() ); // liste de colonnes vide]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'produit_name'))
+             ->join(array('l' => 'ligne_items'),
+                    'p.produit_id = l.produit_id',
+                    array() ); // liste de colonnes vide]]>
+                </programlisting>
                 <para>
                     Notez le tableau vide (<code>array()</code>) dans l'exemple ci-dessus à la place de la liste de colonnes de la table jointe.
                 </para>
             </example>
 
             <para>
-                Le SQL a plusieurs types de jointures. Voyez la liste ci-dessous des méthodes supportant les différents types de jointures dans Zend_Db_Select.
+                Le SQL a plusieurs types de jointures. Voyez la liste ci-dessous des méthodes supportant les différents types de jointures dans <code>Zend_Db_Select</code>.
             </para>
 
             <itemizedlist>
@@ -376,7 +371,7 @@ $select = $db->select()
                         Ceci est le type de jointure le plus commun. Les lignes de chaque table sont comparées en utilisant la condition join spécifiée. Le résultat inclut seulement les lignes qui vérifient la condition join. Le résultat peut être vide si aucune ligne ne satisfait la condition.
                     </para>
                     <para>
-                        Tous les marques de SGBDR suportent ce type de jointure.
+                        Tous les marques de SGBDR supportent ce type de jointure.
                     </para>
                 </listitem>
                 <listitem>
@@ -387,7 +382,7 @@ $select = $db->select()
                         Toutes les lignes issues de la table opérande de gauche sont inclues, les lignes correspondantes de la table de droite sont inclues, et les colonnes de la table opérande de droite sont remplies de NULL si aucune ligne existante ne correspond à la table de gauche.
                     </para>
                     <para>
-                        Tous les marques de SGBDR suportent ce type de jointure.
+                        Tous les marques de SGBDR supportent ce type de jointure.
                     </para>
                 </listitem>
                 <listitem>
@@ -436,6 +431,51 @@ $select = $db->select()
                 </listitem>
             </itemizedlist>
 
+          <para>
+              En plus de ces méthodes join, vous pouvez simplifier vos requêtes en utilisant les méthodes de type <code>join*Using</code>. Au lieu de fournir une condition complète à votre jointure, vous fournissez simplement le nom de la colonne sur laquelle réaliser la jointure et l'objet <code>Zend_Db_Select</code> complète la condition pour vous.
+          </para>
+
+          <example id="zend.db.select.building.joinusing.example">
+            <title>Exemple avec la méthode joinUsing()</title>
+
+            <programlisting role="php"><![CDATA[<?php
+// Construire cette requête :
+//   SELECT *
+//   FROM "table1"
+//   JOIN "table2"
+//   ON "table1".colonne1 = "table2".colonne1
+//   WHERE colonne2 = 'foo'
+
+$select = $db->select()
+             ->from('table1')
+             ->joinUsing('table2', 'colonne1')
+             ->where('column2 = ?', 'foo');]]>
+            </programlisting>
+          </example>
+
+          <para>
+              Chacune des méthodes join applicables du composant <code>Zend_Db_Select</code> possède une méthode correspondante "using".
+          </para>
+
+          <itemizedlist>
+            <listitem>
+              <para><code>joinUsing(table, join, [columns])</code> et
+              <code>joinInnerUsing(table, join, [columns])</code></para>
+            </listitem>
+
+            <listitem>
+              <para><code>joinLeftUsing(table, join, [columns])</code></para>
+            </listitem>
+
+            <listitem>
+              <para><code>joinRightUsing(table, join, [columns])</code></para>
+            </listitem>
+
+            <listitem>
+              <para><code>joinFullUsing(table, join, [columns])</code></para>
+            </listitem>
+          </itemizedlist>
+
         </sect3>
 
         <sect3 id="zend.db.select.building.where">
@@ -455,11 +495,10 @@ $select = $db->select()
 //   WHERE prix > 100.00
 
 $select = $db->select()
-    ->from(
-        'produits',
-        array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix > 100.00');]]>
-			    </programlisting>
+             ->from('produits',
+                    array('produit_id', 'produit_nom', 'prix'))
+             ->where('prix > 100.00');]]>
+                </programlisting>
             </example>
 
             <note>
@@ -469,7 +508,7 @@ $select = $db->select()
             </note>
 
             <para>
-                Le second argument de la méthode <code>where()</code> est optionnel. C'est une valeur à substituer dans l'expression. Zend_Db_Select échappe cette valeur et la substitue au caractère point ("<code>?</code>") d'interrogation dans l'expression.
+                Le second argument de la méthode <code>where()</code> est optionnel. C'est une valeur à substituer dans l'expression. <code>Zend_Db_Select</code> échappe cette valeur et la substitue au caractère point ("<code>?</code>") d'interrogation dans l'expression.
             </para>
 
             <para>
@@ -487,15 +526,14 @@ $select = $db->select()
 $prixminimum = 100;
 
 $select = $db->select()
-    ->from(
-        'produits',
-        array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix > ?', $prixminimum);]]>
-			    </programlisting>
+             ->from('produits',
+                    array('produit_id', 'produit_nom', 'prix'))
+             ->where('prix > ?', $prixminimum);]]>
+                </programlisting>
             </example>
 
             <para>
-                Vous pouvez appeler la méthode <code>where()</code> plusieurs fois sur la même objet Zend_Db_Select. La requête résultante combine les différents termes ensemble en utilisant <code>AND</code> entre eux.
+                Vous pouvez appeler la méthode <code>where()</code> plusieurs fois sur la même objet <code>Zend_Db_Select</code>. La requête résultante combine les différents termes ensemble en utilisant <code>AND</code> entre eux.
             </para>
 
             <example id="zend.db.select.building.where.example-and">
@@ -511,11 +549,11 @@ $prixminimum = 100;
 $prixmaximum = 500;
 
 $select = $db->select()
-    ->from('produits',
-        array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix > ?', $prixminimum)
-    ->where('prix < ?', $prixmaximum);]]>
-			    </programlisting>
+             ->from('produits',
+                    array('produit_id', 'produit_nom', 'prix'))
+             ->where('prix > ?', $prixminimum)
+             ->where('prix < ?', $prixmaximum);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -535,11 +573,11 @@ $prixminimum = 100;
 $prixmaximum = 500;
 
 $select = $db->select()
-    ->from('produits',
-        array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix < ?', $prixminimum)
-    ->orWhere('prix > ?', $prixmaximum);]]>
-			    </programlisting>
+             ->from('produits',
+                    array('produit_id', 'produit_nom', 'prix'))
+             ->where('prix < ?', $prixminimum)
+             ->orWhere('prix > ?', $prixmaximum);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -560,21 +598,20 @@ $prixmaximum = 500;
 $prod = 'Pomme';
 
 $select = $db->select()
-    ->from('produits',
-        array('produit_id', 'produit_nom', 'prix'))
-    ->where("prix < $prixminimum OR prix > $prixmaximum")
-    ->where('produit_nom = ?', $prod);]]>
-			    </programlisting>
+             ->from('produits',
+                    array('produit_id', 'produit_nom', 'prix'))
+             ->where("prix < $prixminimum OR prix > $prixmaximum")
+             ->where('produit_nom = ?', $prod);]]>
+                </programlisting>
             </example>
 
             <para>
-                Dans l'exemple ci-dessus, le résultat serait tout à fait différent sans parenthèses, car <code>AND</code> a une plus grande priorité que <code>OR</code>. Zend_Db_Select applique les parenthèses avec pour effet de relier de manière plus étroite chaque expression dans les appels successifs de <code>where()</code> qu'avec <code>AND</code> qui combine les expressions.
+                Dans l'exemple ci-dessus, le résultat serait tout à fait différent sans parenthèses, car <code>AND</code> a une plus grande priorité que <code>OR</code>. <code>Zend_Db_Select</code> applique les parenthèses avec pour effet de relier de manière plus étroite chaque expression dans les appels successifs de <code>where()</code> qu'avec <code>AND</code> qui combine les expressions.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.group">
-
             <title>Ajouter une clause GROUP BY</title>
 
             <para>
@@ -582,7 +619,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Dans Zend_Db_Select, vous pouvez spécifier la(es) colonne(s) à utliser pour calculer les groupes de lignes en utilisant la méthode <code>group()</code>. L'argument de cette méthode est une colonne ou un tableau de colonnes à utiliser dans la clause <code>GROUP BY</code>.
+                Dans <code>Zend_Db_Select</code>, vous pouvez spécifier la(es) colonne(s) à utiliser pour calculer les groupes de lignes en utilisant la méthode <code>group()</code>. L'argument de cette méthode est une colonne ou un tableau de colonnes à utiliser dans la clause <code>GROUP BY</code>.
             </para>
 
             <example id="zend.db.select.building.group.example">
@@ -595,31 +632,30 @@ $select = $db->select()
 //   GROUP BY p.produit_id
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id'))
-    ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id',
-        array('ligne_items_par_produit' => 'COUNT(*)'))
-    ->group('p.produit_id');]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id'))
+             ->join(array('l' => 'ligne_items'),
+                    'p.produit_id = l.produit_id',
+                    array('ligne_items_par_produit' => 'COUNT(*)'))
+            ->group('p.produit_id');]]>
+                </programlisting>
             </example>
 
             <para>
-                Comme le tableau de colonnes de la méthode <code>from()</code>, vous pouvez utiliser des noms d'alias dans le nom de la colonne, et la colonne est échappé comme un identificateur à moins que la chaîne ne contiennent des parenthèses ou que ce soit un objet de type Zend_Db_Expr.
+                Comme le tableau de colonnes de la méthode <code>from()</code>, vous pouvez utiliser des noms d'alias dans le nom de la colonne, et la colonne est échappée comme un identificateur à moins que la chaîne ne contiennent des parenthèses ou que ce soit un objet de type <code>Zend_Db_Expr</code>.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.having">
-
             <title>Ajouter une clause HAVING</title>
 
             <para>
-                Dans la syntaxe SQL, la clause <code>HAVING</code> applique une restriction sur un groupe de lignes. Ceci est similaire à la manière dont la clause <code>WHERE</code> applique une restriction sur des lignes. Mais les deux clauses sont différentes car les conditions <code>WHERE</code> sont appliqués avant que les groupes de lignes ne soient définis, alors que les conditions <code>HAVING</code> sont appliqués après que les groupes ont été définis.
+                Dans la syntaxe SQL, la clause <code>HAVING</code> applique une restriction sur un groupe de lignes. Ceci est similaire à la manière dont la clause <code>WHERE</code> applique une restriction sur des lignes. Mais les deux clauses sont différentes car les conditions <code>WHERE</code> sont appliquées avant que les groupes de lignes ne soient définis, alors que les conditions <code>HAVING</code> sont appliquées après que les groupes aient été définis.
             </para>
 
             <para>
-                Dans Zend_Db_Select, vous pouvez spécifier des conditions pour restreindre des groupes en utilisant la méthode <code>having()</code>. Son utilisation est similaire à celle de la méthode <code>where()</code>. Le premier argument est une chaîne contenant une expression SQL. Le second argument facultatif est une valeur qui est utilisé pour remplacer le caractère de substitution positionné dans l'expression SQL. Les expressions passées dans de multiples appels de la méthode <code>having()</code> sont combinées en utilisant l'opérateur booléen <code>AND</code>, ou l'opérateur <code>OR</code> si vous utilisez la méthode <code>orHaving()</code>.
+                Dans <code>Zend_Db_Select</code>, vous pouvez spécifier des conditions pour restreindre des groupes en utilisant la méthode <code>having()</code>. Son utilisation est similaire à celle de la méthode <code>where()</code>. Le premier argument est une chaîne contenant une expression SQL. Le second argument facultatif est une valeur qui est utilisé pour remplacer le caractère de substitution positionné dans l'expression SQL. Les expressions passées dans de multiples appels de la méthode <code>having()</code> sont combinées en utilisant l'opérateur booléen <code>AND</code>, ou l'opérateur <code>OR</code> si vous utilisez la méthode <code>orHaving()</code>.
             </para>
 
             <example id="zend.db.select.building.having.example">
@@ -633,14 +669,14 @@ $select = $db->select()
 //   HAVING ligne_items_par_produit > 10
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id'))
-    ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id',
-        array('ligne_items_par_produit' => 'COUNT(*)'))
-    ->group('p.produit_id')
-    ->having('ligne_items_par_produit > 10');]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id'))
+             ->join(array('l' => 'ligne_items'),
+                    'p.produit_id = l.produit_id',
+                    array('ligne_items_par_produit' => 'COUNT(*)'))
+             ->group('p.produit_id')
+             ->having('ligne_items_par_produit > 10');]]>
+                </programlisting>
             </example>
 
             <note>
@@ -652,19 +688,18 @@ $select = $db->select()
         </sect3>
 
         <sect3 id="zend.db.select.building.order">
-
             <title>Ajouter une clause ORDER BY</title>
 
             <para>
-                Dans la syntaxe SQL, la clause <code>ORDER BY</code> spécifie une ou plusieurs colonnes ou expressions suivant lesquels le résultat d'une requête doit être trié. Si plusieurs colonnes sont listées, les colonnes secondaires sont utilisées pour résoudre les égalités ; l'ordre du tri est déterminé par les colonnes secondaires si les colonnes précédentes contiennent des valeurs identiques. Le tri par défaut est ascendant (du plus petit vers le plus grand). Vous pouvez aussi appliqué un tri descendant (du plus grand vers le plus petit) pour une colonne en spécifiant le mot-clé <code>DESC</code> après la colonne.
+                Dans la syntaxe SQL, la clause <code>ORDER BY</code> spécifie une ou plusieurs colonnes ou expressions suivant lesquelles le résultat d'une requête doit être trié. Si plusieurs colonnes sont listées, les colonnes secondaires sont utilisées pour résoudre les égalités ; l'ordre du tri est déterminé par les colonnes secondaires si les colonnes précédentes contiennent des valeurs identiques. Le tri par défaut est ascendant (du plus petit vers le plus grand). Vous pouvez aussi appliqué un tri descendant (du plus grand vers le plus petit) pour une colonne en spécifiant le mot-clé <code>DESC</code> après la colonne.
             </para>
 
             <para>
-                Dans Zend_Db_Select, vous pouvez utiliser la méthode <code>order()</code> pour spécifier une colonne ou un tableau de colonnes par lesquelles vous voulez trier. Chaque élément du tableau est une chaîne nommant une colonne, facultativement suivi les mots-clés <code>ASC</code> ou <code>DESC</code> en séparant avec un espace.
+                Dans <code>Zend_Db_Select</code>, vous pouvez utiliser la méthode <code>order()</code> pour spécifier une colonne ou un tableau de colonnes par lesquelles vous voulez trier. Chaque élément du tableau est une chaîne nommant une colonne, facultativement suivi les mots-clés <code>ASC</code> ou <code>DESC</code> en séparant avec un espace.
             </para>
 
             <para>
-                Comme pour les méthodes <code>from()</code> et <code>group()</code>, les noms de colonnes sont échappées comme des identificateurs, à moins qu'elles ne contiennent des parenthèses ou ne soient des objets de type Zend_Db_Expr.
+                Comme pour les méthodes <code>from()</code> et <code>group()</code>, les noms de colonnes sont échappées comme des identificateurs, à moins qu'elles ne contiennent des parenthèses ou ne soient des objets de type <code>Zend_Db_Expr</code>.
             </para>
 
             <example id="zend.db.select.building.order.example">
@@ -678,20 +713,19 @@ $select = $db->select()
 //   ORDER BY "ligne_items_par_produit" DESC, "produit_id"
 
 $select = $db->select()
-    ->from(array('p' => 'produits'),
-        array('produit_id'))
-    ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id',
-        array('ligne_items_par_produit' => 'COUNT(*)'))
-    ->group('p.produit_id')
-    ->order(array('ligne_items_par_produit DESC', 'produit_id'));]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'),
+                    array('produit_id'))
+             ->join(array('l' => 'ligne_items'),
+                    'p.produit_id = l.produit_id',
+                    array('ligne_items_par_produit' => 'COUNT(*)'))
+             ->group('p.produit_id')
+             ->order(array('ligne_items_par_produit DESC', 'produit_id'));]]>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.limit">
-
             <title>Ajouter une clause LIMIT</title>
 
             <para>
@@ -699,7 +733,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Dans Zend_Db_Select, vous pouvez utiliser la méthode <code>limit()</code> pouur spécifier le nombre de lignes ainsi que le nombre de lignes à omettre. Le premier argument de cette méthode est le nombre de lignes désirées. Le second argument est le nombre de lignes à omettre.
+                Dans <code>Zend_Db_Select</code>, vous pouvez utiliser la méthode <code>limit()</code> pouur spécifier le nombre de lignes ainsi que le nombre de lignes à omettre. Le premier argument de cette méthode est le nombre de lignes désirées. Le second argument est le nombre de lignes à omettre.
             </para>
 
             <example id="zend.db.select.building.limit.example">
@@ -711,14 +745,14 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-    ->from(array('p' => 'produits'), array('produit_id', 'produit_nom'))
-    ->limit(10, 20);]]>
-			    </programlisting>
+             ->from(array('p' => 'produits'), array('produit_id', 'produit_nom'))
+             ->limit(10, 20);]]>
+                </programlisting>
             </example>
 
             <note>
                 <para>
-                    La syntaxe <code>LIMIT</code> n'est pas suporté par toutes les marques de SGBDR. Quelques SGBDR nécessite une syntaxe diférente pour supporter une fonctionnalité similaire. Chaque classe Zend_Db_Adapter_Abstract inclue une méthode pour produire le code SQL approprié à ce SGBDR.
+                    La syntaxe <code>LIMIT</code> n'est pas suporté par toutes les marques de SGBDR. Quelques SGBDR nécessite une syntaxe diférente pour supporter une fonctionnalité similaire. Chaque classe <code>Zend_Db_Adapter_Abstract</code> inclue une méthode pour produire le code SQL approprié à ce SGBDR.
                 </para>
             </note>
 
@@ -735,15 +769,14 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-    ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limitPage(2, 10);]]>
+             ->from(array('p' => 'products'), array('product_id', 'product_name'))
+             ->limitPage(2, 10);]]>
                 </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.distinct">
-
             <title>Ajouter le modificateur de requête DISTINCT</title>
 
             <para>
@@ -758,15 +791,14 @@ $select = $db->select()
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->distinct()
-    ->from(array('p' => 'produits'), 'produit_nom');]]>
-			    </programlisting>
+             ->distinct()
+             ->from(array('p' => 'produits'), 'produit_nom');]]>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.for-update">
-
             <title>Ajouter le modificateur de requête FOR UPDATE</title>
 
             <para>
@@ -781,9 +813,9 @@ $select = $db->select()
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->forUpdate()
-    ->from(array('p' => 'produits'));]]>
-			    </programlisting>
+             ->forUpdate()
+             ->from(array('p' => 'produits'));]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -791,79 +823,75 @@ $select = $db->select()
     </sect2>
 
     <sect2 id="zend.db.select.execute">
-
         <title>Exécuter des requêtes Select</title>
 
         <para>
-            Cette section décrit comment exécuter une requête représentée par un objet Zend_Db_Select.
+            Cette section décrit comment exécuter une requête représentée par un objet <code>Zend_Db_Select</code>.
         </para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
-
             <title>Exécuter des requêtes Select à partir de l'adaptateur Db</title>
 
             <para>
-                Vous pouvez exécuter la requête représentée par l'objet Zend_Db_Select en le passant comme premier argument de la méthode <code>query()</code> d'u objet Zend_Db_Adapter_Abstract. Utilisez les objets Zend_Db_Select plutôt qu'une simple chaîne de requête.
+                Vous pouvez exécuter la requête représentée par l'objet <code>Zend_Db_Select</code> en le passant comme premier argument de la méthode <code>query()</code> d'un objet <code>Zend_Db_Adapter_Abstract</code>. Utilisez les objets <code>Zend_Db_Select</code> plutôt qu'une simple chaîne de requête.
             </para>
 
             <para>
-                La méthode <code>query()</code> retourne un objet de type Zend_Db_Statement ou PDOStatement, dépendant du type d'adaptateur.
+                La méthode <code>query()</code> retourne un objet de type <code>Zend_Db_Statement</code> ou <code>PDOStatement</code>, dépendant du type d'adaptateur.
             </para>
 
             <example id="zend.db.select.execute.query-adapter.example">
                 <title>Exemple d'utilisation de la méthode query() de l'adaptateur Db</title>
                 <programlisting role="php"><![CDATA[<?php
 $select = $db->select()
-  ->from('produits');
+             ->from('produits');
 
 $stmt = $db->query($select);
 $result = $stmt->fetchAll();]]>
-			    </programlisting>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.execute.query-select">
-
             <title>Exécuter des requêtes Select à partir de objet Select</title>
 
             <para>
-                Comme alternative à l'emploi de la méthode <code>query()</code>de l'objet adaptateur, vous pouvez utiliser la méthode <code>query()</code> de l'objet Zend_Db_Select. Les deux méthodes retourne un objet de type Zend_Db_Statement ou PDOStatement, dépendant du type d'adaptateur.
+                Comme alternative à l'emploi de la méthode <code>query()</code>de l'objet adaptateur, vous pouvez utiliser la méthode <code>query()</code> de l'objet <code>Zend_Db_Select</code>. Les deux méthodes retourne un objet de type <code>Zend_Db_Statement</code> ou <code>PDOStatement</code>, dépendant du type d'adaptateur.
             </para>
 
             <example id="zend.db.select.execute.query-select.example">
-                <title>Exemple d'utlisation de la méthode query de l'objet Select</title>
+                <title>Exemple d'utilisation de la méthode query de l'objet Select</title>
                 <programlisting role="php"><![CDATA[<?php
 $select = $db->select()
     ->from('produits');
 
 $stmt = $select->query();
 $result = $stmt->fetchAll();]]>
-			    </programlisting>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.execute.tostring">
-
             <title>Convertir un objet Select en une chaîne SQL</title>
 
             <para>
-                Si vous devez accéder à la chaîne représentant la requête SQL correspondant à un objet Zend_Db_Select, utilisez la méthode <code>__toString()</code>.
+                Si vous devez accéder à la chaîne représentant la requête SQL correspondant à un objet <code>Zend_Db_Select</code>, utilisez la méthode <code>__toString()</code>.
             </para>
 
             <example id="zend.db.select.execute.tostring.example">
                 <title>Exemple d'utilisation de la méthode __toString()</title>
                 <programlisting role="php"><![CDATA[<?php
 $select = $db->select()
-    ->from('produits');
+             ->from('produits');
 
 $sql = $select->__toString();
 echo "$sql\n";
 
 // L'affichage est la chaîne :
 //   SELECT * FROM "produits"]]>
-			    </programlisting>
+                </programlisting>
             </example>
 
         </sect3>
@@ -871,19 +899,17 @@ echo "$sql\n";
     </sect2>
 
     <sect2 id="zend.db.select.other">
-
         <title>Autres méthodes</title>
 
         <para>
-            Cette section décrit les autres méthodes de la classe Zend_Db_Select qui ne sont pas couvertes ci-dessus : <code>getPart()</code> et <code>reset()</code>.
+            Cette section décrit les autres méthodes de la classe <code>Zend_Db_Select</code> qui ne sont pas couvertes ci-dessus : <code>getPart()</code> et <code>reset()</code>.
         </para>
 
         <sect3 id="zend.db.select.other.get-part">
-
             <title>Récupérer des parties de l'objet Select</title>
 
             <para>
-                La méthode <code>getPart()</code> retourne une représentation d'une partie de votre requête SQL. Par exemple, vous pouvez utiliser cette méthode pour retourner un tableau d'expressions pour la clause <code>WHERE</code>, ou un tableau de colonnes (d'expressions de colonnes) qui sont dans l'élément <code>SELECT</code>, ou les valeurs de nombre et de décalage pour la clause <code>LIMIT</code>.
+                La méthode <code>getPart()</code> retourne une représentation d'une partie de votre requête SQL. Par exemple, vous pouvez utiliser cette méthode pour retourner un tableau d'expressions pour la clause <code>WHERE</code>, ou un tableau de colonnes (ou d'expressions de colonnes) qui sont dans l'élément <code>SELECT</code>, ou les valeurs de nombre et de décalage pour la clause <code>LIMIT</code>.
             </para>
 
             <para>
@@ -956,8 +982,8 @@ echo "$sql\n";
                 <title>Exemple d'utilisation de la méthode getPart()</title>
                 <programlisting role="php"><![CDATA[<?php
 $select = $db->select()
-    ->from('produits')
-    ->order('produit_id');
+             ->from('produits')
+             ->order('produit_id');
 
 // Vous pouvez spécifier une chaîne littérale
 $orderData = $select->getPart( 'order' );
@@ -968,13 +994,12 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 // La valeur retournée peut être une structure tableau, pas une chaîne.
 // Chaque partie a une structure différente
 print_r( $orderData );]]>
-			    </programlisting>
+                </programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.other.reset">
-
             <title>Effacer des parties de l'objet Select</title>
 
             <para>
@@ -982,11 +1007,11 @@ print_r( $orderData );]]>
             </para>
 
             <para>
-                L'argument unique est facultatif. Vous pouvez spécifier la partie de la requête à effacer, en utilisant les mêmes chaînes que vous utilisez en tant qu'argument de la méthode <code>getPart()</code>. La partie de la requête que vous spécifiez est réinitialisé à l'état par défaut.
+                L'argument unique est facultatif. Vous pouvez spécifier la partie de la requête à effacer, en utilisant les mêmes chaînes que vous utilisez en tant qu'argument de la méthode <code>getPart()</code>. La partie de la requête que vous spécifiez est réinitialisée à l'état par défaut.
             </para>
 
             <para>
-                Si vous omettez le paramètre, <code>reset()</code> réinitialise toutes les parties de la requête à leur valeur par défaut. Ceci rend l'objet Zend_Db_Select équivalent à un nouvel objet, comme si vous l'aviez tout juste instancier.
+                Si vous omettez le paramètre, <code>reset()</code> réinitialise toutes les parties de la requête à leurs valeurs par défaut. Ceci rend l'objet Zend_Db_Select équivalent à un nouvel objet, comme si vous l'aviez tout juste instancié.
             </para>
 
             <example id="zend.db.select.other.reset.example">
@@ -998,8 +1023,8 @@ print_r( $orderData );]]>
 //   ORDER BY "produit_nom"
 
 $select = $db->select()
-    ->from(array('p' => 'produits')
-    ->order('produit_nom');
+             ->from(array('p' => 'produits')
+             ->order('produit_nom');
 
 // Changer la condition d'ordre avec une colonne différente :
 //   SELECT p.*
@@ -1014,7 +1039,7 @@ $select->order('produit_id');
 
 // Vider toutes les parties de la requête
 $select->reset();]]>
-			    </programlisting>
+                </programlisting>
             </example>
 
         </sect3>
