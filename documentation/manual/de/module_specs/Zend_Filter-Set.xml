@@ -46,8 +46,8 @@
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
         <para>
-            Gibt den String $value zurück und konvertiert die Zeichen in Ihre entsprechende HTML Entitität wenn
-            diese existiert.
+            Gibt den String <code>$value</code> zurück und konvertiert die Zeichen in Ihre
+            entsprechende HTML Entitität wenn diese existiert.
         </para>
     </sect2>
 
