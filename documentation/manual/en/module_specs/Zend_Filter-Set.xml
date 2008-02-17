@@ -47,7 +47,7 @@
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
         <para>
-            Returns the string $value, converting characters to their corresponding
+            Returns the string <code>$value</code>, converting characters to their corresponding
             HTML entity equivalents where they exist.
         </para>
     </sect2>
@@ -55,7 +55,7 @@
     <sect2 id="zend.filter.set.int">
         <title>Int</title>
         <para>
-            Returns (int) $value
+            Returns (int) <code>$value</code>
         </para>
     </sect2>
 
