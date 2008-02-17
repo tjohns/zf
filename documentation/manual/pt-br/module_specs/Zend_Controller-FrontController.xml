@@ -285,18 +285,18 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)Router()</code> let you specify <link
-                        linkend="zend.controller.router">the router</link>
-                    class or object to use during the dispatch process and to
-                    retrieve the current object. When setting the router
-                    object, you may pass in a router class name, in which case
-                    the method will load the class file and instantiate it.
+                    <code>(set|get)Router()</code> permite a você especificar o objeto ou classe <link
+                        linkend="zend.controller.router">roteador(a)</link>
+					para usar durante o processo de dispacho e para
+					recuperar o objeto atual. Quando estiver definindo o objeto
+					roteador, você pode passar o nome de uma classe roteadora
+					e neste caso o metódo roteado irá carregar o arquivo da classe
+					e instancia-la.
                 </para>
 
                 <para>
-                    When retrieving the router object, it first checks to see if
-                    one is present, and if not, instantiates the default router
-                    (rewrite router).
+					Quando recuperá o objeto roteador, ele primeiro verifica se já
+					existe um, se não, instanceia o reteador padrão (roteador re-escrito).
                 </para>
             </listitem>
 
