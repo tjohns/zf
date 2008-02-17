@@ -4,33 +4,33 @@
     <sect2 id="zend.http.cookies.introduction">
         <title>Introduction</title>
         <para>
-            Zend_Http_Cookie, comme son nom l'indique, est une classe qui représente
-            un cookie HTTP. Elle propose des méthodes d'analyse de la chaine de réponse
-            HTTP, de collection des cookies, et d'accès à leurs propriétés.
-            Il est aussi possible avec cette classe de vérifier si les paramètres d'un
-            cookie correspondent à un scénario précis, par exemple une URL spécifique,
-            un certain temps d'expiration, la présence ou non de HTTPS, etc...
+            Zend_Http_Cookie, comme son nom l'indique, est une classe qui reprÃ©sente
+            un cookie HTTP. Elle propose des mÃ©thodes d'analyse de la chaine de rÃ©ponse
+            HTTP, de collection des cookies, et d'accÃ¨s Ã  leurs propriÃ©tÃ©s.
+            Il est aussi possible avec cette classe de vÃ©rifier si les paramÃ¨tres d'un
+            cookie correspondent Ã  un scÃ©nario prÃ©cis, par exemple une URL spÃ©cifique,
+            un certain temps d'expiration, la prÃ©sence ou non de HTTPS, etc...
         </para>
         <para>
-            Zend_Http_CookieJar est un objet utilisé en général avec Zend_Http_Client
-            pour fournir une collection d'objets Zend_Http_Cookie. L'idée principale est
-            d'attacher un objet Zend_Http_CookieJar à un objet Zend_Http_Client, de manière
-            à ce que toutes les requêtes de celui-ci utilisent les cookies présents dans
-            l'objet CookieJar. Ainsi, lorsque le client enverra une autre requête, il demandera
-            à l'objet CookieJar tous les cookies concernant cette requête. Ceci est très pratique
-            dans des cas comme envoyer un cookie de session entre plusieurs requêtes HTTP
-            successives. De plus, l'objet Zend_Http_CookieJar peut être sérialisé et mis en session.
+            Zend_Http_CookieJar est un objet utilisÃ© en gÃ©nÃ©ral avec Zend_Http_Client
+            pour fournir une collection d'objets Zend_Http_Cookie. L'idÃ©e principale est
+            d'attacher un objet Zend_Http_CookieJar Ã  un objet Zend_Http_Client, de maniÃ¨re
+            Ã  ce que toutes les requÃªtes de celui-ci utilisent les cookies prÃ©sents dans
+            l'objet CookieJar. Ainsi, lorsque le client enverra une autre requÃªte, il demandera
+            Ã  l'objet CookieJar tous les cookies concernant cette requÃªte. Ceci est trÃ¨s pratique
+            dans des cas comme envoyer un cookie de session entre plusieurs requÃªtes HTTP
+            successives. De plus, l'objet Zend_Http_CookieJar peut Ãªtre sÃ©rialisÃ© et mis en session.
         </para>
     </sect2>
 
     <sect2 id="zend.http.cookies.cookie.instantiating">
         <title>Instancier des objets Zend_Http_Cookie</title>
         <para>
-            L'instanciation se fait de deux manières différentes :
+            L'instanciation se fait de deux maniÃ¨res diffÃ©rentes :
             <itemizedlist>
                 <listitem>
                     <para>
-                    Via son constructeur, de cette façon :
+                    Via son constructeur, de cette faÃ§on :
                     <code>new Zend_Http_Cookie(string $name, string $value, string $domain, [int $expires, [string $path, [boolean $secure]]]);</code>
                     </para>
                     <itemizedlist>
@@ -46,65 +46,65 @@
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$domain</code>: Le domaine de validité du cookie (par ex. '.example.com') (requis)
+                            <code>$domain</code>: Le domaine de validitÃ© du cookie (par ex. '.example.com') (requis)
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$expires</code>: Temps d'expiration du cookie, un timestamp UNIX (optionnel, défaut à null).
-                            Si non fourni, le cookie sera considéré comme 'cookie de session', avec pas de temps d'expiration.
+                            <code>$expires</code>: Temps d'expiration du cookie, un timestamp UNIX (optionnel, dÃ©faut Ã  null).
+                            Si non fourni, le cookie sera considÃ©rÃ© comme 'cookie de session', avec pas de temps d'expiration.
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$path</code>: Chemin de validitié du cookie, par ex. '/foo/bar/' (optionnel, défault : '/')
+                            <code>$path</code>: Chemin de validitiÃ© du cookie, par ex. '/foo/bar/' (optionnel, dÃ©fault : '/')
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$secure</code>: Booléen, Si le cookie doit être transmis via connection sécurisée (HTTPS)
-                            uniquement (optionnel, défaut à FALSE)
+                            <code>$secure</code>: BoolÃ©en, Si le cookie doit Ãªtre transmis via connection sÃ©curisÃ©e (HTTPS)
+                            uniquement (optionnel, dÃ©faut Ã  FALSE)
                             </para>
                         </listitem>
                     </itemizedlist>
                 </listitem>
                 <listitem>
                     <para>
-                    En appelant la méthode statique fromString(), avec une chaine de caractères représentant un cookie tel que
-                    défini dans les en-têtes HTTP 'Set-Cookie' (réponse) ou 'Cookie' (requête). Dans ce cas la valeur du cookie
-                    doit être encodée. Lorsque la chaine de caractères représentant un cookie ne comporte pas de partie 'domain',
+                    En appelant la mÃ©thode statique fromString(), avec une chaine de caractÃ¨res reprÃ©sentant un cookie tel que
+                    dÃ©fini dans les en-tÃªtes HTTP 'Set-Cookie' (rÃ©ponse) ou 'Cookie' (requÃªte). Dans ce cas la valeur du cookie
+                    doit Ãªtre encodÃ©e. Lorsque la chaine de caractÃ¨res reprÃ©sentant un cookie ne comporte pas de partie 'domain',
                     vous devez fournir alors un URI selon lequel le cookie cherchera son domain et son path.
                     </para>
                 </listitem>
             </itemizedlist>
             <example id="zend.http.cookies.cookie.instantiating.example-1">
-               <title>Créer un objet Zend_Http_Cookie</title>
+               <title>CrÃ©er un objet Zend_Http_Cookie</title>
                <programlisting role="php"><![CDATA[<?php
 // D'abord, en utilisant son constructeur. ce cookie expirera dans 2 heures
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
 
-// En prenant l'en-tête de réponse HTTP 'Set-Cookie'
-// Ce cookie n'expirera pas et ne sera envoyé que sur des connections sécurisées
+// En prenant l'en-tÃªte de rÃ©ponse HTTP 'Set-Cookie'
+// Ce cookie n'expirera pas et ne sera envoyÃ© que sur des connections sÃ©curisÃ©es
 $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
 
-// Si le domaine n'est pas présent, spécifiez le manuellement :
+// Si le domaine n'est pas prÃ©sent, spÃ©cifiez le manuellement :
 $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');]]>
                 </programlisting>
             </example>
             <note>
                 <para>
-                Lorque vous utilisez la méthode statique Zend_Http_Cookie::fromString(), veillez à fournir un cookie
-                url encodé (tel que c'est le cas dans les en-têtes HTTP). Avec le constructeur en revanche, il est
-                nécéssaire d'utiliser une valeur non encodée.
+                Lorque vous utilisez la mÃ©thode statique Zend_Http_Cookie::fromString(), veillez Ã  fournir un cookie
+                url encodÃ© (tel que c'est le cas dans les en-tÃªtes HTTP). Avec le constructeur en revanche, il est
+                nÃ©cÃ©ssaire d'utiliser une valeur non encodÃ©e.
                 </para>
             </note>
         </para>
         <para>
-            La manipulation inverse est possible. Grâce à la méthode __toString(), vous pouvez récupérer une chaine
-            représentant le cookie, à partir de l'objet Zend_Http_Cookie. La chaine alors retournée est la même que celle
-            utilisée dans l'en-tête HTTP 'Cookie', à savoir une chaine encodée, terminée par un point-virgule (;) :
+            La manipulation inverse est possible. GrÃ¢ce Ã  la mÃ©thode __toString(), vous pouvez rÃ©cupÃ©rer une chaine
+            reprÃ©sentant le cookie, Ã  partir de l'objet Zend_Http_Cookie. La chaine alors retournÃ©e est la mÃªme que celle
+            utilisÃ©e dans l'en-tÃªte HTTP 'Cookie', Ã  savoir une chaine encodÃ©e, terminÃ©e par un point-virgule (;) :
             <example id="zend.http.cookies.cookie.instantiating.example-2">
-               <title>Passer de l'objet Zend_Http_Cookie à la chaine</title>
+               <title>Passer de l'objet Zend_Http_Cookie Ã  la chaine</title>
                <programlisting role="php"><![CDATA[<?php
 // Creation d'un nouveau cookie
 $cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
@@ -112,7 +112,7 @@ $cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200
 // Va afficher 'foo=two+words;' :
 echo $cookie->__toString();
 
-// Ceci est la même chose
+// Ceci est la mÃªme chose
 echo (string) $cookie;
 
 // En PHP 5.2 et plus, ceci fonctionne aussi :
@@ -123,9 +123,9 @@ echo $cookie;]]>
     </sect2>
 
     <sect2 id="zend.http.cookies.cookie.accessors">
-        <title>Zend_Http_Cookie méthodes getter</title>
+        <title>Zend_Http_Cookie mÃ©thodes getter</title>
         <para>
-            Une fois l'objet Zend_Http_Cookie crée, il existe des méthodes 'getter' pour accéder aux différentes propriétés
+            Une fois l'objet Zend_Http_Cookie crÃ©e, il existe des mÃ©thodes 'getter' pour accÃ©der aux diffÃ©rentes propriÃ©tÃ©s
             du cookie :
             <itemizedlist>
                 <listitem>
@@ -135,7 +135,7 @@ echo $cookie;]]>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>string getValue()</code>: Retourne la valeur réelle (décodée), du cookie
+                    <code>string getValue()</code>: Retourne la valeur rÃ©elle (dÃ©codÃ©e), du cookie
                     </para>
                 </listitem>
                 <listitem>
@@ -145,46 +145,46 @@ echo $cookie;]]>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>string getPath()</code>: Retourne le chemin du cookie, par défaut '/'
+                    <code>string getPath()</code>: Retourne le chemin du cookie, par dÃ©faut '/'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>int getExpiryTime()</code>: Retourne la date d'expiration, comme timestamp UNIX. Si pas de date,
-                    NULL sera retourné.
+                    NULL sera retournÃ©.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            Voici encore quelques méthodes de vérifications booléennes :
+            Voici encore quelques mÃ©thodes de vÃ©rifications boolÃ©ennes :
             <itemizedlist>
                 <listitem>
                     <para>
                     <code>boolean isSecure()</code>: Regarde si le cookie est un cookie secure. Si c'est le cas, les navigateurs
-                    ont pour instruction de ne les envoyer que sur des connections sécurisées (HTTPS).
+                    ont pour instruction de ne les envoyer que sur des connections sÃ©curisÃ©es (HTTPS).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>boolean isExpired(int $time = null)</code>: Vérifie si le cookie est expirés. Si il n'y a pas de date d'expiration,
-                    cette méthode retournera toujours true. Si $time est fourni, alors la date du cookie sera comparée à ce $time, et non plus
+                    <code>boolean isExpired(int $time = null)</code>: VÃ©rifie si le cookie est expirÃ©s. Si il n'y a pas de date d'expiration,
+                    cette mÃ©thode retournera toujours true. Si $time est fourni, alors la date du cookie sera comparÃ©e Ã  ce $time, et non plus
                     au temps actuel.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>boolean isSessionCookie()</code>: Vérifie si le cookie est un cookie dit 'de session'. C'est un cookie sans date
-                    d'expiration, sensé être détruit à la fin de la session de travail actuelle (à la fermeture du navigateur).
+                    <code>boolean isSessionCookie()</code>: VÃ©rifie si le cookie est un cookie dit 'de session'. C'est un cookie sans date
+                    d'expiration, sensÃ© Ãªtre dÃ©truit Ã  la fin de la session de travail actuelle (Ã  la fermeture du navigateur).
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
             <example id="zend.http.cookies.cookie.accessors.example-1">
-                <title>Utilisation des méthodes getter de Zend_Http_Cookie</title>
+                <title>Utilisation des mÃ©thodes getter de Zend_Http_Cookie</title>
                 <programlisting role="php"><![CDATA[<?php
-// Création d'un cookie
+// CrÃ©ation d'un cookie
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // Affiche 'foo'
@@ -209,44 +209,44 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
     </sect2>
 
     <sect2 id="zend.http.cookies.cookie.matching">
-        <title>Zend_Http_Cookie: Correspondance de scénario</title>
+        <title>Zend_Http_Cookie: Correspondance de scÃ©nario</title>
         <para>
-            La vraie valeur ajoutée d'un objet Zend_Http_Cookie est sa méthode match(). Celle-ci teste le cookie
-            en rapport avec un scénario HTTP, pour savoir ci celui-ci doit être attaché à la requête ou pas.
+            La vraie valeur ajoutÃ©e d'un objet Zend_Http_Cookie est sa mÃ©thode match(). Celle-ci teste le cookie
+            en rapport avec un scÃ©nario HTTP, pour savoir ci celui-ci doit Ãªtre attachÃ© Ã  la requÃªte ou pas.
             La syntaxe est la suivante :
             <code>boolean Zend_Http_Cookie->match(mixed $uri, [boolean $matchSessionCookies, [int $now]]);</code>
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>mixed $uri</code>: Un objet Zend_Uri_Http avec un domaine et un chemin à vérifier.
-                    Une chaine représentant une URL peut aussi être utilisée. Le cookie sera déclaré bon si le schéma de l'URL
+                    <code>mixed $uri</code>: Un objet Zend_Uri_Http avec un domaine et un chemin Ã  vÃ©rifier.
+                    Une chaine reprÃ©sentant une URL peut aussi Ãªtre utilisÃ©e. Le cookie sera dÃ©clarÃ© bon si le schÃ©ma de l'URL
                     (HTTP ou HTTPS) correspond, ainsi que le chemin (path).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>boolean $matchSessionCookies</code>: Etablit ou non une correspondance pour les cookies dits de session.
-                    Par défaut : true. Si mis à false, alors les cookies sans date d'expiration seront ignorés du processus.
+                    Par dÃ©faut : true. Si mis Ã  false, alors les cookies sans date d'expiration seront ignorÃ©s du processus.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>int $now</code>: Timestamp UNIX passé pour vérifier l'expiration du cookie. Si non spécifié, alors le temps
-                    actuel sera pris en considération.
+                    <code>int $now</code>: Timestamp UNIX passÃ© pour vÃ©rifier l'expiration du cookie. Si non spÃ©cifiÃ©, alors le temps
+                    actuel sera pris en considÃ©ration.
                     </para>
                 </listitem>
             </itemizedlist>
             <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>Correspondance de cookies</title>
                 <programlisting role="php"><![CDATA[<?php
-// Création de l'objet cookie - d'abord un cookie sécurisé
+// CrÃ©ation de l'objet cookie - d'abord un cookie sÃ©curisÃ©
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
 // Retournera true
 
 $cookie->match('http://www.example.com/somedir/foo.php');
-// Retournera false, car la connection n'est pas sécurisée
+// Retournera false, car la connection n'est pas sÃ©curisÃ©e
 
 $cookie->match('https://otherexample.com/somedir/foo.php');
 // Retournera false, le domaine est incorrect
@@ -260,7 +260,7 @@ $cookie->match('https://www.example.com/somedir/foo.php', false);
 $cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // Retournera true
 
-// Création d'un autre objet cookie - cette fois non sécurisé, expire dans 2 heures
+// CrÃ©ation d'un autre objet cookie - cette fois non sÃ©curisÃ©, expire dans 2 heures
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200));
 
 $cookie->match('http://www.example.com/');
@@ -282,44 +282,44 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
     <sect2 id="zend.http.cookies.cookiejar">
         <title>Classe Zend_Http_CookieJar : Instantiation</title>
         <para>
-            Dans la plupart des cas, il ne sera pas nécéssaire d'instantier soi-même un objet
-            Zend_Http_CookieJar object. Si vous voulez un conteneur de cookie (CookieJar) attaché
-            à votre objet Zend_Http_Client, appelez simplement Zend_Http_Client->setCookieJar(),
-            et un nouveau conteneur, vide, y sera attaché. Plus tard, vous pourrez utiliser la méthode
-            Zend_Http_Client->getCookieJar(), pour récupérer ce conteneur.
+            Dans la plupart des cas, il ne sera pas nÃ©cÃ©ssaire d'instantier soi-mÃªme un objet
+            Zend_Http_CookieJar object. Si vous voulez un conteneur de cookie (CookieJar) attachÃ©
+            Ã  votre objet Zend_Http_Client, appelez simplement Zend_Http_Client->setCookieJar(),
+            et un nouveau conteneur, vide, y sera attachÃ©. Plus tard, vous pourrez utiliser la mÃ©thode
+            Zend_Http_Client->getCookieJar(), pour rÃ©cupÃ©rer ce conteneur.
         </para>
         <para>
-            Si vous voulez tout de même instantier manuellement un objet CookieJar, appelez son constructeur
-            avec "new Zend_Http_CookieJar()", sans paramètres. Sinon il est possible aussi de passer par la
-            méthode statique Zend_Http_CookieJar::fromResponse() qui prend, elle, deux paramètres : un objet
-            Zend_Http_Response et un URI de référence (un objet Zend_Uri_Http ou une chaine).
-            Cette méthode retourne alors un objet Zend_Http_CookieJar qui contiendra les cookies de la réponse
-            HTTP passée. L'URI de référence servira à remplir les paramètres 'domain' et 'path' des cookies, si
-            jamais ils n'ont pas été définis dans les en-têtes 'Set-Cookie'.
+            Si vous voulez tout de mÃªme instantier manuellement un objet CookieJar, appelez son constructeur
+            avec "new Zend_Http_CookieJar()", sans paramÃ¨tres. Sinon il est possible aussi de passer par la
+            mÃ©thode statique Zend_Http_CookieJar::fromResponse() qui prend, elle, deux paramÃ¨tres : un objet
+            Zend_Http_Response et un URI de rÃ©fÃ©rence (un objet Zend_Uri_Http ou une chaine).
+            Cette mÃ©thode retourne alors un objet Zend_Http_CookieJar qui contiendra les cookies de la rÃ©ponse
+            HTTP passÃ©e. L'URI de rÃ©fÃ©rence servira Ã  remplir les paramÃ¨tres 'domain' et 'path' des cookies, si
+            jamais ils n'ont pas Ã©tÃ© dÃ©finis dans les en-tÃªtes 'Set-Cookie'.
         </para>
     </sect2>
 
     <sect2 id="zend.http.cookies.cookiejar.adding_cookies">
-        <title>Ajouter des cookies à un objet Zend_Http_CookieJar</title>
+        <title>Ajouter des cookies Ã  un objet Zend_Http_CookieJar</title>
         <para>
             En temps normal, c'est l'objet Zend_Http_Client qui ajoutera des cookies dans l'objet CookieJar que vous
-            lui aurez attaché. Vous pouvez en ajouter manuellement aussi :
+            lui aurez attachÃ©. Vous pouvez en ajouter manuellement aussi :
             <itemizedlist>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</code>: Ajoute un cookie au conteneur (Jar).
-                    $cookie peut être soit un objet Zend_Http_Cookie, soit une chaine qui sera alors convertie de manière
-                    automatique en objet cookie. Si vous passez une chaine, alors vous devriez aussi passer le paramètre
-                    $ref_uri qui représente l'URI de référence pour determiner les paramètres 'domain' et 'path' du cookie.
+                    $cookie peut Ãªtre soit un objet Zend_Http_Cookie, soit une chaine qui sera alors convertie de maniÃ¨re
+                    automatique en objet cookie. Si vous passez une chaine, alors vous devriez aussi passer le paramÃ¨tre
+                    $ref_uri qui reprÃ©sente l'URI de rÃ©fÃ©rence pour determiner les paramÃ¨tres 'domain' et 'path' du cookie.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>:
-                    Ajoute tous les cookies présents dans une réponse HTTP au conteneur. La réponse HTTP doit être un objet
-                    Zend_Http_Response contenant au moins un en-tête 'Set-Cookie'. $ref_uri est un URI (un objet
-                    Zend_Uri_Http ou une chaine), servant de référence pour remplir les paramètres du cookie 'domain' et 'path',
-                    si ceux-ci ne sont pas trouvés dans la réponse.
+                    Ajoute tous les cookies prÃ©sents dans une rÃ©ponse HTTP au conteneur. La rÃ©ponse HTTP doit Ãªtre un objet
+                    Zend_Http_Response contenant au moins un en-tÃªte 'Set-Cookie'. $ref_uri est un URI (un objet
+                    Zend_Uri_Http ou une chaine), servant de rÃ©fÃ©rence pour remplir les paramÃ¨tres du cookie 'domain' et 'path',
+                    si ceux-ci ne sont pas trouvÃ©s dans la rÃ©ponse.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -327,63 +327,63 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
     </sect2>
 
     <sect2 id="zend.http.cookies.cookiejar.getting_cookies">
-        <title>Récupérer les cookies présents dans un objet Zend_Http_CookieJar</title>
+        <title>RÃ©cupÃ©rer les cookies prÃ©sents dans un objet Zend_Http_CookieJar</title>
         <para>
-            Comme pour l'ajout de cookies, en théorie, vous n'aurez pas besoin de récupérer des cookies
-            du conteneur, car l'objet Zend_Http_Client se chargera de les gérer lui-même et de les envoyer
-            dans les bonnes requêtes. Cependant, il existe des méthodes pour récupérer des cookies depuis un
+            Comme pour l'ajout de cookies, en thÃ©orie, vous n'aurez pas besoin de rÃ©cupÃ©rer des cookies
+            du conteneur, car l'objet Zend_Http_Client se chargera de les gÃ©rer lui-mÃªme et de les envoyer
+            dans les bonnes requÃªtes. Cependant, il existe des mÃ©thodes pour rÃ©cupÃ©rer des cookies depuis un
             conteneur (Jar) : <code>getCookie()</code>,
             <code>getAllCookies()</code>, et <code>getMatchingCookies()</code>.
         </para>
         <para>
-            Il est important de noter que chacune de ces trois méthodes, prend un paramètre spécial destiné à
-            determiner le type que chaque méthode retournera. Ce paramètre peut avoir 3 valeurs:
+            Il est important de noter que chacune de ces trois mÃ©thodes, prend un paramÃ¨tre spÃ©cial destinÃ© Ã 
+            determiner le type que chaque mÃ©thode retournera. Ce paramÃ¨tre peut avoir 3 valeurs:
             <itemizedlist>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar::COOKIE_OBJECT</code>: Retourne un objet Zend_Http_Cookie. Si plus
-                    d'un cookie devait être retourné, il s'agira alors d'un tableau d'objets cookie.
+                    d'un cookie devait Ãªtre retournÃ©, il s'agira alors d'un tableau d'objets cookie.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</code>: Retourne les cookies comme des chaines de
-                    caractères dans un format "foo=bar", correspondant au format de l'en-tête de requête HTTP
-                    "Cookie". Si plus d'un cookie devait être retourné, il s'agira alors d'un tableau de chaines.
+                    caractÃ¨res dans un format "foo=bar", correspondant au format de l'en-tÃªte de requÃªte HTTP
+                    "Cookie". Si plus d'un cookie devait Ãªtre retournÃ©, il s'agira alors d'un tableau de chaines.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</code>: Similaire à COOKIE_STRING_ARRAY, mais si
-                    plusieurs cookies devaient être retournés, alors il ne s'agira plus d'un tableau, mais d'une chaine
-                    concaténant tous les cookies, séparés par des point-virgule (;). Ceci est très utile pour passer
-                    tous les cookies d'un coup, dans l'en-tête HTTP "Cookie".
+                    <code>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</code>: Similaire Ã  COOKIE_STRING_ARRAY, mais si
+                    plusieurs cookies devaient Ãªtre retournÃ©s, alors il ne s'agira plus d'un tableau, mais d'une chaine
+                    concatÃ©nant tous les cookies, sÃ©parÃ©s par des point-virgule (;). Ceci est trÃ¨s utile pour passer
+                    tous les cookies d'un coup, dans l'en-tÃªte HTTP "Cookie".
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            Voici la structure des méthodes de récupération des cookies :
+            Voici la structure des mÃ©thodes de rÃ©cupÃ©ration des cookies :
             <itemizedlist>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
                     Retourne un cookie depuis le conteneur, selon son URI (domain et path), et son nom.
                     $uri est un objet Zend_Uri_Http ou une chaine. $cookie_name est une chaine identifiant
-                    le cookie en question. $ret_as spécifie le type de retour, comme vu plus haut (par défaut
+                    le cookie en question. $ret_as spÃ©cifie le type de retour, comme vu plus haut (par dÃ©faut
                     COOKIE_OBJECT).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>: Retourne tous les cookies du conteneur.
-                    $ret_as spécifie le type de retour, comme vu plus haut (par défaut COOKIE_OBJECT).
+                    $ret_as spÃ©cifie le type de retour, comme vu plus haut (par dÃ©faut COOKIE_OBJECT).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</code>:
-                    Retourne tous les cookies ayant une correspondance pour un scénario donné, à savoir un URI et une date
+                    Retourne tous les cookies ayant une correspondance pour un scÃ©nario donnÃ©, Ã  savoir un URI et une date
                     d'expiration.
                     <itemizedlist>
                         <listitem>
@@ -393,21 +393,21 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$matchSessionCookies</code> est un booléen désignant si les cookies de session, c'est à dire
-                            sans date d'expiration, doivent être analysés aussi pour établir une correspondance. Par défaut :
+                            <code>$matchSessionCookies</code> est un boolÃ©en dÃ©signant si les cookies de session, c'est Ã  dire
+                            sans date d'expiration, doivent Ãªtre analysÃ©s aussi pour Ã©tablir une correspondance. Par dÃ©faut :
                             true.
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$ret_as</code> spécifie le type de retour, comme vu plus haut (par défaut COOKIE_OBJECT).
+                            <code>$ret_as</code> spÃ©cifie le type de retour, comme vu plus haut (par dÃ©faut COOKIE_OBJECT).
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$now</code> est un entier représentant un timestamp UNIX à considérer comme 'maintenant'.
-                            Ainsi tous les cookies expirant avant ce temps là, ne seront pas pris en compte. Si vous ne
-                            spécifiez pas ce paramètre, alors c'est le temps actuel qui sera pris comme référence.
+                            <code>$now</code> est un entier reprÃ©sentant un timestamp UNIX Ã  considÃ©rer comme 'maintenant'.
+                            Ainsi tous les cookies expirant avant ce temps lÃ , ne seront pas pris en compte. Si vous ne
+                            spÃ©cifiez pas ce paramÃ¨tre, alors c'est le temps actuel qui sera pris comme rÃ©fÃ©rence.
                             </para>
                         </listitem>
                     </itemizedlist>
