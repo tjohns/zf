@@ -43,14 +43,14 @@
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
         <para>
-            Retourne la chaîne <code>$value</code>, en convertissant les caractères en leurs entités HTML correspondantes quand elles existent
+            Retourne la chaîne <code>$value</code>, en convertissant les caractères en leurs entités HTML correspondantes quand elles existent.
         </para>
     </sect2>
 
     <sect2 id="zend.filter.set.int">
         <title>Int</title>
         <para>
-            Retourne la valeur entière
+            Retourne la valeur <code>(int) $value</code>.
         </para>
     </sect2>
 
