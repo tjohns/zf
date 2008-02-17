@@ -1100,4 +1100,22 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         $this->assertEquals(3, $productRows->current()->$product_id);
     }
 
+    /**
+     * Test that findManyToManyRowset() works even if the column types are
+     * not the same.
+     */
+    public function testTableRelationshipFindManyToManyRowsetWithDissimilarTypes()
+    {
+        $table = $this->_table['products'];
+        
+        $originRows = $table->find(1);
+        $originRow1 = $originRows->current();
+
+        $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_TableBugs', 'Zend_Db_Table_TableBugsProducts');
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $destRows,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($destRows));
+
+        $this->assertEquals(1, $destRows->count());
+    }
+
 }

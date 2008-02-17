@@ -271,7 +271,7 @@ abstract class Zend_Db_TestUtil_Common
     {
         return array(
             'bug_id'       => 'INTEGER NOT NULL',
-            'product_id'   => 'INTEGER NOT NULL',
+            'product_id'   => 'VARCHAR(4) NOT NULL',
             'PRIMARY KEY'  => 'bug_id,product_id'
         );
     }

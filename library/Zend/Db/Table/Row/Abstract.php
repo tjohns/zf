@@ -958,8 +958,8 @@ abstract class Zend_Db_Table_Row_Abstract
             $interColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
             $interCol = $db->quoteIdentifier("i.$interColumnName", true);
             $matchColumnName = $db->foldCase($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
-            $matchInfo = $matchTable->info();
-            $type = $matchInfo[Zend_Db_Table_Abstract::METADATA][$matchColumnName]['DATA_TYPE'];
+            $interInfo = $intersectionTable->info();
+            $type = $interInfo[Zend_Db_Table_Abstract::METADATA][$interColumnName]['DATA_TYPE'];
             $select->where($db->quoteInto("$interCol = ?", $value, $type));
         }
 
