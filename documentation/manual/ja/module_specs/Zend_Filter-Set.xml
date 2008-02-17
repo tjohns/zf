@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8090 -->
 <sect1 id="zend.filter.set">
 
     <title>標準のフィルタクラス群</title>
@@ -50,7 +51,7 @@
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
         <para>
-            文字列 $value について、
+            文字列 <code>$value</code> について、
             HTML エンティティが存在するものについてはそのエンティティに変換したものを返します。
         </para>
     </sect2>
@@ -58,7 +59,7 @@
     <sect2 id="zend.filter.set.int">
         <title>Int</title>
         <para>
-            (int) $value を返します。
+            (int) <code>$value</code> を返します。
         </para>
     </sect2>
 
