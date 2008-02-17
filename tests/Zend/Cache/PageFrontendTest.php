@@ -96,14 +96,14 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorWithBadRegexps3()
     {
         $array = array(
-	       '^/$' => array('cache' => true),         
-	       '^/index/' => array('cache' => true),    
-	       '^/article/' => array('cache' => false), 
-	       '^/article/view/' => array(            
-	           'foo' => true,                    
-	           'cache_with_post_variables' => true,   
-	           'make_id_with_post_variables' => true,   
-	       )
+           '^/$' => array('cache' => true),         
+           '^/index/' => array('cache' => true),    
+           '^/article/' => array('cache' => false), 
+           '^/article/view/' => array(            
+               'foo' => true,                    
+               'cache_with_post_variables' => true,   
+               'make_id_with_post_variables' => true,   
+           )
         );
         try {
             $test = new Zend_Cache_Frontend_Page(array('regexps' => $array));
@@ -116,14 +116,14 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorWithGoodRegexps()
     {
         $array = array(
-	       '^/$' => array('cache' => true),         
-	       '^/index/' => array('cache' => true),    
-	       '^/article/' => array('cache' => false), 
-	       '^/article/view/' => array(            
-	           'cache' => true,                    
-	           'cache_with_post_variables' => true,   
-	           'make_id_with_post_variables' => true,   
-	       )
+           '^/$' => array('cache' => true),         
+           '^/index/' => array('cache' => true),    
+           '^/article/' => array('cache' => false), 
+           '^/article/view/' => array(            
+               'cache' => true,                    
+               'cache_with_post_variables' => true,   
+               'make_id_with_post_variables' => true,   
+           )
         );
         $test = new Zend_Cache_Frontend_Page(array('regexps' => $array));        
     }
@@ -137,7 +137,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
     {
         ob_start();
         ob_implicit_flush(false);
-        if (!($this->_instance->start('123', true))) {
+        if (!($this->_instance->start('serialized2', true))) {
             echo('foobar');
             ob_end_flush();
         }
@@ -166,7 +166,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
         $this->_instance->setOption('debug_header', true);
         ob_start();
         ob_implicit_flush(false);
-        if (!($this->_instance->start('123', true))) {
+        if (!($this->_instance->start('serialized2', true))) {
             echo('foobar');
             ob_end_flush();
         }
