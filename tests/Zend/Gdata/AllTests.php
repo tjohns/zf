@@ -33,6 +33,11 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 /**
+ * Tests of the authentication URL generator
+ */
+require_once 'Zend/Gdata/AuthSubTest.php';
+
+/**
  * Tests that do not require online access to servers
  */
 require_once 'Zend/Gdata/AppTest.php';
@@ -184,6 +189,11 @@ class Zend_Gdata_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Gdata');
+
+        /**
+         * Tests of the authentication URL generator
+         */
+        $suite->addTestSuite('Zend_Gdata_AuthSubTest');
 
         /**
          * Tests that do not require online access to servers
