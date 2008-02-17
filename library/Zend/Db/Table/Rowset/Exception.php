@@ -34,4 +34,3 @@ require_once 'Zend/Db/Table/Exception.php';
 class Zend_Db_Table_Rowset_Exception extends Zend_Db_Table_Exception
 {
 }
-
