@@ -1031,7 +1031,7 @@ abstract class Zend_Db_Table_Abstract
             'stored'   => true
         );
 
-        Zend_Loader::loadClass($this->_rowsetClass);
+        @Zend_Loader::loadClass($this->_rowsetClass);
         return new $this->_rowsetClass($data);
     }
 
@@ -1076,7 +1076,7 @@ abstract class Zend_Db_Table_Abstract
             'stored'  => true
         );
 
-        Zend_Loader::loadClass($this->_rowClass);
+        @Zend_Loader::loadClass($this->_rowClass);
         return new $this->_rowClass($data);
     }
 
@@ -1111,7 +1111,7 @@ abstract class Zend_Db_Table_Abstract
             'stored'   => false
         );
 
-        Zend_Loader::loadClass($this->_rowClass);
+        @Zend_Loader::loadClass($this->_rowClass);
         return new $this->_rowClass($config);
     }
 

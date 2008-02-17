@@ -462,6 +462,78 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(3, count($result[0]));
     }
 
+    protected function _selectJoinUsing()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->joinUsing("zfbugs_products", "$product_id")
+            ->where("$bugs_products.$product_id < ?", 3);
+        return $select;
+    }
+
+    public function testSelectMagicMethod()
+    {
+        $select = $this->_selectJoinUsing();
+        try {
+            $select->foo();
+            $this->fail('Expected exception of type "Zend_Db_Select_Exception"');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Select_Exception', $e,
+                              'Expected exception of type "Zend_Db_Select_Exception", got ' . get_class($e));
+            $this->assertEquals("Unrecognized method 'foo()'", $e->getMessage());
+        }
+    }
+
+    public function testSelectJoinUsing()
+    {
+        $select = $this->_selectJoinUsing();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(1, $result[0]['product_id']);
+    }
+
+    protected function _selectJoinInnerUsing()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->joinInnerUsing("zfbugs_products", "$product_id")
+            ->where("$bugs_products.$product_id < ?", 3);
+        return $select;
+    }
+
+    public function testSelectJoinInnerUsing()
+    {
+        $select = $this->_selectJoinInnerUsing();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(1, $result[0]['product_id']);
+    }
+
+    public function testSelectJoinInnerUsingException()
+    {
+        $select = $this->_selectJoinInnerUsing();
+        try {
+            $select->joinFooUsing();
+            $this->fail('Expected exception of type "Zend_Db_Select_Exception"');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Select_Exception', $e,
+                              'Expected exception of type "Zend_Db_Select_Exception", got ' . get_class($e));
+            $this->assertEquals("Unrecognized method 'joinFooUsing()'", $e->getMessage());
+        }
+    }
+
     /**
      * Test adding a WHERE clause to a Zend_Db_Select object.
      */

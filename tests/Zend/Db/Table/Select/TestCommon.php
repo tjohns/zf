@@ -61,7 +61,7 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         if (is_array($options) && !isset($options['db'])) {
             $options['db'] = $this->_db;
         }
-        Zend_Loader::loadClass($tableClass);
+        @Zend_Loader::loadClass($tableClass);
         $table = new $tableClass($options);
         return $table;
     }

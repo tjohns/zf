@@ -122,7 +122,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
             }
             
             switch (true) {
-                case ($column == '*'):
+                case ($column == self::SQL_WILDCARD):
                     break;
 
                 case ($column instanceof Zend_Db_Expr):
@@ -148,7 +148,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      * @param  string $schema The schema name to specify, if any.
      * @return Zend_Db_Table_Select This Zend_Db_Table_Select object.
      */
-    public function from($name, $cols = '*', $schema = null)
+    public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
     {
         if ($name instanceof Zend_Db_Table_Abstract) {
             $info = $name->info();
@@ -172,7 +172,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
 
         // If no fields are specified we assume all fields from primary table
         if (!count($fields)) {
-            $this->from($primary, '*', $schema);
+            $this->from($primary, self::SQL_WILDCARD, $schema);
             $fields = $this->getPart(Zend_Db_Table_Select::COLUMNS);
         }
 
