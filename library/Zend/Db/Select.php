@@ -702,8 +702,6 @@ class Zend_Db_Select
      * * joinUsing
      * * joinInnerUsing
      * * joinFullUsing
-     * * joinCrossUsing
-     * * joinNaturalUsing
      * * joinRightUsing
      * * joinLeftUsing
      *
@@ -1088,6 +1086,10 @@ class Zend_Db_Select
                 if (!in_array($type, self::$_joinTypes)) {
                     require_once 'Zend/Db/Select/Exception.php';
                     throw new Zend_Db_Select_Exception("Unrecognized method '$method()'");
+                }
+                if (in_array($type, array(self::CROSS_JOIN, self::NATURAL_JOIN))) {
+                    require_once 'Zend/Db/Select/Exception.php';
+                    throw new Zend_Db_Select_Exception("Cannot perform a joinUsing with method '$method()'");
                 }
             } else {
                 $type = self::INNER_JOIN;

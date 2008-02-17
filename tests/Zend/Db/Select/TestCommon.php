@@ -534,6 +534,32 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         }
     }
 
+    protected function _selectJoinCrossUsing()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$bugs_products.$product_id < ?", 3);
+        return $select;
+    }
+
+    public function testSelectJoinCrossUsing()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $select = $this->_selectJoinCrossUsing();
+        try {
+            $select->joinCrossUsing("zfbugs_products", "$product_id");
+            $this->fail('Expected exception of type "Zend_Db_Select_Exception"');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Select_Exception', $e,
+                              'Expected exception of type "Zend_Db_Select_Exception", got ' . get_class($e));
+            $this->assertEquals("Cannot perform a joinUsing with method 'joinCrossUsing()'", $e->getMessage());
+        }
+    }
+
     /**
      * Test adding a WHERE clause to a Zend_Db_Select object.
      */
