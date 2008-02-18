@@ -916,18 +916,25 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     public function postDispatch()
     {
-        if ($this->getFrontController()->getParam('noViewRenderer')) {
-            return;
+        if ($this->_shouldRender()) {
+            $this->render();
         }
+    }
 
-        if (!$this->_neverRender
+    /**
+     * Should the ViewRenderer render a view script?
+     * 
+     * @return bool
+     */
+    protected function _shouldRender()
+    {
+        return (!$this->getFrontController()->getParam('noViewRenderer')
+            && !$this->_neverRender
             && !$this->_noRender
             && (null !== $this->_actionController)
             && $this->getRequest()->isDispatched()
-            && !$this->getResponse()->isRedirect())
-        {
-            $this->render();
-        }
+            && !$this->getResponse()->isRedirect()
+        );
     }
 
     /**
