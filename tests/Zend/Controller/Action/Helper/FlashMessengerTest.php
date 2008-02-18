@@ -107,6 +107,13 @@ class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework
         $this->assertFalse($this->helper->hasMessages());
         $this->assertEquals(0, count($this->helper));
     }
+
+    public function testDirectProxiesToAddMessage()
+    {
+        $this->helper->direct('foo');
+        $this->assertTrue($this->helper->hasMessages());
+        $this->assertEquals(1, count($this->helper));
+    }
 }
 
 // Call Zend_Controller_Action_Helper_FlashMessengerTest::main() if this source file is executed directly.
