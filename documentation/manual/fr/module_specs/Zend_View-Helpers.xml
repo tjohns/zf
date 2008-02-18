@@ -87,7 +87,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs)</code> : génère des listes ordonnées ou non basées sur les <code>$items</code> qui lui sont fournis. Si <code>$items</code> est un tableau multidimensionnel, une liste imbriquée sera construite.
+                <code>htmlList($items, $ordered, $attribs, $escape)</code> : génère des listes ordonnées ou non basées sur les <code>$items</code> qui lui sont fournis. Si <code>$items</code> est un tableau multidimensionnel, une liste imbriquée sera construite. Si le paramètre <code>$escape</code> vaut <code>true</code> (valeur par défaut), chaque élément sera échappé en utilisant le mécanisme d'échappement enregistré dans les objets de vue ; fournissez une valeur <code>false</code> si vous voulez autoriser du balisage dans vos listes.
             </para></listitem>
         </itemizedlist>
 
