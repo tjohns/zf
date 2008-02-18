@@ -202,6 +202,17 @@ class Zend_View_Helper_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($transLoc->getAdapter(), $this->helper->getTranslator());
         $this->assertNotSame($transLoc->getAdapter(), $transReg->getAdapter());
     }
+
+    public function testHelperObjectReturnedWhenNoArgumentsPassed()
+    {
+        $helper = $this->helper->translate();
+        $this->assertSame($this->helper, $helper);
+
+        $transLoc = new Zend_Translate('array', array());
+        $this->helper->setTranslator($transLoc);
+        $helper = $this->helper->translate();
+        $this->assertSame($this->helper, $helper);
+    }
 }
 
 // Call Zend_View_Helper_TranslateTest::main() if this source file is executed directly.

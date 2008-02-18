@@ -61,12 +61,12 @@ class Zend_View_Helper_Translate
      */
     public function translate($messageid = null)
     {
+        if (null === $messageid) {
+            return $this;
+        }
+
         if (null === ($translate = $this->getTranslator())) {
-            if (empty($messageid)) {
-                return $this;
-            } else {
-                return $messageid;
-            }
+            return $messageid;
         }
 
         $options = func_get_args();
