@@ -767,22 +767,25 @@ class Zend_Controller_Front
     }
 
     /**
+     * Set the throwExceptions flag and retrieve current status
+     *
      * Set whether exceptions encounted in the dispatch loop should be thrown
-     * or caught and trapped in the response object
+     * or caught and trapped in the response object.
      *
      * Default behaviour is to trap them in the response object; call this
      * method to have them thrown.
      *
-     * @param boolean $flag Defaults to true
+     * Passing no value will return the current value of the flag; passing a 
+     * boolean true or false value will set the flag and return the current 
+     * object instance.
+     *
+     * @param boolean $flag Defaults to null (return flag state)
      * @return boolean|Zend_Controller_Front Used as a setter, returns object; as a getter, returns boolean
      */
     public function throwExceptions($flag = null)
     {
-        if (true === $flag) {
-            $this->_throwExceptions = true;
-            return $this;
-        } elseif (false === $flag) {
-            $this->_throwExceptions = false;
+        if ($flag !== null) {
+            $this->_throwExceptions = (bool) $flag;
             return $this;
         }
 
