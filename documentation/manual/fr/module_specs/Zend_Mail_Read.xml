@@ -60,6 +60,13 @@
                     <entry>Non</entry>
                     <entry>Oui</entry>
                 </row>
+                <row>
+                    <entry>Quota</entry>
+                    <entry>Non</entry>
+                    <entry>Oui</entry>
+                    <entry>Non</entry>
+                    <entry>Non</entry>
+                </row>
             </tbody>
         </tgroup>
     </table>
@@ -602,6 +609,79 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             <para>
                 Comme vous voyez nous supposons toujours que nous sommes reliés, identifiés et, si supporté, un dossier est choisi dans le constructeur de la classe principale. Ainsi si vous assignez votre propre classe de protocole vous devez toujours vous assurer que c'est fait ou la prochaine méthode échouera si le serveur ne la permet pas dans l'état actuel.
             </para>
+
+        </sect3>
+        <sect3 id="zend.mail.read-advanced.quota">
+            <title>Utilisation des Quotas (since 1.5)</title>
+
+            <para>
+            <code>Zend_Mail_Storage_Writable_Maildir</code> has support for Maildir++ quotas. It's disabled by default,
+            but it's possible to use it manually, if the automatic checks are not desired (this means
+            <code>appendMessage()</code>, <code>removeMessage()</code> and <code>copyMessage()</code> do no checks
+            and do not add entry to the maildirsize file). If enabled an exception is thrown if you try to write
+            to the maildir if it's already over quota.
+            </para>
+
+            <para>
+            There are three methods used for quotas: <code>getQuota()</code>, <code>setQuota()</code> and
+            <code>checkQuota()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/mail/'));
+$mail->setQuota(true); // true to enable, false to disable
+echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
+// check quota can be used even if quota checks are disabled
+echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";]]>
+            </programlisting>
+
+            <para>
+            <code>checkQuota()</code> can also return a more detailed response:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$quota = $mail->checkQuota(true);
+echo 'You are ', $quota['over_quota'] ? 'over quota' : 'not over quota', "\n";
+echo 'You have ', $quota['count'], ' of ', $quota['quota']['count'], ' messages and use ';
+echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';]]>
+            </programlisting>
+
+            <para>
+            If you want to specify your own quota instead of using the one specified in the maildirsize file you
+            can do with <code>setQuota()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// message count and octet size supported, order does matter
+$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
+            </programlisting>
+
+            <para>
+            To add your own quota checks use single letters as key and they are preserved (but obviously not checked).
+            It's also possible to extend  <code>Zend_Mail_Storage_Writable_Maildir</code> to define your own quota only
+            if the maildirsize file is missing (which can happen in Maildir++):
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
+	// getQuota is called with $fromStorage = true by quota checks
+	public function getQuota($fromStorage = false) {
+		try {
+			return parent::getQuota($fromStorage);
+		} catch (Zend_Mail_Storage_Exception $e) {
+			if (!$fromStorage) {
+				// unknown error:
+				throw $e;
+			}
+			// maildirsize file must be missing
+
+			list($count, $size) = get_quota_from_somewhere_else();
+			return array('count' => $count, 'size' => $size);
+		}
+	}
+}]]>
+            </programlisting>
+
 
         </sect3>
     </sect2>

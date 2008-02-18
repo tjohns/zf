@@ -73,7 +73,7 @@
                 <title>getParam() retrouve plus que les paramètres d'utilisateur</title>
 
                 <para>
-                    Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur réglés par l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, les paramètres <code>POST</code>, et finalement les paramètres <code>COOKIE</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
+                    Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur réglés par l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, et finalement les paramètres <code>POST</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
                 </para>
                 <para>
                     Si vous souhaitez rechercher seulement dans les valeurs que vous avez paramètrées avec <code>setParam()</code>, utilisez <code>getUserParam()</code>.

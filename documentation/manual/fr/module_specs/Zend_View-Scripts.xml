@@ -3,18 +3,18 @@
     <title>Scripts de vue</title>
 
     <para>
-        une fois que le contrôleur a assigné les variables et appelé <code>render()</code>, <code>Zend_View</code> inclus le script de vue requis, et l'exécute &quot;à l'intérieur&quot; de la portée de l'instance <code>Zend_View</code>. Donc dans vos scripts de vue, les références à $this-> pointent en fait sur l'instance <code>Zend_View</code> elle-même.
+        Une fois que le contrôleur a assigné les variables et appelé <code>render()</code>, <code>Zend_View</code> inclue le script de vue requis et l'exécute "à l'intérieur" de la portée de l'instance <code>Zend_View</code>. Donc dans vos scripts de vue, les références à <code>$this</code> pointent en fait sur l'instance <code>Zend_View</code> elle-même.
     </para>
 
     <para>
-        Les variables assignées à la vue depuis le contrôleur lui sont référées comme des propriétés de l'instance. Par exemple, si le contrôleur a assigné une variable &quot;quelque-chose&quot;, vous vous référerez à cette variable par <code>$this->quelque-chose</code> dans le script de vue. (Cela vous permet de garder une trace pour savoir quelles valeurs ont été assignées au script, et lesquelles sont internes au script lui même.)
+        Les variables assignées à la vue depuis le contrôleur lui sont référées comme des propriétés de l'instance. Par exemple, si le contrôleur a assigné une variable "quelquechose", vous vous référerez à cette variable par <code>$this->quelquechose</code> dans le script de vue. (Cela vous permet de garder une trace pour savoir quelles valeurs ont été assignées au script, et lesquelles sont internes au script lui même.)
     </para>
 
     <para>
         Pour rappel, voici l'exemple de script issu de l'introduction de ce chapitre sur <code>Zend_View</code>.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    <programlisting role="php"><![CDATA[<?php if ($this->livres): ?>
 
     <!-- La table des livres -->
     <table>
@@ -23,10 +23,10 @@
             <th>Titre</th>
         </tr>
 
-        <?php foreach ($this->books as $key => $val): ?>
+        <?php foreach ($this->livres as $cle => $livre): ?>
         <tr>
-            <td><?php echo $this->escape($val['auteur']) ?></td>
-            <td><?php echo $this->escape($val['titre']) ?></td>
+            <td><?php echo $this->escape($livre['auteur']) ?></td>
+            <td><?php echo $this->escape($livre['titre']) ?></td>
         </tr>
         <?php endforeach; ?>
 
@@ -44,7 +44,7 @@
         <title>Echapper la sortie</title>
 
         <para>
-            Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer que la sortie est correctement échappé ; de plus ceci permet d'éviter les attaques de type cross-site scripting (XSS). A moins que vous n'utilisiez une fonction, une méthode , ou une aide qui gère l'échappement, vous devriez toujours échapper les variables lors de l'affichage.
+            Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer que la sortie est correctement échappé ; de plus ceci permet d'éviter les attaques de type cross-site scripting (XSS). A moins que vous n'utilisiez une fonction, une méthode, ou une aide qui gère l'échappement, vous devriez toujours échapper les variables lors de l'affichage.
         </para>
 
         <para>
@@ -70,19 +70,19 @@ $view = new Zend_View();
 // spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
 $view->setEscape('htmlentities');
 
-// ou spécifie qu'il faut utiliser une méthode statique comme rappel d'échapement
-$view->setEscape(array('SomeClass', 'methodName'));
+// ou spécifie qu'il faut utiliser une méthode statique comme rappel d'échappement
+$view->setEscape(array('UneClasse', 'nomDeMethode'));
 
 // ou alors une méthode d'instance
-$obj = new SomeClass();
-$view->setEscape(array($obj, 'methodName'));
+$obj = new UneClasse();
+$view->setEscape(array($obj, 'nomDeMethode'));
 
 // et ensuite effectue le rendu de la vue
 echo $view->render(...);]]>
 	    </programlisting>
 
         <para>
-            La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tout les autres paramètres devraient être optionnels.
+            La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tous les autres paramètres devraient être optionnels.
         </para>
 
     </sect2>
@@ -93,7 +93,7 @@ echo $view->render(...);]]>
 
 
         <para>
-            Bien que PHP lui-même un moteur de gabarit puissant, beaucoup de développeurs pensent que c'est beaucoup trop puissant ou complexe pour les graphistes/intégrateurs et veulenbt utiliser un moteur de template alternatif. Zend_View fournit deux méchanismes pour faire cela, le premier au travers les scripts de vues, le second en implémentant Zend_View_Interface.
+            Bien que PHP lui-même un moteur de gabarit puissant, beaucoup de développeurs pensent que c'est beaucoup trop puissant ou complexe pour les graphistes/intégrateurs et veulent utiliser un moteur de template alternatif. <code>Zend_View</code> fournit deux méchanismes pour faire cela, le premier à travers les scripts de vues, le second en implémentant <code>Zend_View_Interface</code>.
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -110,22 +110,22 @@ echo $view->render(...);]]>
 include_once 'template.inc';
 $tpl = new Template();
 
-if ($this->books) {
+if ($this->livres) {
     $tpl->setFile(array(
-        "booklist" => "booklist.tpl",
-        "eachbook" => "eachbook.tpl",
+        "listelivre" => "listelivre.tpl",
+        "chaquelivre" => "chaquelivre.tpl",
     ));
 
-    foreach ($this->books as $key => $val) {
-        $tpl->set_var('auteur', $this->escape($val['auteur']);
-        $tpl->set_var('titre', $this->escape($val['titre']);
-        $tpl->parse("livre", "eachbook", true);
+    foreach ($this->livres as $cle => $livre) {
+        $tpl->set_var('auteur', $this->escape($livre['auteur']);
+        $tpl->set_var('titre', $this->escape($livre['titre']);
+        $tpl->parse("livre", "chaquelivre", true);
     }
 
-    $tpl->pparse("output", "booklist");
+    $tpl->pparse("output", "listelivre");
 } else {
-    $tpl->setFile("nobooks", "nobooks.tpl")
-    $tpl->pparse("output", "nobooks");
+    $tpl->setFile("nobooks", "pasdelivres.tpl")
+    $tpl->pparse("output", "pasdelivres");
 }]]>
 	    </programlisting>
 
@@ -134,22 +134,22 @@ if ($this->books) {
         </para>
 
         <programlisting role="html"><![CDATA[
-<!-- booklist.tpl -->
+<!-- listelivre.tpl -->
 <table>
     <tr>
         <th>Auteur</th>
         <th>Titre</th>
     </tr>
-    {books}
+    {livres}
 </table>
 
-<!-- eachbook.tpl -->
+<!-- chaquelivre.tpl -->
     <tr>
         <td>{auteur}</td>
         <td>{title}</td>
     </tr>
 
-<!-- nobooks.tpl -->
+<!-- pasdelivres.tpl -->
 <p>Aucun livre à afficher</p>]]>
 		    </programlisting>
 
@@ -172,6 +172,21 @@ public function getEngine();
  * Affecte le dossier des scripts de gabarits
  */
 public function setScriptPath($path);
+
+/**
+ * Règle un chemin de base pour toutes les ressources de vue
+ */
+public function setBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Ajoute un chemin de base supplémentairepour les ressources de vue
+ */
+public function addBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Récupère les chemins actuels vers les ressources de vue
+ */
+public function getScriptPaths();
 
 /**
  * Méthode à surcharger pour affecter les variables des gabarits en tant que propriétés de l'objet
@@ -199,7 +214,7 @@ public function render($name);]]>
 		    </programlisting>
 
             <para>
-                En utilisant cette interface, il devient relativement facile d'encapsuler un moteur de gabarit tiers comme une classe compatible Zend_View. Comme par exemple, le code suivant est une encapsulation potentielle de Smarty :
+                En utilisant cette interface, il devient relativement facile d'encapsuler un moteur de gabarit tiers comme une classe compatible <code>Zend_View</code>. Comme par exemple, le code suivant est une encapsulation potentielle de Smarty :
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -258,6 +273,40 @@ class Zend_View_Smarty implements Zend_View_Interface
         }
 
         throw new Exception('Répertoire fourni invalide');
+    }
+
+    /**
+     * Récupère le dossier courant des gabarits
+     *
+     * @return string
+     */
+    public function getScriptPaths()
+    {
+        return array($this->_smarty->template_dir);
+    }
+
+    /**
+     * Alias pour setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function setBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
+    }
+
+    /**
+     * Alias pour setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function addBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
     }
 
     /**
@@ -364,7 +413,6 @@ $rendered = $view->render('bookinfo.tpl');]]>
 		    </programlisting>
 
         </sect3>
-
     </sect2>
 
 </sect1>
