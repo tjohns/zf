@@ -39,6 +39,9 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * echo $this->element->getLabel();
  * </code>
  *
+ * Any options other than separator, placement, and viewScript are passed to 
+ * the partial as local variables.
+ *
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
@@ -119,7 +122,10 @@ class Zend_Form_Decorator_ViewScript extends Zend_Form_Decorator_Abstract
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
 
-        $renderedContent = $view->partial($viewScript, array('element' => $element));
+        $vars            = $this->getOptions();
+        $vars['element'] = $element;
+
+        $renderedContent = $view->partial($viewScript, $vars);
 
         switch ($placement) {
             case self::PREPEND:

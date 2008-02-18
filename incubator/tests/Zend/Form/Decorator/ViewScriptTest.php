@@ -107,6 +107,22 @@ class Zend_Form_Decorator_ViewScriptTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render('');
         $this->assertContains('This is content from the view script', $test);
     }
+
+    public function testOptionsArePassedToPartialAsVariables()
+    {
+        $this->decorator->setOptions(array(
+            'foo'        => 'Foo Value',
+            'bar'        => 'Bar Value',
+            'baz'        => 'Baz Value',
+            'bat'        => 'Bat Value',
+            'viewScript' => 'decorator.phtml',
+        ));
+        $this->getElement();
+        $test = $this->decorator->render('');
+        foreach ($this->decorator->getOptions() as $key => $value) {
+            $this->assertContains("$key: $value", $test);
+        }
+    }
 }
 
 // Call Zend_Form_Decorator_ViewScriptTest::main() if this source file is executed directly.
