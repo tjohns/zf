@@ -20,11 +20,25 @@
     </para>
 
     <note>
+        <title>Watch the Case</title>
         <para>
             Helper names are always camelCased, i.e., they never begin with an
-            uppercase character.
+            uppercase character. The class name itself is CamelCased, but the
+            method that is actually executed is camelCased.
         </para>
     </note>
+
+    <note>
+        <title>Default Helper Path</title>
+
+        <para>
+            The default helper path always points to the Zend Framework view
+            helpers, i.e., 'Zend/View/Helper/'. Even if you call
+            <code>setHelperPath()</code> to overwrite the existing paths, this
+            path will be set to ensure the default helpers work.
+        </para>
+    </note>
+
 
     <para>
         To use a helper in your view script, call it using
