@@ -132,6 +132,11 @@ require_once 'Zend/Validate/StringLengthTest.php';
  */
 require_once 'Zend/Validate/MessageTest.php';
 
+/**
+ * @see Zend_Validate_IdenticalTest
+ */
+require_once 'Zend/Validate/IdenticalTest.php';
+
 
 /**
  * @category   Zend
@@ -181,6 +186,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_RegexTest');
         $suite->addTestSuite('Zend_Validate_StringLengthTest');
         $suite->addTestSuite('Zend_Validate_MessageTest');
+        $suite->addTestSuite('Zend_Validate_IdenticalTest');
 
         return $suite;
     }

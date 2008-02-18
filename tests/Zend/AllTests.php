@@ -45,6 +45,7 @@ require_once 'Zend/DebugTest.php';
 require_once 'Zend/Feed/AllTests.php';
 require_once 'Zend/FilterTest.php';
 require_once 'Zend/Filter/AllTests.php';
+require_once 'Zend/Form/AllTests.php';
 require_once 'Zend/Gdata/AllTests.php';
 require_once 'Zend/Http/AllTests.php';
 require_once 'Zend/InfoCard/AllTests.php';
@@ -113,6 +114,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Feed_AllTests::suite());
         $suite->addTestSuite('Zend_FilterTest');
         $suite->addTest(Zend_Filter_AllTests::suite());
+        $suite->addTest(Zend_Form_AllTests::suite());
         $suite->addTest(Zend_Gdata_AllTests::suite());
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTest(Zend_InfoCard_AllTests::suite());
