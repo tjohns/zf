@@ -113,6 +113,12 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
         ));
         $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
     }
+
+    public function testCheckedAttributeNotRenderedIfItEvaluatesToFalse()
+    {
+        $test = $this->helper->formCheckbox('foo', 'value', array('checked' => false));
+        $this->assertNotContains('checked', $test);
+    }
 }
 
 // Call Zend_View_Helper_FormCheckboxTest::main() if this source file is executed directly.

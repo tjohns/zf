@@ -67,6 +67,58 @@ class Zend_Form_Element_CheckboxTest extends PHPUnit_Framework_TestCase
         $helper = $decorator->getHelper();
         $this->assertEquals('formCheckbox', $helper);
     }
+
+    public function testCheckedFlagIsFalseByDefault()
+    {
+        $this->assertFalse($this->element->checked);
+    }
+
+    public function testCheckedAttributeNotRenderedByDefault()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $html = $this->element->render($view);
+        $this->assertNotContains('checked="checked"', $html);
+    }
+
+    public function testCheckedAttributeRenderedWhenCheckedFlagTrue()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $this->element->checked = true;
+        $html = $this->element->render($view);
+        $this->assertContains('checked="checked"', $html);
+    }
+
+    public function testValueInitiallyZero()
+    {
+        $this->assertEquals(0, $this->element->getValue());
+    }
+
+    public function testSettingNonNullValueSetsValueToOne()
+    {
+        $this->testValueInitiallyZero();
+        $this->element->setValue('');
+        $this->assertEquals(1, $this->element->getValue());
+        $this->element->setValue('foo');
+        $this->assertEquals(1, $this->element->getValue());
+    }
+
+    public function testSettingNullValueSetsValueToZero()
+    {
+        $this->testSettingNonNullValueSetsValueToOne();
+        $this->element->setValue(null);
+        $this->assertEquals(0, $this->element->getValue());
+    }
+
+    public function testCheckedFlagTogglesWithValue()
+    {
+        $this->testCheckedFlagIsFalseByDefault();
+        $this->testSettingNonNullValueSetsValueToOne();
+        $this->assertTrue($this->element->checked);
+        $this->element->setValue(null);
+        $this->assertFalse($this->element->checked);
+    }
 }
 
 // Call Zend_Form_Element_CheckboxTest::main() if this source file is executed directly.

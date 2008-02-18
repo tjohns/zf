@@ -35,8 +35,35 @@ require_once 'Zend/Form/Element/Xhtml.php';
 class Zend_Form_Element_Checkbox extends Zend_Form_Element_Xhtml
 {
     /**
+     * Is the checkbox checked?
+     * @var bool
+     */
+    public $checked = false;
+
+    /**
      * Use formCheckbox view helper by default
      * @var string
      */
     public $helper = 'formCheckbox';
+
+    /**
+     * Current value
+     * @var int 0 or 1
+     */
+    protected $_value = 0;
+
+    /**
+     * Set value
+     *
+     * If non-null, sets checked flag to true
+     * 
+     * @param mixed $value 
+     * @return void
+     */
+    public function setValue($value)
+    {
+        $value = ($value === null) ? 0 : 1;
+        $this->checked = ($value === 0) ? false : true;
+        return parent::setValue($value);
+    }
 }

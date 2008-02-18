@@ -60,6 +60,8 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
         if (isset($attribs['checked']) && $attribs['checked']) {
             $checked = ' checked="checked"';
             unset($attribs['checked']);
+        } elseif (isset($attribs['checked'])) {
+            unset($attribs['checked']);
         }
 
         // is the element disabled?
