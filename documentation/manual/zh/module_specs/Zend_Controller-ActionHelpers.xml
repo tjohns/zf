@@ -159,11 +159,14 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>内建的动作助手</title>
 
         <para>
-           Zend Framework默认包含三个动作助手：<code>FlashMessenger</code>用来处理Flash Messenger会话； <code>Redirector</code>提供另一种实现方式，帮助程序重定向到内部或者外部页面；<code>ViewRenderer</code>自动的完成在控制器内建立视图对象并渲染视图的过程。
+           Zend Framework 默认包含若干个动作助手：<code>AutoComplete</code> 自动响应 AJAX 的自动完成；<code>ContextSwitch</code> 和 <code>AjaxContext</code> 为你的动作提供替代响应格式；<code>FlashMessenger</code> 用来处理Flash Messenger会话；<code>Json</code> 用来解码和发送 JSON 响应；<code>Redirector</code> 提供另一种实现方式，帮助程序重定向到内部或者外部页面；<code>ViewRenderer</code> 自动的完成在控制器内建立视图对象并渲染视图的过程。
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-Json.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
