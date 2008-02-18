@@ -30,11 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'ActionTest.php';
 require_once 'Action/HelperBrokerTest.php';
-require_once 'Action/Helper/ActionStackTest.php';
-require_once 'Action/Helper/FlashMessengerTest.php';
-require_once 'Action/Helper/RedirectorTest.php';
-require_once 'Action/Helper/UrlTest.php';
-require_once 'Action/Helper/ViewRendererTest.php';
+require_once 'Action/Helper/AllTests.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 require_once 'Plugin/ActionStackTest.php';
@@ -70,11 +66,7 @@ class Zend_Controller_AllTests
 
         $suite->addTestSuite('Zend_Controller_ActionTest');
         $suite->addTestSuite('Zend_Controller_Action_HelperBrokerTest');
-        $suite->addTestSuite('Zend_Controller_Action_Helper_ActionStackTest');
-        $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
-        $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
-        $suite->addTestSuite('Zend_Controller_Action_Helper_UrlTest');
-        $suite->addTestSuite('Zend_Controller_Action_Helper_ViewRendererTest');
+        $suite->addTest(Zend_Controller_Action_Helper_AllTests::suite());
         $suite->addTestSuite('Zend_Controller_Dispatcher_StandardTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
         $suite->addTestSuite('Zend_Controller_Plugin_ActionStackTest');

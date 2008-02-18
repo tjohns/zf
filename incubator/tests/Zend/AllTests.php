@@ -74,11 +74,6 @@ class Zend_AllTests
         $suite->addTest(Zend_Db_AllTests::suite());
 
         /*
-         * Perform the tests for Zend_Form component now.
-         */
-        $suite->addTest(Zend_Form_AllTests::suite());
-
-        /*
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());

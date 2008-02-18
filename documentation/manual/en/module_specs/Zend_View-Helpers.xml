@@ -208,6 +208,7 @@
         <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
+        <xi:include href="Zend_View-Helpers-Json.xml" />
         <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 

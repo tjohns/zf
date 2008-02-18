@@ -28,7 +28,14 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Action_Helper_AllTests::main');
 }
 
-require_once 'Zend/Controller/Action/Helper/AutoCompleteTest.php';
+require_once 'Zend/Controller/Action/Helper/ActionStackTest.php';
+require_once 'Zend/Controller/Action/Helper/AjaxContextTest.php';
+require_once 'Zend/Controller/Action/Helper/ContextSwitchTest.php';
+require_once 'Zend/Controller/Action/Helper/FlashMessengerTest.php';
+require_once 'Zend/Controller/Action/Helper/JsonTest.php';
+require_once 'Zend/Controller/Action/Helper/RedirectorTest.php';
+require_once 'Zend/Controller/Action/Helper/UrlTest.php';
+require_once 'Zend/Controller/Action/Helper/ViewRendererTest.php';
 
 /**
  * @category   Zend
@@ -48,7 +55,14 @@ class Zend_Controller_Action_Helper_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
-        $suite->addTestSuite('Zend_Controller_Action_Helper_AutoCompleteTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ActionStackTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ContextSwitchTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_AjaxContextTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_JsonTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_UrlTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ViewRendererTest');
 
         return $suite;
     }

@@ -226,8 +226,6 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml" />
-        <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
-        <xi:include href="Zend_Controller-ActionHelpers-Json.xml" />
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.writingyourown">
