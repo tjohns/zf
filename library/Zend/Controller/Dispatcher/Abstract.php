@@ -208,7 +208,7 @@ abstract class Zend_Controller_Dispatcher_Abstract implements Zend_Controller_Di
      * Set the path delimiter to use in controllers. May be a single string or
      * an array of strings.
      *
-     * @param string|array $spec
+     * @param string $spec
      * @return Zend_Controller_Dispatcher_Abstract
      */
     public function setPathDelimiter($spec)
