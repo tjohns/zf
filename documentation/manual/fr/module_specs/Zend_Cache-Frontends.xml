@@ -36,6 +36,13 @@
                               <entry>active / désactive le cache (peut-être très utile pour le débogage de scripts en cache)</entry>
                           </row>
                           <row>
+                              <entry><code>cache_id_prefix</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>null</code></entry>
+                              <entry>Un préfixe pour tous les id de cache, si réglé à <code>null</code>, aucun préfixe d'id de cache ne sera utilisé. Le préfixe d'id de cache sert essentiellement à créer des espaces de noms dans le cache, permettant à plusieurs applications ou sites webs d'utiliser un cache partagé. Chaque application ou site web peut utilisé un préfixe d'id de cache différent et un préfixe peut aussi être utilisé plusieurs fois.
+                              </entry>
+                          </row>
+                          <row>
                               <entry><code>lifetime</code></entry>
                               <entry><code>integer</code></entry>
                               <entry><code>3600</code></entry>

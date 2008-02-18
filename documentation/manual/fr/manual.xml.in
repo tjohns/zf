@@ -75,9 +75,7 @@
         <xi:include href="module_specs/Zend_Controller-Basics.xml" />
         <xi:include href="module_specs/Zend_Controller-FrontController.xml" />
         <xi:include href="module_specs/Zend_Controller-Request.xml" />
-        <xi:include href="module_specs/Zend_Controller-Router.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Router.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Controller-Router.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Controller-Dispatcher.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionController.xml" />
         <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" />
@@ -124,20 +122,14 @@
         <xi:include href="module_specs/Zend_Db_Adapter.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Adapter.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Db_Statement.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Statement.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Db_Statement.xml" />
         <xi:include href="module_specs/Zend_Db_Profiler.xml" />
         <xi:include href="module_specs/Zend_Db_Select.xml" />
         <xi:include href="module_specs/Zend_Db_Table.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Table.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Db_Table_Row.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Table_Row.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Db_Table_Rowset.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Table_Rowset.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Db_Table_Row.xml" />
+        <xi:include href="module_specs/Zend_Db_Table_Rowset.xml" />
         <xi:include href="module_specs/Zend_Db_Table-Relationships.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Table-Relationships.xml" /></xi:fallback>
         </xi:include>
@@ -174,15 +166,29 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Filter-Inflector.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.form">
+        <title>Zend_Form</title>
+        <xi:include href="module_specs/Zend_Form-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-QuickStart.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-QuickStart.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Elements.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Elements.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Forms.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Forms.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Decorators.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Decorators.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Gdata_AuthSub.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_AuthSub.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_ClientLogin.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
+        <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
         <xi:include href="module_specs/Zend_Gdata_Calendar.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Calendar.xml" /></xi:fallback>
         </xi:include>
@@ -210,16 +216,10 @@
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
-        <xi:include href="module_specs/Zend_Http_Client.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Http_Client.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Http_Client.xml" />
         <xi:include href="module_specs/Zend_Http_Client-Advanced.xml" />
-        <xi:include href="module_specs/Zend_Http_Client-Adapters.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Http_Client-Adapters.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Http_Cookie-Handling.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Http_Cookie-Handling.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Http_Client-Adapters.xml" />
+        <xi:include href="module_specs/Zend_Http_Cookie-Handling.xml" />
         <xi:include href="module_specs/Zend_Http_Response.xml" />
     </chapter>
     <chapter id="zend.infocard">
@@ -331,9 +331,7 @@
         <xi:include href="module_specs/Zend_Pdf-Save.xml" />
         <xi:include href="module_specs/Zend_Pdf-Pages.xml" />
         <xi:include href="module_specs/Zend_Pdf-Drawing.xml" />
-        <xi:include href="module_specs/Zend_Pdf-Properties.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Properties.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Pdf-Properties.xml" />
         <xi:include href="module_specs/Zend_Pdf-Usage.xml" />
     </chapter>
     <chapter id="zend.registry">
@@ -430,9 +428,7 @@
     </chapter>
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
-        <xi:include href="module_specs/Zend_Uri.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Uri.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Uri.xml" />
     </chapter>
     <chapter id="zend.validate">
         <title>Zend_Validate</title>
