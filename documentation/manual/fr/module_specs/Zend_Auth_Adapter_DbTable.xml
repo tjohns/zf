@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> fournit la possibilité d'authentifier sur la base de crédits stockés dans une table de base de données. Comme <code>Zend_Auth_Adapter_DbTable</code> requiert qu'une instance de <code>Zend_Db_Adapter_Abstract</code> soit fournie à son constructeur, chaque instance est liée à une connection de base de données particulière. Les autres options de configuration peuvent être réglées grâce au constructeur ou au travers de différentes méthodes, une pour chaque option.
+            <code>Zend_Auth_Adapter_DbTable</code> fournit la possibilité d'authentifier sur la base de crédits stockés dans une table de base de données. Comme <code>Zend_Auth_Adapter_DbTable</code> requiert qu'une instance de <code>Zend_Db_Adapter_Abstract</code> soit fournie à son constructeur, chaque instance est liée à une connexion de base de données particulière. Les autres options de configuration peuvent être réglées grâce au constructeur ou au travers de différentes méthodes, une pour chaque option.
         </para>
 
         <para>
@@ -41,14 +41,14 @@
             <title>Utilisation basique</title>
 
             <para>
-                Comme expliqué dans l'introduction, le constructeur de <code>Zend_Auth_Adapter_DbTable</code> requiert une instance de <code>Zend_Db_Adapter_Abstract</code> qui est utilisée comme connection à la base de données à laquelle l'instance d'adaptateur d'authentification est liée. Avant tout, la connection à la base de donnée devrait être crée.
+                Comme expliqué dans l'introduction, le constructeur de <code>Zend_Auth_Adapter_DbTable</code> requiert une instance de <code>Zend_Db_Adapter_Abstract</code> qui est utilisée comme connexion à la base de données à laquelle l'instance d'adaptateur d'authentification est liée. Avant tout, la connexion à la base de donnée devrait être crée.
             </para>
 
             <para>
                 Le code suivant crée un adaptateur pour une base de données en mémoire, crée un schéma avec une table unique, et insère une ligne sur laquelle nous pouvons réaliser une requête d'authentification plus tard. Cet exemple requiert que l'extension PDO SQLite soit disponible :
 
                 <programlisting role="php"><![CDATA[<?php
-// Crée une connection de base de données SQLite en mémoire
+// Crée une connexion de base de données SQLite en mémoire
 require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
 $dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
 

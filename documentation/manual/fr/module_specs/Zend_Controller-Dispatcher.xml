@@ -5,7 +5,7 @@
         <title>Vue d'ensemble</title>
 
         <para>
-            Le dispatchage est le processus de récupération de l'objet requête, <code>Zend_Controller_Request_Abstract</code>, d'extraction du nom de module, du nom de contrôleur, du nom d'action, et des paramètres facultatifs qui s'y trouvent, et enfin d'instantiation du contrôleur et de l'appel d'une action de ce contrôleur. Si le module, le contrôleur, ou l'action ne sont pas trouvés, il emploiera des valeurs par défaut pour eux. <code>Zend_Controller_Dispatcher_Standard</code> indique <code>index</code> pour le contrôleur et l'action par défaut et <code>default</code> pour le module par défaut, mais permet au développeur de changer ces valeurs par défaut pour chacun en utilisant les méthodes respectives <code>setDefaultController()</code>, <code>setDefaultAction()</code>, et <code>setDefaultModule()</code>.
+            Le dispatchage est le processus de récupération de l'objet requête, <code>Zend_Controller_Request_Abstract</code>, d'extraction du nom de module, du nom de contrôleur, du nom d'action, et des paramètres facultatifs qui s'y trouvent, et enfin d'instanciation du contrôleur et de l'appel d'une action de ce contrôleur. Si le module, le contrôleur, ou l'action ne sont pas trouvés, il emploiera des valeurs par défaut pour eux. <code>Zend_Controller_Dispatcher_Standard</code> indique <code>index</code> pour le contrôleur et l'action par défaut et <code>default</code> pour le module par défaut, mais permet au développeur de changer ces valeurs par défaut pour chacun en utilisant les méthodes respectives <code>setDefaultController()</code>, <code>setDefaultAction()</code>, et <code>setDefaultModule()</code>.
         </para>
 
         <para>

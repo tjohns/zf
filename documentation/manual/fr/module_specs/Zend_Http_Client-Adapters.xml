@@ -1,14 +1,14 @@
 <sect1 id="zend.http.client.adapters">
-    <title>Zend_Http_Client - Adaptateurs de connection</title>
+    <title>Zend_Http_Client - Adaptateurs de connexion</title>
 
     <sect2 id="zend.http.client.adapters.overview">
         <title>Présentation globale</title>
         <para>
             Zend_Http_Client accepte des objets adaptateurs. Ces objets ont la responsabilité
-            de soutenir la connection vers un serveur, à savoir écrire des requêtes et lire des
+            de soutenir la connexion vers un serveur, à savoir écrire des requêtes et lire des
             réponses L'adaptateur peut donc être changé, et même écrit ou réécrit pour
             correspondre à vos besoins, sans avoir l'obligation de toucher à toute la classe dite
-            'client'. Vous vous connectez et manipulez votre connection toujours de la même manière
+            'client'. Vous vous connectez et manipulez votre connexion toujours de la même manière
             quelque soit l'adaptateur situé dessous.
         </para>
         <para>
@@ -90,7 +90,7 @@
             <note>
                 <title>HTTPS SSL Paramètres de flux</title>
                 <para>
-                    Toutes les options ci-dessus sont relatives aux connections SSL utilisées par HTTPS.
+                    Toutes les options ci-dessus sont relatives aux connexions SSL utilisées par HTTPS.
                     Les valeurs par défaut devraient suffire, mais si vous devez les changer, alors lisez
                     les sections relatives aux couches de transport SSL
                     <ulink url="http://www.php.net/manual/en/transports.phphttp://framework.zend.com/manual/en/zend.search.lucene.searching.html#transports.inet">here</ulink>.
@@ -109,12 +109,12 @@ $config = array(
 // Instantie un objet client
 $client = Zend_Http_Client('https://www.example.com', $config);
 
-// Cette requête sera envoyée vers une connection sécurisée TLS
+// Cette requête sera envoyée vers une connexion sécurisée TLS
 $response = $client->request();]]>
             </programlisting>
         </example>
         <para>
-            Le résultat ci-dessus sera similaire à l'ouverture d'une connection TCP avec la commande PHP suivante :
+            Le résultat ci-dessus sera similaire à l'ouverture d'une connexion TCP avec la commande PHP suivante :
         </para>
         <para>
             <code>fsockopen('tls://www.example.com', 443)</code>
@@ -180,7 +180,7 @@ $response = $client->request();]]>
         </para>
         <para>
             proxy_host devrait toujours être fourni. Si ça n'est pas le cas, alors le client retournera
-            sur une connection Socket par défaut. proxy_port est par défaut à '8080'.
+            sur une connexion Socket par défaut. proxy_port est par défaut à '8080'.
         </para>
         <para>
             proxy_user et proxy_pass ne sont requis que si le serveur Proxy demande une authentification.
@@ -219,13 +219,13 @@ $client = Zend_Http_Client('http://www.example.com', $config);
     <sect2 id="zend.http.client.adapters.test">
         <title>Adaptateur Test</title>
         <para>
-            Il est quelque fois difficile de tester une application qui a besoin d'une connection HTTP.
+            Il est quelque fois difficile de tester une application qui a besoin d'une connexion HTTP.
             Par exemple, une application qui est en charge de lire un flux RSS aura besoin d'une
-            connection, qui n'est pas tout le temps disponible.
+            connexion, qui n'est pas tout le temps disponible.
         </para>
         <para>
             C'est pour cette raison que l'adaptateur Zend_Http_Client_Adapter_Test est présent. Vous pouvez
-            de cette manière écrire vos applications, et lors de la phase de tests, passer votre connection
+            de cette manière écrire vos applications, et lors de la phase de tests, passer votre connexion
             sur l'adaptateur Test (mock object).
         </para>
         <para>
@@ -265,7 +265,7 @@ $response = $client->request('GET');
             L'exemple ci dessus montre comment préconfigurer la réponse qui sera retournée lors
             d'une requête de votre objet client. Ainsi lors des tests, votre application continuera
             de se comporter normallement, elle aura tout simplement été trompée (mock).
-            Aucune connection HTTP n'est dans ce cas là nécéssaire.
+            Aucune connexion HTTP n'est dans ce cas là nécéssaire.
         </para>
 
         <para>
@@ -328,7 +328,7 @@ $adapter->addResponse(
     </sect2>
 
     <sect2 id="zend.http.client.adapters.extending">
-        <title>Créer vos propres adaptateurs de connection</title>
+        <title>Créer vos propres adaptateurs de connexion</title>
         <para>
             Vous pouvez créer vos propres adaptateurs, si vous avez un besoin spécial à utiliser.
             Par exemple, des possibilités de cache, ou des sockets persistantes.
@@ -340,7 +340,7 @@ $adapter->addResponse(
             de l'interface :
         </para>
         <example id="zend.http.client.adapters.extending.example-1">
-            <title>Création de votre propre adaptateur de connection</title>
+            <title>Création de votre propre adaptateur de connexion</title>
             <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
@@ -364,7 +364,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function connect($host, $port = 80, $secure = false)
     {
-        // Etablit la connection au serveur
+        // Etablit la connexion au serveur
     }
 
     /**
@@ -394,12 +394,12 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
     }
 
     /**
-     * Ferme la connection avec le serveur
+     * Ferme la connexion avec le serveur
      *
      */
     public function close()
     {
-        // Ferme la connection, appelée en dernière.
+        // Ferme la connexion, appelée en dernière.
     }
 }
 

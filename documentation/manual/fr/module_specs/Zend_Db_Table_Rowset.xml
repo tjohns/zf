@@ -254,7 +254,7 @@ $rowset = unserialize($serializedRowset);
 $bugs = new Bugs();
 
 // Reconnecte le rowset à une table, et par
-// conséquent, à la connection vers la base de données active
+// conséquent, à la connexion vers la base de données active
 $rowset->setTable($bugs);
 
 $row = $rowset->current();

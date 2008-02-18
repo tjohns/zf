@@ -72,7 +72,7 @@ array(
       'rating'      => 'l'évaluation PICS du canal', // optionel, ignoré si le flux est de type atom
       'cloud'       => array(
                              'domain'            => 'domaine du nuage, ex. rpc.sys.com' // obligatoire
-                             'port'              => 'port de connection' // optionel, par défault port 80
+                             'port'              => 'port de connexion' // optionel, par défault port 80
                              'path'              => 'chemin du nuage, ex. /RPC2' // obligatoire
                              'registerProcedure' => 'procédure à appeler, ex. myCloud.rssPleaseNotify' // obligatoire
                              'protocol'          => 'protocole à utiliser , ex. soap ou xml-rpc' // obligatoire

@@ -110,12 +110,12 @@ $mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));]]
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connection à Pop3
+// connexion à Pop3
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'exemple.com'
                                          'user'     => 'test',
                                          'password' => 'test'));
 
-// connection à Imap
+// connexion à Imap
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'exemple.com'
                                          'user'     => 'test',
                                          'password' => 'test'));
@@ -474,7 +474,7 @@ $mail->selectFolder($folder);]]>
             <title>Utiliser NOOP</title>
 
             <para>
-                Si vous employez un stockage distant et avez une longue tâche vous pourriez devoir maintenir la connection persistante par l'intermédiaire du noop :
+                Si vous employez un stockage distant et avez une longue tâche vous pourriez devoir maintenir la connexion persistante par l'intermédiaire du noop :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -482,11 +482,11 @@ foreach ($mail as $message) {
 
     // faire qqch...
 
-    $mail->noop(); // maintient la connection
+    $mail->noop(); // maintient la connexion
 
     // faire autre chose...
 
-    $mail->noop(); // maintient la connection
+    $mail->noop(); // maintient la connexion
 }]]>
     		</programlisting>
 
@@ -547,7 +547,7 @@ class Example_Mail_Protocol_Pop3_Knock extends Zend_Mail_Protocol_Pop3
 
     public function __construct($host, $port = null)
     {
-        // pas d'auto-connection dans cette classe
+        // pas d'auto-connexion dans cette classe
         $this->host = $host;
         $this->port = $port;
     }

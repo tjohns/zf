@@ -11,7 +11,7 @@
 
             <programlisting role="php"><![CDATA[<?php
 /**
- * Connection au serveur framework.zend.com server
+ * Connexion au serveur framework.zend.com server
  */
 require_once 'Zend/Rest/Client.php';
 

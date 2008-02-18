@@ -17,7 +17,7 @@
             Zend_Uri_Http), et un tableau de configuration. Ils peuvent aussi être
             définis avec des méthodes plus tard : setUri() et setConfig().
             <example id="zend.http.client.introduction.example-1">
-                <title>Instantiation d'un objet Zend_Http_Client</title>
+                <title>Instanciation d'un objet Zend_Http_Client</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
 
@@ -79,7 +79,7 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>timeout</entry>
-                            <entry>Connection timeout (secondes)</entry>
+                            <entry>Connexion timeout (secondes)</entry>
                             <entry>entier</entry>
                             <entry>10</entry>
                         </row>

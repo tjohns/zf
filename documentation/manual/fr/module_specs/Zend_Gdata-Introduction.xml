@@ -269,7 +269,7 @@ $entry->cell = $cell;
 
         <para>
             Zend_Gdata assumes your PHP application is running on a host that
-            has a direct connection to the Internet.
+            has a direct connexion to the Internet.
             The Zend_Gdata client operates by contacting Google Data servers.
         </para>
 

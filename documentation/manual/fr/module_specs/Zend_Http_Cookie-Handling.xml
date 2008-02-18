@@ -62,7 +62,7 @@
                         </listitem>
                         <listitem>
                             <para>
-                            <code>$secure</code>: Booléen, Si le cookie doit être transmis via connection sécurisée (HTTPS)
+                            <code>$secure</code>: Booléen, Si le cookie doit être transmis via connexion sécurisée (HTTPS)
                             uniquement (optionnel, défaut à FALSE)
                             </para>
                         </listitem>
@@ -84,7 +84,7 @@
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
 
 // En prenant l'en-tête de réponse HTTP 'Set-Cookie'
-// Ce cookie n'expirera pas et ne sera envoyé que sur des connections sécurisées
+// Ce cookie n'expirera pas et ne sera envoyé que sur des connexions sécurisées
 $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
 
 // Si le domaine n'est pas présent, spécifiez le manuellement :
@@ -162,7 +162,7 @@ echo $cookie;]]>
                 <listitem>
                     <para>
                     <code>boolean isSecure()</code>: Regarde si le cookie est un cookie secure. Si c'est le cas, les navigateurs
-                    ont pour instruction de ne les envoyer que sur des connections sécurisées (HTTPS).
+                    ont pour instruction de ne les envoyer que sur des connexions sécurisées (HTTPS).
                     </para>
                 </listitem>
                 <listitem>
@@ -246,7 +246,7 @@ $cookie->match('https://www.example.com/somedir/foo.php');
 // Retournera true
 
 $cookie->match('http://www.example.com/somedir/foo.php');
-// Retournera false, car la connection n'est pas sécurisée
+// Retournera false, car la connexion n'est pas sécurisée
 
 $cookie->match('https://otherexample.com/somedir/foo.php');
 // Retournera false, le domaine est incorrect
@@ -267,7 +267,7 @@ $cookie->match('http://www.example.com/');
 // Retournera true
 
 $cookie->match('https://www.example.com/');
-// Will return true - non secure cookies can go over secure connections as well!
+// Will return true - non secure cookies can go over secure connexions as well!
 
 $cookie->match('http://subdomain.example.com/');
 // Retournera false, domaine incorrect
@@ -280,7 +280,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
     </sect2>
 
     <sect2 id="zend.http.cookies.cookiejar">
-        <title>Classe Zend_Http_CookieJar : Instantiation</title>
+        <title>Classe Zend_Http_CookieJar : Instanciation</title>
         <para>
             Dans la plupart des cas, il ne sera pas nécéssaire d'instantier soi-même un objet
             Zend_Http_CookieJar object. Si vous voulez un conteneur de cookie (CookieJar) attaché

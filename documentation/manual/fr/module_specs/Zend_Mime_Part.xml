@@ -16,12 +16,12 @@
     </sect2>
 
     <sect2 id="zend.mime.part.instantiation">
-        <title>Instantiation</title>
+        <title>Instanciation</title>
 
         <para>
             <code>Zend_Mime_Part</code> est instantiée avec une chaîne de caractères qui
             représente le contenu de cette nouvelle partie. Le type doit être <code>OCTET-STREAM</code>,
-            et l'encodage 8 bits. Après instantiation de <code>Zend_Mime_Part</code>, les métas-informations
+            et l'encodage 8 bits. Après instanciation de <code>Zend_Mime_Part</code>, les métas-informations
             peuvent être définies en accédant directement aux attributs :
         </para>
 
