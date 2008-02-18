@@ -552,7 +552,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @param  bool $flag 
      * @return Zend_Form_Element
      */
-    public function setArray($flag)
+    public function setIsArray($flag)
     {
         $this->_isArray = (bool) $flag;
         return $this;
@@ -1050,18 +1050,37 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $this->_errors   = array();
         $result          = true;
         $translator      = $this->getTranslator();
+        $isArray         = $this->isArray();
         foreach ($this->getValidators() as $key => $validator) {
             if (method_exists($validator, 'setTranslator')) {
                 $validator->setTranslator($translator);
             }
 
+            if ($isArray && is_array($value)) {
+                $message = array();
+                $errors  = array();
+                foreach ($value as $val) {
+                    if (!$validator->isValid($val, $context)) {
+                        $result = false;
+                        $messages = array_merge($messages, $validator->getMessages());
+                        $errors   = array_merge($errors,   $validator->getErrors());
+                    }
+                }
+                if ($result) {
+                    continue;
+                }
+            }
             if ($validator->isValid($value, $context)) {
                 continue;
+            } else {
+                $result = false;
+                $messages = $validator->getMessages();
+                $errors   = array_keys($messages);
             }
 
             $result          = false;
-            $this->_messages = array_merge($this->_messages, $validator->getMessages());
-            $this->_errors   = array_merge($this->_errors,   $validator->getErrors());
+            $this->_messages = array_merge($this->_messages, $messages);
+            $this->_errors   = array_merge($this->_errors,   $errors);
 
             if ($validator->zfBreakChainOnFailure) {
                 break;

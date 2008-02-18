@@ -102,7 +102,7 @@ class Zend_Form_Decorator_ViewHelperTest extends PHPUnit_Framework_TestCase
     public function testAppendsBracketsIfElementIsAnArray()
     {
         $element = $this->getElement();
-        $element->setArray(true);
+        $element->setIsArray(true);
         $name = $this->decorator->getName();
         $expect = $element->getName() . '[]';
         $this->assertEquals($expect, $name);

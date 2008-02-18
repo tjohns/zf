@@ -239,9 +239,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testCanSetArrayFlag()
     {
         $this->testElementIsNotArrayByDefault();
-        $this->element->setArray(true);
+        $this->element->setIsArray(true);
         $this->assertTrue($this->element->isArray());
-        $this->element->setArray(false);
+        $this->element->setIsArray(false);
         $this->assertFalse($this->element->isArray());
     }
 
@@ -718,6 +718,13 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail('Validating an element should work');
         }
+    }
+
+    public function testCanValidateArrayValue()
+    {
+        $this->element->setIsArray(true)
+             ->addValidator('InArray', false, array(array('foo', 'bar', 'baz', 'bat')));
+        $this->assertTrue($this->element->isValid(array('foo', 'bat')));
     }
 
     public function testIsValidPopulatesElementValue()
