@@ -127,9 +127,9 @@
                     In order to do some of its work, <code>getParam()</code> actually
                     retrieves from several sources. In order of priority, these
                     include: user parameters set via <code>setParam()</code>,
-                    <code>GET</code> parameters, <code>POST</code> parameters,
-                    and finally <code>COOKIE</code> parameters. Be aware of this
-                    when pulling data via this method.
+                    <code>GET</code> parameters, and finally <code>POST</code>
+                    parameters.  Be aware of this when pulling data via this
+                    method.
                 </para>
 
                 <para>
