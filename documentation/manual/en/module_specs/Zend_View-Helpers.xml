@@ -142,10 +142,13 @@
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code> generates
+                <code>htmlList($items, $ordered, $attribs, $escape):</code> generates
                 unordered and ordered lists based on the <code>$items</code>
                 passed to it. If <code>$items</code> is a multidimensional
-                array, a nested list will be built.
+                array, a nested list will be built. If the <code>$escape</code>
+                flag is true (default), individual items will be escaped using
+                the view objects registered escaping mechanisms; pass a false
+                value if you want to allow markup in your lists.
             </para></listitem>
 
         </itemizedlist>
