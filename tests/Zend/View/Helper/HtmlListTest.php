@@ -4,6 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HtmlListTest::main");
 }
 
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -158,6 +159,33 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<li>one <b>small</b> test</li>', $list);
     } 
 
+    /**
+     * ZF-2527
+     */
+    public function testEscapeFlagHonoredForMultidimensionalLists()
+    {
+        $items = array('<b>one</b>', array('<b>four</b>', '<b>five</b>', '<b>six</b>'), '<b>two</b>', '<b>three</b>');
+
+        $list = $this->helper->htmlList($items, false, false, false);
+
+        foreach ($items[1] as $item) {
+            $this->assertContains($item, $list);
+        }
+    }
+
+    /**
+     * ZF-2527
+     */
+    public function testAttribsPassedIntoMultidimensionalLists()
+    {
+        $items = array('one', array('four', 'five', 'six'), 'two', 'three');
+
+        $list = $this->helper->htmlList($items, false, array('class' => 'foo'));
+
+        foreach ($items[1] as $item) {
+            $this->assertRegexp('#<ul[^>]*?class="foo"[^>]*>.*?(<li>' . $item . ')#', $list);
+        }
+    }
 }
 
 // Call Zend_View_Helper_HtmlListTest::main() if this source file is executed directly.
