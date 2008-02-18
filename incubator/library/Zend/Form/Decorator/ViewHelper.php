@@ -44,6 +44,16 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 {
     /**
+     * Element types that represent buttons
+     * @var array
+     */
+    protected $_buttonTypes = array(
+        'Zend_Form_Element_Button',
+        'Zend_Form_Element_Reset',
+        'Zend_Form_Element_Submit',
+    );
+
+    /**
      * View helper to use when rendering
      * @var string
      */
@@ -169,6 +179,28 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
     }
 
     /**
+     * Get value
+     *
+     * If element type is one of the button types, returns the label.
+     * 
+     * @param  Zend_Form_Element $element 
+     * @return string|null
+     */
+    public function getValue($element)
+    {
+        if (!$element instanceof Zend_Form_Element) {
+            return null;
+        }
+
+        $type = $element->getType();
+        if (in_array($type, $this->_buttonTypes)) {
+            return $element->getLabel();
+        }
+
+        return $element->getValue();
+    }
+
+    /**
      * Render an element using a view helper
      *
      * Determine view helper from 'viewHelper' option, or, if none set, from 
@@ -193,9 +225,11 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             $element->getMultiOptions();
         }
 
-        $helper         = $this->getHelper();
-        $separator      = $this->getSeparator();
-        $elementContent = $view->$helper($this->getName(), $element->getValue(), $this->getElementAttribs(), $element->options);
+        $helper    = $this->getHelper();
+        $separator = $this->getSeparator();
+        $value     = $this->getValue($element);
+
+        $elementContent = $view->$helper($this->getName(), $value, $this->getElementAttribs(), $element->options);
         switch ($this->getPlacement()) {
             case self::APPEND:
                 return $content . $separator . $elementContent;

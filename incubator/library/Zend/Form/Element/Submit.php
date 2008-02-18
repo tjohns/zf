@@ -35,7 +35,7 @@ require_once 'Zend/Form/Element/Xhtml.php';
 class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
 {
     /**
-     * Use formSubmit view helper by default
+     * Default view helper to use
      * @var string
      */
     public $helper = 'formSubmit';
@@ -50,25 +50,24 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
     public function __construct($spec, $options = null)
     {
         if (is_string($spec) && ((null !== $options) && is_string($options))) {
-            $options = array('value' => $options);
+            $options = array('label' => $options);
         }
 
         parent::__construct($spec, $options);
     }
 
     /**
-     * Return value
+     * Return label
      *
-     * If no value is present, returns the currently set name.
+     * If no label is present, returns the currently set name.
      *
-     * If a translator is present, returns the translated value. Otherwise, 
-     * returns the filtered value.
+     * If a translator is present, returns the translated label.
      * 
      * @return string
      */
-    public function getValue()
+    public function getLabel()
     {
-        $value = parent::getValue();
+        $value = parent::getLabel();
 
         if (null === $value) {
             $value = $this->getName();
@@ -79,5 +78,40 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
         }
 
         return $value;
+    }
+
+    /**
+     * Has this submit button been selected?
+     * 
+     * @return bool
+     */
+    public function isChecked()
+    {
+        $value = $this->getValue();
+
+        if (empty($value)) {
+            return false;
+        }
+        if ($value != $this->getLabel()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Default decorators
+     *
+     * Uses only 'Submit' and 'DtDdWrapper' decorators by default.
+     * 
+     * @return void
+     */
+    protected function _loadDefaultDecorators()
+    {
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('ViewHelper')
+                 ->addDecorator('DtDdWrapper');
+        }
     }
 }

@@ -85,19 +85,19 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('formButton', $helper);
     }
 
-    public function testGetValueReturnsTranslatedValueIfTranslatorIsRegistered()
+    public function testGetLabelReturnsTranslatedLabelIfTranslatorIsRegistered()
     {
         $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
         $translate = new Zend_Translate('array', $translations, 'en');
         $this->element->setTranslator($translate)
-                      ->setValue('submit');
-        $test = $this->element->getValue();
+                      ->setLabel('submit');
+        $test = $this->element->getLabel();
         $this->assertEquals($translations['submit'], $test);
     }
 
-    public function testTranslatedValueIsRendered()
+    public function testTranslatedLabelIsRendered()
     {
-        $this->testGetValueReturnsTranslatedValueIfTranslatorIsRegistered();
+        $this->testGetLabelReturnsTranslatedLabelIfTranslatorIsRegistered();
         $this->element->setView($this->getView());
         $decorator = $this->element->getDecorator('ViewHelper');
         $decorator->setElement($this->element);

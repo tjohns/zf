@@ -68,33 +68,35 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element instanceof Zend_Form_Element);
     }
 
-    public function testSubmitElementUsesSubmitHelperInViewHelperDecoratorByDefault()
+    public function testSubmitElementUsesViewHelperDecoratorByDefault()
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
-        $decorator->setElement($this->element);
-        $helper = $decorator->getHelper();
-        $this->assertEquals('formSubmit', $helper);
     }
 
-    public function testGetValueReturnsNameIfNoValuePresent()
+    public function testSubmitElementSpecifiesFormSubmitAsDefaultHelper()
     {
-        $this->assertEquals($this->element->getName(), $this->element->getValue());
+        $this->assertEquals('formSubmit', $this->element->helper);
     }
 
-    public function testGetValueReturnsTranslatedValueIfTranslatorIsRegistered()
+    public function testGetLabelReturnsNameIfNoValuePresent()
+    {
+        $this->assertEquals($this->element->getName(), $this->element->getLabel());
+    }
+
+    public function testGetLabelReturnsTranslatedLabelIfTranslatorIsRegistered()
     {
         $translations = include dirname(__FILE__) . '/../_files/locale/array.php';
         $translate = new Zend_Translate('array', $translations, 'en');
         $this->element->setTranslator($translate)
-                      ->setValue('submit');
-        $test = $this->element->getValue();
+                      ->setLabel('submit');
+        $test = $this->element->getLabel();
         $this->assertEquals($translations['submit'], $test);
     }
 
-    public function testTranslatedValueIsRendered()
+    public function testTranslatedLabelIsRendered()
     {
-        $this->testGetValueReturnsTranslatedValueIfTranslatorIsRegistered();
+        $this->testGetLabelReturnsTranslatedLabelIfTranslatorIsRegistered();
         $this->element->setView($this->getView());
         $decorator = $this->element->getDecorator('ViewHelper');
         $decorator->setElement($this->element);
@@ -102,27 +104,46 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('/<(input|button)[^>]*?value="Submit Button"/', $html);
     }
 
-    public function testConstructorSetsValueToNameIfNoValueProvided()
+    public function testConstructorSetsLabelToNameIfNoLabelProvided()
     {
         $submit = new Zend_Form_Element_Submit('foo');
         $this->assertEquals('foo', $submit->getName());
-        $this->assertEquals('foo', $submit->getValue());
+        $this->assertEquals('foo', $submit->getLabel());
     }
 
-    public function testCanPassValueAsParameterToConstructor()
+    public function testCanPassLabelAsParameterToConstructor()
     {
         $submit = new Zend_Form_Element_Submit('foo', 'Label');
-        $this->assertEquals('Label', $submit->getValue());
+        $this->assertEquals('Label', $submit->getLabel());
     }
 
-    public function testValueIsTranslatedWhenTranslationAvailable()
+    public function testLabelIsTranslatedWhenTranslationAvailable()
     {
         require_once 'Zend/Translate.php';
         $translations = array('Label' => 'This is the Submit Label');
         $translate = new Zend_Translate('array', $translations);
         $submit = new Zend_Form_Element_Submit('foo', 'Label');
         $submit->setTranslator($translate);
-        $this->assertEquals($translations['Label'], $submit->getValue());
+        $this->assertEquals($translations['Label'], $submit->getLabel());
+    }
+
+    public function testIsCheckedReturnsFalseWhenNoValuePresent()
+    {
+        $this->assertFalse($this->element->isChecked());
+    }
+
+    public function testIsCheckedReturnsFalseWhenValuePresentButDoesNotMatchLabel()
+    {
+        $this->assertFalse($this->element->isChecked());
+        $this->element->setValue('bar');
+        $this->assertFalse($this->element->isChecked());
+    }
+
+    public function testIsCheckedReturnsTrueWhenValuePresentAndMatchesLabel()
+    {
+        $this->testIsCheckedReturnsFalseWhenNoValuePresent();
+        $this->element->setValue('foo');
+        $this->assertTrue($this->element->isChecked());
     }
 }
 

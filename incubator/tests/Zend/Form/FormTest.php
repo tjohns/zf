@@ -772,6 +772,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSettingElementDefaultsSetsElementValuesToNullIfNotInDefaultsArray()
+    {
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->baz->setValue('testing');
+        $values = array(
+            'foo' => 'foovalue',
+            'bat' => 'batvalue'
+        );
+        $this->form->setDefaults($values);
+        $this->assertEquals('foovalue', $this->form->foo->getValue());
+        $this->assertEquals('batvalue', $this->form->bat->getValue());
+        $this->assertNull($this->form->baz->getValue());
+        $this->assertNull($this->form->bar->getValue());
+    }
+
     public function testCanRetrieveSingleElementValue()
     {
         $this->form->addElement('text', 'foo', array('value' => 'foovalue'));
@@ -1118,7 +1133,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $subForm->addSubForm($subSubForm, 'subSub');
 
         $form->addSubForm($subForm, 'sub')
-             ->addElement('submit', 'save', array('value' => 'submit'));
+             ->addElement('submit', 'save', array('value' => 'submit', 'ignore' => true));
 
 
         $data = array('foobar' => array(
@@ -1134,7 +1149,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($form->isValid($data));
 
         $values = $form->getValues();
-        $data['foobar']['save'] = 'submit';
         $this->assertEquals($data, $values);
     }
 

@@ -978,14 +978,28 @@ class Zend_Form implements Iterator, Countable
 
     /**
      * Set default values for elements
+     *
+     * If an element's name is not specified as a key in the array, its value 
+     * is set to null.
      * 
      * @param  array $defaults 
      * @return Zend_Form
      */
     public function setDefaults(array $defaults)
     {
-        foreach ($defaults as $key => $value) {
-            $this->setDefault($key, $value);
+        foreach ($this->getElements() as $name => $element) {
+            if (array_key_exists($name, $defaults)) {
+                $this->setDefault($name, $defaults[$name]);
+            } else {
+                $this->setDefault($name, null);
+            }
+        }
+        foreach ($this->getSubForms() as $name => $form) {
+            if (array_key_exists($name, $defaults)) {
+                $form->setDefaults($defaults[$name]);
+            } else {
+                $form->setDefaults($defaults);
+            }
         }
         return $this;
     }
@@ -1641,9 +1655,7 @@ class Zend_Form implements Iterator, Countable
         foreach ($this->getElements() as $key => $element) {
             $element->setTranslator($translator);
             if (!isset($data[$key])) {
-                if ($element->isRequired()) {
-                    $valid = $element->isValid(null, $data) && $valid;
-                }
+                $valid = $element->isValid(null, $data) && $valid;
             } else {
                 $valid = $element->isValid($data[$key], $data) && $valid;
             }
