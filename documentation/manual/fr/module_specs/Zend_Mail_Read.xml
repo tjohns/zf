@@ -615,67 +615,59 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             <title>Utilisation des Quotas (since 1.5)</title>
 
             <para>
-            <code>Zend_Mail_Storage_Writable_Maildir</code> has support for Maildir++ quotas. It's disabled by default,
-            but it's possible to use it manually, if the automatic checks are not desired (this means
-            <code>appendMessage()</code>, <code>removeMessage()</code> and <code>copyMessage()</code> do no checks
-            and do not add entry to the maildirsize file). If enabled an exception is thrown if you try to write
-            to the maildir if it's already over quota.
+                <code>Zend_Mail_Storage_Writable_Maildir</code> supporte les quotas Maildir++. Ceci est désactivé par défaut, mais il est possible de l'utiliser manuellement, si la vérification automatique n'est pas souhaitée (ce qui veut dire que <code>appendMessage()</code>, <code>removeMessage()</code> et <code>copyMessage()</code> ne vérifie pas et n'ajoute pas d'entrée dans le fichier de contrôle de la taille du dossier de mails). Si vous l'activez une exception sera levée si vous tentez d'écrire dans le dossier de mails et qu'il a déjà atteint son quota.
             </para>
 
             <para>
-            There are three methods used for quotas: <code>getQuota()</code>, <code>setQuota()</code> and
-            <code>checkQuota()</code>:
+                Il existe trois méthodes pour les quotas : <code>getQuota()</code>, <code>setQuota()</code> et <code>checkQuota()</code>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/mail/'));
-$mail->setQuota(true); // true to enable, false to disable
-echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
-// check quota can be used even if quota checks are disabled
-echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";]]>
+$mail->setQuota(true); // true pour activer, false pour désactiver
+echo 'La vérification du quota est maintenant ', $mail->getQuota() ? 'active' : 'inactive', "\n";
+// la vérification du quota peut être utilisée si celle-ci est désactivée
+echo 'Vous êtes ', $mail->checkQuota() ? 'hors quota' : 'dans le quota', "\n";]]>
             </programlisting>
 
             <para>
-            <code>checkQuota()</code> can also return a more detailed response:
+                <code>checkQuota()</code> peut aussi retournée une réponse plus détaillée :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $quota = $mail->checkQuota(true);
-echo 'You are ', $quota['over_quota'] ? 'over quota' : 'not over quota', "\n";
-echo 'You have ', $quota['count'], ' of ', $quota['quota']['count'], ' messages and use ';
-echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';]]>
+echo 'Vous êtes ', $quota['over_quota'] ? 'hors quota' : 'dans le quota', "\n";
+echo 'Vous avez ', $quota['count'], ' de ', $quota['quota']['count'], ' messages et vous utilisez ';
+echo $quota['size'], ' de ', $quota['quota']['size'], ' octets';]]>
             </programlisting>
 
             <para>
-            If you want to specify your own quota instead of using the one specified in the maildirsize file you
-            can do with <code>setQuota()</code>:
+                Si vous voulez spécifier votre propre quota plutôt que d'utiliser celui spécifié dans le fichier de contrôle de la taille du dossier de mails, vous pouvez le faire avec <code>setQuota()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// message count and octet size supported, order does matter
+// le nombre de messages et la taille en octet sont supportés, l'ordre est important
 $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
             </programlisting>
 
             <para>
-            To add your own quota checks use single letters as key and they are preserved (but obviously not checked).
-            It's also possible to extend  <code>Zend_Mail_Storage_Writable_Maildir</code> to define your own quota only
-            if the maildirsize file is missing (which can happen in Maildir++):
+                Pour ajouter vos propres vérifications de quota, utilisez des caractères uniques en tant que clé et ils seront préservés (mais évidemment non vérifié). Il est aussi possible d'étendre <code>Zend_Mail_Storage_Writable_Maildir</code> pour définir votre propre quota seulement si le fichier de contrôle de la taille du dossier de mails est absent (qui peut se produire dans Maildir++) :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
-	// getQuota is called with $fromStorage = true by quota checks
+class Exemple_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
+	// getQuota est appelé avec $fromStorage = true par la vérification de quota
 	public function getQuota($fromStorage = false) {
 		try {
 			return parent::getQuota($fromStorage);
 		} catch (Zend_Mail_Storage_Exception $e) {
 			if (!$fromStorage) {
-				// unknown error:
+				// Erreur inconnue
 				throw $e;
 			}
-			// maildirsize file must be missing
+			// le fichier de contrôle de la taille du dossier de mails doit être absent
 
-			list($count, $size) = get_quota_from_somewhere_else();
+			list($count, $size) = get_un_autre_quota();
 			return array('count' => $count, 'size' => $size);
 		}
 	}
