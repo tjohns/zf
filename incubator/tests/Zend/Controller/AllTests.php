@@ -28,7 +28,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_AllTests::main');
 }
 
-require_once 'Zend/Controller/Action/Helper/AllTests.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 
@@ -50,7 +49,6 @@ class Zend_Controller_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
-        $suite->addTest(Zend_Controller_Action_Helper_AllTests::suite());
         $suite->addTestSuite('Zend_Controller_Dispatcher_StandardTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
         

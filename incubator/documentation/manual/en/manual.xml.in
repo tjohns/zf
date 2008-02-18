@@ -20,11 +20,6 @@
         </copyright>
     </bookinfo>
 
-    <chapter id="zend.controller">
-        <title>Zend_Controller</title>
-        <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" />
-    </chapter>
-
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
         <xi:include href="module_specs/Zend_Http_Server-Introduction.xml" />

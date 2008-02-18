@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Zend/Controller/Action/Helper/ActionStackTest.php';
 require_once 'Zend/Controller/Action/Helper/AjaxContextTest.php';
+require_once 'Zend/Controller/Action/Helper/AutoCompleteTest.php';
 require_once 'Zend/Controller/Action/Helper/ContextSwitchTest.php';
 require_once 'Zend/Controller/Action/Helper/FlashMessengerTest.php';
 require_once 'Zend/Controller/Action/Helper/JsonTest.php';
@@ -56,6 +57,7 @@ class Zend_Controller_Action_Helper_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
         $suite->addTestSuite('Zend_Controller_Action_Helper_ActionStackTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_AutoCompleteTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_ContextSwitchTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_AjaxContextTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
