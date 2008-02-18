@@ -64,6 +64,13 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     protected $_messages = array();
 
     /**
+     * Flag indidcating whether or not value should be obfuscated in error 
+     * messages
+     * @var bool
+     */
+    protected $_obscureValue = false;
+
+    /**
      * Array of validation failure message codes
      *
      * @var array
@@ -189,6 +196,10 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
             }
         }
 
+        if ($this->getObscureValue()) {
+            $value = str_repeat('*', strlen($value));
+        }
+
         $message = str_replace('%value%', (string) $value, $message);
         foreach ($this->_messageVariables as $ident => $property) {
             $message = str_replace("%$ident%", $this->$property, $message);
@@ -236,6 +247,29 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function getErrors()
     {
         return $this->_errors;
+    }
+
+    /**
+     * Set flag indicating whether or not value should be obfuscated in messages
+     * 
+     * @param  bool $flag 
+     * @return Zend_Validate_Abstract
+     */
+    public function setObscureValue($flag)
+    {
+        $this->_obscureValue = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Retrieve flag indicating whether or not value should be obfuscated in 
+     * messages
+     * 
+     * @return bool
+     */
+    public function getObscureValue()
+    {
+        return $this->_obscureValue;
     }
 
     /**

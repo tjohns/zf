@@ -150,6 +150,31 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertContains('bar', $messages['fooMessage']);
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
     }
+
+    public function testObscureValueFlagFalseByDefault()
+    {
+        $this->assertFalse($this->validator->getObscureValue());
+    }
+
+    public function testCanSetObscureValueFlag()
+    {
+        $this->testObscureValueFlagFalseByDefault();
+        $this->validator->setObscureValue(true);
+        $this->assertTrue($this->validator->getObscureValue());
+        $this->validator->setObscureValue(false);
+        $this->assertFalse($this->validator->getObscureValue());
+    }
+
+    public function testValueIsObfuscatedWheObscureValueFlagIsTrue()
+    {
+        $this->validator->setObscureValue(true);
+        $this->assertFalse($this->validator->isValid('foobar'));
+        $messages = $this->validator->getMessages();
+        $this->assertTrue(isset($messages['fooMessage']));
+        $message = $messages['fooMessage'];
+        $this->assertNotContains('foobar', $message);
+        $this->assertContains('******', $message);
+    }
 }
 
 class Zend_Validate_AbstractTest_Concrete extends Zend_Validate_Abstract

@@ -41,28 +41,21 @@ class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
     public $helper = 'formPassword';
 
     /**
-     * Override getMessages()
+     * Override isValid()
      *
-     * Mask value in error messages
+     * Ensure that validation error messages mask password value.
      * 
-     * @return array
+     * @param  string $value 
+     * @param  mixed $context 
+     * @return bool
      */
-    public function getMessages()
+    public function isValid($value, $context = null)
     {
-        $value = '';
-
-        $validators = $this->getValidators();
-        if (!empty($validators)) {
-            foreach ($validators as $validator) {
-                $value = $validator->value;
-                break;
+        foreach ($this->getValidators() as $validator) {
+            if ($validator instanceof Zend_Validate_Abstract) {
+                $validator->setObscureValue(true);
             }
         }
-
-        $masked = str_repeat('*', strlen($value));
-        foreach ($this->_messages as $code => $message) {
-            $this->_messages[$code] = str_replace($value, $masked, $message);
-        }
-        return $this->_messages;
+        return parent::isValid($value, $context);
     }
 }
