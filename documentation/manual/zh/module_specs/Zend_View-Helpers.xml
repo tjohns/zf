@@ -11,10 +11,20 @@
     </para>
 
     <note>
+        <title>Watch the Case</title>
         <para>
-            助手名称总是遵循驼峰格式，例如，它们从不以大写字母开头。
+            助手名称总是遵循驼峰格式，例如，它们从不以大写字母开头。类名是驼峰格式，但方法在执行时是驼峰格式。
         </para>
     </note>
+    <note>
+        <title> 缺省助手路径 </title>
+
+        <para>
+            即使调用 <code>setHelperPath()</code> 来重写当前的路径，缺省助手路径总是指向 Zend Framework 视图助手， 例如：'Zend/View/Helper/'，设置这个路径来确保缺省的助手工作。
+        </para>
+    </note>
+
+
 
     <para>
        在视图脚本中，你可以用<code>$this->helperName()</code>来调用helper。这时<code>Zend_View</code>会加载 <code>Zend_View_Helper_HelperName</code>类，建立一个对象实例，并调用它的<code>helperName()</code>方法。对象的实例会在 <code>Zend_View</code>的实例内一直存在，并可以被<code>$this->helperName()</code>重复调用。

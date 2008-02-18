@@ -1,0 +1,111 @@
+<sect3 id="zend.controller.actionhelpers.autocomplete">
+    <title>AutoComplete</title>
+
+    <para>
+        许多 AJAX javascript 函数库提供了以潜在地匹配结果的选择列表作为用户类别显示的自动完成。<code>AutoComplete</code> 助手简化返回可接受的响应给这样的方法。
+    </para>
+
+    <para>
+        因为并非所有的 JS 库用同样的方法实现自动完成，<code>AutoComplete</code> 助手提供了一些必要的基本的摘要函数给这些库并对个别库提供了具体实现。返回类型一般是 JSON 字符串数组、JSON 数组的数组 （每个成员的数组是一个用于创建选择列表的元数据（metadata）的关联数组） 或 HTML。
+    </para>
+
+    <para>
+        每个实现的基本用法都一样：
+    </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // Perform some logic...
+
+        // Encode and send response;
+        $this->_helper->autoCompleteDojo($data);
+
+        // Or explicitly:
+        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+
+        // Or simply prepare autocompletion response:
+        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+    }
+}
+?>]]></programlisting>
+
+    <para>
+        缺省地，自动完成做这些工作：
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                关闭布局（layouts）和视图解析器（ViewRenderer）。
+        </para></listitem>
+
+        <listitem><para>
+                设置合适的响应头。
+        </para></listitem>
+
+        <listitem><para>
+                用编码的/格式化的自动完成数据设置响应体。
+        </para></listitem>
+
+        <listitem><para>
+                发送响应。
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        可用的助手方法包括：
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                <code>disableLayouts()</code> 用来关闭布局和视图解析器。一般地，在 <code>prepareAutoCompletion()</code> 里调用它。
+        </para></listitem>
+
+        <listitem><para>
+                <code>encodeJson($data, $keepLayouts = false)</code> 给 JSON 编码，可选打开或关闭布局。一般地，在 <code>prepareAutoCompletion()</code> 里调用它。
+        </para></listitem>
+
+        <listitem><para>
+                <code>prepareAutoCompletion($data, $keepLayouts = false)</code> 用来为具体实现以响应格式准备数据，可选地打开或关闭布局，返回值因不同的实现而不同。
+        </para></listitem>
+
+        <listitem><para>
+                <code>sendAutoCompletion($data, $keepLayouts = false)</code> 用来为具体实现发送响应格式的数据，它调用 <code>prepareAutoCompletion()</code>，然后发送响应。
+        </para></listitem>
+
+        <listitem><para>
+                当把助手作为助手代理的方法来调用，使用 <code>direct($data, $sendNow = true, $keepLayouts = false)</code> 。The <code>$sendNow</code> flag 用来决定是否分别调用 <code>sendAutoCompletion()</code> 或 <code>prepareAutoCompletion()</code>。
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        目前 <code>AutoComplete</code> 支持下列 AJAX 库：
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <ulink url="http://dojotoolkit.org/">Dojo</ulink>。Dojo 自己当前没有正式的自动完成工具，但是 <ulink url="http://today.java.net/pub/a/today/2006/04/27/building-ajax-with-dojo-and-json.html"> Java.net 详细描述了一个方案 </ulink>，当用 Dojo 执行自动完成，一般参考这个方案，它期望一个包含字符串数组的 JSON 响应。
+            </para>
+
+            <para>
+                使用这个库的助手是 'AutoCompleteDojo'.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <ulink url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">Scriptaculous</ulink>。Script.aculo.us 期望特别格式的 HTML 响应。
+            </para>
+
+            <para>
+                使用这个库的助手是 'AutoCompleteScriptaculous'.
+            </para>
+        </listitem>
+    </itemizedlist>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->
