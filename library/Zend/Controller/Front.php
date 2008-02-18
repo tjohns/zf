@@ -778,11 +778,8 @@ class Zend_Controller_Front
      */
     public function throwExceptions($flag = null)
     {
-        if (true === $flag) {
-            $this->_throwExceptions = true;
-            return $this;
-        } elseif (false === $flag) {
-            $this->_throwExceptions = false;
+        if ($flag !== null) {
+            $this->_throwExceptions = (bool) $flag;
             return $this;
         }
 
