@@ -136,12 +136,25 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone implements Iter
         return $this->_container;
     }
 
+    /**
+     * Overloading: set property value
+     * 
+     * @param  string $key 
+     * @param  mixed $value 
+     * @return void
+     */
     public function __set($key, $value)
     {
         $container = $this->getContainer();
         $container[$key] = $value;
     }
 
+    /**
+     * Overloading: retrieve property
+     * 
+     * @param  string $key 
+     * @return mixed
+     */
     public function __get($key)
     {
         $container = $this->getContainer();
@@ -152,12 +165,24 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone implements Iter
         return null;
     }
 
+    /**
+     * Overloading: check if property is set
+     * 
+     * @param  string $key 
+     * @return bool
+     */
     public function __isset($key)
     {
         $container = $this->getContainer();
         return isset($container[$key]);
     }
 
+    /**
+     * Overloading: unset property
+     * 
+     * @param  string $key 
+     * @return void
+     */
     public function __unset($key)
     {
         $container = $this->getContainer();
@@ -166,6 +191,15 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone implements Iter
         }
     }
 
+    /**
+     * Overload
+     *
+     * Proxy to container methods
+     * 
+     * @param  string $method 
+     * @param  array $args 
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         $container = $this->getContainer();
@@ -182,37 +216,87 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone implements Iter
         throw new Zend_View_Exception('Method "' . $method . '" does not exist');
     }
 
-    public function __toString()
+    /**
+     * String representation
+     * 
+     * @return string
+     */
+    public function toString()
     {
         return $this->getContainer()->toString();
     }
 
+    /**
+     * Cast to string representation
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
+    }
+
+    /**
+     * Countable
+     * 
+     * @return int
+     */
     public function count()
     {
         $container = $this->getContainer();
         return count($container);
     }
 
+    /**
+     * ArrayAccess: offsetExists
+     * 
+     * @param  string|int $offset 
+     * @return bool
+     */
     public function offsetExists($offset)
     {
         return $this->getContainer()->offsetExists($offset);
     }
 
+    /**
+     * ArrayAccess: offsetGet
+     * 
+     * @param  string|int $offset 
+     * @return mixed
+     */
     public function offsetGet($offset)
     {
         return $this->getContainer()->offsetGet($offset);
     }
 
+    /**
+     * ArrayAccess: offsetSet
+     * 
+     * @param  string|int $offset 
+     * @param  mixed $value 
+     * @return void
+     */
     public function offsetSet($offset, $value)
     {
         return $this->getContainer()->offsetSet($offset, $value);
     }
 
+    /**
+     * ArrayAccess: offsetUnset
+     * 
+     * @param  string|int $offset 
+     * @return void
+     */
     public function offsetUnset($offset)
     {
         return $this->getContainer()->offsetUnset($offset);
     }
 
+    /**
+     * IteratorAggregate: get Iterator
+     * 
+     * @return Iterator
+     */
     public function getIterator()
     {
         return $this->getContainer()->getIterator();
