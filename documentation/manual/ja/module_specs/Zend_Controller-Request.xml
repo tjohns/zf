@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8135 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -128,9 +129,9 @@
                 <para>
                     <code>getParam()</code> は、実際にはユーザパラメータ以外のところからも情報を取得しています。
                     優先順位の高い順に並べると、まず最初は <code>setParam()</code>
-                    で設定したパラメータ、それ以降は <code>GET</code> パラメータ、
-                    <code>POST</code> パラメータ、<code>COOKIE</code>
-                    パラメータの順になります。このメソッドを使用する際には、この点に注意しましょう。
+                    で設定したパラメータ、それから <code>GET</code> パラメータ、
+                    <code>POST</code> パラメータの順になります。
+                    このメソッドを使用する際には、この点に注意しましょう。
                 </para>
 
                 <para>
