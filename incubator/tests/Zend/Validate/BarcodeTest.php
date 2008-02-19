@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -13,18 +14,17 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    UnitTests
+ * @package    Zend_Validate
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-// Call Zend_Soap_ServerTest::main() if this source file is executed directly.
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Validate_BarcodeTest::main');
-}
-
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Validate_Barcode */
 require_once 'Zend/Validate/Barcode.php';
@@ -33,11 +33,11 @@ require_once 'Zend/Validate/Barcode.php';
  * Zend_Validate_Barcode
  *
  * @category   Zend
- * @package    UnitTests
+ * @package    Zend_Validate
+ * @subpackage UnitTests
  * @uses       Zend_Validate_Barcode
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 class Zend_Validate_BarcodeTest extends PHPUnit_Framework_TestCase
 {
@@ -77,9 +77,4 @@ class Zend_Validate_BarcodeTest extends PHPUnit_Framework_TestCase
         $barcode->setType('ean-13');
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
-}
-
-// Call Zend_Soap_ServerTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Zend_Validate_BarcodeTest::main') {
-    Zend_Soap_ServerTest::main();
 }
