@@ -107,4 +107,9 @@ class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
         }
     }
 
+    public function getMediaGroup()
+    {
+        return $this->_mediaGroup;
+    }
+
 }

@@ -79,6 +79,11 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $query = new Zend_Gdata_YouTube_VideoQuery();
         $query->setVideoQuery('puppy');
         $feed = $this->gdata->getVideoFeed($query);
+        foreach ($feed as $videoEntry) {
+            $videoResponsesLink = $videoEntry->getVideoResponsesLink();
+            $videoRatingsLink = $videoEntry->getVideoRatingsLink();
+            $videoComplaintsLink = $videoEntry->getVideoComplaintsLink();
+        }
 
         $feed = $this->gdata->getVideoFeed($query->getQueryUrl());
     }

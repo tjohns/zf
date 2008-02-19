@@ -177,6 +177,137 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->verifyAllSamplePropertiesAreCorrect($this->entry);
     }
 
+    public function testGetVideoTitle() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals('"Crazy (Gnarles Barkley)" - Acoustic Cover', $videoEntry->getVideoTitle());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoTitle());
+    }
+
+    public function testGetVideoDescription() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals('Gnarles Barkley acoustic cover http://www.myspace.com/davidchoimusic', $videoEntry->getVideoDescription());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoDescription());
+    }
+
+    public function testGetVideoWatchPageUrl() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals('http://www.youtube.com/watch?v=UMFI1hdm96E', $videoEntry->getVideoWatchPageUrl());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoWatchPageUrl());
+    }
+
+    public function testGetVideoThumbnails() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $mediaThumbnails1 = $videoEntry->getMediaGroup()->getThumbnail();
+        $mediaThumbnails2 = $videoEntry->getVideoThumbnails();
+        $this->assertEquals(count($mediaThumbnails1), count($mediaThumbnails2)); 
+
+        $foundThumbnail = false;
+        foreach ($mediaThumbnails2 as $thumbnail) {
+            if ($thumbnail['url'] == 'http://img.youtube.com/vi/UMFI1hdm96E/1.jpg') {
+                $foundThumbnail = true;
+                $this->assertEquals(97, $thumbnail['height']); 
+                $this->assertEquals(130, $thumbnail['width']); 
+                $this->assertEquals('00:01:03.750', $thumbnail['time']); 
+            }
+        } 
+        $this->assertTrue($foundThumbnail);
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(array(), $newEntry->getVideoThumbnails());
+    }
+
+    public function testGetVideoTags() { 
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+
+        $keywords = $videoEntry->getMediaGroup()->getKeywords();
+        if (strlen(trim($keywords)) > 0) {
+            $keywordArray = split('(, *)|,', $keywords);
+        }
+
+        $tagArray = $videoEntry->getVideoTags();
+        $this->assertEquals(count($keywordArray), count($tagArray));
+        foreach ($keywordArray as $keyword) {
+            $this->assertTrue(in_array($keyword, $tagArray));
+        }
+        foreach ($tagArray as $tag) {
+            $this->assertTrue(in_array($tag, $keywordArray));
+        }
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(array(), $newEntry->getVideoTags());
+    }
+
+    public function testGetFlashPlayerUrl() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals('http://www.youtube.com/v/UMFI1hdm96E', $videoEntry->getFlashPlayerUrl());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getFlashPlayerUrl());
+    }
+
+    public function testGetVideoDuration() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals(255, $videoEntry->getVideoDuration());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoDuration());
+    }
+
+    public function testGetVideoViewCount() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals(113321, $videoEntry->getVideoViewCount());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoViewCount());
+    }
+
+    public function testGetVideoGeoLocation() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $geoLocation =  $videoEntry->getVideoGeoLocation();
+        $this->assertEquals('37.398529052734375', $geoLocation['latitude']);
+        $this->assertEquals('-122.0635986328125', $geoLocation['longitude']);
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoGeoLocation());
+    }
+
+    public function testGetVideoRatingInfo() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+
+        $ratingInfo = $videoEntry->getVideoRatingInfo();
+
+        $this->assertEquals(4.77, $ratingInfo['average']);
+        $this->assertEquals(1005, $ratingInfo['numRaters']);
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoRatingInfo());
+    }
+
+    public function testGetVideoCategory() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+        $this->assertEquals('Music', $videoEntry->getVideoCategory());
+
+        $newEntry = new Zend_Gdata_YouTube_VideoEntry();
+        $this->assertEquals(null, $newEntry->getVideoCategory());
+    }
+
     public function testConvertVideoEntryToAndFromString() {
         $this->entry->transferFromXML($this->entryText);
         $entryXml = $this->entry->saveXML();
@@ -185,6 +316,13 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->verifyAllSamplePropertiesAreCorrect($newVideoEntry);
         $newVideoEntryXml = $newVideoEntry->saveXML();
         $this->assertEquals($entryXml, $newVideoEntryXml);
+    }
+
+    public function testNoEmbed() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+
+        $this->assertNotEquals(null, $videoEntry->getNoEmbed());
     }
 
 }

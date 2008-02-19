@@ -475,6 +475,22 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     }
 
     /**
+     * Returns a string representation of the title of this feed or entry.  
+     * The title is an extremely short textual representation of this 
+     * resource and is found as an atom:title element in a feed or entry
+     *
+     * @return string
+     */
+    public function getTitleValue()
+    {
+        if (($titleObj = $this->getTitle()) != null) {
+            return $titleObj->getText();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Returns the title of this feed or entry.  The title is an extremely
      * short textual representation of this resource and is found as
      * an atom:title element in a feed or entry
