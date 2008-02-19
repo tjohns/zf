@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8161 -->
+<!-- EN-Revision: 8179 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -171,7 +171,7 @@ $row9->save();
         </example>
 
             <para>
-                <code>getRow()<code> は、位置がわかっている場合に
+                <code>getRow()</code> は、位置がわかっている場合に
                 行セット内の特定の行を取得するためのメソッドです。
                 しかし、この位置はゼロから数え始めることを忘れないようにしましょう。
                 <code>getRow()</code> の最初のパラメータは、位置を表す整数値です。
@@ -198,7 +198,7 @@ $row9->assigned_to = 'mmouse';
 $row9->save();
 }]]></programlisting>
 
-        </example>
+
 
         <para>
             個々の行オブジェクトにアクセスすると、後は
