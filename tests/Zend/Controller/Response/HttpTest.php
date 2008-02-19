@@ -538,6 +538,21 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(0 < count($exceptions));
         $this->assertEquals(200, $exceptions[0]->getCode());
     }
+
+    public function testHeaderNamesAreCaseInsensitive()
+    {
+        $this->_response->setHeader('X-Foo_Bar-Baz', 'value');
+        $this->_response->setHeader('X-FOO_bar-bAz', 'bat');
+
+        $headers = $this->_response->getHeaders();
+        $names   = array();
+        foreach ($headers as $header) {
+            $names[] = $header['name'];
+        }
+        $this->assertTrue(in_array('X-Foo-Bar-Baz', $names), var_export($headers, 1));
+        $this->assertFalse(in_array('X-Foo_Bar-Baz', $names));
+        $this->assertFalse(in_array('X-FOO_bar-bAz', $names));
+    }
 }
 
 require_once 'Zend/Controller/Action.php';
