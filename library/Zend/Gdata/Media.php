@@ -42,13 +42,15 @@ class Zend_Gdata_Media extends Zend_Gdata
     /**
      * Create Gdata_Media object
      *
-     * @param Zend_Http_Client $client The optional pre-configured HTTP client
+     * @param Zend_Http_Client $client (optional) The HTTP client to use when
+     *          when communicating with the Google Apps servers.
+     * @param string $applicationId The identity of the app in the form of Company-AppName-Version
      */
-    public function __construct($client = null)
+    public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0')
     {
         $this->registerPackage('Zend_Gdata_Media');
         $this->registerPackage('Zend_Gdata_Media_Extension');
-        parent::__construct($client);
+        parent::__construct($client, $applicationId);
     }
 
 }
