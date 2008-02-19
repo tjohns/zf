@@ -29,10 +29,10 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * - separator: separator to use between label and content (defaults to PHP_EOL)
  * - placement: whether to append or prepend label to content (defaults to prepend)
  * - tag: if set, used to wrap the label in an additional HTML tag
- * - optPrefix: a prefix to the label to use when the element is optional
- * - optSuffix: a suffix to the label to use when the element is optional
- * - reqPrefix: a prefix to the label to use when the element is required
- * - reqSuffix: a suffix to the label to use when the element is required
+ * - opt(ional)Prefix: a prefix to the label to use when the element is optional
+ * - opt(iona)lSuffix: a suffix to the label to use when the element is optional
+ * - req(uired)Prefix: a prefix to the label to use when the element is required
+ * - req(uired)Suffix: a suffix to the label to use when the element is required
  *
  * Any other options passed will be used as HTML attributes of the label tag.
  * 
