@@ -193,6 +193,24 @@ class Zend_Form_Decorator_HtmlTagTest extends PHPUnit_Framework_TestCase
         $html = $this->decorator->render('content');
         $this->assertRegexp('#(<div>).*?(content)#', $html, $html);
     }
+
+    public function testTagIsInitiallyDiv()
+    {
+        $this->assertEquals('div', $this->decorator->getTag());
+    }
+
+    public function testCanSetTag()
+    {
+        $this->testTagIsInitiallyDiv();
+        $this->decorator->setTag('dl');
+        $this->assertEquals('dl', $this->decorator->getTag());
+    }
+
+    public function testCanSetTagViaOption()
+    {
+        $this->decorator->setOption('tag', 'dl');
+        $this->assertEquals('dl', $this->decorator->getTag());
+    }
 }
 
 // Call Zend_Form_Decorator_HtmlTagTest::main() if this source file is executed directly.

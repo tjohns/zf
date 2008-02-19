@@ -54,6 +54,12 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     protected $_placement = null;
 
     /**
+     * HTML tag to use
+     * @var string
+     */
+    protected $_tag;
+
+    /**
      * @var Zend_Filter
      */
     protected $_tagFilter;
@@ -99,6 +105,39 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
     }
 
     /**
+     * Set tag to use
+     * 
+     * @param  string $tag 
+     * @return Zend_Form_Decorator_HtmlTag
+     */
+    public function setTag($tag)
+    {
+        $this->_tag = $this->normalizeTag($tag);
+        return $this;
+    }
+
+    /**
+     * Get tag
+     *
+     * If no tag is registered, either via setTag() or as an option, uses 'div'.
+     * 
+     * @return string
+     */
+    public function getTag()
+    {
+        if (null === $this->_tag) {
+            if (null === ($tag = $this->getOption('tag'))) {
+                $this->setTag('div');
+            } else {
+                $this->setTag($tag);
+                $this->removeOption('tag');
+            }
+        }
+
+        return $this->_tag;
+    }
+
+    /**
      * Get the formatted open tag
      * 
      * @param  string $tag 
@@ -134,12 +173,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
      */
     public function render($content)
     {
-        $tag     = 'div';
-        if (null !== ($tagOption = $this->getOption('tag'))) {
-            $tag = $this->normalizeTag($tagOption);
-            $this->removeOption('tag');
-        }
-
+        $tag       = $this->getTag();
         $placement = $this->getPlacement();
         $noAttribs = $this->getOption('noAttribs');
         $openOnly  = $this->getOption('openOnly');
