@@ -274,8 +274,16 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             $modifiersString .= $key . '="' . $this->_escape($value) . '" ';
         }
 
+        if ($this->view instanceof Zend_View_Abstract) {
+            $tpl = ($this->view->doctype()->isXhtml())
+                 ? '<meta %s="%s" content="%s" %s/>'
+                 : '<meta %s="%s" content="%s" %s>';
+        } else {
+            $tpl = '<meta %s="%s" content="%s" %s/>';
+        }
+
         $meta = sprintf(
-            '<meta %s="%s" content="%s" %s/>',
+            $tpl,
             $type,
             $this->_escape($item->$type),
             $this->_escape($item->content),

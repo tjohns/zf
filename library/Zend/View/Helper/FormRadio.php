@@ -122,6 +122,12 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         // ensure value is an array to allow matching multiple times
         $value = (array) $value;
 
+        // XHTML or HTML end tag?
+        $endTag = ' />';
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+            $endTag= '>';
+        }
+
         // add radio buttons to the list.
         foreach ($options as $opt_value => $opt_label) {
 
@@ -153,7 +159,8 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
                     . ' value="' . $this->view->escape($opt_value) . '"'
                     . $checked
                     . $disabled
-                    . $this->_htmlAttribs($attribs) .  ' />' 
+                    . $this->_htmlAttribs($attribs) 
+                    . $endTag
                     . (('append' == $labelPlacement) ? $opt_label : '')
                     . '</label>';
 

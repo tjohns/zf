@@ -70,6 +70,12 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
             $disabled = ' disabled="disabled"';
         }
 
+        // XHTML or HTML end tag?
+        $endTag = ' />';
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+            $endTag= '>';
+        }
+
         // build the element
         $xhtml = '<input type="checkbox"'
                . ' name="' . $this->view->escape($name) . '"'
@@ -77,8 +83,8 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
                . ' value="' . $this->view->escape($value) . '"'
                . $checked
                . $disabled
-               . $this->_htmlAttribs($attribs) 
-               . ' />';
+               . $this->_htmlAttribs($attribs)
+               . $endTag;
 
         return $xhtml;
     }

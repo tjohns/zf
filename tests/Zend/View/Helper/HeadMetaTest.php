@@ -4,9 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HeadMetaTest::main");
 }
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_View_Helper_HeadMeta */
 require_once 'Zend/View/Helper/HeadMeta.php';
@@ -16,6 +14,9 @@ require_once 'Zend/View/Helper/Placeholder/Registry.php';
 
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
+
+/** Zend_View */
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_View_Helper_HeadMeta.
@@ -43,8 +44,6 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_HeadMetaTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -57,13 +56,17 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $regKey = Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY;
-        if (Zend_Registry::isRegistered($regKey)) {
-            $registry = Zend_Registry::getInstance();
-            unset($registry[$regKey]);
+        foreach (array(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY, 'Zend_View_Helper_Doctype') as $key) {
+            if (Zend_Registry::isRegistered($key)) {
+                $registry = Zend_Registry::getInstance();
+                unset($registry[$key]);
+            }
         }
         $this->basePath = dirname(__FILE__) . '/_files/modules';
-        $this->helper = new Zend_View_Helper_HeadMeta();
+        $this->view     = new Zend_View();
+        $this->view->doctype('XHTML1_STRICT');
+        $this->helper   = new Zend_View_Helper_HeadMeta();
+        $this->helper->setView($this->view);
     }
 
     /**
@@ -305,6 +308,16 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
 
         $scripts = substr_count($string, '    <meta name=');
         $this->assertEquals(2, $scripts);
+    }
+
+    public function testStringRepresentationReflectsDoctype()
+    {
+        $this->view->doctype('HTML4_STRICT');
+        $this->helper->headMeta('some content', 'foo');
+        $test = $this->helper->toString();
+        $this->assertNotContains('/>', $test);
+        $this->assertContains('some content', $test);
+        $this->assertContains('foo', $test);
     }
 }
 

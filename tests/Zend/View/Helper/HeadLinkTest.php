@@ -17,6 +17,9 @@ require_once 'Zend/View/Helper/Placeholder/Registry.php';
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
 
+/** Zend_View */
+require_once 'Zend/View.php';
+
 /**
  * Test class for Zend_View_Helper_HeadLink.
  *
@@ -57,13 +60,16 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $regKey = Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY;
-        if (Zend_Registry::isRegistered($regKey)) {
-            $registry = Zend_Registry::getInstance();
-            unset($registry[$regKey]);
+        foreach (array(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY, 'Zend_View_Helper_Doctype') as $key) {
+            if (Zend_Registry::isRegistered($key)) {
+                $registry = Zend_Registry::getInstance();
+                unset($registry[$key]);
+            }
         }
         $this->basePath = dirname(__FILE__) . '/_files/modules';
+        $this->view = new Zend_View();
         $this->helper = new Zend_View_Helper_HeadLink();
+        $this->helper->setView($this->view);
     }
 
     /**
@@ -342,6 +348,15 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
 
         $scripts = substr_count($string, '    <link ');
         $this->assertEquals(2, $scripts);
+    }
+
+    public function testLinkRendersAsPlainHtmlIfDoctypeNotXhtml()
+    {
+        $this->view->doctype('HTML4_STRICT');
+        $this->helper->headLink(array('rel' => 'icon', 'src' => '/foo/bar'))
+                     ->headLink(array('rel' => 'foo', 'href' => '/bar/baz'));
+        $test = $this->helper->toString();
+        $this->assertNotContains(' />', $test);
     }
 }
 

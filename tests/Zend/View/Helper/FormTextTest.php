@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View.php';
 require_once 'Zend/View/Helper/FormText.php';
+require_once 'Zend/Registry.php';
 
 /**
  * Zend_View_Helper_FormTextTest 
@@ -27,8 +28,6 @@ class Zend_View_Helper_FormTextTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_FormTextTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -41,6 +40,10 @@ class Zend_View_Helper_FormTextTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        if (Zend_Registry::isRegistered('Zend_View_Helper_Doctype')) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry['Zend_View_Helper_Doctype']);
+        }
         $this->view = new Zend_View();
         $this->helper = new Zend_View_Helper_FormText();
         $this->helper->setView($this->view);
@@ -99,6 +102,19 @@ class Zend_View_Helper_FormTextTest extends PHPUnit_Framework_TestCase
         ));
 
         $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
+    }
+
+    public function testRendersAsHtmlByDefault()
+    {
+        $test = $this->helper->formText('foo', 'bar');
+        $this->assertNotContains(' />', $test);
+    }
+
+    public function testCanRendersAsXHtml()
+    {
+        $this->view->doctype('XHTML1_STRICT');
+        $test = $this->helper->formText('foo', 'bar');
+        $this->assertContains(' />', $test);
     }
 }
 

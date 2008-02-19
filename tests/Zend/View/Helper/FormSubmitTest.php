@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormSubmit.php';
 require_once 'Zend/View.php';
+require_once 'Zend/Registry.php';
 
 /**
  * Test class for Zend_View_Helper_FormSubmit.
@@ -21,8 +22,6 @@ class Zend_View_Helper_FormSubmitTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_FormSubmitTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -35,6 +34,10 @@ class Zend_View_Helper_FormSubmitTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        if (Zend_Registry::isRegistered('Zend_View_Helper_Doctype')) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry['Zend_View_Helper_Doctype']);
+        }
         $this->view   = new Zend_View();
         $this->helper = new Zend_View_Helper_FormSubmit();
         $this->helper->setView($this->view);
@@ -83,6 +86,19 @@ class Zend_View_Helper_FormSubmitTest extends PHPUnit_Framework_TestCase
             'value'   => '',
         ));
         $this->assertRegexp('/<input[^>]*?(value="")/', $html);
+    }
+
+    public function testRendersAsHtmlByDefault()
+    {
+        $test = $this->helper->formSubmit('foo', 'bar');
+        $this->assertNotContains(' />', $test);
+    }
+
+    public function testCanRendersAsXHtml()
+    {
+        $this->view->doctype('XHTML1_STRICT');
+        $test = $this->helper->formSubmit('foo', 'bar');
+        $this->assertContains(' />', $test);
     }
 }
 

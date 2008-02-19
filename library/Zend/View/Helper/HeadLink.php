@@ -266,9 +266,13 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             }
         }
         
-        $link .= '/>';
+        if ($this->view instanceof Zend_View_Abstract) {
+            $link .= ($this->view->doctype()->isXhtml()) ? '/>' : '>';
+        } else {
+            $link .= '/>';
+        }
 
-        if ($link == '<link />') {
+        if (($link == '<link />') || ($link == '<link >')) {
             return '';
         }
 

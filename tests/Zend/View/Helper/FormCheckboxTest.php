@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormCheckbox.php';
 require_once 'Zend/View.php';
+require_once 'Zend/Registry.php';
 
 /**
  * Zend_View_Helper_FormCheckboxTest 
@@ -26,14 +27,16 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_FormCheckboxTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
     public function setUp()
     {
+        if (Zend_Registry::isRegistered('Zend_View_Helper_Doctype')) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry['Zend_View_Helper_Doctype']);
+        }
         $this->view   = new Zend_View();
         $this->helper = new Zend_View_Helper_FormCheckbox();
         $this->helper->setView($this->view);
@@ -124,6 +127,19 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
     {
         $test = $this->helper->formCheckbox('foo', 'bar');
         $this->assertContains('value="bar"', $test);
+    }
+
+    public function testRendersAsHtmlByDefault()
+    {
+        $test = $this->helper->formCheckbox('foo', 'bar');
+        $this->assertNotContains(' />', $test);
+    }
+
+    public function testCanRendersAsXHtml()
+    {
+        $this->view->doctype('XHTML1_STRICT');
+        $test = $this->helper->formCheckbox('foo', 'bar');
+        $this->assertContains(' />', $test);
     }
 }
 
