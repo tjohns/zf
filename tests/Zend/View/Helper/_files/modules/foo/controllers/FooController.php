@@ -8,4 +8,14 @@ class Foo_FooController extends Zend_Controller_Action
     {
         $this->view->bar = 'bar';
     }
+
+    public function nestAction()
+    {
+        $this->render();
+    }
+
+    public function nestedAction()
+    {
+        $this->render();
+    }
 }

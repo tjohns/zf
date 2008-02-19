@@ -61,6 +61,18 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
     protected $_captureAttrs = null;
 
     /**
+     * Capture lock
+     * @var bool
+     */
+    protected $_captureLock;
+
+    /**
+     * Capture type (append, prepend, set)
+     * @var string
+     */
+    protected $_captureType;
+
+    /**
      * Constructor
      *
      * Set separator to PHP_EOL.
@@ -154,8 +166,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             return $this;
         }
 
-        require_once 'Zend/View/Exception.php';
-        throw new Zend_View_Exception(sprintf('Invalid method %s::%s()', __CLASS__, $method));
+        return parent::__call($method, $args);
     }
 
     /**
@@ -190,7 +201,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             throw new Zend_View_Exception('Invalid value passed to append; please use appendStyle()');
         }
 
-        return parent::append($value);
+        return $this->getContainer()->append($value);
     }
    
     /**
@@ -207,7 +218,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             throw new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetStyle()');
         }
 
-        return parent::offsetSet($index, $value);
+        return $this->getContainer()->offsetSet($index, $value);
     }
 
     /**
@@ -223,7 +234,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             throw new Zend_View_Exception('Invalid value passed to prepend; please use prependStyle()');
         }
 
-        return parent::prepend($value);
+        return $this->getContainer()->prepend($value);
     }
 
     /**
@@ -239,7 +250,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             throw new Zend_View_Exception('Invalid value passed to set; please use setStyle()');
         }
 
-        return parent::set($value);
+        return $this->getContainer()->set($value);
     }
 
     /**
@@ -252,7 +263,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
     public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $attrs = null)
     {
         $this->_captureAttrs = $attrs;
-        return parent::captureStart($type);
+        return $this->getContainer()->captureStart($type);
     }
     
     /**
@@ -268,13 +279,13 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
         $this->_captureLock  = false;
 
         switch ($this->_captureType) {
-            case self::SET:
+            case Zend_View_Helper_Placeholder_Container_Abstract::SET:
                 $this->setStyle($content, $attrs);
                 break;
-            case self::PREPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::PREPEND:
                 $this->prependStyle($content, $attrs);
                 break;
-            case self::APPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::APPEND:
             default:
                 $this->appendStyle($content, $attrs);
                 break;

@@ -5,8 +5,6 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 }
 
 require_once dirname(__FILE__) . '/../../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 /** Zend_View_Helper_Placeholder_Container_Standalone */
 require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
@@ -36,8 +34,6 @@ class Zend_View_Helper_Placeholder_StandaloneContainerTest extends PHPUnit_Frame
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_Placeholder_StandaloneContainerTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -75,6 +71,21 @@ class Zend_View_Helper_Placeholder_StandaloneContainerTest extends PHPUnit_Frame
         $view = new Zend_View();
         $this->helper->setView($view);
         $this->assertSame($view, $this->helper->view);
+    }
+
+    public function testContainersPersistBetweenInstances()
+    {
+        $foo1 = new Zend_View_Helper_Placeholder_StandaloneContainerTest_Foo;
+        $foo1->append('Foo');
+        $foo1->setSeparator(' - ');
+
+        $foo2 = new Zend_View_Helper_Placeholder_StandaloneContainerTest_Foo;
+        $foo2->append('Bar');
+
+        $test = $foo1->toString();
+        $this->assertContains('Foo', $test);
+        $this->assertContains(' - ', $test);
+        $this->assertContains('Bar', $test);
     }
 }
 

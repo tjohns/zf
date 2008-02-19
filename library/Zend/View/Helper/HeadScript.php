@@ -51,8 +51,10 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * Capture type and/or attributes (used for hinting during capture)
      * @var string
      */
+    protected $_captureLock;
     protected $_captureScriptType  = null;
     protected $_captureScriptAttrs = null;
+    protected $_captureType;
     /**#@-*/
 
     /**
@@ -135,7 +137,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         $this->_captureType        = $captureType;
         $this->_captureScriptType  = $type;
         $this->_captureScriptAttrs = $attrs;
-        return parent::captureStart($captureType);
+        return $this->getContainer()->captureStart($captureType);
     }
     
     /**
@@ -153,9 +155,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         $this->_captureLock        = false;
 
         switch ($this->_captureType) {
-            case self::SET:
-            case self::PREPEND:
-            case self::APPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::SET:
+            case Zend_View_Helper_Placeholder_Container_Abstract::PREPEND:
+            case Zend_View_Helper_Placeholder_Container_Abstract::APPEND:
                 $action = strtolower($this->_captureType) . 'Script';
                 break;
             default:
@@ -237,8 +239,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             return $this;
         }
 
-        require_once 'Zend/View/Exception.php';
-        throw new Zend_View_Exception(sprintf('Method "%s" does not exist', $method));
+        return parent::__call($method, $args);
     }
 
     /**
@@ -273,7 +274,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             throw new Zend_View_Exception('Invalid argument passed to append(); please use one of the helper methods, appendScript() or appendFile()');
         }
 
-        return parent::append($value);
+        return $this->getContainer()->append($value);
     }
 
     /**
@@ -289,7 +290,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             throw new Zend_View_Exception('Invalid argument passed to prepend(); please use one of the helper methods, prependScript() or prependFile()');
         }
 
-        return parent::prepend($value);
+        return $this->getContainer()->prepend($value);
     }
 
     /**
@@ -305,7 +306,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             throw new Zend_View_Exception('Invalid argument passed to set(); please use one of the helper methods, setScript() or setFile()');
         }
 
-        return parent::set($value);
+        return $this->getContainer()->set($value);
     }
 
     /**
@@ -323,7 +324,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         }
 
         $this->_isValid($value);
-        return parent::offsetSet($index, $value);
+        return $this->getContainer()->offsetSet($index, $value);
     }
 
     /**

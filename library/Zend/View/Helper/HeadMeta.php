@@ -158,8 +158,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             return $this;
         }
 
-        require_once 'Zend/View/Exception.php';
-        throw new Zend_View_Exception(sprintf('Invalid action "%s"', $method));
+        return parent::__call($method, $args);
     }
 
     /**
@@ -195,7 +194,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('Invalid value passed to append; please use appendMeta()');
         }
 
-        return parent::append($value);
+        return $this->getContainer()->append($value);
     }
 
     /**
@@ -213,7 +212,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetMeta()');
         }
 
-        return parent::offsetSet($index, $value);
+        return $this->getContainer()->offsetSet($index, $value);
     }
 
     /**
@@ -230,7 +229,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('Invalid value passed to prepend; please use prependMeta()');
         }
 
-        return parent::prepend($value);
+        return $this->getContainer()->prepend($value);
     }
 
     /**
@@ -247,7 +246,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('Invalid value passed to set; please use setMeta()');
         }
 
-        return parent::set($value);
+        return $this->getContainer()->set($value);
     }
 
     /**

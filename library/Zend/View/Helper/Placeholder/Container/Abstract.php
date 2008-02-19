@@ -96,7 +96,6 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function __construct()
     {
-
         parent::__construct(array(), parent::ARRAY_AS_PROPS);
     }
     

@@ -72,13 +72,13 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         if (null !== $attributes) {
             $item = $this->createData($attributes);
             switch ($placement) {
-                case self::SET:
+                case Zend_View_Helper_Placeholder_Container_Abstract::SET:
                     $this->set($item);
                     break;
-                case self::PREPEND:
+                case Zend_View_Helper_Placeholder_Container_Abstract::PREPEND:
                     $this->prepend($item);
                     break;
-                case self::APPEND:
+                case Zend_View_Helper_Placeholder_Container_Abstract::APPEND:
                 default:
                     $this->append($item);
                     break;
@@ -158,8 +158,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             return $this;
         }
 
-        require_once 'Zend/View/Exception.php';
-        throw new Zend_View_Exception(sprintf('Method "%s" does not exist', $method));
+        return parent::__call($method, $args);
     }
 
     /**
@@ -197,7 +196,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('append() expects a data token; please use one of the custom append*() methods');
         }
 
-        return parent::append($value);
+        return $this->getContainer()->append($value);
     }
 
     /**
@@ -214,7 +213,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('offsetSet() expects a data token; please use one of the custom offsetSet*() methods');
         }
 
-        return parent::offsetSet($index, $value);
+        return $this->getContainer()->offsetSet($index, $value);
     }
 
     /**
@@ -230,7 +229,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('prepend() expects a data token; please use one of the custom prepend*() methods');
         }
 
-        return parent::prepend($value);
+        return $this->getContainer()->prepend($value);
     }
 
     /**
@@ -246,7 +245,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('set() expects a data token; please use one of the custom set*() methods');
         }
 
-        return parent::set($value);
+        return $this->getContainer()->set($value);
     }
 
     
