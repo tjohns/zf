@@ -545,7 +545,7 @@ $contextSwitch->initContext();
                     multiple headers at once to a given context. Proxies to
                     <code>addHeader()</code>, so if the header already exists,
                     an exception will be thrown. <code>$headers</code> is an
-                    array of header/content pairs.
+                    array of header/context pairs.
                 </para>
             </listitem>
 
@@ -593,8 +593,8 @@ $contextSwitch->initContext();
             <listitem>
                 <para>
                     <code>setCallbacks($context, array $callbacks)</code>: set
-                    multiple callbacks for a given context. Callbacks should be
-                    trigger/callback pairs. In actuality, the most callbacks
+                    multiple callbacks for a given context. <code>$callbacks</code> 
+                    should be trigger/callback pairs. In actuality, the most callbacks
                     that can be registered are two, one for initialization and
                     one for post processing.
                 </para>
