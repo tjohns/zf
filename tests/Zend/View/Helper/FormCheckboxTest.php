@@ -119,6 +119,12 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->formCheckbox('foo', 'value', array('checked' => false));
         $this->assertNotContains('checked', $test);
     }
+
+    public function testCanSpecifyValue()
+    {
+        $test = $this->helper->formCheckbox('foo', 'bar');
+        $this->assertContains('value="bar"', $test);
+    }
 }
 
 // Call Zend_View_Helper_FormCheckboxTest::main() if this source file is executed directly.

@@ -74,7 +74,7 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
         $xhtml = '<input type="checkbox"'
                . ' name="' . $this->view->escape($name) . '"'
                . ' id="' . $this->view->escape($id) . '"'
-               . ' value="' . $this->view->escape($options[0]) . '"'
+               . ' value="' . $this->view->escape($value) . '"'
                . $checked
                . $disabled
                . $this->_htmlAttribs($attribs) 
