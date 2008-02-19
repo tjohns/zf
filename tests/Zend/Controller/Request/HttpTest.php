@@ -1,6 +1,11 @@
 <?php
+// Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Request_HttpTest::main");
+}
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
 require_once 'Zend/Controller/Request/Http.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase 
 {
@@ -14,6 +19,18 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
      * @var array 
      */
     protected $_origServer;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Request_HttpTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     public function setUp()
     {
@@ -200,6 +217,14 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_SERVER['REQUEST_URI'] = '/mycontroller/myaction?foo=bar';
         $request = new Zend_Controller_Request_Http();
         $this->assertEquals('/mycontroller/myaction?foo=bar', $request->getRequestUri());
+    }
+
+    public function testSetRequestUriPassesUriThroughUrldecode()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setRequestUri('/foo/bar?foo=bar%20baz');
+        $requestUri = $request->getRequestUri();
+        $this->assertEquals('/foo/bar?foo=bar baz', $requestUri);
     }
 
     public function testIsPost()
@@ -496,4 +521,9 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('value', $this->_request->getParam('controller'));
         $this->assertEquals('value', $this->_request->getParam('var1'));
     }
+}
+
+// Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Request_HttpTest::main") {
+    Zend_Controller_Request_HttpTest::main();
 }
