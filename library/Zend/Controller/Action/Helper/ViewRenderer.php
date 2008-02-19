@@ -264,13 +264,13 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             require_once 'Zend/Filter/PregReplace.php';
             require_once 'Zend/Filter/Word/UnderscoreToSeparator.php';
             $this->_inflector = new Zend_Filter_Inflector();
-            $this->_inflector->addRules(array(
-                     ':module'     => array('Word_CamelCaseToDash', 'stringToLower'),
+            $this->_inflector->setStaticRuleReference('moduleDir', $this->_moduleDir) // moduleDir must be specified before the less specific 'module'
+                 ->addRules(array(
+                     ':module'     => array('Word_CamelCaseToDash', 'StringToLower'),
                      ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator(DIRECTORY_SEPARATOR), 'StringToLower'),
                      ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('#[^a-z0-9' . preg_quote(DIRECTORY_SEPARATOR, '#') . ']+#i', '-'), 'StringToLower'),
                  ))
                  ->setStaticRuleReference('suffix', $this->_viewSuffix)
-                 ->setStaticRuleReference('moduleDir', $this->_moduleDir)
                  ->setTargetReference($this->_inflectorTarget);
         }
 
@@ -360,7 +360,15 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
 
         $inflector = $this->getInflector();
         $this->_setInflectorTarget($this->getViewBasePathSpec());
-        $path = $inflector->filter(array());
+        
+        $request = $this->getRequest();
+        $parts = array(
+            'module'     => $request->getModuleName(),
+            'controller' => $request->getControllerName(),
+            'action'     => $request->getActionName()
+            );
+        
+        $path = $inflector->filter($parts);
         return $path;
     }
 

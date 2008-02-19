@@ -737,9 +737,28 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->request->setModuleName('bar')
                       ->setControllerName('index')
                       ->setActionName('layout/admin');
+        $this->assertEquals('index/layout/admin.phtml', $this->helper->getViewScript());
+    }
+
+    /**
+     * @issue ZF-2443
+     */
+    public function testStockInflectorWorksWithViewBaseSpec()
+    {
+        $this->request->setModuleName('bar')  // bar must exist so the ViewRendere doesnt throw an exception
+                      ->setControllerName('index')
+                      ->setActionName('admin');
         $controller = new Bar_IndexController($this->request, $this->response, array());
-        $expected   = 'index/layout/admin.phtml';
-        $this->assertEquals($expected, $this->helper->getViewScript());
+        $this->helper->setActionController($controller);
+                      
+        $this->helper->setView($view = new Zend_View());
+        $this->helper->setViewBasePathSpec(':moduleDir/:module');
+        $this->helper->initView();
+        
+        $viewScriptPaths = $view->getAllPaths(); 
+
+        $this->assertRegExp('#modules/bar/bar/scripts/$#', $viewScriptPaths['script'][0]);
+        $this->assertEquals($this->helper->getViewScript(), 'index/admin.phtml');
     }
     
 }
