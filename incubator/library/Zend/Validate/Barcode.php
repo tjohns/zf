@@ -46,7 +46,8 @@ class Zend_Validate_Barcode extends Zend_Validate_Abstract
      * Generates the standard validator object
      *
      * @param  string $barcodeType - Barcode validator to use
-     * @throws Validate_Exception
+     * @return void
+     * @throws Zend_Validate_Exception
      */
     public function __construct($barcodeType)
     {
@@ -57,7 +58,8 @@ class Zend_Validate_Barcode extends Zend_Validate_Abstract
      * Sets a new barcode validator
      *
      * @param  string $barcodeType - Barcode validator to use
-     * @throws Validate_Exception
+     * @return void
+     * @throws Zend_Validate_Exception
      */
     public function setType($barcodeType)
     {

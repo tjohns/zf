@@ -14,7 +14,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Validate_Barcode
+ * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -29,7 +29,7 @@ require_once 'Zend/Validate/Abstract.php';
 
 /**
  * @category   Zend
- * @package    Zend_Validate_Barcode
+ * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -43,7 +43,7 @@ class Zend_Validate_Barcode_UpcA extends Zend_Validate_Abstract
 
     /**
      * Validation failure message key for when the value is
-     * not 13 characters long
+     * not 12 characters long
      */
     const INVALID_LENGTH = 'stringLength';
 
@@ -88,7 +88,7 @@ class Zend_Validate_Barcode_UpcA extends Zend_Validate_Abstract
         }
 
         $calculation = ($oddSum + $evenSum) % 10;
-        $checksum    = ($calculation === 0) ? 0 : 10-$calculation;
+        $checksum    = ($calculation === 0) ? 0 : 10 - $calculation;
 
         if ($valueString[11] != $checksum) {
             $this->_error(self::INVALID);
