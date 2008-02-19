@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7863 -->
+<!-- EN-Revision: 8128 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -20,11 +20,27 @@
     </para>
 
     <note>
+        <title>大文字小文字の扱い</title>
         <para>
             ヘルパー名は常に camelCase 形式となります。
             つまり、最初は常に小文字となります。
+            クラス名は CamelCase 形式ですが、実際に実行されるメソッドは
+            camelCase 形式となります。
         </para>
     </note>
+
+    <note>
+        <title>デフォルトのヘルパーのパス</title>
+
+        <para>
+            デフォルトのヘルパーのパスは常に Zend Framework
+            のビューヘルパーのパス、すなわち 'Zend/View/Helper/' となります。
+            <code>setHelperPath()</code> をコールして既存のパスを上書きしても、
+            このパスだけは残ります。これにより、
+            デフォルトのヘルパーは常に動作することが保証されます。
+        </para>
+    </note>
+
 
     <para>
         ビュースクリプト内でヘルパーを使用するには、
@@ -142,10 +158,13 @@
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code>
+                <code>htmlList($items, $ordered, $attribs, $escape):</code>
                 <code>$items</code> で渡した内容をもとに
                 順序つきリストあるいは順序なしリストを作成します。
                 <code>$items</code> が多次元配列の場合は、入れ子状のリストとなります。
+                <code>$escape</code> フラグを true (デフォルト) にすると、
+                各項目はビューオブジェクトに登録されているエスケープ方式でエスケープされます。
+                リスト内でマークアップを行いたい場合は false を渡します。
             </para></listitem>
 
         </itemizedlist>
@@ -208,6 +227,7 @@
         <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
+        <xi:include href="Zend_View-Helpers-Json.xml" />
         <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 
