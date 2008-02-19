@@ -388,7 +388,7 @@ $form->setElementFilters(array('StringTrim'));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$form-addDisplayGroup(array('username', 'password'), 'login');
+$form->addDisplayGroup(array('username', 'password'), 'login');
 ?>]]></programlisting>
 
         <para>
