@@ -56,6 +56,12 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
     protected $_curModule;
 
     /**
+     * Controller directory(ies)
+     * @var array
+     */
+    protected $_controllerDirectory = array();
+
+    /**
      * Constructor: Set current module to default value
      *
      * @param  array $params
@@ -80,7 +86,10 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
             $module = $this->_defaultModule;
         }
 
-        $this->getFrontController()->addControllerDirectory($path, $module);
+        $module = (string) $module;
+        $path   = rtrim((string) $path, '/\\');
+
+        $this->_controllerDirectory[$module] = $path;
         return $this;
     }
 
@@ -90,9 +99,20 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      * @param array|string $directory
      * @return Zend_Controller_Dispatcher_Standard
      */
-    public function setControllerDirectory($directory)
+    public function setControllerDirectory($directory, $module = null)
     {
-        $this->getFrontController()->setControllerDirectory($directory);
+        $this->_controllerDirectory = array();
+
+        if (is_string($directory)) {
+            $this->addControllerDirectory($directory, $module);
+        } elseif (is_array($directory)) {
+            foreach ((array) $directory as $module => $path) {
+                $this->addControllerDirectory($path, $module);
+            }
+        } else {
+            throw new Zend_Controller_Exception('Controller directory spec must be either a string or an array');
+        }
+
         return $this;
     }
 
@@ -108,13 +128,32 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      */
     public function getControllerDirectory($module = null)
     {
-        $directories = $this->getFrontController()->getControllerDirectory();
-
-        if ((null !== $module) && (isset($directories[$module]))) {
-            return $directories[$module];
+        if (null === $module) {
+            return $this->_controllerDirectory;
         }
 
-        return $directories;
+        $module = (string) $module;
+        if (array_key_exists($module, $this->_controllerDirectory)) {
+            return $this->_controllerDirectory[$module];
+        }
+
+        return null;
+    }
+
+    /**
+     * Remove a controller directory by module name
+     * 
+     * @param  string $module 
+     * @return bool
+     */
+    public function removeControllerDirectory($module)
+    {
+        $module = (string) $module;
+        if (array_key_exists($module, $this->_controllerDirectory)) {
+            unset($this->_controllerDirectory[$module]);
+            return true;
+        }
+        return false;
     }
 
     /**

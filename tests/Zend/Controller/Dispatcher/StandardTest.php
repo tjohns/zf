@@ -32,12 +32,12 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
     {
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
-        $front->setControllerDirectory(array(
+        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+        $this->_dispatcher = new Zend_Controller_Dispatcher_Standard();
+        $this->_dispatcher->setControllerDirectory(array(
             'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files',
             'admin'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin'
         ));
-        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
-        $this->_dispatcher = new Zend_Controller_Dispatcher_Standard();
     }
 
     public function tearDown()
@@ -354,9 +354,11 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
 
     public function testModuleSubdirControllerFound()
     {
-        Zend_Controller_Front::getInstance()->addControllerDirectory(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'controllers',
-            'foo'
+        Zend_Controller_Front::getInstance()
+            ->setDispatcher($this->_dispatcher)
+            ->addControllerDirectory(
+                dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'foo' . DIRECTORY_SEPARATOR . 'controllers',
+                'foo'
         );
 
         $request = new Zend_Controller_Request_Http();
@@ -433,7 +435,9 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
 
     public function testLoadClassLoadsControllerInSpecifiedModuleWithModulePrefix()
     {
-        Zend_Controller_Front::getInstance()->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
+        Zend_Controller_Front::getInstance()
+            ->setDispatcher($this->_dispatcher)
+            ->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
         $request = new Zend_Controller_Request_Simple();
         $request->setControllerName('index')
                 ->setModuleName('bar');
@@ -446,7 +450,9 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
 
     public function testLoadClassLoadsControllerInDefaultModuleWithModulePrefixWhenRequested()
     {
-        Zend_Controller_Front::getInstance()->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
+        Zend_Controller_Front::getInstance()
+            ->setDispatcher($this->_dispatcher)
+            ->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
         $this->_dispatcher->setDefaultModule('foo')
                           ->setParam('prefixDefaultModule', true);
         $request = new Zend_Controller_Request_Simple();
@@ -456,6 +462,21 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $test = $this->_dispatcher->loadClass($class);
         $this->assertEquals('Foo_IndexController', $test);
         $this->assertTrue(class_exists($test));
+    }
+
+    /**
+     * ZF-2435
+     */
+    public function testCanRemoveControllerDirectory()
+    {
+        Zend_Controller_Front::getInstance()
+            ->setDispatcher($this->_dispatcher)
+            ->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
+        $dirs = $this->_dispatcher->getControllerDirectory();
+        $this->_dispatcher->removeControllerDirectory('foo');
+        $test = $this->_dispatcher->getControllerDirectory();
+        $this->assertNotEquals($dirs, $test);
+        $this->assertFalse(array_key_exists('foo', $test));
     }
 }
 

@@ -236,19 +236,14 @@ class Zend_Controller_Front
      */
     public function addControllerDirectory($directory, $module = null)
     {
-        if (empty($module) || is_numeric($module) || !is_string($module)) {
-            $module = $this->getDispatcher()->getDefaultModule();
-        }
-
-        $this->_controllerDir[$module] = rtrim((string) $directory, '/\\');
-
+        $this->getDispatcher()->addControllerDirectory($directory, $module);
         return $this;
     }
 
     /**
      * Set controller directory
      *
-     * Stores controller directory to pass to dispatcher. May be an array of
+     * Stores controller directory(ies) in dispatcher. May be an array of
      * directories or a string containing a single directory.
      *
      * @param string|array $directory Path to Zend_Controller_Action controller
@@ -258,18 +253,7 @@ class Zend_Controller_Front
      */
     public function setControllerDirectory($directory, $module = null)
     {
-        $this->_controllerDir = array();
-
-        if (is_string($directory)) {
-            $this->addControllerDirectory($directory, $module);
-        } elseif (is_array($directory)) {
-            foreach ((array) $directory as $module => $path) {
-                $this->addControllerDirectory($path, $module);
-            }
-        } else {
-            throw new Zend_Controller_Exception('Controller directory spec must be either a string or an array');
-        }
-
+        $this->getDispatcher()->setControllerDirectory($directory, $module);
         return $this;
     }
 
@@ -286,16 +270,18 @@ class Zend_Controller_Front
      */
     public function getControllerDirectory($name = null)
     {
-        if (null === $name) {
-            return $this->_controllerDir;
-        }
+        return $this->getDispatcher()->getControllerDirectory($name);
+    }
 
-        $name = (string) $name;
-        if (isset($this->_controllerDir[$name])) {
-            return $this->_controllerDir[$name];
-        }
-
-        return null;
+    /**
+     * Remove a controller directory by module name 
+     * 
+     * @param  string $module 
+     * @return bool
+     */
+    public function removeControllerDirectory($module)
+    {
+        return $this->getDispatcher()->removeControllerDirectory($module);
     }
 
     /**

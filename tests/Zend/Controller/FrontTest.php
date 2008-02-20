@@ -515,8 +515,22 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $controllerDirs['bar']);
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
     }
+
+    /**
+     * ZF-2435
+     */
+    public function testCanRemoveIndividualModuleDirectory()
+    {
+        $moduleDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'modules';
+        $this->_controller->addModuleDirectory($moduleDir);
+        $controllerDirs = $this->_controller->getControllerDirectory();
+        $this->_controller->removeControllerDirectory('foo');
+        $test = $this->_controller->getControllerDirectory();
+        $this->assertNotEquals($controllerDirs, $test);
+        $this->assertFalse(array_key_exists('foo', $test));
+    }
     
-        public function testAddModuleDirectoryThrowsExceptionForInvalidDirectory()
+    public function testAddModuleDirectoryThrowsExceptionForInvalidDirectory()
     {
         $moduleDir = 'doesntexist';
         try {
