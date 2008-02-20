@@ -82,11 +82,6 @@ class Zend_AllTests
          */
         $suite->addTest(Zend_Service_AllTests::suite());
 
-        /*
-         * Perform the tests for Zend_TimeSync component now.
-         */
-        $suite->addTestSuite('Zend_TimeSyncTest');
-
         return $suite;
     }
 }
