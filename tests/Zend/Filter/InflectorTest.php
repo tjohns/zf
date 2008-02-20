@@ -462,6 +462,18 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    /**
+     * @issue ZF-2522
+     */
+    public function testTestForFalseInConstructorParams()
+    {
+        $inflector = new Zend_Filter_Inflector('something', array(), false, false);
+        $this->assertFalse($inflector->isThrowTargetExceptionsOn());
+        $this->assertEquals($inflector->getTargetReplacementIdentifier(), ':');
+        $inflector = new Zend_Filter_Inflector('something', array(), false, '#');
+        $this->assertEquals($inflector->getTargetReplacementIdentifier(), '#');
+    }
+    
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.

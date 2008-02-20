@@ -84,11 +84,11 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
                 $this->addRules($rules);
             }
             
-            if ($throwTargetExceptionsOn != null) {
+            if ($throwTargetExceptionsOn !== null) {
                 $this->setThrowTargetExceptionsOn($throwTargetExceptionsOn);
             }
             
-            if ($targetReplacementIdentifer != null) {
+            if ($targetReplacementIdentifer != '') {
                 $this->setTargetReplacementIdentifier($targetReplacementIdentifer);
             }
         }
