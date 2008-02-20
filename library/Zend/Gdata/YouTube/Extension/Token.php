@@ -25,65 +25,45 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Data model class to represent a playlist item's position in the list (yt:position)
+ * Represents the yt:token element used by the YouTube data API
  *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
+class Zend_Gdata_YouTube_Extension_Token extends Zend_Gdata_App_Extension
 {
 
-    protected $_rootElement = 'position';
     protected $_rootNamespace = 'yt';
+    protected $_rootElement = 'token';
 
     /**
-     * Constructs a new Zend_Gdata_YouTube_Extension_Position object.
-     * 
-     * @param string $value (optional) The 1-based position in the playlist
+     * Constructs a new Zend_Gdata_YouTube_Extension_Token object.
      */
-    public function __construct($value = null) 
+    public function __construct($text = null)
     {
         foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
         parent::__construct();
-        $this->_text = $value;
+        $this->_text = $text;
     }
 
-    /**
-     * Get the value for the position in the playlist
+    /** 
+     * Retrieves a DOMElement which corresponds to this element and all
+     * child properties.  This is used to build an entry back into a DOM
+     * and eventually XML text for sending to the server upon updates, or
+     * for application storage/persistence.
      *
-     * @return int The 1-based position in the playlist
+     * @param DOMDocument $doc The DOMDocument used to construct DOMElements
+     * @return DOMElement The DOMElement representing this element and all
+     * child properties.
      */
-    public function getValue()
+    public function getDOM($doc = null)
     {
-        return $this->_text;
+        $element = parent::getDOM($doc);
+        return $element;
     }
 
-    /**
-     * Set the value for the position in the playlist
-     *
-     * @param int $value The 1-based position in the playlist
-     * @return Zend_Gdata_Extension_Visibility The element being modified
-     */
-    public function setValue($value)
-    {
-        $this->_text = $value;
-        return $this;
-    }
-
-    /**
-     * Magic toString method allows using this directly via echo
-     * Works best in PHP >= 4.2.0
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getValue();
-    }
-    
 }
-

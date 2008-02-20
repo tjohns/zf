@@ -121,4 +121,5 @@ xmlns:georss='http://www.georss.org/georss'>
   <gd:comments>
     <gd:feedLink href='http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments' />
   </gd:comments>
+  <yt:noembed />
 </entry>

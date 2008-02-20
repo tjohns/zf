@@ -400,6 +400,24 @@ class Zend_Gdata_Media_Extension_MediaGroup extends Zend_Gdata_Extension
     }
 
     /**
+     * @return Zend_Gdata_Media_Extension_MediaTitle
+     */ 
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @param Zend_Gdata_Media_Extension_MediaTitle $value
+     * @return Zend_Gdata_Media_Extension_MediaGroup
+     */ 
+    public function setTitle($value)
+    {
+        $this->_title = $value;
+        return $this;
+    }
+
+    /**
      * @return Zend_Gdata_Media_Extension_MediaDescription
      */
     public function getDescription()

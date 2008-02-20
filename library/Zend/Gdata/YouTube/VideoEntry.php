@@ -45,6 +45,11 @@ require_once 'Zend/Gdata/YouTube/Extension/NoEmbed.php';
 require_once 'Zend/Gdata/YouTube/Extension/Statistics.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Link
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Link.php';
+
+/**
  * @see Zend_Gdata_YouTube_Extension_Racy
  */
 require_once 'Zend/Gdata/YouTube/Extension/Racy.php';
@@ -214,7 +219,16 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $feedLink->transferFromDOM($child);
             $this->_feedLink[] = $feedLink;
             break;
-        case $this->lookupNamespace('georss') . ':' . 'where':                              $where = new Zend_Gdata_Geo_Extension_GeoRssWhere();                            $where->transferFromDOM($child);                                                $this->_where = $where;                                                         break;                                                              
+        case $this->lookupNamespace('georss') . ':' . 'where':
+            $where = new Zend_Gdata_Geo_Extension_GeoRssWhere();
+            $where->transferFromDOM($child);
+            $this->_where = $where;
+            break;
+        case $this->lookupNamespace('atom') . ':' . 'link';
+            $link = new Zend_Gdata_YouTube_Extension_Link();
+            $link->transferFromDOM($child);
+            $this->_link[] = $link;
+            break;
         default:
             parent::takeChildFromDOM($child);
             break;
@@ -307,7 +321,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Sets the rating relating to the video.
      *
-     * @param Zend_Gdata_YouTube_Extension_Rating $rating The rating relating to the video
+     * @param Zend_Gdata_Extension_Rating $rating The rating relating to the video
      * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
      */ 
     public function setRating($rating = null) 
@@ -319,7 +333,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Returns the rating relating to the video.
      *
-     * @return Zend_Gdata_YouTube_Extension_Rating  The rating relating to the video 
+     * @return Zend_Gdata_Extension_Rating  The rating relating to the video 
      */
     public function getRating()
     {
@@ -456,4 +470,224 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         return $this;
     }
 
+    /**
+     * Gets the title of the video as a string.  null is returned
+     * if the video title is not available.
+     *
+     * @return string The title of the video
+     */
+    public function getVideoTitle()
+    {
+        if (($mediaGroup = $this->getMediaGroup()) != null && 
+             $mediaGroup->getTitle() != null) {
+
+            return $mediaGroup->getTitle()->getText();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the description  of the video as a string.  null is returned
+     * if the video description is not available.
+     *
+     * @return string The description of the video
+     */
+    public function getVideoDescription()
+    {
+        if (($mediaGroup = $this->getMediaGroup()) != null && 
+             $mediaGroup->getDescription() != null) {
+
+            return $mediaGroup->getDescription()->getText();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the URL of the YouTube video watch page.  null is returned
+     * if the video watch page URL is not available.
+     *
+     * @return string The URL of the YouTube video watch page
+     */
+    public function getVideoWatchPageUrl()
+    {
+        if (($mediaGroup = $this->getMediaGroup()) != null && 
+             $mediaGroup->getPlayer() != null &&
+             array_key_exists(0, $mediaGroup->getPlayer())) {
+
+            $players = $mediaGroup->getPlayer();
+            return $players[0]->getUrl();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets an array of the thumbnails representing the video.
+     * Each thumbnail is an element of the array, and is an
+     * array of the thumbnail properties - time, height, width,
+     * and url.  For convient usage inside a foreach loop, an
+     * empty array is returned if there are no thumbnails.
+     *
+     * @return string The URL of the YouTube video watch page
+     */
+    public function getVideoThumbnails()
+    {
+        if (($mediaGroup = $this->getMediaGroup()) != null &&
+             $mediaGroup->getThumbnail() != null) {
+        
+            $thumbnailArray = array();
+
+            foreach ($mediaGroup->getThumbnail() as $thumbnailObj) {
+                $thumbnail = array();
+                $thumbnail['time'] = $thumbnailObj->time;
+                $thumbnail['height'] = $thumbnailObj->height;
+                $thumbnail['width'] = $thumbnailObj->width;
+                $thumbnail['url'] = $thumbnailObj->url;
+                $thumbnailArray[] = $thumbnail;
+            }
+            return $thumbnailArray;
+        } else {
+            return array();
+        }
+    }
+
+    /**
+     * Gets the URL of the flash player SWF.  null is returned if the
+     * duration value is not available.
+     *
+     * @return string The URL of the flash player SWF
+     */
+    public function getFlashPlayerUrl()
+    {
+        if ($this->getMediaGroup() != null) {
+            foreach ($this->getMediaGroup()->getContent() as $content) {
+                if ($content->getType() === 'application/x-shockwave-flash') {
+                    return $content->getUrl();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the duration of the video, in seconds.  null is returned
+     * if the duration value is not available.
+     *
+     * @return string The duration of the video, in seconds. 
+     */
+    public function getVideoDuration()
+    {
+        if ($this->getMediaGroup() != null &&
+            $this->getMediaGroup()->getDuration() != null) {
+
+            return $this->getMediaGroup()->getDuration()->getSeconds();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets an array of the tags assigned to this video.  For convient
+     * usage inside a foreach loop, an empty array is returned when there
+     * are no tags assigned.
+     *
+     * @return array An array of the tags assigned to this video
+     */
+    public function getVideoTags()
+    {
+        if ($this->getMediaGroup() != null &&
+            $this->getMediaGroup()->getKeywords() != null) {
+           
+            $keywords = $this->getMediaGroup()->getKeywords();
+ 
+            if (strlen(trim($keywords)) > 0) {
+                return split('(, *)|,', $keywords);
+            }
+        }
+        return array();
+    }
+
+    /**
+     * Gets the number of views for this video.  null is returned if the
+     * number of views is not available.
+     *
+     * @return string The number of views for this video
+     */
+    public function getVideoViewCount()
+    {
+        if ($this->getStatistics() != null) {
+            return $this->getStatistics()->getViewCount();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the location specified for this video, if available.  The location
+     * is returned as an array containing the keys 'longitude' and 'latitude'.
+     * null is returned if the location is not available.
+     *
+     * @return array The location specified for this video
+     */
+    public function getVideoGeoLocation()
+    {
+        if ($this->getWhere() != null && 
+            $this->getWhere()->getPoint() != null &&
+            ($position = $this->getWhere()->getPoint()->getPos()) != null) {
+
+            if (strlen(trim($position)) > 0) {
+                $positionArray = explode(' ', trim($position));
+                if (count($positionArray) == 2) {
+                    $returnArray = array();
+                    $returnArray['latitude'] = $positionArray[0];
+                    $returnArray['longitude'] = $positionArray[1];
+                    return $returnArray;
+                }
+            }
+        } 
+        return null;
+    }
+
+    /**
+     * Gets the rating information for this video, if available.  The rating
+     * is returned as an array containing the keys 'average' and 'numRaters'.
+     * null is returned if the rating information is not available.
+     *
+     * @return array The rating information for this video
+     */
+    public function getVideoRatingInfo() 
+    {
+        if ($this->getRating() != null) {
+            $returnArray = array();
+            $returnArray['average'] = $this->getRating()->getAverage();
+            $returnArray['numRaters'] = $this->getRating()->getNumRaters();
+            return $returnArray;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the category of this video, if available.  The category is returned
+     * as a string. Valid categories are found at:
+     * http://gdata.youtube.com/schemas/2007/categories.cat
+     * If the category is not set, null is returned.
+     *
+     * @return string The category of this video 
+     */
+    public function getVideoCategory()
+    {
+        if ($this->getMediaGroup() != null &&
+            ($categoryArray = $this->getMediaGroup()->getCategory()) != null) {
+        
+            foreach ($categoryArray as $category) {
+                if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/categories.cat') {
+                    return $category->getText(); 
+                }
+            }    
+        }
+        return null;
+    }
 }

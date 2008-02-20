@@ -60,6 +60,8 @@ class Zend_Gdata_YouTube_PlaylistVideoFeedTest extends PHPUnit_Framework_TestCas
         $this->assertEquals('http://gdata.youtube.com/feeds/users/testuser', $playlistVideoFeed->author[0]->uri->text);
         $this->assertEquals(13, $playlistVideoFeed->totalResults->text);
         $this->assertEquals(13, count($playlistVideoFeed->entry));
+        $entries = $playlistVideoFeed->entry;
+        $this->assertEquals(1, $entries[0]->getPosition()->getText());
     }
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {
