@@ -432,6 +432,16 @@ class Zend_Service_SlideShare {
 	 * @return array An array of Zend_Service_SlideShare_SlideShow objects
 	 */
 	public function getSlideShowsByTag($tag, $offset = null, $limit = null) {
+		
+		if(is_array($tag)) {
+			$tmp = array();
+			foreach($tag as $t) {
+				$tmp[] = "\"$t\"";
+			}
+			
+			$tag = implode(" ", $tmp);
+		}
+		
 		return $this->_getSlideShowsByType('tag', $tag, $offset, $limit);
 	}
 	
