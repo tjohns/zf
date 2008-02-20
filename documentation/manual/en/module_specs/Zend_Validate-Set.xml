@@ -22,6 +22,17 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.validate.set.barcode">
+        <title>Barcode</title>
+        <para>
+            This validator is instantiated with a barcode type against which you wish to validate a barcode value.
+            It currently supports "<code>UPC-A</code>" (Universal Product Code) and "<code>EAN-13</code>" (European
+            Article Number) barcode types, and the <code>isValid()</code> method returns true if and only if the input
+            successfully validates against the barcode validation algorithm. You should remove all characters other
+            than the digits zero through nine (0-9) from the input value before passing it on to the validator.
+        </para>
+    </sect2>
+
     <sect2 id="zend.validate.set.between">
         <title>Between</title>
         <para>

@@ -36,7 +36,6 @@ require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/Validate/BarcodeTest.php';
 
 /**
  * @category   Zend
@@ -87,11 +86,6 @@ class Zend_AllTests
          * Perform the tests for Zend_TimeSync component now.
          */
         $suite->addTestSuite('Zend_TimeSyncTest');
-
-        /*
-         * Perform the tests for Zend_Validate_Barcode component now.
-         */
-        $suite->addTestSuite('Zend_Validate_BarcodeTest');
 
         return $suite;
     }
