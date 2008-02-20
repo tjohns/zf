@@ -83,6 +83,8 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
             $tns .= '(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=' . $dsn['host'] . ')';
             if (isset($dsn['port'])) {
                 $tns .= '(PORT=' . $dsn['port'] . ')';
+            } else {
+                $tns .= '(PORT=1521)';
             }
             $tns .= '))';
         }
