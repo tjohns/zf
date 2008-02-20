@@ -81,7 +81,8 @@ class Zend_Gdata_ClientLogin
         $client = null,
         $source = self::DEFAULT_SOURCE,
         $loginToken = null,
-        $loginCaptcha = null)
+        $loginCaptcha = null,
+        $loginUri = self::CLIENTLOGIN_URI)
     {
         if (! ($email && $password)) {
             require_once 'Zend/Gdata/App/AuthException.php';
@@ -97,7 +98,7 @@ class Zend_Gdata_ClientLogin
         }
 
         // Build the HTTP client for authentication
-        $client->setUri(self::CLIENTLOGIN_URI);
+        $client->setUri($loginUri);
         $useragent = $source . ' Zend_Framework_Gdata/' . Zend_Version::VERSION;
         $client->setConfig(array(
                 'maxredirects'    => 0,
