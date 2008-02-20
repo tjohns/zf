@@ -66,6 +66,11 @@
       <media:thumbnail url="http://lh4.google.com/sample.user/Rt8WU4DZEKI/AAAAAAAAABY/IVgLqmnzJII/s288/Aqua%20Blue.jpg" height="180" width="288"/>
       <media:credit>sample</media:credit>
     </media:group>
+    <georss:where>
+      <gml:Point>
+        <gml:pos>41.87194 12.56738</gml:pos>
+      </gml:Point>
+    </georss:where>
   </entry>
   <entry>
     <id>http://picasaweb.google.com/data/entry/api/user/sample.user/albumid/1/photoid/3</id>

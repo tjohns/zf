@@ -43,4 +43,9 @@
     <media:thumbnail url="http://lh5.google.com/sample.user/Rt8WVIDZELI/AAAAAAAAABg/d7e0i7gvhNU/s288/Aqua%20Graphite.jpg" height="180" width="288"/>
     <media:credit>sample</media:credit>
   </media:group>
+  <georss:where>
+    <gml:Point>
+      <gml:pos>41.87194 12.56738</gml:pos>
+    </gml:Point>
+  </georss:where>
 </entry>

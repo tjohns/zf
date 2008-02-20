@@ -32,4 +32,9 @@
     <media:thumbnail url="http://lh6.google.com/sample.user/Rt8WNoDZEJE/AAAAAAAAABk/HQGlDhpIgWo/s160-c/Test.jpg" height="160" width="160"/>
     <media:credit>sample</media:credit>
   </media:group>
+  <georss:where>
+    <gml:Point>
+      <gml:pos>42.87194 13.56738</gml:pos>
+    </gml:Point>
+  </georss:where>
 </entry>
