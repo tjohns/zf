@@ -39,13 +39,13 @@ class Zend_Validate_Barcode_UpcA extends Zend_Validate_Abstract
      * Validation failure message key for when the value is
      * an invalid barcode
      */
-    const INVALID = 'stringInvalid';
+    const INVALID = 'invalid';
 
     /**
      * Validation failure message key for when the value is
      * not 12 characters long
      */
-    const INVALID_LENGTH = 'stringLength';
+    const INVALID_LENGTH = 'invalidLength';
 
     /**
      * Validation failure message template definitions
