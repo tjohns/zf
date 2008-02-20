@@ -14,7 +14,7 @@
             </para>
 
             <itemizedlist>
-                <listitem>capturing of validation error codes and messages</listitem>
+                <listitem><para>capturing of validation error codes and messages</para></listitem>
             </itemizedlist>
         </listitem>
 
@@ -106,7 +106,7 @@
             If you subscribe to the security mantra of "filter input, escape
             output," you'll want to validate ("filter input") your form input.
             In <code>Zend_Form</code>, each element includes its own validator
-            chain, consisting of <code>Zend_Validate_*</code> validators. 
+            chain, consisting of <code>Zend_Validate_*</code> validators.
         </para>
 
         <para>
@@ -243,11 +243,11 @@ $element->addValidators(array(
         <programlisting role="php"><![CDATA[<?php
 $element->addValidators(array(
     array(
-        'validator'           => 'NotEmpty', 
+        'validator'           => 'NotEmpty',
         'breakChainOnFailure' => true),
     array('validator' => 'alnum'),
     array(
-        'validator' => 'stringLength', 
+        'validator' => 'stringLength',
         'options'   => array(6, 20)),
 ));
 ?>]]></programlisting>
@@ -573,7 +573,7 @@ $unfiltered = $element->getUnfilteredValue();
         <itemizedlist>
             <listitem><para>
                 <emphasis>ViewHelper</emphasis>: specifies a view helper to use
-                to render the element 
+                to render the element
             </para></listitem>
 
             <listitem><para>
@@ -680,7 +680,7 @@ $decorator = $element->getDecorator('FooBar');
 $element->addDecorators(
     array('HtmlTag', array('tag' => 'div')),
     array(
-        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'decorator' => array('FooBar' => 'HtmlTag'),
         'options' => array('tag' => 'dd')
     ),
 );
@@ -761,7 +761,7 @@ $fooBar  = $element->getDecorator('FooBar');
                 the element is required when performing form validation. Uses
                 the <code>setRequired()</code> and <code>getRequired()</code>
                 accessors. This flag is false by default.
-            </para></listitem>.
+            </para></listitem>
 
             <listitem><para>
                 <emphasis>allowEmpty</emphasis>: flag indicating whether or not
@@ -864,12 +864,12 @@ $element->class = 'text; // set 'class' attribute to 'text'
 
             <listitem><para><emphasis>Textarea</emphasis>: Zend_Form_Element_Textarea</para></listitem>
         </itemizedlist>
-        
+
         <para>
-            Besides these, Zend_Form also provides additional utility elements 
+            Besides these, Zend_Form also provides additional utility elements
             providing more advanced functionality:
         </para>
-        
+
         <itemizedlist>
             <listitem>
             <para><emphasis>Hash</emphasis>: Zend_Form_Element_Hash</para>
@@ -881,11 +881,11 @@ $element->class = 'text; // set 'class' attribute to 'text'
             </simpara>
             <para>
               The name of the hash element should be unique. It is recommended to use
-              the <literal>salt</literal> option for the element, two hashes with 
-              same names and different salts would not collide:  
+              the <literal>salt</literal> option for the element, two hashes with
+              same names and different salts would not collide:
             </para>
             <programlisting role="php"><![CDATA[<?php
-$form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique')); 
+$form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ?>]]></programlisting>
             </listitem>
         </itemizedlist>
@@ -1045,7 +1045,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
                     <listitem><para><code>setPluginLoader</code></para></listitem>
 
                     <listitem><para><code>setTranslator</code></para></listitem>
-                    
+
                     <listitem><para><code>setView</code></para></listitem>
                 </itemizedlist>
             </listitem>
