@@ -226,12 +226,14 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
                     break;
                 case 'file':
                 default:
-                    $attrs['src'] = $content;
-                    $item = $this->createData($type, $attrs);
-                    if ('offsetSet' == $action) {
-                        $this->offsetSet($index, $item);
-                    } else {
-                        $this->$action($item);
+                    if (!$this->_isDuplicate($content)) {
+                        $attrs['src'] = $content;
+                        $item = $this->createData($type, $attrs);
+                        if ('offsetSet' == $action) {
+                            $this->offsetSet($index, $item);
+                        } else {
+                            $this->$action($item);
+                        }
                     }
                     break;
             }
@@ -240,6 +242,25 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         }
 
         return parent::__call($method, $args);
+    }
+
+    /**
+     * Is the file specified a duplicate?
+     * 
+     * @param  string $file 
+     * @return bool
+     */
+    protected function _isDuplicate($file)
+    {
+        foreach ($this->getContainer() as $item) {
+            if (($item->source === null) 
+                && array_key_exists('src', $item->attributes)
+                && ($file == $item->attributes['src']))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -329,6 +329,13 @@ document.write(bar.strlen());');
         $this->assertContains('    var', $string);
         $this->assertContains('    document', $string);
     }
+
+    public function testDoesNotAllowDuplicateFiles()
+    {
+        $this->helper->headScript('FILE', '/js/prototype.js');
+        $this->helper->headScript('FILE', '/js/prototype.js');
+        $this->assertEquals(1, count($this->helper));
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

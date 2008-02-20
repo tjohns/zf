@@ -149,10 +149,12 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
                 $item       = $this->$dataMethod($args);
             }
 
-            if ('offsetSet' == $action) {
-                $this->offsetSet($index, $item);
-            } else {
-                $this->$action($item);
+            if ($item) {
+                if ('offsetSet' == $action) {
+                    $this->offsetSet($index, $item);
+                } else {
+                    $this->$action($item);
+                }
             }
 
             return $this;
@@ -321,7 +323,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      * Create item for stylesheet link item
      * 
      * @param  array $args 
-     * @return stdClass
+     * @return stdClass|false Returns fals if stylesheet is a duplicate
      */
     public function createDataStylesheet(array $args)
     {
@@ -330,6 +332,10 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         $media                 = 'screen';
         $conditionalStylesheet = false;
         $href                  = array_shift($args);
+
+        if ($this->_isDuplicateStylesheet($href)) {
+            return false;
+        }
 
         if (0 < count($args)) {
             $media = array_shift($args);
@@ -344,6 +350,21 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         return $this->createData($attributes);
     }
 
+    /**
+     * Is the linked stylesheet a duplicate?
+     * 
+     * @param  string $uri 
+     * @return bool
+     */
+    protected function _isDuplicateStylesheet($uri)
+    {
+        foreach ($this->getContainer() as $item) {
+            if (($item->rel == 'stylesheet') && ($item->href == $uri)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Create item for alternate link item

@@ -358,6 +358,13 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->toString();
         $this->assertNotContains(' />', $test);
     }
+
+    public function testDoesNotAllowDuplicateStylesheets()
+    {
+        $this->helper->appendStylesheet('foo');
+        $this->helper->appendStylesheet('foo');
+        $this->assertEquals(1, count($this->helper), var_export($this->helper->getContainer()->getArrayCopy(), 1));
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.
