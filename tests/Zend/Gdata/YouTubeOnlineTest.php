@@ -64,14 +64,32 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ytgdatatest1', $feed->entry[0]->username->text);
     }
 
+    public function testRetrieveUserVideos()
+    {
+        $feed = $this->gdata->getUserUploads($this->ytAccount);
+        $this->assertEquals('Zfgdata\'s Videos', $feed->title->text);
+        $this->assertTrue(count($feed->entry) === 0);
+    }
+
     public function testRetrieveUserProfile()
     {
         $entry = $this->gdata->getUserProfile($this->ytAccount);
-        $this->assertEquals('zfgdata', $entry->title->text);
+        $this->assertEquals('Lonely TestAccount (zfgdata)', $entry->title->text);
         $this->assertEquals('zfgdata', $entry->username->text);
+        $this->assertEquals('I\'m a lonely test account, with little to do but sit around and wait for people to use me.  I get bored in between releases and often sleep to pass the time.  Please use me more often, as I love to show off my talent in breaking your code.',
+                $entry->description->text);
         $this->assertEquals(31, $entry->age->text);
+        $this->assertEquals('crime and punishment, ps i love you, the stand', $entry->books->text);
+        $this->assertEquals('Google', $entry->company->text);
+        $this->assertEquals('software engineering, information architecture, photography, travel', $entry->hobbies->text);
+        $this->assertEquals('Mountain View, CA', $entry->hometown->text);
+        $this->assertEquals('San Francisco, CA, US', $entry->location->text);
+        $this->assertEquals('monk, heroes, law and order, top gun', $entry->movies->text);
+        $this->assertEquals('imogen heap, frou frou, thievory corp, morcheeba, barenaked ladies', $entry->music->text);
+        $this->assertEquals('Developer Programs', $entry->occupation->text);
+        $this->assertEquals('University of the World', $entry->school->text);
         $this->assertEquals('f', $entry->gender->text);
-        $this->assertEquals('US', $entry->location->text);
+        $this->assertEquals('taken', $entry->relationship->text);
     }
 
     public function testRetrievePlaylistList()
