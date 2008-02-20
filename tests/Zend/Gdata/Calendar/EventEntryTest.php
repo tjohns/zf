@@ -36,6 +36,17 @@ class Zend_Gdata_Calendar_EventEntryTest extends PHPUnit_Framework_TestCase
                 true);
         $this->entry = new Zend_Gdata_Calendar_EventEntry();
     }
+
+    public function testSetters() {
+        $entry = new Zend_Gdata_Calendar_EventEntry();
+        $who = new Zend_Gdata_Extension_Who();
+        $who->setValueString("John Doe");
+        $who->setEmail("john@doe.com");
+        $entry->setWho($who);
+        $whoRetrieved = $entry->getWho();
+        $this->assertEquals("john@doe.com", $whoRetrieved->getEmail());
+        $this->assertEquals("John Doe", $whoRetrieved->getValueString());
+    }
       
     public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entry->extensionElements));
