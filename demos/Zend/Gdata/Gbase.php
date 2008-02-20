@@ -315,9 +315,10 @@ function insertItem($client, $dryRun = false)
 
   //$newEntry->addGbaseAttribute('payment_notes', 'Google Checkout', 'text');
 
-  //$link = 'http://www.mysite.com/products/item123.php';
-  //$newEntry->link = $service->newLink($link);
-  //$newEntry->link->type = 'text/html';
+  //$link = $service->newLink('http://www.mysite.com/products/item123.php');
+  //$link->type = 'text/html';
+  //$link->rel = 'alternate';
+  //$newEntry->link = array($link);
 
   // Post the item
   $createdEntry = $service->insertGbaseItem($newEntry, $dryRun);
