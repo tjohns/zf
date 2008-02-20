@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 8123 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
@@ -219,16 +219,23 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>組み込みのアクションヘルパー</title>
 
         <para>
-            Zend Framework には、デフォルトで三種類のアクションヘルパーが組み込まれています。
-            セッション単位のフラッシュメッセージを扱う <code>FlashMessenger</code> と、
+            Zend Framework には、いくつかのアクションヘルパーがデフォルトで組み込まれています。
+            AJAX のオートコンプリート機能用のレスポンスを作成する <code>AutoComplete</code>、
+            アクションに応じてレスポンスの形式を変更する <code>ContextSwitch</code> と
+            <code>AjaxContext</code>、セッション単位のフラッシュメッセージを扱う
+            <code>FlashMessenger</code>、JSON 形式へのエンコードとレスポンスの送信を行う
+            <code>Json</code>、
             アプリケーション内から内部あるいは外部へのリダイレクトを実装できるようにする
-            <code>Redirector</code>、そして、
+            <code>Redirector</code>、そして
             コントローラ内でのビューオブジェクトの設定とビューのレンダリングを自動化する
             <code>ViewRenderer</code> です。
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-Json.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
