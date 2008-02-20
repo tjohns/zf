@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<entry xmlns='http://www.w3.org/2005/Atom'
-xmlns:media='http://search.yahoo.com/mrss/'
-xmlns:gd='http://schemas.google.com/g/2005'
-xmlns:yt='http://gdata.youtube.com/schemas/2007'>
+<entry xmlns='http://www.w3.org/2005/Atom' 
+xmlns:media='http://search.yahoo.com/mrss/' 
+xmlns:gd='http://schemas.google.com/g/2005' 
+xmlns:yt='http://gdata.youtube.com/schemas/2007' 
+xmlns:gml='http://www.opengis.net/gml' 
+xmlns:georss='http://www.georss.org/georss'>
   <id>http://gdata.youtube.com/feeds/videos/UMFI1hdm96E</id>
   <published>2007-01-07T01:50:15.000Z</published>
   <updated>2007-01-07T01:50:15.000Z</updated>
@@ -111,6 +113,11 @@ xmlns:yt='http://gdata.youtube.com/schemas/2007'>
   </media:group>
   <yt:statistics viewCount='113321' />
   <gd:rating min='1' max='5' numRaters='1005' average='4.77' />
+  <georss:where>
+    <gml:Point>
+      <gml:pos>37.398529052734375 -122.0635986328125</gml:pos>
+    </gml:Point>
+  </georss:where>
   <gd:comments>
     <gd:feedLink href='http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments' />
   </gd:comments>

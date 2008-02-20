@@ -55,6 +55,11 @@ require_once 'Zend/Gdata/YouTube/Extension/Racy.php';
 require_once 'Zend/Gdata/Extension/Rating.php';
 
 /**
+ * @see Zend_Gdata_Geo_Extension_GeoRssWhere
+ */
+require_once 'Zend/Gdata/Geo/Extension/GeoRssWhere.php';
+
+/**
  * Represents the YouTube video flavor of an Atom entry
  *
  * @category   Zend
@@ -110,6 +115,13 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     protected $_feedLink = array();
 
     /**
+     * Geo location for the video
+     *
+     * @var Zend_Gdata_Geo_Extension_GeoRssWhere
+     */
+    protected $_where = null;
+
+    /**
      * Creates a Video entry, representing an individual video
      *
      * @param DOMElement $element (optional) DOMElement from which this
@@ -156,6 +168,9 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
                 $element->appendChild($feedLink->getDOM($element->ownerDocument));
             }
         }
+        if ($this->_where != null) {
+           $element->appendChild($this->_where->getDOM($element->ownerDocument));
+        }
         return $element;
     }
 
@@ -199,6 +214,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $feedLink->transferFromDOM($child);
             $this->_feedLink[] = $feedLink;
             break;
+        case $this->lookupNamespace('georss') . ':' . 'where':                              $where = new Zend_Gdata_Geo_Extension_GeoRssWhere();                            $where->transferFromDOM($child);                                                $this->_where = $where;                                                         break;                                                              
         default:
             parent::takeChildFromDOM($child);
             break;
@@ -416,6 +432,28 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         } else {
             return substr($fullId, strrpos($fullId,'/') + 1);
         }
+    }
+
+    /** 
+     * Gets the georss:where element
+     *
+     * @return Zend_Gdata_Geo_Extension_GeoRssWhere
+     */
+    public function getWhere()
+    {
+        return $this->_where;
+    }
+
+    /** 
+     * Sets the georss:where element
+     *
+     * @param Zend_Gdata_Geo_Extension_GeoRssWhere $value The georss:where class value
+     * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
+     */
+    public function setWhere($value)
+    {
+        $this->_where = $value;
+        return $this;
     }
 
 }

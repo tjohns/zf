@@ -95,7 +95,10 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const AUTH_SERVICE_NAME = 'videoonline';
 
     public static $namespaces = array(
-            'yt' => 'http://gdata.youtube.com/schemas/2007');
+            'yt' => 'http://gdata.youtube.com/schemas/2007',
+            'georss' => 'http://www.georss.org/georss',
+            'gml' => 'http://www.opengis.net/gml',
+            'media' => 'http://search.yahoo.com/mrss/');
 
     /**
      * Create Zend_Gdata_YouTube object

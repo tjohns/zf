@@ -121,6 +121,8 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1005, $videoEntry->rating->numRaters);
         $this->assertEquals(4.77, $videoEntry->rating->average);
         $this->assertEquals('http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments', $videoEntry->comments->feedLink->href);
+
+        $this->assertEquals('37.398529052734375 -122.0635986328125', $videoEntry->where->point->pos->text);
     }
 
     public function testGetVideoId() {
