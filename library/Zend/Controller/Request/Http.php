@@ -755,4 +755,14 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
     }
+
+    /**
+     * Is this a Flash request?
+     * 
+     * @return bool
+     */
+    public function isFlashRequest()
+    {
+        return ($this->getHeader('USER_AGENT') == 'Shockwave Flash');
+    }
 }

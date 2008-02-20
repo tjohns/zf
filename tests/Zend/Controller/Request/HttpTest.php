@@ -521,6 +521,13 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('value', $this->_request->getParam('controller'));
         $this->assertEquals('value', $this->_request->getParam('var1'));
     }
+
+    public function testCanDetectFlashRequests()
+    {
+        $this->assertFalse($this->_request->isFlashRequest());
+        $_SERVER['HTTP_USER_AGENT'] = 'Shockwave Flash';
+        $this->assertTrue($this->_request->isFlashRequest());
+    }
 }
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
