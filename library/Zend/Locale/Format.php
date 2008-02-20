@@ -318,6 +318,7 @@ class Zend_Locale_Format
      * @param   string  $input    Localized number string
      * @param   array   $options  Options: number_format, locale, precision. See {@link setOptions()} for details.
      * @return  string  locale formatted number
+     * @throws Zend_Locale_Exception
      */
     public static function toNumber($value, array $options = array())
     {
@@ -373,6 +374,10 @@ class Zend_Locale_Format
                 $options['precision'] = 0;
             }
             $value = Zend_Locale_Math::normalize($value);
+        }
+        if (strpos($format, '0') === false) {
+            require_once 'Zend/Locale/Exception.php';
+            throw new Zend_Locale_Exception('Wrong format... missing 0');
         }
 
         // get number parts
