@@ -1384,6 +1384,19 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $element->foo);
         $this->assertEquals('bat', $element->baz);
     }
+
+    public function testValueIsFilteredPriorToValidation()
+    {
+        $this->element->addFilter('StringTrim')
+                      ->addValidator('StringLength', false, array(3, 8));
+        $this->assertTrue($this->element->isValid('  foobar  '));
+        $this->assertEquals('foobar', $this->element->getValue());
+
+        $this->element->setFilters(array('StringTrim'))
+                      ->setRequired(true)
+                      ->setValidators(array('NotEmpty'));
+        $this->assertFalse($this->element->isValid('    '));
+    }
 }
 
 class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract

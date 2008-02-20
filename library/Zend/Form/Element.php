@@ -1033,6 +1033,8 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * translated according to the current locale, using the given error code; 
      * if no matching translation is found, the original message will be 
      * utilized.
+     *
+     * Note: The *filtered* value is validated.
      * 
      * @param  mixed $value 
      * @param  mixed $context 
@@ -1041,6 +1043,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function isValid($value, $context = null)
     {
         $this->setValue($value);
+        $value = $this->getValue();
 
         if (empty($value) && !$this->isRequired() && $this->getAllowEmpty()) {
             return true;
