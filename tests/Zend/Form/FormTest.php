@@ -4,8 +4,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
@@ -26,7 +24,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 {
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
         $suite  = new PHPUnit_Framework_TestSuite('Zend_Form_FormTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -424,6 +421,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->testNameIsInitiallyNull();
         $this->form->setName('foo');
         $this->assertEquals('foo', $this->form->getName());
+    }
+
+    public function testZeroAsNameIsAllowed()
+    {
+        try {
+            $this->form->setName(0);
+            $this->assertEquals(0, $this->form->getName());
+        } catch (Zend_Form_Exception $e) {
+            $this->fail('Should allow zero as form name');
+        }
     }
 
     public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()
@@ -1628,7 +1635,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $data['foobar']['baz'] = array('bat' => array('home' => 'ab'));
 
         $this->assertFalse($form->isValidPartial($data), var_export($form->sub->subSub->home, 1));
-        $this->assertEquals('ab', $form->sub->subSub->home->getValue());
+        $this->assertEquals('1', $form->sub->subSub->home->getValue());
         $messages = $form->getMessages();
         $this->assertFalse(empty($messages));
         $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']), var_export($messages, 1));

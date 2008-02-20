@@ -338,7 +338,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function setName($name)
     {
         $name = $this->filtername($name);
-        if (empty($name)) {
+        if (('0' !== $name) && empty($name)) {
             require_once 'Zend/Form/Exception.php';
             throw new Zend_Form_Exception('Invalid name provided; must contain only valid variable characters and be non-empty');
         }

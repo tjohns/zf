@@ -4,8 +4,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
@@ -25,7 +23,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 {
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
         $suite  = new PHPUnit_Framework_TestSuite('Zend_Form_ElementTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -134,6 +131,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
             $this->fail('Empty names should raise exception');
         } catch (Zend_Form_Exception $e) {
             $this->assertContains('Invalid name provided', $e->getMessage());
+        }
+    }
+
+    public function testZeroIsAllowedAsElementName()
+    {
+        try {
+            $this->element->setName(0);
+            $this->assertSame('0', $this->element->getName());
+        } catch (Zend_Form_Exception $e) {
+            $this->fail('Should allow zero as element name');
         }
     }
 
