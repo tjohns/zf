@@ -168,7 +168,8 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
     {
         $query = new Zend_Gdata_Spreadsheets_ListQuery();
         $query->setSpreadsheetKey($this->sprKey);
-        $query->setRowId('1');
+        $query->setStartIndex('1');
+        $query->setMaxResults('1');
         $entry = $this->gdata->getListEntry($query);
         $this->assertTrue($entry instanceof Zend_Gdata_Spreadsheets_ListEntry);
         

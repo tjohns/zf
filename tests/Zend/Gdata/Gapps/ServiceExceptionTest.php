@@ -20,7 +20,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'PHPUnit/Extensions/ExceptionTestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Gdata/Gapps/ServiceException.php';
 require_once 'Zend/Gdata/Gapps/Error.php';
 require_once 'Zend/Gdata/Gapps.php';
@@ -29,7 +29,7 @@ require_once 'Zend/Gdata/Gapps.php';
  * @package Zend_Gdata
  * @subpackage UnitTests
  */
-class Zend_Gdata_Gapps_ServiceExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
+class Zend_Gdata_Gapps_ServiceExceptionTest extends PHPUnit_Framework_TestCase
 {
     protected $fixture;
     protected $data;
@@ -45,8 +45,10 @@ class Zend_Gdata_Gapps_ServiceExceptionTest extends PHPUnit_Extensions_Exception
         $this->data[4] = new Zend_Gdata_Gapps_Error(2398, "red", "kitten");
     }
 
+    /**
+     * @expectedException Zend_Gdata_Gapps_ServiceException
+     */
     public function testCanThrowServiceException() {
-        $this->setExpectedException('Zend_Gdata_Gapps_ServiceException');
         throw $this->fixture;
     }
 
