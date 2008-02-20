@@ -20,6 +20,32 @@
             methods, respectively.
         </para>
 
+        <note>
+            <title>Default Module</title>
+
+            <para>
+                When creating modular applications, you may find that you want
+                your default module namespaced as well (the default
+                configuration is that the default module is
+                <emphasis>not</emphasis> namespaced). As of 1.5.0, you can now
+                do so by specifying the <code>prefixDefaultModule</code> as true
+                in either the front controller or your dispatcher:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php 
+// In your front controller:
+$front->setParam('prefixDefaultModule', true);
+
+// In your dispatcher:
+$dispatcher->setParam('prefixDefaultModule', true);
+?>]]></programlisting>
+
+            <para>
+                This allows you to re-purpose an existing module to be the
+                default module for an application.
+            </para>
+        </note>
+
         <para>
             Dispatching happens in a loop in the front controller. Before
             dispatching occurs, the front controller routes the request to find

@@ -2,22 +2,14 @@
 // Call Zend_Controller_Dispatcher_StandardTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Dispatcher_StandardTest::main");
-
-    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 4));
-
-    set_include_path(
-        $basePath . DIRECTORY_SEPARATOR . 'tests'
-        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
-        . PATH_SEPARATOR . get_include_path()
-    );
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
+require_once 'Zend/Controller/Request/Simple.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
 class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase 
@@ -32,8 +24,6 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Dispatcher_StandardTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -428,6 +418,44 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->_dispatcher->getDefaultModule(), $request->getModuleName());
         $this->assertEquals($this->_dispatcher->getDefaultControllerName(), $request->getControllerName());
         $this->assertNull($request->getActionName());
+    }
+
+    public function testLoadClassLoadsControllerInDefaultModuleWithoutModulePrefix()
+    {
+        $request = new Zend_Controller_Request_Simple();
+        $request->setControllerName('empty');
+        $class = $this->_dispatcher->getControllerClass($request);
+        $this->assertEquals('EmptyController', $class);
+        $test = $this->_dispatcher->loadClass($class);
+        $this->assertEquals($class, $test);
+        $this->assertTrue(class_exists($class));
+    }
+
+    public function testLoadClassLoadsControllerInSpecifiedModuleWithModulePrefix()
+    {
+        Zend_Controller_Front::getInstance()->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
+        $request = new Zend_Controller_Request_Simple();
+        $request->setControllerName('index')
+                ->setModuleName('bar');
+        $class = $this->_dispatcher->getControllerClass($request);
+        $this->assertEquals('IndexController', $class);
+        $test = $this->_dispatcher->loadClass($class);
+        $this->assertEquals('Bar_IndexController', $test);
+        $this->assertTrue(class_exists($test));
+    }
+
+    public function testLoadClassLoadsControllerInDefaultModuleWithModulePrefixWhenRequested()
+    {
+        Zend_Controller_Front::getInstance()->addModuleDirectory(dirname(__FILE__) . '/../_files/modules');
+        $this->_dispatcher->setDefaultModule('foo')
+                          ->setParam('prefixDefaultModule', true);
+        $request = new Zend_Controller_Request_Simple();
+        $request->setControllerName('index');
+        $class = $this->_dispatcher->getControllerClass($request);
+        $this->assertEquals('IndexController', $class);
+        $test = $this->_dispatcher->loadClass($class);
+        $this->assertEquals('Foo_IndexController', $test);
+        $this->assertTrue(class_exists($test));
     }
 }
 
