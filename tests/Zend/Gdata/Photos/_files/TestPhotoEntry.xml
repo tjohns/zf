@@ -20,8 +20,16 @@
   <gphoto:checksum/>
   <gphoto:timestamp>1189025363000</gphoto:timestamp>
   <exif:tags>
-    <exif:flash>true</exif:flash>
-    <exif:imageUniqueID>a5ce2e36b9df7d3cb081511c72e73926</exif:imageUniqueID>
+     <exif:fstop>11.0</exif:fstop>
+     <exif:exposure>0.0040</exif:exposure>
+     <exif:flash>true</exif:flash>
+     <exif:focallength>22.0</exif:focallength>
+     <exif:iso>200</exif:iso>
+     <exif:time>1180950900000</exif:time>
+     <exif:imageUniqueID>a5ce2e36b9df7d3cb081511c72e73926</exif:imageUniqueID>
+     <exif:distance>0.0</exif:distance>
+     <exif:make>Fictitious Camera Company</exif:make>
+     <exif:model>AMAZING-100D</exif:model>
   </exif:tags>
   <gphoto:commentingEnabled>true</gphoto:commentingEnabled>
   <gphoto:commentCount>0</gphoto:commentCount>

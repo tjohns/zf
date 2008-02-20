@@ -202,7 +202,6 @@ class Zend_Gdata_Exif_Extension_Tags extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        
         switch ($absoluteNodeName) {
             case $this->lookupNamespace('exif') . ':' . 'distance'; 
                 $distance = new Zend_Gdata_Exif_Extension_Distance();
@@ -229,7 +228,7 @@ class Zend_Gdata_Exif_Extension_Tags extends Zend_Gdata_Extension
                 $fStop->transferFromDOM($child);
                 $this->_fStop = $fStop;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'imageUniqueId'; 
+            case $this->lookupNamespace('exif') . ':' . 'imageUniqueID'; 
                 $imageUniqueId = new Zend_Gdata_Exif_Extension_ImageUniqueId();
                 $imageUniqueId->transferFromDOM($child);
                 $this->_imageUniqueId = $imageUniqueId;

@@ -180,13 +180,30 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
     public function testExifData()
     {
         $exifTags = $this->photoEntry->exifTags;
-        //var_dump($this->photoEntry);
-        $this->assertTrue($exifTags != null, "exif:tags not null");
+        $this->assertTrue($exifTags != null);
         $this->assertTrue($exifTags->flash != null); 
+        $this->assertTrue($exifTags->fstop != null); 
+        $this->assertTrue($exifTags->exposure != null); 
+        $this->assertTrue($exifTags->focallength != null); 
+        $this->assertTrue($exifTags->iso != null); 
+        $this->assertTrue($exifTags->time != null);
+        $this->assertTrue($exifTags->distance != null); 
+        $this->assertTrue($exifTags->make != null);
+        $this->assertTrue($exifTags->model != null);
+        $this->assertTrue($exifTags->imageUniqueID != null,"imageUniqueID is null"); 
         $this->assertEquals("true", $exifTags->flash->text); 
-        //$this->assertEquals("adfafaf", $exifTags->imageUniqueID->text); 
+        $this->assertEquals("11.0", $exifTags->fstop->text); 
+        $this->assertEquals("0.0040", $exifTags->exposure->text); 
+        $this->assertEquals("22.0", $exifTags->focallength->text);
+        $this->assertEquals("200", $exifTags->iso->text);
+        $this->assertEquals("1180950900000", $exifTags->time->text);
+        $this->assertEquals("0.0",$exifTags->distance->text);
+        $this->assertEquals("Fictitious Camera Company",$exifTags->make->text);
+        $this->assertEquals("AMAZING-100D",$exifTags->model->text); 
+        $this->assertEquals("a5ce2e36b9df7d3cb081511c72e73926", $exifTags->imageUniqueID->text); 
     }
-
+    
+    
     /**
       * Check for the existence of an <gphoto:version> and verify that it contains
       * the expected value.
