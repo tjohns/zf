@@ -131,7 +131,7 @@ abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
 
     /**
      * @param Zend_Gdata_App_Extension_Email $value
-     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     * @return Zend_Gdata_App_Extension_Person Provides a fluent interface
      */
     public function setEmail($value)
     {
@@ -149,7 +149,7 @@ abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
 
     /**
      * @param Zend_Gdata_App_Extension_Uri $value
-     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     * @return Zend_Gdata_App_Extension_Person Provides a fluent interface
      */
     public function setUri($value)
     {

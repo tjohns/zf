@@ -81,6 +81,7 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
      * Given a DOMNode representing an attribute, tries to map the data into
      * instance members.  If no mapping is defined, the name and valueare 
      * stored in an array.
+     * TODO: Convert attributes to proper types
      *
      * @param DOMNode $attribute The DOMNode attribute needed to be handled
      */
@@ -101,7 +102,7 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
     /**
      * Get the value for this element's viewCount attribute.
      *
-     * @return bool The value associated with this attribute.
+     * @return int The value associated with this attribute.
      */
     public function getViewCount()
     {
@@ -111,7 +112,7 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
     /**
      * Set the value for this element's viewCount attribute.
      *
-     * @param bool $value The desired value for this attribute.
+     * @param int $value The desired value for this attribute.
      * @return Zend_Gdata_YouTube_Extension_Statistics The element being modified.
      */
     public function setViewCount($value)
@@ -123,7 +124,7 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
     /**
      * Get the value for this element's watchCount attribute.
      *
-     * @return bool The value associated with this attribute.
+     * @return int The value associated with this attribute.
      */
     public function getWatchCount()
     {
@@ -133,7 +134,7 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
     /**
      * Set the value for this element's watchCount attribute.
      *
-     * @param bool $value The desired value for this attribute.
+     * @param int $value The desired value for this attribute.
      * @return Zend_Gdata_YouTube_Extension_Statistics The element being modified.
      */
     public function setWatchCount($value)
@@ -145,6 +146,8 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
     /**
      * Magic toString method allows using this directly via echo
      * Works best in PHP >= 4.2.0
+     *
+     * @return string
      */
     public function __toString() 
     {

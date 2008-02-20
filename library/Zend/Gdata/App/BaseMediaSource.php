@@ -44,7 +44,8 @@ abstract class Zend_Gdata_App_BaseMediaSource implements Zend_Gdata_App_MediaSou
 
     /**
      * The slug header value representing the attached file title, or null if
-     * no slug should be used.
+     * no slug should be used.  The slug header is only necessary in some cases,
+     * usually when a multipart upload is not being performed.
      *
      * @var string
      */
