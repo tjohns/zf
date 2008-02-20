@@ -343,5 +343,16 @@ class Zend_Gdata_Photos_PhotosAlbumEntryTest extends PHPUnit_Framework_TestCase
         // Assert that the entry's media group exists
         $this->assertTrue($entry->getMediaGroup() instanceof Zend_Gdata_Media_Extension_MediaGroup);
     }
+
+    /**
+     * Check for the geo data and verify that it contains the expected values
+     */
+    public function testGeoData()
+    {
+        $geoRssWhere = $this->albumEntry->geoRssWhere;
+        $point = $geoRssWhere->point;
+        $pos = $point->pos;
+        $this->assertEquals("42.87194 13.56738", $pos->text);
+    }
     
 }

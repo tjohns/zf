@@ -202,6 +202,17 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("AMAZING-100D",$exifTags->model->text); 
         $this->assertEquals("a5ce2e36b9df7d3cb081511c72e73926", $exifTags->imageUniqueID->text); 
     }
+
+    /**
+     * Check for the geo data and verify that it contains the expected values
+     */
+    public function testGeoData()
+    {
+        $geoRssWhere = $this->photoEntry->geoRssWhere;
+        $point = $geoRssWhere->point;
+        $pos = $point->pos;
+        $this->assertEquals("41.87194 12.56738", $pos->text);
+    }
     
     
     /**
