@@ -297,8 +297,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         if ($style === null) {
             $style = $this->_fetchMode;
         }
-
-        // @todo, respect the foldCase for column names
+        
         switch ($style) {
             case Zend_Db::FETCH_NUM:
                 $row = ibase_fetch_row($this->_stmtResult, IBASE_TEXT);
@@ -339,18 +338,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Firebird/Exception.php';
             throw new Zend_Db_Statement_Firebird_Exception($error);
         }
-/*
-        switch ($this->_adapter->caseFolding) {
-            case Zend_Db::CASE_LOWER:
-                $r = array_change_key_case($row, CASE_LOWER);
-                break;
-            case Zend_Db::CASE_UPPER:
-                $r = array_change_key_case($row, CASE_UPPER);
-                break;
-            case default:
-                $r = $row;
-                break;
-        }*/
+
         return $row;
     }
 
