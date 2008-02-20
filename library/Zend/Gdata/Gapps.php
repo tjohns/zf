@@ -100,16 +100,17 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     /**
      * Create Gdata_Gapps object
      * 
-     * @param Zend_Http_Client $client (optional) The HTTP client to use when 
+     * @param Zend_Http_Client $client (optional) The HTTP client to use when
      *          when communicating with the Google Apps servers.
      * @param string $domain (optional) The Google Apps domain which is to be 
      *          accessed.
+     * @param string $applicationId The identity of the app in the form of Company-AppName-Version
      */
-    public function __construct($client = null, $domain = null)
+    public function __construct($client = null, $domain = null, $applicationId = 'MyCompany-MyApp-1.0')
     {
         $this->registerPackage('Zend_Gdata_Gapps');
         $this->registerPackage('Zend_Gdata_Gapps_Extension');
-        parent::__construct($client);
+        parent::__construct($client, $applicationId);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
         $this->_domain = $domain;        
     }
