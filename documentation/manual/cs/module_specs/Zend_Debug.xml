@@ -4,7 +4,7 @@
 
     <para>
         Statická metoda <code>Zend_Debug::dump()</code> vypisuje nebo vrací informaci
-        o určitém výrazu. Takový způsob ladění kódu se používá běžně, protože není
+        o určitém výrazu. Tento způsob ladění kódu se používá běžně, protože není
         třeba používat žádné speciální nástroje nebo prostředí pro ladění.
     </para>
 
@@ -48,11 +48,11 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </para>
 
     <tip>
-        <title>Logování s Zend_Log</title>
+        <title>Ladění pomocí Zend_Log</title>
         <para>
             Používání metody <code>Zend_Debug::dump()</code> je velmi dobré pro
             jednoduché ladění během vývoje. Jednoduše můžete přidat kód, který
-            vypíše hodnotu proměnné a pak ho zase rychle odstranit.
+            vypíše hodnotu proměnné a pak jej zase rychle odstranit.
         </para>
         <para>
             Je možné také používat knihovnu <link linkend="zend.log.overview">Zend_Log</link>

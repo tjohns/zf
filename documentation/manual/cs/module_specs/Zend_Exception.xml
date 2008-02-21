@@ -10,15 +10,13 @@
     <example id="zend.exception.using.example">
         <title>Příklad zachycení výjimky</title>
         <programlisting role="php"><![CDATA[<?php
-
 try {
-    Zend_Loader::loadClass('nonexistantclass');
+    Zend_Loader::loadClass('neexistujicitrida');
 } catch (Zend_Exception $e) {
     echo "Zachycená výjimka: " . get_class($e) . "\n";
     echo "Zpráva: " . $e->getMessage() . "\n";
     // další kód, který se vykoná při chybě
 }
-
 ?>]]></programlisting>
     </example>
 

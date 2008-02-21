@@ -1,6 +1,6 @@
 <sect1 id="zend.version.reading">
 
-    <title>Získávání informací o verzi Zend Frameworku</title>
+    <title>Získání informací o verzi Zend Frameworku</title>
 
     <para>
         Hodnotou konstanty <code>Zend_Version::VERSION</code> je
