@@ -37,14 +37,13 @@ require_once 'Zend/View/Exception.php';
  */
 class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_Standalone
 {
-    /**#@+
+    /**
      * Types of attributes
      * @var array
      */
     protected $_typeKeys     = array('name', 'http-equiv');
     protected $_requiredKeys = array('content');
     protected $_modifierKeys = array('lang', 'scheme');
-    /**#@-*/
 
     /**
      * @var string registry key
@@ -154,6 +153,10 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
                 return $this->offsetSet($index, $item);
             }
 
+            if ($action == 'set') {
+                //var_dump($this->getContainer());
+            }
+            
             $this->$action($item);
             return $this;
         }
@@ -216,6 +219,23 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
     }
 
     /**
+     * OffsetUnset
+     * 
+     * @param  string|int $index
+     * @return void
+     * @throws Zend_View_Exception
+     */
+    public function offsetUnset($index)
+    {
+        if (!in_array($index, $this->getContainer()->getKeys())) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid index passed to offsetUnset.');
+        }
+        
+        return $this->getContainer()->offsetUnset($index);
+    }
+    
+    /**
      * Prepend
      * 
      * @param  string $value 
@@ -246,7 +266,14 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             throw new Zend_View_Exception('Invalid value passed to set; please use setMeta()');
         }
 
-        return $this->getContainer()->set($value);
+        $container = $this->getContainer();
+        foreach ($container->getArrayCopy() as $index => $item) {
+            if ($item->type == $value->type) {
+                $this->offsetUnset($index);
+            }
+        }
+            
+        return $this->append($value);
     }
 
     /**

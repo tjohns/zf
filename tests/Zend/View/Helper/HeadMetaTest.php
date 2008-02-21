@@ -171,13 +171,14 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
 
     protected function _testOverloadSet($type)
     {
-        $action = 'set' . $this->_inflectAction($type);
+        $setAction = 'set' . $this->_inflectAction($type);
+        $appendAction = 'append' . $this->_inflectAction($type);
         $string = 'foo';
         for ($i = 0; $i < 3; ++$i) {
-            $this->helper->appendName('keywords', $string);
+            $this->helper->$appendAction('keywords', $string);
             $string .= ' foo';
         }
-        $this->helper->$action('keywords', $string);
+        $this->helper->$setAction('keywords', $string);
         $values = $this->helper->getArrayCopy();
         $this->assertEquals(1, count($values));
         $item = array_shift($values);
@@ -319,6 +320,24 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $this->assertContains('some content', $test);
         $this->assertContains('foo', $test);
     }
+    
+    /**
+     * @issue ZF-2663
+     */
+    public function testSetNameDoesntClobber()
+    {
+        $view = new Zend_View();
+        $view->headMeta()->setName('keywords', 'foo');
+        $view->headMeta()->appendHttpEquiv('pragma', 'bar');
+        $view->headMeta()->appendHttpEquiv('Cache-control', 'baz');
+        $view->headMeta()->setName('keywords', 'bat');
+ 
+        $this->assertEquals(
+            '<meta http-equiv="pragma" content="bar" />' . PHP_EOL . '<meta http-equiv="Cache-control" content="baz" />' . PHP_EOL . '<meta name="keywords" content="bat" />', 
+            $view->headMeta()->toString()
+            );
+    }
+    
 }
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.
