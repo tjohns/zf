@@ -22,19 +22,19 @@
 
 
 /**
- * Zend_Acl_Resource_Interface
+ * @see Zend_Acl_Resource_Interface
  */
 require_once 'Zend/Acl/Resource/Interface.php';
 
 
 /**
- * Zend_Acl_Role_Registry
+ * @see Zend_Acl_Role_Registry
  */
 require_once 'Zend/Acl/Role/Registry.php';
 
 
 /**
- * Zend_Acl_Assert_Interface
+ * @see Zend_Acl_Assert_Interface
  */
 require_once 'Zend/Acl/Assert/Interface.php';
 
@@ -171,7 +171,7 @@ class Zend_Acl
      */
     public function inheritsRole($role, $inherit, $onlyParents = false)
     {
-        return $this->_getRoleRegistry()->inherits($role, $inherit, $onlyParents = false);
+        return $this->_getRoleRegistry()->inherits($role, $inherit, $onlyParents);
     }
 
     /**

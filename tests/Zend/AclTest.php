@@ -17,6 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
@@ -1022,6 +1023,20 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_acl->isAllowed('marketing', 'latest', 'edit'));
         $this->assertTrue($this->_acl->isAllowed('marketing', 'latest'));
 
+    }
+
+    /**
+     * Ensures that the $onlyParents argument to inheritsRole() works
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-2502
+     */
+    public function testRoleInheritanceSupportsCheckingOnlyParents()
+    {
+        $this->_acl->addRole(new Zend_Acl_Role('grandparent'))
+                   ->addRole(new Zend_Acl_Role('parent'), 'grandparent')
+                   ->addRole(new Zend_Acl_Role('child'), 'parent');
+        $this->assertFalse($this->_acl->inheritsRole('child', 'grandparent', true));
     }
 
 }
