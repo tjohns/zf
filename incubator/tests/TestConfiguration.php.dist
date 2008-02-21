@@ -77,6 +77,24 @@ define('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE', false);
 define('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED', false);
 
 /**
+ * Zend_Service_SlideShare tests
+ */
+
+define('TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY', '');
+
+// The slide show ID to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID', 0);
+
+// The tag to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_TAG', 'zend');
+
+// The group to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_GROUP', '');
+
+/**
  * Zend_Ldap online tests
  */
 define('TESTS_ZEND_LDAP_ONLINE_ENABLED', false);

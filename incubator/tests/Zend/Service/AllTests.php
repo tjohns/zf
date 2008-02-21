@@ -6,7 +6,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/Service/GravatarTest.php';
+require_once 'Zend/Service/SlideShareTest.php';
 
 class Zend_Service_AllTests
 {
@@ -19,8 +19,7 @@ class Zend_Service_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service');
 
-        $suite->addTestSuite('Zend_Service_GravatarTest');
-
+		$suite->addTestSuite('Zend_Service_SlideShareTest');
         return $suite;
     }
 }
