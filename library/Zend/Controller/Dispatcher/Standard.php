@@ -172,6 +172,18 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
     }
 
     /**
+     * Format action class name
+     *
+     * @param string $moduleName Name of the current module
+     * @param string $className Name of the action class
+     * @return string Formatted class name
+     */
+    public function formatClassName($moduleName, $className)
+    {
+        return $this->formatModuleName($moduleName) . '_' . $className;
+    }
+
+    /**
      * Convert a class name to a filename
      *
      * @param string $class
@@ -318,7 +330,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         if (($this->_defaultModule != $this->_curModule) 
             || $this->getParam('prefixDefaultModule')) 
         {
-            $finalClass = $this->formatModuleName($this->_curModule) . '_' . $className;
+            $finalClass = $this->formatClassName($this->_curModule, $className);
         }
         if (class_exists($finalClass, false)) {
             return $finalClass;
