@@ -60,7 +60,10 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID);
-        $ss->getCacheObject()->clean();
+                                                 
+        $cache = Zend_Cache::factory('Core', 'File', array('lifetime' => 0, 'automatic_serialization' => true), 
+        											 array('cache_dir' => dirname(__FILE__)."/SlideShare/_files"));
+		$ss->setCacheObject($cache);
         return $ss;
     }
 
@@ -69,6 +72,7 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         try {
             $result = $ss->getSlideShow(TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID);
         } catch(Exception $e) {
+        	var_dump($e);
             $this->fail("Exception Caught retrieving Slideshow");
         }
 

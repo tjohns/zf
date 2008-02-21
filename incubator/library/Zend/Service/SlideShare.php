@@ -377,7 +377,7 @@ class Zend_Service_SlideShare {
 
 		$cache = $this->getCacheObject();
 		
-		$cache_key = md5($key.$value.$offset.$limit);
+		$cache_key = md5("__zendslideshare_cache_$ss_id");
 		
 		if(!$retval = $cache->load($cache_key)) {		                
 			$client = $this->getHttpClient();
