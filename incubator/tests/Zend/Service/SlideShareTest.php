@@ -67,12 +67,33 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         return $ss;
     }
 
+    public function setUp() {
+    	
+    	if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY") ||
+    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET") ||
+    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME") ||
+    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD") ||
+    	   (TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY == "") ||
+    	   (TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET == "") ||
+    	   (TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME == "") ||
+    	   (TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD == "")) {
+
+    	   	$this->markTestSkipped("You must configure an account for slideshare to run these tests");
+    	}
+    }
+    
+    
     public function testGetSlideShow() {
+    	
+		if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID") ||
+		   (TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID <= 0)) {
+		   	$this->markTestSkipped("You must provide a Slideshow ID to retrieve to perform this test");
+		}
+		
         $ss = $this->_getSSObject();
         try {
             $result = $ss->getSlideShow(TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID);
         } catch(Exception $e) {
-        	var_dump($e);
             $this->fail("Exception Caught retrieving Slideshow");
         }
 
@@ -93,7 +114,25 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($results));
         $this->assertTrue(count($results) == 1);
         $this->assertTrue($results[0] instanceof Zend_Service_SlideShare_SlideShow);
+        
+    }
+    
+    public function testGetSlideShowByTags() {
+    	
+        $ss = $this->_getSSObject();
 
+        try {
+            $results = $ss->getSlideShowsByTag(array('zend', 'php'), 0, 1);
+        } catch(Exception $e) {
+            $this->fail("Exception Caught retrieving Slideshow List (tag)");
+        }
+
+        $this->assertTrue(is_array($results));
+        
+        if(!empty($results)) {
+        	$this->assertTrue(count($results) == 1);
+        	$this->assertTrue($results[0] instanceof Zend_Service_SlideShare_SlideShow);
+        }
     }
 
     public function testGetSlideShowByUsername() {
