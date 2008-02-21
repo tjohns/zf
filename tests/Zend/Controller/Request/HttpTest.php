@@ -528,6 +528,37 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_SERVER['HTTP_USER_AGENT'] = 'Shockwave Flash';
         $this->assertTrue($this->_request->isFlashRequest());
     }
+
+    /**
+     * ZF-1798
+     */
+    public function testGetAndPostBothInDefaultParamSources()
+    {
+        $this->assertEquals(array('_GET', '_POST'), $this->_request->getParamSources());
+    }
+
+    /**
+     * ZF-1798
+     */
+    public function testCanSetParamSources()
+    {
+        $this->testGetAndPostBothInDefaultParamSources();
+        $this->_request->setParamSources(array());
+        $this->assertSame(array(), $this->_request->getParamSources());
+        $this->_request->setParamSources(array('_GET'));
+        $this->assertSame(array('_GET'), $this->_request->getParamSources());
+    }
+
+    /**
+     * ZF-1798
+     */
+    public function testParamSourcesHonoredByGetParam()
+    {
+        $_GET  = array('foo' => 'bar');
+        $_POST = array('foo' => 'baz');
+        $this->_request->setParamSources(array('_POST'));
+        $this->assertEquals('baz', $this->_request->getParam('foo'));
+    }
 }
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.

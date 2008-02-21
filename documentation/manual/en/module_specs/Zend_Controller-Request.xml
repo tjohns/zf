@@ -136,6 +136,16 @@
                     If you wish to pull only from parameters you set via
                     <code>setParam()</code>, use the <code>getUserParam()</code>.
                 </para>
+
+                <para>
+                    Additionally, as of 1.5.0, you can lock down which parameter
+                    sources will be searched. <code>setParamSources()</code>
+                    allows you to specify an empty array or an array with one or
+                    more of the values '_GET' or '_POST' indicating which
+                    parameter sources are allowed (by default, both are
+                    allowed); if you wish to restrict access to only '_GET'
+                    specify <code>setParamSources(array('_GET'))</code>.
+                </para>
             </note>
 
             <note>

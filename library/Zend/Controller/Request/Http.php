@@ -39,6 +39,12 @@ require_once 'Zend/Uri.php';
 class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 {
     /**
+     * Allowed parameter sources
+     * @var array
+     */
+    protected $_paramSources = array('_GET', '_POST');
+
+    /**
      * REQUEST_URI
      * @var string;
      */
@@ -561,6 +567,30 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     }
 
     /**
+     * Set allowed parameter sources
+     *
+     * Can be empty array, or contain one or more of '_GET' or '_POST'.
+     * 
+     * @param  array $paramSoures 
+     * @return Zend_Controller_Request_Http
+     */
+    public function setParamSources(array $paramSources = array())
+    {
+        $this->_paramSources = $paramSources;
+        return $this;
+    }
+
+    /**
+     * Get list of allowed parameter sources
+     * 
+     * @return array
+     */
+    public function getParamSources()
+    {
+        return $this->_paramSources;
+    }
+
+    /**
      * Set a userland parameter
      *
      * Uses $key to set a userland parameter. If $key is an alias, the actual
@@ -594,11 +624,12 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         $keyName = (null !== ($alias = $this->getAlias($key))) ? $alias : $key;
 
+        $paramSources = $this->getParamSources();
         if (isset($this->_params[$keyName])) {
             return $this->_params[$keyName];
-        } elseif ((isset($_GET[$keyName]))) {
+        } elseif (in_array('_GET', $paramSources) && (isset($_GET[$keyName]))) {
             return $_GET[$keyName];
-        } elseif ((isset($_POST[$keyName]))) {
+        } elseif (in_array('_POST', $paramSources) && (isset($_POST[$keyName]))) {
             return $_POST[$keyName];
         }
 
