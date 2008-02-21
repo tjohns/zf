@@ -30,6 +30,9 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (isset($this->error)) {
+            unset($this->error);
+        }
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
         Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
@@ -477,6 +480,82 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $test = $this->_dispatcher->getControllerDirectory();
         $this->assertNotEquals($dirs, $test);
         $this->assertFalse(array_key_exists('foo', $test));
+    }
+
+    /**
+     * ZF-2693
+     */
+    public function testCamelCasedActionsNotRequestedWithWordSeparatorsShouldNotResolve()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
+        $request->setControllerName('foo-bar');
+        $request->setActionName('bazBat');
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $this->fail('Invalid camelCased action should raise exception');
+        } catch (Zend_Controller_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+    }
+
+    /**
+     * ZF-2693
+     */
+    public function testCamelCasedActionsNotRequestedWithWordSeparatorsShouldResolveIfForced()
+    {
+        $this->_dispatcher->setParam('useCaseSensitiveActions', true);
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
+        $request->setControllerName('foo-bar');
+        $request->setActionName('bazBat');
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        $oldLevel = error_reporting(0);
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $body = $this->_dispatcher->getResponse()->getBody();
+            error_reporting($oldLevel);
+            $this->assertContains("Admin_FooBar::bazBat action called", $body, $body);
+        } catch (Zend_Controller_Exception $e) {
+            error_reporting($oldLevel);
+            $this->fail('camelCased actions should succeed when forced');
+        }
+    }
+
+    public function handleErrors($errno, $errstr)
+    {
+        $this->error = $errstr;
+    }
+
+    /**
+     * ZF-2693
+     */
+    public function testForcingCamelCasedActionsNotRequestedWithWordSeparatorsShouldRaiseNotices()
+    {
+        $this->_dispatcher->setParam('useCaseSensitiveActions', true);
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('admin');
+        $request->setControllerName('foo-bar');
+        $request->setActionName('bazBat');
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        set_error_handler(array($this, 'handleErrors'));
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $body = $this->_dispatcher->getResponse()->getBody();
+            restore_error_handler();
+            $this->assertTrue(isset($this->error));
+            $this->assertContains('deprecated', $this->error);
+        } catch (Zend_Controller_Exception $e) {
+            restore_error_handler();
+            $this->fail('camelCased actions should succeed when forced');
+        }
     }
 }
 

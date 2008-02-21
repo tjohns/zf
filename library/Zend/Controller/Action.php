@@ -495,7 +495,14 @@ abstract class Zend_Controller_Action
         $this->preDispatch();
         if ($this->getRequest()->isDispatched()) {
             // preDispatch() didn't change the action, so we can continue
-            $this->$action();
+            if ($this->getInvokeArg('useCaseSensitiveActions') || in_array($action, get_class_methods($this))) {
+                if ($this->getInvokeArg('useCaseSensitiveActions')) {
+                    trigger_error('Using case sensitive actions without word separators is deprecated; please do not rely on this "feature"');
+                }
+                $this->$action();
+            } else {
+                $this->__call($action, array());
+            }
             $this->postDispatch();
         }
 
