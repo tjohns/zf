@@ -107,7 +107,16 @@ class Zend_OpenId
         }
 
         $url .= $port;
-        if (isset($_SERVER['SCRIPT_URL'])) {
+        if (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
+            $url .= $_SERVER['HTTP_X_REWRITE_URL'];
+        } elseif (isset($_SERVER['REQUEST_URI'])) {
+            $query = strpos($_SERVER['REQUEST_URI'], '?');
+            if ($query === false) {
+                $url .= $_SERVER['REQUEST_URI'];
+            } else {
+                $url .= substr($_SERVER['REQUEST_URI'], 0, $query);
+            }
+        } else if (isset($_SERVER['SCRIPT_URL'])) {
             $url .= $_SERVER['SCRIPT_URL'];
         } else if (isset($_SERVER['REDIRECT_URL'])) {
             $url .= $_SERVER['REDIRECT_URL'];
