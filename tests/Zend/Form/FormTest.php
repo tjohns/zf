@@ -74,7 +74,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->form->getName());
         $this->assertEquals('someform', $this->form->getAttrib('class'));
         $this->assertEquals('/foo/bar', $this->form->getAction());
-        $this->assertEquals('PUT', $this->form->getMethod());
+        $this->assertEquals('put', $this->form->getMethod());
     }
 
     public function testCanSetObjectStateByPassingOptionsToConstructor()
@@ -84,7 +84,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $form->getName());
         $this->assertEquals('someform', $form->getAttrib('class'));
         $this->assertEquals('/foo/bar', $form->getAction());
-        $this->assertEquals('PUT', $form->getMethod());
+        $this->assertEquals('put', $form->getMethod());
     }
 
     public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
@@ -328,7 +328,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->form->getName());
         $this->assertEquals('someform', $this->form->getAttrib('class'));
         $this->assertEquals('/foo/bar', $this->form->getAction());
-        $this->assertEquals('PUT', $this->form->getMethod());
+        $this->assertEquals('put', $this->form->getMethod());
     }
 
     public function testCanSetObjectStateByPassingConfigObjectToConstructor()
@@ -338,7 +338,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $form->getName());
         $this->assertEquals('someform', $form->getAttrib('class'));
         $this->assertEquals('/foo/bar', $form->getAction());
-        $this->assertEquals('PUT', $form->getMethod());
+        $this->assertEquals('put', $form->getMethod());
     }
 
 
@@ -460,19 +460,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testMethodDefaultsToPost()
     {
-        $this->assertEquals('POST', $this->form->getMethod());
+        $this->assertEquals('post', $this->form->getMethod());
     }
 
     public function testCanSetMethod()
     {
         $this->testMethodDefaultsToPost();
         $this->form->setMethod('get');
-        $this->assertEquals('GET', $this->form->getMethod());
+        $this->assertEquals('get', $this->form->getMethod());
     }
 
     public function testMethodLimitedToGetPostPutAndDelete()
     {
-        foreach (array('GET', 'POST', 'PUT', 'DELETE') as $method) {
+        foreach (array('get', 'post', 'put', 'delete') as $method) {
             $this->form->setMethod($method);
             $this->assertEquals($method, $this->form->getMethod());
         }

@@ -39,10 +39,10 @@ class Zend_Form implements Iterator, Countable
     /**#@+
      * Method type constants
      */
-    const METHOD_DELETE = 'DELETE';
-    const METHOD_GET    = 'GET';
-    const METHOD_POST   = 'POST';
-    const METHOD_PUT    = 'PUT';
+    const METHOD_DELETE = 'delete';
+    const METHOD_GET    = 'get';
+    const METHOD_POST   = 'post';
+    const METHOD_PUT    = 'put';
     /**#@-*/
 
     /**
@@ -127,7 +127,7 @@ class Zend_Form implements Iterator, Countable
      * Allowed form methods
      * @var array
      */
-    protected $_methods = array('DELETE', 'GET', 'POST', 'PUT');
+    protected $_methods = array('delete', 'get', 'post', 'put');
 
     /**
      * Order in which to display and iterate elements
@@ -609,7 +609,7 @@ class Zend_Form implements Iterator, Countable
      */
     public function setMethod($method)
     {
-        $method = strtoupper($method);
+        $method = strtolower($method);
         if (!in_array($method, $this->_methods)) {
             require_once 'Zend/Form/Exception.php';
             throw new Zend_Form_Exception(sprintf('"%s" is an invalid form method', $method));
@@ -629,7 +629,7 @@ class Zend_Form implements Iterator, Countable
             $method = self::METHOD_POST;
             $this->setAttrib('method', $method);
         }
-        return $method;
+        return strtolower($method);
     }
 
     /**
