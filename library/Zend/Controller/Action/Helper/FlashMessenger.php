@@ -133,7 +133,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
 
         self::$_session->{$this->_namespace}[] = $message;
 
-        return;
+        return $this;
     }
 
     /**
@@ -163,7 +163,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     }
 
     /**
-     * Clear all messages from the current namespace
+     * Clear all messages from the previous request & current namespace
      *
      * @return bool True if messages were cleared, false if none existed
      */
@@ -203,6 +203,21 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         return array();
     }
 
+    /**
+     * clear messages from the current request & current namespace
+     *
+     * @return bool
+     */
+    public function clearCurrentMessages()
+    {
+        if ($this->hasCurrentMessages()) {
+            unset(self::$_session->{$this->_namespace});
+            return true;
+        }
+        
+        return false;
+    }
+    
     /**
      * getIterator() - complete the IteratorAggregate interface, for iterating
      *
