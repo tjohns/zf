@@ -1060,8 +1060,8 @@ class Zend_Form_Element implements Zend_Validate_Interface
             }
 
             if ($isArray && is_array($value)) {
-                $message = array();
-                $errors  = array();
+                $messages = array();
+                $errors   = array();
                 foreach ($value as $val) {
                     if (!$validator->isValid($val, $context)) {
                         $result = false;
