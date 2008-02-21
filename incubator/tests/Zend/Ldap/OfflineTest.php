@@ -107,6 +107,9 @@ class Zend_Ldap_OfflineTest extends PHPUnit_Framework_TestCase
 			'EXAMPLE\\username' => false,
 			'CN=,Alice Baker,CN=Users,DC=example,DC=com' => false,
 			'CN=Users,DC==example,DC=com' => false,
+			'O=ACME' => true,
+			'' => false,
+			'	' => false,
 		);
 
 		foreach ($inputs as $dn => $expected) {

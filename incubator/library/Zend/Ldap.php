@@ -121,7 +121,7 @@ class Zend_Ldap
             }
         }
 
-        return $state === 1 && strtoupper($key) === 'DC'; 
+        return $state === 1 && $ko > 0; 
     }
 
     /**
