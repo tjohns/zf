@@ -16,8 +16,9 @@
  * @category   Zend
  * @package    Zend_Service_SlideShare
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RememberTheMilkTest.php 5393 2007-06-20 21:16:06Z darby $
+ * @version    $Id$
  * @author     John Coggeshall <john@zend.com>
  */
 
@@ -37,8 +38,9 @@ require_once 'Zend/Service/SlideShare.php';
  * @category   Zend
  * @package    Zend_Service_SlideShare
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author        John Coggeshall <john@zend.com>
+ * @author     John Coggeshall <john@zend.com>
  */
 class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
 {
@@ -54,42 +56,45 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
      *
      * @return Zend_Service_SlideShare
      */
-    protected function _getSSObject() {
+    protected function _getSSObject()
+    {
         $ss = new Zend_Service_SlideShare(TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD,
                                                  TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID);
-                                                 
-        $cache = Zend_Cache::factory('Core', 'File', array('lifetime' => 0, 'automatic_serialization' => true), 
-        											 array('cache_dir' => dirname(__FILE__)."/SlideShare/_files"));
-		$ss->setCacheObject($cache);
+
+        $cache = Zend_Cache::factory('Core', 'File', array('lifetime' => 0, 'automatic_serialization' => true),
+                                                     array('cache_dir' => dirname(__FILE__)."/SlideShare/_files"));
+        $ss->setCacheObject($cache);
         return $ss;
     }
 
-    public function setUp() {
-    	
-    	if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY") ||
-    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET") ||
-    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME") ||
-    	   !defined("TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD") ||
-    	   (TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY == "") ||
-    	   (TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET == "") ||
-    	   (TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME == "") ||
-    	   (TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD == "")) {
+    public function setUp()
+    {
 
-    	   	$this->markTestSkipped("You must configure an account for slideshare to run these tests");
-    	}
+        if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY") ||
+           !defined("TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET") ||
+           !defined("TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME") ||
+           !defined("TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD") ||
+           (TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY == "") ||
+           (TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET == "") ||
+           (TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME == "") ||
+           (TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD == "")) {
+
+               $this->markTestSkipped("You must configure an account for slideshare to run these tests");
+        }
     }
-    
-    
-    public function testGetSlideShow() {
-    	
-		if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID") ||
-		   (TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID <= 0)) {
-		   	$this->markTestSkipped("You must provide a Slideshow ID to retrieve to perform this test");
-		}
-		
+
+
+    public function testGetSlideShow()
+    {
+
+        if(!defined("TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID") ||
+           (TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID <= 0)) {
+               $this->markTestSkipped("You must provide a Slideshow ID to retrieve to perform this test");
+        }
+
         $ss = $this->_getSSObject();
         try {
             $result = $ss->getSlideShow(TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID);
@@ -101,7 +106,8 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testGetSlideShowByTag() {
+    public function testGetSlideShowByTag()
+    {
 
         $ss = $this->_getSSObject();
 
@@ -114,11 +120,12 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($results));
         $this->assertTrue(count($results) == 1);
         $this->assertTrue($results[0] instanceof Zend_Service_SlideShare_SlideShow);
-        
+
     }
-    
-    public function testGetSlideShowByTags() {
-    	
+
+    public function testGetSlideShowByTags()
+    {
+
         $ss = $this->_getSSObject();
 
         try {
@@ -128,14 +135,15 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue(is_array($results));
-        
+
         if(!empty($results)) {
-        	$this->assertTrue(count($results) == 1);
-        	$this->assertTrue($results[0] instanceof Zend_Service_SlideShare_SlideShow);
+            $this->assertTrue(count($results) == 1);
+            $this->assertTrue($results[0] instanceof Zend_Service_SlideShare_SlideShow);
         }
     }
 
-    public function testGetSlideShowByUsername() {
+    public function testGetSlideShowByUsername()
+    {
 
         $ss = $this->_getSSObject();
 
@@ -151,7 +159,8 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testUploadSlideShow() {
+    public function testUploadSlideShow()
+    {
         $ss = $this->_getSSObject();
 
         $title = "Unit Test for ZF SlideShare Component";
@@ -185,7 +194,8 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testSlideShowObj() {
+    public function testSlideShowObj()
+    {
         $ss = new Zend_Service_SlideShare_SlideShow();
 
         $ss->setDescription("Foo");
