@@ -67,6 +67,11 @@ require_once 'Zend/Service/Flickr/AllTests.php';
 require_once 'Zend/Service/SimpyTest.php';
 
 /**
+ * @see Zend_Service_SlideShareTest
+ */
+require_once 'Zend/Service/SlideShareTest.php';
+
+/**
  * @see Zend_Service_StrikeIron_AllTests
  */
 require_once 'Zend/Service/StrikeIron/AllTests.php';
@@ -120,6 +125,7 @@ class Zend_Service_AllTests
         } else {
             $suite->addTestSuite('Zend_Service_SimpyTest_Skip');
         }
+        $suite->addTestSuite('Zend_Service_SlideShareTest');
         $suite->addTest(Zend_Service_StrikeIron_AllTests::suite());
         $suite->addTest(Zend_Service_Technorati_AllTests::suite());
         $suite->addTest(Zend_Service_Yahoo_AllTests::suite());

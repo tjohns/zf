@@ -217,8 +217,8 @@ define('TESTS_ZEND_GDATA_SPREADSHEETS_WORKSHEETID', 'default');
 define('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED', false);
 
 /*
- * This is the fully-qualified domain name for a domiain hosted using 
- * Google Apps. This domain must be registered with Google Apps and 
+ * This is the fully-qualified domain name for a domiain hosted using
+ * Google Apps. This domain must be registered with Google Apps and
  * have API access enabled.  This should be a TEST domain only.
  */
 define('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED', false);
@@ -383,6 +383,23 @@ define('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY', 'Enter API key here');
  * Zend_Service_Simpy tests
  */
 define('TESTS_ZEND_SERVICE_SIMPY_ENABLED', false);
+
+/**
+ * Zend_Service_SlideShare tests
+ */
+define('TESTS_ZEND_SERVICE_SLIDESHARE_USERNAME', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_PASSWORD', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_SHAREDSECRET', '');
+define('TESTS_ZEND_SERVICE_SLIDESHARE_APIKEY', '');
+
+// The slide show ID to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_SLIDESHOWID', 0);
+
+// The tag to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_TAG', 'zend');
+
+// The group to retrieve during tests
+define('TESTS_ZEND_SERVICE_SLIDESHARE_GROUP', '');
 
 /**
  * Zend_Service_Yahoo online tests
