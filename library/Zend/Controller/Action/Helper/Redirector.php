@@ -258,7 +258,20 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         }
         $paramsString = implode('/', $paramsNormalized);
 
-        $url = $module . '/' . $controller . '/' . $action . '/' . $paramsString;
+        if (!empty($paramsString)) {
+            $url = $module . '/' . $controller . '/' . $action . '/' . $paramsString;
+        } else {
+            if ($action != $dispatcher->getDefaultAction()) {
+                $url = $module . '/' . $controller . '/' . $action;
+            } else {
+                if ($controller != $dispatcher->getDefaultControllerName()) {
+                    $url = $module . '/' . $controller;
+                } else {
+                    $url = $module;
+                }
+            }
+        }
+
         $url = '/' . trim($url, '/');
 
         $url = $this->_prependBase($url);

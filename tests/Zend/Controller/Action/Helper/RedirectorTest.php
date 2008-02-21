@@ -184,6 +184,21 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->assertEquals('/news/view/item/id/42', $this->redirector->getRedirectUrl());
     }
 
+    /**
+     * ZF-2351
+     */
+    public function testGotoDoesNotUtilizeDefaultSegments()
+    {
+        $request = $this->request;
+        $request->setModuleName('default');
+        $this->redirector->setGoto('index', 'index');
+        $this->assertEquals('/', $this->redirector->getRedirectUrl());
+
+        $this->redirector->setGoto('index', 'blog');
+        $this->assertEquals('/blog', $this->redirector->getRedirectUrl());
+    }
+
+
     public function testSetGotoRoute()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
