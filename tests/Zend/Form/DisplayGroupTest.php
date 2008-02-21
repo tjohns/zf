@@ -333,7 +333,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
         $text = $this->group->__toString();
 
-        set_error_handler($origErrorHandler);
+        restore_error_handler();
 
         $this->assertTrue(empty($text));
         $this->assertTrue(isset($this->error));
