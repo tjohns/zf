@@ -88,6 +88,12 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->formPassword('foo', 'bar');
         $this->assertContains(' />', $test);
     }
+
+    public function testDoesNotRenderValue()
+    {
+        $test = $this->helper->formPassword('foo', 'bar');
+        $this->assertNotContains('bar', $test);
+    }
 }
 
 // Call Zend_View_Helper_FormPasswordTest::main() if this source file is executed directly.
