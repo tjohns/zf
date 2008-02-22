@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 8211 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -20,6 +20,19 @@
         <para>
              <code>$value</code> が英字のみで構成されているときにのみ <code>true</code> を返します。
             このバリデータでは、オプションとして空白文字を認めることもできます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.validate.set.barcode">
+        <title>Barcode</title>
+        <para>
+            このバリデータのインスタンスを作成する際には、検証したいバーコードの形式を指定します。
+            現在サポートしているバーコード形式は "<code>UPC-A</code>" (Universal Product Code) と
+            "<code>EAN-13</code>" (European Article Number) です。
+            <code>isValid()</code> メソッドは、
+            指定した型のバーコードの検証アルゴリズムで入力が検証できた場合に
+            true を返します。このバリデータに入力を渡す前に、
+            数字の 0 から 9 まで (0-9) 以外の文字はすべて取り除いておかなければなりません。
         </para>
     </sect2>
 
