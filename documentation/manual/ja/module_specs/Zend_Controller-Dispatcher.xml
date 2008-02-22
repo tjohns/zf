@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8214 -->
 <sect1 id="zend.controller.dispatcher">
     <title>ディスパッチャ</title>
 
@@ -17,6 +18,32 @@
             <code>setDefaultAction()</code> メソッド、そして
             <code>setDefaultModule()</code> でこれらを変更することもできます。
         </para>
+
+        <note>
+            <title>デフォルトモジュール</title>
+
+            <para>
+                モジュール構造のアプリケーションを作成する場合に、
+                デフォルトのモジュールにも名前空間を定義したくなることもあるでしょう
+                (デフォルトの設定では、デフォルトモジュールには名前空間が
+                <emphasis>ありません</emphasis>)。1.5.0 以降では、
+                フロントコントローラあるいはディスパッチャで
+                <code>prefixDefaultModule</code> に true
+                を設定すればこれが実現できるようになりました。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php 
+// フロントコントローラで
+$front->setParam('prefixDefaultModule', true);
+
+// ディスパッチャで
+$dispatcher->setParam('prefixDefaultModule', true);
+?>]]></programlisting>
+
+            <para>
+                これにより、既存のモジュールをアプリケーションのデフォルトモジュールとすることができます。
+            </para>
+        </note>
 
         <para>
             ディスパッチ処理が発生するのは、フロントコントローラでのループの内部です。
