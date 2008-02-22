@@ -168,4 +168,26 @@ if ($result->isValid()) {
 
     </sect2>
 
+    <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
+        <title>Utilisation avancée par l'exemple</title>
+
+        <para>
+            Bien que le but initial de <code>Zend_Auth</code> (et par extension celui de <code>Zend_Auth_Adapter_DbTable</code>) est principalement l'<emphasis role="strong">authentification</emphasis> et non l'<emphasis role="strong">autorisation</emphasis>, il existe quelques exemples et problèmes qui franchissent la ligne des domaines auquels ils appartiennent. Selon la façon dont vous avez décidé d'expliquer votre problème, il semble parfois raisonnable de résoudre ce qui pourrait ressembler à un problème d'autorisation dans l'adaptateur d'authentification.
+        </para>
+
+        <para>
+            Ceci étant dit, <code>Zend_Auth_Adapter_DbTable</code> possède des mécanismes qui sont construits de telle sorte qu'ils peuvent être démultipliés pour ajouter des contrôles supplémentaires au moment de l'authentification pour résoudre quelques problèmes communs d'utilisateur.
+
+            <programlisting role="php"><![CDATA[<?php
+// La valeur du champs "etat" d'un compte ne doit être égal à "compromis"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND etat != "compromis"');
+
+// La valeur du champs "actif" d'un compte doit être égal à "TRUE"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND actif = "TRUE"');]]>
+            </programlisting>
+
+        </para>
+
+    </sect2>
+
 </sect1>
