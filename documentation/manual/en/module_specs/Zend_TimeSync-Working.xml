@@ -13,7 +13,7 @@
             In all examples within this chapter we are using one of the available public generic timeservers.
             In our case <emphasis role="strong">0.europe.pool.ntp.org</emphasis>. For your environment
             it is recommended that you are using a public generic timeserver which is nearly to the location
-            of your server. See <link linkend="http://www.pool.ntp.org">http://www.pool.ntp.org</link> for
+            of your server. See <ulink url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink> for
             details.
         </para>
     </note>
@@ -30,7 +30,7 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/TimeSync.php';
 
-$server = new Zend_TimeSync('0.pool.ntp.org'); 
+$server = new Zend_TimeSync('0.pool.ntp.org');
 
 print $server->getDate()->getIso();]]>
         </programlisting>
@@ -74,7 +74,7 @@ require_once 'Zend/TimeSync.php';
 
 $server = new Zend_TimeSync(array('0.pool.ntp.org',
                                   '1.pool.ntp.org',
-                                  '2.pool.ntp.org')); 
+                                  '2.pool.ntp.org'));
 $server->addServer('3.pool.ntp.org');
 
 print $server->getDate()->getIso();]]>
@@ -282,7 +282,7 @@ $serverlist = array(
         // invalid servers
         'invalid_a'  => 'ntp://a.foo.bar.org',
         'invalid_b'  => 'sntp://b.foo.bar.org',
-); 
+);
 
 $server = new Zend_TimeSync($serverlist);
 
