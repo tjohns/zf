@@ -8,6 +8,25 @@
             Le dispatchage est le processus de récupération de l'objet requête, <code>Zend_Controller_Request_Abstract</code>, d'extraction du nom de module, du nom de contrôleur, du nom d'action, et des paramètres facultatifs qui s'y trouvent, et enfin d'instanciation du contrôleur et de l'appel d'une action de ce contrôleur. Si le module, le contrôleur, ou l'action ne sont pas trouvés, il emploiera des valeurs par défaut pour eux. <code>Zend_Controller_Dispatcher_Standard</code> indique <code>index</code> pour le contrôleur et l'action par défaut et <code>default</code> pour le module par défaut, mais permet au développeur de changer ces valeurs par défaut pour chacun en utilisant les méthodes respectives <code>setDefaultController()</code>, <code>setDefaultAction()</code>, et <code>setDefaultModule()</code>.
         </para>
 
+        <note>
+            <title>Le module "Default"</title>
+
+            <para>
+                Quand vous créez des applications modulaires, vous pouvez constater que vous voulez aussi que votre module par défaut ait son espace de noms (dans la configuration par défaut, le module "default" n'a pas d'espace de noms). A partir de la version 1.5.0, vous pouvez spécifier le paramètre <code>prefixDefaultModule</code> à <code>true</code> soit dans le contrôleur frontal soit dans le dispatcheur :
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Dans le contrôleur frontal :
+$front->setParam('prefixDefaultModule', true);
+
+// Dans le dispatcheur :
+$dispatcher->setParam('prefixDefaultModule', true);]]></programlisting>
+
+            <para>
+                Ceci vous permet de ré-utiliser un module existant en tant que module par défaut d'une application.
+            </para>
+        </note>
+
         <para>
             Le dispatchage se produit dans une boucle dans le contrôleur frontal. Avant que le dispatchage ne se produise, le contrôleur frontal détermine la route de la requête pour récupérer les valeurs spécifiées par l'utilsateur pour le module, le contrôleur , l'action , et les paramètres optionnels. Il entre alors dans la boucle d'expédition, et dispatche la requête.
         </para>
