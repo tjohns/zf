@@ -1,6 +1,6 @@
 ﻿<sect1 id="zend.auth.adapter.dbtable">
 
-    <title>用数据库表认证</title>
+    <title>数据库表认证</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
 
@@ -160,6 +160,33 @@ if ($result->isValid()) {
 
     </sect2>
 
+    <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
+        <title>高级用法示例</title>
+        
+        <para>
+            基于它们用在哪个域名下，还是有一些实例和问题。根据如何解释你的问题，有时候通过在认证适配器里检查授权问题也许能解决问题。
+        </para>
+        
+        <para>
+            用一点不恰当的免责声明，Zend_Auth_Adapter_DbTable 有内建的机制可以用来利用添加另外的认证时的检查来解决一些普通的用户问题。
+            
+            <programlisting role="php"><![CDATA[<?php
+// The status field value of an account is not equal to "compromised"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND status != "compromised"');
+
+// The active field value of an account is equal to "TRUE"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND active = "TRUE"');
+
+]]>
+            </programlisting>
+             
+        </para>
+            
+
+            
+        
+        
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
