@@ -306,29 +306,27 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     {
         $tempvalue = $value;
         if ($this->_UNITS[$type][0] <= 16) {
-            $newvalue = "";
+            $newvalue = '';
             $count = 200;
+            $base = $this->_UNITS[$type][0];
+            
             while (call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) <> 0) {
                 $target = call_user_func(Zend_Locale_Math::$mod, $value, $this->_UNITS[$type][0]);
-                if (($value != $tempvalue) && (($value * 2) > $oldvalue)) {
-                    $target = 0;
-                    --$value;
-                }
-                $oldvalue = $value;
-                $value = call_user_func(Zend_Locale_Math::$div, $value, $this->_UNITS[$type][0], 0);
-                if (call_user_func(Zend_Locale_Math::$add, $value, $target) > $oldvalue) {
-                    --$value;
-                }
-                $target = strtoupper( dechex($target) );
-                $newvalue = $target . $newvalue;
-                if (($value == 1) and ($newvalue == 1)) {
-                    break;
-                }
+
+                $newvalue = strtoupper( dechex($target) ) . $newvalue;
+                
+                $value = call_user_func(Zend_Locale_Math::$sub, $value, $target, 0);
+                $value = call_user_func(Zend_Locale_Math::$div, $value, $base,   0);
+
                 --$count;
                 if ($count == 0) {
                     require_once 'Zend/Measure/Exception.php';
                     throw new Zend_Measure_Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
                 }
+            }
+            
+            if ($newvalue == '') {
+                $newvalue = '0';
             }
         }
 
