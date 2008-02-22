@@ -33,7 +33,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
     </example>
 
     <note>
-        <title>Frontends et Backends consistitués de plusieurs mots</title>
+        <title>Frontends et Backends constitués de plusieurs mots</title>
         <para>
             Certains frontends et backends sont nommés en utilisant plusieurs mots, comme "ZendPlatform". En les spécifiant à la fabrique, séparez les en utilisant un séparateur de mot, comme l'espace (" "), le tiret ("-") ou le point (".").
         </para>
@@ -67,7 +67,7 @@ if(!$result = $cache->get('myresult')) {
 print_r($result);]]>
 	    </programlisting>
     </example>
-    
+
     <example id="zend.cache.introduction.example-3">
         <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
         <para>

@@ -119,9 +119,7 @@
     </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
-        <xi:include href="module_specs/Zend_Db_Adapter.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Adapter.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Db_Adapter.xml" />
         <xi:include href="module_specs/Zend_Db_Statement.xml" />
         <xi:include href="module_specs/Zend_Db_Profiler.xml" />
         <xi:include href="module_specs/Zend_Db_Select.xml" />
@@ -210,9 +208,7 @@
         <xi:include href="module_specs/Zend_Gdata_Photos.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Photos.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Gdata_Exception.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Exception.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
@@ -397,6 +393,9 @@
         <xi:include href="module_specs/Zend_Service_Simpy.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Simpy.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Service_SlideShare.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Service_SlideShare.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_StrikeIron-Overview.xml" /></xi:fallback>
         </xi:include>
@@ -418,6 +417,15 @@
         <xi:include href="module_specs/Zend_Session-AdvancedUsage.xml" />
         <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Session-GlobalSessionManagement.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+    <chapter id="zend.timesync">
+        <title>Zend_TimeSync</title>
+        <xi:include href="module_specs/Zend_TimeSync.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_TimeSync.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_TimeSync-Working.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_TimeSync-Working.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.translate">

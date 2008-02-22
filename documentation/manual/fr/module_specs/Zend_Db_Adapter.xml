@@ -71,7 +71,12 @@
         </listitem>
         <listitem>
             <para>
-                IBM DB2,  utilisant l'extension PHP <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink>.
+                IBM DB2, utilisant l'extension PHP <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Firebird/Interbase, utilisant l'extension PHP <ulink url="http://www.php.net/ibase">php_interbase</ulink>
             </para>
         </listitem>
     </itemizedlist>
@@ -1852,9 +1857,37 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             </itemizedlist>
         </sect3>
 
+
+        <sect3 id="zend.db.adapter.adapter-notes.firebird">
+            <title>Firebird/Interbase</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Passez le paramètre 'Firebird' à la méthode <code>factory()</code>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Cet adaptateur utilise l'extension PHP php_interbase.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Firebird/interbase ne supporte pas les clé auto-incrémentées, donc vous devez spécifier
+                        un paramètre de séquence à <code>lastInsertId()</code> ou
+                        <code>lastSequenceId()</code>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Pour l'instant l'option <code>Zend_Db::CASE_FOLDING</code> n'est pas supportée
+                        par l'adaptateur Firebird/interbase. Tout identificateur non quoté sera automatiquement
+                        retourné en majuscules.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

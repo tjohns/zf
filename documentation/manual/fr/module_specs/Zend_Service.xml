@@ -43,6 +43,11 @@
         </listitem>
         <listitem>
             <para>
+                <link linkend="zend.service.slideshare">SlideShare</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 <link linkend="zend.service.strikeiron">StrikeIron</link>
             </para>
         </listitem>
