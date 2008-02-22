@@ -62,7 +62,7 @@
         <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_Http.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Auth_Adapter_OpenId.xml" />
+        <xi:include href="module_specs/Zend_Auth_Adapter_OpenId.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_OpenId.xml" /></xi:fallback>
         </xi:include>
     </chapter>
