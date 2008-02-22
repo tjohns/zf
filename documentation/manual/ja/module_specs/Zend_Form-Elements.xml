@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8118 -->
+<!-- EN-Revision: 8207 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -16,7 +16,7 @@
             </para>
 
             <itemizedlist>
-                <listitem>検証エラーのコードやメッセージの取得</listitem>
+                <listitem><para>検証エラーのコードやメッセージの取得</para></listitem>
             </itemizedlist>
         </listitem>
 
@@ -245,11 +245,11 @@ $element->addValidators(array(
         <programlisting role="php"><![CDATA[<?php
 $element->addValidators(array(
     array(
-        'validator'           => 'NotEmpty', 
+        'validator'           => 'NotEmpty',
         'breakChainOnFailure' => true),
     array('validator' => 'alnum'),
     array(
-        'validator' => 'stringLength', 
+        'validator' => 'stringLength',
         'options'   => array(6, 20)),
 ));
 ?>]]></programlisting>
@@ -682,7 +682,7 @@ $decorator = $element->getDecorator('FooBar');
 $element->addDecorators(
     array('HtmlTag', array('tag' => 'div')),
     array(
-        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'decorator' => array('FooBar' => 'HtmlTag'),
         'options' => array('tag' => 'dd')
     ),
 );
@@ -874,12 +874,12 @@ $element->class = 'text; // 'class' 属性を 'text' と設定します
 
             <listitem><para><emphasis>Textarea</emphasis>: Zend_Form_Element_Textarea</para></listitem>
         </itemizedlist>
-        
+
         <para>
             これら以外にも、Zend_Form には追加のユーティリティ要素を用意しています。
             これらを使えばより高度な機能を使用できます。
         </para>
-        
+
         <itemizedlist>
             <listitem>
             <para><emphasis>Hash</emphasis>: Zend_Form_Element_Hash</para>
@@ -896,7 +896,7 @@ $element->class = 'text; // 'class' 属性を 'text' と設定します
               名前が同じでも salt が異なればハッシュは衝突しません。
             </para>
             <programlisting role="php"><![CDATA[<?php
-$form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique')); 
+$form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ?>]]></programlisting>
             </listitem>
         </itemizedlist>
@@ -1056,7 +1056,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
                     <listitem><para><code>setPluginLoader</code></para></listitem>
 
                     <listitem><para><code>setTranslator</code></para></listitem>
-                    
+
                     <listitem><para><code>setView</code></para></listitem>
                 </itemizedlist>
             </listitem>
