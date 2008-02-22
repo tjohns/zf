@@ -312,6 +312,35 @@ h1 {
         $this->assertContains('        font-weight', $string);
         $this->assertContains('    }', $string);
     }
+
+    public function testSerialCapturingWorks()
+    {
+        $this->helper->headStyle()->captureStart();
+        echo "Captured text";
+        $this->helper->headStyle()->captureEnd();
+
+        try {
+            $this->helper->headStyle()->captureStart();
+        } catch (Zend_View_Exception $e) {
+            $this->fail('Serial capturing should work');
+        }
+        $this->helper->headStyle()->captureEnd();
+    }
+
+    public function testNestedCapturingFails()
+    {
+        $this->helper->headStyle()->captureStart();
+        echo "Captured text";
+            try {
+                $this->helper->headStyle()->captureStart();
+                $this->helper->headStyle()->captureEnd();
+                $this->fail('Nested capturing should fail');
+            } catch (Zend_View_Exception $e) {
+                $this->helper->headStyle()->captureEnd();
+                $this->assertContains('Cannot nest', $e->getMessage());
+            }
+        $this->helper->headStyle()->captureEnd();
+    }
 }
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.

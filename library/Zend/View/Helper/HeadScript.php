@@ -140,10 +140,16 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     public function captureStart($captureType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $type = 'text/javascript', $attrs = array())
     {
+        if ($this->_captureLock) {
+            require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';
+            throw new Zend_View_Helper_Placeholder_Container_Exception('Cannot nest headScript captures');
+        }
+
+        $this->_captureLock        = true;
         $this->_captureType        = $captureType;
         $this->_captureScriptType  = $type;
         $this->_captureScriptAttrs = $attrs;
-        return $this->getContainer()->captureStart($captureType);
+        ob_start();
     }
     
     /**

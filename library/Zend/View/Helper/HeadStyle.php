@@ -262,8 +262,15 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
      */
     public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $attrs = null)
     {
-        $this->_captureAttrs = $attrs;
-        return $this->getContainer()->captureStart($type);
+        if ($this->_captureLock) {
+            require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';
+            throw new Zend_View_Helper_Placeholder_Container_Exception('Cannot nest headStyle captures');
+        }
+
+        $this->_captureLock        = true;
+        $this->_captureAttrs       = $attrs;
+        $this->_captureType        = $type;
+        ob_start();
     }
     
     /**

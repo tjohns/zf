@@ -351,6 +351,35 @@ document.write(bar.strlen());');
         $test = $this->helper->headScript()->toString();
         $this->assertContains('bogus="deferred"', $test);
     }
+
+    public function testCanPerformMultipleSerialCaptures()
+    {
+        $this->helper->headScript()->captureStart();
+        echo "this is something captured";
+        $this->helper->headScript()->captureEnd();
+        try {
+            $this->helper->headScript()->captureStart();
+        } catch (Zend_View_Exception $e) {
+            $this->fail('Serial captures should be allowed');
+        }
+        echo "this is something else captured";
+        $this->helper->headScript()->captureEnd();
+    }
+
+    public function testCannotNestCaptures()
+    {
+        $this->helper->headScript()->captureStart();
+        echo "this is something captured";
+        try {
+            $this->helper->headScript()->captureStart();
+            $this->helper->headScript()->captureEnd();
+            $this->fail('Should not be able to nest captures');
+        } catch (Zend_View_Exception $e) {
+            $this->helper->headScript()->captureEnd();
+            $this->assertContains('Cannot nest', $e->getMessage());
+        }
+        $this->helper->headScript()->captureEnd();
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.
