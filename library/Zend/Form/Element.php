@@ -58,6 +58,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_allowEmpty = true;
 
     /**
+     * Flag indicating whether or not to insert NotEmpty validator when element is required
+     * @var bool
+     */
+    protected $_autoInsertNotEmptyValidator = true;
+
+    /**
      * Array to which element belongs
      * @var string
      */
@@ -475,6 +481,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function isRequired()
     {
         return $this->_required;
+    }
+
+    /**
+     * Set flag indicating whether a NotEmpty validator should be inserted when element is required
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setAutoInsertNotEmptyValidator($flag)
+    {
+        $this->_autoInsertNotEmptyValidator = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get flag indicating whether a NotEmpty validator should be inserted when element is required
+     * 
+     * @return bool
+     */
+    public function autoInsertNotEmptyValidator()
+    {
+        return $this->_autoInsertNotEmptyValidator;
     }
 
     /**
@@ -1047,6 +1075,16 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
         if (empty($value) && !$this->isRequired() && $this->getAllowEmpty()) {
             return true;
+        }
+
+        if ($this->isRequired() 
+            && $this->autoInsertNotEmptyValidator() 
+            && !$this->getValidator('NotEmpty'))
+        {
+            $validators = $this->getValidators();
+            $notEmpty   = array('validator' => 'NotEmpty', 'breakChainOnFailure' => true);
+            array_unshift($validators, $notEmpty);
+            $this->setValidators($validators);
         }
 
         $this->_messages = array();

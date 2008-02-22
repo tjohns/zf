@@ -226,6 +226,36 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element->isRequired());
     }
 
+    public function testIsValidInsertsNotEmptyValidatorWhenElementIsRequiredByDefault()
+    {
+        $this->element->setRequired(true);
+        $this->assertFalse($this->element->isValid(''));
+        $validator = $this->element->getValidator('NotEmpty');
+        $this->assertTrue($validator instanceof Zend_Validate_NotEmpty);
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+    }
+
+    public function testAutoInsertNotEmptyValidatorFlagTrueByDefault()
+    {
+        $this->assertTrue($this->element->autoInsertNotEmptyValidator());
+    }
+
+    public function testCanSetAutoInsertNotEmptyValidatorFlag()
+    {
+        $this->testAutoInsertNotEmptyValidatorFlagTrueByDefault();
+        $this->element->setAutoInsertNotEmptyValidator(false);
+        $this->assertFalse($this->element->autoInsertNotEmptyValidator());
+        $this->element->setAutoInsertNotEmptyValidator(true);
+        $this->assertTrue($this->element->autoInsertNotEmptyValidator());
+    }
+
+    public function testIsValidDoesNotInsertNotEmptyValidatorWhenElementIsRequiredButAutoInsertNotEmptyValidatorFlagIsFalse()
+    {
+        $this->element->setAutoInsertNotEmptyValidator(false)
+             ->setRequired(true);
+        $this->assertTrue($this->element->isValid(''));
+    }
+
     public function testDescriptionInitiallyNull()
     {
         $this->assertNull($this->element->getDescription());
