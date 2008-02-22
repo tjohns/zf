@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 8133 -->
+<!-- EN-Revision: 8230 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -312,6 +312,13 @@
         <xi:include href="module_specs/Zend_Session-AdvancedUsage.xml" />
         <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml" />
     </chapter>
+
+    <chapter id="zend.timesync">
+        <title>Zend_TimeSync</title>
+        <xi:include href="module_specs/Zend_TimeSync.xml" />
+        <xi:include href="module_specs/Zend_TimeSync-Working.xml" />
+    </chapter>
+
     <chapter id="zend.translate">
         <title>Zend_Translate</title>
         <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
