@@ -7,6 +7,26 @@
         <para>
 			      分发是取得请求对象，提取其中的模块名，控制器名，动作名以及可选参数，然后实例化控制器并调用其中的动作的整过过程。如果其中的模块、控制器或者动作没能找到，将使用它们的默认值。<code>Zend_Controller_Dispatcher_Standard</code>指定每个控制器和动作的默认值为 <code>index</code>，模块的默认值为<code>default</code>，允许开发人通过<code>setDefaultController()</code>、<code>setDefaultAction()</code>和<code>setDefaultModule()</code>改变默认值设定。
         </para>
+        
+        <note>
+            <title>缺省模块</title>
+
+            <para>
+                当创建模块程序，你可能也需要缺省模块的命名空间（缺省配置中，缺省模块<emphasis>没有</emphasis>命名空间）。从 1.5.0 开始，可以在前端控制器或你的派遣器里通过指定 <code>prefixDefaultModule</code>  为 true 来实现。
+             </para>
+
+            <programlisting role="php"><![CDATA[<?php 
+// In your front controller:
+$front->setParam('prefixDefaultModule', true);
+
+// In your dispatcher:
+$dispatcher->setParam('prefixDefaultModule', true);
+?>]]></programlisting>
+
+            <para>
+                这允许你重定义一个已存在的模块为程序的缺省模块。
+            </para>
+        </note>
 
         <para>
 			      分发发生在前端控制器中的一个循环（loop）中。分发之前，前端控制器通过路由请求，找到用户指定的模块、控制器、动作和可选参数。然后进入分发循环，分发请求。
