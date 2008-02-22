@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8230 -->
+<!-- EN-Revision: 8275 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>導入</title>
@@ -107,11 +107,11 @@
         <title>NTP とは?</title>
 
         <para>
-            <code>Network Time Protocol (<emphasis role="strong">NTP</emphasis>)</code>
+            <code>Network Time Protocol</code> (<emphasis role="strong">NTP</emphasis>)
             は、ネットワーク上のパケット交換によってコンピュータシステムの時刻を同期させるプロトコルです。
             NTP は UDP ポート 123 を使用します。このプロトコルについての詳細は
-            <link linkend="http://en.wikipedia.org/wiki/Network_Time_Protocol">wikipedia の記事</link>
-            (<link linkend="http://ja.wikipedia.org/wiki/Network_Time_Protocol">日本語</link>)
+            <ulink url="http://en.wikipedia.org/wiki/Network_Time_Protocol">wikipedia の記事</ulink>
+            (<ulink url="http://ja.wikipedia.org/wiki/Network_Time_Protocol">日本語</ulink>)
             を参照ください。
         </para>
 
@@ -122,7 +122,7 @@
         <title>SNTP とは?</title>
 
         <para>
-            <code>Simple Network Time Protocol (<emphasis role="strong">SNTP</emphasis>)</code>
+            <code>Simple Network Time Protocol</code> (<emphasis role="strong">SNTP</emphasis>)
             は、ネットワーク上のパケット交換によってコンピュータシステムの時刻を同期させるプロトコルです。
             SNTP は UDP ポート 37 を使用します。<code>NTP</code>
             プロトコルに似ていますが、よりシンプルです。
@@ -205,7 +205,7 @@
         </para>
 
         <para>
-            まずは <link linkend="http://www.pool.ntp.org">pool.ntp.org</link>
+            まずは <ulink url="http://www.pool.ntp.org">pool.ntp.org</ulink>
             で一番近いサーバプールを見つけましょう。たとえばサーバがドイツ国内にあるのなら
             <code>0.<emphasis role="strong">europe</emphasis>.pool.ntp.org</code>
             を使用することになるでしょう。
