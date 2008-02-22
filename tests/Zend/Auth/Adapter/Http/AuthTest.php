@@ -134,10 +134,10 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
     public function testBasicChallenge()
     {
         // Trying to authenticate without sending an Authorization header
-        // should result in a 401 reply with a WWW-Authenticate header, and a
+        // should result in a 401 reply with a Www-Authenticate header, and a
         // false result.
 
-        // The expected Basic WWW-Authenticate header value
+        // The expected Basic Www-Authenticate header value
         $basic = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
 
         $data = $this->_doAuth('', 'basic');
@@ -147,10 +147,10 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
     public function testDigestChallenge()
     {
         // Trying to authenticate without sending an Authorization header
-        // should result in a 401 reply with a WWW-Authenticate header, and a
+        // should result in a 401 reply with a Www-Authenticate header, and a
         // false result.
 
-        // The expected Digest WWW-Authenticate header value
+        // The expected Digest Www-Authenticate header value
         $digest = $this->_digestChallenge();
 
         $data = $this->_doAuth('', 'digest');
@@ -160,13 +160,13 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
     public function testBothChallenges()
     {
         // Trying to authenticate without sending an Authorization header
-        // should result in a 401 reply with at least one WWW-Authenticate
+        // should result in a 401 reply with at least one Www-Authenticate
         // header, and a false result.
 
         $data = $this->_doAuth('', 'both');
         extract($data); // $result, $status, $headers
 
-        // The expected WWW-Authenticate header values
+        // The expected Www-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
         $digest = $this->_digestChallenge();
 
@@ -176,8 +176,8 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
 
         // Verify the status code and the presence of both challenges
         $this->assertEquals(401, $status);
-        $this->assertEquals('WWW-Authenticate', $headers[0]['name']);
-        $this->assertEquals('WWW-Authenticate', $headers[1]['name']);
+        $this->assertEquals('Www-Authenticate', $headers[0]['name']);
+        $this->assertEquals('Www-Authenticate', $headers[1]['name']);
 
         // Check to see if the expected challenges match the actual
         $this->assertEquals($basic,  $headers[0]['value']);
@@ -197,7 +197,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         // Ensure that credentials containing invalid characters are treated as 
         // a bad username or password.
 
-        // The expected Basic WWW-Authenticate header value
+        // The expected Basic Www-Authenticate header value
         $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
 
         $data = $this->_doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
@@ -209,7 +209,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         // Attempt Basic Authentication with a nonexistant username and 
         // password
 
-        // The expected Basic WWW-Authenticate header value
+        // The expected Basic Www-Authenticate header value
         $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
 
         $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
@@ -221,7 +221,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         // Attempt Basic Authentication with a valid username, but invalid 
         // password
 
-        // The expected Basic WWW-Authenticate header value
+        // The expected Basic Www-Authenticate header value
         $basic = 'Basic realm="' . $this->_basicConfig['realm'] . '"';
 
         $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
@@ -264,7 +264,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
     {
         // Attempt Digest Authentication with a bad username and password
 
-        // The expected Digest WWW-Authenticate header value
+        // The expected Digest Www-Authenticate header value
         $digest = $this->_digestChallenge();
 
         $data = $this->_doAuth($this->_digestReply('Nobody', 'NotValid'), 'digest');
@@ -276,7 +276,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         // Formerly, a username with invalid characters would result in a 400 
         // response, but now should result in 401 response.
 
-        // The expected Digest WWW-Authenticate header value
+        // The expected Digest Www-Authenticate header value
         $digest = $this->_digestChallenge();
 
         $data = $this->_doAuth($this->_digestReply('Bad:chars', 'NotValid'), 'digest');
@@ -293,7 +293,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
             $tampered
         );
 
-        // The expected Digest WWW-Authenticate header value
+        // The expected Digest Www-Authenticate header value
         $digest = $this->_digestChallenge();
 
         $data = $this->_doAuth($tampered, 'digest');
@@ -438,7 +438,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
      * Checks for an expected 401 Unauthorized response
      *
      * @param  array  $data     Authentication results
-     * @param  string $expected Expected WWW-Authenticate header value
+     * @param  string $expected Expected Www-Authenticate header value
      * @return void
      */
     protected function _checkUnauthorized($data, $expected)
@@ -451,7 +451,7 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
 
         // Verify the status code and the presence of the challenge
         $this->assertEquals(401, $status);
-        $this->assertEquals('WWW-Authenticate', $headers[0]['name']);
+        $this->assertEquals('Www-Authenticate', $headers[0]['name']);
 
         // Check to see if the expected challenge matches the actual
         $this->assertEquals($expected, $headers[0]['value']);
