@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7676 -->
+<!-- EN-Revision: 8186 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -56,6 +56,7 @@
                 SQLite (<ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
+    
     </itemizedlist>
 
     <para>
@@ -79,6 +80,11 @@
                 IBM DB2 (<ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> を使用します)
             </para>
         </listitem>
+        <listitem>
+            <para>
+                Firebird/Interbase (<ulink url="http://www.php.net/ibase">php_interbase</ulink> を使用します)
+            </para>
+        </listitem>     
     </itemizedlist>
 
     <note>
@@ -1983,6 +1989,39 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
             </itemizedlist>
         </sect3>
+        
+        <sect3 id="zend.db.adapter.adapter-notes.firebird">
+            <title>Firebird/Interbase</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Firebird' とします。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        このアダプタは、PHP の php_interbase 拡張モジュールを使用します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Firebird/interbase は自動インクリメントのキーをサポートしていません。
+                        シーケンスの名前を
+                        <code>lastInsertId()</code> あるいは
+                        <code>lastSequenceId()</code> に指定する必要があります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        現在、Firebird/interbase アダプタでは <code>Zend_Db::CASE_FOLDING</code>
+                        オプションをサポートしていません。
+                        クォートしていない識別子は、自動的に大文字で返されます。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+        
 
     </sect2>
 
