@@ -43,7 +43,7 @@
         </para>
 
         <para>
-            Many developers relied on this "feature", which was never intended.
+            Some developers relied on this "feature", which was never intended.
             Several changes in the 1.5.0 tree, however, made it so that the
             ViewRenderer no longer resolves these paths; the semantic tie is now
             enforced. First among these, the dispatcher now enforces case
@@ -96,13 +96,14 @@ $inflector->setFilterRule(':action', array(
 
                 <para>
                     If renaming your view scripts would be too tedious or time
-                    consuming, this is your best option.
+                    consuming, this is your best option until you can find the
+                    time to do so.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    Least desireable option: You can force the dispatcher to
+                    Least desirable option: You can force the dispatcher to
                     dispatch camelCased action names with a new front controller
                     flag, 'useCaseSensitiveActions':
                 </para>
@@ -114,8 +115,8 @@ $front->setParam('useCaseSensitiveActions', true);
                 <para>
                     This will allow you to use camelCasing on the url and still
                     have it resolve to the same action as when you use word
-                    separators. This will mean that the original issues will
-                    cascade on through, however; you will likely need to use the
+                    separators. However, this will mean that the original issues
+                    will cascade on through; you will likely need to use the
                     second option above in addition to this for things to work
                     at all reliably.
                 </para>
