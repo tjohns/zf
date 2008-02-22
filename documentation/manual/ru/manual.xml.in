@@ -155,8 +155,8 @@
         <xi:include href="module_specs/Zend_Currency-Introduction.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Currency-Introduction.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Currency-Useage.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Currency-Useage.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_Currency-Usage.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Currency-Usage.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Currency-Migrating.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Currency-Migrating.xml" /></xi:fallback>
