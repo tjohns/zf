@@ -78,6 +78,9 @@
                 <para>
                     Si vous souhaitez rechercher seulement dans les valeurs que vous avez paramètrées avec <code>setParam()</code>, utilisez <code>getUserParam()</code>.
                 </para>
+                <para>
+                    De plus, à partir de la version 1.5.0, vous pouvez verrouiller les sources de paramètres à utiliser. <code>setParamSources()</code> vous permet de spéciier un tableau vide ou un tableau contenant une ou plusiurs des valeurs "_GET" ou "_POST" indiquant quelle source de paramètres est autorisée (par défaut les deux sont autorisées) ; si vous souhaitez restreindre l'accès seulement à "_GET", spécifiez <code>setParamSources(array('_GET'))</code>.
+                </para>
             </note>
             <note>
                 <title>Caprices d'Apache</title>
