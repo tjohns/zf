@@ -20,6 +20,13 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.validate.set.barcode">
+        <title>Barcode</title>
+        <para>
+            Ce validateur est intancié avec le type de code-barres suivant lequel vous souhaitez valider une valeur. Il supporte actuellement les types de code-barres "<code>UPC-A</code>" (Universal Product Code) et "<code>EAN-13</code>" (European Article Number), et la méthode <code>isValid()</code> retourne <code>true</code> si et seulement si la valeur fournie est validée par l'algorithme de validation du code-barres. Vous devez retirer tous les caractères exceptés les nombres compris entre zéro et neuf (0-9) de la valeur à tester avant de la fournir au validateur.
+        </para>
+    </sect2>
+
     <sect2 id="zend.validate.set.between">
         <title>Between</title>
         <para>
