@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8268 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript ヘルパー</title>
 
@@ -87,6 +88,26 @@
             ページの表示速度が向上します。特に、
             サードパーティのアクセス解析用スクリプトを使用する場合などにこの効果が顕著にあらわれます。
         </para>
+    </note>
+
+    <note>
+        <title>すべての属性はデフォルトで無効</title>
+
+        <para>
+            デフォルトでは、<code>HeadScript</code> がレンダリングする
+            <code>&lt;script&gt;</code> の属性は W3C
+            に認められているものだけです。
+            'type' や 'charset'、'defer'、'language' そして 'src' が該当します。
+            しかし、Javascript のフレームワーク
+            (<ulink url="http://www.dojotoolkit.org/">Dojo</ulink> など)
+            では独自の属性を用いることでその挙動を変更しています。
+            このような属性を許可するには、
+            <code>setAllowArbitraryAttributes()</code> メソッドを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->headScript()->setAllowArbitraryAttributes(true);
+?>]]></programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
