@@ -336,6 +336,21 @@ document.write(bar.strlen());');
         $this->helper->headScript('FILE', '/js/prototype.js');
         $this->assertEquals(1, count($this->helper));
     }
+
+    public function testRenderingDoesNotRenderArbitraryAttributesByDefault()
+    {
+        $this->helper->headScript()->appendFile('/js/foo.js', 'text/javascript', array('bogus' => 'deferred'));
+        $test = $this->helper->headScript()->toString();
+        $this->assertNotContains('bogus="deferred"', $test);
+    }
+
+    public function testCanRenderArbitraryAttributesOnRequest()
+    {
+        $this->helper->headScript()->appendFile('/js/foo.js', 'text/javascript', array('bogus' => 'deferred'))
+             ->setAllowArbitraryAttributes(true);
+        $test = $this->helper->headScript()->toString();
+        $this->assertContains('bogus="deferred"', $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

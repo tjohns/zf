@@ -86,6 +86,25 @@
         </para>
     </note>
 
+    <note>
+        <title>Arbitrary Attributes are Disabled by Default</title>
+
+        <para>
+            By default, <code>HeadScript</code> only will render
+            <code>&lt;script&gt;</code> attributes that are blessed by the W3C.
+            These include 'type', 'charset', 'defer', 'language', and 'src.'
+            However, some javascript frameworks, notably <ulink
+                url="http://www.dojotoolkit.org/">Dojo</ulink>, utilize custom
+            attributes in order to modify behavior. To allow such attributes,
+            you can enable them via the
+            <code>setAllowArbitraryAttributes()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->headScript()->setAllowArbitraryAttributes(true);
+?>]]></programlisting>
+    </note>
+
     <example id="zend.view.helpers.initial.headscript.basicusage">
         <title>HeadScript Helper Basic Usage</title>
 

@@ -40,13 +40,19 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     const FILE   = 'FILE';
     const SCRIPT = 'SCRIPT';
     /**#@-*/
-    
+
     /**
      * Registry key for placeholder
      * @var string
      */
     protected $_regKey = 'Zend_View_Helper_HeadScript';
 
+    /**
+     * Are arbitrary attributes allowed?
+     * @var bool
+     */
+    protected $_arbitraryAttributes = false;
+    
     /**#@+
      * Capture type and/or attributes (used for hinting during capture)
      * @var string
@@ -349,6 +355,28 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     }
 
     /**
+     * Set flag indicating if arbitrary attributes are allowed
+     * 
+     * @param  bool $flag 
+     * @return Zend_View_Helper_HeadScript
+     */
+    public function setAllowArbitraryAttributes($flag)
+    {
+        $this->_arbitraryAttributes = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Are arbitrary attributes allowed?
+     * 
+     * @return bool
+     */
+    public function arbitraryAttributesAllowed()
+    {
+        return $this->_arbitraryAttributes;
+    }
+
+    /**
      * Create script HTML
      * 
      * @param  string $type 
@@ -362,7 +390,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         $attrString = '';
         if (!empty($item->attributes)) {
             foreach ($item->attributes as $key => $value) {
-                if (!in_array($key, $this->_optionalAttributes)) {
+                if (!$this->arbitraryAttributesAllowed() 
+                    && !in_array($key, $this->_optionalAttributes)) 
+                {
                     continue;
                 }
                 if ('defer' == $key) {
