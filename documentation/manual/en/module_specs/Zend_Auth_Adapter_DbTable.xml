@@ -196,20 +196,21 @@ if ($result->isValid()) {
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
-        
+
         <para>
-            While the primary purpose of Zend_Auth (and consequently Zend_Auth_Adapter_DbTable) is primarily 
-            <b>authentication</b> and not <b>authorization</b>, there exist a few instances and problems
+            While the primary purpose of Zend_Auth (and consequently Zend_Auth_Adapter_DbTable) is primarily
+            <emphasis role="strong">authentication</emphasis> and not <emphasis role="strong">authorization</emphasis>,
+            there exist a few instances and problems
             that toe the line upon which domain the fit within.  Depending on how you've decided to explain
             your problem, it sometimes makes sense to solve what could look like an authorization problem
             within the authentication adapter.
         </para>
-        
+
         <para>
             With that bit of a disclaimer out of the way, Zend_Auth_Adapter_DbTable has some built in
             mechanisms that can be leveraged to add additional checks at authentication time to solve
             some common user problems.
-            
+
             <programlisting role="php"><![CDATA[<?php
 // The status field value of an account is not equal to "compromised"
 $adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND status != "compromised"');
@@ -219,13 +220,13 @@ $adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', '
 
 ]]>
             </programlisting>
-             
-        </para>
-            
 
-            
-        
-        
+        </para>
+
+
+
+
+
     </sect2>
 
 </sect1>
