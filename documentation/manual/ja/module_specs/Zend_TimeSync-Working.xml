@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8230 -->
+<!-- EN-Revision: 8306 -->
 <sect1 id="zend.timesync.working">
 
     <title>Zend_TimeSync の動作</title>
@@ -15,7 +15,7 @@
             この章のすべてのサンプルでは、一般に公開されているタイムサーバのひとつを使用します。
             私たちは <emphasis role="strong">0.europe.pool.ntp.org</emphasis>
             を使用しますが、あなたの環境にあわせて最も近いタイムサーバを使うことをお勧めします。
-            詳細は <link linkend="http://www.pool.ntp.org">http://www.pool.ntp.org</link>
+            詳細は <ulink url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink>
             を参照ください。
         </para>
     </note>
@@ -32,7 +32,7 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/TimeSync.php';
 
-$server = new Zend_TimeSync('0.pool.ntp.org'); 
+$server = new Zend_TimeSync('0.pool.ntp.org');
 
 print $server->getDate()->getIso();]]>
         </programlisting>
@@ -79,7 +79,7 @@ require_once 'Zend/TimeSync.php';
 
 $server = new Zend_TimeSync(array('0.pool.ntp.org',
                                   '1.pool.ntp.org',
-                                  '2.pool.ntp.org')); 
+                                  '2.pool.ntp.org'));
 $server->addServer('3.pool.ntp.org');
 
 print $server->getDate()->getIso();]]>
@@ -299,7 +299,7 @@ $serverlist = array(
         // 無効なサーバを指定します
         'invalid_a'  => 'ntp://a.foo.bar.org',
         'invalid_b'  => 'sntp://b.foo.bar.org',
-); 
+);
 
 $server = new Zend_TimeSync($serverlist);
 
