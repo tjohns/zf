@@ -7,10 +7,9 @@
     </para>
 
     <itemizedlist>
-        <listitem><para>Element validation</para></listitem>
-        <listitem><para>Element filtering</para></listitem>
+        <listitem><para>Element input filtering and validation</para></listitem>
         <listitem><para>Element ordering</para></listitem>
-        <listitem><para>Element and Form rendering</para></listitem>
+        <listitem><para>Element and Form rendering, including escaping</para></listitem>
         <listitem><para>Element and form grouping</para></listitem>
         <listitem><para>Element and form-level configuration</para></listitem>
     </itemizedlist>
