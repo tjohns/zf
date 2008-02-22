@@ -28,15 +28,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 /**
- * PHPUnit_Framework_TestSuite
+ * Test helper
  */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 
 /**
