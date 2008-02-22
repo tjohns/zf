@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8216 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -32,10 +33,10 @@ $inflector->setRules(array(
 ));
 
 $string   = 'CamelCasedWords';
-$filtered = $page->filter(array('page' => $string)); // pages/camel-cased-words.html
+$filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';
-$filtered = $page->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
+$filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
 ?>]]></programlisting>
     </example>
 
@@ -206,6 +207,21 @@ class Foo
         <para>
             先ほど説明したように、静的なルールとフィルタを使用したルールのふたつがあります。
         </para>
+        
+        <note>
+            <para>
+                インフレクタにメソッドを追加するときに
+                ひとつずつ追加したとしても一度に追加したとしても、
+                その順番が重要となることに注意しましょう。
+                より細かい名前、あるいは他のルール名を含む名前などを先に追加するようにしなければなりません。
+                たとえば、ふたつのフール 'moduleDir' と 'module'
+                があった場合、'moduleDir' のほうが module より前になければなりません。
+                というのも 'module' は 'moduleDir' の中に含まれるからです。
+                'module' を 'moduleDir' より前に追加すると
+                'module' が 'moduleDir' の一部にもマッチしてしまい、
+                'Dir' の部分はインフレクションの対象から外れてしまいます。
+            </para>
+        </note>
 
         <sect3 id="zend.filter.inflector.rules.static">
             <title>静的なルール</title>
