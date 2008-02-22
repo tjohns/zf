@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8135 -->
+<!-- EN-Revision: 8239 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -137,6 +137,16 @@
                 <para>
                     <code>setParam()</code> で設定したパラメータからだけ取得したい場合は、
                     <code>getUserParam()</code> を使用します。
+                </para>
+
+                <para>
+                    さらに、1.5.0 以降では
+                    どのパラメータから検索するかを制限することができます。
+                    <code>setParamSources()</code> に空の配列あるいは
+                    値 '_GET' や '_POST' を含む配列を指定して使用します
+                    (デフォルトでは両方が指定されています)。'_GET'
+                    からのみに制限したい場合は
+                    <code>setParamSources(array('_GET'))</code> とします。
                 </para>
             </note>
 
