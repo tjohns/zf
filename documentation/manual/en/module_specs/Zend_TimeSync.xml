@@ -189,7 +189,7 @@
         <para>
             Take a look at <ulink url="http://www.pool.ntp.org">pool.ntp.org</ulink> to get your nearest
             serverpool. So if your server is located within germany for example you can connect to
-            <code>0.<emphasis role="strong">europe</emphasis>.pool.ntp.org</code> and so on.
+            <code>0.europe.pool.ntp.org</code> and so on.
         </para>
 
     </sect2>
