@@ -310,26 +310,26 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
 
             Alternatively, you can query rows from a dependent table using a special mechanism
             called a "magic method". Zend_Db_Table_Row_Abstract invokes the method:
-            <code>findDependentRowset('&gt;TableClass&lt;', '&gt;Rule&lt;')</code> if you invoke a method on
+            <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code> if you invoke a method on
             the Row object matching either of the following patterns:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$row->find&gt;TableClass&lt;()</code>
+                    <code>$row->find&lt;TableClass&gt;()</code>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>$row->find&gt;TableClass&lt;By&gt;Rule&lt;()</code>
+                    <code>$row->find&lt;TableClass&gt;By&lt;Rule&gt;()</code>
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            In the patterns above, <code>&gt;TableClass&lt;</code> and <code>&gt;Rule&lt;</code> are strings
+            In the patterns above, <code>&lt;TableClass&gt;</code> and <code>&lt;Rule&gt;</code> are strings
             that correspond to the class name of the dependent table, and the dependent table's
             rule key that references the parent table.
         </para>
@@ -452,27 +452,27 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
         <para>
             Alternatively, you can query rows from a parent table using a "magic method".
             Zend_Db_Table_Row_Abstract invokes the method:
-            <code>findParentRow('&gt;TableClass&lt;', '&gt;Rule&lt;')</code> if you invoke a method
+            <code>findParentRow('&lt;TableClass&gt;', '&lt;Rule&gt;')</code> if you invoke a method
             on the Row object matching either of the following patterns:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$row->findParent&gt;TableClass&lt;([Zend_Db_Table_Select $select])</code>
+                    <code>$row->findParent&lt;TableClass&gt;([Zend_Db_Table_Select $select])</code>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>$row->findParent&gt;TableClass&lt;By&gt;Rule&lt;([Zend_Db_Table_Select
+                    <code>$row->findParent&lt;TableClass&gt;By&lt;Rule&gt;([Zend_Db_Table_Select
                     $select])</code>
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            In the patterns above, <code>&gt;TableClass&lt;</code> and <code>&gt;Rule&lt;</code>
+            In the patterns above, <code>&lt;TableClass&gt;</code> and <code>&lt;Rule&gt;</code>
             are strings that correspond to the class name of the parent table, and the dependent
             table's rule key that references the parent table.
         </para>
@@ -621,29 +621,29 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
         <para>
             Alternatively, you can query rows from the destination table in a many-to-many
             relationship using a "magic method." Zend_Db_Table_Row_Abstract invokes the method:
-            <code>findManyToManyRowset('&gt;TableClass&lt;', '&gt;IntersectionTableClass&lt;',
-            '&gt;Rule1&lt;', '&gt;Rule2&lt;')</code> if you invoke a method matching any of the
+            <code>findManyToManyRowset('&lt;TableClass&gt;', '&lt;IntersectionTableClass&gt;',
+            '&lt;Rule1&gt;', '&lt;Rule2&gt;')</code> if you invoke a method matching any of the
             following patterns:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$row->find&gt;TableClass&lt;Via&gt;IntersectionTableClass&lt;
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;
                     ([Zend_Db_Table_Select $select])</code>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>$row->find&gt;TableClass&lt;Via&gt;IntersectionTableClass&lt;By&gt;Rule1&lt;
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;By&lt;Rule1&gt;
                     ([Zend_Db_Table_Select $select])</code>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>$row->find&gt;TableClass&lt;Via&gt;IntersectionTableClass&lt;By&gt;Rule1&lt;And&gt;Rule2&lt;
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;By&lt;Rule1&gt;And&lt;Rule2&gt;
                     ([Zend_Db_Table_Select $select])</code>
                 </para>
             </listitem>
