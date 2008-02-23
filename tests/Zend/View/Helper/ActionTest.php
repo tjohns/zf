@@ -243,6 +243,22 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Foo Nest', $title);
         $this->assertContains('Nested Stuff', $title);
     }
+    
+    public function testActionWithPartialsUseOfViewRendererReturnsToOriginatingViewState()
+    {
+        require_once 'Zend/View/Helper/Partial.php';
+        $partial = new Zend_View_Helper_Partial();
+        $this->view->setScriptPath(dirname(__FILE__) . '/_files/modules/default/views/scripts/');
+        $partial->setView($this->view);
+        
+        Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view = $this->view;
+        
+        $partial->partial('partialActionCall.phtml');
+        
+        $this->assertSame($this->view, Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view);
+
+    }
+    
 }
 
 // Call Zend_View_Helper_ActionTest::main() if this source file is executed directly.
