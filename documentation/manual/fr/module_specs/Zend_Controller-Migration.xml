@@ -5,6 +5,78 @@
         L'API des composants MVC a hangé plusieurs fois. Si vous avez débuté avec des versions antérieures du Zend Framework, suivez les recommandations suivantes pour migrer vos scripts afin d'utiliser la nouvelle architecture.
     </para>
 
+    <sect2 id="zend.controller.migration.fromoneohtoonefive">
+        <title>Migrer de la version 1.0.x vers 1.5.0 ou plus récent</title>
+
+        <para>
+            Bien que la plupart des fonctionnalités de base demeurent les mêmes, et que toutes les fonctionnalités documentées restent les mêmes, il existe une "fonctionnalité" particulière <emphasis>non documentée</emphasis> qui a changé.
+        </para>
+
+        <para>
+            Quand vous écrivez des URLs, la manière documentée d'écrire les noms d'action en notationCamel est d'utiliser un séparateur de mot ; ceux ci sont "." ou "-" par défaut, mais ils peuvent être configurés dans le dispatcheur. Le dispacheur en interne transforme les noms d'action en minuscules, et utilise ces séparateurs de mots pour réassembler la méthode d'action en utilisant la notationCamel. Cependant, comme les fonctions PHP ne sont pas sensibles à la casse, vous <emphasis>pouvez</emphasis> toujours écrire les URLs en utilisant la notationCamel, et le dispatcheur les résoudra de la même manière. Par exemple, "notation-camel" deviendra "notationCamelAction" dans le dispatcheur, tandis que "notationCamel" deviendra "notationcamelAction" ; cependant, à cause d l'insensibilité à la casse de PHP, dans les deux cas cela exécutera la même méthode.
+        </para>
+
+        <para>
+            Ceci pose des problèmes avec le <code>ViewRenderer</code> lors de la résolution des scripts de vue. La manière canonique et documentée est que tous les séparateurs de mot sont convertis en tirets, et les mots en minuscules. Ceci crée un lien sémantique entre les actions et les scripts de vue, et la normalisation s'assure que les scripts peuvent être trouvés. Cependant, si l'action "notationCamel" est appelée et est résolue, le séparateur de mot n'est pas pour autant présent, et le <code>ViewRenderer</code> tente de résoudre un emplacement différent - "notationcamel.phtml" au lieu de "notation-camel.phtml".
+        </para>
+
+        <para>
+            Quelques réalisateurs se sont fondés sur ce "dispositif", qui n'a jamais été prévu. Plusieurs changements de l'arbre 1.5.0, cependant, l'ont fait de sorte que le <code>ViewRenderer</code> ne résout plus ces chemins ; le lien sémantique est maintenant imposé. A partir de maintenant, le dispatcheur impose la sensibilité à la casse dans les noms d'action. Ceci veut dire que la référence vers vos actions dans l'URL en utilisant la notationCamel ne résoudra plus les mêmes méthodes quen utilisant les séparateurs de mots (par ex., "notation-camel"). Ceci entraîne que' à partirde maintenant le <code>ViewRenderer</code> honorera seulement les actions en "mots-séparés" lors de la résolution des scripts de vue.
+        </para>
+
+        <para>
+            Si vous constatez que vous comptiez sur ce "dispositif", vous avez plusieurs options :
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    Meilleure option : renommez vos scripts de vue. Pour : compatibilité ascendante. Contre : si vous avez beaucoup de scripts de vue basé sur l'ancien, comportement fortuit, vous aurez de renommage à faire.
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    Seconde meilleur option : le <code>ViewRenderer</code> délègue maintenant la résolution des scripts de vue à <code>Zend_Filter_Inflector</code> ; vous pouvez modifier les règles de l'inflecteur pour ne plus séparer les mots d'une action avec un tiret :
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$inflector = $viewRenderer->getInflector();
+$inflector->setFilterRule(':action', array(
+    new Zend_Filter_PregReplace(
+        '#[^a-z0-9' . preg_quote(DIRECTORY_SEPARATOR, '#') . ']+#i',
+        ''
+    ),
+    'StringToLower'
+));]]></programlisting>
+
+                <para>
+                    Le code ci-dessus modifiera l'inflecteur pour ne plus séparer les mots avec un tiret ; vous pouvez aussi vouloir supprimer le filtre <code>StringToLower</code> si vous <emphasis>voulez</emphasis> que vos scripts de vue utilise aussi la notationCamel.
+                </para>
+
+                <para>
+                    Si le renommage de vos scripts de vue est trop fastideux ou nécessite trop de temps, ceci est la meilleure option avant de trouver le temps de le faire.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Option la moins souhaitable : Vous pouvez forcer le dispatcheur à dispatcher les noms d'action écrits en notationCamel avec un nouveau drapeau du contrôleur frontal, <code>useCaseSensitiveActions</code> :u
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
+
+                <para>
+                    Ceci vous permetta d'utiliser la notationCamel dans l'url et de toujours faire résoudre la même action quisi vous utilisez les séparateurs de mots. Cependant, ceci signifiera que les problèmes décrits ci-dessus interviendront tôt ou tard ; vous devrez probablement utiliser la deuxième option ci-dessus en plus de celle-ci pour que tout fonctionne correctement.
+                </para>
+
+                <para>
+                    Notez, de plus, que l'utilisation de ce drapeau déclenchera une <code>notice</code> indiuant que cette utilisation été dépréciée.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromzeroninethree">
         <title>Migrer de la version 0.9.3 vers 1.0.0RC1 ou plus récent</title>
 
