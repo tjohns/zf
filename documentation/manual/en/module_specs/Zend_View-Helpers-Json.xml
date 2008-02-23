@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        The JSON helpers sets the following header:
+        The JSON helper sets the following header:
     </para>
 
     <programlisting role="text"><![CDATA[
