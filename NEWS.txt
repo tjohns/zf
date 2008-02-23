@@ -1,7 +1,7 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 1.0.4 / 22-Feb-2007 / based on revision 8311 =
+=RELEASE 1.0.4 / 25-Feb-2007 / based on revision 8311 =
 - Documentation
   ZF-2575 Typo in Zend_Http_Cookie documentation
   ZF-2361 Yahoo! API documentation has changes place
