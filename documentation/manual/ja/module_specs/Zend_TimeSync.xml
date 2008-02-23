@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8275 -->
+<!-- EN-Revision: 8316 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>導入</title>
@@ -207,7 +207,7 @@
         <para>
             まずは <ulink url="http://www.pool.ntp.org">pool.ntp.org</ulink>
             で一番近いサーバプールを見つけましょう。たとえばサーバがドイツ国内にあるのなら
-            <code>0.<emphasis role="strong">europe</emphasis>.pool.ntp.org</code>
+            <code>0.europe.pool.ntp.org</code>
             を使用することになるでしょう。
         </para>
 
