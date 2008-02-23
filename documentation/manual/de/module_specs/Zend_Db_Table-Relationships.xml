@@ -324,13 +324,13 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$row-&gt;find&lt;TabellenKlasse&gt;()</code>
+                    <code>$row->find&lt;TabellenKlasse&gt;()</code>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>$row-&gt;find&lt;TabellenKlasse&gt;By&lt;Regel&gt;()</code>
+                    <code>$row->find&lt;TabellenKlasse&gt;By&lt;Regel&gt;()</code>
                 </para>
             </listitem>
         </itemizedlist>
