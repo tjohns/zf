@@ -43,13 +43,13 @@ PHPDOC=phpdoc
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
 # location (e.g., trunk, branch/release-1.0).
-ZF_SVN_REVISION=6503
+ZF_SVN_REVISION=8311
 ZF_SVN_DIR=branch/release-1.0
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=1.0.3
+ZF_VERSION=1.0.4
 
 # For ZF_LANG, use '*' if you want to build all manual translations.
 # If you want to build one language, use one of the names of language
