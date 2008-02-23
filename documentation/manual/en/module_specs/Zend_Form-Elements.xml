@@ -856,14 +856,14 @@ $fooBar  = $element->getDecorator('FooBar');
                 accessors. This flag is true by default.
             </para></listitem>
 
-            <lisitem><para>
+            <listitem><para>
                 <emphasis>autoInsertNotEmptyValidator</emphasis>: flag
                 indicating whether or not to insert a 'NotEmpty' validator when
                 the element is required. By default, this flag is true. Set the
                 flag with <code>setAutoInsertNotEmptyValidator($flag)</code> and
                 determine the value with
                 <code>autoInsertNotEmptyValidator()</code>.
-            </para></lisitem>
+            </para></listitem>
         </itemizedlist>
 
         <para>
