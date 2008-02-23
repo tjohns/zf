@@ -1,6 +1,189 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.0.4 / 22-Feb-2007 / based on revision 8311 =
+- Documentation
+  ZF-2575 Typo in Zend_Http_Cookie documentation
+  ZF-2361 Yahoo! API documentation has changes place
+  ZF-2552 Missing close parenthesis
+  ZF-2514 Wrong CSS property/value
+  ZF-2423 Some documents did NOT follow the DTD rules
+  ZF-2315 Translation of -ing forms
+- IDE Integration
+  ZF-2274 Documentation fixes
+- TestTools
+  ZF-2183 Cannot run incubator tests for Zend_Db components
+  ZF-2281 Constant TEST_GENERATE_REPORT is not defined per default
+- Zend_Acl
+  ZF-2502 Zend_ACL::inheritsRole not passing parameter properly
+- Zend_Auth
+  ZF-2704 Zend_Auth_Adapter_Http_AuthTest failures
+  ZF-2238 Ability to add additional columns for dbtable authentication
+  ZF-2405 Add example of how to extend Zend_Auth_Adapter_DbTable for adding
+authentication criteria
+  ZF-1811 Fail gracefully if hash extension is not present.
+- Zend_Cache
+  ZF-2632 testSaveWithABadCacheDir(Zend_Cache_FileBackendTest): date(): It is
+not safe to rely on the system's timezone settings.
+  ZF-2271 Zend_Cache_Backend_File bug in PHP 5.2.5
+  ZF-2627 Zend_Cache unittest problem
+  ZF-2604 Unittests hang
+  ZF-2481 Zend_Cache documentation wrong: No longer valid configuration
+parameter names
+- Zend_Config
+  ZF-2437 Zend_Config_Xml Does not properly support nested items
+  ZF-2508 Zend_Config_Ini does not load an INI file with no [sections]
+- Zend_Controller
+  ZF-2516 Fix Zend_Controller_Request docs to remove references to $_COOKIE
+  ZF-2455 Wrong variable name in Zend_Controller_Request_Http::setParam()
+  ZF-2402 Improve logic of throwExceptions()
+  ZF-2342 setPathDelimiter() should accept arrays of string as per the phpdoc
+description
+  ZF-2259 Dispatcher does not pass boolean false second parameter to
+class_exists() calls
+  ZF-2525 Zend_Controller_Router_Route_Module has no accessor methods for
+_defaults property
+  ZF-2496 extract method in Zend_Controller_Action_Helper_ViewRenderer to
+check if should render or not.
+  ZF-2451 There's no direct function in FlashMessenger
+  ZF-2325 Inconsistent package/subpackage names in Zend_Controller_Action
+files
+  ZF-2314 Accessors to set custom classes for ErrorHandler
+  ZF-2229 ZCResponse::getHeader() should be case-insensitive
+  ZF-2149 isValidModule() in Zend_Controller_Dispatcher_Standard does not
+check if $module is a string
+  ZF-2052 base url not detected when it has urlencoded characters
+  ZF-2560 Zend_Controller_Action::__call() should throw different exceptions
+for missing actions vs missing methods
+  ZF-2438 Zend_Controller_Router's addConfig() - mandatory second parameter
+  ZF-2430 Zend_Controller_Router_Interface class doesn't need to include front
+controller
+  ZF-2206 Wrong phpDoc of Zend_Controller_Front::getRouter() method
+  ZF-2355 Small typo in Zend/Controller/Front
+  ZF-2297 Add the possibility to reset a specific parameter in url view helper
+  ZF-2284 Error in docblock for Zend_Controller_Request_Http::getServer and
+getEnv
+- Zend_Date
+  ZF-2623 Fatal error in unit tests - Class 'DateTime' not found
+  ZF-2622 Zend_Date->set() claims Undefined offset: -1 at lines 1337/1340
+  ZF-2613 Fatal error running unit tests: Class 'DateTimeZone' not found
+  ZF-2611 Debug code slipped through
+  ZF-2679 Constructor throws Autodetect of Zend Locale exception even if a
+Zend_Locale is given
+  ZF-2404 In Zend_Date constructor Zend_Date::now() should pass a locale
+  ZF-2380 Zend_Date.addMinute incorrect value
+  ZF-2302 Use new self() construction instead new Zend_Date()
+- Zend_Db
+  ZF-2567 ZF-2058The commited patch break Oracle9i connections
+  ZF-2293 Zend_Db_Adapter_Pdo_Sqlite::describeTable() bugs
+  ZF-2028 Docblock for Zend_Db_Adapter_Abstract::setFetchMode() specifies
+neither return type nor any exceptions thrown
+  ZF-2369 Reference Guide: Example 10.25. Using quote() with a SQL type refers
+to inexistent function Zend_Db_Adapter::quoteType()
+  ZF-1731 Zend_Db_Statement_Pdo_Exception has no error code set
+  ZF-2347 Pdo_Mssql fails when using PDO_DBLIB and a non-standard port
+- Zend_Db_Select
+  ZF-2223 Zend_Db_Select needs a new in() method
+  ZF-1856 Using subquery in from() is broken because of new schema logic
+  ZF-2316 Allow NULL columns in Select object
+- Zend_Db_Table
+  ZF-2217 Zend_Db_Table_Abstract doesn't return the right primary key when
+inserting a new row
+  ZF-1911 Making Zend_Db_Table_Rowset seekable to be able to fetch a specific
+Row
+- Zend_Feed
+  ZF-2635 testAtomSample3(Zend_Feed_ImportTest): Failed asserting that
+<boolean:false> is true.
+  ZF-2590 Unit test error: testAtomSample3(Zend_Feed_ImportTest)
+- Zend_Filter_Input
+  ZF-2280 namespace is a reserved keyword in PHP 5.3
+  ZF-1787 Passing objects as validators does not work when used with
+parameters / metacommands
+- Zend_Form
+  ZF-2656 Undefined variable $value in Zend_Form_Element_Password if no
+validators
+- Zend_Gdata
+  ZF-2338 Exif data not parsed from photo entries
+  ZF-2258 Undefined variable in YouTube code, demo
+  ZF-2253 $_description not defined in Zend_Gdata_YouTube_UserProfileEntry
+  ZF-2250 constant UPLOADS_URI_SUFFIX incorrectly spelled in Zend_Gdata_YouTub
+  ZF-2141 Zend_Gdata_AuthSub::AuthSubRevokeToken() generates warning
+  ZF-2023 Zend_Gdata_Calendar sample code doesn't list setReminder or
+addExtendedProperty when listing valid commands
+- Zend_Locale
+  ZF-2310 Add an default locale to Zend_Locale
+  ZF-2653 Update Zend_Locale data files to honor typography rules
+  ZF-2303 Add one type more for getTranslationList.
+  ZF-2300 System locale de_DE@euro is not deceted
+  ZF-2169 testToFloatSetlocale(Zend_Locale_FormatTest) unit tests fails
+- Zend_Measure
+  ZF-2631 Test process stops because of out of memory
+  ZF-2368 Zend_Measure_NumberTest::testConvertTo() failing (1.0-branch)
+  ZF-2241 ConvertTo millilambert failed
+  ZF-2672 testConvertTo(Zend_Measure_NumberTest) failing (1.0-branch)
+  ZF-2272 Zend_Measure_Numbertest hangs ?
+- Zend_Mime
+  ZF-2495 Missing parrametr in Zend_Mime::encode()
+- Zend_OpenId
+  ZF-2345 Zend_OpenId_Consumer fails to identify OpenId server element when
+attributes are single-quoted
+- Zend_Pdf
+  ZF-1988 Page graphics state is inherited
+- Zend_Rest_Client
+  ZF-1853 Zend_Rest_Client doesn't clean params before create the
+Zend_Http_Client request
+- Zend_Search_Lucene
+  ZF-2170 testOptimize(Zend_Search_Lucene_LuceneTest) unit test fail
+  ZF-2095 Zend Search tries to search for .del compound file while it actually
+isn't there and caused exception
+  ZF-2035 Zend_Search_Lucene_Index_SegmentInfoTest unit tests failing
+  ZF-1376 Error in sample code of section 27.3.1.1 - Query Parsing
+  ZF-2548 Problems with Ubuntu 6.06 Locales for 1.0-Branch when running Unit
+TEsts
+  ZF-2487 testGetField(..._Index_SegmentInfoTest) &
+testGetFieldInfos(..._Index_SegmentInfoTest) failure
+- Zend_Service_Audioscrobbler
+  ZF-1308 Coding standards compliance, including private method names
+  ZF-1307 Fatal error resulting from bug in getInfo() method
+- Zend_Service_Delicious
+  ZF-2318 Zend_Service_Delicious execution failed when called on Mac shell
+- Zend_Service_Technorati
+  ZF-2373 ZF-2334Fix all xpath expression @todo
+  ZF-2371 ZF-2334Class docblocks
+  ZF-2216 Change the scope of public properties when applicable
+  ZF-2203 Compare any response object class with response DTD
+  ZF-2372 ZF-2334Clear/Fix all @todo from Unit tests
+- Zend_Service_Yahoo
+  ZF-2363 webSearch and newsSearch invalid default language parameter
+  ZF-2362 API base URI has changed
+  ZF-1926 webSearch() returns wrong CacheUrl and CacheSize
+- Zend_Session
+  ZF-2459 Zend_Session fails under Windows
+  ZF-1497 Zend_Session doesn't allow you to destory/recreate a session
+  ZF-2037 Zend_Session::getSaveHandler()
+- Zend_Translate
+  ZF-2367 Zend_Translate Unit Tests failing (1.0-branch)
+  ZF-2365 Zend_Translate_ArrayTest failing (1.0-branch)
+  ZF-2255 Locale is over written with Automatic source detection
+- Zend_Validate
+  ZF-2665 Unittest Problem with Zend_Validate
+  ZF-2420 Zend_Validate_Ip doesn't recognize 0.0.0.0 as a valid ip..
+  ZF-2003 Zend_Validate_Date to support more formats than YYYY-MM-DD
+- Zend_View
+  ZF-2634 testStrictVars(Zend_ViewTest): Key foo does not exist
+  ZF-2527 HtmlList escape works only for one dimension
+  ZF-2267 Document design decision behind Zend_View_Abstract private members
+  ZF-2218 Zend_View_Helper_Url and url encoding
+  ZF-2210 Zend_View_Interface sample causes Warning.
+  ZF-2154 formLabel should be for ID, not NAME
+  ZF-2473 Zend_View_Helper_FormLabel
+  ZF-2230 View helper for checkbox is not compatible with array
+  ZF-2129 Wrong subpackage tag in DeclareVars and Url helpers' docblock
+  ZF-2489 testStrictVars(Zend_ViewTest) testDefaultFilterPath(Zend_ViewTest)
+  ZF-2317 View Helper Default Path
+- Proposals process
+  ZF-4    Move Proposals from SVN to Wiki
+
 =RELEASE 1.0.3 / 30-Nov-2007 / based on revision 6983 =
 - Documentation
   ZF-2040 Literal error in example 9.21
