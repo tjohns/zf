@@ -1,0 +1,435 @@
+<!-- EN-Revision: 8118 -->
+<sect1 id="zend.form.decorators">
+    <title>Zend_Form_Decorator による独自のフォームマークアップの作成</title>
+
+    <para>
+        フォームオブジェクトのレンダリングは、完全に別の処理です。
+        <code>Zend_Form</code> の render() メソッドを使わなくてもかまいません。
+        しかし、もし使う場合は
+        フォームオブジェクトのレンダリングにはデコレータを使用します。
+    </para>
+
+    <para>
+        任意の数のデコレータを各項目
+        (要素、表示グループ、サブフォーム、あるいはフォームオブジェクト自体)
+        にアタッチすることができます。しかし、
+        同じ型のデコレータは各項目にひとつだけしかアタッチすることができません。
+        デコレータは、登録した順にコールされます。
+        デコレータの種類によっては、渡されたコンテンツを書き換えたり
+        前後にコンテンツを追加したりするものもあります。
+    </para>
+
+    <para>
+        オブジェクトの状態を設定するには、コンストラクタあるいは
+        デコレータの <code>setOptions()</code> メソッドにオプションを渡します。
+        各項目の <code>addDecorator()</code> 系のメソッドでデコレータを作成する際には、
+        そのメソッドの引数でオプションを指定することができます。
+        これを使用して、配置方法や区切り文字などのデコレータ用オプションを指定します。
+    </para>
+
+    <para>
+        各デコレータの <code>render()</code> メソッドがコールされる前に、
+        <code>setElement()</code> を使用して現在の項目がデコレータに設定されます。
+        これで、デコレータがレンダリングすべき項目を知ることができるようになります。
+        これを使用すると、特定の部分 (ラベルや値、エラーメッセージなど)
+        だけをレンダリングするデコレータを作成することができます。
+        複数のデコレータにそれぞれ個別の部分をレンダリングさせた結果をまとめることで、
+        ひとつの項目に対して複雑なマークアップを行うことができます。
+    </para>
+
+    <sect2 id="zend.form.decorators.operation">
+        <title>操作方法</title>
+
+        <para>
+            デコレータを設定するには、オプションの配列あるいは
+            <code>Zend_Config</code> オブジェクトをコンストラクタに渡します。
+            あるいは、配列を <code>setOptions()</code> に渡したり
+            <code>Zend_Config</code> オブジェクトを <code>setConfig()</code>
+            に渡すことでも設定できます。
+        </para>
+
+        <para>
+            標準のオプションは次のとおりです。
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>placement</code>: 配置方法を 'append' あるいは
+                    'prepend' (大文字小文字は区別しません) で指定します。
+                    これは、<code>render()</code> に渡されたコンテンツを
+                    先頭に追加するのか末尾に追加するのかを表します。
+                    デコレータがコンテンツを書き換えるときは、この設定は無視されます。
+                    デフォルトの設定は append (末尾に追加する) です。
+            </para></listitem>
+
+            <listitem><para>
+                    <code>separator</code>: 区切り文字を指定します。
+                    これは、<code>render()</code> に渡されたコンテンツと
+                    デコレータが新たに作成したコンテンツの区切りとして使用します。
+                    あるいはデコレータがレンダリングする各項目の区切りにも使用します
+                    (たとえば、FormElements は各項目の区切りにこの文字を使用します)。
+                    デコレータがコンテンツを書き換えるときは、この設定は無視されます。
+                    デフォルト値は <code>PHP_EOL</code> です。
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            デコレータのインターフェイスの中にはオプションを操作するメソッドも用意されています。
+            以下にそれをまとめます。
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>setOption($key, $value)</code>: 単一のオプションを設定します。
+            </para></listitem>
+
+            <listitem><para>
+                    <code>getOption($key)</code>: 単一のオプションの値を取得します。
+            </para></listitem>
+
+            <listitem><para>
+                    <code>getOptions()</code>: すべてのオプションを取得します。
+            </para></listitem>
+
+            <listitem><para>
+                    <code>removeOption($key)</code>: 単一のオプションを削除します。
+            </para></listitem>
+
+            <listitem><para>
+                    <code>clearOptions()</code>: すべてのオプションを削除します。
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            デコレータは、
+            <code>Zend_Form</code> のさまざまなクラスで使用できるようになっています。
+            <code>Zend_Form</code> や
+            <code>Zend_Form_Element</code>、<code>Zend_Form_DisplayGroup</code>、
+            そしてその派生クラスのすべてで使用することができます。
+            <code>setElement()</code> メソッドを使用すると、
+            デコレータが処理するオブジェクトを指定することができます。一方
+            <code>getElement()</code> で、現在処理中のオブジェクトを取得することができます。
+        </para>
+
+        <para>
+            各デコレータの <code>render()</code> メソッドの引数
+            <code>$content</code> には文字列が渡されます。
+            最初のデコレータがコールされたときは、通常はこの文字列は空です。
+            それ以降のコールの際に、内容が書き込まれていきます。
+            デコレータの型やオプションに応じて、デコレータはコンテンツを書き換えたり
+            コンテンツの前後に文字列を追加したりします。
+            前後に文字列を追加するときには、オプションで指定した区切り文字を使用します。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.decorators.standard">
+        <title>標準のデコレータ</title>
+
+        <para>
+            <code>Zend_Form</code> には標準でいくつかのデコレータが組み込まれています。
+        </para>
+
+        <sect3 id="zend.form.decorators.standard.callback">
+            <title>Callback</title>
+
+            <para>
+                Callback デコレータは、コンテンツをレンダリングする際に任意のコールバックを実行します。
+                コールバックは、デコレータのオプション 'callback' で指定します。
+                PHP のコールバック型の値を指定することができます。
+                指定するコールバックは、3 つの引数
+                <code>$content</code> (デコレータに渡されたコンテンツ)、
+                <code>$element</code> (処理する項目)、
+                <code>$options</code> (オプションの配列)
+                を受け取るものでなければなりません。
+                コールバックの例は、次のようになります。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class Util
+{
+    public static function label($content, $element, array $options)
+    {
+        return '<span class="label">' . $element->getLabel() . "</span>";
+    }
+}
+?>]]></programlisting>
+
+            <para>
+                このコールバックは <code>array('Util',
+                    'label')</code> のように指定します。
+                そして、ラベル用の (間違った) HTML マークアップを生成します。
+                Callback デコレータはコンテンツの内容を書き換えることもできますし、
+                コンテンツの前後に文字列を追加することもできます。
+            </para>
+
+            <para>
+                Callback デコレータの placement オプションに null 値を指定すると、
+                元のコンテンツをコールバックの返り値で上書きします。
+                'prepend' や 'append' を指定した場合も正しく動作します。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.dtddwrapper">
+            <title>DtDdWrapper</title>
+
+            <para>
+                デフォルトのデコレータで、フォームの要素を定義リスト
+                (<code>&lt;dl&gt;</code>) を用いて装飾します。
+                フォームの項目は任意の順序であらわれるので、
+                表示グループやサブフォームがその他のフォーム項目の中に点在することがあり得ます。
+                表示グループやサブフォームなどの特定の項目を定義リスト内でも保持するために、
+                DtDdWrapper は新しい空の用語定義 (<code>&lt;dt&gt;</code>)
+                を作成し、コンテンツを新しい定義データ (<code>&lt;dd&gt;</code>)
+                としてラップします。出力は、次のようになります。
+            </para>
+
+            <programlisting role="html"><![CDATA[
+<dt></dt>
+<dd><fieldset id="subform">
+    <legend>ユーザ情報</legend>
+    ...
+</fieldset></dd>
+]]></programlisting>
+
+            <para>
+                このデコレータは、元のコンテンツを上書きし、
+                <code>&lt;dd&gt;</code> 要素でラップしたもので置き換えます。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.errors">
+            <title>Errors</title>
+
+            <para>
+                要素のエラーを処理するのが Errors デコレータです。
+                このデコレータは FormErrors ビューヘルパーへのプロキシとなり、
+                エラーメッセージを順序なしリスト
+                (<code>&lt;ul&gt;</code>) にレンダリングします。
+                <code>&lt;ul&gt;</code> 要素のクラスは "errors" となります。
+            </para>
+
+            <para>
+                Errors デコレータは、元のコンテンツの先頭あるいは末尾に文字列を追加します。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.fieldset">
+            <title>Fieldset</title>
+
+            <para>
+                グループやサブフォームの内容を、デフォルトで fieldset
+                の中にレンダリングします。
+                Fieldset デコレータは、オプション 'legend'
+                の内容あるいは要素の <code>getLegend()</code> メソッドの内容を確認し、
+                何かが指定されていればそれを legend として使用します。
+                渡されたコンテンツは HTML の fieldset でラップされ、
+                その内容で元のコンテンツを上書きします。
+                元の項目に設定されていた属性は、すべて fieldset
+                の HTML 属性として設定されます。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.form">
+            <title>Form</title>
+
+            <para>
+                <code>Zend_Form</code> オブジェクトは HTML の form タグをレンダリングするものです。
+                Form デコレータは Form ビューヘルパーへのプロキシとなります。
+                これは、渡されたコンテンツを HTML の form 要素でラップします。
+                その際に <code>Zend_Form</code> オブジェクトの action や method、
+                そして属性を使用します。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.formelements">
+            <title>FormElements</title>
+
+            <para>
+                フォームや表示グループ、サブフォームはいくつかの要素のコレクションです。
+                これらの要素をレンダリングする際には FormElements デコレータを使用します。
+                これは、各構成要素を順次処理して個別に <code>render()</code>
+                をコールし、登録されている区切り文字で結果を連結します。
+                このデコレータは、元のコンテンツの先頭あるいは末尾に文字列を追加します。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.htmltag">
+            <title>HtmlTag</title>
+
+            <para>
+                HtmlTag デコレータは、HTML タグを使ってコンテンツを装飾します。
+                使用するタグを 'tag' オプションで指定します。
+                それ以外に指定したオプションは、そのタグの属性として用いられます。
+                デフォルトのタグはブロックレベルのものであり、
+                指定したタグでコンテンツをラップして元のコンテンツを上書きします。
+                しかし、placement に append あるいは prepend を指定することもできます。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.label">
+            <title>Label</title>
+
+            <para>
+                フォーム要素には通常ラベルがあります。Label
+                デコレータは、このラベルをレンダリングするものです。
+                FormLabel ビューヘルパーへのプロキシとして働き、
+                要素の <code>getLabel()</code> メソッドを使用してラベルを取得します。
+                ラベルが存在しない場合は、何もレンダリングしません。
+            </para>
+
+            <para>
+                オプション 'tag' を指定することもできます。
+                指定した場合は、そのブロックレベルタグでラベルをラップします。
+                'tag' が指定されているがラベルが存在しないという場合は、
+                指定したタグを中身なしでレンダリングします。
+            </para>
+
+            <para>
+                デフォルトでは、Label デコレータは元のコンテンツの先頭に結果を追加します。
+                'placement' オプションを 'append' にすると、
+                コンテンツの末尾に追加することができます。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.form.decorators.standard.viewhelper">
+            <title>ViewHelper</title>
+
+            <para>
+                大半の要素のレンダリングには <code>Zend_View</code>
+                ヘルパーを使用します。これを行うのが ViewHelper デコレータです。
+                このデコレータでは、'helper' タグで明示的にビューヘルパーを指定することができます。
+                指定しなかった場合は、要素のクラス名の最後の部分をもとに使用するヘルパーを決定します。
+                この最後の部分の先頭に 'form' をつけたものを使います。
+                たとえば 'Zend_Form_Element_Text' の場合は 'formText'
+                というビューヘルパーを探すことになります。
+            </para>
+
+            <para>
+                渡された要素のすべての属性は、要素の属性としてビューヘルパーに渡されます。
+            </para>
+
+            <para>
+                デフォルトでは、このデコレータはコンテンツの末尾に結果を追加します。
+                'placement' オプションを指定すれば、先頭に追加させることもできます。
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2 id="zend.form.decorators.custom">
+        <title>独自のデコレータ</title>
+
+        <para>
+            複雑なレンダリングを要したり大幅なカスタマイズが必要な場合は、
+            独自のデコレータを自作することを考えてみましょう。
+        </para>
+
+        <para>
+            デコレータに必要なのは、<code>Zend_Decorator_Interface</code>
+            を実装することだけです。このインターフェイスの定義は次のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+interface Zend_Decorator_Interface
+{
+    public function __construct($options = null);
+    public function setElement($element);
+    public function getElement();
+    public function setOptions(array $options);
+    public function setConfig(Zend_Config $config);
+    public function setOption($key, $value);
+    public function getOption($key);
+    public function getOptions();
+    public function removeOption($key);
+    public function clearOptions();
+    public function render($content);
+}
+?>]]></programlisting>
+
+        <para>
+            よりお手軽に作成するには、<code>Zend_Decorator_Abstract</code>
+            を継承したクラスを作成します。このクラスは、
+            <code>render()</code> 以外のすべてのメソッドを実装しています。
+        </para>
+
+        <para>
+            たとえば、ラベルの最後に ':' を追加し、必須要素には
+            '*' と表示させたいという場合は、このようなデコレータを書くことになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_Decorator_Label extends Zend_Form_Decorator_Abstract
+{
+    public function getLabel()
+    {
+        $label = $this->getOption('label');
+        if (null === $label) {
+            if ((null !== ($element = $this->getElement()))
+                && ($element instanceof Zend_Form_Element) )
+            {
+                $label = $element->getLabel();
+            } 
+        }
+        
+        return (string) $label;
+    }
+
+    public function render($content)
+    {
+        $element = $this->getElement();
+        if (!$element instanceof Zend_Form_Element) {
+            return $content;
+        }
+
+        $label = $this->getLabel();
+        if ($translator = $element->getTranslator()) {
+            $label = $translator->translate($label);
+        }
+        if ($element->getRequired()) {
+            $label .= '*';
+        }
+        $label .= ':';
+
+        $separator = $this->getSeparator();
+        $placement = $this->getPlacement();
+        $view      = $element->getView();
+        if (null !== $view) {
+            $label = $view->formLabel($element->getName(), $label, $this->getOptions());
+        }
+
+        switch ($placement) {
+            case (self::PREPEND):
+                return $label . $separator . $content;
+            case (self::APPEND):
+            default:
+                return $content . $separator . $label;
+        }
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            そして、これをデコレータのパスに配置します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 特定の要素向け
+$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+
+// すべての要素向け
+$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+?>]]></programlisting>
+
+        <para>
+            この例では、デコレータ名の最後の部分である 'Label' が
+            <code>Zend_Form_Decorator_Label</code> と同じなので、このデコレータの
+            <emphasis>かわりに</emphasis> レンダリングに用いられます。
+            つまり、特にデコレータを変更しなくても出力が変わるということです
+            (言うまでもありませんが、違う名前のデコレータを作ることもできます。
+            ここでは、既存のレンダリング機能をカスタムデコレータでお手軽に
+            上書きする方法を示したまでのことです)。
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
