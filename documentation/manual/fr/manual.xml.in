@@ -166,9 +166,7 @@
     </chapter>
     <chapter id="zend.form">
         <title>Zend_Form</title>
-        <xi:include href="module_specs/Zend_Form-Introduction.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Introduction.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Introduction.xml" />
         <xi:include href="module_specs/Zend_Form-QuickStart.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Form-QuickStart.xml" /></xi:fallback>
         </xi:include>
