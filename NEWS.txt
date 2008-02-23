@@ -1,6 +1,254 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.5.0RC1 / 22-Feb-2007 / based on revision 8311 =
+- Documentation
+  ZF-1860 Document controller/action naming conventions
+  ZF-1894 Typo in "22.2.3.1. Memory Limit"
+  ZF-1809 Missing apostrophs around string
+- Zend_Acl
+  ZF-2289 Multiple Assertions
+  ZF-1765 Asserts don't get role, resource and privilege parameters unless specified in allow()
+- Zend_Auth
+  ZF-2344 "ZF-994Zend team proposal review and approval"
+  ZF-2132 InfoCard Authentication
+  ZF-2292 Zend_Auth_Adapter_DbTable authenticate() could be split into subroutines to facilitate subclassing
+- Zend_Auth_Adapter_Ldap / Zend_Ldap
+  ZF-2446 "ZF-994Provide DocBook sources based on existing documentation"
+  ZF-2572 Logging behavior of Zend_Auth_Adapter_Ldap is hardcoded and creates unnecessary dependency
+  ZF-2570 Use type hints where methods expect parameters of hintable types
+  ZF-2578 Promote Zend_Auth_Adapter_OpenId to core
+- Zend_Cache
+  ZF-2593 When using file backend for cache, the files will never be locked.
+  ZF-2386 Better description in exception
+  ZF-2246 Tagging of cache records broken in ZendPlatform Backend
+  ZF-2125 Sqlite Cache Backend throws an Exception when the sqlite extension is not loaded
+  ZF-2329 Zend_Cache should remember HTTP headers (Content-Type) when using Zend_Cache_Frontend_Page
+  ZF-2667 Zend_Cache_FactoryTest failing (trunk)
+  ZF-2493 Zend_Cache testsuite wants to use '/' dir to store files
+  ZF-2480 Zend_Cache_Frontend_Class does not cache by class
+  ZF-2449 Complete refactoring of the file backend
+  ZF-2181 testSaveCorrectCallWithHashedDirectoryStructure(Zend_Cache_FileBackendTest): Failed asserting that <boolean:false> is true.
+  ZF-2168 Zend_Cache_FileBackendTest error
+  ZF-2093 Drop backward compatibility with ZF versions before 1.0 RC1
+  ZF-2082 Zend_Cache_Backend_File's "save" method returns if cache_dir doesn't exist or cannot be written
+  ZF-2072 Detect missing SQLite extension and throw exception
+  ZF-1983 Zend_Cache_Frontend_Page when using a cache_dir that has a relative path
+  ZF-1973 Unexpected results with Zend_Cache_Backend_File when using user-defined error handler
+  ZF-1684 Tab inserted into temporary directory path if no path available in user's environment
+  ZF-1662 Zend_Cache should allow the use of custom backends and frontents
+  ZF-1594 Zend_Cache_Backend_File writes files with 644 permissions
+  ZF-1524 introduction of cache_id_prefix
+  ZF-1338 error messages on writing cache files
+  ZF-1295 Zend_Cache_Backend_File use glob() to find cache files ?
+  ZF-1282 Support for PHP's hash() for read/write control
+  ZF-1276 add ignore_user_abort to Zend_Cache_Backend_File
+- Zend_Config
+  ZF-2437 Zend_Config_Xml Does not properly support nested items
+- Zend_Controller / Zend_Filter
+  ZF-2285 Allow Zend_Config_Xml to support multiple values of the same name as an array
+  ZF-2443 ViewRenderer's setViewBasePathSpec() does not recognize the placeholders :module, :controller or :action
+- Zend_Controller
+  ZF-2535 Regression in ViewRenderer in 1.5 PR
+  ZF-2305 plugin broker does not set request/response object for late-registered plugins
+  ZF-2475 "ZF-1535Zend_Controller_Action_Helper_FlashMessenger lacks a method to clear all current messages too"
+  ZF-2471 Add isFlashRequest() to Zend_Controller_Request_Http
+  ZF-2435 add unsetModuleDirectory() method to FrontController
+  ZF-2390 Easier overloading for Zend_Controller_Dispatcher_Standard
+  ZF-2351 Action_Helper_Redirector: Wrong URL
+  ZF-2313 Conditionally require ViewRenderer and ErrorHandler in Zend_Controller_Front
+  ZF-2167 Redirects should be treated the same as forwards
+  ZF-1798 Zend_Controller_Request_Http too liberal when retrieving parameter sources
+  ZF-1808 Allow controllers in default module to be namespaced
+  ZF-2518 Zend_Form_Element::getAttribs() returns empty array in 5.1.x
+  ZF-2176 "ZF-2116Inflector integration into ViewRenderer"
+  ZF-1893 Make Zend_Controller_Router_Rewrite support method chaining
+  ZF-1889 Bug on Zend_Controller_Router_Route::assemble which makes to not be possible to assembe url's using a different route
+  ZF-1831 Add new parameter for dispatcher to add module prefix to controllers for default module
+- Zend_Currency
+  ZF-2485 testGetRegionList(Zend_CurrencyTest) unit test fails
+  ZF-1989 Unit tests under default configuration require exceptionally long time
+- Zend_Date / Zend_Locale
+  ZF-2290 add method to get/set the timezone by a locale (Zend/Locale/Data/supplementalData.xml)
+- Zend_Date
+  ZF-2071 Zend_Date Constructor should respect timezone offsets in ISO 8601 date strings
+  ZF-961  Proposed Feature: Enable Zend_Date::now() / Zend_TimeSync to interoperate
+- Zend_Db
+  ZF-2407 PHP Warning within Zend_Db_Statement
+  ZF-2319 Support transactions in the pdo_mssql driver in Zend Framework
+  ZF-2185 Public refresh() method in Zend_Db_Table_Row_Abstract
+  ZF-2121 DB Table Enhancements
+  ZF-2058 Can't connect to PDO OCI with Zend_Db
+  ZF-1269 Error extending Zend_Db_Table for PostGreSQL database views
+  ZF-2015 Global entry point for established connection
+  ZF-1428 Adapter fetchAll() method should have an optional fetch-mode argument
+  ZF-2640 Warnings generated when MSSQL table has no primary keys in Zend_Db_Adapter_Pdo_Mssql::describeTable
+  ZF-2220 Zend_Db::factory not working with Zend_Config_Xml nor with Zend_Config_Ini
+  ZF-1984 Zend_Db_Statement->_stripQuoted() does not escape strings in regular expressions
+  ZF-1685 Zend_Db Manual Bug at example 9.11
+- Zend_Db_Adapter_Db2 / Zend_Db_Adapter_Oracle
+  ZF-2070 Exception names not according to classname coding standard
+- Zend_Db_Select
+  ZF-2417 Limit with Ordering broken
+  ZF-1845 Support JOIN ... USING syntax
+  ZF-1692 Allow extension of Zend_Db_Select join types
+  ZF-1100 Refactor Zend_Db_Select::__toString() method
+  ZF-40   Zend_Db_Select SQL: FOR UPDATE
+- Zend_Db_Table
+  ZF-2393 Instantiation of model fails with "Call to a member function describeTable() on a non-object in .../Zend/Db/Table/Abstract.php on line 595"
+  ZF-2330 Promote Zend_Db_Table query enhancements to core for release
+  ZF-2231 Zend_Db_Table_Select does not utilise schema for find/fetch methods
+  ZF-2171 Add select params to findDependentRowset and such
+  ZF-1834 Fluent interface for Rowset iterator methods next(), rewind()
+  ZF-1335 Provide table-specific SELECT queries with select() method
+  ZF-39   Zend_Db_Table For Update
+  ZF-1549 Add 'init' hook to Zend_Db_Table, Rowset and Row
+  ZF-1343 "Invalid parameter number: no parameters were bound" when using ' and ? in where clause
+- Zend_Feed
+  ZF-2140 Zend_Feed (RSS) Does Not Provide Access To <content:encoded>
+  ZF-2180 Zend_Feed_Rss->saveXML() violates coding standard
+- Zend_Filter
+  ZF-2522 Zend_Filter_Inflector __construct params ignored
+  ZF-2549 Typo error
+- Zend_Filter_Inflector
+  ZF-2538 Zend_Filter_Inflector::filter() fails with all numeric folder on Windows
+- Zend_Filter_Input
+  ZF-2550 Refactor Zend_Filter_Input to use Zend_Loader_PluginLoader
+- Zend_Form
+  ZF-2697 Password element repopulates posted value in html
+  ZF-2554 Validation errors not XSS-attack save
+  ZF-2528 Zend_Form __toString() implementations should not throw exceptions
+  ZF-2521 Add ALLOW_EMPTY functionality to Zend_Form_Element
+  ZF-2712 Add NotEmpty validator when element is required
+  ZF-2645 Allow ability to ignore elements when using Zend_Form::getValues()
+- Zend_Form / Zend_Validate
+  ZF-2568 No %value% substitution in translated validation messages
+- Zend_Form Zend_View
+  ZF-2563 Allow array notation in form element names
+- Zend_Form
+  ZF-2562 Create interfaces for the various Zend_Form classes
+  ZF-2561 Allow alternate DisplayGroup classes in Zend_Form
+  ZF-2564 Add createElement() method to Zend_Form
+  ZF-2519 Label decorators should use id attribute if available
+  ZF-2444 Add the ability to set filters and decorators for elements en-masse
+  ZF-2391 Values of Multi-Elements (select...) can be "out of range"
+  ZF-2520 Zend_Form should set name of SubForm
+- Zend_Gdata
+  ZF-2376 Lazy load all exceptions in Zend_Gdata
+  ZF-2050 time query param only valid for top_rated and most_viewed standard feeds
+  ZF-2049 incorrect constant name used in Zend_Gdata_YouTube_VideoQuery
+- Zend_Http_Client
+  ZF-2530 Add methods for setting multiple GET/POST parameters at once
+  ZF-2019 Zend_Http_Client->setHeaders() is too strict...
+  ZF-1986 Typo error
+  ZF-1934 http client fails on redirects with malformed urls
+  ZF-1318 HTTPS connection through Proxy
+- Zend_InfoCard
+  ZF-2422 Acronyms are to be camelCased, too
+  ZF-2421 Zend_InfoCard tests give 2 warnings before 1 fatal error
+  ZF-2328 Promote Zend_InfoCard to core for release
+- Zend_Json
+  ZF-1830 No such file, Zend/Json/AllTests.php, in Zend/AllTests.php
+- Zend_Loader
+  ZF-2463 Zend_Loader suppressing parse errors when loading class files
+  ZF-2296 Zend_Locale::getQuestion() does not return yesexpr and noexpr
+  ZF-2686 Unterminated Loop in Zend_Locale_Format::toNumber
+  ZF-2309 Autodetection of Locale has been failed!
+  ZF-1940 Zend_Locale_Math bcsub substitution function returns wrong result
+- Zend_Mail
+  ZF-2439 Zend_Mail_Storage_Pop3 method getUniqueId does not work properly when there are no messages on the server and UIDL extension is unsupported
+  ZF-2110 No Date header is added to mail messages before sending
+  ZF-1737 Zend_Mail_Transport example for multiple mails per connection
+  ZF-2378 A "new " miss in the example code
+  ZF-2080 Zend_Mail::getPartCount() - wrong datatype defined as return value in phpdoc
+  ZF-2075 Exception in destructor Zend_Mail_Transport_Smtp
+  ZF-1976 Remove BCC in SMTP transport
+- Zend_Measure
+  ZF-2368 Zend_Measure_NumberTest::testConvertTo() failing (1.0-branch)
+  ZF-2672 testConvertTo(Zend_Measure_NumberTest) failing (1.0-branch)
+  ZF-2245 Nothing is returned when convertion to micromole per day
+  ZF-2034 testConvertTo(Zend_Measure_NumberTest) failing
+- Zend_Mime
+  ZF-2495 Missing parrametr in Zend_Mime::encode()
+- Zend_OpenId
+  ZF-2150 OpenID Authentication
+  ZF-2208 Move Zend_OpenId component into Core
+- Zend_Pdf
+  ZF-2615 Fatal error: Cannot access protected property Zend_Pdf_Resource_Font_CidFont_TrueType::$_fontNames
+  ZF-2387 drawText() fails on Solaris
+  ZF-1988 Page graphics state is inherited
+  ZF-1507 Non european encodings support for text drawing
+  ZF-2466 $pds->pages[2]->drawtext () with accentuation not possible on linux
+  ZF-2136 Using already embedded fonts
+  ZF-1987 Shift handling
+  ZF-1874 Zend_Pdf fails with some freware TTF fonts
+- Zend_Rest_Client
+  ZF-1853 Zend_Rest_Client doesn't clean params before create the Zend_Http_Client request
+- Zend_Search_Lucene
+  ZF-2188 Fuzzy search
+  ZF-2172 Support Lucene Fuzzy Searches
+  ZF-2170 testOptimize(Zend_Search_Lucene_LuceneTest) unit test fail
+  ZF-1959 Demo script produces error notices ([function.iconv]) in some environment
+  ZF-1954 Zend_Search_Lucene uses compound file format by default for pre-2.1 indices. Actually it should be checked
+  ZF-1890 Boolean queries construction API is not described in a documentation
+  ZF-1729 Index folder celan-up
+  ZF-1154 Apache Lucene V2.1 file format support
+  ZF-978  Wildcard queries
+  ZF-400  date(int)-range searching ?
+  ZF-2456 Fatal error: Class 'Zend_Search_Lucene_Analysis_Analyzer_Common' not found
+  ZF-2099 User friendly query parsing
+  ZF-249  Tokenizer does not support UTF-8 - Potential way to fix
+  ZF-2548 Problems with Ubuntu 6.06 Locales for 1.0-Branch when running Unit TEsts
+  ZF-2487 testGetField(..._Index_SegmentInfoTest) & testGetFieldInfos(..._Index_SegmentInfoTest) failure
+  ZF-2470 If two long-running threads are doing multiple updates on the index at the same time, the index can be left in a corrupted/unusable.
+  ZF-2448 Zend_Search_Lucene fix [ZF-1729] causes new corruption issues
+  ZF-1960 getFieldInfos() was removed from Search/Lucene/Index/SegmentInfo.php, but is still being called in Search/Lucene/Index/SegmentMerger.php
+  ZF-1885 index.lock problem
+  ZF-1762 Wildcard queries produce error on very short segments
+  ZF-1565 Best practice section for Zend_Search_Lucene module
+  ZF-412  Support delayed file deleting on Windows systems.
+  ZF-2131 Lucene 2.1 Index File Format
+- Zend_Service_SlideShare
+  ZF-2333 Promote Zend_Service_SlideShare to core for release
+- Zend_Service_Technorati
+  ZF-2334 Promote Zend_Service_Technorati to core for release
+  ZF-2308 Remove pointless dependencies
+  ZF-2350 Convert DOM and XPath objects for serialization
+- Zend_Service_Yahoo
+  ZF-272  Add support for Yahoo! Site Explorer
+  ZF-267  Add video search to Zend_Service_Yahoo
+- Zend_TimeSync
+  ZF-987  Extensible sleep / wakeup
+- Zend_Translate
+  ZF-2247 Add caching support for Zend Translate
+  ZF-2291 Trim whitespace in CSV files
+  ZF-2377 getMessageIds() fails
+  ZF-2266 Problems doubling the separator in Zend_Translate_Adapter_Csv
+  ZF-2262 xml_parser_free() called after exception is thrown
+  ZF-2256 Possibility to give a string as the source files in the array adapter Zend_Translate_Adapter_Array
+- Zend_Validate
+  ZF-2432 Zend_Validate validators do not all set messages
+  ZF-1769 Zend_Validate_StringLength allows max to be lower than min...
+  ZF-2433 Add accessors to Zend_Validate_Abstract to make l10n/i18n possible
+  ZF-2336 Promote Zend_Validate_Barcode and friends to core for release
+- Zend_View
+  ZF-2709 headStyle and headScript helpers do not allow serial capturing
+  ZF-2706 headScript should allow arbitrary attributes for script tags
+  ZF-2399 Action/Partial doesn't allow for head*() helper usage
+  ZF-2184 Zend_View Enhanced
+  ZF-2116 View Layouts
+  ZF-1198 Zend_View - support layouts.
+  ZF-2431 Zend_View_Helper_Partial does not support an object to be passed in.
+  ZF-2426 New Zend_View placeholders allow duplicates...
+  ZF-2398 Zend_View_Helper_HeadLink should be Doctype-aware
+  ZF-2283 View Helper htmlList() needs to escape output (but currently doesn't).
+  ZF-1587 Allow variables to be passed to render()
+  ZF-792  Components (Symfony-like defenition) in MVC
+  ZF-1639 Zend_View_Helper_FormSelect and multiples
+  ZF-2403 Zend_View_Helper_Head* muilt view support
+  ZF-2161 Zend_View::javascript(), Zend_View::css()
+  ZF-1666 Zend_View - form helpers produce extraneous hidden elements
+
 =RELEASE 1.0.4 / 22-Feb-2007 / based on revision 8311 =
 - Documentation
   ZF-2575 Typo in Zend_Http_Cookie documentation
