@@ -196,6 +196,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Zend Framework enthält standardmäßig verschiedene Action Helfer:
+            <code>AutoComplete</code> für automatisierte Antworten für AJAX Autovervollständigung;
             <code>ContextSwitch</code> und <code>AjaxContext</code> für alternative Antwort Formate
             eigener Aktionen; einen <code>FlashMessenger</code> für die Behandlung von
             Kurznachrichten; <code>Json</code> für das verschlüsseln und senden von JSON Antworten;
@@ -208,8 +209,17 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ActionStack.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-AutoComplete.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ContextSwitch.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-FlashMessenger.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-Json.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-Json.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-Redirector.xml" /></xi:fallback>
