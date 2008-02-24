@@ -19,6 +19,13 @@
             当且仅当<code>$value</code>只包含字母字符，返回 <code>true</code>。这个校验器包括一个考虑空白字符是否有效的选项。
         </para>
     </sect2>
+     
+    <sect2 id="zend.validate.set.barcode">
+        <title>Barcode</title>
+        <para>
+            这个校验器是个带有条码类型的实例，条码类型是根据你希望用来校验条码值而定。它目前支持 "<code>UPC-A</code>"  （通用产品码）和 "<code>EAN-13</code>"  （欧洲商品码）条码类型，当且仅当输入成功通过条码校验算法的校验，<code>isValid()</code>  返回 true。你应该从输入中删除除了数字0到9（0-9）以外的其它字符，然后传递给校验器。
+         </para>
+    </sect2>
 
     <sect2 id="zend.validate.set.between">
         <title>Between</title>
