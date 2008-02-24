@@ -56,7 +56,7 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
             Zeilensatz zu erhalten.
         </para>
 
-        <example id="zend.db.table.rowset.rows.countingExample">
+        <example id="zend.db.table.rowset.rows.counting.example">
 
             <title>Zeilen in einem Zeilensatz zählen</title>
 
@@ -74,7 +74,7 @@ if ($rowCount > 0) {
 
         </example>
 
-        <example id="zend.db.table.rowset.rows.currentExample">
+        <example id="zend.db.table.rowset.rows.current.example">
 
             <title>Eine einzelne Zeile aus einem Zeilensatz auslesen</title>
 
@@ -96,7 +96,7 @@ $row    = $rowset->current();]]></programlisting>
             Wenn der Zeilensatz keine Zeilen enthält, gibt <code>current()</code> den Wert <code>null</code> zurück.
         </para>
 
-        <example id="zend.db.table.rowset.rows.iterateExample">
+        <example id="zend.db.table.rowset.rows.iterate.example">
 
             <title>Einen Zeilensatz durchlaufen</title>
 
@@ -133,7 +133,7 @@ foreach ($rowset as $row) {
 
         </example>
 
-        <example id="zend.db.table.rowset.rows.seekExample">
+        <example id="zend.db.table.rowset.rows.seek.example">
 
             <title>Eine bekannte Position in einem Rowset suchen</title>
 
@@ -167,7 +167,7 @@ $row9->save();
         </example>
 
             <para>
-                <code>getRow()<code> erlaubt es eine spezielle Zeile im Rowset zu erhalten wenn
+                <code>getRow()</code> erlaubt es eine spezielle Zeile im Rowset zu erhalten wenn
                 dessen Position bekannt ist; trotzdem sollte nicht vergessen werden dass die
                 Position mit dem Index null beginnt. Der erste Parameter für <code>getRow()</code>
                 ist ein Integer für die gewünschte Position. Der zweite optionale Parameter ist ein
