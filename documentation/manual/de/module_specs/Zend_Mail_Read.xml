@@ -63,6 +63,13 @@
                     <entry>No</entry>
                     <entry>Yes</entry>
                 </row>
+                <row>
+                    <entry>Quote</entry>
+                    <entry>No</entry>
+                    <entry>Yes</entry>
+                    <entry>No</entry>
+                    <entry>No</entry>
+                </row>
             </tbody>
         </tgroup>
     </table>
@@ -673,6 +680,83 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
                 sonst die nächste Methode fehlschlagen wird wenn der Server das im aktuellen Status nicht
                 zuläßt.
             </para>
+
+        </sect3>
+        <sect3 id="zend.mail.read-advanced.quota">
+            <title>Quote verwenden (seit 1.5)</title>
+
+            <para>
+                <code>Zend_Mail_Storage_Writable_Maildir</code> bietet Unterstützung für Maildir++
+                Quoten. Diese sind standardmäßig ausgeschaltet, aber es ist möglich Sie manuell zu
+                verwenden, wenn automatische Checks nicht gewünscht sind (das bedeutet
+                <code>appendMessage()</code>, <code>removeMessage()</code> und
+                <code>copyMessage()</code> führen keine Checks durch und fügen keinen Eintrag zur
+                maildirsize Datei hinzu). Wenn aktiviert, wird eine Ausnahme geworfen wenn versucht
+                wird in maildir zu schreiben wenn es bereits voll ist und die Quote überschritten
+                wurde.
+            </para>
+
+            <para>
+                Es gibt drei Methoden die für Quoten verwendet werden: <code>getQuota()</code>,
+                <code>setQuota()</code> und <code>checkQuota()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/mail/'));
+$mail->setQuota(true); // true zum einschalten, false zum ausschalten
+echo 'Quotenprüfung ist jetzt ', $mail->getQuota() ? 'eingeschaltet' : 'ausgeschaltet', "\n";
+// Quotenprüfung kann verwendet werden selbst wenn die Quotenprüfung ausgeschaltet ist
+echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quote', "\n";]]>
+            </programlisting>
+
+            <para>
+                <code>checkQuota()</code> kann eine viel detailiertere Antwort zurückgeben:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$quota = $mail->checkQuota(true);
+echo 'Sie sind ', $quota['over_quota'] ? 'über der Quote' : 'nicht über der Quote', "\n";
+echo 'Sie haben ', $quota['count'], ' von ', $quota['quota']['count'], ' Nachrichten und verwenden ';
+echo $quota['size'], ' von ', $quota['quota']['size'], ' Oktets';]]>
+            </programlisting>
+
+            <para>
+                Wenn man eigene Quoten spezifizieren will statt die bereits in der maildirsize
+                Datei spezifizierte zu verwenden kann das mit <code>setQuota()</code> getan werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// message count and octet size supported, order does matter
+$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
+            </programlisting>
+
+            <para>
+                Wenn eigene Quotenchecks hinzugefügt werden sollen können einzelne Buchstaben als
+                Schlüssel verwendet werden und Sie werden reserviert (aber logischerweise nicht
+                geprüft). Es ist auch möglich <code>Zend_Mail_Storage_Writable_Maildir</code> zu
+                erweitern um eigene Quoten zu definieren wenn die maildirsize Datei fehlt (was in
+                Maildir++ vorkommen kann):
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
+         // getQuota wird mit $fromStorage = true durch die Quotenprüfung aufgerufen
+         public function getQuota($fromStorage = false) {
+                   try {
+                             return parent::getQuota($fromStorage);
+                   } catch (Zend_Mail_Storage_Exception $e) {
+                             if (!$fromStorage) {
+                                       // unbekannter Fehler:
+                                       throw $e;
+                             }
+                             // Die maildirsize Datei muß fehlen
+
+                             list($count, $size) = get_quota_from_somewhere_else();
+                             return array('count' => $count, 'size' => $size);
+                   }
+         }
+}]]>
+            </programlisting>
 
         </sect3>
     </sect2>
