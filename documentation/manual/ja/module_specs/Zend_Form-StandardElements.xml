@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8336 -->
+<!-- EN-Revision: 8360 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -30,9 +30,9 @@
         <para>
             ラベルも要素の一部なので、button 要素は
             <link
-                linkend="zend.form.decorators.standard.viewhelper">ViewHelper</link>
+                linkend="zend.form.standardDecorators.viewHelper">ViewHelper</link>
             デコレータと <link
-                linkend="zend.form.decorators.standard.dtddwrapper">DtDdWrapper</link>
+                linkend="zend.form.standardDecorators.dtDdWrapper">DtDdWrapper</link>
             デコレータのみを使用します。
         </para>
 
@@ -95,7 +95,7 @@
         <programlisting role="php"><![CDATA[<?php
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ?>]]></programlisting>
-
+        
         <para>
             salt は、後から <code>setSalt($salt)</code>
             メソッドを使って設定することもできます。
@@ -350,9 +350,9 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             <link
-                linkend="zend.form.decorators.standard.viewhelper">ViewHelper</link>
+                linkend="zend.form.standardDecorators.viewHelper">ViewHelper</link>
             デコレータと <link
-                linkend="zend.form.decorators.standard.dtddwrapper">DtDdWrapper</link>
+                linkend="zend.form.standardDecorators.dtDdWrapper">DtDdWrapper</link>
             デコレータを使用して要素をレンダリングします。label
             デコレータは使用しません。要素のレンダリング時にはボタンのラベルを使用するからです。
             また、一般的には submit 要素にはエラーを関連付けません。
