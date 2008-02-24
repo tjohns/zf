@@ -6,10 +6,9 @@
     </para>
 
     <itemizedlist>
-        <listitem><para> 元素校验 </para></listitem>
-        <listitem><para> 元素过滤 </para></listitem>
+        <listitem><para> 元素输入过滤和校验 </para></listitem>
         <listitem><para> 元素排序 </para></listitem>
-        <listitem><para> 元素和表单解析 </para></listitem>
+        <listitem><para> 元素和表单解析（rendering），包括转义（escaping） </para></listitem>
         <listitem><para> 元素和表单分组 </para></listitem>
         <listitem><para> 元素和表单级配置 </para></listitem>
     </itemizedlist>
