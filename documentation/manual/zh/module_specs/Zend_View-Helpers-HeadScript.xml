@@ -54,6 +54,18 @@
         <para>
             当包含脚本内嵌在 HTML <code>body</code>里时，应当使用<code>HeadScript</code> 的兄弟助手，<link linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>。为了加速页面的加载，提高用户访问速度，特别是当使用第三方分析脚本（比如Google Analytics等流量统计系统的javascript文件 --Haohappy注），把脚本放在文档的最后是一个好的习惯。
         </para>
+    </note> 
+
+    <note>
+        <title> 任意的属性缺省关闭 （Disabled）</title>
+
+        <para>
+            缺省地，<code>HeadScript</code> 将只解析（render）由 W3C 赋予的 <code>&lt;script&gt;</code> 属性，包括 'type'、 'charset'、 'defer'、 'language' 和 'src' 。 然而，一些 javascript 框架，如 <ulink url="http://www.dojotoolkit.org/">Dojo</ulink>，利用定制的属性来修改行为。为了允许这样的属性，可以通过 <code>setAllowArbitraryAttributes()</code> 方法来打开（enable）它们：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->headScript()->setAllowArbitraryAttributes(true);
+?>]]></programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
