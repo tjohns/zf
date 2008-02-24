@@ -228,7 +228,7 @@ foreach ($hits as $hit) {
     </sect2>
 
     <sect2 id="zend.search.lucene.searching.results-limiting">
-        <title>´Begrenzen des Ergebnissets</title>
+        <title>Begrenzen des Ergebnissets</title>
 
         <para>
             Der berechnungsintensivste Teil des Suchens ist die Berechnung der Treffer. Das kann für große Ergebnisse
