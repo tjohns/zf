@@ -349,7 +349,6 @@ class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
         foreach ($this as $row) {
             if ($row->updated_at > $max_updated_at) {
                 $latestRow = $row;
-                $max_updated_at = $row->updated_at;
             }
         }
         return $latestRow;
