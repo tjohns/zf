@@ -81,6 +81,12 @@
                 IBM DB2, mit der <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP Erweiterung
             </para>
         </listitem>
+
+        <listitem>
+            <para>
+                Firebird/Interbase, mit der <ulink url="http://www.php.net/ibase">php_interbase</ulink> PHP Erweiterung
+            </para>
+        </listitem>                    
     </itemizedlist>
 
     <note>
@@ -1822,6 +1828,37 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         Ergebnissätzen verwendet werden. Wenn in den Ergebnissätzen Schlüssel der Art
                         "tabellenname.spaltenname" bei Nutzung von JOIN Abfragen auftreten, sollte die aktuellste
                         PHP Version installiert werden.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.db.adapter.adapter-notes.firebird">
+            <title>Firebird/Interbase</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen
+                        'Firebird' angegeben.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Dieser Adapter verwendet die PHP Erweiterung php_interbase.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Firebird/interbase unterstützt keine auto-increment Schlüssel, deswegen
+                        sollte der Name einer Sequenz bei <code>lastInsertId()</code> oder
+                        <code>lastSequenceId()</code> spezifiziert werden.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Aktuell wird die <code>Zend_Db::CASE_FOLDING</code> Option vom
+                        Firebird/interbase Adapter nicht unterstützt. Nicht gequotete Identifizierer
+                        werden automatisch in Großschreibweise zurückgegeben.
                     </para>
                 </listitem>
             </itemizedlist>
