@@ -191,8 +191,6 @@ $row9->assigned_to = 'mmouse';
 $row9->save();
 }]]></programlisting>
 
-        </example>
-
         <para>
             Sobald der Zugriff auf ein Zeilenobjekt besteht, kann dieses mit den Methoden manipuliert werden,
             die in <xref linkend="zend.db.table.row" /> beschrieben werden.
