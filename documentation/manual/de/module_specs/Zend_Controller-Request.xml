@@ -111,10 +111,11 @@
                 <title>getParam() empfängt mehr als Benutzer Parameter</title>
 
                 <para>
-                    Um einiges Ihrer Arbeit zu tun, empfängt <code>getParam()</code> von verschiedenen Quellen.
-                    Je nach Priorität inkludieren diese: Benutzer Parameter die über <code>setParam()</code>
-                    gesetzt wurden, <code>GET</code> Parameter, <code>POST</code> Parameter, und letztendlich
-                    <code>COOKIE</code> Parameter. Aufpassen vor dem Durchlaufen von Daten mit dieser Methode.
+                    Um einiges Ihrer Arbeit zu tun, empfängt <code>getParam()</code> von
+                    verschiedenen Quellen. Je nach Priorität enthalten diese: Benutzer Parameter
+                    die über <code>setParam()</code> gesetzt wurden, <code>GET</code> Parameter,
+                    und letztendlich <code>POST</code> Parameter. Aufpassen vor dem Durchlaufen von
+                    Daten mit dieser Methode.
                 </para>
             </note>
 
