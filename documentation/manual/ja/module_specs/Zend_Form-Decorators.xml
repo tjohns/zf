@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8118 -->
+<!-- EN-Revision: 8351 -->
 <sect1 id="zend.form.decorators">
     <title>Zend_Form_Decorator による独自のフォームマークアップの作成</title>
 
@@ -126,193 +126,10 @@
         <title>標準のデコレータ</title>
 
         <para>
-            <code>Zend_Form</code> には標準でいくつかのデコレータが組み込まれています。
+            <code>Zend_Form</code> には、多くのデコレータが標準で組み込まれています。
+            詳細は <link linkend="zend.form.standardDecorators">標準のデコレータについての章</link>
+            を参照ください。
         </para>
-
-        <sect3 id="zend.form.decorators.standard.callback">
-            <title>Callback</title>
-
-            <para>
-                Callback デコレータは、コンテンツをレンダリングする際に任意のコールバックを実行します。
-                コールバックは、デコレータのオプション 'callback' で指定します。
-                PHP のコールバック型の値を指定することができます。
-                指定するコールバックは、3 つの引数
-                <code>$content</code> (デコレータに渡されたコンテンツ)、
-                <code>$element</code> (処理する項目)、
-                <code>$options</code> (オプションの配列)
-                を受け取るものでなければなりません。
-                コールバックの例は、次のようになります。
-            </para>
-
-            <programlisting role="php"><![CDATA[<?php
-class Util
-{
-    public static function label($content, $element, array $options)
-    {
-        return '<span class="label">' . $element->getLabel() . "</span>";
-    }
-}
-?>]]></programlisting>
-
-            <para>
-                このコールバックは <code>array('Util',
-                    'label')</code> のように指定します。
-                そして、ラベル用の (間違った) HTML マークアップを生成します。
-                Callback デコレータはコンテンツの内容を書き換えることもできますし、
-                コンテンツの前後に文字列を追加することもできます。
-            </para>
-
-            <para>
-                Callback デコレータの placement オプションに null 値を指定すると、
-                元のコンテンツをコールバックの返り値で上書きします。
-                'prepend' や 'append' を指定した場合も正しく動作します。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.dtddwrapper">
-            <title>DtDdWrapper</title>
-
-            <para>
-                デフォルトのデコレータで、フォームの要素を定義リスト
-                (<code>&lt;dl&gt;</code>) を用いて装飾します。
-                フォームの項目は任意の順序であらわれるので、
-                表示グループやサブフォームがその他のフォーム項目の中に点在することがあり得ます。
-                表示グループやサブフォームなどの特定の項目を定義リスト内でも保持するために、
-                DtDdWrapper は新しい空の用語定義 (<code>&lt;dt&gt;</code>)
-                を作成し、コンテンツを新しい定義データ (<code>&lt;dd&gt;</code>)
-                としてラップします。出力は、次のようになります。
-            </para>
-
-            <programlisting role="html"><![CDATA[
-<dt></dt>
-<dd><fieldset id="subform">
-    <legend>ユーザ情報</legend>
-    ...
-</fieldset></dd>
-]]></programlisting>
-
-            <para>
-                このデコレータは、元のコンテンツを上書きし、
-                <code>&lt;dd&gt;</code> 要素でラップしたもので置き換えます。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.errors">
-            <title>Errors</title>
-
-            <para>
-                要素のエラーを処理するのが Errors デコレータです。
-                このデコレータは FormErrors ビューヘルパーへのプロキシとなり、
-                エラーメッセージを順序なしリスト
-                (<code>&lt;ul&gt;</code>) にレンダリングします。
-                <code>&lt;ul&gt;</code> 要素のクラスは "errors" となります。
-            </para>
-
-            <para>
-                Errors デコレータは、元のコンテンツの先頭あるいは末尾に文字列を追加します。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.fieldset">
-            <title>Fieldset</title>
-
-            <para>
-                グループやサブフォームの内容を、デフォルトで fieldset
-                の中にレンダリングします。
-                Fieldset デコレータは、オプション 'legend'
-                の内容あるいは要素の <code>getLegend()</code> メソッドの内容を確認し、
-                何かが指定されていればそれを legend として使用します。
-                渡されたコンテンツは HTML の fieldset でラップされ、
-                その内容で元のコンテンツを上書きします。
-                元の項目に設定されていた属性は、すべて fieldset
-                の HTML 属性として設定されます。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.form">
-            <title>Form</title>
-
-            <para>
-                <code>Zend_Form</code> オブジェクトは HTML の form タグをレンダリングするものです。
-                Form デコレータは Form ビューヘルパーへのプロキシとなります。
-                これは、渡されたコンテンツを HTML の form 要素でラップします。
-                その際に <code>Zend_Form</code> オブジェクトの action や method、
-                そして属性を使用します。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.formelements">
-            <title>FormElements</title>
-
-            <para>
-                フォームや表示グループ、サブフォームはいくつかの要素のコレクションです。
-                これらの要素をレンダリングする際には FormElements デコレータを使用します。
-                これは、各構成要素を順次処理して個別に <code>render()</code>
-                をコールし、登録されている区切り文字で結果を連結します。
-                このデコレータは、元のコンテンツの先頭あるいは末尾に文字列を追加します。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.htmltag">
-            <title>HtmlTag</title>
-
-            <para>
-                HtmlTag デコレータは、HTML タグを使ってコンテンツを装飾します。
-                使用するタグを 'tag' オプションで指定します。
-                それ以外に指定したオプションは、そのタグの属性として用いられます。
-                デフォルトのタグはブロックレベルのものであり、
-                指定したタグでコンテンツをラップして元のコンテンツを上書きします。
-                しかし、placement に append あるいは prepend を指定することもできます。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.label">
-            <title>Label</title>
-
-            <para>
-                フォーム要素には通常ラベルがあります。Label
-                デコレータは、このラベルをレンダリングするものです。
-                FormLabel ビューヘルパーへのプロキシとして働き、
-                要素の <code>getLabel()</code> メソッドを使用してラベルを取得します。
-                ラベルが存在しない場合は、何もレンダリングしません。
-            </para>
-
-            <para>
-                オプション 'tag' を指定することもできます。
-                指定した場合は、そのブロックレベルタグでラベルをラップします。
-                'tag' が指定されているがラベルが存在しないという場合は、
-                指定したタグを中身なしでレンダリングします。
-            </para>
-
-            <para>
-                デフォルトでは、Label デコレータは元のコンテンツの先頭に結果を追加します。
-                'placement' オプションを 'append' にすると、
-                コンテンツの末尾に追加することができます。
-            </para>
-        </sect3>
-
-        <sect3 id="zend.form.decorators.standard.viewhelper">
-            <title>ViewHelper</title>
-
-            <para>
-                大半の要素のレンダリングには <code>Zend_View</code>
-                ヘルパーを使用します。これを行うのが ViewHelper デコレータです。
-                このデコレータでは、'helper' タグで明示的にビューヘルパーを指定することができます。
-                指定しなかった場合は、要素のクラス名の最後の部分をもとに使用するヘルパーを決定します。
-                この最後の部分の先頭に 'form' をつけたものを使います。
-                たとえば 'Zend_Form_Element_Text' の場合は 'formText'
-                というビューヘルパーを探すことになります。
-            </para>
-
-            <para>
-                渡された要素のすべての属性は、要素の属性としてビューヘルパーに渡されます。
-            </para>
-
-            <para>
-                デフォルトでは、このデコレータはコンテンツの末尾に結果を追加します。
-                'placement' オプションを指定すれば、先頭に追加させることもできます。
-            </para>
-        </sect3>
     </sect2>
 
     <sect2 id="zend.form.decorators.custom">
@@ -352,25 +169,60 @@ interface Zend_Decorator_Interface
         </para>
 
         <para>
-            たとえば、ラベルの最後に ':' を追加し、必須要素には
-            '*' と表示させたいという場合は、このようなデコレータを書くことになります。
+            たとえば、使用するデコレータの数を減らすために
+            "複合" デコレータを作成することにしましょう。
+            このデコレータでは、ラベルや要素、エラーメッセージ、
+            そして説明を HTML の <code>div</code> でレンダリングします。
+            この 'Composite' デコレータは、次のようになります。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-class My_Decorator_Label extends Zend_Form_Decorator_Abstract
+class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 {
-    public function getLabel()
+    public function buildLabel()
     {
-        $label = $this->getOption('label');
-        if (null === $label) {
-            if ((null !== ($element = $this->getElement()))
-                && ($element instanceof Zend_Form_Element) )
-            {
-                $label = $element->getLabel();
-            } 
+        $element = $this->getElement();
+        $label = $element->getLabel();
+        if ($translator = $element->getTranslator()) {
+            $label = $translator->translate($label);
         }
-        
-        return (string) $label;
+        if ($element->getRequired()) {
+            $label .= '*';
+        }
+        $label .= ':';
+        return $element->getView()->formLabel($element->getName(), $label);
+    }
+
+    public function buildInput()
+    {
+        $element = $this->getElement();
+        $helper  = $element->helper;
+        return $element->getView()->$helper(
+            $element->getName(),
+            $element->getValue(),
+            $element->getAttribs(),
+            $element->options
+        );
+    }
+
+    public function buildErrors()
+    {
+        $element  = $this->getElement();
+        $messages = $element->getMessages();
+        if (empty($messages)) {
+            return '';
+        }
+        return '<div class="errors">' . $element->getView()->formErrors($messages) . '</div>';
+    }
+
+    public function buildDescription()
+    {
+        $element = $this->getElement();
+        $desc    = $element->getDescription();
+        if (empty($messages)) {
+            return '';
+        }
+        return '<div class="description">' . $desc . '</div>';
     }
 
     public function render($content)
@@ -379,29 +231,30 @@ class My_Decorator_Label extends Zend_Form_Decorator_Abstract
         if (!$element instanceof Zend_Form_Element) {
             return $content;
         }
-
-        $label = $this->getLabel();
-        if ($translator = $element->getTranslator()) {
-            $label = $translator->translate($label);
+        if (null === $element->getView()) {
+            return $content;
         }
-        if ($element->getRequired()) {
-            $label .= '*';
-        }
-        $label .= ':';
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $view      = $element->getView();
-        if (null !== $view) {
-            $label = $view->formLabel($element->getName(), $label, $this->getOptions());
-        }
+        $label     = $this->buildLabel();
+        $input     = $this->buildInput();
+        $errors    = $this->buildErrors();
+        $desc      = $this->buildDescription();
+
+        $output = '<div class="form element">'
+                . $label
+                . $input
+                . $errors
+                . $desc
+                . '</div>'
 
         switch ($placement) {
             case (self::PREPEND):
-                return $label . $separator . $content;
+                return $output . $separator . $content;
             case (self::APPEND):
             default:
-                return $content . $separator . $label;
+                return $content . $separator . $output;
         }
     }
 }
@@ -420,13 +273,60 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 ?>]]></programlisting>
 
         <para>
-            この例では、デコレータ名の最後の部分である 'Label' が
-            <code>Zend_Form_Decorator_Label</code> と同じなので、このデコレータの
+            そうすれば、このデコレータを 'Composite'
+            として要素にアタッチすることができるようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 既存のデコレータをこのひとつで置き換えます
+$element->setDecorators(array('Composite'));
+?>]]></programlisting>
+
+        <para>
+            この例では複数の要素のプロパティをもとに複雑な出力を作成するデコレータの
+            作り方を示しましたが、要素の特定の側面だけを扱うようなデコレータを作成することもできます。
+            'Decorator' デコレータや 'Label' デコレータなどは、
+            この方式のすばらしい例です。
+            このようにしておけば、複数のデコレータを組み合わせて
+            複雑な出力を作成することができます。
+            と同時に、必要に応じて出力の一部だけをオーバーライドすることもできるわけです。
+        </para>
+
+        <para>
+            たとえば、要素の検証でエラーが発生したことだけをシンプルに表示して、
+            各要素の個別の検証エラーメッセージは表示しないようにしたい場合は、
+            独自の 'Errors' デコレータを作成します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_Decorator_Errors
+{
+    public function render($content = '')
+    {
+        $output = '<div class="errors">The value you provided was invalid;
+            please try again</div>';
+
+        $placement = $this->getPlacement();
+        $separator = $this->getSeparator();
+
+        switch ($placement) {
+            case 'PREPEND':
+                return $output . $separator . $content;
+            case 'APPEND':
+            default:
+                return $content . $separator . $output;
+        }
+    }
+}
+?>]]></programlisting>
+    
+        <para>
+            この例では、デコレータ名の最後の部分である 'Errors' が
+            <code>Zend_Form_Decorator_Errors</code> と同じなので、このデコレータの
             <emphasis>かわりに</emphasis> レンダリングに用いられます。
             つまり、特にデコレータを変更しなくても出力が変わるということです
-            (言うまでもありませんが、違う名前のデコレータを作ることもできます。
-            ここでは、既存のレンダリング機能をカスタムデコレータでお手軽に
-            上書きする方法を示したまでのことです)。
+            既存のデコレータとあわせた名前のデコレータを作成すれば、
+            要素のデコレータを変更しなくても出力を変更することができます。
         </para>
     </sect2>
 </sect1>
