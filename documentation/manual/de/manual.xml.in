@@ -276,6 +276,27 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Filter-Inflector.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.form">
+        <title>Zend_Form</title>
+        <xi:include href="module_specs/Zend_Form-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-QuickStart.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-QuickStart.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Elements.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Elements.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Forms.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Forms.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Decorators.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Decorators.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Form-Examples.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-Examples.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml">
