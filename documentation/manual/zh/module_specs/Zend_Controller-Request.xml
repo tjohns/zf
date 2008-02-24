@@ -78,13 +78,17 @@
             </note>
 
             <para>
-                如果你希望从你通过 <code>setParam()</code> 设置的参数中获取（参数）， 使用 <code>getUserParam()</code>。
+                如果你希望从你通过 <code>setParam()</code> 设置的参数中获取（参数），使用 <code>getUserParam()</code>。
+            </para>
+             
+            <para>
+                 另外，从 1.5.0 开始，可以锁定搜索哪个参数源，<code>setParamSources()</code> 允许指定一个空数组或者一个带有一个或多个指示哪个参数源被允许（缺省两者都被允许）的值 '_GET'或'_POST'的数组；如果想限制只访问 '_GET'，那么指定 <code>setParamSources(array('_GET'))</code> 。                  
             </para>
 
             <note>
                 <title>Apache相关</title>
                 <para>
-		    如果使用apache的404处理器来传递请求到前端控制器，或者使用重写规则(rewrite rules)的PT标志，URI包含在<code>$_SERVER['REDIRECT_URL']</code>，而不是<code>$_SERVER['REQUEST_URI']</code>。如果使用这样的设定并获取无效的路由，应该使用<code>Zend_Controller_Request_Apache404</code>类代替默认的HTTP类：
+		                如果使用apache的404处理器来传递请求到前端控制器，或者使用重写规则(rewrite rules)的PT标志，URI包含在<code>$_SERVER['REDIRECT_URL']</code>，而不是<code>$_SERVER['REQUEST_URI']</code>。如果使用这样的设定并获取无效的路由，应该使用<code>Zend_Controller_Request_Apache404</code>类代替默认的HTTP类：
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
