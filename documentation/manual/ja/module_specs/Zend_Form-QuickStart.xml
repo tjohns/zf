@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8118 -->
+<!-- EN-Revision: 8312 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -47,7 +47,7 @@ $form->setAction('/resource/process')
             さらに、<code>&lt;form&gt;</code>
             タグ用のその他の HTML 属性を設定することもできます。
             その場合は setAttrib() メソッドあるいは setAttribs() メソッド使用します。
-            たとえば id を指定したい場合は、"id" プロパティを使用します。
+            たとえば id を指定したい場合は、"id" 属性を使用します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -71,7 +71,7 @@ $form->setAttrib('id', 'login');
             </para></listitem>
 
             <listitem><para>
-                checkbox
+                checkbox (あるいは複数チェックボックスを一度にレンダリングする multiCheckbox)
             </para></listitem>
 
             <listitem><para>
@@ -187,6 +187,12 @@ $username->setRequired(true);
 ?>]]></programlisting>
 
         <para>
+            要素が必須な場合は、'NotEmpty' バリデータが
+            バリデータチェインの先頭に追加されます。
+            これで、必須要素には値が入力されていることが保証されます。
+        </para>
+
+        <para>
             フィルタの登録方法は、基本的にはバリデータと同じです。
             例として、最終的な値を小文字変換するフィルタを追加してみましょう。
         </para>
@@ -201,7 +207,7 @@ $username->addFilter('StringtoLower');
 
         <programlisting role="php"><![CDATA[<?php
 $username->addValidator('alnum')
-         ->addValidator('regex', false, array('/^[a-z]/i'))
+         ->addValidator('regex', false, array('/^[a-z]/'))
          ->setRequired(true)
          ->addFilter('StringToLower');
 
@@ -237,11 +243,11 @@ $form->addElement('text', 'username', array(
 ));
 ?>]]></programlisting>
 
-        <para>
+        <note><para>
             同じオプションを指定した要素をいろんな場所で使用するような場合は、
             <code>Zend_Form_Element</code> のサブクラスを作成してそれを使用するといいでしょう。
             長い目で見れば、そのほうがタイピング量を軽減できます。
-        </para>
+        </para></note>
     </sect2>
 
     <sect2 id="zend.form.quickstart.render">
@@ -293,7 +299,7 @@ echo $form;
 
         <programlisting role="php"><![CDATA[<?php
 $element->addDecorators(array(
-    array('ViewHelper', array('helper' => '<HELPERNAME>')),
+    'ViewHelper',
     'Errors',
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
@@ -310,7 +316,7 @@ $element->addDecorators(array(
         </para>
 
         <programlisting role="html"><![CDATA[
-<dt><label for="username"></dt>
+<dt><label for="username" class="required">Username</dt>
 <dd>
     <input type="text" name="username" value="123-abc" />
     <ul class="errors">
@@ -486,28 +492,30 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$form = new Zend_Form(array(
-    'action'   => '/user/login',
-    'method'   => 'post',
-    'elements' => array(
-        'username' => array('text', array(
-            'validators' => array(
-                'alnum',
-                array('regex', false, array('/^[a-z]/i')),
-                array('stringLength', false, array(6, 20))
-            ),
-            'required' => true,
-            'filters'  => array('StringToLower')
-        )),
-        'password' => array('password', array(
-            'validators' => array(
-                array('stringLength', false, array(6))
-            ),
-            'required' => true,
-        )),
-        'submit' => 'submit',
-    ),
-));
+
+
+$form = new Zend_Form();
+$form->setAction('/usr/login')
+     ->setMethod('post');
+
+// username 要素を作成・設定します
+$username = $form->createElement('text', 'username');
+$username->addValidator('alnum')
+         ->addValidator('regex', false, array('/^[a-z]+/'))
+         ->addValidator('stringLength', false, array(6, 20))
+         ->setRequired(true)
+         ->addFilter('StringToLower');
+
+// password 要素を作成・設定します
+$password = $form->createElement('password', 'password');
+$password->addValidator('StringLength', false, array(6))
+         ->setRequired(true);
+
+// 要素をフォームに追加します
+$form->addElement($username)
+     ->addElement($password)
+     // addElement() をファクトリとして使用して 'Login' ボタンを作成します
+     ->addElement('submit', 'login', array('label' => 'Login'));
 ?>]]></programlisting>
 
         <para>
@@ -615,7 +623,8 @@ user.login.elements.submit.type = "submit"
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$form = new Zend_Form($config->user->login);
+$config = new Zend_Config_Ini($configFile, 'development');
+$form   = new Zend_Form($config->user->login);
 ?>]]></programlisting>
 
         <para>
