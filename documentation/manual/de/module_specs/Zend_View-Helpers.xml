@@ -20,9 +20,22 @@
     </para>
 
     <note>
+        <title>Betrachte den Fall</title>
         <para>
-            Namen von Helfern sind immer camelCased, bzw. beginnen Sie nie mit einem großgeschriebenen
-            Zeichen.
+            Namen von Helfern sind immer camelCased, bzw. beginnen Sie nie mit einem
+            großgeschriebenen Zeichen. Der Klassenname selbst ist CamelCased, aber die Methode die
+            aktuell ausgeführt wird ist camelCased.
+        </para>
+    </note>
+
+    <note>
+        <title>Standard Helfer Pfad</title>
+
+        <para>
+            Der Standard Helfer Pfad zeigt immer zu den View Helfern des Zend Frameworks,
+            normalerweise 'Zend/View/Helper/'.  Selbst wenn <code>setHelperPath()</code> ausgerufen
+            wird um den existierenden Pfad zu überschreiben, wird dieser Pfad gesetzt um
+            sicherzustellen das die Standard Helfer arbeiten.
         </para>
     </note>
 
