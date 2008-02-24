@@ -30,9 +30,9 @@
         <para>
             Because the label is used as part of the element, the button element
             uses only the <link
-                linkend="zend.form.decorators.standard.viewhelper">ViewHelper</link>
+                linkend="zend.form.standardDecorators.viewHelper">ViewHelper</link>
             and <link
-                linkend="zend.form.decorators.standard.dtddwrapper">DtDdWrapper</link>
+                linkend="zend.form.standardDecorators.dtDdWrapper">DtDdWrapper</link>
             decorators.
         </para>
 
@@ -93,7 +93,7 @@
         <programlisting role="php"><![CDATA[<?php
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ?>]]></programlisting>
-
+        
         <para>
             You can set the salt later using the <code>setSalt($salt)</code>
             method.
@@ -344,9 +344,9 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             The <link
-                linkend="zend.form.decorators.standard.viewhelper">ViewHelper</link>
+                linkend="zend.form.standardDecorators.viewHelper">ViewHelper</link>
             and <link
-                linkend="zend.form.decorators.standard.dtddwrapper">DtDdWrapper</link>
+                linkend="zend.form.standardDecorators.dtDdWrapper">DtDdWrapper</link>
             decorators to render the element. No label decorator is used, as the
             button label is used when rendering the element; also, typically,
             you will not associate errors with a submit element.
