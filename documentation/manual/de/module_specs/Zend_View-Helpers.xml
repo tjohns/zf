@@ -129,9 +129,13 @@
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code> erzeugt ungeordnete und geordnete Listen
-                welche auf den <code>$items</code> basieren die übergeben wurden. Wenn <code>$items</code>
-                ein multidimensionales Array ist, wird eine verschachtelte Liste gebaut.
+                <code>htmlList($items, $ordered, $attribs, $escape):</code> erzeugt ungeordnete und
+                geordnete Listen welche auf den <code>$items</code> basieren die übergeben wurden.
+                Wenn <code>$items</code> ein multidimensionales Array ist, wird eine verschachtelte
+                Liste gebaut. Wenn das <code>$escape</code> Flag true ist (standard), werden
+                individuelle Abschnitte escaped durch Verwendung des Escaping Mechanismus der im
+                View Objekt registriert wurde; ein false Wert wird übergeben wenn Markups in den
+                Listen gewünscht werden. 
             </para></listitem>
 
         </itemizedlist>
