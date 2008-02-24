@@ -195,11 +195,14 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>Eingebaute Aktions Helfer</title>
 
         <para>
-            Zend Framework inkludiert standardmäßig drei Aktions Helfer: einen <code>FlashMessenger</code>
-            für die Handhabung von Flash Nachrichten; einen <code>Redirector</code>, um verschiedene
-            Implementationen, für das Umleiten zu internen und externen Seiten, für die Anwendung bereitzustellen
-            und einen <code>ViewRenderer</code> um den Prozess des Setzens eines View Objekts im Kontroller und
-            dem Rendern von Views zu automatisieren.
+            Zend Framework enthält standardmäßig verschiedene Action Helfer:
+            <code>ContextSwitch</code> und <code>AjaxContext</code> für alternative Antwort Formate
+            eigener Aktionen; einen <code>FlashMessenger</code> für die Behandlung von
+            Kurznachrichten; <code>Json</code> für das verschlüsseln und senden von JSON Antworten;
+            einen <code>Redirector</code>, um verschiedene Implementationen, für das Umleiten zu
+            internen und externen Seiten, für die Anwendung bereitzustellen und einen
+            <code>ViewRenderer</code> um den Prozess des Setzens eines View Objekts im Kontroller
+            und dem Rendern von Views zu automatisieren.
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml">
