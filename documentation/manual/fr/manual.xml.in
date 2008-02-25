@@ -44,6 +44,9 @@
         <xi:include href="module_specs/Zend_Auth_Adapter_DbTable.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Digest.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml" />
+        <xi:include href="module_specs/Zend_Auth_Adapter_Ldap.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_Ldap.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Auth_Adapter_OpenId.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Auth_Adapter_OpenId.xml" /></xi:fallback>
         </xi:include>
@@ -227,7 +230,7 @@
         <xi:include href="module_specs/Zend_InfoCard-Basics.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_InfoCard-Basics.xml" /></xi:fallback>
         </xi:include>
-</chapter>
+    </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
         <xi:include href="module_specs/Zend_Json-Introduction.xml" />
@@ -241,6 +244,12 @@
         <xi:include href="module_specs/Zend_Layout-QuickStart.xml" />
         <xi:include href="module_specs/Zend_Layout-Options.xml" />
         <xi:include href="module_specs/Zend_Layout-Advanced.xml" />
+    </chapter>
+    <chapter id="zend.ldap">
+        <title>Zend_Ldap</title>
+        <xi:include href="module_specs/Zend_Ldap.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Ldap.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.loader">
         <title>Zend_Loader</title>
