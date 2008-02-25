@@ -134,7 +134,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </para>
 
             <programlisting role="php"><![CDATA[
-<a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]>
+<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]>
             </programlisting>
 
             <para>
