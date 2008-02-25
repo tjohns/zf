@@ -117,12 +117,21 @@
                     und letztendlich <code>POST</code> Parameter. Aufpassen vor dem Durchlaufen von
                     Daten mit dieser Methode.
                 </para>
-            </note>
 
-            <para>
-                Wenn man nur Parameter erhalten will die vorher mit <code>setParam()</code> gesetzt wurden,
-                muß <code>getUserParam()</code> verwendet werden.
-            </para>
+                <para>
+                    Wenn man nur Parameter erhalten will die vorher mit <code>setParam()</code> gesetzt wurden,
+                    muß <code>getUserParam()</code> verwendet werden.
+                </para>
+
+                <para>
+                    Zusätzlich, sein 1.5.0, kann gesperrt werden welche Quellparameter gesucht
+                    werden. <code>setParamSources()</code> erlaubt es ein leeres Array zu
+                    spezifizieren oder ein Array mit einem oder mehreren Werten von '_GET' oder
+                    '_POST' um zu zeigen welche Quellparameter erlaubt sind (standardmäßig sind
+                    beide erlaubt); Wenn der Zugriff nur auf '_GET' beschränkt werden soll muß
+                    <code>setParamSources(array('_GET'))</code> spezifiziert werden.
+                </para>
+            </note>
 
             <note>
                 <title>Apache Quirks</title>
