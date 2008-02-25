@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7808 -->
+<!-- EN-Revision: 8387 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -384,7 +384,7 @@ $date = new Zend_Date($locale);]]>
         </para>
 
         <para>
-            Zend Framework リリース 1.1 以降では、もっとうまいやりかたが用意されています。
+            Zend Framework リリース 1.5 以降では、もっとうまいやりかたが用意されています。
             デフォルトのロケールを、静的メソッド <code>setDefault()</code> で設定できるのです。
             もちろん、未知のロケールや不完全なロケールが指定された場合も例外をスローします。
             <code>setDefault()</code> は、<code>Zend_Locale</code>

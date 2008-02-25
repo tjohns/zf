@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7809 -->
+<!-- EN-Revision: 8387 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale の使用法</title>
@@ -1449,7 +1449,7 @@ Array
             <para>
                 1.0.3 までは、<emphasis role="strong">yesabbr</emphasis>
                 もロケールデータから取得可能でした。
-                1.1 以降、この情報は単体では存在しません。しかし、同じ情報を
+                1.5 以降、この情報は単体では存在しません。しかし、同じ情報を
                 <emphasis role="strong">yesarray</emphasis>
                 から取得できます。
             </para>

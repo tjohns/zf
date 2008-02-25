@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7745 -->
+<!-- EN-Revision: 8387 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -43,7 +43,7 @@
                </para>
                <para>
                    Lucene 2.1 インデックスフォーマットのサポートは
-                   ZF 1.1.0 に組み込まれる予定です。現在のリリース版 (ZF V1.0.2) は
+                   ZF 1.5.0 に組み込まれる予定です。現在のリリース版 (ZF V1.0.4) は
                    Lucene 1.9-2.0 に対応しています。
                </para>
             </footnote>.

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8211 -->
+<!-- EN-Revision: 8387 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -150,7 +150,7 @@
             文字列 <code>$value</code> の長さが最小値以上、
             かつ最大値以下 (最大値が <code>null</code> 以外のとき)
             の場合にのみ <code>true</code> を返します。
-            バージョン 1.1.0 以降では、<code>setMin()</code>
+            バージョン 1.5.0 以降では、<code>setMin()</code>
             で最大値より大きい値を指定したり <code>setMax()</code>
             で最小値より小さい値を設定したりした場合に例外をスローします。
             バージョン 1.0.2 以降では、このクラスは UTF-8 のほかに

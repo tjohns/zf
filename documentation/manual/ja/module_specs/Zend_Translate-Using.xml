@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7811 -->
+<!-- EN-Revision: 8387 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -319,7 +319,7 @@ $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
 
         <para>
-            リリース 1.1 以降では、配列を外部のファイルに含めることもサポートしています。
+            リリース 1.5 以降では、配列を外部のファイルに含めることもサポートしています。
             ファイル名を指定すると、<code>Zend_Translate</code>
             が自動的にそれをインクルードして配列を探します。
             詳細は、次の例を参照ください。
@@ -766,7 +766,7 @@ $translate->addTranslation("\my_de.mo","de");
 
         <note>
             <para>
-                自動的なソース検出機能は、Zend Framework バージョン 1.1
+                自動的なソース検出機能は、Zend Framework バージョン 1.5
                 以降で使用可能です。
             </para>
         </note>
