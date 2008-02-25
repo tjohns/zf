@@ -79,6 +79,23 @@
         </para>
     </note>
 
+    <note>
+        <title>Andere Attribute werden stanadrdmäßig ausgeschaltet</title>
+
+        <para>
+            Standardmäßig wird <code>HeadScript</code> nur <code>&lt;script&gt;</code> Attribute
+            darstellen die von W3C abgesegnet sind. Diese beinhalten 'type', 'charset', 'defer',
+            'language', und 'src'. Trotzdem, verwenden einige Javascript Frameworks, vorallem
+            <ulink url="http://www.dojotoolkit.org/">Dojo</ulink>, eigene Attribute um Verhalten
+            zu ändern. Um solche Attribute zu erlauben, können diese über die
+            <code>setAllowArbitraryAttributes()</code> Methode eingeschaltet werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->headScript()->setAllowArbitraryAttributes(true);
+?>]]></programlisting>
+    </note>
+
     <example id="zend.view.helpers.initial.headscript.basicusage">
         <title>Grundsätzliche Verwendung des HeadScript Helfers</title>
 
