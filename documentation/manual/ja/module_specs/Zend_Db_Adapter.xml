@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8186 -->
+<!-- EN-Revision: 8396 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -241,8 +241,7 @@ $config = new Zend_Config(
     )
 );
 
-$db = Zend_Db::factory($config->database);
-));]]>
+$db = Zend_Db::factory($config->database);]]>
                 </programlisting>
             </example>
 
