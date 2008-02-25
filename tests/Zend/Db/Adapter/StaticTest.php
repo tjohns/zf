@@ -23,14 +23,9 @@
 
 
 /**
- * PHPUnit_Framework_TestCase
+ * Test helper
  */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * PHPUnit_Util_Filter
- */
-require_once 'PHPUnit/Util/Filter.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
