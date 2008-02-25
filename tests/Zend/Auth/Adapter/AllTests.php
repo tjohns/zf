@@ -58,6 +58,12 @@ require_once 'Zend/Auth/Adapter/Http/AllTests.php';
 
 
 /**
+ * @see Zend_Auth_Adapter_Ldap_AllTests
+ */
+require_once 'Zend/Auth/Adapter/Ldap/AllTests.php';
+
+
+/**
  * @see Zend_Auth_Adapter_OpenId_AllTests
  */
 require_once 'Zend/Auth/Adapter/OpenId/AllTests.php';
@@ -94,6 +100,7 @@ class Zend_Auth_Adapter_AllTests
         $suite->addTest(Zend_Auth_Adapter_DbTable_AllTests::suite());
         $suite->addTestSuite('Zend_Auth_Adapter_DigestTest');
         $suite->addTest(Zend_Auth_Adapter_Http_AllTests::suite());
+        $suite->addTest(Zend_Auth_Adapter_Ldap_AllTests::suite());
         $suite->addTest(Zend_Auth_Adapter_OpenId_AllTests::suite());
 
         return $suite;
