@@ -40,7 +40,7 @@
         </para>
 
         <para>
-            Viele Entwickler hängen an diesem "Feature", welches nie angedacht war. Verschiedene
+            Einige Entwickler hängen an diesem "Feature", welches nie angedacht war. Verschiedene
             Änderungen im 1.5.0 Baum, führen dazu das der ViewRenderer diese Pfade nicht länger
             auflöst; die semantische Bindung wird nun erzwungen. Ale erstes, erzwingt der
             Dispatcher nun die Groß-/Kleinschreibung in Aktionsnamen. Das bedeutet das das
@@ -91,7 +91,7 @@ $inflector->setFilterRule(':action', array(
 
                 <para>
                     Wenn die Umbenennung der View Skripte zu aufwendig oder Zeitintensiv ist, dann
-                    ist das die beste Option.
+                    ist das die beste Option wenn man die Zeit hierfür findet.
                 </para>
             </listitem>
 
