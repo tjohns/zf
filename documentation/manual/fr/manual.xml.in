@@ -182,6 +182,9 @@
         <xi:include href="module_specs/Zend_Form-StandardElements.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Form-StandardElements.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Form-StandardDecorators.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Form-StandardDecorators.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
@@ -456,9 +459,7 @@
         <xi:include href="module_specs/Zend_View-Controllers.xml" />
         <xi:include href="module_specs/Zend_View-Scripts.xml" />
         <xi:include href="module_specs/Zend_View-Helpers.xml" parse="xml" />
-        <xi:include href="module_specs/Zend_View-Abstract.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_View-Abstract.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_View-Abstract.xml" />
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
