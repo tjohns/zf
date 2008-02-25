@@ -33,7 +33,7 @@
                    It is available via SVN in current nightly snapshots.
                </para>
                <para>
-                   We hope to include Lucene 2.1 index format support in ZF 1.1.0. The current release (ZF V1.0.2) works with
+                   We hope to include Lucene 2.1 index format support in ZF 1.5.0. The current release (ZF V1.0.4) works with
                    Lucene 1.9-2.0 index formats.
                </para>
             </footnote>.

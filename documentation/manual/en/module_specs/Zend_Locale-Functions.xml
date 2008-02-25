@@ -1128,7 +1128,7 @@ Array
         <note>
             <para>
                 Until 1.0.3 <emphasis role="strong">yesabbr</emphasis> from the underlaying locale data was also
-                available. Since 1.1 this information is no longer standalone available, but you will find the
+                available. Since 1.5 this information is no longer standalone available, but you will find the
                 information from it within <emphasis role="strong">yesarray</emphasis>.
             </para>
         </note>

@@ -341,7 +341,7 @@ $date = new Zend_Date($locale);]]>
         </para>
 
         <para>
-            Since Zend Framework Release 1.1 there is a much better way to handle this. You can set a
+            Since Zend Framework Release 1.5 there is a much better way to handle this. You can set a
             default locale which the static <code>setDefault()</code> method. Of course, every unknown
             or not full qualified locale will also throw an exception. <code>setDefault()</code> should
             be the first call before you initiate any class using <code>Zend_Locale</code>. See the

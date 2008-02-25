@@ -324,7 +324,7 @@ $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
 
         <para>
-            Since Release 1.1 it is also supported to have arrays included within a external file.
+            Since Release 1.5 it is also supported to have arrays included within a external file.
             You just have to give the filename and <code>Zend_Translate</code> will automatically
             include it and look for the array. See the following example for details:
         </para>
@@ -734,7 +734,7 @@ $translate->addTranslation("\my_de.mo","de");
 
         <note>
             <para>
-                Automatic source detection is available since Zend Framework version 1.1 .
+                Automatic source detection is available since Zend Framework version 1.5 .
             </para>
         </note>
 
