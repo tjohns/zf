@@ -125,7 +125,7 @@
     <sect2 id="zend.validate.set.string_length">
         <title>StringLength</title>
         <para>
-            当且仅当字串长度值<code>$value</code>至少是最小值并不大于最大值（当max选项不是<code>null</code>），返回 <code>true</code>。从1.1.0版开始，如果最小长度被设置为一个大于已设定的最大长度的值，<code>setMin()</code>方法抛出一个异常，并且如果最大长度值被设置为小于一个已设定的最小长度的值，<code>setMax()</code>方法抛出一个异常。从1.0.2版开始，基于<ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink> 的当前值，这个类支持UTF-8和其它字符编码。
+            当且仅当字串长度值<code>$value</code>至少是最小值并不大于最大值（当max选项不是<code>null</code>），返回 <code>true</code>。从1.5.0版开始，如果最小长度被设置为一个大于已设定的最大长度的值，<code>setMin()</code>方法抛出一个异常，并且如果最大长度值被设置为小于一个已设定的最小长度的值，<code>setMax()</code>方法抛出一个异常。从1.0.2版开始，基于<ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink> 的当前值，这个类支持UTF-8和其它字符编码。
         </para>
     </sect2>
 
