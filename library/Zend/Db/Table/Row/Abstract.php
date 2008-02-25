@@ -827,8 +827,10 @@ abstract class Zend_Db_Table_Row_Abstract
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $parentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $value = $this->_data[$parentColumnName];
-            $dependentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::COLUMNS][$i]);
-            $dependentColumn = $db->quoteIdentifier($dependentColumnName, true);
+            // Use adapter from dependent table to ensure correct query construction
+            $dependentDb = $dependentTable->getAdapter();
+            $dependentColumnName = $dependentDb->foldCase($map[Zend_Db_Table_Abstract::COLUMNS][$i]);
+            $dependentColumn = $dependentDb->quoteIdentifier($dependentColumnName, true);
             $dependentInfo = $dependentTable->info();
             $type = $dependentInfo[Zend_Db_Table_Abstract::METADATA][$dependentColumnName]['DATA_TYPE'];
             $select->where("$dependentColumn = ?", $value, $type);
@@ -878,8 +880,10 @@ abstract class Zend_Db_Table_Row_Abstract
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $dependentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::COLUMNS][$i]);
             $value = $this->_data[$dependentColumnName];
-            $parentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
-            $parentColumn = $db->quoteIdentifier($parentColumnName, true);
+            // Use adapter from parent table to ensure correct query construction
+            $parentDb = $parentTable->getAdapter();
+            $parentColumnName = $parentDb->foldCase($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
+            $parentColumn = $parentDb->quoteIdentifier($parentColumnName, true);
             $parentInfo = $parentTable->info();
             $type = $parentInfo[Zend_Db_Table_Abstract::METADATA][$parentColumnName]['DATA_TYPE'];
             $select->where("$parentColumn = ?", $value, $type);
@@ -943,7 +947,9 @@ abstract class Zend_Db_Table_Row_Abstract
             $select->setTable($matchTable);
         }
         
+        // Use adapter from intersection table to ensure correct query construction
         $interInfo = $intersectionTable->info();
+        $interDb   = $intersectionTable->getAdapter();
         $interName = $interInfo['name'];
         $matchInfo = $matchTable->info();
         $matchName = $matchInfo['name'];
@@ -951,8 +957,8 @@ abstract class Zend_Db_Table_Row_Abstract
         $matchMap = $this->_prepareReference($intersectionTable, $matchTable, $matchRefRule);
 
         for ($i = 0; $i < count($matchMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
-            $interCol = $db->quoteIdentifier('i' . '.' . $matchMap[Zend_Db_Table_Abstract::COLUMNS][$i], true);
-            $matchCol = $db->quoteIdentifier('m' . '.' . $matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i], true);
+            $interCol = $interDb->quoteIdentifier('i' . '.' . $matchMap[Zend_Db_Table_Abstract::COLUMNS][$i], true);
+            $matchCol = $interDb->quoteIdentifier('m' . '.' . $matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i], true);
             $joinCond[] = "$interCol = $matchCol";
         }
         $joinCond = implode(' AND ', $joinCond);
@@ -966,12 +972,12 @@ abstract class Zend_Db_Table_Row_Abstract
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $callerColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $value = $this->_data[$callerColumnName];
-            $interColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
-            $interCol = $db->quoteIdentifier("i.$interColumnName", true);
-            $matchColumnName = $db->foldCase($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
+            $interColumnName = $interDb->foldCase($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
+            $interCol = $interDb->quoteIdentifier("i.$interColumnName", true);
+            $matchColumnName = $interDb->foldCase($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $interInfo = $intersectionTable->info();
             $type = $interInfo[Zend_Db_Table_Abstract::METADATA][$interColumnName]['DATA_TYPE'];
-            $select->where($db->quoteInto("$interCol = ?", $value, $type));
+            $select->where($interDb->quoteInto("$interCol = ?", $value, $type));
         }
 
         $stmt = $select->query();
