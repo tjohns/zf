@@ -44,6 +44,7 @@
         <xi:include href="module_specs/Zend_Auth_Adapter_DbTable.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Digest.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_Http.xml" />
+        <xi:include href="module_specs/Zend_Auth_Adapter_Ldap.xml" />
         <xi:include href="module_specs/Zend_Auth_Adapter_OpenId.xml" />
     </chapter>
     <chapter id="zend.cache">
@@ -185,6 +186,10 @@
         <xi:include href="module_specs/Zend_Layout-QuickStart.xml" />
         <xi:include href="module_specs/Zend_Layout-Options.xml" />
         <xi:include href="module_specs/Zend_Layout-Advanced.xml" />
+    </chapter>
+    <chapter id="zend.ldap">
+        <title>Zend_Ldap</title>
+        <xi:include href="module_specs/Zend_Ldap.xml" />
     </chapter>
     <chapter id="zend.loader">
         <title>Zend_Loader</title>

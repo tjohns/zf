@@ -166,9 +166,9 @@ class Zend_Auth_Adapter_Ldap_OnlineTest extends PHPUnit_Framework_TestCase
 
         $result = $adapter->authenticate();
         $this->assertTrue($result instanceof Zend_Auth_Result);
-        $this->assertTrue($result->isValid() === false);
-        $this->assertTrue($result->getCode() == Zend_Auth_Result::FAILURE);
+        $this->assertFalse($result->isValid());
+        $this->assertEquals(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
         $messages = $result->getMessages();
-        $this->assertContains('Authority not found', $messages[0]);
+        $this->assertContains('Account not found', $messages[0]);
     }
 }
