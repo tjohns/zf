@@ -3,7 +3,7 @@
 
     <para>
         This quick start guide is intended to cover the basics of creating,
-        validating, and rendering forms using Zend_Form.
+        validating, and rendering forms using <code>Zend_Form</code>.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
@@ -378,7 +378,7 @@ if ($form->isValid($_POST)) {
 
         <para>
             With AJAX requests, you sometimes can get away with validating
-            single elements, or groups of elements.
+            single element, or groups of elements.
             <code>isValidPartial()</code> will validate a partial form. Unlike
             <code>isValid()</code>, however, if a particular key is not
             present, it will not run validations for that particular element:
