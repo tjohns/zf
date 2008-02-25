@@ -228,8 +228,7 @@ $config = new Zend_Config(
     )
 );
 
-$db = Zend_Db::factory($config->database);
-));]]>
+$db = Zend_Db::factory($config->database);]]>
                 </programlisting>
             </example>
 
