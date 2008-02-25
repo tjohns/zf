@@ -1,6 +1,6 @@
 <sect1 id="zend.auth.adapter.dbtable">
 
-    <title>Authentifizieren mit einer Datenbank Tabelle</title>
+    <title>Datenbanktabellen Authentifizierung</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
 
@@ -197,6 +197,38 @@ if ($result->isValid()) {
     /* ... */
 
 }]]>
+            </programlisting>
+
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
+        <title>Forgeschrittene Verwendung durch Beispiele</title>
+
+        <para>
+            Wärend der primäre Zweck von Zend_Auth (und konsequenter Weise
+            Zend_Auth_Adapter_DbTable) die <b>Authentifizierung</b> und nicht die
+            <b>Authorisierung</b> ist, gibt es ein paar Instanzen und Probleme auf dem Weg welche
+            Art besser passt. Abhängig davon wie man sich entscheidet ein Problem zu beschreiben,
+            macht es manchmal Sinn, das was wie ein Authorisierungsproblem aussieht im
+            Authentifizierungs-Adapter zu lösen.
+        </para>
+
+        <para>
+            Mit dieser kurzen Definition, hat Zend_Auth_Adapter_DbTable einige eingebaute
+            Mechanismen die so angepasst werden können das zusätzliche Checks wärend der
+            Authentifizierungszeit hinzugefügt werden können, um einige übliche Benutzerprobleme
+            zu lösen.
+
+            <programlisting role="php"><![CDATA[<?php
+// Der Feldwert des Status eines Accounts ist nicht gleich "compromised"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND status != "compromised"');
+
+// Der aktive Feldwert des Accounts ist gleich "TRUE"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND active = "TRUE"');
+
+]]>
             </programlisting>
 
         </para>

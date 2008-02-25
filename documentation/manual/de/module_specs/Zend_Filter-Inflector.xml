@@ -29,10 +29,10 @@ $inflector->setRules(array(
 ));
 
 $string   = 'CamelCasedWords';
-$filtered = $page->filter(array('page' => $string)); // pages/camel-cased-words.html
+$filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';
-$filtered = $page->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
+$filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
 ?>]]></programlisting>
     </example>
 
@@ -188,6 +188,20 @@ class Foo
         <para>
             Wie bereits in der Einführung erwähnt, gibt es zwei Typen von Regeln: statische und filter-basierende.
         </para>
+        
+        <note>
+            <para>
+                Es ist wichtig festzustellen das unabhängig von der Methode in welche Regeln dem
+                Inflector hinzugefügt werden, entweder eine nach der anderen, oder alle auf einmal;
+                die Reihenfolge sehr wichtig ist. Speziellere Namen, oder Namen die andere
+                Regelnamen enthalten können, müssen vor nicht speziellen Namen hinzugefügt werden.
+                Wenn zum Beispiel zwei Regelnamen 'moduleDir' und 'module' angenommen werden,
+                sollte die 'moduleDir' Regel vor 'module' auftreten, da 'module' in 'moduleDir'
+                enthalten ist. Wenn 'module' vor 'moduleDir' hinzugefügt wurde, wird 'module' als
+                Teil von 'moduleDir' erkannt und und ausgeführt wobei 'Dir' im Ziel nicht ersetzt
+                wird.
+            </para>
+        </note>
 
         <sect3 id="zend.filter.inflector.rules.static">
             <title>Statische Regeln</title>
