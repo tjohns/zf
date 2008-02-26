@@ -24,11 +24,11 @@
  * Helper for rendering a template fragment in its own variable scope.
  *
  * @package    Zend_View
- * @subpackage Helpers
+ * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Partial 
+class Zend_View_Helper_Partial
 {
     /**
      * Variable to which object will be assigned
@@ -49,18 +49,18 @@ class Zend_View_Helper_Partial
      *
      * If no arguments are passed, returns the helper instance.
      *
-     * If the $model is an array, it is passed to the view object's assign() 
+     * If the $model is an array, it is passed to the view object's assign()
      * method.
      *
-     * If the $model is an object, it first checks to see if the object 
-     * implements a 'toArray' method; if so, it passes the result of that 
-     * method to to the view object's assign() method. Otherwise, the result of 
+     * If the $model is an object, it first checks to see if the object
+     * implements a 'toArray' method; if so, it passes the result of that
+     * method to to the view object's assign() method. Otherwise, the result of
      * get_object_vars() is passed.
      *
      * @param  string $name Name of view script
      * @param  string|array $module If $model is empty, and $module is an array,
-     *                              these are the variables to populate in the 
-     *                              view. Otherwise, the module in which the 
+     *                              these are the variables to populate in the
+     *                              view. Otherwise, the module in which the
      *                              partial resides
      * @param  array $model Variables to populate in the view
      * @return string|Zend_View_Helper_Partial
@@ -80,11 +80,11 @@ class Zend_View_Helper_Partial
             }
             $viewsDir = dirname($moduleDir) . '/views';
             $view->addBasePath($viewsDir);
-        } elseif ((null == $model) && (null !== $module) 
-            && (is_array($module) || is_object($module))) 
+        } elseif ((null == $model) && (null !== $module)
+            && (is_array($module) || is_object($module)))
         {
             $model = $module;
-        } 
+        }
 
         if (!empty($model)) {
             if (is_array($model)) {
@@ -129,8 +129,8 @@ class Zend_View_Helper_Partial
 
     /**
      * Set object key
-     * 
-     * @param  string $key 
+     *
+     * @param  string $key
      * @return Zend_View_Helper_PartialLoop
      */
     public function setObjectKey($key)
@@ -147,9 +147,9 @@ class Zend_View_Helper_Partial
     /**
      * Retrieve object key
      *
-     * The objectKey is the variable to which an object in the iterator will be 
+     * The objectKey is the variable to which an object in the iterator will be
      * assigned.
-     * 
+     *
      * @return null|string
      */
     public function getObjectKey()

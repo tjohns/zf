@@ -13,10 +13,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend_View
- * @package    Helper
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: $
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -25,7 +26,8 @@ require_once 'Zend/Locale.php';
 
 /**
  * Translation view helper
- * 
+ *
+ * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  */
@@ -54,7 +56,7 @@ class Zend_View_Helper_Translate
      * You can give multiple params or an array of params.
      * If you want to output another locale just set it as last single parameter
      * Example 1: translate('%1\$s + %2\$s', $value1, $value2, $locale);
-     * Example 2: translate('%1\$s + %2\$s', array($value1, $value2), $locale); 
+     * Example 2: translate('%1\$s + %2\$s', array($value1, $value2), $locale);
      *
      * @param string           $messageid
      * @return string  Translated message
@@ -108,9 +110,9 @@ class Zend_View_Helper_Translate
     /**
      * Retrieve translation object
      *
-     * If none is currently registered, attempts to pull it from the registry 
+     * If none is currently registered, attempts to pull it from the registry
      * using the key 'Zend_Translate'.
-     * 
+     *
      * @return Zend_Translate_Adapter|null
      */
     public function getTranslator()
