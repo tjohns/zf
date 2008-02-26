@@ -1,4 +1,4 @@
-<sect1 id="zend.ldap">
+<sect1 id="zend.ldap.using">
 
     <title>Zend_Ldap</title>
 
@@ -17,7 +17,7 @@
         modifying entries in an LDAP directory.
     </para>
 
-    <sect2 id="zend.ldap.theory-of-operation">
+    <sect2 id="zend.ldap.using.theory-of-operation">
 
         <title>Theory of Operation</title>
 
@@ -77,7 +77,7 @@ echo "$acctname\n";]]></programlisting>
             because that is what exercises the most of what little code is currently present in this class.
         </para>
 
-        <sect3 id="zend.ldap.theory-of-operation.username-canonicalization-automatic">
+        <sect3 id="zend.ldap.using.theory-of-operation.username-canonicalization-automatic">
 
             <title>Automatic Username Canonicalization When Binding</title>
 
@@ -123,7 +123,7 @@ echo "$acctname\n";]]></programlisting>
 
         </sect3>
 
-        <sect3 id="zend.ldap.theory-of-operation.options">
+        <sect3 id="zend.ldap.using.theory-of-operation.options">
 
             <title>Zend_Ldap Options</title>
 
@@ -131,7 +131,7 @@ echo "$acctname\n";]]></programlisting>
                 The <code>Zend_Ldap</code> component accepts an array of options either supplied to the constructor or
                 through the <code>setOptions()</code> method. The permitted options are as follows:
 
-                <table id="zend.ldap.theory-of-operation.options.table">
+                <table id="zend.ldap.using.theory-of-operation.options.table">
                   <title>Zend_Ldap Options</title>
                   <tgroup cols="2">
                     <thead>
@@ -232,7 +232,7 @@ echo "$acctname\n";]]></programlisting>
 
         </sect3>
 
-        <sect3 id="zend.ldap.theory-of-operation.account-name-canonicalization">
+        <sect3 id="zend.ldap.using.theory-of-operation.account-name-canonicalization">
 
             <title>Account Name Canonicalization</title>
 
@@ -242,7 +242,7 @@ echo "$acctname\n";]]></programlisting>
                 also used to canonicalize usernames. Specifically, names are canonicalized to the form specified by the
                 <code>accountCanonicalForm</code> option. This option may one of the following values:
 
-                <table id="zend.ldap.theory-of-operation.account-name-canonicalization.table">
+                <table id="zend.ldap.using.theory-of-operation.account-name-canonicalization.table">
                   <title><code>accountCanonicalForm</code></title>
                   <tgroup cols="3">
                     <thead>
@@ -296,7 +296,7 @@ echo "$acctname\n";]]></programlisting>
 
         </sect3>
 
-        <sect3 id="zend.ldap.theory-of-operation.multi-domain-failover">
+        <sect3 id="zend.ldap.using.theory-of-operation.multi-domain-failover">
 
             <title>Multi-domain Authentication and Failover</title>
 
