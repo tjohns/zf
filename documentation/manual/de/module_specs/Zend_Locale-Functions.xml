@@ -976,7 +976,7 @@ print $locale->getTranslation('de', 'language', 'zh');
 
         <note>
             <para>
-                Mit Zend Framework 1.5 wurde verschiedene alte Typen umbenannt. Das wurde notwendig durch
+                Mit dem Zend Framework 1.5 wurde verschiedene alte Typen umbenannt. Das wurde notwendig durch
                 verschiedene neue Typen, einige Schreibfehler und die Erhöhung der Verwendbarkeit. Die folgende
                 Tabelle zeigt eine Liste von alten und neuen Typen:
             </para>
