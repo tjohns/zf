@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8362 -->
+<!-- EN-Revision: 8423 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -921,7 +921,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]>
                     <para>
                         JOIN したテーブルのカラムを結果の行や行セットに指定することは
                         <emphasis>できません</emphasis>。
-                        そうすると、例外がスローされます。
+                        そうすると、PHP のエラーが発生します。
                         これにより、<code>Zend_Db_Table</code>
                         の整合性が保証されます。つまり、
                         <code>Zend_Db_Table_Row</code> はその親のテーブルのカラムしか参照しないということです。
@@ -1148,7 +1148,7 @@ $rows = $table->fetchAll($select);]]>
 
             <example id="zend.db.table.qry.rows.set.integrity.example">
 
-                <title>Zend_Db_Select の整合性チェックを削除し、JOIN した行を許可する</title>
+                <title>Zend_Db_Table_Select の整合性チェックを削除し、JOIN した行を許可する</title>
 
                 <programlisting><![CDATA[<?php
 $table = new Bugs();
