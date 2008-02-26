@@ -1,9 +1,9 @@
-<!-- EN-Revision: 8312 -->
+<!-- EN-Revision: 8410 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
     <para>
-        このクイックスタートガイドでは、Zend_Form
+        このクイックスタートガイドでは、<code>Zend_Form</code>
         を用いたフォームの作成や検証、そしてレンダリングについての基本を扱います。
     </para>
 
