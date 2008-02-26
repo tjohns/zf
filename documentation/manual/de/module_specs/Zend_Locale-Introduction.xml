@@ -354,7 +354,7 @@ $date = new Zend_Date($locale);]]>
         </para>
 
         <para>
-            Seit Zend Framework Release 1.1 gibt es einen viel besseren Weg um das handzuhaben. Man kann
+            Seit Zend Framework Release 1.5 gibt es einen viel besseren Weg um das handzuhaben. Man kann
             ein Standard Gebietsschema mit der statischen <code>setDefault()</code> Methode setzen. Natürlich
             wird jedes unbekannte oder nicht voll qualifizierte Gebietsschema eine Ausnahme werden.
             <code>setDefault()</code> sollte der erste Aufruf sein bevor irgendeine Klasse initiiert wird

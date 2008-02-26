@@ -323,7 +323,7 @@ $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
 
         <para>
-            Seit Release 1.1 wird es auch unterstützt, das Array die in externen Dateien vorhanden sind zu
+            Seit Release 1.5 wird es auch unterstützt, das Array die in externen Dateien vorhanden sind zu
             inkludieren. Es muß nur der Dateiname angegeben werden und <code>Zend_Translate</code> wird
             diesen automatisch inkludieren und nach dem Array schauen. Das folgende Beispiel zeigt Details:
         </para>
@@ -736,7 +736,7 @@ $translate->addTranslation("\my_de.mo","de");
 
         <note>
             <para>
-                Automatische Erkennung der Quellen ist seit Zend Framework Version 1.1 vorhanden.
+                Automatische Erkennung der Quellen ist seit Zend Framework Version 1.5 vorhanden.
             </para>
         </note>
 

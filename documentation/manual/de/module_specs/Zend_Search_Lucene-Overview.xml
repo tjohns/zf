@@ -42,8 +42,8 @@
                    Schnappschuß.
                </para>
                <para>
-                   Wir hoffen die Unterstützung des Lucene 2.1 Index Formats im ZF 1.1.0 zu inkludieren.
-                   Das aktuelle Release (ZF V1.0.2) arbeitet mit den Indexformaten Lucene 1.9-2.0.
+                   Wir hoffen die Unterstützung des Lucene 2.1 Index Formats im ZF 1.5.0 zu inkludieren.
+                   Das aktuelle Release (ZF V1.0.4) arbeitet mit den Indexformaten Lucene 1.9-2.0.
                </para>
             </footnote>.
 
