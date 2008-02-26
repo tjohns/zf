@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8427 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle ヘルパー</title>
 
@@ -37,7 +38,7 @@
 
     <para>
         すべての場合において、<code>$content</code> には実際の CSS 宣言を指定します。
-        $attributes には、<code>style</code> タグに追加したい属性があれば指定します。
+        <code>$attributes</code> には、<code>style</code> タグに追加したい属性があれば指定します。
         lang、title、media そして dir のすべてが使用可能です。
     </para>
 
@@ -79,7 +80,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // スクリプトを追加します
+<?php // スタイルを追加します
 $this->headStyle()->appendStyle($styles);
 ?>
 ]]></programlisting>
@@ -147,7 +148,7 @@ body {
 
             <listitem><para>
                     <code>&lt;style&gt;</code> タグに追加の属性を指定したい場合は、
-                    <code>captureStart()</code> の 3 番目の引数に配列形式で渡します。
+                    <code>captureStart()</code> の 2 番目の引数に配列形式で渡します。
             </para></listitem>
         </itemizedlist>
     </example>
