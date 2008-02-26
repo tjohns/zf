@@ -35,7 +35,7 @@
 
     <para>
         In all cases, <code>$content</code> is the actual CSS declarations.
-        $attributes are any additional attributes you wish to provide to the
+        <code>$attributes</code> are any additional attributes you wish to provide to the
         <code>style</code> tag: lang, title, media, or dir are all permissable.
     </para>
 
@@ -77,7 +77,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // adding scripts
+<?php // adding styles
 $this->headStyle()->appendStyle($styles);
 ?>
 ]]></programlisting>
@@ -147,7 +147,7 @@ body {
             <listitem><para>
                     If you wish to specify any additional attributes for the
                     <code>&lt;style&gt;</code> tag, pass them in an array as
-                    the third argument to <code>captureStart()</code>.
+                    the second argument to <code>captureStart()</code>.
             </para></listitem>
         </itemizedlist>
     </example>
