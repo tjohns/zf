@@ -101,6 +101,7 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function countMessages()
     {
+    	// TODO: first parameter gives wanted flag
         if (!$this->_currentFolder) {
             /**
              * @see Zend_Mail_Storage_Exception
@@ -584,6 +585,20 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
         }
     }
 
+    /**
+     * move an existing message
+     *
+     * NOTE: imap has no native move command, thus it's emulated with copy and delete
+     *
+     * @param int                             $id     number of message
+     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function moveMessage($id, $folder) {
+    	$this->copyMessage($id, $folder);
+    	$this->removeMessage($id);
+    }
 
     /**
      * set flags for message

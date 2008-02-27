@@ -42,7 +42,6 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $this->_params = array('host'     => TESTS_ZEND_MAIL_IMAP_HOST,
                                'user'     => TESTS_ZEND_MAIL_IMAP_USER,
                                'password' => TESTS_ZEND_MAIL_IMAP_PASSWORD);
-
         if (defined('TESTS_ZEND_MAIL_SERVER_TESTDIR') && TESTS_ZEND_MAIL_SERVER_TESTDIR) {
             if (!file_exists(TESTS_ZEND_MAIL_SERVER_TESTDIR . DIRECTORY_SEPARATOR . 'inbox')
              && !file_exists(TESTS_ZEND_MAIL_SERVER_TESTDIR . DIRECTORY_SEPARATOR . 'INBOX')) {
@@ -816,4 +815,20 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $result = $protocol->store(array('\Flagged'), 1, null, '+', false);
         $this->assertTrue(in_array('\Flagged', $result[1]));
     }
+    
+    public function testMove()
+    {
+        $mail = new Zend_Mail_Storage_Imap($this->_params);
+        $mail->selectFolder('subfolder/test');
+        $toCount = $mail->countMessages();
+        $mail->selectFolder('INBOX');
+        $fromCount = $mail->countMessages();
+        $mail->moveMessage(1, 'subfolder/test');
+
+
+        $this->assertEquals($fromCount - 1, $mail->countMessages());
+        $mail->selectFolder('subfolder/test');
+        $this->assertEquals($toCount + 1, $mail->countMessages());
+    }
+    	
 }

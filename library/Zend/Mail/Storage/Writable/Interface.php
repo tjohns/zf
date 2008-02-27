@@ -86,6 +86,16 @@ interface Zend_Mail_Storage_Writable_Interface
     public function copyMessage($id, $folder);
 
     /**
+     * move an existing message
+     *
+     * @param int                             $id     number of message
+     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function moveMessage($id, $folder);
+
+    /**
      * set flags for message
      *
      * NOTE: this method can't set the recent flag.

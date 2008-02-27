@@ -587,4 +587,21 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals($mail->getMessage($mail->countMessages())->subject, 'test');
     }
+
+    public function testMove()
+    {
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $target = $mail->getFolders()->subfolder->test;
+        $mail->selectFolder($target);
+        $toCount = $mail->countMessages();
+        $mail->selectFolder('INBOX');
+        $fromCount = $mail->countMessages();
+        $mail->moveMessage(1, $target);
+
+
+        $this->assertEquals($fromCount - 1, $mail->countMessages());
+        $mail->selectFolder($target);
+        $this->assertEquals($toCount + 1, $mail->countMessages());
+    }
+
 }

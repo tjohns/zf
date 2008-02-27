@@ -501,7 +501,7 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
 
         // we're adding the size to the filename for maildir++
         $size = filesize($temp_file['filename']);
-        if ($size) {
+        if ($size !== false) {
             $info = ',S=' . $size . $info;
         }
         $new_filename = $temp_file['dirname'] . DIRECTORY_SEPARATOR;
@@ -570,11 +570,11 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         fclose($temp_file['handle']);
 
         // we're adding the size to the filename for maildir++
-        // TODO: maybe we should support maildirsize or we just let the MDA do the work
         $size = filesize($old_file);
-        if ($size) {
+        if ($size !== false) {
             $info = ',S=' . $size . $info;
         }
+        // TODO: support MDA with recent flag -> move to new
         $new_file = $temp_file['dirname'] . DIRECTORY_SEPARATOR . 'cur' . DIRECTORY_SEPARATOR . $temp_file['uniq'] . $info;
 
         // we're throwing any exception after removing our temp file and saving it to this variable instead
@@ -610,6 +610,72 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
 	        $this->_addQuotaEntry((int)$size, 1);
 	    }
     }
+
+    /**
+     * move an existing message
+     *
+     * @param int                             $id     number of message
+     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @return null
+     * @throw Zend_Mail_Storage_Exception
+     */
+    public function moveMessage($id, $folder) {
+        if (!($folder instanceof Zend_Mail_Storage_Folder)) {
+            $folder = $this->getFolders($folder);
+        }
+        
+        if ($folder->getGlobalName() == $this->_currentFolder
+            || ($this->_currentFolder == 'INBOX' && $folder->getGlobalName() == '/')) {
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            throw new Zend_Mail_Storage_Exception('target is current folder');
+        }
+        
+        $filedata = $this->_getFileData($id);
+        $old_file = $filedata['filename'];
+        $flags = $filedata['flags'];
+
+        // moved message can't be recent
+        while (($key = array_search(Zend_Mail_Storage::FLAG_RECENT, $flags)) !== false) {
+            unset($flags[$key]);
+        }
+        $info = $this->_getInfoString($flags);
+
+        // reserving a new name
+        $temp_file = $this->_createTmpFile($folder->getGlobalName());
+        fclose($temp_file['handle']);
+
+        // we're adding the size to the filename for maildir++
+        $size = filesize($old_file);
+        if ($size !== false) {
+            $info = ',S=' . $size . $info;
+        }
+        // TODO: support MDA with recent flag -> move to new
+        $new_file = $temp_file['dirname'] . DIRECTORY_SEPARATOR . 'cur' . DIRECTORY_SEPARATOR . $temp_file['uniq'] . $info;
+
+        // we're throwing any exception after removing our temp file and saving it to this variable instead
+        $exception = null;
+
+        if (!rename($old_file, $new_file)) {
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
+            $exception = new Zend_Mail_Storage_Exception('cannot move message file');
+        }
+        @unlink($temp_file['filename']);
+
+        if ($exception) {
+            throw $exception;
+        }
+
+        unset($this->_files[$id - 1]);
+        // remove the gap
+        $this->_files = array_values($this->_files);
+    }
+
 
     /**
      * set flags for message
