@@ -881,19 +881,19 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]>
 
                 <listitem>
                     <para>
-                        Man <emphasis>can</emphasis> JOIN Klauseln auf einer Auswahl erlauben um
+                        Man <emphasis>kann</emphasis> JOIN Klauseln auf einer Auswahl erlauben um
                         Mehrfach-Tabellen Lookups zu erlauben.
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        Man <emphasis>kann nicht</emphasis> Spalten von einer geJOINten Tabelle
+                        Man <emphasis>kann keine</emphasis> Spalten von einer geJOINten Tabelle
                         spezifizieren damit Sie in einer Zeile/Zeilenset zurückgegeben werden. Wenn
-                        das versucht wird, wird eine Exception geworfen. Das wurde getan um Sicherzustellen
-                        das die Integrität von <code>Zend_Db_Table gewahrt bleibt</code>. z.B. ein
-                        <code>Zend_Db_Table_Row</code> sollte nur Spalten referenzieren die von seiner
-                        Elterntabelle abgeleitet sind.
+                        das versucht wird, wird ein PHP Fehler getriggert. Das wurde getan um
+                        Sicherzustellen das die Integrität von <code>Zend_Db_Table gewahrt
+                        bleibt</code>. z.B. ein <code>Zend_Db_Table_Row</code> sollte nur Spalten
+                        referenzieren die von seiner Elterntabelle abgeleitet sind.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1116,7 +1116,7 @@ $rows = $table->fetchAll($select);]]>
 
             <example id="zend.db.table.qry.rows.set.integrity.example">
 
-                <title>Entfernen des Integritäts Checks von Zend_Db_Select um geJOINte Zeilen zu erlauben</title>
+                <title>Entfernen des Integritäts Checks von Zend_Db_Table_Select um geJOINte Zeilen zu erlauben</title>
 
                 <programlisting><![CDATA[<?php
 $table = new Bugs();
