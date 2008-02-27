@@ -90,6 +90,7 @@ class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
      */
     public function testMultiByte()
     {
+        $this->markTestIncomplete('Multibyte testing incomplete');
         if (!$this->_filter->getUnicodeEnabled()) {
             $this->markTestSkipped('Multibyte test not run; Unicode PCRE is not supported on this platform');
         }
