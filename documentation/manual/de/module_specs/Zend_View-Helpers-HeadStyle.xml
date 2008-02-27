@@ -33,9 +33,9 @@
     </itemizedlist>
 
     <para>
-        In allen Fällen ist <code>$content</code> die aktuelle CSS Deklaration. $attributes sind alle
-        zusätzlichen Attribute die das <code>style</code> Tag erhalten soll: lang, title, media, oder dir
-        sind alle möglich.
+        In allen Fällen ist <code>$content</code> die aktuelle CSS Deklaration.
+        <code>$attributes</code> sind alle zusätzlichen Attribute die das <code>style</code> Tag
+        erhalten soll: lang, title, media, oder dir sind alle möglich.
     </para>
 
     <para>
@@ -73,7 +73,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Skripte hinzufügen
+<?php // Stile hinzufügen
 $this->headStyle()->appendStyle($styles);
 ?>
 ]]></programlisting>
@@ -133,17 +133,17 @@ body {
         <itemizedlist>
             <listitem>
                 <para>
-                    Die Style Deklarationen werden dem Stack angefügt. Wenn Sie den Stack ersetzen sollen oder
-                    an den Anfang hinzugefügt werden sollten muß 'SET' oder 'PREPEND' als erstes Argument
-                    an <code>captureStart()</code> übergeben werden
+                    Die Style Deklarationen werden dem Stack angefügt. Wenn Sie den Stack ersetzen
+                    sollen oder an den Anfang hinzugefügt werden sollten muß 'SET' oder 'PREPEND'
+                    als erstes Argument an <code>captureStart()</code> übergeben werden
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    Wenn zusätzliche Attribute für das <code>&lt;style&gt;</code> Tag spezifiziert werden sollen,
-                    dann müssen diese in einem Array als drittes Argument an <code>captureStart()</code>
-                    übergeben werden.
+                    Wenn zusätzliche Attribute für das <code>&lt;style&gt;</code> Tag spezifiziert
+                    werden sollen, dann müssen diese in einem Array als zweites Argument an
+                    <code>captureStart()</code> übergeben werden.
                 </para>
             </listitem>
         </itemizedlist>
