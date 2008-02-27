@@ -3,7 +3,7 @@
 
     <para>
         Diese Schnellstart Anleitung soll die Grundsätze der Erstellung, Validierung und
-        Darstellung von Forms mit Zend_Form zeigen.
+        Darstellung von Forms mit <code>Zend_Form</code> zeigen.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
