@@ -235,20 +235,17 @@ $select = $db->select()
             </para>
 
             <para>
-                If you give an empty array as the columns argument, no columns
-                from the respective table are included in the result set.
-                See a <link linkend="zend.db.select.building.join.example-no-columns">code example</link>
-                under the section on the <code>join()</code> method.
+                Se você passar um array vazio como o argumento de colunas, nenhuma 
+				coluna da respectiva tabela será incluída no result set.
+                Veja um exemplo de <link linkend="zend.db.select.building.join.example-no-columns">código</link> sob a seção do método <code>join()</code>.
             </para>
 
             <para>
-                You can specify the column name as
+                Você pode especificar o nome da coluna como
                 "<code>correlationName.columnName</code>".
-                Zend_Db_Select quotes each part individually.
-                If you don't specify a correlation name for a
-                column, it uses the correlation name for the
-                table named in the current <code>from()</code>
-                method.
+                Zend_Db_Select os coloca entre aspas individualmente.
+                Caso você não especifique o nome da correlação para uma coluna,
+				é usado o nome da correlação da tabela indicada no método<code>from()</code>.
             </para>
 
             <example id="zend.db.select.building.columns.example">
