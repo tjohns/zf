@@ -878,6 +878,19 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($helper1, $helper2);
     }
+    
+    /**
+     * @issue ZF-2742
+     */
+    public function testGetHelperWorksWithPredefinedClassNames()
+    {
+        $view = new Zend_View();
+
+        $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2');
+        $datetime = $view->datetime();
+        $this->assertType('Zend_View_Helper_Datetime', $datetime);
+    }
+    
 }
 
 /**
