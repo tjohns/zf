@@ -124,6 +124,7 @@ class Zend_View_Helper_Action
 
         // clone the view object to prevent over-writing of view variables
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $viewRendererViewObj = $viewRenderer->view;
         $viewRenderer->view = $this->cloneView(); 
         
         $this->request->setParams($params) 
@@ -135,7 +136,7 @@ class Zend_View_Helper_Action
         $this->dispatcher->dispatch($this->request, $this->response); 
  
         // reset the view object to it's original state
-        $viewRenderer->view = $this->view;
+        $viewRenderer->view = $viewRendererViewObj;
         
         if (!$this->request->isDispatched() 
             || $this->response->isRedirect()) 
