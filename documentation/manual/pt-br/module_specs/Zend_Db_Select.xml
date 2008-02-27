@@ -125,7 +125,7 @@ $select->order( ...specify sorting criteria... );]]></programlisting>
         </para>
 
         <example id="zend.db.select.building.example-fluent">
-            <title>Example of the using the fluent interface</title>
+            <title>Examplo de uso da interface "fluent"</title>
             <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
@@ -135,22 +135,22 @@ $select = $db->select()
         </example>
 
         <para>
-            The examples in this section show usage of the fluent interface,
-            but you can use the non-fluent interface in all cases.
-            It is often necessary to use the non-fluent interface, for example,
-            if your application needs to perform some logic before adding a
-            clause to a query.
+            Os exemplos nesta seção mostram o uso da  interface "fluent",
+            mas você pode usar a interface "non-fluent" em todos os casos.
+            É freqüentemente necessário usar a interface "non-fluent" quando, por exemplo,
+            sua aplicação precisa executar alguma lógica antes de adicionar uma cláusula 
+			a uma consulta.
         </para>
 
         <sect3 id="zend.db.select.building.from">
 
-            <title>Adding a FROM clause</title>
+            <title>Adicionando uma cláusula FROM</title>
 
             <para>
-                Specify the table for this query using the <code>from()</code>
-                method.  You can specify the table name as a simple string.
-                Zend_Db_Select applies identifier quoting around the table name,
-                so you can use special characters.
+                Especifique a tabela para esta consulta usando o método <code>from()</code>.
+				Você pode especificar o nome da tabela como uma simples string.
+				Zend_Db_Select coloca o entre aspas o nome da tabela, então, você pode 
+				usar caracteres especiais.
             </para>
 
             <example id="zend.db.select.building.from.example">
@@ -166,7 +166,7 @@ $select = $db->select()
             </example>
 
             <para>
-                You can also specify the correlation name (sometimes called the
+				You can also specify the correlation name (sometimes called the
                 "table alias") for a table.  Instead of a simple string, use an
                 associative array mapping the correlation name to the table
                 name.  In other clauses of the SQL query, use this correlation
@@ -188,15 +188,17 @@ $select = $db->select()
             </example>
 
             <para>
-                Some RDBMS brands support a leading schema specifier for a
-                table.  You can specify the table name as
-                "<code>schemaName.tableName</code>", where Zend_Db_Select quotes each part individually,
-                or you may specify the schema name separately. A schema name specified in the table name
-                takes precedence over a schema provided separately in the event that both are provided.
+                Algumas marcas de RDBMS dão suporte a um especificador de schema 
+				para uma tabela. Você pode especificar o nome a tabela como 
+				"<code>schemaName.tableName</code>", onde Zend_Db_Select coloca entre aspas
+				cada uma das partes individualmente, ou então você deve especificar o nome 
+				do schema separadamente. Um nome de schema especificado no nome da tabela
+				precede um schema fornecido separadamente se eventualmente ambos forem 
+				informados.
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
-                <title>Example of specifying a schema name</title>
+                <title>Exemplo de especificação de nome de schema</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Build this query:
@@ -216,21 +218,20 @@ $select = $db->select()
 
         <sect3 id="zend.db.select.building.columns">
 
-            <title>Adding Columns</title>
+            <title>Adicionando Colunas</title>
 
             <para>
-                In the second argument of the <code>from()</code> method,
-                you can specify the columns to select from the respective
-                table.  If you specify no columns, the default is
-                "<code>*</code>", the SQL wildcard for "all columns".
+                No segundo argumento do método <code>from()</code> ,
+                você pode especificaras colunas a serem selecionadas da 
+				respectiva tabela. Se você não especificar nenhuma coluna,
+				o valor padrão é "<code>*</code>", o caracter curinga para "todas as colunas".
             </para>
 
             <para>
-                You can list the columns in a simple array of strings,
-                or as an associative mapping of column alias to column name.
-                If you only have one column to query, and you don't need to
-                specify a column alias, you can list it as a plain string
-                instead of an array.
+                Você pode listar as colunas em um simples array de strings, ou como
+				um mapeamento associativo do alias da coluna para nome da coluna.
+				Se você só tiver uma coluna para consultar, e não precisar indicar um 
+				alias, você pode listá-la em uma string simples ao invés de um array.
             </para>
 
             <para>
