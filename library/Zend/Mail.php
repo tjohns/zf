@@ -165,7 +165,7 @@ class Zend_Mail extends Zend_Mime_Message
      *
      * @param string $charset
      */
-    public function __construct($charset='iso-8859-1')
+    public function __construct($charset = 'iso-8859-1')
     {
         $this->_charset = $charset;
     }
@@ -409,9 +409,9 @@ class Zend_Mail extends Zend_Mime_Message
      *
      * @param string  $headerName
      * @param string  $value
-     * @param boolean $append
+     * @param bool $append
      */
-    protected function _storeHeader($headerName, $value, $append=false)
+    protected function _storeHeader($headerName, $value, $append = false)
     {
 // ??        $value = strtr($value,"\r\n\t",'???');
         if (isset($this->_headers[$headerName])) {
@@ -430,6 +430,7 @@ class Zend_Mail extends Zend_Mime_Message
      * Add a recipient
      *
      * @param string $email
+     * @param boolean $to
      */
     protected function _addRecipient($email, $to = false)
     {
@@ -462,8 +463,8 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Adds To-header and recipient
      *
-     * @param  string $name
      * @param  string $email
+     * @param  string $name
      * @return Zend_Mail Provides fluent interface
      */
     public function addTo($email, $name='')
@@ -475,8 +476,8 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Adds Cc-header and recipient
      *
-     * @param  string    $name
      * @param  string    $email
+     * @param  string    $name
      * @return Zend_Mail Provides fluent interface
      */
     public function addCc($email, $name='')
