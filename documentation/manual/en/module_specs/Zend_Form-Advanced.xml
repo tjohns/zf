@@ -1,0 +1,212 @@
+<sect1 id="zend.form.advanced">
+    <title>Advanced Zend_Form Usage</title>
+
+    <para>
+        <code>Zend_Form</code> has a wealth of functionality, much of it aimed
+        at experienced developers. This chapter aims to document some of this
+        functionality with examples and use cases.
+    </para>
+
+    <sect2 id="zend.form.advanced.arrayNotation">
+        <title>Array Notation</title>
+
+        <para>
+            Many experienced web developers like to group related form elements
+            using array notation in the element names. For example, if you have
+            two addresses you wish to capture, a shipping and a billing address,
+            you may have identical elements; by grouping them in an array, you
+            can ensure they are captured separately. Take the following form,
+            for example:
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<form>
+    <fieldset>
+        <legend>Shipping Address</legend>
+        <dl>
+            <dt><label for="recipient">Ship to:</label></dt>
+            <dd><input name="recipient" type="text" value="" /></dd>
+
+            <dt><label for="address">Address:</label></dt>
+            <dd><input name="address" type="text" value="" /></dd>
+
+            <dt><label for="municipality">City:</label></dt>
+            <dd><input name="municipality" type="text" value="" /></dd>
+
+            <dt><label for="province">State:</label></dt>
+            <dd><input name="province" type="text" value="" /></dd>
+
+            <dt><label for="postal">Postal Code:</label></dt>
+            <dd><input name="postal" type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>Billing Address</legend>
+        <dl>
+            <dt><label for="payer">Bill To:</label></dt>
+            <dd><input name="payer" type="text" value="" /></dd>
+
+            <dt><label for="address">Address:</label></dt>
+            <dd><input name="address" type="text" value="" /></dd>
+
+            <dt><label for="municipality">City:</label></dt>
+            <dd><input name="municipality" type="text" value="" /></dd>
+
+            <dt><label for="province">State:</label></dt>
+            <dd><input name="province" type="text" value="" /></dd>
+
+            <dt><label for="postal">Postal Code:</label></dt>
+            <dd><input name="postal" type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <dl>
+        <dt><label for="terms">I agree to the Terms of Service</label></dt>
+        <dd><input name="terms" type="checkbox" value="" /></dd>
+
+        <dt></dt>
+        <dd><input name="save" type="submit" value="Save" /></dd>
+    </dl>
+</form>
+]]></programlisting>
+        
+        <para>
+            In this example, the billing and shipping address contain some
+            identical fields, which means one would overwrite the other. We can
+            solve this solution using array notation:
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<form>
+    <fieldset>
+        <legend>Shipping Address</legend>
+        <dl>
+            <dt><label for="shipping-recipient">Ship to:</label></dt>
+            <dd><input name="shipping[recipient]" id="shipping-recipient"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-address">Address:</label></dt>
+            <dd><input name="shipping[address]" id="shipping-address"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-municipality">City:</label></dt>
+            <dd><input name="shipping[municipality]" id="shipping-municipality"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-province">State:</label></dt>
+            <dd><input name="shipping[province]" id="shipping-province"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-postal">Postal Code:</label></dt>
+            <dd><input name="shipping[postal]" id="shipping-postal"
+                type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>Billing Address</legend>
+        <dl>
+            <dt><label for="billing-payer">Bill To:</label></dt>
+            <dd><input name="billing[payer]" id="billing-payer"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-address">Address:</label></dt>
+            <dd><input name="billing[address]" id="billing-address"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-municipality">City:</label></dt>
+            <dd><input name="billing[municipality]" id="billing-municipality" 
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-province">State:</label></dt>
+            <dd><input name="billing[province]" id="billing-province"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-postal">Postal Code:</label></dt>
+            <dd><input name="billing[postal]" id="billing-postal"
+                type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <dl>
+        <dt><label for="terms">I agree to the Terms of Service</label></dt>
+        <dd><input name="terms" type="checkbox" value="" /></dd>
+
+        <dt></dt>
+        <dd><input name="save" type="submit" value="Save" /></dd>
+    </dl>
+</form>
+]]></programlisting>
+
+        <para>
+            In the above sample, we now get separate addresses. In the submitted
+            form, we'll now have three elements, the 'save' element for the
+            submit, and then two arrays, 'shipping' and 'billing', each with
+            keys for their various elements.
+        </para>
+
+        <para>
+            <code>Zend_Form</code> attempts to automate this process with its
+            <link linkend="zend.form.forms.subforms">sub forms</link>. By
+            default, sub forms render using the array notation as shown in the
+            previous HTML form listing, complete with ids. The array name is
+            based on the sub form name, with the keys based on the elements
+            contained in the sub form. Sub forms may be nested arbitrarily deep,
+            and this will create nested arrays to reflect the structure.
+            Additionally, the various validation routines in
+            <code>Zend_Form</code> honor the array structure, ensuring that your
+            form validates correctly, no matter how arbitrarily deep you nest
+            your sub forms. You need do nothing to benefit from this; this
+            behaviour is enabled by default.
+        </para>
+
+        <para>
+            Additionally, there are facilities that allow you to turn on array
+            notation conditionally, as well as specify the specific array to
+            which an element or collection belongs:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Form::setIsArray($flag)</code>: By setting the
+                    flag true, you can indicate that an entire form should be
+                    treated as an array. By default, the form's name will be
+                    used as the name of the array, unless
+                    <code>setElementsBelongTo()</code> has been called. If the
+                    form has no specified name, or if
+                    <code>setElementsBelongTo()</code> has not been set, this
+                    flag will be ignored (as there is no array name to which
+                    the elements may belong).
+                </para>
+
+                <para>
+                    You may determine if a form is being treated as an array
+                    using the <code>isArray()</code> accessor.
+                </para>
+            </listitem>
+
+            <listitem><para>
+                    <code>Zend_Form::setElementsBelongTo($array)</code>:
+                    Using this method, you can specify the name of an array to
+                    which all elements of the form belong. You can determine the
+                    name using the <code>getElementsBelongTo()</code> accessor.
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            Additionally, on the element level, you can specify individual
+            elements may belong to particular arrays using
+            <code>Zend_Form_Element::setBelongsTo()</code> method.
+            However, doing this may cause issues when validating your element,
+            and is not recommended in most cases. However, you may occasionally
+            want to know <emphasis>which</emphasis> array an element belongs to,
+            which you may discover using the <code>getBelongsTo()</code>
+            accessor. 
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
