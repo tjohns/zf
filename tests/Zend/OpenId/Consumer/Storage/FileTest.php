@@ -53,13 +53,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $tmp = getenv('TMP');
-        if (empty($tmp)) {
-            $tmp = getenv('TEMP');
-            if (empty($tmp)) {
-                $tmp = "/tmp";
-            }
-        }
+        $tmp = dirname(__FILE__)."/_files";
         $dir = $tmp . '/openid_consumer';
         @rmdir($dir);
         $storage = new Zend_OpenId_Consumer_Storage_File($dir);
@@ -74,7 +68,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue( $ex instanceof Zend_OpenId_Exception );
         $this->assertSame( Zend_OpenId_Exception::ERROR_STORAGE, $ex->getCode() );
-        $this->assertSame( 'Cannot access storage directory /tmp/openid_consumer/test', $ex->getMessage() );
+        $this->assertContains( 'Cannot access storage directory', $ex->getMessage() );
         chmod($dir, 0777);
         $this->assertFalse( is_dir($dir2) );
         @rmdir($dir);
@@ -87,7 +81,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetAssociation()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delAssociation(self::URL);
         $this->assertTrue( $storage->addAssociation(self::URL, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
         $this->assertTrue( $storage->getAssociation(self::URL, $handle, $macFunc, $secret, $expires) );
@@ -122,7 +116,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetAssociationByHandle()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delAssociation(self::URL);
         $this->assertTrue( $storage->addAssociation(self::URL, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
         $this->assertTrue( $storage->getAssociationByHandle(self::HANDLE, $url, $macFunc, $secret, $expires) );
@@ -141,7 +135,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetAssociationExpiratin()
     {
         $expiresIn = time() + 1;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delAssociation(self::URL);
         $this->assertTrue( $storage->addAssociation(self::URL, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
         sleep(2);
@@ -155,7 +149,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetAssociationByHandleExpiration()
     {
         $expiresIn = time() + 1;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delAssociation(self::URL);
         $this->assertTrue( $storage->addAssociation(self::URL, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
         sleep(2);
@@ -169,7 +163,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetDiscoveryInfo()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, self::VERSION, $expiresIn) );
         $this->assertTrue( $storage->getDiscoveryInfo(self::ID, $realId, $server, $version, $expires) );
@@ -180,13 +174,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $storage->delDiscoveryInfo(self::ID) );
         $this->assertFalse( $storage->getDiscoveryInfo(self::ID, $realId, $server, $version, $expires) );
 
-        $tmp = getenv('TMP');
-        if (empty($tmp)) {
-            $tmp = getenv('TEMP');
-            if (empty($tmp)) {
-                $tmp = "/tmp";
-            }
-        }
+        $tmp = dirname(__FILE__)."/_files";
         $dir = $tmp . '/openid_consumer';
         @rmdir($dir);
         $storage = new Zend_OpenId_Consumer_Storage_File($dir);
@@ -204,7 +192,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     public function testGetDiscoveryInfoExpiration()
     {
         $expiresIn = time() + 1;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, self::VERSION, $expiresIn) );
         sleep(2);
@@ -217,7 +205,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
      */
     public function testIsUniqueNonce()
     {
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->purgeNonces();
         $this->assertTrue( $storage->isUniqueNonce('1') );
         $this->assertTrue( $storage->isUniqueNonce('2') );
