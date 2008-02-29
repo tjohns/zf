@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8171 -->
+<!-- EN-Revision: 8453 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -122,6 +122,35 @@ $form = new Zend_Form($config);
         </itemizedlist>
 
         <para>
+            さらに、<code>Zend_Form</code>
+            のインスタンスで作成したすべての要素や表示グループ用のプレフィックスパスを設定するには
+            次のメソッドを使用します。
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <code>addElementPrefixPath($prefix, $path, $type = null)</code>:
+                <code>addPrefixPath()</code> と同じですが、
+                クラスのプレフィックスとパスを指定しなければなりません。
+                <code>$type</code> を指定する場合は、それは
+                <code>Zend_Form_Element</code>
+                で指定したプラグインローダーの型のひとつでなければなりません。
+                <code>$type</code> にどんな値が指定できるのかについては <link
+                    linkend="zend.form.elements.loaders">要素のプラグインのセクション</link>
+                を参照ください。<code>$type</code> を省略した場合は、
+                すべての型で用いる全般的なプレフィックスとみなします。
+            </para></listitem>
+
+            <listitem><para>
+                <code>addDisplayGroupPrefixPath($prefix, $path)</code>:
+                <code>addPrefixPath()</code> と似ていますが、
+                クラスのプレフィックスとパスを指定しなければなりません。
+                しかし、表示グループではプラグインとして対応しているのはデコレータだけなので、
+                <code>$type</code> は不要です。
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
             独自の要素やデコレータを使用すると、
             複数フォーム間で機能を共有したり
             独自の機能をカプセル化したりできるようになります。
@@ -165,6 +194,31 @@ $form->addElement('text', 'foo');
 $form->addElement('text', 'foo', array('label' => 'Foo:'));
 ?>]]></programlisting>
 
+        <note>
+            <title>addElement() における「流れるようなインターフェイス」の実装</title>
+
+            <para>
+                <code>addElement()</code> は「流れるようなインターフェイス」
+                を実装しています。つまり、このメソッドは要素ではなく
+                <code>Zend_Form</code> オブジェクトを返すということです。
+                これによって、複数の addElement() メソッドやその他のフォームメソッド
+                (Zend_Form のすべてのセッターは流れるようなインターフェイスを実装しています)
+                を連結させることができます。)
+            </para>
+
+            <para>
+                単に要素を返してほしい場合は、
+                <code>createElement()</code> を使いましょう。
+                概要は以下で説明します。しかし、
+                <code>createElement()</code> は要素をフォームにアタッチしないことに注意しましょう。
+            </para>
+
+            <para>
+                内部的には、<code>addElement()</code> は実際には
+                <code>createElement()</code> をコールして作成した要素をフォームにアタッチしています。
+            </para>
+        </note>
+
         <para>
             要素をフォームに追加したら、名前を指定してそれを取得することができます。
             取得するには、<code>getElement()</code> メソッドを使用するか
@@ -178,6 +232,18 @@ $foo = $form->getElement('foo');
 
 // オブジェクトのプロパティとして
 $foo = $form->foo;
+?>]]></programlisting>
+
+        <para>
+            時には、フォームにアタッチせずに要素を作成したいこともあるでしょう
+            (フォームに登録されているさまざまなプラグインパスを使いたいけれど、
+            そのオブジェクトは後でサブフォームにアタッチしたい場合など)。
+            そんな場合は <code>createElement()</code> メソッドを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// $username は Zend_Form_Element_Text オブジェクトとなります
+$username = $form->createElement('text', 'username');
 ?>]]></programlisting>
 
         <sect3 id="zend.form.forms.elements.values">
@@ -265,6 +331,26 @@ $form->setElementDecorators(array(
     'Label'
 ));
 ?>]]></programlisting>
+
+                <note>
+                    <title>要素によっては不適切なデコレータもある</title>
+
+                    <para>
+                        <code>setElementDecorators()</code>
+                        はよい方法に見えますが、時には予期せぬ結果を引き起こすこともあります。
+                        たとえば、ボタン系の要素 (Submit, Button, Reset)
+                        では現在ラベルをボタンの値として使用しています。
+                        そして ViewHelper デコレータや DtDdWrapper デコレータは、
+                        余計なラベルやエラー、ヒントをレンダリングしないためにのみ用います。
+                        上の例ではいくつかのラベルが重複してしまいます。
+                    </para>
+
+                    <para>
+                        したがって、このメソッドは注意して使うようにしましょう。
+                        場合によっては、いくつかの要素のデコレータを変更して
+                        予期せぬ結果を防ぐ必要があります。
+                    </para>
+                </note>
             </example>
 
             <example id="zend.form.forms.elements.global.filters">
@@ -289,6 +375,10 @@ $form->setElementFilters(array('StringTrim'));
             </para>
 
             <itemizedlist>
+                <listitem><para>
+                    <code>createElement($element, $name = null, $options = null)</code>
+                </para></listitem>
+
                 <listitem><para>
                     <code>addElement($element, $name = null, $options = null)</code>
                 </para></listitem>
@@ -453,6 +543,53 @@ $form->setDisplayGroupDecorators(array(
             </example>
         </sect3>
 
+        <sect3 id="zend.form.forms.displaygroups.customClasses">
+            <title>独自の表示グループクラスの使用</title>
+
+            <para>
+                デフォルトでは、<code>Zend_Form</code> は
+                表示グループ用に <code>Zend_Form_DisplayGroup</code>
+                クラスを使用します。
+                このクラスを継承すれば、独自の機能を持つクラスを作成することができます。
+                <code>addDisplayGroup()</code>
+                には具象インスタンスを渡すことはできませんが、
+                どのクラスを使用するのかをオプションで指定することができます。
+                このときに使用するキーは 'displayGroupClass' です。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// 'My_DisplayGroup' クラスを使用します
+$form->addDisplayGroup(
+    array('username', 'password'), 
+    'user',
+    array('displayGroupClass' => 'My_DisplayGroup')
+);
+?>]]></programlisting>
+
+            <para>
+                そのクラスがまだ読み込まれていない場合は、<code>Zend_Form</code>
+                は <code>Zend_Loader</code> を使ってクラスを読み込みます。
+            </para>
+
+            <para>
+                デフォルトの表示グループクラスを指定し、
+                そのフォームオブジェクトで作成するすべての表示グループで
+                同じクラスを使わせることもできます。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// すべての表示グループで 'My_DisplayGroup' クラスを使用します
+$form->setDefaultDisplayGroupClass('My_DisplayGroup');
+?>]]></programlisting>
+
+            <para>
+                これは、設定項目
+                'defaultDisplayGroupClass' で指定することもできます。
+                そうすれば、事前にこのクラスが読み込まれて
+                すべての表示グループでこのクラスを使うようになります。
+            </para>
+        </sect3>
+
         <sect3 id="zend.form.forms.displaygroups.interactionmethods">
             <title>表示グループを操作するためのメソッド</title>
 
@@ -496,6 +633,14 @@ $form->setDisplayGroupDecorators(array(
                 <listitem><para>
                     <code>addDisplayGroupPrefixPath($prefix, $path)</code>
                 </para></listitem>
+
+                <listitem><para>
+                    <code>setDefaultDisplayGroupClass($class)</code>
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultDisplayGroupClass($class)</code>
+                </para></listitem>
             </itemizedlist>
         </sect3>
 
@@ -536,6 +681,10 @@ $form->setDisplayGroupDecorators(array(
 
                         <listitem><para><code>getName()</code></para></listitem>
 
+                        <listitem><para><code>setDescription($value)</code></para></listitem>
+
+                        <listitem><para><code>getDescription()</code></para></listitem>
+
                         <listitem><para><code>setLegend($legend)</code></para></listitem>
 
                         <listitem><para><code>getLegend()</code></para></listitem>
@@ -548,7 +697,9 @@ $form->setDisplayGroupDecorators(array(
 
                 <listitem><para>要素</para>
                     <itemizedlist>
-                        <listitem><para><code>addElement(Zend_Form_Element $element)</code></para></listitem>
+                        <listitem><para><code>createElement($type, $name, array $options = array())</code></para></listitem>
+
+                        <listitem><para><code>addElement($typeOrElement, $name, array $options = array())</code></para></listitem>
 
                         <listitem><para><code>addElements(array $elements)</code></para></listitem>
 

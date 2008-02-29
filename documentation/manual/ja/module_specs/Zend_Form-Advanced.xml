@@ -1,0 +1,210 @@
+<!-- EN-Revision: 8453 -->
+<sect1 id="zend.form.advanced">
+    <title>Zend_Form の高度な使用法</title>
+
+    <para>
+        <code>Zend_Form</code> にはさまざまな機能があり、
+        その多くは熟練者向けに用意されています。本章では、
+        それらの機能について例を交えて説明します。
+    </para>
+
+    <sect2 id="zend.form.advanced.arrayNotation">
+        <title>配列記法</title>
+
+        <para>
+            関連するフォーム要素について、要素名を配列形式にしてグループ化したいこともあるでしょう。
+            たとえば、配送先と請求先のふたつの住所を受け取りたい場合、
+            それぞれに同じ要素を使った上で配列でグループ化すれば、
+            結果を別々に受け取ることができます。
+            たとえば次のようなフォームを例に考えてみましょう。
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<form>
+    <fieldset>
+        <legend>配送先</legend>
+        <dl>
+            <dt><label for="recipient">氏名:</label></dt>
+            <dd><input name="recipient" type="text" value="" /></dd>
+
+            <dt><label for="address">住所:</label></dt>
+            <dd><input name="address" type="text" value="" /></dd>
+
+            <dt><label for="municipality">市:</label></dt>
+            <dd><input name="municipality" type="text" value="" /></dd>
+
+            <dt><label for="province">州:</label></dt>
+            <dd><input name="province" type="text" value="" /></dd>
+
+            <dt><label for="postal">郵便番号:</label></dt>
+            <dd><input name="postal" type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>請求先</legend>
+        <dl>
+            <dt><label for="payer">氏名:</label></dt>
+            <dd><input name="payer" type="text" value="" /></dd>
+
+            <dt><label for="address">住所:</label></dt>
+            <dd><input name="address" type="text" value="" /></dd>
+
+            <dt><label for="municipality">市:</label></dt>
+            <dd><input name="municipality" type="text" value="" /></dd>
+
+            <dt><label for="province">州:</label></dt>
+            <dd><input name="province" type="text" value="" /></dd>
+
+            <dt><label for="postal">郵便番号:</label></dt>
+            <dd><input name="postal" type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <dl>
+        <dt><label for="terms">I agree to the Terms of Service</label></dt>
+        <dd><input name="terms" type="checkbox" value="" /></dd>
+
+        <dt></dt>
+        <dd><input name="save" type="submit" value="Save" /></dd>
+    </dl>
+</form>
+]]></programlisting>
+        
+        <para>
+            この例では、請求先住所と配送先住所に同じフィールドを使用しているため、
+            一方が他方を上書きしてしまいます。
+            これを解決するには、配列記法を使用します。
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<form>
+    <fieldset>
+        <legend>配送先</legend>
+        <dl>
+            <dt><label for="shipping-recipient">氏名:</label></dt>
+            <dd><input name="shipping[recipient]" id="shipping-recipient"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-address">住所:</label></dt>
+            <dd><input name="shipping[address]" id="shipping-address"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-municipality">市:</label></dt>
+            <dd><input name="shipping[municipality]" id="shipping-municipality"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-province">州:</label></dt>
+            <dd><input name="shipping[province]" id="shipping-province"
+                type="text" value="" /></dd>
+
+            <dt><label for="shipping-postal">郵便番号:</label></dt>
+            <dd><input name="shipping[postal]" id="shipping-postal"
+                type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>請求先</legend>
+        <dl>
+            <dt><label for="billing-payer">氏名:</label></dt>
+            <dd><input name="billing[payer]" id="billing-payer"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-address">住所:</label></dt>
+            <dd><input name="billing[address]" id="billing-address"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-municipality">市:</label></dt>
+            <dd><input name="billing[municipality]" id="billing-municipality" 
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-province">州:</label></dt>
+            <dd><input name="billing[province]" id="billing-province"
+                type="text" value="" /></dd>
+
+            <dt><label for="billing-postal">郵便番号:</label></dt>
+            <dd><input name="billing[postal]" id="billing-postal"
+                type="text" value="" /></dd>
+        </dl>
+    </fieldset>
+
+    <dl>
+        <dt><label for="terms">I agree to the Terms of Service</label></dt>
+        <dd><input name="terms" type="checkbox" value="" /></dd>
+
+        <dt></dt>
+        <dd><input name="save" type="submit" value="Save" /></dd>
+    </dl>
+</form>
+]]></programlisting>
+
+        <para>
+            上の例では、住所をそれぞれ個別に受け取ることができます。
+            このフォームを送信すると、受け取り側では 3 つの要素を取得することができます。
+            'save' が送信ボタン、そしてふたつの配列 'shipping' と 'billing'
+            の中にはさまざまなキーとそれに対応する要素が含まれています。
+        </para>
+
+        <para>
+            <code>Zend_Form</code> は、この処理を
+            <link linkend="zend.form.forms.subforms">サブフォーム</link>
+            で自動化します。デフォルトで、
+            サブフォームのレンダリングには先ほどのような配列記法を使用します。
+            配列の名前はサブフォーム名からとられ、
+            配列のキーはサブフォーム内に含まれる要素となります。
+            サブフォームは、何段階でもネストさせることができます。
+            その場合も、ネストした配列形式でその構造を表します。
+            さらに、<code>Zend_Form</code>
+            のさまざまなバリデーション機能は、この配列構造をきちんと処理するようにできています。
+            サブフォームをどれだけ深くネストさせたとしても、
+            フォームの検証は正しく行ってくれます。
+            この機能を使うために特に何かしなければならないということはありません。
+            この機能はデフォルトで有効になっています。
+        </para>
+
+        <para>
+            さらに、条件付きで配列記法を有効にしたり
+            特定の配列を指定してそこに要素やコレクションを所属させたりといった機能もあります。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Form::setIsArray($flag)</code>:
+                    このフラグを true にすると、フォーム全体を配列として扱うことができます。
+                    デフォルトでは、<code>setElementsBelongTo()</code>
+                    がコールされていない限りはフォーム名を配列の名前とします。
+                    フォームに名前が設定されていない場合や
+                    <code>setElementsBelongTo()</code> が設定されていない場合は、
+                    このフラグは無視されます (要素が属する配列の名前がないからです)。
+                </para>
+
+                <para>
+                    フォームが配列として扱われているかどうかを知りたい場合には
+                    <code>isArray()</code> アクセサを使用します。
+                </para>
+            </listitem>
+
+            <listitem><para>
+                    <code>Zend_Form::setElementsBelongTo($array)</code>:
+                    このメソッドを使用すると、フォームの全要素が属する
+                    配列の名前を指定することができます。現在設定されている値を調べるには
+                    <code>getElementsBelongTo()</code> アクセサを使用します。
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            さらに、要素レベルでは、特定の要素を特定の配列に属させるために
+            <code>Zend_Form_Element::setBelongsTo()</code> メソッドを使うこともできます。
+            しかし、これは要素を検証する際に問題を引き起こす可能性があり、
+            あまりお勧めできません。
+            時には、特定の要素がどの配列に属しているのかを知りたいこともあるでしょう。
+            そんな場合には <code>getBelongsTo()</code>
+            アクセサを使用します。
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
