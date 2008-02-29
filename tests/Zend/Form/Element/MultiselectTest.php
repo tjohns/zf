@@ -204,6 +204,11 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $test = $this->element->getMultiOption('testing');
         $this->assertEquals($options['testing'], $test);
     }
+
+    public function testMultiselectIsArrayByDefault()
+    {
+        $this->assertTrue($this->element->isArray());
+    }
 }
 
 // Call Zend_Form_Element_MultiselectTest::main() if this source file is executed directly.
