@@ -126,6 +126,6 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
         }
 
         $helper  = $this->getHelper();
-        return $view->$helper($form->getName(), $content, $this->getOptions()); 
+        return $view->$helper($form->getName(), $this->getOptions(), $content); 
     }
 }

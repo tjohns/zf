@@ -56,7 +56,7 @@ class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
 
     public function testFormHelperCreatesFormWithProvidedContent()
     {
-        $html = $this->helper->form('foo', 'foobar');
+        $html = $this->helper->form('foo', null, 'foobar');
         $this->assertRegexp('#<form[^>]+id="foo".*?>#', $html);
         $this->assertRegexp('#<form[^>]+name="foo".*?>#', $html);
         $this->assertContains('</form>', $html);
@@ -68,6 +68,13 @@ class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
         $html = $this->helper->form('', 'foobar');
         $this->assertNotRegexp('/id="/', $html);
         $this->assertNotRegexp('/name="/', $html);
+    }
+
+    public function testPassingBooleanFalseContentRendersOnlyOpeningTag()
+    {
+        $html = $this->helper->form('login', false);
+        $this->assertContains('<form', $html);
+        $this->assertNotContains('</form>', $html);
     }
 }
 
