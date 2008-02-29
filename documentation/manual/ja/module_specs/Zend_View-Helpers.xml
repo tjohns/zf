@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8128 -->
+<!-- EN-Revision: 8488 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -76,6 +76,24 @@
             </para></listitem>
 
             <listitem><para>
+                <code>fieldset($name, $content, $attribs):</code>
+                XHTML の fieldset を作成します。<code>$attribs</code> に
+                'legend' というキーが含まれる場合、その値をフィールドセットの説明として使用します。
+                フィールドセットで囲む内容は、このヘルパーに渡した
+                <code>$content</code> です。
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content):</code>
+                XHTML の form を作成します。すべての <code>$attribs</code>
+                はエスケープされ、form タグの XHTML 属性としてレンダリングされます。
+                <code>$content</code> が存在してその値が false 以外の場合は、
+                その内容がフォームの開始タグと終了タグの間にレンダリングされます。
+                <code>$content</code> が false (デフォルト) の場合は、
+                フォームの開始タグのみを作成します。
+            </para></listitem>
+
+            <listitem><para>
                 <code>formButton($name, $value, $attribs):</code> &lt;input
                 type="button" /&gt; 要素を作成します。
             </para></listitem>
@@ -88,6 +106,40 @@
                 (デフォルトは '1' および '0' です)。$value が
                 "checked" の値に一致すると、チェックボックスがチェックされた状態になります。
             </para></listitem>
+
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code>
+                    エラーの表示用に、XHTML の順序なしリストを作成します。
+                    <code>$errors</code> は、文字列あるいは文字列の配列となります。
+                    <code>$options</code> は、リストの開始タグの属性として設定したい内容です。
+                </para>
+
+                <para>
+                    エラー出力の開始時、終了時、そして各エラーの区切りとして使用する
+                    コンテンツを指定することもできます。
+                    そのためにはヘルパーのこれらのメソッドをコールします。
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>;
+                            デフォルトは '&lt;ul class="errors"%s"&gt;&lt;li&gt;'
+                            で、%s の部分には <code>$options</code>
+                            で指定した属性が入ります。
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>;
+                            デフォルトは '&lt;/li&gt;&lt;li&gt;' です。
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>;
+                            デフォルトは '&lt;/li&gt;&lt;/ul&gt;' です。
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs):</code> &lt;input
@@ -108,7 +160,20 @@
                 を渡すと、結果を何も返しません。
             </para></listitem>
 
-             <listitem><para>
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options,
+                    $listsep):</code> チェックボックスのリストを作成します。
+                <code>$options</code> は連想配列で、任意の深さにすることができます。
+                <code>$value</code> は単一の値か複数の値の配列で、これが
+                <code>$options</code> 配列のキーにマッチします。
+                <code>$listsep</code> は、デフォルトでは HTML の改行
+                ("&lt;br /&gt;") です。デフォルトでは、
+                この要素は配列として扱われます。
+                つまり、すべてのチェックボックスは同じ名前となり、
+                入力内容は配列形式で送信されます。
+            </para></listitem>
+
+            <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> &lt;input
                 type="password" /&gt; 要素を作成します。
             </para></listitem>
