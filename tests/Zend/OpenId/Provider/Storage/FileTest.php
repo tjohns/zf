@@ -56,13 +56,18 @@ class Zend_OpenId_Provider_Storage_FileTest extends PHPUnit_Framework_TestCase
         @rmdir($dir);
         $storage = new Zend_OpenId_Provider_Storage_File($dir);
         $this->assertTrue( is_dir($dir) );
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return;
+        }
+
         chmod($dir, 0);
         $dir2 = $dir . '/test';
         try {
             $storage = new Zend_OpenId_Provider_Storage_File($dir2);
             $ex = null;
         } catch (Exception $e) {
-            $ex = $e;                    
+            $ex = $e;
         }
         $this->assertTrue( $ex instanceof Zend_OpenId_Exception );
         $this->assertSame( Zend_OpenId_Exception::ERROR_STORAGE, $ex->getCode() );
@@ -94,6 +99,11 @@ class Zend_OpenId_Provider_Storage_FileTest extends PHPUnit_Framework_TestCase
         @rmdir($dir);
         $storage = new Zend_OpenId_Provider_Storage_File($dir);
         $this->assertTrue( is_dir($dir) );
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return;
+        }
+
         chmod($dir, 0);
         $this->assertFalse( $storage->addAssociation(self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
         chmod($dir, 0777);
