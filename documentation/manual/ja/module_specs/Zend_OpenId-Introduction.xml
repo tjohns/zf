@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7480 -->
+<!-- EN-Revision: 8460 -->
 <sect1 id="zend.openid.introduction">
     <title>導入</title>
     <para>
@@ -134,6 +134,15 @@
             OpenID Simple Registration Extension と
             <code>Zend_OpenId</code> クラスのユーティリティ関数群です。
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> は、<ulink url="http://php.net/gmp">GMP
+                拡張モジュール</ulink> が使用可能な場合はそれを使用します。
+                <code>Zend_OpenId</code> を使う場合は、
+                GMP 拡張モジュールを有効にしておくとよりよいパフォーマンスが得られるでしょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.openid.introduction.standards">
