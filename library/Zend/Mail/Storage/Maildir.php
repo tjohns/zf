@@ -65,6 +65,8 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
                                           'R' => Zend_Mail_Storage::FLAG_ANSWERED,
                                           'S' => Zend_Mail_Storage::FLAG_SEEN,
                                           'T' => Zend_Mail_Storage::FLAG_DELETED);
+                                          
+    // TODO: getFlags($id) for fast access if headers are not needed (i.e. just setting flags)?
 
     /**
      * Count messages all messages in current box
@@ -72,9 +74,32 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
      */
-    public function countMessages()
+    public function countMessages($flags = null)
     {
-        return count($this->_files);
+		if ($flags === null) {
+	        return count($this->_files);
+	    }
+
+		$count = 0;		    	
+	    if (!is_array($flags)) {
+	    	foreach ($this->_files as $file) {
+	    		if (isset($file['flaglookup'][$flags])) {
+	    			++$count;
+	    		}
+	    	}
+	    	return $count;
+	    }
+	    
+	    $flags = array_flip($flags);
+	   	foreach ($this->_files as $file) {
+	   		foreach ($flags as $flag => $v) {
+	   			if (!isset($file['flaglookup'][$flag])) {
+	   				continue 2;
+	   			}
+	   		}
+	   		++$count;
+	   	}
+	   	return $count;
     }
 
     /**
@@ -119,6 +144,7 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function getSize($id = null)
     {
+    	// TODO: get size from filename in maildir++
         if ($id !== null) {
             return filesize($this->_getFileData($id, 'filename'));
         }
@@ -331,9 +357,10 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
                 $named_flags[$flag] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : $flag;
             }
 
-            $this->_files[] = array('uniq'     => $uniq,
-                                    'flags'    => $named_flags,
-                                    'filename' => $dirname . $entry);
+            $this->_files[] = array('uniq'       => $uniq,
+                                    'flags'      => $named_flags,
+                                    'flaglookup' => array_flip($named_flags),
+                                    'filename'   => $dirname . $entry);
         }
     }
 

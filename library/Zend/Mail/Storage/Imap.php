@@ -93,15 +93,25 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
                                           '\Flagged'  => Zend_Mail_Storage::FLAG_FLAGGED);
 
     /**
+     * map flags to search criterias
+     * @var array
+     */
+    protected static $_searchFlags = array('\Recent'   => 'RECENT',
+                                           '\Answered' => 'ANSWERED',
+                                           '\Seen'     => 'SEEN',
+                                           '\Deleted'  => 'DELETED',
+                                           '\Draft'    => 'DRAFT',
+                                           '\Flagged'  => 'FLAGGED');
+
+    /**
      * Count messages all messages in current box
      *
      * @return int number of messages
      * @throws Zend_Mail_Storage_Exception
      * @throws Zend_Mail_Protocol_Exception
      */
-    public function countMessages()
+    public function countMessages($flags = null)
     {
-    	// TODO: first parameter gives wanted flag
         if (!$this->_currentFolder) {
             /**
              * @see Zend_Mail_Storage_Exception
@@ -110,9 +120,20 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
             throw new Zend_Mail_Storage_Exception('No selected folder to count');
         }
 
-        // we're reselecting the current mailbox, because STATUS is slow and shouldn't be used on the current mailbox
-        $result = $this->_protocol->select($this->_currentFolder);
-        return $result['exists'];
+    	if ($flags === null) {
+    		return count($this->_protocol->search(array('ALL')));
+    	}
+    	
+    	$params = array();
+    	foreach ((array)$flags as $flag) {
+    		if (isset(self::$_searchFlags[$flag])) {
+    			$params[] = self::$_searchFlags[$flag];
+    		} else {
+    			$params[] = 'KEYWORD';
+    			$params[] = $this->_protocol->escapeString($flag);
+    		}
+    	}
+        return count($this->_protocol->search($params));
     }
 
     /**
