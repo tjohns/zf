@@ -40,7 +40,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array());
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('text' => 'test'));
         $this->assertTrue($lang instanceof Zend_Translate);
     }
 
@@ -59,7 +59,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testGetAdapter()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY , array(), 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY , array('text' => 'test'), 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
 
         $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/_files/testmsg_en.mo', 'en');
@@ -103,7 +103,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     public function testSetAdapter()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/_files/testmsg_en.mo', 'en');
-        $lang->setAdapter(Zend_Translate::AN_ARRAY, array());
+        $lang->setAdapter(Zend_Translate::AN_ARRAY, array('text' => 'test'));
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
 
         try {

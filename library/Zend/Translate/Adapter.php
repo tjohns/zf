@@ -68,6 +68,11 @@ abstract class Zend_Translate_Adapter {
      */
     public function __construct($data, $locale = null, array $options = array())
     {
+        if (empty($data)) {
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
+        }
+
         if (isset(self::$_cache)) {
             $id = 'Zend_Translate_' . $this->toString();
             if ($result = self::$_cache->load($id)) {
