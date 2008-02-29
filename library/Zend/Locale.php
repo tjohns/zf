@@ -802,12 +802,19 @@ class Zend_Locale {
 
     /**
      * Returns a list of all known locales where the locale is the key
+     * Only real locales are returned, the internal locales 'root', 'auto', 'browser'
+     * and 'environment' are suppressed
      * 
      * @return  array
      */
     public static function getLocaleList()
     {
-        return self::$_localeData;
+        $list = self::$_localeData;
+        unset($list['root']);
+        unset($list['auto']);
+        unset($list['browser']);
+        unset($list['environment']);
+        return $list;
     }
 
 
