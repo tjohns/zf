@@ -5,11 +5,10 @@
  * @subpackage UnitTests
  */
 
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
 /** Zend_Controller_Router_Route_Regex */
 require_once 'Zend/Controller/Router/Route/Regex.php';
-
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
@@ -391,24 +390,36 @@ class Zend_Controller_Router_Route_RegexTest extends PHPUnit_Framework_TestCase
 
     }
     
-    public function testAssembleZF2301() 
+    /**
+     * @issue ZF-2301
+     */
+    public function testAssemblyOfRouteWithMergedMatchedParts() 
     {
         $route = new Zend_Controller_Router_Route_Regex(
-            "itemlist(?:/(\d+))?",
+            'itemlist(?:/(\d+))?',
             array('page' => 1), // Defaults
             array(1 => 'page'), // Parameter map
             'itemlist/%d'
         );
         
-        $values = $route->match('/itemlist/2');
+        // make sure defaults work
+        $this->assertEquals(array('page' => 1), $route->match('/itemlist/'));
         
-        $this->assertEquals(array('page' => 2), $values);
-
-        $url = $route->assemble();
-        $this->assertEquals('itemlist/2', $url);
+        // make sure default assembly work
+        $this->assertEquals('itemlist/1', $route->assemble());
         
-        $url = $route->assemble(array('page' => 2));
-        $this->assertEquals('itemlist/2', $url);
+        // make sure the route is parsed correctly
+        $this->assertEquals(array('page' => 2), $route->match('/itemlist/2'));
+        
+        // check to make sure that the default assembly will return with default 1 (previously defined)
+        $this->assertEquals('itemlist/2', $route->assemble());
+        
+        // check to make sure that the assembly will return with provided page=3 in the correct place
+        $this->assertEquals('itemlist/3', $route->assemble(array('page' => 3)));
+        
+        // check to make sure that the assembly can reset a single parameter
+        $this->assertEquals('itemlist/1', $route->assemble(array('page' => null)));
+        
     }
     
 }

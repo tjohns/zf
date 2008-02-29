@@ -132,7 +132,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
 
         return $return;
     }
-
+    
     /**
      * Assembles a URL path defined by this route
      *
@@ -145,14 +145,29 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
             require_once 'Zend/Controller/Router/Exception.php';
             throw new Zend_Controller_Router_Exception('Cannot assemble. Reversed route is not specified.');
         }
+        
+        $defaultValuesMapped  = $this->_getMappedValues($this->_defaults, true, false);
+        $matchedValuesMapped  = $this->_getMappedValues($this->_values, true, false);
+        $dataValuesMapped     = $this->_getMappedValues($data, true, false);
 
-        $data = $this->_getMappedValues($data, true, false);
-        $data += $this->_getMappedValues($this->_defaults, true, false);
-        $data += $this->_values;
+        // handle resets, if so requested (By null value) to do so
+        if (($resetKeys = array_search(null, $dataValuesMapped, true)) !== false) {
+            foreach ((array) $resetKeys as $resetKey) {
+                if (isset($matchedValuesMapped[$resetKey])) {
+                    unset($matchedValuesMapped[$resetKey]);
+                    unset($dataValuesMapped[$resetKey]);
+                }
+            }
+        }
+        
+        // merge all the data together, first defaults, then values matched, then supplied
+        $mergedData = $defaultValuesMapped;
+        $mergedData = $this->_arrayMergeNumericKeys($mergedData, $matchedValuesMapped);
+        $mergedData = $this->_arrayMergeNumericKeys($mergedData, $dataValuesMapped);
 
-        ksort($data);
+        ksort($mergedData);
 
-        $return = @vsprintf($this->_reverse, $data);
+        $return = @vsprintf($this->_reverse, $mergedData);
 
         if ($return === false) {
             require_once 'Zend/Controller/Router/Exception.php';
@@ -183,5 +198,23 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     public function getDefaults() {
         return $this->_defaults;
     }
+    
+    /**
+     * _arrayMergeNumericKeys() - allows for a strict key (numeric's included) array_merge.  
+     * php's array_merge() lacks the ability to merge with numeric keys.
+     *
+     * @param array $array1
+     * @param array $array2
+     * @return array
+     */
+    protected function _arrayMergeNumericKeys(Array $array1, Array $array2)
+    {
+        $returnArray = $array1;
+        foreach ($array2 as $array2Index => $array2Value) {
+            $returnArray[$array2Index] = $array2Value;
+        }
+        return $returnArray;
+    }
+    
 
 }
