@@ -25,6 +25,14 @@
             of <code>Zend_OpenId_Consumer</code> component which implements the
             OpenID authentication protocol itself.
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> takes advantage of the <ulink url="http://php.net/gmp">GMP extension</ulink>,
+                where available. Consider enabling the GMP extension for better performance when using
+                <code>Zend_Auth_Adapter_OpenId</code>.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.auth.adapter.openid.specifics">

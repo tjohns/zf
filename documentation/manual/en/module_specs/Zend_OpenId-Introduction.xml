@@ -125,6 +125,14 @@
             <code>Zend_OpenId_Extension_Sreg</code> class and the set of utility
             functions implemented by <code>Zend_OpenId</code> class.
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> takes advantage of the <ulink url="http://php.net/gmp">GMP extension</ulink>,
+                where available. Consider enabling the GMP extension for better performance when using
+                <code>Zend_OpenId</code>.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.openid.introduction.standards">
