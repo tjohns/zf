@@ -120,6 +120,15 @@
             die von der <code>Zend_OpenId_Extension_Sreg</code> Klasse implementiert wird und das Set von
             Hilfs Funktionen die von der <code>Zend_OpenId</code> Klasse implementiert werden.
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> hat Vorteile davon wenn die
+                <ulink url="http://php.net/gmp">GMP Erweiterung</ulink> vorhanden ist. Es sollte
+                Angedacht werden die GMP Erweiterung für eine bessere Performance einzuschalten  wenn
+                <code>Zend_OpenId</code> verwendet wird.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.openid.introduction.standards">

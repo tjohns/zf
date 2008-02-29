@@ -23,6 +23,15 @@
             <code>Zend_OpenId_Consumer</code> Komponente welche das OpenID Authentifizierungs Protokoll selbst
             implementiert.
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> hat Vorteile davon wenn die
+                <ulink url="http://php.net/gmp">GMP Erweiterung</ulink> vorhanden ist. Es sollte
+                Angedacht werden die GMP Erweiterung für eine bessere Performance einzuschalten  wenn
+                <code>Zend_Auth_Adapter_OpenId</code> verwendet wird.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.auth.adapter.openid.specifics">
