@@ -1,24 +1,46 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Controller
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
 // Call Zend_Controller_Response_HttpTest::main() if this source file is executed directly.
-if (!defined("PHPUnit_MAIN_METHOD")) {
-    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Response_HttpTest::main");
-
-    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
-
-    set_include_path(
-        $basePath . DIRECTORY_SEPARATOR . 'tests'
-        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
-        . PATH_SEPARATOR . get_include_path()
-    );
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Response_HttpTest::main');
 }
-
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Response/Http.php';
 require_once 'Zend/Controller/Response/Exception.php';
 
-class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase 
+/**
+ * @category   Zend
+ * @package    Zend_Controller
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_Http_Response
@@ -429,8 +451,8 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->_response->appendBody($string3, 'string3');
 
         $expected = array(
-            'string1' => $string1, 
-            'string2' => $string2, 
+            'string1' => $string1,
+            'string2' => $string2,
             'string3' => $string3
         );
 
@@ -556,7 +578,7 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
 }
 
 require_once 'Zend/Controller/Action.php';
-class Zend_Controller_Response_HttpTest_Action extends Zend_Controller_Action 
+class Zend_Controller_Response_HttpTest_Action extends Zend_Controller_Action
 {}
 
 // Call Zend_Controller_Response_HttpTest::main() if this source file is executed directly.
