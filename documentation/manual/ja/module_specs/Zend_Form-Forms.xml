@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8453 -->
+<!-- EN-Revision: 8462 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -154,6 +154,10 @@ $form = new Zend_Form($config);
             独自の要素やデコレータを使用すると、
             複数フォーム間で機能を共有したり
             独自の機能をカプセル化したりできるようになります。
+            独自の要素を既存の標準クラスに置き換えて使用する例については、
+            要素のドキュメントの中の
+            <link linkend="zend.form.elements.loaders.customLabel">独自のラベルを作る例</link>
+            を参照ください。
         </para>
     </sect2>
 

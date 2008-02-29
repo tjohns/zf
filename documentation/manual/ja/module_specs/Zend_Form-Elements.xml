@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8335 -->
+<!-- EN-Revision: 8462 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -102,6 +102,92 @@
             独自のバリデータやフィルタ、デコレータを作成すると、
             複数のフォームで機能を共有したり独自の機能をカプセル化したりすることが簡単になります。
         </para>
+
+        <example id="zend.form.elements.loaders.customLabel">
+            <title>独自のラベル</title>
+
+            <para>
+                プラグインの使用例としてよくあるのは、
+                既存の標準クラス群のかわりとして使用することです。
+                たとえば、'Label' デコレータの実装を変更し、
+                最後に常にコロンを追加するようにしたくなったとしましょう。
+                そんな場合は、独自の 'Label' デコレータを
+                クラスプレフィックスつきで作成し、
+                それをプレフィックスパスに追加します。
+            </para>
+
+            <para>
+                では、独自の Label デコレータを作ってみましょう。
+                ここではクラスプレフィックスを "My_Decorator" とします。
+                このクラスは、"My/Decorator/Label.php" というファイルで定義されることになります。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class My_Decorator_Label extends Zend_Form_Decorator_Abstract
+{
+    protected $_placement = 'PREPEND';
+
+    public function render($content)
+    {
+        if (null === ($element = $this->getElement())) {
+            return $content;
+        }
+        if (!method_exists($element, 'getLabel')) {
+            return $content;
+        }
+
+        $label = $element->getLabel() . ':';
+
+        if (null === ($view = $element->getView())) {
+            return $this->renderLabel($content, $label);
+        }
+
+        $label = $view->formLabel($element->getName(), $label);
+
+        return $this->renderLabel($content, $label);
+    }
+
+    public function renderLabel($content, $label)
+    {
+        $placement = $this->getPlacement();
+        $separator = $this->getSeparator();
+
+        switch ($placement) {
+            case 'APPEND':
+                return $content . $separator . $label;
+            case 'PREPEND':
+            default:
+                return $label . $separator . $content;
+        }
+    }
+}
+]]></programlisting>
+
+            <para>
+                では、デコレータを探す際にこのプラグインパスを考慮するように
+                要素に指定してみましょう。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                あるいは、フォームレベルでこれを設定してしまうべ、
+                すべてのデコレータがこのパスを考慮するようになります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                このパスにデコレータを追加すれば
+                'My/Decorator/' にあるデコレータがまず最初に見つけられることになります。
+                つまり、'Label' デコレータが必要となる場面ではそのかわりに
+                'My_Decorator_Label' が使われることになるわけです。
+            </para>
+        </example>
     </sect2>
 
     <sect2 id="zend.form.elements.filters">
