@@ -97,6 +97,90 @@
             Eigene Prüfungen, Filter und Dekoratore sind ein einfacher Weg um Funktionalität zwischen
             Forms zu teilen und eigene Funktionalitäten zu kapseln.
         </para>
+
+        <example id="zend.form.elements.loaders.customLabel">
+            <title>Eigenes Label</title>
+
+            <para>
+                Ein üblicher Verwendungszweck ist es Ersetzungen für Standardklassen anzubieten.
+                Zum Beispiel wenn man eine andere Implementation des 'Label' Dekorators anbieten
+                will -- zum Beispiel um immer einen Bindestrich anzufügen -- dann könnte man einen
+                eigenen 'Label' Dekorator mit einem eigenen Klassenpräfix erstellen, und diesen
+                zum eigenen Präfix Pfad hinzufügen.
+            </para>
+
+            <para>
+                Beginnen wir mit einem eigenen Label Dekorator. Wir geben Ihm den Klassenpräfix
+                "My_Decorator", und die Klasse selbst wird in der Datei "My/Decorator/Label.php"
+                sein.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class My_Decorator_Label extends Zend_Form_Decorator_Abstract
+{
+    protected $_placement = 'PREPEND';
+
+    public function render($content)
+    {
+        if (null === ($element = $this->getElement())) {
+            return $content;
+        }
+        if (!method_exists($element, 'getLabel')) {
+            return $content;
+        }
+
+        $label = $element->getLabel() . ':';
+
+        if (null === ($view = $element->getView())) {
+            return $this->renderLabel($content, $label);
+        }
+
+        $label = $view->formLabel($element->getName(), $label);
+
+        return $this->renderLabel($content, $label);
+    }
+
+    public function renderLabel($content, $label)
+    {
+        $placement = $this->getPlacement();
+        $separator = $this->getSeparator();
+
+        switch ($placement) {
+            case 'APPEND':
+                return $content . $separator . $label;
+            case 'PREPEND':
+            default:
+                return $label . $separator . $content;
+        }
+    }
+}
+]]></programlisting>
+
+            <para>
+                Jetzt kann dem Element mitgeteilt werden diesen Plugin Pfad zu verwenden wenn
+                nach Dekoratoren gesucht wird:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                Alternativ kann das bei der Form gemacht werden um sicherzustellen das alle
+                Dekoratore diesen Pfad verwenden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                Wird dieser Pfad hinzugefügt, wenn ein Dekorator hinzugefügt wird, wird der
+                Pfad 'My/Decorator/' zuerst durchsucht um zu sehen ob der Dekorator dort existiert.
+                Als Ergebnis wird 'My_Decorator_Label' jetzt verwendet wenn der 'Labe' Dekorator
+                angefragt wird.
+            </para>
+        </example>
     </sect2>
 
     <sect2 id="zend.form.elements.filters">
