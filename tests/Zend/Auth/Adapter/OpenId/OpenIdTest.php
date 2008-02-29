@@ -50,6 +50,10 @@ require_once 'Zend/OpenId/Extension/Sreg.php';
  */
 require_once 'Zend/Auth/Adapter/OpenId.php';
 
+/**
+ * @see Zend_OpenId_Consumer_Storage_File
+ */
+require_once 'Zend/OpenId/Consumer/Storage/File.php';
 
 /**
  * @category   Zend
@@ -70,14 +74,14 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
 
     public function testAuthenticateInvalid()
     {
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
     }
 
     public function testAuthenticateLoginInvalid()
     {
-        $adapter = new Zend_Auth_Adapter_OpenId("%sd");
+        $adapter = new Zend_Auth_Adapter_OpenId("%sd", new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
     }
@@ -85,7 +89,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testAuthenticateLoginValid()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -95,7 +99,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
-        $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
         $this->assertSame($adapter, $adapter->setResponse($response));
         $ret = $adapter->authenticate();
         $this->assertTrue(is_null($ret));
@@ -132,7 +136,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testSetIdentity()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -142,7 +146,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, $storage);
         $this->assertSame($adapter, $adapter->setIdentity(self::ID));
         $adapter->setResponse($response);
         $ret = $adapter->authenticate();
@@ -180,7 +184,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testSetStorage()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -228,7 +232,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testSetReturnTo()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -238,7 +242,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
-        $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
         $adapter->setResponse($response);
         $this->assertSame($adapter, $adapter->setReturnTo("http://www.zf-test.com/return.php"));
         $ret = $adapter->authenticate();
@@ -276,7 +280,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testSetRoot()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -286,7 +290,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
-        $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
         $adapter->setResponse($response);
         $this->assertSame($adapter, $adapter->setRoot("http://www.zf-test.com/root.php"));
         $ret = $adapter->authenticate();
@@ -325,7 +329,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     {
         unset($_SERVER['REQUEST_METHOD']);
         $_GET = array('openid_mode'=>'id_res');
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
     }
@@ -333,7 +337,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testAuthenticateVerifyGetValid()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -351,7 +355,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
             "openid_signed" => "assoc_handle,return_to,claimed_id,identity,response_nonce,mode,signed",
             "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
         );
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, $storage);
         $ret = $adapter->authenticate();
         $this->assertTrue($ret->isValid());
     }
@@ -359,7 +363,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testAuthenticateVerifyPostValid()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -378,7 +382,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
             "openid_signed" => "assoc_handle,return_to,claimed_id,identity,response_nonce,mode,signed",
             "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
         );
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, $storage);
         $ret = $adapter->authenticate();
         $this->assertTrue($ret->isValid());
     }
@@ -386,7 +390,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testSetExtensions()
     {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $this->assertTrue( $storage->delDiscoveryInfo(self::ID) );
         $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 2.0, $expiresIn) );
         $storage->delAssociation(self::SERVER);
@@ -409,7 +413,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
             "openid_sig" => "jcV5K517GrjOxjRzi0QNLX2D+1s="
         );
         $_POST = array();
-        $adapter = new Zend_Auth_Adapter_OpenId();
+        $adapter = new Zend_Auth_Adapter_OpenId(null, $storage);
         $sreg= new Zend_OpenId_Extension_Sreg(array("nickname"=>true,"email"=>false));
         $this->assertSame($adapter, $adapter->setExtensions($sreg));
         $ret = $adapter->authenticate();
@@ -420,7 +424,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
 
     function testSetCheckImmediate() {
         $expiresIn = time() + 600;
-        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->delDiscoveryInfo(self::ID);
         $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
         $storage->delAssociation(self::SERVER);
@@ -430,7 +434,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
-        $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
         $adapter->setCheckImmediate(true);
         $this->assertSame($adapter, $adapter->setResponse($response));
         $ret = $adapter->authenticate();
