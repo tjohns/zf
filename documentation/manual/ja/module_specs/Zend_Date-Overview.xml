@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8467 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API の概要</title>
@@ -180,7 +181,7 @@ echo $date1, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
-$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // 指定したフォーマットで解釈するように強制します
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // 指定したフォーマットで解釈するように強制します
 echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
             </programlisting>
         </example>

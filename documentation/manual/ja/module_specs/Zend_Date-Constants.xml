@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8467 -->
 <sect1 id="zend.date.constants">
 
     <title>日付関数全般用の定数</title>
@@ -1086,6 +1087,40 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
             </tgroup>
         </table>
 
+        <note>
+            <para>
+                デフォルトの ISO フォーマットは、PHP のフォーマットとは異なることに注意しましょう。
+                これまでに使ったことがない方は、少々いらいらするかもしれません。
+                特に、<emphasis role="strong">「年」と「分」</emphasis>
+                に関する指定子については、なかなか期待通りに動作しないことでしょう。
+            </para>
+
+            <para>
+                <emphasis role="strong">「年」</emphasis>
+                については、間違えやすい指定子がふたつあります。
+                ISO 形式の年を表す <emphasis role="strong">Y</emphasis> 指定子と、
+                実際の年を表す <emphasis role="strong">y</emphasis> 指定子です。
+                両者の違いは些細なものではありますが、非常に重要です。
+                <emphasis role="strong">Y</emphasis> は ISO 形式の年を算出するものです。
+                これは、カレンダーを作成する際によく用いられます。
+                2007 年 12 月 31 日を例にとって考えてみましょう。
+                実際の年は 2007 ですが、この日は
+                2008 年の最初の週 (第 1 週) の最初の日でもあります。
+                したがって、'dd.MM.yyyy' として場合は '31.December.2007'
+                が得られますが、'dd.MM.YYYY' とした場合の結果は '31.December.2008'
+                となるのです。これはバグではなく、期待通りの振る舞いです。
+                これが、ふたつの指定子の違いとなります。
+            </para>
+
+            <para>
+                <emphasis role="strong">「分」</emphasis>
+                の場合は、違いはそれほど大きくはありません。ISO では「分」
+                を表す指定子として <emphasis role="strong">m</emphasis>
+                を使用します。PHP が使っている <emphasis role="strong">i</emphasis>
+                ではありません。分を取得する書式指定をする際には、
+                正しい指定子を使っているかどうかを確認するようにしましょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.date.constants.phpformats">
