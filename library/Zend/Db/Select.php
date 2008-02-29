@@ -643,7 +643,7 @@ class Zend_Db_Select
                 }
                 break;
             }
-        } else if ($name instanceof Zend_Db_Expr) {
+        } else if ($name instanceof Zend_Db_Expr|| $name instanceof Zend_Db_Select) {
             $tableName = $name;
             $correlationName = $this->_uniqueCorrelation('t');
         } else if (preg_match('/^(.+)\s+AS\s+(.+)$/i', $name, $m)) {
@@ -655,7 +655,7 @@ class Zend_Db_Select
         }
 
         // Schema from table name overrides schema argument
-        if (false !== strpos($tableName, '.')) {
+        if (!is_object($tableName) && false !== strpos($tableName, '.')) {
             list($schema, $tableName) = explode('.', $tableName);
         }
 

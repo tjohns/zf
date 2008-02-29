@@ -246,6 +246,30 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test support for nested select in from()
+     */
+    protected function _selectFromSelectObject()
+    {
+        $subquery = $this->_db->select()
+            ->from('subqueryTable');
+
+        $select = $this->_db->select()
+            ->from($subquery);
+        return $select;
+    }
+
+    public function testSelectFromSelectObject()
+    {
+        $select = $this->_selectFromSelectObject();
+        $query = $select->__toString();
+        $cmp = 'SELECT ' . $this->_db->quoteIdentifier('t') . '.* FROM (SELECT '
+                         . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
+                         . $this->_db->quoteIdentifier('subqueryTable') . ') AS '
+                         . $this->_db->quoteIdentifier('t');
+        $this->assertEquals($query, $cmp);
+    }
+
+    /**
      * Test support for FOR UPDATE
      * e.g. from('schema.table').
      */
@@ -580,6 +604,31 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(2, $result[0]['product_id']);
+    }
+
+    /**
+     * Test support for nested select in from()
+     */
+    protected function _selectWhereSelectObject()
+    {
+        $subquery = $this->_db->select()
+            ->from('subqueryTable');
+
+        $select = $this->_db->select()
+            ->from('table')
+            ->where('foo IN ?', $subquery);
+        return $select;
+    }
+
+    public function testSelectWhereSelectObject()
+    {
+        $select = $this->_selectWhereSelectObject();
+        $query = $select->__toString();
+        $cmp = 'SELECT ' . $this->_db->quoteIdentifier('table') . '.* FROM '
+                         . $this->_db->quoteIdentifier('table') . ' WHERE (foo IN (SELECT '
+                         . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
+                         . $this->_db->quoteIdentifier('subqueryTable') . '))';
+        $this->assertEquals($query, $cmp);
     }
 
     /**

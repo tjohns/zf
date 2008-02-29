@@ -742,6 +742,10 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $this->_connect();
 
+        if ($value instanceof Zend_Db_Select) {
+            return '(' . $value->__toString() . ')';
+        }
+
         if ($value instanceof Zend_Db_Expr) {
             return $value->__toString();
         }
@@ -884,6 +888,8 @@ abstract class Zend_Db_Adapter_Abstract
     {
         if ($ident instanceof Zend_Db_Expr) {
             $quoted = $ident->__toString();
+        } elseif ($ident instanceof Zend_Db_Select) {
+            $quoted = '(' . $ident->__toString() . ')';
         } else {
             if (is_string($ident)) {
                 $ident = explode('.', $ident);
