@@ -75,6 +75,24 @@
             </para></listitem>
 
             <listitem><para>
+                <code>fieldset($name, $content, $attribs):</code> Creates an
+                XHTML fieldset. If <code>$attribs</code> contains a 'legend'
+                key, that value will be used for the fieldset legend. The
+                fieldset will surround the <code>$content</code> as provided to
+                the helper.
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content):</code> Generates an XHTML
+                form. All <code>$attribs</code> are escaped and rendered as
+                XHTML attributes of the form tag. If <code>$content</code> is
+                present and not a boolean false, then that content is rendered
+                within the start and close form tags; if <code>$content</code>
+                is a boolean false (the default), only the opening form tag is
+                generated.
+            </para></listitem>
+
+            <listitem><para>
                 <code>formButton($name, $value, $attribs):</code> Creates an
                 &lt;input type="button" /&gt; element.
             </para></listitem>
@@ -87,6 +105,42 @@
                 defaults are '1' and '0').  If $value matches the "checked"
                 value, the box will be checked for you.
             </para></listitem>
+
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code> Generates an
+                    XHTML unordered list to show errors. <code>$errors</code>
+                    should be a string or an array of strings;
+                    <code>$options</code> should be any attributes you want
+                    placed in the opening list tag.
+                    XHTML list. 
+                </para>
+
+                <para>
+                    You can specify alternate opening, closing, and separator
+                    content when rendering the errors by calling several methods
+                    on the helper:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>; default is
+                            '&lt;ul class="errors"%s"&gt;&lt;li&gt;', where %s
+                            is replaced with the attributes as specified in
+                            <code>$options</code>.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>; default
+                            is '&lt;/li&gt;&lt;li&gt;'.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>; default is
+                            '&lt;/li&gt;&lt;/ul&gt;'.
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs):</code> Creates an
@@ -106,7 +160,19 @@
                 <code>attribs</code>, nothing will be returned.
             </para></listitem>
 
-             <listitem><para>
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options,
+                    $listsep):</code> Creates a list of checkboxes.
+                <code>$options</code> should be an associative array, and may be
+                arbitrarily deep. <code>$value</code> may be a single value or
+                an array of selected values that match the keys in the
+                <code>$options</code> array. <code>$listsep</code> is an HTML
+                break ("&lt;br /&gt;") by default. By default, this element is
+                treated as an array; all checkboxes share the same name, and are
+                submitted as an array.
+            </para></listitem>
+
+            <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> Creates an
                 &lt;input type="password" /&gt; element.
             </para></listitem>
