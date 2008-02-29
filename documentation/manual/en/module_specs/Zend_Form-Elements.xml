@@ -101,6 +101,91 @@
             Custom validators, filters, and decorators are an easy way to share
             functionality between forms and encapsulate custom functionality.
         </para>
+
+        <example id="zend.form.elements.loaders.customLabel">
+            <title>Custom Label</title>
+
+            <para>
+                One common use case for plugins is to provide replacements for
+                standard classes. For instance, if you want to provide a
+                different implementation of the 'Label' decorator -- for
+                instance, to always append a colon -- you could create your own
+                'Label' decorator with your own class prefix, and then add it to
+                your prefix path.
+            </para>
+
+            <para>
+                Let's start with a custom Label decorator. We'll give it the
+                class prefix "My_Decorator", and the class itself will be in the
+                file "My/Decorator/Label.php".
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class My_Decorator_Label extends Zend_Form_Decorator_Abstract
+{
+    protected $_placement = 'PREPEND';
+
+    public function render($content)
+    {
+        if (null === ($element = $this->getElement())) {
+            return $content;
+        }
+        if (!method_exists($element, 'getLabel')) {
+            return $content;
+        }
+
+        $label = $element->getLabel() . ':';
+
+        if (null === ($view = $element->getView())) {
+            return $this->renderLabel($content, $label);
+        }
+
+        $label = $view->formLabel($element->getName(), $label);
+
+        return $this->renderLabel($content, $label);
+    }
+
+    public function renderLabel($content, $label)
+    {
+        $placement = $this->getPlacement();
+        $separator = $this->getSeparator();
+
+        switch ($placement) {
+            case 'APPEND':
+                return $content . $separator . $label;
+            case 'PREPEND':
+            default:
+                return $label . $separator . $content;
+        }
+    }
+}
+]]></programlisting>
+
+            <para>
+                Now we can tell the element to use this plugin path when looking
+                for decorators:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                Alternately, we can do that at the form level to ensure all
+                decorators use this path:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+]]></programlisting>
+
+            <para>
+                With this path added, when you add a decorator, the
+                'My/Decorator/' path will be searched first to see if the
+                decorator exists there. As a result, 'My_Decorator_Label' will
+                now be used when the 'Label' decorator is requested.
+            </para>
+        </example>
     </sect2>
 
     <sect2 id="zend.form.elements.filters">

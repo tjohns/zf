@@ -152,6 +152,11 @@ $form = new Zend_Form($config);
         <para>
             Custom elements and decorators are an easy way to share
             functionality between forms and encapsulate custom functionality.
+            See the <link
+                linkend="zend.form.elements.loaders.customLabel">Custom Label
+                example</link> in the elements documentation for an example of
+            how custom elements can be used as replacements for standard
+            classes.
         </para>
     </sect2>
 
