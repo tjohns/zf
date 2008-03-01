@@ -184,8 +184,8 @@
                     </row>
                     <row>
                         <entry>interbase</entry>
-                        <entry>--</entry>
-                        <entry></entry>
+                        <entry>Dependência</entry>
+                        <entry>Zend_Db_Adapter_Firebird</entry>
                     </row>
                     <row>
                         <entry>json</entry>
