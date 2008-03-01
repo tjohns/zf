@@ -2006,12 +2006,6 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Firebird'.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
                         This Adapter uses the PHP extension php_interbase.
                     </para>
                 </listitem>

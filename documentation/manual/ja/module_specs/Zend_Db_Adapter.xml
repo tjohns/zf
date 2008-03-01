@@ -1994,12 +1994,6 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        このアダプタを <code>factory()</code> で指定する場合は、
-                        名前を 'Firebird' とします。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
                         このアダプタは、PHP の php_interbase 拡張モジュールを使用します。
                     </para>
                 </listitem>

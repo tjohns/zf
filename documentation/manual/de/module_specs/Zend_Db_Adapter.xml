@@ -1837,12 +1837,6 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen
-                        'Firebird' angegeben.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
                         Dieser Adapter verwendet die PHP Erweiterung php_interbase.
                     </para>
                 </listitem>

@@ -1862,11 +1862,6 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Passez le paramètre 'Firebird' à la méthode <code>factory()</code>.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
                         Cet adaptateur utilise l'extension PHP php_interbase.
                     </para>
                 </listitem>
