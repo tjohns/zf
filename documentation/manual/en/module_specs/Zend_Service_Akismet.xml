@@ -333,7 +333,7 @@ $akismet->submitHam($data));]]>
                 <para>
                     The value used to set the user agent should be of the form
                     <code>some user agent/version | Akismet/version</code>. The
-                    default is <code>Zend Framework/0.7.0 | Akismet/1.11</code>.
+                    default is <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>, where <code>ZF-VERSION</code> is the current Zend Framework version as stored in the <code>Zend_Framework::VERSION</code> constant.
                 </para>
             </listitem>
         </itemizedlist>
