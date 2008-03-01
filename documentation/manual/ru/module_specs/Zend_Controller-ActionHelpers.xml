@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Помощники действий</title>
 
     <sect2 id="zend.controller.actionhelper.introduction">
@@ -217,19 +217,40 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>Встроенные помощники действий</title>
 
         <para>
-            Zend Framework по умолчанию включает в себя несколько помощников
-            действий: <code>FlashMessenger</code> для управления мгновенными
-            сообщениями, <code>Redirector</code>, предоставляющий различные
-            реализации перенаправления на внутренние и внешние страницы из
-            вашего приложения, и <code>ViewRenderer</code> для автоматизации
-            процесса настройки объекта вида в ваших контроллерах и рендеринга
-            видов.
+            Zend Framework уже содержит в себе набор помощников действий:
+            <code>AutoComplete</code> автоматизирует ответы для автозавершения
+            ввода с использованием AJAX; <code>ContextSwitch</code> и
+            <code>AjaxContext</code> для обслуживания альтернативных форматов
+            ответов для ваших действий; <code>FlashMessenger</code> для
+            управления сессионными сообщениями; <code>Json</code> для
+            кодирования и отправки ответов JSON; <code>Redirector</code>,
+            предоставляющий различные реализации перенаправления из вашего
+            приложения на внутренние и внешние страницы; и
+            <code>ViewRenderer</code>, автоматизирующий процесс настройки
+            объекта вида в контроллерах и рендеринга видов.
         </para>
 
-        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
-        <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml"/>
-        <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml"/>
-        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml"/>
+        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ActionStack.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-AutoComplete.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ContextSwitch.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-FlashMessenger.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-Json.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-Json.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-Redirector.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ViewRenderer.xml" /></xi:fallback>
+        </xi:include>
     </sect2>
     
     <sect2 id="zend.controller.actionhelper.writingyourown">

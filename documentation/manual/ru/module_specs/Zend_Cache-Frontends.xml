@@ -48,6 +48,23 @@
                               </entry>
                           </row>
                           <row>
+                              <entry><code>cache_id_prefix</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>null</code></entry>
+                              <entry>
+                                  Префикс для всех идентификаторов кэша. Если
+                                  установлен в <code>null</code>, то префикс не
+                                  будет использоваться. Префикс идентификатора
+                                  кэша в первую очередь создает пространство
+                                  имен в кэше, что позволяет нескольким
+                                  приложениям или веб-сайтам использовать общий
+                                  кэш. Любое приложение или веб-сайт может
+                                  использовать свой префикс идентификаторов
+                                  кэша, благодаря чему отдельные идентификаторы
+                                  кеша могут использоваться многократно.
+                              </entry>
+                          </row>
+                          <row>
                               <entry><code>lifetime</code></entry>
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
@@ -106,6 +123,17 @@
                                 <code>x (integer) &gt; 1</code> означает, что
                                 автоматическая чистка производится случайным
                                 образом 1 раз на x записей кэша.
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>ignore_user_abort</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  Если установлен в true, то ядро будет
+                                  устанавливать флаг ignore_user_abort в методе
+                                  save() во избежание порчи кэша в некоторых
+                                  случаях.
                               </entry>
                           </row>
                       </tbody>
@@ -261,7 +289,7 @@ echo 'This is never cached ('.time().').';]]>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -270,7 +298,7 @@ echo 'This is never cached ('.time().').';]]>
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedFunctions</code></entry>
+                              <entry><code>cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -278,7 +306,7 @@ echo 'This is never cached ('.time().').';]]>
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedFunctions</code></entry>
+                              <entry><code>non_cached_functions</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -352,7 +380,7 @@ $cache->call('veryExpensiveFunc', $params);
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cachedEntity</code> (required)</entry>
+                              <entry><code>cached_entity</code> (required)</entry>
                               <entry><code>mixed</code></entry>
                               <entry></entry>
                               <entry>
@@ -364,7 +392,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>cache_by_default</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
@@ -373,7 +401,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cachedMethods</code></entry>
+                              <entry><code>cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -382,7 +410,7 @@ $cache->call('veryExpensiveFunc', $params);
                               </entry>
                          </row>
                          <row>
-                              <entry><code>nonCachedMethods</code></entry>
+                              <entry><code>non_cached_methods</code></entry>
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
@@ -413,7 +441,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => 'test' // имя класса
+    'cached_entity' => 'test' // имя класса
 );
 // [...]
 
@@ -438,7 +466,7 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => new test() // экземпляр класса
+    'cached_entity' => new test() // экземпляр класса
 );
 // [...]
 
@@ -483,7 +511,7 @@ $res = $cache->foobar2('1', '2');]]>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>masterFile (обязательный)</code></entry>
+                              <entry><code>master_file (обязательный)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
