@@ -1083,6 +1083,37 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
             </tgroup>
         </table>
 
+        <note>
+            <para>
+                Es muß beachtet werden das sich das Standard ISO Format vom PHP Format
+                unterscheidet was irritierend sein kann wenn man es vorher noch nie verwendet hat.
+                Speziell die Formatbezeichner für
+                <emphasis role="strong">Jahr und Minute</emphasis> werden oft nicht auf die
+                erwartete Art und Weise verwendet.
+            </para>
+
+            <para>
+                Für das <emphasis role="strong">Jahr</emphasis> gibt es zwei vorhandene Bezeichner
+                die oft vertauscht werden. Der <emphasis role="strong">Y</emphasis> Bezeichner für
+                das ISO Jahr und den <emphasis role="strong">y</emphasis> Bezeichner für das
+                wirkliche Jahr. Der Unterschied ist klein aber signifikant.
+                <emphasis role="strong">Y</emphasis> kalkuliert das ISO Jahr, welches oft für
+                Kalender Formate verwendet wird. Zum Beispiel der 31. Dezember 2007. Das wirkliche
+                Jahr ist 2007, aber es ist der erste Tag der ersten Woche, der Woche 1, des Jahres
+                2008. Deswegen erhält man, wenn man 'dd.MM.yyyy' verwendet den '31.Dezember.2007',
+                aber wenn man 'dd.MM.YYYY' verwendet den '31.Dezember.2008'. Wie man sieht ist das
+                kein Fehler sondern ein erwartetes Verhalten basierend auf den verwendeten
+                Bezeichnern.
+            </para>
+
+            <para>
+                Für die <emphasis role="strong">Minute</emphasis> ist der 'Unterschied nicht so
+                groß. ISO verwendet den Bezeichner <emphasis role="strong">m</emphasis> für die
+                Minute, anders als PHP welches <emphasis role="strong">i</emphasis> verwendet.
+                Wenn man also keine Minute erhält dann sollte man sein Format darauf prüfen, ob
+                der richtige Bezeichner verwendet wurde. 
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.date.constants.phpformats">

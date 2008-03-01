@@ -169,7 +169,7 @@ echo $date1, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
-$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // Stikte Interpretation des angegebenen Formats
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // Stikte Interpretation des angegebenen Formats
 echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
             </programlisting>
         </example>
