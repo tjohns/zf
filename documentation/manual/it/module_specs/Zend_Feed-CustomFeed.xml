@@ -32,7 +32,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         switch ($var) {
             case 'myUpdated':
-                // Traduci myUpdated in mions:updated.
+                // Converti myUpdated in mions:updated.
                 return parent::__get('mions:updated');
 
             default:
@@ -44,7 +44,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         switch ($var) {
             case 'myUpdated':
-                // Traduci myUpdated in mions:updated.
+                // Converti myUpdated in mions:updated.
                 parent::__set('mions:updated', $value);
                 break;
 
@@ -53,6 +53,17 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
+    public function __call($var, $unused)
+    {
+        switch ($var) {
+            case 'myUpdated':
+                // Converti myUpdated to myns:updated.
+                return parent::__call('myns:updated', $unused);
+
+            default:
+                return parent::__call($var, $unused);
+        }
+    }
 }]]>
         </programlisting>
         <para>
@@ -60,7 +71,12 @@ class MyEntry extends Zend_Feed_Entry_Atom
         </para>
         <programlisting role="php"><![CDATA[<?php
 $entry = new MyEntry();
-$entry->myUpdated = '2005-04-19T15:30';]]>
+$entry->myUpdated = '2005-04-19T15:30';
+
+// la chiamata in stile metodo è gestita dalla funzione __call
+$entry->myUpdated();  
+// la chiamata in stile proprietà è gestita dalla funzione __get
+$entry->myUpdated;]]>
         </programlisting>
     </example>
 
