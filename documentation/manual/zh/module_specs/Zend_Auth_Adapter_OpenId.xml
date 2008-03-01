@@ -14,6 +14,12 @@
         <para>
             <code>Zend_Auth_Adapter_OpenId</code> 类是 <code>Zend_OpenId_Consumer</code> 组件的封装，而 <code>>Zend_OpenId_Consumer</code> 组件实现 OpenID 认证协议自己。
         </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> 利用有效的 <ulink url="http://php.net/gmp">GMP extension</ulink>。当使用 <code>Zend_Auth_Adapter_OpenId</code> 时，可以考虑打开 GMP extension 来改善性能。
+            </para>
+        </note>        
     </sect2>
 
     <sect2 id="zend.auth.adapter.openid.specifics">
