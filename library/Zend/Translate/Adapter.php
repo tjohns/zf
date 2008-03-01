@@ -68,17 +68,41 @@ abstract class Zend_Translate_Adapter {
      */
     public function __construct($data, $locale = null, array $options = array())
     {
-        if (empty($data)) {
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
-        }
-
         if (isset(self::$_cache)) {
             $id = 'Zend_Translate_' . $this->toString();
             if ($result = self::$_cache->load($id)) {
                 $this->_translate = unserialize($result);
                 return true;
             }
+        }
+
+        if (empty($data)) {
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
+        }
+
+        $this->addTranslation($data, $locale, $options);
+        $this->_automatic = true;
+    }
+
+    /**
+     * Add translation data
+     *
+     * It may be a new language or additional data for existing language
+     * If $clear parameter is true, then translation data for specified
+     * language is replaced and added otherwise
+     *
+     * @param  array|string          $data    Translation data
+     * @param  string|Zend_Locale    $locale  Locale/Language to add data for, identical with locale identifier,
+     *                                        see Zend_Locale for more information
+     * @param  array                 $options OPTIONAL Option for this Adapter
+     * @throws Zend_Translate_Exception
+     */
+    public function addTranslation($data, $locale = null, array $options = array())
+    {
+        if (empty($data)) {
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
         }
 
         if ($locale === null) {
@@ -129,7 +153,7 @@ abstract class Zend_Translate_Adapter {
                         }
                     }
                     try {
-                        $this->addTranslation((string) $info->getPathname(), $locale, $this->_options);
+                        $this->_addTranslationData((string) $info->getPathname(), $locale, $this->_options);
                         if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
                             $this->setLocale($locale);
                         }
@@ -139,7 +163,7 @@ abstract class Zend_Translate_Adapter {
                 }
             }
         } else {
-            $this->addTranslation($data, $locale, $this->_options);
+            $this->_addTranslationData($data, $locale, $this->_options);
             if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
                 $this->setLocale($locale);
             }
@@ -147,7 +171,7 @@ abstract class Zend_Translate_Adapter {
         if ((array_key_exists($originate, $this->_translate)) and (count($this->_translate[$originate]) > 0)) {
             $this->setLocale($originate);
         }
-        $this->_automatic = true;
+        return $this;
     }
 
 
@@ -309,7 +333,7 @@ abstract class Zend_Translate_Adapter {
     abstract protected function _loadTranslationData($data, $locale, array $options = array());
 
     /**
-     * Add translation data
+     * Internal function for adding translation data
      *
      * It may be a new language or additional data for existing language
      * If $clear parameter is true, then translation data for specified
@@ -321,7 +345,7 @@ abstract class Zend_Translate_Adapter {
      * @param  array                 $options OPTIONAL Option for this Adapter
      * @throws Zend_Translate_Exception
      */
-    public function addTranslation($data, $locale, array $options = array())
+    private function _addTranslationData($data, $locale, array $options = array())
     {
         if (!$locale = Zend_Locale::isLocale($locale)) {
             require_once 'Zend/Translate/Exception.php';

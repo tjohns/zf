@@ -139,13 +139,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
         $lang->addTranslation(array('msg1' => 'Message 1 (ru)'), 'ru');
-        $this->assertEquals('en', $lang->getLocale());
-
-        $lang->setLocale('ru');
         $this->assertEquals('ru', $lang->getLocale());
 
         $lang->setLocale('en');
         $this->assertEquals('en', $lang->getLocale());
+
+        $lang->setLocale('ru');
+        $this->assertEquals('ru', $lang->getLocale());
 
         $lang->setLocale('ru_RU');
         $this->assertEquals('ru', $lang->getLocale());
@@ -155,10 +155,10 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1'), 'en');
         $lang->addTranslation(array('msg1' => 'Message 1 (ru)'), 'ru');
-        $this->assertEquals('en', $lang->getLocale());
-
-        $lang->setLocale('ru');
         $this->assertEquals('ru', $lang->getLocale());
+
+        $lang->setLocale('en');
+        $this->assertEquals('en', $lang->getLocale());
     }
 
     public function testGetLanguageList()
@@ -183,14 +183,14 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1 (en)'), 'en');
         $lang->addTranslation(array('msg1' => 'Message 1 (ru)'), 'ru');
-        $this->assertEquals('Message 1 (en)', $lang->_('msg1'              ));
-        $this->assertEquals('Message 1 (ru)', $lang->_('msg1', 'ru'        ));
+        $this->assertEquals('Message 1 (en)', $lang->_('msg1', 'en'        ));
+        $this->assertEquals('Message 1 (ru)', $lang->_('msg1'              ));
+        $this->assertEquals('msg2',           $lang->_('msg2', 'en'        ));
         $this->assertEquals('msg2',           $lang->_('msg2'              ));
-        $this->assertEquals('msg2',           $lang->_('msg2', 'ru'        ));
-        $this->assertEquals('Message 1 (en)', $lang->translate('msg1'      ));
-        $this->assertEquals('Message 1 (ru)', $lang->translate('msg1', 'ru'));
+        $this->assertEquals('Message 1 (en)', $lang->translate('msg1', 'en'));
+        $this->assertEquals('Message 1 (ru)', $lang->translate('msg1'      ));
+        $this->assertEquals('msg2',           $lang->translate('msg2', 'en'));
         $this->assertEquals('msg2',           $lang->translate('msg2'      ));
-        $this->assertEquals('msg2',           $lang->translate('msg2', 'ru'));
     }
 
     public function testIsTranslated()
