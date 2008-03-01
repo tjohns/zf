@@ -29,7 +29,7 @@
     </itemizedlist>
 
     <para>
-        对于所有情况，<code>$content</code>  是实际上的 CSS 声明。$attributes  是提供给 <code>style</code>  标签的任何额外的属性：lang、 title、 media 或 dir 都是允许的。
+        对于所有情况，<code>$content</code>  是实际上的 CSS 声明。<code>$attributes</code>  是提供给 <code>style</code>  标签的任何额外的属性：lang、 title、 media 或 dir 都是允许的。
     </para>
 
     <para>
@@ -56,7 +56,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // adding scripts
+<?php // adding styles
 $this->headStyle()->appendStyle($styles);
 ?>
 ]]></programlisting>
@@ -113,7 +113,7 @@ body {
             </para></listitem>
 
             <listitem><para>
-                    如果想指定任何另外的属性给 <code>&lt;style&gt;</code> 标签，通过数组把它们作为第三个参数传递给 <code>captureStart()</code> 。
+                    如果想指定任何另外的属性给 <code>&lt;style&gt;</code> 标签，通过数组把它们作为第二个参数传递给 <code>captureStart()</code> 。
             </para></listitem>
         </itemizedlist>
     </example>

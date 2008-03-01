@@ -45,12 +45,44 @@
             </para></listitem>
 
             <listitem><para>
+                <code>fieldset($name, $content, $attribs):</code> 生成一个 XHTML fieldset. 如果 <code>$attribs</code> 包含一个 'legend' 键，它的值将用于 fieldset legend。 Fieldset 将环绕在 <code>$content</code> 周围提供给助手。
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content):</code> 生成一个 XHTML 表单。所有 <code>$attribs</code> 转义和解析成表单标签的 XHTML 属性。如果 <code>$content</code>  不以布尔 false 出现，那么内容就是在表单标签内被解析，如果 <code>$content</code>  是布尔 false （缺省），只有开头的表单标签被生成。
+            </para></listitem>
+
+            <listitem><para>            
                 <code>formButton($name, $value, $attribs):</code> 生成 &lt;input type="button" /&gt; 
             </para></listitem>
 
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs, $options):</code> 生成 &lt;input type="checkbox" /&gt; $options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
             </para></listitem>
+            
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code> 生成一个无顺序的 XHTML 列表来显示错误。 <code>$errors</code> 是个字符串或字符串数组；<code>$options</code>  是你想放入开头列表标签的任何属性。
+                </para>
+
+                <para>
+                    当通过调用助手中的方法时，你可以指定替代的开头，结尾和分隔符：
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>; 缺省为 '&lt;ul class="errors"%s"&gt;&lt;li&gt;', 其中 %s 是在  <code>$options</code> 中被替换的属性。
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>; 缺省为 '&lt;/li&gt;&lt;li&gt;'。
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>; 缺省为 '&lt;/li&gt;&lt;/ul&gt;'。
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs):</code> 生成&lt;input
@@ -69,11 +101,13 @@
                 
                 如果 <code>disable</code> 传递给
                 <code>attribs</code>，什么都不返回。 
-                 
-                 
             </para></listitem>
 
-             <listitem><para>
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep):</code> 生成一个 checkboxes 列表。<code>$options</code> 是个联合数组，可以有任意的深度。<code>$value</code> 可以是单个的值或者是可选的匹配在 <code>$options</code> 数组中的键的一个数组。<code>$listsep</code> 缺省为一个 HTML break ("&lt;br /&gt;")。缺省地，这个元素被当作数组，所有 checkboxes 共享同一个名称，并以数组的形式提交。
+            </para></listitem>
+
+            <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> Creates an
                 &lt;input type="password" /&gt; element.
             </para></listitem>
