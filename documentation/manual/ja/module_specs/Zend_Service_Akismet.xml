@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8503 -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
 
@@ -332,8 +333,11 @@ $akismet->submitHam($data));]]>
                     ユーザエージェントに設定する値は
                     <code>some user agent/version | Akismet/version</code>
                     形式でなければなりません。デフォルトは
-                    <code>Zend Framework/0.7.0 | Akismet/1.11</code>
-                    です。
+                    <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>
+                    です。<code>ZF-VERSION</code> の部分には現在の
+                    Zend Framework のバージョン、つまり定数
+                    <code>Zend_Framework::VERSION</code>
+                    の値があてはまります。
                 </para>
             </listitem>
         </itemizedlist>
