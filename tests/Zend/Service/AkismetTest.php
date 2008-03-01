@@ -37,7 +37,7 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
 
 
 /**
- * @package 	Zend_Service
+ * @package     Zend_Service
  * @subpackage  UnitTests
  */
 class Zend_Service_AkismetTest extends PHPUnit_Framework_TestCase
@@ -59,7 +59,7 @@ class Zend_Service_AkismetTest extends PHPUnit_Framework_TestCase
             'comment_content' => 'spam check'
         );
     }
-	
+
     public function testBlogUrl()
     {
         $this->assertEquals('http://framework.zend.com/wiki/', $this->akismet->getBlogUrl());
@@ -90,9 +90,13 @@ class Zend_Service_AkismetTest extends PHPUnit_Framework_TestCase
 
     public function testUserAgent()
     {
-        $this->assertEquals('Zend Framework/0.7.0 | Akismet/1.11', $this->akismet->getUserAgent());
         $this->akismet->setUserAgent('MyUserAgent/1.0 | Akismet/1.11');
         $this->assertEquals('MyUserAgent/1.0 | Akismet/1.11', $this->akismet->getUserAgent());
+    }
+    
+    public function testUserAgentDefaultMatchesFrameworkVersion()
+    {
+        $this->assertContains('Zend Framework/' . Zend_Version::VERSION, $this->akismet->getUserAgent());
     }
 
     public function testVerifyKey()

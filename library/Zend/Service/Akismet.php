@@ -21,6 +21,11 @@
  */
 
 
+/**
+ * @see Zend_Version
+ */
+require_once 'Zend/Version.php';
+
 /**   
  * @see Zend_Service_Abstract
  */
@@ -67,7 +72,7 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
      * User Agent string to send in requests
      * @var string
      */
-    protected $_userAgent = 'Zend Framework/0.7.0 | Akismet/1.11';
+    protected $_userAgent;
 
     /**
      * Constructor
@@ -79,7 +84,8 @@ class Zend_Service_Akismet extends Zend_Service_Abstract
     public function __construct($apiKey, $blog)
     {
         $this->setBlogUrl($blog)
-            ->setApiKey($apiKey);
+             ->setApiKey($apiKey)
+             ->setUserAgent('Zend Framework/' . Zend_Version::VERSION . ' | Akismet/1.11');
     }
 
     /**
