@@ -63,12 +63,28 @@
         <itemizedlist>
 
             <listitem><para>
-                <code>declareVars()</code>: Primär benutzt mit
-                <code>strictVars()</code>, kann dieser Helfer verwendet werden um template Variablen
-                zu deklarieren welche bereits, oder noch nicht, im View Objekt bereits gesetzt sind,
-                sowie auch Standard Werte. Arrays welche als Argument dieser Methode übergeben werden,
-                werden verwendet um Standard Werte zu setzen; Andernfalls, wenn die Variable nicht
+                <code>declareVars()</code>: Primär benutzt mit <code>strictVars()</code>, kann
+                dieser Helfer verwendet werden um template Variablen zu deklarieren welche
+                bereits, oder noch nicht, im View Objekt bereits gesetzt sind, sowie auch
+                Standard Werte. Arrays welche als Argument dieser Methode übergeben werden, werden
+                verwendet um Standard Werte zu setzen; Andernfalls, wenn die Variable nicht
                 existiert, wird diese mit einem leeren String gesetzt.
+            </para></listitem>
+
+            <listitem><para>
+                <code>fieldset($name, $content, $attribs):</code> Erstellt ein XHTML Fieldset.
+                Wenn <code>$attribs</code> einen 'legend' Schlüssel enthält, wird der Wert für
+                die Fieldset Beschriftung verwendet. Das Fieldset wird <code>$content</code>
+                umfassen wie vom Helfer angeboten. 
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content):</code> Erzeugt eine XHTML Form. Alle
+                <code>$attribs</code> werden als XHTML Attribute des Form Tags escaped und
+                dargestellt. Wenn <code>$content</code> vorhanden und kein boolsches false ist,
+                dann wird dieser Inhalt innerhalb der Start und End Form Tags dargestellt werden;
+                wenn <code>$content</code> ein boolsches false ist (der Standard), wird nur das
+                beginnende Formtag erzeugt.
             </para></listitem>
 
             <listitem><para>
@@ -85,6 +101,39 @@
                 für dich ausgewählt sein.
             </para></listitem>
 
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code> Erzeugt eine ungeordnete XHTML
+                    Liste und zeigt Fehler an. <code>$errors</code> sollte ein String oder ein
+                    Array von Strings sein; <code>$options</code> sollte irgendein Attribut sein
+                    das im beginnenden List Tag platziert werden soll. XHTML Liste.
+                </para>
+
+                <para>
+                    Es kann alternativer beginnender, schließender und seperierter Inhalt
+                    spezifiziert werden wenn Fehler dargestellt werden durch aufruf von
+                    verschiedenen Methoden auf dem Helfer:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>; Standard ist
+                            '&lt;ul class="errors"%s"&gt;&lt;li&gt;', wobei %s mit den in
+                            <code>$options</code> spezifizierten Attributen ersetzt wird.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>; Standard ist
+                            '&lt;/li&gt;&lt;li&gt;'.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>; Standard ist
+                            '&lt;/li&gt;&lt;/ul&gt;'.
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
+
             <listitem><para>
                 <code>formFile($name, $value, $attribs)</code>: Erstellt ein
                 &lt;input type="file" /&gt; Element.
@@ -93,6 +142,17 @@
             <listitem><para>
                 <code>formHidden($name, $value, $attribs)</code>: Erstellt ein
                 &lt;input type="hidden" /&gt; Element.
+            </para></listitem>
+
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep):</code>
+                Erstellt eine Liste von Checkboxen. <code>$options</code> sollte ein assoziatives
+                Array sein und kann beliebig tief werden. <code>$value</code> kann ein einzelner
+                Wert oder ein Array von ausgewählten Werten sein die Schlüsseln im
+                <code>$options</code> Array entsprechen. <code>$listsep</code> ist standardmäßig
+                ein HTML Break ("&lt;br /&gt;"). Standardmäßig wird dieses Element als Array
+                behandelt; alle Checkboxen teilen den gleichen Namen, und werden als Array
+                übertragen.
             </para></listitem>
 
             <listitem><para>
