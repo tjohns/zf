@@ -35,12 +35,44 @@
             </para></listitem>
 
             <listitem><para>
+                <code>fieldset($name, $content, $attribs)</code> : crée un ensemble de champs XHTML. Si <code>$attribs</code> contient une clé "legend", cette valeur sera utilisée pour lé gende du fieldset. Le fieldset entourera le contenu <code>$content</code> tel qu'il aura été fourni à l'aide.
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content)</code> : génère un formulaire XHTML. Tous les éléments <code>$attribs</code> sont échappés et rendus sous la forme d'attributs de la balise "form". Si <code>$content</code> est présent et n'est pas un booléen valant <code>false</code>, alors ce contenu est rendu à l'intérieurs des balises "form" ; si <code>$content</code> est un booléen valant <code>false</code> (par défaut), seul la balise ouvrante "form" est générée.
+            </para></listitem>
+
+            <listitem><para>
                 <code>formButton($name, $value, $attribs)</code> : crée un élément &lt;input type="button" /&gt;.
             </para></listitem>
 
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs, $options)</code> : crée un élément &lt;input type="checkbox" /&gt;. Le paramètre <code>$options</code> est un tableau dans lequel la première valeur est la valeur "checked", et la seconde "unchecked" (les valeurs par défaut sont '1' et '0'). Si <code>$value</code> correspond à la valeur "checked", la boite sera cochée.
             </para></listitem>
+
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options)</code> : génère une liste non ordonnée XHTML pour montrer des erreurs. <code>$errors</code> peut être une chaîne de caractères ou un tableau de chaînes ; <code>$options</code> peut être tout attribut que vous pourriez vouloir placer dans la balise ouvrante de la liste.
+                </para>
+
+                <para>
+                    Vous pouvez spécifier des éléments ouvrants, fermants et des séparateurs de contenu alternatifs lors du rendu des erreurs en appelant les différentes méthodes suivantes de l'aide :
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code> ; par défaut vaut "&lt;ul class="errors"%s"&gt;&lt;li&gt;", où <code>%s</code> est remplacé avec les attributs spécifiés dans <code>$options</code>.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code> ; par défaut vaut "&lt;/li&gt;&lt;li&gt;".
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code> ; par défaut vaut "&lt;/li&gt;&lt;/ul&gt;".
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs)</code>: crée un élément &lt;input type="file" /&gt;.
@@ -52,6 +84,10 @@
 
             <listitem><para>
                 <code>formLabel($name, $value, $attribs)</code> : crée un élément &lt;label&gt;, en réglant l'attribut <code>for</code> avec <code>$name</code>, et le texte du label avec <code>$value</code>. Si <code>disable</code> est fourni via <code>attribs</code>, rien n'est retourné.
+            </para></listitem>
+
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep)</code> : crée une list de cases à cocher. <code>$options</code> devrait être un tableau associatif, avec une profondeur arbitraire. <code>$value</code> peut être une valeur unique ou un tableau de valeurs sélectionnées qui correspondent aux clés du tableau <code>$options</code>. <code>$listsep</code> est un séparateur HTML ("&lt;br /&gt;") par défaut. Par défaut, cet élément est traité comme un tableau ; toutes les cases à cocher partagent le même nom, et sont soumises sous la forme d'un tableau.
             </para></listitem>
 
             <listitem><para>

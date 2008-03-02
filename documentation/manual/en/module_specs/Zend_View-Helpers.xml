@@ -113,7 +113,6 @@
                     should be a string or an array of strings;
                     <code>$options</code> should be any attributes you want
                     placed in the opening list tag.
-                    XHTML list. 
                 </para>
 
                 <para>
