@@ -281,31 +281,30 @@ $select = $db->select()
 
         <sect3 id="zend.db.select.building.columns-expr">
 
-            <title>Adding Expression Columns</title>
+            <title>Adicionando Colunas de Expressões</title>
 
             <para>
-                Columns in SQL queries are sometimes expressions, not simply
-                column names from a table.  Expressions should not have
-                correlation names or quoting applied.
-                If your column string contains parentheses, Zend_Db_Select
-                recognizes it as an expression.
+               Algumas vezes as colunas de uma consulta SQL são expressões, e não
+			   simplesmente o nome de uma couna da tabela. Expressões não devem usar 
+			   nomes de correlação ou aspas. Se a string da coluna possuir parênteses,
+			   Zend_Db_Select a reconhecerá como uma expressão.
             </para>
 
             <para>
-                You also can create an object of type Zend_Db_Expr explicitly,
-                to prevent a string from being treated as a column name.
-                Zend_Db_Expr is a minimal class that contains a single string.
-                Zend_Db_Select recognizes objects of type Zend_Db_Expr and
-                converts them back to string, but does not apply any
-                alterations, such as quoting or correlation names.
+                Você também pode criar um objeto do tipo Zend_Db_Expr explicitamente,
+                para prevenir que uma string seja tratada como um nome de coluna.
+				Zend_Db_Expr é uma classe diminuta que contém uma única string.
+				Zend_Db_Select reconhece obtejos do tipo Zend_Db_Expr e os converte 
+				novamente para strings, mas não efetua qualquer alteração como a 
+				colocação de aspas ou nomes de correlação.
             </para>
 
             <note>
                 <para>
-                    Using Zend_Db_Expr for column names is not necessary if your
-                    column expression contains parentheses; Zend_Db_Select
-                    recognizes parentheses and treats the string as an expression,
-                    skipping quoting and correlation names.
+                    O uso de Zend_Db_Expr para nomes de colunas não é necessário se as
+					expressões contiverem parênteses; Zend_Db_Select reconhece os parênteses
+					e trata a string como uma expresão, ignorando a colocação de aspas e de
+					nomes de correlação.
                 </para>
             </note>
 
