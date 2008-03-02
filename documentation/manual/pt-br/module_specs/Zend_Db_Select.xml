@@ -309,7 +309,7 @@ $select = $db->select()
             </note>
 
             <example id="zend.db.select.building.columns-expr.example">
-                <title>Examples of specifying columns containing expressions</title>
+                <title>Exemplos de especificação de colunas contendo expressões</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Build this query:
@@ -340,31 +340,30 @@ $select = $db->select()
             </example>
 
             <para>
-                In the cases above, Zend_Db_Select does not alter the
-                string to apply correlation names or identifier quoting.
-                If those changes are necessary to resolve ambiguity,
-                you must make the changes manually in the string.
+                Nos casos acima, Zend_Db_Select não altera a string
+				para colocar os nomes de correlação ou aspas. Se as 
+				mudanças forem necessárias para evitar alguma ambiguidade,
+				você deve fazê-las manualmente na string.
             </para>
 
             <para>
-                If your column names are SQL keywords or contain special
-                characters, you should use the Adapter's
-                <code>quoteIdentifier()</code> method and interpolate the
-                result into the string.  The <code>quoteIdentifier()</code>
-                method uses SQL quoting to delimit the identifier, which
-                makes it clear that it is an identifier for a table or
-                a column, and not any other part of SQL syntax.
+                Se os nomes das colunas são palavras-chave SQL ou possuem 
+				caracteres especiais, você deve usar o método <code>quoteIdentifier()</code>
+				da classe Adapter, e interpolar o resultado na string. O método
+				<code>quoteIdentifier()</code> usa aspas no SQL para delimitar o identificador,
+				o que deixa claro que ele é um identificador de uma tabela ou coluna e não
+				parte da síntaxe SQL.
             </para>
 
             <para>
-                Your code is more database-independent if you use the
-                <code>quoteIdentifier()</code> method instead of typing
-                quotes literally in your string, because some RDBMS brands use
-                nonstandard symbols for quoting identifiers.
-                The <code>quoteIdentifier()</code> method is designed to use
-                the appropriate quoting symbols based on the adapter type.
-                The <code>quoteIdentifier()</code> method also escapes any quote
-                characters that appear within the identifier name itself.
+                Seu código fica mais independente de base de dados se você
+				usar o método <code>quoteIdentifier()</code> ao invés de digitar
+				as aspas nas strings porque algumas marcas de SGBD Relacionais usam
+				símbolos fora do padrão para referenciar identificadores.
+				O método <code>quoteIdentifier()</code> é projetado para usar
+				os símbolos de referência apropriados de acordo com o tipo de adaptador.
+				O método  <code>quoteIdentifier()</code> também ignora qualquer
+				caracter de referência que aparecer no nome de um identificador.
             </para>
 
             <example id="zend.db.select.building.columns-quoteid.example">
