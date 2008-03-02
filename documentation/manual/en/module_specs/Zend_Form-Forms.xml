@@ -338,6 +338,7 @@ $form->setElementDecorators(array(
 ));
 ?>]]></programlisting>
 
+            </example>
                 <note>
                     <title>Some Decorators are Inappropriate for Some Elements</title>
 
@@ -359,7 +360,6 @@ $form->setElementDecorators(array(
                         prevent unwanted output.
                     </para>
                 </note>
-            </example>
 
             <example id="zend.form.forms.elements.global.filters">
                 <title>Setting Filters for All Elements</title>
