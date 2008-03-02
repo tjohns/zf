@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8462 -->
+<!-- EN-Revision: 8511 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -336,6 +336,7 @@ $form->setElementDecorators(array(
 ));
 ?>]]></programlisting>
 
+            </example>
                 <note>
                     <title>要素によっては不適切なデコレータもある</title>
 
@@ -355,7 +356,6 @@ $form->setElementDecorators(array(
                         予期せぬ結果を防ぐ必要があります。
                     </para>
                 </note>
-            </example>
 
             <example id="zend.form.forms.elements.global.filters">
                 <title>すべての要素に対するフィルタの設定</title>
