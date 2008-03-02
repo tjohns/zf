@@ -62,7 +62,7 @@
             
             <listitem>
                 <para>
-                    <code>formErrors($errors, $options):</code> 生成一个无顺序的 XHTML 列表来显示错误。 <code>$errors</code> 是个字符串或字符串数组；<code>$options</code>  是你想放入开头列表标签的任何属性。
+                    <code>formErrors($errors, $options):</code> 生成一个无顺序的 XHTML 列表来显示错误。 <code>$errors</code> 是个字符串或字符串数组；<code>$options</code> 是你想放入开头列表标签的任何属性。
                 </para>
 
                 <para>
