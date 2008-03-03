@@ -46,7 +46,7 @@ abstract class Zend_Translate_Adapter {
     protected $_options = array(
         'clear'  => false, // clear previous loaded translation data
         'scan'   => null,  // where to find the locale
-        'locale' => null   // actual set locale/language 
+        'locale' => 'auto' // actual set locale/language 
     );
 
     /**
@@ -380,23 +380,22 @@ abstract class Zend_Translate_Adapter {
     {
         if ($locale === null) {
             $locale = $this->_options['locale'];
-        } else {
-            if (!$locale = Zend_Locale::isLocale($locale)) {
-                // language does not exist, return original string
-                return $messageId;
-            }
+        }
+        if (!$locale = Zend_Locale::isLocale($locale)) {
+            // language does not exist, return original string
+            return $messageId;
         }
 
-        if ((array_key_exists($locale, $this->_translate)) and
-            (array_key_exists($messageId, $this->_translate[$locale]))) {
+        if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+            (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
             return $this->_translate[$locale][$messageId];
         } else if (strlen($locale) != 2) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if ((array_key_exists($locale, $this->_translate)) and
-                (array_key_exists($messageId, $this->_translate[$locale]))) {
+            if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+                (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
                 // return regionless translation (en_US -> en)
                 return $this->_translate[$locale][$messageId];
             }
