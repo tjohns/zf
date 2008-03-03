@@ -76,11 +76,6 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if (empty($data)) {
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
-        }
-
         $this->addTranslation($data, $locale, $options);
         $this->_automatic = true;
     }
@@ -100,11 +95,6 @@ abstract class Zend_Translate_Adapter {
      */
     public function addTranslation($data, $locale = null, array $options = array())
     {
-        if (empty($data)) {
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("Nothing to translate... please give translation data");
-        }
-
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
