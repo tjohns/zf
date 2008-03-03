@@ -145,7 +145,7 @@ $imfs->unlink('/foo.txt');]]>
       <para>
         Nirvanix divides its web services into 
         <ulink url="http://developer.nirvanix.com/sitefiles/1000/API.html#_Toc175999879">namespaces</ulink>.  
-        Each namespace encapsulates group of related operations. After getting
+        Each namespace encapsulates a group of related operations. After getting
         an instance of <code>Zend_Service_Nirvanix</code>, call the
         <code>getService()</code> method to create a proxy for the namespace
         you want to use. Above, a proxy for the <code>IMFS</code> namespace is created.
