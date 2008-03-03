@@ -131,7 +131,7 @@ class Zend_View_Helper_Partial
      * Set object key
      *
      * @param  string $key
-     * @return Zend_View_Helper_PartialLoop
+     * @return Zend_View_Helper_Partial
      */
     public function setObjectKey($key)
     {
