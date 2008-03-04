@@ -438,7 +438,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoId()
     {
-        $fullId = $this->getId();
+        $fullId = $this->getId()->getText();
         $position = strrpos($fullId, '/');
         if ($position === false) {
             require_once 'Zend/Gdata/App/Exception.php';
