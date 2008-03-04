@@ -77,7 +77,7 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         $result = $op1 - $op2;
         if (($result === INF)  or  (($result + $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
-            throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $res_1", $op1, $op2, $res_1);
+            throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $result", $op1, $op2, $result);
         }
         if ($op3 === null) {
             $op3 = Zend_Locale_Math_PhpMath::$_scale;
