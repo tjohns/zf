@@ -1,6 +1,6 @@
 <sect1 id="zend.ldap.using">
 
-    <title>Zend_Ldap</title>
+    <title>Introduction</title>
 
     <note>
         <title>Minimal Functionality</title>
@@ -13,8 +13,8 @@
     </note>
 
     <para>
-        Zend_Ldap is a class for performing LDAP operations including but not limited to binding, searching and
-        modifying entries in an LDAP directory.
+        <code>Zend_Ldap</code> is a class for performing LDAP operations including but not limited to binding,
+        searching and modifying entries in an LDAP directory.
     </para>
 
     <sect2 id="zend.ldap.using.theory-of-operation">
