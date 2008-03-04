@@ -496,7 +496,11 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Indian/Maldives', $date->getTimezone());
         try {
             $this->assertFalse($date->setTimezone('Unknown'));
-            $this->fail("exception expected");
+            // without new phpdate false timezones do not throw an exception !
+            // known and expected behaviour
+            if (function_exists('timezone_open')) {
+                $this->fail("exception expected");
+            }
         } catch (Zend_Date_Exception $e) {
             $this->assertRegexp('/not a known timezone/i', $e->getMessage());
             $this->assertSame('Unknown', $e->getOperand());
