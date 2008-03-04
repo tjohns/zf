@@ -411,7 +411,8 @@ class Zend_Locale_Format
             $number = $value;
         }
 
-        $prec   = call_user_func(Zend_Locale_Math::$sub, $value, $number, $options['precision']);
+        $prec = call_user_func(Zend_Locale_Math::$sub, $value, $number, $options['precision']);
+        $prec = Zend_Locale_Math::normalize($prec);
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
