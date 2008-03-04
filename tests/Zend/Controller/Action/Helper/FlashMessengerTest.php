@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
 // Call Zend_Controller_Action_Helper_FlashMessengerTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_FlashMessengerTest::main");
@@ -79,7 +85,7 @@ class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework
         $this->controller = new HelperFlashMessengerController($this->request, $this->response, array());
         $this->helper     = new Zend_Controller_Action_Helper_FlashMessenger($this->controller);
     }
-       
+
     public function testLoadFlashMessenger()
     {
         $this->markTestSkipped();
