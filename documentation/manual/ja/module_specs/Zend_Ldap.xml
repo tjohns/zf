@@ -1,7 +1,7 @@
-<!-- EN-Revision: 8421 -->
+<!-- EN-Revision: 8529 -->
 <sect1 id="zend.ldap.using">
 
-    <title>Zend_Ldap</title>
+    <title>導入</title>
 
     <note>
         <title>最小限の機能</title>
@@ -16,7 +16,7 @@
     </note>
 
     <para>
-        Zend_Ldap は LDAP の操作を行うクラスです。バインドだけが可能で、
+        <code>Zend_Ldap</code> は LDAP の操作を行うクラスです。バインドだけが可能で、
         LDAP ディレクトリ内のエントリの検索や変更には対応していません。
     </para>
 
