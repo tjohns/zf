@@ -106,7 +106,7 @@
                     <code>formErrors($errors, $options):</code> Erzeugt eine ungeordnete XHTML
                     Liste und zeigt Fehler an. <code>$errors</code> sollte ein String oder ein
                     Array von Strings sein; <code>$options</code> sollte irgendein Attribut sein
-                    das im beginnenden List Tag platziert werden soll. XHTML Liste.
+                    das im beginnenden List Tag platziert werden soll.
                 </para>
 
                 <para>
