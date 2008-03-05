@@ -50,6 +50,13 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
     protected $_validator;
 
     /**
+     * Whether an error occurred
+     *
+     * @var boolean
+     */
+    protected $_errorOccurred = false;
+
+    /**
      * Creates a new Zend_Validate_Date object for each test method
      *
      * @return void
@@ -133,7 +140,15 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_validator->setFormat('dd.MM.YYYY')->isValid('10.01.2008'));
         $this->assertTrue($this->_validator->setFormat('MMM yyyy')->isValid('Jan 2010'));
         $this->assertFalse($this->_validator->setFormat('dd/MM/yyyy')->isValid('2008/10/22'));
-        $this->assertTrue($this->_validator->setFormat('s')->isValid(0));
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $result = $this->_validator->setFormat('s')->isValid(0);
+        if (!$this->_errorOccurred) {
+            $this->assertTrue($result);
+        } else {
+            $this->markTestSkipped('Affected by bug described in ZF-2789');
+        }
+        restore_error_handler();
+        $this->_errorOccurred = false;
     }
 
     /**
@@ -144,6 +159,8 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testUseLocaleFormat()
     {
+        $errorOccurredLocal = false;
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $valuesExpected = array(
             '10.01.2008' => true,
             '32.02.2008' => false,
@@ -155,9 +172,35 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
             999999999999 => false,
             'Jan 1 2007' => false
             );
-        foreach ($valuesExpected as $input => $result) {
-            $this->assertEquals($result, $this->_validator->setLocale('de_AT')->isValid($input),
-                                "'$input' expected to be " . ($result ? '' : 'in') . 'valid');
+        foreach ($valuesExpected as $input => $resultExpected) {
+            $resultActual = $this->_validator->setLocale('de_AT')->isValid($input);
+            if (!$this->_errorOccurred) {
+                $this->assertEquals($resultExpected, $resultActual, "'$input' expected to be "
+                    . ($resultExpected ? '' : 'in') . 'valid');
+            } else {
+                $errorOccurredLocal = true;
+            }
+            $this->_errorOccurred = false;
         }
+        restore_error_handler();
+        if ($errorOccurredLocal) {
+            $this->markTestSkipped('Affected by bug described in ZF-2789');
+        }
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-2789
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
