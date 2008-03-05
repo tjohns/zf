@@ -64,14 +64,14 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
     /**
      * Optional format
      *
-     * @var mixed
+     * @var string|null
      */
     protected $_format;
 
     /**
      * Optional locale
      *
-     * @var mixed
+     * @var string|Zend_Locale|null
      */
     protected $_locale;
 
@@ -91,7 +91,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
     /**
      * Returns the locale option
      *
-     * @return string||null
+     * @return string|Zend_Locale|null
      */
     public function getLocale()
     {
@@ -120,7 +120,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
     /**
      * Returns the locale option
      *
-     * @return string||null
+     * @return string|null
      */
     public function getFormat()
     {
