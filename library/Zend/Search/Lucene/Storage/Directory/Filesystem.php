@@ -212,8 +212,6 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $trackErrors = ini_get('track_errors'); ini_set('track_errors', '1');
         if (!@unlink($this->_dirPath . '/' . $filename)) {
             ini_set('track_errors', $trackErrors);
-            throw $e;
-            
             throw new Zend_Search_Lucene_Exception('Can\'t delete file: ' . $php_errormsg);
         }
         ini_set('track_errors', $trackErrors);
