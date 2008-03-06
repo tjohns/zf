@@ -944,7 +944,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
             } else {
                 $r = new ReflectionClass($name);
                 if ($r->hasMethod('__construct')) {
-                    $validator = $r->newInstanceArgs($options);
+                    $validator = $r->newInstanceArgs((array) $options);
                 } else {
                     $validator = $r->newInstance();
                 }
@@ -1203,7 +1203,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
             } else {
                 $r = new ReflectionClass($name);
                 if ($r->hasMethod('__construct')) {
-                    $filter = $r->newInstanceArgs($options);
+                    $filter = $r->newInstanceArgs((array) $options);
                 } else {
                     $filter = $r->newInstance();
                 }

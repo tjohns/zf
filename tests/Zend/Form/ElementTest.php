@@ -598,6 +598,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($validator->zfBreakChainOnFailure);
     }
 
+    public function testOptionsAreCastToArrayWhenAddingValidator()
+    {
+        try {
+            $this->element->addValidator('Alnum', false, true);
+        } catch (Exception $e) {
+            $this->fail('Should be able to add non-array validator options');
+        }
+        $validator = $this->element->getValidator('Alnum');
+        $this->assertTrue($validator instanceof Zend_Validate_Alnum);
+        $this->assertTrue($validator->allowWhiteSpace);
+    }
+
     public function testCanRetrieveSingleValidatorRegisteredAsValidatorObjectUsingShortName()
     {
         $this->assertFalse($this->element->getValidator('digits'));
@@ -874,6 +886,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $filter = new Zend_Filter_Digits();
         $this->element->addFilter($filter);
         $test = $this->element->getFilter('digits');
+    }
+
+    public function testOptionsAreCastToArrayWhenAddingFilter()
+    {
+        try {
+            $this->element->addFilter('Alnum', true);
+        } catch (Exception $e) {
+            $this->fail('Should be able to add non-array filter options');
+        }
+        $filter = $this->element->getFilter('Alnum');
+        $this->assertTrue($filter instanceof Zend_Filter_Alnum);
+        $this->assertTrue($filter->allowWhiteSpace);
     }
 
     public function testCanAddMultipleFilters()
