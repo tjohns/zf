@@ -237,6 +237,11 @@ class Zend_Form implements Iterator, Countable
             unset($options['elementsBelongTo']);
         }
 
+        if (isset($options['attribs'])) {
+            $this->addAttribs($options['attribs']);
+            unset($options['attribs']);
+        }
+
         $forbidden = array(
             'Options', 'Config', 'PluginLoader', 'SubForms', 'View', 'Translator',
             'Attrib', 'Default',

@@ -107,6 +107,22 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->setOptions($options);
     }
 
+    public function testSetOptionsWithAttribsDoesNotOverwriteActionOrMethodOrName()
+    {
+        $attribs = $this->getOptions();
+        unset($attribs['action'], $attribs['method']);
+        $options = array(
+            'name'    => 'MYFORM',
+            'action'  => '/bar/baz',
+            'method'  => 'GET',
+            'attribs' => $attribs,
+        );
+        $form = new Zend_Form($options);
+        $this->assertEquals($options['name'], $form->getName());
+        $this->assertEquals($options['action'], $form->getAction());
+        $this->assertEquals(strtolower($options['method']), strtolower($form->getMethod()));
+    }
+
     public function getElementOptions()
     {
         $elements = array(
