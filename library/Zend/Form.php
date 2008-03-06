@@ -18,6 +18,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Validate_Interface */
+require_once 'Zend/Validate/Interface.php';
+
 /**
  * Zend_Form
  * 
@@ -27,7 +30,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-class Zend_Form implements Iterator, Countable
+class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 {
     /**#@+
      * Plugin loader type constants
@@ -1651,8 +1654,12 @@ class Zend_Form implements Iterator, Countable
      * @param  array $data 
      * @return boolean
      */
-    public function isValid(array $data)
+    public function isValid($data)
     {
+        if (!is_array($data)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception(__CLASS__ . '::' . __METHOD__ . ' expects an array');
+        }
         $translator = $this->getTranslator();
         $valid      = true;
 
