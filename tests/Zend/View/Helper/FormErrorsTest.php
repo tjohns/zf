@@ -5,8 +5,6 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 }
 
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/View/Helper/FormErrors.php';
 require_once 'Zend/View.php';
@@ -123,6 +121,17 @@ class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase
         $html = $this->helper->formErrors($errors);
         $this->assertNotContains($errors['bad'], $html);
         $this->assertContains('&', $html);
+    }
+
+    public function testCanDisableEscapingErrorMessages()
+    {
+        $errors = array(
+            'foo' => '<b>Field is required</b>',
+            'bar' => '<a href="/help">Please click here for more information</a>'
+        );
+        $html = $this->helper->formErrors($errors, array('escape' => false));
+        $this->assertContains($errors['foo'], $html);
+        $this->assertContains($errors['bar'], $html);
     }
 }
 
