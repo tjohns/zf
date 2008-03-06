@@ -120,6 +120,10 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 
     public function testStandAloneProcess()
     {
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) {
+            $this->markTestSkipped('DOMDocument::C14N() not available until PHP 5.2.0');
+        }
+
         $_SERVER['SERVER_NAME'] = "192.168.1.105";
         $_SERVER['SERVER_PORT'] = 80;
 
@@ -134,6 +138,10 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 
     public function testPlugins()
     {
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) {
+            $this->markTestSkipped('DOMDocument::C14N() not available until PHP 5.2.0');
+        }
+
         $adapter  = new _Zend_InfoCard_Test_Adapter();
         $infoCard = new Zend_InfoCard();
 
@@ -163,6 +171,10 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 
     public function testClaims()
     {
+        if (version_compare(PHP_VERSION, '5.2.0', '<')) {
+            $this->markTestSkipped('DOMDocument::C14N() not available until PHP 5.2.0');
+        }
+
         $infoCard = new Zend_InfoCard();
 
         $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);

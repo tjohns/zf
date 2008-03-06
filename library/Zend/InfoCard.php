@@ -384,11 +384,29 @@ class Zend_InfoCard
 
         $PKcipher = Zend_InfoCard_Cipher::getInstanceByURI($encryptedKey->getEncryptionMethod());
 
-        $symmetricKey = $PKcipher->decrypt(base64_decode($encryptedKey->getCipherValue(), true), file_get_contents($certificate_pair['private']), $certificate_pair['password']);
+        $base64DecodeSupportsStrictParam = version_compare(PHP_VERSION, '5.2.0', '>=');
+
+        if ($base64DecodeSupportsStrictParam) {
+            $keyCipherValueBase64Decoded = base64_decode($encryptedKey->getCipherValue(), true);
+        } else {
+            $keyCipherValueBase64Decoded = base64_decode($encryptedKey->getCipherValue());
+        }
+
+        $symmetricKey = $PKcipher->decrypt(
+            $keyCipherValueBase64Decoded,
+            file_get_contents($certificate_pair['private']),
+            $certificate_pair['password']
+            );
 
         $symCipher = Zend_InfoCard_Cipher::getInstanceByURI($encryptedData->getEncryptionMethod());
 
-        $signedToken = $symCipher->decrypt(base64_decode($encryptedData->getCipherValue(), true), $symmetricKey);
+        if ($base64DecodeSupportsStrictParam) {
+            $dataCipherValueBase64Decoded = base64_decode($encryptedData->getCipherValue(), true);
+        } else {
+            $dataCipherValueBase64Decoded = base64_decode($encryptedData->getCipherValue());
+        }
+
+        $signedToken = $symCipher->decrypt($dataCipherValueBase64Decoded, $symmetricKey);
 
         return $signedToken;
     }
