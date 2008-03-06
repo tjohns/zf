@@ -54,6 +54,11 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->clearRegistry();
     }
 
+    public function testZendFormImplementsZendValidateInterface()
+    {
+        $this->assertTrue($this->form instanceof Zend_Validate_Interface);
+    }
+
     // Configuration
 
     public function getOptions()
@@ -1363,6 +1368,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             'bar' => '123456789',
             'baz' => 'foo123BAR',
         );
+    }
+
+    public function testIsValidShouldThrowExceptionWithNonArrayArgument()
+    {
+        try {
+            $this->form->isValid(true);
+            $this->fail('isValid() should raise exception with non-array argument');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('expects an array', $e->getMessage());
+        }
     }
 
     public function testCanValidateFullFormContainingOnlyElements()
