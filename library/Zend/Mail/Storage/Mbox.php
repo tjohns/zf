@@ -33,9 +33,9 @@
 require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * @see Zend_Mail_Message
+ * @see Zend_Mail_Message_File
  */
-require_once 'Zend/Mail/Message.php';
+require_once 'Zend/Mail/Message/File.php';
 
 
 /**
@@ -71,6 +71,11 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     protected $_positions;
 
+    /**
+     * used message class, change it in an extened class to extend the returned message class
+     * @var string
+     */
+    protected $_messageClass = 'Zend_Mail_Message_File';
 
     /**
      * Count messages all messages in current box
@@ -131,11 +136,19 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      * Fetch a message
      *
      * @param  int $id number of message
-     * @return Zend_Mail_Message
+     * @return Zend_Mail_Message_File
      * @throws Zend_Mail_Storage_Exception
      */
     public function getMessage($id)
     {
+    	// TODO that's ugly, would be better to let the message class decide
+    	if (strtolower($this->_messageClass) == 'zend_mail_message_file' || is_subclass_of($this->_messageClass, 'zend_mail_message_file')) {
+    	    // TODO top/body lines
+    	    $messagePos = $this->_getPos($id);
+    	    return new $this->_messageClass(array('file' => $this->_fh, 'startPos' => $messagePos['start'],
+    	                                          'endPos' => $messagePos['end']));
+    	}
+
         $bodyLines = 0; // TODO: need a way to change that
 
         $message = $this->getRawHeader($id);

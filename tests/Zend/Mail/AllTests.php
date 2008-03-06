@@ -15,8 +15,10 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Mail/MboxTest.php';
+require_once 'Zend/Mail/MboxMessageOldTest.php';
 require_once 'Zend/Mail/MboxFolderTest.php';
 require_once 'Zend/Mail/MaildirTest.php';
+require_once 'Zend/Mail/MaildirMessageOldTest.php';
 require_once 'Zend/Mail/MaildirFolderTest.php';
 require_once 'Zend/Mail/MaildirWritableTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
@@ -39,6 +41,7 @@ class Zend_Mail_AllTests
         $suite->addTestSuite('Zend_Mail_MessageTest');
         $suite->addTestSuite('Zend_Mail_InterfaceTest');
         $suite->addTestSuite('Zend_Mail_MboxTest');
+        $suite->addTestSuite('Zend_Mail_MboxMessageOldTest');
         $suite->addTestSuite('Zend_Mail_MboxFolderTest');
         if (defined('TESTS_ZEND_MAIL_POP3_ENABLED') && constant('TESTS_ZEND_MAIL_POP3_ENABLED') == true) {
             $suite->addTestSuite('Zend_Mail_Pop3Test');
@@ -48,6 +51,7 @@ class Zend_Mail_AllTests
         }
         if (defined('TESTS_ZEND_MAIL_MAILDIR_ENABLED') && constant('TESTS_ZEND_MAIL_MAILDIR_ENABLED')) {
             $suite->addTestSuite('Zend_Mail_MaildirTest');
+            $suite->addTestSuite('Zend_Mail_MaildirMessageOldTest');
             $suite->addTestSuite('Zend_Mail_MaildirFolderTest');
             $suite->addTestSuite('Zend_Mail_MaildirWritableTest');
         }

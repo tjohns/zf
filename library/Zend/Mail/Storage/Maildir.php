@@ -27,9 +27,9 @@
 require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * @see Zend_Mail_Message
+ * @see Zend_Mail_Message_File
  */
-require_once 'Zend/Mail/Message.php';
+require_once 'Zend/Mail/Message/File.php';
 
 /**
  * @see Zend_Mail_Storage
@@ -46,6 +46,12 @@ require_once 'Zend/Mail/Storage.php';
  */
 class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
 {
+	/**
+     * used message class, change it in an extened class to extend the returned message class
+     * @var string
+     */
+    protected $_messageClass = 'Zend_Mail_Message_File';
+
     /**
      * data of found message files in maildir dir
      * @var array
@@ -163,11 +169,17 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      * Fetch a message
      *
      * @param  int $id number of message
-     * @return Zend_Mail_Message
+     * @return Zend_Mail_Message_File
      * @throws Zend_Mail_Storage_Exception
      */
     public function getMessage($id)
     {
+    	// TODO that's ugly, would be better to let the message class decide
+    	if (strtolower($this->_messageClass) == 'zend_mail_message_file' || is_subclass_of($this->_messageClass, 'zend_mail_message_file')) {
+			return new $this->_messageClass(array('file'  => $this->_getFileData($id, 'filename'),
+			                                      'flags' => $this->_getFileData($id, 'flags')));
+		}
+		
         return new $this->_messageClass(array('handler' => $this, 'id' => $id, 'headers' => $this->getRawHeader($id),
                                               'flags'   => $this->_getFileData($id, 'flags')));
     }

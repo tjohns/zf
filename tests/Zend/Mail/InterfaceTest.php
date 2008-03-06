@@ -91,7 +91,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         foreach ($list as $key => $message) {
-            $this->assertTrue($message instanceof Zend_Mail_Message, 'value in iteration is not a mail message');
+            $this->assertTrue($message instanceof Zend_Mail_Message_Interface, 'value in iteration is not a mail message');
         }
     }
 

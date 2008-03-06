@@ -25,6 +25,11 @@
  */
 require_once 'Zend/Mime/Decode.php';
 
+/**
+ * @see Zend_Mail_Part_Interface
+ */
+require_once 'Zend/Mail/Part/Interface.php';
+
 
 /**
  * @category   Zend
@@ -32,7 +37,7 @@ require_once 'Zend/Mime/Decode.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Part implements RecursiveIterator
+class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
 {
     /**
      * headers of part as array
