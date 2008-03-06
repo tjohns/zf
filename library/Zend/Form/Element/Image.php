@@ -39,14 +39,18 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
      * 
      * @return void
      */
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return;
+        }
+
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('Image')
-                ->addDecorator('Errors')
-                ->addDecorator('HtmlTag', array('tag' => 'dd'))
-                ->addDecorator('Label', array('tag' => 'dt'));
+                 ->addDecorator('Errors')
+                 ->addDecorator('HtmlTag', array('tag' => 'dd'))
+                 ->addDecorator('Label', array('tag' => 'dt'));
         }
     }
 }

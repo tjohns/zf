@@ -337,8 +337,8 @@ $form->setElementDecorators(array(
     'Label'
 ));
 ?>]]></programlisting>
-
             </example>
+
                 <note>
                     <title>Some Decorators are Inappropriate for Some Elements</title>
 
@@ -502,6 +502,30 @@ $login = $form->getDisplayGroup('login');
 // Using overloading:
 $login = $form->login;
 ?>]]></programlisting>
+
+        <note>
+            <title>Default Decorators Do Not Need to Be Loaded</title>
+
+            <para>
+                By default, the default decorators are loaded during object
+                initialization. You can disable this by passing the
+                'disableLoadDefaultDecorators' option when creating a display
+                group:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form->addDisplayGroup(
+    array('foo', 'bar'), 
+    'foobar', 
+    array('disableLoadDefaultDecorators' => true)
+);
+]]></programlisting>
+            
+            <para>
+                This option may be mixed with any other options you pass,
+                both as array options or in a <code>Zend_Config</code> object.
+            </para>
+        </note>
 
         <sect3 id="zend.form.forms.displaygroups.global">
             <title>Global Operations</title>
@@ -1025,6 +1049,25 @@ $form->setDecorators(array(
             Any attributes set on the form object will be used as HTML
             attributes of the <code>&lt;form&gt;</code> tag.
         </para>
+
+        <note>
+            <title>Default Decorators Do Not Need to Be Loaded</title>
+
+            <para>
+                By default, the default decorators are loaded during object
+                initialization. You can disable this by passing the
+                'disableLoadDefaultDecorators' option to the constructor:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
+]]></programlisting>
+            
+            <para>
+                This option may be mixed with any other options you pass,
+                both as array options or in a <code>Zend_Config</code> object.
+            </para>
+        </note>
 
         <note>
             <title>Using Multiple Decorators of the Same Type</title>

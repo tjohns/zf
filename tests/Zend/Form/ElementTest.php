@@ -944,6 +944,13 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
+    public function testCanDisableRegisteringDefaultDecoratorsDuringInitialization()
+    {
+        $element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));
+        $decorators = $element->getDecorators();
+        $this->assertEquals(array(), $decorators);
+    }
+
     public function testAddingInvalidDecoratorThrowsException()
     {
         try {
