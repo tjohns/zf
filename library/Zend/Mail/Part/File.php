@@ -166,6 +166,17 @@ class Zend_Mail_Part_File extends Zend_Mail_Part
     }
 
     /**
+     * Return size of part
+     *
+     * Quite simple implemented currently (not decoding). Handle with care.
+     *
+     * @return int size
+     */
+    public function getSize() {
+    	return $this->_contentPos[1] - $this->_contentPos[0];
+    }
+
+    /**
      * Get part of multipart message
      *
      * @param  int $num number of part starting with 1 for first part

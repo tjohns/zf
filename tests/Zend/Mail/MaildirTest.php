@@ -407,4 +407,10 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
         $this->assertEquals($mail->getMessage(4)->getPart(2)->contentType, 'text/x-vertical');
 	}
+
+	public function testPartSize()
+	{
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+        $this->assertEquals($mail->getMessage(4)->getPart(2)->getSize(), 88);
+	}
 }

@@ -182,6 +182,18 @@ class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
     }
 
     /**
+     * Return size of part
+     *
+     * Quite simple implemented currently (not decoding). Handle with care.
+     *
+     * @return int size
+     */
+    public function getSize() {
+    	return strlen($this->getContent());
+    }
+
+
+    /**
      * Cache content and split in parts if multipart
      *
      * @return null

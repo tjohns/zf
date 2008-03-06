@@ -49,6 +49,12 @@ interface Zend_Mail_Part_Interface extends RecursiveIterator
      */
     public function getContent();
 
+    /**
+     * Return size of part
+     *
+     * @return int size
+     */
+    public function getSize();
 
     /**
      * Get part of multipart message
