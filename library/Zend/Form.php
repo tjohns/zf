@@ -109,6 +109,12 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     protected $_elementsBelongTo;
 
     /**
+     * Are there errors in the form?
+     * @var bool
+     */
+    protected $_errorsExist = false;
+
+    /**
      * Form order
      * @var int|null
      */
@@ -1691,6 +1697,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 }
             }
         }
+
+        $this->_errorsExist = !$valid;
         return $valid;
     }
 
@@ -1742,6 +1750,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 }
             }
         }
+
+        $this->_errorsExist = !$valid;
         return $valid;
     }
 
@@ -1767,6 +1777,16 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 
     public function persistData()
     {
+    }
+
+    /**
+     * Are there errors in the form?
+     * 
+     * @return bool
+     */
+    public function isErrors()
+    {
+        return $this->_errorsExist;
     }
 
     /**
