@@ -219,12 +219,13 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/mycontroller/myaction?foo=bar', $request->getRequestUri());
     }
 
-    public function testSetRequestUriPassesUriThroughUrldecode()
+    public function testSetRequestUriDoesNotPassUriThroughUrldecode()
     {
         $request = new Zend_Controller_Request_Http();
         $request->setRequestUri('/foo/bar?foo=bar%20baz');
         $requestUri = $request->getRequestUri();
-        $this->assertEquals('/foo/bar?foo=bar baz', $requestUri);
+        $this->assertNotEquals('/foo/bar?foo=bar baz', $requestUri);
+        $this->assertEquals('/foo/bar?foo=bar%20baz', $requestUri);
     }
 
     public function testIsPost()
