@@ -70,6 +70,12 @@ class Zend_Form implements Iterator, Countable
     protected $_description;
 
     /**
+     * Should we disable loading the default decorators?
+     * @var bool
+     */
+    protected $_disableLoadDefaultDecorators = false;
+
+    /**
      * Display group prefix paths
      * @var array
      */
@@ -185,7 +191,7 @@ class Zend_Form implements Iterator, Countable
             $this->setConfig($options);
         }
 
-        $this->_loadDefaultDecorators();
+        $this->loadDefaultDecorators();
     }
 
     /**
@@ -2371,12 +2377,38 @@ class Zend_Form implements Iterator, Countable
     }
 
     /**
+     * Set flag to disable loading default decorators
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form
+     */
+    public function setDisableLoadDefaultDecorators($flag)
+    {
+        $this->_disableLoadDefaultDecorators = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Should we load the default decorators?
+     * 
+     * @return bool
+     */
+    public function loadDefaultDecoratorsIsDisabled()
+    {
+        return $this->_disableLoadDefaultDecorators;
+    }
+
+    /**
      * Load the default decorators
      * 
      * @return void
      */
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return;
+        }
+
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('FormElements')

@@ -1982,6 +1982,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
     }
 
+    public function testCanDisableRegisteringFormDecoratorsDuringInitialization()
+    {
+        $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
+        $decorators = $form->getDecorators();
+        $this->assertEquals(array(), $decorators);
+    }
+
     public function testCanAddSingleDecoratorAsString()
     {
         $this->form->clearDecorators();

@@ -189,6 +189,17 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
     }
 
+    public function testCanDisableRegisteringDefaultDecoratorsDuringInitialization()
+    {
+        $group = new Zend_Form_DisplayGroup(
+            'test',
+            $this->loader,
+            array('disableLoadDefaultDecorators' => true)
+        );
+        $decorators = $group->getDecorators();
+        $this->assertEquals(array(), $decorators);
+    }
+
     public function testAddingInvalidDecoratorThrowsException()
     {
         try {

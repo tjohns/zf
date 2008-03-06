@@ -48,6 +48,12 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     protected $_description;
 
     /**
+     * Should we disable loading the default decorators?
+     * @var bool
+     */
+    protected $_disableLoadDefaultDecorators = false;
+
+    /**
      * Element order
      * @var array
      */
@@ -113,13 +119,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
             $this->setConfig($options);
         }
 
-        $decorators = $this->getDecorators();
-        if (empty($decorators)) {
-            $this->addDecorator('FormElements')
-                 ->addDecorator('HtmlTag', array('tag' => 'dl'))
-                 ->addDecorator('Fieldset')
-                 ->addDecorator('DtDdWrapper');
-        }
+        $this->loadDefaultDecorators();
     }
 
     /**
@@ -530,6 +530,48 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     }
 
     // Decorators
+
+    /**
+     * Set flag to disable loading default decorators
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setDisableLoadDefaultDecorators($flag)
+    {
+        $this->_disableLoadDefaultDecorators = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Should we load the default decorators?
+     * 
+     * @return bool
+     */
+    public function loadDefaultDecoratorsIsDisabled()
+    {
+        return $this->_disableLoadDefaultDecorators;
+    }
+
+    /**
+     * Load default decorators
+     * 
+     * @return void
+     */
+    public function loadDefaultDecorators()
+    {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return;
+        }
+
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('FormElements')
+                 ->addDecorator('HtmlTag', array('tag' => 'dl'))
+                 ->addDecorator('Fieldset')
+                 ->addDecorator('DtDdWrapper');
+        }
+    }
 
     /**
      * Instantiate a decorator based on class name or class name fragment

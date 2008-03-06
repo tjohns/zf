@@ -82,6 +82,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_description;
 
     /**
+     * Should we disable loading the default decorators?
+     * @var bool
+     */
+    protected $_disableLoadDefaultDecorators = false;
+
+    /**
      * Validation errors
      * @var array
      */
@@ -211,7 +217,29 @@ class Zend_Form_Element implements Zend_Validate_Interface
         /**
          * Register ViewHelper decorator by default
          */
-        $this->_loadDefaultDecorators();
+        $this->loadDefaultDecorators();
+    }
+
+    /**
+     * Set flag to disable loading default decorators
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setDisableLoadDefaultDecorators($flag)
+    {
+        $this->_disableLoadDefaultDecorators = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Should we load the default decorators?
+     * 
+     * @return bool
+     */
+    public function loadDefaultDecoratorsIsDisabled()
+    {
+        return $this->_disableLoadDefaultDecorators;
     }
 
     /**
@@ -219,8 +247,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * 
      * @return void
      */
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return;
+        }
+
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
