@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+    <context type="resource" name="project" class="Zend_Build_Resource_Project">
+        <attribute getopt="name|n">
+            <usage>
+                The name of the project.
+            </usage>
+        </attribute>
+        <attribute getopt="project-profile|p=s">
+            <usage>
+                The project profile to use.
+            </usage>
+        </attribute>
+    </context>
+</configdata>
