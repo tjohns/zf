@@ -353,7 +353,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
             }
         }
 
-        $this->_requestUri = urldecode($requestUri);
+        $this->_requestUri = $requestUri;
         return $this;
     }
 
