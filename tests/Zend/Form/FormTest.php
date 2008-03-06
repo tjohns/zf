@@ -2354,6 +2354,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator->getAdapter(), $received);
     }
 
+    public function testCanDisableTranslation()
+    {
+        $this->testCanSetDefaultGlobalTranslator();
+        $this->form->setDisableTranslator(true);
+        $this->assertNull($this->form->getTranslator());
+    }
+
     // Iteration
     
     public function testFormObjectIsIterableAndIteratesElements()

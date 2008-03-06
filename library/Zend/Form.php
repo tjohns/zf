@@ -180,6 +180,12 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     protected static $_translatorDefault;
 
     /**
+     * is the translator disabled?
+     * @var bool
+     */
+    protected $_translatorDisabled = false;
+
+    /**
      * @var Zend_View_Interface
      */
     protected $_view;
@@ -2217,6 +2223,10 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     public function getTranslator()
     {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
         if (null === $this->_translator) {
             return self::getDefaultTranslator();
         }
@@ -2243,6 +2253,28 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             }
         }
         return self::$_translatorDefault;
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     * 
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
     }
 
     /**

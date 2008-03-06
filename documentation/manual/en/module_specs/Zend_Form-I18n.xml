@@ -19,6 +19,18 @@
         object and translation files
     </para>
 
+    <note>
+        <title>Translation Can Be Turned Off Per Item</title>
+
+        <para>
+            You can disable translation for any form, element, display group, or
+            sub form by calling its <code>setDisableTranslator($flag)</code>
+            method or passing a <code>disableTranslator</code> option to the
+            object. This can be useful when you want to selectively disable
+            translation for individual elements or sets of elements.
+        </para>
+    </note>
+
     <sect2 id="zend.form.i18n.initialization">
         <title>Initializing I18n in Forms</title>
 
