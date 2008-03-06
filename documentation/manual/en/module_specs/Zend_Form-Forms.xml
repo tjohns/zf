@@ -1609,7 +1609,7 @@ class My_Form_Login extends Zend_Form
                      array('Label', array('class' => 'label'))
                  ));
 
-        $password = new Zend_Form_Element_Password('password);
+        $password = new Zend_Form_Element_Password('password');
         $password->class = 'formtext';
         $password->setLabel('Username:')
                  ->setDecorators(array(
