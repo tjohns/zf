@@ -145,9 +145,19 @@ class Zend_InfoCard_Xml_Security
                 throw new Zend_InfoCard_Xml_Security_Exception("Unknown or unsupported DigestMethod Requested");
         }
 
-        $dValue = base64_decode((string)$sxe->Signature->SignedInfo->Reference->DigestValue, true);
+        $base64DecodeSupportsStrictParam = version_compare(PHP_VERSION, '5.2.0', '>=');
 
-        $signatureValue = base64_decode((string)$sxe->Signature->SignatureValue, true);
+        if ($base64DecodeSupportsStrictParam) {
+            $dValue = base64_decode((string)$sxe->Signature->SignedInfo->Reference->DigestValue, true);
+        } else {
+            $dValue = base64_decode((string)$sxe->Signature->SignedInfo->Reference->DigestValue);
+        }
+
+        if ($base64DecodeSupportsStrictParam) {
+            $signatureValue = base64_decode((string)$sxe->Signature->SignatureValue, true);
+        } else {
+            $signatureValue = base64_decode((string)$sxe->Signature->SignatureValue);
+        }
 
         $transformer = new Zend_InfoCard_Xml_Security_Transform();
 
