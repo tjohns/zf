@@ -153,6 +153,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_translator;
 
     /**
+     * Is translation disabled?
+     * @var bool
+     */
+    protected $_translatorDisabled = false;
+
+    /**
      * Element type
      * @var string
      */
@@ -341,6 +347,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function getTranslator()
     {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
         if (null === $this->_translator) {
             require_once 'Zend/Form.php';
             return Zend_Form::getDefaultTranslator();
@@ -348,6 +358,27 @@ class Zend_Form_Element implements Zend_Validate_Interface
         return $this->_translator;
     }
 
+    /**
+     * Indicate whether or not translation should be disabled
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     * 
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
+    }
 
     // Metadata
 

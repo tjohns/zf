@@ -95,6 +95,12 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
     protected $_translator;
 
     /**
+     * Is translation disabled?
+     * @var bool
+     */
+    protected $_translatorDisabled = false;
+
+    /**
      * @var Zend_View_Interface
      */
     protected $_view;
@@ -832,12 +838,38 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
      */
     public function getTranslator()
     {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
         if (null === $this->_translator) {
             require_once 'Zend/Form.php';
             return Zend_Form::getDefaultTranslator();
         }
 
         return $this->_translator;
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_DisplayGroup
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     * 
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
     }
 
     // Interfaces: Iterator, Countable

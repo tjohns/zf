@@ -121,6 +121,13 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator->getAdapter(), $received);
     }
 
+    public function testCanDisableTranslation()
+    {
+        $this->testGetTranslatorRetrievesGlobalDefaultWhenAvailable();
+        $this->element->setDisableTranslator(true);
+        $this->assertNull($this->element->getTranslator());
+    }
+
     public function testSetNameNormalizesValueToContainOnlyValidVariableCharacters()
     {
         $this->element->setName('f%\o^&*)o\(%$b#@!.a}{;-,r');

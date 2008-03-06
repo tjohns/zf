@@ -373,6 +373,13 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($translator->getAdapter(), $received);
     }
 
+    public function testCanDisableTranslation()
+    {
+        $this->testGetTranslatorRetrievesGlobalDefaultWhenAvailable();
+        $this->group->setDisableTranslator(true);
+        $this->assertNull($this->group->getTranslator());
+    }
+
     // Iteration
 
     public function setupIteratorElements()
