@@ -62,7 +62,6 @@ class Zend_Mail_Part_File extends Zend_Mail_Part
     public function __construct(array $params)
     {
     	if (empty($params['file'])) {
-    	var_dump($params);
 			/**
 			 * @see Zend_Mail_Exception
 			 */
@@ -184,6 +183,7 @@ class Zend_Mail_Part_File extends Zend_Mail_Part
             throw new Zend_Mail_Exception('part not found');
         }
 
-        return new self($this->_fh, $this->_partPos[$num][0], $this->_partPos[$num][1]);
+        return new self(array('file' => $this->_fh, 'startPos' => $this->_partPos[$num][0], 
+                              'endPos' => $this->_partPos[$num][1]));
     }
 }
