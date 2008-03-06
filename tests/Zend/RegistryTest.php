@@ -198,13 +198,10 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
     public function testRegistryExceptionClassNotFound()
     {
         try {
-            $registry = Zend_Registry::setClassName('classdoesnotexist');
+            $registry = @Zend_Registry::setClassName('classdoesnotexist');
             $this->fail('Expected exception, because we cannot initialize the registry using a non-existent class.');
         } catch (Zend_Exception $e) {
-            $this->assertTrue(is_array($e->includeErrors));
-            $this->assertEquals(2, count($e->includeErrors));
-            $this->assertRegExp('/failed to open stream: No such file/i', $e->includeErrors[0]->errstr);
-            $this->assertRegExp('/Failed opening \'classdoesnotexist\.php\'/i', $e->includeErrors[1]->errstr);
+            $this->assertRegExp('/file .* was loaded but .*/i', $e->getMessage());
         }
     }
 
