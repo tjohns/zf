@@ -121,6 +121,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
                 throw new Zend_Search_Lucene_Exception('Path exists, but it\'s not a directory');
             } else {
                 if (!self::mkdirs($path)) {
+                    require_once 'Zend/Search/Lucene/Exception.php';
                     throw new Zend_Search_Lucene_Exception("Can't create directory '$path'.");
                 }
             }
@@ -186,6 +187,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $trackErrors = ini_get('track_errors'); ini_set('track_errors', '1');
         if (!@chmod($this->_dirPath . '/' . $filename, self::$_defaultFilePermissions)) {
             ini_set('track_errors', $trackErrors);
+            require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception($php_errormsg);
         }
         ini_set('track_errors', $trackErrors);
@@ -212,6 +214,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $trackErrors = ini_get('track_errors'); ini_set('track_errors', '1');
         if (!@unlink($this->_dirPath . '/' . $filename)) {
             ini_set('track_errors', $trackErrors);
+            require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('Can\'t delete file: ' . $php_errormsg);
         }
         ini_set('track_errors', $trackErrors);
@@ -298,6 +301,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
 
         if (file_exists($this->_dirPath . '/' . $to)) {
             if (!unlink($this->_dirPath . '/' . $to)) {
+                require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Delete operation failed');
             }
         }
@@ -308,6 +312,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $success = @rename($this->_dirPath . '/' . $from, $this->_dirPath . '/' . $to);
         if (!$success) {
             ini_set('track_errors', $trackErrors);
+            require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception($php_errormsg);
         }
 
