@@ -140,7 +140,7 @@ class Zend_Form_Decorator_Image extends Zend_Form_Decorator_Abstract
         $tag       = $this->getTag();
         $placement = $this->getPlacement();
         $separator = $this->getSeparator();
-        $options   = $this->getOptions();
+        $options   = array_merge($element->getAttribs(), $this->getOptions());
 
         $image = $view->formImage($element->getName(), $image, $options); 
 

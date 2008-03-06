@@ -151,6 +151,25 @@ class Zend_Form_Decorator_ImageTest extends PHPUnit_Framework_TestCase
         $image = $this->decorator->render('content');
         $this->assertRegexp('#<input[^>]*>.*?(content)#s', $image, $image);
     }
+
+    /**
+     * @see ZF-2714
+     */
+    public function testImageElementAttributesPassedWithDecoratorOptionsToViewHelper()
+    {
+        $element = new Zend_Form_Element_Image('foo');
+        $element->setValue('foobar')
+                ->setAttrib('onClick', 'foo()')
+                ->setAttrib('id', 'foo-element')
+                ->setView($this->getView());
+        $this->decorator->setElement($element)
+                        ->setOption('class', 'imageclass');
+
+        $image = $this->decorator->render('');
+        $this->assertContains('class="imageclass"', $image);
+        $this->assertContains('onClick="foo()"', $image);
+        $this->assertContains('id="foo-element"', $image);
+    }
 }
 
 // Call Zend_Form_Decorator_ImageTest::main() if this source file is executed directly.
