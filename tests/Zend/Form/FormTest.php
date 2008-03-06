@@ -1736,6 +1736,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete('Zend_Form does not implement session storage at this time');
     }
+
+    public function testCanCheckIfErrorsAreRegistered()
+    {
+        $this->assertFalse($this->form->isErrors());
+        $this->testCanValidateFullFormContainingOnlyElements();
+        $this->assertTrue($this->form->isErrors());
+    }
     
     public function testCanRetrieveErrorCodesFromAllElementsAfterFailedValidation()
     {
