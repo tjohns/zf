@@ -62,26 +62,26 @@ class Zend_View_Helper_FormImage extends Zend_View_Helper_FormElement
             unset($attribs['src']);
         }
 
-        // unset any 'alt' attrib
-        if (isset($attribs['alt'])) {
-            unset($attribs['alt']);
+        // Disabled?
+        $disabled = '';
+        if ($disable) {
+            $disabled = ' disabled="disabled"';
+        }
+        
+        // XHTML or HTML end tag?
+        $endTag = ' />';
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+            $endTag= '>';
         }
 
         // build the element
-        if ($disable) {
-            // disabled, just an image tag
-            $xhtml = '<image'
-                   . ' alt="' . $this->view->escape($name) . '"'
-                   . ' src="' . $this->view->escape($value) . '"'
-                   . $this->_htmlAttribs($attribs) . ' />';
-        } else {
-            // enabled
-            $xhtml = '<input type="image"'
-                   . ' name="' . $this->view->escape($name) . '"'
-                   . ' id="' . $this->view->escape($id) . '"'
-                   . ' src="' . $this->view->escape($value) . '"'
-                   . $this->_htmlAttribs($attribs) . ' />';
-        }
+        $xhtml = '<input type="image"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' src="' . $this->view->escape($value) . '"'
+                . $disabled
+                . $this->_htmlAttribs($attribs) 
+                . $endTag;
 
         return $xhtml;
     }

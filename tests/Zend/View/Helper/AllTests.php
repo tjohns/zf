@@ -12,6 +12,7 @@ require_once 'Zend/View/Helper/FormButtonTest.php';
 require_once 'Zend/View/Helper/FormCheckboxTest.php';
 require_once 'Zend/View/Helper/FormErrorsTest.php';
 require_once 'Zend/View/Helper/FormFileTest.php';
+require_once 'Zend/View/Helper/FormImageTest.php';
 require_once 'Zend/View/Helper/FormLabelTest.php';
 require_once 'Zend/View/Helper/FormMultiCheckboxTest.php';
 require_once 'Zend/View/Helper/FormPasswordTest.php';
@@ -66,6 +67,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_FormCheckboxTest');
         $suite->addTestSuite('Zend_View_Helper_FormErrorsTest');
         $suite->addTestSuite('Zend_View_Helper_FormFileTest');
+        $suite->addTestSuite('Zend_View_Helper_FormImageTest');
         $suite->addTestSuite('Zend_View_Helper_FormLabelTest');
         $suite->addTestSuite('Zend_View_Helper_FormMultiCheckboxTest');
         $suite->addTestSuite('Zend_View_Helper_FormPasswordTest');
