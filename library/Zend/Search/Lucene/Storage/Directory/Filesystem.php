@@ -118,6 +118,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
     {
         if (!is_dir($path)) {
             if (file_exists($path)) {
+                require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Path exists, but it\'s not a directory');
             } else {
                 if (!self::mkdirs($path)) {
