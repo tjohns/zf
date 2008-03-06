@@ -60,6 +60,14 @@ class Zend_Form_Element_ImageTest extends PHPUnit_Framework_TestCase
         $decorator = $this->element->getDecorator('Image');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Image);
     }
+
+    /**
+     * ZF-2717
+     */
+    public function testImageShouldSetHelperPropertyToFormImageByDefault()
+    {
+        $this->assertEquals('formImage', $this->element->helper);
+    }
 }
 
 // Call Zend_Form_Element_ImageTest::main() if this source file is executed directly.

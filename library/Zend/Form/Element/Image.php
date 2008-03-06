@@ -35,6 +35,12 @@ require_once 'Zend/Form/Element/Xhtml.php';
 class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
 {
     /**
+     * What view helper to use when using view helper decorator
+     * @var string
+     */
+    public $helper = 'formImage';
+
+    /**
      * Load default decorators
      * 
      * @return void
