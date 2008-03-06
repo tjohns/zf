@@ -16,21 +16,25 @@
  * @category     Zend
  * @package      Zend_Gdata_YouTube
  * @subpackage   UnitTests
- * @copyright    Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com);
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @copyright    Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com);
+ * @license      http://framework.zend.com/license/new-bsd     New BSD License
+ * @version      $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube/VideoEntry.php';
 require_once 'Zend/Gdata/YouTube.php';
 
 /**
- * @package Zend_Gdata_App
- * @subpackage UnitTests
+ * @category     Zend
+ * @package      Zend_Gdata_YouTube
+ * @subpackage   UnitTests
+ * @copyright    Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com);
+ * @license      http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
 {
@@ -97,7 +101,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(255, $mediaGroup->content[0]->duration);
         $this->assertEquals(5, $mediaGroup->content[0]->format);
         $this->assertEquals('http://www.youtube.com/watch?v=UMFI1hdm96E', $mediaGroup->player[0]->url);
-        
+
         $this->assertEquals('http://img.youtube.com/vi/UMFI1hdm96E/2.jpg', $mediaGroup->thumbnail[0]->url);
         $this->assertEquals(97, $mediaGroup->thumbnail[0]->height);
         $this->assertEquals(130, $mediaGroup->thumbnail[0]->width);
@@ -132,7 +136,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $videoEntry->id = new Zend_Gdata_App_Extension_Id('http://gdata.youtube.com/feeds/videos/ABCDEFG12AB');
         $this->assertEquals('ABCDEFG12AB', $videoEntry->getVideoId());
     }
-    
+
     public function testGetVideoIdException() {
         $videoEntry = new Zend_Gdata_YouTube_VideoEntry();
 
@@ -209,30 +213,33 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $videoEntry = $this->entry;
         $mediaThumbnails1 = $videoEntry->getMediaGroup()->getThumbnail();
         $mediaThumbnails2 = $videoEntry->getVideoThumbnails();
-        $this->assertEquals(count($mediaThumbnails1), count($mediaThumbnails2)); 
+        $this->assertEquals(count($mediaThumbnails1), count($mediaThumbnails2));
 
         $foundThumbnail = false;
         foreach ($mediaThumbnails2 as $thumbnail) {
             if ($thumbnail['url'] == 'http://img.youtube.com/vi/UMFI1hdm96E/1.jpg') {
                 $foundThumbnail = true;
-                $this->assertEquals(97, $thumbnail['height']); 
-                $this->assertEquals(130, $thumbnail['width']); 
-                $this->assertEquals('00:01:03.750', $thumbnail['time']); 
+                $this->assertEquals(97, $thumbnail['height']);
+                $this->assertEquals(130, $thumbnail['width']);
+                $this->assertEquals('00:01:03.750', $thumbnail['time']);
             }
-        } 
+        }
         $this->assertTrue($foundThumbnail);
 
         $newEntry = new Zend_Gdata_YouTube_VideoEntry();
         $this->assertEquals(array(), $newEntry->getVideoThumbnails());
     }
 
-    public function testGetVideoTags() { 
+    public function testGetVideoTags() {
         $this->entry->transferFromXML($this->entryText);
         $videoEntry = $this->entry;
 
         $keywords = $videoEntry->getMediaGroup()->getKeywords();
-        if (strlen(trim($keywords)) > 0) {
-            $keywordArray = split('(, *)|,', $keywords);
+
+        $keywordsString = (string) $keywords;
+
+        if (strlen(trim($keywordsString)) > 0) {
+            $keywordArray = split('(, *)|,', $keywordsString);
         }
 
         $tagArray = $videoEntry->getVideoTags();
