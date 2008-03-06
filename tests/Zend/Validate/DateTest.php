@@ -83,7 +83,9 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
             '9999-99-99' => false,
             0            => false,
             999999999999 => false,
-            'Jan 1 2007' => false
+            'Jan 1 2007' => false,
+            'asdasda'    => false,
+            'sdgsdg'     => false
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input),
