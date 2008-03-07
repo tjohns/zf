@@ -100,6 +100,21 @@
                 </para>
             </note>
 
+            <note>
+                <title>Gleichzeitiges Empfangen der rohen POST Daten!</title>
+
+                <para>
+                    Mit 1.5.0 können auch die rohen Post Daten über die <code>getRawPost()</code>
+                    Methode empfangen werden. Diese Methode gibt false zurück wenn keine Daten auf
+                    diesem Weg übermittelt wurden, andernfalls den kompletten Inhalt von Post.
+                </para>
+
+                <para>
+                    Das ist grundsätzlich sinnvoll um Inhalt zu akzeptieren wenn eine RESTvolle MVC
+                    Anwendung entwickelt wird.
+                </para>
+            </note>
+
             <para>
                 Es können auch Benutzerparameter im Anfrage Objekt gesetzt werden durch Verwendung von
                 <code>setParam()</code> und empfangen derselben später durch verwenden von <code>getParam()</code>.
@@ -209,6 +224,31 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+
+        <sect3 id="zend.controller.request.http.method">
+            <title>Erkennen der Anfrage Methode</title>
+
+            <para>
+                <code>getMethod()</code> erlaubt es die HTTP Anfrage Methode zu erkennen die
+                verwendet wurde um die aktuelle Ressource anzufragen. Zusätzlich existiert eine
+                Vielzahl von Methoden die es erlauben boolsche Antworten zu erhalten wenn gefragt
+                wird ob ein spezieller Typ von Anfrage durchgeführt wurde:
+            </para>
+
+            <itemizedlist>
+                <listitem><code>isGet()</code></listitem>
+                <listitem><code>isPost()</code></listitem>
+                <listitem><code>isPut()</code></listitem>
+                <listitem><code>isDelete()</code></listitem>
+                <listitem><code>isHead()</code></listitem>
+                <listitem><code>isOptions()</code></listitem>
+            </itemizedlist>
+
+            <para>
+                Der grundsätzliche Verwendungszweck hierfür ist die Erstellung von RESTvollen MVC
+                Architekturen.
+            </para>
         </sect3>
 
         <sect3 id="zend.controller.request.http.ajax">
