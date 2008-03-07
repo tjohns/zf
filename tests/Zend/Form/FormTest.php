@@ -2387,6 +2387,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testFormObjectIteratesElementsInExpectedOrderWhenAllElementsHaveOrder()
+    {
+        $this->form->addElement('submit', 'submit')->submit->setLabel('Submit')->setOrder(30);
+        $this->form->addElement('text', 'name')->name->setLabel('Name')->setOrder(10);
+        $this->form->addElement('text', 'email')->email->setLabel('E-mail')->setOrder(20);
+
+        $expected = array('name', 'email', 'submit');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+            $this->assertTrue($value instanceof Zend_Form_Element);
+        }
+        $this->assertSame($expected, $received);
+    }
+
     public function testFormObjectIteratesElementsAndSubforms()
     {
         $this->setupElements();
