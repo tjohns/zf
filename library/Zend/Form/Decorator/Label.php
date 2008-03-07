@@ -136,13 +136,18 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      */
     public function getClass()
     {
-        $class = $this->getOption('class');
+        $class = null;
+        if (null !== ($element = $this->getElement())) {
+            $class = $element->getAttrib('class');
+        }
+
         if (null === $class) {
             $class = '';
         }
 
-        if (null === ($element = $this->getElement())) {
-            return $class;
+        $decoratorClass = $this->getOption('class');
+        if (!empty($decoratorClass)) {
+            $class .= ' ' . $decoratorClass;
         }
 
         $type  = $element->isRequired() ? 'required' : 'optional';
@@ -150,7 +155,6 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
         if (!strstr($class, $type)) {
             $class .= ' ' . $type;
             $class = trim($class);
-            $this->setOption('class', $class);
         }
 
         return $class;
@@ -286,11 +290,13 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
         $class     = $this->getClass();
         $options   = $this->getOptions();
 
+
         if (empty($label) && empty($tag)) {
             return $content;
         }
 
         if (!empty($label)) {
+            $options['class'] = $class;
             $label = $view->formLabel($element->getName(), trim($label), $options); 
         }
 

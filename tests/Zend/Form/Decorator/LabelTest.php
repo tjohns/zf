@@ -105,12 +105,12 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $element->class = "bar";
         $this->decorator->setOption('class', 'foo');
         $test = $this->decorator->render($content);
-        $this->assertNotContains('bar', $test);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*bar/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*optional/', $test, $test);
     }
 
-    public function testRenderAddsRequiredClassForNonRequiredElements()
+    public function testRenderAddsRequiredClassForRequiredElements()
     {
         $element = new Zend_Form_Element('foo');
         $element->setRequired(true)
@@ -124,9 +124,23 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $element->class = "bar";
         $this->decorator->setOption('class', 'foo');
         $test = $this->decorator->render($content);
-        $this->assertNotContains('bar', $test);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*bar/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*foo/', $test, $test);
         $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
+    }
+
+    public function testRenderAppendsRequiredClassToClassProvidedInRequiredElement()
+    {
+        $element = new Zend_Form_Element('foo');
+        $element->setRequired(true)
+                ->setView($this->getView())
+                ->setLabel('My Label')
+                ->setAttrib('class', 'bazbat');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*required/', $test, $test);
+        $this->assertRegexp('/<label[^>]*?class="[^"]*bazbat/', $test, $test);
     }
 
     public function testRenderUtilizesOptionalSuffixesAndPrefixesWhenRequested()
