@@ -301,10 +301,30 @@ class Util
             provided to the decorator, or as an attribute of the element. It
             then renders that view script as a partial script, meaning each call
             to it has its own variable scope; no variables from the view will be
-            injected other than the element itself. The element is passed as the
-            'element' variable. Any decorator options will also be passed as
-            view variables.
+            injected other than the element itself. Several variables are then
+            populated:
         </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>element</code>: the element being decorated
+            </para></listitem>
+
+            <listitem><para>
+                    <code>content</code>: the content passed to the decorator
+            </para></listitem>
+
+            <listitem><para>
+                    <code>decorator</code>: the decorator object itself
+            </para></listitem>
+
+            <listitem><para>
+                    Additionally, all options passed to the decorator via
+                    <code>setOptions()</code> that are not used internally (such
+                    as placement, separator, etc.) are passed to the view script
+                    as view variables.
+            </para></listitem>
+        </itemizedlist>
 
         <para>
             As an example, you might have the following element:
@@ -339,6 +359,31 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
     <div class="hint"><?= $this->element->getDescription() ?></div>
 </div>
 ]]></programlisting>
+
+        <note>
+            <title>Replacing content with a view script</title>
+
+            <para>
+                You may find it useful for the view script to replace the
+                content provided to the decorator -- for instance, if you want
+                to wrap it. You can do so by specifying a boolean false value
+                for the decorator's 'placement' option:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// At decorator creation:
+$element->addDecorator('ViewScript', array('placement' => false));
+
+// Applying to an existing decorator instance:
+$decorator->setOption('placement', false);
+
+// Applying to a decorator already attached to an element:
+$element->getDecorator('ViewScript')->setOption('placement', false);
+
+// Within a view script used by a decorator:
+$this->decorator->setOption('placement', false);
+?>]]></programlisting>
+        </note>
 
         <para>
             Using the ViewScript decorator is recommended for when you want to
