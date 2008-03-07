@@ -262,7 +262,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
     public function testAtomImportFullBuilder()
     {
         $feed = Zend_Feed::importBuilder(new Zend_Feed_Builder($this->_getFullArray()), 'atom');
-        
+
     }
 
     /**
@@ -271,7 +271,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
     public function testAtomImportFullBuilderValid()
     {
         $feed = Zend_Feed::importBuilder(new Zend_Feed_Builder($this->_getFullArray()), 'atom');
-        
+
         $feed = Zend_Feed::importString($feed->saveXml());
         $this->assertType('Zend_Feed_Atom', $feed);
     }
@@ -299,7 +299,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
         $href = $feed->link('self');
         $this->assertEquals('http://www.example.com', $href);
     }
-    
+
     /**
      * Imports an invalid feed and ensure everything works as expected
      * even if XDebug is running (ZF-2590).
@@ -309,7 +309,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
         if (!function_exists('xdebug_is_enabled')) {
             $this->markTestIncomplete('XDebug not installed');
         }
-        
+
         $response = new Zend_Http_Response(200, array(), '');
         $this->_adapter->setResponse($response);
 
@@ -318,10 +318,10 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
             $this->fail('Expected Zend_Feed_Exception not thrown');
         } catch (Zend_Feed_Exception $e) {
             $this->assertType('Zend_Feed_Exception', $e);
-            $this->assertRegExp('/XDebug is running/', $e->getMessage());
+            $this->assertRegExp('/(XDebug is running|Empty string)/', $e->getMessage());
         }
     }
-    
+
     /**
      * Returns the array used by Zend_Feed::importArray
      * and Zend_Feed::importBuilder tests
