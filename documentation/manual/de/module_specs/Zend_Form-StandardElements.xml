@@ -43,17 +43,34 @@
         <title>Zend_Form_Element_Checkbox</title>
 
         <para>
-            HTML Checkboxen haben boolsche Werte; sie sind entweder an oder aus.
-            <code>Zend_Form_Element_Checkbox</code> erzwingt dies in <code>setValue()</code>: Wenn
-            ein null Wert übergeben wird, wird der Wert als 0 gespeichert; andernfalls wird er als
-            1 gespeichert (HTML Forms übergeben einfach den Elementschlüssel mit einem leeren
-            Wert wenn die Checkbox ausgewählt wurde). Wenn der Wert 0 ist, ist das
-            <code>checked</code> auf an gewechselt, und visa versa für den Wert von 1. Der Wert
-            ist standardmäßig 0 oder aus.
+            HTML Checkboxen erlauben es spezifische Werte zurückzugeben, arbeiten aber
+            grundsätzlich als Boolean: Wenn Sie angehackt sind, wird der Wert übertragen; wenn Sie
+            nicht angehackt sind, wird nichts übertragen. Intern erzwingt
+            Zend_Form_Element_Checkbox diesen Status.
+        </para>
+            
+        <para>
+            Standardmäßg ist der angehackte Wert '1', und der nicht angehackte Wert '0'. Dieser
+            Wert kann spezifiziert werden indem die <code>setCheckedValue()</code> und
+            <code>setUncheckedValue()</code> Zugriffsmethoden verwendet werden. Intern wird,
+            jedesmal wenn der Wert gesetzt wird, wenn der angebotene Wert dem angehackten Wert
+            entspricht, er gesetzt, aber jeder andere Wert bewirkt das der nicht angehackte Wert
+            gesetzt wird.
+        </para>
+ 
+         <para>
+            Zusätzlich setzt, das Setzen des Werte, die <code>checked</code> Eigenschaft der
+            Checkbox. Das kann abgefragt werden indem <code>isChecked()</code> verwendet wird oder
+            einfach auf die Eigenschaft zugegriffen wird. Das Verwenden der
+            <code>setChecked($flag)</code> Methode setzt beides, den Status des Flags sowie den
+            entsprechenden gecheckten oder nicht gecheckten Wert im Element. Bitte verwenden Sie
+            diese Methode wenn der gecheckte Status eines Checkbox Elements gesetzt wird um
+            sicherzustellen das der Wert richtig gesetzt wird.
         </para>
 
         <para>
-            <code>Zend_Form_Element_Checkbox</code> verwendet den 'formCheckbox' View Helfer.
+            <code>Zend_Form_Element_Checkbox</code> verwendet den 'formCheckbox' View Helfer. Der
+            angehackte Wert wird immer verwendet um Sie zu veröffentlichen.
         </para>
     </sect2>
 
