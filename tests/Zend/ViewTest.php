@@ -878,6 +878,34 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($helper1, $helper2);
     }
+    
+    /**
+     * @issue ZF-2742
+     */
+    public function testGetHelperWorksWithPredefinedClassNames()
+    {
+        $view = new Zend_View();
+
+        $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2');
+        try {
+            $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1', null);
+            $this->fail('Exception for empty prefix was expected.');
+        } catch (Exception $e) {
+            $this->assertEquals('The classPrefix cannot be empty.', $e->getMessage());
+        }
+
+        try {
+            $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1', null);
+            $this->fail('Exception for empty prefix was expected.');
+        } catch (Exception $e) {
+            $this->assertEquals('The classPrefix cannot be empty.', $e->getMessage());
+        }
+        
+        
+        $helper = $view->getHelper('Datetime');
+        $this->assertEquals('Zend_View_Helper_Datetime', get_class($helper));
+    }
+    
 }
 
 /**
