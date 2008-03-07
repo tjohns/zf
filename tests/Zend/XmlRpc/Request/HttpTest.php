@@ -1,6 +1,11 @@
 <?php
+// Call Zend_XmlRpc_Request_HttpTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Request_HttpTest::main");
+}
+
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/XmlRpc/Request/Http.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Test case for Zend_XmlRpc_Request_Http
@@ -11,6 +16,17 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_XmlRpc_Request_HttpTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_Request_HttpTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     /**
      * Setup environment
      */
@@ -59,7 +75,7 @@ EOX;
         $_SERVER['HTTP_USER_AGENT']     = 'Zend_XmlRpc_Client';
         $_SERVER['HTTP_HOST']           = 'localhost';
         $_SERVER['HTTP_CONTENT_TYPE']   = 'text/xml';
-        $_SERVER['HTTP_CONTENT_LENGTH'] = 958;
+        $_SERVER['HTTP_CONTENT_LENGTH'] = strlen($this->xml) + 1;
     }
 
     /**
@@ -100,4 +116,38 @@ EOT;
 
         $this->assertEquals($expected, $this->request->getFullRequest());
     }
+
+    public function testCanPassInMethodAndParams()
+    {
+        try {
+            $request = new Zend_XmlRpc_Request_Http('foo', array('bar', 'baz'));
+        } catch (Exception $e) {
+            $this->fail('Should be able to pass in methods and params to request');
+        }
+    }
+
+    public function testExtendingClassShouldBeAbleToReceiveMethodAndParams()
+    {
+        try {
+            $request = new Zend_XmlRpc_Request_HttpTest_Extension('foo', array('bar', 'baz'));
+        } catch (Exception $e) {
+            $this->fail('Should be able to pass in methods and params to request');
+        }
+        $this->assertEquals('foo', $request->method);
+        $this->assertEquals(array('bar', 'baz'), $request->params);
+    }
+}
+
+class Zend_XmlRpc_Request_HttpTest_Extension extends Zend_XmlRpc_Request_Http
+{
+    public function __construct($method = null, $params = null)
+    {
+        $this->method = $method;
+        $this->params = (array) $params;
+    }
+}
+
+// Call Zend_XmlRpc_Request_HttpTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_Request_HttpTest::main") {
+    Zend_XmlRpc_Request_HttpTest::main();
 }
