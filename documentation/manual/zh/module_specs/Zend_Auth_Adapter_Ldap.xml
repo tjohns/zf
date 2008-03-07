@@ -270,7 +270,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   <row>
                     <entry>Index 0</entry>
                     <entry>
-                        显示给用户的全部信息（例如无效的证书（credentials））。如果认证成功，这个字符串是空的。
+                        显示给用户的用户友好的一般信息（例如无效的证书（credentials））。如果认证成功，这个字符串是空的。
                     </entry>
                   </row>
                   <row>
@@ -439,69 +439,6 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   </tgroup>
                 </table>
 
-            </para>
-
-        </sect3>
-
-    </sect2>
-
-    <sect2 id="zend.auth.adapter.ldap.network-packet-capture">
-
-        <title> 获得从 Web 服务器抓取的网络包 </title>
-
-        <para>
-            这一节描述如何获得网络包，<code>Zend_Ldap</code> 开发者用来诊断失败。注意所有的包必需从一个机器抓取，这个机器能在运行 <code>Zend_Ldap</code> 代码的服务器和目录服务器（例如 web 服务器）之间访问 LDAP 包。
-        </para>
-
-        <note>
-            <title> 敏感信息 </title>
-            <para>
-                包的抓取必需用 <code>useSsl=false</code> 获得，这意味着提供给认证适配器的密码将被抓取到文件中，你可能更喜欢在共享前面提到的文件之前用一个临时账户或修改密码。一般地，网络抓取文件可能包含关于网络的敏感信息，不应该共享给不信任的实体（entity）。
-            </para>
-        </note>
-
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.linux">
-
-            <title> 获得从 Linux 抓取的包 </title>
-
-            <para>
-                在 Linux web 服务器上安装 <emphasis>tcpdump</emphasis> 程序，确保 <code>useSsl=false</code> 并运行 <emphasis>tcpdump</emphasis> 如下：
-
-                <programlisting role="shell"><![CDATA[tcpdump -s 0 -w out.pcap port ldap]]></programlisting>
-
-                Try the operation of interest to provoke the behavior being diagnosed，按 Ctrl-C 停止抓取，不要抓取太长时间，这样可能会收集到无用的包。这将在当前目录产生一个 <code>out.pcap</code> 文件。
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.windows">
-
-            <title> 获得从 Windows 抓取的包 </title>
-
-            <para>
-                对于 Windows web 服务器，从 CD-ROM 安装 <emphasis>XP Support Tools</emphasis>，具体描述在下面的 KB （知识库） 文章中：<ulink url="http://support.microsoft.com/kb/306794/EN-US/">http://support.microsoft.com/kb/306794/EN-US/</ulink>。
-            </para>
-
-            <para>
-                运行 <code>cmd.exe</code> 然后 <code>netcap.exe /?</code> 来检查是否安装正确。
-            </para>
-
-            <note>
-                <para>
-                    如果你有多个网络接口，看一下 <code>netcap.exe</code> 输出的结尾，有个适配器列表。If the one your LDAP traffic is on is not primary，你将需要指定 <code>/N:&lt;number&gt;</code>，这里 <code>number</code> 是适配器的数字值，请给这个值做个记录。
-                </para>
-            </note>
-
-            <para>
-                现在再运行 <code>netcap.exe</code> 如下（如果需要指定特定的适配器，添加 <code>/N:&lt;number&gt;</code>）：
-
-                <programlisting role="shell"><![CDATA[C:\tmp>netcap /c:out.cap]]></programlisting>
-
-                它将开始在当前目录下写网络包到名为 <code>out.cap</code> 的文件。现在试一下 <code>Zend_Auth_Adapter_Ldap</code> 并在 <emphasis>cmd.exe</emphasis> 窗口中按空格键来停止抓取。不要抓取太长时间，那将会收集到无用的包。
-            </para>
-
-            <para>
-                上述过程也可能适用于其它 Windows 版本。如果你安装了 <emphasis>NetMon</emphasis>，也可以使用。
             </para>
 
         </sect3>
