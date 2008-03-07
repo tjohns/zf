@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8239 -->
+<!-- EN-Revision: 8619 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -112,6 +112,22 @@
                     これらのデータは、一切フィルタリングを行っていません。
                     ルータやディスパッチャのほうで適切な検証とフィルタリングを行うので、
                     リクエストオブジェクト内のデータはそのままにしておきましょう。
+                </para>
+            </note>
+
+            <note>
+                <title>生の POST データの取得</title>
+
+                <para>
+                    1.5.0 以降では、生の投稿データを
+                    <code>getRawPost()</code> メソッドで取得することができます。
+                    このメソッドは、データが送信されていない場合は false を返します。
+                    送信されている場合は、投稿内容の本文全体を返します。
+                </para>
+
+                <para>
+                    これは、RESTful な MVC
+                    アプリケーションを開発するにあたって非常に有用です。
                 </para>
             </note>
 
@@ -236,6 +252,32 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+
+        <sect3 id="zend.controller.request.http.method">
+            <title>リクエストメソッドの判定</title>
+
+            <para>
+                <code>getMethod()</code> では、
+                現在のリソースへのリクエストの際に使用した
+                HTTP メソッドを判定することができます。
+                さらに、指定した型のリクエストであったかどうかを判定するための
+                メソッドも用意されています。
+            </para>
+
+            <itemizedlist>
+                <listitem><code>isGet()</code></listitem>
+                <listitem><code>isPost()</code></listitem>
+                <listitem><code>isPut()</code></listitem>
+                <listitem><code>isDelete()</code></listitem>
+                <listitem><code>isHead()</code></listitem>
+                <listitem><code>isOptions()</code></listitem>
+            </itemizedlist>
+
+            <para>
+                これらの主な使用法は、RESTfult な
+                MVC アーキテクチャを作成することです。
+            </para>
         </sect3>
 
         <sect3 id="zend.controller.request.http.ajax">
