@@ -293,9 +293,29 @@ class Util
             Dekorator, oder als Attribut des Elements. Er stellt dann das View Skript als
             teilweises Skript, was bedeutet das jeder Aufruf von Ihm seinen eigenen
             Geltungsbereich der Variablen hat; keine Variablen von der View werden im Element
-            enthalten sein ausser denen des Elements selbst. Das Element wird als 'element'
-            Variable übergeben. Jede Option des Dekorators wird auch als View Variable übergeben.
+            enthalten sein ausser denen des Elements selbst. Verschiedene Variablen werden dann
+            bekannt gegeben:
         </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>element</code>: Das Element das dekoriert wird
+            </para></listitem>
+
+            <listitem><para>
+                    <code>content</code>: Der Inhalt der an den Dekorator übergeben wird
+            </para></listitem>
+
+            <listitem><para>
+                    <code>decorator</code>: Das Dekorator Objekt selbst
+            </para></listitem>
+
+            <listitem><para>
+                    Zusätzlich werden, alle Optionen die an den Dekorator mit
+                    <code>setOptions()</code> übergeben und nicht intern verwendet werden, an das
+                    View Skript als View Variablen übergeben.
+            </para></listitem>
+        </itemizedlist>
 
         <para>
             Als Beispiel, kann das folgende Element hergenommen werden:
@@ -330,6 +350,31 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
     <div class="hint"><?= $this->element->getDescription() ?></div>
 </div>
 ]]></programlisting>
+
+        <note>
+            <title>Inhalte mit einem View Skript ersetzen</title>
+
+            <para>
+                Es kann für das View Skript nützlich sein den Inhalt der dem Dekorator angeboten
+                wird zu ersetzen -- zum Beispiel wenn man Ihn wrappen will. Das kann man erreichen
+                indem ein boolscher false Wert für die 'placement' Option des Dekorators
+                spezifiziert wird: 
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Bei Erstellung des Dekorators:
+$element->addDecorator('ViewScript', array('placement' => false));
+
+// Zu einer existierenden Dekorator Instanz hinzufügen:
+$decorator->setOption('placement', false);
+
+// Zu einem Dekorator hinzufügen der bereits bei einem Element hinzugefügt ist:
+$element->getDecorator('ViewScript')->setOption('placement', false);
+
+// In einem View Skript das von einem Dekorator verwendet wird:
+$this->decorator->setOption('placement', false);
+?>]]></programlisting>
+        </note>
 
         <para>
             Die Verwendung des ViewScript Dekorators wird empfohlen wenn man eine sehr feinkörnige
