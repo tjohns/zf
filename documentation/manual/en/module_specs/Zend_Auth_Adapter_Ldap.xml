@@ -402,8 +402,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   <row>
                     <entry>Index 0</entry>
                     <entry>
-                        An overall message that is suitable for displaying to users (e.g., Invalid credentials). If the
-                        authentication is successful, this string is empty.
+                        A generic, user-friendly message that is suitable for displaying to users (e.g., "Invalid
+                        credentials"). If the authentication is successful, this string is empty.
                     </entry>
                   </row>
                   <row>
@@ -610,46 +610,6 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   </tgroup>
                 </table>
 
-            </para>
-
-        </sect3>
-
-    </sect2>
-
-    <sect2 id="zend.auth.adapter.ldap.network-packet-capture">
-
-        <title>Obtaining a Network Packet Capture on the Web Server</title>
-
-        <para>
-            This section describes how to obtain a network packet capture used by <code>Zend_Ldap</code> developers to
-            diagnose failures. Note that all captures must be taken from a machine with access to LDAP traffic between
-            the web server running the <code>Zend_Ldap</code> code and the directory server (e.g., the web server).
-        </para>
-
-        <note>
-            <title>Sensitive Information</title>
-            <para>
-                Packet captures must be obtained with <code>useSsl=false</code>, which means that passwords supplied to
-                the authentication adapter will be captured in the capture file. You may prefer to use a temporary
-                account or change your password before sharing the capture file with anyone. In general, network
-                capture files can contain sensitive information about your network and users and should not be shared
-                with untrusted entities.
-            </para>
-        </note>
-
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.linux">
-
-            <title>Obtaining a Packet Capture on Linux</title>
-
-            <para>
-                Install the <emphasis>tcpdump</emphasis> program on the Linux web server. Make sure
-                <code>useSsl=false</code> and run <emphasis>tcpdump</emphasis> as follows:
-
-                <programlisting role="shell"><![CDATA[tcpdump -s 0 -w out.pcap port ldap]]></programlisting>
-
-                Try the operation of interest to provoke the behavior being diagnosed. Press Ctrl-C to stop the
-                capture. Try not to run the capture for too long as it may collect unwanted traffic. This should
-                produce an <code>out.pcap</code> file in the current directory.
             </para>
 
         </sect3>
