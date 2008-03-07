@@ -140,6 +140,42 @@ class Zend_Form_Element_MultiCheckboxTest extends PHPUnit_Framework_TestCase
         $count = substr_count($html, 'name="foo[]"');
         $this->assertEquals(2, $count);
     }
+
+    /**
+     * @see ZF-2828
+     */
+    public function testCanPopulateCheckboxOptionsFromPostedData()
+    {
+        $form = new Zend_Form(array(
+            'elements' => array(
+                '100_1' => array('MultiCheckbox', array(
+                    'multiOptions' => array(
+                        '100_1_1'  => 'Agriculture',
+                        '100_1_2'  => 'Automotive',
+                        '100_1_12' => 'Chemical',
+                        '100_1_13' => 'Communications',
+                    ),
+                    'required' => true,
+                )),
+            ),
+        ));
+        $data = array(
+            '100_1' => array(
+                '100_1_1',
+                '100_1_2',
+                '100_1_12',
+                '100_1_13'
+            ),
+        );
+        $form->populate($data);
+        $html = $form->render($this->getView());
+        foreach ($form->getElement('100_1')->getMultiOptions() as $key => $value) {
+            if (!preg_match('#(<input[^>]*' . $key . '[^>]*>)#', $html, $m)) {
+                $this->fail('Missing input for a given multi option: ' . $html);
+            }
+            $this->assertContains('checked="checked"', $m[1]);
+        }
+    }
 }
 
 // Call Zend_Form_Element_MultiCheckboxTest::main() if this source file is executed directly.
