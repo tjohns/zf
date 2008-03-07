@@ -800,10 +800,11 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testSettingElementDefaultsSetsElementValuesToNullIfNotInDefaultsArray()
+    public function testSettingElementDefaultsDoesNotSetElementValuesToNullIfNotInDefaultsArray()
     {
         $this->testCanAddAndRetrieveMultipleElements();
         $this->form->baz->setValue('testing');
+        $this->form->bar->setValue('testing');
         $values = array(
             'foo' => 'foovalue',
             'bat' => 'batvalue'
@@ -811,8 +812,8 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->setDefaults($values);
         $this->assertEquals('foovalue', $this->form->foo->getValue());
         $this->assertEquals('batvalue', $this->form->bat->getValue());
-        $this->assertNull($this->form->baz->getValue());
-        $this->assertNull($this->form->bar->getValue());
+        $this->assertNotNull($this->form->baz->getValue());
+        $this->assertNotNull($this->form->bar->getValue());
     }
 
     public function testCanRetrieveSingleElementValue()
@@ -1642,7 +1643,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $subSubForm->addElement('checkbox', 'home')
                    ->getElement('home')
                    ->setRequired(true)
-                   ->addValidator('NotEmpty');
+                   ->addValidator('InArray', false, array(array('1')));
 
         $subForm->addSubForm($subSubForm, 'subSub');
 
@@ -1665,12 +1666,12 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $form->sub->subSub->home->addValidator('StringLength', false, array(4, 6));
         $data['foobar']['baz'] = array('bat' => array('home' => 'ab'));
 
-        $this->assertFalse($form->isValidPartial($data), var_export($form->sub->subSub->home, 1));
-        $this->assertEquals('1', $form->sub->subSub->home->getValue());
+        $this->assertFalse($form->isValidPartial($data), var_export($data, 1));
+        $this->assertEquals('0', $form->sub->subSub->home->getValue());
         $messages = $form->getMessages();
         $this->assertFalse(empty($messages));
         $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']), var_export($messages, 1));
-        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']['stringLengthTooShort']));
+        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']['isEmpty']), var_export($messages, 1));
     }
 
     public function testValidatingFormWithDisplayGroupsDoesSameAsWithout()
