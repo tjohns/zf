@@ -654,48 +654,6 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
 
         </sect3>
 
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.windows">
-
-            <title>Obtaining a Packet Capture on Windows</title>
-
-            <para>
-                For a Windows web server, install the <emphasis>XP Support Tools</emphasis> from CD-ROM as described in
-                the following KB article:
-                <ulink url="http://support.microsoft.com/kb/306794/EN-US/">http://support.microsoft.com/kb/306794/EN-US/</ulink>
-            </para>
-
-            <para>
-                Run <code>cmd.exe</code> and then <code>netcap.exe /?</code> to see if it was installed properly.
-            </para>
-
-            <note>
-                <para>
-                    If you have multiple network interfaces, look at the end of the output of <code>netcap.exe</code>
-                    for the list of adapters. If the one your LDAP traffic is on is not primary, you will need to
-                    specify <code>/N:&lt;number&gt;</code>, where <code>number</code> is the numeric value for that
-                    adapter; make a note of that value.
-                </para>
-            </note>
-
-            <para>
-                Now run <code>netcap.exe</code> again as illustrated here (adding the <code>/N:&lt;number&gt;</code> if
-                you need to specify a particular adapter):
-
-                <programlisting role="shell"><![CDATA[C:\tmp>netcap /c:out.cap]]></programlisting>
-
-                This will start to write network packets to the named file <code>out.cap</code> in the current
-                directory. Now try <code>Zend_Auth_Adapter_Ldap</code> and press the space bar in the
-                <emphasis>cmd.exe</emphasis> window to stop the capture. Try not to allow the capture to run for too
-                long, as it may collect unwanted traffic.
-            </para>
-
-            <para>
-                The above procedure may also work for other versions of Windows. If you have
-                <emphasis>NetMon</emphasis> installed you may use that as well.
-            </para>
-
-        </sect3>
-
     </sect2>
 
 </sect1>
