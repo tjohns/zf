@@ -217,6 +217,8 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
                 $base = rtrim($request->getBaseUrl(), '/');
                 if (!empty($base) && ('/' != $base)) {
                     $url = $base . '/' . ltrim($url, '/');
+                } else {
+                    $url = '/' . ltrim($url, '/');
                 }
             }
         }
