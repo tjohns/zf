@@ -318,7 +318,6 @@ $form->setElementDecorators(array(
     'Label'
 ));
 ?>]]></programlisting>
-
             </example>
 
             <note>
@@ -481,6 +480,29 @@ $login = $form->getDisplayGroup('login');
 // Überladen verwenden:
 $login = $form->login;
 ?>]]></programlisting>
+
+        <note>
+            <title>Standarddekoratore müssen nicht geladen werden</title>
+
+            <para>
+                Standardmäßig werden die Standarddekoratore wärend der Initialisierung des Objektes
+                geladen. Das kann durch die Übergabe der 'disableLoadDefaultDecorators' Option, bei
+                der Erstellung der Anzeigegruppe, deaktiviert werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form->addDisplayGroup(
+    array('foo', 'bar'), 
+    'foobar', 
+    array('disableLoadDefaultDecorators' => true)
+);
+]]></programlisting>
+            
+            <para>
+                Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
+                sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
+            </para>
+        </note>
 
         <sect3 id="zend.form.forms.displaygroups.global">
             <title>Globale Operationen</title>
@@ -994,6 +1016,25 @@ $form->setDecorators(array(
             Jegliche Attribute die auf dem Form Objekt gesetzt sindwerden als HTML Attribute des
             <code>&lt;form&gt;</code> Tags verwendet.
         </para>
+
+        <note>
+            <title>Standarddekoratore müssen nicht geladen werden</title>
+
+            <para>
+                Standardmäßig werden die Standarddekoratore wärend der Initialisierung des Objektes
+                geladen. Das kann durch die Übergabe der 'disableLoadDefaultDecorators' Option, bei
+                der Erstellung der Anzeigegruppe, deaktiviert werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
+]]></programlisting>
+            
+            <para>
+                Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
+                sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
+            </para>
+        </note>
 
         <note>
             <title>Verwenden mehrerer Dekoratore des gleichen Typs</title>

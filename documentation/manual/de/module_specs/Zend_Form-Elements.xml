@@ -734,6 +734,25 @@ $messages = $element->getMessages();
             </para></listitem>
         </itemizedlist>
 
+        <note>
+            <title>Standard Dekoratore müssen nicht geladen werden</title>
+
+            <para>
+                Standardmäßig werden die Standarddekoratore wärend der Initialisierung des Objekts
+                geladen. Das kann durch die Übergabe der 'disableLoadDefaultDecorators' Option an
+                den Konstruktor ausgeschaltet werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));
+]]></programlisting>
+            
+            <para>
+                Diese Option kann mit jeder anderen Option gemischt sein die übergeben wird, sowohl
+                als Array Option oder in einem <code>Zend_Config</code> Objekt.
+            </para>
+        </note>
+
         <para>
             Da die Reihenfolge in der Dekoratre registriert werden von Bedeutung ist -- der zuerst
             registrierte Dekorator wird als erstes ausgeführt -- man muß sicherstellen das eigene
