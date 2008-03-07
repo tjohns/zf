@@ -17,12 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * @see Zend_Json
@@ -70,14 +71,12 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test encoding and decoding in a single step
-     * @param array $values   array of values to test against encode/decode 
+     * @param array $values   array of values to test against encode/decode
      */
-    protected function _testJson($values) 
+    protected function _testJson($values)
     {
-        foreach ($values as $value) {
-            $encoded = Zend_Json::encode($value);
-            $this->assertEquals($value, Zend_Json::decode($encoded));
-        }
+        $encoded = Zend_Json::encode($values);
+        $this->assertEquals($values, Zend_Json::decode($encoded));
     }
 
     /**
@@ -190,7 +189,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     /**
      * test associative array encoding/decoding
      */
-    public function testAssocArray() 
+    public function testAssocArray()
     {
         $this->_testEncodeDecode(array(array('one' => 1, 'two' => 2)));
     }
@@ -198,7 +197,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     /**
      * test associative array encoding/decoding, with mixed key types
      */
-    public function testAssocArray2() 
+    public function testAssocArray2()
     {
         $this->_testEncodeDecode(array(array('one' => 1, 2 => 2)));
     }
@@ -206,7 +205,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     /**
      * test associative array encoding/decoding, with integer keys not starting at 0
      */
-    public function testAssocArray3() 
+    public function testAssocArray3()
     {
         $this->_testEncodeDecode(array(array(1 => 'one', 2 => 'two')));
     }
@@ -273,9 +272,9 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test encoding and decoding in a single step
-     * @param array $values   array of values to test against encode/decode 
+     * @param array $values   array of values to test against encode/decode
      */
-    protected function _testEncodeDecode($values) 
+    protected function _testEncodeDecode($values)
     {
         foreach ($values as $value) {
             $encoded = Zend_Json_Encoder::encode($value);
@@ -284,7 +283,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that version numbers such as 4.10 are encoded and decoded properly; 
+     * Test that version numbers such as 4.10 are encoded and decoded properly;
      * See ZF-377
      */
     public function testEncodeReleaseNumber()
@@ -295,7 +294,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests that spaces/linebreaks prior to a closing right bracket don't throw 
+     * Tests that spaces/linebreaks prior to a closing right bracket don't throw
      * exceptions. See ZF-283.
      */
     public function testEarlyLineBreak()
@@ -345,7 +344,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests for ZF-461
-     * 
+     *
      * Check to see that cycling detection works properly
      */
     public function testZf461()
@@ -410,8 +409,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 /**
  * Zend_JsonTest_Item: test item for use with testZf461()
  */
-class Zend_JsonTest_Item 
-{ 
+class Zend_JsonTest_Item
+{
 }
 
 /**
