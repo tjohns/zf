@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7463 -->
+<!-- EN-Revision: 8606 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partial ヘルパー</title>
 
@@ -115,8 +115,8 @@
 
         <programlisting role="php"><![CDATA[
 <? // partialLoop.phtml ?>
-    <dt><?= $key ?></dt>
-    <dd><?= $value ?></dd>
+    <dt><?= $this->key ?></dt>
+    <dd><?= $this->value ?></dd>
 
 ]]></programlisting>
 
