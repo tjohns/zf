@@ -127,6 +127,19 @@ class Zend_Form_Element_MultiCheckboxTest extends PHPUnit_Framework_TestCase
         $count = substr_count($html, $this->element->getSeparator());
         $this->assertEquals(4, $count);
     }
+
+    /**
+     * @see ZF-2830
+     */
+    public function testRenderingMulticheckboxCreatesCorrectArrayNotation()
+    {
+        $this->element->addMultiOption(1, 'A');
+        $this->element->addMultiOption(2, 'B');
+        $html = $this->element->render($this->getView());
+        $this->assertContains('name="foo[]"', $html, $html);
+        $count = substr_count($html, 'name="foo[]"');
+        $this->assertEquals(2, $count);
+    }
 }
 
 // Call Zend_Form_Element_MultiCheckboxTest::main() if this source file is executed directly.

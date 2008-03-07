@@ -115,7 +115,7 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
         
         // should the name affect an array collection?
         $name = $this->view->escape($name);
-        if ($this->_isArray) {
+        if ($this->_isArray && ('[]' != substr($name, -2))) {
             $name .= '[]';
         }
 
