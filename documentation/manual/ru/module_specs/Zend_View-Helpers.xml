@@ -1,207 +1,250 @@
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
-    <title>Вспомогательные классы вида<!--View Helpers--></title>
+    <title>Помощники вида</title>
 
     <para>
-        В скрипте вида часто бывает так, что необходимо выполнять
-        определенный набор функций повторно; например, формирование даты,
+        Часто бывает так, что в скриптах вида необходимо повторно выполнять
+        определенный набор функций; например, формирование даты,
         генерация элементов формы, отображение ссылок. Вы можете использовать
-        вспомогательные классы для выполнения этих действий.
-<!--
-        In your view scripts, often it is necessary to perform certain
-        complex functions over and over; e.g., formatting a date,
-        generating form elements, or displaying action links.  You can
-        use helper classes to perform these behaviors for you.
--->
+        помощников (вспомогательные классы) для выполнения этих действий.
     </para>
 
     <para>
-        Чтобы применять вспомогательные классы ("помощников") в своем скрипте вида,
-        вызывайте их, используя <code>$this->имяПомощника()</code>.
-        <code>Zend_View</code> загрузит класс <code>Zend_View_Helper_ИмяПомощника</code>,
-        создаст его объект, и вызовет его метод <code>имяПомощника()</code>.
-        Этот объект находится постоянно внутри экземпляра <code>Zend_View</code>
-        и повторно используется во всех вызовах <code>$this->имяПомощника()</code>.
-<!--
-        To use a helper in your view script, call it using
-        $this->helperName(). Behind the scenes, Zend_View will load the
-        Zend_View_Helper_HelperName class, create an object instance of
-        it, and call its helperName() method.  The object instance is
-        persistent within the Zend_View instance, and is reused for all
-        future calls to $this->helperName().
--->
+        Помощник представляет собой просто класс. Скажем, нам нужен помощник
+        'fooBar'. По умолчанию имя класса помощника начинается с
+        <code>'Zend_View_Helper_'</code> (вы можете указать другой префикс при
+        установке путей к помощникам видов), последней частью имени класа
+        является имя помощника. Все слова этой части должны писаться слитно,
+        первые буквы слов - в верхнем регистре (TitleCapped); таким образом мы
+        получаем имя класа <code>Zend_View_Helper_FooBar</code>. Класс должен
+        содержать как минимум один метод, названный по имени помощника в формате
+        camelCase: <code>fooBar()</code>.
+    </para>
+
+    <note>
+        <title>Следите за регистром</title>
+        <para>
+            Имена помощников всегда должны быть в формате camelCase, т.е. они
+            никогда не начинаются с символа в верхнем регистре. Имя для класса
+            начинается с символа в верхнем регистре, но реально выполняемый
+            метод должен быть в формате camelCase.
+        </para>
+    </note>
+
+    <note>
+        <title>Путь к помощникам по умолчанию</title>
+
+        <para>
+            Используемый по умолчанию путь к помощникам всегда указывает на
+            помощники Zend Framework-а, т.е. 'Zend/View/Helper/'. Даже если вы
+            вызываете <code>setHelperPath()</code> для перезаписи существующих
+            путей, этот путь всегда будет использоваться для обеспечения работы
+            помощников, входящих в поставку Zend Framework-а
+        </para>
+    </note>
+
+
+    <para>
+        Для того, чтобы использовать помощника в своем скрипте вида, вызывайте
+        его, используя <code>$this->имяПомощника()</code>.
+        <code>Zend_View</code> внутри себя загрузит класс
+        <code>Zend_View_Helper_ИмяПомощника</code>, создаст его экземпляр и
+        вызовет его метод <code>имяПомощника()</code>. Экземпляр объекта
+        сохраняется в экземпляре <code>Zend_View</code> и будет повторно
+        использоваться им во всех будущих вызовах
+        <code>$this->имяПомощника()</code>.
     </para>
 
     <sect2 id="zend.view.helpers.initial">
 
-        <title>Начальные вспомогательные классы<!--Initial Helpers--></title>
+        <title>Стартовый набор помощников</title>
 
         <para>
-            <code>Zend_View</code> снабжен начальным набором вспомогательных
-            классов, все они имеют отношение к генерации элементов форм.
-            Каждый из них автоматически выполняет соответствующее экранирование
-            выходных данных. Это:
-<!--
-            Zend_View comes with an initial set of helper classes, all of
-            which relate to form element generation.  They each perform the
-            appopriate output escaping automatically.  They are:
--->
+            <code>Zend_View</code> изначально снабжен набором помощников, большинство из них иеет отношение к генерации элементов форм и автоматически экранируют весь вывод. Кроме этого, есть помощники для создания HTML-списков, URL-ов на основе маршрутов, и объявления переменных. В настоящее время в поставляемый набор входят:
         </para>
 
         <itemizedlist>
 
             <listitem><para>
+                <code>declareVars():</code> В основном для использования вместе
+                с <code>strictVars()</code>. Этот помощник может использоваться
+                для объявления переменных шаблонов, которые могут быть или не
+                быть в объекте вида, и для установки значений по умолчанию.
+                Массивы, переданные методу в качестве аргуметов, будут
+                использованы для установки значений по умолчанию; иначе, если
+                переменная не существует, то ее значением будет пустая строка.
+            </para></listitem>
+
+            <listitem><para>
+                <code>fieldset($name, $content, $attribs):</code> Создает
+                XHTML-элемент <code>fieldset</code> (набор полей). Если массив
+                <code>$attribs</code> содержит в ключ 'legend', то это значение
+                используется для элемента <code>legend</code>. Элемент
+                <code>fieldset</code> будет содержать в себе значение
+                параметра <code>$content</code>, переданного помощнику.
+            </para></listitem>
+
+            <listitem><para>
+                <code>form($name, $attribs, $content):</code> Генерирует
+                XHTML-элемент <code>form</code> (форма). Все элементы массива
+                <code>$attribs</code> и добавляются как аттрибуты тега
+                <code>form</code>. Если параметр <code>$content</code> передан и
+                не имеет значение false, то это содержимое добавляется между
+                открывающим и закрывающим тегами формы. Если же
+                <code>$content</code> имеет булево значение false (по
+                умолчанию), то будет сгенерирован только открывающий тег формы.
+            </para></listitem>
+
+            <listitem><para>
                 <code>formButton($name, $value, $attribs)</code>: Создает элемент
                 <code>&lt;input type="button" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="button" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs, $options)</code>:
                 Создает элемент <code>&lt;input type="checkbox" /&gt;</code>
-                (флажок опций). Параметр <code>$options</code> является массивом,
-                в котором первым значением является "выбранное" (checked) значение,
-                вторым — "невыбранное" значение (по умолчанию это '1' и '0').
-                Если <code>$value</code> соответствует "выбранному" значению,
-                то этот флажок опций будет выбран.
-<!--
-                Creates
-                an &lt;input type="checkbox" /&gt; element.  The
-                $options param is an array where the first value is the
-                "checked" value, and the second is the "unchecked" value
-                (the defaults are '1' and '0').  If $value matches the
-                "checked" value, the box will be checked for you.
--->
+                (флажок опций). Параметр <code>$options</code> является
+                массивом, в котором первым значением является "выбранное"
+                (checked) значение, вторым — "невыбранное" значение (по
+                умолчанию это '1' и '0'). Если <code>$value</code> соответствует
+                "выбранному" значению, то этот флажок опций будет выбран.
             </para></listitem>
+
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code> Генерирует
+                    ненумерованный список XHTML для вывода сообщений об ошибках.
+                    <code>$errors</code> должен быть строкой или массивом строк.
+                    <code>$options</code> должен заключать в себе все аттрибуты, которые вы хотите поместить в открывающий тег списка.
+                </para>
+
+                <para>
+                    Вы можете указать альтернативный открывающий, закрывающий и разделяющий код путем вызова нескольких методов данного помощника:
+
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>; по умолчанию
+                            используется
+                            '&lt;ul class="errors"%s"&gt;&lt;li&gt;', где %s
+                            заменяется аттрибутами, указанными в
+                            <code>$options</code>.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>; по
+                            умолчанию используется '&lt;/li&gt;&lt;li&gt;'.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>; по умолчанию
+                            используется '&lt;/li&gt;&lt;/ul&gt;'.
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="file" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="file" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formHidden($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="hidden" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="hidden" /&gt; element.
--->
+            </para></listitem>
+
+            <listitem><para>
+                <code>formLabel($name, $value, $attribs):</code> Создает элемент
+                &lt;label&gt;, устанавливая значение аттрибута <code>for</code>
+                равным значению <code>$name</code>, и содержимое элемента равным
+                значению <code>$value</code>. Если в <code>$attribs</code> был
+                передан <code>disable</code>, то ничего не будет возвращено.
+            </para></listitem>
+
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options,
+                    $listsep):</code>
+                Создает список флажков опций. <code>$options</code> должен
+                быть ассоциативным массивом, который может быть произвольной
+                глубины. <code>$value</code> может быть скалярным значением или массивом выбранных значений, которые соответствуют ключам в массиве <code>$options</code>. <code>$listsep</code> по умолчанию является переносом строки в HTML ("&lt;br /&gt;"). По умолчанию этот элемент интерпретируется как массив - все флажки опций имеют одно и то же имя и передаются как массив.
             </para></listitem>
 
             <listitem><para>
                 <code>formPassword($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="password" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="password" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formRadio($name, $value, $attribs, $options)</code>: Создает
                 последовательность элементов <code>&lt;input type="radio" /&gt;</code>
                 (переключатель опций). В массиве <code>$options</code> ключ
-                элемента является значением переключателя, значение
-                элемента является текстом к переключателю. Переключатель опций
-                со значением <code>$value</code> будет предварительно выбран.
-<!--
-                Creates a
-                series of &lt;input type="radio" /&gt; elements, one for
-                each of the $options elements.  In the $options array, the
-                element key is the radio value, and the element value is the
-                radio label.  The $value radio will be preselected for you.
--->
+                является значением переключателя, значение является содержимым
+                элемента <code>label</code> к переключателю. Переключатель опций
+                со значением <code>$value</code> будет предварительно выбранным.
             </para></listitem>
 
             <listitem><para>
                 <code>formReset($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="password" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="reset" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formSelect($name, $value, $attribs, $options)</code>:
                 Создает блок <code>&lt;select&gt;...&lt;/select&gt;</code>,
-                с одной опцией <code>&lt;option&gt;</code> на каждый
-                элемент массива <code>$options</code>. В массиве
-                <code>$options</code> ключ элемента является значением опции,
-                значение элемента является текстом опции. Опция со значением
-                <code>$value</code> будет предварительно выбрана.
-<!--
-                Creates a
-                &lt;select&gt;...&lt;/select&gt; block, with one
-                &lt;option&gt;one for each of the $options elements.  In
-                the $options array, the element key is the option value,
-                and the element value is the option label.  The $value
-                option(s) will be preselected for you.
--->
+                с опциями <code>&lt;option&gt;</code>, соотвествующими
+                элементам массива <code>$options</code>. В массиве
+                <code>$options</code> ключ является значением опции,
+                значение - текстом опции. Опция со значением
+                <code>$value</code> будет предварительно выбранной.
             </para></listitem>
 
             <listitem><para>
                 <code>formSubmit($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="submit" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="submit" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formText($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="text" /&gt;</code>.
-<!--
-                Creates an &lt;input
-                type="text" /&gt; element.
--->
             </para></listitem>
 
             <listitem><para>
                 <code>formTextarea($name, $value, $attribs)</code>: Создает
                 блок <code>&lt;textarea&gt;...&lt;/textarea&gt;</code>.
-<!--
-                Creates a
-                &lt;textarea&gt;...&lt;/textarea&gt; block.
--->
+            </para></listitem>
+
+            <listitem><para>
+                <code>url($urlOptions, $name, $reset):</code> Создает строку
+                URL, основываясь на машруте с именем $name.
+                <code>$urlOptions</code> должен быть ассоциативным массивом пар
+                ключ-значение для использования в данном маршруте.
+            </para></listitem>
+
+            <listitem><para>
+                <code>htmlList($items, $ordered, $attribs, $escape):</code>
+                Генерирует маркированный или нумерованный список на основе
+                <code>$items</code>. Если <code>$items</code> является
+                многомерным массивом, то будут построены вложенные списки. Если
+                <code>$escape</code> установлен в true (значение по умолчанию),
+                то все пункты будут экранированы с использованием механизма, зарегистрированного в объекте вида. Передавайте значение false, если хотите использовать разметку в своих списках. Если <code>$ordered</code> установлен в false (значение по умолчанию), то генерируется маркированный список, иначе - нумерованный.
             </para></listitem>
 
         </itemizedlist>
 
         <para>
-            Использование их в скрипте вида очень простое, вот пример.
-            Обратите внимание, что это все, что вам нужно для их вызова — они
-            будут загружаться и инстанцироваться самостоятельно, когда
-            будут нужны.
-
-<!--
-            Using these in your view scripts is very easy, here is an example.
-            Note that you all you need to to is call them; they will load
-            and instantiate themselves as they are needed.
--->
+            Использовать их в скрипте вида очень просто, вот пример.
+            Обратите внимание, что это все, что вам нужно для их вызова —
+            помощники будут загружаться и инстанцироваться автоматически, по
+            мере необходимости.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// внутри вашего скрипта вида $this ссылается на экземпляр Zend_View
+// в скрипте вида $this ссылается на экземпляр Zend_View
 //
-// предположим, что вы уже имеете последовательность опций
+// предположим, вы уже имеете последовательность опций $countries
 // в виде массива ('us' => 'United States', 'il' =>
-// 'Israel', 'de' => 'Germany') именем $countries
-<!--
-// inside your view script, $this refers to the Zend_View instance.
-//
-// say that you have already assigned a series of select options under
-// the name $countries as array('us' => 'United States', 'il' =>
-// 'Israel', 'de' => 'Germany').
--->
+// 'Israel', 'de' => 'Germany')
 ?>
 <form action="action.php" method="post">
     <p><label>Your Email:
@@ -218,10 +261,7 @@
 
         <para>
             Результирующие выходные данные этого скрипта вида будут выглядеть
-            наподобие этого:
-<!--
-            The resulting output from the view script will look something like this:
--->
+            наподобие этих:
         </para>
 
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
@@ -272,58 +312,45 @@
         <xi:include href="Zend_View-Helpers-InlineScript.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-InlineScript.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="Zend_View-Helpers-Json.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Json.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_View-Helpers-Translate.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Translate.xml" /></xi:fallback>
+        </xi:include>
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">
 
-        <title>Пути к вспомогательным классам<!--Helper Paths--></title>
+        <title>Пути к классам помощников</title>
 
         <para>
             Как и для скриптов вида, ваш контроллер может задать
             стек путей, в которых <code>Zend_View</code> должен искать
-            вспомогательные классы. По умолчанию <code>Zend_View</code>
-            ищет вспомогательные классы в <code>Zend/View/Helper/*</code>. Вы
-            можете приказать <code>Zend_View</code> искать в других местах,
-            используя методы <code>setHelperPath()</code> и
-            <code>addHelperPath()</code>. Кроме этого, вы можете указать префикс
-            класса, используемый для вспомогательных классов, он
-            обеспечивает пространство имен. Если префикс не указан, то по
-            умолчанию используется 'Zend_View_Helper_'.
-<!--
-            As with view scripts, your controller can specify a stack of paths
-            for Zend_View to search for helper classes. By default, Zend_View
-            looks in "Zend/View/Helper/*" for helper classes. You can tell
-            Zend_View to look in other locations using the setHelperPath() and
-            addHelperPath() methods.  Additionally, you can indicate a class
-            prefix to use for helpers in the path provided, to allow namespacing
-            your helper classes. By default, if no class prefix is provided,
-            'Zend_View_Helper_' is assumed.
--->
+            классы помощников. По умолчанию <code>Zend_View</code>
+            ищет классы помощников в <code>Zend/View/Helper/*</code>. Используя
+            методы <code>setHelperPath()</code> и <code>addHelperPath()</code>,
+            вы можете укзать <code>Zend_View</code>, чтобы он искал классы
+            помощников в других местах. Кроме этого, вы можете указать префикс
+            класса, используемый для помощников, находящихся в данном пути;
+            префикс обеспечивает пространство имен. Если префикс не указан, то
+            по умолчанию используется 'Zend_View_Helper_'.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
 // Устанавливает путь /path/to/more/helpers с префиксом 'My_View_Helper'
-$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
-?>]]>
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
         </programlisting>
 
         <para>
-            Вы можете "складывать" в стек пути, используя метод
+            Фактически вы можете "складывать" в стек пути, используя метод
             <code>addHelperPath()</code>. Если вы добавили
             пути в стек, то <code>Zend_View</code> будет искать запрошенный
-            вспомогательный класс в этих путях, начиная с пути, добавленного
-            последним. Это дает возможность добавлять (или даже замещать)
-            к начальному набору свои собственные вспомогательные классы.
-<!--
-            In fact, you can "stack" paths using the addHelperPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested helper
-            class.  This allows you to add to (or even override) the
-            initial distribution of helpers with your own custom
-            helpers.
--->
+            класс помощника в этих путях, начиная с пути, добавленного
+            последним. Это дает возможность добавлять к начальному набору своих
+            помощников (или даже замещать имеющиеся).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -336,109 +363,64 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // теперь, когда вы вызываете $this->helperName(), Zend_View будет искать
 // "/other/path/to/helpers/HelperName.php" с классом "My_View_Helper_HelperName",
 // затем "/path/to/some/helpers/HelperName" с классом "Your_View_Helper_HelperName",
-// и под конец "Zend/View/Helper/HelperName.php" с классом "Zend_View_Helper_HelperName".
-?>]]>
+// и под конец "Zend/View/Helper/HelperName.php" с классом "Zend_View_Helper_HelperName".]]>
         </programlisting>
 
     </sect2>
 
     <sect2 id="zend.view.helpers.custom">
 
-        <title>Написание собственных вспомогательных классов<!--Writing Custom Helpers--></title>
+        <title>Написание собственных помощников</title>
 
         <para>
-            Написание собственных вспомогательных классов является довольно простым делом —
-            просто следуйте этим правилам:
-<!--
-            Writing custom helpers is easy; just follow these rules:
--->
+            Написать собственного помощника довольно просто — просто следуйте
+            этим правилам:
         </para>
 
         <itemizedlist>
 
             <listitem><para>
-                Имя класса должно быть <code>Zend_View_Helper_*</code>,
-                где * является именем самого "помощника". Например, если
-                вы написали "помощника", называющегося "specialPurpose",
-                имя класса должно быть "Zend_View_Helper_SpecialPurpose"
-                (обратите внимание на использование главных букв).
-
-                Имя класса должно быть, как минимум, заканчиваться именем
-                "помощника", в котором имена начинаются с заглавной буквы. Т.е.
-                если вы написали "помощника" с именем "specialPurpose", то
-                минимальное имя класса должно быть "SpecialPurpose". Вы можете
+                Имя класса должно, как минимум, заканчиваться именем
+                помощника в формате CamelCaps. Т.е. если вы пишете помощника с
+                именем "specialPurpose", то минимальное имя класса должно быть
+                "SpecialPurpose". Вы можете
                 (и должны) давать классам имена с префиксом, рекомендуется
-                использовать 'View_Helper' как часть этого префикса с или без
-                завершающего знака подчеркивания.
-<!--
-                The class name must, at the very minimum, end with the helper
-                name itself, using CamelCaps.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would minimally
-                need to be "SpecialPurpose". You may, and should, give the class
-                name a prefix, and it is recommended that you use 'View_Helper'
-                as part of that prefix: "My_View_Helper_SpecialPurpose". (You
-                will need to pass in the prefix, with or without the trailing
-                underscore, to <code>addHelperPath()</code> or
-                <code>setHelperPath()</code>).
--->
+                использовать 'View_Helper' как часть этого префикса:
+                "My_View_Helper_SpecialPurpose" (Вам нужно будет передать этот
+                префикс с или без завершающего знака подчеркивания методу
+                <code>addHelperPath()</code> или <code>setHelperPath()</code>).
             </para></listitem>
-
+                
             <listitem><para>
                 Класс должен иметь открытый метод, имя которого
-                соответствует имени "помощника". Это метод, который будет
-                вызываться, когда ваш шаблон вызывает
-                <code>$this->specialPurpose()</code>. В нашем примере с помощником
-                "specialPurpose" объявление требуемого метода должно быть
-                <code>public function specialPurpose()</code>.
-<!--
-                The class must have a public method that matches the
-                helper name; this is the method that will be called when
-                your template calls "$this->specialPurpose()".  In our
-                "specialPurpose" helper example, the required method
-                declaration would be "public function specialPurpose()".
--->
+                соответствует имени помощника. Это метод, который будет
+                вызываться, когда ваш шаблон выполняет вызов
+                <code>$this->specialPurpose()</code>. В нашем примере с
+                помощником "specialPurpose" объявление требуемого метода должно
+                быть <code>public function specialPurpose()</code>.
             </para></listitem>
 
             <listitem><para>
                 Обычно класс не должен выполнять вывод, вместо этого
                 он должен возвращать значение для вывода. Возвращаемое значение
                 должно быть экранировано должным образом.
-<!--
-                In general, the class should not echo or print or otherwise
-                generate output.  Instead, it should return values to be
-                printed or echoed.  The returned values should be escaped
-                appropriately.
--->
             </para></listitem>
 
             <listitem><para>
-                Класс должен быть в файле, названном по имени метода.
+                Класс должен быть в файле, названном по имени класса.
                 Снова используя пример с помощником "specialPurpose", мы
                 должны дать файлу имя "SpecialPurpose.php".
-<!--
-                The class must be in file named after the helper method.
-                Again using our "specialPurpose" helper example, the file
-                has to be named "SpecialPurpose.php".
--->
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Размещайте вспомогательный класс где-либо в одном из находящихся в стеке путей
-            к "помощникам", и <code>Zend_View</code> будет автоматически загружать,
-            инстанцировать, сохранять и выполнять его.
-<!--
-            Place the helper class file somewhere in your helper path stack,
-            and Zend_View will automatically load, instantiate, persist,
-            and execute it for you.
--->
+            Размещайте класс помощника где-либо в одном из находящихся в
+            стеке путей к помощникам, и <code>Zend_View</code> будет
+            автоматически загружать, инстанцировать, сохранять и выполнять его.
         </para>
 
         <para>
             Вот пример кода нашего помощника "SpecialPurpose":
-<!--
-            Here is an example of our SpecialPurpose helper code:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -451,38 +433,64 @@ class My_View_Helper_SpecialPurpose {
         return htmlspecialchars($output);
     }
 }
-?>]]>
+}]]>
         </programlisting>
 
         <para>
-            Далее в скрипте вида вы можете вызывать помощника SpecialPurpose
-            столько раз, сколько вам нужно. Он будет инстанцирован один раз,
-            и сохраняется в течение существования экземпляра Zend_View.
-<!--
-            Then in a view script, you can call the SpecialPurpose helper
-            as many times as you like; it will be instantiated once, and
-            then it persists for the life of that Zend_View instance.
--->
+            Далее в скрипте вида вы можете вызывать помощника
+            <code>SpecialPurpose</code> сколько угодно раз. Он будет
+            инстанцирован один раз, и сохраняется в течение существования
+            экземпляра <code>Zend_View</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 // помните, что в скрипте вида $this ссылается на экземпляр Zend_View
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-echo $this->specialPurpose();
-?>]]>
+echo $this->specialPurpose();]]>
         </programlisting>
 
         <para>
-            Результат должен выглядеть наподобие этого:
-<!--
-            The output would look something like this:
--->
+            Результат должен выглядеть наподобие следующего:
         </para>
         <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).
 I have seen 'The Jerk' 3 time(s).]]>
         </programlisting>
+
+        <para>
+            Иногда бывает, что нужен доступ к объекту <code>Zend_View</code> -
+            например, нужно получить зарегистрированное значение кодировки
+            или произвести рендеринг другого скрипта вида как часть
+            действий, выполняемых вашим помощником. Для того, чтобы можно было
+            получить доступ к объекту вида, ваш класс помощника должен иметь
+            метод <code>setView($view)</code>, пример которого показан ниже:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_View_Helper_ScriptPath
+{
+    public $view;
+
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+    }
+
+    public function scriptPath($script)
+    {
+        return $this->view->getScriptPath($script);
+    }
+}]]>
+        </programlisting>
+
+        <para>
+            Если ваш класс помощника имеет метод <code>setView()</code>, то он
+            будет вызываться при первом инстанцировании класса помощника и его
+            передаче текущему объекту вида. На ваше усмотрение остается то, как
+            в вашем классе помощника должен сохраняться объект вида и
+            производиться доступ к нему.
+        </para>
 
     </sect2>
 
