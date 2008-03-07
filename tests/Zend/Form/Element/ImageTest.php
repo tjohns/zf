@@ -7,6 +7,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Form/Element/Image.php';
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_Form_Element_Image
@@ -67,6 +68,69 @@ class Zend_Form_Element_ImageTest extends PHPUnit_Framework_TestCase
     public function testImageShouldSetHelperPropertyToFormImageByDefault()
     {
         $this->assertEquals('formImage', $this->element->helper);
+    }
+
+    public function testImageSourceValueNullByDefault()
+    {
+        $this->assertNull($this->element->getImage());
+        $this->assertNull($this->element->src);
+    }
+
+    public function testCanSetImageSourceViaAccessors()
+    {
+        $this->element->setImage('foo.gif');
+        $this->assertEquals('foo.gif', $this->element->getImage());
+        $this->assertEquals('foo.gif', $this->element->src);
+    }
+
+    public function testImageSourceUsedWhenRenderingImage()
+    {
+        $this->testCanSetImageSourceViaAccessors();
+        $html = $this->element->render(new Zend_View());
+        $this->assertContains('src="foo.gif"', $html);
+    }
+
+    public function testHelperAttributeNotRenderedWhenRenderingImage()
+    {
+        $this->testCanSetImageSourceViaAccessors();
+        $html = $this->element->render(new Zend_View());
+        $this->assertNotContains('helper="', $html);
+    }
+
+    public function testValueEmptyWhenRenderingImageByDefault()
+    {
+        $this->testCanSetImageSourceViaAccessors();
+        $html = $this->element->render(new Zend_View());
+        if (!strstr($html, 'value="')) {
+            return;
+        }
+        $this->assertContains('value=""', $html);
+    }
+
+    public function testLabelUsedAsAltAttribute()
+    {
+        $this->element->setLabel('Foo Bar');
+        $html = $this->element->render(new Zend_View());
+        $this->assertRegexp('#<input[^>]*alt="Foo Bar"#', $html);
+    }
+
+    public function testImageValueRenderedAsElementValue()
+    {
+        $this->element->setImageValue('foo')
+             ->setImage('foo.gif');
+        $html = $this->element->render(new Zend_View());
+        $this->assertRegexp('#<input[^>]*value="foo"#', $html, $html);
+    }
+
+    public function testIsCheckedReturnsSetValueMatchesImageValue()
+    {
+        $this->assertFalse($this->element->isChecked());
+        $this->element->setImageValue('foo');
+        $this->assertFalse($this->element->isChecked());
+        $this->element->setValue('foo');
+        $this->assertTrue($this->element->isChecked());
+        $this->element->setValue('bar');
+        $this->assertFalse($this->element->isChecked());
     }
 }
 

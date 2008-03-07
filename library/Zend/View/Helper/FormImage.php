@@ -57,9 +57,20 @@ class Zend_View_Helper_FormImage extends Zend_View_Helper_FormElement
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, value, attribs, options, listsep, disable
 
-        // unset any 'src' attrib
+        // Determine if we should use the value or the src attribute
         if (isset($attribs['src'])) {
+            $src = ' src="' . $this->view->escape($attribs['src']) . '"';
             unset($attribs['src']);
+        } else {
+            $src = ' src="' . $this->view->escape($value) . '"';
+            unset($value);
+        }
+
+        // Do we have a value?
+        if (isset($value) && !empty($value)) {
+            $value = ' value="' . $this->view->escape($value) . '"';
+        } else {
+            $value = '';
         }
 
         // Disabled?
@@ -78,7 +89,8 @@ class Zend_View_Helper_FormImage extends Zend_View_Helper_FormElement
         $xhtml = '<input type="image"'
                 . ' name="' . $this->view->escape($name) . '"'
                 . ' id="' . $this->view->escape($id) . '"'
-                . ' src="' . $this->view->escape($value) . '"'
+                . $src
+                . $value
                 . $disabled
                 . $this->_htmlAttribs($attribs) 
                 . $endTag;
