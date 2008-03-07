@@ -172,9 +172,9 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
     {
         $this->request->setModuleName('foo')
                       ->setControllerName('index');
+
         $controller = new Foo_IndexController($this->request, $this->response, array());
         $this->helper->setActionController($controller);
-
         $this->helper->initView();
         $this->_checkDefaults();
     }
@@ -756,7 +756,9 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         
         $viewScriptPaths = $this->helper->view->getAllPaths(); 
 
-        $this->assertRegExp('#modules/bar/bar/scripts/$#', $viewScriptPaths['script'][0]);
+        // we need this until View decides to not use DIRECTORY_SEPARATOR
+        $expectedPathRegex = (DIRECTORY_SEPARATOR == '\\') ? '#modules\\\\bar\\\\bar\\\\scripts\\\\$#' : '#modules/bar/bar/scripts/$#';
+        $this->assertRegExp($expectedPathRegex, $viewScriptPaths['script'][0]);
         $this->assertEquals($this->helper->getViewScript(), 'index/admin.phtml');
     }
     
@@ -771,7 +773,9 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $controller = new Bar_IndexController($this->request, $this->response, array());
         $this->helper->setActionController($controller);
         $viewScriptPaths = $this->helper->view->getAllPaths();
-        $this->assertRegExp('#modules/foo/views/scripts/$#', $viewScriptPaths['script'][0]);
+
+        $expectedPathRegex = (DIRECTORY_SEPARATOR == '\\') ? '#modules\\\\foo\\\\views\\\\scripts\\\\$#' : '#modules/foo/views/scripts/$#';
+        $this->assertRegExp($expectedPathRegex, $viewScriptPaths['script'][0]);
         $this->assertEquals($this->helper->getViewScript(), 'car-bar/baz.phtml');
     }
     
