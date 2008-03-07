@@ -115,7 +115,9 @@ class Zend_XmlRpc_Server_Cache
             return false;
         }
 
-        $dispatchArray = @unserialize($dispatch);
+        if (false === ($dispatchArray = @unserialize($dispatch))) {
+            return false;
+        }
 
         $server->loadFunctions($dispatchArray);
 
