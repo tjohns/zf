@@ -1,5 +1,10 @@
 <?php
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_XmlRpc_ClientTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_ClientTest::main");
+}
+
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/XmlRpc/Client.php';
 
@@ -16,6 +21,17 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
  */
 class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_ClientTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->httpAdapter = new Zend_Http_Client_Adapter_Test();
@@ -133,6 +149,33 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expectedMethod, $request->getMethod());
         $this->assertSame($expectedParams, $request->getParams());
         $this->assertSame($expectedReturn, $response->getReturnValue());
+        $this->assertFalse($response->isFault());
+    }
+
+    /**
+     * @see ZF-1797
+     */
+    public function testSuccesfulRpcMethodCallWithXmlRpcValueParameters()
+    {
+        $time   = time();
+        $params = array(
+            new Zend_XmlRpc_Value_Boolean(true),
+            new Zend_XmlRpc_Value_Integer(4),
+            new Zend_XmlRpc_Value_String('foo')
+        );
+        $expect = array(true, 4, 'foo');
+
+        $this->setServerResponseTo($expect);
+
+        $result = $this->xmlrpcClient->call('foo.bar', $params);
+        $this->assertSame($expect, $result);
+
+        $request  = $this->xmlrpcClient->getLastRequest();
+        $response = $this->xmlrpcClient->getLastResponse();
+
+        $this->assertSame('foo.bar', $request->getMethod());
+        $this->assertSame($params, $request->getParams());
+        $this->assertSame($expect, $response->getReturnValue());
         $this->assertFalse($response->isFault());
     }
 
@@ -466,4 +509,9 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
                          );
         return implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
     }
+}
+
+// Call Zend_XmlRpc_ClientTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_ClientTest::main") {
+    Zend_XmlRpc_ClientTest::main();
 }
