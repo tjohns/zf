@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8402 -->
+<!-- EN-Revision: 8645 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -459,7 +459,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   <row>
                     <entry>0</entry>
                     <entry>
-                        ユーザ向けの表示に適した、全体にわたるメッセージ (認証に失敗したなど)。
+                        ユーザ向けの表示に適した、全般的なメッセージ (認証に失敗したなど)。
                         認証に成功した場合は、この文字列は空となります。
                     </entry>
                   </row>
@@ -679,98 +679,6 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   </tgroup>
                 </table>
 
-            </para>
-
-        </sect3>
-
-    </sect2>
-
-    <sect2 id="zend.auth.adapter.ldap.network-packet-capture">
-
-        <title>ウェブサーバ上でのネットワークパケットキャプチャの取得</title>
-
-        <para>
-            このセクションでは、開発者が障害調査のために <code>Zend_Ldap</code>
-            のネットワークパケットキャプチャを取得するための方法を説明します。
-            キャプチャの取得は、<code>Zend_Ldap</code> のコードが動作しているウェブサーバと
-            ディレクトリサーバとの間の LDAP トラフィックにアクセスできるサーバ (たとえばウェブサーバ)
-            からでないとできないことに注意しましょう。
-        </para>
-
-        <note>
-            <title>機密情報</title>
-            <para>
-                パケットキャプチャを取得するには <code>useSsl=false</code> としなければなりません。
-                つまり、認証アダプタに渡したパスワードもキャプチャファイルに記録されてしまうことになります。
-                キャプチャファイルを他人と共有する場合は、一時的なアカウントを使用するなり
-                パスワードを一時的に変更するなりしたほうがいいでしょう。
-                一般論として、ネットワークのキャプチャファイルには
-                そのネットワークやユーザに関する機密情報が含まれる可能性があります。
-                信頼できない相手と共有すべきではありません。
-            </para>
-        </note>
-
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.linux">
-
-            <title>Linux 上でのパケットキャプチャの取得</title>
-
-            <para>
-                <emphasis>tcpdump</emphasis> プログラムを Linux ウェブサーバ上にインストールします。
-                <code>useSsl=false</code> としたうえで、<emphasis>tcpdump</emphasis>
-                を次のように実行します。
-
-                <programlisting role="shell"><![CDATA[tcpdump -s 0 -w out.pcap port ldap]]></programlisting>
-
-                その後何らかの操作をすると、その振る舞いが記録されます。
-                Ctrl-C を押せばキャプチャが終了します。
-                必要以上にトラフィックのキャプチャを続けないようにしましょう。
-                結果は、カレントディレクトリに <code>out.pcap</code>
-                という名前のファイルで保存されます。
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.auth.adapter.ldap.network-packet-capture.windows">
-
-            <title>Windows 上でのパケットキャプチャの取得</title>
-
-            <para>
-                Windows ウェブサーバの場合は <emphasis>XP Support Tools</emphasis> を CD-ROM
-                からインストールします。詳細は、次の KB の記事
-                <ulink url="http://support.microsoft.com/kb/306794/EN-US/">http://support.microsoft.com/kb/306794/EN-US/</ulink>
-                で説明されています。
-            </para>
-
-            <para>
-                <code>cmd.exe</code> を実行し、<code>netcap.exe /?</code>
-                とすればインストールに成功したかどうかがわかります。
-            </para>
-
-            <note>
-                <para>
-                    複数のネットワークインターフェイスが搭載されている場合は、
-                    <code>netcap.exe</code> の出力の最後のほうにアダプタの一覧が出力されます。
-                    LDAP トラフィックが流れるのがプライマリインターフェイスでない場合は、
-                    <code>/N:&lt;number&gt;</code> を指定する必要があります。ここで <code>number</code>
-                    にはアダプタの番号を指定します。
-                </para>
-            </note>
-
-            <para>
-                では、<code>netcap.exe</code> を次のように実行してみましょう
-                (特定のアダプタを指定する場合は、必要に応じて <code>/N:&lt;number&gt;</code> を追加します)。
-
-                <programlisting role="shell"><![CDATA[C:\tmp>netcap /c:out.cap]]></programlisting>
-
-                これは、ネットワーク上のパケットをカレントディレクトリ上のファイル <code>out.cap</code>
-                に書き出します。<code>Zend_Auth_Adapter_Ldap</code> で何らかの操作をしてみましょう。
-                <emphasis>cmd.exe</emphasis> のウィンドウでスペースバーを押せばキャプチャが終了します。
-                必要以上にトラフィックのキャプチャを続けないようにしましょう。
-            </para>
-
-            <para>
-                上の手順は、他のバージョンの Windows でもおそらく動作するでしょう。
-                <emphasis>NetMon</emphasis> がインストールされている場合はそれを使用してもかまいません。
             </para>
 
         </sect3>
