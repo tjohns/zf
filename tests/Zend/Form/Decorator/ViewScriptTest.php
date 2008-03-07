@@ -123,6 +123,43 @@ class Zend_Form_Decorator_ViewScriptTest extends PHPUnit_Framework_TestCase
             $this->assertContains("$key: $value", $test);
         }
     }
+
+    public function testCanReplaceContentBySpecifyingFalsePlacement()
+    {
+        $this->decorator->setViewScript('replacingDecorator.phtml')
+             ->setOption('placement', false)
+             ->setElement($this->getElement());
+        $test = $this->decorator->render('content to decorate');
+        $this->assertNotContains('content to decorate', $test, $test);
+        $this->assertContains('This is content from the view script', $test);
+    }
+
+    public function testContentCanBeRenderedWithinViewScript()
+    {
+        $this->decorator->setViewScript('contentWrappingDecorator.phtml')
+             ->setOption('placement', false)
+             ->setElement($this->getElement());
+
+        $test = $this->decorator->render('content to decorate');
+        $this->assertContains('content to decorate', $test, $test);
+        $this->assertContains('This text prefixes the content', $test);
+        $this->assertContains('This text appends the content', $test);
+    }
+
+    public function testDecoratorCanControlPlacementFromWithinViewScript()
+    {
+        $this->decorator->setViewScript('decoratorCausesReplacement.phtml')
+             ->setElement($this->getElement());
+
+        $test = $this->decorator->render('content to decorate');
+        $this->assertContains('content to decorate', $test, $test);
+
+        $count = substr_count($test, 'content to decorate');
+        $this->assertEquals(1, $count);
+
+        $this->assertContains('This text prefixes the content', $test);
+        $this->assertContains('This text appends the content', $test);
+    }
 }
 
 // Call Zend_Form_Decorator_ViewScriptTest::main() if this source file is executed directly.
