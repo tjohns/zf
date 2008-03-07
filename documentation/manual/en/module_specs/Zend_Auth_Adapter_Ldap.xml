@@ -574,7 +574,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                         <entry><emphasis role="strong">baseDn</emphasis></entry>
                         <entry>
                             As with all servers, this option is required and indicates the DN under which all accounts
-                            being authenticated are located
+                            being authenticated are located.
                         </entry>
                       </row>
                       <row>
