@@ -86,13 +86,13 @@
 
         <programlisting role="php"><![CDATA[
 <? // partialLoop.phtml ?>
-    <dt><?= $key ?></dt>
-    <dd><?= $value ?></dd>
+    <dt><?= $this->key ?></dt>
+    <dd><?= $this->value ?></dd>
 
 ]]></programlisting>
 
         <para>
-            And the following "model":
+            添加下列 "model"：
         </para>
 
         <programlisting role="php"><![CDATA[<?php

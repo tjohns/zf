@@ -12,7 +12,7 @@
             </para></listitem>
 
             <listitem><para>
-			  控制器名可通过<code>getControllerName()</code>和<code>setControllerName()</code>访问。
+			                    控制器名可通过<code>getControllerName()</code>和<code>setControllerName()</code>访问。
             </para></listitem>
 
             <listitem><para>
@@ -62,6 +62,18 @@
                 <title>GET和POST数据</title>
                 <para>
                     需要注意：在请求对象中访问数据是没有经过任何过滤的，路由器和分发器根据任务来验证过滤数据，但在请求对象中没有任何处理。
+                </para>
+            </note> 
+             
+              <note>
+                <title> 也获取原始 （Raw） POST 数据！</title>
+
+                <para>
+                    从 1.5.0 开始，也可以通过 <code>getRawPost()</code>  方法获取原始 post 数据。如果没有数据以那种方式提交，该方法返回 false，但 post 的全体（full boday）是个例外。
+                </para>
+
+                <para>
+                    当开发一个 RESTful MVC 程序，这个对于接受内容相当有用。
                 </para>
             </note>
 
@@ -138,7 +150,28 @@ $response   = $controller->dispatch();]]>
             </programlisting>
 
         </sect3>
-                    
+        
+        <sect3 id="zend.controller.request.http.method">
+            <title> 决定请求方式 </title>
+
+            <para>
+                <code>getMethod()</code> 允许你决定用于请求当前资源的 HTTP 请求方法。另外，当询问是否一个请求的特定类型是否已经存在，有许多方法允许你获得布尔响应：
+            </para>
+
+            <itemizedlist>
+                <listitem><code>isGet()</code></listitem>
+                <listitem><code>isPost()</code></listitem>
+                <listitem><code>isPut()</code></listitem>
+                <listitem><code>isDelete()</code></listitem>
+                <listitem><code>isHead()</code></listitem>
+                <listitem><code>isOptions()</code></listitem>
+            </itemizedlist>
+
+            <para>
+                这些基本用例是来创建 RESTful MVC 架构的。
+            </para>
+        </sect3>
+            
         <sect3 id="zend.controller.request.http.ajax">
             <title>删除 AJAX 请求</title>
 
