@@ -2452,6 +2452,54 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testClearingAttachedItemsShouldNotCauseIterationToRaiseExceptions()
+    {
+        $form = new Zend_Form();
+        $form->addElements(array(
+            'username' => 'text',
+            'password' => 'text',
+        ));
+        $form->clearElements();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing elements prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
+        }
+
+        $form->addElements(array(
+                 'username' => 'text',
+                 'password' => 'text',
+             ))
+             ->addDisplayGroup(array('username', 'password'), 'login');
+        $form->clearDisplayGroups();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing display groups prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
+        }
+
+        $subForm = new Zend_Form_SubForm();
+        $form->addSubForm($subForm, 'foo');
+        $form->clearSubForms();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing sub forms prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
+        }
+    }
+
     // Countable
 
     public function testCanCountFormObject()

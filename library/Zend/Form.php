@@ -993,7 +993,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     public function clearElements()
     {
         foreach (array_keys($this->_elements) as $key) {
-            if (isset($this->_order[$key])) {
+            if (array_key_exists($key, $this->_order)) {
                 unset($this->_order[$key]);
             }
         }
@@ -1365,7 +1365,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     public function clearSubForms()
     {
         foreach (array_keys($this->_subForms) as $key) {
-            if (isset($this->_order[$key])) {
+            if (array_key_exists($key, $this->_order)) {
                 unset($this->_order[$key]);
             }
         }
@@ -1601,7 +1601,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     public function clearDisplayGroups()
     {
         foreach ($this->_displayGroups as $key => $group) {
-            if (isset($this->_order[$key])) {
+            if (array_key_exists($key, $this->_order)) {
                 unset($this->_order[$key]);
             }
             foreach ($group as $name => $element) {
@@ -2382,7 +2382,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             return $this->getDisplayGroup($key);
         } else {
             require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception('Corruption detected in form; invalid key found in internal iterator');
+            throw new Zend_Form_Exception(sprintf('Corruption detected in form; invalid key ("%s") found in internal iterator', (string) $key));
         }
     }
 
