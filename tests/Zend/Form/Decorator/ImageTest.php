@@ -74,11 +74,6 @@ class Zend_Form_Decorator_ImageTest extends PHPUnit_Framework_TestCase
         $this->assertSame($content, $this->decorator->render($content));
     }
 
-    public function testImageInitiallyNull()
-    {
-        $this->assertNull($this->decorator->getImage());
-    }
-
     public function testTagInitiallyNull()
     {
         $this->assertNull($this->decorator->getTag());
@@ -98,26 +93,10 @@ class Zend_Form_Decorator_ImageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('div', $this->decorator->getTag());
     }
 
-    public function testCanSetImage()
-    {
-        $this->testImageInitiallyNull();
-        $this->decorator->setImage('foobar');
-        $this->assertEquals('foobar', $this->decorator->getImage());
-    }
-
-    public function testImagePulledFromElementValueWhenPresent()
-    {
-        $this->testImageInitiallyNull();
-        $element = new Zend_Form_Element_Image('foo');
-        $element->setValue('foobar');
-        $this->decorator->setElement($element);
-        $this->assertEquals('foobar', $this->decorator->getImage());
-    }
-
     public function testRendersXhtmlImageTag()
     {
         $element = new Zend_Form_Element_Image('foo');
-        $element->setValue('foobar')
+        $element->setImage('foobar')
                 ->setView($this->getView());
         $this->decorator->setElement($element);
 
