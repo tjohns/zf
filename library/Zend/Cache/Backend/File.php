@@ -661,8 +661,10 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         if (!is_file($file)) {
             return false;
         }
-        $mqr = get_magic_quotes_runtime();
-        set_magic_quotes_runtime(0);       
+        if (function_exists('get_magic_quotes_runtime')) {
+            $mqr = get_magic_quotes_runtime();
+            set_magic_quotes_runtime(0);       
+        }   
         $f = @fopen($file, 'rb');
         if ($f) {
             if ($this->_options['file_locking']) @flock($f, LOCK_SH);
@@ -675,7 +677,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             if ($this->_options['file_locking']) @flock($f, LOCK_UN);
             @fclose($f);
         }
-        set_magic_quotes_runtime($mqr);
+        if (function_exists('set_magic_quotes_runtime')) {
+            set_magic_quotes_runtime($mqr);
+        }
         return $result;
     }
     
