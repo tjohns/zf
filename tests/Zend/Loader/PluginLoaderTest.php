@@ -322,6 +322,24 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($className, $loader->getClassName('FormSubmit'));
         $this->assertEquals('ZfTest_FormSubmit', $loader->getClassName('FormSubmit'));
     }
+    
+    /**
+     * @issue ZF-2741
+     */
+    public function testWin32UnderscoreSpacedShortNamesWillLoad()
+    {
+        $loader = new Zend_Loader_PluginLoader(array());
+        $loader->addPrefixPath('Zend_Filter', $this->libPath . '/Zend/Filter');
+        try {
+            // Plugin loader will attempt to load "c:\path\to\library/Zend/Filter/Word\UnderscoreToDash.php"
+            $className = $loader->load('Word_UnderscoreToDash');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals($className, $loader->getClassName('Word_UnderscoreToDash'));
+    }
+    
 }
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
