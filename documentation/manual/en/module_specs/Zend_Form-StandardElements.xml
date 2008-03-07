@@ -138,7 +138,16 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             Images need an image source. <code>Zend_Form_Element_Image</code>
-            uses the element value as the source, and then uses the
+            allows you to specify this by using the <code>setImage()</code>
+            accessor (or 'image' configuration key). You can also optionally specify a value to use when
+            submitting the image using the <code>setImageValue()</code> accessor
+            (or 'imageValue' configuration key). When the value set for the
+            element matches the <code>imageValue</code>, then the accessor
+            <code>isChecked()</code> will return true. 
+        </para>
+
+        <para>
+            The Image element uses the 
             <link linkend="zend.form.standardDecorators.image">Image
                 Decorator</link> for rendering (as well as the standard Errors,
             HtmlTag, and Label decorators). You can optionally specify a tag to

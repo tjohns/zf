@@ -183,9 +183,12 @@ class Util
         </para>
 
         <para>
-            By default, the decorator uses the element's value as the image
-            source. You can, however, explicitly set the image source using the
-            <code>setImage()</code> accessor.
+            By default, the decorator uses the element's src property, which can
+            be set with the <code>setImage()</code> method, as the image
+            source. Additionally, the element's label will be used as the alt
+            tag, and the <code>imageValue</code> (manipulated with the Image
+            element's <code>setImageValue()</code> and
+            <code>getImageValue()</code> accessors) will be used for the value.
         </para>
 
         <para>
