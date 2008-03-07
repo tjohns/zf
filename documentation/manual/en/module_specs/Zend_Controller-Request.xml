@@ -112,6 +112,22 @@
                 </para>
             </note>
 
+            <note>
+                <title>Retrieve the Raw POST Data, Too!</title>
+
+                <para>
+                    As of 1.5.0, you can also retrieve the raw post data via the
+                    <code>getRawPost()</code> method. This method returns false
+                    if no data was submitted in that fashion, but the full body
+                    of the post otherwise.
+                </para>
+
+                <para>
+                    This is primarily useful for accepting content when
+                    developing a RESTful MVC application.
+                </para>
+            </note>
+
             <para>
                 You may also set user parameters in the request object using
                 <code>setParam()</code> and retrieve these later using
@@ -231,6 +247,32 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+
+        <sect3 id="zend.controller.request.http.method">
+            <title>Determining the Request Method</title>
+
+            <para>
+                <code>getMethod()</code> allows you to determine the HTTP
+                request method used to request the current resource.
+                Additionally, a variety of methods exist that allow you to get
+                boolean responses when asking if a specific type of request has
+                been made:
+            </para>
+
+            <itemizedlist>
+                <listitem><code>isGet()</code></listitem>
+                <listitem><code>isPost()</code></listitem>
+                <listitem><code>isPut()</code></listitem>
+                <listitem><code>isDelete()</code></listitem>
+                <listitem><code>isHead()</code></listitem>
+                <listitem><code>isOptions()</code></listitem>
+            </itemizedlist>
+
+            <para>
+                The primary use case for these is for creating RESTful MVC
+                architectures.
+            </para>
         </sect3>
 
         <sect3 id="zend.controller.request.http.ajax">
