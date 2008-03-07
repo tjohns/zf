@@ -46,19 +46,34 @@
         <title>Zend_Form_Element_Checkbox</title>
 
         <para>
-            HTML checkboxes have boolean values; they are either on or off.
-            <code>Zend_Form_Element_Checkbox</code> enforces this in
-            <code>setValue()</code>: if a null value is passed, the value is
-            stored as 0; otherwise it is stored as a 1 (HTML forms simply pass
-            the element key with an empty value when the checkbox is selected).
-            When the value is 0, the <code>checked</code> attribute is toggled
-            on, and vice versa for a value of 1. The value is 0, or off, by
-            default.
+            HTML checkboxes allow you return a specific value, but basically
+            operate as booleans: when it is checked, the value is submitted;
+            when it's not checked, nothing is submitted. Internally,
+            Zend_Form_Element_Checkbox enforces this state.
+        </para>
+            
+        <para>
+            By default, the checked value is '1', and the unchecked value '0'.
+            You can specify the values to use using the
+            <code>setCheckedValue()</code> and <code>setUncheckedValue()</code>
+            accessors, respectively. Internally, any time you set the value, if
+            the provided value matches the checked value, then it is set, but
+            any other value causes the unchecked value to be set.
+        </para>
+
+        <para>
+            Additionally, setting the value sets the <code>checked</code>
+            property of the checkbox. You can query this using
+            <code>isChecked()</code> or simply accessing the property. Using the
+            <code>setChecked($flag)</code> method will both set the state of the
+            flag as well as set the approriate checked or unchecked value in the
+            element. Please use this method when setting the checked state of a
+            checkbox element to ensure the value is set properly.
         </para>
 
         <para>
             <code>Zend_Form_Element_Checkbox</code> uses the 'formCheckbox' view
-            helper.
+            helper. The checked value is always used to populate it.
         </para>
     </sect2>
 
