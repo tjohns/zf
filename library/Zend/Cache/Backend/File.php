@@ -662,8 +662,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             return false;
         }
         if (function_exists('get_magic_quotes_runtime')) {
-            $mqr = get_magic_quotes_runtime();
-            set_magic_quotes_runtime(0);       
+            $mqr = @get_magic_quotes_runtime();
+            @set_magic_quotes_runtime(0);       
         }   
         $f = @fopen($file, 'rb');
         if ($f) {
@@ -678,7 +678,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             @fclose($f);
         }
         if (function_exists('set_magic_quotes_runtime')) {
-            set_magic_quotes_runtime($mqr);
+            @set_magic_quotes_runtime($mqr);
         }
         return $result;
     }
