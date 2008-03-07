@@ -235,7 +235,12 @@ abstract class Zend_XmlRpc_Value
     {
         switch (gettype($value)) {
             case 'object':
-                // We convert the object into a struct
+                // Check to see if it's an XmlRpc value
+                if ($value instanceof Zend_XmlRpc_Value) {
+                    return $value;
+                }
+                
+                // Otherwise, we convert the object into a struct
                 $value = get_object_vars($value);
                 // Break intentionally omitted
             case 'array':
