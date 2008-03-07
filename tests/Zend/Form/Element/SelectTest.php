@@ -5,8 +5,6 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 }
 
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Select.php';
 
@@ -22,8 +20,6 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Form_Element_SelectTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -65,6 +61,11 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     public function testSelectElementInstanceOfBaseElement()
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element);
+    }
+
+    public function testSelectElementIsNotAnArrayByDefault()
+    {
+        $this->assertFalse($this->element->isArray());
     }
 
     public function testSelectElementUsesSelectHelperInViewHelperDecoratorByDefault()

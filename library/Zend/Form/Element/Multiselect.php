@@ -45,4 +45,10 @@ class Zend_Form_Element_Multiselect extends Zend_Form_Element_Select
      * @var string
      */
     public $helper = 'formSelect';
+
+    /**
+     * Multiselect is an array of values by default
+     * @var bool
+     */
+    protected $_isArray = true;
 }
