@@ -361,13 +361,15 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         $inflector = $this->getInflector();
         $this->_setInflectorTarget($this->getViewBasePathSpec());
         
+        $dispatcher = $this->_frontController->getDispatcher();
         $request = $this->getRequest();
+
         $parts = array(
-            'module'     => $request->getModuleName(),
-            'controller' => $request->getControllerName(),
-            'action'     => $request->getActionName()
+            'module'     => (($moduleName = $request->getModuleName()) != '') ? $dispatcher->formatModuleName($moduleName) : $moduleName,
+            'controller' => substr($dispatcher->formatControllerName($request->getControllerName()), 0, -10),
+            'action'     => $dispatcher->formatActionName($request->getActionName())
             );
-        
+
         $path = $inflector->filter($parts);
         return $path;
     }
@@ -809,9 +811,10 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     {
         $inflector  = $this->getInflector();
         $request    = $this->getRequest();
-        $module     = $request->getModuleName();
-        $controller = $request->getControllerName();
-        $action     = $request->getActionName();
+        $dispatcher = $this->_frontController->getDispatcher();
+        $module     = $dispatcher->formatModuleName($request->getModuleName());
+        $controller = substr($dispatcher->formatControllerName($request->getControllerName()), 0, -10);
+        $action     = $dispatcher->formatActionName($request->getActionName());
 
         $params     = compact('module', 'controller', 'action');
         foreach ($vars as $key => $value) {

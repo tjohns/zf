@@ -751,14 +751,28 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $controller = new Bar_IndexController($this->request, $this->response, array());
         $this->helper->setActionController($controller);
                       
-        $this->helper->setView($view = new Zend_View());
         $this->helper->setViewBasePathSpec(':moduleDir/:module');
         $this->helper->initView();
         
-        $viewScriptPaths = $view->getAllPaths(); 
+        $viewScriptPaths = $this->helper->view->getAllPaths(); 
 
         $this->assertRegExp('#modules/bar/bar/scripts/$#', $viewScriptPaths['script'][0]);
         $this->assertEquals($this->helper->getViewScript(), 'index/admin.phtml');
+    }
+    
+    /**
+     * @issue ZF-2738
+     */
+    public function testStockInflectorWorksWithDottedRequestParts()
+    {
+        $this->request->setModuleName('foo')
+                      ->setControllerName('car.bar')
+                      ->setActionName('baz');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $viewScriptPaths = $this->helper->view->getAllPaths();
+        $this->assertRegExp('#modules/foo/views/scripts/$#', $viewScriptPaths['script'][0]);
+        $this->assertEquals($this->helper->getViewScript(), 'car-bar/baz.phtml');
     }
     
 }
