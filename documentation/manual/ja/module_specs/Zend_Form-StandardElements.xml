@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8360 -->
+<!-- EN-Revision: 8631 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -47,20 +47,41 @@
         <title>Zend_Form_Element_Checkbox</title>
 
         <para>
-            HTML の checkbox は boolean 値を保持し、それぞれオン・オフを表します。
-            <code>Zend_Form_Element_Checkbox</code> は、これを
-            <code>setValue()</code> で保証します。null 値が渡された場合は
-            その値を 0 として保存し、それ以外の場合は 1
-            として保存します (HTML フォームのチェックボックスは、
-            チェックされた場合にその要素のキーのみ (値は空) を送信します)。
-            値が 0 の場合は <code>checked</code> 属性がオン、
-            値が 1 の場合はその逆となります。デフォルトの値は 0
-            です。
+            HTML のチェックボックスは指定した値を返すことができます。
+            しかし、基本的には boolean として扱います。
+            チェックされている場合はその値が送信され、
+            チェックされていない場合はなにも送信されません。
+            内部的に、Zend_Form_Element_Checkbox はこの状態を強制します。
+        </para>
+            
+        <para>
+            デフォルトでは、チェックされているときの値は '1'
+            でチェックされていないときの値は '0' です。
+            使用する値を指定するには、アクセサ
+            <code>setCheckedValue()</code> および <code>setUncheckedValue()</code>
+            をそれぞれ使用します。内部的には、この値を設定すると、
+            渡された値が checked
+            値と一致する場合はその値を設定しますが、
+            それ以外の値が渡された場合は
+            unchecked 値を設定します。
+        </para>
+
+        <para>
+            さらに、値を設定するとチェックボックスの
+            <code>checked</code> プロパティも設定されます。
+            この内容を確認するには、<code>isChecked()</code>
+            を使用するか、単純にそのプロパティにアクセスします。
+            <code>setChecked($flag)</code> メソッドを使用すると、
+            フラグの状態を設定すると同時に checked 値あるいは
+            unchecked 値のいずれか適切なほうを要素の値として設定します。
+            チェックボックス要素のチェック状態を設定するときには、
+            このメソッドを使用してプロパティが適切に設定されるようにしましょう。
         </para>
 
         <para>
             <code>Zend_Form_Element_Checkbox</code> は 'formCheckbox'
             ビューヘルパーを使用します。
+            値としては常に checked 値を使用します。
         </para>
     </sect2>
 
