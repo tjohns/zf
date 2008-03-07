@@ -56,8 +56,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1 = self::normalize($op1);
         $op2 = self::normalize($op2);
-        $result = $op1 + $op2;
-        if (($result === INF) or (($result - $op2) != $op1)) {
+        $result = self::normalize($op1 + $op2);
+        if (($result === "INF") or (self::normalize($result - $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("addition overflow: $op1 + $op2 != $result", $op1, $op2, $result);
         }
@@ -74,8 +74,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1  = self::normalize($op1);
         $op2  = self::normalize($op2);
-        $result = $op1 - $op2;
-        if (($result === INF)  or  (($result + $op2) != $op1)) {
+        $result = self::normalize($op1 - $op2);
+        if (($result === "INF")  or  (self::normalize($result + $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $result", $op1, $op2, $result);
         }
@@ -89,8 +89,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
     {
         $op1 = self::normalize($op1);
         $op2 = self::normalize($op2);
-        $result = pow($op1, $op2);
-        if ($result === INF) {
+        $result = self::normalize(pow($op1, $op2));
+        if ($result === "INF") {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("power overflow: $op1 ^ $op2", $op1, $op2, $result);
         }
@@ -107,8 +107,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1 = self::normalize($op1);
         $op2 = self::normalize($op2);
-        $result = $op1 * $op2;
-        if (($result === INF) or (($result / $op2) != $op1)) {
+        $result = self::normalize($op1 * $op2);
+        if (($result === "INF") or (self::normalize($result / $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("multiplication overflow: $op1 * $op2 != $result", $op1, $op2, $result);
         }
@@ -129,8 +129,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1 = self::normalize($op1);
         $op2 = self::normalize($op2);
-        $result = $op1 / $op2;
-        if (($result === INF) or (($result * $op2) != $op1)) {
+        $result = self::normalize($op1 / $op2);
+        if (($result === "INF") or (self::normalize($result * $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("division overflow: $op1 / $op2 != $result", $op1, $op2, $result);
         }
@@ -146,8 +146,8 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
             $op1 = 0;
         }
         $op1 = self::normalize($op1);
-        $result = sqrt($op1);
-        if (($result === INF) or (($result * $result) != $op1)) {
+        $result = self::normalize(sqrt($op1));
+        if (($result === "INF") or (self::normalize($result * $result) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("sqrt operand overflow: $op1", $op1, null, $result);
         }
@@ -168,13 +168,12 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         }
         $op1 = self::normalize($op1);
         $op2 = self::normalize($op2);
-        $result = $op1 / $op2;
-        if (($result === INF) or (($result * $op2) != $op1)) {
+        $result = self::normalize($op1 / $op2);
+        if (($result === "INF") or (self::normalize($result * $op2) != $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';
             throw new Zend_Locale_Math_Exception("modulo overflow: $op1 % $op2 (result=$result)", $op1, $op2, $result);
         }
-        $result = $op1 % $op2;
-        return $result;
+        return self::normalize($op1 % $op2);
     }
 
     public static function Comp($op1, $op2, $op3 = null)

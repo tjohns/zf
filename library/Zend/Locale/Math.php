@@ -65,9 +65,9 @@ class Zend_Locale_Math
     public static function round($op1, $precision = 0)
     {
         if (self::$_bcmathDisabled) {
-            return (string) round($op1, $precision);
+            return self::normalize(round($op1, $precision));
         }
-        $op1 = trim($op1);
+        $op1 = trim(self::normalize($op1));
         $length = strlen($op1);
         if (($decPos = strpos($op1, '.')) === false) {
             $op1 .= '.0';
