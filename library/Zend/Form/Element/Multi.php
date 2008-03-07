@@ -41,12 +41,6 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     public $options = array();
 
     /**
-     * Multi elements are arrays
-     * @var bool
-     */
-    protected $_isArray = true;
-
-    /**
      * Separator to use between options; defaults to '<br />'.
      * @var string
      */

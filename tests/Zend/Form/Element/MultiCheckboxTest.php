@@ -68,6 +68,11 @@ class Zend_Form_Element_MultiCheckboxTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->element instanceof Zend_Form_Element);
     }
 
+    public function testMultiCheckboxElementIsAnArrayByDefault()
+    {
+        $this->assertTrue($this->element->isArray());
+    }
+
     public function testHelperAttributeSetToFormMultiCheckboxByDefault()
     {
         $this->assertEquals('formMultiCheckbox', $this->element->getAttrib('helper'));

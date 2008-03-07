@@ -2387,6 +2387,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testFormObjectIteratesElementsInExpectedOrderWhenAllElementsHaveOrder()
+    {
+        $this->form->addElement('submit', 'submit')->submit->setLabel('Submit')->setOrder(30);
+        $this->form->addElement('text', 'name')->name->setLabel('Name')->setOrder(10);
+        $this->form->addElement('text', 'email')->email->setLabel('E-mail')->setOrder(20);
+
+        $expected = array('name', 'email', 'submit');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+            $this->assertTrue($value instanceof Zend_Form_Element);
+        }
+        $this->assertSame($expected, $received);
+    }
+
     public function testFormObjectIteratesElementsAndSubforms()
     {
         $this->setupElements();
@@ -2449,6 +2464,54 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             }
         } catch (Exception $e) {
             $this->fail('Exceptions should not be raised by iterator when elements are removed; error message: ' . $e->getMessage());
+        }
+    }
+
+    public function testClearingAttachedItemsShouldNotCauseIterationToRaiseExceptions()
+    {
+        $form = new Zend_Form();
+        $form->addElements(array(
+            'username' => 'text',
+            'password' => 'text',
+        ));
+        $form->clearElements();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing elements prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
+        }
+
+        $form->addElements(array(
+                 'username' => 'text',
+                 'password' => 'text',
+             ))
+             ->addDisplayGroup(array('username', 'password'), 'login');
+        $form->clearDisplayGroups();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing display groups prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
+        }
+
+        $subForm = new Zend_Form_SubForm();
+        $form->addSubForm($subForm, 'foo');
+        $form->clearSubForms();
+
+        try {
+            foreach ($form as $item) {
+            }
+        } catch (Zend_Form_Exception $e) {
+            $message = "Clearing sub forms prior to iteration should not cause iteration to fail;\n"
+                     . $e->getMessage();
+            $this->fail($message);
         }
     }
 
