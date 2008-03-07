@@ -763,6 +763,10 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
                         <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
                         <listitem><para><code>getTranslator()</code></para></listitem>
+
+                        <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+
+                        <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                     </itemizedlist>
                 </listitem>
             </itemizedlist>
@@ -1413,6 +1417,10 @@ $messages = $form->getMessages('username');
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
                     <listitem><para><code>getTranslator()</code></para></listitem>
+
+                    <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+
+                    <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                 </itemizedlist>
             </listitem>
         </itemizedlist>
@@ -1488,6 +1496,8 @@ action = "/user/register"
 method = "post"
 attribs.class = "zend_form"
 attribs.onclick = "validate(this)"
+
+disableTranslator = 0
 
 prefixPaths.element.prefix = "My_Element"
 prefixPaths.element.path = "My/Element/"

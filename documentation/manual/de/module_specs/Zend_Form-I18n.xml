@@ -17,6 +17,18 @@
         Informationen darüber wie ein Übersetzungsobjekt und Übersetzungsdateien erstellt werden.
     </para>
 
+    <note>
+        <title>Die Übersetzung kann für jedes Element einzeln abgeschaltet werden</title>
+
+        <para>
+            Übersetzung kann für jede Form, Element, Anzeigegruppe, oder Subform, durch den Aufruf
+            dessen <code>setDisableTranslator($flag)</code> Methode oder der Übergabe der
+            <code>disableTranslator</code> Option an das Objekt, ausgeschaltet werden. Das kann
+            nützlich sein wenn man Übersetzungen selektiv für individuelle Elemente oder Sets von
+            Elementen ausschalten will.
+        </para>
+    </note>
+
     <sect2 id="zend.form.i18n.initialization">
         <title>I18N in Formen initialisieren</title>
 

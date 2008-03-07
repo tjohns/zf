@@ -1026,6 +1026,8 @@ $element->class = 'text;
                 <itemizedlist>
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
                     <listitem><para><code>getTranslator()</code></para></listitem>
+                    <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+                    <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                 </itemizedlist>
             </listitem>
 
@@ -1186,6 +1188,7 @@ attribs.class = "element"
 onclick = "autoComplete(this, '/form/autocomplete/element')" ; Setzt das 'onclick' Attribut
 prefixPaths.decorator.prefix = "My_Decorator"
 prefixPaths.decorator.path = "My/Decorator/"
+disableTranslator = 0
 validators.required.validator = "NotEmpty"
 validators.required.breakChainOnFailure = true
 validators.alpha.validator = "alpha"
