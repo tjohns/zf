@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8511 -->
+<!-- EN-Revision: 8604 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -335,8 +335,8 @@ $form->setElementDecorators(array(
     'Label'
 ));
 ?>]]></programlisting>
-
             </example>
+
                 <note>
                     <title>要素によっては不適切なデコレータもある</title>
 
@@ -501,6 +501,31 @@ $login = $form->getDisplayGroup('login');
 // オーバーロードの使用
 $login = $form->login;
 ?>]]></programlisting>
+
+        <note>
+            <title>読み込み不要なデフォルトのデコレータ</title>
+
+            <para>
+                デフォルトのデコレータは、
+                オブジェクトの初期化時に読み込まれるようになっています。
+                この機能を無効にするには、表示グループの作成時にオプション
+                'disableLoadDefaultDecorators' を指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form->addDisplayGroup(
+    array('foo', 'bar'), 
+    'foobar', 
+    array('disableLoadDefaultDecorators' => true)
+);
+]]></programlisting>
+            
+            <para>
+                このオプションは、他のオプションと混用することもできます。
+                その場合はオプションの配列や <code>Zend_Config</code>
+                オブジェクトを使用します。
+            </para>
+        </note>
 
         <sect3 id="zend.form.forms.displaygroups.global">
             <title>グローバルな操作</title>
@@ -764,6 +789,10 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
                         <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
                         <listitem><para><code>getTranslator()</code></para></listitem>
+
+                        <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+
+                        <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                     </itemizedlist>
                 </listitem>
             </itemizedlist>
@@ -1028,6 +1057,27 @@ $form->setDecorators(array(
             フォームオブジェクトに設定した任意の属性は、
             HTML の <code>&lt;form&gt;</code> タグの属性となります。
         </para>
+
+        <note>
+            <title>読み込み不要なデフォルトのデコレータ</title>
+
+            <para>
+                デフォルトのデコレータは、
+                オブジェクトの初期化時に読み込まれるようになっています。
+                この機能を無効にするには、コンストラクタでオプション
+                'disableLoadDefaultDecorators' を指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
+]]></programlisting>
+            
+            <para>
+                このオプションは、他のオプションと混用することもできます。
+                その場合はオプションの配列や <code>Zend_Config</code>
+                オブジェクトを使用します。
+            </para>
+        </note>
 
         <note>
             <title>同じ型の複数のデコレータの使用法</title>
@@ -1408,6 +1458,10 @@ $messages = $form->getMessages('username');
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
                     <listitem><para><code>getTranslator()</code></para></listitem>
+
+                    <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+
+                    <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                 </itemizedlist>
             </listitem>
         </itemizedlist>
@@ -1486,6 +1540,8 @@ action = "/user/register"
 method = "post"
 attribs.class = "zend_form"
 attribs.onclick = "validate(this)"
+
+disableTranslator = 0
 
 prefixPaths.element.prefix = "My_Element"
 prefixPaths.element.path = "My/Element/"
@@ -1566,7 +1622,7 @@ class My_Form_Login extends Zend_Form
                      array('Label', array('class' => 'label'))
                  ));
 
-        $password = new Zend_Form_Element_Password('password);
+        $password = new Zend_Form_Element_Password('password');
         $password->class = 'formtext';
         $password->setLabel('Username:')
                  ->setDecorators(array(

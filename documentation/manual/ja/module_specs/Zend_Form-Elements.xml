@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8462 -->
+<!-- EN-Revision: 8604 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -762,6 +762,27 @@ $messages = $element->getMessages();
             </para></listitem>
         </itemizedlist>
 
+        <note>
+            <title>読み込み不要なデフォルトのデコレータ</title>
+
+            <para>
+                デフォルトのデコレータは、
+                オブジェクトの初期化時に読み込まれるようになっています。
+                この機能を無効にするには、コンストラクタでオプション
+                'disableLoadDefaultDecorators' を指定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+$element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));
+]]></programlisting>
+            
+            <para>
+                このオプションは、他のオプションと混用することもできます。
+                その場合はオプションの配列や <code>Zend_Config</code>
+                オブジェクトを使用します。
+            </para>
+        </note>
+
         <para>
             デコレータの実行順序は登録された順によって決まります。
             つまり、最初に登録したデコレータから順に実行することになります。
@@ -1052,6 +1073,8 @@ $element->class = 'text;
                 <itemizedlist>
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
                     <listitem><para><code>getTranslator()</code></para></listitem>
+                    <listitem><para><code>setDisableTranslator($flag)</code></para></listitem>
+                    <listitem><para><code>translatorIsDisabled()</code></para></listitem>
                 </itemizedlist>
             </listitem>
 
@@ -1214,6 +1237,7 @@ attribs.class = "element"
 onclick = "autoComplete(this, '/form/autocomplete/element')" ; sets 'onclick' attribute
 prefixPaths.decorator.prefix = "My_Decorator"
 prefixPaths.decorator.path = "My/Decorator/"
+disableTranslator = 0
 validators.required.validator = "NotEmpty"
 validators.required.breakChainOnFailure = true
 validators.alpha.validator = "alpha"

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8450 -->
+<!-- EN-Revision: 8604 -->
 <sect1 id="zend.form.i18n">
     <title>Zend_Form の国際化</title>
 
@@ -21,6 +21,18 @@
         <link linkend="zend.translate">Zend_Translate
         のドキュメント</link> を参照ください。
     </para>
+
+    <note>
+        <title>項目単位での翻訳の無効化</title>
+
+        <para>
+            個々のフォームや要素、表示グループ、サブフォームなどの単位で翻訳を無効にするには、
+            <code>setDisableTranslator($flag)</code> メソッドをコールするか
+            あるいはそのオブジェクトにオプション <code>disableTranslator</code>
+            を渡します。これは、特定の要素 (あるいは要素群)
+            についてだけ翻訳を無効にしたい場合に有用です。
+        </para>
+    </note>
 
     <sect2 id="zend.form.i18n.initialization">
         <title>フォームでの i18n 機能の初期化</title>
