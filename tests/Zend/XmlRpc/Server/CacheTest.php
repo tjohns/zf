@@ -1,8 +1,12 @@
 <?php
+// Call Zend_XmlRpc_Server_CacheTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_CacheTest::main");
+}
+
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Cache.php';
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_XmlRpc_Server_Cache
@@ -13,6 +17,17 @@ require_once 'PHPUnit/Framework/IncompleteTestError.php';
  */
 class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_Server_CacheTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     /**
      * Zend_XmlRpc_Server object
      * @var Zend_XmlRpc_Server
@@ -52,7 +67,7 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase
     public function testGetSave()
     {
         if (!is_writeable('./')) {
-            throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
+            $this->markTestIncomplete('Directory no writable');
         }
 
         $this->assertTrue(Zend_XmlRpc_Server_Cache::save($this->_file, $this->_server));
@@ -70,10 +85,26 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         if (!is_writeable('./')) {
-            throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
+            $this->markTestIncomplete('Directory no writable');
         }
 
         $this->assertTrue(Zend_XmlRpc_Server_Cache::save($this->_file, $this->_server));
         $this->assertTrue(Zend_XmlRpc_Server_Cache::delete($this->_file));
     }
+
+    public function testShouldReturnFalseWithInvalidCache()
+    {
+        if (!is_writeable('./')) {
+            $this->markTestIncomplete('Directory no writable');
+        }
+
+        file_put_contents($this->_file, 'blahblahblah');
+        $server = new Zend_XmlRpc_Server();
+        $this->assertFalse(Zend_XmlRpc_Server_Cache::get($this->_file, $server));
+    }
+}
+
+// Call Zend_XmlRpc_Server_CacheTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_Server_CacheTest::main") {
+    Zend_XmlRpc_Server_CacheTest::main();
 }
