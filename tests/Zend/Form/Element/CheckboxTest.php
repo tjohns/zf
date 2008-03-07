@@ -5,8 +5,6 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 }
 
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Checkbox.php';
 
@@ -22,8 +20,6 @@ class Zend_Form_Element_CheckboxTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Form_Element_CheckboxTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -47,6 +43,12 @@ class Zend_Form_Element_CheckboxTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+    }
+
+    public function getView()
+    {
+        require_once 'Zend/View.php';
+        return new Zend_View();
     }
 
     public function testCheckboxElementSubclassesXhtmlElement()
@@ -90,34 +92,117 @@ class Zend_Form_Element_CheckboxTest extends PHPUnit_Framework_TestCase
         $this->assertContains('checked="checked"', $html);
     }
 
-    public function testValueInitiallyZero()
+    public function testCheckedValueDefaultsToOne()
     {
-        $this->assertEquals(0, $this->element->getValue());
+        $this->assertEquals(1, $this->element->getCheckedValue());
     }
 
-    public function testSettingNonNullValueSetsValueToOne()
+    public function testUncheckedValueDefaultsToZero()
     {
-        $this->testValueInitiallyZero();
-        $this->element->setValue('');
-        $this->assertEquals(1, $this->element->getValue());
-        $this->element->setValue('foo');
-        $this->assertEquals(1, $this->element->getValue());
+        $this->assertEquals(0, $this->element->getUncheckedValue());
     }
 
-    public function testSettingNullValueSetsValueToZero()
+    public function testCanSetCheckedValue()
     {
-        $this->testSettingNonNullValueSetsValueToOne();
-        $this->element->setValue(null);
-        $this->assertEquals(0, $this->element->getValue());
+        $this->testCheckedValueDefaultsToOne();
+        $this->element->setCheckedValue('foo');
+        $this->assertEquals('foo', $this->element->getCheckedValue());
     }
 
-    public function testCheckedFlagTogglesWithValue()
+    public function testCanSetUncheckedValue()
     {
-        $this->testCheckedFlagIsFalseByDefault();
-        $this->testSettingNonNullValueSetsValueToOne();
+        $this->testUncheckedValueDefaultsToZero();
+        $this->element->setUncheckedValue('foo');
+        $this->assertEquals('foo', $this->element->getUncheckedValue());
+    }
+
+    public function testValueInitiallyUncheckedValue()
+    {
+        $this->assertEquals($this->element->getUncheckedValue(), $this->element->getValue());
+    }
+
+    public function testSettingValueToCheckedValueSetsWithEquivalentValue()
+    {
+        $this->testValueInitiallyUncheckedValue();
+        $this->element->setValue($this->element->getCheckedValue());
+        $this->assertEquals($this->element->getCheckedValue(), $this->element->getValue());
+    }
+
+    public function testSettingValueToAnythingOtherThanCheckedValueSetsAsUncheckedValue()
+    {
+        $this->testSettingValueToCheckedValueSetsWithEquivalentValue();
+        $this->element->setValue('bogus');
+        $this->assertEquals($this->element->getUncheckedValue(), $this->element->getValue());
+    }
+
+    public function testSettingCheckedFlagToTrueSetsValueToCheckedValue()
+    {
+        $this->testValueInitiallyUncheckedValue();
+        $this->element->setChecked(true);
+        $this->assertEquals($this->element->getCheckedValue(), $this->element->getValue());
+    }
+
+    public function testSettingCheckedFlagToFalseSetsValueToUncheckedValue()
+    {
+        $this->testSettingCheckedFlagToTrueSetsValueToCheckedValue();
+        $this->element->setChecked(false);
+        $this->assertEquals($this->element->getUncheckedValue(), $this->element->getValue());
+    }
+
+    public function testSettingValueToCheckedValueMarksElementAsChecked()
+    {
+        $this->testValueInitiallyUncheckedValue();
+        $this->element->setValue($this->element->getCheckedValue());
         $this->assertTrue($this->element->checked);
-        $this->element->setValue(null);
+    }
+
+    public function testSettingValueToUncheckedValueMarksElementAsNotChecked()
+    {
+        $this->testSettingValueToCheckedValueMarksElementAsChecked();
+        $this->element->setValue($this->element->getUncheckedValue());
         $this->assertFalse($this->element->checked);
+    }
+
+    public function testSetOptionsSetsInitialValueAccordingToCheckedAndUncheckedValues()
+    {
+        $options = array(
+            'checkedValue'   => 'foo',
+            'uncheckedValue' => 'bar',
+        );
+
+        $element = new Zend_Form_Element_Checkbox('test', $options);
+        $this->assertEquals($options['uncheckedValue'], $element->getValue());
+    }
+
+    public function testSetOptionsSetsInitialValueAccordingToSubmittedValues()
+    {
+        $options = array(
+            'test1' => array(
+                'value'          => 'foo',
+                'checkedValue'   => 'foo',
+                'uncheckedValue' => 'bar',
+            ),
+            'test2' => array(
+                'value'          => 'bar',
+                'checkedValue'   => 'foo',
+                'uncheckedValue' => 'bar',
+            ),
+        );
+
+        foreach ($options as $current) {
+            $element = new Zend_Form_Element_Checkbox('test', $current);
+            $this->assertEquals($current['value'], $element->getValue());
+            $this->assertEquals($current['checkedValue'], $element->getCheckedValue());
+            $this->assertEquals($current['uncheckedValue'], $element->getUncheckedValue());
+        }
+    }
+
+    public function testCheckedValueAlwaysRenderedAsCheckboxValue()
+    {
+        $this->element->setValue($this->element->getUncheckedValue());
+        $html = $this->element->render($this->getView());
+        $this->assertContains('value="' . $this->element->getCheckedValue() . '"', $html);
+        $this->assertNotContains($this->element->getUncheckedValue(), $html);
     }
 }
 
