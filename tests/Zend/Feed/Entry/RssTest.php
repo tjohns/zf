@@ -47,22 +47,28 @@ class Zend_Feed_Entry_RssTest extends PHPUnit_Framework_TestCase
     {
         $feed = Zend_Feed::importFile(dirname(__FILE__) . '/../_files/TestFeedEntryRssContentEncoded.xml');
         $this->assertType('Zend_Feed_Rss', $feed);
-        
+
         $item = $feed->current();
         $this->assertType('Zend_Feed_Entry_Rss', $item);
-        
+
         $this->assertTrue(isset($item->content));
-        $this->assertContains('http://framework.zend.com/fisheye/changelog/Zend_Framework/?cs=7757', (string) $item->content);
-        $this->assertContains('http://framework.zend.com/fisheye/changelog/Zend_Framework/?cs=7757', (string) $item->content());
+        $this->assertContains(
+            'http://framework.zend.com/fisheye/changelog/Zend_Framework/?cs=7757',
+            $item->content->__toString()
+            );
+        $this->assertContains(
+            'http://framework.zend.com/fisheye/changelog/Zend_Framework/?cs=7757',
+            $item->content()
+            );
         $item->content = 'foo';
-        $this->assertEquals('foo', (string) $item->content);
+        $this->assertEquals('foo', $item->content->__toString());
     }
 
     public function testContentEncodedNullIfEmpty()
     {
         $feed = Zend_Feed::importFile(dirname(__FILE__) . '/../_files/TestFeedEntryRssContentEncoded.xml');
         $this->assertType('Zend_Feed_Rss', $feed);
-        
+
         $feed->next();
         $item =  $feed->current();
         $this->assertType('Zend_Feed_Entry_Rss', $item);
@@ -70,5 +76,5 @@ class Zend_Feed_Entry_RssTest extends PHPUnit_Framework_TestCase
         $this->assertNull($item->content());
         // $this->assertNull($item->content); // always return DOMElement Object
     }
-    
+
 }
