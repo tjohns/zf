@@ -1016,8 +1016,6 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         foreach ($this->getElements() as $name => $element) {
             if (array_key_exists($name, $defaults)) {
                 $this->setDefault($name, $defaults[$name]);
-            } else {
-                $this->setDefault($name, null);
             }
         }
         foreach ($this->getSubForms() as $name => $form) {
