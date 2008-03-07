@@ -228,15 +228,6 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/foo/bar?foo=bar%20baz', $requestUri);
     }
 
-    public function testIsPost()
-    {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $this->assertTrue($this->_request->isPost());
-
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->assertFalse($this->_request->isPost());
-    }
-
     public function testGetMethod()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -246,6 +237,55 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('GET', $this->_request->getMethod());
     }
  
+    public function testIsPost()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $this->assertTrue($this->_request->isPost());
+
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->assertFalse($this->_request->isPost());
+    }
+
+    public function testIsGet()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->assertTrue($this->_request->isGet());
+        $this->assertFalse($this->_request->isPost());
+    }
+
+    public function testIsPut()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'PUT';
+        $this->assertTrue($this->_request->isPut());
+        $this->assertFalse($this->_request->isGet());
+    }
+
+    public function testIsDelete()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'DELETE';
+        $this->assertTrue($this->_request->isDelete());
+        $this->assertFalse($this->_request->isGet());
+    }
+
+    public function testIsHead()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'HEAD';
+        $this->assertTrue($this->_request->isHead());
+        $this->assertFalse($this->_request->isGet());
+    }
+
+    public function testIsOptions()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'OPTIONS';
+        $this->assertTrue($this->_request->isOptions());
+        $this->assertFalse($this->_request->isGet());
+    }
+
+    public function testGetRawBodyReturnsFalseWithNoPost()
+    {
+        $this->assertFalse($this->_request->getRawBody());
+    }
+
     public function testGetQuery()
     {
         $this->assertEquals('val1', $this->_request->getQuery('var1'));
