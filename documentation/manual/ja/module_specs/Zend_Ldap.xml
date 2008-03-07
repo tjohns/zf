@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8529 -->
+<!-- EN-Revision: 8641 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -271,7 +271,7 @@ echo "$acctname\n";]]></programlisting>
                       <row>
                         <entry>名前</entry>
                         <entry>値</entry>
-                        <entry>説明</entry>
+                        <entry>例</entry>
                       </row>
                     </thead>
                     <tbody>
