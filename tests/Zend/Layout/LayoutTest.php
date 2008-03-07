@@ -471,6 +471,17 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         $layout->setInflectorTarget('php');
         $this->assertEquals($layout->getInflectorTarget(), $inflector->getTarget());
     }
+    
+    public function testLayoutWithViewBasePath()
+    {
+        $layout = new Zend_Layout(array(
+            'viewBasePath' => dirname(__FILE__) . '/_files/layouts-basepath/')
+            );
+        $this->assertEquals('layout inside basePath', $layout->render());
+        $layout->setLayout('layout2');
+        $this->assertEquals('foobar-helper-output', $layout->render());
+    }
+    
 }
 
 /**

@@ -81,7 +81,10 @@ class Zend_Layout
      * Layout view script path
      * @var string
      */
-    protected $_layoutPath;
+    protected $_viewScriptPath = null;
+    
+    protected $_viewBasePath = null;
+    protected $_viewBasePrefix = 'Layout_View';
 
     /**
      * Flag: is MVC integration enabled?
@@ -344,7 +347,31 @@ class Zend_Layout
     {
         return $this->_enabled;
     }
- 
+
+    
+    public function setViewBasePath($path, $prefix = 'Layout_View')
+    {
+        $this->_viewBasePath = $path;
+        $this->_viewBasePrefix = $prefix;
+        return $this;
+    }
+    
+    public function getViewBasePath()
+    {
+        return $this->_viewBasePath;
+    }
+    
+    public function setViewScriptPath($path)
+    {
+        $this->_viewScriptPath = $path;
+        return $this;
+    }
+    
+    public function getViewScriptPath()
+    {
+        return $this->_viewScriptPath;
+    }
+    
     /**
      * Set layout script path
      * 
@@ -353,10 +380,9 @@ class Zend_Layout
      */ 
     public function setLayoutPath($path) 
     {
-        $this->_layoutPath = $path;
-        return $this;
+        return $this->setViewScriptPath($path);
     } 
- 
+    
     /**
      * Get current layout script path
      * 
@@ -364,7 +390,7 @@ class Zend_Layout
      */ 
     public function getLayoutPath() 
     {
-        return $this->_layoutPath;
+        return $this->getViewScriptPath();
     } 
 
     /**
@@ -721,8 +747,10 @@ class Zend_Layout
 
         $view = $this->getView();
 
-        if (null !== ($path = $this->getLayoutPath())) {
+        if (null !== ($path = $this->getViewScriptPath())) {
             $view->addScriptPath($path);
+        } elseif (null !== ($path = $this->getViewBasePath())) {
+            $view->addBasePath($path, $this->_viewBasePrefix);
         }
 
         return $view->render($name);
