@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8631 -->
+<!-- EN-Revision: 8683 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -146,8 +146,19 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             この要素には、元となる画像が必要です。
-            <code>Zend_Form_Element_Image</code>
-            は要素の value を元画像として使用し、
+            <code>Zend_Form_Element_Image</code> では、それを
+            <code>setImage()</code> アクセサ
+            (あるいは設定キー 'image') で設定します。
+            また、画像を submit したときに使用する値は、
+            <code>setImageValue()</code> アクセサ
+            (あるいは設定キー 'imageValue') でオプションとして設定することができます。
+            その要素に設定された値が
+            <code>imageValue</code> とマッチした場合、アクセサ
+            <code>isChecked()</code> は true を返します。
+        </para>
+
+        <para>
+            Image 要素はその value を元画像として使用し、
             <link linkend="zend.form.standardDecorators.image">Image
             デコレータ</link> でレンダリングを行います
             (それ以外に標準のデコレータ Errors、HtmlTag および Label も使用します)。

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8632 -->
+<!-- EN-Revision: 8683 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -188,8 +188,13 @@ class Util
         </para>
 
         <para>
-            デフォルトでは、このデコレータは要素の value を画像ソースとして使用します。
-            しかし、画像ソースを <code>setImage()</code> で明示的に指定することもできます。
+            デフォルトでは、このデコレータは要素の src プロパティを使用します。
+            これは、<code>setImage()</code> で画像ソースとして指定することができます。
+            さらに、要素のラベルは alt タグとして使用します。また
+            <code>imageValue</code> (Image 要素のアクセサ
+            <code>setImageValue()</code> および
+            <code>getImageValue()</code> で操作します)
+            を値として使用します。
         </para>
 
         <para>
