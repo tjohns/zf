@@ -24,7 +24,11 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_InfoCard_CipherTest::main");
 }
 
-require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -78,6 +82,10 @@ class Zend_InfoCard_CipherTest extends PHPUnit_Framework_TestCase
 
     public function testCipherFactory()
     {
+        if (!defined('MCRYPT_RIJNDAEL_128')) {
+            $this->markTestSkipped('Use of the Zend_InfoCard component requires the mcrypt extension to be enabled in PHP');
+        }
+
         $this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_AES128CBC)
                           instanceof Zend_InfoCard_Cipher_Symmetric_Adapter_Aes128cbc);
         $this->assertTrue(Zend_InfoCard_Cipher::getInstanceByURI(Zend_InfoCard_Cipher::ENC_RSA)

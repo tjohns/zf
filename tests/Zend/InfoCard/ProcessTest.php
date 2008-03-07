@@ -24,7 +24,11 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_InfoCard_ProcessTest::main");
 }
 
-require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -64,7 +68,16 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
 
     public function testCertificatePairs()
     {
-        $infoCard = new Zend_InfoCard();
+        try {
+            $infoCard = new Zend_InfoCard();
+        } catch (Zend_InfoCard_Exception $e) {
+            $message = $e->getMessage();
+            if (preg_match('/requires.+mcrypt/', $message)) {
+                $this->markTestSkipped($message);
+            } else {
+                throw $e;
+            }
+        }
 
         $key_id = $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
 
