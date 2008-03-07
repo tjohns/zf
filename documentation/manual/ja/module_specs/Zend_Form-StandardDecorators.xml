@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8450 -->
+<!-- EN-Revision: 8632 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -306,9 +306,29 @@ class Util
             そのビュースクリプトをパーシャルスクリプトとしてレンダリングします。
             各コールごとに独自の変数スコープを保持するので、
             その要素の変数以外にビューからの変数が注入されることはありません。
-            要素は、変数 'element' で渡します。
-            デコレータのオプションは、ビュー変数として渡します。
+            いくつかの変数が設定されます。
         </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>element</code>: デコレートする要素の名前
+            </para></listitem>
+
+            <listitem><para>
+                    <code>content</code>: デコレータに渡されたコンテンツ
+            </para></listitem>
+
+            <listitem><para>
+                    <code>decorator</code>: デコレータオブジェクト自身
+            </para></listitem>
+
+            <listitem><para>
+                    さらに、デコレータに <code>setOptions()</code>
+                    で渡されたすべてのオプションのうち内部的に使用しないもの
+                    (placement や　separator など) は、
+                    ビュースクリプトにビュー変数として渡されます。
+            </para></listitem>
+        </itemizedlist>
 
         <para>
             例として、次のような要素を考えてみましょう。
@@ -343,6 +363,31 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
     <div class="hint"><?= $this->element->getDescription() ?></div>
 </div>
 ]]></programlisting>
+
+        <note>
+            <title>ビュースクリプトによるコンテンツの置換</title>
+
+            <para>
+                デコレータに渡されたコンテンツをビュースクリプトで置換したいこともあるでしょう。
+                たとえばコンテンツをラップしたい場合などです。
+                その場合は、デコレータのオプション 'placement'
+                に false を設定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// デコレータの作成時
+$element->addDecorator('ViewScript', array('placement' => false));
+
+// 既存のデコレータインスタンスへの適用
+$decorator->setOption('placement', false);
+
+// 既に要素にアタッチされているデコレータへの適用
+$element->getDecorator('ViewScript')->setOption('placement', false);
+
+// デコレータが使用するビュースクリプト内
+$this->decorator->setOption('placement', false);
+?>]]></programlisting>
+        </note>
 
         <para>
             ViewScript デコレータは、
