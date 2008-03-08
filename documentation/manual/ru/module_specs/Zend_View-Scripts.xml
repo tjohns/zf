@@ -1,47 +1,27 @@
 <sect1 id="zend.view.scripts">
 
-    <title>Скрипты вида<!--View Scripts--></title>
+    <title>Скрипты видов</title>
 
     <para>
         После того, как ваш контроллер определил переменные и вызвал
         метод <code>render()</code>, <code>Zend_View</code> включает
-        требуемый скрипт представления и выполняет его "внутри" области
+        требуемый скрипт вида и выполняет его в области
         видимости <code>Zend_View</code>. Поэтому в вашем скрипте представления
         ссылки на $this в действительности будут ссылаться на сам экземляр
         <code>Zend_View</code>.
-<!--
-        Once your controller has assigned variables and called render(),
-        Zend_View then includes the requested view script and executes
-        it "inside" the scope of the Zend_View instance.  Therefore,
-        in your view scripts, references to $this actually point to the
-        Zend_View instance itself.
--->
     </para>
 
     <para>
         Переменные, объявленные для вида в контроллере, ссылаются на
         свойства экземпляра. Например, если контроллер объявил
-        переменную 'something', вы можете ссылаться на нее как
+        переменную 'something', то вы можете ссылаться на нее как
         на <code>$this->something</code> в скрипте вида (это дает
         вам возможность отслеживать, какие переменные были объявлены
         для скрипта, и какие были объявлены самим скриптом).
-<!--
-        Variables assigned to the view from the controller are referred
-        to as instance properties.  For example, if the controller were
-        to assign a variable 'something', you would refer to it as
-        $this->something in the view script.  (This allows you to keep
-        track of which values were assigned to the script, and which are
-        internal to the script itself.)
--->
     </para>
 
     <para>
-        Для напоминания, здесь приведен пример скрипта представления из
-        введения.
-<!--
-        By way of reminder, here is the example view script from the
-        Zend_View introduction.
--->
+        Ниже приведен пример скрипта представления из введения:
     </para>
 
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -71,33 +51,21 @@
 
     <sect2 id="zend.view.scripts.escaping">
 
-        <title>Экранирование вывода<!--Escaping Output--></title>
+        <title>Экранирование вывода</title>
 
         <para>
             Одной из наиважнейших задач, которую должен решать скрипт вида,
-            является обеспечение того, что выходные данные должным образом
-            экранированы; помимо прочего, это помогает
+            является обеспечение того, что вывод должным образом
+            экранирован; помимо прочего, это помогает
             предотвратить XSS-атаки.
-            За исключением тех случаев, когда используете функции,
-            методы или вспомогательные классы, которые делают экранирование
+            За исключением тех случаев, когда используются функции,
+            методы или помощники, которые делают экранирование
             сами, вы должны всегда экранировать переменные, когда выводите их.
-<!--
-            One of the most important tasks to perform in a view script
-            is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks.
-            Unless you are using a function, method, or helper that does
-            escaping on its own, you should always escape variables when
-            you output them.
--->
         </para>
 
         <para>
             <code>Zend_View</code> снабжен методом <code>escape()</code>,
             который выполняет экранирование.
-<!--
-            Zend_View comes with a method called escape() that does such
-            escaping for you.
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -116,13 +84,6 @@ echo $this->escape($this->variable);
             по-иному. Используйте метод <code>setEscape()</code> на уровне
             контроллера, чтобы указать <code>Zend_View</code>, какую
             экранирующую функцию обратного вызова использовать.
-<!--
-            By default, the escape() method uses the PHP htmlspecialchars()
-            function for escaping.  However, depending on your environment,
-            you may wish for escaping to occur in a different way.  Use the
-            setEscape() method at the controller level to tell Zend_View
-            what escaping callback to use.
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -148,19 +109,14 @@ echo $view->render(...);
         <para>
             Функции или методы обратного вызова должны принимать значение,
             которое требуется экранировать как первый параметр,
-            все остальные параметры должны быть необязателными.
-<!--
-            The callback function or method should take the value to be
-            escaped as its first parameter, and all other parameters should
-            be optional.
--->
+            все остальные параметры должны быть необязательными.
         </para>
 
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
 
-        <title>Использование других шаблонизаторов<!--Using Alternate Template Systems--></title>
+        <title>Использование других шаблонизаторов</title>
 
         <para>
             Хотя PHP сам по себе представляет собой мощный шаблонизатор,
@@ -169,28 +125,15 @@ echo $view->render(...);
             шаблонизаторы. Zend_View предоставляет 2 пути для этого: первый –
             через скрипты вида, второй - посредством реализации интерфейса
             Zend_View_Interface.
-<!--
-            Although PHP is itself a powerful template system, many developers
-            feel it is too powerful or complex for their template designers and
-            will want to use an alternate template engine. Zend_View provides
-            two mechanisms for doing so, the first through view scripts, the
-            second by implementing Zend_View_Interface.
--->
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
-            <title>Шаблонизаторы c использованием скриптов видов<!--Template Systems Using View Scripts--></title>
+            <title>Шаблонизаторы c использованием скриптов видов</title>
 
             <para>
                 Скрипт вида может использоваться для инстанцирования и
                 манипулирования отдельным объектом шаблона (это могут быть
                 шаблоны в стиле PHPLIB).
-<!--
-                A view script may be used to instantiate and manipulate a
-                separate template object, such as a PHPLIB-style template.  The
-                view script for that kind of activity might look something like
-                this:
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -218,9 +161,6 @@ if ($this->books) {
 
             <para>
                 Это может соответствовать следующему файлу шаблона:
-<!--
-                These would be the related template files:
--->
             </para>
 
             <programlisting role="html"><![CDATA[
@@ -246,18 +186,13 @@ if ($this->books) {
         </sect3>
 
         <sect3 id="zend.view.scripts.templates.interface">
-            <title>Шаблонизаторы с использованием Zend_View_Interface<!--Template Systems Using Zend_View_Interface--></title>
+            <title>Шаблонизаторы с использованием Zend_View_Interface</title>
 
             <para>
                 Некоторым может быть удобнее использовать совместимый с
                 Zend_View шаблонизатор. <code>Zend_View_Interface</code>
-                предоставляет минимальный интерфейс, необходимый для
-                совместимости:
-<!--
-                Some may find it easier to simply provide a Zend_View-compatible
-                template engine. <code>Zend_View_Interface</code> defines the
-                minimum interface needed for compatability:
--->
+                предоставляет минимально необходимый для
+                совместимости интерфейс:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -298,14 +233,9 @@ public function render($name);
 ]]></programlisting>
 
             <para>
-                Используя этот интерфейс, можно легко сделать "обертку" для
+                Используя этот интерфейс, легко сделать "обертку" для
                 шаблонизаторов сторонних разработчиков. В примере показан
                 вариант "обертки" для Smarty:
-<!--
-                Using this interface, it becomes relatively easy to wrap a
-                third-party template engine as a Zend_View-compatible class. As
-                an example, the following is one potential wrapper for Smarty:
--->
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -461,12 +391,6 @@ class Zend_View_Smarty implements Zend_View_Interface
                 <code>Zend_View_Smarty</code> вместо <code>Zend_View</code> и
                 использовать его подобно тому, как используется
                 <code>Zend_View</code>.
-<!--
-                In this example, you would instantiate the
-                <code>Zend_View_Smarty</code> class instead of
-                <code>Zend_View</code>, and then use it in roughly the same
-                fashion as <code>Zend_View</code>:
--->
             </para>
 
             <programlisting role="php"><![CDATA[

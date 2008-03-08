@@ -222,28 +222,28 @@ base/path/
             <listitem>
                 <para>
                     <code>getHelperPath($helper)</code> возвращает вычисленный
-                    путь ко классу помощника, имя которого передается в
+                    путь к классу помощника, имя которого передается в
                     качестве параметра.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHelperPaths()</code> возвращает все зарегистрированные пути ко классам помощников.
+                    <code>getHelperPaths()</code> возвращает все зарегистрированные пути к классам помощников.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>getFilterPath($filter)</code> возвращает вычисленный
-                    путь ко классу фильтра, имя которого передается в
+                    путь к классу фильтра, имя которого передается в
                     качестве параметра.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getFilterPaths()</code> возвращает все зарегистрированные пути ко классам фильтров.
+                    <code>getFilterPaths()</code> возвращает все зарегистрированные пути к классам фильтров.
                 </para>
             </listitem>
         </itemizedlist>

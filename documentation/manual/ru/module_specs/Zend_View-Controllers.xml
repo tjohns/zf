@@ -1,61 +1,40 @@
 <sect1 id="zend.view.controllers">
-    <title>Скрипты контроллера<!--Controller Scripts--></title>
+    <title>Скрипты контроллеров</title>
 
     <para>
-        В контроллере вы создаете и конфигурируете экземпляр <code>Zend_View</code>.
-        Затем вы объявляете переменные для этого экземпляра и подаете ему команду
-        воспроизвести выходные данные, используя указанный скрипт.
-<!--
-        The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to
-        render output using a particular script.
--->
+        В контроллере вы создаете и конфигурируете экземпляр
+        <code>Zend_View</code>. Затем вы объявляете переменные для этого
+        экземпляра и приказываете ему сгенерировать выходные данные, используя
+        указанный скрипт.
     </para>
 
     <sect2 id="zend.view.controllers.assign">
 
-        <title>Объявление переменных<!--Assigning Variables--></title>
+        <title>Объявление переменных</title>
 
         <para>
             Ваш скрипт контроллера должен объявить
-            необходимые переменные для вида до того, как будет передан
-            контроль скрипту вида. Обычно вы можете делать одно объявление
-            за раз посредством объявления свойств экземпляра вида.
-<!--
-            Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
-            can do assignments one at a time by assigning to property names
-            of the view instance:
--->
+            необходимые переменные до того, как будет передано
+            управление скрипту вида. Обычно вы можете делать объявления по одному через объявление свойств экземпляра вида.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
-$view->c = "Sea";
-?>]]>
+$view->c = "Sea";]]>
         </programlisting>
 
         <para>
             Однако это может оказаться утомительным, если вы уже имеете
             набор значений для присвоения в массиве или объекте.
-<!--
-            However, this can be tedious when you have already collected the
-            values to be assigned into an array or object.
--->
         </para>
 
         <para>
             Методы <code>assign()</code> дают возможность присваивать значения
             из массива или объекта "партиями". Следующий пример делает
-            то же самое, что и приведенное выше последовательное объявление
+            то же самое, что и предыдущий с последовательным объявлением
             свойств.
-<!--
-            The assign() method lets you assign from an array or object "in
-            bulk."  The following examples have the same effect as the above
-            one-by-one property assignments.
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -77,50 +56,36 @@ $obj = new StdClass;
 $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
-$view->assign((array) $obj);
-?>]]>
+$view->assign((array) $obj);]]>
         </programlisting>
 
         <para>
-            В качестве альтернативы вы можете использовать методы для
-            последовательного объявления посредством передачи строки с
-            именем переменной и значения переменной после нее.
-<!--
-            Alternatively, you can use the assign method to assign
-            one-by-one by passing a string variable name, and then the
-            variable value.
--->
+            Вы можете также использовать методы для
+            последовательного объявления c передачей имени переменной
+            и ее значения.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
-$view->assign('c', "Sea");
-?>]]>
+$view->assign('c', "Sea");]]>
         </programlisting>
 
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
 
-        <title>Выполнение скрипта вида<!--Rendering a View Script--></title>
+        <title>Выполнение скрипта вида</title>
 
         <para>
             После того, как вы определили все необходимые переменные, контроллер
             должен дать <code>Zend_View</code> команду выполнить указанный
             скрипт вида. Делайте это посредством вызова метода
             <code>render()</code>. Обратите внимание, что этот метод будет
-            возвращать результат выполнения, но не выводить его,
-            поэтому вам нужно самостоятельно вывести его посредством функции
-            <code>echo()</code> или <code>print()</code> в подходящее время.
-<!--
-            Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
-            return the rendered view, not print it, so you need to print or
-            echo it yourself at the appropriate time.
--->
+            возвращать результат рендеринга, но не выводить его,
+            поэтому вам нужно самостоятельно вывести его посредством
+            <code>echo</code> или <code>print</code>, когда нужно.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -128,15 +93,14 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-echo $view->render('someView.php');
-?>]]>
+echo $view->render('someView.php');]]>
         </programlisting>
 
     </sect2>
 
     <sect2 id="zend.view.controllers.script-paths">
 
-        <title>Пути к скриптам вида<!--View Script Paths--></title>
+        <title>Пути к скриптам видов</title>
 
         <para>
             По умолчанию <code>Zend_View</code> ищет скрипты
@@ -146,58 +110,31 @@ echo $view->render('someView.php');
             <code>$view->render('someView.php')</code>, то
             <code>Zend_View</code> будет искать
             <code>/path/to/app/controllers/someView.php</code>.
-<!--
-            By default, Zend_View expects your view scripts to be relative to
-            your calling script.  For example, if your controller script is at
-            "/path/to/app/controllers" and it calls
-            $view->render('someView.php'), Zend_View will look for
-            "/path/to/app/controllers/someView.php".
--->
         </para>
 
         <para>
-            Очевидно, что ваши скрипты вида могут находиться в другом месте.
+            Очевидно, ваши скрипты вида могут находиться в другом месте.
             Чтобы указать <code>Zend_View</code>, где искать скрипты вида,
             используйте метод <code>setScriptPath()</code>.
-<!--
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
-            setScriptPath() method.
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setScriptPath('/path/to/app/views');
-?>]]>
+$view->setScriptPath('/path/to/app/views');]]>
         </programlisting>
 
         <para>
-            Теперь вы можете вызывать <code>$view->render('someView.php')</code>,
+            Теперь, когда вы вызываете <code>$view->render('someView.php')</code>,
             он будет искать <code>/path/to/app/views/someView.php</code>.
-<!--
-            Now when you call $view->render('someView.php'), it will look
-            for "/path/to/app/views/someView.php".
--->
         </para>
 
         <para>
-            Вы можете "складывать" в стек пути,
+            Фактически вы можете "складывать" в стек пути,
             используя метод <code>addScriptPath()</code>. Если вы добавили
             пути в стек, то <code>Zend_View</code> будет искать запрошенный
             скрипт вида в этих путях, начиная с пути, добавленного последним.
-            Это дает возможность замещать виды, принятые по умолчанию,
-            специальными видами, для того, чтобы можно было создавать
-            специальные "темы" и "скины" для некоторых видов, оставляя в то
-            же время другие в единственном варианте.
-<!--
-            In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
-            views so that you may create custom "themes" or "skins" for
-            some views, while leaving others alone.
--->
+            Это дает возможность замещать скрипты видов, принятые по умолчанию,
+            другими, это позволяет создавать специальные "темы" и "скины" для всех или только определенных видов.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -208,8 +145,7 @@ $view->addScriptPath('/path/to/custom/');
 // теперь, когда вы вызываете $view->render('booklist.php'), Zend_View
 // будет искать "/path/to/custom/booklist.php",
 // затем "/path/to/app/views/booklist.php",
-// и под конец "booklist.php" в текущем каталоге.
-?>]]>
+// и под конец "booklist.php" в текущем каталоге.]]>
         </programlisting>
 
     </sect2>
