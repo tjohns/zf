@@ -248,7 +248,7 @@ echo 'Hier wird nie gecached ('.time().').';]]>
         </sect3>
         <sect3 id="zend.cache.frontends.function.options">
             <title>Mögliche Optionen</title>
-            <table>
+            <table id="zend.cache.frontends.function.options.table">
                 <title>Cache Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
@@ -326,7 +326,7 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
         <sect3 id="zend.cache.frontends.class.options">
             <title>Mögliche Optionen</title>
-            <table>
+            <table id="zend.cache.frontends.class.options.table">
                 <title>Class Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
@@ -450,7 +450,7 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Mögliche Optionen</title>
-            <table>
+            <table id="zend.cache.frontends.file.options.table">
                 <title>File Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
@@ -508,7 +508,7 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>Mögliche Optionen (Für dieses Frontend in der Zend_Cache Factory)</title>
-            <table>
+            <table id="zend.cache.frontends.page.options.table">
                 <title>Page Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
