@@ -80,10 +80,15 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
 
     public function testEncodeJsonProxiesToJsonActionHelper()
     {
-        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
-        $data = array('foo', 'bar', 'baz');
-        $encoded = $dojo->encodeJson($data);
-        $this->assertSame($data, Zend_Json::decode($encoded));
+        $dojo    = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $data    = array('foo', 'bar', 'baz');
+        $encoded = $dojo->prepareAutoCompletion($data);
+        $decoded = Zend_Json::decode($encoded);
+        $test    = array();
+        foreach ($decoded['items'] as $item) {
+            $test[] = $item['name'];
+        }
+        $this->assertSame($data, $test);
         $this->assertFalse($this->layout->isEnabled());
         $headers = $this->response->getHeaders();
         $found = false;
@@ -104,7 +109,7 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $data = array('foo' => 'bar', 'baz');
         try {
             $encoded = $dojo->encodeJson($data);
-            $this->fail('Associative arrays should be considered invalid');
+            $this->fail('Associative arrays without an "items" key should be considered invalid');
         } catch (Zend_Controller_Action_Exception $e) {
             $this->assertContains('Invalid data', $e->getMessage());
         }
@@ -133,7 +138,16 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
         $data = array('foo', 'bar', 'baz');
         $encoded = $dojo->direct($data, false);
-        $this->assertSame($data, Zend_Json::decode($encoded));
+        $decoded = Zend_Json::decode($encoded);
+        $this->assertContains('items', array_keys($decoded));
+        $this->assertContains('identifier', array_keys($decoded));
+        $this->assertEquals('name', $decoded['identifier']);
+
+        $test = array();
+        foreach ($decoded['items'] as $item) {
+            $test[] = $item['label'];
+        }
+        $this->assertEquals($data, $test);
     }
 
     public function testDojoHelperSendsResponseByDefault()
@@ -142,7 +156,12 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $dojo->suppressExit = true;
         $data = array('foo', 'bar', 'baz');
         $encoded = $dojo->direct($data);
-        $this->assertSame($data, Zend_Json::decode($encoded));
+        $decoded = Zend_Json::decode($encoded);
+        $test    = array();
+        foreach ($decoded['items'] as $item) {
+            $test[] = $item['name'];
+        }
+        $this->assertSame($data, $test);
         $body = $this->response->getBody();
         $this->assertSame($encoded, $body);
     }
