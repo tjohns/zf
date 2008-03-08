@@ -973,6 +973,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
             if (empty($options)) {
                 $validator = new $name;
             } else {
+                $messages = false;
+                if (isset($options['messages'])) {
+                    $messages = $options['messages'];
+                    unset($options['messages']);
+                }
+
                 $r = new ReflectionClass($name);
                 if ($r->hasMethod('__construct')) {
                     $validator = $r->newInstanceArgs((array) $options);
@@ -980,8 +986,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
                     $validator = $r->newInstance();
                 }
 
-                if (isset($options['messages']) && is_array($options['messages'])) {
-                    $validator->setMessages($options['messages']);
+                if ($messages) {
+                    if (is_array($messages)) {
+                        $validator->setMessages($messages);
+                    } elseif (is_string($messages)) {
+                        $validator->setMessage($messages);
+                    }
                 }
             }
         } else {
