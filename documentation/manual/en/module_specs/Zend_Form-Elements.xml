@@ -1269,7 +1269,7 @@ decorators.label.decorator = "Label"
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    class __construct($name, $options = null)
+    public function __construct($name, $options = null)
     {
         $this->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator')
              ->addFilters('StringTrim')
