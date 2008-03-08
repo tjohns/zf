@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8123 -->
+<!-- EN-Revision: 8692 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -106,38 +106,241 @@ class FooController extends Zend_Controller_Action
 
     <para>
         現在 <code>AutoComplete</code> がサポートしている AJAX
-        ライブラリは次のとおりです。
+        ライブラリは、Dojo と Scriptaculous です。
     </para>
 
-    <itemizedlist>
-        <listitem>
+    <sect4 id="zend.controller.actionhelpers.autocomplete.dojo">
+        <title>Dojo でのオートコンプリート</title>
+
+        <para>
+            Dojo には、オートコンプリートのためだけのウィジェットはありません。
+            しかし、ComboBox と FilteringSelect
+            のふたつのウィジェットがオートコンプリート機能を持っています。
+            どちらのウィジェットも、QueryReadStore
+            を実装したデータを必要とします。詳細は
+            <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-3-programmatic-dijit-and-dojo/data-retrieval-dojo-data-0">dojo.data</ulink>
+            のドキュメントを参照ください。
+        </para>
+
+        <para>
+            Zend Framework では、単純な数値添字の配列を
+            AutoCompleteDojo ヘルパーに渡します。
+            そうすると、適切な形式の JSON オブジェクトを返します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// コントローラのアクション内で
+$this->_helper->autoCompleteDojo($data);
+]]></programlisting>
+        
+        <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
+            <title>Zend MVC を使用した、Dojo でのオートコンプリート</title>
+
             <para>
-                <ulink url="http://dojotoolkit.org/">Dojo</ulink>。
-                Dojo そのものには現時点では公式なオートコンプリート機能はありません。
-                しかし、Dojo でオートコンプリート機能を使用する場合には、一般的には
-                <ulink
-                    url="http://today.java.net/pub/a/today/2006/04/27/building-ajax-with-dojo-and-json.html">Java.net
-                    で説明されている方法</ulink> が用いられています。
-                これは、文字列の配列を JSON 形式で受け取ります。
+                Zend MVC で Dojo によるオートコンプリートを使用するには、
+                いくつかの準備が必要です。オートコンプリートを使用したい
+                ComboBox 用にフォームオブj稀有とを作成し、
+                オートコンプリートの結果を提供するためのコントローラアクションを作成し、
+                オートコンプリートアクションに接続するための
+                独自の QueryReadStore を作成し、
+                サーバ側でオートコンプリートを行わせるための javascript
+                を作成することになります。
             </para>
 
             <para>
-                このライブラリを使用するヘルパーは 'AutoCompleteDojo' です。
+                まずは、必要となる javascript を見ていきましょう。
+                Dojo は javascript によるオブジェクト指向プログラミングを行うための
+                完全なフレームワークで、ちょうど PHP における Zend Framework
+                のようなものです。その中には、
+                ディレクトリ構造を用いて擬似的な名前空間を作成する機能もあります。
+                ここでは、Dojo の配布ファイルの dojo
+                ディレクトリと同じ階層に 'custom' ディレクトリを作成します。
+                そのディレクトリの中に TestNameReadStore.js
+                という javascript ファイルを作成し、次のようなコードを書きます。
             </para>
-        </listitem>
 
-        <listitem>
+            <programlisting role="javascript"><![CDATA[
+dojo.provide("custom.TestNameReadStore");
+dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
+    fetch:function (request) {
+        request.serverQuery = { test:request.query.name };
+        return this.inherited("fetch", arguments);
+    }
+});
+]]></programlisting>
+            
             <para>
-                <ulink
-                    url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">Scriptaculous</ulink>。
-                Script.aculo.us は、所定の形式の HTML レスポンスを受け取ります。
+                このクラスは、単に Dojo 自身の QueryReadStore
+                クラスを継承したものです。継承元のクラス自体は抽象クラスです。
+                そこにリクエスト用のメソッドを定義し、'test'
+                要素に割り当てています。
             </para>
 
             <para>
-                このライブラリを使用するヘルパーは 'AutoCompleteScriptaculous' です。
+                次に、オートコンプリートを行うためのフォーム要素を作成します。
             </para>
-        </listitem>
-    </itemizedlist>
+
+            <programlisting role="php"><![CDATA[<?php
+class TestController extends Zend_Controller_Action
+{
+    protected $_form;
+
+    public function getForm()
+    {   
+        if (null === $this->_form) {
+            require_once 'Zend/Form.php';
+            $this->_form = new Zend_Form();
+            $this->_form->setMethod('get')
+                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->addElements(array(
+                    'test' => array('type' => 'text', 'options' => array(
+                        'filters'        => array('StringTrim'),
+                        'dojoType'       => array('dijit.form.ComboBox'),
+                        'store'          => 'testStore',
+                        'autoComplete'   => 'false',
+                        'hasDownArrow'   => 'true',
+                        'label' => 'Your input:',
+                    )),
+                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                ));
+        }
+        return $this->_form;
+    }
+}
+]]></programlisting>
+            
+            <para>
+                ここでは、単に 'test' と 'go' メソッドのみを持つフォームを作成します。
+                'test' メソッドは、特別な Dojo 固有の属性
+                dojoType、store、autoComplete および hasDownArrow
+                を追加します。dojoType では、これから ComboBox
+                を作成することを指定します。そして、それを 'testStore' のデータストア
+                (キー 'store') にリンクします。詳細は後ほど説明します。
+                'autoComplete' を false に設定することで、
+                最初にマッチしたものを自動選択するのではなく
+                マッチしたものの一覧を表示するよう Dojo に指示します。
+                最後に 'hasDownArrow' でセレクトボックス風の下向き矢印を作ります。
+                これで、マッチしたものを表示したり隠したりできるようになります。
+            </para>
+
+            <para>
+                では、フォームを表示するためのメソッドと
+                オートコンプリートの処理用のエンドポイントを作成してみましょう。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class TestController extends Zend_Controller_Action
+{
+    // ...
+
+    /**
+     * 最初のページ
+     */
+    public function indexAction()
+    {
+        $this->view->form = $this->getForm();
+    }
+
+    public function autocompleteAction()
+    {
+        if ('ajax' != $this->_getParam('format', false)) {
+            return $this->_helper->redirector('index');
+        }
+        if ($this->getRequest()->isPost()) {
+            return $this->_helper->redirector('index');
+        }
+
+        $match = trim($this->getRequest()->getQuery('test', ''));
+
+        $matches = array();
+        foreach ($this->getData() as $datum) {
+            if (0 === strpos($datum, $match)) {
+                $matches[] = $datum;
+            }
+        }
+        $this->_helper->autoCompleteDojo($matches);
+    }
+}
+]]></programlisting>
+            
+            <para>
+                <code>autocompleteAction()</code>
+                ではいくつかの作業を行っています。
+                まず、POST リクエストを受け取ったことを確実にし、
+                'format' パラメータの値を 'ajax' に設定します。
+                これにより、余計なクエリがアクションに送られることを減らします。
+                次に、'test' パラメータの内容を確認し、私たちのデータと比較します
+                (ここでは、<code>getData()</code> の実装は意図的に控えています。
+                何らかのデータソースを使用することになるでしょう)。
+                最後に、マッチした内容を AutoCompletion ヘルパーに送信します。
+            </para>
+
+            <para>
+                これでバックエンド側の準備はすべて整いました。
+                次に、ページのビュースクリプト側ではどうすればいいのかを考えてみましょう。
+                まず、データストアを用意しなければなりません。
+                次にフォームをレンダリングし、最後に適切な Dojo ライブラリ
+                (使用するデータストアも含む) を読み込みます。
+                ビュースクリプトを見てみましょう。
+                適宜コメントを入れてあります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<? // データストアの準備 ?>
+<div dojoType="custom.TestNameReadStore" jsId="testStore"
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+
+<? // フォームのレンダリング ?>
+<?= $this->form ?>
+
+<? // Dojo 関連の CSS の、HTML head での読み込み ?>
+<? $this->headStyle()->captureStart() ?>
+@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<? $this->headStyle()->captureEnd() ?>
+
+<? // 必要な Dojo ライブラリを含む javascript の、
+   // HTML head での読み込み ?>
+<? $this->headScript()
+        ->setAllowArbitraryAttributes(true)
+        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 
+            'text/javascript', 
+            array('djConfig' => 'parseOnLoad: true'))
+        ->captureStart() ?>
+djConfig.usePlainJson=true;
+dojo.registerModulePath("custom","../custom");
+dojo.require("dojo.parser");
+dojo.require("dojox.data.QueryReadStore");
+dojo.require("dijit.form.ComboBox");
+dojo.require("custom.TestNameReadStore");
+<? $this->headScript()->captureEnd() ?>
+]]></programlisting>
+
+            <para>
+                headStyle や headScript といったビューヘルパーのコールに注意しましょう。
+                これらはプレースホルダで、ビュースクリプトをレンダリングする際に
+                HTML の head セクションとなります。
+            </para>
+
+            <para>
+                これで、Dojo のオートコンプリートを動作させるための準備がすべて整いました。
+            </para>
+        </example>
+    </sect4>
+
+    <sect4 id="zend.controller.actionhelpers.autocomplete.scriptaculous">
+        <title>Scriptaculous でのオートコンプリート</title>
+        <para>
+            <ulink url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">Scriptaculous</ulink>
+            は、所定の形式の HTML レスポンスを受け取ることを想定しています。
+        </para>
+
+        <para>
+            このライブラリで使用するヘルパーは 'AutoCompleteScriptaculous' です。
+            このヘルパーにデータの配列を渡せば、Ajax.Autocompleter
+            に対応した形式の HTML レスポンスができあがります。
+        </para>
+    </sect4>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
