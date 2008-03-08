@@ -176,9 +176,12 @@ class Util
         </para>
 
         <para>
-            Standardmäßig verwendet der Dekorator den Wert des Elements als Bildquelle. Es kann,
-            trotzdem, die Bildquelle explizit gesetzt werden indem die Zugriffsmethode
-            <code>setImage()</code> verwendet wird.
+            Standardmäßig verwendet der Dekorator die src Eigenschaft des Elements als Bildquelle,
+            welche mit der <code>setImage()</code> Methode als Bildquelle gesetzt werden.
+            Zusätzlich wird das Lebel des Elements als alt Tag verwendet, und
+            <code>imageValue</code> (welches mit den <code>setImageValue()</code> und
+            <code>getImageValue()</code> Zugriffsmethoden des Bildes manipuliert werden kann)
+            wird für den Wert verwendet.
         </para>
 
         <para>

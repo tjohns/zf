@@ -134,8 +134,17 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            Bilder benötigen eine Bildquelle. <code>Zend_Form_Element_Image</code> verwendet den
-            Elementwert als Quelle, und dann verwendet es den
+            Bilder benötigen eine Bildquelle. <code>Zend_Form_Element_Image</code> erlaube dessen
+            Spezifikation durch Verwendung der <code>setImage()</code> Zugriffsmethode (oder des
+            'image' Konfigurations Schlüssels). Es kann auch optional ein Wert spezifiziert werden
+            der zu verwenden ist wenn das Bild übertragen wird indem die Zugriffsmethode
+            <code>setImageValue()</code> verwendet wird (oder der 'imageValue Konfigurations
+            Schlüssel). Wenn der Wert der für das Element gesetzt ist, mit <code>imageValue</code>
+            übereinstimmt, gibt <code>isChecked()</code> true zurück.
+        </para>
+
+        <para>
+            Das Bild Element verwenden den
             <link linkend="zend.form.standardDecorators.image">Image Decorator</link> für die
             Darstellung (genauso wie die Standard Error, HtmlTag und Label Dekoratore). Es kann
             optional ein Tag für den <code>Image</code> Dekorator spezifiziert werden der das
