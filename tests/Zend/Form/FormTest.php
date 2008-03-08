@@ -2289,6 +2289,30 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Raising exception in decorator callback', $this->error);
     }
 
+    /**
+     * ZF-2718
+     */
+    public function testHiddenElementsGroupedWhenRendered()
+    {
+        $this->markTestIncomplete('Scheduling for future release');
+        $this->form->addElements(array(
+            array('type' => 'hidden', 'name' => 'first', 'options' => array('value' => 'first value')),
+            array('type' => 'text', 'name' => 'testone'),
+            array('type' => 'hidden', 'name' => 'second', 'options' => array('value' => 'second value')),
+            array('type' => 'text', 'name' => 'testtwo'),
+            array('type' => 'hidden', 'name' => 'third', 'options' => array('value' => 'third value')),
+            array('type' => 'text', 'name' => 'testthree'),
+        ));
+        $html = $this->form->render($this->getView());
+        if (!preg_match('#(<input type="hidden" name="[^>].*>\s*){3}#', $html, $matches)) {
+            $this->fail('Hidden elements should be grouped');
+        }
+        foreach (array('first', 'second', 'third') as $which) {
+            $this->assertRegexp('#<input[^]*name="' . $which . '"#', $matches[0]);
+            $this->assertRegexp('#<input[^]*value="' . $which . ' value"#', $matches[0]);
+        }
+    }
+
     // Localization
 
     public function testTranslatorIsNullByDefault()
