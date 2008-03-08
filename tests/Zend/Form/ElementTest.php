@@ -679,6 +679,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($messageTemplates[Zend_Validate_Digits::NOT_DIGITS], $message);
     }
 
+    public function testCanPassSingleMessageToValidatorToSetValidatorMessages()
+    {
+        $message = 'My custom empty message';
+        $this->element->setRequired(true)
+                      ->addValidator('notEmpty', false, array('messages' => $message));
+        
+        $this->element->isValid('');
+        $messages = $this->element->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals($message, current($messages));
+    }
+
     public function testMessagesAreTranslatedForCurrentLocale()
     {
         $localeFile   = dirname(__FILE__) . '/_files/locale/array.php';
