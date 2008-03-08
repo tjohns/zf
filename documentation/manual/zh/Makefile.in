@@ -24,11 +24,11 @@
 #  check - validate DocBook manual using xmllint.
 #  check1 - validate one DocBook XML file using xmllint.
 #    Requires that you set the XMLFILE variable.
-# 
+#
 
 # -- parameters you are likely to want to change --
 
-# XMLFILE is the name of one DocBook XML file that you want to 
+# XMLFILE is the name of one DocBook XML file that you want to
 #   test with xmllint, using the 'check1' target.
 
 XEP=@XEP@
@@ -40,7 +40,7 @@ ECSRC=@ECSRC@
 HERE=@HERE@
 
 DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
-DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/htmlhelp/htmlhelp.xsl
 DOCBOOK_FO_XSL=http://framework.zend.com/docbook-xsl/fo/docbook.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
@@ -56,7 +56,8 @@ html: html/index.html
 
 html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
-	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) $(MANUAL_XML)
+          $(XMLLINT) --xinclude --output _temp_manual.xml $(MANUAL_XML) 
+	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) _temp_manual.xml
 	@echo "Copying manual figures (recursively)..."
 	-[ -d figures ] && cp -r figures html/figures
 
@@ -99,7 +100,7 @@ clean:
 	-rm -f _temp_*.xml
 
 cleanall: clean
-	-rm -f config.* configure 
+	-rm -f config.* configure
 	-rm -rf autom4te.cache
 	-rm -f Makefile
 	-rm -f $(HTML_XSL) $(MANUAL_XML)

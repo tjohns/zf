@@ -40,7 +40,7 @@ ECSRC=@ECSRC@
 HERE=@HERE@
 
 DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
-DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/htmlhelp/htmlhelp.xsl
 DOCBOOK_FO_XSL=http://framework.zend.com/docbook-xsl/fo/docbook.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml

@@ -17,7 +17,7 @@
 
 LANG=*
 DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
-DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/htmlhelp/htmlhelp.xsl
 
 all: html
 
