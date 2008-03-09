@@ -85,16 +85,35 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 ''              => ''
                 );
         } else {
-            $valuesExpected = array(
-                'abc123'        => 'abc',
-                'abc 123'       => 'abc',
-                'abcxyz'        => 'abcxyz',
-                'četně'         => 'četně',
-                'لعربية'        => 'لعربية',
-                'grzegżółka'    => 'grzegżółka',
-                'België'        => 'België',
-                ''              => ''
-                );
+       	    if (extension_loaded('mbstring')) {
+	            /**
+	             * The first element contains multibyte alphabets.
+	             *  But , Zend_Filter_Alpha is expected to return only singlebyte alphabets.
+	             * The second contains multibyte or singlebyte space.
+	             * The third  contains multibyte or singlebyte digits.
+	             * The forth  contains various multibyte or singlebyte characters.
+	             * The last contains only singlebyte alphabets.
+	             */
+	            $valuesExpected = array(
+	                'aＡBｂc'  => 'aBc',
+	                'z Ｙ　x'  => 'zx',
+	                'Ｗ1v３Ｕ4t' => 'vt',
+	                '，sй.rλ:qν＿p' => 'srqp',
+	                'onml' => 'onml'
+	            	);       	    
+       	    } else {
+       	    	//without mbstring
+	        	$valuesExpected = array(
+	                'abc123'        => 'abc',
+	                'abc 123'       => 'abc',
+	                'abcxyz'        => 'abcxyz',
+	                'četně'         => 'četně',
+	                'لعربية'        => 'لعربية',
+	                'grzegżółka'    => 'grzegżółka',
+	                'België'        => 'België',
+	                ''              => ''
+	                );
+       	    }
         }
 
         foreach ($valuesExpected as $input => $output) {
@@ -125,18 +144,26 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 " \t "          => " \t "
                 );
         } else {
-            $valuesExpected = array(
-                'abc123'        => 'abc',
-                'abc 123'       => 'abc ',
-                'abcxyz'        => 'abcxyz',
-                'četně'         => 'četně',
-                'لعربية'        => 'لعربية',
-                'grzegżółka'    => 'grzegżółka',
-                'België'        => 'België',
-                ''              => '',
-                "\n"            => "\n",
-                " \t "          => " \t "
-                );
+        	if (extension_loaded('mbstring')) {
+				$valuesExpected = array(
+                	'a B'  => 'a B',
+                	'zＹ　x'  => 'zx'
+            		);
+        	} else {
+       	    	//without mbstring
+	            $valuesExpected = array(
+	                'abc123'        => 'abc',
+	                'abc 123'       => 'abc ',
+	                'abcxyz'        => 'abcxyz',
+	                'četně'         => 'četně',
+	                'لعربية'        => 'لعربية',
+	                'grzegżółka'    => 'grzegżółka',
+	                'België'        => 'België',
+	                ''              => '',
+	                "\n"            => "\n",
+	                " \t "          => " \t "
+	                );
+        	}
         }
 
         foreach ($valuesExpected as $input => $output) {

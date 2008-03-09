@@ -70,7 +70,13 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
             // POSIX named classes are not supported, use alternative 0-9 match
             $pattern = '/[^0-9]/';
         } else {
-            $pattern = '/[\p{^N}]/u';
+       	    if (extension_loaded('mbstring')) {
+            	// Filter for the value with mbstring
+            	$pattern = '/[^[:digit:]]/';
+        	} else {
+            	// Filter for the value without mbstring
+	       	    $pattern = '/[\p{^N}]/';
+        	}
         }
 
         return preg_replace($pattern, '', (string) $value);
