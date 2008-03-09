@@ -391,7 +391,7 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         }
 
         // Check input against local network name schema; last chance to pass validation
-        $regexLocal = "/^(([a-zA-Z0-9\x2d]{1,63}\x2e)*[a-zA-Z0-9\x2d]{1,63}){1,254}$/";
+        $regexLocal = '/^(([a-zA-Z0-9\x2d]{1,63}\x2e)*[a-zA-Z0-9\x2d]{1,63}){1,254}$/';
         $status = @preg_match($regexLocal, $valueString);
         if (false === $status) {
             /**
