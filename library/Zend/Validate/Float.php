@@ -61,8 +61,8 @@ class Zend_Validate_Float extends Zend_Validate_Abstract
 
         $locale = localeconv();
 
-        $valueFiltered = str_replace($locale['decimal_point'], '.', $valueString);
-        $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
+        $valueFiltered = str_replace($locale['thousands_sep'], '', $valueString);
+        $valueFiltered = str_replace($locale['decimal_point'], '.', $valueFiltered);
 
         if (strval(floatval($valueFiltered)) != $valueFiltered) {
             $this->_error();
