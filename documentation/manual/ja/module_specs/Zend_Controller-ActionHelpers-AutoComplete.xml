@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8692 -->
+<!-- EN-Revision: 8705 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -153,7 +153,7 @@ $this->_helper->autoCompleteDojo($data);
                 完全なフレームワークで、ちょうど PHP における Zend Framework
                 のようなものです。その中には、
                 ディレクトリ構造を用いて擬似的な名前空間を作成する機能もあります。
-                ここでは、Dojo の配布ファイルの dojo
+                ここでは、Dojo の配布ファイルの Dojo
                 ディレクトリと同じ階層に 'custom' ディレクトリを作成します。
                 そのディレクトリの中に TestNameReadStore.js
                 という javascript ファイルを作成し、次のようなコードを書きます。

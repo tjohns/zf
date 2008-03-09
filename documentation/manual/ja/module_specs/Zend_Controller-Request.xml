@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8619 -->
+<!-- EN-Revision: 8706 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -266,12 +266,12 @@ $response   = $controller->dispatch();]]>
             </para>
 
             <itemizedlist>
-                <listitem><code>isGet()</code></listitem>
-                <listitem><code>isPost()</code></listitem>
-                <listitem><code>isPut()</code></listitem>
-                <listitem><code>isDelete()</code></listitem>
-                <listitem><code>isHead()</code></listitem>
-                <listitem><code>isOptions()</code></listitem>
+                <listitem><para><code>isGet()</code></para></listitem>
+                <listitem><para><code>isPost()</code></para></listitem>
+                <listitem><para><code>isPut()</code></para></listitem>
+                <listitem><para><code>isDelete()</code></para></listitem>
+                <listitem><para><code>isHead()</code></para></listitem>
+                <listitem><para><code>isOptions()</code></para></listitem>
             </itemizedlist>
 
             <para>
