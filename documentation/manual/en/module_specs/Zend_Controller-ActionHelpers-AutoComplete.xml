@@ -149,7 +149,7 @@ $this->_helper->autoCompleteDojo($data);
                 complete framework for creating OOP javascript, much as Zend
                 Framework does for PHP. Part of that is the ability to create
                 pseudo-namespaces using the directory hierarchy. We'll create a
-                'custom' directory at the same level as the dojo directory
+                'custom' directory at the same level as the Dojo directory
                 that's part of the Dojo distribution. Inside that directory,
                 we'll create a javascript file, TestNameReadStore.js, with the
                 following contents:
