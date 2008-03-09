@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 8453 -->
+<!-- EN-Revision: 8557 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -306,6 +306,7 @@
         <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
         <xi:include href="module_specs/Zend_Service_Flickr.xml" />
+        <xi:include href="module_specs/Zend_Service_Nirvanix.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
         <xi:include href="module_specs/Zend_Service_SlideShare.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml" />
