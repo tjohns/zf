@@ -797,10 +797,9 @@ class Zend_Db_Select
             $count = substr_count($condition, '?');
             foreach($value as $key => $token) {
                 if (is_numeric($key)) {
-                    if ($count > 0) {
+                    if ($count > 1) {
                         $condition = $this->_adapter->quoteInto($condition, $token, null, 1);
-                    } else {
-                        $condition = $this->_adapter->quoteInto($condition, $token, $type);
+                        array_shift($value);
                     }
                     --$count;
                 } else {
@@ -811,7 +810,11 @@ class Zend_Db_Select
                         throw new Zend_Db_Select_Exception("Invalid token '$key' given");
                     }
                     $condition = str_replace($key, $this->_adapter->quote($token), $condition);
+                    array_shift($value);
                 }
+            }
+            if (!empty($value)) {
+                $condition = $this->_adapter->quoteInto($condition, $value, $type);
             }
         } else if ($value !== null) {
             $condition = $this->_adapter->quoteInto($condition, $value, $type);
