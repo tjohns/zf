@@ -46,7 +46,7 @@ PHPDOC=phpdoc
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
 # location (e.g., tag/release-1.0.3)
-ZF_SVN_REVISION=8311
+ZF_SVN_REVISION=8341
 ZF_SVN_DIR=tag/release-1.5.0RC1
 
 # ZF_VERSION is the release version string to build.  This is added
@@ -58,7 +58,7 @@ ZF_VERSION=1.5.0RC1
 # If you want to build one language, use one of the names of language
 # directories (e.g., 'en', 'de').  You also can use any file-globbing
 # pattern.
-ZF_LANG=de en fr ja ru
+ZF_LANG=de en fr ja ru zh
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_HOST=framework.zend.com

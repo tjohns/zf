@@ -97,13 +97,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $storage->delAssociation(self::URL) );
         $this->assertFalse( $storage->getAssociation(self::URL, $handle, $macFunc, $secret, $expires) );
 
-        $tmp = getenv('TMP');
-        if (empty($tmp)) {
-            $tmp = getenv('TEMP');
-            if (empty($tmp)) {
-                $tmp = "/tmp";
-            }
-        }
+        $tmp = dirname(__FILE__)."/_files";
         $dir = $tmp . '/openid_consumer';
         @rmdir($dir);
         $storage = new Zend_OpenId_Consumer_Storage_File($dir);
