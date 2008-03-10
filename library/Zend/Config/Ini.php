@@ -108,7 +108,6 @@ class Zend_Config_Ini extends Zend_Config
         foreach ($iniArray as $key => $data)
         {
             $bits = explode(':', $key);
-            $numberOfBits = count($bits);
             $thisSection = trim($bits[0]);
             switch (count($bits)) {
                 case 1:
