@@ -157,8 +157,11 @@ class Zend_Validate implements Zend_Validate_Interface
                         return $object->isValid($value);
                     }
                 }
+            } catch (Zend_Validate_Exception $ze) {
+                // if there is an exception while validating throw it
+                throw $ze;
             } catch (Zend_Exception $ze) {
-                // fallthrough and continue
+                // fallthrough and continue for missing validation classes
             }
         }
         require_once 'Zend/Validate/Exception.php';
