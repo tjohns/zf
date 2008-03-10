@@ -95,15 +95,15 @@ class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('Multibyte test not run; Unicode PCRE is not supported on this platform');
         }
         /**
-		 * The first element of $valuesExpected contains multibyte digit characters.
-		 *   But , Zend_Filter_Digits is expected to return only singlebyte digits.
-		 *
-		 * The second contains multibyte or singebyte space, and also alphabet.
-		 * The third  contains various multibyte characters.
-		 * The last contains only singlebyte digits.
-		 */
+         * The first element of $valuesExpected contains multibyte digit characters.
+         *   But , Zend_Filter_Digits is expected to return only singlebyte digits.
+         *
+         * The second contains multibyte or singebyte space, and also alphabet.
+         * The third  contains various multibyte characters.
+         * The last contains only singlebyte digits.
+         */
         $valuesExpected = array(
-			'1９2八3四８'     => '123',
+            '1９2八3四８'     => '123',
             'Ｃ 4.5B　6'      => '456',
             '9壱8＠7．6，5＃4' => '987654',
             '789'              => '789'
