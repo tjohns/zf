@@ -472,161 +472,165 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
      */
     public function testAssociate()
     {
-        $storage = new Zend_OpenId_Provider_Storage_File(dirname(__FILE__)."/_files/provider");
-        $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
+        try {
+            $storage = new Zend_OpenId_Provider_Storage_File(dirname(__FILE__)."/_files/provider");
+            $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
 
-        // Wrong assoc_type
-        $ret = $provider->handle(array('openid_mode'=>'associate'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Wrong assoc_type
+            $ret = $provider->handle(array('openid_mode'=>'associate'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( 'unsupported-type', $res['error-code'] );
+            $this->assertSame( 'unsupported-type', $res['error-code'] );
 
-        // Wrong assoc_type (OpenID 2.0)
-        $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
-                                       'openid_mode'=>'associate'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Wrong assoc_type (OpenID 2.0)
+            $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
+                                           'openid_mode'=>'associate'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
-        $this->assertSame( 'unsupported-type', $res['error-code'] );
+            $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
+            $this->assertSame( 'unsupported-type', $res['error-code'] );
 
-        // Wrong session_type
-        $ret = $provider->handle(array('openid_mode'=>'associate',
-                                       'openid_assoc_type'=>'HMAC-SHA1',
-                                       'openid_session_type'=>'DH-SHA257'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Wrong session_type
+            $ret = $provider->handle(array('openid_mode'=>'associate',
+                                           'openid_assoc_type'=>'HMAC-SHA1',
+                                           'openid_session_type'=>'DH-SHA257'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( 'unsupported-type', $res['error-code'] );
+            $this->assertSame( 'unsupported-type', $res['error-code'] );
 
-        // Associaation without encryption
-        $ret = $provider->handle(array('openid_assoc_type'=>'HMAC-SHA1',
-                                       'openid_mode'=>'associate'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Associaation without encryption
+            $ret = $provider->handle(array('openid_assoc_type'=>'HMAC-SHA1',
+                                           'openid_mode'=>'associate'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( 'HMAC-SHA1', $res['assoc_type'] );
-        $this->assertTrue( isset($res['mac_key']) );
-        $this->assertSame( 20, strlen(base64_decode($res['mac_key'])) );
-        $this->assertTrue( isset($res['assoc_handle']) );
-        $this->assertSame( '3600', $res['expires_in'] );
-        $this->assertFalse( isset($res['session_type']) );
-        $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
-        $this->assertSame( 'sha1', $macFunc );
-        $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
+            $this->assertSame( 'HMAC-SHA1', $res['assoc_type'] );
+            $this->assertTrue( isset($res['mac_key']) );
+            $this->assertSame( 20, strlen(base64_decode($res['mac_key'])) );
+            $this->assertTrue( isset($res['assoc_handle']) );
+            $this->assertSame( '3600', $res['expires_in'] );
+            $this->assertFalse( isset($res['session_type']) );
+            $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
+            $this->assertSame( 'sha1', $macFunc );
+            $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
 
-        // Associaation without encryption (OpenID 2.0)
-        $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
-                                       'openid_assoc_type'=>'HMAC-SHA256',
-                                       'openid_mode'=>'associate'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Associaation without encryption (OpenID 2.0)
+            $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
+                                           'openid_assoc_type'=>'HMAC-SHA256',
+                                           'openid_mode'=>'associate'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
-        $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
-        $this->assertTrue( isset($res['mac_key']) );
-        $this->assertSame( 32, strlen(base64_decode($res['mac_key'])) );
-        $this->assertTrue( isset($res['assoc_handle']) );
-        $this->assertSame( '3600', $res['expires_in'] );
-        $this->assertFalse( isset($res['session_type']) );
-        $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
-        $this->assertSame( 'sha256', $macFunc );
-        $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
+            $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
+            $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
+            $this->assertTrue( isset($res['mac_key']) );
+            $this->assertSame( 32, strlen(base64_decode($res['mac_key'])) );
+            $this->assertTrue( isset($res['assoc_handle']) );
+            $this->assertSame( '3600', $res['expires_in'] );
+            $this->assertFalse( isset($res['session_type']) );
+            $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
+            $this->assertSame( 'sha256', $macFunc );
+            $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
 
-        // Associaation without encryption (OpenID 2.0)
-        $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
-                                       'openid_assoc_type'=>'HMAC-SHA256',
-                                       'openid_mode'=>'associate',
-                                       'openid_session_type'=>'no-encryption'));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Associaation without encryption (OpenID 2.0)
+            $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
+                                           'openid_assoc_type'=>'HMAC-SHA256',
+                                           'openid_mode'=>'associate',
+                                           'openid_session_type'=>'no-encryption'));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
-        $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
-        $this->assertTrue( isset($res['mac_key']) );
-        $this->assertSame( 32, strlen(base64_decode($res['mac_key'])) );
-        $this->assertTrue( isset($res['assoc_handle']) );
-        $this->assertSame( '3600', $res['expires_in'] );
-        $this->assertSame( 'no-encryption', $res['session_type'] );
-        $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
-        $this->assertSame( 'sha256', $macFunc );
-        $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
+            $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
+            $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
+            $this->assertTrue( isset($res['mac_key']) );
+            $this->assertSame( 32, strlen(base64_decode($res['mac_key'])) );
+            $this->assertTrue( isset($res['assoc_handle']) );
+            $this->assertSame( '3600', $res['expires_in'] );
+            $this->assertSame( 'no-encryption', $res['session_type'] );
+            $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
+            $this->assertSame( 'sha256', $macFunc );
+            $this->assertSame( bin2hex(base64_decode($res['mac_key'])), bin2hex($secret) );
 
-        // Associaation with DH-SHA1 encryption
-        $ret = $provider->handle(array('openid_assoc_type'=>'HMAC-SHA1',
-                                       'openid_mode'=>'associate',
-                                       'openid_session_type'=>'DH-SHA1',
-                                       'openid_dh_modulus'=>'ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX+YkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi/368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI+XUkKJX8Fvf8W8vsixYOr',
-                                       'openid_dh_gen'=>'Ag==',
-                                       'openid_dh_consumer_public'=>'RqexRm+Zn5s3sXxFBjI9WfCOBwBDDQBKPzX4fjMGl3YEJh5tx8SVo7awgwuqsliR+nvjmRh5kSFIGv8YSCsy88v1CcAfWUGfjehO9euxQcXOYJnNGbl6GQrE2FYe2RCvML4Yi8eYCYtCQi0wlDE7BJXGSVPXFzj/ru0lR/voPpk=',
-                                       ));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Associaation with DH-SHA1 encryption
+            $ret = $provider->handle(array('openid_assoc_type'=>'HMAC-SHA1',
+                                           'openid_mode'=>'associate',
+                                           'openid_session_type'=>'DH-SHA1',
+                                           'openid_dh_modulus'=>'ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX+YkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi/368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI+XUkKJX8Fvf8W8vsixYOr',
+                                           'openid_dh_gen'=>'Ag==',
+                                           'openid_dh_consumer_public'=>'RqexRm+Zn5s3sXxFBjI9WfCOBwBDDQBKPzX4fjMGl3YEJh5tx8SVo7awgwuqsliR+nvjmRh5kSFIGv8YSCsy88v1CcAfWUGfjehO9euxQcXOYJnNGbl6GQrE2FYe2RCvML4Yi8eYCYtCQi0wlDE7BJXGSVPXFzj/ru0lR/voPpk=',
+                                           ));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
-        }
-        $this->assertSame( 'HMAC-SHA1', $res['assoc_type'] );
-        $this->assertSame( 'DH-SHA1', $res['session_type'] );
-        $this->assertTrue( isset($res['dh_server_public']) );
-        $this->assertTrue( isset($res['enc_mac_key']) );
-        $this->assertSame( 20, strlen(base64_decode($res['enc_mac_key'])) );
-        $this->assertTrue( isset($res['assoc_handle']) );
-        $this->assertSame( '3600', $res['expires_in'] );
-        $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
-        $this->assertSame( 'sha1', $macFunc );
+            $this->assertSame( 'HMAC-SHA1', $res['assoc_type'] );
+            $this->assertSame( 'DH-SHA1', $res['session_type'] );
+            $this->assertTrue( isset($res['dh_server_public']) );
+            $this->assertTrue( isset($res['enc_mac_key']) );
+            $this->assertSame( 20, strlen(base64_decode($res['enc_mac_key'])) );
+            $this->assertTrue( isset($res['assoc_handle']) );
+            $this->assertSame( '3600', $res['expires_in'] );
+            $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
+            $this->assertSame( 'sha1', $macFunc );
 
-        // Associaation with DH-SHA256 encryption (OpenID 2.0)
-        $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
-                                       'openid_assoc_type'=>'HMAC-SHA256',
-                                       'openid_mode'=>'associate',
-                                       'openid_session_type'=>'DH-SHA256',
-                                       'openid_dh_modulus'=>'ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX+YkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi/368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI+XUkKJX8Fvf8W8vsixYOr',
-                                       'openid_dh_gen'=>'Ag==',
-                                       'openid_dh_consumer_public'=>'RqexRm+Zn5s3sXxFBjI9WfCOBwBDDQBKPzX4fjMGl3YEJh5tx8SVo7awgwuqsliR+nvjmRh5kSFIGv8YSCsy88v1CcAfWUGfjehO9euxQcXOYJnNGbl6GQrE2FYe2RCvML4Yi8eYCYtCQi0wlDE7BJXGSVPXFzj/ru0lR/voPpk=',
-                                       ));
-        $res = array();
-        foreach (explode("\n", $ret) as $line) {
-            if (!empty($line)) {
-                list($key, $val) = explode(":", $line, 2);
-                $res[$key] = $val;
+            // Associaation with DH-SHA256 encryption (OpenID 2.0)
+            $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
+                                           'openid_assoc_type'=>'HMAC-SHA256',
+                                           'openid_mode'=>'associate',
+                                           'openid_session_type'=>'DH-SHA256',
+                                           'openid_dh_modulus'=>'ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX+YkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi/368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI+XUkKJX8Fvf8W8vsixYOr',
+                                           'openid_dh_gen'=>'Ag==',
+                                           'openid_dh_consumer_public'=>'RqexRm+Zn5s3sXxFBjI9WfCOBwBDDQBKPzX4fjMGl3YEJh5tx8SVo7awgwuqsliR+nvjmRh5kSFIGv8YSCsy88v1CcAfWUGfjehO9euxQcXOYJnNGbl6GQrE2FYe2RCvML4Yi8eYCYtCQi0wlDE7BJXGSVPXFzj/ru0lR/voPpk=',
+                                           ));
+            $res = array();
+            foreach (explode("\n", $ret) as $line) {
+                if (!empty($line)) {
+                    list($key, $val) = explode(":", $line, 2);
+                    $res[$key] = $val;
+                }
             }
+            $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
+            $this->assertSame( 'DH-SHA256', $res['session_type'] );
+            $this->assertTrue( isset($res['dh_server_public']) );
+            $this->assertTrue( isset($res['enc_mac_key']) );
+            $this->assertSame( 32, strlen(base64_decode($res['enc_mac_key'])) );
+            $this->assertTrue( isset($res['assoc_handle']) );
+            $this->assertSame( '3600', $res['expires_in'] );
+            $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
+            $this->assertSame( 'sha256', $macFunc );
+        } catch (Zend_OpenId_Exception $e) {
+            $this->markTestSkipped($e->getMessage());
         }
-        $this->assertSame( 'HMAC-SHA256', $res['assoc_type'] );
-        $this->assertSame( 'DH-SHA256', $res['session_type'] );
-        $this->assertTrue( isset($res['dh_server_public']) );
-        $this->assertTrue( isset($res['enc_mac_key']) );
-        $this->assertSame( 32, strlen(base64_decode($res['enc_mac_key'])) );
-        $this->assertTrue( isset($res['assoc_handle']) );
-        $this->assertSame( '3600', $res['expires_in'] );
-        $this->assertTrue( $storage->getAssociation($res['assoc_handle'], $macFunc, $secret, $expires) );
-        $this->assertSame( 'sha256', $macFunc );
     }
 
     /**

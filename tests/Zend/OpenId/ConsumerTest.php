@@ -382,171 +382,175 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
      */
     public function testAssociate()
     {
-        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files/consumer");
-        $storage->delAssociation(self::SERVER);
-        $consumer = new Zend_OpenId_ConsumerHelper($storage);
-        $http = new Zend_Http_Client(null,
-            array(
-                'maxredirects' => 4,
-                'timeout'      => 15,
-                'useragent'    => 'Zend_OpenId'
-            ));
-        $test = new Zend_Http_Client_Adapter_Test();
-        $http->setAdapter($test);
-        $consumer->SetHttpClient($http);
+        try {
+            $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files/consumer");
+            $storage->delAssociation(self::SERVER);
+            $consumer = new Zend_OpenId_ConsumerHelper($storage);
+            $http = new Zend_Http_Client(null,
+                array(
+                    'maxredirects' => 4,
+                    'timeout'      => 15,
+                    'useragent'    => 'Zend_OpenId'
+                ));
+            $test = new Zend_Http_Client_Adapter_Test();
+            $http->setAdapter($test);
+            $consumer->SetHttpClient($http);
 
-        // Test OpenID 1.1 association request with DH-SHA1
-        $consumer->clearAssociation();
-        $this->assertFalse( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertSame( "POST / HTTP/1.1\r\n" .
-                           "Host: www.myopenid.com\r\n" .
-                           "Connection: close\r\n" .
-                           "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 510\r\n\r\n" .
-                           "openid.mode=associate&" .
-                           "openid.assoc_type=HMAC-SHA1&" .
-                           "openid.session_type=DH-SHA1&".
-                           "openid.dh_modulus=ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX%2BYkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi%2F368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI%2BXUkKJX8Fvf8W8vsixYOr&" .
-                           "openid.dh_gen=Ag%3D%3D&" .
-                           "openid.dh_consumer_public=GaLlROlBGgSopPzo1ewYISnnT4BUFBfIKlgDPoS9U41t5eQb8QYqgcw7%2BW3dSF1VlWcvJGR0UbZIEhJ3UrCs6p69q6sgl%2FOZ7P%2B17rme7OynqszA3pqD6MJoQVZ5Ht%2FR%2BjmMjK08ajcgYEZU1GG4U5k8eYbcFnje00%2FTGfjKY0I%3D",
-                           $http->getLastRequest() );
+            // Test OpenID 1.1 association request with DH-SHA1
+            $consumer->clearAssociation();
+            $this->assertFalse( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertSame( "POST / HTTP/1.1\r\n" .
+                               "Host: www.myopenid.com\r\n" .
+                               "Connection: close\r\n" .
+                               "Accept-encoding: gzip, deflate\r\n" .
+                               "User-agent: Zend_OpenId\r\n" .
+                               "Content-type: application/x-www-form-urlencoded\r\n" .
+                               "Content-length: 510\r\n\r\n" .
+                               "openid.mode=associate&" .
+                               "openid.assoc_type=HMAC-SHA1&" .
+                               "openid.session_type=DH-SHA1&".
+                               "openid.dh_modulus=ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX%2BYkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi%2F368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI%2BXUkKJX8Fvf8W8vsixYOr&" .
+                               "openid.dh_gen=Ag%3D%3D&" .
+                               "openid.dh_consumer_public=GaLlROlBGgSopPzo1ewYISnnT4BUFBfIKlgDPoS9U41t5eQb8QYqgcw7%2BW3dSF1VlWcvJGR0UbZIEhJ3UrCs6p69q6sgl%2FOZ7P%2B17rme7OynqszA3pqD6MJoQVZ5Ht%2FR%2BjmMjK08ajcgYEZU1GG4U5k8eYbcFnje00%2FTGfjKY0I%3D",
+                               $http->getLastRequest() );
 
-        // Test OpenID 2.0 association request with DH-SHA256
-        $consumer->clearAssociation();
-        $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertSame( "POST / HTTP/1.1\r\n" .
-                           "Host: www.myopenid.com\r\n" .
-                           "Connection: close\r\n" .
-                           "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 567\r\n\r\n" .
-                           "openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&" .
-                           "openid.mode=associate&" .
-                           "openid.assoc_type=HMAC-SHA256&" .
-                           "openid.session_type=DH-SHA256&".
-                           "openid.dh_modulus=ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX%2BYkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi%2F368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI%2BXUkKJX8Fvf8W8vsixYOr&" .
-                           "openid.dh_gen=Ag%3D%3D&" .
-                           "openid.dh_consumer_public=GaLlROlBGgSopPzo1ewYISnnT4BUFBfIKlgDPoS9U41t5eQb8QYqgcw7%2BW3dSF1VlWcvJGR0UbZIEhJ3UrCs6p69q6sgl%2FOZ7P%2B17rme7OynqszA3pqD6MJoQVZ5Ht%2FR%2BjmMjK08ajcgYEZU1GG4U5k8eYbcFnje00%2FTGfjKY0I%3D",
-                           $http->getLastRequest() );
+            // Test OpenID 2.0 association request with DH-SHA256
+            $consumer->clearAssociation();
+            $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertSame( "POST / HTTP/1.1\r\n" .
+                               "Host: www.myopenid.com\r\n" .
+                               "Connection: close\r\n" .
+                               "Accept-encoding: gzip, deflate\r\n" .
+                               "User-agent: Zend_OpenId\r\n" .
+                               "Content-type: application/x-www-form-urlencoded\r\n" .
+                               "Content-length: 567\r\n\r\n" .
+                               "openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&" .
+                               "openid.mode=associate&" .
+                               "openid.assoc_type=HMAC-SHA256&" .
+                               "openid.session_type=DH-SHA256&".
+                               "openid.dh_modulus=ANz5OguIOXLsDhmYmsWizjEOHTdxfo2Vcbt2I3MYZuYe91ouJ4mLBX%2BYkcLiemOcPym2CBRYHNOyyjmG0mg3BVd9RcLn5S3IHHoXGHblzqdLFEi%2F368Ygo79JRnxTkXjgmY0rxlJ5bU1zIKaSDuKdiI%2BXUkKJX8Fvf8W8vsixYOr&" .
+                               "openid.dh_gen=Ag%3D%3D&" .
+                               "openid.dh_consumer_public=GaLlROlBGgSopPzo1ewYISnnT4BUFBfIKlgDPoS9U41t5eQb8QYqgcw7%2BW3dSF1VlWcvJGR0UbZIEhJ3UrCs6p69q6sgl%2FOZ7P%2B17rme7OynqszA3pqD6MJoQVZ5Ht%2FR%2BjmMjK08ajcgYEZU1GG4U5k8eYbcFnje00%2FTGfjKY0I%3D",
+                               $http->getLastRequest() );
 
-        // Test OpenID 1.1 association response with DH-SHA1
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "assoc_type:HMAC-SHA1\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:DH-SHA1\n".
-                           "dh_server_public:AIoP3d+ZTkd5vZj6G82XVIQ6KRAfSKmLz2Q3qVMzZ5tt7Z7St714GccipYXzCs5Tzgkc+Nt/uDE5xQ/f0Zn0uDS65CZHx3MOPqAANw/9YC/CafF1CD1MxW5TiN50GsjT/wGkcJFcpPXYVigQDOjIkHjKCysk53ktFvCoT60nFKGc\n".
-                           "enc_mac_key:ON+M6/X8uUcOfxw1HF4sw/0XYyw=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
-        $this->assertSame( "0123456789absdef0123456789absdef", $handle );
-        $this->assertSame( "sha1", $macFunc );
-        $this->assertSame( "8382aea922560ece833ba55fa53b7a975f597370", bin2hex($secret) );
-        $this->assertTrue( $storage->delAssociation(self::SERVER) );
+            // Test OpenID 1.1 association response with DH-SHA1
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "assoc_type:HMAC-SHA1\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:DH-SHA1\n".
+                               "dh_server_public:AIoP3d+ZTkd5vZj6G82XVIQ6KRAfSKmLz2Q3qVMzZ5tt7Z7St714GccipYXzCs5Tzgkc+Nt/uDE5xQ/f0Zn0uDS65CZHx3MOPqAANw/9YC/CafF1CD1MxW5TiN50GsjT/wGkcJFcpPXYVigQDOjIkHjKCysk53ktFvCoT60nFKGc\n".
+                               "enc_mac_key:ON+M6/X8uUcOfxw1HF4sw/0XYyw=\n");
+            $this->assertTrue( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
+            $this->assertSame( "0123456789absdef0123456789absdef", $handle );
+            $this->assertSame( "sha1", $macFunc );
+            $this->assertSame( "8382aea922560ece833ba55fa53b7a975f597370", bin2hex($secret) );
+            $this->assertTrue( $storage->delAssociation(self::SERVER) );
 
-        // Wrong OpenID 2.0 association response (wrong ns)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/1.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:DH-SHA256\n".
-                           "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
-                           "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
-        $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            // Wrong OpenID 2.0 association response (wrong ns)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/1.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:DH-SHA256\n".
+                               "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
+                               "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
+            $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
 
-        // Wrong OpenID 2.0 association response (wrong assoc_type)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA1\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:DH-SHA256\n".
-                           "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
-                           "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
-        $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            // Wrong OpenID 2.0 association response (wrong assoc_type)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA1\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:DH-SHA256\n".
+                               "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
+                               "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
+            $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
 
-        // Wrong OpenID 2.0 association response (wrong session_type)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:DH-SHA257\n".
-                           "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
-                           "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
-        $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            // Wrong OpenID 2.0 association response (wrong session_type)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:DH-SHA257\n".
+                               "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
+                               "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
+            $this->assertFalse( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
 
-        // Test OpenID 2.0 association response with DH-SHA256
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:DH-SHA256\n".
-                           "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
-                           "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
-        $this->assertSame( "0123456789absdef0123456789absdef", $handle );
-        $this->assertSame( "sha256", $macFunc );
-        $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
-        $this->assertTrue( $storage->delAssociation(self::SERVER) );
+            // Test OpenID 2.0 association response with DH-SHA256
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:DH-SHA256\n".
+                               "dh_server_public:AIlflxF8rvxx1Xi4Oj/KdP+7fvczeIRvx8WScMQS9I27R6YKd3Nx++5tAAF0rHelKDSG2ZeFM/zLEu9ZmUFzF02OaehWqykCfmtLASwMZO0u2GwYiIu5BoeJb9HlXJes58u/M4ViPXWhn27w2ZTlZJuuK8sDiTSTj9TmFxOriH4X\n".
+                               "enc_mac_key:lvvCoTyvKy8oV6wnNHeroU0uLgBHiGV4BNkrXJe04JE=\n");
+            $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
+            $this->assertSame( "0123456789absdef0123456789absdef", $handle );
+            $this->assertSame( "sha256", $macFunc );
+            $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
+            $this->assertTrue( $storage->delAssociation(self::SERVER) );
 
-        // Test OpenID 2.0 association response without encryption (missing session_type)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
-        $this->assertSame( "0123456789absdef0123456789absdef", $handle );
-        $this->assertSame( "sha256", $macFunc );
-        $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
-        $this->assertTrue( $storage->delAssociation(self::SERVER) );
+            // Test OpenID 2.0 association response without encryption (missing session_type)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
+            $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
+            $this->assertSame( "0123456789absdef0123456789absdef", $handle );
+            $this->assertSame( "sha256", $macFunc );
+            $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
+            $this->assertTrue( $storage->delAssociation(self::SERVER) );
 
-        // Test OpenID 2.0 association response without encryption (blank session_type)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:\n".
-                           "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
-        $this->assertSame( "0123456789absdef0123456789absdef", $handle );
-        $this->assertSame( "sha256", $macFunc );
-        $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
-        $this->assertTrue( $storage->delAssociation(self::SERVER) );
+            // Test OpenID 2.0 association response without encryption (blank session_type)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:\n".
+                               "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
+            $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
+            $this->assertSame( "0123456789absdef0123456789absdef", $handle );
+            $this->assertSame( "sha256", $macFunc );
+            $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
+            $this->assertTrue( $storage->delAssociation(self::SERVER) );
 
-        // Test OpenID 2.0 association response without encryption (blank session_type)
-        $consumer->clearAssociation();
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
-                           "ns:http://specs.openid.net/auth/2.0\n" .
-                           "assoc_type:HMAC-SHA256\n" .
-                           "assoc_handle:0123456789absdef0123456789absdef\n" .
-                           "expires_in:3600\n" .
-                           "session_type:no-encryption\n".
-                           "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
-        $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
-        $this->assertSame( "0123456789absdef0123456789absdef", $handle );
-        $this->assertSame( "sha256", $macFunc );
-        $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
-        $this->assertTrue( $storage->delAssociation(self::SERVER) );
+            // Test OpenID 2.0 association response without encryption (blank session_type)
+            $consumer->clearAssociation();
+            $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                               "ns:http://specs.openid.net/auth/2.0\n" .
+                               "assoc_type:HMAC-SHA256\n" .
+                               "assoc_handle:0123456789absdef0123456789absdef\n" .
+                               "expires_in:3600\n" .
+                               "session_type:no-encryption\n".
+                               "mac_key:7ZAbxWHCn9e7QoYuXwn6N+eUSn7nIUIyLzSiG/4ThLg=\n");
+            $this->assertTrue( $consumer->associate(self::SERVER, 2.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+            $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
+            $this->assertSame( "0123456789absdef0123456789absdef", $handle );
+            $this->assertSame( "sha256", $macFunc );
+            $this->assertSame( "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8", bin2hex($secret) );
+            $this->assertTrue( $storage->delAssociation(self::SERVER) );
+        } catch (Zend_OpenId_Exception $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
     }
 
     /**
