@@ -192,6 +192,62 @@ class Zend_Service_Flickr
         require_once 'Zend/Service/Flickr/ResultSet.php';
         return new Zend_Service_Flickr_ResultSet($dom, $this);
     }
+    
+    /**
+     * Finds photos in a group's pool.
+     *
+     * @param  string $query   group id
+     * @param  array  $options Additional parameters to refine your query.
+     * @return Zend_Service_Flickr_ResultSet
+     * @throws Zend_Service_Exception
+     */
+    public function groupPoolGetPhotos($query, array $options = array())
+    {
+        static $method = 'flickr.groups.pools.getPhotos';
+        static $defaultOptions = array('per_page' => 10,
+                                       'page'     => 1,
+                                       'extras'   => 'license, date_upload, date_taken, owner_name, icon_server');
+
+        if (empty($query) || !is_string($query)) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('You must supply a group id');
+        }
+
+        $options['group_id'] = $query;
+
+        $options = $this->_prepareOptions($method, $options, $defaultOptions);
+
+        $this->_validateGroupPoolGetPhotos($options);
+
+        // now search for photos
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/services/rest/', $options);
+
+        if ($response->isError()) {
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: '
+                                           . $response->getStatus());
+        }
+
+        $dom = new DOMDocument();
+        $dom->loadXML($response->getBody());
+
+        self::_checkErrors($dom);
+
+        /**
+        * @see Zend_Service_Flickr_ResultSet
+        */
+        require_once 'Zend/Service/Flickr/ResultSet.php';
+        return new Zend_Service_Flickr_ResultSet($dom, $this);
+    }
+
 
 
     /**
@@ -452,6 +508,60 @@ class Zend_Service_Flickr
             }
         }
 
+    }
+    
+    
+    /**
+    * Validate Group Search Options
+    *
+    * @param  array $options
+    * @throws Zend_Service_Exception
+    * @return void
+    */
+    protected function _validateGroupPoolGetPhotos(array $options)
+    {
+        $validOptions = array('api_key', 'tags', 'method', 'group_id', 'per_page', 'page', 'extras', 'user_id');
+
+        $this->_compareOptions($options, $validOptions);
+
+        /**
+        * @see Zend_Validate_Between
+        */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 500, true);
+        if (!$between->isValid($options['per_page'])) {
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
+        }
+
+        /**
+        * @see Zend_Validate_Int
+        */
+        require_once 'Zend/Validate/Int.php';
+        $int = new Zend_Validate_Int();
+        
+        if (!$int->isValid($options['page'])) {
+            /**
+            * @see Zend_Service_Exception
+            */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
+        }
+
+        // validate extras, which are delivered in csv format
+        if (isset($options['extras'])) {
+            $extras = explode(',', $options['extras']);
+            $validExtras = array('license', 'date_upload', 'date_taken', 'owner_name', 'icon_server');
+            foreach($extras as $extra) {
+                /**
+                * @todo The following does not do anything [yet], so it is commented out.
+                */
+                //in_array(trim($extra), $validExtras);
+            }
+        }
     }
 
 
