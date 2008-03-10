@@ -223,7 +223,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
         $storage->purgeNonces();
         $this->assertTrue( $storage->isUniqueNonce('1') );
         sleep(2);
-        $date = date("r", time());
+        $date = @date("r", time());
         sleep(2);
         $this->assertTrue( $storage->isUniqueNonce('2') );
         $storage->purgeNonces($date);
