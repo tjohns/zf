@@ -77,7 +77,11 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
         if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative a-zA-Z match
             $pattern = '/[^a-zA-Z' . $whiteSpace . ']/';
+        } else if (extension_loaded('mbstring')) {
+            // Unicode safe filter for the value with mbstring
+            $pattern = '/[^[:alpha:]' . $whiteSpace . ']/u';
         } else {
+            // Unicode safe filter for the value without mbstring
             $pattern = '/[^\p{L}' . $whiteSpace . ']/u';
         }
 
