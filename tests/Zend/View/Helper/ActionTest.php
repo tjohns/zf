@@ -244,6 +244,9 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Nested Stuff', $title);
     }
     
+    /**
+     * @issue ZF-2716
+     */
     public function testActionWithPartialsUseOfViewRendererReturnsToOriginatingViewState()
     {
         require_once 'Zend/View/Helper/Partial.php';
@@ -258,6 +261,32 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->view, Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view);
 
     }
+    
+    /**
+     * Future ViewRenderer State issues should be included in this test.
+     * 
+     * @issue ZF-2846
+     */
+    public function testActionReturnsViewRendererToOriginalState()
+    {
+        /* Setup the VR as if we were inside an action controller */
+        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+        $viewRenderer->init();
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+
+        // make sure noRender is false
+        $this->assertFalse($viewRenderer->getNoRender());
+        
+        $value = $this->helper->action('bar', 'foo');
+        
+        $viewRendererPostAction = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        
+        // ViewRenderer noRender should still be false
+        $this->assertFalse($viewRendererPostAction->getNoRender());
+        $this->assertSame($viewRenderer, $viewRendererPostAction);
+    }
+    
+    
     
 }
 

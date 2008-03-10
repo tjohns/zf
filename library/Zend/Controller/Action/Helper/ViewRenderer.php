@@ -193,6 +193,18 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $this->_setOptions($options);
         }
     }
+    
+    /**
+     * Clone - also make sure the view is cloned.
+     *
+     */
+    public function __clone()
+    {
+        if (isset($this->view) && $this->view instanceof Zend_View_Interface) {
+            $this->view = clone $this->view;
+            
+        }
+    }
 
     /**
      * Set the view object
