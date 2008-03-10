@@ -448,16 +448,16 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if ((array_key_exists($locale, $this->_translate)) and
-            (array_key_exists($messageId, $this->_translate[$locale]))) {
+        if (is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+            (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
             return true;
         } else if ((strlen($locale) != 2) and ($original === false)) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if ((array_key_exists($locale, $this->_translate)) and
-                (array_key_exists($messageId, $this->_translate[$locale]))) {
+            if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+                (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
                 // return regionless translation (en_US -> en)
                 return true;
             }
