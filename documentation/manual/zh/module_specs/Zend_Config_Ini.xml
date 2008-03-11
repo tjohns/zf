@@ -12,11 +12,11 @@
     <note>
         <title>键分离器</title>
         <para>
-            缺省地，键分离器字符是句号(<code>.</code>)。然而，这个可以通过当构造<code>Zend_Config_Ini</code>对象时修改<code>$config</code> key <code>'nestSeparator'</code> 被修改。例如：
+            缺省地，键分离器字符是句号(<code>.</code>)。然而，这个可以通过当构造<code>Zend_Config_Ini</code>对象时修改<code>$options</code> key <code>'nestSeparator'</code> 被修改。例如：
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -72,8 +72,8 @@ echo $config->database->params->dbname; // 输出 "dbname"]]>
                     <entry>在INI文件中 [section] （节）将被加载。把这个参数设置为null，所有的节将被加载。另外，一个节名称的数组被提供给加载多个节。</entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>配置数组。下面的键被支持：
+                    <entry><code>$options = false</code></entry>
+                    <entry>选项数组。下面的键被支持：
                         <itemizedlist>
                             <listitem><para><emphasis>allowModifications</emphasis>：设置为true 允许随后加载文件更改。缺省为false </para></listitem>
                             <listitem><para><emphasis>nestSeparator</emphasis>: 设置嵌套字符。缺省为"."</para></listitem>
