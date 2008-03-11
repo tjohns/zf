@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8686 -->
+<!-- EN-Revision: 8748 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -1047,7 +1047,7 @@ $element->class = 'text;
         <title>標準の要素</title>
 
         <para>
-            Zend_Form には、標準的な要素が同梱されています。詳細は
+            <code>Zend_Form</code> には、標準的な要素が同梱されています。詳細は
             <link linkend="zend.form.standardElements">標準要素</link>
             の章を参照ください。
         </para>
