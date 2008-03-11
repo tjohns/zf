@@ -2,7 +2,7 @@
     <title>Zend_Form - Быстрый старт</title>
 
     <para>
-        Данное руководство должно охватвать основы создания форм,
+        Данное руководство должно охватывать основы создания форм,
         проверки корректности данных и рендеринга с использованием
         <code>Zend_Form</code>.
     </para>
@@ -20,9 +20,9 @@ $form = new Zend_Form;
 ?>]]></programlisting>
 
         <para>
-            Для более сложных случаев использования вы можете захотеть создать
-            подклассы <code>Zend_Form</code>, но для простых форм вы можете
-            создавать формы программно, используя объект <code>Zend_Form</code>.
+            Для более сложных случаев использования вы можете создавать
+            подклассы <code>Zend_Form</code>, но простые форм вы можете
+            создавать, используя объект <code>Zend_Form</code>.
         </para>
 
         <para>
@@ -40,12 +40,13 @@ $form->setAction('/resource/process')
         <para>
             Приведенный выше код устанавливает значение атрибута
             <code>action</code> равным "/resource/process" и указывает способ
-            отправки данных - HTTP POST. Это будет отражено в выводе после
+            отправки данных - HTTP POST. Эти атрибуты будут выведены после
             окончательного рендеринга формы.
         </para>
 
         <para>
-            Вы можете установить дополнительные HTML-атрибуты для тега <code>&lt;form&gt;</code>, используя методы setAttrib() и setAttribs(). Например, если вы хотите установить идентификатор элемента формы, то установите атрибут "id":
+            Вы можете установить дополнительные HTML-атрибуты для тега <code>&lt;form&gt;</code>, используя методы setAttrib() и setAttribs(). Например, если вы хотите установить идентификатор
+            элемента формы, то установите атрибут "id":
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -57,10 +58,10 @@ $form->setAttrib('id', 'login');
         <title>Добавление элементов в форму</title>
 
         <para>
-            Любая форма без элементов бесмысленна. <code>Zend_Form</code>
-            изначально поставляется с некоторыми элементами, которые отвечают за
-            рендеринг XHTML-кода с использованием помощников
-            <code>Zend_View</code>. В их список входят элементы:
+            Форма без элементов бесмысленна. <code>Zend_Form</code>
+            поставляется с некоторым начальным набором элементов, которые
+            отвечают за рендеринг XHTML-кода с использованием помощников
+            <code>Zend_View</code>. В этот список входят элементы:
         </para>
 
         <itemizedlist>
@@ -112,7 +113,7 @@ $form->setAttrib('id', 'login');
 
         <para>
             Есть два способа добавления элементов в форму - вы можете
-            инстанцировать определенные элементы и передавать их объекты, или
+            инстанцировать нужные элементы и передавать их объекту формы, или
             передавать только тип элемента, в этом случае <code>Zend_Form</code>
             инстанцирует соответствующий объект за вас.
         </para>
@@ -130,7 +131,13 @@ $form->addElement('text', 'username');
 ?>]]></programlisting>
 
         <para>
-            По умолчанию элементы не имеют никаких валидаторов или фильтров. Это означает, что вам нужно сконфигурировать свои элементы как минимум с валидаторами и, возможно, с фильтрами. Вы можете делать это (a) до передачи элементов в форму, (b) через опции конфигурирования, которые передаются при создании элемента через <code>Zend_Form</code>, или (с) путем извлечения элементов формы из объекта формы и их конфигурирования.
+            По умолчанию элементы не имеют никаких валидаторов или фильтров. Это
+            означает, что вам нужно установить к своим элементам, как минимум,
+            валидаторы, и, возможно, фильтры. Вы можете делать это (a) до
+            передачи элементов в форму, (b) через опции конфигурирования,
+            которые передаются при создании элемента через
+            <code>Zend_Form</code>, или (с) путем извлечения элементов формы из
+            объекта формы и их конфигурирования.
         </para>
 
         <para>
@@ -168,8 +175,8 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
 
         <para>
             Вы можете также указать элемент как обязательный для заполнения. Это
-            может быть сделано как через использование аксессора, так и через
-            передачу определенной опции при создании элемента. В первом случае:
+            может быть сделано как через использование аксессора, так и путем
+            передачи определенной опции при создании элемента. В первом случае:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -183,7 +190,7 @@ $username->setRequired(true);
 
         <para>
             Фильтры регистрируются в основном так же, как и валидаторы. Для
-            демонстрации добавим фильтр для приведения итогового значения к
+            демонстрации добавим фильтр для приведения значения к
             нижнему регистру:
         </para>
 
@@ -235,7 +242,7 @@ $form->addElement('text', 'username', array(
             Если вы обнаружили, что настраиваете элементы, используя одни и те
             же опции во многих местах, то можете создать подкласс
             <code>Zend_Form_Element</code> и использовать его вместо выполнения
-            этих процедур - это убережет вас от лишней работы по набору кода.
+            этих процедур; это может избавить от лишней работы по набору кода.
         </para></note>
     </sect2>
 
@@ -245,15 +252,16 @@ $form->addElement('text', 'username', array(
         <para>
             Рендеринг формы производится легко. Большинство элементов использует
             помощника <code>Zend_View</code> для генерации вывода и поэтому
-            нуждаются в объекте вида для выполнения рендеринга. Кроме этого,
-            есть два способа запустить рендеринг: использовать метод формы render() или просто вывести ее с помощью echo.
+            нуждаются в объекте вида для выполнения рендеринга. Есть два способа
+            запустить рендеринг: использовать метод формы render() или просто
+            вывести ее с помощью echo.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Explicitly calling render(), and passing an optional view object:
+// Явный вызов render() с передачей объекта вида:
 echo $form->render($view);
 
-// Assuming a view object has been previously set via setView():
+// Предполагается, что объект вида уже был установлен ранее через setView():
 echo $form;
 ?>]]></programlisting>
 
@@ -275,8 +283,9 @@ echo $form;
             переданного элемента, производить добавления в его начало и конец,
             производить наблюдение за ним. В результате вы можете комбинировать
             несколько декораторов для достижения нужного эффекта. По умолчанию
-            <code>Zend_Form_Element</code> использует четыре декоратора
-            для подучения нужного вывода; их установка выглядит наподобие следующего:
+            в <code>Zend_Form_Element</code> используется четыре декоратора
+            для получения нужного вывода; их установка выглядит приблизительно
+            так:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -304,18 +313,19 @@ $element->addDecorators(array(
 ]]></programlisting>
 
         <para>
-            Вы можете именить набор декораторов, используемый элементом, если
+            Вы можете изменить набор декораторов, используемый элементом, если
             хотите иметь другой вывод; более подробную информацию ищите в
             разделе о декораторах.
         </para>
 
         <para>
-            Форма сама по себе просто производит обход списка элементов и
-            окружает получившийся вывод тегами <code>&lt;form&gt;</code>.
-            Переданные вами <code>action</code> и <code>method</code>, так же,
-            как и остальные атрибуты, установленные через семейство методов
-            <code>setAttribs()</code>, устанавливаются в качестве атрибутов тега
-            <code>&lt;form&gt;</code>.
+            Форма сама по себе просто производит обход содержащегося в ней
+            списка элементов и окружает получившийся вывод тегами
+            <code>&lt;form&gt;</code>. Переданные вами <code>action</code> и
+            <code>method</code> устанавливаются в качестве атрибутов тега
+            <code>&lt;form&gt;</code> - так же, как и остальные атрибуты,
+            установленные через семейство методов
+            <code>setAttribs()</code>.
         </para>
 
         <para>
@@ -342,14 +352,17 @@ $form->addElement('text', 'username', array('order' => 10));
         <title>Проверка корректности данных формы</title>
 
         <para>
-            После того, как форма отправлена, вам нужно будет сверить ее и
-            увидеть, проходит ли она проверки на корректность. Каждый элемент сверяется на соответствие переданным данным - если ключ,
-            соответствующий имени элемента, не найден, и элемент помечен как обязательный, то проверки корректности данных будут производиться со значением null.
+            После того, как форма отправлена, нужно сверить переданные
+            данные и выяснить, проходит ли она проверку на корректность
+            заполнения. Для всех элементов производится проверка переданных
+            данных на наличие ключа, соответствующего имени элемента. Если этот
+            ключ не найден, и элемент помечен как обязательный, то для проверки
+            на корректность используется значение null.
         </para>
 
         <para>
             Откуда идут данные? Вы можете использовать <code>$_POST</code>,
-            <code>$_GET</code> и любые другие имеющиеся источники данных
+            <code>$_GET</code>, и любые другие имеющиеся источники данных
             (например, запросы веб-сервисов):
         </para>
 
@@ -362,31 +375,32 @@ if ($form->isValid($_POST)) {
 ?>]]></programlisting>
 
         <para>
-            With AJAX requests, you sometimes can get away with validating
-            single element, or groups of elements.
-            <code>isValidPartial()</code> will validate a partial form. Unlike
-            <code>isValid()</code>, however, if a particular key is not
-            present, it will not run validations for that particular element:
+            Вам может прийти в голову идея проверять данные одного элемента или
+            группы элементов с помощью AJAX-запросов.
+            Метод <code>isValidPartial()</code> будет проверять на корректность
+            данные части формы. Его отличие от <code>isValid()</code> состоит в
+            том, что если в данных формы отсутствует какой-либо ключ, то для
+            этого элемента не будут производиться проверки на корректность
+            заполнения:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 if ($form->isValidPartial($_POST)) {
-    // elements present all passed validations
+    // все предоставленные элементы прошли проверки на корректность
 } else {
-    // one or more elements tested failed validations
+    // один или более элементов не прошли проверки на корректность
 }
 ?>]]></programlisting>
 
         <para>
-            An additional method, <code>processAjax()</code>, can also be used
-            for validating partial forms. Unlike <code>isValidPartial()</code>,
-            it returns a JSON-formatted string containing error messages on
-            failure.
+            Для проверки части формы может также использоваться метод
+            <code>processAjax()</code>. В отличие от
+            <code>isValidPartial()</code>, в случае неуспеха он возвращает
+            строку в формате JSON, содержащую сообщения об ошибках заполнения.
         </para>
 
         <para>
-            Assuming your validations have passed, you can now fetch the
-            filtered values:
+            Если проверка на корректность заполнения была пройдена успешно, то вы можете извлечь прошедшие фильтрацию данные:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -394,7 +408,7 @@ $values = $form->getValues();
 ?>]]></programlisting>
 
         <para>
-            If you need the unfiltered values at any point, use:
+            Для того, чтобы извлечь нефильтрованные данные, используйте:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -403,12 +417,13 @@ $unfiltered = $form->getUnfilteredValues();
     </sect2>
 
     <sect2 id="zend.form.quickstart.errorstatus">
-        <title>Get error status</title>
+        <title>Получение статуса ошибки</title>
 
         <para>
-            So, your form failed validations? In most cases, you can simply
-            render the form again, and errors will be displayed when using the
-            default decorators:
+            А что, если форма не прошла проверку на корректность? В
+            большинстве случаев вы можете просто снова вывести ее, и сообщения
+            об ошибках будут отображены, если вы используете
+            декораторы по умолчанию:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -422,22 +437,23 @@ if (!$form->isValid($_POST)) {
 ?>]]></programlisting>
 
         <para>
-            If you want to inspect the errors, you have two methods.
-            <code>getErrors()</code> returns an associative array of element
-            names / codes (where codes is an array of error codes).
-            <code>getMessages()</code> returns an associative array of element
-            names / messages (where messages is an associative array of error
-            code / error message pairs). If a given element does not have any
-            errors, it will not be included in the array.
+            Если нужно проанализировать ошибки, то для их получения есть
+            два метода. <code>getErrors()</code> возвращает ассоциативный массив
+            имен элементов и кодов ошибок (где коды ошибок представлены в виде
+            массива). <code>getMessages()</code> возвращает ассоциативный массив
+            имен элементов и сообщений об ошибках (где сообщения об ошибках
+            представлены в виде ассоциативного массива пар 'код
+            ошибки'/'сообщение об ошибке'). Если элемент не имеет ошибок, то он
+            не будет включен в массив.
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.puttingtogether">
-        <title>Putting it together</title>
+        <title>Объединяя изложенное</title>
 
         <para>
-            Let's build a simple login form. It will need elements
-            representing:
+            Давайте создадим простую форму для входа на сайт. Для нее будут
+            нужны следующие элементы:
         </para>
 
         <itemizedlist>
@@ -447,17 +463,18 @@ if (!$form->isValid($_POST)) {
         </itemizedlist>
 
         <para>
-            For our purposes, let's assume that a valid username should be
-            alphanumeric characters only, start with a letter, have a minimum
-            length of 6, and maximum length of 20; they will be normalized to
-            lowercase. Passwords must be a minimum of 6 characters.  We'll
-            simply toss the submit value when done, so it can remain
-            unvalidated.
+            Для примера предположим, что корректное имя пользователя должно
+            содержать только буквенно-цифровые символы, начинаться с буквы,
+            иметь длину не меньше 6 и не больше 20 символов, кроме этого, имена
+            пользователей должны быть приведены к нижнему регистру. Пароль
+            должен содержать как минимум 6 символов. Переданное значение кнопки
+            использоваться не будет, поэтому проверка для нее может не
+            производиться.
         </para>
 
         <para>
-            We'll use the power of <code>Zend_Form</code>'s configuration
-            options to build the form:
+            Мы используем мощь конфигурационных опций <code>Zend_Form</code> для
+            построения формы:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -467,7 +484,7 @@ $form = new Zend_Form();
 $form->setAction('/usr/login')
      ->setMethod('post');
 
-// Create and configure username element:
+// Создание и конфигурирование элемента username
 $username = $form->createElement('text', 'username');
 $username->addValidator('alnum')
          ->addValidator('regex', false, array('/^[a-z]+/'))
@@ -475,20 +492,20 @@ $username->addValidator('alnum')
          ->setRequired(true)
          ->addFilter('StringToLower');
 
-// Create and configure password element:
+// Создание и конфигурирование элемента password
 $password = $form->createElement('password', 'password');
 $password->addValidator('StringLength', false, array(6))
          ->setRequired(true);
 
-// Add elements to form:
+// Добавление элементов в форму:
 $form->addElement($username)
      ->addElement($password)
-     // use addElement() as a factory to create 'Login' button:
+     // addElement() используется в качестве "фабрики" для создания кнопки 'Login':
      ->addElement('submit', 'login', array('label' => 'Login'));
 ?>]]></programlisting>
 
         <para>
-            Next, we'll create a controller for handling this:
+            Затем создается контроллер для отображения формы и ее обработки:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -496,13 +513,13 @@ class UserController extends Zend_Controller_Action
 {
     public function getForm()
     {
-        // create form as above
+        // здесь должен быть код для создания формы, приведенный выше
         return $form;
     }
 
     public function indexAction()
     {
-        // render user/form.phtml
+        // рендеринг user/form.phtml
         $this->view->form = $this->getForm();
         $this->render('form');
     }
@@ -514,19 +531,19 @@ class UserController extends Zend_Controller_Action
         }
         $form = $this->getForm();
         if (!$form->isValid($_POST)) {
-            // Failed validation; redisplay form
+            // проверка на корректность не пройдена, выводим форму снова
             $this->form = $form;
             return $this->render('form');
         }
         
         $values = $form->getValues();
-        // now try and authenticate....
+        // аутентификация...
     }
 }
 ?>]]></programlisting>
 
         <para>
-            And a view script for displaying the form:
+            ...и скрипт вида для отображения формы:
         </para>
 
 <programlisting role="php"><![CDATA[
@@ -535,34 +552,34 @@ class UserController extends Zend_Controller_Action
 ]]></programlisting>
 
         <para>
-            As you'll note from the controller code, there's more work to do:
-            while the submission may be valid, you may still need to do some
-            authentication using <code>Zend_Auth</code>, for instance.
+            Как вы, наверное, заметили, код контроллера не является полным,
+            после успешно проведенной проверки должна производиться авторизация
+            пользователя (например, используя <code>Zend_Auth</code>).
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Using a Zend_Config object</title>
+        <title>Использование объекта Zend_Config</title>
 
         <para>
-            All <code>Zend_Form</code> classes are configurable using
-            <code>Zend_Config</code>; you can either pass a
-            <code>Zend_Config</code> object to the constructor or pass it in
-            via <code>setConfig()</code>. Let's look at how we might create the
-            above form using an INI file. First, let's follow the
-            recommendations, and place our configurations into sections
-            reflecting the release location, and focus on the 'development'
-            section. Next, we'll setup a section for the given controller
-            ('user'), and a key for the form ('login'):
+            Все классы <code>Zend_Form</code> можно конфигурировать, используя
+            <code>Zend_Config</code>. Вы можете передавать объект
+            <code>Zend_Config</code> либо конструктору, либо через метод
+            <code>setConfig()</code>. Посмотрим, как можно создать описанную
+            выше форму, используя файл INI. Во-первых, будем следовать
+            рекомендации размещать конфигурации в разделах, отражающих
+            местонахождение релиза, и сфокусируемся на разделе 'development'.
+            Во-вторых, установим раздел для данного контроллера ('user') и
+            ключ для формы ('login'):
         </para>
 
         <programlisting role="ini"><![CDATA[
 [development]
-; general form metainformation
+; общие метаданные для формы
 user.login.action = "/user/login"
 user.login.method = "post"
 
-; username element
+; элемент username
 user.login.elements.username.type = "text"
 user.login.elements.username.options.validators.alnum.validator = "alnum"
 user.login.elements.username.options.validators.regex.validator = "regex"
@@ -573,18 +590,18 @@ user.login.elements.username.options.validators.strlen.options.max = "20"
 user.login.elements.username.options.required = true
 user.login.elements.username.options.filters.lower.filter = "StringToLower"
 
-; password element
+; элемент password
 user.login.elements.password.type = "password"
 user.login.elements.password.options.validators.strlen.validator = "StringLength"
 user.login.elements.password.options.validators.strlen.options.min = "6"
 user.login.elements.password.options.required = true
 
-; submit element
+; элемент кнопки
 user.login.elements.submit.type = "submit"
 ]]></programlisting>
 
         <para>
-            You could then pass this to the form constructor:
+            Вы можете потом передать это конструктору формы:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -593,17 +610,18 @@ $form   = new Zend_Form($config->user->login);
 ?>]]></programlisting>
 
         <para>
-            and the entire form will be defined.
+            ... и вся форма будет определена.
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.conclusion">
-        <title>Conclusion</title>
+        <title>Заключение</title>
 
         <para>
-            Hopefully with this little tutorial, you should now be well on your
-            way to unlocking the power and flexibility of
-            <code>Zend_Form</code>. Read on for more in-depth information!
+            Надеемся, благодаря этому небольшому обучающему руководству вы на
+            верном пути к открытию для себя мощи и гибкости
+            <code>Zend_Form</code>. Читайте далее для получения более подробной
+            информации!
         </para>
     </sect2>
 </sect1>
