@@ -25,13 +25,13 @@
         <title>Schlüssel Trenner</title>
         <para>
             Standardmäßig ist das Schlüssel Trennzeichen der Punkt (<code>.</code>). Dies kann
-            geändert werden, indem der <code>$config</code> Schlüssel <code>'nestSeparator'</code>
+            geändert werden, indem der <code>$options</code> Schlüssel <code>'nestSeparator'</code>
             geändert wird, wenn das <code>Zend_Config_Ini</code> Objekt instanziert wird. Zum
             Beispiel:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -100,8 +100,8 @@ echo $config->database->params->dbname; // ausgabe "dbname"]]>
                     mehrere Sektionen zu laden.</entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>Konfigurations Array. Die folgenden Schlüssel werden unterstützt:
+                    <entry><code>$options = false</code></entry>
+                    <entry>Options Array. Die folgenden Schlüssel werden unterstützt:
                         <itemizedlist>
                             <listitem>
                                 <para>
