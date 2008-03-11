@@ -29,12 +29,13 @@
         <para>
             По умолчанию разделителем ключей является символ точки
             (<code>.</code>). Он может быть заменен на любой другой посредством
-            изменения ключа <code>'nestSeparator'</code> в <code>$config</code>
-            при создании объекта <code>Zend_Config_Ini</code>. Например:
+            изменения ключа <code>'nestSeparator'</code> в массиве
+            <code>$options</code> при создании объекта <code>Zend_Config_Ini</code>.
+            Например:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -108,9 +109,9 @@ echo $config->database->params->dbname; // выведет "dbname"]]>
                     </entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
+                    <entry><code>$options = false</code></entry>
                     <entry>
-                        Конфигурационный массив. Поддерживаются следующие ключи:
+                        Массив опций. Поддерживаются следующие ключи:
                         <itemizedlist>
                             <listitem>
                                 <para>
