@@ -868,6 +868,11 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $name = $this->getResponseSegment();
         }
 
+require_once 'Zend/Log.php';
+require_once 'Zend/Log/Writer/Stream.php';
+$log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/zf.log'));
+$log->info(sprintf('Preparing to render script "%s"', $script));
+
         $this->getResponse()->appendBody(
             $this->view->render($script),
             $name

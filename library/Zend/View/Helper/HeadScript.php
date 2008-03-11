@@ -426,7 +426,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     public function toString($indent = null)
     {
         $indent = (null !== $indent)
-                ? $this->_getWhitespace($indent)
+                ? $this->getWhitespace($indent)
                 : $this->getIndent();
 
         if ($this->view) {

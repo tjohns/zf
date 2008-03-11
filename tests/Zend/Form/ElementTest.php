@@ -242,6 +242,25 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($validator->zfBreakChainOnFailure);
     }
 
+    /**
+     * @see ZF-2862
+     */
+    public function testBreakChainOnFailureFlagsForExistingValidatorsRemainSetWhenNotEmptyValidatorAutoInserted()
+    {
+        $username = new Zend_Form_Element('username');
+        $username->addValidator('stringLength', true, array(5, 20))
+                 ->addValidator('regex', true, array('/^[a-zA-Z0-9_]*$/'))
+                 ->addFilter('StringToLower')
+                 ->setRequired(true);
+        $form = new Zend_Form(array('elements' => array($username)));
+        $form->isValid(array('username' => '#'));
+
+        $validator = $username->getValidator('stringLength');
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+        $validator = $username->getValidator('regex');
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+    }
+
     public function testAutoInsertNotEmptyValidatorFlagTrueByDefault()
     {
         $this->assertTrue($this->element->autoInsertNotEmptyValidator());
