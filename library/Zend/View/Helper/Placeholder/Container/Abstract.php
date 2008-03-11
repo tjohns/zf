@@ -219,7 +219,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function setIndent($indent)
     {
-        $this->_indent = $this->_getWhitespace($indent);
+        $this->_indent = $this->getWhitespace($indent);
         return $this;
     }
 
@@ -239,7 +239,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      * @param  int|string $indent 
      * @return string
      */
-    protected function _getWhitespace($indent)
+    public function getWhitespace($indent)
     {
         if (is_int($indent)) {
             $indent = str_repeat(' ', $indent);
@@ -351,7 +351,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     public function toString($indent = null)
     {
         $indent = ($indent !== null) 
-                ? $this->_getWhitespace($indent) 
+                ? $this->getWhitespace($indent) 
                 : $this->getIndent();
         
         $items  = $this->getArrayCopy();
