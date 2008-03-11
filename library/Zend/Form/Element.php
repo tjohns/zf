@@ -999,7 +999,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
             throw new Zend_Form_Exception('Invalid validator provided to addValidator; must be string or Zend_Validate_Interface');
         }
 
-        $validator->zfBreakChainOnFailure = $breakChainOnFailure;
+        if (!isset($validator->zfBreakChainOnFailure)) {
+            $validator->zfBreakChainOnFailure = $breakChainOnFailure;
+        }
+
         $this->_validators[$name] = $validator;
 
         return $this;
