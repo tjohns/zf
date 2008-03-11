@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8741 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -30,12 +31,12 @@
             デフォルトでは、キーの区切り文字はピリオド (<code>.</code>) です。
             しかし、これは変更することもできます。変更するには、
             <code>Zend_Config_Ini</code> オブジェクトの作成時に
-            <code>$config</code> のキー
+            <code>$options</code> のキー
             <code>'nestSeparator'</code> を設定します。たとえばこのようになります。
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -105,8 +106,8 @@ echo $config->database->params->dbname; // "dbname" と出力します]]>
                     </entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>設定項目の配列。以下のキーをサポートしています。
+                    <entry><code>$options = false</code></entry>
+                    <entry>オプションの配列。以下のキーをサポートしています。
                         <itemizedlist>
                             <listitem><para><emphasis>allowModifications</emphasis>: true を指定すると、読み込んだファイルを後で変更することができます。デフォルトは false です。</para></listitem>
                             <listitem><para><emphasis>nestSeparator</emphasis>: ネストの区切り文字として使用する文字を設定します。デフォルトは "." です。</para></listitem>
