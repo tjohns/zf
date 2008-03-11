@@ -31,7 +31,7 @@
  * running via CLI, all functionality except AuthSub is available and dependent
  * upon the command line options passed.  Run this script without any
  * command line options to see usage, eg:
- *     /usr/local/bin/php -f Calendar-expanded.php
+ *     /usr/local/bin/php -f Calendar.php
  *
  * More information on the Command Line Interface is available at:
  *     http://www.php.net/features.commandline
@@ -57,7 +57,7 @@ Zend_Loader::loadClass('Zend_Gdata_Calendar');
  * Env variables used:
  * $_SERVER['HTTPS'] = (on|off|)
  * $_SERVER['HTTP_HOST'] = value of the Host: header
- * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443
+ * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443)
  * $_SERVER['REQUEST_URI'] = the URI after the method of the HTTP request
  *
  * @return string Current URL
