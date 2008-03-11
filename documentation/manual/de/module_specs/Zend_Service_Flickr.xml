@@ -79,6 +79,34 @@ foreach ($results as $result) {
             </programlisting>
         </example>
     </sect2>
+    <sect2 id="zend.service.flickr.grouppoolgetphotos">
+        <title>Photos in einem Gruppenpool finden</title>
+        <para>
+            <code>Zend_Service_Flickr</code> erlaubt es Photos eines Gruppenpools basierend auf der
+            ID zu empfangen. Hierfür kann die <code>groupPoolGetPhotos()</code> Methode verwendet
+            werden:
+        </para>
+        <example id="zend.service.flickr.grouppoolgetphotos.example-1">
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Service/Flickr.php';
+
+    $flickr = new Zend_Service_Flickr('MY_API_KEY');
+
+    $results = $flickr->groupPoolGetPhotos($groupId);
+
+    foreach ($results as $result) {
+        echo $result->title . '<br />';
+    }]]>            
+            </programlisting>
+        </example>
+        <note>
+            <title>Optionale Parameter</title>
+            <para>
+                <code>groupPoolGetPhotos()</code> akzeptiert einen optionalen zweiten Parameter als
+                ein Array von Optionen.
+            </para>
+        </note>
+    </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Empfangen von Details zu Bildern durch Flickr</title>
         <para>
