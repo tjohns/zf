@@ -484,8 +484,7 @@ element.validators.strlen.options.max = 20
         </para>
 
         <para>
-            Um ein Element zu prüfen, muß der Wert der zu prüfen ist an <code>isValid()</code>
-            übergeben werden:
+            Um ein Element zu prüfen, muß der Wert an <code>isValid()</code> übergeben werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -718,8 +717,8 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Errors</emphasis>: Fügt Fehlermeldungen an das Element an indem es
-                Zend_View_Helper_FormErrors verwendet. Wenn keine vorhanden sind wird auch nichts
-                hinzugefügt.
+                <code>Zend_View_Helper_FormErrors</code> verwendet. Wenn keine vorhanden sind
+                wird auch nichts hinzugefügt.
             </para></listitem>
 
             <listitem><para>
@@ -729,8 +728,9 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Label</emphasis>: Stell ein Label vor das Element indem es 
-                Zend_View_Helper_FormLabel verwendet, und wrapt es in ein &lt;dt&gt; Tag. Wenn kein
-                Label angegeben wurde, wird nur das Definitionsbegriff Tag dargestellt.
+                <code>Zend_View_Helper_FormLabel</code> verwendet, und wrapt es in ein &lt;dt&gt;
+                Tag. Wenn kein Label angegeben wurde, wird nur das Definitionsbegriff Tag
+                dargestellt.
             </para></listitem>
         </itemizedlist>
 
@@ -1000,9 +1000,10 @@ $element->class = 'text;
         <title>Standard Elemente</title>
 
         <para>
-            Zend_Form wird mit einer Anzahl an Standardelementen ausgeliefert; lesen Sie das
-            Kapitel über <link linkend="zend.form.standardElements">Standard Elemente</link>
-            für vollständige Details.
+            <code>Zend_Form</code> wird mit einer Anzahl an Standardelementen ausgeliefert;
+            lesen Sie das Kapitel über
+            <link linkend="zend.form.standardElements">Standard Elemente</link> für vollständige
+            Details.
         </para>
     </sect2>
 
