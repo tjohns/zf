@@ -492,7 +492,7 @@ element.validators.strlen.options.max = 20
         </para>
 
         <para>
-            To validate an element, pass the value to validate to
+            To validate an element, pass the value to 
             <code>isValid()</code>:
         </para>
 
@@ -739,7 +739,7 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Errors</emphasis>: appends error messages to the
-                element using Zend_View_Helper_FormErrors. If none are present,
+                element using <code>Zend_View_Helper_FormErrors</code>. If none are present,
                 nothing is appended.
             </para></listitem>
 
@@ -750,7 +750,7 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Label</emphasis>: prepends a label to the element
-                using Zend_View_Helper_FormLabel, and wraps it in a &lt;dt&gt;
+                using <code>Zend_View_Helper_FormLabel</code>, and wraps it in a &lt;dt&gt;
                 tag. If no label is provided, just the definition term tag is
                 rendered.
             </para></listitem>
@@ -802,7 +802,7 @@ $this->addDecorators(array(
             &lt;dd&gt; tag.  Finally, the last decorator, 'label', retrieves
             the element's label and passes it to the 'FormLabel' view helper,
             wrapping it in an HTML &lt;dt&gt; tag; the value is prepended to
-            the content by default The resulting output looks basically like
+            the content by default. The resulting output looks basically like
             this:
         </para>
 
@@ -1033,7 +1033,7 @@ $element->class = 'text;
         <title>Standard Elements</title>
 
         <para>
-            Zend_Form ships with a number of standard elements; please read the
+            <code>Zend_Form</code> ships with a number of standard elements; please read the
             <link linkend="zend.form.standardElements">Standard Elements</link>
             chapter for full details.
         </para>
