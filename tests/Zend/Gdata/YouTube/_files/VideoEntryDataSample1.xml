@@ -4,7 +4,8 @@ xmlns:media='http://search.yahoo.com/mrss/'
 xmlns:gd='http://schemas.google.com/g/2005' 
 xmlns:yt='http://gdata.youtube.com/schemas/2007' 
 xmlns:gml='http://www.opengis.net/gml' 
-xmlns:georss='http://www.georss.org/georss'>
+xmlns:georss='http://www.georss.org/georss'
+xmlns:app='http://purl.org/atom/app#'>
   <id>http://gdata.youtube.com/feeds/videos/UMFI1hdm96E</id>
   <published>2007-01-07T01:50:15.000Z</published>
   <updated>2007-01-07T01:50:15.000Z</updated>
@@ -122,4 +123,12 @@ xmlns:georss='http://www.georss.org/georss'>
     <gd:feedLink href='http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments' />
   </gd:comments>
   <yt:noembed />
+      <app:control>
+        <app:draft>yes</app:draft>
+        <yt:state
+          name="rejected"
+          reasonCode="inappropriate"
+          helpUrl="http://www.youtube.com/t/community_guidelines">
+          The content of this video may violate the terms of use.</yt:state>
+      </app:control>
 </entry>

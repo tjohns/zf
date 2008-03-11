@@ -66,6 +66,11 @@ require_once 'Zend/Gdata/Extension/Rating.php';
 require_once 'Zend/Gdata/Geo/Extension/GeoRssWhere.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Control
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Control.php';
+
+/**
  * Represents the YouTube video flavor of an Atom entry
  *
  * @category   Zend
@@ -229,6 +234,11 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $link = new Zend_Gdata_YouTube_Extension_Link();
             $link->transferFromDOM($child);
             $this->_link[] = $link;
+            break;
+        case $this->lookupNamespace('app') . ':' . 'control':
+            $control = new Zend_Gdata_YouTube_Extension_Control();
+            $control->transferFromDOM($child);
+            $this->_control = $control;
             break;
         default:
             parent::takeChildFromDOM($child);
@@ -695,4 +705,22 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         }
         return null;
     }
+
+    /**
+     * Get the current publishing state of the video. 
+     *
+     * @return Zend_Gdata_YouTube_Extension_State The publishing state of this video
+     */
+    public function getVideoState()
+    {
+        $control = $this->getControl();
+        if ($control != null && 
+            $control->getDraft() != null && 
+            $control->getDraft()->getText() == 'yes') {
+
+            return $control->getState();
+        }
+        return null;
+    }
+
 }

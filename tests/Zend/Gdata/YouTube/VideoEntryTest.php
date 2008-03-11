@@ -27,6 +27,7 @@
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube/VideoEntry.php';
+require_once 'Zend/Gdata/YouTube/Extension/State.php';
 require_once 'Zend/Gdata/YouTube.php';
 
 /**
@@ -137,11 +138,13 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ABCDEFG12AB', $videoEntry->getVideoId());
     }
 
+    /**
+     * @expectedException Zend_Gdata_App_Exception
+     */
     public function testGetVideoIdException() {
         $videoEntry = new Zend_Gdata_YouTube_VideoEntry();
 
         // assert invalid ID
-        $this->setExpectedException('Zend_Gdata_App_Exception');
         $videoEntry->id = new Zend_Gdata_App_Extension_Id('adfadfasf');
         $this->assertEquals('adfadfasf', $videoEntry->getVideoId());
     }
@@ -330,6 +333,20 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $videoEntry = $this->entry;
 
         $this->assertNotEquals(null, $videoEntry->getNoEmbed());
+    }
+
+    public function testVideoState() {
+        $this->entry->transferFromXML($this->entryText);
+        $videoEntry = $this->entry;
+
+        $videoState = $videoEntry->getVideoState();
+        $this->assertTrue($videoState instanceof Zend_Gdata_YouTube_Extension_State);
+
+        $this->assertEquals('rejected', $videoState->getName());
+        $this->assertEquals('inappropriate', $videoState->getReasonCode());
+        $this->assertEquals('http://www.youtube.com/t/community_guidelines', $videoState->getHelpUrl());
+        $this->assertEquals('The content of this video may violate the terms of use.', 
+                            $videoState->getText());
     }
 
 }
