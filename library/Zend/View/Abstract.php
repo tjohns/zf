@@ -442,6 +442,10 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     public function setHelperPath($path, $classPrefix = 'Zend_View_Helper_')
     {
+        if ($classPrefix == null) {
+            throw new Zend_View_Exception('The classPrefix cannot be empty.');
+        }
+        
         if (!empty($classPrefix) && ('_' != substr($classPrefix, -1))) {
             $classPrefix .= '_';
         }
