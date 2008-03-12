@@ -24,7 +24,7 @@
         pole. Nicméně, pokud vyžadujete vrácení objektu, můžete to určit takto: 
     </para>
     <programlisting role="php"><![CDATA[<?php
-// Dekódovat objekty jako objekty
+// Dekódovat JSON objekty jako PHP objekty
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
     <para>
