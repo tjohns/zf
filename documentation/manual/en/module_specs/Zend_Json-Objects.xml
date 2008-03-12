@@ -26,7 +26,7 @@
         specify this:
     </para>
     <programlisting role="php"><![CDATA[<?php
-// Decode objects as objects
+// Decode JSON objects as PHP objects
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
     <para>

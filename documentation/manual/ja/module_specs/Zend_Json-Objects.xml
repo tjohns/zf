@@ -27,7 +27,7 @@
         もしオブジェクトとして受け取りたいのなら、そのように指定することもできます。
     </para>
     <programlisting role="php"><![CDATA[<?php
-// オブジェクトをオブジェクトにデコードします
+// JSONオブジェクトをPHPオブジェクトにデコードします
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
     <para>
