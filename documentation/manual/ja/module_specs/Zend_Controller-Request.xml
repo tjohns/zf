@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8706 -->
+<!-- EN-Revision: 8782 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -120,7 +120,7 @@
 
                 <para>
                     1.5.0 以降では、生の投稿データを
-                    <code>getRawPost()</code> メソッドで取得することができます。
+                    <code>getRawBody()</code> メソッドで取得することができます。
                     このメソッドは、データが送信されていない場合は false を返します。
                     送信されている場合は、投稿内容の本文全体を返します。
                 </para>
