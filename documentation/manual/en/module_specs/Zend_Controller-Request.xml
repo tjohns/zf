@@ -117,7 +117,7 @@
 
                 <para>
                     As of 1.5.0, you can also retrieve the raw post data via the
-                    <code>getRawPost()</code> method. This method returns false
+                    <code>getRawBody()</code> method. This method returns false
                     if no data was submitted in that fashion, but the full body
                     of the post otherwise.
                 </para>
