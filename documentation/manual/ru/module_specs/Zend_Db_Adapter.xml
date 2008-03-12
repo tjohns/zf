@@ -78,6 +78,11 @@
                 IBM DB2, с использованием расширения <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink>
             </para>
         </listitem>
+        <listitem>
+            <para>
+                Firebird/Interbase, с использованием расширения <ulink url="http://www.php.net/ibase">php_interbase</ulink>
+            </para>
+        </listitem>		
     </itemizedlist>
 
     <note>
@@ -235,8 +240,7 @@ $config = new Zend_Config(
     )
 );
 
-$db = Zend_Db::factory($config->database);
-));]]>
+$db = Zend_Db::factory($config->database);]]>
                 </programlisting>
             </example>
 
@@ -1270,7 +1274,7 @@ SELECT * FROM atable WHERE intColumn = '123']]>
                 <programlisting role="php"><![CDATA[<?php
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
-     . $db->quoteType($value, 'INTEGER');
+     . $db->quote($value, 'INTEGER');
 ]]>
                 </programlisting>
             </example>
@@ -2020,6 +2024,35 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         использования коротких имен столбцов в результатах. Если
                         имеются проблемы с тем, что результаты возвращаются с
                         ключами в виде "tablename.columnname", когда производится запрос с объединением таблиц, то следует обновить PHP до текущей версии.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+        
+        <sect3 id="zend.db.adapter.adapter-notes.firebird">
+            <title>Firebird/Interbase</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Этот адаптер использует PHP-расширение php_interbase.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Firebird/interbase  не поддерживает автоинкрементные
+                        ключи, поэтому вы должны указывать имя
+                        последовательности для
+                        <code>lastInsertId()</code> или
+                        <code>lastSequenceId()</code>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        На данный момент опция
+                        <code>Zend_Db::CASE_FOLDING</code> не поддерживается
+                        адаптером Firebird/interbase. Не заключенные в кавычки
+                        идентификаторы автоматически возвращаются в верхнем
+                        регистре..
                     </para>
                 </listitem>
             </itemizedlist>

@@ -121,6 +121,23 @@
                 </para>
             </note>
 
+            <note>
+                <title>Извлечение Raw POST данных</title>
+
+                <para>
+                    Начиная с версии 1.5.0 вы можете также извлекать данные POST
+                    в том виде, в котором они присутствуют в теле запроса,
+                    используя метод <code>getRawPost()</code>. Этот метод
+                    возвращает false, если данные POST отсутствуют в теле
+                    запроса, иначе - все тело POST.
+                </para>
+
+                <para>
+                    Этот метод в основном полезен для получения содержимого при
+                    разработке RESTful приложений.
+                </para>
+            </note>
+
             <para>
                 Вы можете также устанавливать пользовательские параметры в
                 объекте запроса, используя <code>setParam()</code>, и извлекать
@@ -130,14 +147,15 @@
             </para>
 
             <note>
-                <title>getParam() извлекает не только пользовательские параметры</title>
+                <title>getParam() извлекает не только пользовательские
+                параметры</title>
 
                 <para>
                     <code>getParam()</code> извлекает значения из нескольких
                     источников. В порядке следования эти источники включают в
-                    себя: пользовательские параметры, установленные через
-                    <code>setParam()</code>, параметры
-                    <code>GET</code>, <code>POST</code> и <code>COOKIE</code>.
+                    себя: установленные через метод <code>setParam()</code>
+                    пользовательские параметры, параметры
+                    <code>GET</code>, и, наконец, параметры <code>POST</code>.
                     Помните об этом, когда извлекаете данные через этот метод.
                 </para>
                 
@@ -145,6 +163,18 @@
                     Если вы хотите извлекать только те параметры, которые
                     установили через <code>setParam()</code>, то используйте
                     <code>getUserParam()</code>.
+                </para>
+                
+                <para>
+                    Кроме этого, начиная с версии 1.5.0, вы можете ограничивать
+                    набор доступных для поиска источников параметров.
+                    <code>setParamSources()</code> позволяет указывать
+                    пустой массив или массив с одним или более значений, это
+                    могут быть'_GET' и '_POST' (по умолчанию оба разрешены).
+                    Через этот массив задается набор источников параметров,
+                    которым можно пользоваться для поиска. Если вы хотите
+                    ограничить доступ источником '_GET', то указывайте
+                    <code>setParamSources(array('_GET'))</code>.
                 </para>
             </note>
 
@@ -242,6 +272,31 @@ $response   = $controller->dispatch();]]>
 
         </sect3>
         
+        <sect3 id="zend.controller.request.http.method">
+            <title>Определение HTTP-метода запроса</title>
+
+            <para>
+                <code>getMethod()</code> позволяет определить HTTP-метод
+                текущего запроса. Кроме этого, есть набор методов, позволяющий
+                проверить, использовался ли тот или иной HTTP-метод
+                при произведении текущего запроса. Все они возвращают ответ булевого типа:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>isGet()</code></para></listitem>
+                <listitem><para><code>isPost()</code></para></listitem>
+                <listitem><para><code>isPut()</code></para></listitem>
+                <listitem><para><code>isDelete()</code></para></listitem>
+                <listitem><para><code>isHead()</code></para></listitem>
+                <listitem><para><code>isOptions()</code></para></listitem>
+            </itemizedlist>
+
+            <para>
+                Эти методы могут использоваться в основном для создания т.н.
+                RESTful-архитектуры.
+            </para>
+        </sect3>
+
         <sect3 id="zend.controller.request.http.ajax">
             <title>Определение запросов AJAX</title>
 

@@ -425,7 +425,7 @@ array(
 
             <listitem>
                 <para>
-                    <code>getException(Exception $e)</code> возвращает весь стек
+                    <code>getException()</code> возвращает весь стек
                     исключений.
                 </para>
             </listitem>

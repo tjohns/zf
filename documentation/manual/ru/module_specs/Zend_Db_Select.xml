@@ -71,9 +71,9 @@
         <example id="zend.db.select.creating.example-db">
             <title>Пример использования метода select() адаптера БД</title>
             <programlisting role="php"><![CDATA[<?php
-
 $db = Zend_Db::factory( ...опции... );
-$select = $db->select();]]></programlisting>
+$select = $db->select();]]>
+            </programlisting>
         </example>
 
         <para>
@@ -84,11 +84,10 @@ $select = $db->select();]]></programlisting>
         <example id="zend.db.select.creating.example-new">
             <title>Пример создания нового объекта Select</title>
             <programlisting role="php"><![CDATA[<?php
-
 $db = Zend_Db::factory( ...опции... );
-$select = new Zend_Db_Select($db);]]></programlisting>
+$select = new Zend_Db_Select($db);]]>
+            </programlisting>
         </example>
-
     </sect2>
 
     <sect2 id="zend.db.select.building">
@@ -105,7 +104,6 @@ $select = new Zend_Db_Select($db);]]></programlisting>
         <example id="zend.db.select.building.example">
             <title>Пример использования методов для добавления предложений</title>
             <programlisting role="php"><![CDATA[<?php
-
 // Создание объекта Zend_Db_Select
 $select = $db->select();
 
@@ -116,7 +114,8 @@ $select->from( ...определение таблицы и столбцов... )
 $select->where( ...определение критериев поиска... )
 
 // Добавление предложения ORDER BY
-$select->order( ...определение критериев сортировки... );]]></programlisting>
+$select->order( ...определение критериев сортировки... );]]>
+            </programlisting>
         </example>
 
         <para>
@@ -130,11 +129,11 @@ $select->order( ...определение критериев сортировк�
         <example id="zend.db.select.building.example-fluent">
             <title>Пример использования fluent interface</title>
             <programlisting role="php"><![CDATA[<?php
-
 $select = $db->select()
     ->from( ...определение таблицы и столбцов... )
     ->where( ...определение критериев поиска... )
-    ->order( ...определение критериев сортировки... );]]></programlisting>
+    ->order( ...определение критериев сортировки... );]]>
+            </programlisting>
         </example>
 
         <para>
@@ -159,13 +158,13 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example">
                 <title>Пример использования метода from()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT *
 //   FROM "products"
 
 $select = $db->select()
-    ->from( 'products' );]]></programlisting>
+    ->from( 'products' );]]>
+                </programlisting>
             </example>
 
             <para>
@@ -183,13 +182,13 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example-cname">
                 <title>Пример задания корреляционного имени таблицы</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p.*
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'products') );]]></programlisting>
+    ->from( array('p' => 'products') );]]>
+                </programlisting>
             </example>
 
             <para>
@@ -202,7 +201,6 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example-schema">
                 <title>Пример задания имени схемы</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT *
 //   FROM "myschema"."products"
@@ -213,7 +211,8 @@ $select = $db->select()
 // или
 
 $select = $db->select()
-    ->from('products', '*', 'myschema');]]></programlisting>
+    ->from('products', '*', 'myschema');]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -256,7 +255,6 @@ $select = $db->select()
             <example id="zend.db.select.building.columns.example">
                 <title>Пример указания столбцов</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -279,7 +277,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('prodno' => 'product_id', 'product_name'));]]></programlisting>
+        array('prodno' => 'product_id', 'product_name'));]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -319,7 +318,6 @@ $select = $db->select()
             <example id="zend.db.select.building.columns-expr.example">
                 <title>Пример указания столбцов, содержащих выражения</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", LOWER(product_name)
 //   FROM "products" AS p
@@ -343,7 +341,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));]]></programlisting>
+        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));]]>
+                </programlisting>
             </example>
 
             <para>
@@ -377,7 +376,6 @@ $select = $db->select()
             <example id="zend.db.select.building.columns-quoteid.example">
                 <title>Пример заключения в кавычки столбцов в выражении</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строится следующий запрос, при этом имя столбца "from" в выражении
 // заключается в кавычки:
 //   SELECT p."from" + 10 AS origin
@@ -385,7 +383,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]></programlisting>
+        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -407,7 +406,6 @@ $select = $db->select()
             <example id="zend.db.select.building.join.example">
                 <title>Пример использования метода join()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", p."product_name", l.*
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -417,7 +415,8 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id');]]></programlisting>
+        'p.product_id = l.product_id');]]>
+                </programlisting>
             </example>
 
             <para>
@@ -458,7 +457,6 @@ $select = $db->select()
             <example id="zend.db.select.building.join.example-no-columns">
                 <title>Пример извлечения без столбцов</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -469,7 +467,8 @@ $select = $db->select()
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
-        array() ); // пустой список столбцов]]></programlisting>
+        array() ); // пустой список столбцов]]>
+                    </programlisting>
                 <para>
                     Обратите внимание на пустой <code>array()</code> в примере
                     выше вместо списка столбцов из присоединяемой таблицы.
@@ -592,6 +591,65 @@ $select = $db->select()
                 </listitem>
             </itemizedlist>
 
+            <para>
+                В дополнение к этим методам объединения вы можете упростить свои
+                запросы, используя методы JoinUsing. Вместо предоставления
+                полного условия объединения вы можете просто передавать имя
+                столбца, по которому производится объединение, и Zend_Db_Select
+                допишет условие объединения за вас.
+            </para>
+
+            <example id="zend.db.select.building.joinusing.example">
+
+                <title>Пример использования метода joinUsing()</title>
+
+                <programlisting role="php"><![CDATA[<?php
+// Строится запрос:
+//   SELECT *
+//   FROM "table1"
+//   JOIN "table2"
+//   ON "table1".column1 = "table2".column1
+//   WHERE column2 = 'foo'
+
+$select = $db->select()
+    ->from('table1')
+    ->joinUsing('table2', 'column1')
+    ->where('column2 = ?', 'foo');]]>
+                </programlisting>
+
+            </example>
+
+            <para>
+                Каждый метод объединения из перечисленных выше имеет соответствующий ему метод JoinUsing.
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>joinUsing(table, join, [columns])</code> и
+                        <code>joinInnerUsing(table, join, [columns])</code>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>joinLeftUsing(table, join, [columns])</code>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>joinRightUsing(table, join, [columns])</code>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>joinFullUsing(table, join, [columns])</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+
         </sect3>
 
         <sect3 id="zend.db.select.building.where">
@@ -608,7 +666,6 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example">
                 <title>Пример использования метода where()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строится запрос:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -618,7 +675,8 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > 100.00');]]></programlisting>
+    ->where('price > 100.00');]]>
+                </programlisting>
             </example>
 
             <note>
@@ -649,7 +707,6 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-param">
                 <title>Пример параметра в методе where()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -661,7 +718,8 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > ?', $minimumPrice);]]></programlisting>
+    ->where('price > ?', $minimumPrice);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -674,7 +732,6 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-and">
                 <title>Пример нескольких вызовов метода where()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -688,7 +745,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price > ?', $minimumPrice)
-    ->where('price < ?', $maximumPrice);]]></programlisting>
+    ->where('price < ?', $maximumPrice);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -703,7 +761,6 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-or">
                 <title>Пример использования метода orWhere()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -717,7 +774,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price < ?', $minimumPrice)
-    ->orWhere('price > ?', $maximumPrice);]]></programlisting>
+    ->orWhere('price > ?', $maximumPrice);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -731,7 +789,6 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-parens">
                 <title>Пример заключения булевых выражений в скобки</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -746,7 +803,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where("price < $minimumPrice OR price > $maximumPrice")
-    ->where('product_name = ?', $prod);]]></programlisting>
+    ->where('product_name = ?', $prod);]]>
+                </programlisting>
             </example>
 
             <para>
@@ -781,7 +839,6 @@ $select = $db->select()
             <example id="zend.db.select.building.group.example">
                 <title>Пример использования метода group()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -794,7 +851,8 @@ $select = $db->select()
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id');]]></programlisting>
+    ->group('p.product_id');]]>
+                </programlisting>
             </example>
 
             <para>
@@ -837,7 +895,6 @@ $select = $db->select()
             <example id="zend.db.select.building.having.example">
                 <title>Пример использования метода having()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -852,7 +909,8 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->having('line_items_per_product > 10');]]></programlisting>
+    ->having('line_items_per_product > 10');]]>
+                </programlisting>
             </example>
 
             <note>
@@ -905,7 +963,6 @@ $select = $db->select()
             <example id="zend.db.select.building.order.example">
                 <title>Пример использования метода order()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -920,7 +977,8 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->order(array('line_items_per_product DESC', 'product_id'));]]></programlisting>
+    ->order(array('line_items_per_product DESC', 'product_id'));]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -950,7 +1008,6 @@ $select = $db->select()
             <example id="zend.db.select.building.limit.example">
                 <title>Пример использования метода limit()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -958,7 +1015,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limit(10, 20);]]></programlisting>
+    ->limit(10, 20);]]>
+                </programlisting>
             </example>
 
             <note>
@@ -970,6 +1028,38 @@ $select = $db->select()
                     SQL, присущего данной СУРБД.
                 </para>
             </note>
+            
+            <para>
+                Используйте метод <code>limitPage()</code> в качестве
+                альтернативного способа указания количества строк и смещения.
+                Этот метод позволяет ограничить набор возвращаемых результатов
+                подмножеством фиксированной длины, который является одним из
+                последовательности подмножеств, составляющих весь набор
+                результатов запроса.
+                Другими словами, вы указываете длину "страницы" результатов в
+                строках и порядковый номер страницы для извлечения. Номер
+                страницы является первым аргументом в методе
+                <code>limitPage()</code>, а длина страницы - вторым. Оба
+                аргумента являются обязательными и не имеют значений по
+                умолчанию.
+            </para>
+
+            <example id="zend.db.select.building.limit.example2">
+
+                <title>Example of the limitPage() method</title>
+
+                <programlisting role="php"><![CDATA[<?php
+// Строит запрос:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+//   LIMIT 10, 20
+
+$select = $db->select()
+    ->from(array('p' => 'products'), array('product_id', 'product_name'))
+    ->limitPage(2, 10);]]>
+                </programlisting>
+
+            </example>
 
         </sect3>
 
@@ -983,16 +1073,16 @@ $select = $db->select()
             </para>
 
             <example id="zend.db.select.building.distinct.example">
-                <title>Пример использования метода distinct()<!--Example of the distinct() method--></title>
+                <title>Пример использования метода distinct()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT DISTINCT p."product_name"
 //   FROM "products" AS p
 
 $select = $db->select()
     ->distinct()
-    ->from(array('p' => 'products'), 'product_name');]]></programlisting>
+    ->from(array('p' => 'products'), 'product_name');]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1009,14 +1099,14 @@ $select = $db->select()
             <example id="zend.db.select.building.for-update.example">
                 <title>Пример использования метода forUpdate()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT FOR UPDATE p.*
 //   FROM "products" AS p
 
 $select = $db->select()
     ->forUpdate()
-    ->from(array('p' => 'products'));]]></programlisting>
+    ->from(array('p' => 'products'));]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1052,12 +1142,12 @@ $select = $db->select()
             <example id="zend.db.select.execute.query-adapter.example">
                 <title>Пример использования метода query() адаптера БД</title>
                 <programlisting role="php"><![CDATA[<?php
-
 $select = $db->select()
   ->from('products');
 
 $stmt = $db->query($select);
-$result = $stmt->fetchAll();]]></programlisting>
+$result = $stmt->fetchAll();]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1076,12 +1166,12 @@ $result = $stmt->fetchAll();]]></programlisting>
             <example id="zend.db.select.execute.query-select.example">
                 <title>Пример использования метода query() объекта Select</title>
                 <programlisting role="php"><![CDATA[<?php
-
 $select = $db->select()
     ->from('products');
 
 $stmt = $select->query();
-$result = $stmt->fetchAll();]]></programlisting>
+$result = $stmt->fetchAll();]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1099,7 +1189,6 @@ $result = $stmt->fetchAll();]]></programlisting>
             <example id="zend.db.select.execute.tostring.example">
                 <title>Пример использования метода __toString()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 $select = $db->select()
     ->from('products');
 
@@ -1107,7 +1196,8 @@ $sql = $select->__toString();
 echo "$sql\n";
 
 // Выводом будет строка:
-//   SELECT * FROM "products"]]></programlisting>
+//   SELECT * FROM "products"]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1156,11 +1246,6 @@ echo "$sql\n";
                 Zend_Db_Select определяет константы, которые вы можете
                 использовать для частей SQL-запроса. Вы можете использовать эти
                 константы или литеральные строки.
-<!--
-                The Zend_Db_Select class defines constants you can use for
-                parts of the SQL query.  You can use these constant definitions,
-                or you can the literal strings.
--->
             </para>
 
             <table id="zend.db.select.other.get-part.table">
@@ -1220,7 +1305,6 @@ echo "$sql\n";
             <example id="zend.db.select.other.get-part.example">
                 <title>Пример использования метода getPart()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 $select = $db->select()
     ->from('products')
     ->order('product_id');
@@ -1233,7 +1317,8 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 
 // Возвращаемое значение может быть массивом, а не строкой
 // Каждая часть имет свою структуру
-print_r( $orderData );]]></programlisting>
+print_r( $orderData );]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -1266,7 +1351,6 @@ print_r( $orderData );]]></programlisting>
             <example id="zend.db.select.other.reset.example">
                 <title>Пример использования метода reset()</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Строит запрос:
 //   SELECT p.*
 //   FROM "products" AS p
@@ -1289,7 +1373,8 @@ $select->reset( Zend_Db_Select::ORDER );
 $select->order('product_id');
 
 // Очищаем все части запроса
-$select->reset();]]></programlisting>
+$select->reset();]]>
+                </programlisting>
             </example>
 
         </sect3>
