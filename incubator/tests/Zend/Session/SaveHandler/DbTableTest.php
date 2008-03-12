@@ -66,7 +66,7 @@ class Zend_Session_SaveHandler_DbTableTest extends PHPUnit_Framework_TestCase
     /**
      * construction
      */
-    public function __construct()
+    protected function setUp()
     {
         $this->_setupDb($this->_saveHandlerTableConfig['primary']);
     }
@@ -74,7 +74,7 @@ class Zend_Session_SaveHandler_DbTableTest extends PHPUnit_Framework_TestCase
     /**
     * destruction
     */
-    public function __destruct()
+    protected function tearDown()
     {
         $this->_dropDb();
     }
