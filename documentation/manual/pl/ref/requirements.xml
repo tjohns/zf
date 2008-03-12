@@ -1,0 +1,961 @@
+<appendix id="requirements">
+
+    <title>Wymagania systemowe</title>
+
+    <para>
+        Ten rozdział opisuje wymagania systemowe dla Zend Framework.
+    </para>
+
+    <sect1 id="requirements.version">
+
+        <title>Wymagana wersja PHP</title>
+
+        <para>
+            Zend Framework wymaga PHP w wersji 5.1.4 lub nowszej. Niektóre 
+            interfejsu SPL takie jak <code>Countable</code> nie były stabilne 
+            we wcześniejszych wersjach PHP.
+        </para>
+
+        <para>
+            Zend Framework posiada obszerny zbiór zautomatyzowanych testów, 
+            które możesz uruchomić używając PHPUnit w wersji 3.0 lub nowszej. 
+            Ta wersja PHPUnit także wymaga PHP w wersji 5.1.4 lub nowszej.
+        </para>
+
+        <para>
+            Chociaż Zend Framework będzie działać poprawnie z PHP w wersji 
+            podanej wyżej, mocno zalecano jest użycie PHP w wersji 5.2.3 lub
+            nowszej. W nowszych wersjach PHP jest wiele ważnych poprawek w
+            kwestii bezpieczeństwa oraz wydajności.
+        </para>
+
+    </sect1>
+
+    <sect1 id="requirements.extensions">
+
+        <title>Rozszerzenia PHP</title>
+
+        <para>
+            Poniżej jest tabela, w której wymieniono wszystkie rozszerzenia, 
+            jakie można znaleźć w PHP, a także podano informację o tym, w jaki 
+            sposób są one użyte w Zend Framework. Pomoże to w zorientowaniu się,
+            które rozszerzenia są wymagane przez twoją aplikację. Nie wszystkie
+            rozszerzenia używane przez Zend Framework są wymagane przez każdą
+            aplikację.
+        </para>
+        
+        <para>
+            Typ użycia "Zależne" oznacza, że komponenty lub klasy nie będą
+            działać jeśli odpowiednie rozszerzenie nie jest dostępne. Typ
+            użycia "Opcjonalne" oznacza, że jeśli rozszerzenie nie jest 
+            dostępne, to komponenty lub klasy automatycznie będą używać
+            alternatywnego kodu.
+        </para>
+
+        <table frame='all' id="requirements.extensions.table-1">
+            <title>Rozszerzenia PHP użyte w Zend Framework</title>
+            <tgroup cols='3'>
+                <colspec colwidth='1in'/>
+                <colspec colwidth='1in'/>
+                <colspec colwidth='3in'/>
+                <thead>
+                    <row>
+                        <entry>Rozszerzenie</entry>
+                        <entry>Typ użycia</entry>
+                        <entry>Używane przez komponenty Zend Framework</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.apc.php"><code>apc</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.bc.php"><code>bcmath</code></ulink></entry>
+                        <entry>Opcjonalne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.locale.html"><code>Zend_Locale_Math</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://pecl.php.net/package/Bitset"><code>bitset</code></ulink></entry>
+                        <entry>Opcjonalne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.bzip2.php"><code>bz2</code></ulink></entry>
+                        <entry>--</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.calendar.php"><code>calendar</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.com.php"><code>com_dotnet</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                           <ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata_App</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http_Client</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.rest.client.html"><code>Zend_Rest_Client</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.uri.html"><code>Zend_Uri</code></ulink>,
+                           <ulink url="http://framework.zend.com/manual/en/zend.validate.html"><code>Zend_Validate</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.curl.php"><code>curl</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.http.client.adapters.html"><code>Zend_Http_Client_Adapter_Curl</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.datetime.php"><code>date</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.dba.php"><code>dba</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.dbase.php"><code>dbase</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.amazon.html"><code>Zend_Service_Amazon</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.delicious.html"><code>Zend_Service_Delicious</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.simpy.html"><code>Zend_Service_Simpy</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.yahoo.html"><code>Zend_Service_Yahoo</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.exif.php"><code>exif</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.fbsql.php"><code>fbsql</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.fdf.php"><code>fdf</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.filter.php"><code>filter</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ftp.php"><code>ftp</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.image.php"><code>gd</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.gettext.php"><code>gettext</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.gmp.php"><code>gmp</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.hash.php"><code>hash</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ibm-db2.php"><code>ibm_db2</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Db2</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.locale.parsing.html"><code>Zend_Locale_Format</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.mime.html"><code>Zend_Mime_Decode</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.audioscrobbler.html"><code>Zend_Service_Audioscrobbler</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.client.html"><code>Zend_XmlRpc_Client</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.imap.php"><code>imap</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ifx.php"><code>informix</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ibase.php"><code>interbase</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>Zend_Db_Adapter_Firebird</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.json.php"><code>json</code></ulink></entry>
+                        <entry>Opcjonalne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.json.html"><code>Zend_Json</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ldap.php"><code>ldap</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>DOM</code></ulink>,
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>,
+                            <ulink url="http://www.php.net/manual/en/ref.xslt.php"><code>XSLT</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mbstring.php"><code>mbstring</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mcrypt.php"><code>mcrypt</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>memcache</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcached</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mhash.php"><code>mhash</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mime-magic.php"><code>mime_magic</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http_Client</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ming.php"><code>ming</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.msql.php"><code>msql</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mssql.php"><code>mssql</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mysql.php"><code>mysql</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.mysqli.php"><code>mysqli</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Mysqli</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ncurses.php"><code>ncurses</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.oci8.php"><code>oci8</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Oracle</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.uodbc.php"><code>odbc</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.openssl.php"><code>openssl</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pcntl.php"><code>pcntl</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pcre.php"><code>pcre</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>Wirtualnie wszystkie komponenty</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo.php"><code>pdo</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>Wszystkie sterowniki baz danych dla PDO</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-dblib.php"><code>pdo_dblib</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-firebird.php"><code>pdo_firebird</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><code>pdo_mssql</code></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mssql</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-mysql.php"><code>pdo_mysql</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mysql</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-oci.php"><code>pdo_oci</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Oci</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-pgsql.php"><code>pdo_pgsql</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Pgsql</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pdo-sqlite.php"><code>pdo_sqlite</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Sqlite</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pgsql.php"><code>pgsql</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.posix.php"><code>posix</code></ulink></entry>
+                        <entry>Opcjonalne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.mail.html"><code>Zend_Mail</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.pspell.php"><code>pspell</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.readline.php"><code>readline</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.recode.php"><code>recode</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.controller.html"><code>Zend_Controller</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.filter.html"><code>Zend_Filter</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.filter.input.html"><code>Zend_Filter_Input</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.json.html"><code>Zend_Json</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.log.html"><code>Zend_Log</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.server.reflection.html"><code>Zend_Server_Reflection</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.validate.html"><code>Zend_Validate</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.view.html"><code>Zend_View</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.server.html"><code>Zend_XmlRpc_Server</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.session.php"><code>session</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.controller.actionhelpers.html"><code>Zend_Controller_Action_Helper_Redirector</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.session.html"><code>Zend_Session</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.shmop.php"><code>shmop</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.config.adapters.xml.html"><code>Zend_Config_Xml</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.rest.client.html"><code>Zend_Rest_Client</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.service.audioscrobbler.html"><code>Zend_Service_Audioscrobbler</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.soap.php"><code>soap</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.strikeiron.html"><code>Zend_Service_StrikeIron</code></ulink></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.sockets.php"><code>sockets</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.spl.php"><code>SPL</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>Wirtualnie wszystkie komponenty</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html">Zend_Cache_Backend_Sqlite</ulink></entry>
+                    </row>
+                    <row>
+                        <entry><code>standard</code></entry>
+                        <entry>Zależne</entry>
+                        <entry>Wirtualnie wszystkie komponenty</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.sybase.php"><code>sybase</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>sysvmsg</entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>sysvsem</entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry>sysvshm</entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.tidy.php"><code>tidy</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.tokenizer.php"><code>tokenizer</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.wddx.php"><code>wddx</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.xml.php"><code>xml</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Qt</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Tmx</code></ulink>,
+                            <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Xliff</code></ulink>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.xmlreader.php"><code>XMLReader</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.xmlrpc.php"><code>xmlrpc</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.xmlwriter.php"><code>XMLWriter</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.xsl.php"><code>xsl</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.zip.php"><code>zip</code></ulink></entry>
+                        <entry>---</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink></entry>
+                        <entry>Zależne</entry>
+                        <entry>
+                            <ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink>,
+                            <ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>Memcache</code></ulink>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect1>
+
+    <sect1 id="requirements.zendcomponents">
+
+        <title>Komponenty Zend Framework</title>
+
+        <para>
+            Poniżej jest tabela, w której wymieniono wszystkie komponenty Zend 
+            Framework i rozszerzenia PHP, których one potrzebują.
+            Pomoże to w zorientowaniu się, które rozszerzenia są wymagane przez 
+            twoją aplikację. Nie wszystkie rozszerzenia używane przez Zend 
+            Framework są wymagane przez każdą aplikację.
+        </para>
+
+        <table frame='all' id="requirements.zendcomponents.table-1">
+            <title>Komponenty Zend Framework i rozszerzenia PHP których używają</title>
+            <tgroup cols='3'>
+                <colspec colwidth='2in'/>
+                <colspec colwidth='4in'/>
+                <thead>
+                    <row>
+                        <entry>Komponenty Zend Framework</entry>
+                        <entry>Rozszerzenie PHP ( Klasa / Typ użycia )</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Wszystkie komponenty</entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.pcre.php"><code>pcre</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.spl.php"><code>SPL</code></ulink>
+                            ( Zależne )
+                            <code>standard</code>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.acl.html"><code>Zend_Acl</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.auth.html"><code>Zend_Auth</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.hash.php"><code>hash</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.html"><code>Zend_Cache</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.apc.php"><code>apc</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>memcache</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcached</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>sqlite</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Sqlite</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.config.html"><code>Zend_Config</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.config.adapters.xml.html"><code>Zend_Config_Xml</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.config.adapters.xml.html"><code>Zend_Config_Xml</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.console.getopt.html"><code>Zend_Console_Getopt</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.controller.html"><code>Zend_Controller</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.session.php"><code>session</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.controller.actionhelpers.html"><code>Zend_Controller_Action_Helper_Redirector</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.date.html"><code>Zend_Date</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ibm-db2.php"><code>ibm_db2</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Db2</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.mysqli.php"><code>mysqli</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Mysqli</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.oci8.php"><code>oci8</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Oracle</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.pdo.php"><code>pdo</code></ulink>
+                            ( Wszystkie sterowniki baz danych dla PDO / Zależne )
+                            <code>pdo_mssql</code>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mssql</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.pdo-mysql.php"><code>pdo_mysql</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mysql</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.pdo-oci.php"><code>pdo_oci</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Oci</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.pdo-pgsql.php"><code>pdo_pgsql</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Pgsql</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.pdo-sqlite.php"><code>pdo_sqlite</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Sqlite</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.debug.html"><code>Zend_Debug</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.exception.html"><code>Zend_Exception</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.mbstring.php"><code>mbstring</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.filter.html"><code>Zend_Filter</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.filter.input.html"><code>Zend_Filter_Input</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata_App</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http_Client</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.curl.php"><code>curl</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.http.client.adapters.html"><code>Zend_Http_Client_Adapter_Curl</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.mime-magic.php"><code>mime_magic</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http_Client</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.json.html"><code>Zend_Json</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.json.php"><code>json</code></ulink>
+                            ( Opcjonalne )
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.loader.html"><code>Zend_Loader</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.locale.html"><code>Zend_Locale</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.bc.php"><code>bcmath</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.locale.html"><code>Zend_Locale_Math</code></ulink> / Opcjonalne )
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.locale.parsing.html"><code>Zend_Locale_Format</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.log.html"><code>Zend_Log</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.mail.html"><code>Zend_Mail</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.posix.php"><code>posix</code></ulink>
+                            ( Opcjonalne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.measure.html"><code>Zend_Measure</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.memory.html"><code>Zend_Memory</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.mime.html"><code>Zend_Mime</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.mime.html"><code>Zend_Mime_Decode</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.image.php"><code>gd</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.registry.html"><code>Zend_Registry</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Request</entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.rest.html"><code>Zend_Rest</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.client.html"><code>Zend_Rest_Client</code></ulink> / Zależne )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.client.html"><code>Zend_Rest_Client</code></ulink> / Zależne )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.rest.client.html"><code>Zend_Rest_Client</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://pecl.php.net/package/Bitset"><code>bitset</code></ulink>
+                            ( Opcjonalne )
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.server.reflection.html"><code>Zend_Server_Reflection</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.akismet.html"><code>Zend_Service_Akismet</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.amazon.html"><code>Zend_Service_Amazon</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.audioscrobbler.html"><code>Zend_Service_Audioscrobbler</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.delicious.html"><code>Zend_Service_Delicious</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.simpy.html"><code>Zend_Service_Simpy</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.strikeiron.html"><code>Zend_Service_StrikeIron</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.soap.php"><code>soap</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.service.yahoo.html"><code>Zend_Service_Yahoo</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.session.html"><code>Zend_Session</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.session.php"><code>session</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.translate.html"><code>Zend_Translate</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.xml.php"><code>xml</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Qt</code></ulink> / Zależne )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Tmx</code></ulink> / Zależne )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Xliff</code></ulink> / Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.uri.html"><code>Zend_Uri</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.validate.html"><code>Zend_Validate</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.version.html"><code>Zend_Version</code></ulink></entry>
+                        <entry>---</entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.view.html"><code>Zend_View</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink></entry>
+                        <entry>
+                            <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.client.html"><code>Zend_XmlRpc_Client</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink>
+                            ( Zależne )
+                            <ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.server.html"><code>Zend_XmlRpc_Server</code></ulink> / Zależne )
+                            <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>
+                            ( Zależne )
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+    </sect1>
+
+</appendix>
+<!--
+vim:se ts=4 sw=4 et:
+-->
