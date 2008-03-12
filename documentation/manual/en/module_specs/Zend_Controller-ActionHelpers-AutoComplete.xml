@@ -1,0 +1,144 @@
+<sect3 id="zend.controller.actionhelpers.autocomplete">
+    <title>AutoComplete</title>
+
+    <para>
+        Many AJAX javascript libraries offer functionality for providing
+        autocompletion whereby a selectlist of potentially matching results is
+        displayed as the user types.  The <code>AutoComplete</code> helper aims
+        to simplify returning acceptable responses to such methods.
+    </para>
+
+    <para>
+        Since not all JS libraries implement autocompletion in the same way, the
+        <code>AutoComplete</code> helper provides some abstract base
+        functionality necessary to many libraries, and concrete implementations
+        for individual libraries. Return types are generally either JSON arrays
+        of strings, JSON arrays of arrays (with each member array being an
+        associative array of metadata used to create the selectlist), or HTML.
+    </para>
+
+    <para>
+        Basic usage for each implementation is the same:
+    </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // Perform some logic...
+
+        // Encode and send response;
+        $this->_helper->autoCompleteDojo($data);
+
+        // Or explicitly:
+        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+
+        // Or simply prepare autocompletion response:
+        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+    }
+}
+?>]]></programlisting>
+
+    <para>
+        By default, autocompletion does the following:
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                Disables layouts and ViewRenderer.
+        </para></listitem>
+
+        <listitem><para>
+                Sets appropriate response headers.
+        </para></listitem>
+
+        <listitem><para>
+                Sets response body with encoded/formatted autocompletion data.
+        </para></listitem>
+
+        <listitem><para>
+                Sends response.
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        Available methods of the helper include:
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                <code>disableLayouts()</code> can be used to disable layouts and
+                the ViewRenderer. Typically, this is called within
+                <code>prepareAutoCompletion()</code>.
+        </para></listitem>
+
+        <listitem><para>
+                <code>encodeJson($data, $keepLayouts = false)</code> will encode
+                data to JSON, optionally enabling or disabling layouts.
+                Typically, this is called within
+                <code>prepareAutoCompletion()</code>.
+        </para></listitem>
+
+        <listitem><para>
+                <code>prepareAutoCompletion($data, $keepLayouts = false)</code>
+                is used to prepare data in the response format necessary for the
+                concrete implementation, optionally enabling or disabling
+                layouts. The return value will vary based on the implementation.
+        </para></listitem>
+
+        <listitem><para>
+                <code>sendAutoCompletion($data, $keepLayouts = false)</code>
+                is used to send data in the response format necessary for the
+                concrete implementation. It calls
+                <code>prepareAutoCompletion()</code>, and then sends the
+                response.
+        </para></listitem>
+
+        <listitem><para>
+                <code>direct($data, $sendNow = true, $keepLayouts =
+                    false)</code> is used when calling the helper as a method of
+                the helper broker. The <code>$sendNow</code> flag is used to
+                determine whether to call <code>sendAutoCompletion()</code> or
+                <code>prepareAutoCompletion()</code>, respectively.
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        Currently, <code>AutoComplete</code> supports the following AJAX
+        libraries:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <ulink url="http://dojotoolkit.org/">Dojo</ulink>. Dojo itself
+                does not currently have an offical autocompletion facility, but
+                <ulink
+                    url="http://today.java.net/pub/a/today/2006/04/27/building-ajax-with-dojo-and-json.html">Java.net
+                    details a solution</ulink> that is typically referenced when
+                performing AutoCompletion with Dojo. It expects a JSON response
+                containing an array of strings.
+            </para>
+
+            <para>
+                The helper to use with this library is 'AutoCompleteDojo'.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <ulink
+                    url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">Scriptaculous</ulink>.
+                Script.aculo.us expects an HTML response in a specific format.
+            </para>
+
+            <para>
+                The helper to use with this library is 'AutoCompleteScriptaculous'.
+            </para>
+        </listitem>
+    </itemizedlist>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->

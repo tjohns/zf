@@ -1,0 +1,66 @@
+<sect3 id="zend.view.helpers.initial.doctype">
+    <title>L'aide de vue Doctype</title>
+
+    <para>
+        Les documents HTML et XHTML valides doivent inclure une déclaration <code>DOCTYPE</code>. Sans compter qu'ils sont difficiles à garder en mémoire, ceux-ci peuvent aussi affecter la façon dont certains éléments du document peuvent être rendus (par exemple, les échappements CDATA dans <code>&lt;script&gt;</code> et les éléments <code>&lt;style&gt;</code>.
+    </para>
+
+    <para>
+        L'aide <code>Doctype</code> vous permet de spécifier un des types suivants :
+    </para>
+
+    <itemizedlist>
+        <listitem><para><code>XHTML1_STRICT</code></para></listitem>
+        <listitem><para><code>XHTML1_TRANSITIONAL</code></para></listitem>
+        <listitem><para><code>XHTML1_FRAMESET</code></para></listitem>
+        <listitem><para><code>HTML4_STRICT</code></para></listitem>
+        <listitem><para><code>HTML4_LOOSE</code></para></listitem>
+        <listitem><para><code>HTML4_FRAMESET</code></para></listitem>
+    </itemizedlist>
+
+    <para>
+        Vous pouvez aussi spécifier un doctype personnalisé du moment que celuic-i soit correctement formé.
+    </para>
+
+    <para>
+        L'aide <code>Doctype</code> est une implémentation concrète de l'<link linkend="zend.view.helpers.initial.placeholder">aide Conteneur</link>.
+    </para>
+
+    <example id="zend.view.helpers.initial.doctype.basicusage">
+        <title>Utilisation basique de l'aide Doctype</title>
+
+        <para>
+            Vous pouvez spécifier le doctype à n'importe quel moment. Cependant, le cas d'utilisation le plus simple et le plus probable est de le spécifier et de l'afficher au même moment, au début du script de disposition ("layout") :
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?= $this->doctype('XHTML1_STRICT') ?>
+]]></programlisting>
+
+        <para>
+            A partir de ce moment et pour la suite, toute aide qui dépend du doctype pour son affichage sera averti du doctype - et le doctype sera présent dans votre document.
+        </para>
+    </example>
+
+    <example id="zend.view.helpers.initial.doctype.retrieving">
+        <title>Récupérer le Doctype</title>
+
+        <para>
+            Si vous avez besoin du doctype plus tard, vous pouvez le récupérer par l'appel de <code>getDoctype()</code> sur l'objet.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$doctype = $view->doctype()->getDoctype();
+?>]]></programlisting>
+
+        <para>
+            Typiquement, vous pouvez simplement vouloir savoir si le doctype est XHTML ou non ; pour ceci, la méthode <code>isXhtml()</code> vous suffira :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+if ($view->doctype()->isXhtml()) {
+    // faire qqch de différent
+}
+?>]]></programlisting>
+    </example>
+</sect3>
