@@ -30,7 +30,7 @@ NEW FEATURES
 * New Zend_Form component with support for AJAX-enabled form elements
 * New action and view helpers for automating and facilitating AJAX requests and
   alternate response formats
-* Infocard and OpenID authentication adapters
+* LDAP, Infocard, and OpenID authentication adapters
 * Support for complex Lucene searches, including fuzzy, date-range, and wildcard
   queries
 * Support for Lucene 2.1 index file format
@@ -38,7 +38,7 @@ NEW FEATURES
   composition and rendering
 * New Zend_Layout component for automating and facilitating site layouts
 * UTF-8 support for PDF documents
-* New Technorati and SlideShare web services
+* LDAP, Infocard, and OpenID authentication adapters
 
 ENHANCEMENTS AND BUGFIXES
 -------------------------
