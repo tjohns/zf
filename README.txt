@@ -1,4 +1,4 @@
-Welcome to Zend Framework 1.5 Release Candidate 1! This release is intented to
+Welcome to Zend Framework 1.5 Release Candidate 2! This release is intented to
 meet quality guidelines for production use, but additional release candidates may
 be necessary to reach the quality standards of a General Availability release.
 To help us deliver a stable Zend Framework 1.5 GA release soon, please post your
@@ -10,7 +10,7 @@ http://framework.zend.com/issues
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.5 Release Candidate 1 (revision [INSERT REV NUMBER HERE]).
+Zend Framework 1.5 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
 Released on [INSERT DATE HERE].
 
 SPECIAL NOTICE FOR LUCENE SEARCH USERS
