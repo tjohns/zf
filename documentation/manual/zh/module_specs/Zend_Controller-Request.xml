@@ -69,7 +69,7 @@
                 <title> 也获取原始 （Raw） POST 数据！</title>
 
                 <para>
-                    从 1.5.0 开始，也可以通过 <code>getRawPost()</code>  方法获取原始 post 数据。如果没有数据以那种方式提交，该方法返回 false，但 post 的全体（full boday）是个例外。
+                    从 1.5.0 开始，也可以通过 <code>getRawBody()</code>  方法获取原始 post 数据。如果没有数据以那种方式提交，该方法返回 false，但 post 的全体（full boday）是个例外。
                 </para>
 
                 <para>
