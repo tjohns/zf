@@ -193,7 +193,7 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
         $this->assertEquals('SELECT "zfproducts".*, "zfbugs_products".* FROM "zfproducts" INNER JOIN "zfbugs_products" ON "zfproducts"."product_id" = "zfbugs_products"."product_id"', $sql);
     }
-    
+
     /**
      * Test adding an INNER JOIN to a Zend_Db_Select object.
      * This should be exactly the same as the plain JOIN clause.
@@ -297,6 +297,17 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
+     * Test adding an array in the WHERE clause to a Zend_Db_Select object.
+     */
+
+    public function testSelectWhereArray()
+    {
+        $select = $this->_selectWhereArray();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" IN (1, 2, 3))', $sql);
+    }
+
+    /**
      * test adding more WHERE conditions,
      * which should be combined with AND by default.
      */
@@ -321,41 +332,17 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test support for where() with count, 
-     * e.g. where("id = ? and name='O?'", 1, Zend_Db::INT_TYPE). 
-     */ 
-  
-    public function testSelectWhereWithCount() 
-    { 
-        $select = $this->_selectWhereWithCount(); 
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
-    } 
-  
-    /** 
-     * Test support for where() with parameter array, 
-     * e.g. where('id = ? and id= ?', array(1, 6)). 
-     */ 
-  
-    public function testSelectWhereWithParmArray() 
-    { 
-        $select = $this->_selectWhereWithParmArray(); 
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
-    } 
-  
-    /** 
-     * Test support for where() with parameter array, 
-     * e.g. where('id = :id1 and id= :id2', array('id1' => 1, 'id2' => 6)). 
-     */ 
-  
-    public function testSelectWhereWithParmId() 
-    { 
-        $select = $this->_selectWhereWithParmId(); 
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString()); 
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2 or "product_id" = 6)', $sql); 
-    } 
-  
+     * Test support for where() with a parameter,
+     * e.g. where('id = ?', 1).
+     */
+
+    public function testSelectWhereWithType()
+    {
+        $select = $this->_selectWhereWithType();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2)', $sql);
+    }
+
     /** 
      *      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
