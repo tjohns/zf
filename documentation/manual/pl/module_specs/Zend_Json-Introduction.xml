@@ -14,7 +14,7 @@
     </para>
 
     <para>
-        Dodatkowo klasa Zend_Json zapewnia łatwy sposób konwertowania danych
+        Dodatkowo klasa <code>Zend_Json</code> zapewnia łatwy sposób konwertowania danych
         XML na JSON. Ta wbudowana funkcjonalność pozwoli programistom PHP
         zamieniać dane zakodowane w formacie XML do formatu JSON przed wysłaniem
         ich do aplikacji klienta Ajax opartej na przeglądarce internetowej.

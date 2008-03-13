@@ -3,18 +3,18 @@
     <title>Dynamiczne ładowanie plików i klas</title>
 
     <para>
-        Klasa Zend_Loader zawiera metody pomagające ci w dynamicznym ładowaniu
+        Klasa <code>Zend_Loader</code> zawiera metody pomagające ci w dynamicznym ładowaniu
         plików.
     </para>
 
     <tip>
         <title>Zend_Loader a require_once()</title>
         <para>
-            Metody klasy Zend_Loader są przydatne gdy nazwa pliku, który chcesz
+            Metody klasy <code>Zend_Loader</code> są przydatne gdy nazwa pliku, który chcesz
             załadować jest zmienną. Na przykład, jeśli nazwa jest oparta na
             parametrze pochodzącym od użytkownika lub argumencie metody.
             Jeśli ładujesz plik lub klasę których nazwą jest stała, nie ma
-            dodatkowych korzyści z użycia Zend_Loader zamiast tradycyjnych
+            dodatkowych korzyści z użycia <code>Zend_Loader</code> zamiast tradycyjnych
             funkcji PHP takich jak
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
@@ -103,13 +103,13 @@ Zend_Loader::loadClass('Container_Tree',
             kolejności ich zdefiniowania. Pierwszy pasujący plik zostanie
             załadowany. Jeśli plik nie istnieje w ścieżkach ze zmiennej
             <code>$dirs</code>, to przeszukiwane są ścieżki z dyrektywy
-            include_path środowiska PHP.
+            <code>include_path</code> środowiska PHP.
         </para>
 
         <para>
             Jeśli plik nie zostanie znaleziony lub po załadowaniu pliku klasa
             nie istnieje, metoda <code>Zend_Loader::loadClass()</code> wyrzuca
-            wyjątek Zend_Exception.
+            wyjątek <code>Zend_Exception</code>.
         </para>
 
         <para>
@@ -128,7 +128,7 @@ Zend_Loader::loadClass('Container_Tree',
             Statyczna metoda <code>Zend_Loader::isReadable($pathname)</code>
             zwraca <code>TRUE</code> jeśli plik w określonej ścieżce istnieje
             i jest dostępny do odczytu, w przeciwnym wypadku zwracana jest
-            wartość FALSE.
+            wartość <code>FALSE</code>.
         </para>
 
         <example id="zend.loader.load.isreadable.example">
@@ -155,13 +155,13 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Użycie Autoloadera</title>
 
         <para>
-            Klasa Zend_Loader zawiera metodę, którą możesz zarejestrować jako
+            Klasa <code>Zend_Loader</code> zawiera metodę, którą możesz zarejestrować jako
             autoloader PHP SPL. Tą metodą jest <code>Zend_Loader::autoload()</code>.
-            Dla wygody klasa Zend_Loader posiada metodę
+            Dla wygody klasa <code>Zend_Loader</code> posiada metodę
             <code>registerAutoload()</code> rejestrującą swoją własną metodę
             <code>autoload()</code>. Jeśli rozszerzenie <code>spl_autoload</code>
             nie jest zainstalowane w środowisku PHP, to metoda
-            <code>registerAutoload()</code> wyrzuca wyjątek Zend_Exception.
+            <code>registerAutoload()</code> wyrzuca wyjątek <code>Zend_Exception</code>.
 
         </para>
 
@@ -191,7 +191,7 @@ Zend_Loader::registerAutoload();]]>
         </para>
 
         <para>
-            Jeśli rozszerzyłeś klasę Zend_Loader, możesz przekazać opcjonalny
+            Jeśli rozszerzyłeś klasę <code>Zend_Loader</code>, możesz przekazać opcjonalny
             argument do metody <code>registerAutoload()</code>, aby określić
             klasę, której metoda <code>autoload()</code> ma zostać zarejestrowana.
         </para>

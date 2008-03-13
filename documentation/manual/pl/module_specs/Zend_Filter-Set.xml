@@ -50,7 +50,7 @@
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
         <para>
-            Zwraca łańcuch znaków $value, zamieniając znaki na ich odpowiadające
+            Zwraca łańcuch znaków <code>$value</code>, zamieniając znaki na ich odpowiadające
             encje HTML, jeśli istnieją.
         </para>
     </sect2>
@@ -58,7 +58,7 @@
     <sect2 id="zend.filter.set.int">
         <title>Int</title>
         <para>
-            Zwraca wartość całkowitą (int) $value
+            Zwraca wartość całkowitą (int) <code>$value</code>
         </para>
     </sect2>
 

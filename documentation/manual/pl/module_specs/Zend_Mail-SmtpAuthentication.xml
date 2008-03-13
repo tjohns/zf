@@ -33,10 +33,12 @@ $mail->send($transport);]]>
   <note>
     <title>Typy uwierzytelniania</title>
 
-    <para>Nie znaczenia czy nazwę typu uwierzytelniania podamy używając wielkich
-    czy małych liter, ale podajemy ją bez znaków interpunkcyjnych. Np. aby użyć
-    adaptera CRAM-MD5 powinieneś przekazać parametr 'auth' =&gt; 'crammd5' do
-    konstruktora klasy <code>Zend_Mail_Transport_Smtp</code>.</para>
+    <para>
+        Nie znaczenia czy nazwę typu uwierzytelniania podamy używając wielkich
+        czy małych liter, ale podajemy ją bez znaków interpunkcyjnych. Np. aby 
+        użyć adaptera CRAM-MD5 powinieneś przekazać parametr 'auth' => 'crammd5' 
+        do konstruktora klasy <code>Zend_Mail_Transport_Smtp</code>.
+    </para>
   </note>
 </sect1>
 <!--

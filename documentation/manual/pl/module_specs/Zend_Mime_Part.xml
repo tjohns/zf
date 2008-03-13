@@ -36,13 +36,13 @@ public $charset;]]>
   <sect2 id="zend.mime.part.methods">
     <title>Metody do renderowania części wiadomości do łańcucha znaków</title>
 
-    <para><code>-&gt;getContent()</code> zwraca zawartość MimePart zakodowaną
+    <para><code>getContent()</code> zwraca zawartość MimePart zakodowaną
     jako łańcuch znaków przy użyciu kodowania określonego w atrybucie $encoding.
     Poprawne wartości to ZMime::ENCODING_*. Konwersje zestawów znaków nie są
     przeprowadzane.</para>
 
     <para>
-        <code>-&gt;getHeaders()</code> zwraca nagłówki Mime dla zawartości
+        <code>getHeaders()</code> zwraca nagłówki Mime dla zawartości
         MimePart wygenerowane na podstawie informacji zawartych w publicznie dostępnych
         atrybutach. Przed wywołaniem tej metody, atrybuty obiektu muszą być poprawnie
         zdefiniowane.

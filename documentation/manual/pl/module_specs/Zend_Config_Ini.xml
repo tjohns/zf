@@ -27,12 +27,12 @@
         <para>
             Domyślnie separatorem kluczy jest znak kropki (<code>.</code>). Może
             on być jednak zmieniony przez zmianę klucza
-            <code>'nestSeparator'</code> z tablicy <code>$config</code> podczas
+            <code>'nestSeparator'</code> z tablicy <code>$options</code> podczas
             tworzenia obiektu <code>Zend_Config_Ini</code>. Na przykład:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -53,19 +53,19 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
         </para>
         <programlisting role="ini"><![CDATA[; Podstawowe dane konfiguracyjne
 [production]
-webhost           = www.example.com
-database.type     = pdo_mysql
-database.host     = db.example.com
-database.username = dbuser
-database.password = secret
-database.name     = dbname
+webhost                  = www.example.com
+database.adapter         = pdo_mysql
+database.params.host     = db.example.com
+database.params.username = dbuser
+database.params.password = secret
+database.params.dbname   = dbname
 
 ; Konfiguracja aplikacji rozbudowywanej dziedziczy z podstawowej
 ; konfiguracji, a niektóre wartości są nadpisywane
 [staging : production]
-database.host     = dev.example.com
-database.username = devuser
-database.password = devsecret]]>
+database.params.host     = dev.example.com
+database.params.username = devuser
+database.params.password = devsecret]]>
         </programlisting>
         <para>
             Następnie załóżmy, że programista aplikacji potrzebuje danych
@@ -78,8 +78,8 @@ require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
-echo $config->database->host; // wyświetla "dev.example.com"
-echo $config->database->name; // wyświetla "dbname"]]>
+echo $config->database->params->host; // wyświetla "dev.example.com"
+echo $config->database->params->dbname; // wyświetla "dbname"]]>
         </programlisting>
     </example>
     <note>
@@ -107,8 +107,8 @@ echo $config->database->name; // wyświetla "dbname"]]>
                     </entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>Tablica konfiguracyjna. Poniższe klucze są obsługiwane:
+                    <entry><code>$options = false</code></entry>
+                    <entry>Tablica opcji. Obsługiwane są poniższe klucze: 
                         <itemizedlist>
                             <listitem>
                                 <para>

@@ -53,7 +53,7 @@ $mail->send();]]>
             (<code>\n</code>).
         </para>
         <para>
-            You also can use most methods of the Zend_Mail object with a convenient fluent interface. A fluent
+            You also can use most methods of the <code>Zend_Mail</code> object with a convenient fluent interface. A fluent
             interface means that each method returns a reference to the object on which it was called, so you can
             immediately call another method.
         </para>
