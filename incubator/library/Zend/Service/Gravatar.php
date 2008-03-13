@@ -62,7 +62,6 @@ class Zend_Service_Gravatar extends Zend_Service_Abstract
         'rating'  => 'G',
         'size'    => '80',
         'default' => 'http://www.gravatar.com/avatar.php',
-        'border'  => '',
     );
 
     /**
@@ -138,7 +137,7 @@ class Zend_Service_Gravatar extends Zend_Service_Abstract
     {
         $client = self::getHttpClient();
 
-        $client->setUri($this->getUri());
+        $client->setUri($this->_generateUri());
         $client->setMethod(Zend_Http_Client::GET);
 
         $response = $client->request();
@@ -155,15 +154,13 @@ class Zend_Service_Gravatar extends Zend_Service_Abstract
     }
 
     /**
-     * Get URI of gravatar image.
+     * Get escaped URI of gravatar image.
      *
-     * @return string URI of gravatar image
+     * @return string escaped URI of gravatar image
      */
     public function getUri() {
 
-	    return self::API_URI . '/' 
-	         . self::PATH_AVATAR . '?' 
-	         . http_build_query($this->_getQuery(), null, '&amp;');
+	    return $this->_generateUri('&amp;');
     }
 
     /**
@@ -186,4 +183,15 @@ class Zend_Service_Gravatar extends Zend_Service_Abstract
     	return array('gravatar_id' => $this->getGravatarId()) + $this->_params;
     }
 
+    /**
+     * Generates URI of gravatar image.
+     *
+     * @return string URI of gravatar image
+     */
+    protected function _generateUri($separator = '&') {
+
+	    return self::API_URI . '/' 
+	         . self::PATH_AVATAR . '?' 
+	         . http_build_query($this->_getQuery(), null, $separator);
+    }
 }

@@ -12,6 +12,33 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.service.gravatar.simplestuse">
+        <title>Simplest use</title>
+
+        <para>
+            <code>Zend_Service_Gravatar::getUri()</code> is used to 
+            generate URI of the avatar for given e-mail address.
+        </para>
+
+        <para>
+            The <code>getUri()</code> method will return URI for the avatar
+            image. It works blindly - if image doesn't exist, default image 
+            from Web Service will be printed without any checks.
+        </para>
+
+        <example id="zend.service.gravatar.simplestuse.example-1">
+            <title>getUri() Usage</title>
+
+            <programlisting role="php"><![CDATA[<?php
+$gravatar = new Zend_Service_Gravatar('john.doe@example.com'); 
+
+echo '<img src="' . $gravatar->getUri() . '" />' . "\n"; 
+]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.service.gravatar.isvalid">
         <title>Check for Gravatar</title>
 
@@ -34,8 +61,72 @@ $gravatar = new Zend_Service_Gravatar('john.doe@example.com');
 
 if ($gravatar->isValid()) {
     //Avatar is valid. Let's print it.
-    echo '<img src="' . $avatar->getUri() . '" />' . "\n";
+    echo '<img src="' . $gravatar->getUri() . '" />' . "\n";
 }]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.service.gravatar.customizing">
+        <title>Customizing Gravatar</title>
+
+        <para>
+            You can customize avatar image passing an aray of parameters to
+            class constructor or to 
+            <code>Zend_Service_Gravatar::setParam()</code> method. 
+        </para>
+        
+        <para>
+            You can use parameters:
+        </para>
+
+        <itemizedlist>
+
+            <listitem>
+                <para>
+                    <code>rating</code> - parameter may follow with a value of
+                    "G" (General Audiences), "PG" (Parental Guidance Suggested), 
+                    "R" (Restricted) or "X" (No One 17 And Under Admitted) that 
+                    determines the highest rating that will be 
+                    returned.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>size</code> - parameter specifies desired width and
+                    height of avatar image. Valid values are from 1 to 80. Any
+                    bigger size will cause the original avatar image will
+                    be resampled.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>default</code> - parameter specifies the URI of image
+                    that should be returned if either requested e-mail address
+                    has no associated avatar image, or image is rated higher than
+                    is allowed.
+                </para>
+            </listitem>
+
+        </itemizedlist>
+
+        <example id="zend.service.gravatar.customizing.example-1">
+            <title>Customizing Gravatar</title>
+
+            <programlisting role="php"><![CDATA[<?php
+$params = array(
+    'rating'  => 'X',
+    'size'    => '50',
+    'default' => 'http://www.example.com/avatar.php',
+);
+
+$gravatar = new Zend_Service_Gravatar('john.doe@example.com', $params); 
+
+echo '<img src="' . $gravatar->getUri() . '" />' . "\n";
+]]>
             </programlisting>
         </example>
 
@@ -72,8 +163,6 @@ if ($gravatar->isValid()) {
                     allow you to retrieve and modify params used to 
                     make the request.
                 </para>
-
-                <!-- table describing params -->
             </listitem>
 
         </itemizedlist>

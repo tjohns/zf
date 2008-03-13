@@ -33,8 +33,8 @@
         <xi:include href="module_specs/Zend_Json-xml2json.xml" />
     </chapter>
 
-    <chapter id="zend.service.gravatar">
-        <title>Zend_Service_Gravatar</title>
+    <chapter id="zend.service">
+        <title>Zend_Service</title>
         <xi:include href="module_specs/Zend_Service_Gravatar.xml" />
     </chapter>
 
