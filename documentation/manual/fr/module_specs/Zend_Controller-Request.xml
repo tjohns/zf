@@ -65,6 +65,18 @@
                 </para>
             </note>
 
+            <note>
+                <title>Récupérer les données POST brutes, aussi !</title>
+
+                <para>
+                    A partir de la version 1.5.0, vous pouvez aussi les données POST brutes avec la méthode <code>getRawBody()</code>. La méthode retourne <code>false</code> si aucune donnée n'a été envoyé, et le corps complet du POST sinon.
+                </para>
+
+                <para>
+                    Ceci est principalement utile pour accepter le contenu lors du développement des applications MVC de type REST.
+                </para>
+            </note>
+
             <para>
                 Vous pouvez également placer des paramètres d'utilisateur dans l'objet de requête en utilisant <code>setParam()</code> et récupérer ces derniers en tuilisant plus tard <code>getParam()</code>. Le routeur se sert de cette fonctionnalité pour faire correspondre des paramètres de l'URI de la requête dans l'objet requête.
             </para>
@@ -135,6 +147,28 @@ $response   = $controller->dispatch();]]>
 		    </programlisting>
 
         </sect3>
+
+        <sect3 id="zend.controller.request.http.method">
+            <title>Déterminer le type de la requête</title>
+
+            <para>
+                <code>getMethod()</code> vous permet de déterminer le type de requête HTTP utiliser pour appeler la ressource courante. De plus, différentes méthodes existent pour récupérer sous la forme de booléen le type de requête réalisée :
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>isGet()</code></para></listitem>
+                <listitem><para><code>isPost()</code></para></listitem>
+                <listitem><para><code>isPut()</code></para></listitem>
+                <listitem><para><code>isDelete()</code></para></listitem>
+                <listitem><para><code>isHead()</code></para></listitem>
+                <listitem><para><code>isOptions()</code></para></listitem>
+            </itemizedlist>
+
+            <para>
+                La principale utilisation est lors de la création des architectures MVC de type REST.
+            </para>
+        </sect3>
+
         <sect3 id="zend.controller.request.http.ajax">
             <title>Détecter les requêtes AJAX</title>
 
