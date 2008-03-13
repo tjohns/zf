@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.json.objects">
+<sect1 id="zend.json.objects">
     <title>Objets JSON</title>
     <para>
         Lorsque vous encodez des objets PHP en tant que JSON, toutes les propriétés publiques de cet objet sont encodées dans un objet JSON.
@@ -12,7 +12,7 @@
     <para>
         Par défaut, <code>Zend_Json</code> décodera des objets JSON comme en tableaux associatifs. Cependant, si vous désirez avoir un objet en retour, vous pouvez le spécifier :
         <programlisting role="php"><![CDATA[<?php
-// Décode des objets en tant qu'objets
+// Décode des objets JSON en tant qu'objets PHP
 $phpNatif = Zend_Json::decode($valeurEncodee, Zend_Json::TYPE_OBJECT);]]>
     	</programlisting>
         Tous les objets sont ainsi décodés et retournés comme des objets de type <code>StdClass</code>, avec leurs propriétés correspondantes aux paires clé/valeur de la notation JSON.
