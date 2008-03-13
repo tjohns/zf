@@ -84,6 +84,7 @@ foreach ($results as $result) {
             on the group ID. Use the <code>groupPoolGetPhotos()</code> method:
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
+            <title>Retrieving a Group's Pool Photos by Group ID</title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Service/Flickr.php';
 
