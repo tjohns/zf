@@ -12,11 +12,11 @@
     <note>
         <title>Séparateur de clé</title>
         <para>
-            Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant la clé de $config "nestSeparator" en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
+            Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant la clé de <code>$options</code> "nestSeparator" en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);]]>
+$options['nestSeparator'] = ':';
+$options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);]]>
 		    </programlisting>
         </para>
     </note>
@@ -73,8 +73,8 @@ echo $config->database->params->dbname; // affiche "dbname"]]>
                     <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de null à ce paramètre chargera toutes les sections. Alternativement, un tableau de noms de section peut être fourni pour charger des sections multiples.</entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>Tableau de configuration. Les clés suivantes sont supportées :
+                    <entry><code>$options = false</code></entry>
+                    <entry>Tableau d'options. Les clés suivantes sont supportées :
                         <itemizedlist>
                             <listitem>
                                 <para><emphasis>allowModifications</emphasis> : Mettre à <code>true</code> pour permettre la modification du fichier chargé. Par défaut à <code>false</code>.</para>
