@@ -75,6 +75,20 @@ class Zend_Service_GravatarTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($params, $this->gravatar->getParams());
     }
 
+    public function testParamsInConstructor()
+    {
+        $params = array(
+        'rating'  => 'R',
+        'size'    => '75',
+        'default' => 'http://www.example.com/avatar.jpg',
+        'border'  => 'FF0000',
+        );
+
+        $gravatar = new Zend_Service_Gravatar('email@example.com', $params);
+
+        $this->assertEquals($params, $gravatar->getParams());
+    }
+
     public function testGravatarId() 
     {
         $this->gravatar->setEmail('email@example.com');
@@ -118,4 +132,18 @@ class Zend_Service_GravatarTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->gravatar->isValid());
     }
 
+    public function testException()
+    {
+        $response = "HTTP/1.1 404 Not Found\r\n"
+                  . "Connection: close\r\n";
+
+        $this->adapter->setResponse($response);
+
+        try {
+            $this->gravatar->isValid();
+            $this->fail('Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            //success
+        }
+    }
 }
