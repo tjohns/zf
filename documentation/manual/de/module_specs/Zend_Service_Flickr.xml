@@ -87,6 +87,7 @@ foreach ($results as $result) {
             werden:
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
+            <title>Empfangen von Photos aus einem Gruppenpool durch die Gruppen ID</title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Service/Flickr.php';
 
