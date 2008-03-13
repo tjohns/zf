@@ -162,7 +162,7 @@ $result = $authAdapter->authenticate();]]>
 echo $result->getIdentity() . "\n\n";
 
 // Wyświetlamy wiersz rezultatów
-print_r($identity);
+print_r($authAdapter->getResultRowObject());
 
 /* Wyświetlone dane:
 my_username
@@ -207,7 +207,7 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // przechowujemy tożsamość jako obiekt, w którym zwracane są jedynie pola username oraz real_name
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // przechowujemy tożsamość jako obiekt w którym kolumna z hasłem została pominięta
     $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
@@ -222,6 +222,44 @@ if ($result->isValid()) {
             </programlisting>
 
         </para>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
+        <title>Przykład zaawansowanego użycia</title>
+
+        <para>
+            O ile głównym przeznaczeniem komponentu Zend_Auth (i odpowiednio
+            Zend_Auth_Adapter_DbTable) jest 
+            <emphasis role="strong">uwierzytelnianie</emphasis> a nie
+            <emphasis role="strong">autoryzacja</emphasis>, 
+            jest kilka problemów które możemy rozwiązać odrobinę przekraczając
+            pole zastosowań komponentu. Zależnie od tego jak zdecydujesz
+            wyjaśnić swój problem, czasem może być przydatne rozwiązanie 
+            problemu autoryzacji podczas uwierzytelniania.
+        </para>
+
+        <para>
+            Komponent Zend_Auth_Adapter_DbTable posiada pewien wbudowany 
+            mechanizm, który może być użyty do dodania dodatkowych warunków 
+            podczas uwierzytelniania, dzięki czemu można rozwiązać niektóre 
+            problemy.
+
+            <programlisting role="php"><![CDATA[<?php
+// Wartość pola "status" dla tego konta nie jest równa wartości "compromised"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND status != "compromised"');
+
+// Wartość pola "active" dla tego konta jest równa wartości "TRUE"
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND active = "TRUE"');
+
+]]>
+            </programlisting>
+
+        </para>
+
+
+
+
 
     </sect2>
 

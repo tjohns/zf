@@ -56,6 +56,7 @@
                           <entry>
                             Typ kontroli odczytu (tylko jeśli kontrola odczytu jest włączona). Dostępne wartości to:
                             'md5' (najlepszy, ale najwolniejszy), 'crc32' (odrobinę mniej bezpieczny, ale szybszy, lepszy wybór),
+                            'adler32' (nowy wybór, szybszy niż crc32),
                             'strlen' tylko dla testu długości (najszybszy).
                         </entry>
                       </row>
