@@ -24,7 +24,7 @@
         angeben:
     </para>
     <programlisting role="php"><![CDATA[<?php
-// Dekodiere Objekte als Objekte
+// Dekodiere JSON Objekte als PHP Objekte
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
     <para>
