@@ -163,7 +163,7 @@ class Zend_Service_Gravatar extends Zend_Service_Abstract
 
 	    return self::API_URI . '/' 
 	         . self::PATH_AVATAR . '?' 
-	         . http_build_query($this->_getQuery(), null, '&');
+	         . http_build_query($this->_getQuery(), null, '&amp;');
     }
 
     /**
