@@ -2,6 +2,20 @@
 
     <title>LDAP 认证 </title>
 
+    <sect2 id="zend.auth.adapter.ldap.introduction">
+
+        <title> 简介 </title>
+
+        <para>
+            <code>Zend_Auth_Adapter_Ldap</code> 用 LDAP 服务支持 web 程序认证。它的功能包括用户名和域名规范化、多域认证和实效切（failover）换能力。经测试，它能与  <ulink url="http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/">Microsoft Active Directory</ulink> 和 <ulink url="http://www.openldap.org/">OpenLDAP</ulink> 一起工作，它也应该能和其它 LDAP 服务提供者一起工作。
+        </para>
+
+        <para>
+            本文档包括使用 <code>Zend_Auth_Adapter_Ldap</code> 的指南、它的 API 、各种可用选项的大纲、认证问题故障排除的诊断信息和Active Directory 与 OpenLDAP 服务器的范例选项。
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.auth.adapter.ldap.usage">
 
         <title> 用法 </title>
@@ -190,7 +204,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   <row>
                     <entry><emphasis role="strong">username</emphasis></entry>
                     <entry>
-                        账户的 DN， 用来执行账户 DN 查找。LDAP servers that require the username to be in DN form when performing the "bind" require this option （这句没有理解）。
+<input type="password" <textarea></textarea>>                        账户的 DN， 用来执行账户 DN 查找。LDAP servers that require the username to be in DN form when performing the "bind" require this option （这句没有理解）。
                         如果 <emphasis role="strong">bindRequiresDn</emphasis> 是 <code>true</code>，这个选项是必需的。这个账户不需要是优先账户 － a account with read-only
                         access to objects under the <emphasis role="strong">baseDn</emphasis> is all that is necessary (and preferred based on the <emphasis>Principle of Least Privilege</emphasis>).
                     </entry>
@@ -244,7 +258,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
 
         <note>
             <para>
-                如果你设置  <code>useSsl = true</code> 可能发现 LDAP 客户端会产生一个不能校验服务器证书的错误。假定 PHP LDAP 扩展完全链接到 OpenLDAP 客户库，为解决这个问题你可以在 OpenLDAP 客户 <code>ldap.conf</code> 里设置 <code>TLS_REQCERT never</code> （并重启 web 服务器）来指明 OpenLDAP 客户端库你信任这个服务器。另外如果涉及到服务器可能被欺骗（在 intranet 环境中不是通常的最弱的链接），你可以输出 LDAP 服务器的根证书并把它放到 web 服务器，这样 OpenLDAP 客户端可以校验服务器的身份。
+                如果你设置  <code>useSsl = true</code> 可能发现 LDAP 客户端会产生一个不能校验服务器证书的错误。假定 PHP LDAP 扩展完全链接到 OpenLDAP 客户库，为解决这个问题你可以在 OpenLDAP 客户 <code>ldap.conf</code> 里设置 “<code>TLS_REQCERT never</code>” （并重启 web 服务器）来指明 OpenLDAP 客户端库你信任这个服务器。另外如果涉及到服务器可能被欺骗，你可以输出 LDAP 服务器的根证书并把它放到 web 服务器，这样 OpenLDAP 客户端可以校验服务器的身份。
             </para>
         </note>
 
@@ -348,7 +362,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                       <row>
                         <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
                         <entry>
-                            AD 服务器在授权时域用户的 NetBIOS 名称。如果使用反斜杠风格 <emphasis role="strong">accountCanonicalForm</emphasis>，这个是必需的。 
+                            AD 服务器是授权的域用户的 NetBIOS 名称。如果使用反斜杠风格 <emphasis role="strong">accountCanonicalForm</emphasis>，这个是必需的。 
                         </entry>
                       </row>
                     </tbody>
