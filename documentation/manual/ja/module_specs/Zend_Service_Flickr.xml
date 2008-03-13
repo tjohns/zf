@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8733 -->
+<!-- EN-Revision: 8802 -->
 <sect1 id="zend.service.flickr">
     <title>Zend_Service_Flickr</title>
     <sect2 id="zend.service.flickr.introduction">
@@ -92,6 +92,7 @@ foreach ($results as $result) {
             <code>groupPoolGetPhotos()</code> メソッドを使用します。
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
+            <title>グループ ID を指定し、グループにプールされている写真を取得する</title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Service/Flickr.php';
 
