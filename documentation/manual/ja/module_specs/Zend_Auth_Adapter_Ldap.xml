@@ -1,7 +1,33 @@
-<!-- EN-Revision: 8645 -->
+<!-- EN-Revision: 8808 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
+
+    <sect2 id="zend.auth.adapter.ldap.introduction">
+
+        <title>導入</title>
+
+        <para>
+            <code>Zend_Auth_Adapter_Ldap</code> は、LDAP
+            サービスによるウェブアプリケーションの認証をサポートします。
+            ユーザ名やドメイン名の正規化や複数ドメインの認証、
+            フェイルオーバー機能などがあります。
+            <ulink url="http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/">Microsoft
+            Active Directory</ulink>
+            と
+            <ulink url="http://www.openldap.org/">OpenLDAP</ulink>
+            で動作確認をしていますが、それ以外の LDAP
+            サービスプロバイダでも動作するはずです。
+        </para>
+
+        <para>
+            このドキュメントで扱う内容は、
+            <code>Zend_Auth_Adapter_Ldap</code> の使い方やその API、
+            使用可能なオプション、トラブルシューティングの方法、
+            そして Active Directory 用および OpenLDAP 用の設定例です。
+        </para>
+
+    </sect2>
 
     <sect2 id="zend.auth.adapter.ldap.usage">
 
@@ -426,9 +452,9 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                 「サーバの証明書を検証できない」というエラーが発生することに気づかれるかもしれません。
                 PHP の LDAP 拡張モジュールは OpenLDAP クライアントライブラリと密接につながっているので、
                 この問題を解決するには OpenLDAP クライアントの <code>ldap.conf</code> で
-                <code>TLS_REQCERT never</code> を設定 (そしてウェブサーバを再起動)
+                "<code>TLS_REQCERT never</code>" を設定 (そしてウェブサーバを再起動)
                 して OpenLDAP クライアントライブラリがサーバを信頼するようにします。
-                もしいわゆる「なりすまし」が心配なら (イントラネット環境ではあまり気にすることはありません)、
+                もしいわゆる「なりすまし」が心配なら、
                 LDAP サーバのルート証明書をエクスポートしてそれをウェブサーバに配置すれば、
                 OpenLDAP クライアントがサーバを検証できるようになります。
             </para>
@@ -626,7 +652,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                         <entry><emphasis role="strong">password</emphasis></entry>
                         <entry>
                             上のユーザ名に対応するパスワード。しかし、
-                            LDAP サーバが匿名バインドをサポートしている場合には省略することもできます。
+                            匿名バインドによるユーザ検索を
+                            LDAP サーバがサポートしている場合には省略することもできます。
                         </entry>
                       </row>
                       <row>

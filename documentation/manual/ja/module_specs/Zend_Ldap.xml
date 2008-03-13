@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8641 -->
+<!-- EN-Revision: 8808 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -420,7 +420,7 @@ foreach ($multiOptions as $name => $options) {
             <para>
                 上のコードは、
                 <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
-                を使用するコードと非常によく似ています。実際のところ、
+                の中で使用するコードと非常によく似ています。実際のところ、
                 複数ドメインとファイルオーバー機能をもつ LDAP 基本印象を行うのなら、
                 この認証アダプタを使用する (あるいはコードをコピーする) ことをおすすめします。
             </para>
