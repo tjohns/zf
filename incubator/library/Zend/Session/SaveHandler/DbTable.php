@@ -223,7 +223,7 @@ class Zend_Session_SaveHandler_DbTable extends Zend_Db_Table_Abstract implements
      */
     protected function _setupTableName()
     {
-        if (!$this->_name) {
+        if (empty($this->_name)) {
             if (basename(($this->_name = session_save_path())) != $this->_name) {
                 require_once 'Zend/Session/SaveHandler/Exception.php';
 
@@ -310,12 +310,11 @@ class Zend_Session_SaveHandler_DbTable extends Zend_Db_Table_Abstract implements
     public function setLifetime($lifetime, $overrideLifetime = null)
     {
         if($lifetime < 0)
-        	throw new Zend_Session_SaveHandler_Exception();
-        elseif ($lifetime === false)
+	  throw new Zend_Session_SaveHandler_Exception();
+        elseif (empty($lifetime))
             $this->_lifetime = (int) ini_get('session.gc_maxlifetime');
         else
-	        $this->_lifetime = (int) $lifetime;
-
+	  $this->_lifetime = (int) $lifetime;
 
         if ($overrideLifetime != null)
             $this->setOverrideLifetime($overrideLifetime);
