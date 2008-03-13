@@ -2,6 +2,27 @@
 
     <title>LDAP Authentication</title>
 
+    <sect2 id="zend.auth.adapter.ldap.introduction">
+
+        <title>Introduction</title>
+
+        <para>
+            <code>Zend_Auth_Adapter_Ldap</code> supports web application authentication with LDAP services. Its
+            features include username and domain name canonicalization, multi-domain authentication, and failover
+            capabilities. It has been tested to work with
+            <ulink url="http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/">Microsoft
+            Active Directory</ulink> and <ulink url="http://www.openldap.org/">OpenLDAP</ulink>, but it should also
+            work with other LDAP service providers.
+        </para>
+
+        <para>
+            This documentation includes a guide on using <code>Zend_Auth_Adapter_Ldap</code>, an exploration of its
+            API, an outline of the various available options, diagnostic information for troubleshooting authentication
+            problems, and example options for both Active Directory and OpenLDAP servers.
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.auth.adapter.ldap.usage">
 
         <title>Usage</title>
@@ -367,14 +388,13 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
 
         <note>
             <para>
-                If you enable <code>useSsl = true</code> you may find that the LDAP client may generate an error
+                If you enable <code>useSsl = true</code> you may find that the LDAP client generates an error
                 claiming that it cannot validate the server's certificate. Assuming the PHP LDAP extension is
                 ultimately linked to the OpenLDAP client libraries, to resolve this issue you can set
-                <code>TLS_REQCERT never</code> in the OpenLDAP client <code>ldap.conf</code> (and restart the web
+                "<code>TLS_REQCERT never</code>" in the OpenLDAP client <code>ldap.conf</code> (and restart the web
                 server) to indicate to the OpenLDAP client library that you trust the server. Alternatively if you are
-                concerned that the server could be spoofed (not usually the weakest link in an intranet environment)
-                you can export the LDAP server's root certificate and put it on the web server so that the OpenLDAP
-                client can validate the server's identity.
+                concerned that the server could be spoofed, you can export the LDAP server's root certificate and put
+                it on the web server so that the OpenLDAP client can validate the server's identity.
             </para>
         </note>
 
@@ -468,8 +488,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                       <row>
                         <entry><emphasis role="strong">baseDn</emphasis></entry>
                         <entry>
-                            As with all servers, this option is required. By default AD places all user accounts are
-                            under the <emphasis>Users</emphasis> container (e.g.,
+                            As with all servers, this option is required. By default AD places all user accounts under
+                            the <emphasis>Users</emphasis> container (e.g.,
                             <emphasis>CN=Users,DC=foo,DC=net</emphasis>), but the default is not common in larger
                             organizations. Ask your AD administrator what the best DN for accounts for your application
                             would be.
@@ -496,7 +516,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                       <row>
                         <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
                         <entry>
-                            The NetBIOS name of the domain users are in and for which the AD server is in authority.
+                            The NetBIOS name of the domain users are in and for which the AD server is an authority.
                             This is required if the backslash style
                             <emphasis role="strong">accountCanonicalForm</emphasis> is used.
                         </entry>
@@ -560,7 +580,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                         <entry><emphasis role="strong">password</emphasis></entry>
                         <entry>
                             The password corresponding to the username above, but this may be omitted if the LDAP
-                            server supports anonymous binds.
+                            server permits an anonymous binding to query user accounts.
                         </entry>
                       </row>
                       <row>

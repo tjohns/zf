@@ -384,7 +384,7 @@ foreach ($multiOptions as $name => $options) {
             </para>
 
             <para>
-                The above code is very similar to code using
+                The above code is very similar to code used within
                 <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>. In fact, we
                 recommend that you simply use that authentication adapter for multi-domain + failover LDAP based
                 authentication (or copy the code).
