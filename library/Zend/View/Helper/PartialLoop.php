@@ -28,7 +28,7 @@ require_once 'Zend/View/Helper/Partial.php';
  * over data provided and renders for each iteration.
  *
  * @package    Zend_View
- * @subpackage Helpers
+ * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

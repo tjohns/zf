@@ -13,7 +13,7 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_View
- * @subpackage Helpers
+ * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id: Placeholder.php 7078 2007-12-11 14:29:33Z matthew $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -27,7 +27,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
  *
  * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
- * @subpackage Helpers
+ * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

@@ -65,7 +65,7 @@ require_once 'Zend/View.php';
  *
  * @uses       Zend_Controller_Action_Helper_Abstract
  * @package    Zend_Controller
- * @subpackage Zend_Controller_Action
+ * @subpackage Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
