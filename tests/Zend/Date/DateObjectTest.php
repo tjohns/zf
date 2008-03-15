@@ -23,14 +23,14 @@
 
 
 /**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
-
-/**
  * Zend_Date
  */
 require_once 'Zend/Date.php';
+
+/**
+ * PHPUnit test case
+ */
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -62,7 +62,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('Autodetection of locale failed');
             return;
         }
-
+        
         $date = new Zend_Date(0);
         $this->assertTrue($date instanceof Zend_Date);
     }
@@ -79,7 +79,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('Autodetection of locale failed');
             return;
         }
-
+        
         $date = new Zend_Date(1000);
         $this->assertTrue($date instanceof Zend_Date);
     }
@@ -96,7 +96,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('Autodetection of locale failed');
             return;
         }
-
+        
         try {
             $date = new Zend_Date("notimestamp");
             $this->fail("exception expected");
@@ -383,7 +383,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame((int) $test['year'],    (int) $result['year']   );
         $this->assertSame((int) $test['yday'],    (int) $result['yday']   );
     }
-
+    
     public function testDate()
     {
         $date = new Zend_Date_DateObjectTestHelper(0);
@@ -455,7 +455,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $reference = $date->date('U');
         $this->assertTrue(abs($reference - time()) < 2);
         $this->assertSame('69000000', $date->date('U',69000000));
-
+        
         // ISO Year (o) depends on the week number so 1.1. can be last year is week is 52/53
         $this->assertSame('1739', $date->date('o',$date->mktime(0, 0, 0, 1, 1, 1740)));
         $this->assertSame('1740', $date->date('o',$date->mktime(0, 0, 0, 1, 1, 1741)));
@@ -555,7 +555,7 @@ class Zend_Date_DateObjectTestHelper extends Zend_Date
     {
         return parent::getUnixTimestamp();
     }
-
+    
     public function setUnixTimestamp($timestamp = null)
     {
         return parent::setUnixTimestamp($timestamp);
