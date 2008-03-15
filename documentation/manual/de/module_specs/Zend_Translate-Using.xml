@@ -820,6 +820,18 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 </para>
             </note>
 
+            <note>
+                <para>
+                    Man sollte acht geben wenn man verschiedenen Unterverzeichnisse in der gleichen
+                    Struktur hat. Angenommen wir haben eine Struktur wie
+                    <code>/language/module/de/en/file.mo</code>. Der Pfad enthält in diesem Fall
+                    mehrere Strings die als Gebietsschema erkannt werden würden. Das könnte
+                    entweder <code>de</code> oder <code>en</code> sein. Da das Verhalten, in diesem
+                    Fall, unbestimmt ist sollte in solchen Situationen die Dateierkennung
+                    verwendet werden.
+                </para>
+            </note>
+
         </sect3>
 
         <sect3 id="zend.translate.using.detection.filename">
