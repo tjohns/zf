@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8123 -->
+<!-- EN-Revision: 8836 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
@@ -16,11 +16,11 @@
         <para>
             アクションヘルパーにはさまざまな使用法があります。
             たとえば、<link
-                linkend="zend.view.helpers">Zend_View_Helpers</link>
+                linkend="zend.view.helpers">Zend_View_Helper</link>
             や <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>
             と同じように、処理の仲買をするために用いることもできます。
-            アクションヘルパーは (<code>Zend_View_Helpers</code> と同様に)、
+            アクションヘルパーは (<code>Zend_View_Helper</code> と同様に)、
             必要になった時点で読み込むこともできますし、
             リクエスト時 (起動時) やアクションコントローラの作成時 (init())
             で読み込むこともできます。詳細は、以下の使用例を参照ください。
