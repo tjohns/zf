@@ -15,10 +15,10 @@
             There are a number of ways to use Action Helpers.  Action Helpers
             employ the use of a brokerage system, similar to the types of
             brokerage you see in <link
-                linkend="zend.view.helpers">Zend_View_Helpers</link>, and that
+                linkend="zend.view.helpers">Zend_View_Helper</link>, and that
             of <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
-            Action Helpers (like <code>Zend_View_Helpers</code>) may be
+            Action Helpers (like <code>Zend_View_Helper</code>) may be
             loaded and called on demand, or they may be instantiated at
             request time (bootstrap) or action controller creation time
             (init()).  To understand this more fully, please see the usage
