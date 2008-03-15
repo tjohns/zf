@@ -264,6 +264,14 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         if (is_resource($this->_connection)) {
             return;
         }
+		
+        if (!extension_loaded('interbase')) {
+            /**
+             * @see Zend_Db_Adapter_Firebird_Exception
+             */
+            require_once 'Zend/Db/Adapter/Firebird/Exception.php';
+            throw new Zend_Db_Adapter_Firebird_Exception('The Interbase extension is required for this adapter but the extension is not loaded');
+        }		
 
 		$port = '';
         if (isset($this->_config['port']))
@@ -271,7 +279,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
 
         // Suppress connection warnings here.
         // Throw an exception instead.
-        @$this->_connection = ibase_connect(
+        @$this->_connection = @ibase_connect(
                                 $this->_config['host'] .$port. ':' . $this->_config['dbname'],
                                 $this->_config['username'],
                                 $this->_config['password'],
