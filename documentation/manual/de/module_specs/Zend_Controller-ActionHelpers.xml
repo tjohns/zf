@@ -12,9 +12,9 @@
 
         <para>
             Es gibt eine Menge an Wegen um Aktion Helfer zu verwenden. Aktion Helfer verwenden ein Broker System,
-            ähnlich den Typen von Brokern in <link linkend="zend.view.helpers">Zend_View_Helpers</link>, und
+            ähnlich den Typen von Brokern in <link linkend="zend.view.helpers">Zend_View_Helper</link>, und
             denen von <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Aktion Helfer
-            (wie <code>Zend_View_Helpers</code>) können bei Bedarf geladen und aufgerufen werden, oder Sie können
+            (wie <code>Zend_View_Helper</code>) können bei Bedarf geladen und aufgerufen werden, oder Sie können
             wärend der Anfragezeit (Bootstrap) instanziert werden oder wären der Erstellungszeit des
             Aktion Kontrollers (init()). Um Sie näher zu verstehen, betrachten wir Ihre Verwendung in der
             folgenden Sektion.
