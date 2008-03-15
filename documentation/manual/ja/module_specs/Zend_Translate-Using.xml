@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8387 -->
+<!-- EN-Revision: 8827 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -855,6 +855,17 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                     たとえば TMX などでこのオプションを使用しても、無視されます。
                     また、このオプションを使用した場合は
                     ファイル名による言語の自動検出は無視されます。
+                </para>
+            </note>
+
+            <note>
+                <para>
+                    同じ構造のもとで複数のサブディレクトリがある場合は注意が必要です。
+                    たとえば <code>/language/module/de/en/file.mo</code>
+                    のような構造を考えてみましょう。
+                    このパスには、ロケールと検出されうる文字列が複数含まれています。
+                    <code>de</code> と <code>en</code> です。
+                    このような場合は、ファイル名による検出を用いることを推奨します。
                 </para>
             </note>
 
