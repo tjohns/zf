@@ -92,6 +92,7 @@ abstract class Zend_Translate_Adapter {
      *                                        see Zend_Locale for more information
      * @param  array                 $options OPTIONAL Option for this Adapter
      * @throws Zend_Translate_Exception
+     * @return Zend_Translate_Adapter
      */
     public function addTranslation($data, $locale = null, array $options = array())
     {
@@ -170,11 +171,16 @@ abstract class Zend_Translate_Adapter {
      *
      * @param  array  $options  Adapter options
      * @throws Zend_Translate_Exception
+     * @return Zend_Translate_Adapter
      */
     public function setOptions(array $options = array())
     {
         foreach ($options as $key => $option) {
-            $this->_options[strtolower($key)] = $option;
+            if ($key == "locale") {
+                $this->setLocale($option);
+            } else {
+                $this->_options[strtolower($key)] = $option;
+            }
         }
         return $this;
     }
@@ -201,7 +207,7 @@ abstract class Zend_Translate_Adapter {
     /**
      * Gets locale
      *
-     * @return Zend_Locale|null
+     * @return Zend_Locale|string|null
      */
     public function getLocale()
     {
@@ -214,6 +220,7 @@ abstract class Zend_Translate_Adapter {
      *
      * @param  string|Zend_Locale  $locale  Locale to set
      * @throws Zend_Translate_Exception
+     * @return Zend_Translate_Adapter
      */
     public function setLocale($locale)
     {
@@ -334,6 +341,7 @@ abstract class Zend_Translate_Adapter {
      *                                        see Zend_Locale for more information
      * @param  array                 $options OPTIONAL Option for this Adapter
      * @throws Zend_Translate_Exception
+     * @return Zend_Translate_Adapter
      */
     private function _addTranslationData($data, $locale, array $options = array())
     {
@@ -448,16 +456,16 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if ((array_key_exists($locale, $this->_translate)) and
-            (array_key_exists($messageId, $this->_translate[$locale]))) {
+        if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+            (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
             return true;
         } else if ((strlen($locale) != 2) and ($original === false)) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if ((array_key_exists($locale, $this->_translate)) and
-                (array_key_exists($messageId, $this->_translate[$locale]))) {
+            if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
+                (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
                 // return regionless translation (en_US -> en)
                 return true;
             }

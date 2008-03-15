@@ -214,7 +214,7 @@ abstract class Zend_Measure_Abstract
                     }
                 }
             } else {
-                $value = $value * ($this->_UNITS[$this->getType()][0]);
+                $value = call_user_func(Zend_Locale_Math::$mul, $value, $this->_UNITS[$this->getType()][0], 25);
             }
             
             // Convert to expected value
@@ -238,7 +238,7 @@ abstract class Zend_Measure_Abstract
                     }
                 }
             } else {
-                $value = $value / ($this->_UNITS[$type][0]);
+                $value = @call_user_func(Zend_Locale_Math::$div, $value, $this->_UNITS[$type][0], 25);
             }
 
             $this->_value = $value;
