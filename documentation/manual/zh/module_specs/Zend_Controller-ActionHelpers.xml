@@ -8,7 +8,7 @@
         </para>
 
         <para>
-           动作助手有多种使用方式。动作助手使用了一套经纪系统(brokerage system)，与<link linkend="zend.view.helpers">Zend_View_Helpers</link>中使用的，也就是<link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>的经纪系统类似。动作助手在需要调用时加载，可以在请求的时候(bootstrap)或者动作控制器创建的时候(init())实例化。要充分了解这些细节，请阅读下面的章节。
+           动作助手有多种使用方式。动作助手使用了一套经纪系统(brokerage system)，与<link linkend="zend.view.helpers">Zend_View_Helper</link>中使用的，也就是<link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>的经纪系统类似。动作助手（like <code>Zend_View_Helper</code>）在需要调用时加载，可以在请求的时候(bootstrap)或者动作控制器创建的时候(init())实例化。要充分了解这些细节，请阅读下面的章节。
         </para>
     </sect2>
 
