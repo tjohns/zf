@@ -365,6 +365,16 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $this->helper->appendStylesheet('foo');
         $this->assertEquals(1, count($this->helper), var_export($this->helper->getContainer()->getArrayCopy(), 1));
     }
+
+    /**
+     * test for ZF-2889
+     */
+    public function testBooleanStylesheet()
+    {
+        $this->helper->appendStylesheet(array('href' => '/bar/baz', 'conditionalStylesheet' => false));
+        $test = $this->helper->toString();
+        $this->assertNotContains('[if false]', $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.
