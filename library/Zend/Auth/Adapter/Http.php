@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -359,8 +358,8 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
     /**
      * Authenticate
      *
-     * @return Zend_Auth_Result
      * @throws Zend_Auth_Adapter_Exception
+     * @return Zend_Auth_Result
      */
     public function authenticate()
     {

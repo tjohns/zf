@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -146,7 +145,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * setTableName() - set the table name to be used in the select query
      *
      * @param  string $tableName
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setTableName($tableName)
     {
@@ -158,7 +157,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * setIdentityColumn() - set the column name to be used as the identity column
      *
      * @param  string $identityColumn
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setIdentityColumn($identityColumn)
     {
@@ -170,7 +169,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * setCredentialColumn() - set the column name to be used as the credential column
      *
      * @param  string $credentialColumn
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setCredentialColumn($credentialColumn)
     {
@@ -193,7 +192,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      *  'MD5(?)'
      *
      * @param  string $treatment
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setCredentialTreatment($treatment)
     {
@@ -205,7 +204,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * setIdentity() - set the value to be used as the identity
      *
      * @param  string $value
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setIdentity($value)
     {
@@ -218,7 +217,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * to be used, should be supplied in parameterized form, such as 'MD5(?)' or 'PASSWORD(?)'
      *
      * @param  string $credential
-     * @return Zend_Auth_Adapter_DbTable
+     * @return Zend_Auth_Adapter_DbTable Provides a fluent interface
      */
     public function setCredential($credential)
     {
@@ -231,7 +230,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      *
      * @param  string|array $returnColumns
      * @param  string|array $omitColumns
-     * @return stdClass
+     * @return stdClass|boolean
      */
     public function getResultRowObject($returnColumns = null, $omitColumns = null)
     {
@@ -375,7 +374,6 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      */
     protected function _authenticateQuerySelect(Zend_Db_Select $dbSelect)
     {
-
         try {
             if ($this->_zendDb->getFetchMode() != Zend_DB::FETCH_ASSOC) {
                 $origDbFetchMode = $this->_zendDb->getFetchMode();
@@ -405,7 +403,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * @param array $resultIdentities
      * @return true|Zend_Auth_Result
      */
-    protected function _authenticateValidateResultSet(Array $resultIdentities)
+    protected function _authenticateValidateResultSet(array $resultIdentities)
     {
 
 

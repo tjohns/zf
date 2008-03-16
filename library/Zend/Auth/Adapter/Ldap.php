@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage Zend_Auth_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -28,6 +28,7 @@ require_once 'Zend/Auth/Adapter/Interface.php';
 /**
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage Zend_Auth_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -63,6 +64,8 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     protected $_password = null;
 
     /**
+     * Constructor
+     *
      * @param  array  $options  An array of arrays of Zend_Ldap options
      * @param  string $username The username of the account being authenticated
      * @param  string $password The password of the account being authenticated
@@ -91,6 +94,8 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     }
 
     /**
+     * Sets the username for binding
+     *
      * @param  string $username The username for binding
      * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
      */
@@ -112,6 +117,8 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     }
 
     /**
+     * Sets the passwort for the account
+     *
      * @param  string $password The password of the account being authenticated
      * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
      */
@@ -122,7 +129,9 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * @return Zend_Ldap The Zend_Ldap object used to authenticate the credentials.
+     * Returns the LDAP Object
+     *
+     * @return Zend_Ldap The Zend_Ldap object used to authenticate the credentials
      */
     public function getLdap()
     {
@@ -137,11 +146,16 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * @return Zend_Auth_Result
+     * Authenticate the user
+     *
      * @throws Zend_Auth_Adapter_Exception
+     * @return Zend_Auth_Result
      */
     public function authenticate()
     {
+        /**
+         * @see Zend_Ldap_Exception
+         */
         require_once 'Zend/Ldap/Exception.php';
 
         $messages = array();
@@ -176,6 +190,9 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
         foreach ($this->_options as $name => $options) {
 
             if (!is_array($options)) {
+                /**
+                 * @see Zend_Auth_Adapter_Exception
+                 */
                 require_once 'Zend/Auth/Adapter/Exception.php';
                 throw new Zend_Auth_Adapter_Exception('Adapter options array not in array');
             }
@@ -235,6 +252,12 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
         return new Zend_Auth_Result($code, $username, $messages);
     }
 
+    /**
+     * Converts options to string
+     *
+     * @param  array $options
+     * @return string
+     */
     private function _optionsToString(array $options)
     {
         $str = '';

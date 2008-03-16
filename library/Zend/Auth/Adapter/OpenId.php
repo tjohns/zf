@@ -98,14 +98,15 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
     /**
      * Constructor
      *
-     * @param  string $id the identity value
-     * @param  Zend_OpenId_Consumer_Storage $storage an optional implementation
-        of a storage object
+     * @param string $id the identity value
+     * @param Zend_OpenId_Consumer_Storage $storage an optional implementation
+     *        of a storage object
      * @param string $returnTo HTTP URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
      * @param Zend_Controller_Response_Abstract $response an optional response
-     *  object to perform HTTP or HTML form redirection
+     *        object to perform HTTP or HTML form redirection
+     * @return void
      */
     public function __construct($id = null,
                                 Zend_OpenId_Consumer_Storage $storage = null,
@@ -125,7 +126,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets the value to be used as the identity
      *
      * @param  string $id the identity value
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setIdentity($id)
     {
@@ -137,7 +138,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets the storage implementation which will be use by OpenId
      *
      * @param  Zend_OpenId_Consumer_Storage $storage
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setStorage(Zend_OpenId_Consumer_Storage $storage)
     {
@@ -149,7 +150,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets the HTTP URL to redirect response from server to
      *
      * @param  string $returnTo
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setReturnTo($returnTo)
     {
@@ -161,7 +162,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets HTTP URL to identify consumer on server
      *
      * @param  string $root
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setRoot($root)
     {
@@ -173,7 +174,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets OpenID extension(s)
      *
      * @param  mixed $extensions
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setExtensions($extensions)
     {
@@ -185,7 +186,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Sets an optional response object to perform HTTP or HTML form redirection
      *
      * @param  string $root
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setResponse($response)
     {
@@ -198,7 +199,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * OpenID provider.
      *
      * @param  bool $check_immediate
-     * @return Zend_Auth_Adapter_OpenId
+     * @return Zend_Auth_Adapter_OpenId Provides a fluent interface
      */
     public function setCheckImmediate($check_immediate)
     {
@@ -210,8 +211,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
      * Authenticates the given OpenId identity.
      * Defined by Zend_Auth_Adapter_Interface.
      *
-     * @throws Zend_Auth_Adapter_Exception if answering the authentication
-     *  query is impossible
+     * @throws Zend_Auth_Adapter_Exception If answering the authentication query is impossible
      * @return Zend_Auth_Result
      */
     public function authenticate() {
