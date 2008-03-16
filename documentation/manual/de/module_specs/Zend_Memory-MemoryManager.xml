@@ -25,7 +25,7 @@
 
         <programlisting role="php"><![CDATA[<?php
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Verzeichnis in welchem die geswappten Memory Blöcke abgelegt werden
+    'cache_dir' => './tmp/' // Verzeichnis in welchem die geswappten Memory Blöcke abgelegt werden
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);]]>

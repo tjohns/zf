@@ -39,7 +39,7 @@
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Verzeichnis in welches die getauschten Speicherblöcke geschrieben werden
+    'cache_dir' => './tmp/' // Verzeichnis in welches die getauschten Speicherblöcke geschrieben werden
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
