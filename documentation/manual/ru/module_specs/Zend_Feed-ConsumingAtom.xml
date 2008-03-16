@@ -1,0 +1,179 @@
+<sect1 id="zend.feed.consuming-atom">
+<title>
+    Работа с лентой Atom
+    <!-- Consuming an Atom Feed -->
+</title>
+
+    <para>
+        <code>Zend_Feed_Atom</code> используется в основном так же, как и
+        <code>Zend_Feed_Rss</code>. Он предоставляет те же доступ к свойствам
+        ленты и обход публикаций в ленте.  Основное отличие заключается в самой
+        структуре ленты по протоколу Atom. Atom является преемником RSS, это более
+        обобщенный протокол. Он разработан для более легкой работы с лентами, и
+        предоставяет полное информационное содержимое внутри самой ленты, разделив
+        для этой цели тег <code>&lt;description&gt;</code> в RSS на два элемента —
+        <code>&lt;summary&gt;</code> (анонс) и <code>&lt;content&gt;</code> (содержимое).
+<!--
+        <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
+        the same access to feed-level properties and iteration over entries in the feed. The main
+        difference is in the structure of the Atom protocol itself. Atom is a successor to RSS; it is more
+        generalized protocol and it is designed to deal more easily with feeds that provide their full
+        content inside the feed, splitting RSS' <code>description</code> tag into two elements,
+        <code>summary</code> and <code>content</code>, for that purpose.
+-->
+    </para>
+
+    <example id="zend.feed.consuming-atom.example.usage">
+        <title>
+            Основы использования ленты Atom
+            <!--Basic Use of an Atom Feed-->
+        </title>
+        <para>
+            Чтение ленты Atom и вывод <code>title</code>,
+            <code>summary</code> для  каждой публикации.
+<!--
+            Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+$feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
+echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";
+foreach ($feed as $entry) {
+    echo 'Title: ' . $entry->title() . "\n";
+    echo 'Summary: ' . $entry->summary() . "\n\n";
+}
+
+?>]]>   </programlisting>
+    </example>
+
+    <para>
+        В ленте Atom (элемент <code>&lt;feed&gt;</code>) должны присутствовать следующие свойства:
+<!--
+        In an Atom feed you can expect to find the following feed properties:
+-->
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>title</code> — заголовок ленты, аналогичен заголовку RSS-канала
+                    <!-- The feed's title, same as RSS's channel title -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>id</code> — каждая лента и каждая публикация в Atom имеют свои
+                    уникальные идентификаторы
+                    <!-- Every feed and entry in Atom has a unique identifier -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>link</code> — лента может иметь одну или несколько ссылок, которые
+                    имеют атрибут <code>type</code>
+                    <!-- Feeds can have multiple links, which are distinguished by a <code>type</code> attribute -->
+                </para>
+                <para>
+                    Эквивалентом ссылке в RSS-канале будет <code>type="text/html"</code>. Если
+                    ссылка ведет на альтернативную версию того же контента, что представлен
+                    в ленте, она должна иметь атрибут <code>rel="alternate"</code>.
+<!--
+                    The equivalent to RSS's channel link would be <code>type="text/html"</code>. If the link
+                    is to an alternate version of the same content that's in the feed, it would have a
+                    <code>rel="alternate"</code> attribute.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>subtitle</code> — описание ленты, эквивалентен описанию RSS-канала
+                    <!-- The feed's description, equivalent to RSS' channel description -->
+                </para>
+                <para>
+                    <code>author->name()</code> — имя автора ленты
+                    <!-- The feed author's name -->
+                </para>
+                <para>
+                    <code>author->email()</code> — e-mail автора ленты
+                    <!-- The feed author's email address -->
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Публикации  Atom (элемент <code>&lt;entry&gt;</code>) обычно имеют следующие свойства:
+<!--
+        Atom entries commonly have the following properties:
+-->
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>id</code> — уникальный идентификатор публикации
+                    <!-- The entry's unique identifier -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>title</code> — заголовок публикации
+                    <!-- The entry's title, same as RSS item titles -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>link</code> — ссылка на альтернативное представление публикации в
+                    другом формате
+                    <!-- A link to another format an an alternate view of this entry -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>summary</code> — аннотация к содержимому публикации
+                    <!-- A summary of this entry's content -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>content</code> — полное содержимое публикации, может быть пропущен, если
+                    лента содержит только аннотации
+                    <!-- The full content of the entry; can be skipped if the feed just contains summaries -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>author</code> — с субтегами <code>name</code> и <code>email</code>,
+                    как у элемента <code>feed</code>
+                    <!-- with <code>name</code> and <code>email</code> sub-tags like feeds have -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>published</code> — дата публикации в формате RFC 3339
+                    <!-- the date the entry was published, in RFC 3339 format -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>updated</code> — дата последнего изменения публикации в формате RFC 3339
+                    <!-- the date the entry was last updated, in RFC 3339 format -->
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        За другими ресурсами и дополнительной информацией по Atom см.:
+<!--
+        For more information on Atom and plenty of resources, see
+        <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
