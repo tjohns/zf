@@ -1320,7 +1320,7 @@ $frontendOptions = array(
     );
 
 $backendOptions  = array(
-    'cacheDir'                => 'cacheDir'
+    'cache_dir'                => 'cacheDir'
     );
 
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
@@ -1363,7 +1363,7 @@ $frontendOptions = array(
     );
 
 $backendOptions  = array(
-    'cacheDir'                => 'cacheDir'
+    'cache_dir'                => 'cacheDir'
     );
 
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);

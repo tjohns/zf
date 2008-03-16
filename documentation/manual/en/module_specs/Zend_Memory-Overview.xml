@@ -37,7 +37,7 @@
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directory where to put the swapped memory blocks
+    'cache_dir' => './tmp/' // Directory where to put the swapped memory blocks
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);

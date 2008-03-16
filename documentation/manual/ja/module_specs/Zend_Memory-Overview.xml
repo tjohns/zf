@@ -40,7 +40,7 @@
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // スワップしたメモリブロックを配置するディレクトリ
+    'cache_dir' => './tmp/' // スワップしたメモリブロックを配置するディレクトリ
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
