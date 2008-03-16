@@ -15,7 +15,7 @@
         Per impostazione predefinita, <code>Zend_Json</code> decodifica gli oggetti JSON in array associativi, Tuttavia, se si desidera che il metodo restituisca un oggetto, è possibile specificarlo:
     </para>
     <programlisting role="php"><![CDATA[<?php
-// Decodifica gli oggetti in oggetti
+// Decodifica gli oggetti JSON in oggetti PHP
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>
     <para>
