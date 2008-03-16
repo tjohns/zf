@@ -125,7 +125,7 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        // @todo: use INFORMATION_SCHEMA someday when MySQL's
+        // @todo  use INFORMATION_SCHEMA someday when MySQL's
         // implementation has reasonably good performance and
         // the version with this improvement is in wide use.
 

@@ -88,43 +88,43 @@ require_once 'Zend/Console/Getopt/Exception.php';
  * @version    Release: @package_version@
  * @since      Class available since Release 0.6.0
  *
- * @todo: Handle params with multiple values, e.g. --colors=red,green,blue
+ * @todo  Handle params with multiple values, e.g. --colors=red,green,blue
  *        Set value of parameter to the array of values.  Allow user to specify
  *        the separator with Zend_Console_Getopt::CONFIG_PARAMETER_SEPARATOR.
  *        If this config value is null or empty string, do not split values
  *        into arrays.  Default separator is comma (',').
  *
- * @todo: Handle params with multiple values specified with separate options
+ * @todo  Handle params with multiple values specified with separate options
  *        e.g. --colors red --colors green --colors blue should give one
  *        option with an array(red, green, blue).
  *        Enable with Zend_Console_Getopt::CONFIG_CUMULATIVE_PARAMETERS.
  *        Default is that subsequent options overwrite the parameter value.
  *
- * @todo: Handle flags occurring multiple times, e.g. -v -v -v
+ * @todo  Handle flags occurring multiple times, e.g. -v -v -v
  *        Set value of the option's parameter to the integer count of instances
  *        instead of a boolean.
  *        Enable with Zend_Console_Getopt::CONFIG_CUMULATIVE_FLAGS.
  *        Default is that the value is simply boolean true regardless of
  *        how many instances of the flag appear.
  *
- * @todo: Handle flags that implicitly print usage message, e.g. --help
+ * @todo  Handle flags that implicitly print usage message, e.g. --help
  *
- * @todo: Handle freeform options, e.g. --set-variable
+ * @todo  Handle freeform options, e.g. --set-variable
  *        Enable with Zend_Console_Getopt::CONFIG_FREEFORM_FLAGS
  *        All flag-like syntax is recognized, no flag generates an exception.
  *
- * @todo: Handle numeric options, e.g. -1, -2, -3, -1000
+ * @todo  Handle numeric options, e.g. -1, -2, -3, -1000
  *        Enable with Zend_Console_Getopt::CONFIG_NUMERIC_FLAGS
  *        The rule must specify a named flag and the '#' symbol as the
  *        parameter type. e.g.,  'lines=#'
  *
- * @todo: Enable user to specify header and footer content in the help message.
+ * @todo  Enable user to specify header and footer content in the help message.
  *
- * @todo: Feature request to handle option interdependencies.
+ * @todo  Feature request to handle option interdependencies.
  *        e.g. if -b is specified, -a must be specified or else the
  *        usage is invalid.
  *
- * @todo: Feature request to implement callbacks.
+ * @todo  Feature request to implement callbacks.
  *        e.g. if -a is specified, run function 'handleOptionA'().
  */
 class Zend_Console_Getopt
