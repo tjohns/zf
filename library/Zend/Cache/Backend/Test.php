@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,31 +14,26 @@
  *
  * @category   Zend
  * @package    Zend_Cache
- * @subpackage Backend
+ * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /**
- * Zend_Cache_Backend_Interface
+ * @see Zend_Cache_Backend_Interface
  */
 require_once 'Zend/Cache/Backend/Interface.php';
 
 
 /**
  * @package    Zend_Cache
- * @subpackage Backend
+ * @subpackage Zend_Cache_Backend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
 {
-
-    // ------------------
-    // --- Properties ---
-    // ------------------
-
     /**
      * Available options
      *
@@ -68,15 +62,11 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      */
     private $_index = 0;
 
-
-    // ----------------------
-    // --- Public methods ---
-    // ----------------------
-
     /**
      * Constructor
      *
-     * @param array $options associative array of options
+     * @param  array $options associative array of options
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -86,7 +76,8 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     /**
      * Set the frontend directives
      *
-     * @param array $directives assoc of directives
+     * @param  array $directives assoc of directives
+     * @return void
      */
     public function setDirectives($directives)
     {
@@ -100,9 +91,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * if $id == 'serialized', the method will return a serialized array
      * ('foo' else)
      *
-     * @param string $id cache id
-     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
-     * @return string cached datas (or false)
+     * @param  string  $id                     Cache id
+     * @param  boolean $doNotTestCacheValidity If set to true, the cache validity won't be tested
+     * @return string Cached datas (or false)
      */
     public function load($id, $doNotTestCacheValidity = false)
     {
@@ -131,8 +122,8 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * For this test backend only, if $id == 'false', then the method will return false
      * (123456 else)
      *
-     * @param string $id cache id
-     * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
+     * @param  string $id Cache id
+     * @return mixed|false false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
     public function test($id)
     {
@@ -155,11 +146,11 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * For this test backend only, if $id == 'false', then the method will return false
      * (true else)
      *
-     * @param string $data datas to cache
-     * @param string $id cache id
-     * @param array $tags array of strings, the cache record will be tagged by each string entry
-     * @param int $specificLifetime if != false, set a specific lifetime for this cache record (null => infinite lifetime)
-     * @return boolean true if no problem
+     * @param  string $data             Datas to cache
+     * @param  string $id               Cache id
+     * @param  array  $tags             Array of strings, the cache record will be tagged by each string entry
+     * @param  int    $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
+     * @return boolean True if no problem
      */
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
@@ -176,8 +167,8 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * For this test backend only, if $id == 'false', then the method will return false
      * (true else)
      *
-     * @param string $id cache id
-     * @return boolean true if no problem
+     * @param  string $id Cache id
+     * @return boolean True if no problem
      */
     public function remove($id)
     {
@@ -202,9 +193,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
      *                                               ($tags can be an array of strings or a single string)
      *
-     * @param string $mode clean mode
-     * @param array $tags array of tags
-     * @return boolean true if no problem
+     * @param  string $mode Clean mode
+     * @param  array  $tags Array of tags
+     * @return boolean True if no problem
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
@@ -218,7 +209,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     /**
      * Get the last log
      *
-     * @return string the last log
+     * @return string The last log
      */
     public function getLastLog()
     {
@@ -228,7 +219,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     /**
      * Get the log index
      *
-     * @return int log index
+     * @return int Log index
      */
     public function getLogIndex()
     {
@@ -238,7 +229,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     /**
      * Get the complete log array
      *
-     * @return array complete log array
+     * @return array Complete log array
      */
     public function getAllLogs()
     {
@@ -255,16 +246,12 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
         return true;
     }
 
-
-    // -----------------------
-    // --- Private methods ---
-    // -----------------------
-
     /**
      * Add an event to the log array
      *
-     * @param string $methodName methodName
-     * @param array $args arguments
+     * @param  string $methodName MethodName
+     * @param  array  $args       Arguments
+     * @return void
      */
     private function _addLog($methodName, $args)
     {
