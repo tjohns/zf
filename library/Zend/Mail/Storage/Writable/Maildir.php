@@ -614,10 +614,10 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
     /**
      * move an existing message
      *
-     * @param int                             $id     number of message
-     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @param  int                             $id     number of message
+     * @param  string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
      * @return null
-     * @throw Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function moveMessage($id, $folder) {
         if (!($folder instanceof Zend_Mail_Storage_Folder)) {
