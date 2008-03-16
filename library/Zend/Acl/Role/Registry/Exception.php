@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -22,7 +21,7 @@
 
 
 /**
- * Zend_Acl_Exception
+ * @see Zend_Acl_Exception
  */
 require_once 'Zend/Acl/Exception.php';
 
