@@ -20,7 +20,7 @@
 
 
 /**
- * Zend_Console_Getopt_Exception
+ * @see Zend_Console_Getopt_Exception
  */
 require_once 'Zend/Exception.php';
 
@@ -33,14 +33,31 @@ require_once 'Zend/Exception.php';
  */
 class Zend_Console_Getopt_Exception extends Zend_Exception
 {
+    /**
+     * Usage
+     *
+     * @var string
+     */
     protected $usage = '';
 
+    /**
+     * Constructor
+     *
+     * @param string $message
+     * @param string $usage
+     * @return void
+     */
     public function __construct($message, $usage = '')
     {
         $this->usage = $usage;
         parent::__construct($message);
     }
 
+    /**
+     * Returns the usage
+     *
+     * @return string
+     */
     public function getUsageMessage()
     {
         return $this->usage;
