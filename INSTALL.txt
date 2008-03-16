@@ -13,7 +13,6 @@ appendix for more detailed information:
 
 http://framework.zend.com/manual/en/requirements.html
 
-
 DEVELOPMENT VERSIONS
 --------------------
 
@@ -71,12 +70,11 @@ http://www.php.net/manual/en/configuration.changes.php
 GETTING STARTED
 ---------------
 
-One of the Zend Framework's most useful features is its implementation of the Front
-Controller and Model-View-Controller (MVC) design patterns. The Zend_Controller Quick
-Start is a great place to get started building MVC applications:
+A great place to get up-to-speed quickly is the Zend Framework QuickStart:
 
-http://framework.zend.com/manual/en/zend.controller.html#zend.controller.quickstart
+http://framework.zend.com/docs/quickstart
 
-Since Zend Framework is designed with a use-at-will architecture and components are
+The QuickStart covers some of the most commonly used components of ZF. Since
+Zend Framework is designed with a use-at-will architecture and components are
 loosely coupled, you can select and use only those components that are needed for
 your project.
