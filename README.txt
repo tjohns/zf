@@ -1,28 +1,36 @@
-Welcome to Zend Framework 1.5 Release Candidate 2! This release is intented to
-meet quality guidelines for production use, but additional release candidates may
-be necessary to reach the quality standards of a General Availability release.
-To help us deliver a stable Zend Framework 1.5 GA release soon, please post your
-comments and questions to the appropriate mailing list and bring any bugs to our
-attention in the Zend Framework issue tracker:
-
-http://framework.zend.com/issues
+Welcome to Zend Framework 1.5! This is the first production release of the 
+Zend Framework 1.5 series. This release maintains backwards compatibility with
+the Zend Framework 1.0 series and has been rigorously tested with many
+applications written for 1.0.
+HOWEVER, PLEASE READ ALL SPECIAL NOTICES FOR UPGRADING IN THIS README *BEFORE*
+UPGRADING EXISTING APPLICATIONS TO ZF 1.5.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.5 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
-Released on [INSERT DATE HERE].
+Zend Framework 1.5.0 (revision <INSERT REV NUMBER HERE>).
+Released on 2008-03-17.
 
-SPECIAL NOTICE FOR LUCENE SEARCH USERS
---------------------------------------
+SPECIAL NOTICES FOR UPGRADING TO ZF 1.5
+---------------------------------------
 
-If you are upgrading from a 1.0 ZF release to a 1.5 ZF release and you are using
-Zend_Search_Lucene, you should be aware that Zend_Search_Lucene now works
-exclusively with Apache Lucene 2.1 index file format. Conversion from the
-previous format (1.9) is performed automatically during the first index update
-after the ZF 1.5 release is installed. THIS CONVERSION CANNOT BE UNDONE. Please
-backup your Lucene index if you plan to rollback to 1.0 versions of Zend
-Framework and wish to continue using this index.
+* If you are upgrading from a 1.0 ZF release to a 1.5 ZF release and you are using
+  Zend_Search_Lucene, you should be aware that Zend_Search_Lucene now works
+  exclusively with Apache Lucene 2.1 index file format. Conversion from the
+  previous format (1.9) is performed automatically during the first index update
+  after the ZF 1.5 release is installed. *THIS CONVERSION CANNOT BE UNDONE*.
+  Please backup your Lucene index if you plan to rollback to 1.0 versions of Zend
+  Framework and wish to continue using this index.
+
+* Some developers have relied on undocumented and unintended behavior of
+  Zend_Controller in 1.0 ZF releases that allowed resolution from camelCased URLs to
+  controller actions. This unintended behavior, however, causes indeterminate results
+  later in the request dispatching process. For this reason, we have chosen to enforce
+  our documented recommendations. URLs now require word separator characters when
+  resolving to camelCased action methods. For more information, please see:
+
+    http://framework.zend.com/manual/en/zend.controller.migration.html
+
 
 NEW FEATURES
 ------------
@@ -38,7 +46,6 @@ NEW FEATURES
   composition and rendering
 * New Zend_Layout component for automating and facilitating site layouts
 * UTF-8 support for PDF documents
-* LDAP, Infocard, and OpenID authentication adapters
 
 ENHANCEMENTS AND BUGFIXES
 -------------------------
@@ -63,16 +70,6 @@ ENHANCEMENTS AND BUGFIXES
 A detailed list of all features and bug fixes in this release may be found at:
 
 http://framework.zend.com/issues/secure/IssueNavigator.jspa?mode=hide&requestId=10661
-
-INTENDED USE
-------------
-
-The Zend Framework community does not recommend this release for production use.
-Please be aware that the API's introduced in this release may not be final, and
-that the Zend Framework team does not guarantee backwards compatibility to this
-release in future releases of Zend Framework. Once a release candidate is
-sanctioned by the ZF community as a GA release, Zend and the ZF community will 
-make every effort to maintain backwards compatibility.
 
 SYSTEM REQUIREMENTS
 -------------------
@@ -103,11 +100,9 @@ tracker at:
 
 http://framework.zend.com/issues
 
-If you have not done so already, you must email cla@zend.com with your issue
-tracker username requesting issue posting privileges.
-If you would like to be notified of new releases- including the general
-availability release of Zend Framework 1.5- you can subscribe to the fw-announce
-mailing list by sending a blank message to fw-announce-subscribe@lists.zend.com.
+If you would like to be notified of new releases- including maintenance releases
+for Zend Framework 1.5- you can subscribe to the fw-announce mailing list by
+sending a blank message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
 -------
