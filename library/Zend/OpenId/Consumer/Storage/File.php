@@ -376,7 +376,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
     /**
      * The function checks the uniqueness of openid.response_nonce
      *
-     * @nonce string openid.response_nonce field from authentication response
+     * @param  string $nonce openid.response_nonce field from authentication response
      * @return bool
      */
     public function isUniqueNonce($nonce)
