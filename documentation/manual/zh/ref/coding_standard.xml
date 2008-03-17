@@ -251,7 +251,7 @@ widgetFactory()]]>
             </para>
 
             <para>
-                短标签（<? ?>）是不允许的，只包含 PHP 代码的文件，不要结束标签 （参见 <xref linkend="coding-standard.php-file-formatting.general" />）。
+                短标签（ ）是不允许的，只包含 PHP 代码的文件，不要结束标签 （参见 <xref linkend="coding-standard.php-file-formatting.general" />）。
             </para>
         </sect2>
 
