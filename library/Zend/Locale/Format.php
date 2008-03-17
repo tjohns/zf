@@ -497,6 +497,8 @@ class Zend_Locale_Format
      */
     public static function isNumber($input, array $options = array())
     {
+        $options = array_merge(self::$_Options, self::checkOptions($options));
+
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getList($options['locale'],'symbols');
 
