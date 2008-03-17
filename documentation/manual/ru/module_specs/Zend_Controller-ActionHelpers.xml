@@ -16,9 +16,9 @@
             Есть несколько вариантов использования помощников действий.
             Помощники действий используют брокерскую систему (brokerage system),
             подобную той, которая используется в
-            <link linkend="zend.view.helpers">Zend_View_Helpers</link> и
+            <link linkend="zend.view.helpers">Zend_View_Helper</link> и
             <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
-            Помощники действий (как и <code>Zend_View_Helpers</code>) могут быть
+            Помощники действий (как и <code>Zend_View_Helper</code>) могут быть
             загружены и вызваны по требованию, либо инстанцироваться во время
             запроса (начальной загрузки) или создания контроллера действий
             (init()). Для того, чтобы лучше разобраться с этим, см. ниже раздел
