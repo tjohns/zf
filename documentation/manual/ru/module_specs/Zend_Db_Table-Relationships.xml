@@ -693,8 +693,6 @@ $products          = $bug1234->findProductsViaBugsProducts();
 
 // Задается правило связи
 $products          = $bug1234->findProductsViaBugsProductsByBug();]]>
-
-?>]]>
             </programlisting>
         </example>
 
