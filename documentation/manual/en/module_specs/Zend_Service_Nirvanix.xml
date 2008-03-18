@@ -25,7 +25,7 @@
         <para>
             Before you can get started with <code>Zend_Service_Nirvanix</code>, you must first
             register for an account.  Please see the 
-            <ulink url="http://nirvanix.com/gettingStarted.aspx">Getting Started</ulink>
+            <ulink url="http://www.nirvanix.com/gettingStarted.aspx">Getting Started</ulink>
             page on the Nirvanix website for more information.
         </para>
 
@@ -63,7 +63,7 @@
 
         <para>
             Nirvanix's REST service can be used effectively with PHP using the 
-            <ulink url="http://nirvanix.com/gettingStarted.aspx">SimpleXML</ulink>
+            <ulink url="http://www.php.net/simplexml">SimpleXML</ulink>
             extension and <code>Zend_Http_Client</code> alone. However, using it this way
             is somewhat inconvenient due to repetitive operations like passing the
             session token on every request and repeatedly checking the response body for
