@@ -19,6 +19,7 @@ library/Zend/Validate/Hostname.php
 library/Zend/Validate/Interface.php
 library/Zend/Validate/Ip.php
 library/Zend/Version.php
+library/Zend/Registry.php
 
 documentation/manual/en/html
 documentation/manual/en/ref
