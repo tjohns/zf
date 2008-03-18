@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -34,9 +35,25 @@
  * to filtering the input data should be used.  This code is designed only
  * for demonstration purposes.
  */
+
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata_YouTube
+ */
 Zend_Loader::loadClass('Zend_Gdata_YouTube');
+
+/**
+ * @see Zend_Gdata_AuthSub
+ */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+
+/**
+ * @see Zend_Gdata_App_Exception
+ */
 Zend_Loader::loadClass('Zend_Gdata_App_Exception');
 
 /*
@@ -140,10 +157,11 @@ switch ($operation) {
 /**
  * Perform a search on youtube
  *
- * @param string $searchType The type of search to perform. If 'owner' then attempt to authenticate.
- * @param string $searchTerm The term to search on.
- * @param string $startIndex Start retrieving search results from this index.
- * @param string $maxResults The number of results to retrieve.
+ * @param  string $searchType The type of search to perform. If 'owner' then attempt to authenticate.
+ * @param  string $searchTerm The term to search on.
+ * @param  string $startIndex Start retrieving search results from this index.
+ * @param  string $maxResults The number of results to retrieve.
+ * @return void
  */
 function searchVideos($searchType, $searchTerm, $startIndex, $maxResults) 
 {
@@ -212,8 +230,8 @@ function searchVideos($searchType, $searchTerm, $startIndex, $maxResults)
 /**
  * Finds the URL for the flash representation of the specified video.
  *
- * @param Zend_Gdata_YouTube_VideoEntry $entry The video entry
- * @return (string|null) The URL or null, if the URL is not found
+ * @param  Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @return string|null The URL or null, if the URL is not found
  */
 function findFlashUrl($entry) 
 {
@@ -228,7 +246,8 @@ function findFlashUrl($entry)
 /**
  * Check the upload status of a video
  *
- * @param string $videoId The video to check.
+ * @param  string $videoId The video to check.
+ * @return void
  */
 function checkUpload($videoId) 
 {
@@ -266,6 +285,7 @@ function checkUpload($videoId)
 /**
  * Store location of the demo application into session variables.
  *
+ * @return void
  */
 function generateUrlInformation() 
 {
@@ -280,8 +300,9 @@ function generateUrlInformation()
 /**
  * Log a message to the session variable array.
  *
- * @param string $message The message to log.
- * @param string $messageType The type of message to log.
+ * @param  string $message     The message to log.
+ * @param  string $messageType The type of message to log.
+ * @return void
  */
 function logMessage($message, $messageType) 
 {
@@ -308,11 +329,12 @@ function logMessage($message, $messageType)
 /**
  * Update an existing video's meta-data.
  *
- * @param string $newVideoTitle The new title for the video entry.
- * @param string $newVideoDescription The new description for the video entry.
- * @param string $newVideoCategory The new category for the video entry.
- * @param string $newVideoTags The new set of tags for the video entry (whitespace separated).
- * @param string $videoId The video id for the video to be edited.
+ * @param  string $newVideoTitle       The new title for the video entry.
+ * @param  string $newVideoDescription The new description for the video entry.
+ * @param  string $newVideoCategory    The new category for the video entry.
+ * @param  string $newVideoTags        The new set of tags for the video entry (whitespace separated).
+ * @param  string $videoId             The video id for the video to be edited.
+ * @return void
  */
 function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, $newVideoTags, $videoId) 
 {
@@ -388,10 +410,11 @@ function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, 
 /**
  * Create upload form by sending the incoming video meta-data to youtube and retrieving a new entry.
  *
- * @param string $VideoTitle The title for the video entry.
- * @param string $VideoDescription The description for the video entry.
- * @param string $VideoCategory The category for the video entry.
- * @param string $VideoTags The set of tags for the video entry (whitespace separated).
+ * @param  string $videoTitle       The title for the video entry.
+ * @param  string $videoDescription The description for the video entry.
+ * @param  string $videoCategory    The category for the video entry.
+ * @param  string $videoTags        The set of tags for the video entry (whitespace separated).
+ * @return void
  */
 function createUploadForm($videoTitle, $videoDescription, $videoCategory, $videoTags) 
 {
@@ -459,7 +482,8 @@ END;
 /**
  * Deletes a Video.
  *
- * @param string $videoId Id of the video to be deleted.
+ * @param  string $videoId Id of the video to be deleted.
+ * @return void
  */
 function deleteVideo($videoId) 
 {
@@ -510,8 +534,9 @@ function deleteVideo($videoId)
 /**
  * Enables logging.
  *
- * @param string $loggingOption 'on' to turn logging on, 'off' to turn logging off.
- * @param integer|null $maxLogItems Maximum items to log, default is 10.
+ * @param  string       $loggingOption 'on' to turn logging on, 'off' to turn logging off.
+ * @param  integer|null $maxLogItems   Maximum items to log, default is 10.
+ * @return void
  */
 function setLogging($loggingOption, $maxLogItems = 10)
 {
@@ -543,7 +568,8 @@ function loggingEnabled()
 /**
  * Unset a specific session variable.
  *
- * @param string $name Name of the session variable to delete.
+ * @param  string $name Name of the session variable to delete.
+ * @return void
  */
 function clearSessionVar($name) 
 {
@@ -556,7 +582,8 @@ function clearSessionVar($name)
 /**
  * Generate an AuthSub request Link.
  *
- * @param string $nextUrl URL to redirect to after performing the authentication.
+ * @param  string $nextUrl URL to redirect to after performing the authentication.
+ * @return void
  */
 function generateAuthSubRequestLink($nextUrl = null)
 {
@@ -576,7 +603,8 @@ function generateAuthSubRequestLink($nextUrl = null)
 /**
  * Store the developer key provided in the session variables.
  *
- * @param string $developerKey A valid YouTube developer key.
+ * @param  string $developerKey A valid YouTube developer key.
+ * @return void
  */
 function setDeveloperKey($developerKey) 
 {
@@ -592,7 +620,8 @@ function setDeveloperKey($developerKey)
 /**
  * Upgrade the single-use token to a session token.
  *
- * @param string $singleUseToken A valid single use token that is upgradable to a session token.
+ * @param  string $singleUseToken A valid single use token that is upgradable to a session token.
+ * @return void
  */
 function updateAuthSubToken($singleUseToken) 
 {
@@ -631,7 +660,8 @@ function getAuthSubHttpClient()
  * specified video feed. Upon clicking the thumbnails, the video should
  * be presented.
  *
- * @param Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @param  Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @return void
  */
 function echoThumbnails($feed) 
 {
@@ -646,8 +676,9 @@ function echoThumbnails($feed)
 /**
  * Echo the list of videos in the specified feed.
  *
- * @param Zend_Gdata_YouTube_VideoFeed $feed The video feed.
- * @param boolean|null $authenticated If true then the videoList will attempt to create additional forms to edit video meta-data.
+ * @param  Zend_Gdata_YouTube_VideoFeed $feed          The video feed.
+ * @param  boolean|null                 $authenticated If true then the videoList will attempt to create additional forms to edit video meta-data.
+ * @return void
  */
 function echoVideoList($feed, $authenticated = false) 
 {
@@ -702,7 +733,8 @@ function echoVideoList($feed, $authenticated = false)
  * Echo the video embed code, related videos and videos owned by the same user
  * as the specified videoId.
  *
- * @param string $videoId The video
+ * @param  string $videoId The video
+ * @return void
  */
 function echoVideoPlayer($videoId) {
     $youTubeService = new Zend_Gdata_YouTube();
@@ -740,7 +772,7 @@ END;
 /**
  * Returns a feed of videos related to the specified video
  *
- * @param string $videoId The video
+ * @param  string $videoId The video
  * @return Zend_Gdata_YouTube_VideoFeed The feed of related videos
  */
 function getRelatedVideos($videoId) 
@@ -761,7 +793,7 @@ function getRelatedVideos($videoId)
 /**
  * Returns a feed of top rated videos for the specified user
  *
- * @param string $user The username 
+ * @param  string $user The username 
  * @return Zend_Gdata_YouTube_VideoFeed The feed of top rated videos
  */
 function getTopRatedVideosByUser($user) 
@@ -782,7 +814,8 @@ function getTopRatedVideosByUser($user)
 /**
  * Echo video metadata
  * 
- * @param Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @param  Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @return void
  */
 function echoVideoMetadata($entry) 
 {
@@ -824,6 +857,8 @@ function printCacheWarning()
 
 /**
  * Retrieve playlists for the currently authenticated user.
+ *
+ * @return void
  */
 function retrievePlaylists() {
   
@@ -873,8 +908,9 @@ function retrievePlaylists() {
 /**
  * Create a new playlist for the currently authenticated user
  *
- * @param string $playlistTitle Title of the new playlist 
- * @param string $playlistDescription Description for the new playlist
+ * @param  string $playlistTitle       Title of the new playlist 
+ * @param  string $playlistDescription Description for the new playlist
+ * @return void
  */
 function createPlaylist($playlistTitle, $playlistDescription) 
 {
@@ -925,7 +961,8 @@ function createPlaylist($playlistTitle, $playlistDescription)
 /**
  * Delete a playlist
  *
- * @param string $playlistTitle Title of the playlist to be deleted
+ * @param  string $playlistTitle Title of the playlist to be deleted
+ * @return void
  */
 function deletePlaylist($playlistTitle)
 {
@@ -977,9 +1014,10 @@ function deletePlaylist($playlistTitle)
 /**
  * Delete a playlist
  *
- * @param string $newplaylistTitle New title for the playlist to be updated
- * @param string $newPlaylistDescription New description for the playlist to be updated
- * @param string $oldPlaylistTitle Title of the playlist to be updated
+ * @param  string $newplaylistTitle       New title for the playlist to be updated
+ * @param  string $newPlaylistDescription New description for the playlist to be updated
+ * @param  string $oldPlaylistTitle       Title of the playlist to be updated
+ * @return void
  */
 function updatePlaylist($newPlaylistTitle, $newPlaylistDescription, $oldPlaylistTitle) 
 {
@@ -1034,7 +1072,8 @@ function updatePlaylist($newPlaylistTitle, $newPlaylistDescription, $oldPlaylist
 /**
  * Helper function if an unsupported operation is passed into this files main loop.
  *
- * @param array $post (Optional) The post variables that accompanied the operation, if available.
+ * @param  array $post (Optional) The post variables that accompanied the operation, if available.
+ * @return void
  */
 function unsupportedOperation($_POST) 
 {
@@ -1046,5 +1085,3 @@ function unsupportedOperation($_POST)
     }
     print $message;
 }
-
-?>

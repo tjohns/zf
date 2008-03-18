@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -28,12 +29,26 @@
 *
 * To run the sample:
 * php Blogger.php -- --user=email@email.com --pass=password
-*
 */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
-Zend_Loader::loadClass('Zend_Gdata_Query'); 
+
+/**
+ * @see Zend_Gdata_Query
+ */
+Zend_Loader::loadClass('Zend_Gdata_Query');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 
 
@@ -42,20 +57,21 @@ Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @copyright  2005 Zend Technologies
+ * @subpackage Demos
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class SimpleCRUD
 {
     /**
-     * Blog ID used for demo operations
+     * $blogID - Blog ID used for demo operations
      *
      * @var string
      */
     public $blogID; 
 
     /**
-     * Client class used to communicate with the Blogger service
+     * $gdClient - Client class used to communicate with the Blogger service
      *
      * @var Zend_Gdata_Client
      */
@@ -66,8 +82,9 @@ class SimpleCRUD
      * Constructor for the class. Takes in user credentials and generates the  
      * the authenticated client object.
      *
-     * @param string $email The user's email address.
-     * @param string $password The user's password.
+     * @param  string $email    The user's email address.
+     * @param  string $password The user's password.
+     * @return void
      */
     public function __construct($email, $password)
     {
@@ -81,6 +98,8 @@ class SimpleCRUD
      *
      * Once the index is selected by the user, the corresponding blogID is 
      * extracted and stored for easy access. 
+     *
+     * @return void
      */
     public function promptForBlogID()
     {
@@ -100,11 +119,9 @@ class SimpleCRUD
      * whether the post should be added as a draft or as a published
      * post.
      *
-     * @param string $title The title of the blog post.
-     * @param string $content The body of the post.
-     * @param bool $isDraft Whether the post should be added as a draft
-     * or as a published post
-     *
+     * @param  string  $title   The title of the blog post.
+     * @param  string  $content The body of the post.
+     * @param  boolean $isDraft Whether the post should be added as a draft or as a published post
      * @return string The newly created post's ID
      */
     public function createPost($title, $content, $isDraft=False)
@@ -134,8 +151,10 @@ class SimpleCRUD
         return $postID; 
     }
     
-    /* 
+    /**
      * Prints the titles of all the posts in the user's blog.
+     *
+     * @return void
      */
     public function printAllPosts()
     {
@@ -148,12 +167,11 @@ class SimpleCRUD
      * Retrieves the specified post and updates the title and body. Also sets
      * the post's draft status.
      *
-     * @param string $postID The ID of the post to update. PostID in <id> field:
-     *                       tag:blogger.com,1999:blog-blogID.post-postID
-     * @param string $updatedTitle The new title of the post.
-     * @param string $updatedContent The new body of the post.
-     * @param bool $isDraft Whether the post will be published or saved as a draft.
-     *
+     * @param string  $postID         The ID of the post to update. PostID in <id> field:
+     *                                tag:blogger.com,1999:blog-blogID.post-postID
+     * @param string  $updatedTitle   The new title of the post.
+     * @param string  $updatedContent The new body of the post.
+     * @param boolean $isDraft        Whether the post will be published or saved as a draft.
      * @return Zend_Gdata_Entry The updated post. 
      */
     public function updatePost($postID, $updatedTitle, $updatedContent, $isDraft)
@@ -181,10 +199,10 @@ class SimpleCRUD
      * This function uses query parameters to retrieve and print all posts 
      * within a specified date range.
      *
-     * @param string $startDate Beginning date, inclusive. Preferred format is 
-     *                          a RFC-3339 date, though other formats are
-     *                          accepted. 
-     * @param string $endDate End date, exclusive.  
+     * @param  string $startDate Beginning date, inclusive. Preferred format is a RFC-3339 date,
+     *                           though other formats are accepted. 
+     * @param  string $endDate   End date, exclusive.
+     * @return void  
      */
     public function printPostsInDateRange($startDate, $endDate)
     {
@@ -200,10 +218,9 @@ class SimpleCRUD
      * This function creates a new comment and adds it to the specified post.
      * A comment is created as a Zend_Gdata_Entry.
      *
-     * @param string $postID The ID of the post to add the comment to. PostID
-     *                       in the <id> field: tag:blogger.com,1999:blog-blogID.post-postID
-     * @param string $commentText The text of the comment to add. 
-     *
+     * @param  string $postID      The ID of the post to add the comment to. PostID
+     *                             in the <id> field: tag:blogger.com,1999:blog-blogID.post-postID
+     * @param  string $commentText The text of the comment to add. 
      * @return string The ID of the newly created comment.
      */
     public function createComment($postID, $commentText)
@@ -226,7 +243,8 @@ class SimpleCRUD
     /** 
      * This function prints all comments associated with the specified post.
      *
-     * @param string $postID The ID of the post whose comments we'll print.
+     * @param  string $postID The ID of the post whose comments we'll print.
+     * @return void
      */
     public function printAllComments($postID)
     {
@@ -238,10 +256,11 @@ class SimpleCRUD
     /** 
      * This function deletes the specified comment from a post.
      *
-     * @param string $postID The ID of the post where the comment is. PostID in
-     *                       the <id> field: tag:blogger.com,1999:blog-blogID.post-postID
-     * @param string $commentID The ID of the comment to delete. The commentID
-     *                          in the editURL: /feeds/blogID/postID/comments/default/commentID 
+     * @param  string $postID    The ID of the post where the comment is. PostID in
+     *                           the <id> field: tag:blogger.com,1999:blog-blogID.post-postID
+     * @param  string $commentID The ID of the comment to delete. The commentID
+     *                           in the editURL: /feeds/blogID/postID/comments/default/commentID
+     * @return void 
      */
     public function deleteComment($postID, $commentID)
     {
@@ -252,7 +271,8 @@ class SimpleCRUD
     /** 
      * This function deletes the specified post.
      *
-     * @param string $postID The ID of the post to delete.
+     * @param  string $postID The ID of the post to delete.
+     * @return void
      */
     public function deletePost($postID)
     {
@@ -264,7 +284,8 @@ class SimpleCRUD
      * Helper function to print out the titles of all supplied Blogger
      * feeds.
      *
-     * @param Zend_Gdata_Feed The feed to print.
+     * @param  Zend_Gdata_Feed The feed to print.
+     * @return void
      */
     public function printFeed($feed)
     {
@@ -277,7 +298,9 @@ class SimpleCRUD
     }
    
     /**
-     *  Runs the sample.
+     * Runs the sample.
+     *
+     * @return void
      */
     public function run()
     {
@@ -315,12 +338,12 @@ class SimpleCRUD
         echo "Deleting the post titled: " . $updatedPost->title->text . "\n";
         $this->deletePost($postID); 
     }
-    
 }
 
 /**
  * Gets credentials from user.
  *
+ * @param  string $text
  * @return string Index of the blog the user has chosen. 
  */
 function getInput($text)
@@ -348,5 +371,3 @@ if (($user == null) || ($pass == null)) {
 
 $sample = new SimpleCRUD($user, $pass); 
 $sample->run();
-
-

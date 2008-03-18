@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -44,18 +44,37 @@
  * handling.  
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
+
+/**
+ * @see Zend_Gdata_AuthSub
+ */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+
+/**
+ * @see Zend_Gdata_Docs
+ */
 Zend_Loader::loadClass('Zend_Gdata_Docs');
 
 /**
  * Returns a HTTP client object with the appropriate headers for communicating
  * with Google using the ClientLogin credentials supplied.
  *
- * @param string $user The username, in e-mail address format, to authenticate
- * @param string $pass The password for the user specified
+ * @param  string $user The username, in e-mail address format, to authenticate
+ * @param  string $pass The password for the user specified
  * @return Zend_Http_Client
  */
 function getClientLoginHttpClient($user, $pass)
@@ -70,8 +89,8 @@ function getClientLoginHttpClient($user, $pass)
 /**
  * Display list of valid commands.
  *
- * @param string $executable The name of the current script. This is
- *      usually available as $argv[0].
+ * @param  string $executable The name of the current script. This is usually available as $argv[0].
+ * @return void
  */
 function displayHelp($executable)
 {
@@ -91,10 +110,10 @@ function displayHelp($executable)
  *
  * If no arguments are provided, usage information will be provided.
  *
- * @param array $argv The array of command line arguments provided by PHP.
- *          $argv[0] should be the current executable name or '-' if
- *          not available.
- * @param int $argc The size of $argv.
+ * @param  array   $argv The array of command line arguments provided by PHP.
+ *                       $argv[0] should be the current executable name or '-' if not available.
+ * @param  integer $argc The size of $argv.
+ * @return void
  */
 function runCLIVersion($argv, $argc)
 {
@@ -190,9 +209,10 @@ function runCLIVersion($argv, $argc)
  * Displays the titles for the Google Documents entries in the feed. In HTML 
  * mode, the titles are links which point to the HTML version of the document.
  *
- * @param Zend_Gdata_Docs_DocumentListFeed $feed
- * @param boolean $html True if output should be formatted for display in a 
- *     web browser
+ * @param  Zend_Gdata_Docs_DocumentListFeed $feed
+ * @param  boolean                          $html True if output should be formatted for display in
+ *                                          a web browser
+ * @return void
  */
 function printDocumentsFeed($feed, $html) 
 {

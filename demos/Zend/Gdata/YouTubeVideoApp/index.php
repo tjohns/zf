@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -39,9 +40,10 @@ session_start();
 /**
  * Convert HTTP status into normal text.
  *
- * @param number $status HTTP status received after posting syndicated upload
- * @param string $code Alphanumeric description of error
- * @param string $videoId (optional) Video id received back to which the status code refers to
+ * @param  integer $status  HTTP status received after posting syndicated upload
+ * @param  string  $code    Alphanumeric description of error
+ * @param  string  $videoId (optional) Video id received back to which the status code refers to
+ * @return void
  */
 function uploadStatus($status, $code = null, $videoId = null) 
 {
@@ -84,6 +86,8 @@ function developerKeySet()
 
 /** 
  * Helper function to print a form for user to enter the developer key.
+ *
+ * @return void
  */
 function printDeveloperKeyForm()
 {
@@ -98,6 +102,8 @@ END;
 
 /** 
  * Helper function to print a list of authenticated actions for a user.
+ *
+ * @return void
  */
 function printAuthenticatedActions()
 {

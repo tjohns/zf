@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -45,10 +45,29 @@
  * be handled and the online code samples for additional information.
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
+
+/**
+ * @see Zend_Gdata_AuthSub
+ */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+
+/**
+ * @see Zend_Gdata_Calendar
+ */
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 
 /**
@@ -111,6 +130,8 @@ function getAuthSubUrl()
  * a link to the AuthSub URL.
  * 
  * Uses getAuthSubUrl() to get the URL which the user must visit to authenticate
+ *
+ * @return void
  */
 function requestUserLogin($linkText) 
 {
@@ -162,8 +183,8 @@ function processPageLoad()
  * Returns a HTTP client object with the appropriate headers for communicating
  * with Google using the ClientLogin credentials supplied.
  *
- * @param string $user The username, in e-mail address format, to authenticate
- * @param string $pass The password for the user specified
+ * @param  string $user The username, in e-mail address format, to authenticate
+ * @param  string $pass The password for the user specified
  * @return Zend_Http_Client
  */
 function getClientLoginHttpClient($user, $pass) 
@@ -180,8 +201,8 @@ function getClientLoginHttpClient($user, $pass)
  * which allows read-only access to private calendar data using a special token
  * available from within the Calendar UI.
  *
- * @param string $user The username or address of the calendar to be retrieved.
- * @param string $magicCookie The magic cookie token
+ * @param  string $user        The username or address of the calendar to be retrieved.
+ * @param  string $magicCookie The magic cookie token
  * @return void
  */
 function outputCalendarMagicCookie($user, $magicCookie) 
@@ -204,7 +225,7 @@ function outputCalendarMagicCookie($user, $magicCookie)
  * Outputs an HTML unordered list (ul), with each list item representing a
  * calendar in the authenticated user's calendar list.  
  *
- * @param Zend_Http_Client $client The authenticated client object
+ * @param  Zend_Http_Client $client The authenticated client object
  * @return void
  */
 function outputCalendarList($client) 
@@ -225,7 +246,7 @@ function outputCalendarList($client)
  * event ID in the output.  Events are ordered by starttime and include only
  * events occurring in the future.
  *
- * @param Zend_Http_Client $client The authenticated client object
+ * @param  Zend_Http_Client $client The authenticated client object
  * @return void
  */
 function outputCalendar($client) 
@@ -266,9 +287,9 @@ function outputCalendar($client)
  * bound for date queries is exclusive.  See the 'query parameters reference':
  * http://code.google.com/apis/gdata/calendar.html#Parameters
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $startDate The start date in YYYY-MM-DD format
- * @param string $endDate The end date in YYYY-MM-DD format
+ * @param  Zend_Http_Client $client    The authenticated client object
+ * @param  string           $startDate The start date in YYYY-MM-DD format
+ * @param  string           $endDate   The end date in YYYY-MM-DD format
  * @return void
  */
 function outputCalendarByDateRange($client, $startDate='2007-05-01', 
@@ -301,8 +322,8 @@ function outputCalendarByDateRange($client, $startDate='2007-05-01',
  * event on the authenticated user's calendar which matches the search string
  * specified as the $fullTextQuery parameter
  * 
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $fullTextQuery The string for which you are searching
+ * @param  Zend_Http_Client $client        The authenticated client object
+ * @param  string           $fullTextQuery The string for which you are searching
  * @return void
  */
 function outputCalendarByFullTextQuery($client, $fullTextQuery='tennis') 
@@ -331,13 +352,15 @@ function outputCalendarByFullTextQuery($client, $fullTextQuery='tennis')
  * Creates an event on the authenticated user's default calendar with the
  * specified event details.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $title The event title
- * @param string $desc The detailed description of the event
- * @param string $startDate The start date of the event in YYYY-MM-DD format
- * @param string $startTime The start time of the event in HH:MM 24hr format
- * @param string $endTime The end time of the event in HH:MM 24hr format
- * @param string $tzOffset The offset from GMT/UTC in [+-]DD format (eg -08)
+ * @param  Zend_Http_Client $client    The authenticated client object
+ * @param  string           $title     The event title
+ * @param  string           $desc      The detailed description of the event
+ * @param  string           $where
+ * @param  string           $startDate The start date of the event in YYYY-MM-DD format
+ * @param  string           $startTime The start time of the event in HH:MM 24hr format
+ * @param  string           $endDate   The end date of the event in YYYY-MM-DD format
+ * @param  string           $endTime   The end time of the event in HH:MM 24hr format
+ * @param  string           $tzOffset  The offset from GMT/UTC in [+-]DD format (eg -08)
  * @return string The ID URL for the event.
  */
 function createEvent ($client, $title = 'Tennis with Beth', 
@@ -366,8 +389,8 @@ function createEvent ($client, $title = 'Tennis with Beth',
  * Creates an event on the authenticated user's default calendar using 
  * the specified QuickAdd string.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $quickAddText The QuickAdd text for the event
+ * @param  Zend_Http_Client $client       The authenticated client object
+ * @param  string           $quickAddText The QuickAdd text for the event
  * @return string The ID URL for the event
  */
 function createQuickAddEvent ($client, $quickAddText) {
@@ -385,15 +408,15 @@ function createQuickAddEvent ($client, $quickAddText) {
  * calendar with the specified event details. For simplicity, the event 
  * is created as an all day event and does not include a description.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $title The event title
- * @param string $startDate The start date of the event in YYYY-MM-DD format
- * @param string $endDate The end time of the event in HH:MM 24hr format
- * @param string $icon URL pointing to a 16x16 px icon representing the event.
- * @param string $url The URL containing the web content for the event.
- * @param string $height The desired height of the web content pane.
- * @param string $width The desired width of the web content pane.
- * @param string $type The MIME type of the web content.
+ * @param  Zend_Http_Client $client    The authenticated client object
+ * @param  string           $title     The event title
+ * @param  string           $startDate The start date of the event in YYYY-MM-DD format
+ * @param  string           $endDate   The end time of the event in HH:MM 24hr format
+ * @param  string           $icon      URL pointing to a 16x16 px icon representing the event.
+ * @param  string           $url       The URL containing the web content for the event.
+ * @param  string           $height    The desired height of the web content pane.
+ * @param  string           $width     The desired width of the web content pane.
+ * @param  string           $type      The MIME type of the web content.
  * @return string The ID URL for the event.
  */
 function createWebContentEvent ($client, $title = 'World Cup 2006', 
@@ -434,10 +457,11 @@ function createWebContentEvent ($client, $title = 'World Cup 2006',
  * Creates a recurring event on the authenticated user's default calendar with
  * the specified event details.  
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $title The event title
- * @param string $desc The detailed description of the event
- * @param string $recurData The iCalendar recurring event syntax (RFC2445)
+ * @param  Zend_Http_Client $client    The authenticated client object
+ * @param  string           $title     The event title
+ * @param  string           $desc      The detailed description of the event
+ * @param  string           $where
+ * @param  string           $recurData The iCalendar recurring event syntax (RFC2445)
  * @return void
  */
 function createRecurringEvent ($client, $title = 'Tennis with Beth', 
@@ -471,9 +495,9 @@ function createRecurringEvent ($client, $title = 'Tennis with Beth',
 /**
  * Returns an entry object representing the event with the specified ID.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $eventId The event ID string
- * @return Zend_Gdata_Calendar_EventEntry if the event is found, null if it's not
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $eventId The event ID string
+ * @return Zend_Gdata_Calendar_EventEntry|null if the event is found, null if it's not
  */
 function getEvent($client, $eventId) 
 {
@@ -498,10 +522,10 @@ function getEvent($client, $eventId)
  * the title specified.  Also outputs the new and old title
  * with HTML br elements separating the lines
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $eventId The event ID string
- * @param string $newTitle The new title to set on this event 
- * @return Zend_Gdata_Calendar_EventEntry The updated entry
+ * @param  Zend_Http_Client $client   The authenticated client object
+ * @param  string           $eventId  The event ID string
+ * @param  string           $newTitle The new title to set on this event 
+ * @return Zend_Gdata_Calendar_EventEntry|null The updated entry
  */
 function updateEvent ($client, $eventId, $newTitle) 
 {
@@ -529,11 +553,11 @@ function updateEvent ($client, $eventId, $newTitle)
  * to an event and retrieved via the API.  It is not accessible from the
  * calendar web interface.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $eventId The event ID string
- * @param string $name The name of the extended property
- * @param string $value The value of the extended property
- * @return Zend_Gdata_Calendar_EventEntry The updated entry
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $eventId The event ID string
+ * @param  string           $name    The name of the extended property
+ * @param  string           $value   The value of the extended property
+ * @return Zend_Gdata_Calendar_EventEntry|null The updated entry
  */
 function addExtendedProperty ($client, $eventId, 
     $name='http://www.example.com/schemas/2005#mycal.id', $value='1234') 
@@ -554,10 +578,10 @@ function addExtendedProperty ($client, $eventId,
 /**
  * Adds a reminder to the event specified as a parameter.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $eventId The event ID string
- * @param int $minutes Minutes before event to set reminder
- * @return Zend_Gdata_Calendar_EventEntry The updated entry
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $eventId The event ID string
+ * @param  integer          $minutes Minutes before event to set reminder
+ * @return Zend_Gdata_Calendar_EventEntry|null The updated entry
  */
 function setReminder($client, $eventId, $minutes=15)
 {
@@ -584,8 +608,8 @@ function setReminder($client, $eventId, $minutes=15)
  * example purposes only, as it is inefficient to retrieve the entire
  * atom entry only for the purposes of deleting it.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $eventId The event ID string
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $eventId The event ID string
  * @return void
  */
 function deleteEventById ($client, $eventId) 
@@ -599,8 +623,8 @@ function deleteEventById ($client, $eventId)
  * method.  The URL is typically in the format of:
  * http://www.google.com/calendar/feeds/default/private/full/<eventId>
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $url The url for the event to be deleted 
+ * @param  Zend_Http_Client $client The authenticated client object
+ * @param  string           $url    The url for the event to be deleted 
  * @return void
  */
 function deleteEventByUrl ($client, $url) 
