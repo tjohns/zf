@@ -14,7 +14,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/stable">Download the latest stable release.</ulink>
+                    <ulink url="http://framework.zend.com/download">Download the latest stable release.</ulink>
                     This version, available in both <code>.zip</code> and <code>.tar.gz</code> formats, is a good
                     choice for those who are new to Zend Framework.
                 </para>
