@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8699 -->
+<!-- EN-Revision: 8889 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -28,7 +28,7 @@
             <code>Zend_Service_Nirvanix</code> を使う前に、
             まずアカウントを取得する必要があります。詳細な情報は、
             Nirvanix のウェブサイトにある
-            <ulink url="http://nirvanix.com/gettingStarted.aspx">Getting Started</ulink>
+            <ulink url="http://www.nirvanix.com/gettingStarted.aspx">Getting Started</ulink>
             を参照ください。
         </para>
 
@@ -69,7 +69,7 @@
 
         <para>
             Nirvanix の REST サービスは、PHP の
-            <ulink url="http://nirvanix.com/gettingStarted.aspx">SimpleXML</ulink>
+            <ulink url="http://www.php.net/simplexml">SimpleXML</ulink>
             拡張モジュールと <code>Zend_Http_Client</code>
             を使うだけでもうまく操作できます。しかしこの方法だと、
             リクエスト時にセッショントークンを毎回渡したり、
