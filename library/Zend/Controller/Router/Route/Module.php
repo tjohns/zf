@@ -42,7 +42,7 @@ require_once 'Zend/Controller/Request/Abstract.php';
 class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Route_Interface
 {
     /**
-     * @const string URI delimiter
+     * URI delimiter
      */
     const URI_DELIMITER = '/';
 

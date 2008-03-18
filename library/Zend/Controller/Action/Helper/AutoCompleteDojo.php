@@ -14,13 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Action_Helper_AutoComplete_Abstract */
+/**
+ * @see Zend_Controller_Action_Helper_AutoComplete_Abstract
+ */
 require_once 'Zend/Controller/Action/Helper/AutoComplete/Abstract.php';
 
 /**
@@ -29,7 +31,7 @@ require_once 'Zend/Controller/Action/Helper/AutoComplete/Abstract.php';
  * @uses       Zend_Controller_Action_Helper_AutoComplete_Abstract
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -39,7 +41,7 @@ class Zend_Controller_Action_Helper_AutoCompleteDojo extends Zend_Controller_Act
      * Validate data for autocompletion
      * 
      * @param  mixed $data 
-     * @return bool
+     * @return boolean
      */
     public function validateData($data)
     {
@@ -53,8 +55,8 @@ class Zend_Controller_Action_Helper_AutoCompleteDojo extends Zend_Controller_Act
     /**
      * Prepare data for autocompletion
      * 
-     * @param  mixed $data 
-     * @param  bool $keepLayouts 
+     * @param  mixed   $data 
+     * @param  boolean $keepLayouts 
      * @return string
      */
     public function prepareAutoCompletion($data, $keepLayouts = false)

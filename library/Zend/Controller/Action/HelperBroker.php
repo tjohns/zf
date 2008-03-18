@@ -14,19 +14,25 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action
+ * @subpackage Zend_Controller_Action
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
-/** Zend_Controller_Action_Exception */
+/**
+ * @see Zend_Controller_Action_Exception
+ */
 require_once 'Zend/Controller/Action/Exception.php';
 
-/** Zend_Controller_Action_Helper_Abstract */
+/**
+ * @see Zend_Controller_Action_Helper_Abstract
+ */
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
-/** Zend_Loader **/
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
 
 /**

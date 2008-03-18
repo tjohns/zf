@@ -36,14 +36,12 @@ require_once 'Zend/Validate/Interface.php';
  */
 class Zend_Form_Element implements Zend_Validate_Interface
 {
-    /**#@+
-     * Constants
-     * @const string
+    /**
+     * Element Constants
      */
     const DECORATOR = 'DECORATOR';
     const FILTER    = 'FILTER';
     const VALIDATE  = 'VALIDATE';
-    /**#@-*/
 
     /**
      * Default view helper to use

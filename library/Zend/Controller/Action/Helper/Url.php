@@ -14,16 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Action_Helper_Abstract */
+/**
+ * @see Zend_Controller_Action_Helper_Abstract
+ */
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
-/** Zend_Controller_Front */
+/**
+ * @see Zend_Controller_Front
+ */
 require_once 'Zend/Controller/Front.php';
 
 /**
@@ -32,7 +36,7 @@ require_once 'Zend/Controller/Front.php';
  * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -44,7 +48,7 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
      * @param  string $action
      * @param  string $controller
      * @param  string $module
-     * @param  array $params
+     * @param  array  $params
      * @return string
      */
     public function simple($action, $controller = null, $module = null, array $params = null)
@@ -84,8 +88,10 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
      * This method will typically be used for more complex operations, as it
      * ties into the route objects registered with the router.
      *
-     * @param  array $urlOptions Options passed to the assemble method of the Route object.
-     * @param  mixed $name The name of a Route to use. If null it will use the current Route
+     * @param  array   $urlOptions Options passed to the assemble method of the Route object.
+     * @param  mixed   $name       The name of a Route to use. If null it will use the current Route
+     * @param  boolean $reset
+     * @param  boolean $encode
      * @return string Url for the link href attribute.
      */
     public function url($urlOptions = array(), $name = null, $reset = false, $encode = true)
@@ -123,7 +129,7 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
      * @param  string $action
      * @param  string $controller
      * @param  string $module
-     * @param  array $params
+     * @param  array  $params
      * @return string
      */
     public function direct($action, $controller = null, $module = null, array $params = null)

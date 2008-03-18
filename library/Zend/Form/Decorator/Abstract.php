@@ -33,13 +33,11 @@ require_once 'Zend/Form/Decorator/Interface.php';
  */
 abstract class Zend_Form_Decorator_Abstract implements Zend_Form_Decorator_Interface
 {
-    /**#@+
+    /**
      * Placement constants
-     * @const string
      */
     const APPEND  = 'APPEND';
     const PREPEND = 'PREPEND';
-    /**#@-*/
 
     /**
      * Default placement: append
