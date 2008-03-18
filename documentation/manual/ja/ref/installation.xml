@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8888 -->
 <sect1 id="introduction.installation">
 
     <title>インストール</title>
@@ -16,7 +17,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/stable">最新の安定版をダウンロードする</ulink>。
+                    <ulink url="http://framework.zend.com/download">最新の安定版をダウンロードする</ulink>。
                     このバージョンは <code>.zip</code> と <code>.tar.gz</code>
                     の二種類の形式で公開されており、Zend Framework
                     をはじめて使う人におすすめです。
