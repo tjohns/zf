@@ -30,6 +30,16 @@
 class Zend_Loader
 {
     /**
+     * Accumulation of suppressed errors
+     *
+     * Each element is a stdClass object having the following properties that correspond to the values passed to the
+     * error handling method: errno, errstr, errfile, errline, and errcontext.
+     *
+     * @var array
+     */
+    public static $errors = array();
+
+    /**
      * Loads a class from a PHP file.  The filename must be formatted
      * as "$class.php".
      *
@@ -219,8 +229,9 @@ class Zend_Loader
     }
 
     /**
-     * If the raised error appears to be a "file not found" warning, it is suppressed. Otherwise, the raised error
-     * is passed along to be handled normally (this method returns false).
+     * If the raised error appears to be a "file not found" warning, it is suppressed, accumulated, and exposed through
+     * the $errors property. Otherwise, the raised error is passed along to be handled normally (this method returns
+     * false).
      *
      * @param  integer $errno
      * @param  string  $errstr
@@ -231,11 +242,17 @@ class Zend_Loader
      */
     public static function suppressFileNotFoundWarnings($errno, $errstr, $errfile, $errline, array $errcontext)
     {
-        if (preg_match('/failed (to open stream|opening .+ for inclusion)/i', $errstr)) {
-            return;
-        } else {
+        if (!preg_match('/failed (to open stream|opening .+ for inclusion)/i', $errstr)) {
             return false;
         }
+
+        $error = new stdClass();
+        $error->errno      = $errno;
+        $error->errstr     = $errstr;
+        $error->errfile    = $errfile;
+        $error->errline    = $errline;
+        $error->errcontext = $errcontext;
+        self::$errors[] = $error;
     }
 
     /**
