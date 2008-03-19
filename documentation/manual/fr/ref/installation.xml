@@ -1,4 +1,4 @@
-﻿<sect1 id="introduction.installation">
+<sect1 id="introduction.installation">
 
     <title>Installation</title>
 
@@ -12,7 +12,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/stable">Téléchargement de la dernière version stable :</ulink> Cette version, disponible à la fois au format <code>.zip</code> et au format <code>.tar.gz</code>, est un bon choix pour ceux qui débutent avec le Zend Framework.
+                    <ulink url="http://framework.zend.com/download">Téléchargement de la dernière version stable :</ulink> Cette version, disponible à la fois au format <code>.zip</code> et au format <code>.tar.gz</code>, est un bon choix pour ceux qui débutent avec le Zend Framework.
                 </para>
             </listitem>
             <listitem>

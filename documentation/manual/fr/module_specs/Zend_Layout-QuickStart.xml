@@ -1,5 +1,5 @@
 <sect1 id="zend.layout.quickstart">
-    <title>Zend_Layout démarrage rapide</title>
+    <title>Zend_Layout - Démarrage rapide</title>
 
     <para>
         Il y a deux modes d'utilisation de <code>Zend_Layout</code> : avec
@@ -64,7 +64,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?= $this->headTitle() ?></title>
+    <?= $this->headTitle() ?>
     <?= $this->headScript() ?>
     <?= $this->headStyle() ?>
 </head>

@@ -4,11 +4,11 @@
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>Introduction</title>
         <para>
-            Les aides d'action permettent aux développeurs d'injecter, en cours d'exécution et/ou à la demande, des fonctionnalités dans tout contrôleurs d'action qui étend <code>Zend_Controller_Action</code>. Le but des aides d'action est de minimiser la nécessité d'étendre le contrôleur d'action abstrait en y injectant des fonctionnalités communes de contrôleur d'action.
+            Les aides d'action permettent aux développeurs d'injecter, en cours d'exécution et/ou à la demande, des fonctionnalités dans tout contrôleurs d'action qui étendent <code>Zend_Controller_Action</code>. Le but des aides d'action est de minimiser la nécessité d'étendre le contrôleur d'action abstrait en y injectant des fonctionnalités communes de contrôleur d'action.
         </para>
 
         <para>
-            Il y a de nombreuses manières d'utiliser les aides d'action. Les aides d'action utilisent le système de gestionnaire ("Broker"), similaire aux types de gestionnaire vu pour les <link linkend="zend.view.helpers">Zend_View_Helpers</link>, et les <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Les aides d'action (comme les aides de vue <code>Zend_View_Helpers</code>) peuvent être chargés et appelés à la demande, ou ils peuvent être instanciés au début de la requête ("bootstrap") ou au moment de la création des contrôleurs d'action (<code>init()</code>). Pour mieux comprendre ceci, reportez vous à la section d'utilisation ci-dessous.
+            Il y a de nombreuses manières d'utiliser les aides d'action. Les aides d'action utilisent le système de gestionnaire ("Broker"), similaire aux types de gestionnaire vu pour les <link linkend="zend.view.helpers">Zend_View_Helper</link>, et les <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Les aides d'action (comme les aides de vue <code>Zend_View_Helper</code>) peuvent être chargées et appelées à la demande, ou elles peuvent être instanciées au début de la requête ("bootstrap") ou au moment de la création des contrôleurs d'action (<code>init()</code>). Pour mieux comprendre ceci, reportez vous à la section d'utilisation ci-dessous.
         </para>
     </sect2>
 
@@ -16,7 +16,7 @@
         <title>Initialisation des aides</title>
 
         <para>
-            Une aide peut être initialisée de plusieurs manières différentes, basés sur vos besoins aussi bien que la fonctionnalité de l'aide.
+            Une aide peut être initialisée de plusieurs manières différentes, basées sur vos besoins aussi bien que la fonctionnalité de l'aide.
         </para>
 
         <para>
@@ -70,11 +70,11 @@ $this->_helper->FlashMessenger('Nous avons fait quelquechose lors de la dernièr
         <title>Le gestionaire d'aide (Broker)</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code> gére les détails de l'enregistremen des objets d'aide et les chemins de ces aides, ainisi que la récupération des aides à la demande.
+            <code>Zend_Controller_Action_HelperBroker</code> gére les détails de l'enregistrement des objets d'aide et les chemins de ces aides, ainsi que la récupération des aides à la demande.
         </para>
 
         <para>
-            Pour enregistrer une aide dans le gestionnaire, utilisez <code>addHelper</code>:
+            Pour enregistrer une aide dans le gestionnaire, utilisez <code>addHelper</code> :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -82,7 +82,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
         </programlisting>
 
         <para>
-            Bien sûr, isntancier et fournir des aides au gestionnaire est coûteux en temps et en ressource donc deux méthodes existent automatiser les choses légèrement : <code>addPrefix()</code> et <code>addPath()</code>.
+            Bien sûr, instancier et fournir des aides au gestionnaire est coûteux en temps et en ressource donc deux méthodes existent pour automatiser les choses légèrement : <code>addPrefix()</code> et <code>addPath()</code>.
         </para>
 
         <itemizedlist>
@@ -92,7 +92,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-// Ajoute les aides préfixées Mes_Action_Helpers in Mes/Action/Helpers/
+// Ajoute les aides préfixées Mes_Action_Helpers dans Mes/Action/Helpers/
 Zend_Controller_Action_HelperBroker::addPrefix('Mes_Action_Helpers');]]>
                 </programlisting>
             </listitem>
@@ -110,7 +110,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Aides', 'Aide');]]>
         </itemizedlist>
 
         <para>
-            Puisque ces méthodes sont statiques, elles peuvent être appelées en tout point de du déroulement du contrôleur pour ajouter dynamiquement les aides nécessaires.
+            Puisque ces méthodes sont statiques, elles peuvent être appelées en tout point du déroulement du contrôleur pour ajouter dynamiquement les aides nécessaires.
         </para>
 
         <para>
@@ -125,7 +125,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
-            Il existe aussi deux méthodes statiques pour récupérer les aides issues du gestionnaire d'aide : <code>getExistingHelper()</code> et <code>getStaticHelper()</code>.<code>getExistingHelper()</code> récupérera un aide seulement s'il a précédemment été invoqué par ou explicitement enregistré dans le gestionnaire d'aide; la méthode lèvera une exception si non. <code>getStaticHelper()</code> réalise la même chose que <code>getExistingHelper()</code>, mais tentera d'instancier l'aide si elle n'a pas déjà été enregistrée dans la pile des aides. <code>getStaticHelper()</code> est un bon choix pour récupérer les aides que vous voulez configurer.
+            Il existe aussi deux méthodes statiques pour récupérer les aides issues du gestionnaire d'aide : <code>getExistingHelper()</code> et <code>getStaticHelper()</code>. <code>getExistingHelper()</code> récupérera une aide seulement si elle a précédemment été invoquée par ou explicitement enregistrée dans le gestionnaire d'aide ; la méthode lèvera une exception si non. <code>getStaticHelper()</code> réalise la même chose que <code>getExistingHelper()</code>, mais tentera d'instancier l'aide si elle n'a pas déjà été enregistrée dans la pile des aides. <code>getStaticHelper()</code> est un bon choix pour récupérer les aides que vous voulez configurer.
         </para>
 
         <para>
@@ -186,7 +186,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setActionController()</code> est utilisé pour paramétrer le contrôleur d'action courant.
+                    <code>setActionController()</code> est utilisée pour paramétrer le contrôleur d'action courant.
                 </para>
             </listitem>
 
@@ -228,7 +228,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </itemizedlist>
 
         <para>
-            ous pouvez optionnellement inclure une méthode <code>direct()</code> dans votre classe d'aide. Si défini, ceci vous permet de traiter l'aide comme une méthode du gestionnaire, dans le but de faciliter un usage unique de l'aide. Pour exemple, l'aide <link linkend="zend.controller.actionhelpers.redirector">redirector</link> définit <code>direct()</code> comme un alias de <code>goto()</code>, vous permettant d'utiliser l'aide comme ceci :
+            Vous pouvez optionnellement inclure une méthode <code>direct()</code> dans votre classe d'aide. Si défini, ceci vous permet de traiter l'aide comme une méthode du gestionnaire, dans le but de faciliter un usage unique de l'aide. Pour exemple, l'aide <link linkend="zend.controller.actionhelpers.redirector">redirector</link> définit <code>direct()</code> comme un alias de <code>goto()</code>, vous permettant d'utiliser l'aide comme ceci :
         </para>
 
         <programlisting role="php"><![CDATA[<?php

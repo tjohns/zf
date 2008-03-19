@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.memory.overview">
+<sect1 id="zend.memory.overview">
     <title>Présentation</title>
 
     <sect2 id="zend.memory.introduction">
@@ -28,7 +28,7 @@
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Dossier où les blocks de mémoire peuvent être stockés
+    'cache_dir' => './tmp/' // Dossier où les blocks de mémoire peuvent être stockés
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
@@ -66,7 +66,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]>
                     <para>Conteneur de mémoire</para>
                 </listitem>
                 <listitem>
-                    <para>Objet de mémoire vérrouillé</para>
+                    <para>Objet de mémoire verrouillé</para>
                 </listitem>
                 <listitem>
                     <para>Objet de mémoire mobile</para>
@@ -120,10 +120,10 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
 
         <sect3 id="zend.memory.theory-of-operation.locked">
 
-            <title>Objet de mémoire vérrouillé</title>
+            <title>Objet de mémoire verrouillé</title>
 
             <para>
-                Les objets de mémoire vérrouillés sont toujours stockés dans la mémoire. Les données stockées dans la mémoire verrouillée ne sont jamais mis en cache.
+                Les objets de mémoire verrouillés sont toujours stockés dans la mémoire. Les données stockées dans la mémoire verrouillée ne sont jamais mis en cache.
             </para>
 
         </sect3>
@@ -137,7 +137,7 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
             </para>
 
             <para>
-                Le manager de mémoire ne met pas en cache des objets ayant une taille plus pettite que le minimum spécifié dans un soucis de performances. Voir <xref linkend="zend.memory.memory-manager.settings.min-size" /> pour plus de détails.
+                Le manager de mémoire ne met pas en cache des objets ayant une taille plus petite que le minimum spécifié dans un soucis de performances. Voir <xref linkend="zend.memory.memory-manager.settings.min-size" /> pour plus de détails.
             </para>
 
         </sect3>
