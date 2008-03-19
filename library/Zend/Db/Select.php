@@ -836,22 +836,25 @@ class Zend_Db_Select
     /**
      * Render DISTINCT clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderDistinct()
+    protected function _renderDistinct($sql)
     {
         if ($this->_parts[self::DISTINCT]) {
-            return self::SQL_DISTINCT;
+            $sql .= ' ' . self::SQL_DISTINCT;
         }
-        return null;
+
+        return $sql;
     }
 
     /**
      * Render DISTINCT clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderColumns()
+    protected function _renderColumns($sql)
     {
         if (!count($this->_parts[self::COLUMNS])) {
             return null;
@@ -874,15 +877,17 @@ class Zend_Db_Select
                 }
             }
         }
-        return implode(', ', $columns);
+
+        return $sql .= ' ' . implode(', ', $columns);
     }
 
     /**
      * Render FROM clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderFrom()
+    protected function _renderFrom($sql)
     {
         /*
          * If no table specified, use RDBMS-dependent solution
@@ -916,61 +921,68 @@ class Zend_Db_Select
 
         // Add the list of all joins
         if (!empty($from)) {
-            return self::SQL_FROM . ' ' . implode("\n", $from);
+            $sql .= ' ' . self::SQL_FROM . ' ' . implode("\n", $from);
         }
 
-        return null;
+        return $sql;
     }
 
     /**
      * Render WHERE clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderWhere()
+    protected function _renderWhere($sql)
     {
         if ($this->_parts[self::FROM] && $this->_parts[self::WHERE]) {
-            return self::SQL_WHERE . ' ' .  implode(' ', $this->_parts[self::WHERE]);
+            $sql .= ' ' . self::SQL_WHERE . ' ' .  implode(' ', $this->_parts[self::WHERE]);
         }
-        return null;
+
+        return $sql;
     }
 
     /**
      * Render GROUP clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderGroup()
+    protected function _renderGroup($sql)
     {
         if ($this->_parts[self::FROM] && $this->_parts[self::GROUP]) {
             $group = array();
             foreach ($this->_parts[self::GROUP] as $term) {
                 $group[] = $this->_adapter->quoteIdentifier($term, true);
             }
-            return self::SQL_GROUP_BY . ' ' . implode(",\n\t", $group);
+            $sql .= ' ' . self::SQL_GROUP_BY . ' ' . implode(",\n\t", $group);
         }
-        return null;
+
+        return $sql;
     }
 
     /**
      * Render HAVING clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderHaving()
+    protected function _renderHaving($sql)
     {
         if ($this->_parts[self::FROM] && $this->_parts[self::HAVING]) {
-            return self::SQL_HAVING . ' ' . implode(' ', $this->_parts[self::HAVING]);
+            $sql .= ' ' . self::SQL_HAVING . ' ' . implode(' ', $this->_parts[self::HAVING]);
         }
-        return null;
+
+        return $sql;
     }
 
     /**
      * Render ORDER clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderOrder()
+    protected function _renderOrder($sql)
     {
         if ($this->_parts[self::ORDER]) {
             $order = array();
@@ -981,17 +993,19 @@ class Zend_Db_Select
                     $order[] = $this->_adapter->quoteIdentifier($term, true);
                 }
             }
-            return self::SQL_ORDER_BY . ' ' . implode(', ', $order);
+            $sql .= ' ' . self::SQL_ORDER_BY . ' ' . implode(', ', $order);
         }
-        return null;
+
+        return $sql;
     }
 
     /**
      * Render LIMIT OFFSET clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderLimitoffset()
+    protected function _renderLimitoffset($sql)
     {
         $count = 0;
         $offset = 0;
@@ -1010,23 +1024,25 @@ class Zend_Db_Select
          * Add limits clause
          */
         if ($count > 0) {
-            return trim($this->_adapter->limit('', $count, $offset));
+            $sql = trim($this->_adapter->limit($sql, $count, $offset));
         }
 
-        return null;
+        return $sql;
     }
 
     /**
      * Render FOR UPDATE clause
      *
-     * @return string|null
+     * @param string   $sql SQL query
+     * @return string
      */
-    protected function _renderForupdate()
+    protected function _renderForupdate($sql)
     {
         if ($this->_parts[self::FOR_UPDATE]) {
-            return self::SQL_FOR_UPDATE;
+            $sql .= ' ' . self::SQL_FOR_UPDATE;
         }
-        return null;
+
+        return $sql;
     }
 
     /**
@@ -1078,14 +1094,14 @@ class Zend_Db_Select
      */
     public function __toString()
     {
-        $sql = array(self::SQL_SELECT);
+        $sql = self::SQL_SELECT;
         foreach (array_keys(self::$_partsInit) as $part) {
             $method = '_render' . ucfirst($part);
             if (method_exists($this, $method)) {
-                $sql[] = $this->$method();
+                $sql = $this->$method($sql);
             }
         }
-        return implode(' ', array_filter($sql));
+        return $sql;
     }
 
 }
