@@ -11,6 +11,7 @@ library/Zend/Http/Response.php
 library/Zend/Loader.php
 library/Zend/Mime.php
 library/Zend/Mime
+library/Zend/Registry.php
 library/Zend/Uri
 library/Zend/Uri.php
 library/Zend/Validate/Hostname
