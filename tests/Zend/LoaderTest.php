@@ -98,7 +98,7 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             Zend_Loader::loadClass('ClassNonexistent', $dir);
             $this->fail('Zend_Exception was expected but never thrown.');
         } catch (Zend_Exception $e) {
-            $this->assertRegExp('/file(.*)loaded but class(.*)not found/i', $e->getMessage());
+            $this->assertRegExp('/file(.*)does not exist or class(.*)not found/i', $e->getMessage());
         }
     }
 

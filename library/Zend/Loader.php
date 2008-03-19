@@ -85,7 +85,7 @@ class Zend_Loader
 
         if (!class_exists($class, false) && !interface_exists($class, false)) {
             require_once 'Zend/Exception.php';
-            throw new Zend_Exception("File \"$file\" was loaded but class \"$class\" was not found in the file");
+            throw new Zend_Exception("File \"$file\" does not exist or class \"$class\" was not found in the file");
         }
     }
 
