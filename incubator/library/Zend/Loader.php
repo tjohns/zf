@@ -177,10 +177,13 @@ class Zend_Loader
      */
     public static function autoload($class)
     {
+        set_error_handler(array('self', 'suppressFileNotFoundWarnings'));
         try {
             self::loadClass($class);
+            restore_error_handler();
             return $class;
         } catch (Exception $e) {
+            restore_error_handler();
             return false;
         }
     }
@@ -212,6 +215,26 @@ class Zend_Loader
             spl_autoload_register(array($class, 'autoload'));
         } else {
             spl_autoload_unregister(array($class, 'autoload'));
+        }
+    }
+
+    /**
+     * If the raised error appears to be a "file not found" warning, it is suppressed. Otherwise, the raised error
+     * is passed along to be handled normally (this method returns false).
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void|false
+     */
+    public static function suppressFileNotFoundWarnings($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        if (preg_match('/failed (to open stream|opening .+ for inclusion)/i', $errstr)) {
+            return;
+        } else {
+            return false;
         }
     }
 
