@@ -361,11 +361,6 @@ class Zend_Db_Select
      */
     public function where($cond, $value = null, $type = null)
     {
-        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !== 2))) {
-            $value = func_get_args();
-            array_shift($value);
-            $type = null;
-        }
         $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
 
         return $this;
@@ -385,11 +380,6 @@ class Zend_Db_Select
      */
     public function orWhere($cond, $value = null, $type = null)
     {
-        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !== 2))) {
-            $value = func_get_args();
-            array_shift($value);
-            $type = null;
-        }
         $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, false);
 
         return $this;
@@ -793,27 +783,7 @@ class Zend_Db_Select
      */
     protected function _where($condition, $value = null, $type = null, $bool = true)
     {
-        if (is_array($value)) {
-            $count = substr_count($condition, '?');
-            foreach($value as $key => $token) {
-                if (is_numeric($key)) {
-                    if ($count > 0) {
-                        $condition = $this->_adapter->quoteInto($condition, $token, null, 1);
-                    } else {
-                        $condition = $this->_adapter->quoteInto($condition, $token, $type);
-                    }
-                    --$count;
-                } else {
-                    if ($key[0] !== ":") {
-                        $key = ":" . $key;
-                    }
-                    if (strpos($condition, $key) === false) {
-                        throw new Zend_Db_Select_Exception("Invalid token '$key' given");
-                    }
-                    $condition = str_replace($key, $this->_adapter->quote($token), $condition);
-                }
-            }
-        } else if ($value !== null) {
+        if ($value !== null) {
             $condition = $this->_adapter->quoteInto($condition, $value, $type);
         }
 
@@ -825,9 +795,8 @@ class Zend_Db_Select
                 $cond = self::SQL_OR . ' ';
             }
         }
-        $condition = $cond . "($condition)";
-
-        return $condition;
+        
+        return $cond . "($condition)";
     }
 
     /**

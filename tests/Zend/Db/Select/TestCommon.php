@@ -630,6 +630,24 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
                          . $this->_db->quoteIdentifier('subqueryTable') . '))';
         $this->assertEquals($query, $cmp);
     }
+    
+    protected function _selectWhereArray()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id IN (?)", array(1, 2, 3));
+        return $select;
+    }
+    
+    public function testSelectWhereArray()
+    {
+        $select = $this->_selectWhereArray();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+    }
 
     /**
      * test adding more WHERE conditions,
@@ -678,74 +696,28 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
-     * Test support for where() with count, 
-     * e.g. where('id = ?', 1). 
-     */ 
-    protected function _selectWhereWithCount() 
-    { 
-        $product_id = $this->_db->quoteIdentifier('product_id'); 
+     * Test support for where() with a specified type,
+     * e.g. where('id = ?', 1, 'int').
+     */
+    protected function _selectWhereWithType()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $select = $this->_db->select() 
-            ->from('zfproducts') 
-            ->where("$product_id = ? or $product_id = ?", 2, 6); 
-        return $select; 
-    } 
-  
-    public function testSelectWhereWithCount() 
-    { 
-        $select = $this->_selectWhereWithCount(); 
-        $stmt = $this->_db->query($select); 
-        $result = $stmt->fetchAll(); 
-        $this->assertEquals(1, count($result)); 
-        $this->assertEquals(2, $result[0]['product_id']); 
-    } 
-  
-    /** 
-     * Test support for where() with count, 
-     * e.g. where('id = ?', 1). 
-     */ 
-    protected function _selectWhereWithParmArray() 
-    { 
-        $product_id = $this->_db->quoteIdentifier('product_id'); 
-  
-        $select = $this->_db->select() 
-            ->from('zfproducts') 
-            ->where("$product_id = ? or $product_id = ?", array(2,6)); 
-        return $select; 
-    } 
-  
-    public function testSelectWhereWithParmArray() 
-    { 
-        $select = $this->_selectWhereWithParmArray(); 
-        $stmt = $this->_db->query($select); 
-        $result = $stmt->fetchAll(); 
-        $this->assertEquals(1, count($result)); 
-        $this->assertEquals(2, $result[0]['product_id']); 
-    } 
-  
-    /** 
-     * Test support for where() with count, 
-     * e.g. where('id = ?', 1). 
-     */ 
-    protected function _selectWhereWithParmId() 
-    { 
-        $product_id = $this->_db->quoteIdentifier('product_id'); 
-  
-        $select = $this->_db->select() 
-            ->from('zfproducts') 
-            ->where("$product_id = :id1 or $product_id = :id2", array('id1' => 2, 'id2' => 6)); 
-        return $select; 
-    } 
-  
-    public function testSelectWhereWithParmId() 
-    { 
-        $select = $this->_selectWhereWithParmId(); 
-        $stmt = $this->_db->query($select); 
-        $result = $stmt->fetchAll(); 
-        $this->assertEquals(1, count($result)); 
-        $this->assertEquals(2, $result[0]['product_id']); 
-    } 
-  
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id = ?", 2, 'int');
+        return $select;
+    }
+
+    public function testSelectWhereWithType()
+    {
+        $select = $this->_selectWhereWithType();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(2, $result[0]['product_id']);
+    }
+
     /** 
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
