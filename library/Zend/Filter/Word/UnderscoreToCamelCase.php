@@ -24,7 +24,6 @@
  */
 require_once 'Zend/Filter/Word/SeparatorToCamelCase.php';
 
-
 /**
  * @category   Zend
  * @package    Zend_Filter
