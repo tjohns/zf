@@ -244,12 +244,10 @@ if ($queryType === null) {
         break;
     case 'most_recent':
         $query->setFeedType('most recent');
-        $query->setTime('this_week');
         $feed = $yt->getVideoFeed($query);
         break;
     case 'recently_featured':
         $query->setFeedType('recently featured');
-        $query->setTime('this_week');
         $feed = $yt->getVideoFeed($query);
         break;
     case 'top_rated':
