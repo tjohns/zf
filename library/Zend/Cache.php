@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -67,10 +66,12 @@ abstract class Zend_Cache
     /**
      * Factory
      *
-     * @param string $frontend frontend name
-     * @param string $backend backend name
-     * @param array $frontendOptions associative array of options for the corresponding frontend constructor
-     * @param array $backendOptions associative array of options for the corresponding backend constructor
+     * @param string $frontend        frontend name
+     * @param string $backend         backend name
+     * @param array  $frontendOptions associative array of options for the corresponding frontend constructor
+     * @param array  $backendOptions  associative array of options for the corresponding backend constructor
+     * @throws Zend_Cache_Exception
+     * @return Zend_Cache_Frontend
      */
     public static function factory($frontend, $backend, $frontendOptions = array(), $backendOptions = array())
     {
@@ -130,6 +131,8 @@ abstract class Zend_Cache
      * Throw an exception
      *
      * Note : for perf reasons, the "load" of Zend/Cache/Exception is dynamic
+     * @param  string $msg  Message for the exception
+     * @throws Zend_Cache_Exception
      */
     public static function throwException($msg)
     {
@@ -141,7 +144,7 @@ abstract class Zend_Cache
     /**
      * Normalize frontend and backend names to allow multiple words TitleCased
      *
-     * @param  string $name
+     * @param  string $name  Name to normalize
      * @return string
      */
     protected static function _normalizeName($name)
