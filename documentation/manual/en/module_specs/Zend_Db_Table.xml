@@ -1141,7 +1141,7 @@ $table = new Bugs();
 $select  = $table->select()->where('bug_status = ?', 'NEW')
                            ->order('bug_id');
 
-$row = $table->fetchRow($where);]]>
+$row = $table->fetchRow($select);]]>
             </programlisting>
 
         </example>
