@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Wtyczki</title>
 
     <sect2 id="zend.controller.plugins.introduction">
@@ -200,6 +200,9 @@ $front->dispatch();]]>
             obsługi błędów.
         </para>
 
+        <xi:include href="Zend_Controller-Plugins-ActionStack.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Plugins-ActionStack.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Plugins-ErrorHandler.xml" /></xi:fallback>
         </xi:include>

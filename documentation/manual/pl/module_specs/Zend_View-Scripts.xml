@@ -311,7 +311,7 @@ class Zend_View_Smarty implements Zend_View_Interface
      */
     public function getScriptPaths()
     {
-        return $this->_smarty->template_dir;
+        return array($this->_smarty->template_dir);
     }
 
     /**

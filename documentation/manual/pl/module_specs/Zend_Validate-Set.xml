@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Standardowe klasy walidatorów</title>
 
@@ -22,6 +22,17 @@
             Zwraca wartość <code>true</code> tylko wtedy, gdy wartość <code>$value</code> 
             zawiera tylko znaki alfabetu. Ten walidator posiada także opcję, 
             służącą do określenia, czy białe znaki mąją być uznane za prawidłowe.
+        </para>
+    </sect2>
+    
+    <sect2 id="zend.validate.set.barcode">
+        <title>Barcode</title>
+        <para>
+            Ten walidator jest pomocny przy sprawdzaniu poprawności wartości kodu kreskowego. Obecnie obsługuje standardy
+            "<code>UPC-A</code>" (Universal Product Code) oraz "<code>EAN-13</code>" (European Article Number). Metoda 
+            <code>isValid()</code> zwraca wartość <code>true</code> tylko w przypadku poprawnej walidacji poprzez algorytm
+            kodów kreskowych. Powinieneś usunąć wszystkie znaki nie będące cyframi od zera do dziewiątki (0-9) przed
+            podaniem wartości do walidatora.
         </para>
     </sect2>
 
@@ -48,8 +59,12 @@
     <sect2 id="zend.validate.set.date">
         <title>Date</title>
         <para>
-            Zwraca wartość <code>true</code> tylko wtedy, gdy wartość <code>$value</code> jest poprawną datą
-            w formacie <code>YYYY-MM-DD</code>.
+            Zwraca wartość <code>true</code> jeśli wartość <code>$value</code> jest poprawną datą
+            w formacie <code>YYYY-MM-DD</code>. Jeśli podano opcjonalny parametr <code>locale</code> wtedy data będzie
+            sprawdzana zgodnie z podaną lokalizacją. Dodatkowo jeśli podano opcjonalny parametr <code>format</code> będzie
+            on podstawą do sprawdzenia poprawności daty. Sprawdź 
+            <link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link> aby uzyskać szczegóły opcjonalnych
+            parametrów. 
         </para>
     </sect2>
 
@@ -137,7 +152,7 @@
             <code>$value</code> jest większa lub równa od zadanej wartośći
             minimalnej i mniejsza lub równa od zadanej wartości maksymalnej.
             (wtedy gdy zadana wartość maksymalna jest różna od <code>null</code>).
-            Od wersji 1.1.0 metoda <code>setMin()</code> wyrzuca wyjątek jeśli
+            Od wersji 1.5.0 metoda <code>setMin()</code> wyrzuca wyjątek jeśli
             zadana wartość minimalna jest ustawiona na wartość większą od 
             zadanej wartości maksymalnej, a metoda <code>setMax()</code> wyrzuca
             wyjątek jeśli zadana wartość maksymalna jest ustawiona na wartość 
