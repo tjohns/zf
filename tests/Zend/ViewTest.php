@@ -253,7 +253,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         try {
             $view->nonexistantHelper();
-            // @todo: fail if no exception?
+            // @todo  fail if no exception?
         } catch (Zend_View_Exception $e) {
             $this->assertRegexp('/helper [\'a-z]+ not found in path/i', $e->getMessage());
         }
@@ -273,7 +273,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             // attempt to load the helper StubEmpty, whose file exists but
             // does not contain the expected class within
             $view->stubEmpty();	
-            // @todo: fail if no exception?
+            // @todo  fail if no exception?
         } catch (Zend_View_Exception $e) {
             $this->assertRegexp("/['_a-z]+ not found in path/i", $e->getMessage());
         }
@@ -392,7 +392,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('Rendering a template when no script path is set should raise an exception');
         } catch (Exception $e) {
             // success...
-            // @todo: assert something?
+            // @todo  assert something?
         }
     }
 
@@ -517,7 +517,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     {
         $view = new Zend_View();
         unset($view->_path);
-        // @todo: assert something?
+        // @todo  assert something?
     }
 
     public function testSetProtectedThrowsException()
@@ -528,7 +528,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('Should not be able to set protected properties');
         } catch (Exception $e) {
             // success
-            // @todo: assert something?
+            // @todo  assert something?
         }
     }
 
@@ -585,7 +585,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('Protected/private properties cannot be assigned');
         } catch (Exception $e) {
             // success
-            // @todo: assert something?
+            // @todo  assert something?
         }
 
         try {
@@ -593,7 +593,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('Protected/private properties cannot be assigned');
         } catch (Exception $e) {
             // success
-            // @todo: assert something?
+            // @todo  assert something?
         }
 
         try {
@@ -601,7 +601,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('Assign spec requires string or array');
         } catch (Exception $e) {
             // success
-            // @todo: assert something?
+            // @todo  assert something?
         }
     }
 

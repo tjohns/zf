@@ -45,7 +45,7 @@ require_once 'Zend/Loader.php';
 require_once 'Zend/Date.php';
 require_once 'Zend/Locale.php';
 require_once 'Zend/Date/Cities.php';
-// require_once 'Zend/TimeSync.php';
+require_once 'Zend/TimeSync.php';
 
 // echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
@@ -4804,22 +4804,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
     public function testTimesync()
     {
-        // @todo: when the Zend_TimeSync adapter moves out of the incubator,
-        // the following hack to allow it to be loaded should be removed.
-        // see also ZF-954
-        $incubator = dirname(dirname(dirname(__FILE__)))
-            . DIRECTORY_SEPARATOR . 'incubator' . DIRECTORY_SEPARATOR . 'library';
-        $include_path = get_include_path();
-        set_include_path($include_path . PATH_SEPARATOR . $incubator);
-        try {
-            Zend_Loader::loadClass('Zend_TimeSync');
-            Zend_Loader::loadClass('Zend_TimeSync_Ntp');
-        } catch (Zend_Exception $e) {
-            $this->markTestIncomplete($e->getMessage());
-        }
-        set_include_path($include_path);
-        // @todo: end of hack
-
         try {
             $server = new Zend_TimeSync('ntp://pool.ntp.org', 'alias');
             $date1 = $server->getDate();

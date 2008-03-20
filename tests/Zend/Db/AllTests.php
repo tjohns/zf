@@ -89,7 +89,7 @@ class Zend_Db_AllTests
 		self::_addDbTestSuites($suite, 'Firebird');
 
         /**
-         * @todo: self::_addDbTestSuites($suite, 'Odbc');
+         * @todo  self::_addDbTestSuites($suite, 'Odbc');
          */
         self::_addDbTestSuites($suite, 'Pdo_Ibm');
         self::_addDbTestSuites($suite, 'Pdo_Mssql');
@@ -121,7 +121,7 @@ class Zend_Db_AllTests
             'Mysqli' => 'mysqli',
 			'Firebird' => 'interbase',
             /**
-             * @todo: 'Odbc'
+             * @todo  'Odbc'
              */
         );
 
