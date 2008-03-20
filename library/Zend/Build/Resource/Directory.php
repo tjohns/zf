@@ -1,29 +1,27 @@
-<?php
+mee<?php
 
 require_once 'Zend/Build/Resource/Abstract.php';
 
-class Zend_Build_Resource_Directory extends Zend_Build_Resource_Abstract
+class Zend_Build_Resource_Directory extends Zend_Build_Resource_Filesystem 
 {
-
-    protected $_basePath = null;
     
-    public function validate()
+    protected function create()
     {
-        if (isset($this->_parameters['basePath']) && isset($this->_parameters['name'])) {
-            $this->_parameters['directoryPath'] = $this->_parameters['basePath'] . '/' . $this->_parameters['name'];
+        $directory = $this->_parameters['path']; 
+        
+        if (file_exists($directory)) {
+            return;
         }
         
-        if (!isset($this->_parameters['directoryPath'])) {
-            throw new Zend_Build_Exception('"directoryPath" was not supplied to ' . get_class($this));
+        if (!mkdir($directory)) {
+            throw new Zend_Build_Resource_Exception('could not create directory ' . $directory);
         }
         
     }
     
-    public function create()
+    public function getDirname()
     {
-        //echo 'creating directory ' . $this->_parameters['directoryPath'];
-        mkdir($this->_parameters['directoryPath']);
+        return parent::getRealpath() . '/';
     }
-    
     
 }

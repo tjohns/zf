@@ -7,17 +7,38 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
     
     protected $_projectStructure = null;
     
+    /**
+     * @var Zend_Build_Manifest
+     */
+    protected $_buildManifest = null;
+    
+    public function __construct()
+    {
+        $this->_buildManifest = Zend_Build_Manifest::getInstance();
+    }
+    
     public function validate()
     {
         if (isset($this->_parameters['projectProfile'])) {
+            
             // check to see if the projectProfile that exists is sane
+            
         } else {
-            $this->_projectStructure = new SimpleXMLElement($this->_getDefaultProjectStructure());
+            //$this->_projectStructure = new SimpleXMLElement($this->_getDefaultProjectStructure());
         }
         
-        if (!isset($this->_parameter['directory'])) {
-            $this->_parameters['directory'] = realpath('./');
+        if (!isset($this->_parameters['directory'])) {
+            $this->_parameters['directory'] = './';
         }
+        
+        
+        if (!realpath($this->_parameters['directory'])) {
+            if (mkdir($this->_parameters['directory']) === false) {
+                throw new Zend_Tool_Cli_Exception('Could not create directory ' . $this->_parameters['directory']);
+            }
+        }
+        
+        $this->_parameters['directory'] = realpath($this->_parameters['directory']);
         
     }
     
@@ -27,13 +48,13 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
         $basePath = $this->_parameters['directory'];
         $pathArray = array();
         
-        $x = new SimpleXMLIterator($this->_getDefaultProjectStructure());
+        $projectFile = new Zend_Build_Resource_ProjectFile();
         
-        $ri = new RecursiveIteratorIterator($x, RecursiveIteratorIterator::SELF_FIRST);
         $lastDepth = 0;
-        foreach ($ri as $name => $item) {
-
-            $currentDepth = $ri->getDepth();
+        $profileIterator = new RecursiveIteratorIterator($projectFile->getProfile(), RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($profileIterator as $name => $item) {
+            
+            $currentDepth = $profileIterator->getDepth();
             
             if ($currentDepth <= $lastDepth) {
                 array_pop($pathArray);
@@ -50,73 +71,46 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
                 $fullPath .= implode('/', $pathArray);
             }
             
-            $fullPath = rtrim($fullPath, '/') . '/' . $name;
-            
-            echo $fullPath . PHP_EOL;
+            $resource = $this->_buildManifest->getContext('resource', $name);
 
-            array_push($pathArray, $name);
+            if ($resource === null) {
+                throw new Zend_Build_Exception('Context not available.');
+            }
             
-            $lastDepth = $ri->getDepth();
+            $className = $resource->getClassName();
+            
+            Zend_Loader::loadClass($className);
+            $resourceObject = new $className();
+
+            if (!$resourceObject instanceof Zend_Build_Resource_Filesystem) {
+                throw new Zend_Build_Exception('Projects can only deal with file and directory resources.');
+            }
+            
+            $resourceObject->setParameter('basePath', $fullPath);
+            
+            if (count($attrs = $item->attributes()) > 0) {
+                
+                foreach ($attrs as $attrName => $attrValue) {
+                    if ($attrName != 'enabled') {
+                        $resourceObject->setParameter($attrName, $attrValue);
+                    }
+                }
+            }
+            
+            $resourceObject->validate();
+            
+            if (!isset($item->enabled) || (isset($item->enabled) && ($item->enabled != false))) {
+                $resourceObject->execute($actionName);
+            }
+            
+            $dirRemainder = preg_replace('#^' . preg_quote($fullPath, '#') . '#', '', $resourceObject->getDirname());
+            
+            if ($dirRemainder) {
+                array_push($pathArray, trim($dirRemainder, '/'));
+            }
+            
+            $lastDepth = $profileIterator->getDepth();
         }
-    }
-    
-    protected function _getDefaultProjectStructure()
-    {
-        return <<<EOS
-<?xml version="1.0" encoding="UTF-8"?>
-<projectProfile name="default">
-    <applicationDirectory>
-        <apiDirectory enabled="false" />
-        <configsDirectory />
-        <controllersDirectory>
-            <controllerFile name="IndexController.php" />
-            <controllerFile name="ErrorController.php" />
-        </controllersDirectory>
-        <layoutsDirectory />
-        <modelsDirectory />
-        <modulesDirectory enabled="false" />
-        <viewsDirectory>
-            <viewScriptsDirectory>
-                <directory name="index">
-                    <viewScriptFile name="index.phtml" />
-                </directory>
-            </viewScriptsDirectory>
-            <viewHelpersDirectory />
-            <viewFiltersDirectory />
-        </viewsDirectory>
-        <bootstrapFile />        
-    </applicationDirectory>
-    <dataDirectory>
-        <cachesDirectory />
-        <searchIndexesDirectory />
-        <localesDirectory />
-        <logsDirectory />
-        <sessionsDirectory />
-        <uploadsDirectory />
-    </dataDirectory>
-    <docsDirectory>
-    </docsDirectory>
-    <libraryDirectory>
-        <zendFrameworkLibrary />
-    </libraryDirectory>
-    <publicDirectory>
-        <cssDirectory />
-        <jsDirectory />
-        <imagesDirectory />
-        <htaccessFile />
-        <indexFile />
-    </publicDirectory>
-    <scriptsDirectory enabled="false">
-        <jobsDirectory />
-        <buildsDirectory />
-    </scriptsDirectory>
-    <tempDirectory enabled="false">
-    </tempDirectory>
-    <testsDirectory>
-    </testsDirectory>
-</projectProfile>    
-EOS;
-
     }
     
 }

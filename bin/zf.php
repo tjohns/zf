@@ -6,7 +6,7 @@
  */
 define('ZF_BIN_PATH', dirname(__FILE__));
 set_include_path('.:/usr/lib/php');
-set_include_path(get_include_path() . PATH_SEPARATOR . ZF_BIN_PATH . '/../library/' . PATH_SEPARATOR . ZF_BIN_PATH . '/../../repo-trunk/library');
+set_include_path(get_include_path() . PATH_SEPARATOR . ZF_BIN_PATH . '/../library/' . PATH_SEPARATOR . ZF_BIN_PATH . '/../../../repo-trunk/library');
 require_once 'Zend/Loader.php';
 Zend_Loader::registerAutoload();
 /**
