@@ -259,7 +259,6 @@ if ($queryType === null) {
         $feed = $yt->getVideoFeed($query);
         break;
     case 'recently_featured':
-        $yt->enableRequestDebugLogging('/tmp/yt.log');
         $query->setFeedType('recently featured');
         $feed = $yt->getVideoFeed($query);
         break;
