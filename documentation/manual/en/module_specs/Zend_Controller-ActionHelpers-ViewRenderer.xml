@@ -254,7 +254,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code> may be called
+                    <code>initView($path, $prefix, $options)</code> may be called
                     to specify the base view path, class prefix for helper and
                     filter scripts, and <code>ViewRenderer</code> options. You
                     may pass any of the following flags:
@@ -461,7 +461,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                     <para>
                         Internally, the inflector uses the filters
-                        <code>Zend_Filter_Word_CamelCaseToDash</code>, 
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>,
                         <code>Zend_Filter_Word_UnderscoreToSeparator</code>, and
                         <code>Zend_Filter_StringToLower</code>.
                     </para>
@@ -470,7 +470,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:action</code>: CamelCasedWords are separated
-                        by dashes; non-alphanumeric characters are translated to 
+                        by dashes; non-alphanumeric characters are translated to
                         dashes, and the entire string cast to lower case.
                         Examples: "fooBar" becomes "foo-bar"; "foo-barBaz"
                         becomes "foo-bar-baz".
@@ -478,7 +478,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                     <para>
                         Internally, the inflector uses the filters
-                        <code>Zend_Filter_Word_CamelCaseToDash</code>, 
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>,
                         <code>Zend_Filter_PregReplace</code>, and
                         <code>Zend_Filter_StringToLower</code>.
                     </para>
