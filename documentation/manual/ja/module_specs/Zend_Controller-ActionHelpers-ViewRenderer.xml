@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8932 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -253,7 +254,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code>
+                    <code>initView($path, $prefix, $options)</code>
                     は、ビューの基底パスを指定します。
                     また、ヘルパースクリプトとフィルタスクリプトの先頭につけるクラスプレフィックスや
                     <code>ViewRenderer</code> のオプションも設定します。
