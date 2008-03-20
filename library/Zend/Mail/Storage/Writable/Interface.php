@@ -40,7 +40,7 @@ interface Zend_Mail_Storage_Writable_Interface
      * @param string                          $name         global name of folder, local name if $parentFolder is set
      * @param string|Zend_Mail_Storage_Folder $parentFolder parent folder for new folder, else root folder is parent
      * @return null
-     * @throw Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function createFolder($name, $parentFolder = null);
 
@@ -49,7 +49,7 @@ interface Zend_Mail_Storage_Writable_Interface
      *
      * @param string|Zend_Mail_Storage_Folder $name      name or instance of folder
      * @return null
-     * @throw Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function removeFolder($name);
 
@@ -61,27 +61,27 @@ interface Zend_Mail_Storage_Writable_Interface
      * @param string|Zend_Mail_Storage_Folder $oldName name or instance of folder
      * @param string                          $newName new global name of folder
      * @return null
-     * @throw Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function renameFolder($oldName, $newName);
 
     /**
      * append a new message to mail storage
      *
-     * @param string|Zend_Mail_Message|Zend_Mime_Message $message message as string or instance of message class
-     * @param null|string|Zend_Mail_Storage_Folder       $folder  folder for new message, else current folder is taken
-     * @param null|array                                 $flags   set flags for new message, else a default set is used
-     * @throw Zend_Mail_Storage_Exception
+     * @param  string|Zend_Mail_Message|Zend_Mime_Message $message message as string or instance of message class
+     * @param  null|string|Zend_Mail_Storage_Folder       $folder  folder for new message, else current folder is taken
+     * @param  null|array                                 $flags   set flags for new message, else a default set is used
+     * @throws Zend_Mail_Storage_Exception
      */
     public function appendMessage($message, $folder = null, $flags = null);
 
     /**
      * copy an existing message
      *
-     * @param int                             $id     number of message
-     * @param string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
+     * @param  int                             $id     number of message
+     * @param  string|Zend_Mail_Storage_Folder $folder name or instance of targer folder
      * @return null
-     * @throw Zend_Mail_Storage_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function copyMessage($id, $folder);
 
@@ -90,9 +90,9 @@ interface Zend_Mail_Storage_Writable_Interface
      *
      * NOTE: this method can't set the recent flag.
      *
-     * @param int   $id    number of message
-     * @param array $flags new flags for message
-     * @throw Zend_Mail_Storage_Exception
+     * @param  int   $id    number of message
+     * @param  array $flags new flags for message
+     * @throws Zend_Mail_Storage_Exception
      */
     public function setFlags($id, $flags);
 }

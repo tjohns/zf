@@ -441,7 +441,7 @@ class Zend_Filter_Input
 
     /**
      * @return Zend_Filter_Input
-     * @throw Zend_Filter_Exception
+     * @throws Zend_Filter_Exception
      */
     public function process()
     {

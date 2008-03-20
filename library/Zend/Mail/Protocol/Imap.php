@@ -735,7 +735,7 @@ class Zend_Mail_Protocol_Imap
      * @param int|null $to     if null only one message ($from) is fetched, else it's the
      *                         last message, INF means last message avaible
      * @return bool success
-     * @throw Zend_Mail_Protocol_Exception
+     * @throws Zend_Mail_Protocol_Exception
      */
     public function copy($folder, $from, $to = null)
     {
