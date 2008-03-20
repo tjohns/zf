@@ -336,7 +336,9 @@ $akismet->submitHam($data));]]>
                 <para>
                     Wartość użyta do ustawienia nazwy klienta HTTP powinna być
                     w formacie <code>nazwa klienta/wersja | Akismet/wersja</code>.
-                    Domyślna wartość to <code>Zend Framework/0.7.0 | Akismet/1.11</code>.
+                    Domyślna wartość to <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>, 
+                    gdzie <code>ZF-VERSION</code> jest numerem obecnej wersji ZF
+                    przechowywanym w stałej <code>Zend_Framework::VERSION</code>.
                 </para>
             </listitem>
         </itemizedlist>

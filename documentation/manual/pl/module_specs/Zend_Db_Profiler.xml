@@ -40,15 +40,16 @@ $db->getProfiler()->setEnabled(true);]]>
         </programlisting>
         
         <para>
-            The value of the '<code>profiler</code>' option is flexible. It is interpreted differently depending on its
-            type.  Most often, you should use a simple boolean value, but other types enable you to customize the
-            profiler behavior.
+            Wartość opcji '<code>profiler</code>' jest dość elastyczna. Jest
+            ona interpretowana zależnie id jej typu. W większości przypadków 
+            powinieneś użyć wartości logicznej, ale inne typy pozwalają na
+            dostosowanie zachowania profilera do własnych potrzeb.
         </para>
 
         <para>
-            A boolean argument sets the profiler to enabled if it is a <code>true</code> value, or disabled if
-            <code>false</code>.  The profiler class is the adapter's default profiler class,
-            <code>Zend_Db_Profiler</code>.
+            Parametr logiczny włącza profiler jeśli ma wartość
+            <code>true</code>, lub wyłącza jeśli ma wartość <code>false</code>.  
+            Klasą profilera domyślnie jest klasa <code>Zend_Db_Profiler</code>.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = true;
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
@@ -56,8 +57,10 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
         </para>
 
         <para>
-            An instance of a profiler object makes the adapter use that object.  The object type must be
-            <code>Zend_Db_Profiler</code> or a subclass thereof. Enabling the profiler is done separately.
+            Przekazanie instancji obiektu profilera powoduje jej użycie przez
+            sterownik bazy danych. Musi to być obiekt klasy 
+            <code>Zend_Db_Profiler</code> lub klasy ją rozszerzającej. Aktywacja
+            profilera odbywa się osobno.
             <programlisting role="php"><![CDATA[
 $profiler = MyProject_Db_Profiler();
 $profiler->setEnabled(true);
@@ -67,12 +70,16 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
         </para>
 
         <para>
-            The argument can be an associative array containing any or all of the keys '<code>enabled</code>',
-            '<code>instance</code>', and '<code>class</code>'. The '<code>enabled</code>' and '<code>instance</code>'
-            keys correspond to the boolean and instance types documented above. The '<code>class</code>' key is used
-            to name a class to use for a custom profiler. The class must be <code>Zend_Db_Profiler</code> or a
-            subclass. The class is instantiated with no constructor arguments. The '<code>class</code>' option is
-            ignored when the '<code>instance</code>' option is supplied.
+            Argument może być tablicą asocjacyjną zawierającą wszystkie lub
+            jeden z kluczy '<code>enabled</code>', '<code>instance</code>', oraz
+            '<code>class</code>'. Klucz '<code>enabled</code>' odpowiada wartości
+            logicznej, a '<code>instance</code>' wartości instancji, obie są
+            opisane powyżej. Klucz '<code>class</code>' jest używany do podania
+            nazwy klasy jaka ma być użyta we własnym profilerze. Musi być to
+            obiekt klasy <code>Zend_Db_Profiler</code> lub klasy ją rozszerzającej. 
+            Instancja klasy jest tworzona bez żadnych argumentów. Opcja
+            '<code>class</code>' jest ingorowana jeśli podana jest opcja
+            '<code>instance</code>'.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = array(
     'enabled' => true,
@@ -83,14 +90,17 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
         </para>
 
         <para>
-            Finally, the argument can be an object of type <code>Zend_Config</code> containing properties, which are treated as the array keys described above.  For example, a file "config.ini" might contain the following data:
+            Ostatecznie, argument może być obiektem klasy <code>Zend_Config</code> 
+            zawierającym właściwości, które są traktowane jako klucze tablicy
+            opisane powyżej. Przykładowo plik "config.ini" może zawierać
+            następujące dane:
             <programlisting role="ini"><![CDATA[
 [main]
 db.profiler.class   = "MyProject_Db_Profiler"
 db.profiler.enabled = true]]>
             </programlisting>
 
-            This configuration can be applied by the following PHP code:
+            Konfiguracja może być przekazana za pomocą takiego kodu PHP:
 
             <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('config.ini', 'main');
@@ -98,7 +108,7 @@ $params['profiler'] = $config->db->profiler;
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             </programlisting>
             
-            The '<code>instance</code>' property may be used as in the following:
+            Właściwość '<code>instance</code>' może być użyta w następujący sposób:
             <programlisting role="php"><![CDATA[
 $profiler = new MyProject_Db_Profiler();
 $profiler->setEnabled(true);

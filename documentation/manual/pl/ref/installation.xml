@@ -18,7 +18,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/stable">Ściągnij najnowszą stabilną wersję.</ulink>
+                    <ulink url="http://framework.zend.com/download">Ściągnij najnowszą stabilną wersję.</ulink>
                     Ta wersja, dostępna w formatach <code>.zip</code> oraz
                     <code>.tar.gz</code>, jest dobrym wyborem dla początkujących
                     z Zend Framework.

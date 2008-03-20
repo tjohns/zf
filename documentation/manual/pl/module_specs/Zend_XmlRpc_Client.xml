@@ -369,7 +369,7 @@ try {
 
     $client->call('bar', array($arg1, $arg2));
 
-} catch (Zend_XmlRpc_HttpException $e) {
+} catch (Zend_XmlRpc_Client_HttpException $e) {
 
     // $e->getCode() zwraca 404
     // $e->getMessage() zwraca "Not found"
@@ -416,7 +416,7 @@ try {
 
     $client->call('badMethod');
 
-} catch (Zend_XmlRpc_FaultException $e) {
+} catch (Zend_XmlRpc_Client_FaultException $e) {
 
     // $e->getCode() zwraca 1
     // $e->getMessage() zwraca "Unknown method"
@@ -428,7 +428,7 @@ try {
             <para>
                 Gdy metoda <code>call()</code> jest użyta do przeprowadzenia
                 żądania, przy wystąpieniu błędu zostanie wyrzucony wyjątek
-                <code>Zend_XmlRpc_FaultException</code>. Obiekt
+                <code>Zend_XmlRpc_Client_FaultException</code>. Obiekt
                 <code>Zend_XmlRpc_Response</code> zawierający błąd będzie także
                 dostępny przez wywołanie metody <code>getLastResponse()</code>.
             </para>
