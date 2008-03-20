@@ -356,7 +356,7 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
     }
 
     /**
-     * @teturn string
+     * @return string
      */
     public function getExpression()
     {
