@@ -35,7 +35,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     protected $_regex = null;
     protected $_defaults = array();
     protected $_reverse = null;
-
+    protected $_map = array();
     protected $_values = array();
 
     /**
@@ -132,7 +132,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
 
         return $return;
     }
-    
+
     /**
      * Assembles a URL path defined by this route
      *
@@ -145,7 +145,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
             require_once 'Zend/Controller/Router/Exception.php';
             throw new Zend_Controller_Router_Exception('Cannot assemble. Reversed route is not specified.');
         }
-        
+
         $defaultValuesMapped  = $this->_getMappedValues($this->_defaults, true, false);
         $matchedValuesMapped  = $this->_getMappedValues($this->_values, true, false);
         $dataValuesMapped     = $this->_getMappedValues($data, true, false);
@@ -159,7 +159,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
                 }
             }
         }
-        
+
         // merge all the data together, first defaults, then values matched, then supplied
         $mergedData = $defaultValuesMapped;
         $mergedData = $this->_arrayMergeNumericKeys($mergedData, $matchedValuesMapped);
@@ -198,9 +198,9 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     public function getDefaults() {
         return $this->_defaults;
     }
-    
+
     /**
-     * _arrayMergeNumericKeys() - allows for a strict key (numeric's included) array_merge.  
+     * _arrayMergeNumericKeys() - allows for a strict key (numeric's included) array_merge.
      * php's array_merge() lacks the ability to merge with numeric keys.
      *
      * @param array $array1
@@ -215,6 +215,6 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
         }
         return $returnArray;
     }
-    
+
 
 }
