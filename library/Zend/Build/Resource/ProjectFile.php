@@ -26,7 +26,7 @@ class Zend_Build_Resource_ProjectFile extends Zend_Build_Resource_File
         return <<<EOS
 <?xml version="1.0" encoding="UTF-8"?>
 <projectProfile name="default">
-    <projectFile name="blah"/>
+    <projectFile />
     <applicationDirectory>
         <apisDirectory enabled="false" />
         <configsDirectory />
