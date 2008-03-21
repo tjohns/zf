@@ -533,7 +533,7 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-2693
+     * @see ZF-2693
      */
     public function testForcingCamelCasedActionsNotRequestedWithWordSeparatorsShouldRaiseNotices()
     {
@@ -555,6 +555,22 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Controller_Exception $e) {
             restore_error_handler();
             $this->fail('camelCased actions should succeed when forced');
+        }
+    }
+
+    /**
+     * @see ZF-2887
+     */
+    public function testGetControllerClassThrowsExceptionIfNoDefaultModuleDefined()
+    {
+        $this->_dispatcher->setControllerDirectory(array());
+
+        $request = new Zend_Controller_Request_Simple();
+        $request->setControllerName('empty');
+        try {
+            $class = $this->_dispatcher->getControllerClass($request);
+        } catch (Zend_Controller_Exception $e) {
+            $this->assertContains('No default module', $e->getMessage());
         }
     }
 }
