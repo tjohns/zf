@@ -1140,6 +1140,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function clearValidators()
     {
         $this->_validators = array();
+        return $this;
     }
 
     /**
