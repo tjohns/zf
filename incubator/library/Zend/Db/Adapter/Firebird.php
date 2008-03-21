@@ -472,13 +472,15 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Firebird_Exception("LIMIT argument offset=$offset is not valid");
         }
 
-        $sql = substr_replace($sql, "select first $count skip $offset ", stripos($sql, 'select'), 6);
-
-        /* compatible with FB2
-        $sql .= " rows $count";
-        if ($offset > 0) {
-            $sql .= " to $offset";
-        }*/
+		if (trim($sql) == ''){
+			//Only compatible with FB 2.0 or newer
+			//ZF 1.5.0 don't support limit sql syntax that don't only append texto to sql, fixed in 1.5.1
+			$sql .= " rows $count";
+			if ($offset > 0)
+				$sql .= " to $offset";
+		}
+		else
+			$sql = substr_replace($sql, "select first $count skip $offset ", stripos($sql, 'select'), 6);
 
         return $sql;
     }
