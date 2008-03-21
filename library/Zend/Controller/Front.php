@@ -141,7 +141,7 @@ class Zend_Controller_Front
      *
      * @return void
      */
-    private function __construct()
+    protected function __construct()
     {
         $this->_plugins = new Zend_Controller_Plugin_Broker();
     }
