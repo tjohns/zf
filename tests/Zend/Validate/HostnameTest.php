@@ -224,4 +224,30 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Validate_Hostname::ALLOW_DNS, $this->_validator->getAllow());
     }
 
+    /**
+     * @see ZF-2861
+     */
+    public function testIpValidatorMessagesShouldBeTranslated()
+    {
+        require_once 'Zend/Validate/Ip.php';
+        $ipValidator = new Zend_Validate_Ip();
+        require_once 'Zend/Translate.php';
+        $translations = array(
+            'notIpAddress' => 'this is the IP error message',
+        );
+        $translator = new Zend_Translate('array', $translations);
+        $this->_validator->setTranslator($translator)->setIpValidator($ipValidator);
+
+        $this->_validator->isValid('0.239,512.777');
+        $messages = $ipValidator->getMessages();
+        $found = false;
+        foreach ($messages as $code => $message) {
+            if (array_key_exists($code, $translations)) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found);
+        $this->assertEquals($translations[$code], $message);
+    }
 }
