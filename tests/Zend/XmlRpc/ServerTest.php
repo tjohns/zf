@@ -1,8 +1,14 @@
 <?php
+// Call Zend_XmlRpc_ServerTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_XmlRpc_ServerTest::main');
+}
+
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Request.php';
 require_once 'Zend/XmlRpc/Response.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Test case for Zend_XmlRpc_Server
@@ -18,6 +24,17 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
      * @var Zend_XmlRpc_Server
      */
     protected $_server;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_ServerTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     /**
      * Setup environment
@@ -282,7 +299,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $request->addParam($struct);
         $response = $this->_server->handle($request);
 
-        $this->assertTrue($response instanceof Zend_XmlRpc_Response, $response->__toString());
+        $this->assertTrue($response instanceof Zend_XmlRpc_Response, $response->__toString() . "\n\n" . $request->__toString());
         $returns = $response->getReturnValue();
         $this->assertTrue(is_array($returns));
         $this->assertEquals(2, count($returns));
@@ -403,6 +420,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $request->setMethod('test1');
         $request->addParam('value');
         $response = $this->_server->handle($request);
+        $this->assertFalse($response instanceof Zend_XmlRpc_Fault);
         $this->assertEquals('String: value', $response->getReturnValue());
     }
 
@@ -413,6 +431,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $request->setMethod('test2');
         $request->addParam(array('value1', 'value2'));
         $response = $this->_server->handle($request);
+        $this->assertFalse($response instanceof Zend_XmlRpc_Fault);
         $this->assertEquals('value1; value2', $response->getReturnValue());
     }
 
@@ -423,6 +442,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $request->setMethod('Zend_XmlRpc_Server_testFunction');
         $request->setParams(array(array('value1'), 'key'));
         $response = $this->_server->handle($request);
+        $this->assertFalse($response instanceof Zend_XmlRpc_Fault);
         $this->assertEquals('key: value1', $response->getReturnValue());
     }
 
@@ -474,6 +494,21 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($response));
         $this->assertTrue(isset($response['faultCode']));
         $this->assertEquals(605, $response['faultCode']);
+    }
+
+    /**
+     * @see ZF-2872
+     */
+    public function testCanMarshalBase64Requests()
+    {
+        $this->_server->setClass('Zend_XmlRpc_Server_testClass', 'test');
+        $data    = base64_encode('this is the payload');
+        $param   = array('type' => 'base64', 'value' => $data);
+        $request = new Zend_XmlRpc_Request('test.base64', array($param));
+
+        $response = $this->_server->handle($request);
+        $this->assertFalse($response instanceof Zend_XmlRpc_Fault);
+        $this->assertEquals($data, $response->getReturnValue());
     }
 }
 
@@ -551,6 +586,17 @@ class Zend_XmlRpc_Server_testClass
     protected function _test3()
     {
     }
+
+    /**
+     * Test base64 encoding in request and response
+     * 
+     * @param  base64 $data 
+     * @return base64
+     */
+    public function base64($data)
+    {
+        return $data;
+    }
 }
 
 class Zend_XmlRpc_Server_testResponse extends Zend_XmlRpc_Response
@@ -559,4 +605,9 @@ class Zend_XmlRpc_Server_testResponse extends Zend_XmlRpc_Response
 
 class Zend_XmlRpc_Server_testRequest extends Zend_XmlRpc_Request
 {
+}
+
+// Call Zend_XmlRpc_ServerTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_ServerTest::main") {
+    Zend_XmlRpc_ServerTest::main();
 }
