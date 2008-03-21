@@ -14,13 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Action_Helper_Abstract */
+/**
+ * @see Zend_Controller_Action_Helper_Abstract
+ */
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
@@ -29,7 +31,7 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
  * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -37,23 +39,24 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
 {
     /**
      * Suppress exit when sendJson() called
-     * @var bool
+     *
+     * @var boolean
      */
     public $suppressExit = false;
 
     /**
      * Validate autocompletion data
      * 
-     * @param  mixed $data 
-     * @return bool
+     * @param  mixed $data
+     * @return boolean
      */
     abstract public function validateData($data);
 
     /**
      * Prepare autocompletion data
      * 
-     * @param  mixed $data 
-     * @param  bool $keepLayouts 
+     * @param  mixed   $data 
+     * @param  boolean $keepLayouts 
      * @return mixed
      */
     abstract public function prepareAutoCompletion($data, $keepLayouts = false);
@@ -61,10 +64,13 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
     /**
      * Disable layouts and view renderer
      * 
-     * @return Zend_Controller_Action_Helper_AutoComplete_Abstract
+     * @return Zend_Controller_Action_Helper_AutoComplete_Abstract Provides a fluent interface
      */
     public function disableLayouts()
     {
+        /**
+         * @see Zend_Layout
+         */
         require_once 'Zend/Layout.php';
         if (null !== ($layout = Zend_Layout::getMvcInstance())) {
             $layout->disableLayout();
@@ -79,9 +85,9 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
      * Encode data to JSON
      * 
      * @param  mixed $data 
-     * @param  bool $keepLayouts 
-     * @return string
+     * @param  bool  $keepLayouts 
      * @throws Zend_Controller_Action_Exception
+     * @return string
      */
     public function encodeJson($data, $keepLayouts = false)
     {
@@ -89,6 +95,9 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
             return Zend_Controller_Action_HelperBroker::getStaticHelper('Json')->encodeJson($data, $keepLayouts);
         }
 
+        /**
+         * @see Zend_Controller_Action_Exception
+         */
         require_once 'Zend/Controller/Action/Exception.php';
         throw new Zend_Controller_Action_Exception('Invalid data passed for autocompletion');
     }
@@ -100,7 +109,7 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
      * information, and sends response.
      * 
      * @param  mixed $data 
-     * @param  bool $keepLayouts 
+     * @param  bool  $keepLayouts 
      * @return string|void
      */
     public function sendAutoCompletion($data, $keepLayouts = false)
@@ -125,8 +134,8 @@ abstract class Zend_Controller_Action_Helper_AutoComplete_Abstract extends Zend_
      * response.
      * 
      * @param  mixed $data 
-     * @param  bool $sendNow 
-     * @param  bool $keepLayouts 
+     * @param  bool  $sendNow 
+     * @param  bool  $keepLayouts 
      * @return string|void
      */
     public function direct($data, $sendNow = true, $keepLayouts = false)

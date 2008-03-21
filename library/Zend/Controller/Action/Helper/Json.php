@@ -14,13 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Action_Helper_Abstract */
+/**
+ * @see Zend_Controller_Action_Helper_Abstract
+ */
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
@@ -29,7 +31,7 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
  * @uses       Zend_Controller_Action_Helper_Abstract
  * @category   Zend
  * @package    Zend_Controller
- * @subpackage Action_Helper
+ * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -37,7 +39,7 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
 {
     /**
      * Suppress exit when sendJson() called
-     * @var bool
+     * @var boolean
      */
     public $suppressExit = false;
 
@@ -48,17 +50,24 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
      * 'application/json', and disables layouts and viewRenderer (if being 
      * used).
      *
-     * @param  mixed $data
-     * @param  bool  $keepLayouts
+     * @param  mixed   $data
+     * @param  boolean $keepLayouts
+     * @throws Zend_Controller_Action_Helper_Json
      * @return string
      */
     public function encodeJson($data, $keepLayouts = false)
     {
+        /**
+         * @see Zend_View_Helper_Json
+         */
         require_once 'Zend/View/Helper/Json.php';
         $jsonHelper = new Zend_View_Helper_Json();
         $data = $jsonHelper->json($data, $keepLayouts);
 
         if (!$keepLayouts) {
+            /**
+             * @see Zend_Controller_Action_HelperBroker
+             */
             require_once 'Zend/Controller/Action/HelperBroker.php';
             Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
         }
@@ -69,9 +78,9 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
     /**
      * Encode JSON response and immediately send
      * 
-     * @param  mixed $data 
-     * @param  bool $keepLayouts 
-     * @return void
+     * @param  mixed   $data 
+     * @param  boolean $keepLayouts 
+     * @return string|void
      */
     public function sendJson($data, $keepLayouts = false)
     {
@@ -93,9 +102,9 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
      * Allows encoding JSON. If $sendNow is true, immediately sends JSON 
      * response. 
      * 
-     * @param  mixed $data 
-     * @param  bool $sendNow 
-     * @param  bool $keepLayouts 
+     * @param  mixed   $data 
+     * @param  boolean $sendNow 
+     * @param  boolean $keepLayouts 
      * @return string|void
      */
     public function direct($data, $sendNow = true, $keepLayouts = false)
