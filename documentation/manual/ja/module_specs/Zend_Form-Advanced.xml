@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8474 -->
+<!-- EN-Revision: 8981 -->
 <sect1 id="zend.form.advanced">
     <title>Zend_Form の高度な使用法</title>
 
@@ -241,7 +241,7 @@
             <programlisting role="php"><![CDATA[<?php
 class My_Form_Registration extends Zend_Form
 {
-    public function __construct($options = null)
+    public function init()
     {
         // ユーザサブフォーム (ユーザ名とパスワード) を作成します
         $user = new Zend_Form_SubForm();

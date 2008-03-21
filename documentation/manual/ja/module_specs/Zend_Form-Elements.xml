@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8748 -->
+<!-- EN-Revision: 8981 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -1270,6 +1270,13 @@ decorators.label.decorator = "Label"
         </itemizedlist>
 
         <para>
+            要素を継承する際に主に使用するメソッドは次の 2 つです。
+            <code>init()</code> で独自の初期化ロジックをあなたの要素に追加し、
+            <code>loadDefaultDecorators()</code>
+            でデフォルトのデコレータのリストをあなたの要素に設定します。,
+        </para>
+
+        <para>
             たとえば、あなたが作成するフォーム上のテキストボックスでは、すべて
             <code>StringTrim</code> フィルタが必要で、
             かつ正規表現による入力検証を行うことになるとしましょう。
@@ -1282,7 +1289,7 @@ decorators.label.decorator = "Label"
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    public function __construct($name, $options = null)
+    public function init()
     {
         $this->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator')
              ->addFilters('StringTrim')
@@ -1291,7 +1298,6 @@ class My_Element_Text extends Zend_Form_Element
              ->setAttrib('size', 30)
              ->setAttrib('maxLength', 45)
              ->setAttrib('class', 'text');
-        parent::__construct($name, $options);
     }
 }
 ?>]]></programlisting>
@@ -1313,7 +1319,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
 
         <para>
             <code>Zend_Form_Element</code> を継承したクラスでオーバーライドしたくなる
-            メソッドとして、<code>_loadDefaultDecorators()</code>
+            その他のメソッドとして、<code>loadDefaultDecorators()</code>
             があります。このメソッドは、条件付きで
             要素にデフォルトのデコレータセットを読み込みます。
             継承したクラスで、このデコレータ群を置き換えることができます。
@@ -1322,7 +1328,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
         $this->addDecorator('ViewHelper')
              ->addDecorator('DisplayError')

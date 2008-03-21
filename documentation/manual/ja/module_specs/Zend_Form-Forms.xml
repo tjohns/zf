@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8604 -->
+<!-- EN-Revision: 8981 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -1605,14 +1605,14 @@ decorators.form.decorator = "Form"
         </itemizedlist>
 
         <para>
-            一般的な使用法としては、
-            コンストラクタでフォーム要素などの設定を行います。
+            一般的な使用法としては、<code>init()</code>
+            メソッドでフォーム要素などの設定を行います。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class My_Form_Login extends Zend_Form
 {
-    public function __construct($options = null)
+    public function init()
     {
         $username = new Zend_Form_Element_Text('username');
         $username->class = 'formtext';
@@ -1665,6 +1665,26 @@ $form = new My_Form_Login();
             設定ファイルは不要です (この例はかなり単純化していることに注意しましょう。
             バリデーションや要素のフィルタなどは省略しています)。
         </para>
+
+        <para>
+            独自のフォームを作成する理由としてもうひとつよくあるのが、
+            デフォルトのデコレータを定義したいというものです。
+            この場合は <code>loadDefaultDecorators()</code> メソッドを上書きします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_Form_Login extends Zend_Form
+{
+    public function loadDefaultDecorators()
+    {
+        $this->setDecorators(array(
+            'FormElements',
+            'Fieldset',
+            'Form'
+        ));
+    }
+}
+]]></programlisting>
     </sect2>
 </sect1>
 <!--
