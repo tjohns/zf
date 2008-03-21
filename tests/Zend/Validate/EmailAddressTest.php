@@ -362,4 +362,38 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
     }
+
+    /**
+     * @see ZF-2861
+     */
+    public function testHostnameValidatorMessagesShouldBeTranslated()
+    {
+        require_once 'Zend/Validate/Hostname.php';
+        $hostnameValidator = new Zend_Validate_Hostname();
+        require_once 'Zend/Translate.php';
+        $translations = array(
+            'hostnameIpAddressNotAllowed' => 'hostnameIpAddressNotAllowed translation',
+            'hostnameUnknownTld' => 'hostnameUnknownTld translation',
+            'hostnameDashCharacter' => 'hostnameDashCharacter translation',
+            'hostnameInvalidHostnameSchema' => 'hostnameInvalidHostnameSchema translation',
+            'hostnameUndecipherableTld' => 'hostnameUndecipherableTld translation',
+            'hostnameInvalidHostname' => 'hostnameInvalidHostname translation',
+            'hostnameInvalidLocalName' => 'hostnameInvalidLocalName translation',
+            'hostnameLocalNameNotAllowed' => 'hostnameLocalNameNotAllowed translation',
+        );
+        $translator = new Zend_Translate('array', $translations);
+        $this->_validator->setTranslator($translator)->setHostnameValidator($hostnameValidator);
+
+        $this->_validator->isValid('_XX.!!3xx@0.239,512.777');
+        $messages = $hostnameValidator->getMessages();
+        $found = false;
+        foreach ($messages as $code => $message) {
+            if (array_key_exists($code, $translations)) {
+                $this->assertEquals($translations[$code], $message);
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found);
+    }
 }

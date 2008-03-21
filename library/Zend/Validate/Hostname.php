@@ -281,7 +281,7 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         $this->_setValue($valueString);
 
         // Check input against IP address schema
-        if ($this->_ipValidator->isValid($valueString)) {
+        if ($this->_ipValidator->setTranslator($this->getTranslator())->isValid($valueString)) {
             if (!($this->_allow & self::ALLOW_IP)) {
                 $this->_error(self::IP_ADDRESS_NOT_ALLOWED);
                 return false;
