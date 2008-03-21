@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -35,14 +35,22 @@
  * to filtering the input data should be used.  This code is designed only
  * for demonstration purposes.
  */
+
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata_YouTube
+ */
 Zend_Loader::loadClass('Zend_Gdata_YouTube');
 
 /**
  * Finds the URL for the flash representation of the specified video
  *
- * @param Zend_Gdata_YouTube_VideoEntry $entry The video entry
- * @return (string|null) The URL or null, if the URL is not found
+ * @param  Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @return string|null The URL or null, if the URL is not found
  */
 function findFlashUrl($entry) 
 {
@@ -57,7 +65,7 @@ function findFlashUrl($entry)
 /**
  * Returns a feed of top rated videos for the specified user
  *
- * @param string $user The username 
+ * @param  string $user The username 
  * @return Zend_Gdata_YouTube_VideoFeed The feed of top rated videos
  */
 function getTopRatedVideosByUser($user) 
@@ -78,7 +86,7 @@ function getTopRatedVideosByUser($user)
 /**
  * Returns a feed of videos related to the specified video
  *
- * @param string $videoId The video
+ * @param  string $videoId The video
  * @return Zend_Gdata_YouTube_VideoFeed The feed of related videos
  */
 function getRelatedVideos($videoId) 
@@ -101,7 +109,8 @@ function getRelatedVideos($videoId)
  * specified video feed.  Upon clicking the thumbnails, the video should
  * be presented.
  *
- * @param Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @param  Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @return void
  */
 function echoThumbnails($feed) 
 {
@@ -116,7 +125,8 @@ function echoThumbnails($feed)
  * Echo the video embed code, related videos and videos owned by the same user
  * as the specified videoId.
  *
- * @param string $videoId The video
+ * @param  string $videoId The video
+ * @return void
  */
 function echoVideoPlayer($videoId) 
 {
@@ -148,7 +158,8 @@ END;
 /**
  * Echo video metadata
  * 
- * @param Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @param  Zend_Gdata_YouTube_VideoEntry $entry The video entry
+ * @return void
  */
 function echoVideoMetadata($entry) 
 {
@@ -179,7 +190,8 @@ END;
 /**
  * Echo the list of videos in the specified feed.
  *
- * @param Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @param  Zend_Gdata_YouTube_VideoFeed $feed The video feed
+ * @return void
  */
 function echoVideoList($feed) 
 {
@@ -264,4 +276,3 @@ if ($queryType === null) {
     }
     echoVideoList($feed);
 }
-?>
