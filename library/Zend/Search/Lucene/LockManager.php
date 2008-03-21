@@ -40,6 +40,9 @@ require_once 'Zend/Search/Lucene/Storage/File.php';
  */
 class Zend_Search_Lucene_LockManager
 {
+	/**
+	 * consts for name of file to show lock status
+	 */
     const WRITE_LOCK_FILE        = 'write.lock.file';
     const READ_LOCK_FILE         = 'read.lock.file';
     const OPTIMIZATION_LOCK_FILE = 'optimization.lock.file';
