@@ -379,14 +379,17 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $className = $this->formatControllerName($controllerName);
 
         $controllerDirs      = $this->getControllerDirectory();
-        $this->_curModule    = $this->_defaultModule;
-        $this->_curDirectory = $controllerDirs[$this->_defaultModule];
         $module = $request->getModuleName();
         if ($this->isValidModule($module)) {
             $this->_curModule    = $module;
             $this->_curDirectory = $controllerDirs[$module];
+        } elseif ($this->isValidModule($this->_defaultModule)) {
+            $request->setModuleName($this->_defaultModule);
+            $this->_curModule    = $this->_defaultModule;
+            $this->_curDirectory = $controllerDirs[$this->_defaultModule];
         } else {
-            $request->setModuleName($this->_curModule);
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception('No default module defined for this application');
         }
 
         return $className;
