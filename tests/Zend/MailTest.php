@@ -171,11 +171,11 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addTo('testmail2@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addCc('testmail3@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->setSubject('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addHeader('X-MyTest', 'Test-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', true);
+        $mail->setFrom('mymail@example.com', 'äüößÄÖÜ');
+        $mail->addTo('testmail2@example.com', 'äüößÄÖÜ');
+        $mail->addCc('testmail3@example.com', 'äüößÄÖÜ');
+        $mail->setSubject('äüößÄÖÜ');
+        $mail->addHeader('X-MyTest', 'Test-äüößÄÖÜ', true);
 
         $mock = new Zend_Mail_Transport_Mock();
         $mail->send($mock);
@@ -205,11 +205,11 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addTo('testmail2@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addCc('testmail3@example.com', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->setSubject('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
-        $mail->addHeader('X-MyTest', 'Test-ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', true);
+        $mail->setFrom('mymail@example.com', 'äüößÄÖÜ');
+        $mail->addTo('testmail2@example.com', 'äüößÄÖÜ');
+        $mail->addCc('testmail3@example.com', 'äüößÄÖÜ');
+        $mail->setSubject('äüößÄÖÜ');
+        $mail->addHeader('X-MyTest', 'Test-äüößÄÖÜ', true);
 
         $mock = new Zend_Mail_Transport_Sendmail_Mock();
         $mail->send($mock);
