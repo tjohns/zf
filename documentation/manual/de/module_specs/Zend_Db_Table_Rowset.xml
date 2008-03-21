@@ -161,8 +161,7 @@ $row9 = $rowset->current();
 
 // und es verwenden
 $row9->assigned_to = 'mmouse';
-$row9->save();
-}]]></programlisting>
+$row9->save();]]></programlisting>
 
         </example>
 
