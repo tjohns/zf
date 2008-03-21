@@ -67,23 +67,23 @@ class Zend_Config_Ini extends Zend_Config
      *      $data->hostname === "staging"
      *      $data->db->connection === "database"
      *
-     * The $config parameter may be provided as either a boolean or an array.
+     * The $options parameter may be provided as either a boolean or an array.
      * If provided as a boolean, this sets the $allowModifications option of
      * Zend_Config. If provided as an array, there are two configuration
      * directives that may be set. For example:
      *
-     * $config = array(
+     * $options = array(
      *     'allowModifications' => false,
      *     'nestSeparator'      => '->'
      *      );
      *
      * @param  string        $filename
      * @param  string|null   $section
-     * @param  boolean|array $config
+     * @param  boolean|array $options
      * @throws Zend_Config_Exception
      * @return void
      */
-    public function __construct($filename, $section = null, $config = false)
+    public function __construct($filename, $section = null, $options = false)
     {
         if (empty($filename)) {
             /**
@@ -94,14 +94,14 @@ class Zend_Config_Ini extends Zend_Config
         }
 
         $allowModifications = false;
-        if (is_bool($config)) {
-            $allowModifications = $config;
-        } elseif (is_array($config)) {
-            if (isset($config['allowModifications'])) {
-                $allowModifications = (bool) $config['allowModifications'];
+        if (is_bool($options)) {
+            $allowModifications = $options;
+        } elseif (is_array($options)) {
+            if (isset($options['allowModifications'])) {
+                $allowModifications = (bool) $options['allowModifications'];
             }
-            if (isset($config['nestSeparator'])) {
-                $this->_nestSeparator = (string) $config['nestSeparator'];
+            if (isset($options['nestSeparator'])) {
+                $this->_nestSeparator = (string) $options['nestSeparator'];
             }
         }
 
@@ -110,7 +110,6 @@ class Zend_Config_Ini extends Zend_Config
         foreach ($iniArray as $key => $data)
         {
             $bits = explode(':', $key);
-            $numberOfBits = count($bits);
             $thisSection = trim($bits[0]);
             switch (count($bits)) {
                 case 1:
@@ -135,7 +134,7 @@ class Zend_Config_Ini extends Zend_Config
             $dataArray = array();
             foreach ($preProcessedArray as $sectionName => $sectionData) {
                 if(!is_array($sectionData)) {
-                    $dataArray = array_merge_recursive($dataArray, $this->_processKey($config, $sectionName, $sectionData));
+                    $dataArray = array_merge_recursive($dataArray, $this->_processKey(array(), $sectionName, $sectionData));
                 } else {
                     $dataArray[$sectionName] = $this->_processExtends($preProcessedArray, $sectionName);
                 }

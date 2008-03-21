@@ -23,12 +23,12 @@
         <title>Key Separator</title>
         <para>
             By default, the key separator character is the period character (<code>.</code>). This can be changed,
-            however, by changing the <code>$config</code> key <code>'nestSeparator'</code> when constructing the
+            however, by changing the <code>$options</code> key <code>'nestSeparator'</code> when constructing the
             <code>Zend_Config_Ini</code> object. For example:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
-$config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
     </note>
@@ -94,8 +94,8 @@ echo $config->database->params->dbname; // prints "dbname"]]>
                         array of section names may be supplied to load multiple sections.</entry>
                 </row>
                 <row>
-                    <entry><code>$config = false</code></entry>
-                    <entry>Configuration array. The following keys are supported:
+                    <entry><code>$options = false</code></entry>
+                    <entry>Options array. The following keys are supported:
                         <itemizedlist>
                             <listitem><para><emphasis>allowModifications</emphasis>: Set to true to allow subsequent modification of loaded file. Defaults to false</para></listitem>
                             <listitem><para><emphasis>nestSeparator</emphasis>: Set to the character to be used as the nest separator. Defaults to "."</para></listitem>
