@@ -56,6 +56,23 @@ class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
         $this->form->setName('foo');
         $this->assertEquals($this->form->getName(), $this->form->getElementsBelongTo());
     }
+
+    // Extensions
+
+    public function testInitCalledBeforeLoadDecorators()
+    {
+        $form = new Zend_Form_SubFormTest_SubForm();
+        $decorators = $form->getDecorators();
+        $this->assertTrue(empty($decorators));
+    }
+}
+
+class Zend_Form_SubFormTest_SubForm extends Zend_Form_SubForm
+{
+    public function init()
+    {
+        $this->setDisableLoadDefaultDecorators(true);
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_SubFormTest::main') {

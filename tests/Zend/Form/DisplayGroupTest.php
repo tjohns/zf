@@ -592,6 +592,26 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->group->clearAttribs();
         $this->assertEquals(array(), $this->group->getAttribs());
     }
+
+    // Extension
+
+    public function testInitCalledBeforeLoadDecorators()
+    {
+        $group = new Zend_Form_DisplayGroupTest_DisplayGroup(
+            'test',
+            $this->loader
+        );
+        $decorators = $group->getDecorators();
+        $this->assertTrue(empty($decorators));
+    }
+}
+
+class Zend_Form_DisplayGroupTest_DisplayGroup extends Zend_Form_DisplayGroup
+{
+    public function init()
+    {
+        $this->setDisableLoadDefaultDecorators(true);
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_DisplayGroupTest::main') {

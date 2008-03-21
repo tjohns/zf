@@ -206,7 +206,19 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $this->setConfig($options);
         }
 
+        // Extensions...
+        $this->init();
+
         $this->loadDefaultDecorators();
+    }
+
+    /**
+     * Initialize form (used by extending classes)
+     * 
+     * @return void
+     */
+    public function init()
+    {
     }
 
     /**

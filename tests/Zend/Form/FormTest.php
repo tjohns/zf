@@ -2737,10 +2737,27 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($decorator instanceof Zend_Form_Decorator_Callback);
         }
     }
+
+    // Extension
+
+    public function testInitCalledPriorToLoadingDefaultDecorators()
+    {
+        $form = new Zend_Form_FormTest_FormExtension();
+        $decorators = $form->getDecorators();
+        $this->assertTrue(empty($decorators));
+    }
 }
 
 class Zend_Form_FormTest_DisplayGroup extends Zend_Form_DisplayGroup
 {
+}
+
+class Zend_Form_FormTest_FormExtension extends Zend_Form
+{
+    public function init()
+    {
+        $this->setDisableLoadDefaultDecorators(true);
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_FormTest::main') {
