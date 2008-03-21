@@ -50,7 +50,7 @@ $inflector->setFilterRule(':action', array(
 ));]]></programlisting>
 
                 <para>
-                    Le code ci-dessus modifiera l'inflecteur pour ne plus séparer les mots avec un tiret ; vous pouvez aussi vouloir supprimer le filtre <code>StringToLower</code> si vous <emphasis>voulez</emphasis> que vos scripts de vue utilise aussi la notationCamel.
+                    Le code ci-dessus modifiera l'inflecteur pour ne plus séparer les mots avec un tiret ; vous pouvez aussi vouloir supprimer le filtre <code>StringToLower</code> si vous <emphasis>voulez</emphasis> que vos scripts de vues utilisent aussi la notationCamel.
                 </para>
 
                 <para>
