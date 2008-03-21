@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -22,19 +21,19 @@
 
 
 /**
- * Zend_Acl
+ * @see Zend_Acl
  */
 require_once 'Zend/Acl.php';
 
 
 /**
- * Zend_Acl_Role_Interface
+ * @see Zend_Acl_Role_Interface
  */
 require_once 'Zend/Acl/Role/Interface.php';
 
 
 /**
- * Zend_Acl_Resource_Interface
+ * @see Zend_Acl_Resource_Interface
  */
 require_once 'Zend/Acl/Resource/Interface.php';
 

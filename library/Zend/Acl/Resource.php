@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -22,7 +21,7 @@
 
 
 /**
- * Zend_Acl_Resource_Interface
+ * @see Zend_Acl_Resource_Interface
  */
 require_once 'Zend/Acl/Resource/Interface.php';
 
@@ -45,7 +44,7 @@ class Zend_Acl_Resource implements Zend_Acl_Resource_Interface
     /**
      * Sets the Resource identifier
      *
-     * @param  string $id
+     * @param  string $resourceId
      * @return void
      */
     public function __construct($resourceId)
