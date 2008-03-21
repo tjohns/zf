@@ -122,6 +122,25 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expectedReturn, $response->getReturnValue());
         $this->assertFalse($response->isFault());
     }
+
+    /**
+     * @see ZF-2090
+     */
+    public function testSuccessfullyDetectsEmptyArrayParameterAsArray()
+    {
+        $expectedMethod = 'foo.bar';
+        $expectedParams = array(array());
+        $expectedReturn = array(true);
+
+        $this->setServerResponseTo($expectedReturn);
+        
+        $actualReturn = $this->xmlrpcClient->call($expectedMethod, $expectedParams);
+        $this->assertSame($expectedReturn, $actualReturn);
+
+        $request  = $this->xmlrpcClient->getLastRequest();
+
+        $this->assertSame($expectedParams, $request->getParams());
+    }
     
     /**
      * Test for ZF-1412
