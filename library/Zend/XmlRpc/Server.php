@@ -485,11 +485,17 @@ class Zend_XmlRpc_Server
 
         // Check calling parameters against signatures
         $matched    = false;
-        $sigCalled  = array();
-        foreach ($params as $param) {
-            $value = Zend_XmlRpc_Value::getXmlRpcValue($param);
-            $sigCalled[] = $value->getType();
+        $sigCalled  = $request->getTypes();
+
+        $sigLength  = count($sigCalled);
+        $paramsLen  = count($params);
+        if ($sigLength < $paramsLen) {
+            for ($i = $sigLength; $i < $paramsLen; ++$i) {
+                $xmlRpcValue = Zend_XmlRpc_Value::getXmlRpcValue($params[$i]);
+                $sigCalled[] = $xmlRpcValue->getType();
+            }
         }
+
         $signatures = $info->getPrototypes();
         foreach ($signatures as $signature) {
             $sigParams = $signature->getParameters();
@@ -681,7 +687,7 @@ class Zend_XmlRpc_Server
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
-     * @param array $methods
+     * @param  array $methods
      * @return array
      */
     public function multicall($methods)
