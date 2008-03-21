@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage Zend_Auth_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -21,17 +22,17 @@
  */
 
 /**
- * Zend_Auth_Adapter_Interface
+ * @see Zend_Auth_Adapter_Interface
  */
 require_once 'Zend/Auth/Adapter/Interface.php';
 
 /**
- * Zend_Auth_Result
+ * @see Zend_Auth_Result
  */
 require_once 'Zend/Auth/Result.php';
 
 /**
- * Zend_InfoCard
+ * @see Zend_InfoCard
  */
 require_once 'Zend/InfoCard.php';
 
@@ -41,6 +42,7 @@ require_once 'Zend/InfoCard.php';
  *
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage Zend_Auth_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
@@ -64,7 +66,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Constructor
      *
-     * @param string $strXmlDocument The XML Token provided by the client
+     * @param  string $strXmlDocument The XML Token provided by the client
+     * @return void
      */
     public function __construct($strXmlDocument)
     {
@@ -75,8 +78,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Sets the InfoCard component Adapter to use
      *
-     * @param Zend_InfoCard_Adapter_Interface $a
-     * @return Zend_Auth_Adapter_InfoCard
+     * @param  Zend_InfoCard_Adapter_Interface $a
+     * @return Zend_Auth_Adapter_InfoCard Provides a fluent interface
      */
     public function setAdapter(Zend_InfoCard_Adapter_Interface $a)
     {
@@ -107,8 +110,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Sets the InfoCard public key cipher object to use
      *
-     * @param Zend_InfoCard_Cipher_PKI_Interface $cipherObj
-     * @return Zend_Auth_Adapter_InfoCard
+     * @param  Zend_InfoCard_Cipher_PKI_Interface $cipherObj
+     * @return Zend_Auth_Adapter_InfoCard Provides a fluent interface
      */
     public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj)
     {
@@ -129,8 +132,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Sets the InfoCard symmetric cipher object to use
      *
-     * @param Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj
-     * @return Zend_Auth_Adapter_InfoCard
+     * @param  Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj
+     * @return Zend_Auth_Adapter_InfoCard Provides a fluent interface
      */
     public function setSymCipherObject(Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj)
     {
@@ -141,9 +144,9 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Remove a Certificate Pair by Key ID from the search list
      *
+     * @param  string $key_id The Certificate Key ID returned from adding the certificate pair
      * @throws Zend_InfoCard_Exception
-     * @param string $key_id The Certificate Key ID returned from adding the certificate pair
-     * @return Zend_Auth_Adapter_InfoCard
+     * @return Zend_Auth_Adapter_InfoCard Provides a fluent interface
      */
     public function removeCertificatePair($key_id)
     {
@@ -154,11 +157,11 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Add a Certificate Pair to the list of certificates searched by the component
      *
+     * @param  string $private_key_file    The path to the private key file for the pair
+     * @param  string $public_key_file     The path to the certificate / public key for the pair
+     * @param  string $type                (optional) The URI for the type of key pair this is (default RSA with OAEP padding)
+     * @param  string $password            (optional) The password for the private key file if necessary
      * @throws Zend_InfoCard_Exception
-     * @param string $private_key_file The path to the private key file for the pair
-     * @param string $public_key_file The path to the certificate / public key for the pair
-     * @param string $type (optional) The URI for the type of key pair this is (default RSA with OAEP padding)
-     * @param string $password (optional) The password for the private key file if necessary
      * @return string A key ID representing this key pair in the component
      */
     public function addCertificatePair($private_key_file, $public_key_file, $type = Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, $password = null)
@@ -169,8 +172,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Return a Certificate Pair from a key ID
      *
+     * @param  string $key_id The Key ID of the certificate pair in the component
      * @throws Zend_InfoCard_Exception
-     * @param string $key_id The Key ID of the certificate pair in the component
      * @return array An array containing the path to the private/public key files,
      *               the type URI and the password if provided
      */
@@ -182,8 +185,8 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
     /**
      * Set the XML Token to be processed
      *
-     * @param string $strXmlToken The XML token to process
-     * @return Zend_Auth_Adapter_InfoCard
+     * @param  string $strXmlToken The XML token to process
+     * @return Zend_Auth_Adapter_InfoCard Provides a fluent interface
      */
     public function setXmlToken($strXmlToken)
     {
@@ -208,7 +211,6 @@ class Zend_Auth_Adapter_InfoCard implements Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-
         try {
             $claims = $this->_infoCard->process($this->getXmlToken());
         } catch(Exception $e) {
