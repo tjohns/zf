@@ -1496,10 +1496,27 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
                       ->setValidators(array('NotEmpty'));
         $this->assertFalse($this->element->isValid('    '));
     }
+
+    // Extensions
+
+    public function testInitCalledBeforeLoadDecorators()
+    {
+        $element = new Zend_Form_ElementTest_Element('test');
+        $decorators = $element->getDecorators();
+        $this->assertTrue(empty($decorators));
+    }
 }
 
 class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract
 {
+}
+
+class Zend_Form_ElementTest_Element extends Zend_Form_Element
+{
+    public function init()
+    {
+        $this->setDisableLoadDefaultDecorators(true);
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_ElementTest::main') {
