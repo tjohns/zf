@@ -1602,14 +1602,15 @@ decorators.form.decorator = "Form"
         </itemizedlist>
 
         <para>
-            The most typical use case would be to use the constructor to setup
-            specific form elements and configuration:
+            The most typical use case would be to use the
+            <code>init()</code> method to setup specific form elements and
+            configuration:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class My_Form_Login extends Zend_Form
 {
-    public function __construct($options = null)
+    public function init()
     {
         $username = new Zend_Form_Element_Text('username');
         $username->class = 'formtext';
@@ -1662,6 +1663,26 @@ $form = new My_Form_Login();
             needed. (Note that this example is greatly simplified, as it
             contains no validators or filters for the elements.)
         </para>
+
+        <para>
+            Another common reason for extension is to define a set of
+            default decorators. You can do this by overriding the
+            <code>loadDefaultDecorators()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_Form_Login extends Zend_Form
+{
+    public function loadDefaultDecorators()
+    {
+        $this->setDecorators(array(
+            'FormElements',
+            'Fieldset',
+            'Form'
+        ));
+    }
+}
+]]></programlisting>
     </sect2>
 </sect1>
 <!--

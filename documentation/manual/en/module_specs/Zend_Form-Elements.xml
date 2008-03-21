@@ -1257,6 +1257,14 @@ decorators.label.decorator = "Label"
         </itemizedlist>
 
         <para>
+            There are two methods typically used to extend an element:
+            <code>init()</code>, which can be used to add custom initialization
+            logic to your element, and <code>loadDefaultDecorators()</code>,
+            which can be used to set a list of default decorators used by your
+            element.
+        </para>
+
+        <para>
             As an example, let's say that all text elements in a form you are
             creating need to be filtered with <code>StringTrim</code>,
             validated with a common regular expression, and that you want to
@@ -1269,7 +1277,7 @@ decorators.label.decorator = "Label"
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    public function __construct($name, $options = null)
+    public function init()
     {
         $this->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator')
              ->addFilters('StringTrim')
@@ -1278,7 +1286,6 @@ class My_Element_Text extends Zend_Form_Element
              ->setAttrib('size', 30)
              ->setAttrib('maxLength', 45)
              ->setAttrib('class', 'text');
-        parent::__construct($name, $options);
     }
 }
 ?>]]></programlisting>
@@ -1299,9 +1306,9 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         </para>
 
         <para>
-            One specific method you may want to override when extending
+            Another method you may want to override when extending
             <code>Zend_Form_Element</code> is the
-            <code>_loadDefaultDecorators()</code> method. This method
+            <code>loadDefaultDecorators()</code> method. This method
             conditionally loads a set of default decorators for your element;
             you may wish to substitute your own decorators in your extending
             class:
@@ -1310,7 +1317,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
         $this->addDecorator('ViewHelper')
              ->addDecorator('DisplayError')
