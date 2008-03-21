@@ -98,12 +98,10 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options):</code>
-                Creates an &lt;input type="checkbox" /&gt; element.  The
-                $options param is an array where the first value is the
-                "checked" value, and the second is the "unchecked" value (the
-                defaults are '1' and '0').  If $value matches the "checked"
-                value, the box will be checked for you.
+                <code>formCheckbox($name, $value, $attribs):</code>
+                Creates an &lt;input type="checkbox" /&gt; element.
+                If $value matches the "checked" value, the box will be checked
+                for you.
             </para></listitem>
 
             <listitem>

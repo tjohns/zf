@@ -99,12 +99,10 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options):</code>
+                <code>formCheckbox($name, $value, $attribs):</code>
                 &lt;input type="checkbox" /&gt; 要素を作成します。
-                $options パラメータは配列で、最初の値が
-                "checked" に対応する値、2 番目が "unchecked" に対応する値となります
-                (デフォルトは '1' および '0' です)。$value が
-                "checked" の値に一致すると、チェックボックスがチェックされた状態になります。
+                $value が"checked" の値に一致すると、チェックボックスがチェック
+                された状態になります。
             </para></listitem>
 
             <listitem>

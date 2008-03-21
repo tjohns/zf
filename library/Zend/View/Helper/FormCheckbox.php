@@ -47,7 +47,6 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
      * are extracted in place of added parameters.
      * @param mixed $value The element value.
      * @param array $attribs Attributes for the element tag.
-     * @param mixed $options 
      * @return string The element XHTML.
      */
     public function formCheckbox($name, $value = null, $attribs = null)
