@@ -185,7 +185,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code>可以指定视图的基路径，为助手和过滤器脚本设置类前缀，设定<code>ViewRenderer</code>选项。可以传入以下任意的标志：<code>neverRender</code>，<code>noRender</code>，<code>noController</code>， <code>scriptAction</code>，和<code>responseSegment</code>。	
+                    <code>initView($path, $prefix, $options)</code>可以指定视图的基路径，为助手和过滤器脚本设置类前缀，设定<code>ViewRenderer</code>选项。可以传入以下任意的标志：<code>neverRender</code>，<code>noRender</code>，<code>noController</code>， <code>scriptAction</code>，和<code>responseSegment</code>。	
                 </para>
             </listitem>
 
