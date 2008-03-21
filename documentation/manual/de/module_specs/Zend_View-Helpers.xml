@@ -93,12 +93,9 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options)</code>: Erstellt ein
-                &lt;input type="checkbox" /&gt; Element. Der $options Parameter ist ein Array, bei
-                dem der erste Wert der ausgewählte Wert ("checked") und der zweite Wert der
-                nicht ausgewählte Wert ("unchecked") angibt (die Standardwerte sind '1' und '0').
-                Wenn $value mit dem ausgewählten Wert ("checked") übereinstimmt, wird die Checkbox
-                für dich ausgewählt sein.
+                <code>formCheckbox($name, $value, $attribs)</code>: Erstellt ein
+                &lt;input type="checkbox" /&gt; Element. Wenn $value mit dem ausgewählten Wert
+                ("checked") übereinstimmt, wird die Checkbox ausgewählt.
             </para></listitem>
 
             <listitem>
