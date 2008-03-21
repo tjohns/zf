@@ -229,7 +229,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code> kann aufgerufen werden um den Basis View Pfad,
+                    <code>initView($path, $prefix, $options)</code> kann aufgerufen werden um den Basis View Pfad,
                     den Klassenprefix für Helfer, Filter Skripts und <code>ViewRenderer</code> Optionen zu
                     spezifizieren. Es kann eines der folgenden Flags übergeben werden: <code>neverRender</code>,
                     <code>noRender</code>, <code>noController</code>, <code>scriptAction</code>, und
