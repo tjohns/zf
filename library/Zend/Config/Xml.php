@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -48,15 +47,18 @@ class Zend_Config_Xml extends Zend_Config
      * Note that the keys in $section will override any keys of the same
      * name in the sections that have been included via "extends".
      *
-     * @param string $filename
-     * @param mixed $section
-     * @param boolean $allowModifications
+     * @param  string  $filename
+     * @param  mixed   $section
+     * @param  boolean $allowModifications
      * @throws Zend_Config_Exception
+     * @return void
      */
     public function __construct($filename, $section = null, $allowModifications = false)
     {
         if (empty($filename)) {
-            /** @see Zend_Config_Exception */
+            /**
+             * @see Zend_Config_Exception
+             */
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
@@ -73,7 +75,9 @@ class Zend_Config_Xml extends Zend_Config
             $dataArray = array();
             foreach ($section as $sectionName) {
                 if (!isset($config->$sectionName)) {
-                    /** @see Zend_Config_Exception */
+                    /**
+                     * @see Zend_Config_Exception
+                     */
                     require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
                 }
@@ -82,7 +86,9 @@ class Zend_Config_Xml extends Zend_Config
             parent::__construct($dataArray, $allowModifications);
         } else {
             if (!isset($config->$section)) {
-                /** @see Zend_Config_Exception */
+                /**
+                 * @see Zend_Config_Exception
+                 */
                 require_once 'Zend/Config/Exception.php';
                 throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
             }
@@ -102,16 +108,18 @@ class Zend_Config_Xml extends Zend_Config
      * Helper function to process each element in the section and handle
      * the "extends" inheritance attribute.
      *
-     * @param SimpleXMLElement $element
-     * @param string $section
-     * @param array $config
+     * @param  SimpleXMLElement $element
+     * @param  string           $section
+     * @param  array            $config
      * @throws Zend_Config_Exception
      * @return array
      */
     protected function _processExtends($element, $section, $config = array())
     {
         if (!$element->$section) {
-            /** @see Zend_Config_Exception */
+            /**
+             * @see Zend_Config_Exception
+             */
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception("Section '$section' cannot be found");
         }
@@ -134,7 +142,7 @@ class Zend_Config_Xml extends Zend_Config
      * Returns a string or an associative and possibly multidimensional array from
      * a SimpleXMLElement.
      *
-     * @param SimpleXMLElement $xmlObject
+     * @param  SimpleXMLElement $xmlObject
      * @return array|string
      */
     protected function _toArray($xmlObject)
@@ -168,8 +176,8 @@ class Zend_Config_Xml extends Zend_Config
      * Merge two arrays recursively, overwriting keys of the same name
      * in $array1 with the value in $array2.
      *
-     * @param array $array1
-     * @param array $array2
+     * @param  array $array1
+     * @param  array $array2
      * @return array
      */
     protected function _arrayMergeRecursive($array1, $array2)

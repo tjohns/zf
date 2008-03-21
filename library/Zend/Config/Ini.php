@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -82,11 +81,14 @@ class Zend_Config_Ini extends Zend_Config
      * @param  string|null   $section
      * @param  boolean|array $config
      * @throws Zend_Config_Exception
+     * @return void
      */
     public function __construct($filename, $section = null, $config = false)
     {
         if (empty($filename)) {
-            /** @see Zend_Config_Exception */
+            /**
+             * @see Zend_Config_Exception
+             */
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
@@ -121,7 +123,9 @@ class Zend_Config_Ini extends Zend_Config
                     break;
 
                 default:
-                    /** @see Zend_Config_Exception */
+                    /**
+                     * @see Zend_Config_Exception
+                     */
                     require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Section '$thisSection' may not extend multiple sections in $filename");
             }
@@ -141,7 +145,9 @@ class Zend_Config_Ini extends Zend_Config
             $dataArray = array();
             foreach ($section as $sectionName) {
                 if (!isset($preProcessedArray[$sectionName])) {
-                    /** @see Zend_Config_Exception */
+                    /**
+                     * @see Zend_Config_Exception
+                     */
                     require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
                 }
@@ -151,7 +157,9 @@ class Zend_Config_Ini extends Zend_Config
             parent::__construct($dataArray, $allowModifications);
         } else {
             if (!isset($preProcessedArray[$section])) {
-                /** @see Zend_Config_Exception */
+                /**
+                 * @see Zend_Config_Exception
+                 */
                 require_once 'Zend/Config/Exception.php';
                 throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
             }
@@ -166,9 +174,9 @@ class Zend_Config_Ini extends Zend_Config
      * the "extends" inheritance keyword. Passes control to _processKey()
      * to handle the "dot" sub-property syntax in each key.
      *
-     * @param array $iniArray
-     * @param string $section
-     * @param array $config
+     * @param  array  $iniArray
+     * @param  string $section
+     * @param  array  $config
      * @throws Zend_Config_Exception
      * @return array
      */
@@ -182,7 +190,9 @@ class Zend_Config_Ini extends Zend_Config
                     $this->_assertValidExtend($section, $value);
                     $config = $this->_processExtends($iniArray, $value, $config);
                 } else {
-                    /** @see Zend_Config_Exception */
+                    /**
+                     * @see Zend_Config_Exception
+                     */
                     require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Section '$section' cannot be found");
                 }
@@ -198,9 +208,9 @@ class Zend_Config_Ini extends Zend_Config
      * notation for sub-properties by passing control to
      * processLevelsInKey().
      *
-     * @param array $config
-     * @param string $key
-     * @param string $value
+     * @param  array  $config
+     * @param  string $key
+     * @param  string $value
      * @throws Zend_Config_Exception
      * @return array
      */
@@ -212,13 +222,17 @@ class Zend_Config_Ini extends Zend_Config
                 if (!isset($config[$pieces[0]])) {
                     $config[$pieces[0]] = array();
                 } elseif (!is_array($config[$pieces[0]])) {
-                    /** @see Zend_Config_Exception */
+                    /**
+                     * @see Zend_Config_Exception
+                     */
                     require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Cannot create sub-key for '{$pieces[0]}' as key already exists");
                 }
                 $config[$pieces[0]] = $this->_processKey($config[$pieces[0]], $pieces[1], $value);
             } else {
-                /** @see Zend_Config_Exception */
+                /**
+                 * @see Zend_Config_Exception
+                 */
                 require_once 'Zend/Config/Exception.php';
                 throw new Zend_Config_Exception("Invalid key '$key'");
             }
