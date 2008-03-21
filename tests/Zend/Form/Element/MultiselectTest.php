@@ -121,6 +121,52 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar' => 'barvalue', 'baz' => 'bazvalue', 'bat' => 'batvalue', 'foo' => 'foovalue', 'test' => 'testvalue'), $this->element->getMultiOptions());
     }
 
+    /**
+     * @see ZF-2824
+     */
+    public function testCanSetMultiOptionsUsingAssocArraysWithKeyValueKeys()
+    {
+        $options = array(
+            array(
+                'value' => '1',
+                'key'   => 'aa',
+            ),
+            array (
+                'key'   => '2',
+                'value' => 'xxxx',
+            ),
+            array (
+                'value' => '444',
+                'key'   => 'ssss',
+            ),
+        );
+        $this->element->addMultiOptions($options);
+        $this->assertEquals($options[0]['value'], $this->element->getMultiOption('aa'));
+        $this->assertEquals($options[1]['value'], $this->element->getMultiOption(2));
+        $this->assertEquals($options[2]['value'], $this->element->getMultiOption('ssss'));
+    }
+
+    /**
+     * @see ZF-2824
+     */
+    public function testCanSetMultiOptionsUsingConfigWithKeyValueKeys()
+    {
+        require_once 'Zend/Config/Xml.php';
+        $config = new Zend_Config_Xml(dirname(__FILE__) . '/../_files/config/multiOptions.xml', 'testing');
+        $this->element->setMultiOptions($config->options->toArray());
+        $this->assertEquals($config->options->first->value, $this->element->getMultiOption('aa'));
+        $this->assertEquals($config->options->second->value, $this->element->getMultiOption(2));
+        $this->assertEquals($config->options->third->value, $this->element->getMultiOption('ssss'));
+
+        require_once 'Zend/Config/Ini.php';
+        $config = new Zend_Config_Ini(dirname(__FILE__) . '/../_files/config/multiOptions.ini', 'testing');
+        $this->element->setMultiOptions($config->options->toArray());
+        $this->assertEquals($config->options->first->value, $this->element->getMultiOption('aa'));
+        $this->assertEquals($config->options->second->value, $this->element->getMultiOption(2));
+        $this->assertEquals($config->options->third->value, $this->element->getMultiOption('ssss'));
+
+    }
+
     public function testCanRemoveMultiOption()
     {
         $this->testMultiOptionsEmptyByDefault();

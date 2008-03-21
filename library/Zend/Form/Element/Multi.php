@@ -115,7 +115,14 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     public function addMultiOptions(array $options)
     {
         foreach ($options as $option => $value) {
-            $this->addMultiOption($option, $value);
+            if (is_array($value) 
+                && array_key_exists('key', $value)
+                && array_key_exists('value', $value)
+            ) {
+                $this->addMultiOption($value['key'], $value['value']);
+            } else {
+                $this->addMultiOption($option, $value);
+            }
         }
         return $this;
     }
