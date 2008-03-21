@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -27,15 +26,10 @@
  */
 class Zend_Cache_Core
 {
-
-    // ------------------
-    // --- Properties ---
-    // ------------------
-
     /**
      * Backend Object
      *
-     * @var object
+     * @var object $_backend
      */
     private $_backend = null;
 
@@ -77,7 +71,7 @@ class Zend_Cache_Core
      * - If set to true, the core will set the ignore_user_abort PHP flag inside the
      *   save() method to avoid cache corruptions in some cases (default false)
      *
-     * @var array available options
+     * @var array $_options available options
      */
     protected $_options = array(
         'write_control'             => true,
@@ -93,11 +87,15 @@ class Zend_Cache_Core
 
     /**
      * Array of options which have to be transfered to backend
+     *
+     * @var array $_directivesList
      */
     protected static $_directivesList = array('lifetime', 'logging', 'logger');
 
     /**
      * Not used for the core, just a sort a hint to get a common setOption() method (for the core and for frontends)
+     *
+     * @var array $_specificOptions
      */
     protected $_specificOptions = array();
 
@@ -108,14 +106,12 @@ class Zend_Cache_Core
      */
     private $_lastId = null;
 
-    // ----------------------
-    // --- Public methods ---
-    // ----------------------
-
     /**
      * Constructor
      *
-     * @param array $options associative array of options
+     * @param  array $options Associative array of options
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -131,7 +127,9 @@ class Zend_Cache_Core
     /**
      * Set the backend
      *
-     * @param object $backendObject
+     * @param  object $backendObject
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     public function setBackend($backendObject)
     {
@@ -153,8 +151,10 @@ class Zend_Cache_Core
      *
      * There is an additional validation (relatively to the protected _setOption method)
      *
-     * @param string $name name of the option
-     * @param mixed $value value of the option
+     * @param  string $name  Name of the option
+     * @param  mixed  $value Value of the option
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     public function setOption($name, $value)
     {
@@ -177,8 +177,10 @@ class Zend_Cache_Core
     /**
      * Set an option
      *
-     * @param string $name name of the option
-     * @param mixed $value value of the option
+     * @param  string $name  Name of the option
+     * @param  mixed  $value Value of the option
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     private function _setOption($name, $value)
     {
@@ -193,7 +195,8 @@ class Zend_Cache_Core
      *
      * The new value is set for the core/frontend but for the backend too (directive)
      *
-     * @param int $newLifetime new lifetime (in seconds)
+     * @param  int $newLifetime New lifetime (in seconds)
+     * @return void
      */
     public function setLifetime($newLifetime)
     {
@@ -206,10 +209,10 @@ class Zend_Cache_Core
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      *
-     * @param string $id cache id
-     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
-     * @param boolean $doNotUnserialize do not serialize (even if automatic_serialization is true) => for internal use
-     * @return mixed cached datas (or false)
+     * @param  string  $id                     Cache id
+     * @param  boolean $doNotTestCacheValidity If set to true, the cache validity won't be tested
+     * @param  boolean $doNotUnserialize       Do not serialize (even if automatic_serialization is true) => for internal use
+     * @return mixed|false Cached datas
      */
     public function load($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
@@ -234,8 +237,8 @@ class Zend_Cache_Core
     /**
      * Test if a cache is available for the given id
      *
-     * @param string $id cache id
-     * @return boolean true is a cache is available, false else
+     * @param  string $id Cache id
+     * @return boolean True is a cache is available, false else
      */
     public function test($id)
     {
@@ -251,11 +254,12 @@ class Zend_Cache_Core
     /**
      * Save some data in a cache
      *
-     * @param mixed $data data to put in cache (can be another type than string if automatic_serialization is on)
-     * @param cache $id cache id (if not set, the last cache id will be used)
-     * @param array $tags cache tags
-     * @param int $specificLifetime if != false, set a specific lifetime for this cache record (null => infinite lifetime)
-     * @return boolean true if no problem
+     * @param  mixed $data           Data to put in cache (can be another type than string if automatic_serialization is on)
+     * @param  cache $id             Cache id (if not set, the last cache id will be used)
+     * @param  array $tags           Cache tags
+     * @param  int $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
+     * @throws Zend_Cache_Exception
+     * @return boolean True if no problem
      */
     public function save($data, $id = null, $tags = array(), $specificLifetime = false)
     {
@@ -317,8 +321,8 @@ class Zend_Cache_Core
     /**
      * Remove a cache
      *
-     * @param string $id cache id to remove
-     * @return boolean true if ok
+     * @param  string $id Cache id to remove
+     * @return boolean True if ok
      */
     public function remove($id)
     {
@@ -341,9 +345,10 @@ class Zend_Cache_Core
      * 'notMatchingTag' => remove cache entries not matching one of the given tags
      *                     ($tags can be an array of strings or a single string)
      *
-     * @param string $mode
-     * @param mixed $parameters
-     * @return boolean true if ok
+     * @param  string       $mode
+     * @param  array|string $tags
+     * @throws Zend_Cache_Exception
+     * @return boolean True if ok
      */
     public function clean($mode = 'all', $tags = array())
     {
@@ -357,16 +362,14 @@ class Zend_Cache_Core
         return $this->_backend->clean($mode, $tags);
     }
 
-    // ------------------------------------
-    // --- Private or protected methods ---
-    // ------------------------------------
-
     /**
      * Validate a cache id or a tag (security, reliable filenames, reserved prefixes...)
      *
      * Throw an exception if a problem is found
      *
-     * @param string $string cache id or tag
+     * @param  string $string Cache id or tag
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     private static function _validateIdOrTag($string)
     {
@@ -386,7 +389,9 @@ class Zend_Cache_Core
      *
      * Throw an exception if a problem is found
      *
-     * @param array $tags array of tags
+     * @param  array $tags Array of tags
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     private static function _validateTagsArray($tags)
     {
@@ -404,8 +409,8 @@ class Zend_Cache_Core
      * is available.
      * Create a default log object if none is set.
      *
-     * @return void
      * @throws Zend_Cache_Exception
+     * @return void
      */
     protected function _loggerSanity()
     {
@@ -413,6 +418,10 @@ class Zend_Cache_Core
             return;
         }
         try {
+            /**
+             * @see Zend_Loader
+             * @see Zend_Log
+             */
             require_once 'Zend/Loader.php';
             Zend_Loader::loadClass('Zend_Log');
         } catch (Zend_Exception $e) {
@@ -431,8 +440,8 @@ class Zend_Cache_Core
      * Log a message at the WARN (4) priority.
      *
      * @param string $message
-     * @return void
      * @throws Zend_Cache_Exception
+     * @return void
      */
     protected function _log($message, $priority = 4)
     {
@@ -451,8 +460,8 @@ class Zend_Cache_Core
      *
      * Checks 'cache_id_prefix' and returns new id with prefix or simply the id if null
      *
-     * @param string $id cache id
-     * @return string cache id (with or without prefix)
+     * @param  string $id Cache id
+     * @return string Cache id (with or without prefix)
      */  
     private function _id($id)
     {

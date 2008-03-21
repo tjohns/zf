@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,30 +14,25 @@
  *
  * @category   Zend
  * @package    Zend_Cache
- * @subpackage Frontend
+ * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * Zend_Cache_Core
+ * @see Zend_Cache_Core
  */
 require_once 'Zend/Cache/Core.php';
 
 
 /**
  * @package    Zend_Cache
- * @subpackage Frontend
+ * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Frontend_Class extends Zend_Cache_Core
 {
-
-    // ------------------
-    // --- Properties ---
-    // ------------------
-
     /**
      * Available options
      *
@@ -96,14 +90,12 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
       */
      private $_cachedEntityLabel = ''; 
 
-    // ----------------------
-    // --- Public methods ---
-    // ----------------------
-
     /**
      * Constructor
      *
-     * @param array $options associative array of options
+     * @param  array $options Associative array of options
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -130,7 +122,8 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Set a specific life time
      *
-     * @param int $specificLifetime
+     * @param  int $specificLifetime
+     * @return void
      */
     public function setSpecificLifetime($specificLifetime = false)
     {
@@ -140,7 +133,8 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Set the cache array
      *
-     * @param array $tags
+     * @param  array $tags
+     * @return void
      */
     public function setTagsArray($tags = array())
     {
@@ -150,9 +144,9 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Main method : call the specified method or get the result from cache
      *
-     * @param string $name method name
-     * @param array $parameters method parameters
-     * @return mixed result
+     * @param  string $name       Method name
+     * @param  array  $parameters Method parameters
+     * @return mixed Result
      */
     public function __call($name, $parameters)
     {
@@ -184,17 +178,12 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         return $return;
     }
 
-
-    // ------------------------------------
-    // --- Private or protected methods ---
-    // ------------------------------------
-
     /**
      * Make a cache id from the method name and parameters
      *
-     * @param string $name method name
-     * @param array $parameters method parameters
-     * @return string cache id
+     * @param  string $name       Method name
+     * @param  array  $parameters Method parameters
+     * @return string Cache id
      */
     private function _makeId($name, $parameters)
     {

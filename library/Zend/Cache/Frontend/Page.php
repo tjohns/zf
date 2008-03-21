@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,27 +14,26 @@
  *
  * @category   Zend
  * @package    Zend_Cache
- * @subpackage Frontend
+ * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /**
- * Zend_Cache_Core
+ * @see Zend_Cache_Core
  */
 require_once 'Zend/Cache/Core.php';
 
 
 /**
  * @package    Zend_Cache
- * @subpackage Frontend
+ * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Frontend_Page extends Zend_Cache_Core
 {
-
     /**
      * This frontend specific options
      *
@@ -100,8 +98,10 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Constructor
      *
-     * @param array $options associative array of options
-     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
+     * @param  array   $options                Associative array of options
+     * @param  boolean $doNotTestCacheValidity If set to true, the cache validity won't be tested
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -129,7 +129,9 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Specific setter for the 'default_options' option (with some additional tests)
      *
-     * @param array $options associative array
+     * @param  array $options Associative array
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     protected function _setDefaultOptions($options)
     {
@@ -149,7 +151,9 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Specific setter for the 'regexps' option (with some additional tests)
      *
-     * @param array $options associative array
+     * @param  array $options Associative array
+     * @throws Zend_Cache_Exception
+     * @return void
      */
     protected function _setRegexps($regexps)
     {
@@ -174,9 +178,9 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Start the cache
      *
-     * @param string $id (optional) a cache id (if you set a value here, maybe you have to use Output frontend instead)
-     * @param boolean $doNotDie for unit testing only !
-     * @return boolean true if the cache is hit (false else)
+     * @param  string  $id       (optional) A cache id (if you set a value here, maybe you have to use Output frontend instead)
+     * @param  boolean $doNotDie For unit testing only !
+     * @return boolean True if the cache is hit (false else)
      */
     public function start($id = false, $doNotDie = false)
     {
@@ -231,8 +235,8 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * callback for output buffering
      * (shouldn't really be called manually)
      *
-     * @param string $data buffered output
-     * @return string data to send to browser
+     * @param  string $data Buffered output
+     * @return string Data to send to browser
      */
     public function _flush($data)
     {
@@ -259,7 +263,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Make an id depending on REQUEST_URI and superglobal arrays (depending on options)
      *
-     * @return mixed a cache id (string), false if the cache should have not to be used
+     * @return mixed|false a cache id (string), false if the cache should have not to be used
      */
     private function _makeId()
     {
@@ -277,10 +281,10 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Make a partial id depending on options
      *
-     * @param string $arrayName superglobal array name
-     * @param bool $bool1 if true, cache is still on even if there are some variables in the superglobal array
-     * @param bool $bool2 if true, we have to use the content of the superglobal array to make a partial id
-     * @return mixed partial id (string) or false if the cache should have not to be used
+     * @param  string $arrayName Superglobal array name
+     * @param  bool   $bool1     If true, cache is still on even if there are some variables in the superglobal array
+     * @param  bool   $bool2     If true, we have to use the content of the superglobal array to make a partial id
+     * @return mixed|false Partial id (string) or false if the cache should have not to be used
      */
     private function _makePartialId($arrayName, $bool1, $bool2)
     {
@@ -324,4 +328,3 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     }
 
 }
-
