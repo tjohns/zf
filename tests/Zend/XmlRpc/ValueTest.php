@@ -18,6 +18,7 @@ require_once 'Zend/XmlRpc/Value/DateTime.php';
 require_once 'Zend/XmlRpc/Value/Double.php';
 require_once 'Zend/XmlRpc/Value/Integer.php';
 require_once 'Zend/XmlRpc/Value/String.php';
+require_once 'Zend/XmlRpc/Value/Nil.php';
 require_once 'Zend/XmlRpc/Value/Struct.php';
 
 /**
@@ -177,6 +178,37 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());        
+    }
+
+    //Nil
+
+    public function testFactoryAutodetectsNil()
+    {
+        $val = Zend_XmlRpc_Value::getXmlRpcValue(NULL);
+        $this->assertXmlRpcType('nil', $val);
+    }
+
+    public function testMarshalNilFromNative()
+    {
+        $native = NULL;
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($native, 
+                                    Zend_XmlRpc_Value::XMLRPC_TYPE_NIL);
+
+        $this->assertXmlRpcType('nil', $val);
+        $this->assertSame($native, $val->getValue());
+    }
+
+    public function testMarshalNilFromXmlRpc()
+    {
+        $xml = '<value><nil/></value>';
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml, 
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('nil', $val);
+        $this->assertEquals('nil', $val->getType());
+        $this->assertSame(NULL, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
     }
 
     // Array

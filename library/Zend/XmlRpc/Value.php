@@ -43,6 +43,9 @@ require_once 'Zend/XmlRpc/Value/Integer.php';
 /** Zend_XmlRpc_Value_String */
 require_once 'Zend/XmlRpc/Value/String.php';
 
+/** Zend_XmlRpc_Value_Nil */
+require_once 'Zend/XmlRpc/Value/Nil.php';
+
 /** Zend_XmlRpc_Value_Collection */
 require_once 'Zend/XmlRpc/Value/Collection.php';
 
@@ -115,6 +118,7 @@ abstract class Zend_XmlRpc_Value
     const XMLRPC_TYPE_BASE64   = 'base64';
     const XMLRPC_TYPE_ARRAY    = 'array';
     const XMLRPC_TYPE_STRUCT   = 'struct';
+    const XMLRPC_TYPE_NIL      = 'nil';
 
 
     /**
@@ -208,6 +212,9 @@ abstract class Zend_XmlRpc_Value
             case self::XMLRPC_TYPE_BASE64:
                 return new Zend_XmlRpc_Value_Base64($value);
 
+            case self::XMLRPC_TYPE_NIL:
+                return new Zend_XmlRpc_Value_Nil();
+
             case self::XMLRPC_TYPE_DATETIME:
                 return new Zend_XmlRpc_Value_DateTime($value);
 
@@ -261,6 +268,10 @@ abstract class Zend_XmlRpc_Value
 
             case 'boolean':
                 return new Zend_XmlRpc_Value_Boolean($value);
+
+            case 'NULL':
+            case 'null':
+                return new Zend_XmlRpc_Value_Nil();
 
             case 'string':
                 // Fall through to the next case
@@ -318,6 +329,9 @@ abstract class Zend_XmlRpc_Value
                 break;
             case self::XMLRPC_TYPE_BASE64:    // The value should already be base64 encoded
                 $xmlrpc_val = new Zend_XmlRpc_Value_Base64($value ,true);
+                break;
+            case self::XMLRPC_TYPE_NIL:    // The value should always be NULL
+                $xmlrpc_val = new Zend_XmlRpc_Value_Nil();
                 break;
             case self::XMLRPC_TYPE_ARRAY:
                 // If the XML is valid, $value must be an SimpleXML element and contain the <data> tag

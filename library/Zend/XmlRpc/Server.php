@@ -168,7 +168,8 @@ class Zend_XmlRpc_Server
         'time'             => 'dateTime.iso8601',
         'array'            => 'array',
         'struct'           => 'struct',
-        'null'             => 'void',
+        'null'             => 'nil',
+        'nil'              => 'nil',
         'void'             => 'void',
         'mixed'            => 'struct'
     );
