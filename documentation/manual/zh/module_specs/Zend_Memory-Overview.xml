@@ -2,7 +2,7 @@
     <title>概述</title>
 
     <sect2 id="zend.memory.introduction">
-        <title>间接</title>
+        <title> 简介 </title>
         <para>
             Zend_Memory组件用于在一个受限制的内存环境下管理数据.
         </para>
@@ -29,7 +29,7 @@
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directory where to put the swapped memory blocks
+    'cache_dir' => './tmp/' // Directory where to put the swapped memory blocks
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
