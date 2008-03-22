@@ -97,7 +97,6 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
     /**
      * Get the value for this element's value attribute.
      *
-     * @param string The desired value for this attribute
      * @return string The attribute being modified.
      */
     public function getValue()
@@ -109,7 +108,7 @@ class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
     /**
      * Set the value for this element's value attribute.
      *
-     * @param bool $value The desired value for this attribute.
+     * @param string $value The desired value for this attribute.
      * @return Zend_Gdata_Calendar_Extension_Selected The element being modified.
      */
     public function setValue($value)
