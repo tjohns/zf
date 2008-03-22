@@ -1,0 +1,117 @@
+<sect1 id="zend.pdf.pages">
+    <title>Document pages.</title>
+    <sect2 id="zend.pdf.pages.creation">
+        <title>Page creation.</title>
+        <para>
+            PDF document page abstraction is represented by <code>Zend_Pdf_Page</code> class.
+        </para>
+
+        <para>
+            PDF pages either are loaded from existing PDF, or created.
+        </para>
+
+        <para>
+            New page can be obtained by creating new <code>Zend_Pdf_Page</code> object or calling
+            <code>Zend_Pdf::newPage()</code> method, which returns <code>Zend_Pdf_Page</code> object.
+            The difference is that <code>Zend_Pdf::newPage()</code> method creates a page, already attached to
+            the document. In difference from unattached pages it can't be used with several PDF documents,
+            but has a little bit better performance.
+            <footnote>
+                <para>
+                It's a limitation of V1.0 version of Zend_Pdf module. It will be eliminated in future versions.
+                But unattached pages will always give better (more optimal) result for sharing pages between documents.
+                </para>
+            </footnote>. It's your choice, which approach should be used.
+        </para>
+
+        <para>
+        <code>Zend_Pdf::newPage()</code> method and <code>Zend_Pdf_Page</code> constructors take the same
+        set of parameters specifying page size. It either the size of page ($x, $y) in a points (1/72 inch),
+        or predefined constant, which is treated as a page type:
+            <itemizedlist>
+                <listitem>
+                    <para>Zend_Pdf_Page::SIZE_A4</para>
+                </listitem>
+                <listitem>
+                    <para>Zend_Pdf_Page::SIZE_A4_LANDSCAPE</para>
+                </listitem>
+                <listitem>
+                    <para>Zend_Pdf_Page::SIZE_LETTER</para>
+                </listitem>
+                <listitem>
+                    <para>Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Document pages are stored in <code>$pages</code> public member of <code>Zend_Pdf</code> class.
+            It's an array of <code>Zend_Pdf_Page</code> objects. It completely defines set and order of document pages
+            and can be manipulated as a common array:
+        </para>
+
+        <example id="zend.pdf.pages.example-1">
+            <title>PDF document pages management.</title>
+            <programlisting role="php"><![CDATA[<?php
+    ...
+    // Reverse page order
+    $pdf->pages = array_reverse($pdf->pages);
+    ...
+    // Add new page
+    $pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+    // Add new page
+    $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+
+    // Remove specified page.
+    unset($pdf->pages[$id]);
+
+    ...]]>
+            </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.pdf.pages.cloning">
+        <title>Page cloning.</title>
+        <para>
+            Existing PDF page can be cloned by creating new <code>Zend_Pdf_Page</code> object with existing page as a parameter:
+        </para>
+
+        <example id="zend.pdf.pages.example-2">
+            <title>Cloning existing page.</title>
+            <programlisting role="php"><![CDATA[<?php
+    ...
+    // Store template page in a separate variable
+    $template = $pdf->pages[$templatePageIndex];
+    ...
+    // Add new page
+    $page1 = new Zend_Pdf_Page($template);
+    $pdf->pages[] = $page1;
+    ...
+
+    // Add another page
+    $page2 = new Zend_Pdf_Page($template);
+    $pdf->pages[] = $page2;
+    ...
+
+    // Remove source template page from the documents.
+    unset($pdf->pages[$templatePageIndex]);
+
+    ...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            It's useful if you need several pages to be created using one template.
+        </para>
+
+        <caution>
+            <para>
+                Important! Cloned page shares some PDF resources with a template page, so it can be used only withing the same document
+                as a template page. Modified document can be saved as new one.
+            </para>
+        </caution>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
