@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -23,16 +24,22 @@
  */
 require_once 'Zend/Search/Lucene.php';
 
-
-
+/**
+ * @uses       Zend_Search_Lucene_Document
+ * @package    Zend_Search_Lucene
+ * @subpackage Demos
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class FileDocument extends Zend_Search_Lucene_Document
 {
     /**
      * Object constructor
      *
-     * @param string $fileName
-     * @param boolean $storeContent
+     * @param  string  $fileName
+     * @param  boolean $storeContent
      * @throws Zend_Search_Lucene_Exception
+     * @return void
      */
     public function __construct($fileName, $storeContent = false)
     {
@@ -87,5 +94,3 @@ while (($file = readdir($dir)) !== false) {
     flush();
 }
 closedir($dir);
-
-
