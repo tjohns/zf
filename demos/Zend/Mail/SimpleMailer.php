@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -44,43 +45,58 @@ require_once 'Zend/Loader.php';
  * after login and calls a show method, everything else inits and checks variables and mail storage handler.
  *
  * @package    Zend_Mail
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @subpackage Demos
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Demo_Zend_Mail_SimpleMailer
 {
     /**
-     * mail storage type (mbox, mbox-folder, maildir, maildir-folder, pop3, imap)
+     * Mail storage type (mbox, mbox-folder, maildir, maildir-folder, pop3, imap)
+     *
+     * @var string
      */
     private $type;
 
     /**
-     * filename, dirname or hostname for current mailstorage
+     * Filename, dirname or hostname for current mailstorage
+     *
+     * @var string
      */
     private $param;
 
     /**
-     * selected mail message or null if none
+     * Selected mail message or null if none
+     *
+     * @var integer
      */
     private $messageNum;
 
     /**
-     * mail storage handler
+     * Mail storage handler
+     *
+     * @var Zend_Mail_Storage
      */
     private $mail;
 
     /**
-     * query string with current selection for output
+     * Query string with current selection for output
+     *
+     * @var string
      */
     private $queryString;
 
    /**
-     * don't run run(), needed for auth
+     * Don't run run(), needed for auth
+     *
+     * @var boolean
      */
     private $noRun = false;
 
     /**
-     * init class for run() and output
+     * Init class for run() and output
+     *
+     * @return void
      */
     function __construct()
     {
@@ -124,7 +140,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * check parameter and type
+     * Check parameter and type
+     *
+     * @return void
      */
     function whitelistParam()
     {
@@ -143,7 +161,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * load needed classes
+     * Load needed classes
+     *
+     * @return void
      */
     function loadClasses()
     {
@@ -162,7 +182,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * init variables
+     * Init variables
+     *
+     * @return void
      */
     function initVars()
     {
@@ -176,7 +198,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * send http auth headers, for username and password in pop3 and imap
+     * Send http auth headers, for username and password in pop3 and imap
+     *
+     * @return void
      */
     function needAuth()
     {
@@ -186,7 +210,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * get data from mail storage and output html
+     * Get data from mail storage and output html
+     *
+     * @return void
      */
     function run()
     {
@@ -218,9 +244,10 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output html header
+     * Output html header
      *
-     * @param string $title page title
+     * @param  string $title page title
+     * @return void
      */
     function showHeader($title)
     {
@@ -242,7 +269,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output html footer
+     * Output html footer
+     *
+     * @return void
      */
     function showFooter()
     {
@@ -250,7 +279,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output type selection AKA "login-form"
+     * Output type selection AKA "login-form"
+     *
+     * @return void
      */
     function showChooseType()
     {
@@ -278,7 +309,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output mail message
+     * Output mail message
+     *
+     * @return void
      */
     function showMessage($message)
     {
@@ -333,7 +366,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output message list
+     * Output message list
+     *
+     * @return void
      */
     function showList()
     {
@@ -383,7 +418,9 @@ class Demo_Zend_Mail_SimpleMailer
     }
 
     /**
-     * output folder list
+     * Output folder list
+     *
+     * @return void
      */
     function showFolders()
     {
@@ -409,5 +446,3 @@ class Demo_Zend_Mail_SimpleMailer
 // init and run mailer
 $SimpleMailer = new Demo_Zend_Mail_SimpleMailer();
 $SimpleMailer->run();
-
-
