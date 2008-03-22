@@ -1035,7 +1035,7 @@ $table = new Bugs();
 
 $select = $table->select();
 $select->where('bug_status = ?', 'NEW')
-       ->join('accounts', 'accounts.account_id = bugs.reported_by')
+       ->join('accounts', 'accounts.account_name = bugs.reported_by')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);]]>
@@ -1065,7 +1065,7 @@ $table = new Bugs();
 
 $select = $table->select()->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
-       ->join('accounts', 'accounts.account_id = bugs.reported_by', 'account_name')
+       ->join('accounts', 'accounts.account_name = bugs.reported_by', 'account_name')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);]]>
@@ -1096,7 +1096,7 @@ $table = new Bugs();
 $select  = $table->select()->where('bug_status = ?', 'NEW')
                            ->order('bug_id');
 
-$row = $table->fetchRow($where);]]>
+$row = $table->fetchRow($select);]]>
             </programlisting>
 
         </example>
@@ -1586,6 +1586,3 @@ class BugsProducts extends MyAbstractTable
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

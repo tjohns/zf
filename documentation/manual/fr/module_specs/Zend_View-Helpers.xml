@@ -47,7 +47,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options)</code> : crée un élément &lt;input type="checkbox" /&gt;. Le paramètre <code>$options</code> est un tableau dans lequel la première valeur est la valeur "checked", et la seconde "unchecked" (les valeurs par défaut sont '1' et '0'). Si <code>$value</code> correspond à la valeur "checked", la boite sera cochée.
+                <code>formCheckbox($name, $value, $attribs)</code> : crée un élément &lt;input type="checkbox" /&gt;. Si <code>$value</code> correspond à la valeur "checked", la boite sera cochée.
             </para></listitem>
 
             <listitem>

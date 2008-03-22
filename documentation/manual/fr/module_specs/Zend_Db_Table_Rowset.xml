@@ -153,8 +153,7 @@ $row9 = $rowset->current();
 
 // et utilisation
 $row9->assigned_to = 'mmouse';
-$row9->save();
-}]]></programlisting>
+$row9->save();]]></programlisting>
 
         </example>
 
@@ -395,8 +394,4 @@ class Bugs extends Zend_Db_Table_Abstract
 
     </sect2>
 
-
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -5,7 +5,7 @@
         <title>Introduction</title>
 
         <para>
-            L'aide <code>ViewRenderer</code> apporte les comportements suivants:
+            L'aide <code>ViewRenderer</code> apporte les comportements suivants :
         </para>
 
         <itemizedlist>
@@ -72,14 +72,14 @@
 
             <para>
                 Si vous voulez modifier un paramètre du <code>ViewRenderer</code> avant le 
-				dispatching du contrôleur frontal, il existe deux moyens:
+				dispatching du contrôleur frontal, il existe deux moyens :
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         Instanciez et enregistrez votre propre objet <code>ViewRenderer</code> 
-						et passez le au gestionnaire d'aides:
+						et passez le au gestionnaire d'aides :
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
@@ -93,7 +93,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);?>]]>
                 <listitem>
                     <para>
                         Initialisez et/ou récupérez l'objet <code>ViewRenderer</code>
-                        via le gestionnaire d'aides:
+                        via le gestionnaire d'aides :
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
@@ -113,7 +113,7 @@ $viewRenderer->setView($view)
             L'usage le plus banal consiste à instancier et passer l'objet 
 			<code>ViewRenderer</code> au gestionnaire d'aides. La manière la plus 
 			simple est d'utiliser la méthode statique <code>getStaticHelper()</code> 
-			du gestionnaire, qui s'occupe de tout ceci en une passe:
+			du gestionnaire, qui s'occupe de tout ceci en une passe :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -135,11 +135,11 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');?>]]>
         </para>
 
         <para>
-            Voici un exemple:
+            Voici un exemple :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Bar controller , module foo:
+// Bar controller , module foo :
 class Foo_BarController extends Zend_Controller_Action
 {
     // Rend bar/index.phtml par défaut; rien à faire c'est automatique
@@ -157,21 +157,21 @@ class Foo_BarController extends Zend_Controller_Action
 
 ...
 
-// Dans un des scripts de vue:
+// Dans un des scripts de vue :
 $this->foo(); // appelle Foo_View_Helper_Foo::foo()?>
 ]]>
         </programlisting>
 
         <para>
             Le <code>ViewRenderer</code> définit de même des accesseurs pour configurer
-			la vue qu'il encapsule:
+			la vue qu'il encapsule :
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <code>setView($view)</code> Passage de l'objet de vue. Il devient 
-					accessible comme une propriété publique de l'objet: <code>$view</code>.
+					accessible comme une propriété publique de l'objet : <code>$view</code>.
                 </para>
             </listitem>
 
@@ -234,9 +234,9 @@ $this->foo(); // appelle Foo_View_Helper_Foo::foo()?>
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code> doit être appelée pour 
+                    <code>initView($path, $prefix, $options)</code> doit être appelée pour 
 					configurer la vue : son 'base path', le préfixe de classe pour les filtres et 
-					aides, et des options matérialisées par: 
+					aides, et des options matérialisées par : 
                     <code>neverRender</code>, <code>noRender</code>,
                     <code>noController</code>, <code>scriptAction</code>, et
                     <code>responseSegment</code>.
@@ -249,15 +249,15 @@ $this->foo(); // appelle Foo_View_Helper_Foo::foo()?>
                         = false)</code> vous permet de spécifier les paramètres 
                     <code>scriptAction</code>, <code>responseSegment</code>, et
                     <code>noController</code> en une fois. <code>direct()</code>
-                    est un alias qui permet un appel rapide depuis le contrôleur:
+                    est un alias qui permet un appel rapide depuis le contrôleur :
                 </para>
 
                 <programlisting role="php"><![CDATA[
-// Rends 'foo' au lieu du script correspondant à l'action courante
+// Rend 'foo' au lieu du script correspondant à l'action courante
 $this->_helper->viewRenderer('foo');
 
 // rend form.phtml dans le segment 'html' de la réponse sans utiliser le 
-// sous repertoire contrôleur pour chercher le script de vue:
+// sous repertoire contrôleur pour chercher le script de vue :
 $this->_helper->viewRenderer('form', 'html', true);
 ]]>
                 </programlisting>
@@ -272,7 +272,7 @@ $this->_helper->viewRenderer('form', 'html', true);
 
         <para>
             Le constructeur de <code>ViewRenderer</code> accepte aussi un objet de vue
-			et un tableau d'options, de la même manière que <code>initView()</code>:
+			et un tableau d'options, de la même manière que <code>initView()</code> :
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -400,7 +400,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>:module</code>: MotsCamelCase qui deviennent des mots 
+                        <code>:module</code> : MotsCamelCase qui deviennent des mots 
 						séparés par des tirets, et en minuscule.
                         "FooBarBaz" devient "foo-bar-baz".
                     </para>
@@ -414,7 +414,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:controller</code>: MotsCamelCase qui deviennent des mots
+                        <code>:controller</code>  MotsCamelCase qui deviennent des mots
 						séparés par des tiret; les underscores eux, se transforment en 
 						séparateur de dossier et tout est passé en minuscules.
                         "FooBar" devient "foo-bar"; "FooBar_Admin" devient "foo-bar/admin".
@@ -430,7 +430,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:action</code>: MotsCamelCase qui se transforment en 
+                        <code>:action</code> : MotsCamelCase qui se transforment en 
 						mots séparés par des tirets, minuscules.
 						Les caractères non alphanumeriques deviennent des tirets.
                         "fooBar" devient "foo-bar"; "foo-barBaz" devient "foo-bar-baz".
@@ -602,7 +602,7 @@ class Foo_BarController extends Zend_Controller_Action
         </example>
 
         <note>
-            <title>Conventions de noms: délimiteurs de mots dans les noms de contrôleur
+            <title>Conventions de noms : délimiteurs de mots dans les noms de contrôleur
 			et d'action</title>
             <para>
                 Si les noms de votre contrôleur ou de votre action sont composés de 
@@ -633,12 +633,12 @@ class Foo_BarController extends Zend_Controller_Action
                 Il peut être nécéssaire dans certains cas de désactiver manuellement 
 				le rendu automatique de vue effectué par ViewRenderer. Par exemple, si
 				le contrôleur doit retourner une sortie spéciale, comme XML ou JSON.
-				Deux options s'offrent à vous :<code>setNeverRender()</code>) et 
+				Deux options s'offrent à vous : <code>setNeverRender()</code>) et 
 				<code>setNoRender()</code>.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Baz controller class, bar module:
+// Baz controller class, bar module :
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
@@ -648,7 +648,7 @@ class Bar_BazController extends Zend_Controller_Action
     }
 }
 
-// Bat controller class, bar module:
+// Bat controller class, bar module :
 class Bar_BatController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -677,11 +677,11 @@ class Bar_BatController extends Zend_Controller_Action
 				Par exemple, un contrôleur qui possède deux actions ajout et édition, qui
 				sont susceptibles toutes les deux de rendre le même script de vue.
                 Utilisez alors <code>setScriptAction()</code>, <code>setRender()</code>, ou
-                appelez l'aide ViewRenderer directement:
+                appelez l'aide ViewRenderer directement :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+// Bar controller class, foo module :
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
@@ -724,7 +724,7 @@ class Foo_BarController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+// Bar controller class, foo module :
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -767,7 +767,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <programlisting role="php"><![CDATA[<?php
 /**
- * Dans le fichier de démarrage:
+ * Dans le fichier de démarrage :
  */
 
 // Une implémentation personnalisée de la vue
@@ -787,7 +787,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);?>]]>
 
             <para>
                 Afin de rendre plusieurs scripts de vue dans une même action, appelez 
-				tout simplement plusieurs fois <code>render()</code>:
+				tout simplement plusieurs fois <code>render()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -813,6 +813,3 @@ class SearchController extends Zend_Controller_Action
         </example>
     </sect4>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->
