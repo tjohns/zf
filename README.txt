@@ -1,15 +1,15 @@
-Welcome to Zend Framework 1.5! This is the first production release of the 
+Welcome to Zend Framework 1.5.1! This is the first maintenance release of the 
 Zend Framework 1.5 series. This release maintains backwards compatibility with
 the Zend Framework 1.0 series and has been rigorously tested with many
 applications written for 1.0.
 HOWEVER, PLEASE READ ALL SPECIAL NOTICES FOR UPGRADING IN THIS README *BEFORE*
-UPGRADING EXISTING APPLICATIONS TO ZF 1.5.
+UPGRADING APPLICATIONS WRITTEN ON ZF 1.0 TO ZF 1.5.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.5.0 (revision <INSERT REV NUMBER HERE>).
-Released on 2008-03-17.
+Zend Framework 1.5.1 (revision <INSERT REV NUMBER HERE>).
+Released on 2008-03-24.
 
 SPECIAL NOTICES FOR UPGRADING TO ZF 1.5
 ---------------------------------------
@@ -32,8 +32,8 @@ SPECIAL NOTICES FOR UPGRADING TO ZF 1.5
     http://framework.zend.com/manual/en/zend.controller.migration.html
 
 
-NEW FEATURES
-------------
+NEW FEATURES IN 1.5
+-------------------
 
 * New Zend_Form component with support for AJAX-enabled form elements
 * New action and view helpers for automating and facilitating AJAX requests and
@@ -47,8 +47,8 @@ NEW FEATURES
 * New Zend_Layout component for automating and facilitating site layouts
 * UTF-8 support for PDF documents
 
-ENHANCEMENTS AND BUGFIXES
--------------------------
+ENHANCEMENTS AND BUGFIXES IN 1.5
+--------------------------------
 
 * Zend_Json has been augmented to convert from XML to JSON format
 * New Zend_TimeSync component supporting the Network Time Protocol (NTP)
@@ -67,9 +67,13 @@ ENHANCEMENTS AND BUGFIXES
 * Timezone in Zend_Date may be set by locale
 * Zend_Cache can now use custom frontend and backend classes
 
-A detailed list of all features and bug fixes in this release may be found at:
+A detailed list of all features and bug fixes in the 1.5.0 release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?mode=hide&requestId=10661
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10710
+
+A detailed list of all bug fixes between 1.5.0 and 1.5.1 release may be found at:
+
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10711
 
 SYSTEM REQUIREMENTS
 -------------------
@@ -100,9 +104,9 @@ tracker at:
 
 http://framework.zend.com/issues
 
-If you would like to be notified of new releases- including maintenance releases
-for Zend Framework 1.5- you can subscribe to the fw-announce mailing list by
-sending a blank message to fw-announce-subscribe@lists.zend.com.
+If you would like to be notified of new releases- including further maintenance 
+releases for Zend Framework 1.5- you can subscribe to the fw-announce mailing list
+by sending a blank message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
 -------
