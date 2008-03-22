@@ -57,7 +57,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options):</code> 生成 &lt;input type="checkbox" /&gt; $options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
+                <code>formCheckbox($name, $value, $attribs):</code> 生成 &lt;input type="checkbox" /&gt; ，如果$value匹配"checked"值，则这个 checkbox 显示为已选中。
             </para></listitem>
             
             <listitem>
