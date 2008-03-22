@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -34,13 +35,44 @@
  * handling.
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
+
+/**
+ * @see Zend_Gdata_AuthSub
+ */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+
+/**
+ * @see Zend_Gdata_Photos
+ */
 Zend_Loader::loadClass('Zend_Gdata_Photos');
+
+/**
+ * @see Zend_Gdata_Photos_UserQuery
+ */
 Zend_Loader::loadClass('Zend_Gdata_Photos_UserQuery');
+
+/**
+ * @see Zend_Gdata_Photos_AlbumQuery
+ */
 Zend_Loader::loadClass('Zend_Gdata_Photos_AlbumQuery');
+
+/**
+ * @see Zend_Gdata_Photos_PhotoQuery
+ */
 Zend_Loader::loadClass('Zend_Gdata_Photos_PhotoQuery');
+
+/**
+ * @see Zend_Gdata_App_Extension_Category
+ */
 Zend_Loader::loadClass('Zend_Gdata_App_Extension_Category');
 
 session_start();
@@ -49,10 +81,10 @@ session_start();
 /**
  * Adds a new photo to the specified album
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param array $photo The uploaded photo
+ * @param  Zend_Http_Client $client  The authenticated client
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
+ * @param  array            $photo   The uploaded photo
  * @return void
  */
 function addPhoto($client, $user, $albumId, $photo)
@@ -83,10 +115,10 @@ function addPhoto($client, $user, $albumId, $photo)
 /**
  * Deletes the specified photo
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
+ * @param  Zend_Http_Client $client  The authenticated client
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
+ * @param  integer          $photoId The photo's id
  * @return void
  */
 function deletePhoto($client, $user, $albumId, $photoId)
@@ -109,9 +141,9 @@ function deletePhoto($client, $user, $albumId, $photoId)
 /**
  * Adds a new album to the specified user's album
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param string $name The name of the new album
+ * @param  Zend_Http_Client $client The authenticated client
+ * @param  string           $user   The user's account name
+ * @param  string           $name   The name of the new album
  * @return void
  */
 function addAlbum($client, $user, $name)
@@ -132,9 +164,9 @@ function addAlbum($client, $user, $name)
 /**
  * Deletes the specified album
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
+ * @param  Zend_Http_Client $client  The authenticated client
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
  * @return void
  */
 function deleteAlbum($client, $user, $albumId)
@@ -156,11 +188,11 @@ function deleteAlbum($client, $user, $albumId)
 /**
  * Adds a new comment to the specified photo
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
- * @param string $comment The comment to add
+ * @param  Zend_Http_Client $client  The authenticated client
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
+ * @param  integer          $photoId The photo's id
+ * @param  string           $comment The comment to add
  * @return void
  */
 function addComment($client, $user, $album, $photo, $comment)
@@ -190,11 +222,11 @@ function addComment($client, $user, $album, $photo, $comment)
 /**
  * Deletes the specified comment
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
- * @param integer $commentId The comment's id
+ * @param  Zend_Http_Client $client    The authenticated client
+ * @param  string           $user      The user's account name
+ * @param  integer          $albumId   The album's id
+ * @param  integer          $photoId   The photo's id
+ * @param  integer          $commentId The comment's id
  * @return void
  */
 function deleteComment($client, $user, $albumId, $photoId, $commentId)
@@ -219,11 +251,11 @@ function deleteComment($client, $user, $albumId, $photoId, $commentId)
 /**
  * Adds a new tag to the specified photo
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
- * @param string $tag The tag to add to the photo
+ * @param  Zend_Http_Client $client The authenticated client
+ * @param  string           $user   The user's account name
+ * @param  integer          $album  The album's id
+ * @param  integer          $photo  The photo's id
+ * @param  string           $tag    The tag to add to the photo
  * @return void
  */
 function addTag($client, $user, $album, $photo, $tag)
@@ -252,11 +284,11 @@ function addTag($client, $user, $album, $photo, $tag)
 /**
  * Deletes the specified tag
  *
- * @param Zend_Http_Client $client The authenticated client
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
- * @param string $tagContent The name of the tag to be deleted
+ * @param  Zend_Http_Client $client     The authenticated client
+ * @param  string           $user       The user's account name
+ * @param  integer          $albumId    The album's id
+ * @param  integer          $photoId    The photo's id
+ * @param  string           $tagContent The name of the tag to be deleted
  * @return void
  */
 function deleteTag($client, $user, $albumId, $photoId, $tagContent)
@@ -359,6 +391,8 @@ function getAuthSubUrl()
  * a link to the AuthSub URL.
  * 
  * Uses getAuthSubUrl() to get the URL which the user must visit to authenticate
+ *
+ * @return void
  */
 function requestUserLogin($linkText) 
 {
@@ -613,8 +647,8 @@ function displayAlbumMenu()
  * Outputs an HTML unordered list (ul), with each list item representing an
  * album in the user's feed.
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $user The user's account name
+ * @param  Zend_Http_Client $client The authenticated client object
+ * @param  string           $user   The user's account name
  * @return void
  */
 function outputUserFeed($client, $user) 
@@ -664,9 +698,9 @@ function outputUserFeed($client, $user)
  * Outputs an HTML unordered list (ul), with each list item representing a
  * photo in the user's album feed.  
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $user The user's account name
- * @param integer $albumId The album's id
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
  * @return void
  */
 function outputAlbumFeed($client, $user, $albumId) 
@@ -717,10 +751,10 @@ function outputAlbumFeed($client, $user, $albumId)
 /** 
  * Outputs the feed of the specified photo
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $user The user's account name
- * @param integer $albumId The album's id
- * @param integer $photoId The photo's id
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $user    The user's account name
+ * @param  integer          $albumId The album's id
+ * @param  integer          $photoId The photo's id
  * @return void
  */
 function outputPhotoFeed($client, $user, $albumId, $photoId) 

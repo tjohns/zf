@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -92,18 +93,32 @@ define('LOGIN_PASSWORD', '');
 
 // ************************* END WWW CONFIGURATION *************************
 
-
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+
+/**
+ * @see Zend_Gdata_Gapps
+ */
 Zend_Loader::loadClass('Zend_Gdata_Gapps');
 
 /**
  * Returns a HTTP client object with the appropriate headers for communicating
  * with Google using the ClientLogin credentials supplied.
  *
- * @param string $user The username, in e-mail address format, to authenticate
- * @param string $pass The password for the user specified
+ * @param  string $user The username, in e-mail address format, to authenticate
+ * @param  string $pass The password for the user specified
  * @return Zend_Http_Client
  */
 function getClientLoginHttpClient($user, $pass) 
@@ -117,14 +132,14 @@ function getClientLoginHttpClient($user, $pass)
  * Creates a new user for the current domain. The user will be created 
  * without admin privileges.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The desired username for the user.
- * @param string $givenName The given name for the user.
- * @param string $familyName The family name for the user.
- * @param string $password The plaintext password for the user.
+ * @param  Zend_Gdata_Gapps $gapps      The service object to use for communicating with the Google
+ *                                      Apps server.
+ * @param  boolean          $html       True if output should be formatted for display in a web browser.
+ * @param  string           $username   The desired username for the user.
+ * @param  string           $givenName  The given name for the user.
+ * @param  string           $familyName The family name for the user.
+ * @param  string           $password   The plaintext password for the user.
+ * @return void
  */
 function createUser($gapps, $html, $username, $givenName, $familyName, 
         $password)
@@ -139,11 +154,10 @@ function createUser($gapps, $html, $username, $givenName, $familyName,
  * Retrieves a user for the current domain by username. Information about 
  * that user is then output.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The desired username for the user.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The desired username for the user.
+ * @return void
  */
 function retrieveUser($gapps, $html, $username)
 {
@@ -203,10 +217,9 @@ function retrieveUser($gapps, $html, $username)
  * Retrieves the list of users for the current domain and outputs 
  * that list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
+ * @param  Zend_Gdata_Gapps $gapps The service object to use for communicating with the Google Apps server.
+ * @param  boolean          $html  True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveAllUsers($gapps, $html)
 {
@@ -239,13 +252,13 @@ function retrieveAllUsers($gapps, $html)
 /**
  * Change the name for an existing user.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated
- * @param string $newGivenName The new given name for the user.
- * @param string $newFamilyName The new family name for the user.
+ * @param  Zend_Gdata_Gapps $gapps         The service object to use for communicating with the Google
+ *                                         Apps server.
+ * @param  boolean          $html          True if output should be formatted for display in a web browser.
+ * @param  string           $username      The username which should be updated
+ * @param  string           $newGivenName  The new given name for the user.
+ * @param  string           $newFamilyName The new family name for the user.
+ * @return void
  */
 function updateUserName($gapps, $html, $username, $newGivenName, $newFamilyName)
 {
@@ -270,12 +283,12 @@ function updateUserName($gapps, $html, $username, $newGivenName, $newFamilyName)
 /**
  * Change the password for an existing user.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated
- * @param string $newPassword The new password for the user.
+ * @param  Zend_Gdata_Gapps $gapps       The service object to use for communicating with the Google
+ *                                       Apps server.
+ * @param  boolean          $html        True if output should be formatted for display in a web browser.
+ * @param  string           $username    The username which should be updated
+ * @param  string           $newPassword The new password for the user.
+ * @return void
  */
 function updateUserPassword($gapps, $html, $username, $newPassword)
 {
@@ -299,11 +312,11 @@ function updateUserPassword($gapps, $html, $username, $newPassword)
 /**
  * Suspend a given user. The user will not be able to login until restored.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function suspendUser($gapps, $html, $username)
 {
@@ -327,11 +340,11 @@ function suspendUser($gapps, $html, $username)
 /**
  * Restore a given user after being suspended.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function restoreUser($gapps, $html, $username)
 {
@@ -355,11 +368,11 @@ function restoreUser($gapps, $html, $username)
 /**
  * Give a user admin rights.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function giveUserAdminRights($gapps, $html, $username)
 {
@@ -383,11 +396,11 @@ function giveUserAdminRights($gapps, $html, $username)
 /**
  * Revoke a user's admin rights.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function revokeUserAdminRights($gapps, $html, $username)
 {
@@ -411,11 +424,11 @@ function revokeUserAdminRights($gapps, $html, $username)
 /**
  * Force a user to change their password at next login.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function setUserMustChangePassword($gapps, $html, $username)
 {
@@ -439,11 +452,11 @@ function setUserMustChangePassword($gapps, $html, $username)
 /**
  * Undo forcing a user to change their password at next login.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be updated.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be updated.
+ * @return void
  */
 function clearUserMustChangePassword($gapps, $html, $username)
 {
@@ -467,11 +480,11 @@ function clearUserMustChangePassword($gapps, $html, $username)
 /**
  * Delete the user who owns a given username.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username which should be deleted.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username which should be deleted.
+ * @return void
  */
 function deleteUser($gapps, $html, $username)
 {
@@ -485,13 +498,12 @@ function deleteUser($gapps, $html, $username)
 /**
  * Create a new nickname.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username to which the nickname should be 
- *          assigned.
- * @param string $nickname The name of the nickname to be created.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username to which the nickname should be assigned.
+ * @param  string           $nickname The name of the nickname to be created.
+ * @return void
  */
 function createNickname($gapps, $html, $username, $nickname)
 {
@@ -505,11 +517,11 @@ function createNickname($gapps, $html, $username, $nickname)
 /**
  * Retrieve a specified nickname and output its ownership information.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $nickname The name of the nickname to be retrieved.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $nickname The name of the nickname to be retrieved.
+ * @return void
  */
 function retrieveNickname($gapps, $html, $nickname)
 {
@@ -535,11 +547,11 @@ function retrieveNickname($gapps, $html, $nickname)
 /**
  * Outputs all nicknames owned by a specific username.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $username The username whose nicknames should be displayed.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $username The username whose nicknames should be displayed.
+ * @return void
  */
 function retrieveNicknames($gapps, $html, $username)
 {
@@ -567,10 +579,10 @@ function retrieveNicknames($gapps, $html, $username)
  * Retrieves the list of nicknames for the current domain and outputs 
  * that list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
+ * @param  Zend_Gdata_Gapps $gapps The service object to use for communicating with the Google
+ *                                 Apps server.
+ * @param  boolean          $html  True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveAllNicknames($gapps, $html)
 {
@@ -596,11 +608,11 @@ function retrieveAllNicknames($gapps, $html)
 /**
  * Delete's a specific nickname from the current domain.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $nickname The nickname that should be deleted.
+ * @param  Zend_Gdata_Gapps $gapps    The service object to use for communicating with the Google
+ *                                    Apps server.
+ * @param  boolean          $html     True if output should be formatted for display in a web browser.
+ * @param  string           $nickname The nickname that should be deleted.
+ * @return void
  */
 function deleteNickname($gapps, $html, $nickname)
 {
@@ -615,11 +627,11 @@ function deleteNickname($gapps, $html, $nickname)
 /**
  * Create a new email list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $emailList The name of the email list to be created.
+ * @param  Zend_Gdata_Gapps $gapps     The service object to use for communicating with the Google
+ *                                     Apps server.
+ * @param  boolean          $html      True if output should be formatted for display in a web browser.
+ * @param  string           $emailList The name of the email list to be created.
+ * @return void
  */
 function createEmailList($gapps, $html, $emailList)
 {
@@ -634,13 +646,13 @@ function createEmailList($gapps, $html, $emailList)
  * Outputs the list of email lists to which the specified address is 
  * subscribed.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $recipient The email address of the recipient whose 
- *          subscriptions should be retrieved. Only a username is 
- *          required if the recipient is a member of the current domain.
+ * @param  Zend_Gdata_Gapps $gapps     The service object to use for communicating with the Google
+ *                                     Apps server.
+ * @param  boolean          $html      True if output should be formatted for display in a web browser.
+ * @param  string           $recipient The email address of the recipient whose subscriptions should
+ *                                     be retrieved. Only a username is required if the recipient is a
+ *                                     member of the current domain.
+ * @return void
  */
 function retrieveEmailLists($gapps, $html, $recipient)
 {
@@ -666,10 +678,10 @@ function retrieveEmailLists($gapps, $html, $recipient)
 /**
  * Outputs the list of all email lists on the current domain.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
+ * @param  Zend_Gdata_Gapps $gapps The service object to use for communicating with the Google
+ *                                 Apps server.
+ * @param  boolean          $html  True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveAllEmailLists($gapps, $html)
 {
@@ -695,11 +707,11 @@ function retrieveAllEmailLists($gapps, $html)
 /**
  * Delete's a specific email list from the current domain.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $emailList The email list that should be deleted.
+ * @param  Zend_Gdata_Gapps $gapps     The service object to use for communicating with the Google
+ *                                     Apps server.
+ * @param  boolean          $html      True if output should be formatted for display in a web browser.
+ * @param  string           $emailList The email list that should be deleted.
+ * @return void
  */
 function deleteEmailList($gapps, $html, $emailList)
 {
@@ -713,14 +725,13 @@ function deleteEmailList($gapps, $html, $emailList)
 /**
  * Add a recipient to an existing email list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $recipientAddress The address of the recipient who should 
- *          be added.
- * @param string $emailList The name of the email address the recipient 
- *          be added to.
+ * @param  Zend_Gdata_Gapps $gapps            The service object to use for communicating with the
+ *                                            Google Apps server.
+ * @param  boolean          $html             True if output should be formatted for display in a
+ *                                            web browser.
+ * @param  string           $recipientAddress The address of the recipient who should be added.
+ * @param  string           $emailList        The name of the email address the recipient be added to.
+ * @return void
  */
 function addRecipientToEmailList($gapps, $html, $recipientAddress, 
         $emailList)
@@ -735,11 +746,11 @@ function addRecipientToEmailList($gapps, $html, $recipientAddress,
 /**
  * Outputs the list of all recipients for a given email list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $emailList The email list whose recipients should be output.
+ * @param  Zend_Gdata_Gapps $gapps     The service object to use for communicating with the Google
+ *                                     Apps server.
+ * @param  boolean          $html      True if output should be formatted for display in a web browser.
+ * @param  string           $emailList The email list whose recipients should be output.
+ * @return void
  */
 function retrieveAllRecipients($gapps, $html, $emailList)
 {
@@ -765,14 +776,13 @@ function retrieveAllRecipients($gapps, $html, $emailList)
 /**
  * Remove an existing recipient from an email list.
  * 
- * @param Zend_Gdata_Gapps $gapps The service object to use for 
- *      communicating with the Google Apps server.
- * @param boolean $html True if output should be formatted for display 
- *          in a web browser.
- * @param string $recipientAddress The address of the recipient who should 
- *          be removed.
- * @param string $emailList The email list from which the recipient should 
- *          be removed.
+ * @param  Zend_Gdata_Gapps $gapps            The service object to use for communicating with the
+ *                                            Google Apps server.
+ * @param  boolean          $html             True if output should be formatted for display in a
+ *                                            web browser.
+ * @param  string           $recipientAddress The address of the recipient who should be removed.
+ * @param  string           $emailList        The email list from which the recipient should be removed.
+ * @return void
  */
 function removeRecipientFromEmailList($gapps, $html, $recipientAddress,
         $emailList)
@@ -790,8 +800,8 @@ function removeRecipientFromEmailList($gapps, $html, $recipientAddress,
 /**
  * Display list of valid commands.
  * 
- * @param string $executable The name of the current script. This is 
- *      usually available as $argv[0].
+ * @param  string $executable The name of the current script. This is usually available as $argv[0].
+ * @return void
  */
 function displayHelp($executable)
 {
@@ -830,10 +840,10 @@ function displayHelp($executable)
  *
  * If no arguments are provided, usage information will be provided.
  * 
- * @param array $argv The array of command line arguments provided by PHP.
- *          $argv[0] should be the current executable name or '-' if 
- *          not available.
- * @param int $argc The size of $argv.
+ * @param  array   $argv    The array of command line arguments provided by PHP.
+ *                 $argv[0] should be the current executable name or '-' if not available.
+ * @param  integer $argc    The size of $argv.
+ * @return void
  */
 function runCLIVersion($argv, $argc)
 {
@@ -1140,8 +1150,9 @@ function runCLIVersion($argv, $argc)
  *       having a single-file sample.
  *
  *
- * @param boolean $displayMenu (optional) If set to true, a navigation 
- *          menu is displayed at the top of the page. Default is true.
+ * @param  boolean $displayMenu (optional) If set to true, a navigation 
+ *                              menu is displayed at the top of the page. Default is true.
+ * @return void
  */
 function startHTML($displayMenu = true)
 {
@@ -1289,8 +1300,9 @@ function startHTML($displayMenu = true)
 /**
  * Writes the HTML epilogue for this app and exit.
  *
- * @param boolean $displayBackButton (optional) If true, displays a 
- *          link to go back at the bottom of the page. Defaults to false.
+ * @param  boolean $displayBackButton (optional) If true, displays a 
+ *                                    link to go back at the bottom of the page. Defaults to false.
+ * @return void
  */
 function endHTML($displayBackButton = false)
 {
@@ -1308,6 +1320,8 @@ exit();
 /**
  * Displays a notice indicating that a login password needs to be 
  * set before continuing.
+ *
+ * @return void
  */
 function displayPasswordNotSetNotice()
 {
@@ -1326,6 +1340,8 @@ function displayPasswordNotSetNotice()
 
 /**
  * Displays a notice indicating that authentication to Google Apps failed.
+ *
+ * @return void
  */
 function displayAuthenticationFailedNotice()
 {
@@ -1342,8 +1358,8 @@ function displayAuthenticationFailedNotice()
 /**
  * Outputs a request to the user to enter their login password.
  *
- * @param string $errorText (optional) Error text to be displayed next 
- *          to the login form.
+ * @param  string $errorText (optional) Error text to be displayed next to the login form.
+ * @return void
  */
 function requestUserLogin($errorText = null)
 {
@@ -1367,6 +1383,8 @@ function requestUserLogin($errorText = null)
 
 /**
  * Display the main menu for running in a web browser.
+ *
+ * @return void
  */
 function displayMenu()
 {
@@ -1389,6 +1407,8 @@ function displayMenu()
 
 /**
  * Display the user maintenance menu for running in a web browser.
+ *
+ * @return void
  */
 function displayUserMenu()
 {
@@ -1532,6 +1552,8 @@ function displayUserMenu()
 
 /**
  * Display the nickname maintenance menu for running in a web browser.
+ *
+ * @return void
  */
 function displayNicknameMenu()
 {
@@ -1598,6 +1620,8 @@ function displayNicknameMenu()
 
 /**
  * Display the email list maintenance menu for running in a web browser.
+ *
+ * @return void
  */
 function displayEmailListMenu()
 {
@@ -1684,6 +1708,8 @@ function displayEmailListMenu()
 
 /**
  * Log the current user out of the application.
+ *
+ * @return void
  */
 function logout()
 {
@@ -1702,6 +1728,8 @@ session_destroy();
 
 /**
  * Processes loading of this sample code through a web browser.
+ *
+ * @return void
  */
 function runWWWVersion() 
 {

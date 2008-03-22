@@ -246,10 +246,10 @@ function printDocumentsFeed($feed, $html)
  * Obtain a list of all of a user's docs.google.com documents and print the 
  * titles to the command line.
  *
- * @param Zend_Gdata_Docs $docs The service object to use for communicating 
- *     with the Google Documents server.
- * @param boolean $html True if output should be formatted for display in a 
- *     web browser.
+ * @param  Zend_Gdata_Docs $client The service object to use for communicating with the Google
+ *                                 Documents server.
+ * @param  boolean         $html   True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveAllDocuments($client, $html) 
 {
@@ -264,10 +264,10 @@ function retrieveAllDocuments($client, $html)
  * Obtain a list of all of a user's docs.google.com word processing 
  * documents and print the titles to the command line.
  *
- * @param Zend_Gdata_Docs $docs The service object to use for communicating 
- *     with the Google Documents server.
- * @param boolean $html True if output should be formatted for display in a 
- *     web browser.
+ * @param  Zend_Gdata_Docs $client The service object to use for communicating with the Google
+ *                                 Documents server.
+ * @param  boolean         $html   True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveWPDocs($client, $html) 
 {
@@ -283,10 +283,10 @@ function retrieveWPDocs($client, $html)
  * Obtain a list of all of a user's docs.google.com spreadsheets 
  * documents and print the titles to the command line.
  *
- * @param Zend_Gdata_Docs $docs The service object to use for communicating 
- *     with the Google Documents server.
- * @param boolean $html True if output should be formatted for display in a 
- *     web browser.
+ * @param  Zend_Gdata_Docs $client The service object to use for communicating with the Google
+ *                                 Documents server.
+ * @param  boolean         $html   True if output should be formatted for display in a web browser.
+ * @return void
  */
 function retrieveSpreadsheets($client, $html) 
 {
@@ -303,11 +303,11 @@ function retrieveSpreadsheets($client, $html)
  * which match the specified search criteria and print the titles to the 
  * command line.
  *
- * @param Zend_Gdata_Docs $docs The service object to use for communicating 
- *     with the Google Documents server.
- * @param boolean $html True if output should be formatted for display in a 
- *     web browser.
- * @param string $query The search query to use
+ * @param  Zend_Gdata_Docs $client The service object to use for communicating with the Google
+ *                                 Documents server.
+ * @param  boolean         $html   True if output should be formatted for display in a web browser.
+ * @param  string          $query  The search query to use
+ * @return void
  */
 function fullTextSearch($client, $html, $query) 
 {
@@ -322,19 +322,22 @@ function fullTextSearch($client, $html, $query)
 /**
  * Upload the specified document
  *
- * @param Zend_Gdata_Docs $docs The service object to use for communicating
- *     with the Google Documents server.
- * @param boolean $html True if output should be formatted for display in a
- *     web browser.
- * @param string $originalFileName The name of the file to be uploaded. The
- *     mime type of the file is determined from the extension on this file
- *     name. For example, test.csv is uploaded as a comma seperated volume
- *     and converted into a spreadsheet.
- * @param string $temporaryFileLocation (optional) The file in which the
- *     data for the document is stored. This is used when the file has been
- *     uploaded from the client's machine to the server and is stored in
- *     a temporary file which does not have an extension. If this parameter
- *     is null, the file is read from the originalFileName.
+ * @param  Zend_Gdata_Docs $docs                  The service object to use for communicating with
+ *                                                the Google Documents server.
+ * @param  boolean         $html                  True if output should be formatted for display in
+ *                                                a web browser.
+ * @param  string          $originalFileName      The name of the file to be uploaded. The mime type
+ *                                                of the file is determined from the extension on
+ *                                                this file name. For example, test.csv is uploaded
+ *                                                as a comma seperated volume and converted into a
+ *                                                spreadsheet.
+ * @param  string          $temporaryFileLocation (optional) The file in which the data for the
+ *                                                document is stored. This is used when the file has
+ *                                                been uploaded from the client's machine to the
+ *                                                server and is stored in a temporary file which
+ *                                                does not have an extension. If this parameter is
+ *                                                null, the file is read from the originalFileName.
+ * @return void
  */
 function uploadDocument($docs, $html, $originalFileName,
                         $temporaryFileLocation) {
@@ -376,8 +379,9 @@ function uploadDocument($docs, $html, $originalFileName,
  *       having a single-file sample.
  *
  *
- * @param boolean $displayMenu (optional) If set to true, a navigation
- *          menu is displayed at the top of the page. Default is true.
+ * @param  boolean $displayMenu (optional) If set to true, a navigation menu is displayed at the top
+ *                              of the page. Default is true.
+ * @return void
  */
 function startHTML($displayMenu = true)
 {
@@ -524,8 +528,9 @@ function startHTML($displayMenu = true)
 /**
  * Writes the HTML epilogue for this app and exit.
  *
- * @param boolean $displayBackButton (optional) If true, displays a
- *          link to go back at the bottom of the page. Defaults to false.
+ * @param  boolean $displayBackButton (optional) If true, displays a link to go back at the bottom
+ *                                    of the page. Defaults to false.
+ * @return void
  */
 function endHTML($displayBackButton = false)
 {
@@ -544,6 +549,8 @@ exit();
 /**
  * Displays a notice indicating that a login password needs to be
  * set before continuing.
+ *
+ * @return void
  */
 function displayPasswordNotSetNotice()
 {
@@ -562,6 +569,8 @@ function displayPasswordNotSetNotice()
 
 /**
  * Displays a notice indicating that authentication to Google Apps failed.
+ *
+ * @return void
  */
 function displayAuthenticationFailedNotice()
 {
@@ -580,6 +589,9 @@ function displayAuthenticationFailedNotice()
  * a link to the AuthSub URL.
  *
  * Uses getAuthSubUrl() to get the URL which the user must visit to authenticate
+ *
+ * @param  string $linkText
+ * @return void
  */
 function requestUserLogin($linkText)
 {
@@ -667,6 +679,8 @@ function getCurrentUrl()
 
 /**
  * Display the main menu for running in a web browser.
+ *
+ * @return void
  */
 function displayMenu()
 {
@@ -689,6 +703,8 @@ function displayMenu()
 
 /**
  * Log the current user out of the application.
+ *
+ * @return void
  */
 function logout()
 {
@@ -707,6 +723,8 @@ session_destroy();
 
 /**
  * Processes loading of this sample code through a web browser.
+ *
+ * @return void
  */
 function runWWWVersion()
 {
@@ -820,6 +838,8 @@ function runWWWVersion()
 
 /**
  * Display the menu for running in a web browser.
+ *
+ * @return void
  */
 function displayListMenu()
 {
@@ -857,6 +877,8 @@ function displayListMenu()
 
 /**
  * Display the menu for running in a web browser.
+ *
+ * @return void
  */
 function displayQueryMenu() 
 {
@@ -878,6 +900,8 @@ function displayQueryMenu()
 
 /**
  * Display the menu for running in a web browser.
+ *
+ * @return void
  */
 function displayUploadMenu()
 {
@@ -914,4 +938,3 @@ if (!isset($_SERVER["HTTP_HOST"]))  {
         endHTML(true);
     }
 }
-
