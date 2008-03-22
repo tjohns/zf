@@ -1003,20 +1003,16 @@ decorators.label.decorator = "Label"
         </itemizedlist>
 
         <para>
-            As an example, let's say that all text elements in a form you are
-            creating need to be filtered with <code>StringTrim</code>,
-            validated with a common regular expression, and that you want to
-            use a custom decorator you've created for displaying them,
-            'My_Decorator_TextItem'; additionally, you have a number of standard
-            attributes, including 'size', 'maxLength', and 'class' you wish to
-            specify. You could define such an element as follows:
+            有两个方法一般用来扩展元素：<code>init()</code> 可为元素添加定制的初始化逻辑；<code>loadDefaultDecorators()</code> 可用于设置一个用于元素的缺省装饰器的列表。
+        </para>
+        <para>
             用例子来说明，你在一个表单里生成的所有文本元素需要用 <code>StringTrim</code> 来过滤、用通用的规则表达式来校验，并且你想用你生成的定制的装饰器来显示它们，'My_Decorator_TextItem'。另外，你有许多想指定的标准属性，包括 'size'、 'maxLength' 和 'class'。你可以定义这样的元素如下：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    public function __construct($name, $options = null)
+    public function init()
     {
         $this->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator')
              ->addFilters('StringTrim')
@@ -1025,7 +1021,6 @@ class My_Element_Text extends Zend_Form_Element
              ->setAttrib('size', 30)
              ->setAttrib('maxLength', 45)
              ->setAttrib('class', 'text');
-        parent::__construct($name, $options);
     }
 }
 ?>]]></programlisting>
@@ -1044,13 +1039,13 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         </para>
 
         <para>
-            当继承 <code>Zend_Form_Element</code> 时你想 override 的一个特殊方法是 <code>_loadDefaultDecorators()</code>。这个方法有条件地为你的元素加载一组缺省装饰器，你可能想在你的继承类里替换你自己的装饰器。
+            当继承 <code>Zend_Form_Element</code> 时你想 override 的另一个特殊方法是 <code>loadDefaultDecorators()</code>。这个方法有条件地为你的元素加载一组缺省装饰器，你可能想在你的继承类里替换你自己的装饰器。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
         $this->addDecorator('ViewHelper')
              ->addDecorator('DisplayError')

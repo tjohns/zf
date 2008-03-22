@@ -1350,13 +1350,13 @@ decorators.form.decorator = "Form"
         </itemizedlist>
 
         <para>
-            最典型的用例是使用构造器来设置指定的表单元素和配置：
+            最典型的用例是使用 <code>init()</code> 方法来设置指定的表单元素和配置：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class My_Form_Login extends Zend_Form
 {
-    public function __construct($options = null)
+    public function init()
     {
         $username = new Zend_Form_Element_Text('username');
         $username->class = 'formtext';
@@ -1407,6 +1407,24 @@ $form = new My_Form_Login();
         <para>
             所有的功能已经设置并准备好了，不需要配置文件。（注意这个例子非常简化，因为它没有为元素包含校验器和过滤器。）
         </para>
+        
+        <para>
+            另一个普通的扩展原因是定义一组缺省的装饰器，可以通过覆盖（overriding）<code>loadDefaultDecorators()</code> 方法来完成：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class My_Form_Login extends Zend_Form
+{
+    public function loadDefaultDecorators()
+    {
+        $this->setDecorators(array(
+            'FormElements',
+            'Fieldset',
+            'Form'
+        ));
+    }
+}
+]]></programlisting>
     </sect2>
 </sect1>
 <!--
