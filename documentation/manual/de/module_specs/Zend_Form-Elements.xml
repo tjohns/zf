@@ -1221,6 +1221,14 @@ decorators.label.decorator = "Label"
         </itemizedlist>
 
         <para>
+            Es gibt zwei Methoden die typischerweise verwendet werden um ein Element zu erweitern:
+            <code>init()</code>, was verwendet werden kann um eine eigene Initialisierungs-Logik
+            zum Element hinzuzufügen, und <code>loadDefaultDecorators()</code>, was verwendet
+            werden kann um eine Liste von Standard Dekoratoren zu setzen die vom Element
+            verwendet werden sollen.
+        </para>
+
+        <para>
             Als Beispiel nehmen wir an das alle Text Elemente einer Form die erstellt wird mit
             <code>StringTrim</code> gefiltert werden müssen, mit einer gemeinsamen Regular
             Expression und das ein eigener Dekorator 'My_Decorator_TextItem' verwendet werden soll
@@ -1232,7 +1240,7 @@ decorators.label.decorator = "Label"
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    public function __construct($name, $options = null)
+    public function init()
     {
         $this->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator')
              ->addFilters('StringTrim')
@@ -1241,7 +1249,6 @@ class My_Element_Text extends Zend_Form_Element
              ->setAttrib('size', 30)
              ->setAttrib('maxLength', 45)
              ->setAttrib('class', 'text');
-        parent::__construct($name, $options);
     }
 }
 ?>]]></programlisting>
@@ -1262,8 +1269,8 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         </para>
 
         <para>
-            Eine spezielle Methode die man überschreiben sollte wenn <code>Zend_Form_Element</code>
-            erweitert wird ist die <code>_loadDefaultDecorators()</code> Methode. Diese Methode
+            Eine andere Methode die man überschreiben sollte wenn <code>Zend_Form_Element</code>
+            erweitert wird ist die <code>loadDefaultDecorators()</code> Methode. Diese Methode
             lädt fallweise ein Set von Standarddekoratoren für das Element; es kann gewünscht sein
             eigene Dekoratore in der erweiterten Klasse zu verwenden:
         </para>
@@ -1271,7 +1278,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         <programlisting role="php"><![CDATA[<?php
 class My_Element_Text extends Zend_Form_Element
 {
-    protected function _loadDefaultDecorators()
+    public function loadDefaultDecorators()
     {
         $this->addDecorator('ViewHelper')
              ->addDecorator('DisplayError')
