@@ -30,9 +30,10 @@ require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Auth.php';
 
 /**
- * @uses       Zend_Controller_Action
+ * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Demos
+ * @uses       Zend_Controller_Action
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

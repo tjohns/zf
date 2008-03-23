@@ -44,6 +44,7 @@ require_once 'Zend/Loader.php';
  * The structure of the class is very simple. Every method named show...() output HTML, run() inits mail storage
  * after login and calls a show method, everything else inits and checks variables and mail storage handler.
  *
+ * @category   Zend
  * @package    Zend_Mail
  * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
