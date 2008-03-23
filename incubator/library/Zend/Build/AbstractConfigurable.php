@@ -21,16 +21,23 @@
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @uses       Zend_Build_Configurable
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Build_AbstractConfigurable implements Zend_Build_Configurable
 {
+    /**
+     * $_config
+     *
+     * @var ZenD_Config
+     */
     protected $_config = null;
 
     /**
      * @see Zend_Build_Configurable::getConfig()
+     * @return Zend_Config
      */
     public function getConfig()
     {
@@ -38,17 +45,21 @@ abstract class Zend_Build_AbstractConfigurable implements Zend_Build_Configurabl
     }
     
     /**
-     * @see Zend_Build_Configurable::getConfig()
+     * @see    Zend_Build_Configurable::getConfig()
+     * @param  Zend_Config $config
+     * @return void
      */
     public function setConfig(Zend_Config $config)
     {
         $this->_config = $config;
     }
-    
+
     /**
      * @see Zend_Build_Configurable::getConfigurable()
+     * @param  Zend_Config $config
+     * @return Object
      */
-    public function getConfigurable(Zend_Config $config))
+    public function getConfigurable(Zend_Config $config)
     {
         $configurable = new $config->class;
         $configurable->setConfig($config);

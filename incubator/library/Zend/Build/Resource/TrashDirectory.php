@@ -27,7 +27,9 @@ require_once 'Zend/Build/Resource/Directory.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
+ * @uses       Zend_Build_Resource_Directory
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -36,19 +38,26 @@ class Zend_Build_Resource_TrashDirectory extends Zend_Build_Resource_Directory
     /**
      * Maximum size of this directory in MB. This is a soft limit, since this limit is enforced AFTER
      * the current command has run.
+     *
+     * @var integer
      */
     public $maxSize = 100;
 
     /**
-     *	Set maximum size in MB
+     * Set maximum size in MB
+     *
+     * @param  integer $size
+     * @return void
      */
-    public function setMaxSize (int $size)
+    public function setMaxSize ($size)
     {
         $this->size = $size;
     }
 
     /**
-     *	Get maximum size in MB
+     * Get maximum size in MB
+     *
+     * @return integer
      */
     public function getMaxSize ()
     {
