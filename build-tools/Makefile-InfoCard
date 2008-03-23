@@ -182,7 +182,7 @@ stage-version:
 	@sed -e 's/\[INSERT REV NUMBER HERE\]/$(ZF_SVN_REVISION)/' \
 	    < $(INFOCARD_STAGE_DIR)/README.txt \
 	    > $(INFOCARD_STAGE_DIR)/README.txt.new
-	@ZF_RELEASE_DATE=`date +%Y-%m-%d` ; sed -e "s/\[INSERT DATE HERE\]/$$ZF_RELEASE_DATE/" 
+	@ZF_RELEASE_DATE=`date +%Y-%m-%d` ; sed -e "s/\[INSERT DATE HERE\]/$$ZF_RELEASE_DATE/" \ 
 	    < $(INFOCARD_STAGE_DIR)/README.txt.new \
 	    > $(INFOCARD_STAGE_DIR)/README.txt
 	@rm $(INFOCARD_STAGE_DIR)/README.txt.new
