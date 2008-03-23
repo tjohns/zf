@@ -17,27 +17,27 @@
         </para>
 
         <para>
-            <emphasis role="strong">Caractéristiques principales:</emphasis>
+            <emphasis role="strong">Caractéristiques principales :</emphasis>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Support des méthodes Basic et Digest.
+                        Support des méthodes Basic et Digest ;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         Propose tous les des schémas de challenge, le client peut répondre avec 
-						le schéma qu'il supporte.
+						le schéma qu'il supporte ;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Support de l'authentification Proxy.
+                        Support de l'authentification Proxy ;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Inclus le support d'authentification fichiers, et fournit une interface 
+                        Inclus le support d'authentification de type fichier, et fournit une interface 
 						pour créer son propre support, comme une base de données.
                     </para>
                 </listitem>
@@ -45,16 +45,16 @@
         </para>
 
         <para>
-            Il y a quelques caractéristiques de la RFC-2617 qui ne sont pas encore supportées:
+            Il y a quelques caractéristiques de la RFC-2617 qui ne sont pas encore supportées :
             <itemizedlist>
                 <listitem>
                     <para>
-                        Le "Nonce tracking", mécanisme qui évite les attaques par répétitions.
+                        Le "Nonce tracking", mécanisme qui évite les attaques par répétitions ;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Authentification avec vérification d'intégrité ("auth-int").
+                        Authentification avec vérification d'intégrité ("auth-int") ;
                     </para>
                 </listitem>
                 <listitem>
@@ -77,7 +77,7 @@
 			logique de commande des authentifications Basic et Digest. Elle utilise aussi 
 			un résolveur pour chercher les identifiants sur un disque (fichier texte par 
 			défaut), et les analyser. Ils sont alors comparés aux valeurs envoyées par le 
-			client pour determiner une éventuelle correspondance.
+			client pour déterminer une éventuelle correspondance.
         </para>
 
     </sect2>
@@ -89,14 +89,14 @@
         <para>
             La classe <code>Zend_Auth_Adapter_Http</code> requière un tableau de configuration 
 			lors de sa construction. Il y a plusieurs options de configuration disponibles, dont 
-			certaines requises:
+			certaines requises :
             <table id="zend.auth.adapter.configuration_options.table">
                 <title>Liste des options de configuration</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
                             <entry>Nom</entry>
-                            <entry>Requise?</entry>
+                            <entry>Requise (?)</entry>
                             <entry>Description</entry>
                         </row>
                     </thead>
@@ -105,17 +105,17 @@
                             <entry><code>accept_schemes</code></entry>
                             <entry>Oui</entry>
                             <entry>
-                                Determines les chémas d'authentification que l'adaptateur va 
+                                Détermine les chémas d'authentification que l'adaptateur va 
 								accepter du client. Ce doit être une liste séparée par des 
 								espaces, contenant <code>'basic'</code> et/ou <code>'digest'</code>.
                             </entry>
                         </row>
                         <row>
                             <entry><code>realm</code></entry>
-                            <entry>oui</entry>
+                            <entry>Oui</entry>
                             <entry>
-                                Fournit le nom de l'authentification (realm); chaque nom 
-								d'utilisateur doit être unique, par com d'authentification.
+                                Fournit le nom de l'authentification (realm) ; chaque nom 
+								d'utilisateur doit être unique, par nom d'authentification.
                             </entry>
                         </row>
                         <row>
@@ -134,14 +134,14 @@
 							<code>'digest'</code></entry>
                             <entry>
                                 Nombre de seconde pour la validité du jeton d'authentification. 
-								Voyez les notes après.
+								Voyez les notes ci-dessous.
                             </entry>
                         </row>
                         <row>
                             <entry><code>proxy_auth</code></entry>
                             <entry>Non</entry>
                             <entry>
-                                Désactivé par défaut. Activer le pour effectuer une authentification via
+                                Désactivé par défaut. Activez le pour effectuer une authentification via
 								un Proxy.
                             </entry>
                         </row>
@@ -153,9 +153,9 @@
         <note>
             <para>
                 L'implémentation actuelle du <code>nonce_timeout</code> a des effets intéréssants. 
-				Ce paramètre doit determiner le temps de validité d'un jeton, autremant dit : 
+				Ce paramètre doit déterminer le temps de validité d'un jeton, autrement dit : 
 				le temps d'acceptation d'un client. Par exemple, une valeur de 3600 aura pour effet 
-				de commander à l'adaptateur la redemande des informations d'identification du client, 
+				de commander à l'adaptateur le rappel des informations d'identification du client, 
 				toutes les heures. Ce comportement sera changé lorsque le paramètre "nonce tracking" 
 				sera supporté.
             </para>
@@ -169,9 +169,9 @@
 
         <para>
             Le travail du résolveur consiste à récupérer un nom d'utilisateur (username) et un nom 
-			d'authentification(realm) et retourner des identifiants. L'authentification Basic 
+			d'authentification (realm) et retourner des identifiants. L'authentification Basic 
 			s'attend à recevoir une version encodée Base64 du mot de passe (password). L'authentification 
-			Digest, elle, attend un hash du username, du realm, et du password (separés par des deux-points).
+			Digest, elle, attend un hash du username, du realm, et du password (séparés par des deux-points).
             Actuellement le seul algorithme de hash supporté est MD5.
         </para>
 
@@ -189,10 +189,10 @@
                 Cette classe est très simple. Son constructeur ne prend qu'un paramètre qui définit le nom 
 				du fichier cible. Un accesseur existe aussi. Sa méthode <code>resolve()</code> traverse le fichier 
 				texte à la recherche de la ligne qui correspond au username et au realm. La syntaxe est similaire 
-				aux fichiers htpaswwd d'Apache:
+				aux fichiers htpasswd d'Apache:
                 <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>
                 Chaque ligne se décompose en 3 champs - username, realm, et credentials - séparés par des deux-points.
-				Le résolveur ne fait que retourner la valeur de credentials. Ainsi, avec Basic cette valeur devra 
+				Le résolveur ne fait que retourner la valeur de "credentials". Ainsi, avec Basic cette valeur devra 
 				représenter la valeur Base64 encodée du mot de passe de l'utilisateur identifié par username.
 				En mode Digest, la valeur MD5 de toute la chaine username:realm:password (avec les deux-points).
             </para>
@@ -218,7 +218,7 @@ $resolver->setFile($path);?>]]>
 
     <sect2 id="zend.auth.adapter.http.basic_usage">
 
-        <title>Usage général:</title>
+        <title>Usage général :</title>
 
         <para>
             Tout d'abord, créez un tableau de configuration avec les options requises:
@@ -238,7 +238,7 @@ $config = array(
         </para>
 
         <para>
-            Ensuite, créez un objet de Zend_Auth_Adapter_Http:
+            Ensuite, créez un objet de Zend_Auth_Adapter_Http :
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http.php';
 $adapter = new Zend_Auth_Adapter_Http($config);?>]]>
@@ -247,7 +247,7 @@ $adapter = new Zend_Auth_Adapter_Http($config);?>]]>
 
         <para>
             Comme nous supportons les 2 modes Basic et Digest, nous avons besoin de deux résolveurs 
-			différents:
+			différents :
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
 
@@ -264,7 +264,7 @@ $adapter->setDigestResolver($digestResolver);?>]]>
 
         <para>
             Enfin, nous procédons à la demande d'authentification. L'adaptateur a besoin de deux objets 
-			Request et Response:
+			Request et Response :
             <programlisting role="php"><![CDATA[<?php
 assert($request instanceof Zend_Controller_Request_Http);
 assert($response instanceof Zend_Controller_Response_Http);
@@ -274,7 +274,7 @@ $adapter->setResponse($response);
 
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
-    // Mauvais userame/password, ou action annulée
+    // Mauvais username/password, ou action annulée
 }?>]]>
             </programlisting>
         </para>
@@ -282,6 +282,3 @@ if (!$result->isValid()) {
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

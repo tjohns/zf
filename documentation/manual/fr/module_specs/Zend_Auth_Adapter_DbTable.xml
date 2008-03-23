@@ -15,7 +15,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>tableName</code> : il s'agit du nom de la table dans la base de données qui contient les crédits d'authentification, et against which the database authentication query is performed.
+                        <code>tableName</code> : il s'agit du nom de la table dans la base de données qui contient les crédits d'authentification, et envers laquelle la requête d'authentification sera réalisée.
                     </para>
                 </listitem>
                 <listitem>
@@ -30,7 +30,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialTreatment</code> : dans la plupart des cas, les mots de passe et autres données sensibles sont encryptés, hachés, encodés, masqués, ou sinon traités à travers une fonction ou un algorithme. En spécifiant un traitement paramètrable de chaîne avec cette méthode, comme <code>'MD5(?)'</code> ou <code>'PASSWORD(?)'</code>, un développeur peut appliquer un code SQL arbitraire sur les données fournies de crédit. omme ces fonctions sont spécifiques à chaque gestionnaire de base de données, vérifiez le manuel de la base de données pour vérifier la disponibilité de ces fonctions dans votre système.
+                        <code>credentialTreatment</code> : dans la plupart des cas, les mots de passe et autres données sensibles sont cryptés, hachés, encodés, masqués, ou sinon traités à travers une fonction ou un algorithme. En spécifiant un traitement paramètrable de chaîne avec cette méthode, comme <code>'MD5(?)'</code> ou <code>'PASSWORD(?)'</code>, un développeur peut appliquer un code SQL arbitraire sur les données de crédit fournies. Comme ces fonctions sont spécifiques à chaque gestionnaire de base de données, vérifiez le manuel de la base de données pour vérifier la disponibilité de ces fonctions dans votre système.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -74,15 +74,15 @@ $dbAdapter->query($sqlInsert);]]>
             </para>
 
             <para>
-                Avec une coonection de base de données et des données disponibles dans la table, une instance de <code>Zend_Auth_Adapter_DbTable</code> peut être créée. Les valeurs d'options de configuration peuvent être fournies au constructeur ou en tant que paramètres aux méthodes de réglage après l'instanciation :
+                Avec une connection de base de données et des données disponibles dans la table, une instance de <code>Zend_Auth_Adapter_DbTable</code> peut être créée. Les valeurs d'options de configuration peuvent être fournies au constructeur ou en tant que paramètres aux méthodes de réglage après l'instanciation :
 
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/DbTable.php';
 
-// Configure une instance avec des paramètres de constructeur...
+// Configure une instance avec des paramètres de constructeur ...
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'password');
 
-// ...ou configure l'instance avec des méthodes de réglage
+// ... ou configure l'instance avec des méthodes de réglage
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
@@ -107,7 +107,7 @@ $result = $authAdapter->authenticate();]]>
             </para>
 
             <para>
-                En plus de la disponibilité de la méthode <code>getIdentity()</code> pour récupérer l'objet du résultat d'authentification, <code>Zend_Auth_Adapter_DbTable</code> supporte aussi la récupération de la ligne de la table qui a réussi l'authetification :
+                En plus de la disponibilité de la méthode <code>getIdentity()</code> pour récupérer l'objet du résultat d'authentification, <code>Zend_Auth_Adapter_DbTable</code> supporte aussi la récupération de la ligne de la table qui a réussi l'authentification :
 
                 <programlisting role="php"><![CDATA[<?php
 // Affiche l'identité
@@ -138,7 +138,7 @@ Array
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
 
-        <title>Utilisation avnacée : maintenir persistant l'objet de résultat DbTable</title>
+        <title>Utilisation avancée : maintenir persistant l'objet de résultat DbTable</title>
 
         <para>
 			Par défaut, <code>Zend_Auth_Adapter_DbTable</code> retourne l'identité fournie à l'objet auth en cas d'authentification couronnée de succès. Un autre scénario d'utilisation, où les développeurs veulent stocker dans le mécanisme de stockage persistant du <code>Zend_Auth</code> un objet d'identité contenant d'autres informations utiles, est résolu en utilisant la méthode <code>getResultRowObject()</code> retournant un objet <code>stdClass</code>. Le petit bout de code suivant illustre cette utilisation :
@@ -172,14 +172,14 @@ if ($result->isValid()) {
         <title>Utilisation avancée par l'exemple</title>
 
         <para>
-            Bien que le but initial de <code>Zend_Auth</code> (et par extension celui de <code>Zend_Auth_Adapter_DbTable</code>) est principalement l'<emphasis role="strong">authentification</emphasis> et non l'<emphasis role="strong">autorisation</emphasis>, il existe quelques exemples et problèmes qui franchissent la ligne des domaines auquels ils appartiennent. Selon la façon dont vous avez décidé d'expliquer votre problème, il semble parfois raisonnable de résoudre ce qui pourrait ressembler à un problème d'autorisation dans l'adaptateur d'authentification.
+            Bien que le but initial de <code>Zend_Auth</code> (et par extension celui de <code>Zend_Auth_Adapter_DbTable</code>) est principalement l'<emphasis role="strong">authentification</emphasis> et non l'<emphasis role="strong">autorisation</emphasis> (ou contrôle d'accès), il existe quelques exemples et problèmes qui franchissent la limite des domaines auquels ils appartiennent. Selon la façon dont vous avez décidé d'expliquer votre problème, il semble parfois raisonnable de résoudre ce qui pourrait ressembler à un problème d'autorisation dans l'adaptateur d'authentification.
         </para>
 
         <para>
             Ceci étant dit, <code>Zend_Auth_Adapter_DbTable</code> possède des mécanismes qui sont construits de telle sorte qu'ils peuvent être démultipliés pour ajouter des contrôles supplémentaires au moment de l'authentification pour résoudre quelques problèmes communs d'utilisateur.
 
             <programlisting role="php"><![CDATA[<?php
-// La valeur du champs "etat" d'un compte ne doit être égal à "compromis"
+// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
 $adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND etat != "compromis"');
 
 // La valeur du champs "actif" d'un compte doit être égal à "TRUE"
