@@ -40,12 +40,40 @@ require_once 'Zend/Loader.php';
  */
 class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
 {
-    const BUILD_ENV_CLASS = Zend_Build_Environment;
+    /**
+     * BUILD_ENV_CLASS
+     *
+     * @const Zend_Build_Environment
+     */
+    const BUILD_ENV_CLASS            = Zend_Build_Environment;
+
+    /**
+     * ENV_BUILD_FILE_PLACEHOLDER
+     *
+     * @const string
+     */
     const ENV_BUILD_FILE_PLACEHOLDER = '/* INSERT BUILD FILE HERE */';
-	
+
+    /**
+     * $_buildFileName
+     *
+     * @var string
+     */
     private $_buildFileName = null;
-    private $_envFileName = null;
-	 
+
+    /**
+     * $_envFileName
+     *
+     * @var string
+     */
+    private $_envFileName   = null;
+
+    /**
+     * init
+     *
+     * @param  array $argv
+     * @return void
+     */
     public function init($argv)
     {
         // @todo Use Zend_Log for output
@@ -55,6 +83,10 @@ class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
 	
     /**
      * Build specified buildfile.
+     *
+     * @param  string $target
+     * @param  array  $args
+     * @return void
      */
     public function build(string $target, array $args)
     {
@@ -65,39 +97,52 @@ class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
         // Create the environment for this build
         $processedEnv = $this->preProcessEnvTemplate($buildFileContents, $envFileContents);
 
-		// Load build environment
-		/**
+        // Load build environment
+        /**
          * The processedEnv string has been processed such that eval()
          * should return an accurate line number if an error is found
          * in the build script.
          */
-		eval($processedEnv);
+        eval($processedEnv);
 		
-		// Now execute the build script
-		$buildEnv = new BUILD_ENV_CLASS();
-		$buildEnv->execute($target);
-	}
+        // Now execute the build script
+        $buildEnv = new BUILD_ENV_CLASS();
+        $buildEnv->execute($target);
+    }
 
-	protected function _preProcessEnvTemplate(string $buildFileContents, $envFileContents)
-	{
-		$processed = '';
-		
+    /**
+     * _preProcessEnvTemplate
+     *
+     * @param  string $buildFileContents
+     * @param  string $envFileContents
+     * @return string
+     */
+    protected function _preProcessEnvTemplate(string $buildFileContents, $envFileContents)
+    {
+        $processed = '';
+
         /*
-		 * First replace any newlines with whitespace in the Environment class file contents so that
-		 * eval will return line numbers that correspond to the correct lines in the build file
-		 * in the event of an error.
-		 */
+         * First replace any newlines with whitespace in the Environment class file contents so that
+         * eval will return line numbers that correspond to the correct lines in the build file
+         * in the event of an error.
+         */
         $processed = str_replace('\r', ' ', str_replace('\n', ' ', $envFileContents));
-        
+
         /*
          * Now insert the contents of the build file and return.
          */
         return str_replace(ENV_BUILD_FILE_PLACEHOLDER, $buildFileContents, $processed);
-	}
-	
-	private function _getBuildFileName($argv)
-	{
+    }
+
+    /**
+     * _getBuildFileName
+     *
+     * @param  array $argv
+     * @return string
+     */
+    private function _getBuildFileName($argv)
+    {
         // @todo Actually do the right thing here.
         return $argv[1];  
-	}
+    }
 }

@@ -24,27 +24,44 @@
  * @see Zend_Build_XMLConvertor
  */
 require_once 'Zend/Build/Resource/Interface.php';
+
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
 
 /**
  * Static class to convert from build resources to XML and back.
  * 
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Resource_ConfigConvertor
 {
+    /**
+     * EXTENDS_KEYWORD
+     *
+     * @const string
+     */
     const EXTENDS_KEYWORD = Zend_Config::EXTENDS_KEYWORD;
-    
+
+    /**
+     * CONFIG_XML_ROOT_ELEMENT
+     *
+     * @const string
+     */
     const CONFIG_XML_ROOT_ELEMENT   = 'configdata';
+
     /**
      * Converts build resource to XML.
      * 
-     * @param Zend_Build_Resource_Interface Resource to convert to XML
+     * @see    Zend_Build_Resource_Interface
+     * @param  Zend_Build_Resource_Interface $resource Resource to convert to XML
+     * @param  string                        $filename
      * @return string String in valid XML 1.0 format
-     * @see Zend_Build_Resource_Interface
      */
     public static function writeResourceToConfigXml (Zend_Build_Resource_Interface $resource, $filename)
     {
@@ -63,23 +80,30 @@ class Zend_Build_Resource_ConfigConvertor
     /**
      * Converts XML 1.0 string to Zend_Build_Resource
      * 
-     * @param string String in valid XML 1.0 format
+     * @param  string $filename String in valid XML 1.0 format
      * @return Zend_Build_Resource_Interface Resource to convert to XML
      */
     public static function readConfigXmlToResource ($filename)
     {
         // Reuse Zend_Config here
-        $config = new Zend_Config_Xml()
+        $config = new Zend_Config_Xml();
         // Return resource tree        return $resource;
     }
 
+    /**
+     * _resourceToDomElement
+     *
+     * @param  mixed                         $dom
+     * @param  Zend_Build_Resource_Interface $resource
+     * @return mixed
+     */
     private static function _resourceToDomElement ($dom, Zend_Build_Resource_Interface $resource)
     {
         $dom_element = $dom->createElement(get_class($resource));
         foreach ($resource as $name => $value) {
             $dom_element->setAttribute($name, is_object($value) ? $value->__toString() : $value);
         }
-        
+
         // Recurse on children        $children = $resource->getChildren();
         if (isset($children)) {
             foreach ($children as $child) {
@@ -89,6 +113,12 @@ class Zend_Build_Resource_ConfigConvertor
         return $dom_element;
     }
 
+    /**
+     * _configToResource
+     *
+     * @param  Zend_Config $config
+     * @return Zend_Build_Resource_Interface
+     */
     private static function _configToResource ($config)
     {
         if (! isset($dom_element))

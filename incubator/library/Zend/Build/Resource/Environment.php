@@ -17,49 +17,108 @@
  * @subpackage Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
 /**
+ * This is a very special class; it can be instantiated directly but is intended to be used as a template
+ * for build scripts.
+ * 
  * @category   Zend
  * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-/*
- * This is a very special class; it can be instantiated directly but is intended to be used as a template
- * for build scripts.
- */
 abstract class Zend_Build_Environment
 {
-	const CURR_DIR = './'
-	const DEFAULT_BUILD_FILE_NAME = CURR_DIR . 'build.zf';
-	const PRE_EXECUTE_TASK = 'pre';
-	const POST_EXECUTE_TASK = 'post';
-	
-	private $_profile = null;
-	private $_executedTasks = array();
-	
+    /**
+     * CURR_DIR
+     *
+     * @const string
+     */
+    const CURR_DIR = './';
+
+    /**
+     * DEFAULT_BUILD_FILE_NAME
+     *
+     * @const string
+     */
+    const DEFAULT_BUILD_FILE_NAME = './build.zf';
+
+    /**
+     * PRE_EXECUTE_TASK
+     *
+     * @const string
+     */
+    const PRE_EXECUTE_TASK  = 'pre';
+
+    /**
+     * POST_EXECUTE_TASK
+     *
+     * @const string
+     */
+    const POST_EXECUTE_TASK = 'post';
+
+    /**
+     * $_profile
+     *
+     * @var Zend_Build_Profile
+     */
+    private $_profile = null;
+
+    /**
+     * $_executedTasks
+     *
+     * @var array
+     */
+    private $_executedTasks = array();
+
+    /**
+     * Constructor
+     *
+     * @param  Zend_Build_Profile $profile
+     * @return void
+     */
     public function __construct (Zend_Build_Profile $profile = null)
     {
-        $_profile = $profile;
+        $this->_profile = $profile;
     }
-    
+
+    /**
+     * zfBuildCall
+     *
+     * @param  string $target
+     * @param  array  $args
+     * @return void
+     */
     public function zfBuildCall($target, array $args)
     {
         $this->zfBuildCall(PRE_EXECUTE_TASK);
         $this->_zfBuildCall($task, $args);
-        $this->zfBuildCall(POST_EXECUTE_TASK)
+        $this->zfBuildCall(POST_EXECUTE_TASK);
     }
-    
-    private function _zfBuildcall($task, array $args)
+
+    /**
+     * _zfBuildCall
+     *
+     * @param  string $task
+     * @param  array  $args
+     * @return void
+     */
+    private function _zfBuildCall($task, array $args)
     {
         if(_zfBuildCalled($task, $args)) return;
         _zfBuildPreCall($task, $args);
         $this->$task($args);
         _zfBuildPostCall($task, $args);
     }
-    
+
+    /**
+     * _zfBuildPreCall
+     *
+     * @return void
+     */
     protected function _zfBuildPreCall()
     {
         $dependencies = _zfBuildGetDependencies($task);
@@ -67,35 +126,59 @@ abstract class Zend_Build_Environment
             _zfBuildCall(_zfBuildParseNameFromCS($dependency), _zfBuildParseArgsFromCS($dependency));
         }
     }
-    
+
+    /**
+     * _zfBuildPostCall
+     *
+     * @return void
+     */
     protected function _zfBuildPostCall()
     {
-        
     }
-    
-    private function _zfBuildCalled(string $taskName, array $args)
+
+    /**
+     * _zfBuildCalled
+     *
+     * @param  string $taskName
+     * @param  array  $args
+     * @return boolean
+     */
+    private function _zfBuildCalled($taskName, array $args)
     {
         $callStr = _zfBuildGetCallString($taskName, $args);
-    	
+
         // For debugging.
         if(in_array($callStr)) {
-    	   print($callStr . " has already been called.\n");
-    	} else {
-    	   print($callStr . " has not already been called.\n");
-    	}
-    	return in_array($callStr);
+            print($callStr . " has already been called.\n");
+        } else {
+            print($callStr . " has not already been called.\n");
+        }
+        return in_array($callStr);
     }
-    
-    private function _zfBuildGetDependencies(string $taskName, array $args)
+
+    /**
+     * _zfBuildGetDependencies
+     *
+     * @param  string $taskName
+     * @param  array  $args
+     * @return string
+     */
+    private function _zfBuildGetDependencies($taskName, array $args)
     {
-    	// For now we won't support arguments
+        // For now we won't support arguments
     }
-    
-    private function _zfBuildGetCallString(string $taskName, array $args)
+
+    /**
+     * _zfBuildGetCallString
+     *
+     * @param  string $taskName
+     * @param  array  $args
+     * @return string
+     */
+    private function _zfBuildGetCallString($taskName, array $args)
     {
         return "$taskName(implode(',', array_map('trim', $args)))";
     }
 
     /* INSERT BUILD FILE HERE */
-    
 }

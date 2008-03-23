@@ -27,14 +27,17 @@ require_once 'Zend/Build/Resource/Abstract.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
+ * @uses       Zend_Build_Resource_Abstract
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Resource_Directory extends Zend_Build_Resource_Abstract
 {
     /**
-     * @see Zend_Build_Resource_Interface
+     * @see    Zend_Build_Resource_Interface
+     * @return boolean
      */
     public function exists ()
     {
@@ -46,6 +49,7 @@ class Zend_Build_Resource_Directory extends Zend_Build_Resource_Abstract
      * Creates this instance of the resource in a project
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return null
      */
     public function create ()
     {
@@ -56,6 +60,7 @@ class Zend_Build_Resource_Directory extends Zend_Build_Resource_Abstract
      * Deletes this instance of this resource in a project
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return null
      */
     public function delete ()
     {
@@ -64,6 +69,8 @@ class Zend_Build_Resource_Directory extends Zend_Build_Resource_Abstract
 
     /**
      * Returns the full path of this filesystem resource relative to the project root
+     *
+     * @return string
      */
     public function getPath ()
     {
