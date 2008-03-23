@@ -17,8 +17,11 @@
  * @subpackage Zend_Build_Profile
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
+/**
+ * @see Zend_Controller_Front
+ */
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('../application/controllers');
-

@@ -27,12 +27,16 @@ require_once 'Zend/Build/Resource/Interface.php';
 
 /**
  * Include Action files
+ * @see Zend_Build_Action_Interface
  */
 require_once 'Zend/Build/Action/Interface.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build_Action
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Action
+ * @uses       Zend_Build_AbstractConfigurable
+ * @uses       Zend_Build_Action_Interface
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -40,8 +44,12 @@ abstract class Zend_Build_Action_Abstract
     extends Zend_Build_AbstractConfigurable
     implements Zend_Build_Action_Interface
 {   
-	/**
+    /**
      * Default implementation of execute(). Should work or offer reuse for many commands.
+     *
+     * @param  Project $projectProfile
+     * @param  array   $resources
+     * @return void
      */
     public function execute (Project $projectProfile, array $resources)
     {
@@ -49,8 +57,12 @@ abstract class Zend_Build_Action_Abstract
         $_resources[0]->$this->_name();
     }
     
-	/**
+    /**
      * Default implementation of validate(). Should work or offer reuse for many commands.
+     *
+     * @param  Project $projectProfile
+     * @param  array   $resources
+     * @return boolean
      */
     public function validate (Project $projectProfile, array $resources)
     {
@@ -61,6 +73,8 @@ abstract class Zend_Build_Action_Abstract
 
     /**
      * Return string representation (which will also be a valid CLI command) of this command.
+     *
+     * @return void
      */
     public function __toString ()
     {

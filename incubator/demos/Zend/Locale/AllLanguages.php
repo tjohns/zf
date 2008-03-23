@@ -25,13 +25,20 @@
  * 
  * So en = english de = deutsch da = dánsk and so on
  */
+
+/**
+ * @see Zend_Locale
+ */
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
-$list = $locale->getLanguageList();
-unset($list['no']);
+$list = $locale->getTranslationList('language');
 
 foreach($list as $language => $content) {
-    $lang = new Zend_Locale($language);
-    print "\n<br>[".$language."] ".$lang->getLanguageDisplay($language);
+    try {
+        $lang = $locale->getTranslation($language, 'language', $language);
+        print "\n<br>[".$language."] ".$lang;
+    } catch (Exception $e) {
+        // no output
+    }
 }

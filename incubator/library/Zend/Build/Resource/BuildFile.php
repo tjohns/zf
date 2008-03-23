@@ -32,37 +32,39 @@ require_once 'Zend/Loader.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
+ * @uses       Zend_Build_Resource_File
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
 {
-	const BUILD_ENV_CLASS = Zend_Build_Environment;
-	const ENV_BUILD_FILE_PLACEHOLDER = '/* INSERT BUILD FILE HERE */';
+    const BUILD_ENV_CLASS = Zend_Build_Environment;
+    const ENV_BUILD_FILE_PLACEHOLDER = '/* INSERT BUILD FILE HERE */';
 	
     private $_buildFileName = null;
     private $_envFileName = null;
 	 
-	public function init($argv)
-	{
-	    // @todo Use Zend_Log for output
-	    $_buildFileName = _getBuildFileName($argv);
-		$_envFileName = Zend_Loader::getFileName(BUILD_ENV_CLASS);
-	}
+    public function init($argv)
+    {
+        // @todo Use Zend_Log for output
+        $_buildFileName = _getBuildFileName($argv);
+        $_envFileName = Zend_Loader::getFileName(BUILD_ENV_CLASS);
+    }
 	
-	/**
-	 * Build specified buildfile.
-	 */
-	public function build(string $target, array $args)
-	{
+    /**
+     * Build specified buildfile.
+     */
+    public function build(string $target, array $args)
+    {
         // If there are any errors reading the env or build files, it might as well happen here.
         $buildFileContents = file_read_contents($envFileName);
         $envFileContents = file_read_contents($envFileName);
-        
-		// Create the environment for this build
-		$processedEnv = $this->preProcessEnvTemplate($buildFileContents, $envFileContents);
-		
+
+        // Create the environment for this build
+        $processedEnv = $this->preProcessEnvTemplate($buildFileContents, $envFileContents);
+
 		// Load build environment
 		/**
          * The processedEnv string has been processed such that eval()
