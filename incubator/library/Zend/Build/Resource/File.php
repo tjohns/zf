@@ -36,15 +36,11 @@ require_once 'Zend/Build/Resource/Interface.php';
 class Zend_Build_Resource_File implements Zend_Build_Resource_Interface
 {
     /**
-     * DEFAULT_BUILD_FILE_NAME
-     *
-     * @const string
+     * @constant string
      */
     const DEFAULT_BUILD_FILE_NAME = 'build.zf';
 
     /**
-     * $_contents
-     *
      * @var string
      */
     private $_contents = null;

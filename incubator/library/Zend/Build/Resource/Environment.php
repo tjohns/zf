@@ -33,43 +33,31 @@
 abstract class Zend_Build_Environment
 {
     /**
-     * CURR_DIR
-     *
-     * @const string
+     * @constant string
      */
     const CURR_DIR = './';
 
     /**
-     * DEFAULT_BUILD_FILE_NAME
-     *
-     * @const string
+     * @constant string
      */
     const DEFAULT_BUILD_FILE_NAME = './build.zf';
 
     /**
-     * PRE_EXECUTE_TASK
-     *
-     * @const string
+     * @constant string
      */
     const PRE_EXECUTE_TASK  = 'pre';
 
     /**
-     * POST_EXECUTE_TASK
-     *
-     * @const string
+     * @constant string
      */
     const POST_EXECUTE_TASK = 'post';
 
     /**
-     * $_profile
-     *
      * @var Zend_Build_Profile
      */
     private $_profile = null;
 
     /**
-     * $_executedTasks
-     *
      * @var array
      */
     private $_executedTasks = array();

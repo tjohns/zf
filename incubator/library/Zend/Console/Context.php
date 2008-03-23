@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,33 +13,48 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build
+ * @package    Zend_Console
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-
-/**
- * @category   Zend
- * @package    Zend_Build
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
 /**
  * Include the console files we need
+ *
+ * @see Zend_Console_Exception
  */
 require_once 'Zend/Console/Exception.php';
+
+/**
+ * Include the console files we need
+ *
+ * @see Zend_Console_ErrorCodes
+ */
 require_once 'Zend/Console/ErrorCodes.php';
 
 /**
  * Include the build files we need
+ *
+ * @see Zend_Build_Factory
  */
 require_once 'Zend/Build/Factory.php';
 
+/**
+ * @category   Zend
+ * @package    Zend_Console
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Console_Context
 {
-    public static configure(Zend_Build_Configurable $configurable)
+    /**
+     * configure
+     *
+     * @param  Zend_Build_Configurable $configurable
+     * @return void
+     */
+    public static function configure(Zend_Build_Configurable $configurable)
     {
-        $configurable->
     }
 }

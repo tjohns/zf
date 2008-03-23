@@ -42,16 +42,12 @@ require_once 'Zend/Loader.php';
 class Zend_Build_Resource_ConfigConvertor
 {
     /**
-     * EXTENDS_KEYWORD
-     *
-     * @const string
+     * @constant string
      */
     const EXTENDS_KEYWORD = Zend_Config::EXTENDS_KEYWORD;
 
     /**
-     * CONFIG_XML_ROOT_ELEMENT
-     *
-     * @const string
+     * @constant string
      */
     const CONFIG_XML_ROOT_ELEMENT   = 'configdata';
 

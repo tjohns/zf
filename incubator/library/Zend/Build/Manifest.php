@@ -31,42 +31,34 @@
 class Zend_Build_Manifest
 {
     /**
-     * MANIFEST_FILE_PATTERN
-     *
-     * @const string
+     * @constant string
      */
     const MANIFEST_FILE_PATTERN        = '/^[A-Z][0-9a-z].+-ZFManifest(....)$/';
 
     /**
-     * ZEND_CONFIG_PACKAGE
-     *
-     * @const string
+     * @constant string
      */
     const ZEND_CONFIG_PACKAGE          = 'Zend_Config_';
 
     /**
-     * CONSOLE_CONTEXT_CONFIG_NAME
-     *
-     * @config string
+     * @constant string
      */
     const CONSOLE_CONTEXT_CONFIG_NAME  = 'context';
 
     /**
-     * $_instance
-     *
      * @var Object
      */
     private static $_instance = null;
 
     /**
-     * var Serves as a simple index in to the config array for this manifest instance.
+     * Serves as a simple index in to the config array for this manifest instance.
      *
      * @var array
      */
     private $_configIndex = array();
 
     /**
-     * var Serves as a simple index in to the config array for this manifest instance.
+     * Serves as a simple index in to the config array for this manifest instance.
      *
      * @var array
      */

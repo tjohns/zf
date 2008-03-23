@@ -41,29 +41,21 @@ require_once 'Zend/Loader.php';
 class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
 {
     /**
-     * BUILD_ENV_CLASS
-     *
-     * @const Zend_Build_Environment
+     * @constant Zend_Build_Environment
      */
     const BUILD_ENV_CLASS            = Zend_Build_Environment;
 
     /**
-     * ENV_BUILD_FILE_PLACEHOLDER
-     *
-     * @const string
+     * @constant string
      */
     const ENV_BUILD_FILE_PLACEHOLDER = '/* INSERT BUILD FILE HERE */';
 
     /**
-     * $_buildFileName
-     *
      * @var string
      */
     private $_buildFileName = null;
 
     /**
-     * $_envFileName
-     *
      * @var string
      */
     private $_envFileName   = null;

@@ -28,16 +28,12 @@
 class Zend_Build_Factory
 {
     /**
-     * DEFAULT_PROFILE_PATH
-     *
-     * @const string
+     * @constant string
      */    
     const DEFAULT_PROFILE_PATH = './';
 
     /**
-     * DEFAULT_PROFILE_NAME
-     *
-     * @const string
+     * @constant string
      */
     const DEFAULT_PROFILE_NAME = 'zf-project.xml';
 
