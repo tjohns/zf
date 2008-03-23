@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,16 +19,15 @@
  * @version    $Id: Ini.php 6932 2007-11-25 20:53:26Z rob $
  */
 
-
 /**
  * @see Zend_Config
  */
 require_once 'Zend/Config.php';
 
-
 /**
  * @category   Zend
  * @package    Zend_Config
+ * @uses       Zend_Config
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -82,13 +80,14 @@ class Zend_Config_Ini extends Zend_Config
      * @param  string|null   $section
      * @param  boolean|array $config
      * @throws Zend_Config_Exception
+     * @return void
      */
     public function __construct($filename, $section = null, $config = false)
     {
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
         }
-        
+
         $allowModifications = false;
         if (is_bool($config)) {
             $allowModifications = $config;
@@ -103,8 +102,7 @@ class Zend_Config_Ini extends Zend_Config
 
         $iniArray = parse_ini_file($filename, true);
         $preProcessedArray = array();
-        foreach ($iniArray as $key => $data)
-        {
+        foreach ($iniArray as $key => $data) {
             $bits = explode(':', $key);
             $numberOfBits = count($bits);
             $thisSection = trim($bits[0]);
@@ -154,9 +152,9 @@ class Zend_Config_Ini extends Zend_Config
      * the "extends" inheritance keyword. Passes control to _processKey()
      * to handle the "dot" sub-property syntax in each key.
      *
-     * @param array $iniArray
-     * @param string $section
-     * @param array $config
+     * @param  array  $iniArray
+     * @param  string $section
+     * @param  array  $config
      * @throws Zend_Config_Exception
      * @return array
      */
@@ -184,9 +182,9 @@ class Zend_Config_Ini extends Zend_Config
      * notation for sub-properties by passing control to
      * processLevelsInKey().
      *
-     * @param array $config
-     * @param string $key
-     * @param string $value
+     * @param  array  $config
+     * @param  string $key
+     * @param  string $value
      * @throws Zend_Config_Exception
      * @return array
      */
@@ -209,5 +207,4 @@ class Zend_Config_Ini extends Zend_Config
         }
         return $config;
     }
-
 }
