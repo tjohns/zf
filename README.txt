@@ -9,7 +9,7 @@ RELEASE INFORMATION
 ---------------
 
 Zend Framework 1.5.1 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-03-24.
+Released on 2008-03-25.
 
 SPECIAL NOTICES FOR UPGRADING TO ZF 1.5
 ---------------------------------------
