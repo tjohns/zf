@@ -14,7 +14,6 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,7 +24,7 @@
  *
  * Requires the Zend Framework Zend_Gdata component and PHP >= 5.1.4
  * This sample is run from within a web browser.  These files are required:
- * authentication_details.php - a script to view log output and session variables
+ * session_details.php - a script to view log output and session variables
  * operations.php - the main logic, which interfaces with the YouTube API
  * index.php - the HTML to represent the web UI, contains some PHP
  * video_app.css - the CSS to define the interface style
@@ -40,10 +39,9 @@ session_start();
 /**
  * Convert HTTP status into normal text.
  *
- * @param  integer $status  HTTP status received after posting syndicated upload
- * @param  string  $code    Alphanumeric description of error
- * @param  string  $videoId (optional) Video id received back to which the status code refers to
- * @return void
+ * @param number $status HTTP status received after posting syndicated upload
+ * @param string $code Alphanumeric description of error
+ * @param string $videoId (optional) Video id received back to which the status code refers to
  */
 function uploadStatus($status, $code = null, $videoId = null) 
 {
@@ -55,8 +53,8 @@ function uploadStatus($status, $code = null, $videoId = null)
             break;
         default:
             echo 'There seems to have been an error: '. $code . 
-                 '<a href="#" onclick=" ytVideoApp.checkUploadDetails(\''. $videoId .
-                 '\'); ">(check details)</a>';
+                 '<a href="#" onclick=" ytVideoApp.checkUploadDetails(\''. 
+                 $videoId . '\'); ">(check details)</a>';
     }
 }
 
@@ -86,8 +84,6 @@ function developerKeySet()
 
 /** 
  * Helper function to print a form for user to enter the developer key.
- *
- * @return void
  */
 function printDeveloperKeyForm()
 {
@@ -102,18 +98,20 @@ END;
 
 /** 
  * Helper function to print a list of authenticated actions for a user.
- *
- * @return void
  */
 function printAuthenticatedActions()
 {
     print <<<END
         <div id="actions"><h3>Authenticated Actions</h3>
         <ul>
-        <li><a href="#" onclick="ytVideoApp.listVideos('search_owner', '', 1); return false;">retrieve my videos</a></li>
-        <li><a href="#" onclick="ytVideoApp.prepareUploadForm(); return false;">upload a video</a><br />
-        <div id="syndicatedUploadDiv"></div><div id="syndicatedUploadStatusDiv"></div></li>
-        <li><a href="#" onclick="ytVideoApp.retrievePlaylists(); return false;">manage my playlists</a><br /></li>  
+        <li><a href="#" onclick="ytVideoApp.listVideos('search_owner', '', 1); 
+        return false;">retrieve my videos</a></li>
+        <li><a href="#" onclick="ytVideoApp.prepareUploadForm(); 
+        return false;">upload a video</a><br />
+        <div id="syndicatedUploadDiv"></div><div id="syndicatedUploadStatusDiv">
+        </div></li>
+        <li><a href="#" onclick="ytVideoApp.retrievePlaylists(); 
+        return false;">manage my playlists</a><br /></li>  
         </ul></div>
 END;
 }
@@ -125,11 +123,11 @@ END;
   <script src="video_app.js" type="text/javascript"></script>
 </head>
 
-<body onload="ytVideoApp.presentAuthLink(); ">
+<body>
   <div id="main">
     <div id="titleBar">
       <h2>YouTube data API Video App in PHP</h2>
-        
+        <a href="session_details.php">click to examine session variables</a><br/>
         <div id="searchBox">
         <form id="searchForm" onsubmit="ytVideoApp.listVideos(this.queryType.value, this.searchTerm.value, 1); return false;">
         <select name="queryType" onchange="ytVideoApp.queryTypeChanged(this.value, this.form.searchTerm);">
@@ -157,8 +155,18 @@ END;
     <?php 
         if (developerKeySet()) {
             if (authenticated()) {
-                print 'authenticated <br /><a href="authentication_details.php">click to examine session variables</a><br/>';
-            } 
+                print <<<END
+                    authenticated <br />
+END;
+            } else {
+                print <<<END
+                    developer key set, but no authentication detected.<br />
+                    <div id="generateAuthSubLink"><a href="#" 
+                    onclick="ytVideoApp.presentAuthLink(); 
+                    return false;">Click here to generate authentication link</a>
+                    </div>
+END;
+            }
         } else {
             printDeveloperKeyForm();
         }
@@ -170,9 +178,10 @@ END;
         // if $_GET['status'] is populated then we have a response
         // about a syndicated upload from YouTube's servers
         if (isset($_GET['status'])) {
-           isset($_GET['code']) ? $code = $_GET['code'] : $code = null;
-           isset($_GET['id']) ? $id = $_GET['id'] : $id = null;
-            print '<div id="generalStatus">' . uploadStatus($_GET['status'], $code, $id) . 
+            (isset($_GET['code']) ? $code = $_GET['code'] : $code = null);
+            (isset($_GET['id']) ? $id = $_GET['id'] : $id = null);
+            print '<div id="generalStatus">' . 
+                  uploadStatus($_GET['status'], $code, $id) . 
                   '<div id="detailedUploadStatus"></div></div>';
          } 
     ?>

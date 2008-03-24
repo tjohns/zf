@@ -14,7 +14,6 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,7 +24,7 @@
  *
  * Requires the Zend Framework Zend_Gdata component and PHP >= 5.1.4
  * This sample is run from within a web browser.  These files are required:
- * authentication_details.php - a script to view log output and session variables
+ * session_details.php - a script to view log output and session variables
  * operations.php - the main logic, which interfaces with the YouTube API
  * index.php - the HTML to represent the web UI, contains some PHP
  * video_app.css - the CSS to define the interface style

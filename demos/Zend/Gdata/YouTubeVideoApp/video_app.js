@@ -13,7 +13,6 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -81,13 +80,6 @@ ytVideoApp.VIDEO_PLAYER_DIV = 'videoPlayer';
  */
 ytVideoApp.TOP_SEARCH_CONTAINER_DIV = 'searchBox';
 
-/**
- * container div id used to hold the authentication box which displays
- * when the page first loads
- * @type String
- */
-ytVideoApp.MAIN_AUTH_CONTAINER_DIV = 'mainAuthBox';
-
 /** container div to show detailed upload status
  * @type String
  */
@@ -105,6 +97,12 @@ ytVideoApp.SYNDICATED_UPLOAD_DIV = 'syndicatedUploadDiv';
  */
 ytVideoApp.VIDEO_DATA_EDIT_DIV = 'editForm';
 
+/** 
+ * containder div to hold authentication link in special cases where auth gets
+ * set prior to developer key
+ * @type String
+ */
+ytVideoApp.AUTHSUB_REQUEST_DIV = 'generateAuthSubLink';
 
 /** 
  * container div to hold the form for editing video meta-data
@@ -312,7 +310,7 @@ ytVideoApp.prepareSyndicatedUpload = function(videoTitle, videoDescription, vide
 ytVideoApp.presentAuthLink = function() {
   var filePath = 'operations.php';
   var params = 'operation=auth_sub_request';
-  ytVideoApp.sendRequest(filePath, params, ytVideoApp.MAIN_AUTH_CONTAINER_DIV);
+  ytVideoApp.sendRequest(filePath, params, ytVideoApp.AUTHSUB_REQUEST_DIV);
 }
 
 
@@ -340,7 +338,6 @@ ytVideoApp.checkUploadDetails = function(videoId) {
  * @param {String} videoId The id of the video to be edited
  */
 ytVideoApp.presentMetaDataEditForm = function(oldVideoTitle, oldVideoDescription, oldVideoCategory, oldVideoTags, videoId) {
-  
   // split oldVideoTags by comma and present as whitespace separated
   var oldVideoTagsArray = oldVideoTags.split(',');
   oldVideoTags = oldVideoTagsArray.join(' ');
