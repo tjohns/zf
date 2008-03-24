@@ -704,7 +704,7 @@ $subForm = $form->subform;
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$form->setSubFormsDecorators(array(
+$form->setSubFormDecorators(array(
     'FormElements',
     'Fieldset'
 ));
