@@ -14,57 +14,79 @@
  *
  * @category   Zend
  * @package    Zend_Translate
+ * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Date.php 2498 2006-12-23 22:13:38Z thomas $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Date.php 2498 2006-12-23 22:13:38Z thomas $
  */
 
-
-/** Zend_Locale */
+/**
+ * @see Zend_Locale
+ */
 require_once 'Zend/Locale.php';
 
 /**
+ * Basic adapter class for each translation source adapter
+ *
  * @category   Zend
  * @package    Zend_Translate
+ * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Translate_Adapter {
-
+    /**
+     * Shows if locale detection is in automatic level
+     * @var boolean
+     */
     private          $_automatic = true;
+
+    /**
+     * Internal cache for all adapters
+     * @var Zend_Cache_Core
+     */
     protected static $_cache     = null;
 
-    // Scan options
+    /**
+     * Scans for the locale within the name of the directory
+     * @constant integer
+     */
     const LOCALE_DIRECTORY = 1;
+
+    /**
+     * Scans for the locale within the name of the file
+     * @constant integer
+     */
     const LOCALE_FILENAME  = 2;
 
     /**
      * Array with all options, each adapter can have own additional options
-     *
+     *       'clear'  => clears already loaded data when adding new files
+     *       'scan'   => searches for translation files using the LOCALE constants
+     *       'locale' => the actual set locale to use
      * @var array
      */
     protected $_options = array(
-        'clear'  => false, // clear previous loaded translation data
-        'scan'   => null,  // where to find the locale
-        'locale' => 'auto' // actual set locale/language 
+        'clear'  => false,
+        'scan'   => null,
+        'locale' => 'auto' 
     );
 
     /**
      * Translation table
-     *
      * @var array
      */
     protected $_translate = array();
 
-
     /**
      * Generates the adapter
      *
-     * @param  string|array        $data      Translation data for this adapter
-     * @param  string|Zend_Locale  $locale    OPTIONAL Locale/Language to set, identical with Locale identifiers
-     *                                        see Zend_Locale for more information
-     * @param  string|array        $options   Options for the adaptor
+     * @param  string|array       $data    Translation data or filename for this adapter
+     * @param  string|Zend_Locale $locale  (optional) Locale/Language to set, identical with Locale
+     *                                     identifiers see Zend_Locale for more information
+     * @param  array              $options (optional) Options for the adaptor
      * @throws Zend_Translate_Exception
+     * @return void
      */
     public function __construct($data, $locale = null, array $options = array())
     {
@@ -72,7 +94,9 @@ abstract class Zend_Translate_Adapter {
             $id = 'Zend_Translate_' . $this->toString();
             if ($result = self::$_cache->load($id)) {
                 $this->_translate = unserialize($result);
-                return true;
+                $this->_options   = $this->_translate['_options_'];
+                unset($this->_translate['_options_']);
+                return;
             }
         }
 
@@ -87,12 +111,12 @@ abstract class Zend_Translate_Adapter {
      * If $clear parameter is true, then translation data for specified
      * language is replaced and added otherwise
      *
-     * @param  array|string          $data    Translation data
-     * @param  string|Zend_Locale    $locale  Locale/Language to add data for, identical with locale identifier,
-     *                                        see Zend_Locale for more information
-     * @param  array                 $options OPTIONAL Option for this Adapter
+     * @param  array|string       $data    Translation data
+     * @param  string|Zend_Locale $locale  (optional) Locale/Language to add data for, identical
+     *                                        with locale identifier, see Zend_Locale for more information
+     * @param  array              $options (optional) Option for this Adapter
      * @throws Zend_Translate_Exception
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate_Adapter Provides a fluid interface
      */
     public function addTranslation($data, $locale = null, array $options = array())
     {
@@ -165,13 +189,12 @@ abstract class Zend_Translate_Adapter {
         return $this;
     }
 
-
     /**
      * Sets new adapter options
      *
-     * @param  array  $options  Adapter options
+     * @param  array $options Adapter options
      * @throws Zend_Translate_Exception
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate_Adapter Provides a fluid interface
      */
     public function setOptions(array $options = array())
     {
@@ -188,9 +211,9 @@ abstract class Zend_Translate_Adapter {
     /**
      * Returns the adapters name and it's options
      *
-     * @param  string|null  $optionKey  String returns this option
-     *                                  null returns all options
-     * @return integer|string|array
+     * @param  string|null $optionKey String returns this option
+     *                                null returns all options
+     * @return integer|string|array|null
      */
     public function getOptions($optionKey = null)
     {
@@ -203,7 +226,6 @@ abstract class Zend_Translate_Adapter {
         return null;
     }
 
-
     /**
      * Gets locale
      *
@@ -214,19 +236,21 @@ abstract class Zend_Translate_Adapter {
         return $this->_options['locale'];
     }
 
-
     /**
      * Sets locale
      *
-     * @param  string|Zend_Locale  $locale  Locale to set
+     * @param  string|Zend_Locale $locale Locale to set
      * @throws Zend_Translate_Exception
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate_Adapter Provides a fluid interface
      */
     public function setLocale($locale)
     {
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         } else if (!$locale = Zend_Locale::isLocale($locale)) {
+            /**
+             * @see Zend_Translate_Exception
+             */
             require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
@@ -234,6 +258,9 @@ abstract class Zend_Translate_Adapter {
         if (!array_key_exists($locale, $this->_translate) and empty($this->_translate[$locale])) {
             $temp = explode('_', $locale);
             if (!array_key_exists($temp[0], $this->_translate)) {
+                /**
+                 * @see Zend_Translate_Exception
+                 */
                 require_once 'Zend/Translate/Exception.php';
                 throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
             }
@@ -248,7 +275,6 @@ abstract class Zend_Translate_Adapter {
         }
         return $this;
     }
-
 
     /**
      * Returns the available languages from this adapter
@@ -267,12 +293,11 @@ abstract class Zend_Translate_Adapter {
         return $result;
     }
 
-
     /**
      * Returns all available message ids from this adapter
      * If no locale is given, the actual language will be used
      *
-     * @param  $locale  String|Zend_Locale  Language to return the message ids from
+     * @param  string|Zend_Locale $locale (optional) Language to return the message ids from
      * @return array
      */
     public function getMessageIds($locale = null)
@@ -283,13 +308,12 @@ abstract class Zend_Translate_Adapter {
         return array_keys($this->_translate[$locale]);
     }
 
-
     /**
      * Returns all available translations from this adapter
      * If no locale is given, the actual language will be used
      * If 'all' is given the complete translation dictionary will be returned
      *
-     * @param  $locale  String|Zend_Locale  Language to return the messages from
+     * @param  string|Zend_Locale $locale (optional) Language to return the messages from
      * @return array
      */
     public function getMessages($locale = null)
@@ -303,12 +327,12 @@ abstract class Zend_Translate_Adapter {
         return $this->_translate[$locale];
     }
 
-
     /**
      * Is the wished language available ?
      *
-     * @param  string|Zend_Locale  $locale  Language to search for, identical with locale identifier,
-     *                                      see Zend_Locale for more information
+     * @see    Zend_Locale
+     * @param  string|Zend_Locale $locale Language to search for, identical with locale identifier,
+     *                                    @see Zend_Locale for more information
      * @return boolean
      */
     public function isAvailable($locale)
@@ -323,9 +347,10 @@ abstract class Zend_Translate_Adapter {
     /**
      * Load translation data
      *
-     * @param  mixed               $data
-     * @param  string|Zend_Locale  $locale
-     * @param  array               $options
+     * @param  mixed              $data
+     * @param  string|Zend_Locale $locale
+     * @param  array              $options (optional)
+     * @return void
      */
     abstract protected function _loadTranslationData($data, $locale, array $options = array());
 
@@ -336,16 +361,20 @@ abstract class Zend_Translate_Adapter {
      * If $clear parameter is true, then translation data for specified
      * language is replaced and added otherwise
      *
-     * @param  array|string          $data    Translation data
-     * @param  string|Zend_Locale    $locale  Locale/Language to add data for, identical with locale identifier,
-     *                                        see Zend_Locale for more information
-     * @param  array                 $options OPTIONAL Option for this Adapter
+     * @see    Zend_Locale
+     * @param  array|string       $data    Translation data
+     * @param  string|Zend_Locale $locale  Locale/Language to add data for, identical with locale identifier,
+     *                                     @see Zend_Locale for more information
+     * @param  array              $options (optional) Option for this Adapter
      * @throws Zend_Translate_Exception
-     * @return Zend_Translate_Adapter
+     * @return Zend_Translate_Adapter Provides a fluid interface
      */
     private function _addTranslationData($data, $locale, array $options = array())
     {
         if (!$locale = Zend_Locale::isLocale($locale)) {
+            /**
+             * @see Zend_Translate_Exception
+             */
             require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
@@ -369,19 +398,21 @@ abstract class Zend_Translate_Adapter {
 
         if (isset(self::$_cache)) {
             $id = 'Zend_Translate_' . $this->toString();
-            self::$_cache->save( serialize($this->_translate), $id);
+            $temp = $this->_translate;
+            $temp['_options_'] = $this->_options;
+            self::$_cache->save( serialize($temp), $id);
         }
         return $this;
     }
-
 
     /**
      * Translates the given string
      * returns the translation
      *
-     * @param  string              $messageId  Translation string
-     * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
-     *                                         see Zend_Locale for more information
+     * @see Zend_Locale
+     * @param  string             $messageId Translation string
+     * @param  string|Zend_Locale $locale    (optional) Locale/Language to use, identical with
+     *                                       locale identifier, @see Zend_Locale for more information
      * @return string
      */
     public function translate($messageId, $locale = null)
@@ -413,14 +444,13 @@ abstract class Zend_Translate_Adapter {
         return $messageId;
     }
 
-
     /**
      * Translates the given string
      * returns the translation
      *
-     * @param  string              $messageId  Translation string
-     * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
-     *                                         see Zend_Locale for more information
+     * @param  string             $messageId Translation string
+     * @param  string|Zend_Locale $locale    (optional) Locale/Language to use, identical with locale
+     *                                       identifier, @see Zend_Locale for more information
      * @return string
      */
     public function _($messageId, $locale = null)
@@ -428,17 +458,16 @@ abstract class Zend_Translate_Adapter {
         return $this->translate($messageId, $locale);
     }
 
-
     /**
      * Checks if a string is translated within the source or not
      * returns boolean
      *
-     * @param  string              $messageId  Translation string
-     * @param  boolean             $original   OPTIONAL Allow translation only for original language
-     *                                         when true, a translation for 'en_US' would give false when it can
-     *                                         be translated with 'en' only
-     * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
-     *                                         see Zend_Locale for more information
+     * @param  string             $messageId Translation string
+     * @param  boolean            $original  (optional) Allow translation only for original language
+     *                                       when true, a translation for 'en_US' would give false when it can
+     *                                       be translated with 'en' only
+     * @param  string|Zend_Locale $locale    (optional) Locale/Language to use, identical with locale identifier,
+     *                                       see Zend_Locale for more information
      * @return boolean
      */
     public function isTranslated($messageId, $original = false, $locale = null)
@@ -475,7 +504,6 @@ abstract class Zend_Translate_Adapter {
         return false;
     }
 
-
     /**
      * Sets a cache for all Zend_Translate_Adapters
      *
@@ -485,7 +513,6 @@ abstract class Zend_Translate_Adapter {
     {
         self::$_cache = $cache;
     }
-
 
     /**
      * Returns the adapter name
