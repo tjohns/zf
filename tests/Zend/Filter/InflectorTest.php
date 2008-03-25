@@ -474,6 +474,16 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($inflector->getTargetReplacementIdentifier(), '#');
     }
     
+    /**
+     * @issue ZF-2964
+     */
+    public function testNoInflectableTarget()
+    {
+        $inflector = new Zend_Filter_Inflector('abc');
+        $inflector->addRules(array(':foo' => array()));
+        $this->assertEquals($inflector->filter(array('fo' => 'bar')), 'abc');
+    }
+    
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
