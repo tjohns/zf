@@ -3,7 +3,7 @@
 
     <para>
         The <code>Partial</code> view helper is used to render a specified
-        template within its own ariable scope. The primary use is for reusable
+        template within its own variable scope. The primary use is for reusable
         template fragments with which you do not need to worry about variable
         name clashes. Additionally, they allow you to specify partial view
         scripts from specific modules.
