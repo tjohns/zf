@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8981 -->
+<!-- EN-Revision: 9037 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -876,7 +876,7 @@ $subForm = $form->subform;
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$form->setSubFormsDecorators(array(
+$form->setSubFormDecorators(array(
     'FormElements',
     'Fieldset'
 ));
