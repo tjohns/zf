@@ -2,11 +2,11 @@
     <title>L'aide de vue Partial</title>
 
     <para>
-        L'aide de vue <code>Partial</code> est utilisée pour effectuer le rendu d'un modèle ("template) spécifique dans sa propre portée de variable. L'utilisation principale est pour les fragments réutilisables de modèle avec lesquels vous n'avez pas besoin de vous inquiéter des conflits de noms de variable. De plus, ils vous permettent de spécifier les scripts de vue partiels dans des modules spécifiques.
+        L'aide de vue <code>Partial</code> est utilisée pour effectuer le rendu d'un modèle ("template") spécifique dans sa propre portée de variable. L'utilisation principale est pour les fragments réutilisables de modèle avec lesquels vous n'avez pas besoin de vous inquiéter des conflits de noms de variable. De plus, ils vous permettent de spécifier les scripts de vue partiels dans des modules spécifiques.
     </para>
 
     <para>
-        Une soeur de l'aide <code>Partial</code>, l'aide de vue de <code>PartialLoop</code> vous permet de passer des données itératives, et effectue une rendu partiel pour chaque élément.
+        Une soeur de l'aide <code>Partial</code>, l'aide de vue de <code>PartialLoop</code> vous permet de passer des données itératives, et effectue un rendu partiel pour chaque élément.
     </para>
 
     <example id="zend.view.helpers.initial.partial.usage">
@@ -132,7 +132,7 @@ $model = array(
     </example>
 
     <example id="zend.view.helpers.initial.partial.modules">
-        <title>Effectuer le renud partiel dans d'autres modules</title>
+        <title>Effectuer le rendu partiel dans d'autres modules</title>
 
         <para>
             Parfois un partiel existera dans un module différent. Si vous connaissez le nom du module, vous pouvez le fournir comme deuxième argument à <code>partial()</code> ou à <code>partialLoop()</code>, en déplaçant l'argument <code>$model</code> à la troisième position.
