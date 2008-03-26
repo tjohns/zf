@@ -1,3 +1,4 @@
+<!-- EN-Revision: 5500 -->
 <sect1 id="zend.session.introduction">
 
     <title>導入</title>
@@ -57,7 +58,7 @@
     </para>
 
     <para>
-        でフォルトの
+        デフォルトの
         <ulink url="http://www.php.net/manual/ja/function.session-set-save-handler.php">セッション保存ハンドラ
         </ulink> は、クラスタ構成のサーバではセッションデータの関連性を保持できないことがあります。
         セッションデータは、リクエストに応答したサーバ上に保存されるからです。
