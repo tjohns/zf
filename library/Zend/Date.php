@@ -196,8 +196,10 @@ class Zend_Date extends Zend_Date_DateObject {
         $this->setTimezone($zone);
 
         // try to get timezone from date-string
-        $zone = $this->getTimezoneFromString($date);
-        $this->setTimezone($zone);
+        if (!is_int($date)) {
+            $zone = $this->getTimezoneFromString($date);
+            $this->setTimezone($zone);
+        }
 
         // set datepart
         if (($part !== null && $part !== Zend_Date::TIMESTAMP) or (!is_numeric($date))) {
