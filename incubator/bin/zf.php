@@ -18,8 +18,17 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * @see Zend_Console_Factory
+ */
 require_once('Zend/Console/Factory.php');
 
+/**
+ * println
+ *
+ * @param  string $str
+ * @return void
+ */
 function println($str = '')
 {
     print("$str\n");
@@ -43,4 +52,3 @@ try {
 
 // As far as we know, everything came off just fine
 exit(0);
-?>
