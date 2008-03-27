@@ -82,22 +82,6 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/_files/translation_en.tbx', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tbx);
-
-        try {
-            $lang = new Zend_Translate('sql' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
-            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
-            $this->fail("exception expected");
-        } catch (Zend_Exception $e) {
-            // success - not implemented
-        }
-
-        try {
-            $lang = new Zend_Translate('noadapter' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
-            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
-            $this->fail("exception expected");
-        } catch (Zend_Exception $e) {
-            // success - not implemented
-        }
     }
 
     public function testSetAdapter()
