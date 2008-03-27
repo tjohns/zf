@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,19 +13,24 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build_Manifest
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Manifest
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
 /**
  * Zend_Exception
+ * @see Zend_Build_Exception
  */
 require_once 'Zend/Build/Exception.php';
 
 /**
  * @category   Zend
  * @package    Zend_Build
+ * @subpackage Zend_Build_Manifest
+ * @uses       Zend_Build_Exception
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */

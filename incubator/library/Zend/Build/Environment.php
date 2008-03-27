@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,6 +16,7 @@
  * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
 /**
@@ -27,11 +27,14 @@
  */
 abstract class Zend_Build_Environment
 {
-	
-	function def_task($body, array $args, array $dependencies)
-	{
-	
-	}
+    /**
+     * def_task
+     *
+     * @param string $body
+     * @param array  $args
+     * @param array  $dependencies
+     */
+    function def_task($body, array $args, array $dependencies)
+    {
+    }
 }
-
-function def_task

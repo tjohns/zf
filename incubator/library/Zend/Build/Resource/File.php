@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,7 +13,8 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Interface.php 3412 2007-02-14 22:22:35Z darby $
@@ -27,23 +27,40 @@ require_once 'Zend/Build/Resource/Interface.php';
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
+ * @uses       Zend_Build_Resource_Interface
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Resource_File implements Zend_Build_Resource_Interface
 {
-	const DEFAULT_BUILD_FILE_NAME = 'build.zf';
-	private $_contents = null;
-	
-	public function __construct (string $name, Zend_Build_Resource $parent)
+    /**
+     * @constant string
+     */
+    const DEFAULT_BUILD_FILE_NAME = 'build.zf';
+
+    /**
+     * @var string
+     */
+    private $_contents = null;
+
+    /**
+     * Constructor
+     *
+     * @param  string              $name
+     * @param  Zend_Build_Resource $parent
+     * @return void
+     */
+    public function __construct ($name, Zend_Build_Resource $parent)
     {
         $_name = $name;
         $_parent = $parent;
     }
 
     /**
-     * @see Zend_Build_Resource_Interface
+     * @see    Zend_Build_Resource_Interface
+     * @return boolean
      */
     public function exists ()
     {
@@ -53,9 +70,11 @@ class Zend_Build_Resource_File implements Zend_Build_Resource_Interface
     /**
      * Creates this instance of the resource in a project
      *
+     * @param  string $content
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return void
      */
-    public function create (string $content = '')
+    public function create ($content = '')
     {
         if ($this->exists()) {
             throw new Zend_Build_Exception("File already exists: $this->getPath()");
@@ -73,29 +92,35 @@ class Zend_Build_Resource_File implements Zend_Build_Resource_Interface
      * Deletes this instance of this resource in a project
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return void
      */
     public function delete ();
     
     /**
      * Reads this file into a string and returns it.
+     *
+     * @throws Zend_Build_Exception
+     * @return void
      */
     protected function read()
     {
-    	$fileName = getPath();
+        $fileName = getPath();
         if (!is_set($fileName) || $$fileName == '') {
-        	$name = DEFAULT_BUILD_FILE_NAME;
+            $name = DEFAULT_BUILD_FILE_NAME;
         } else {
-        	trim($fileName);
+            trim($fileName);
         }
         
         // Read contents and store them
         if(!($contents = file_read_contents($fileName))) {
-        	throw new Zend_Build_Exception("File '$fileName' could not be read.");
+            throw new Zend_Build_Exception("File '$fileName' could not be read.");
         }
     }
 
     /**
      * Returns the full path of this filesystem resource relative to the project root
+     *
+     * @return string
      */
     public function getPath ()
     {

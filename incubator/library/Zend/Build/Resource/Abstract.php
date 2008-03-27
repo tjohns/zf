@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,7 +13,8 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Interface.php 3412 2007-02-14 22:22:35Z darby $
@@ -22,19 +22,51 @@
 
 /**
  * @category   Zend
- * @package    Zend_Build_Resource
+ * @package    Zend_Build
+ * @subpackage Zend_Build_Resource
+ * @uses       Zend_Build_AbstractConfigurable
+ * @uses       Zend_Build_Resources_Interface
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Build_Resource_Abstract
-    extends Zend_Build_AbstractConfigurable
+abstract class Zend_Build_Resource_Abstract extends Zend_Build_AbstractConfigurable
     implements Zend_Build_Resource_Interface
 {
+    /**
+     * $name
+     *
+     * @var string
+     */
     public $name;
+
+    /**
+     * $_parent
+     *
+     * @var Zend_Build_Resource_Interface
+     */
     protected $_parent;
+
+    /**
+     * $_children
+     *
+     * @var Zend_Build_Resource_Interface
+     */
     protected $_children;
+
+    /**
+     * $_config
+     *
+     * @var Zend_Config
+     */
     protected $_config;
-    
+
+    /**
+     * Constructor
+     *
+     * @param  string $name
+     * @param  array  $children
+     * @return void
+     */
     public function __construct ($name, array $children = array())
     {
         $this->name = $name;
@@ -45,14 +77,16 @@ abstract class Zend_Build_Resource_Abstract
      * Returns true if an instance of this resource has been updated since it was created with CLI, false otherwise.
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return boolean
      */
     public function updated ()
     {}
 
-	/**
+    /**
      * Returns true if an instance of this resource already exists in this project, false otherwise.
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return boolean
      */
     public function exists ()
     {}
@@ -61,6 +95,7 @@ abstract class Zend_Build_Resource_Abstract
      * Creates this instance of the resource in a project
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return void
      */
     public function create ()
     {}
@@ -69,12 +104,15 @@ abstract class Zend_Build_Resource_Abstract
      * Deletes this instance of this resource in a project
      *
      * @throws Zend_Build_Profile_Resource_Exception If authentication cannot be performed
+     * @return void
      */
     public function delete ()
     {}
 
     /**
      * Gets the parent of this resource instance
+     *
+     * @return Zend_Build_Resource_Interface
      */
     public function getParent ()
     {
@@ -83,6 +121,9 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Removes the parent from this instance of build resource
+     *
+     * @param  Zend_Build_Resource_Interface $child
+     * @return void
      */
     protected function removeParent (Zend_Build_Resource_Interface $child)
     {
@@ -91,6 +132,8 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Gets the children of this resource instance
+     *
+     * @return Zend_Build_Resource_Interface
      */
     public function getChildren ()
     {
@@ -99,6 +142,9 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Adds a child to the end of the list of children for this resource
+     *
+     * @param  Zend_Build_Resource_Interface $child
+     * @return void
      */
     public function addChild (Zend_Build_Resource_Interface $child)
     {
@@ -108,7 +154,8 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Removes a child from the list of children for this resource and returns the new list of children
-     * 
+     *
+     * @param  Zend_Build_Resource_Interface $child
      * @return array New list of children with $child removed
      */
     public function removeChild (Zend_Build_Resource_Interface $child)
@@ -120,6 +167,9 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Adds all children to the end of the list of children for this resource
+     *
+     * @param  array $children
+     * @return void
      */
     public function addAllChildren (array $children)
     {
@@ -130,7 +180,7 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Removes all children from the list of children for this resource and returns all removed children
-     * 
+     *
      * @return array All children removed from this build resource
      */
     public function removeAllChildren ()
@@ -145,41 +195,66 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Gets the type of this resource instance
+     *
+     * @return void
      */
     public function getType ()
     {
         get_class($this);
     }
-    
+
     /**
-     * @see Zend_Build_Configurable::getConfig()
+     * @see    Zend_Build_Configurable::getConfig()
+     * @return Zend_Config
      */
     public function getConfig()
     {
         return $this->_config;
     }
-    
+
     /**
-     * @see Zend_Build_Configurable::getConfig()
+     * @see    Zend_Build_Configurable::getConfig()
+     * @param  Zend_Config $config
+     * @param  string      $section
+     * @return void
      */
     public function setConfig(Zend_Config $config, $section = null)
-    {
-        
-    }
-    
+    {}
+
     /**
-     * @see Zend_Build_Configurable::getConfigurable()
+     * @see    Zend_Build_Configurable::getConfigurable()
+     * @return void
      */
-    public function getConfigurable(public function setConfig(Zend_Config $config, $section = null);)
+    public function getConfigurable()
+    {}
+
+    /**
+     * setConfig
+     *
+     * @param  Zend_Config $config
+     * @param  string      $section
+     * @return Zend_Config
+     */
+    public function setConfig(Zend_Config $config, $section = null)
     {
         $resource = new $config->class;
         $resource->setConfig($config, $section);
         return $resource.configure();
     }
-    
+
+    /**
+     * readChecksum
+     *
+     * @return void
+     */
     protected function readChecksum ()
     {}
-    
+
+    /**
+     * writeChecksum
+     *
+     * @return void
+     */
     protected function writeChecksum ()
     {}
 
@@ -193,6 +268,9 @@ abstract class Zend_Build_Resource_Abstract
 
     /**
      * Default implementation of equals should work for all resources
+     *
+     * @param  mixed $other
+     * @return boolean
      */
     public function __equals ($other)
     {

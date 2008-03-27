@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,34 +16,44 @@
  * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
+/**
+ * @category   Zend
+ * @package    Zend_Build
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 interface Zend_Build_Configurable 
 { 
     /**
      * Configure the component with Config object set previously
+     *
+     * @return void
      */ 
     public function configure(); 
- 
+
     /**
      * Set the Config object on this object
      *
-     * @param Zend_Config $config Configuration object
+     * @param  Zend_Config $config Configuration object
+     * @return void
      */
     public function setConfig(Zend_Config $config);
-    
+
     /**
      * Get configuration object
      *
      * @return Zend_Config|void
      */ 
     public function getConfig(); 
- 
+
     /**
      * Instantiate component from configuration object
      *
      * @param Zend_Config $config  Configuration object
-     * @return object     Instance of the configured component
+     * @return Object Instance of the configured component
      */ 
     public static function getConfigurable(); 
-} 
+}
