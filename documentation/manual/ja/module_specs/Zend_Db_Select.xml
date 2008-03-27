@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8096 -->
+<!-- EN-Revision: 9057 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
@@ -421,6 +421,48 @@ $select = $db->select()
 $select = $db->select()
     ->from(array('p' => 'products'),
         array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.select.building.columns-atomic">
+
+            <title>既存の FROM あるいは JOIN テーブルへのカラムの追加</title>
+
+            <para>
+                既存の FROM や JOIN のテーブルに対して、それらのメソッドをコールした後で
+                カラムを追加したくなることもあるかもしれません。
+                <code>columns()</code> メソッドを使用すると、
+                クエリを実行する前ならいつでも好きなときに特定のカラムを追加することができます。
+                カラムは、文字列あるいは <code>Zend_Db_Expr</code>、
+                あるいはその配列で指定します。
+                このメソッドの 2 番目の引数は省略可能です。
+                省略した場合は、FROM テーブルにカラムが追加されます。
+                指定する場合は、既存の相関名を使用しなければなりません。
+            </para>
+
+            <example id="zend.db.select.building.columns-atomic.example">
+
+                <title><code>columns()</code> メソッドでカラムを追加する例</title>
+
+                <programlisting role="php"><![CDATA[<?php
+// できあがるクエリは、このようになります
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'product_id')
+    ->columns('product_name');
+
+// 同じクエリを、相関名を指定して作成します
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'p.product_id')
+    ->columns('product_name', 'p'); // あるいは columns('p.product_name')]]>
                 </programlisting>
 
             </example>
