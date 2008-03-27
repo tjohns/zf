@@ -67,7 +67,7 @@ abstract class Zend_Cache
         $backend  = self::_normalizeName($backend);
 
         // working on the frontend
-        if (in_array($frontend, self::$availableFrontends)) {
+        if (in_array($frontend, self::$standardFrontends)) {
             // we use a standard frontend
             // For perfs reasons, with frontend == 'Core', we can interact with the Core itself
             $frontendClass = 'Zend_Cache_' . ($frontend != 'Core' ? 'Frontend_' : '') . $frontend;
@@ -87,7 +87,7 @@ abstract class Zend_Cache
         }
         
         // working on the backend
-        if (in_array($backend, Zend_Cache::$availableBackends)) {
+        if (in_array($backend, Zend_Cache::$standardBackends)) {
             // we use a standard backend
             $backendClass = 'Zend_Cache_Backend_' . $backend;
             // For perfs reasons, we do not use the Zend_Loader::loadClass() method
