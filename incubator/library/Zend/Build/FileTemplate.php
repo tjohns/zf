@@ -16,13 +16,25 @@
  * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
 /*
  * This class allows variables to be bound and evaluated in file templates.
+ *
+ * @category   Zend
+ * @package    Zend_Build
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_FileTemplate
 {
+    /**
+     * render
+     *
+     * @param  string $filename
+     * @return boolean
+     */
     public function render($filename)
     {
         return eval(file_get_contents($filename));
