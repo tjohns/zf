@@ -49,6 +49,19 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
      */
+    public function testAdapterZendConfig()
+    {
+        Zend_Loader::loadClass('Zend_Config');
+        $params = new Zend_Config($this->_util->getParams());
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+    }
+
+    /**
+     * Test AUTO_QUOTE_IDENTIFIERS option
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     */
     public function testAdapterAutoQuoteIdentifiersTrue()
     {
         $params = $this->_util->getParams();

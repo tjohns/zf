@@ -186,6 +186,10 @@ class Zend_Db
      */
     public static function factory($adapter, $config = array())
     {
+        if ($config instanceof Zend_Config) {
+            $config = $config->toArray();
+        }
+
         /*
          * Convert Zend_Config argument to plain string
          * adapter name and separate config object.
