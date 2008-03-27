@@ -1,13 +1,35 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Service_Amazon
+ * @subpackage Demos
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+/**
  * Query Amazon's Product Database
  */
 
+/**
+ * @see Zend_Service_Amazon_Query
+ */
 require_once 'Zend/Service/Amazon/Query.php';
 
 $keywords = '';
 $searchFor = '';
-
 
 if (isset($_POST) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
     if (isset($_POST['search_term'])) {

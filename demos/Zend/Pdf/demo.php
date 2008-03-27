@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -22,7 +23,9 @@
 set_include_path( dirname(dirname(dirname(dirname(__FILE__))))
                   . DIRECTORY_SEPARATOR . 'library' );
 
-/** Zend_Pdf */
+/**
+ * @see Zend_Pdf
+ */
 require_once 'Zend/Pdf.php';
 
 if (!isset($argv[1])) {
