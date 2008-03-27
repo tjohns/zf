@@ -196,8 +196,10 @@ class Zend_Date extends Zend_Date_DateObject {
         $this->setTimezone($zone);
 
         // try to get timezone from date-string
-        $zone = $this->getTimezoneFromString($date);
-        $this->setTimezone($zone);
+        if (!is_int($date)) {
+            $zone = $this->getTimezoneFromString($date);
+            $this->setTimezone($zone);
+        }
 
         // set datepart
         if (($part !== null && $part !== Zend_Date::TIMESTAMP) or (!is_numeric($date))) {
@@ -1968,7 +1970,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::YEAR_SHORT :
                 if (is_numeric($date)) {
                     $date = intval($date);
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         $date = self::_century($date);
                     }
                     if ($calc == 'add') {
@@ -1989,7 +1991,7 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::YEAR_SHORT_8601 :
                 if (is_numeric($date)) {
                     $date = intval($date);
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         $date = self::_century($date);
                     }
                     if ($calc == 'add') {
@@ -2186,7 +2188,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     $timematch[3] = 0;
                 }
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$datematch[2];
                     --$month;
                     --$datematch[3];
@@ -2207,7 +2209,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 $months  = $this->getDigitFromName($match[2]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2240,7 +2242,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 try {
                     $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'format_type' => 'iso', 'fix_date' => true));
 
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         --$parsed['month'];
                         --$month;
                         --$parsed['day'];
@@ -2261,7 +2263,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'full'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
 
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         --$parsed['month'];
                         --$month;
                         --$parsed['day'];
@@ -2282,7 +2284,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'long'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
 
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')){
                         --$parsed['month'];
                         --$month;
                         --$parsed['day'];
@@ -2303,7 +2305,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'medium'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
 
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         --$parsed['month'];
                         --$month;
                         --$parsed['day'];
@@ -2326,7 +2328,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
                     $parsed['year'] = self::_century($parsed['year']);
 
-                    if ($calc == 'set') {
+                    if (($calc == 'set') || ($calc == 'cmp')) {
                         --$parsed['month'];
                         --$month;
                         --$parsed['day'];
@@ -2435,7 +2437,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     throw new Zend_Date_Exception("invalid date ($date) operand, ATOM format expected", $date);
                 }
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$match[2];
                     --$month;
                     --$match[3];
@@ -2458,7 +2460,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 $months    = $this->getDigitFromName($match[2]);
                 $match[3] = self::_century($match[3]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2481,7 +2483,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 $months    = $this->getDigitFromName($match[2]);
                 $match[3] = self::_century($match[3]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2503,7 +2505,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 $months    = $this->getDigitFromName($match[2]);
                 $match[3] = self::_century($match[3]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2525,7 +2527,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 $months    = $this->getDigitFromName($match[2]);
                 $match[3] = self::_century($match[3]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2546,7 +2548,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 $months  = $this->getDigitFromName($match[2]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2568,7 +2570,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 $months  = $this->getDigitFromName($match[2]);
                 $match[3] = self::_century($match[3]);
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
                     --$month;
                     --$match[1];
@@ -2587,7 +2589,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     throw new Zend_Date_Exception("invalid date ($date) operand, W3C date format expected", $date);
                 }
 
-                if ($calc == 'set') {
+                if (($calc == 'set') || ($calc == 'cmp')) {
                     --$match[2];
                     --$month;
                     --$match[3];
@@ -2613,7 +2615,7 @@ class Zend_Date extends Zend_Date_DateObject {
                         if ((strpos(strtoupper($part), 'YY') !== false) and (strpos(strtoupper($part), 'YYYY') === false)) {
                             $parsed['year'] = self::_century($parsed['year']);
                         }
-                        if ($calc == 'set') {
+                        if (($calc == 'set') || ($calc == 'cmp')) {
                             if (isset($parsed['month'])) {
                                 --$parsed['month'];
                             } else {
@@ -3005,7 +3007,6 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function compareDate($date, $format = null, $locale = null)
     {
-
         return $this->_date('cmp', $date, $format, $locale);
     }
 
