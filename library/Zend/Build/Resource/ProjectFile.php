@@ -72,10 +72,8 @@ class Zend_Build_Resource_ProjectFile extends Zend_Build_Resource_File
         <jobsDirectory />
         <buildsDirectory />
     </scriptsDirectory>
-    <tempDirectory enabled="false">
-    </tempDirectory>
-    <testsDirectory>
-    </testsDirectory>
+    <tempDirectory enable="false" />
+    <testsDirectory enabled="false" />
 </projectProfile>    
 EOS;
         

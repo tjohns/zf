@@ -2,7 +2,7 @@
 
 require_once 'Zend/Build/Resource/Abstract.php';
 
-class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
+class Zend_Build_Resource_Project extends Zend_Build_Resource_Directory
 {
     
     protected $_projectStructure = null;
@@ -20,32 +20,23 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
     public function validate()
     {
         if (isset($this->_parameters['projectProfile'])) {
-            
             // check to see if the projectProfile that exists is sane
-            
         } else {
             //$this->_projectStructure = new SimpleXMLElement($this->_getDefaultProjectStructure());
         }
         
-        if (!isset($this->_parameters['directory'])) {
-            $this->_parameters['directory'] = './';
-        }
+        $this->_useCwdWhenNoPath = true;
         
-        
-        if (!realpath($this->_parameters['directory'])) {
-            if (mkdir($this->_parameters['directory']) === false) {
-                throw new Zend_Tool_Cli_Exception('Could not create directory ' . $this->_parameters['directory']);
-            }
-        }
-        
-        $this->_parameters['directory'] = realpath($this->_parameters['directory']);
-        
+        parent::validate();
     }
     
     public function create()
     {
+        parent::create();
+        
+        $basePath = $this->getDirname();
+        
         $actionName = 'create';
-        $basePath = $this->_parameters['directory'];
         $pathArray = array();
         
         $projectFile = new Zend_Build_Resource_ProjectFile();
@@ -53,6 +44,12 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
         $lastDepth = 0;
         $profileIterator = new RecursiveIteratorIterator($projectFile->getProfile(), RecursiveIteratorIterator::SELF_FIRST);
         foreach ($profileIterator as $name => $item) {
+            
+            if ($skipToDepth !== null && $profileIterator->getDepth() > $skipToDepth) {
+                continue;
+            } elseif ($skipToDepth !== null && $profileIterator->getDepth() == $skipToDepth) {
+                 $skipToDepth = null;
+            }
             
             $currentDepth = $profileIterator->getDepth();
             
@@ -66,9 +63,14 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
                 }
             }
             
-            $fullPath = $basePath . '/';
+            $fullPath = $basePath;
             if ($pathArray) {
                 $fullPath .= implode('/', $pathArray);
+            }
+            
+            if ($item['enabled'] == 'false') {
+                $skipToDepth = $profileIterator->getDepth();
+                continue;
             }
             
             $resource = $this->_buildManifest->getContext('resource', $name);
@@ -104,6 +106,7 @@ class Zend_Build_Resource_Project extends Zend_Build_Resource_Abstract
             }
             
             $dirRemainder = preg_replace('#^' . preg_quote($fullPath, '#') . '#', '', $resourceObject->getDirname());
+
             
             if ($dirRemainder) {
                 array_push($pathArray, trim($dirRemainder, '/'));

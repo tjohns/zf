@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configdata>
     <context type="resource" name="project" class="Zend_Build_Resource_Project">
-        <attribute getopt="directory|d=s">
+        <attribute getopt="path|p=s">
             <usage>
                 The target directory for the project.
             </usage>

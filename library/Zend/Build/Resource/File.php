@@ -19,7 +19,7 @@ class Zend_Build_Resource_File extends Zend_Build_Resource_Filesystem
     
     public function getDirname()
     {
-        return dirname(parent::getRealpath()) . '/';
+        return dirname($this->getRealpath()) . '/';
     }
     
 }
