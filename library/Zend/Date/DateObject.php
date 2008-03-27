@@ -29,7 +29,6 @@
  */
 abstract class Zend_Date_DateObject {
 
-
     /**
      * UNIX Timestamp
      */
@@ -200,8 +199,9 @@ abstract class Zend_Date_DateObject {
 
             // Date is after UNIX epoch
             // go through leapyears
-            // add months from letest given year
+            // add months from latest given year
             for ($count = 1970; $count <= $year; $count++) {
+
                 $leapyear = self::isYearLeapYear($count);
                 if ($count < $year) {
 
