@@ -188,6 +188,35 @@ class Zend_Db_Select
     }
 
     /**
+     * Specifies the columns used in the FROM clause.
+     *
+     * The parameter can be a single string or Zend_Db_Expr object,
+     * or else an array of strings or Zend_Db_Expr objects.
+     *
+     * @param  array|string|Zend_Db_Expr $cols The columns to select from this table.
+     * @param  string $correlationName Correlation name of target table. OPTIONAL
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function columns($cols = '*', $correlationName = null)
+    {
+        if ($correlationName === null && count($this->_parts[self::FROM])) {
+            $correlationName = key($this->_parts[self::FROM]);
+        }
+
+        if (!array_key_exists($correlationName, $this->_parts[self::FROM])) {
+            /**
+             * @see Zend_Db_Select_Exception
+             */
+            require_once 'Zend/Db/Select/Exception.php';
+            throw new Zend_Db_Select_Exception("No table has been specified for the FROM clause");
+        }
+        
+        $this->_tableCols($correlationName, $cols);
+
+        return $this;
+    }
+
+    /**
      * Adds a JOIN table and columns to the query.
      *
      * The $name and $cols parameters follow the same logic

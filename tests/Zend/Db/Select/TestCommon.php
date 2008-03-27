@@ -270,6 +270,58 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test support for nested select in from()
+     */
+    protected function _selectColumnsReset()
+    {
+        $select = $this->_db->select()
+            ->from(array('p' => 'zfproducts'), array('product_id', 'product_name'));
+        return $select;
+    }
+
+    public function testSelectColumnsReset()
+    {
+        $select = $this->_selectColumnsReset()
+            ->reset(Zend_Db_Select::COLUMNS)
+            ->columns('product_name');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertContains('product_name', array_keys($result[0]));
+        $this->assertNotContains('product_id', array_keys($result[0]));
+
+        $select = $this->_selectColumnsReset()
+            ->reset(Zend_Db_Select::COLUMNS)
+            ->columns('p.product_name');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertContains('product_name', array_keys($result[0]));
+        $this->assertNotContains('product_id', array_keys($result[0]));
+
+        $select = $this->_selectColumnsReset()
+            ->reset(Zend_Db_Select::COLUMNS)
+            ->columns('product_name', 'p');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertContains('product_name', array_keys($result[0]));
+        $this->assertNotContains('product_id', array_keys($result[0]));
+    }
+
+    public function testSelectColumnsResetBeforeFrom()
+    {
+        $select = $this->_selectColumnsReset();
+        try {
+            $select->reset(Zend_Db_Select::COLUMNS)
+                   ->reset(Zend_Db_Select::FROM)
+                   ->columns('product_id');
+            $this->fail('Expected exception of type "Zend_Db_Select_Exception"');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Select_Exception', $e,
+                              'Expected exception of type "Zend_Db_Select_Exception", got ' . get_class($e));
+            $this->assertEquals("No table has been specified for the FROM clause", $e->getMessage());
+        }
+    }
+
+    /**
      * Test support for FOR UPDATE
      * e.g. from('schema.table').
      */

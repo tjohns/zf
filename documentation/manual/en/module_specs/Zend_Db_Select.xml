@@ -396,6 +396,46 @@ $select = $db->select()
 
         </sect3>
 
+        <sect3 id="zend.db.select.building.columns-atomic">
+
+            <title>Adding columns to an existing FROM or JOIN table</title>
+
+            <para>
+                There may be cases where you wish to add columns to an existing FROM or JOIN table
+                after those methods have been called. The <code>columns()</code> method allows you
+                to add specific columns at any point before the query is executed. You can supply
+                the columns as either a string or <code>Zend_Db_Expr</code> or as an array of these
+                elements. The second argument to this method can be omitted, implying that the
+                columns are to be added to the FROM table, otherwise an existing correlation name
+                must be used.
+            </para>
+
+            <example id="zend.db.select.building.columns-atomic.example">
+
+                <title>Examples of adding columns with the <code>columns()</code> method</title>
+
+                <programlisting role="php"><![CDATA[<?php
+// Build this query:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'product_id')
+    ->columns('product_name');
+
+// Build the same query, specifying correlation names:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'p.product_id')
+    ->columns('product_name', 'p'); // Alternatively use columns('p.product_name')]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
         <sect3 id="zend.db.select.building.join">
 
             <title>Adding Another Table to the Query with JOIN</title>

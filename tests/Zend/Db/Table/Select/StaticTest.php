@@ -162,6 +162,15 @@ class Zend_Db_Table_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
      */
 
+    public function testSelectColumnsReset()
+    {
+        $select = $this->_selectColumnsReset()
+            ->reset(Zend_Db_Select::COLUMNS)
+            ->columns('product_name');
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "p"."product_name" FROM "zfproducts" AS "p"', $sql);
+    }
+
     /**
      * Test support for schema-qualified table names in from()
      * e.g. from('schema.table').

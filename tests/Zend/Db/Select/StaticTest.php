@@ -174,6 +174,15 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $this->assertEquals('SELECT "zfproducts".* FROM "dummy"."zfproducts"', $sql);
     }
 
+    public function testSelectColumnsReset()
+    {
+        $select = $this->_selectColumnsReset()
+            ->reset(Zend_Db_Select::COLUMNS)
+            ->columns('product_name');
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "p"."product_name" FROM "zfproducts" AS "p"', $sql);
+    }
+
     public function testSelectFromForUpdate()
     {
         $select = $this->_db->select()
