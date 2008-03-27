@@ -16,6 +16,7 @@
  * @package    Zend_Console
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
 
 /**
@@ -25,9 +26,24 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 interface Zend_Console_ErrorCodes
-{    
+{
+    /**
+     * @constant integer
+     */
     const TASK_NOT_FOUND               = 2;
+
+    /**
+     * @constant integer
+     */
     const RESOURCE_NOT_FOUND           = 3;
+
+    /**
+     * @constant integer
+     */
     const INVALID_TASK_CLASS           = 4;
+
+    /**
+     * @constant integer
+     */
     const INVALID_RESOURCE_CLASS       = 5;
 }
