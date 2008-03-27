@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,18 +16,18 @@
  * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: $
  */
-
 
 /**
- * Zend_Config
+ * @see Zend_Config
  */
 require_once 'Zend/Config.php';
-
 
 /**
  * @category   Zend
  * @package    Zend_Config
+ * @uses       Zend_Config
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -47,10 +46,11 @@ class Zend_Config_Xml extends Zend_Config
      * Note that the keys in $section will override any keys of the same
      * name in the sections that have been included via "extends".
      *
-     * @param string $filename
-     * @param mixed $section
-     * @param boolean $allowModifications
+     * @param  string  $filename
+     * @param  mixed   $section
+     * @param  boolean $allowModifications
      * @throws Zend_Config_Exception
+     * @return void
      */
     public function __construct($filename, $section = null, $allowModifications = false)
     {
@@ -90,14 +90,13 @@ class Zend_Config_Xml extends Zend_Config
         $this->_loadedSection = $section;
     }
 
-
     /**
      * Helper function to process each element in the section and handle
      * the "extends" inheritance attribute.
      *
-     * @param SimpleXMLElement $element
-     * @param string $section
-     * @param array $config
+     * @param  SimpleXMLElement $element
+     * @param  string           $section
+     * @param  array            $config
      * @throws Zend_Config_Exception
      * @return array
      */
@@ -120,12 +119,12 @@ class Zend_Config_Xml extends Zend_Config
         return $config;
     }
 
-
     /**
      * Returns a string or an associative and possibly multidimensional array from 
      * a SimpleXMLElement.
      *
-     * @param SimpleXMLElement $xmlObject
+     * @param  SimpleXMLElement $xmlObject
+     * @throws Zend_Config_Exception
      * @return array|string
      */
     protected function _toArray($xmlObject)
@@ -172,8 +171,8 @@ class Zend_Config_Xml extends Zend_Config
      * Merge two arrays recursively, overwriting keys of the same name
      * in $array1 with the value in $array2.
      *
-     * @param array $array1
-     * @param array $array2
+     * @param  array $array1
+     * @param  array $array2
      * @return array
      */
     protected function _arrayMergeRecursive($array1, $array2)
@@ -191,5 +190,4 @@ class Zend_Config_Xml extends Zend_Config
         }
         return $array1;
     }
-
 }
