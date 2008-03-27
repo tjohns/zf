@@ -10,9 +10,11 @@
     </para>
 
     <itemizedlist>
+        <listitem><para><code>XHTML11</code></para></listitem>
         <listitem><para><code>XHTML1_STRICT</code></para></listitem>
         <listitem><para><code>XHTML1_TRANSITIONAL</code></para></listitem>
         <listitem><para><code>XHTML1_FRAMESET</code></para></listitem>
+        <listitem><para><code>XHTML_BASIC1</code></para></listitem>
         <listitem><para><code>HTML4_STRICT</code></para></listitem>
         <listitem><para><code>HTML4_LOOSE</code></para></listitem>
         <listitem><para><code>HTML4_FRAMESET</code></para></listitem>
