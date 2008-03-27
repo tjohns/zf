@@ -200,7 +200,7 @@ class Zend_Db_Select
     public function columns($cols = '*', $correlationName = null)
     {
         if ($correlationName === null && count($this->_parts[self::FROM])) {
-            $correlationName = key($this->_parts[self::FROM]);
+            $correlationName = current(array_keys($this->_parts[self::FROM]));
         }
 
         if (!array_key_exists($correlationName, $this->_parts[self::FROM])) {
