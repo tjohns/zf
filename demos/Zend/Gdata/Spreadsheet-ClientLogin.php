@@ -14,22 +14,60 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata
+ */
 Zend_Loader::loadClass('Zend_Gdata');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+
+/**
+ * @see Zend_Gdata_Spreadsheets
+ */
 Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
+
+/**
+ * @see Zend_Gdata_App_AuthException
+ */
 Zend_Loader::loadClass('Zend_Gdata_App_AuthException');
+
+/**
+ * @see Zend_Http_Client
+ */
 Zend_Loader::loadClass('Zend_Http_Client');
 
 
-
+/**
+ * SimpleCRUD
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Demos
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class SimpleCRUD
 {
-    
+    /**
+     * Constructor
+     *
+     * @param  string $email
+     * @param  string $password
+     * @return void
+     */
     public function __construct($email, $password)
     {
         try {
@@ -46,7 +84,12 @@ class SimpleCRUD
         $this->rowCount = 0;
         $this->columnCount = 0;
     }
-    
+
+    /**
+     * promptForSpreadsheet
+     *
+     * @return void
+     */
     public function promptForSpreadsheet()
     {
         $feed = $this->gdClient->getSpreadsheetFeed();
@@ -56,7 +99,12 @@ class SimpleCRUD
         $currKey = split('/', $feed->entries[$input]->id->text);
         $this->currKey = $currKey[5];
     }
-    
+
+    /**
+     * promptForWorksheet
+     *
+     * @return void
+     */
     public function promptForWorksheet()
     {
         $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
@@ -69,7 +117,12 @@ class SimpleCRUD
         $this->currWkshtId = $currWkshtId[8];
 
     }
-    
+
+    /**
+     * promptForCellsAction
+     *
+     * @return void
+     */
     public function promptForCellsAction()
     {
         echo "Pick a command:\n";
@@ -92,7 +145,14 @@ class SimpleCRUD
             $this->invalidCommandError($input);
         }
     }
-    
+
+    /**
+     * promptToResize
+     *
+     * @param  integer $newRowCount
+     * @param  integer $newColumnCount
+     * @return boolean
+     */
     public function promptToResize($newRowCount, $newColumnCount) {
         $input = getInput('Would you like to resize the worksheet? [yes | no]');
         if ($input == 'yes') {
@@ -102,6 +162,13 @@ class SimpleCRUD
         }
     }
 
+    /**
+     * resizeWorksheet
+     *
+     * @param  integer $newRowCount
+     * @param  integer $newColumnCount
+     * @return boolean
+     */
     public function resizeWorksheet($newRowCount, $newColumnCount) {
         $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
         $query->setSpreadsheetKey($this->currKey);
@@ -115,6 +182,11 @@ class SimpleCRUD
         return true;
     }
 
+    /**
+     * promptForListAction
+     *
+     * @return void
+     */
     public function promptForListAction()
     {
         echo  "\n== Options ==\n". 
@@ -137,7 +209,12 @@ class SimpleCRUD
             $this->invalidCommandError($input);
         }
     }
-    
+
+    /**
+     * cellsGetAction
+     *
+     * @return void
+     */
     public function cellsGetAction()
     {
         $query = new Zend_Gdata_Spreadsheets_CellQuery();
@@ -146,7 +223,15 @@ class SimpleCRUD
         $feed = $this->gdClient->getCellFeed($query);
         $this->printFeed($feed);
     }
-    
+
+    /**
+     * cellsUpdateAction
+     *
+     * @param  integer $row
+     * @param  integer $col
+     * @param  string  $inputValue
+     * @return void
+     */
     public function cellsUpdateAction($row, $col, $inputValue)
     {   
         if (($row > $this->rowCount) || ($col > $this->columnCount)) {
@@ -161,7 +246,12 @@ class SimpleCRUD
             echo "Success!\n";
         }
     }
-    
+
+    /**
+     * listGetAction
+     *
+     * @return void
+     */
     public function listGetAction()
     {
         $query = new Zend_Gdata_Spreadsheets_ListQuery();
@@ -174,7 +264,13 @@ class SimpleCRUD
         $this->printFeed($this->listFeed);
         print "\n";
     }
-    
+
+    /**
+     * listInsertAction
+     *
+     * @param  mixed $rowData
+     * @return void
+     */
     public function listInsertAction($rowData)
     {
         $rowArray = $this->stringToArray($rowData);
@@ -185,7 +281,14 @@ class SimpleCRUD
             }
         }
     }
-    
+
+    /**
+     * listUpdateAction
+     *
+     * @param  integer $index
+     * @param  mixed   $rowData
+     * @return void
+     */
     public function listUpdateAction($index, $rowData)
     {
         $query = new Zend_Gdata_Spreadsheets_ListQuery();
@@ -199,7 +302,13 @@ class SimpleCRUD
 
         }
     }
-    
+
+    /**
+     * listDeleteAction
+     *
+     * @param  integer $index
+     * @return void
+     */
     public function listDeleteAction($index)
     {
         $query = new Zend_Gdata_Spreadsheets_ListQuery();
@@ -208,7 +317,13 @@ class SimpleCRUD
         $this->listFeed = $this->gdClient->getListFeed($query);
         $this->gdClient->deleteRow($this->listFeed->entries[$index]);
     }
-    
+
+    /**
+     * stringToArray
+     *
+     * @param  string $rowData
+     * @return array
+     */
     public function stringToArray($rowData)
     {
         $arr = array();
@@ -219,6 +334,12 @@ class SimpleCRUD
         return $arr;
     }
 
+    /**
+     * printFeed
+     *
+     * @param  Zend_Gdata_Gbase_Feed $feed
+     * @return void
+     */
     public function printFeed($feed)
     {
         $i = 0;
@@ -233,7 +354,12 @@ class SimpleCRUD
             $i++;
         }
     }
-    
+
+    /**
+     * getRowAndColumnCount
+     *
+     * @return void
+     */
     public function getRowAndColumnCount() 
     {
         $query = new Zend_Gdata_Spreadsheets_CellQuery();
@@ -246,16 +372,27 @@ class SimpleCRUD
             $this->columnCount = $feed->getColumnCount();
         }
     }
-    
+
+    /**
+     * invalidCommandError
+     *
+     * @param  string $input
+     * @return void
+     */
     public function invalidCommandError($input)
     {
         echo 'Invalid input: '.$input."\n";
     }
-    
+
+    /**
+     * promtForFeedtype
+     *
+     * @return void
+     */
     public function promptForFeedtype() {
 
       $input = getInput('Select to use either the cell or the list feed [cells or list]');
-      
+
       if ($input == 'cells') {
         while(1) {
           $this->promptForCellsAction();
@@ -270,6 +407,11 @@ class SimpleCRUD
       }  
     }
 
+    /**
+     * run
+     *
+     * @return void
+     */
     public function run()
     {
         $this->promptForSpreadsheet();
@@ -278,6 +420,12 @@ class SimpleCRUD
     }
 }
 
+/**
+ * getInput
+ *
+ * @param  string $text
+ * @return string
+ */
 function getInput($text)
 {
     echo $text.': ';
@@ -304,5 +452,3 @@ if (($email == null) || ($pass == null)) {
 
 $sample = new SimpleCRUD($email, $pass); 
 $sample->run();
-
-?>

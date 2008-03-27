@@ -14,13 +14,29 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Demos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Gdata_AuthSub
+ */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
+
+/**
+ * @see Zend_Gdata_ClientLogin
+ */
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
+
+/**
+ * @see Zend_Gdata_Gbase
+ */
 Zend_Loader::loadClass('Zend_Gdata_Gbase');
 
 /**
@@ -83,6 +99,8 @@ function getAuthSubUrl()
  * a link to the AuthSub URL.
  * 
  * Uses getAuthSubUrl() to get the URL which the user must visit to authenticate
+ *
+ * @return void
  */
 function requestUserLogin($linkText) 
 {
@@ -116,8 +134,8 @@ function getAuthSubHttpClient()
  * Returns a HTTP client object with the appropriate headers for communicating
  * with Google using the ClientLogin credentials supplied.
  *
- * @param string $user The username, in e-mail address format, to authenticate
- * @param string $pass The password for the user specified
+ * @param  string $user The username, in e-mail address format, to authenticate
+ * @param  string $pass The password for the user specified
  * @return Zend_Http_Client
  */
 function getClientLoginHttpClient($user, $pass) 
@@ -161,6 +179,8 @@ function processPageLoad()
  * NOTE: We would normally keep the HTML/CSS markup separate from the business
  *       logic above, but have decided to include it here for simplicity of
  *       having a single-file sample.
+ *
+ * @return void
  */
 function startHTML()
 {
@@ -236,8 +256,9 @@ function startHTML()
 /**
  * Writes the HTML epilogue for this app and exit.
  *
- * @param boolean $displayBackButton (optional) If true, displays a 
- *          link to go back at the bottom of the page. Defaults to false.
+ * @param  boolean $displayBackButton (optional) If true, displays a link to go back at the bottom
+ *                                    of the page. Defaults to false.
+ * @return void
  */
 function endHTML($displayBackButton = false)
 {
@@ -252,7 +273,8 @@ exit();
 /** 
  * Inserts a Base item into the Customer Items feed
  *
- * @param Zend_Http_Client $client The authenticated client object
+ * @param  Zend_Http_Client $client The authenticated client object
+ * @param  boolean          $dryRun 
  * @return string The URL of the newly created entry
  */
 function insertItem($client, $dryRun = false)
@@ -334,7 +356,7 @@ function insertItem($client, $dryRun = false)
  * Outputs an HTML unordered list (ul), with each list item representing a
  * Base item in the authenticated user's Customer Items list.  
  *
- * @param Zend_Http_Client $client The authenticated client object
+ * @param  Zend_Http_Client $client The authenticated client object
  * @return void
  */
 function listAllMyItems($client) 
@@ -351,7 +373,9 @@ function listAllMyItems($client)
  * Updates a Base item entry. It demonstrates how to access and 
  * update/remove Base attributes
  *
- * @param Zend_Http_Client $client The authenticated client object
+ * @param  Zend_Http_Client $client The authenticated client object
+ * @param  string           $itemUrl
+ * @param  boolean          $dryRun         
  * @return void
  */
 function updateItem($client, $itemUrl, $dryRun = false)
@@ -428,8 +452,8 @@ function updateItem($client, $itemUrl, $dryRun = false)
 /** 
  * Deletes a Base item entry
  *
- * @param Zend_Http_Client $client The authenticated client object
- * @param string $itemUrl The URL of the item to be deleted
+ * @param  Zend_Http_Client $client  The authenticated client object
+ * @param  string           $itemUrl The URL of the item to be deleted
  * @return void
  */
 function deleteItem($client, $itemUrl, $dryRun = false) 
@@ -480,7 +504,7 @@ function querySnippetFeed()
 /**
  * Prints each entry in a given feed
  *
- * @param feed $feed CustomerItems or Snippets feed to be printed
+ * @param  Zend_Gdata_Gbase_Feed $feed CustomerItems or Snippets feed to be printed
  * @return void
  */
 function printEntries($feed) 
@@ -585,5 +609,3 @@ if (isset($argc) && $argc >= 2) {
   // running through web server - demonstrate AuthSub
   processPageLoad();
 }
-
-?>
