@@ -777,11 +777,12 @@ class Zend_Db_Select
         if (!is_array($cols)) {
             $cols = array($cols);
         }
+
         if ($correlationName == null) {
             $correlationName = '';
         }
 
-        foreach ($cols as $alias => $col) {
+        foreach (array_filter($cols) as $alias => $col) {
             $currentCorrelationName = $correlationName;
             if (is_string($col)) {
                 // Check for a column matching "<column> AS <alias>" and extract the alias name

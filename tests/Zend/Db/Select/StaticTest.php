@@ -155,14 +155,6 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
-     *
-    public function testSelectForUpdateModifier()
-    {
-    }
-     */
-
-    /**
      * Test support for schema-qualified table names in from()
      * e.g. from('schema.table').
      */
@@ -292,6 +284,13 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectJoinInnerUsing();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
         $this->assertEquals('SELECT "zfproducts".*, "zfbugs_products".* FROM "zfproducts" INNER JOIN "zfbugs_products" ON "zfbugs_products"."product_id" = "zfproducts"."product_id" WHERE ("zfbugs_products"."product_id" < 3)', $sql);
+    }
+
+    public function testSelectJoinWithNocolumns()
+    {
+        $select = $this->_selectJoinWithNocolumns();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" INNER JOIN "zfbugs" ON "zfbugs"."bug_id" = 1 INNER JOIN "zfbugs_products" ON "zfproducts"."product_id" = "zfbugs_products"."product_id" AND "zfbugs_products"."bug_id" = "zfbugs"."bug_id"', $sql);
     }
 
     /**

@@ -411,6 +411,33 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test adding a JOIN to a Zend_Db_Select object.
+     */
+    protected function _selectJoinWithNocolumns()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->join('zfbugs', "$bugs.$bug_id = 1", array())
+            ->join('zfbugs_products', "$products.$product_id = $bugs_products.$product_id AND $bugs_products.$bug_id = $bugs.$bug_id", null);
+        return $select;
+    }
+
+    public function testSelectJoinWithNocolumns()
+    {
+        $select = $this->_selectJoinWithNocolumns();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+        $this->assertEquals(2, count($result[0]));
+    }
+
+    /**
      * Test adding an outer join to a Zend_Db_Select object.
      */
     protected function _selectJoinLeft()
