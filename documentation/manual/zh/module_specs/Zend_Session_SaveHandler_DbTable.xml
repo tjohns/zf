@@ -1,0 +1,101 @@
+<sect1 id="zend.session.savehandler.dbtable">
+	<title>Zend_Session_SaveHandler_DbTable</title>
+	<para>
+		Zend_Session_SaveHandler_DbTable 的基本设置必需至少包含四列，在配置数组/Zend_Config对象中表示为：
+		primary，主键并且缺省为会话的 id ，并且缺省长度为 32 的字符串；
+		modified，最后修改日期的 unix 时间戳；
+		lifetime，会话的寿命（modified + lifetime > time()）；
+		data，存储在会话中的系列化数据。
+	</para>
+	<example id="zend.session.savehandler.dbtable.basic">
+	        <title> 基本设置 </title>
+    		<programlisting role="SQL"><![CDATA[
+CREATE TABLE `session` (
+  `id` char(32),
+  `modified` int,
+  `lifetime` int,
+  `data` text,
+  PRIMARY KEY (`id`)
+);
+?>]]></programlisting>
+		<programlisting role="php"><![CDATA[<?php
+// 准备好数据库连接
+$db = Zend_Db::factory('Pdo_Mysql', array(
+	'host'		=>'example.com',
+	'username'	=> 'dbuser',
+	'password'	=> '******',
+	'dbname'	=> 'dbname'
+));
+
+//或者设置 Zend_Db_Table 缺省适配器
+//或者直接传递 db 连接并保存到 $config
+Zend_Db_Table_Abstract::setDefaultAdapter($db);
+$config = array(
+	'name'           => 'session', 
+	'primary'        => 'id', 
+	'modifiedColumn' => 'modified',
+	'dataColumn'     => 'data',
+	'lifetimeColumn' => 'lifetime' 
+); 
+
+//创建 Zend_Session_SaveHandler_DbTable 和
+//为 Zend_Session 设置保存句柄
+Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
+
+//启动会话！ 
+Zend_Session::start();
+
+//现在可以象以前一样使用 Zend_Session 
+?>]]></programlisting>
+	</example>
+	<para>
+		也可以在 Zend_Session_SaveHandler_DbTable 的主键中使用多个列。
+	</para>
+	<example id="zend.session.savehandler.dbtable.multi-column-key">
+		<title> 使用一个多列主键 </title>
+		<programlisting role="SQL"><![CDATA[
+CREATE TABLE `session` (
+	`session_id` char(32) NOT NULL,
+	`save_path` varchar(32) NOT NULL,
+	`name` varchar(32) NOT NULL DEFAULT '',
+	`modified` int,
+	`lifetime` int,
+	`session_data` text,
+	PRIMARY KEY (`Session_ID`, `save_path`, `name`)
+);
+?>]]></programlisting>
+		<programlisting role="php"><![CDATA[<?php
+// 象以前设置 DB 连接
+//注：这个配置也传递给 Zend_Db_Table 所以
+//表的任何细节也可以放在 config 中
+$config = array(
+	'name'              => 'session', //table name as per Zend_Db_Table 
+	'primary'           => array( 
+		'session_id',   // php 给定的 sessionID  
+		'save_path',    // session.save_path  
+		'name',         // 会话名
+	),
+	'primaryAssignment' => array( //you must tell the save handler which columns you
+	                              //are using as the primary key. ORDER IS IMPORTANT
+		'sessionId',          //first column of the primary key is of the sessionID 
+		'sessionSavePath',    //second column of the primary key is the save path 
+		'sessionName',        //third column of the primary key is the session name 
+	), 
+	'modifiedColumn'    => 'modified',     //time the session should expire 
+	'dataColumn'        => 'session_data', //serialized data
+	'lifetimeColumn'    => 'lifetime',     //end of life for a specific record 
+);
+
+// 告诉 Zend_Session 使用保存句柄
+Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config)); 
+
+// 启动会话
+Zend_Session::start();
+
+// 正常使用 Zend_Session 
+?>]]></programlisting>
+	</example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
