@@ -58,7 +58,7 @@ if ($validator->isValid($email)) {
         echo "Validation failure '$messageId': $message\n";
     }
 }]]>
-		    </programlisting>
+            </programlisting>
 
         </para>
 
@@ -92,7 +92,7 @@ if (!$validator->isValid('word')) {
 
     // affiche "La chaîne 'word' est trop courte ; elle doit être au moins de 8 caractères"
 }]]>
-		    </programlisting>
+            </programlisting>
         </para>
 
         <para>
@@ -107,7 +107,7 @@ $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => 'La chaîne \'%value%\' est trop courte',
     Zend_Validate_StringLength::TOO_LONG  => 'La chaîne \'%value%\' est trop longue'
 ));]]>
-		    </programlisting>
+            </programlisting>
 
         </para>
 
@@ -128,7 +128,7 @@ if (!validator->isValid('word')) {
         . $validator->max
         . "\n";
 }]]>
-		    </programlisting>
+            </programlisting>
         </para>
 
     </sect2>
@@ -146,7 +146,7 @@ require_once 'Zend/Validate.php';
 if (Zend_Validate::is($email, 'EmailAddress')) {
     // l'email es valide
 }]]>
-		    </programlisting>
+            </programlisting>
 
         </para>
 
@@ -159,7 +159,7 @@ require_once 'Zend/Validate.php';
 if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     // $value est compirs entre 1 et 12
 }]]>
-		    </programlisting>
+            </programlisting>
 
         </para>
 

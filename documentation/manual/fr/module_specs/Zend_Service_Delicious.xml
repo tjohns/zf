@@ -20,7 +20,7 @@ foreach ($posts as $post) {
     echo "Titre: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }]]>
-    		</programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.retrieving_posts">
@@ -60,7 +60,7 @@ public function getRecentPosts($tag = null, $count = 15);
  * @return Zend_Service_Delicious_PostList
  */
 public function getAllPosts($tag = null);]]>
-    	</programlisting>
+        </programlisting>
     </sect2>
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
@@ -89,7 +89,7 @@ foreach ($posts as $post) {
 
 // Affiche une entrée en utilisant un tableau
 echo $posts[0]->getTitle();]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <note>
             <para>
@@ -118,7 +118,7 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <example id="zend.service.delicious.postlist.example.byUrl">
             <title>Filtrage d'une entrée par URL</title>
@@ -135,7 +135,7 @@ foreach ($posts->withUrl('/help/') as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.editing_posts">
@@ -150,7 +150,7 @@ $posts = $delicious->getPosts();
 $posts[0]->setTitle('Nouveau Titre');
 // sauvegarde le changement
 $posts[0]->save();]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <example id="zend.service.delicious.editing_posts.method_call_chaining">
             <title>Enchaînement des appels de méthode</title>
@@ -164,7 +164,7 @@ $posts = $delicious->getPosts();
 $posts[0]->setTitle('Nouveau Titre')
          ->setNotes('Nouvelle note')
          ->save();]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.deleting_posts">
@@ -186,7 +186,7 @@ $posts[0]->delete();
 
 // une autre façon d'utiliser deletePost()
 $delicious->deletePost($posts[0]->getUrl());]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.adding_posts">
@@ -210,7 +210,7 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
 $newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
 $newPost->setNotes('Page d\'accueil du Zend Framework');
 $newPost->save();]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.tags">
@@ -225,7 +225,7 @@ print_r($delicious->getTags());
 
 // renomme le tag "ZF" en "zendFramework"
 $delicious->renameTag('ZF', 'zendFramework');]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.bundles">
@@ -243,7 +243,7 @@ $delicious->deleteBundle('someBundle');
 
 // ajoute un groupe
 $delicious->addBundle('newBundle', array('tag1', 'tag2'));]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.public_data">
@@ -304,7 +304,7 @@ print_r($delicious->getUserNetwork('someUser'));
 
 // récupère les Tags de l'utilisateur someUser
 print_r($delicious->getUserTags('someUser'));]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <sect3 id="zend.service.delicious.public_data.posts">
             <title>Entrées publiques</title>
@@ -362,7 +362,7 @@ print_r($delicious->getUserTags('someUser'));]]>
             <programlisting role="php"><![CDATA[<?php
 $myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             Quand vous effectuez plus d'une requête avec <code>Zend_Service_Delicious</code> vous pouvez accélérez vos
@@ -374,7 +374,7 @@ Zend_Rest_Client::setHttpClient($myHttpClient);]]>
 Zend_Rest_Client::getHttpClient()->setConfig(array(
         'keepalive' => true
 ));]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <note>
             <para>

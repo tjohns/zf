@@ -13,6 +13,6 @@ $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MaSuperApplication');
 $mail->addHeader('X-greetingsTo', 'Maman', true); // plusieurs valeurs
 $mail->addHeader('X-greetingsTo', 'Papa', true);]]>
-    	</programlisting>
+        </programlisting>
     </example>
 </sect1>

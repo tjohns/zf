@@ -15,7 +15,7 @@
         <programlisting role="php"><![CDATA[<?php
 // retourne -1, 0 or 1
 $cmp = Zend_Version::compareVersion('1.0.0');]]>
-    	</programlisting>
+        </programlisting>
     </example>
 
 </sect1>

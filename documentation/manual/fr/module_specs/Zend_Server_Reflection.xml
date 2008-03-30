@@ -46,7 +46,7 @@ foreach ($prototypes as $prototype) {
 // Les espaces de nommage peuvent être définis au moment de l'instanciation (deuxième argument), ou en utilisant
 // setNamespace()
 $reflection->getNamespace();]]>
-    	</programlisting>
+        </programlisting>
 
         <para>
             <code>reflectFunction()</code> retourne un objet <code>Zend_Server_Reflection_Function</code>. <code>reflectClass</code> retourne un objet <code>Zend_Server_Reflection_Class</code>. Veuillez vous référer à la documentation d'api pour savoir quelles méthodes sont disponibles pour chacun.

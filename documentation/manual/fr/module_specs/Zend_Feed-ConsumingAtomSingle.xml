@@ -22,7 +22,7 @@ $flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
 echo 'Le flux possède : ' . $flux->count() . ' entrée(s).';
 
 $entree = $flux->current();]]>
-    	</programlisting>
+        </programlisting>
     </example>
 
     <para>

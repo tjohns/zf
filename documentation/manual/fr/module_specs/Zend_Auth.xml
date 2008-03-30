@@ -76,7 +76,7 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
         // ...
     }
 }]]>
-    		</programlisting>
+            </programlisting>
 
             Comme indiqué dans la documentation "docblock", <code>authenticate()</code> doit retourner une
             instance de <code>Zend_Auth_Result</code> (ou d'une classe dérivée de <code>Zend_Auth_Result</code>).
@@ -131,7 +131,7 @@ Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
 Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
-    		</programlisting>
+            </programlisting>
 
         </para>
 
@@ -160,7 +160,7 @@ switch ($resultat->getCode()) {
         /** autres cas **/
         break;
 }]]>
-    		</programlisting>
+            </programlisting>
 
         </para>
 
@@ -232,7 +232,7 @@ $auth->setStorage(new Zend_Auth_Storage_Session('unEspaceDeNommage'));
 
 // authentification, sauvegarde du résultat et stockage du résultat en cas de succès
 $resultat = $auth->authenticate($authAdaptateur);]]>
-    				</programlisting>
+                    </programlisting>
 
                 </para>
 
@@ -320,7 +320,7 @@ class MonStockage implements Zend_Auth_Storage_Interface
     }
 
 }]]>
-    				</programlisting>
+                    </programlisting>
 
                 </para>
 
@@ -337,7 +337,7 @@ Zend_Auth::getInstance()->setStorage(new MonStockage());
 
 // Authentification, sauvegarde et persistance du résultat en cas de succès.
 $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);]]>
-    				</programlisting>
+                    </programlisting>
 
                 </para>
 
@@ -392,7 +392,7 @@ if (!$resultat->isValid()) {
     // $resultat->getIdentity() === $auth->getIdentity()
     // $resultat->getIdentity() === $identifiant
 }]]>
-    		</programlisting>
+            </programlisting>
         </para>
 
         <para>
@@ -404,7 +404,7 @@ if ($auth->hasIdentity()) {
     // l'identité existe ; on la récupère
     $identite = $auth->getIdentity();
 }]]>
-    		</programlisting>
+            </programlisting>
         </para>
 
         <para>
@@ -439,7 +439,7 @@ if (!$resultat->isValid()) {
     // Authentification réussie
     // $resultat->getIdentity() === $identifiant
 }]]>
-    		</programlisting>
+            </programlisting>
         </para>
 
     </sect2>

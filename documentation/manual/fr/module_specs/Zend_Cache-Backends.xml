@@ -189,7 +189,7 @@
         </para>
         <programlisting role="php"><![CDATA[<?php
 $cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
-	    </programlisting>
+        </programlisting>
         <para>
             Il n'y a pas d'options pour ce backend.
         </para>

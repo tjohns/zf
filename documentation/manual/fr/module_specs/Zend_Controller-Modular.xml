@@ -5,8 +5,8 @@
         <title>Introduction</title>
         <para>
             Les conventions de dossiers vous permettent de séparer les différentes 
-			applications MVC dans des unités isolées et les réutiliser dans le 
-			contrôleur frontal. Voici une illustration :
+            applications MVC dans des unités isolées et les réutiliser dans le 
+            contrôleur frontal. Voici une illustration :
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -48,20 +48,20 @@ application/
 
         <para>
             Ci dessus, le nom du module est utilisé comme préfixe pour les contrôleurs
-			qu'il possède. Il y a donc trois contrôleurs : 'Blog_IndexController', 
-			'News_IndexController', et 'News_ListController'. Deux contrôleurs dans le 
-			module par défaut sont aussi définis, 'IndexController' et
+            qu'il possède. Il y a donc trois contrôleurs : 'Blog_IndexController', 
+            'News_IndexController', et 'News_ListController'. Deux contrôleurs dans le 
+            module par défaut sont aussi définis, 'IndexController' et
             'FooController'. Ceux-ci ne possèdent pas le nom du module dans leur nom.
-			Cet exemple d'arborescence conseillée sera utilisé dans ce chapitre.
+            Cet exemple d'arborescence conseillée sera utilisé dans ce chapitre.
         </para>
 
         <note>
             <title>Pas de namespace pour le module par défaut</title>
             <para>
                 Notez que dans le module par défaut, les contrôleurs n'ont pas 
-				besoin d'être préfixés par le nom du module ('Default_'). Ils 
-				sont simplement dispatchés tels quels. Ce n'est pas le cas pour les
-				autres contrôleurs.
+                besoin d'être préfixés par le nom du module ('Default_'). Ils 
+                sont simplement dispatchés tels quels. Ce n'est pas le cas pour les
+                autres contrôleurs.
             </para>
         </note>
 
@@ -75,18 +75,18 @@ application/
 
         <para>
             La première chose à faire est d'indiquer au contrôleur frontal où se trouvent
-			les dossiers contenant les contrôleurs d'action. Passez un array ou une string
-			à <code>setControllerDirectory()</code>, ou alors une string à
+            les dossiers contenant les contrôleurs d'action. Passez un array ou une string
+            à <code>setControllerDirectory()</code>, ou alors une string à
             <code>addControllerDirectory()</code>. Si vous utlisez les modules, ces appels 
-			de méthodes changent quelque peu.
+            de méthodes changent quelque peu.
         </para>
 
         <para>
             Pour <code>setControllerDirectory()</code>, un tableau est requis. Les paires 
-			clé/valeur représentent le nom du module, et le chemin des contrôleurs. La clé
-			<code>default</code> est utilisée pour indiquer les contrôleurs globaux (dont le
-			nom ne comporte pas le module). Chaque option doit comporter une indication vers
-			un chemin, et la clé <code>default</code> doit être présente :
+            clé/valeur représentent le nom du module, et le chemin des contrôleurs. La clé
+            <code>default</code> est utilisée pour indiquer les contrôleurs globaux (dont le
+            nom ne comporte pas le module). Chaque option doit comporter une indication vers
+            un chemin, et la clé <code>default</code> doit être présente :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -98,8 +98,8 @@ $front->setControllerDirectory(array(
 
         <para>
             <code>addControllerDirectory()</code> prend en paramètre une string décrivant
-			un chemin vers des contrôleurs. Si vous voulez indiquer un module, passez le 
-			en second paramètre. Sinon, le chemin sera ajouté au module <code>default</code>
+            un chemin vers des contrôleurs. Si vous voulez indiquer un module, passez le 
+            en second paramètre. Sinon, le chemin sera ajouté au module <code>default</code>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -108,7 +108,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 
         <para>
             Enfin, si vous avez un dossier spécial regroupant tous vos modules, indiquez le
-			grâce à <code>addModuleDirectory()</code>:
+            grâce à <code>addModuleDirectory()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -128,8 +128,8 @@ $front->addModuleDirectory('/path/to/application/modules');?>]]>
 
         <para>
             Dans le code ci dessus, vous déclarez 3 modules en une méthodes. Celle-ci s'attend
-			à la structure comprenant les modules <code>default</code>, <code>foo</code>, et 
-			<code>bar</code>, chacun devant posséder un dossier <code>controllers</code>
+            à la structure comprenant les modules <code>default</code>, <code>foo</code>, et 
+            <code>bar</code>, chacun devant posséder un dossier <code>controllers</code>
         </para>
 
         <para>
@@ -155,8 +155,8 @@ $front->addModuleDirectory('/path/to/application/modules');?>]]>
 
         <note><para>
             Si vos dossiers de modules ne doivent pas utiliser de sous dossier pour les 
-			contrôleurs, alors passez une valeur vide à 
-			<code>setModuleControllerDirectoryName()</code>.
+            contrôleurs, alors passez une valeur vide à 
+            <code>setModuleControllerDirectoryName()</code>.
         </para></note>
     </sect2>
 
@@ -176,8 +176,8 @@ $front->addModuleDirectory('/path/to/application/modules');?>]]>
 
         <para>
             Ainsi, elle va trouver les contrôleurs et actions, avec ou sans module les
-			précédant. Un module ne sera trouvé que si sa clé existe dans le tableau 
-			d'options passé au contrôleur frontal ou au dispatcheur.
+            précédant. Un module ne sera trouvé que si sa clé existe dans le tableau 
+            d'options passé au contrôleur frontal ou au dispatcheur.
         </para>
     </sect2>
 
@@ -187,16 +187,16 @@ $front->addModuleDirectory('/path/to/application/modules');?>]]>
         <para>
             Dans le routeur par défaut, si aucun contrôleur n'est indiqué dans l'URL,
             un contrôleur par défaut sera utilisé (<code>IndexController</code>, sauf
-			si l'on décide de changer ce paramètre). Avec des modules indiqués dans 
-			l'URL, si aucun contrôleur n'est indiqué, alors le dispatcheur cherchera 
-			dans le module demandé le contrôleur par défaut. Si celui-ci est absent,
-			c'est celui	du module 'default' qui sera utilisé.
+            si l'on décide de changer ce paramètre). Avec des modules indiqués dans 
+            l'URL, si aucun contrôleur n'est indiqué, alors le dispatcheur cherchera 
+            dans le module demandé le contrôleur par défaut. Si celui-ci est absent,
+            c'est celui    du module 'default' qui sera utilisé.
         </para>
 
         <para>
             Si vous voulez renvoyer directement vers le contrôleur par défaut du module 
-			'default', passez le paramètre <code>useDefaultControllerAlways</code> à 
-			true dans le contrôleur frontal:
+            'default', passez le paramètre <code>useDefaultControllerAlways</code> à 
+            true dans le contrôleur frontal:
         </para>
 
         <programlisting role="php"><![CDATA[<?php

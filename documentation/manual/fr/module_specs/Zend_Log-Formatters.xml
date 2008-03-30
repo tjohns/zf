@@ -33,7 +33,7 @@ $logger->addWriter($redacteur);
 $logger->info('Monde');
 
 // affiche "Bonjour Monde"]]>
-    	</programlisting>
+        </programlisting>
     </para>
 
     <para>
@@ -55,26 +55,26 @@ $logger = new Zend_Log();
 $logger->addWriter($redacteur);
 
 $logger->info("Message d'information");]]>
-    	</programlisting>
+        </programlisting>
     </para>
 
     <para>
         Le code ci-dessus affiche le XML suivant (des espaces supplémentaires sont ajoutés pour la clarté) :
 
-      	<programlisting role="xml"><![CDATA[
+          <programlisting role="xml"><![CDATA[
 <logEntry>
   <timestamp>2007-04-06T07:24:37-07:00</timestamp>
   <message>Message d'information</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>]]>
-    	</programlisting>
+        </programlisting>
     </para>
 
     <para>
         Il est possible d'adapter l'élément racine comme indiquent faire coorespondre les éléments XML au tableau de données d'évènements. Le constructeur de <code>Zend_Log_Formatter_Xml</code> accepte une chaîne avec le nom de l'élément racine comme premier paramètre et un tableau associatif avec les éléments de correspondance comme deuxième paramètre :
 
-      	<programlisting role="php"><![CDATA[<?php
+          <programlisting role="php"><![CDATA[<?php
 $redacteur = new Zend_Log_Writer_Stream('php://output');
 $formateur = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'niveau' => 'priorityName'));
 $redacteur->setFormatter($formateur);
@@ -83,16 +83,16 @@ $logger = new Zend_Log();
 $logger->addWriter($redacteur);
 
 $logger->info("Message d'information");]]>
-    	</programlisting>
+        </programlisting>
 
         Le code ci-dessus change l'élément racine par défaut de logEntry <code>logEntry</code> en <code>log</code>. Il fait correspondre également les éléments <code>msg</code> au <code>message</code> de l'item de donnée d'événement. Ceci a comme conséquence l'affichage suivant :
 
-      	<programlisting role="xml"><![CDATA[
+          <programlisting role="xml"><![CDATA[
 <log>
   <msg>Message d'information</msg>
   <niveau>INFO</niveau>
 </log>]]>
-    	</programlisting>
+        </programlisting>
     </para>
 
   </sect2>

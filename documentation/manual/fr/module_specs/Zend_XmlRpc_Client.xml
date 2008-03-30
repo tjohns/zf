@@ -19,7 +19,7 @@ require_once 'Zend/XmlRpc/Client.php';
 $server = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 print_r( $server->system->listMethods() );]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             <note>
@@ -98,7 +98,7 @@ $p2 = array('name' => 'Joe', 'age' => 30);
 
 $service->serviceProcedure($p1, $p2);
 ...]]>
-		    </programlisting>
+            </programlisting>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
             <title>Passer des objets <code>Zend_XmlRpc_Value</code> comme paramètres</title>
@@ -198,7 +198,7 @@ $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
 
 $service->serviceProcedure($p1, $p2);
 ...]]>
-		    </programlisting>
+            </programlisting>
             <para>
                 <note>
                     <title>Automatic conversion</title>
@@ -290,7 +290,7 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', 
   dans le type nécessaire, conformément à la signature de la procédure.
 */
 $service->serviceProcedure($param);]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.xmlrpc.client.response">

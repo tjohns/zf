@@ -25,7 +25,7 @@ $logger->info("Message d'information");
 
 // écrit dans le log
 $logger->emerg("Message d'urgence");]]>
-    	</programlisting>
+        </programlisting>
 
         Quand vous ajoutez un ou plusieurs filtres à l'objet enregistreur, le message doit passer par tous les filtres avant que tous les rédacteurs le reçoive.
       </para>

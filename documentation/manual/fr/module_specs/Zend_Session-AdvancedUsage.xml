@@ -16,10 +16,10 @@
 
         <example id="zend.session.advanced_usage.starting_a_session.example">
             <title>Démarrer la session globale</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
 Zend_Session::start();]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -86,7 +86,7 @@ Zend_Session::start();]]>
 
         <example id="zend.session.advanced_usage.locking.example.basic">
             <title>Vérrouillage des espaces de nommage de session</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
 $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
@@ -98,7 +98,7 @@ $userProfileNamespace->lock();
 if ($userProfileNamespace->isLocked()) {
     $userProfileNamespace->unLock();
 }]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -113,7 +113,7 @@ if ($userProfileNamespace->isLocked()) {
 
         <example id="zend.session.advanced_usage.expiration.example">
             <title>Exemple d'expiration</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
 $s = new Zend_Session_Namespace('expireAll');
@@ -130,7 +130,7 @@ $s->setExpirationSeconds(60);
 // L'espace de nommage "expireAll" sera marqué "expired"
 // soit à la première requête reçue après 60 secondes,
 // soit dans 5 hops, en fonction de ce qui arrivera en premier.]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -159,7 +159,7 @@ require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // expire seulement cette variable
 $testSpace->accept_answer = true;]]>
-    		</programlisting>
+            </programlisting>
 
             <para>
                 Ci-dessous, le contrôleur qui analyse les réponses aux questions du test détermine l'acceptation ou non d'une réponse en se basant sur le fait que l'utilisateur a répondu dans le temps alloué :
@@ -175,7 +175,7 @@ if ($testSpace->accept_answer === true) {
 else {
     // pas dans le temps autorisé
 }]]>
-   			</programlisting>
+               </programlisting>
         </example>
 
     </sect2>
@@ -217,7 +217,7 @@ try {
 } catch (Zend_Session_Exception $e) {
     echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
 }]]>
-		    </programlisting>
+            </programlisting>
 
         </example>
 
@@ -250,7 +250,7 @@ $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 $sessionNamespace->array['testKey'] = 1; // ne fonctionne pas comme attendu avant PHP 5.2.1
 echo $sessionNamespace->array['testKey'];]]>
-		    </programlisting>
+            </programlisting>
 
         </example>
 
@@ -266,7 +266,7 @@ echo $sessionNamespace->array['testKey'];]]>
 require_once 'Zend/Session/Namespace.php';
 $sessionNamespace = new Zend_Session_Namespace('Foo');
 $sessionNamespace->array = array('a', 'b', 'c');]]>
-		    </programlisting>
+            </programlisting>
 
         </example>
 
@@ -299,7 +299,7 @@ $tmp['fruit'] = 'peach';
 $sessionNamespace->array = $tmp;
 
 echo $sessionNamespace->array['fruit']; // affiche "peach"]]>
-		    </programlisting>
+            </programlisting>
 
         </example>
 
@@ -318,7 +318,7 @@ $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
 echo $myNamespace->someArray['foo']; // affiche "bar"]]>
-		    </programlisting>
+            </programlisting>
 
         </example>
 
@@ -348,7 +348,7 @@ echo $myNamespace->someArray['foo']; // affiche "bar"]]>
 
         <example id="zend.session.advanced_usage.testing.example">
             <title>Utilisation de PHPUnit pour tester le code écrit avec Zend_Session*</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 // tester setExpirationSeconds()
 require 'tests/Zend/Session/SessionTestHelper.php'; // voir aussi SessionTest.php dans trunk/
 $script = 'SessionTestHelper.php';
@@ -389,7 +389,7 @@ $result = $this->sortResult($result);
 session_start(); // redémarre artificiellement la session suspendue
 $this->assertTrue($result === ';p === plum',
     "iteration over named Zend_Session namespace failed (result=$result)");]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
     </sect2>

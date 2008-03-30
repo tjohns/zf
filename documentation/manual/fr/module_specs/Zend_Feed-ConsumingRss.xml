@@ -5,7 +5,7 @@
 <code>Zend_Feed_Rss</code> en passant l'URL du flux :
         <programlisting role="php"><![CDATA[<?php
 $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');]]>
-    	</programlisting>
+        </programlisting>
         Si une erreur a lieu lors de l'obtention du flux, une <code>Zend_Feed_Exception</code> sera déclenchée.
     </para>
 
@@ -14,7 +14,7 @@ $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');]]>
         du canal, et ce directement à partir de l'objet :
         <programlisting role="php"><![CDATA[<?php
 echo $canal->title();]]>
-    	</programlisting>
+        </programlisting>
     Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code>
     utilise une convention selon laquelle les propriétés sont traitées comme
     des objets XML si elles sont demandées au moyen de la syntaxe
@@ -29,7 +29,7 @@ echo $canal->title();]]>
     à l'aide de l'indiçage PHP :
         <programlisting role="php"><![CDATA[<?php
 echo $canal->category['domain'];]]>
-    	</programlisting>
+        </programlisting>
         Comme les attributs XML ne peuvent avoir des enfants, la syntaxe
 <code>$obj->propriété['attribut']()</code> n'est pas nécessaire pour
 accéder aux valeurs des attributs.
@@ -44,7 +44,7 @@ l'affichage des titres de tous les articles du canal :
 foreach ($canal as $elem) {
     echo $elem->title() . "\n";
 }]]>
-    	</programlisting>
+        </programlisting>
         Si vous n'êtes pas un familier de RSS, voici les éléments standard
 associés au canal RSS et à ses éléments pris séparément (les entrées).
     </para>
@@ -127,7 +127,7 @@ associés au canal RSS et à ses éléments pris séparément (les entrées).
 if ($elemt->nomPropriete()) {
     // ... traitement
 }]]>
-    	</programlisting>
+        </programlisting>
     </para>
 
     <para>

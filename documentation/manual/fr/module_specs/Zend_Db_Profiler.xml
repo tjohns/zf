@@ -32,7 +32,7 @@ $db->getProfiler()->setEnabled(false);
 
 // active le profileur :
 $db->getProfiler()->setEnabled(true);]]>
-    	</programlisting>
+        </programlisting>
         <para>
             La valeur de l'option <code>profiler</code> est souple. Elle est interprétée différement suivant son type. La plupart du temps, vous devriez simplement utiliser une variable booléenne, mais d'autres valeurs vous permettent de personnaliser le comportement du profileur.
         </para>
@@ -107,7 +107,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
 
         <programlisting role="php"><![CDATA[<?php
 $profileur = $db->getProfiler();]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Ceci retourne une instance de <code>Zend_Db_Profiler</code>. Avec cette instance, le développeur peut examiner les requêtes en utilisant un éventail de méthodes :
@@ -171,7 +171,7 @@ $profileur = $db->getProfiler();]]>
 $query = $profileur->getLastQueryProfile();
 
 echo $query->getQuery();]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Si une page se génère lentement, utilisez le profileur pour déterminer le nombre total de requêtes, et ensuite passer d'une requête à l'autre pour voir laquelle a été la plus longue:
@@ -220,7 +220,7 @@ $profileur->setFilterElapsedSecs(5);
 
 // Profil de toutes les requêtes, peu importe leur durée :
 $profileur->setFilterElapsedSecs(null);]]>
-		    </programlisting>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.db.profiler.advanced.filtertype">
@@ -284,7 +284,7 @@ $profileur->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // Efface tous les filtres
 $profileur->setFilterQueryType(null);]]>
-		    </programlisting>
+            </programlisting>
 
         </sect3>
         <sect3 id="zend.db.profiler.advanced.getbytype">
@@ -305,7 +305,7 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profi
 // Récupère uniquement les profils des requêtes DELETE (on peut donc comprendre pourquoi les données
 // disparaissent)
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
-		    </programlisting>
+            </programlisting>
 
         </sect3>
 

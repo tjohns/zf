@@ -206,7 +206,7 @@
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides', 'Ma_View_Helper');]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             En fait, vous pouvez "empiler" les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la distribution initiale des aides, avec vos propres aides personnalisées.
@@ -224,7 +224,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
 // va rechercher en premier /chemin/vers/des/aides/HelperName.php en utilisant la classe "Ma_View_Helper_HelperName",
 // et ensuite dans /autre/chemin/vers/des/aides/HelperName.php en utilisant la classe "Votre_View_Helper_HelperName",
 // et finalement dans Zend/View/Helpers/HelperName.php en utilisant la classe "Zend_View_Helper_HelperName"]]>
-	    </programlisting>
+        </programlisting>
 
     </sect2>
 
@@ -274,7 +274,7 @@ class Ma_View_Helper_ActionSpeciale
         return htmlspecialchars($output);
     }
 }]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Ensuite, dans un script de vue, vous pouvez appeler l'aide <code>ActionSpeciale</code> autant de fois que vous le souhaitez ; elle sera instantiée une fois, et rendue persistante pendant toute la vie de l'instance de <code>Zend_View</code>.
@@ -285,7 +285,7 @@ class Ma_View_Helper_ActionSpeciale
 echo $this->actionSpeciale();
 echo $this->actionSpeciale();
 echo $this->actionSpeciale();]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             La sortie pourrait alors ressembler à ceci :
@@ -315,7 +315,7 @@ class My_View_Helper_ScriptPath
         return $this->view->getScriptPath($script);
     }
 }]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Si votre classe d'aide a une méthode <code>setView()</code>, elle sera appelée quand votre classe sera instanciée la première fois et fournira l'objet de la vue courante. Il est de votre responsabilité de maintenir la persistance de l'objet dans votre classe, de même que de déterminer la façon dont il peut être accéder.

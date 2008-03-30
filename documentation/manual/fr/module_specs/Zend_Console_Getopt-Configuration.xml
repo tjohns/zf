@@ -15,7 +15,7 @@ $opts->addRules(
     'verbose|v' => 'Print verbose output'
   )
 );]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             L'exemple au-dessus montre comment ajouter l'option "<code>--verbose</code>" avec l'alias "<code>-v</code>" à un ensemble d'options définies dans l'appel au constructeur. Notez que vous pouvez mélanger des options de syntaxe courte et de syntaxe longue dans la même instance de <code>Zend_Console_Getopt</code>.
@@ -38,7 +38,7 @@ $opts->setHelp(
         'p' => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
     )
 );]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             Si vous déclarez des options avec des alias, vous pouvez employer n'importe quel alias comme clé du tableau associatif.
@@ -67,7 +67,7 @@ $opts->setAliases(
         'p' => 'pear'
     )
 );]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             Dans l'exemple ci-dessus, après leurs déclarations, "<code>-a</code>", "<code>--apple</code>" et "<code>--apfel</code>" sont des alias les un pour les autres. En outre "<code>-p</code>" et "<code>--pear</code>" sont des alias l'un pour l'autre.
@@ -93,7 +93,7 @@ $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Remplace les arguments existants par un nouveau tableau
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
 
@@ -139,7 +139,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             L'argument de la méthode <code>setOptions()</code> est un tableau associatif. Les clés de ce tableau sont les noms d'option de configuration, et les valeurs sont des valeurs de configuration. C'est également le format de tableau utilisé par le constructeur de classe. Les valeurs de configuration que vous indiquez sont fusionnées avec la configuration courante ; vous n'avez pas à énumérer toutes les options.
@@ -154,7 +154,7 @@ $opts->setOptions(
         'dashDash'   => false
     )
 );]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
 

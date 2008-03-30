@@ -141,7 +141,7 @@ Array
         <title>Utilisation avancée : maintenir persistant l'objet de résultat DbTable</title>
 
         <para>
-			Par défaut, <code>Zend_Auth_Adapter_DbTable</code> retourne l'identité fournie à l'objet auth en cas d'authentification couronnée de succès. Un autre scénario d'utilisation, où les développeurs veulent stocker dans le mécanisme de stockage persistant du <code>Zend_Auth</code> un objet d'identité contenant d'autres informations utiles, est résolu en utilisant la méthode <code>getResultRowObject()</code> retournant un objet <code>stdClass</code>. Le petit bout de code suivant illustre cette utilisation :
+            Par défaut, <code>Zend_Auth_Adapter_DbTable</code> retourne l'identité fournie à l'objet auth en cas d'authentification couronnée de succès. Un autre scénario d'utilisation, où les développeurs veulent stocker dans le mécanisme de stockage persistant du <code>Zend_Auth</code> un objet d'identité contenant d'autres informations utiles, est résolu en utilisant la méthode <code>getResultRowObject()</code> retournant un objet <code>stdClass</code>. Le petit bout de code suivant illustre cette utilisation :
 
             <programlisting role="php"><![CDATA[<?php
 // authentifie avec Zend_Auth_Adapter_DbTable
@@ -153,7 +153,7 @@ if ($result->isValid()) {
     $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // stocke l'identité comme objet dans lequel la colonne password a été omis
-	$this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
 
     /* ... */
 

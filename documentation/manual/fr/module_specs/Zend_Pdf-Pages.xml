@@ -62,7 +62,7 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 unset($pdf->pages[$id]);
 
 ...]]>
-        	</programlisting>
+            </programlisting>
         </example>
     </sect2>
 

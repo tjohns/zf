@@ -23,7 +23,7 @@ if ($validateur->isValid($domaine)) {
         echo "$message\n";
     }
 }]]>
-	    </programlisting>
+        </programlisting>
 
         Ceci validera le domaine <code>$domaine</code> et, en cas d'échec, fournira des messages d'erreur informatifs via <code>$validator->getMessages()</code>.
 
@@ -50,14 +50,14 @@ if ($validateur->isValid($hostname)) {
         echo "$message\n";
     }
 }]]>
-	    </programlisting>
+        </programlisting>
     </para>
 
     <para>
         Vous pouvez utiliser <code>ALLOW_ALL</code> pour accepter tous les types de domaines. De même, vous pouvez créer des configurations combinant ces différents types. Par exemple, pour accepter les domaines qualifiés et les domaines locaux, instanciez votre objet Zend_Validate_Hostname de la manière suivante :
         <programlisting role="php"><![CDATA[<?php
 $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);]]>
-	    </programlisting>
+        </programlisting>
 
     </para>
 
@@ -108,7 +108,7 @@ $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zen
 
         <programlisting role="php"><![CDATA[<?php
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);]]>
-	    </programlisting>
+        </programlisting>
 
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à <code>$validator->setValidateIdn()</code> pour activer ou désactiver la validation IDN.
 
@@ -130,7 +130,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
 
         <programlisting role="php"><![CDATA[<?php
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);]]>
-	    </programlisting>
+        </programlisting>
 
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à <code>$validator->setValidateTld()</code> pour activer ou désactiver la validation TLD.
     </para>

@@ -15,22 +15,22 @@
     <itemizedlist>
         <listitem><para>
                 Automatiser le rendu des layouts lorsqu'ils sont utilisés avec les
-				composants MVC du Zend Framework.
+                composants MVC du Zend Framework.
         </para></listitem>
 
         <listitem><para>
                 Fournir un cadre à part entière pour les variables du layout, au même
-				titre que les variables de vue.
+                titre que les variables de vue.
         </para></listitem>
 
         <listitem><para>
                 Permettre la configuration du nom des layouts, la recherche
-				des scripts leurs correspondant (inflection), ainsi que leurs chemins d'accès.
+                des scripts leurs correspondant (inflection), ainsi que leurs chemins d'accès.
         </para></listitem>
 
         <listitem><para>
                 Permettre de désactiver les layouts temporairement, changer leur configuration ;
-				tout ceci depuis les contrôleurs ou les scripts de vue.
+                tout ceci depuis les contrôleurs ou les scripts de vue.
         </para></listitem>
 
         <listitem><para>

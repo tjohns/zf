@@ -22,7 +22,7 @@ require_once 'Mon/Service/Classe.php';
 $server = new Zend_Rest_Server();
 $server->setClass('Mon_Service_Classe');
 $server->handle();]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
@@ -46,7 +46,7 @@ function ditBonjour($qui, $quand)
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
 $server->handle();]]>
-		    </programlisting>
+            </programlisting>
         </example>
     </sect2>
 
@@ -108,7 +108,7 @@ function ditBonjour($qui, $quand)
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
 $server->handle();]]>
-    		</programlisting>
+            </programlisting>
         </example>
     </sect2>
 
@@ -149,7 +149,7 @@ $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
 
 $server->handle();]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>

@@ -33,7 +33,7 @@ $backendOptions = array([...]);
 // Nous créons la bonne instance
 // Bien sur, les deux derniers arguments sont optionnels
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
-	    </programlisting>
+        </programlisting>
         <para>
             Dans les exemples suivants, nous nous assurerons que la variable <code>$cache</code> utilise une instance de frontend valide, et que vous comprenez comment passer des paramètres à vos backends.
         </para>
@@ -49,7 +49,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         </para>
         <programlisting role="php"><![CDATA[<?php
 $cache->save($grande_donnees, 'monIDUnique', array('tagA', 'tagB', 'tagC'));]]>
-	    </programlisting>
+        </programlisting>
         <note><para>
             Notez que la méthode <code>save()</code> accepte un quatrième paramètre optionel : <code>$specificLifetime</code> (si différent de <code>false</code>, il affecte un 'lifeTime' spécifique pour cet enregistrement de cache particulier).
         </para></note>
@@ -62,7 +62,7 @@ $cache->save($grande_donnees, 'monIDUnique', array('tagA', 'tagB', 'tagC'));]]>
         </para>
         <programlisting role="php"><![CDATA[<?php
 $cache->remove('idAEffacer');]]>
-	    </programlisting>
+        </programlisting>
         <para>
             Pour effacer/invalider plusieurs identifiants de caches en une seule opération, vous pouvez utiliser la méthode <code>clean()</code>. Par exemple, pour supprimer tous les caches :
         </para>
@@ -72,13 +72,13 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // nettoie uniquement les caches obsolètes
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
-		</programlisting>
+        </programlisting>
         <para>
             Si vous voulez effacer les caches correspondant aux balises 'tagA' et 'tagC' :
         </para>
         <programlisting role="php"><![CDATA[<?php
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
-	    </programlisting>
+        </programlisting>
         <para>
             Les modes disponibles de nettoyage sont <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>, <code>CLEANING_MODE_MATCHING_TAG</code> et <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. Les derniers, comme leur nom l'indique, sont à combiner avec un tableau de balises pour réaliser les opérations de nettoyage.
         </para>

@@ -3,18 +3,18 @@
 
     <para>
         <code>Zend_Controller_Router_Route</code> est la route par défaut intégrée
-		dans le routeur de réécriture (RewriteRouter). Ce routeur combine les deux
-		avantages que sont la simplicité d'utilisation et la fléxibilité. Chaque route
-		est définie par un mapping d'URL (une correspondance), static ou dynamique, et
-		des valeurs par défaut peuvent être fournies, de même que des valeurs
-		obligatoires.
+        dans le routeur de réécriture (RewriteRouter). Ce routeur combine les deux
+        avantages que sont la simplicité d'utilisation et la fléxibilité. Chaque route
+        est définie par un mapping d'URL (une correspondance), static ou dynamique, et
+        des valeurs par défaut peuvent être fournies, de même que des valeurs
+        obligatoires.
     </para>
 
     <para>
         Imaginons une application ayant besoin de posséder une page en décrivant l'auteur.
-		Nous voulons que lorsque le navigateur pointe vers
+        Nous voulons que lorsque le navigateur pointe vers
         <code>http://domain.com/author/martel</code>, la page d'informations en question
-		puisse apparaitre, au sujet de 'martel'. La route pour une telle URL pourrait être :
+        puisse apparaitre, au sujet de 'martel'. La route pour une telle URL pourrait être :
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -32,20 +32,20 @@ $router->addRoute('user', $route);]]>
     <para>
         Le premier paramètre du constructeur de <code>Zend_Controller_Router_Route</code>
         est la définition de la route à analyser avec l'URL. Les définitions des routes
-		sont des parties statiques et dynamiques, séparées par des slashs ('/'). Les parties
-		statiques sont juste du texte brut : <code>author</code>. Les dynamiques, appelées
-		variables, sont repérées grâce à un caractère deux-points (:) devant la variable : 
-		<code>:username</code>.
+        sont des parties statiques et dynamiques, séparées par des slashs ('/'). Les parties
+        statiques sont juste du texte brut : <code>author</code>. Les dynamiques, appelées
+        variables, sont repérées grâce à un caractère deux-points (:) devant la variable : 
+        <code>:username</code>.
     </para>
 
     <note>
         <title>Utilisation des caractères</title>
         <para>
             Pour identifier une variable dans un schéma de routage (après le deux-points), en
-			théorie n'importe quel caractère fait l'affaire (sauf le slash). Cependant il est
-			conseillé de n'utiliser que des caractères que PHP comprend comme étant des noms de
-			variables valides. Les implémentations futures de ce comportement peuvent changer,
-			altérant ainsi votre code.
+            théorie n'importe quel caractère fait l'affaire (sauf le slash). Cependant il est
+            conseillé de n'utiliser que des caractères que PHP comprend comme étant des noms de
+            variables valides. Les implémentations futures de ce comportement peuvent changer,
+            altérant ainsi votre code.
         </para>
     </note>
 

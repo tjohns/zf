@@ -38,7 +38,7 @@
         </database>
     </test>
 </configdata>]]>
-	    </programlisting>
+        </programlisting>
         <para>
             Ensuite, supposons que le développeur a besoin des données de configuration de test issues du fichier XML. Il est facile de charger ces données en indiquant le fichier XML et la section de test :
         </para>
@@ -49,6 +49,6 @@ $config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 
 echo $config->database->params->host;   // affiche "dev.example.com"
 echo $config->database->params->dbname; // affiche "dbname"]]>
-	    </programlisting>
+        </programlisting>
     </example>
 </sect1>

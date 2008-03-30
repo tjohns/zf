@@ -27,7 +27,7 @@ echo $unite;
 $unite = new Zend_Measure_Length($mesure, Zend_Measure_Length::STANDARD);
 echo $unite;
 // affiche '1234.7 m' (mètres)]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -42,14 +42,14 @@ echo $unite;
 
         <example id="zend.measure.creation.string.example-1">
             <title>Création de mesure en utilisant des chaînes</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $machaine = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($machaine, Zend_Measure_Number::BINARY);
 
 echo $unit;]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -58,7 +58,7 @@ echo $unit;]]>
 
         <example id="zend.measure.creation.string.example-2">
             <title>Saisie de texte arbitraire contenant des mesures</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $machaine = "Ma maison a une superficie de 125m².";
@@ -68,7 +68,7 @@ echo $unite; // affiche "125 m²";
 $machaine = "Ma maison a une superficie de 125m², elle comprend 5 pièces de 25m² chacune.";
 $unite = new Zend_Measure_Area($machaine, Zend_Measure_Area::STANDARD);
 echo $unite; // affiche "125 m² in size";]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -83,7 +83,7 @@ echo $unite; // affiche "125 m² in size";]]>
 
         <example id="zend.measure.creation.localized.example-1">
             <title>Localized string</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
@@ -95,7 +95,7 @@ echo $unite; // affiche "1.234 m"
 $machaine = "The boat is 1,234.50 long.";
 $unite = new Zend_Measure_Length($machaine, Zend_Measure_Length::STANDARD, 'en_US');
 echo $unite; // affiche "1234.50 m"]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
     </sect2>

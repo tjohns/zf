@@ -25,7 +25,7 @@
             peuvent être définies en accédant directement aux attributs :
         </para>
 
-    	<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 public $type = Zend_Mime::TYPE_OCTETSTREAM;
 public $encoding = Zend_Mime::ENCODING_8BIT;
 public $id;
@@ -33,7 +33,7 @@ public $disposition;
 public $filename;
 public $description;
 public $charset;]]>
-    	</programlisting>
+        </programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">

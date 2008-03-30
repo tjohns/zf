@@ -16,7 +16,7 @@ try {
     echo "Message: " . $e->getMessage() . "\n";
     // puis tout le code nécessaire pour recupérer la défaillance
 }]]>
-    	</programlisting>
+        </programlisting>
     </example>
 
     <para>

@@ -31,7 +31,7 @@ $pdf->save($newFileName);
 $pdfString = $pdf->render();
 
 ...]]>
-    	</programlisting>
+        </programlisting>
     </example>
 
 </sect1>

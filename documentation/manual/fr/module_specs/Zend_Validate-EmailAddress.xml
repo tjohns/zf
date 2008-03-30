@@ -26,7 +26,7 @@ if ($validateur->isValid($email)) {
         echo "$message\n";
     }
 }]]>
-	    </programlisting>
+        </programlisting>
 
         Ceci validera l'adresse email <code>$email</code> et, en cas d'échec,
         fournira des messages d'erreur informatifs via <code>$validator->getMessages()</code>.
@@ -74,7 +74,7 @@ if ($validateur->isValid($email)) {
         echo "$message\n";
     }
 }]]>
-	    </programlisting>
+        </programlisting>
 
     </para>
 
@@ -92,7 +92,7 @@ if ($validateur->isValid($email)) {
 
         <programlisting role="php"><![CDATA[<?php
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
-	    </programlisting>
+        </programlisting>
 
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à
         <code>$validator->setValidateMx()</code> pour activer ou désactiver la validation MX.

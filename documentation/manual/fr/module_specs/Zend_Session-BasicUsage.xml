@@ -15,7 +15,7 @@ require_once 'Zend/Session/Namespace.php';
 $myNamespace = new Zend_Session_Namespace('monNamespace');
 
 // $myNamespace corresponds to $_SESSION['monNamespace']]]>
-	    </programlisting>
+        </programlisting>
 
         Il est possible d'utiliser <code>Zend_Session</code> conjointement avec d'autre code utilisant directement <code>$_SESSION</code>. Cependant, pour éviter les problèmes, il est fortement recommandé que ce code utilse seulement les parties de <code>$_SESSION</code> ne correspondant pas aux instances de <code>Zend_Session_Namespace</code>.
     </para>
@@ -42,7 +42,7 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
 }
 
 echo "Page demandée lors de cette session : ", $defaultNamespace->numberOfPageRequests;]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -55,7 +55,7 @@ echo "Page demandée lors de cette session : ", $defaultNamespace->numberOfPageR
 
         <example id="zend.session.basic_usage.basic_examples.example.namespaces.new">
             <title>Nouvelle méthode : les espaces de nommage évitent les collisions</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
 // Dans le composant Zend_Auth
@@ -65,7 +65,7 @@ $authNamespace->user = "monusername";
 // Dans un composant service web
 $webServiceNamespace = new Zend_Session_Namespace('Un_Service_Web');
 $webServiceNamespace->user = "monwebusername";]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -74,10 +74,10 @@ $webServiceNamespace->user = "monwebusername";]]>
 
         <example id="zend.session.basic_usage.basic_examples.example.namespaces.old">
             <title>Ancienne méthode : accès aux sessions PHP</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $_SESSION['Zend_Auth']['user'] = "monusername";
 $_SESSION['Un_Service_Web']['user'] = "monwebusername";]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -92,7 +92,7 @@ $_SESSION['Un_Service_Web']['user'] = "monwebusername";]]>
 
         <example id="zend.session.basic_usage.iteration.example">
             <title>Enumeration des sessions</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
 $aNamespace = new Zend_Session_Namespace('un_namespace_avec_des_donnes_presentes');
@@ -100,7 +100,7 @@ $aNamespace = new Zend_Session_Namespace('un_namespace_avec_des_donnes_presentes
 foreach ($aNamespace as $index => $valeur) {
     echo "aNamespace->$index = '$valeur';\n";
 }]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
     </sect2>
@@ -115,7 +115,7 @@ foreach ($aNamespace as $index => $valeur) {
 
         <example id="zend.session.basic_usage.accessors.example">
             <title>Accéder aux données de session</title>
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
 $namespace = new Zend_Session_Namespace(); // Espace de nommage par défaut
@@ -129,7 +129,7 @@ if (!isset($namespace->bar)) {
 }
 
 unset($namespace->foo);]]>
-		    </programlisting>
+            </programlisting>
         </example>
 
     </sect2>

@@ -7,7 +7,7 @@ qui font référence à des flux dont le contenu est lié à la page.
 par une page web en appelant simplement une méthode :
         <programlisting role="php"><![CDATA[<?php
 $tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');]]>
-    	</programlisting>
+        </programlisting>
 La méthode <code>findFeeds()</code> renvoie ici un tableau d'objets
 <code>Zend_Feed_Abstract</code> associés aux flux référencés par les
 balises <code>&lt;link&gt;</code> de la page web <code>news.html</code>.

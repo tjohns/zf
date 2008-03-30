@@ -35,7 +35,7 @@ $logger = new Zend_Log();
 $redacteur = new Zend_Log_Writer_Stream('php://output');
 
 $logger->addWriter($redacteur);]]>
-    	</programlisting>
+        </programlisting>
 
         Il est important de noter que l'enregistreur doit avoir au moins un rédacteur. Vous pouvez ajouter tout nombre de rédacteurs en utilisant la méthode <code>addWriter()</code>.
       </para>
@@ -82,9 +82,9 @@ $logger->emerg("Message d'urgence");]]>
     <para>
         Si l'objet enregistreur n'est plus nécessaire, vous devez affectez la valeur <code>null</code> à la variable le contenant pour le détruire. Ceci appellera automatiquement la méthode <code>shutdown()</code> de chaque rédacteur avant que l'objet enregistreur ne soit détruit :
 
-    	<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $logger = null;]]>
-		</programlisting>
+        </programlisting>
 
         Explicitement détruire le log de cette façon est facultatif et est exécuté automatiquement à la fermeture de PHP.
     </para>
@@ -95,7 +95,7 @@ $logger = null;]]>
     <para>
         La classe de <code>Zend_Log</code> définit les priorités suivantes :
 
-      	<programlisting role="php"><![CDATA[
+          <programlisting role="php"><![CDATA[
 EMERG   = 0;  // Urgence : le système est inutilisable
 ALERT   = 1;  // Alerte: une mesure corrective doit être prise immédiatement
 CRIT    = 2;  // Critique : états critiques
@@ -104,7 +104,7 @@ WARN    = 4;  // Avertissement: états d'avertissement
 NOTICE  = 5;  // Notice: normal mais état significatif
 INFO    = 6;  // Information: messages d'informations
 DEBUG   = 7;  // Debug: messages de déboguages]]>
-    	</programlisting>
+        </programlisting>
 
         Ces priorités sont toujours disponibles, et une méthode de convenance de même nom est disponible pour chacun.
     </para>
@@ -124,16 +124,16 @@ DEBUG   = 7;  // Debug: messages de déboguages]]>
     <para>
         Des priorités définies par l'utilisateur peuvent être ajoutées en cours d'exécution en utilisant la méthode de <code>addPriority()</code> de l'enregistreur :
 
-      	<programlisting role="php"><![CDATA[<?php
+          <programlisting role="php"><![CDATA[<?php
 $logger->addPriority('ESSAI', 8);]]>
-	    </programlisting>
+        </programlisting>
 
         L'extrait ci-dessus crée une nouvelle priorité, <code>ESSAI</code>, dont la valeur est <code>8</code>. La nouvelle priorité est alors disponible pour l'enregistreur :
 
-      	<programlisting role="php"><![CDATA[<?php
+          <programlisting role="php"><![CDATA[<?php
 $logger->log("Message d'essai", 8);
 $logger->essai("Message d'essai");]]>
-	    </programlisting>
+        </programlisting>
 
         Les nouvelles priorités ne peuvent pas surcharger celles existantes.
     </para>
@@ -153,9 +153,9 @@ $logger->essai("Message d'essai");]]>
     <para>
         Pour ajouter un nouvel élément à chaque futur événement, appeler la méthode <code>setEventItem()</code> en donnant une clé et une valeur :
 
-      	<programlisting role="php"><![CDATA[<?php
+          <programlisting role="php"><![CDATA[<?php
 $logger->setEventItem('pid', getmypid());]]>
-    	</programlisting>
+        </programlisting>
 
         L'exemple ci-dessus place un nouvel élément nommé <code>pid</code> et lui donne comme valeur le PID du processus courant. Une fois qu'un nouvel élément a été placé, il est disponible automatiquement pour tous les rédacteurs avec toutes les autres données d'événement pendant l'enregistrement. Un élément peut être surchargé à tout moment en appelant une nouvelle fois la méthode <code>setEventItem()</code>.
     </para>

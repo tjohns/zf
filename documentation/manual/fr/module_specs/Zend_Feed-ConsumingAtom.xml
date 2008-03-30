@@ -29,7 +29,7 @@ foreach ($flux as $entree) {
     echo 'Titre : ' . $entree->title() . "\n";
     echo 'Résumé : ' . $entree->summary() . "\n\n";
 }]]>
-    	</programlisting>
+        </programlisting>
     </example>
 
     <para>

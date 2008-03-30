@@ -20,7 +20,7 @@ $entree->title = 'Ceci est un nouveau titre';
 $entree->author->email = 'mon_email@exemple.com';
 
 echo $entree->saveXML();]]>
-    	</programlisting>
+        </programlisting>
         <para>
            Ce code affichera une représentation XML complète (y compris le
             prologue <code>&lt;?xml ...&gt;</code>) de la nouvelle entrée, avec les
@@ -64,6 +64,6 @@ $entree->{'monen:conteneur_elt'}->partie1 = 'première partie imbriquée personn
 $entree->{'monen:conteneur_elt'}->partie2 = 'deuxième partie imbriquée personnalisée';
 
 echo $entree->saveXML();]]>
-    	</programlisting>
+        </programlisting>
     </example>
 </sect1>

@@ -59,7 +59,7 @@ public function bazAction()
     // Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
 }]]>
-    	</programlisting>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.dispatcher.subclassing">
@@ -200,7 +200,7 @@ interface Zend_Controller_Dispatcher_Interface
      */
     public function isValidModule($module);
 }]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Cependant, dans la plupart des cas, vous devriez simplement étendre la classe abstraite <code>Zend_Controller_Dispatcher_Abstract</code>, dans laquelle chacune de ces méthodes a déjà été définie, ou <code>Zend_Controller_Dispatcher_Standard</code> pour modifier une fonctionnalité du dispatcheur standard.

@@ -25,7 +25,7 @@
             <title>Exemple d'utilisation de la méthode loadFile()</title>
             <programlisting role="php"><![CDATA[<?php
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
-    		</programlisting>
+            </programlisting>
     </example>
 
         <para>
@@ -59,7 +59,7 @@ Zend_Loader::loadClass('Container_Tree',
         '/home/production/myapp'
     )
 );]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -94,7 +94,7 @@ Zend_Loader::loadClass('Container_Tree',
 if (Zend_Loader::isReadable($filename)) {
     // puis manipulation avec $filename
 }]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -116,7 +116,7 @@ if (Zend_Loader::isReadable($filename)) {
             <title>Exemple d'inscription de la méthode de callback autoloader</title>
             <programlisting role="php"><![CDATA[<?php
 Zend_Loader::registerAutoload();]]>
-    		</programlisting>
+            </programlisting>
         </example>
 
         <para>
@@ -151,7 +151,7 @@ class Mon_Chargeur extends Zend_Loader
     }}
 
 Zend_Loader::registerAutoload('Mon_Chargeur');]]>
-    		</programlisting>
+            </programlisting>
         </example>
         <para>
             Vous pouvez effacer un callback d'autoload. <code>registerAutoload()</code> a un paramètre optionel, qui est réglé à <code>true</code> par défaut. S'il vaut <code>false</code>, le callback de l'autoload est effacé de la pile des autoload SPL au lieu d'être enregistré.

@@ -16,6 +16,6 @@ $mail->setFrom('somebody@exemple.com', 'Un expéditeur');
 $mail->addTo('somebody_else@exemple.com', 'Un destinataire');
 $mail->setSubject('Sujet de test');
 $mail->send();]]>
-    	</programlisting>
+        </programlisting>
     </example>
 </sect1>

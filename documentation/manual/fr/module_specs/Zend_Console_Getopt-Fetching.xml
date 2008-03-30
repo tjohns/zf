@@ -22,7 +22,7 @@ try {
     echo $e->getUsageMessage();
     exit;
 }]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             Les cas, où l'analyse syntaxique lève une exception, incluent :
@@ -57,7 +57,7 @@ try {
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             De manière alternative, vous pouvez employer la fonction magique <code>__get()</code> pour rechercher la valeur d'une option comme si c'était une variable de membre de classe. La méthode magique <code>__isset()</code> est également implémentée.
@@ -70,7 +70,7 @@ if (isset($opts->b)) {
     echo "J'ai recu l'option b.\n";
 }
 $p_parameter = $opts->p; // null si non fourni]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             Si vos options sont déclarées avec des alias, vous pouvez employer n'importe quel alias de l'option dans les méthodes ci-dessus.
@@ -120,7 +120,7 @@ $p_parameter = $opts->p; // null si non fourni]]>
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'nomdefichier'));
 $args = $opts->getRemainingArgs(); // retourne array('nomdefichier')]]>
-		    </programlisting>
+            </programlisting>
         </example>
         <para>
             <code>Zend_Console_Getopt</code> supporte la convention GNU selon laquelle un argument se composant d'un double-tiret signifie la fin des options. Tous les arguments suivant celui-ci doivent être traités en tant qu'arguments sans options. C'est utile si vous avez un argument sans options qui commence par un tiret. Par exemple : "<command>rm -- -nomdefichier-avec-tiret</command>".

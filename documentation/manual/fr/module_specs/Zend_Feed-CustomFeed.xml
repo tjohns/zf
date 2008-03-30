@@ -2,7 +2,7 @@
     <title>Classes personnalisées pour les flux et entrées</title>
 
     <para>
-    	Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
+        Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
 vous souhaitez créer votre propre format ou implémenter des améliorations
 comme par exemple la gestion automatique des éléments situés dans un
 espace de noms personnalisé.
@@ -72,7 +72,7 @@ class MonEntree extends Zend_Feed_Entry_Atom
         }
     }
 }]]>
-    	</programlisting>
+        </programlisting>
         <para>
             Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété <code>maMiseAJour</code> :
             <programlisting role="php"><![CDATA[<?php
@@ -84,7 +84,7 @@ $entree->maMiseAJour();
 
 // appel de type propriété géré par __get
 $entree->maMiseAJour;]]>
-    		</programlisting>
+            </programlisting>
         </para>
     </example>
 

@@ -47,7 +47,7 @@ $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // on importe un flux rss à partir d'un tableau
 $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
-    		</programlisting>
+            </programlisting>
 
             <para>
                 Le format du tableau doit être conforme à cette structure :
@@ -150,7 +150,7 @@ array(
                                    )
                              )
        );]]>
-    		</programlisting>
+            </programlisting>
 
             <para>
                 Références :
@@ -210,7 +210,7 @@ $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom
 
 // importe un flux rss à partir d'un constructeur personnalisé
 $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
-		    </programlisting>
+            </programlisting>
 
         </sect3>
 
@@ -230,7 +230,7 @@ print $feed->saveXML();
 
 // envoie les entêtes et décharge le flux
 $feed->send();]]>
-		    </programlisting>
+            </programlisting>
 
         </sect3>
 

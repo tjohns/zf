@@ -426,7 +426,7 @@ abstract class Ma_Base_Controller extends Zend_Controller_Action
         </programlisting>
 
         <para>
-		    En espèrant que les informations de ce chapitre vous permettent de voir la flexibilité de ce composant particulier et comment vous pouvez le modifier suivant les besoins de votre application ou site.
+            En espèrant que les informations de ce chapitre vous permettent de voir la flexibilité de ce composant particulier et comment vous pouvez le modifier suivant les besoins de votre application ou site.
         </para>
     </sect2>
 </sect1>

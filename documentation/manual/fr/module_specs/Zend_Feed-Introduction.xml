@@ -74,6 +74,6 @@ foreach ($rssSlashdot as $elem) {
         'description' => $elem->description()
         );
 }]]>
-    	</programlisting>
+        </programlisting>
     </example>
 </sect1>

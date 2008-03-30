@@ -29,7 +29,7 @@ class MonFiltre implements Zend_Filter_Interface
         return $valeurFiltree;
     }
 }]]>
-    	</programlisting>
+        </programlisting>
 
     </para>
 
@@ -39,7 +39,7 @@ class MonFiltre implements Zend_Filter_Interface
         <programlisting role="php"><![CDATA[<?php
 $filtreChaine = new Zend_Filter();
 $filtreChaine->addFilter(new MonFiltre());]]>
-    	</programlisting>
+        </programlisting>
 
     </para>
 

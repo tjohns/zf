@@ -52,7 +52,7 @@ class MyValid_Float extends Zend_Validate_Abstract
         return true;
     }
 }]]>
-    		</programlisting>
+            </programlisting>
 
             La classe définit un modèle pour son message unique d'échec de validation, qui inclut le paramètre magique intégré, <code>%value%</code>. L'appel à <code>_setValue()</code> prépare l'objet pour insérer automatiquement la valeur examinée dans le message d'échec, si la validation de la valeur échoue. L'appel à <code>_error()</code> trace la raison d'échec de validation. Puisque cette classe définit seulement un message d'échec, il n'est pas nécessaire de fournir à <code>_error()</code> le nom du modèle de message d'échec.
         </para>
@@ -127,7 +127,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
         return true;
     }
 }]]>
-    		</programlisting>
+            </programlisting>
 
             Les propriétés publiques <code>$minimum</code> et <code>$maximum</code> ont été établies pour fournir les frontières minimum et maximum d'une valeur pour qu'elle soit validée avec succès. La classe définit également deux variables de message qui correspondent aux propriétés publiques et permettent que <code>min</code> et <code>max</code> soit employé dans des modèles de message en tant que paramètres magiques, comme avec <code>value</code>.
         </para>
@@ -210,7 +210,7 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
         return $isValid;
     }
 }]]>
-		    </programlisting>
+            </programlisting>
 
             Noter que les quatre critères d'essais dans <code>isValid()</code> ne renvoient pas immédiatement <code>false</code>. Ceci permet à la classe de validation de fournir toutes les raisons pour laquelle le mot de passe d'entrée n'a pas réussi à remplir les conditions de validation. Si, par exemple, un utilisateur devaient entrer la chaîne "<code>#$%</code>" comme mot de passe, <code>isValid()</code> retournerait chacun des quatre messages d'échec de validation d'être retournés par un appel suivant à <code>getMessages()</code>.
         </para>

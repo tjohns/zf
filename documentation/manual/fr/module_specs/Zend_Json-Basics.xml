@@ -9,6 +9,6 @@ $phpNatif = Zend_Json::decode($valeurCodee);
 
 // Codage pour renvoi au client :
 $json = Zend_Json::encode($phpNatif);]]>
-    	</programlisting>
+        </programlisting>
     </para>
 </sect1>

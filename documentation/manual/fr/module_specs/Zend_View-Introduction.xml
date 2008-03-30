@@ -50,7 +50,7 @@ $view->books = $data;
 
 // et appel du script de rendu d'affichage appelé &quot;booklist.php&quot;
 echo $view->render('booklist.php');]]>
-	    </programlisting>
+        </programlisting>
 
     </sect2>
 
@@ -85,7 +85,7 @@ echo $view->render('booklist.php');]]>
     <p>Aucun livre à afficher</p>
 
 <?php endif; ?>]]>
-	    </programlisting>
+        </programlisting>
 
         <para>
             Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.
@@ -114,7 +114,7 @@ base/path/
     helpers/
     filters/
     scripts/]]>
-			    </programlisting>
+                </programlisting>
 
                 <para>
                     This may be set via <code>setBasePath()</code>,

@@ -14,6 +14,6 @@ require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
 // construction du message...]]>
-    	</programlisting>
+        </programlisting>
     </example>
 </sect1>
