@@ -15,8 +15,8 @@
  * @category   Zend
  * @package    Zend_Crypt
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: DiffieHellman.php 127 2007-09-17 13:48:20Z padraic $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: DiffieHellman.php 127 2007-09-17 13:48:20Z padraic $
  */
 
 /** Zend_Exception */
@@ -25,7 +25,7 @@ require_once 'Zend/Exception.php';
 /**
  * @category   Zend
  * @package    Zend_Crypt
- * @copyright  Copyright (c) 2007 Pádraic Brady
- * @license    Zend Framework License version 1.0
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Crypt_Exception extends Zend_Exception {}
