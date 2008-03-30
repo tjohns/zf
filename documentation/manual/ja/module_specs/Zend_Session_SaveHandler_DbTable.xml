@@ -1,19 +1,19 @@
-<!-- EN-Revision: 9085 -->
+<!-- EN-Revision: 9088 -->
 <sect1 id="zend.session.savehandler.dbtable">
-	<title>Zend_Session_SaveHandler_DbTable</title>
-	<para>
-		Zend_Session_SaveHandler_DbTable の基本セットアップには、
-		すくなくとも 4 つのカラムが必要です。これは、配列あるいは
-		Zend_Config オブジェクトで表します。
-		primary は主キーで、デフォルトではセッション ID を使用します。
-		32 文字の文字列となります。
-		modified は最終更新日を表す Unix タイムスタンプです。
-		lifetime はセッションの有効期限 (modified + lifetime > time()) です。
-		そして data はセッションに格納するデータをシリアライズしたものとなります。
-	</para>
-	<example id="zend.session.savehandler.dbtable.basic">
-	        <title>基本的なセットアップ</title>
-    		<programlisting role="SQL"><![CDATA[
+    <title>Zend_Session_SaveHandler_DbTable</title>
+    <para>
+        Zend_Session_SaveHandler_DbTable の基本セットアップには、
+        すくなくとも 4 つのカラムが必要です。これは、配列あるいは
+        Zend_Config オブジェクトで表します。
+        primary は主キーで、デフォルトではセッション ID を使用します。
+        32 文字の文字列となります。
+        modified は最終更新日を表す Unix タイムスタンプです。
+        lifetime はセッションの有効期限 (modified + lifetime > time()) です。
+        そして data はセッションに格納するデータをシリアライズしたものとなります。
+    </para>
+    <example id="zend.session.savehandler.dbtable.basic">
+            <title>基本的なセットアップ</title>
+            <programlisting role="SQL"><![CDATA[
 CREATE TABLE `session` (
   `id` char(32),
   `modified` int,
@@ -22,24 +22,24 @@ CREATE TABLE `session` (
   PRIMARY KEY (`id`)
 );
 ?>]]></programlisting>
-		<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 // データベースへの接続情報を準備します
 $db = Zend_Db::factory('Pdo_Mysql', array(
-	'host'		=>'example.com',
-	'username'	=> 'dbuser',
-	'password'	=> '******',
-	'dbname'	=> 'dbname'
+    'host'      =>'example.com',
+    'username'  => 'dbuser',
+    'password'  => '******',
+    'dbname'    => 'dbname'
 ));
 
 // Zend_Db_Table のデフォルトアダプタを設定するか、
 // あるいはデータベース接続を保存ハンドラの $config に直接渡します
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 $config = array(
-	'name'           => 'session', 
-	'primary'        => 'id', 
-	'modifiedColumn' => 'modified',
-	'dataColumn'     => 'data',
-	'lifetimeColumn' => 'lifetime' 
+    'name'           => 'session', 
+    'primary'        => 'id', 
+    'modifiedColumn' => 'modified',
+    'dataColumn'     => 'data',
+    'lifetimeColumn' => 'lifetime' 
 ); 
 
 // Zend_Session_SaveHandler_DbTable を作成し、
@@ -51,43 +51,43 @@ Zend_Session::start();
 
 // これで、通常通り Zend_Session を使えるようになります
 ?>]]></programlisting>
-	</example>
-	<para>
-		Zend_Session_SaveHandler_DbTable で、複数カラムからなる主キーを使うこともできます。
-	</para>
-	<example id="zend.session.savehandler.dbtable.multi-column-key">
-		<title>複数カラムの主キーの使用</title>
-		<programlisting role="SQL"><![CDATA[
+    </example>
+    <para>
+        Zend_Session_SaveHandler_DbTable で、複数カラムからなる主キーを使うこともできます。
+    </para>
+    <example id="zend.session.savehandler.dbtable.multi-column-key">
+        <title>複数カラムの主キーの使用</title>
+        <programlisting role="SQL"><![CDATA[
 CREATE TABLE `session` (
-	`session_id` char(32) NOT NULL,
-	`save_path` varchar(32) NOT NULL,
-	`name` varchar(32) NOT NULL DEFAULT '',
-	`modified` int,
-	`lifetime` int,
-	`session_data` text,
-	PRIMARY KEY (`Session_ID`, `save_path`, `name`)
+    `session_id` char(32) NOT NULL,
+    `save_path` varchar(32) NOT NULL,
+    `name` varchar(32) NOT NULL DEFAULT '',
+    `modified` int,
+    `lifetime` int,
+    `session_data` text,
+    PRIMARY KEY (`Session_ID`, `save_path`, `name`)
 );
 ?>]]></programlisting>
-		<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 // 先ほどと同様にデータベースへの接続情報を準備します
 // 注意: この設定は Zend_Db_Table にも渡されるので、
 // テーブル固有の情報はすべてここに含める必要があります
 $config = array(
-	'name'              => 'session', // Zend_Db_Table のテーブル名
-	'primary'           => array( 
-		'session_id',   // PHP のセッション ID
-		'save_path',    // session.save_path
-		'name',         // セッション名
-	),
-	'primaryAssignment' => array( // どのカラムを主キーとして使用するのかを
-	                              // 保存ハンドラに教えます。順番が重要です
-		'sessionId',          // 主キーの最初のカラムはセッション ID
-		'sessionSavePath',    // 主キーの 2 番目のカラムは保存パス
-		'sessionName',        // 主キーの 3 番目のカラムはセッション名
-	), 
-	'modifiedColumn'    => 'modified',     // セッションの更新時刻
-	'dataColumn'        => 'session_data', // シリアライズされたデータ
-	'lifetimeColumn'    => 'lifetime',     // そのレコードの有効期限
+    'name'              => 'session', // Zend_Db_Table のテーブル名
+    'primary'           => array( 
+        'session_id',   // PHP のセッション ID
+        'save_path',    // session.save_path
+        'name',         // セッション名
+    ),
+    'primaryAssignment' => array( // どのカラムを主キーとして使用するのかを
+                                  // 保存ハンドラに教えます。順番が重要です
+        'sessionId',          // 主キーの最初のカラムはセッション ID
+        'sessionSavePath',    // 主キーの 2 番目のカラムは保存パス
+        'sessionName',        // 主キーの 3 番目のカラムはセッション名
+    ), 
+    'modifiedColumn'    => 'modified',     // セッションの最終更新時刻
+    'dataColumn'        => 'session_data', // シリアライズされたデータ
+    'lifetimeColumn'    => 'lifetime',     // そのレコードの有効期限
 );
 
 // Zend_Session でこの保存ハンドラを使うように指定します
@@ -98,7 +98,7 @@ Zend_Session::start();
 
 // いつもどおりに Zend_Session を使用します
 ?>]]></programlisting>
-	</example>
+    </example>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
