@@ -35,9 +35,6 @@ require_once 'Zend/Db/Statement/Pdo/Ibm.php';
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author     Manas Dadarkar <manas@us.ibm.com>
- * @author     Kellen Bombardier <kfbombar@us.ibm.com>
- * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
 class Zend_Db_Adapter_Pdo_Ibm_Db2
 {

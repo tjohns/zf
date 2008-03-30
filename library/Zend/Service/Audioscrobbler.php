@@ -34,8 +34,6 @@ require_once 'Zend/Http/Client.php';
  * @subpackage Audioscrobbler
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author     Chris Hartjes chartjes@littlehart.net (ZCE # 901167)
- * @author     Derek Martin  derek@geekunity.com (ZCE # 901168)
  */
 class Zend_Service_Audioscrobbler
 {

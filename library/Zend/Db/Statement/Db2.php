@@ -30,8 +30,6 @@ require_once 'Zend/Db/Statement.php';
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author     Joscha Feth <jffeth@de.ibm.com>
- * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
 class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 {

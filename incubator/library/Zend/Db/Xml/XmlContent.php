@@ -26,7 +26,6 @@
  * @package    Zend_Db_Xml
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author     Salvador Ledezma <ledezma@us.ibm.com>
  */
 class Zend_Db_Xml_XmlContent
 {
