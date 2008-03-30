@@ -297,6 +297,38 @@ $select = $db->select()
 
         </sect3>
 
+        <sect3 id="zend.db.select.building.columns-atomic">
+            <title>Ajouter des colonnes à une table FROM ou JOIN existante</title>
+
+            <para>
+                Il peut y avoir des cas où vous souhaitez ajouter des colonnes à une table FROM ou JOIN existante après que ces méthodes aient été appelées. La méthode <code>columns()</code> vous permet d'ajouter des colonnes spécifiques à n'importe quel moment avant que la requête ne soit exécutée. Vous pouvez fournir les colonnes en tant qu'une chaîne de caractères, une <code>Zend_Db_Expr</code> ou un tableau de ces derniers. Le second argument de cette méthode peut être omis, impliquant que les colonnes sont ajoutées à la table FROM, sinon un alias déjà défini doit être utilisé.
+            </para>
+
+            <example id="zend.db.select.building.columns-atomic.example">
+                <title>Exemples d'ajout de colonnes avec la méthode <code>columns()</code></title>
+
+                <programlisting role="php"><![CDATA[<?php
+// Construire cette requête :
+//   SELECT p."produit_id", p."produit_nom"
+//   FROM "produits" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'produits'), 'produit_id')
+    ->columns('produit_nom');
+
+// Construire la même requête, en spécifiant l'alias :
+//   SELECT p."produit_id", p."produit_nom"
+//   FROM "produits" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'produits'), 'p.produit_id')
+    ->columns('produit_nom', 'p'); // Ou alternativement columns('p.produit_nom')]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
         <sect3 id="zend.db.select.building.join">
             <title>Ajouter une autre table à la requête avec JOIN</title>
 
