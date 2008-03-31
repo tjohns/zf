@@ -82,10 +82,6 @@ class Zend_Session_AllTests
         require_once 'SessionTest.php';
 
         $suite->addTestSuite('Zend_SessionTest');
-	
-	require_once 'SaveHandler/AllTests.php';
-	
-	$suite->addTest(Zend_Session_SaveHandler_AllTests::suite());
 
         return $suite;
     }
