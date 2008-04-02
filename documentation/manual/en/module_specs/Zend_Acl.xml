@@ -265,6 +265,12 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             their ancestors.
         </para>
 
+        <note>
+            <para>
+                In general, Zend_Acl obeys a given rule if and only if a more specific rule does not apply.
+            </para>
+        </note>
+
         <para>
             Consequently, we can define a reasonably complex set of rules with a minimum amount of code.
             To apply the base permissions as defined above:
