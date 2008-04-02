@@ -195,6 +195,12 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
         <para>
            现在 ACL 包含了相关的 Roles，可以建立规则来定义 Roles 如何访问 Resources。你也许注意到我们在这个范例里没有定义任何特定的 Resources， 这简单地表示这些规则适用于所有 Resources。Zend_Acl 提供一个实现，籍此，规则只需要被分配从一般到特殊，最小化规则的需求，因为 Resources 和 Roles 继承由它们祖先定义的规则。
         </para>
+        
+        <note>
+            <para>
+                一般来说，当且仅当更具体的规则没有使用， Zend_Acl 就服从已给定的规则。
+            </para>  
+        </note>
 
         <para>
            因此，我们可以用最少量的代码来定义适度复杂的规则。应用上面定义的基本许可：
