@@ -194,6 +194,12 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));]]>
             Maintenant que l'ACL contient les Rôles nécessaires, on peut établir des règles qui définissent comment les Ressources accèdent aux Rôles. Vous avez sans doute noté que nous n'avons défini aucune Ressource particulière pour cet exemple, ce qui est plus simple pour illustrer comment les règles s'appliquent à toutes les Ressources. <code>Zend_Acl</code> fournit une implémentation dans laquelle les règles doivent simplement être assignées du général au particulier, ce qui réduit le nombre de règles spécifiques à ajouter. Ceci grâce à l'héritage.
         </para>
 
+        <note>
+            <para>
+                Généralement <code>Zend_Acl</code> se conforme à une règle donnée si et seulement si une règle plus spécifique ne s'applique pas.
+            </para>
+        </note>
+
         <para>
             En conséquence, on peut définir un nombre assez complexe de règles avec un nombre minimal de code. Pour définir les permissions comme définies ci-dessus:
         </para>
