@@ -255,7 +255,7 @@ class Zend_Cache_Core
      * Save some data in a cache
      *
      * @param  mixed $data           Data to put in cache (can be another type than string if automatic_serialization is on)
-     * @param  cache $id             Cache id (if not set, the last cache id will be used)
+     * @param  string $id             Cache id (if not set, the last cache id will be used)
      * @param  array $tags           Cache tags
      * @param  int $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
      * @throws Zend_Cache_Exception
