@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9112 -->
 <sect1 id="zend.acl.introduction">
     <title>導入</title>
 
@@ -290,6 +291,13 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             規則を適用するだけで定義できるようになります。
             リソースやロールは、その継承元で定義されている規則を引き継ぐからです。
         </para>
+
+        <note>
+            <para>
+                一般に、Zend_Acl は指定された規則に従います。
+                ただし、より詳細な規則が別途適用されている場合は例外です。
+            </para>
+        </note>
 
         <para>
             そのため、複雑な規則の組み合わせを最小限のコードで定義できるようになります。
