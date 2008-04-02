@@ -48,7 +48,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache initialisé dans l'exemple précédent
 
 // on regarde si un cache existe déjà
-if(!$result = $cache->get('myresult')) {
+if(!$result = $cache->load('myresult')) {
 
     // le cache est manquant, connexion à la base de données
     $db = Zend_Db::factory( [...] );
