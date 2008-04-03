@@ -1,11 +1,9 @@
-<!-- EN-Revision: 5500 -->
+<!-- EN-Revision: 9117 -->
 <sect1 id="zend.session.introduction">
 
     <title>導入</title>
 
     <para>
-        <ulink url="http://framework.zend.com/wiki/x/iVc">
-        このドキュメントの最新版</ulink> も参照ください。また、
         Zend Framework Auth team は皆さんのフィードバックや協力をお待ちしています。
         メーリングリストは
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
