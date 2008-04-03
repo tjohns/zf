@@ -404,6 +404,48 @@ $select = $db->select()
 
         </sect3>
 
+        <sect3 id="zend.db.select.building.columns-atomic">
+
+            <title>Spalten zu einer existierenden FROM oder JOIN Tabelle hinzufügen</title>
+
+            <para>
+                Es kann Fälle geben wo es gewünscht ist Spalten zu einer bestehenden FROM oder JOIN
+                Tabelle hinzuzufügen nachdem diese Methoden aufgerufen wurde. Die
+                <code>columns()</code> Methode erlaubt es spezifische Spalten an jedem Punkt
+                hinzuzufügen bevor die Abfrage aufgeführt wird. Die Spalte kann entweder als String
+                oder <code>Zend_Db_Expr</code> oder als Array dieser Elemente angegeben werden. Das
+                zweite Argument dieser Methode kann unterdrückt werden, was impliziert das die
+                Spalten zu der FROM Tabelle hinzugefügt werden sollen, andernfall muß ein
+                bestehender Korrelationsname verwendet werden.
+            </para>
+
+            <example id="zend.db.select.building.columns-atomic.example">
+
+                <title>Beispiel für das hinzufügen von Spalten mit der <code>columns()</code>
+                    Methode</title>
+
+                <programlisting role="php"><![CDATA[<?php
+// Diese Abfrage bauen:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'product_id')
+    ->columns('product_name');
+
+// Die selbe Abfrage bauen, durch spezifizierung der Korrelationsnamen:
+//   SELECT p."product_id", p."product_name"
+//   FROM "products" AS p
+
+$select = $db->select()
+    ->from(array('p' => 'products'), 'p.product_id')
+    ->columns('product_name', 'p'); // Alternativ kann columns('p.product_name') verwendet werden]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
         <sect3 id="zend.db.select.building.join">
 
             <title>Hinzufügen einer weiteren Tabelle zu der Anfrage mit JOIN</title>
