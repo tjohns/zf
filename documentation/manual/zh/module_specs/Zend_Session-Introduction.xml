@@ -3,9 +3,7 @@
     <title>简介</title>
 
     <para>
-        参见
-        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">最新发布的文档</ulink>。
-        同时，Zend Framework Auth 团队也非常期望大家在邮件列表中进行反馈和贡献：
+        Zend Framework Auth 团队也非常期望大家在邮件列表中进行反馈和贡献：
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
     </para>
 
