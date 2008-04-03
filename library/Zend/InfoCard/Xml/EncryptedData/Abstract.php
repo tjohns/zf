@@ -18,7 +18,6 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
- * @author     John Coggeshall <john@zend.com>
  */
 
 /**
@@ -40,7 +39,6 @@ require_once 'Zend/InfoCard/Xml/KeyInfo.php';
  * @subpackage Zend_InfoCard_Xml
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @author     John Coggeshall <john@zend.com>
  */
 abstract class Zend_InfoCard_Xml_EncryptedData_Abstract extends Zend_InfoCard_Xml_Element
 {
