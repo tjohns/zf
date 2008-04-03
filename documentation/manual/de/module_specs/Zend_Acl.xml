@@ -288,6 +288,13 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             sind.
         </para>
 
+        <note>
+            <para>
+                Generell, wendet Zend_Act eine angegebene Regel dann und nur dann an wenn eine
+                speziellere Regel nicht passt.
+            </para>
+        </note>
+
         <para>
             Folglich können wir einen einigermaßen komplexen Regelsatz mit sehr wenig Code
             definieren. Um die grundlegenden Genehmigungen von oben anzugeben:

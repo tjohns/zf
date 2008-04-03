@@ -3,10 +3,7 @@
     <title>Einführung</title>
 
     <para>
-        Hier
-        <ulink url="http://framework.zend.com/wiki/x/iVc">kann die zuletzt veröffentlichte Version
-        dieses Dokuments</ulink> gefunden werden. Das Zend Framework Auth Team begrüsst Feedback und Beiträge in
-        der Mailing Liste:
+        Das Zend Framework Auth Team begrüsst Feedback und Beiträge in der Mailing Liste:
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
     </para>
 
