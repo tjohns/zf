@@ -15,8 +15,9 @@
  *
  * @category   Zend
  * @package    Zend_Session
- * @copyright  Copyright (c) 2007 Jordan Raub <ludicruz@yahoo.com> and Felix Jendrusch <felixjendrusch@googlemail.com>
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
@@ -29,7 +30,8 @@ require_once 'Zend/Session/Exception.php';
  *
  * @category   Zend
  * @package    Zend_Session
- * @copyright  Copyright (c) 2007 Jordan Raub <ludicruz@yahoo.com> and Felix Jendrusch <felixjendrusch@googlemail.com>
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Session_SaveHandler_Exception extends Zend_Session_Exception {}
+class Zend_Session_SaveHandler_Exception extends Zend_Session_Exception
+{}

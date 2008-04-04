@@ -20,6 +20,11 @@
  * @version    $Id$
  */
 
+/*
+ * Start output buffering
+ */
+ob_start();
+
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/Framework/IncompleteTestError.php';
 require_once 'PHPUnit/Framework/TestCase.php';

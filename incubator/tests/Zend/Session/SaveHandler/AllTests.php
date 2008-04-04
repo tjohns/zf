@@ -18,32 +18,23 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 4773 2007-05-09 19:33:10Z darby $
+ * @version    $Id$
  */
-
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Session_SaveHandler_AllTests::main');
 }
 
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-
-/**
- * Zend_Session tests need to be output buffered because they depend on headers_sent() === false
- *
- * @see http://framework.zend.com/issues/browse/ZF-700
- */
-ob_start();
-
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @category   Zend
- * @package    Zend_Session_SaveHandler
+ * @package    Zend_Session
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -57,11 +48,6 @@ class Zend_Session_SaveHandler_AllTests
      */
     public static function main()
     {
-        /**
-         * PHPUnit_TextUI_TestRunner
-         */
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 
@@ -72,16 +58,18 @@ class Zend_Session_SaveHandler_AllTests
      */
     public static function suite()
     {
-        /**
-         * PHPUnit_Framework_TestSuite
-         */
-        require_once 'PHPUnit/Framework/TestSuite.php';
-
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Session_SaveHandler');
 
-        require_once 'DbTableTest.php';
-        
-        $suite->addTestSuite('Zend_Session_SaveHandler_DbTableTest');
+        /**
+         * @see Zend_Session_SaveHandler_DbTableTest
+         */
+        require_once 'Zend/Session/SaveHandler/DbTableTest.php';
+
+        if (!extension_loaded('pdo_sqlite')) {
+            $suite->addTestSuite('Zend_Session_SaveHandler_DbTableTestSkip');
+        } else {
+            $suite->addTestSuite('Zend_Session_SaveHandler_DbTableTest');
+        }
 
         return $suite;
     }
