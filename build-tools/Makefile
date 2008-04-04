@@ -40,7 +40,7 @@
 # be 'phpdoc' if phpDocumentor is in your PATH.  On Cygwin, you can
 # run 'php' with the phpdoc script as the argument, in Windows-style
 # path format; e.g., "C:/php/phpdoc".
-PHPDOC=phpdoc
+PHPDOC=C:/Voxtronic/3rdParty/PHP/phpdoc
 
 # ZF_SVN_REVISION is the Subversion revision number used for exporting
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
@@ -78,7 +78,7 @@ ZF_PRODUCTNAME=ZendFramework
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
 ZF_EXPORT_DIR=./$(ZF_PRODUCTNAME)-export-$(ZF_SVN_REVISION)
 STAGE_HOME=stage
-ZF_STAGE_DIR=$(STAGE_HOME)/$(ZF_PRODUCT)
+ZF_STAGE_DIR="C:/Voxtronic/3rdParty/Zend Framework"
 
 ZIP=zip
 ZF_ZIPBALL=$(ZF_PRODUCT).zip
