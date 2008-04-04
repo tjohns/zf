@@ -268,7 +268,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                         PHP-Casting in den gewünschten Typ umgewandelt. Beispielsweise
                         wird ein String, der als Wert für ein
                         <code>Zend_XmlRpc_Value_Integer</code>-Objekt genutzt wird,
-                        durch <code>(int)$value</code> in einen integer konvertiert.
+                        durch <code>(int)$value</code> in ein Integer konvertiert.
                     </para>
                 </note>
             </para>
