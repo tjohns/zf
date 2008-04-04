@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -814,7 +813,7 @@ abstract class Zend_Db_Adapter_Abstract
         } else {
             while ($count > 0) {
                 if (strpos($text, '?') != false) {
-                    $text = substr_replace($text, $this->quote($value), strpos($text, '?'), 1);
+                    $text = substr_replace($text, $this->quote($value, $type), strpos($text, '?'), 1);
                 }
                 --$count;
             }
