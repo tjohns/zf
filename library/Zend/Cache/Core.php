@@ -145,6 +145,16 @@ class Zend_Cache_Core
         }
         $this->_backend->setDirectives($directives);
     }
+    
+    /**
+     * Returns the backend
+     *
+     * @return object backend object
+     */
+    public function getBackend()
+    {
+        return $this->_backend;
+    }
 
     /**
      * Public frontend to set an option
