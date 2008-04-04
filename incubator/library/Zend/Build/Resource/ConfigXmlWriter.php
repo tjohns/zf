@@ -67,7 +67,8 @@ class Zend_Build_Resource_ConfigXmlWriter
      */
     public static function getXmlForConfig (Zend_Config $config)
     {
-        // First create the empty XML element        $xml = self::_arrayToXml($config->toArray(), new SimpleXMLElement('<' . self::CONFIG_XML_ROOT_ELEMENT . '/>'), true);
+        // First create the empty XML element        $xml = self::_arrayToXml($config->toArray(), 
+               new SimpleXMLElement('<' . self::CONFIG_XML_ROOT_ELEMENT . '/>'), true);
 
         // Format output for readable XML and save to $filename
         $dom = new DomDocument('1.0');
