@@ -84,16 +84,6 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
         $this->assertType('array', $log['args'][0]);
     }
     
-    public function testSetBackendBadCall()
-    {
-        try {
-            $this->_instance->setBackend('foo');
-        } catch (Zend_Cache_Exception $e) {
-            return;
-        }
-        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
-    }
-    
     public function testSetOptionCorrectCall()
     {
         $this->_instance->setOption('caching', false);
