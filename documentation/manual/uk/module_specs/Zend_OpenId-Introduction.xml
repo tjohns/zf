@@ -1,0 +1,171 @@
+<sect1 id="zend.openid.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_OpenId</code> is a Zend Framework component that provides a
+        simple API for building OpenID-enabled sites and identity providers.
+    </para>
+
+    <sect2 id="zend.openid.introduction.what">
+        <title>What is OpenID?</title>
+        <para>
+            OpenID is a set of protocols for user-centric digital identities.
+            These protocols allow to create an identity online, using an identity
+            provider. This identity can be used anywhere that OpenID is supported.
+            Using OpenID-enabled sites, web users do not need to remember traditional
+            authentication tokens such as username and password. All OpenID-enabled
+            sites accept a single OpenID identity. This identity is typically a URL.
+            It may be the URL of the user's personal page, blog or other resource that
+            may provide additional information about them. No more need for many
+            passwords and different user names - just one identifier for all Internet
+            services. OpenID is an open, decentralized, and free user centric
+            solution. A user may choose which OpenID provider to use, or even create
+            their own personal identity server. No central authority is needed to
+            approve or register OpenID-enabled sites or identity providers.
+        </para>
+
+        <para>
+            For more information about OpenID visit <ulink url="http://www.openid.net/">OpenID official site</ulink>
+            and look into the <ulink url="http://www.openidbook.com/">OpenID Book by Rafeeq
+            Rehman</ulink>.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.openid.introduction.how">
+        <title>How Does it Work?</title>
+        <para>
+            The main purpose of the <code>Zend_OpenId</code> components is to
+            implement an OpenID authentication protocol as described in the following
+            diagram:
+        </para>
+
+        <para>
+            <inlinegraphic align="center" fileref="figures/zend.openid.protocol.jpg" format="JPEG" scale="100" valign="middle" width="559" />
+        </para>
+
+        <orderedlist>
+            <listitem>
+                <para>
+                    Authentication is initiated by the end-user, who passes their
+                    OpenID identifier to the OpenID consumer through a User-Agent.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID consumer performs normalization of the user-supplied
+                    identifier, and discovery on it. As result, it gets the following:
+                    a claimed identifier, OpenID provider URL and an OpenID protocol
+                    version.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID client establishes an optional association with the
+                    server using Diffie-Hellman keys. As a result, both parties get
+                    a common "shared secret" that is used for signing and verification
+                    of the following (subsequent) messages.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID consumer redirects the User-Agent to the OpenID
+                    provider's URL with an OpenID authentication request.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID Provider checks if the user-Agent is already
+                    authenticated and offers to do so if needed.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The end user enters the required password.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID Provider checks if it is allowed to pass the user
+                    identity to the given consumer, and asks the user if needed.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The end user allows or disallows passing his identity.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID Provider redirects the User-Agent back to the OpenID
+                    consumer with an "authentication approved" or "failed" request.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    The OpenID consumer verifies the information received from the
+                    provider by using the "shared secret" it got on step 3 or by
+                    sending additional direct request to the OpenID provider.
+                </para>
+            </listitem>
+        </orderedlist>
+    </sect2>
+
+    <sect2 id="zend.openid.introduction.structure">
+        <title>Zend_OpenId Structure</title>
+        <para>
+            <code>Zend_OpenId</code> consists of two sub packages. The first one
+            is <code>Zend_OpenId_Consumer</code> for developing OpenID-enabled sites
+            and the second <code>Zend_OpenId_Provider</code> for developing OpenID
+            servers. They are completely independent of each other and may be used
+            separately.
+        </para>
+
+        <para>
+            The only common parts of these sub packages are the OpenID Simple
+            Registration Extension implemented by
+            <code>Zend_OpenId_Extension_Sreg</code> class and the set of utility
+            functions implemented by <code>Zend_OpenId</code> class.
+        </para>
+
+        <note>
+            <para>
+                <code>Zend_OpenId</code> takes advantage of the <ulink url="http://php.net/gmp">GMP extension</ulink>,
+                where available. Consider enabling the GMP extension for better performance when using
+                <code>Zend_OpenId</code>.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.openid.introduction.standards">
+        <title>Supported Standards</title>
+        <para>
+            The <code>Zend_OpenId</code> component conforms to the following
+            standards:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    OpenID Authentication protocol version 1.1
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    OpenID Authentication protocol version 2.0 draft 11
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    OpenID Simple Registration Extension version 1.0
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    OpenID Simple Registration Extension version 1.1 draft 1
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
