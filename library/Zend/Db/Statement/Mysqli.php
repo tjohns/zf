@@ -26,7 +26,7 @@
  */
 require_once 'Zend/Db/Statement.php';
 
-
+    
 /**
  * Extends for Mysqli
  *
@@ -124,7 +124,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function closeCursor()
     {
         if ($stmt = $this->_stmt) {
-		    $this->_stmt->free_result();
+        $this->_stmt->free_result();
             return $this->_stmt->reset();
         }
         return false;
@@ -187,7 +187,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     {
         if (!$this->_stmt) {
             return false;
-        }       
+        }
 
         // if no params were given as an argument to execute(),
         // then default to the _bindParam array
@@ -212,8 +212,8 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Mysqli/Exception.php';
             throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error);
         }
-		
-		
+
+
         // retain metadata
         if ($this->_meta === null) {
             $this->_meta = $this->_stmt->result_metadata();
@@ -226,7 +226,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             }
         }
 
-		// statements that have no result set do not return metadata
+        // statements that have no result set do not return metadata
         if ($this->_meta !== false) {
 
             // get the column names that will result
@@ -245,14 +245,14 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             foreach ($this->_values as $i => &$f) {
                 $refs[$i] = &$f;
             }
-			
-			$this->_stmt->store_result();
+
+            $this->_stmt->store_result();
             // bind to the result variables
             call_user_func_array(
                 array($this->_stmt, 'bind_result'),
                 $this->_values
             );
-        }		
+        }
         return $retval;
     }
 
