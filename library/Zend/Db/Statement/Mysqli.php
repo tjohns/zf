@@ -124,6 +124,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function closeCursor()
     {
         if ($stmt = $this->_stmt) {
+		    $this->_stmt->free_result();
             return $this->_stmt->reset();
         }
         return false;
@@ -186,45 +187,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     {
         if (!$this->_stmt) {
             return false;
-        }
-        // retain metadata
-        if ($this->_meta === null) {
-            $this->_meta = $this->_stmt->result_metadata();
-            if ($this->_stmt->errno) {
-                /**
-                 * @see Zend_Db_Statement_Mysqli_Exception
-                 */
-                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error);
-            }
-        }
-
-        // statements that have no result set do not return metadata
-        if ($this->_meta !== false) {
-
-            // get the column names that will result
-            $this->_keys = array();
-            foreach ($this->_meta->fetch_fields() as $col) {
-                $this->_keys[] = $this->_adapter->foldCase($col->name);
-            }
-
-            // set up a binding space for result variables
-            $this->_values = array_fill(0, count($this->_keys), null);
-
-            // set up references to the result binding space.
-            // just passing $this->_values in the call_user_func_array()
-            // below won't work, you need references.
-            $refs = array();
-            foreach ($this->_values as $i => &$f) {
-                $refs[$i] = &$f;
-            }
-
-            // bind to the result variables
-            call_user_func_array(
-                array($this->_stmt, 'bind_result'),
-                $this->_values
-            );
-        }
+        }       
 
         // if no params were given as an argument to execute(),
         // then default to the _bindParam array
@@ -249,8 +212,50 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Mysqli/Exception.php';
             throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error);
         }
+		
+		
+        // retain metadata
+        if ($this->_meta === null) {
+            $this->_meta = $this->_stmt->result_metadata();
+            if ($this->_stmt->errno) {
+                /**
+                 * @see Zend_Db_Statement_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error);
+            }
+        }
+
+		// statements that have no result set do not return metadata
+        if ($this->_meta !== false) {
+
+            // get the column names that will result
+            $this->_keys = array();
+            foreach ($this->_meta->fetch_fields() as $col) {
+                $this->_keys[] = $this->_adapter->foldCase($col->name);
+            }
+
+            // set up a binding space for result variables
+            $this->_values = array_fill(0, count($this->_keys), null);
+
+            // set up references to the result binding space.
+            // just passing $this->_values in the call_user_func_array()
+            // below won't work, you need references.
+            $refs = array();
+            foreach ($this->_values as $i => &$f) {
+                $refs[$i] = &$f;
+            }
+			
+			$this->_stmt->store_result();
+            // bind to the result variables
+            call_user_func_array(
+                array($this->_stmt, 'bind_result'),
+                $this->_values
+            );
+        }		
         return $retval;
     }
+
 
     /**
      * Fetches a row from the result set.
