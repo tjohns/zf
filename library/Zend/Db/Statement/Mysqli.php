@@ -124,6 +124,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function closeCursor()
     {
         if ($stmt = $this->_stmt) {
+        $this->_stmt->free_result();
             return $this->_stmt->reset();
         }
         return false;
@@ -187,6 +188,32 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         if (!$this->_stmt) {
             return false;
         }
+
+        // if no params were given as an argument to execute(),
+        // then default to the _bindParam array
+        if ($params === null) {
+            $params = $this->_bindParam;
+        }
+        // send $params as input parameters to the statement
+        if ($params) {
+            array_unshift($params, str_repeat('s', count($params)));
+            call_user_func_array(
+                array($this->_stmt, 'bind_param'),
+                $params
+            );
+        }
+
+        // execute the statement
+        $retval = $this->_stmt->execute();
+        if ($retval === false) {
+            /**
+             * @see Zend_Db_Statement_Mysqli_Exception
+             */
+            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error);
+        }
+
+
         // retain metadata
         if ($this->_meta === null) {
             $this->_meta = $this->_stmt->result_metadata();
@@ -219,38 +246,16 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
                 $refs[$i] = &$f;
             }
 
+            $this->_stmt->store_result();
             // bind to the result variables
             call_user_func_array(
                 array($this->_stmt, 'bind_result'),
                 $this->_values
             );
         }
-
-        // if no params were given as an argument to execute(),
-        // then default to the _bindParam array
-        if ($params === null) {
-            $params = $this->_bindParam;
-        }
-        // send $params as input parameters to the statement
-        if ($params) {
-            array_unshift($params, str_repeat('s', count($params)));
-            call_user_func_array(
-                array($this->_stmt, 'bind_param'),
-                $params
-            );
-        }
-
-        // execute the statement
-        $retval = $this->_stmt->execute();
-        if ($retval === false) {
-            /**
-             * @see Zend_Db_Statement_Mysqli_Exception
-             */
-            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error);
-        }
         return $retval;
     }
+
 
     /**
      * Fetches a row from the result set.
