@@ -264,7 +264,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                     <para>
                         When building a new <code>Zend_XmlRpc_Value</code>
                         object, its value is set by a PHP type. The PHP type
-                        will be will be converted to the specified type using
+                        will be converted to the specified type using
                         PHP casting. For example, if a string is given as a
                         value to the <code>Zend_XmlRpc_Value_Integer</code>
                         object, it will be converted using
