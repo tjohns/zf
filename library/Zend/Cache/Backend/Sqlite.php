@@ -65,6 +65,13 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @var mixed $_db
      */
     private $_db = null;
+    
+    /**
+     * Boolean to store if the structure has benn checked or not
+     *
+     * @var boolean $_structureChecked
+     */
+    private $_structureChecked = false;
 
     /**
      * Constructor
@@ -104,6 +111,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function load($id, $doNotTestCacheValidity = false)
     {
+        $this->_checkAndBuildStructure();
         $sql = "SELECT content FROM cache WHERE id='$id'";
         if (!$doNotTestCacheValidity) {
             $sql = $sql . " AND (expire=0 OR expire>" . time() . ')';
@@ -124,6 +132,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function test($id)
     {
+        $this->_checkAndBuildStructure();
         $sql = "SELECT lastModified FROM cache WHERE id='$id' AND (expire=0 OR expire>" . time() . ')';
         $result = $this->_query($sql);
         $row = @sqlite_fetch_array($result);
@@ -148,12 +157,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
-        if (!$this->_checkStructureVersion()) {
-            $this->_buildStructure();
-            if (!$this->_checkStructureVersion()) {
-                Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cache_db_complete_path']);
-            }
-        }
+        $this->_checkAndBuildStructure();
         $lifetime = $this->getLifetime($specificLifetime);
         $data = @sqlite_escape_string($data);
         $mktime = time();
@@ -184,6 +188,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function remove($id)
     {
+        $this->_checkAndBuildStructure();
         $res = $this->_query("SELECT COUNT(*) AS nbr FROM cache WHERE id='$id'");
         $result1 = @sqlite_fetch_single($res);
         $result2 = $this->_query("DELETE FROM cache WHERE id='$id'");
@@ -209,6 +214,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
+        $this->_checkAndBuildStructure();
         $return = $this->_clean($mode, $tags);
         $this->_automaticVacuum();
         return $return;
@@ -424,4 +430,23 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         return false;
     }
 
+    /**
+     * Check if the database structure is ok (with the good version), if no : build it
+     *
+     * @return boolean True if ok
+     */   
+    private function _checkAndBuildStructure()
+    {
+        if (!($this->_structureChecked)) {
+            if (!$this->_checkStructureVersion()) {
+                $this->_buildStructure();
+                if (!$this->_checkStructureVersion()) {
+                    Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cache_db_complete_path']);
+                }
+            }
+            $this->_structureChecked = true;
+        }
+        return true;
+    }
+    
 }
