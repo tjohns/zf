@@ -131,11 +131,8 @@ class Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function setBackend($backendObject)
+    public function setBackend(Zend_Cache_Backend $backendObject)
     {
-        if (!is_object($backendObject)) {
-            Zend_Cache::throwException('Incorrect backend object !');
-        }
         $this->_backend= $backendObject;
         // some options (listed in $_directivesList) have to be given
         // to the backend too (even if they are not "backend specific")

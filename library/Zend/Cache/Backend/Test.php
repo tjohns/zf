@@ -25,6 +25,10 @@
  */
 require_once 'Zend/Cache/Backend/Interface.php';
 
+/**
+ * @see Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
 
 /**
  * @package    Zend_Cache
@@ -32,21 +36,21 @@ require_once 'Zend/Cache/Backend/Interface.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
+class Zend_Cache_Backend_Test extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface
 {
     /**
      * Available options
      *
      * @var array available options
      */
-    private $_options = array();
+    protected $_options = array();
 
     /**
      * Frontend or Core directives
      *
      * @var array directives
      */
-    private $_directives = array();
+    protected $_directives = array();
 
     /**
      * Array to log actions
