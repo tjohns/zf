@@ -41,7 +41,7 @@ print $server->getDate()->getIso();]]>
             recognised as possible correct adress for a timeserver. Then when calling
             <code>getDate()</code> the actual set timeserver is requested and it will return it's own
             time. <code>Zend_TimeSync</code> then calculates the difference to the actual time of the
-            server running the script and returns a <code>Zend_Date</code> objekt with the actual,
+            server running the script and returns a <code>Zend_Date</code> object with the actual,
             corrected time.
         </para>
 
@@ -81,7 +81,7 @@ print $server->getDate()->getIso();]]>
         </programlisting>
 
         <para>
-            There is no limitation in the ammount of timeservers you can add. When a timeserver is can not
+            There is no limitation in the ammount of timeservers you can add. When a timeserver can not
             be reached <code>Zend_TimeSync</code> will fallback and try to connect to the next given timeserver.
         </para>
 
@@ -121,7 +121,7 @@ print $server->getDate()->getIso();]]>
 
         <para>
             You can set the proper protocol within the address of the timeserver. Actual there are two
-            protocols which are supported by <code>Zend_TimeSync</code>. The default protocol ist
+            protocols which are supported by <code>Zend_TimeSync</code>. The default protocol is
             <emphasis role="strong">NTP</emphasis>. If you are only using NTP you can ommit the protocol
             within the address as show in the previous examples.
         </para>
@@ -150,8 +150,8 @@ print $server->getDate()->getIso();]]>
 
         <para>
             As every protocol within the world wide web, the <emphasis role="strong">NTP</emphasis> and
-            <emphasis role="strong">NTP</emphasis> protocols are using standard ports. For both protocols
-            this is the port <emphasis role="strong">123</emphasis>.
+            <emphasis role="strong">SNTP</emphasis> protocols are using standard ports. NTP uses port
+            <emphasis role="strong">123</emphasis> and SNTP uses <emphasis role="strong">37</emphasis>.
         </para>
 
         <para>
@@ -189,7 +189,7 @@ print $server->getDate()->getIso();]]>
         </para>
 
         <para>
-            With the <code>setOptions()</code> method, you can set any option. If accepts an array where the
+            With the <code>setOptions()</code> method, you can set any option. It accepts an array where the
             key is the option to set and the value is the value of that option. Any previous set option will
             be overwritten by the new value. If you want to know which options are set, use the
             <code>getOptions()</code> method. It accepts either a key which returns the given option if set
