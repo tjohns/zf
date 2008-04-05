@@ -44,7 +44,8 @@ class Zend_Build_Factory
      * @param  string $profileFileName
      * @return Zend_Build_Resource_Project
      */
-    public static function makeProject($profileFilePath = self::DEFAULT_PROFILE_PATH, $profileFileName = self::DEFAULT_PROFILE_NAME)
+    public static function makeProject($profileFilePath = self::DEFAULT_PROFILE_PATH,
+                                       $profileFileName = self::DEFAULT_PROFILE_NAME)
     {
         return Zend_Build_Resource_Project::getConfigurable(new Zend_Config_Xml($profileFilePath . $profileFileName));
     }
