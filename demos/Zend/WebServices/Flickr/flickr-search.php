@@ -37,5 +37,5 @@ $photos = $flickr->tagSearch('php');
 
 foreach ($photos as $photo) {
     echo '<img src="' . $photo->Thumbnail->uri . '" /> <br />';
-	echo $photo->title . "<br /> \n";
+    echo $photo->title . "<br /> \n";
 }
