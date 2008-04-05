@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8306 -->
+<!-- EN-Revision: 9153 -->
 <sect1 id="zend.timesync.working">
 
     <title>Zend_TimeSync の動作</title>
@@ -159,9 +159,9 @@ print $server->getDate()->getIso();]]>
 
         <para>
             ウェブにおけるさまざまな他のプロトコルと同様、<emphasis role="strong">NTP</emphasis> や
-            <emphasis role="strong">NTP</emphasis> にも標準のポート番号があります。
-            どちらのプロトコルについても、標準のポートは
-            <emphasis role="strong">123</emphasis> です。
+            <emphasis role="strong">SNTP</emphasis> にも標準のポート番号があります。
+            NTP が使用するポートは <emphasis role="strong">123</emphasis> で、
+            SNTP は <emphasis role="strong">37</emphasis> を使用します。
         </para>
 
         <para>
