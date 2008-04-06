@@ -1,5 +1,4 @@
-﻿<!-- $Id: $ -->
-<sect1 id="zend.filter.set">
+﻿<sect1 id="zend.filter.set">
     <title>Classes de filtre standards</title>
     <para>
         Le Zend Framework est fourni avec un jeu de filtres standards, qui sont directement utilisables.

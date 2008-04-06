@@ -37,7 +37,7 @@
             <code>Zend_Acl</code> fournit une structure en arbre à laquelle plusieurs Ressources (ou "zone sous contrôle d'accès") peuvent être ajoutées. Puisque les Ressources sont sauvées dans cet arbre, elles peuvent être organisées du général (via la racine de l'arbre) jusqu'au particulier (via les feuilles de l'arbre). Les requêtes envers une Ressource spécifique vont automatiquement entraîner la recherche de règles sur ses parents au sein de la structure hiérarchique des Ressources, ce qui permet un héritage simple des règles. Par exemple, si une règle par défaut doit être appliquée à tous les batiments d'une ville, on pourra simplement assigner la règle à la ville elle-même, au lieu de la répéter à tous les batiments. Mais certains batiments peuvent nécessiter des règles spécifiques, et ceci peut se faire aisément avec <code>Zend_Acl</code> en assignant les règles nécessaires à chaque batiment de la ville qui nécessite une exception. Une Ressource peut hériter d'un seul parent Ressource, qui hérite lui même de son propre parent, et ainsi de suite.
         </para>
         <para>
-            <code>Zend_Acl</code> supporte aussi des privilèges pour chaque Ressources (par exemple : "créer", "lire", "modifier", "supprimer"), et le développeur peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges d'une Ressource.
+            <code>Zend_Acl</code> supporte aussi des privilèges pour chaque Ressource (par exemple : "créer", "lire", "modifier", "supprimer"), et le développeur peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges d'une Ressource.
         </para>
     </sect2>
 
@@ -222,7 +222,7 @@ $acl->allow($roleinvite, null, 'voir');
 
 /* ce qui précède peut aussi être écrit:
 $acl->allow('invité', null, 'voir');
-//*/
+*/
 
 // Staff hérite des privilèges de Invité, mais a aussi ses propres privilèges
 $acl->allow('staff', null, array('edit', 'submit', 'relire'));

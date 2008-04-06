@@ -3,10 +3,10 @@
     <title>Introduction</title>
 
     <para>
-        Le composant <code>Zend_Service_SlideShare</code> est utilisé dans l'interraction avec les services webs
-        de <ulink url="http://www.slideshare.net/">slideshare.net</ulink>, plateforme servant d'hébergement de slides.
-        Grâce à ce composant, vous pouvez intégrer des slideshows de slideshare, dans votre propre site web, ou même
-        uploader des nouveaux slides sur votre compte slideshare, depuis votre site web.
+        Le composant <code>Zend_Service_SlideShare</code> est utilisé dans l'interaction avec les services webs
+        de <ulink url="http://www.slideshare.net/">slideshare.net</ulink>, plateforme servant d'hébergement de diaporamas.
+        Grâce à ce composant, vous pouvez intégrer des diaporamas de slideshare, dans votre propre site web, ou même
+        uploader des nouveaux diaporamas sur votre compte slideshare, depuis votre site web.
     </para>
 
     <sect2 id="zend.service.slideshare.basicusage">
@@ -14,13 +14,13 @@
         <title>Démarrage avec <code>Zend_Service_SlideShare</code></title>
 
         <para>
-            Pour utiliser Zend_Service_SlideShare, vous devez créer au préalable un compte sur slideshare.net
+            Pour utiliser <code>Zend_Service_SlideShare</code>, vous devez créer au préalable un compte sur slideshare.net
             (plus d'informations à ce sujet <ulink url="http://www.slideshare.net/developers/">ici</ulink>), afin de
             recevoir votre clé d'API et votre login / mot de passe, indispensables pour utiliser le service web.
         </para>
 
         <para>
-            Une fois votre compte crée, vous pouvez utiliser <code>Zend_Service_SlideShare</code> en créant une instance de
+            Une fois votre compte créé, vous pouvez utiliser <code>Zend_Service_SlideShare</code> en créant une instance de
             <code>Zend_Service_SlideShare</code> en lui passant vos identifiants :
         </para>
 
@@ -29,7 +29,7 @@ require_once 'Zend/Service/SlideShare.php';
 
 // Crée une instance du composant
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -39,8 +39,8 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
         <title>L'objet SlideShow</title>
 
         <para>
-            Chaque slide issu de <code>Zend_Service_SlideShare</code> est matérialisé par un objet
-            <code>Zend_Service_SlideShare_SlideShow</code> (que ce soit pour uploader ou récupérer des slideshows).
+            Chaque diaporama issu de <code>Zend_Service_SlideShare</code> est matérialisé par un objet
+            <code>Zend_Service_SlideShare_SlideShow</code> (que ce soit pour uploader ou récupérer des diaporamas).
             Pour information, voici un pseudo code de cette classe :
         </para>
 
@@ -48,21 +48,21 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
 class Zend_Service_SlideShare_SlideShow {
 
     /**
-     * Retrieves the location of the slide show
+     * Récupère l'emplacement du diaporama
      */
     public function getLocation() {
         return $this->_location;
     }
 
     /**
-     * Gets the transcript for this slide show
+     * Récupère la transcription du diaporama
      */
     public function getTranscript() {
         return $this->_transcript;
     }
 
     /**
-     * Adds a tag to the slide show
+     * Associe un mot-clé au diaporama
      */
     public function addTag($tag) {
         $this->_tags[] = (string)$tag;
@@ -70,7 +70,7 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Sets the tags for the slide show
+     * Associe des mots-clés au diaporama
      */
     public function setTags(Array $tags) {
         $this->_tags = $tags;
@@ -78,15 +78,15 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Gets all of the tags associated with the slide show
+     * Récupère tous les mots-clés associés au diaporama
      */
     public function getTags() {
         return $this->_tags;
     }
 
     /**
-     * Sets the filename on the local filesystem of the slide show
-     * (for uploading a new slide show)
+     * Règle le nom de fichier du diaporama dans le système de fichiers local
+     * (pour l'upload d'un nouveau diaporama)
      */
     public function setFilename($file) {
         $this->_slideShowFilename = (string)$file;
@@ -94,36 +94,36 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Retrieves the filename on the local filesystem of the slide show
-     * which will be uploaded
+     * Rècupère le nom de fichier du diaporama dans le système de fichiers local
+     * qui sera uploadé
      */
     public function getFilename() {
         return $this->_slideShowFilename;
     }
 
     /**
-     * Gets the ID for the slide show
+     * Récupère l'ID du diaporama
      */
     public function getId() {
         return $this->_slideShowId;
     }
 
     /**
-     * Retrieves the HTML embed code for the slide show
+     * Récupère le code HTML utilisé pour la projection du diaporama
      */
     public function getEmbedCode() {
         return $this->_embedCode;
     }
 
     /**
-     * Retrieves the Thumbnail URi for the slide show
+     * Récupère l'URI de la vignette du diaporama
      */
     public function getThumbnailUrl() {
         return $this->_thumbnailUrl;
     }
 
     /**
-     * Sets the title for the Slide show
+     * Règle le titre du diaporama
      */
     public function setTitle($title) {
         $this->_title = (string)$title;
@@ -131,14 +131,14 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Retrieves the Slide show title
+     * Récupère le titre du diaporama
      */
     public function getTitle() {
         return $this->_title;
     }
 
     /**
-     * Sets the description for the Slide show
+     * Régle la description du diaporama
      */
     public function setDescription($desc) {
         $this->_description = (string)$desc;
@@ -146,35 +146,35 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Gets the description of the slide show
+     * Récupère la description du diaporama
      */
     public function getDescription() {
         return $this->_description;
     }
 
     /**
-     * Gets the numeric status of the slide show on the server
+     * Récupère le statut (numérique) du diaporama sur le serveur
      */
     public function getStatus() {
         return $this->_status;
     }
 
     /**
-     * Gets the textual description of the status of the slide show on the server
+     * Récupère la description textuelle du statut du diaporama sur le serveur
      */
     public function getStatusDescription() {
         return $this->_statusDescription;
     }
 
     /**
-     * Gets the permanent link of the slide show
+     * Récupère le lien permanent du diaporama
      */
     public function getPermaLink() {
         return $this->_permalink;
     }
 
     /**
-     * Gets the number of views the slide show has received
+     * Récupère le nombre de diapositives que le diaporama comprend
      */
     public function getNumViews() {
         return $this->_numViews;
@@ -193,17 +193,17 @@ class Zend_Service_SlideShare_SlideShow {
 
         <para>
             Lors de l'utilisation de <code>Zend_Service_SlideShare</code>, la classe de données Slideshow sera souvent utilisée
-            pour parcourir, ajouter, ou modifier des slideshows.
+            pour parcourir, ajouter, ou modifier des diaporamas.
         </para>
 
     </sect2>
 
     <sect2 id="zend.service.slideshare.getslideshow">
 
-        <title>Récupérer un slideshow simplement</title>
+        <title>Récupérer un diaporama simplement</title>
 
         <para>
-            La manière la plus simple d'utiliser <code>Zend_Service_SlideShare</code> est la récupératio d'un slideshow depuis son
+            La manière la plus simple d'utiliser <code>Zend_Service_SlideShare</code> est la récupération d'un diaporama depuis son
             ID, fournit par le service slideshare.net, ceci est effectué via la méthode <code>getSlideShow()</code> de l'objet
             <code>Zend_Service_SlideShare</code>. Le résultat de cette méthode est un objet de type
             <code>Zend_Service_SlideShare_SlideShow</code>.
@@ -217,50 +217,50 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
 
 $slideshow = $ss->getSlideShow(123456);
 
-print "Slide Show titre: {$slideshow->getTitle()}<br/>\n";
-print "Nombre de slides: {$slideshow->getNumViews()}<br/>\n";
-?>]]>
+print "Titre du diaporama : {$slideshow->getTitle()}<br/>\n";
+print "Nombre de diapositives : {$slideshow->getNumViews()}<br/>\n";
+]]>
         </programlisting>
 
     </sect2>
 
     <sect2 id="zend.service.slideshare.getslideshowlist">
 
-        <title>Récupérer des groupes de Slideshows</title>
+        <title>Récupérer des groupes de diaporamas</title>
 
         <para>
-            Si vous ne connaissez pas l'ID spécifique d'un slideshow vous intéréssant, il est possible de récupérer des groupes de
-            slideshows, en utilisant une de ces trois méthodes :
+            Si vous ne connaissez pas l'ID spécifique d'un diaporam vous intéréssant, il est possible de récupérer des groupes de
+            diaporamas, en utilisant une de ces trois méthodes :
         </para>
 
         <itemizedlist mark="opencircle">
             <listitem>
                 <para>
-                    <emphasis role="strong">Slideshows depuis un compte spécifique</emphasis>
+                    <emphasis role="strong">Diaporamas depuis un compte spécifique</emphasis>
                 </para>
 
                 <para>
-                    La méthode <code>getSlideShowsByUsername()</code> va retourner tous les slideshows depuis un compte utilisateur.
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <emphasis role="strong">Slideshows contenant des tags spécifiques</emphasis>
-                </para>
-
-                <para>
-                    La méthode <code>getSlideShowsByTag</code> va retourner un ensemble de slideshows comportant certains tags (mots-clés).
+                    La méthode <code>getSlideShowsByUsername()</code> va retourner tous les diaporamas depuis un compte utilisateur.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis role="strong">Slideshows depuis un groupe</emphasis>
+                    <emphasis role="strong">Diaporamas contenant des tags spécifiques</emphasis>
                 </para>
 
                 <para>
-                    La méthode <code>getSlideShowsByGroup</code> récupère tous les slideshows d'un groupe donné.
+                    La méthode <code>getSlideShowsByTag</code> va retourner un ensemble de diaporamas comportant certains tags (mots-clés).
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">Diaporamas depuis un groupe</emphasis>
+                </para>
+
+                <para>
+                    La méthode <code>getSlideShowsByGroup</code> récupère tous les diaporamas d'un groupe donné.
                 </para>
             </listitem>
         </itemizedlist>
@@ -272,22 +272,22 @@ print "Nombre de slides: {$slideshow->getNumViews()}<br/>\n";
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/SlideShare.php';
 
-// Create a new instance of the component
+// Crée une nouvelle instance du composant
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
 $starting_offset = 0;
 $limit = 10;
 
-// Retrieve the first 10 of each type
+// Récupère les 10 premiers de chaque type
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 $ss_tags = $ss->getSlideShowsByTag('zend', $starting_offset, $limit);
 $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 
-// Iterate over the slide shows
+// Itère sur les diaporamas
 foreach($ss_user as $slideshow) {
-   print "Slide Show Title: {$slideshow->getTitle}<br/>\n";
+   print "Titre du diaporama : {$slideshow->getTitle}<br/>\n";
 }
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -318,7 +318,7 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -342,7 +342,7 @@ $client->setConfig(array('timeout' => 5));
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
