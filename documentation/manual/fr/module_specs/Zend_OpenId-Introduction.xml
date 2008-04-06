@@ -17,8 +17,9 @@
         </para>
 
         <para>
-            Visitez donc <ulink url="http://www.openid.net/">le site officiel de OpenID</ulink> pour plus d'information, et voyez aussi
-            <ulink url="http://www.openidbook.com/">le OpenID Book, par Rafeeq Rehman</ulink>.
+            Visitez donc <ulink url="http://www.openid.net/">le site officiel de OpenID</ulink> pour plus d'information, voyez aussi
+            <ulink url="http://www.openidbook.com/">le OpenID Book, par Rafeeq Rehman</ulink> ou
+            <ulink url="http://www.openidfrance.fr">OpenIDFrance</ulink>.
         </para>
     </sect2>
 
@@ -46,7 +47,8 @@
             </listitem>
             <listitem>
                 <para>
-                    Le service protégé par OpenID établit optionnellement une connexion avec le serveur OpenID en utilisant des clés Diffie-Hellman.
+                    Le service protégé par OpenID établit optionnellement une connexion avec le serveur OpenID en utilisant des clés
+                    <ulink url="http://fr.wikipedia.org/wiki/%C3%89change_de_cl%C3%A9s_Diffie-Hellman">Diffie-Hellman</ulink>.
                     Les deux parties partagent alors un "secret" utilisé pour signer et vérifier les messages suivants.
                 </para>
             </listitem>
@@ -67,17 +69,17 @@
             </listitem>
             <listitem>
                 <para>
-                    Le serveur OpenID effectue une vérification pour savoir si l'utilisateur a le droit d'accéder au service protégé par OpenID
+                    Le serveur OpenID effectue une vérification pour savoir si l'utilisateur a le droit d'accéder au service protégé par OpenID.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    L'utilisateur final accepte alors ou non de partager ses informations d'identitié pour le service protégé par OpenID.
+                    L'utilisateur final accepte alors ou non de partager ses informations d'identité pour le service protégé par OpenID.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Le serveur OpenID redirige le navigateur vers le service protégé par OpenID, avec un message "authentication approuvée" ou "echouée".
+                    Le serveur OpenID redirige le navigateur vers le service protégé par OpenID, avec un message "authentication approuvée" ou "échouée".
                 </para>
             </listitem>
             <listitem>
@@ -92,19 +94,19 @@
     <sect2 id="zend.openid.introduction.structure">
         <title>Zend_OpenId Structure</title>
         <para>
-            <code>Zend_OpenId</code> contient deux sous classes. <code>Zend_OpenId_Consumer</code> est un client, il sera
-            utilisé sur les sites nécéssitant identification OpenID. <code>Zend_OpenId_Provider</code>, elle, permet de créer
-            son propre serveur OpenID. Ces deux classes sont totallement idépendantes l'une de l'autre.
+            <code>Zend_OpenId</code> contient deux sous-classes. <code>Zend_OpenId_Consumer</code> est un client, il sera
+            utilisé sur les sites nécessitant l'identification OpenID. <code>Zend_OpenId_Provider</code>, elle, permet de créer
+            son propre serveur OpenID. Ces deux classes sont totalement indépendantes l'une de l'autre.
         </para>
 
         <para>
             Les seuls points communs entre ces deux classes sont l'extension Simple Registration Extension, implémentée par la classe
-            <code>Zend_OpenId_Extension_Sreg</code>, ainsi que les fonctions d'utilitaires présentes dans la classe <code>Zend_OpenId</code>.
+            <code>Zend_OpenId_Extension_Sreg</code>, ainsi que les fonctions utilitaires présentes dans la classe <code>Zend_OpenId</code>.
         </para>
 
         <note>
             <para>
-                <code>Zend_OpenId</code> utilise <ulink url="http://php.net/gmp">l'extension GMP</ulink>, lorsqu'elle est disponible.
+                <code>Zend_OpenId</code> utilise <ulink url="http://www.php.net/manual/fr/ref.gmp.php">l'extension GMP</ulink>, lorsqu'elle est disponible.
                 Activez cette extension si possible, ceci améliorera les performances avec <code>Zend_OpenId</code>.
             </para>
         </note>
@@ -113,7 +115,7 @@
     <sect2 id="zend.openid.introduction.standards">
         <title>Standards supportés</title>
         <para>
-            Le composant <code>Zend_OpenId</code> est conformes aux standards suivants :
+            Le composant <code>Zend_OpenId</code> est conforme aux standards suivants :
         </para>
 
         <itemizedlist>
@@ -140,6 +142,3 @@
         </itemizedlist>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

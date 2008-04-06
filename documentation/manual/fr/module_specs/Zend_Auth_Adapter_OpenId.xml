@@ -6,7 +6,7 @@
 
         <title>Introduction</title>
         <para>
-            <code>Zend_Auth_Adapter_OpenId</code> permet l'authentification au travers un serveur distant
+            <code>Zend_Auth_Adapter_OpenId</code> permet l'authentification à travers un serveur distant
             OpenID. Une telle authentification attend que l'utilisateur fournisse à l'application web son
             identifiant OpenID. L'utilisateur est alors redirigé vers un fournisseur de services OpenID, 
             afin de s'identifier en rapport avec l'application web utilisée. Un mot de passe ou un autre
@@ -15,7 +15,8 @@
         <para>
             L'identitié OpenID est juste une URL HTTP qui pointe vers une page avec des informations décrivant le
             serveur à utiliser et des informations sur l'utilisateur. Pour plus d'informations, consultez
-            <ulink url="http://www.openid.net/">le site officiel OpenID</ulink>.
+            <ulink url="http://www.openid.net/">le site officiel OpenID</ulink> ou une version française
+            <ulink url="http://www.openidfrance.fr">OpenIDFrance</ulink>.
         </para>
         <para>
             La classe <code>Zend_Auth_Adapter_OpenId</code> utilise
@@ -24,7 +25,8 @@
 
         <note>
             <para>
-                <code>Zend_OpenId</code> utilise <ulink url="http://php.net/gmp">l'extension GMP</ulink>, si disponible.
+                <code>Zend_OpenId</code> utilise <ulink url="http://www.php.net/manual/fr/ref.gmp.php">
+                l'extension GMP</ulink>, si disponible.
                 L'utilisation de cette extension est recommandée pour améliorer les performances de
                 <code>Zend_Auth_Adapter_OpenId</code>.
             </para>
@@ -43,7 +45,7 @@
 
         <para>
             A la différence des autres adaptateurs <code>Zend_Auth</code>, l'adaptateur OpenID utilise une
-            authentification sur un serveur externe à l'application, et nécéssitera ainsi deux requêtes
+            authentification sur un serveur externe à l'application, et nécessitera donc deux requêtes
             HTTP. Ainsi <code>Zend_Auth_Adapter_OpenId::authenticate()</code> devra être appelée deux fois :
             d'abord pour rediriger l'utilisateur vers le serveur OpenID (rien ne sera donc retourné par la
             méthode), qui lui-même redirigera l'utilisateur vers l'application, où un deuxième appel de méthode
@@ -53,7 +55,7 @@
 
         <para>
             L'exemple suivant montre l'utilisation de <code>Zend_Auth_Adapter_OpenId</code>.
-            <code>Zend_Auth_Adapter_OpenId::authenticate()</code> est appelée deux fois. Première fois juste
+            <code>Zend_Auth_Adapter_OpenId::authenticate()</code> est appelée deux fois. La première fois juste
             après avoir envoyé le formulaire, lorsque <code>$_POST['openid_action']</code> vaut <code>"login"</code>,
             et la deuxième fois après la redirection du serveur OpenID vers l'application, lorsque
             <code>$_GET['openid_mode']</code> ou <code>$_POST['openid_mode']</code> existe.
@@ -105,13 +107,10 @@ if ((isset($_POST['openid_action']) &&
             du serveur OpenID vers l'application, sur une page différente de la première. Ceci peut être
             fait avec des objets personnalisés <code>Zend_OpenId_Consumer_Storage</code> ou
             <code>Zend_Controller_Response</code>. Vous pouvez aussi utiliser le procédé
-            "Simple Registration" pour récupérer les informations au sujet de l'utilisateur, en provenance du serveur
-            OpenID. Toutes ces possibilités sont écrites et détaillées dans le chapitre concernant
+            "Simple Registration" pour récupérer les informations au sujet de l'utilisateur, en provenance
+            du serveur OpenID. Toutes ces possibilités sont écrites et détaillées dans le chapitre concernant
             <code>Zend_OpenId_Consumer</code>.
         </para>
 
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

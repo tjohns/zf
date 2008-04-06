@@ -1,5 +1,4 @@
 <sect1 id="zend.timesync.working">
-
     <title>Utiliser Zend_TimeSync</title>
 
     <para>
@@ -11,14 +10,13 @@
     <note>
         <para>
             Dans tous les exemples qui suivront, nous utiliserons un pool de serveurs générique public.
-            <emphasis role="strong">0.europe.pool.ntp.org</emphasis>. De votre coté, il est conseillé d'utiliser le pool
+            <emphasis role="strong">0.europe.pool.ntp.org</emphasis>. De votre côté, il est conseillé d'utiliser le pool
             le plus proche possible géographiquement de votre position. Lisez
             <ulink url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink> pour plus d'informations.
         </para>
     </note>
 
     <sect2 id="zend.timesync.working.generic">
-
         <title>Requêter un serveur de temps public</title>
 
         <para>
@@ -34,8 +32,8 @@ print $server->getDate()->getIso();]]>
         </programlisting>
 
         <para>
-            Que se passe-t-il en arrière plan de <code>Zend_TimeSync</code>? Tout d'abord la syntaxe est vérifiée.
-            Ainsi, '<code>0.pool.ntp.org</code>' est vérifié et reconnu comme pouvant être un serveur de temps.
+            Que se passe-t-il en arrière plan de <code>Zend_TimeSync</code> ? Tout d'abord la syntaxe est vérifiée.
+            Ainsi, "<code>0.pool.ntp.org</code>" est vérifié et reconnu comme pouvant être un serveur de temps.
             Ensuite l'appel à <code>getDate()</code> génère une requête vers le serveur de temps qui retourne son temps.
             <code>Zend_TimeSync</code> va alors calculer la différence entre ce temps retourné, et le temps actuel du
             serveur sur lequel le script tourne, et retourner finalement un objet <code>Zend_Date</code> représentant
@@ -50,7 +48,6 @@ print $server->getDate()->getIso();]]>
     </sect2>
 
     <sect2 id="zend.timesync.working.multiple">
-
         <title>Serveurs de temps multiples</title>
 
         <para>
@@ -75,7 +72,7 @@ print $server->getDate()->getIso();]]>
         </programlisting>
 
         <para>
-            Vous pouvez ajouter une infinié de serveurs, et <code>Zend_TimeSync</code> basculera automatiquement au suivant, 
+            Vous pouvez ajouter une infinité de serveurs, et <code>Zend_TimeSync</code> basculera automatiquement au suivant, 
             si un ne répond pas.
         </para>
 
@@ -96,14 +93,13 @@ print $server->getDate()->getIso();]]>
         </programlisting>
 
         <para>
-            En nommant vos serveurs, vous pourrez en interroger un spécifique comme nous allons le voir.
+            En nommant vos serveurs, vous pourrez en interroger un en particulier comme nous allons le voir.
         </para>
 
     </sect2>
 
     <sect2 id="zend.timesync.working.protocol">
-
-        <title>les protocoles des serveurs de temps</title>
+        <title>Les protocoles des serveurs de temps</title>
 
         <para>
             La plupart des serveurs publics de temps utilisent le protocole <emphasis role="strong">NTP</emphasis>.
@@ -134,7 +130,6 @@ print $server->getDate()->getIso();]]>
     </sect2>
 
     <sect2 id="zend.timesync.working.ports">
-
         <title>Utiliser les ports pour les serveurs de temps</title>
 
         <para>
@@ -143,7 +138,7 @@ print $server->getDate()->getIso();]]>
         </para>
 
         <para>
-            Quelque fois il peut être nécéssaire de préciser le port à utiliser. Si c'est le cas, rajoutez le
+            Quelque fois il peut être nécessaire de préciser le port à utiliser. Si c'est le cas, rajoutez le
             simplement à l'adresse du serveur à utiliser, sinon <code>Zend_TimeSync</code> utilisera celui par défaut.
         </para>
 
@@ -160,7 +155,6 @@ print $server->getDate()->getIso();]]>
     </sect2>
 
     <sect2 id="zend.timesync.working.options">
-
         <title>Options pour les serveurs de temps</title>
 
         <para>
@@ -169,16 +163,16 @@ print $server->getDate()->getIso();]]>
         </para>
 
         <para>
-            L'ioption <emphasis role="strong">timeout</emphasis> définit le nombre de secondes au delà duquel la connection
+            L'ioption <emphasis role="strong">timeout</emphasis> définit le nombre de secondes au delà duquel la connexion
             sera considérée comme cassée. La valeur par défaut est <emphasis role="strong">1</emphasis>, donc
-            <code>Zend_TimeSync</code> changera de serveur si la réponse du serveur actuellement intérrogé met plus d'une 
+            <code>Zend_TimeSync</code> changera de serveur si la réponse du serveur actuellement interrogé met plus d'une 
             seconde à arriver.
         </para>
 
         <para>
             Grâce à <code>setOptions()</code>, vous passez un tableau d'options que vous voulez. La clé du tableau représente
             le nom de l'option en question et la valeur, sa valeur. Pour voir les options déja affectées, utilisez la méthode
-            <code>getOptions()</code> method. Elle accepte une clé nommant l'option à récupérer, ou alors si aucun paramètre ne
+            <code>getOptions()</code>. Elle accepte une clé nommant l'option à récupérer, ou alors si aucun paramètre ne
             lui est passé, la méthode retournera toutes les options connues.
         </para>
 
@@ -197,17 +191,16 @@ print "Timeout = " . Zend_TimeSync::getOptions('timeout');]]>
 
         <para>
             Comme vous pouvez le noter, les options de <code>Zend_TimeSync</code> sont statiques, ainsi chaque instance de
-            <code>Zend_TimeSync</code> possèdera les mêmes otpions.
+            <code>Zend_TimeSync</code> possèdera les mêmes options.
         </para>
 
     </sect2>
 
     <sect2 id="zend.timesync.working.different">
-
         <title>Utiliser des serveurs de temps différents</title>
 
         <para>
-            Par défaut la requête utilisera le premier serveur définit, et ainsi de suite. Il peut être nécéssaire parfois,
+            Par défaut la requête utilisera le premier serveur défini, et ainsi de suite. Il peut être nécessaire parfois,
             de spécifier un serveur précis que l'on souhaite interroger. Utilisez <code>setServer()</code> et passez lui le 
             nom du serveur que vous souhaitez interroger prochainement. Pour savoir le serveur qui va être utilisé,
             <code>getServer()</code> vous sera utile.
@@ -227,7 +220,6 @@ $server = $server->setServer('additional');]]>
     </sect2>
 
     <sect2 id="zend.timesync.working.informations">
-
         <title>Informations sur les serveurs de temps</title>
 
         <para>
@@ -251,12 +243,11 @@ print_r ($server->getInfo());]]>
     </sect2>
 
     <sect2 id="zend.timesync.working.exceptions">
-
         <title>Gérer les exceptions</title>
 
         <para>
-            Les exceptions sont collectées pour tous les serveurs et seront retournées en tant que tableau. Vous pourrez ainsi
-            itérer sur vos exceptions, voyez plutot :
+            Les exceptions sont collectées pour tous les serveurs et sont retournées en tant que tableau. Vous pourrez ainsi
+            itérer sur vos exceptions, voyez plutôt :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
