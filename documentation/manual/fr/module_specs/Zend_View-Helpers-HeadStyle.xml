@@ -1,4 +1,4 @@
-<sect3 id="zend.view.helpers.initial.headstyle">
+﻿<sect3 id="zend.view.helpers.initial.headstyle">
     <title>L'aide de vue HeadStyle</title>
 
     <para>
@@ -60,9 +60,8 @@
 $this->headStyle()->appendStyle($styles);]]></programlisting>
 
         <para>
-            L'ordre est très important avec les CSS ; vous pouvez devoir assurer que des déclarations soient chargées dans un ordre spécifique dû à l'ordre de la cascade ; employez les diverses directives "append", "prepend", et "offsetSet" pour faciliter cette tâche :
-
-</para>
+            L'ordre est très important avec les CSS ; vous pouvez devoir assurer que les déclarations soient chargées dans un ordre spécifique dû à l'ordre de la cascade ; employez les diverses directives "append", "prepend", et "offsetSet" pour faciliter cette tâche :
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 // Mettre les styles dans le bon ordre

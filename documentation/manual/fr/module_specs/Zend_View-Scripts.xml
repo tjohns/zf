@@ -44,7 +44,7 @@
         <title>Echapper la sortie</title>
 
         <para>
-            Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer que la sortie est correctement échappé ; de plus ceci permet d'éviter les attaques de type cross-site scripting (XSS). A moins que vous n'utilisiez une fonction, une méthode, ou une aide qui gère l'échappement, vous devriez toujours échapper les variables lors de l'affichage.
+            Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer que la sortie est correctement échappée ; de plus ceci permet d'éviter les attaques de type cross-site scripting (XSS). A moins que vous n'utilisiez une fonction, une méthode, ou une aide qui gère l'échappement, vous devriez toujours échapper les variables lors de l'affichage.
         </para>
 
         <para>
@@ -60,11 +60,11 @@ echo $this->escape($this->variable);]]>
         </programlisting>
 
         <para>
-            Par défaut, la méthode <code>escape()</code> utilise la fonction PHP htmlspecialchar() pour l'échappement. Cependant, en fonction de votre environnement, vous souhaitez peut-être un échappement différent. Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour dire à <code>Zend_View</code> quelle méthode de rappel elle doit utiliser.
+            Par défaut, la méthode <code>escape()</code> utilise la fonction PHP htmlspecialchar() pour l'échappement. Cependant, en fonction de votre environnement, vous souhaitez peut-être un échappement différent. Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour dire à <code>Zend_View</code> quelle méthode de rappel ("callback") elle doit utiliser.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// créé une instance Zend_View
+// crée une instance Zend_View
 $view = new Zend_View();
 
 // spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
@@ -159,7 +159,7 @@ if ($this->livres) {
             <title>Système de gabarit utilisant Zend_View_Interface</title>
 
             <para>
-                Certains peuvent trouver plus facile de simplement fournir un moteur de gabarit compatible avec Zend_View. <code>Zend_View_Interface</code> définit l'interface de compatibilité minimale nécessaire :
+                Certains peuvent trouver plus facile de simplement fournir un moteur de gabarit compatible avec <code>Zend_View</code>. <code>Zend_View_Interface</code> définit l'interface de compatibilité minimale nécessaire :
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -179,7 +179,7 @@ public function setScriptPath($path);
 public function setBasePath($path, $prefix = 'Zend_View');
 
 /**
- * Ajoute un chemin de base supplémentairepour les ressources de vue
+ * Ajoute un chemin de base supplémentaire pour les ressources de vue
  */
 public function addBasePath($path, $prefix = 'Zend_View');
 
@@ -357,9 +357,11 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Affectation de variables au gabarit
      *
-     * Autorise une affectation simple (une clé => une valeur) OU le passage d'un tableau (paire de clé => valeur) à affecter en masse
+     * Autorise une affectation simple (une clé => une valeur) 
+     * OU 
+     * le passage d'un tableau (paire de clé => valeur) à affecter en masse
      *
-     * @voir __set()
+     * @see __set()
      * @param string|array $spec Le type d'affectation à utiliser (clé ou tableau de paires clé => valeur)
      * @param mixed $value (Optionel) Si vous assignez une variable nommée, utilisé ceci comme valeur
      * @return void

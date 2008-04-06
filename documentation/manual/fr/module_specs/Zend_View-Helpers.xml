@@ -1,4 +1,4 @@
-<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
+﻿<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Aides pour la vue</title>
 
@@ -25,7 +25,7 @@
         <title>Aides initiales</title>
 
         <para>
-            <code>Zend_View</code> fournit avec un jeu initial de classes d'aides, la plupart est liée à la génération d'éléments de formulaire. Chacune affiche et échappe l'élement automatiquement. De plus, il existe des aides pour créer des URLS sur la base de routes et des listes HTML, de la même manière que l'on déclarerait des variables. Les aides actuellement incluses sont :
+            <code>Zend_View</code> fournit avec un jeu initial de classes d'aides, la plupart est liée à la génération d'éléments de formulaire. Chacune affiche et échappe l'élément automatiquement. De plus, il existe des aides pour créer des URLS sur la base de routes et des listes HTML, de la même manière que l'on déclarerait des variables. Les aides actuellement incluses sont :
         </para>
 
         <itemizedlist>
@@ -35,11 +35,11 @@
             </para></listitem>
 
             <listitem><para>
-                <code>fieldset($name, $content, $attribs)</code> : crée un ensemble de champs XHTML. Si <code>$attribs</code> contient une clé "legend", cette valeur sera utilisée pour lé gende du fieldset. Le fieldset entourera le contenu <code>$content</code> tel qu'il aura été fourni à l'aide.
+                <code>fieldset($name, $content, $attribs)</code> : crée un ensemble de champs XHTML. Si <code>$attribs</code> contient une clé "legend", cette valeur sera utilisée comme légende du fieldset. Le fieldset entourera le contenu <code>$content</code> tel qu'il aura été fourni à l'aide.
             </para></listitem>
 
             <listitem><para>
-                <code>form($name, $attribs, $content)</code> : génère un formulaire XHTML. Tous les éléments <code>$attribs</code> sont échappés et rendus sous la forme d'attributs de la balise "form". Si <code>$content</code> est présent et n'est pas un booléen valant <code>false</code>, alors ce contenu est rendu à l'intérieurs des balises "form" ; si <code>$content</code> est un booléen valant <code>false</code> (par défaut), seul la balise ouvrante "form" est générée.
+                <code>form($name, $attribs, $content)</code> : génère un formulaire XHTML. Tous les éléments <code>$attribs</code> sont échappés et rendus sous la forme d'attributs de la balise "form". Si <code>$content</code> est présent et n'est pas un booléen valant <code>false</code>, alors ce contenu est rendu à l'intérieur des balises "form" ; si <code>$content</code> est un booléen valant <code>false</code> (par défaut), seul la balise ouvrante "form" est générée.
             </para></listitem>
 
             <listitem><para>
@@ -87,7 +87,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep)</code> : crée une list de cases à cocher. <code>$options</code> devrait être un tableau associatif, avec une profondeur arbitraire. <code>$value</code> peut être une valeur unique ou un tableau de valeurs sélectionnées qui correspondent aux clés du tableau <code>$options</code>. <code>$listsep</code> est un séparateur HTML ("&lt;br /&gt;") par défaut. Par défaut, cet élément est traité comme un tableau ; toutes les cases à cocher partagent le même nom, et sont soumises sous la forme d'un tableau.
+                <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep)</code> : crée une liste de cases à cocher. <code>$options</code> devrait être un tableau associatif, avec une profondeur arbitraire. <code>$value</code> peut être une valeur unique ou un tableau de valeurs sélectionnées qui correspondent aux clés du tableau <code>$options</code>. <code>$listsep</code> est un séparateur HTML ("&lt;br /&gt;") par défaut. Par défaut, cet élément est traité comme un tableau ; toutes les cases à cocher partagent le même nom, et sont soumises sous la forme d'un tableau.
             </para></listitem>
 
             <listitem><para>
@@ -95,7 +95,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formRadio($name, $value, $attribs, $options)</code> : crée une série d'éléments &lt;input type="button" /&gt;, un pour chaque élément $options. Dans le tableau $options, la clé de l'élément est la valeur du radio, et la valeur de l'élément est l'étiquette du radio. La radio <code>$value</code> sera précochée pour vous.
+                <code>formRadio($name, $value, $attribs, $options)</code> : crée une série d'éléments &lt;input type="button" /&gt;, un pour chaque élément <code>$options</code>. Dans le tableau <code>$options</code>, la clé de l'élément est la valeur du radio, et la valeur de l'élément est l'étiquette du radio. La radio <code>$value</code> sera précochée pour vous.
             </para></listitem>
 
             <listitem><para>
@@ -103,7 +103,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formSelect($name, $value, $attribs, $options)</code> : crée un bloc &lt;select&gt;...&lt;/select&gt;, avec une &lt;option&gt; pour chaque élément <code>$options</code>. Dans le tableau <code>$options</code>, la clé de l'élément est la valeur de l'option, et la valeur de l'élément est son étiquette optionnelle. L'option (ou les options) <code>$value</code> sera (ou seront) présélectionnées pour vous.
+                <code>formSelect($name, $value, $attribs, $options)</code> : crée un bloc &lt;select&gt;...&lt;/select&gt;, avec une &lt;option&gt; pour chaque élément <code>$options</code>. Dans le tableau <code>$options</code>, la clé de l'élément est la valeur de l'option, et la valeur de l'élément est son étiquette optionnelle. L'option (ou les options) <code>$value</code> sera (ou seront) présélectionnée(s) pour vous.
             </para></listitem>
 
             <listitem><para>
@@ -127,14 +127,13 @@
             </para></listitem>
         </itemizedlist>
 
-
         <para>
             Les utiliser dans vos script de vue est très simple, voici un exemple. Notez que tout ce dont vous avez besoin, c'est de les appeler; elles vont se charger et s'instantier elle-même si besoin est.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 // dans votre script de vue, $this se réfère à l'instance de Zend_View.
-//
+
 // Partons du principe que vous avez déjà assigné une série d'options de sélection dans un
 // tableau $countries =  array('us' => 'United States', 'il' => 'Israel', 'de' => 'Germany').
 ?>
@@ -152,7 +151,7 @@
         </programlisting>
 
         <para>
-            La sortie résultante du script de vue ressemblera à ceci:
+            La sortie résultante du script de vue ressemblera à ceci :
         </para>
 
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
@@ -184,9 +183,7 @@
         <xi:include href="Zend_View-Helpers-HeadScript.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-HeadScript.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="Zend_View-Helpers-HeadStyle.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-HeadStyle.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
@@ -200,7 +197,7 @@
         <title>Chemin des aides</title>
 
         <para>
-            Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins dans lesquels <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code> cherche dans "Zend/View/Helper/*". Vous pouvez dire à <code>Zend_View</code> de regarder dans d'autres chemins en utilisant les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>. De plus, vous pouvez indiquer un préfixe de classe pour utiliser les aides dans le répertoire fourni, et permettre de donner des espaces de nommage à vos classes d'aide. Par défaut, si aucun préfixe n'est fourni, 'Zend_View_Helper_' est utilisé.
+            Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins dans lesquels <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code> cherche dans "Zend/View/Helper/*". Vous pouvez dire à <code>Zend_View</code> de regarder dans d'autres chemins en utilisant les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>. De plus, vous pouvez indiquer un préfixe de classe pour utiliser les aides dans le répertoire fourni, et permettre de donner des espaces de noms à vos classes d'aide. Par défaut, si aucun préfixe n'est fourni, "Zend_View_Helper_" est utilisé.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -239,7 +236,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
         <itemizedlist>
 
             <listitem><para>
-                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant la notation Camel. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "Ma_View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans l'underscore, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
+                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant la notation Camel. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "Ma_View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans le tiret bas, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
             </para></listitem>
 
             <listitem><para>

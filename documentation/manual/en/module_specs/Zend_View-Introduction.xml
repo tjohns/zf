@@ -2,7 +2,7 @@
     <title>Introduction</title>
 
     <para>
-        Zend_View is a class for working with the "view" portion of
+        <code>Zend_View</code> is a class for working with the "view" portion of
         the model-view-controller pattern.  That is, it exists to
         help keep the view script separate from the model and
         controller scripts.  It provides a system of helpers, output
@@ -10,19 +10,19 @@
     </para>
 
     <para>
-        Zend_View is template system agnostic; you may use PHP as
+        <code>Zend_View</code> is template system agnostic; you may use PHP as
         your template language, or create instances of other
         template systems and manipulate them within your view
         script.
     </para>
 
     <para>
-        Essentially, using Zend_View happens in two major steps:
+        Essentially, using <code>Zend_View</code> happens in two major steps:
 
         1.  Your controller script creates an instance of
         Zend_View and assigns variables to that instance.
 
-        2. The controller tells the Zend_View to render a particular
+        2. The controller tells the <code>Zend_View</code> to render a particular
         view, thereby handing control over the view script, which
         generates the view output.
     </para>
@@ -71,7 +71,7 @@ echo $view->render('booklist.php');]]>
         <para>
             Now we need the associated view script, "booklist.php".
             This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the Zend_View instance, which
+            executes inside the scope of the <code>Zend_View</code> instance, which
             means that references to $this point to the Zend_View
             instance properties and methods.  (Variables assigned to the
             instance by the controller are public properties of the
@@ -122,7 +122,7 @@ echo $view->render('booklist.php');]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>basePath:</code> indicate a base path from which to set
+                    <code>basePath</code>: indicate a base path from which to set
                     the script, helper, and filter path. It assumes a directory
                     structure of:
                 </para>
@@ -142,7 +142,7 @@ base/path/
             </listitem>
 
             <listitem><para>
-                <code>encoding:</code> indicate the character encoding to use
+                <code>encoding</code>: indicate the character encoding to use
                 with <code>htmlentities()</code>,
                 <code>htmlspecialchars()</code>, and other operations. Defaults
                 to ISO-8859-1 (latin1). May be set via
@@ -151,13 +151,13 @@ base/path/
             </para></listitem>
 
             <listitem><para>
-                <code>escape:</code> indicate a callback to be used by
+                <code>escape</code>: indicate a callback to be used by
                 <code>escape()</code>. May be set via <code>setEscape()</code>
                 or the <code>escape</code> option to the constructor.
             </para></listitem>
 
             <listitem><para>
-                <code>filter:</code> indicate a filter to use after rendering
+                <code>filter</code>: indicate a filter to use after rendering
                 a view script. May be set via <code>setFilter()</code>,
                 <code>addFilter()</code>, or the <code>filter</code> option to
                 the constructor.
@@ -195,7 +195,7 @@ base/path/
                 <para>
                     <code>clearVars()</code> will clear all assigned variables;
                     useful when you wish to re-use a view object, but want to
-                    control what variables are available..
+                    control what variables are available.
                 </para>
             </listitem>
 
