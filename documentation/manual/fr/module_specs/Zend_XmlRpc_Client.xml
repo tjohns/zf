@@ -6,7 +6,7 @@
 
         <para>
             Le Zend Framework possède la capacité de consommer des services distants XML-RPC, via
-            la classe <code>Zend_XmlRpc_Client</code>. Ses caractéristiques principales sont la convertion
+            la classe <code>Zend_XmlRpc_Client</code>. Ses caractéristiques principales sont la conversion
             automatique des types entre PHP et XML-RPC, un objet proxy de serveur, et des possibilités
             d'introspection du serveur.
         </para>
@@ -18,13 +18,13 @@
         <title>Appels de méthodes</title>
 
         <para>
-            Le constructeur de <code>Zend_XmlRpc_Client</code> reçoit en premier paramètre l'URM du
-            serveur XML-RPC distant. L'instance retournée pourra alors être utilisée pour appeller 
+            Le constructeur de <code>Zend_XmlRpc_Client</code> reçoit en premier paramètre l'URL du
+            serveur XML-RPC distant. L'instance retournée pourra alors être utilisée pour appeler 
             n'importe quelle méthode distante.
         </para>
 
         <para>
-            Pour appeler une méthode distante, utilisez la méthode <code>call()</code> sur votre instance.
+            Pour appeler une méthode distante, utilisez la méthode <code>call()</code> de votre instance.
             Le code suivant montre un exemple avec le serveur XML-RPC du site de Zend Framework. Vous pouvez l'utiliser
             pour tester ou explorer les possibilités des composants <code>Zend_XmlRpc</code>.
         </para>
@@ -82,7 +82,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
     </sect2>
 
     <sect2 id="zend.xmlrpc.value.parameters">
-        <title>Types et convertions</title>
+        <title>Types et conversions</title>
         <para>
             Certaines méthodes distantes requièrent des paramètres. Ceux-ci sont donnés sous forme de tableau PHP à 
             <code>call()</code>. Chaque paramètre est supposé être un type PHP natif qui sera alors lui-même converti, ou alors
@@ -92,14 +92,14 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         <sect3 id="zend.xmlrpc.value.parameters.php-native">
             <title>Types PHP natifs comme paramètres</title>
             <para>
-                Les paramètres passés à <code>call()</code> peuvent être d"un type PHP natif, à savoir
+                Les paramètres passés à <code>call()</code> peuvent être d'un type PHP natif, à savoir
                 <code>string</code>, <code>integer</code>, <code>float</code>, <code>boolean</code>,
                 <code>array</code>, ou <code>object</code>. Dans ce cas, chacun des types sera converti de manière
                 automatique en son type compatible XML-RPC, suivant la table suivante :
             </para>
 
             <table id="zend.xmlrpc.value.parameters.php-native.table-1">
-                <title>PHP et XML-RPC, convertions de types</title>
+                <title>PHP et XML-RPC, conversions de types</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
@@ -150,22 +150,22 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Lorsque vous voulez être certains du type de paramètre (la méthode attend un entier
+                            Lorsque vous voulez être certain du type de paramètre (la méthode attend un entier
                             et vous le récupérez sous forme de chaine de caractères depuis une base de données)
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            Lorsque la méthode attentd un type <code>base64</code> ou <code>dateTime.iso8601</code>
+                            Lorsque la méthode attend un type <code>base64</code> ou <code>dateTime.iso8601</code>
                             (ceux-ci n'existant pas nativement dans le langage PHP).
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            Lorsque la convertion de types (cast) peut echouer. (vous voulez passer une valeur
+                            Lorsque la conversion de types (cast) peut échouer (vous voulez passer une valeur
                             XML-RPC vide comme paramètre. Mais les valeurs vides en PHP sont représentés sous forme
                             de tableaux vides, or si vous passez un tableau vide à votre méthode <code>call</code>,
-                            ils va être converti vers un tableau XML-RPC, comme ce n'est pas un tableau associatif).
+                            il va être converti en un tableau XML-RPC, comme ce n'est pas un tableau associatif).
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -234,11 +234,11 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
 
             <para>
                 <note>
-                    <title>Convertion automatique</title>
+                    <title>Conversion automatique</title>
                     <para>
-                        Lorsque vous créez un objet <code>Zend_XmlRpc_Value</code>, sa valeur est determinée
+                        Lorsque vous créez un objet <code>Zend_XmlRpc_Value</code>, sa valeur est déterminée
                         par un type PHP. Celui-ci va être converti vers le type désiré en utilisant le cast PHP.
-                        Par exemple si une chaine de caractères est donnée comme valeur à un objet
+                        Par exemple si une chaîne de caractères est donnée comme valeur à un objet
                         <code>Zend_XmlRpc_Value_Integer</code>, elle sera alors convertie suivant la règle
                         <code>(int)$value</code>.
                     </para>
@@ -293,8 +293,8 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"]]>
         </example>
 
         <para>
-            Si le serveur distant supporte les espaces de nommage nichés, alors le proxy les supportera.
-            Par exemple, si le serveur dans l'exemple ci-dessus acceptait les espaces de noms nichés, alors
+            Si le serveur distant supporte les espaces de nommage imbriqués, alors le proxy les supportera.
+            Par exemple, si le serveur dans l'exemple ci-dessus acceptait les espaces de noms imbriqués, alors
             sa méthode <code>test.foo.bar()</code> aurait pu être appelée via
             <code>$test->foo->bar()</code>.
         </para>
@@ -305,7 +305,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"]]>
         <title>Gestion des erreurs</title>
         <para>
             Deux types d'erreurs peuvent être distingués : erreurs HTTP, ou erreurs XML-RPC. L'objet
-            <code>Zend_XmlRpc_Client</code> reconnait ces erreurs et fournit des moyens de les repérer et
+            <code>Zend_XmlRpc_Client</code> reconnait ces erreurs et fournit les moyens de les repérer et
             de les gérer.
         </para>
 
@@ -349,7 +349,7 @@ try {
             <title>Erreurs XML-RPC (Faults)</title>
 
             <para>
-                Une erreur XML-RPC peut s'assimiler à une exception en PHP. C'est un type spécial retourné par une des méthodes
+                Une erreur XML-RPC peut être assimilée à une exception en PHP. C'est un type spécial retourné par une des méthodes
                 du client XML-RPC, et ce type contient un message, et un code d'erreur. Les erreurs XML-RPC seront gérées
                 différemment en fonction du contexte d'utilisation de l'objet <code>Zend_XmlRpc_Client</code>.
             </para>
@@ -399,7 +399,7 @@ try {
     <sect2 id="zend.xmlrpc.client.introspection">
         <title>Introspection du serveur</title>
         <para>
-            Certains serveurs XML-RPC supportent l'introspection de leurs méthodes au travers de l'espace de nom <code>system.</code>
+            Certains serveurs XML-RPC supportent l'introspection de leurs méthodes au travers de l'espace de noms <code>system.</code>
             <code>Zend_XmlRpc_Client</code> fournit un support d'un tel procédé.
         </para>
 
@@ -422,7 +422,7 @@ try {
         </para>
 
         <example id="zend.xmlrpc.client.request-to-response.example-1">
-            <title>Procéder une requête et une réponse manuellement</title>
+            <title>Effectuer une requête et récupérer une réponse manuellement</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Client.php';
@@ -453,7 +453,7 @@ $client->doRequest($request);
 
         <para>
             Dans tous les exemples utilisés sur cette page, nous ne parlons jamais du client HTTP. Lorsque c'est
-            nécessaire, une instance de <code>Zend_Http_Client</code> sera créee par défaut et injectée dans
+            nécessaire, une instance de <code>Zend_Http_Client</code> sera créée par défaut et injectée dans
             <code>Zend_XmlRpc_Client</code> de manière automatique.
         </para>
 
@@ -463,13 +463,10 @@ $client->doRequest($request);
         </para>
 
         <para>
-            <code>setHttpClient()</code> est particulièrement utilisée pour les tests uniatires. Lorsque combinée avec
+            <code>setHttpClient()</code> est particulièrement utilisée pour les tests unitaires. Lorsque combinée avec
             <code>Zend_Http_Client_Adapter_Test</code>, les services webs peuvent être déguisés (émulés) pour les tests.
             Voyez les tests unitaires de <code>Zend_XmlRpc_Client</code> pour des exemples concrets.
         </para>
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
