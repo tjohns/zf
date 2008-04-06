@@ -40,7 +40,7 @@ if ((isset($_POST['openid_action']) &&
     isset($_GET['openid_mode']) ||
     isset($_POST['openid_mode'])) {
     $result = $auth->authenticate(
-    	new Zend_Auth_Adapter_OpenId(@$_POST['openid_identifier']));
+    new Zend_Auth_Adapter_OpenId(@$_POST['openid_identifier']));
     if ($result->isValid()) {
         Zend_OpenId::redirect(Zend_OpenId::selfURL());
     } else {

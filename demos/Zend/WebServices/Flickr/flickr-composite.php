@@ -66,13 +66,13 @@ if (isset($_POST) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
             padding: 5px;
         }
 
-	#composite {
+        #composite {
             text-align: center;
             padding: 25px;
             background-color: black;
             margin-left: auto;
             margin-right: auto;
-	}
+        }
 
         h2 {
             font-size: 14px;
