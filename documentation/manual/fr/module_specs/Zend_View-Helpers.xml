@@ -240,7 +240,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
             </para></listitem>
 
             <listitem><para>
-                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide ; c'est la méthode qui sera appelée quand votre template appelera "$this->actionSpeciale()". Dans notre exemple "$this->actionSpeciale()", la déclaration de méthode requise serait "public function actionSpeciale()".
+                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide ; c'est la méthode qui sera appelée quand votre template appelera <code>$this->actionSpeciale()</code>. Dans notre exemple <code>$this->actionSpeciale()</code>, la déclaration de méthode requise serait <code>public function actionSpeciale()</code>.
             </para></listitem>
 
             <listitem><para>
@@ -248,16 +248,16 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
             </para></listitem>
 
             <listitem><para>
-                La classe doit être dans un fichier ayant le même nom que la méthode d'aide. Si on utilise la méthode "actionSpeciale()", le fichier devra être nommé "ActionSpeciale.php"
+                La classe doit être dans un fichier ayant le même nom que la méthode d'aide. Si on utilise la méthode <code>actionSpeciale()</code>, le fichier devra être nommé "ActionSpeciale.php"
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Placez les fichier de classe d'aide quelque part dans la pile des chemins d'aide, et <code>Zend_View</code> le chargera, l'instantiera, le rendra persistant, et l'exécutera automatiquement pour vous.
+            Placez le fichier de classe d'aide quelque part dans la pile des chemins d'aide, et <code>Zend_View</code> le chargera, l'instantiera, le rendra persistant, et l'exécutera automatiquement pour vous.
         </para>
 
         <para>
-            Voici un exemple du fichier "ActionSpeciale.php" :
+            Voici un exemple de fichier "ActionSpeciale.php" :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -274,7 +274,7 @@ class Ma_View_Helper_ActionSpeciale
         </programlisting>
 
         <para>
-            Ensuite, dans un script de vue, vous pouvez appeler l'aide <code>ActionSpeciale</code> autant de fois que vous le souhaitez ; elle sera instantiée une fois, et rendue persistante pendant toute la vie de l'instance de <code>Zend_View</code>.
+            Ensuite, dans un script de vue, vous pouvez appeler l'aide <code>ActionSpeciale</code> autant de fois que vous le souhaitez ; elle sera instanciée une fois, et rendue persistante pendant toute la vie de l'instance de <code>Zend_View</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -294,11 +294,11 @@ J'ai vu 'The Big Lebowsky' 3 fois.]]>
         </programlisting>
 
         <para>
-            Quelquefois vous devez accéder à l'objet <code>Zend_View</code> appelant - par exemple, si vous devez utiliser l'encodage enregistré ou voulez rendre l'affichage d'un autre script de vue comme une sous partie de votre aide. Pour avoir accès à votre objet de vue, votre classe d'aide doit avoir une méthode <code>setView($view)</code>, comme ceci :
+            Quelquefois vous devez accéder à l'objet <code>Zend_View</code> appelant - par exemple, si vous devez utiliser l'encodage enregistré ou voulez effectuer le rendu d'un autre script de vue comme une sous partie de votre aide. Pour avoir accès à votre objet de vue, votre classe d'aide doit avoir une méthode <code>setView($view)</code>, comme ceci :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_ScriptPath
+class Ma_View_Helper_ScriptPath
 {
     public $view;
 

@@ -7,7 +7,7 @@
         <code>Zend_Service</code> offre un support pour tout service web basé sur REST à travers <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
     </para>
     <para>
-        En plus d'être capable d'étendre <code>Zend_Service</code> et d'utiliser <code>Zend_Rest_Client</code> pour des services web basé sur REST, Zend fournit un support pour les services web populaires. Consultez les sections suivantes pour des informations spécifiques à chaque service web supporté.
+        En plus d'être capable d'étendre <code>Zend_Service</code> et d'utiliser <code>Zend_Rest_Client</code> pour des services web basé sur REST, le Zend Framework fournit un support pour les services web populaires. Consultez les sections suivantes pour des informations spécifiques à chaque service web supporté.
     </para>
 
     <itemizedlist>

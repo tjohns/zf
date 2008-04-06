@@ -3,7 +3,7 @@
     <title>Ecrire des validateurs</title>
 
     <para>
-        Zend_Validate fournit un ensemble de validateurs habituellement nécessaires, mais inévitablement, les développeurs souhaiteront écrire des validateurs sur mesure pour leurs besoins particuliers. La méthode d'écriture d'un validateur personnalisé est décrit dans cette section.
+        <code>Zend_Validate</code> fournit un ensemble de validateurs habituellement nécessaires, mais inévitablement, les développeurs souhaiteront écrire des validateurs sur mesure pour leurs besoins particuliers. La méthode d'écriture d'un validateur personnalisé est décrit dans cette section.
     </para>
 
     <para>
@@ -11,7 +11,7 @@
     </para>
 
     <para>
-        Comme vous avez déjà pu déduire de la description ci-dessus de Zend_Validate_Interface, les classes de validation fournie avec le Zend Framework retourne une valeur booléenne pour savoir si une valeur est validée ou non. Elles fournissent également des informations sur la raison pour laquelle la validation a échoué sur une valeur. La disponibilité de ces raisons d'échec de validation peut être utilisé par une application dans différents buts, tels que fournir des statistiques pour l'analyse de la facilité d'utilisation.
+        Comme vous avez déjà pu déduire de la description ci-dessus de <code>Zend_Validate_Interface</code>, les classes de validation fournie avec le Zend Framework retourne une valeur booléenne pour savoir si une valeur est validée ou non. Elles fournissent également des informations sur la raison pour laquelle la validation a échoué sur une valeur. La mise à dispositionde ces raisons d'échec de validation peut être utilisée par une application dans différents buts, tels que fournir des statistiques pour l'analyse de la facilité d'utilisation.
     </para>
 
     <para>
@@ -23,7 +23,6 @@
     </para>
 
     <example id="zend.validate.writing_validators.example.simple">
-
         <title>Création d'une simple classe de validation</title>
 
         <para>
@@ -32,7 +31,7 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Abstract.php';
 
-class MyValid_Float extends Zend_Validate_Abstract
+class MonValidateur_Float extends Zend_Validate_Abstract
 {
     const FLOAT = 'float';
 
@@ -60,11 +59,10 @@ class MyValid_Float extends Zend_Validate_Abstract
     </example>
 
     <example id="zend.validate.writing_validators.example.conditions.dependent">
-
         <title>Ecriture d'une classe de validation ayant des conditions de dépendances</title>
 
         <para>
-            L'exemple suivant démontre un ensemble plus complexe de règles de validation, où on l'exige que la valeur d'entrée doit être numérique et dans la plage des valeurs limites minimum et maximum. Une valeur d'entrée échouerait la validation pour exactement une des raisons suivantes :
+            L'exemple suivant démontre un ensemble plus complexe de règles de validation, où on l'exige que la valeur d'entrée doit être numérique et dans la plage des valeurs limites minimum et maximum. Une valeur d'entrée ferait échouer la validation pour exactement une des raisons suivantes :
 
             <itemizedlist>
                 <listitem>
@@ -85,7 +83,7 @@ class MyValid_Float extends Zend_Validate_Abstract
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Abstract.php';
 
-class MyValid_NumericBetween extends Zend_Validate_Abstract
+class MonValidateur_NumericBetween extends Zend_Validate_Abstract
 {
     const MSG_NUMERIC = 'msgNumeric';
     const MSG_MINIMUM = 'msgMinimum';
@@ -129,21 +127,20 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 }]]>
             </programlisting>
 
-            Les propriétés publiques <code>$minimum</code> et <code>$maximum</code> ont été établies pour fournir les frontières minimum et maximum d'une valeur pour qu'elle soit validée avec succès. La classe définit également deux variables de message qui correspondent aux propriétés publiques et permettent que <code>min</code> et <code>max</code> soit employé dans des modèles de message en tant que paramètres magiques, comme avec <code>value</code>.
+            Les propriétés publiques <code>$minimum</code> et <code>$maximum</code> ont été établies pour fournir les frontières minimum et maximum d'une valeur pour qu'elle soit validée avec succès. La classe définit également deux variables de message qui correspondent aux propriétés publiques et permettent que <code>min</code> et <code>max</code> soient employés dans des modèles de message en tant que paramètres magiques, comme avec <code>value</code>.
         </para>
 
         <para>
-            Noter que si n'importe quel élément de la validation vérifié dans <code>isValid()</code> échoue, un message approprié d'échec est préparé, et la méthode renvoie immédiatement <code>false</code>. Ces règles de validation sont donc séquentiellement dépendantes. C'est-à-dire, que si un essai échoue, il n'y a aucun besoin d'examiner les règles suivantes de validation. Ce besoin être le cas, cependant. L'exemple suivant illustre comment écrire une classe ayant des règles indépendantes de validation, où l'objet de validation peut renvoyer des raisons multiples pour lesquelles une tentative particulière de validation a échoué.
+            Noter que si n'importe quel élément de la validation vérifié dans <code>isValid()</code> échoue, un message approprié d'échec est préparé, et la méthode renvoie immédiatement <code>false</code>. Ces règles de validation sont donc séquentiellement dépendantes. C'est-à-dire, que si un essai échoue, il n'y a aucun besoin d'examiner les règles suivantes de validation. Ce besoin peut exister, cependant. L'exemple suivant illustre comment écrire une classe ayant des règles indépendantes de validation, où l'objet de validation peut renvoyer des raisons multiples pour lesquelles une tentative particulière de validation a échoué.
         </para>
 
     </example>
 
     <example id="zend.validate.writing_validators.example.conditions.independent">
-
         <title>Validation avec des conditions indépendantes, avec raisons multiples d'échec</title>
 
         <para>
-            Considérons l'écriture d'une classe de validation pour le contrôle de résistance d'un mot de passe - quand un utilisateur est requis afin de choisir un mot de passe qui rencontre certains critères pour aider des comptes bloqués d'utilisateur. Supposons que les critères de sécurité de mot de passe imposent que le mot de passe :
+            Considérons l'écriture d'une classe de validation pour le contrôle de résistance d'un mot de passe - quand un utilisateur est requis afin de choisir un mot de passe qui respecte certains critères pour aider à la sécurisation des comptes d'utilisateur. Supposons que les critères de sécurité de mot de passe imposent que le mot de passe :
 
             <itemizedlist>
                 <listitem>
@@ -167,7 +164,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/Abstract.php';
 
-class MyValid_PasswordStrength extends Zend_Validate_Abstract
+class MonValidateur_PasswordStrength extends Zend_Validate_Abstract
 {
     const LENGTH = 'length';
     const UPPER  = 'upper';
@@ -212,7 +209,7 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 }]]>
             </programlisting>
 
-            Noter que les quatre critères d'essais dans <code>isValid()</code> ne renvoient pas immédiatement <code>false</code>. Ceci permet à la classe de validation de fournir toutes les raisons pour laquelle le mot de passe d'entrée n'a pas réussi à remplir les conditions de validation. Si, par exemple, un utilisateur devaient entrer la chaîne "<code>#$%</code>" comme mot de passe, <code>isValid()</code> retournerait chacun des quatre messages d'échec de validation d'être retournés par un appel suivant à <code>getMessages()</code>.
+            Noter que les quatre critères d'essais dans <code>isValid()</code> ne renvoient pas immédiatement <code>false</code>. Ceci permet à la classe de validation de fournir toutes les raisons pour lesquelles le mot de passe d'entrée n'a pas réussi à remplir les conditions de validation. Si, par exemple, un utilisateur entre la chaîne "<code>#$%</code>" comme mot de passe, <code>isValid()</code> entraînera que les quatre messages d'échec de validation seront retournés lors de l'appel suivant à <code>getMessages()</code>.
         </para>
 
     </example>

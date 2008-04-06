@@ -6,7 +6,7 @@
         Souvent, de multiples validations doivent être appliquées à une valeur dans un ordre particulier.
         Le code suivant décrit une méthode permettant de solutionner l'exemple de
         <link linkend="zend.validate.introduction">l'introduction</link>, dans lequel un identifiant doit
-        contenir précisemment entre 6 et 12 caractères alphanumériques.
+        contenir précisement entre 6 et 12 caractères alphanumériques.
 
         <programlisting role="php"><![CDATA[<?php
 // On fournit la capacité de chaîner les validateurs
@@ -43,8 +43,8 @@ if ($validateurChaine->isValid($identifiant)) {
     <para>
         Dans certains cas, il peut être utile d'interrompre le processus si l'un des tests échoue.
         <code>Zend_Validate</code> permet ce cas de figure via l'usage du deuxième paramètre de la
-        méthode <code>addValidator()</code>. En positionnant <code>$breakChainOnFailure</code> sur
-        <code>true</code>, le validateur ajouté interrompra la procédure de test si il échoue, ce qui
+        méthode <code>addValidator()</code>. En positionnant <code>$breakChainOnFailure</code> à
+        <code>true</code>, le validateur ajouté interrompra la procédure de test s'il échoue, ce qui
         permet d'éviter de lancer tout autre test qui serait inutile ou inapproprié dans ce cas de figure.
         Si l'exemple précédent était écrit comme suit, la validation alphanumérique ne serait pas lancé
         si la vérification de la longueur de la valeur échouait :
@@ -57,7 +57,7 @@ $validateurChaine->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
     <para>
-        Tout objet qui implémente <code>Zend_Validate_Interface</code> peut être utilisé comme chaîne de validation.
+        Tout objet qui implémente <code>Zend_Validate_Interface</code> peut être utilisé dans une chaîne de validation.
     </para>
 
 </sect1>

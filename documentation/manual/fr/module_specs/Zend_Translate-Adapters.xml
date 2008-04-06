@@ -1,5 +1,4 @@
 ﻿<sect1 id="zend.translate.adapter">
-
     <title>Adaptateurs pour Zend_Translate</title>
 
     <para>
@@ -25,7 +24,7 @@
                 <row>
                     <entry>Csv</entry>
                     <entry>Utilise les fichiers à séparation par virgule (*.csv/*.txt)</entry>
-                    <entry>Format simple de fichier texte ; très rapide ; problèmes possibles avec les caractères unicode</entry>
+                    <entry>Format simple de fichier texte ; très rapide ; problèmes possibles avec les caractères unicodes</entry>
                 </row>
                 <row>
                     <entry>Gettext</entry>
@@ -34,13 +33,13 @@
                 </row>
                 <row>
                     <entry>Tbx</entry>
-                    <entry>Use termbase exchange (*.tbx/*.xml) files</entry>
-                    <entry>Industry standard for inter application terminology strings ; format XML</entry>
+                    <entry>Utilise les fichiers d'échange termbase (*.tbx/*.xml)</entry>
+                    <entry>Standard industriel pour des chaînes partagées entre les applications ; format XML</entry>
                 </row>
                 <row>
                     <entry>Tmx</entry>
                     <entry>Utilise les fichiers tmx (*.tmx/*.xml)</entry>
-                    <entry>Industriellement compatible avec la traduction d'inter-application ; format XML ; lisible par l'homme</entry>
+                    <entry>Industriellement compatible avec la traduction partagée d'application ; format XML ; lisible par l'homme</entry>
                 </row>
                 <row>
                     <entry>Qt</entry>
@@ -55,7 +54,7 @@
                 <row>
                     <entry>XmlTm</entry>
                     <entry>Use xmltm (*.xml) files</entry>
-                    <entry>Industry standard for XML document translation memory ; format XML ; lisible par l'homme</entry>
+                    <entry>Standard industriel pour la traduction de type XML ; format XML ; lisible par l'homme</entry>
                 </row>
                 <row>
                     <entry>Autres</entry>
@@ -67,7 +66,6 @@
     </table>
 
     <sect2 id="zend.translate.adapter.decision">
-
         <title>Comment décider quel adaptateur de traduction utiliser ?</title>
 
         <para>
@@ -75,7 +73,6 @@
         </para>
 
         <sect3 id="zend.translate.adapter.array">
-
             <title>Zend_Translate_Adapter_Array</title>
 
             <para>
@@ -88,11 +85,10 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.csv">
-
             <title>Zend_Translate_Adapter_Csv</title>
 
             <para>
-                L'adaptateur Csv est l'adapteur qui est le plus simple à utliser pour les clients. Les fichiers CSV sont lisibles par les éditeurs de texte standard, mais souvent les éditeurs de texte ne supportent pas les jeux de caractères utf8.
+                L'adaptateur Csv est l'adapteur qui est le plus simple à utiliser pour les clients. Les fichiers CSV sont lisibles par les éditeurs de texte standard, mais souvent les éditeurs de texte ne supportent pas les jeux de caractères utf8.
             </para>
 
             <para>
@@ -101,7 +97,6 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.gettext">
-
             <title>Zend_Translate_Adapter_Gettext</title>
 
             <para>
@@ -114,11 +109,10 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.tbx">
-
             <title>Zend_Translate_Adapter_Tbx</title>
 
             <para>
-                L'adaptateur Tbx est un adaptateur qui sera utilisé par les clients qui utilisent déjà le format TBX pour leur système de traduction interne. Tbx n'est pas un format de traduction standard, mais plus une collection de chaînes de caractère sources déjà traduites et pré traduites. Quand vous utilisez cet adaptateur vous devez être sûrs que toute votre chaîne de caractère source nécessaire est traduite. TBX est un fichier basé sur le format XML et un format complètement nouveau. XML des fichiers sont lisibles par l'homme, mais l'analyse syntaxique n'est pas auusi rapide qu'avec des fichiers gettext.
+                L'adaptateur Tbx est un adaptateur qui sera utilisé par les clients qui utilisent déjà le format TBX pour leur système de traduction interne. Tbx n'est pas un format de traduction standard, mais plus une collection de chaînes de caractère sources déjà traduites et pré-traduites. Quand vous utilisez cet adaptateur vous devez être sûrs que toute votre chaîne de caractère source nécessaire est traduite. TBX est un fichier basé sur le format XML et un format complètement nouveau. XML des fichiers sont lisibles par l'homme, mais l'analyse syntaxique n'est pas auusi rapide qu'avec des fichiers gettext.
             </para>
 
             <para>
@@ -127,7 +121,6 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.tmx">
-
             <title>Zend_Translate_Adapter_Tmx</title>
 
             <para>
@@ -140,11 +133,10 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.qt">
-
             <title>Zend_Translate_Adapter_Qt</title>
 
             <para>
-                L'Adaptateur Qt est destiné à tous les clients qui ont des fichiers TS faits par QtLinguist comme source de traduction. QT est un fichier basé sur le format XML. Les fichiers XML sont humainement lisible, mais l'analyse syntaxique n'est pas si rapide qu'avec des fichiers gettext.
+                L'adaptateur Qt est destiné à tous les clients qui ont des fichiers TS faits par QtLinguist comme source de traduction. QT est un fichier basé sur le format XML. Les fichiers XML sont humainement lisible, mais l'analyse syntaxique n'est pas si rapide qu'avec des fichiers gettext.
             </para>
 
             <para>
@@ -153,7 +145,6 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.xliff">
-
             <title>Zend_Translate_Adapter_Xliff</title>
 
             <para>
@@ -166,7 +157,6 @@
         </sect3>
 
         <sect3 id="zend.translate.adapter.xmltm">
-
             <title>Zend_Translate_Adapter_XmlTm</title>
 
             <para>
@@ -181,11 +171,10 @@
     </sect2>
 
     <sect2 id="zend.translate.adapter.selfwritten">
-
         <title>Intégrer ses propres adaptateurs</title>
 
         <para>
-            <code>Zend_Translate</code> vous permet d'intégrer et d'utiliser vos propres classes d'adaptateurs. Elles peuvent être utilisées commes les claases standards qui sont déjà incluses dans <code>Zend_Translate</code>.
+            <code>Zend_Translate</code> vous permet d'intégrer et d'utiliser vos propres classes d'adaptateurs. Elles peuvent être utilisées commes les classes standards qui sont déjà incluses dans <code>Zend_Translate</code>.
         </para>
 
         <para>
@@ -202,7 +191,7 @@ require_once 'Zend/Translate.php';
 try {
     $translate = new Zend_Translate('MonEntreprise_Translate_Adapter_MonFormat', '/chemin/vers/translate.xx', 'fr', array('monoption' => 'mavaleur'));
 } catch (Exception $e) {
-    // Ficher non trouvé, pas de classe d'adaptateur...
+    // Fichier non trouvé, pas de classe d'adaptateur...
     // Echec de l'application
 }]]>
         </programlisting>
@@ -210,7 +199,6 @@ try {
     </sect2>
 
     <sect2 id="zend.translate.adapter.caching">
-
         <title>Améliorer les performances de tous les adaptateurs</title>
 
         <para>

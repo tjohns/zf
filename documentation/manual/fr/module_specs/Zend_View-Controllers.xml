@@ -6,7 +6,6 @@
     </para>
 
     <sect2 id="zend.view.controllers.assign">
-
         <title>Assigner des variables</title>
 
         <para>
@@ -25,7 +24,7 @@ $view->c = "Cé";]]>
         </para>
 
         <para>
-            La méthode <code>assign()</code> vous laisse assigner &quot;en vrac&quot; depuis un tableau ou un objet. Les exemples suivants ont le même effet que celui ci-dessus.
+            La méthode <code>assign()</code> vous laisse assigner "en vrac" depuis un tableau ou un objet. Les exemples suivants ont le même effet que celui ci-dessus.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -63,11 +62,10 @@ $view->assign('c', "Cé");]]>
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
-
         <title>Effectuer le rendu d'un script de vue</title>
 
         <para>
-            Une fois que vous avez assigné toutes les variables dont vous aviez besoin, le contrôleur devrait demander à <code>Zend_View</code> de rendre un script de vue particulier. Faites cela en appelant la méthode <code>render()</code>. Notez que la méthode va retourner la vue rendue, mais ne va pas l'afficher, vous devez donc l'afficher avec print ou echo vous même, au moment voulu.
+            Une fois que vous avez assigné toutes les variables dont vous avez besoin, le contrôleur devrait demander à <code>Zend_View</code> de rendre un script de vue particulier. Faites cela en appelant la méthode <code>render()</code>. Notez que la méthode va retourner la vue rendue, mais ne va pas l'afficher, vous devez donc l'afficher vous même avec <code>print</code> ou <code>echo</code>, au moment voulu.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -85,11 +83,11 @@ echo $view->render('uneVue.php');]]>
         <title>Chemin des scripts de vue</title>
 
         <para>
-            Par défaut, <code>Zend_View</code> s'attend à ce que vos scripts de vues soient dans le même dossier que le celui du contrôleur. Par exemple, si le script du contrôleur est dans &quot;/chemin/des/controleurs&quot; et qu'il appelle $view->render('uneVue.php'), <code>Zend_View</code> va rechercher &quot;/chemin/des/controleurs/uneVue.php&quot;
+            Par défaut, <code>Zend_View</code> s'attend à ce que vos scripts de vues soient dans le même dossier que celui du contrôleur. Par exemple, si le script du contrôleur est dans "/chemin/des/controleurs" et qu'il appelle $view->render('uneVue.php'), <code>Zend_View</code> va rechercher "/chemin/des/controleurs/uneVue.php".
         </para>
 
         <para>
-            Evidemment, vos scripts sont peut-être localisé ailleurs. Pour dire à <code>Zend_View</code> ou il doit chercher, utilisez la méthode <code>setScriptPath()</code>.
+            Evidemment, vos scripts sont peut-être localisés ailleurs. Pour dire à <code>Zend_View</code> ou il doit chercher, utilisez la méthode <code>setScriptPath()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -98,11 +96,11 @@ $view->setScriptPath('/chemin/des/vues');]]>
         </programlisting>
 
         <para>
-            Maintenant, vous appelez $view->render('uneVue.php'), il va rechercher dans &quot;/chemin/des/vues/uneVue.php&quot;.
+            Maintenant, vous appelez $view->render('uneVue.php'), il va rechercher dans "/chemin/des/vues/uneVue.php".
         </para>
 
         <para>
-            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>setScriptPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va rechercher le script de vue dans le chemin le plus récemment ajouté. Cela vous permet de passer outre les vues par défaut, pour des vues personnalisées. Ainsi vous pouvez créer des &quot;thèmes&quot; ou des &quot;skins&quot; pour certaines vues, pendant que vous laissez les autres intactes.
+            En fait, vous pouvez "empiler" les chemins en utilisant la méthode <code>setScriptPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va rechercher le script de vue dans le chemin le plus récemment ajouté. Cela vous permet de passer outre les vues par défaut, pour des vues personnalisées. Ainsi vous pouvez créer des "thèmes" ou des "skins" pour certaines vues, pendant que vous laissez les autres intactes.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -110,10 +108,10 @@ $view = new Zend_View();
 $view->addScriptPath('/chemin/des/vues');
 $view->addScriptPath('/chemin/des/vues-personnalisees');
 
-// maintenant, lorsque vous appelerez $view->render('booklist.php'),
-// Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/booklist.php", puis
-// dans "/chemin/des/vues/booklist.php", et ensuite dans le répertoire courant
-// pour trouver le fichier &quot;booklist.php&quot;.]]>
+// maintenant, lorsque vous appelerez $view->render('listelivre.php'),
+// Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/listelivre.php", puis
+// dans "/chemin/des/vues/listelivre.php", et ensuite dans le répertoire courant
+// pour trouver le fichier "listelivre.php".]]>
         </programlisting>
 
     </sect2>
