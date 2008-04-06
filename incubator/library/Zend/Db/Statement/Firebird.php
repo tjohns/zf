@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -94,15 +93,15 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function _prepare($sql)
     {
-		$this->_stmtRowCount = 0;
-		$this->_stmtColumnCount = 0;
+        $this->_stmtRowCount = 0;
+        $this->_stmtColumnCount = 0;
 
         $connection = $this->_adapter->getConnection();
 
-		if ($trans = $this->_adapter->getTransaction())
-			$this->_stmtPrepared = @ibase_prepare($connection, $trans, $sql);
-		else
-			$this->_stmtPrepared = @ibase_prepare($connection, $sql);
+        if ($trans = $this->_adapter->getTransaction())
+            $this->_stmtPrepared = @ibase_prepare($connection, $trans, $sql);
+        else
+            $this->_stmtPrepared = @ibase_prepare($connection, $sql);
 
         if ($this->_stmtPrepared === false || ibase_errcode()) {
             /**
@@ -170,7 +169,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function columnCount()
     {
-		return $this->_stmtColumnCount ? $this->_stmtColumnCount : 0;
+        return $this->_stmtColumnCount ? $this->_stmtColumnCount : 0;
     }
 
     /**
@@ -182,9 +181,9 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
     public function errorCode()
     {
         if ($this->_stmtPrepared || $this->_stmtResult) {
-            return ibase_errcode();			
+            return ibase_errcode();
         }
-		return false;        
+        return false;        
     }
 
     /**
@@ -230,15 +229,15 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                 $params
             );
         } else
-			// execute the statement
-			$retval = @ibase_execute($this->_stmtPrepared);
+            // execute the statement
+            $retval = @ibase_execute($this->_stmtPrepared);
         $this->_stmtResult = $retval;
 
 
-		//Firebird php ibase extension, auto-commit is not after each call, but at
-		//end of script. Disabled when transsaction is active
-		if (!$this->_adapter->getTransaction())
-			ibase_commit_ret();
+        //Firebird php ibase extension, auto-commit is not after each call, but at
+        //end of script. Disabled when transsaction is active
+        if (!$this->_adapter->getTransaction())
+            ibase_commit_ret();
 
         // statements that have no result set do not return metadata
         if (is_resource($this->_stmtResult)) {
@@ -246,7 +245,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             // get the column names that will result
             $this->_keys = array();
             $coln = ibase_num_fields($this->_stmtResult);
-			$this->_stmtColumnCount = $coln;
+            $this->_stmtColumnCount = $coln;
             for ($i = 0; $i < $coln; $i++) {
                 $col_info = ibase_field_info($this->_stmtResult, $i);
                 $this->_keys[] = $this->_adapter->foldCase($col_info['name']);
@@ -272,11 +271,11 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             throw new Zend_Db_Statement_Firebird_Exception("Firebird statement execute error : " . ibase_errmsg());
         }
 
-		if ($trans = $this->_adapter->getTransaction())
-			$this->_stmtRowCount = ibase_affected_rows($trans);
-		else
-			$this->_stmtRowCount = ibase_affected_rows($this->_adapter->getConnection());
-		return true;
+        if ($trans = $this->_adapter->getTransaction())
+            $this->_stmtRowCount = ibase_affected_rows($trans);
+        else
+            $this->_stmtRowCount = ibase_affected_rows($this->_adapter->getConnection());
+        return true;
     }
 
     /**
@@ -307,18 +306,18 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                 break;
             case Zend_Db::FETCH_BOTH:
                 $row = ibase_fetch_assoc($this->_stmtResult, IBASE_TEXT);
-				if ($row !== false)
-					$row = array_merge($row, array_values($row));
+                if ($row !== false)
+                    $row = array_merge($row, array_values($row));
                 break;
             case Zend_Db::FETCH_OBJ:
                 $row = ibase_fetch_object($this->_stmtResult, IBASE_TEXT);
                 break;
             case Zend_Db::FETCH_BOUND:
                 $row = ibase_fetch_assoc($this->_stmtResult, IBASE_TEXT);
-				if ($row !== false){
-					$row = array_merge($row, array_values($row));
-					$row = $this->_fetchBound($row);
-				}
+                if ($row !== false){
+                    $row = array_merge($row, array_values($row));
+                    $row = $this->_fetchBound($row);
+                }
                 break;
             default:
                 /**

@@ -76,9 +76,9 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      */
 
     public function getTransaction()
-	{
-		return (is_resource($this->_transResource) ? $this->_transResource : null);
-	}
+    {
+        return (is_resource($this->_transResource) ? $this->_transResource : null);
+    }
 
     /**
      * Keys are UPPERCASE SQL datatypes or the constants
@@ -97,12 +97,12 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
         'SMALLINT'           => Zend_Db::INT_TYPE,
         'INT'                => Zend_Db::INT_TYPE,
-	'INTEGER'            => Zend_Db::INT_TYPE,
+        'INTEGER'            => Zend_Db::INT_TYPE,
         'BIGINT'             => Zend_Db::BIGINT_TYPE,
-        'INT64'              => Zend_Db::BIGINT_TYPE,		
+        'INT64'              => Zend_Db::BIGINT_TYPE,
         'DECIMAL'            => Zend_Db::FLOAT_TYPE,
         'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
-        'DOUBLE'  			 => Zend_Db::FLOAT_TYPE,		
+        'DOUBLE'             => Zend_Db::FLOAT_TYPE,
         'NUMERIC'            => Zend_Db::FLOAT_TYPE,
         'FLOAT'              => Zend_Db::FLOAT_TYPE
     );
@@ -172,8 +172,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             'LONG'      => 'INTEGER',
             'FLOAT'     => 'FLOAT',
             'INT64'     => array(0 => 'BIGINT', 'NUMERIC', 'DECIMAL'),
-            'DATE' 		=> 'DATE',
-            'TIME' 		=> 'TIME',
+            'DATE'      => 'DATE',
+            'TIME'      => 'TIME',
             'BLOB'      => 'BLOB',
             'DOUBLE'    => 'DOUBLE PRECISION',
             'TIMESTAMP' => 'TIMESTAMP'
@@ -213,7 +213,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $data_precision  = 9;
         $constraint_type = 10;
         $position        = 11;
-	$sub_type		 = 12;
+        $sub_type        = 12;
 
         $desc = array();
         foreach ($result as $key => $row) {
@@ -227,11 +227,11 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
                 $identity = false;
             }
 
-			$dataType = trim($row[$data_type]);
-			$newType = $fieldMaps[$dataType];
-			if (is_array($newType) && $dataType == 'INT64')
-				$newType = $newType[$row[$sub_type]];
-			$row[$data_type] = $newType;
+            $dataType = trim($row[$data_type]);
+            $newType = $fieldMaps[$dataType];
+            if (is_array($newType) && $dataType == 'INT64')
+                $newType = $newType[$row[$sub_type]];
+            $row[$data_type] = $newType;
 
             $desc[trim($row[$column_name])] = array(
                 'SCHEMA_NAME'      => '',
@@ -265,13 +265,21 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             return;
         }
 
-		$port = '';
+        if (!extension_loaded('interbase')) {
+            /**
+             * @see Zend_Db_Adapter_Firebird_Exception
+             */
+            require_once 'Zend/Db/Adapter/Firebird/Exception.php';
+            throw new Zend_Db_Adapter_Firebird_Exception('The Interbase extension is required for this adapter but the extension is not loaded');
+        }
+
+        $port = '';
         if (isset($this->_config['port']))
             $port = '/' . (integer) $this->_config['port'];
 
         // Suppress connection warnings here.
         // Throw an exception instead.
-        @$this->_connection = ibase_connect(
+        @$this->_connection = @ibase_connect(
                                 $this->_config['host'] .$port. ':' . $this->_config['dbname'],
                                 $this->_config['username'],
                                 $this->_config['password'],
@@ -367,9 +375,9 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     protected function _beginTransaction()
     {
         $this->_connect();
-		if (is_resource($this->_transResource)){
-			return;
-		}
+        if (is_resource($this->_transResource)){
+            return;
+        }
 
         $this->_transResource = ibase_trans(IBASE_DEFAULT, $this->_connection);
     }
@@ -388,7 +396,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             require_once 'Zend/Db/Adapter/Firebird/Exception.php';
             throw new Zend_Db_Adapter_Firebird_Exception(ibase_errmsg());
         }
-		$this->_transResource = null;
+        $this->_transResource = null;
     }
 
     /**
@@ -405,7 +413,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             require_once 'Zend/Db/Adapter/Firebird/Exception.php';
             throw new Zend_Db_Adapter_Firebird_Exception(ibase_errmsg());
         }
-		$this->_transResource = null;
+        $this->_transResource = null;
     }
 
     /**
@@ -424,7 +432,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             case Zend_Db::FETCH_NAMED:
             case Zend_Db::FETCH_OBJ:
             case Zend_Db::FETCH_BOUND: // bound to PHP variable
-				$this->_fetchMode = $mode;
+                $this->_fetchMode = $mode;
                 break;
             default:
                 /**
@@ -464,13 +472,15 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Firebird_Exception("LIMIT argument offset=$offset is not valid");
         }
 
-        $sql = substr_replace($sql, "select first $count skip $offset ", stripos($sql, 'select'), 6);
-
-        /* compatible with FB2
-        $sql .= " rows $count";
-        if ($offset > 0) {
-            $sql .= " to $offset";
-        }*/
+        if (trim($sql) == ''){
+            //Only compatible with FB 2.0 or newer
+            //ZF 1.5.0 don't support limit sql syntax that don't only append texto to sql, fixed in 1.5.1
+            $sql .= " rows $count";
+            if ($offset > 0)
+                $sql .= " to $offset";
+        }
+        else
+            $sql = substr_replace($sql, "select first $count skip $offset ", stripos($sql, 'select'), 6);
 
         return $sql;
     }
@@ -503,7 +513,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $sql = 'SELECT GEN_ID('.$this->quoteIdentifier($sequenceName).', 0) FROM RDB$DATABASE';
         $value = $this->fetchOne($sql);
         return $value;
-    }	
+    }
 
     /**
      * Generate a new value from the specified sequence in the database, and return it.
@@ -519,8 +529,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $sql = 'SELECT GEN_ID('.$this->quoteIdentifier($sequenceName).', 1) FROM RDB$DATABASE';
         $value = $this->fetchOne($sql);
         return $value;
-    }	
-	
+    }
+
     /**
      * Check if the adapter supports real SQL parameters.
      *
@@ -536,5 +546,5 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             default:
                 return false;
         }
-    }	
+    }
 }
