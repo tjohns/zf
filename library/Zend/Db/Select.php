@@ -47,6 +47,7 @@ class Zend_Db_Select
     const DISTINCT       = 'distinct';
     const COLUMNS        = 'columns';
     const FROM           = 'from';
+    const UNION          = 'union';
     const WHERE          = 'where';
     const GROUP          = 'group';
     const HAVING         = 'having';
@@ -64,6 +65,8 @@ class Zend_Db_Select
 
     const SQL_WILDCARD   = '*';
     const SQL_SELECT     = 'SELECT';
+    const SQL_UNION      = 'UNION';
+    const SQL_UNION_ALL  = 'UNION ALL';
     const SQL_FROM       = 'FROM';
     const SQL_WHERE      = 'WHERE';
     const SQL_DISTINCT   = 'DISTINCT';
@@ -95,6 +98,7 @@ class Zend_Db_Select
     protected static $_partsInit = array(
         self::DISTINCT     => false,
         self::COLUMNS      => array(),
+        self::UNION        => array(),
         self::FROM         => array(),
         self::WHERE        => array(),
         self::GROUP        => array(),
@@ -106,7 +110,7 @@ class Zend_Db_Select
     );
 
     /**
-     * The initial values for the $_parts array.
+     * Specify legal join types.
      *
      * @var array
      */
@@ -117,6 +121,16 @@ class Zend_Db_Select
         self::FULL_JOIN,
         self::CROSS_JOIN,
         self::NATURAL_JOIN,
+    );
+
+    /**
+     * Specify legal union types.
+     *
+     * @var array
+     */
+    protected static $_unionTypes = array(
+        self::SQL_UNION,
+        self::SQL_UNION_ALL
     );
 
     /**
@@ -211,6 +225,33 @@ class Zend_Db_Select
         }
         
         $this->_tableCols($correlationName, $cols);
+
+        return $this;
+    }
+
+    /**
+     * Adds a UNION clause to the query.
+     *
+     * The first parameter $select can be a string, an existing Zend_Db_Select
+     * object or an array of either of these types.
+     *
+     * @param  array|string|Zend_Db_Select $select One or more select clauses for the UNION.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function union($select = array(), $type = self::SQL_UNION)
+    {
+        if (!is_array($select)) {
+            $select = array();
+        }
+        
+        if (!in_array($type, self::$_unionTypes)) {
+            require_once 'Zend/Db/Select/Exception.php';
+            throw new Zend_Db_Select_Exception("Invalid union type '{$type}'");
+        }
+
+        foreach ($select as $target) {
+            $this->_parts[self::UNION][] = array($target, $type);
+        }
 
         return $this;
     }
@@ -645,6 +686,11 @@ class Zend_Db_Select
             throw new Zend_Db_Select_Exception("Invalid join type '$type'");
         }
 
+        if (count($this->_parts[self::UNION])) {
+            require_once 'Zend/Db/Select/Exception.php';
+            throw new Zend_Db_Select_Exception("Invalid use of table with " . self::SQL_UNION);
+        }
+
         if (empty($name)) {
             $correlationName = $tableName = '';
         } else if (is_array($name)) {
@@ -812,6 +858,11 @@ class Zend_Db_Select
      */
     protected function _where($condition, $value = null, $type = null, $bool = true)
     {
+        if (count($this->_parts[self::UNION])) {
+            require_once 'Zend/Db/Select/Exception.php';
+            throw new Zend_Db_Select_Exception("Invalid use of where clause with " . self::SQL_UNION);
+        }
+
         if ($value !== null) {
             $condition = $this->_adapter->quoteInto($condition, $value, $type);
         }
@@ -951,6 +1002,31 @@ class Zend_Db_Select
         // Add the list of all joins
         if (!empty($from)) {
             $sql .= ' ' . self::SQL_FROM . ' ' . implode("\n", $from);
+        }
+
+        return $sql;
+    }
+
+    /**
+     * Render UNION query
+     *
+     * @param string   $sql SQL query
+     * @return string
+     */
+    protected function _renderUnion($sql)
+    {
+        if ($this->_parts[self::UNION]) {
+            $parts = count($this->_parts[self::UNION]);
+            foreach ($this->_parts[self::UNION] as $cnt => $union) {
+                list($target, $type) = $union;
+                if ($target instanceof Zend_Db_Select) {
+                    $target = $target->__toString();
+                }
+                $sql .= $target;
+                if ($cnt < $parts - 1) {
+                    $sql .= ' ' . $type . ' ';
+                }
+            }
         }
 
         return $sql;

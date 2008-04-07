@@ -1364,4 +1364,35 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $this->assertTrue(empty($from));
     }
 
+    /**
+     * Test the UNION statement for a Zend_Db_Select object.
+     */
+    protected function _selectUnionString()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+        $id = $this->_db->quoteIdentifier('id');
+        $name = $this->_db->quoteIdentifier('name');
+        $sql1 = "SELECT $bug_id AS $id, $bug_status AS $name FROM $bugs";
+        $sql2 = "SELECT $product_id AS $id, $product_name AS $name FROM $products";
+
+        $select = $this->_db->select()
+            ->union(array($sql1, $sql2))
+            ->order('id');
+        return $select;
+    }
+
+    public function testSelectUnionString()
+    {
+        $select = $this->_selectUnionString();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(7, count($result));
+        $this->assertEquals(1, $result[0]['id']);
+    }
+
 }
