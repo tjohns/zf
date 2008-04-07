@@ -2,15 +2,15 @@
     <title>简介</title>
 
     <para>
-        Zend_View是用来在MVC模式中处理View（视图）部份的一个类。也就是说它用来使视图部份的代码与Model及controller部分分离。它提供了helper,output filter,variable escaping等几个功能组件。
+        <code>Zend_View</code>是用来在MVC模式中处理View（视图）部份的一个类。也就是说它用来使视图部份的代码与Model及controller部分分离。它提供了helper,output filter,variable escaping等几个功能组件。
     </para>
 
     <para>
-        Zend_View使用PHP本身作为你的模板，或者你也可以建立其它模板引擎的实例，并用你的view代码来对其进行操作。
+        <code>Zend_View</code>使用PHP本身作为你的模板，或者你也可以建立其它模板引擎的实例，并用你的view代码来对其进行操作。
     </para>
 
     <para>
-        使用Zend_View主要有两步： 1. 你的Controller建立一个Zend_View实例，并将需要的变量传递给它； 2. Controller告诉Zend_View解析一个特定的视图，生成View输出的内容。
+        使用<code>Zend_View</code>主要有两步： 1. 你的Controller建立一个<code>Zend_View</code>实例，并将需要的变量传递给它； 2. Controller告诉<code>Zend_View</code>解析一个特定的视图，生成View输出的内容。
     </para>
 
     <sect2 id="zend.view.introduction.controller">
@@ -53,7 +53,7 @@ echo $view->render('booklist.php');]]>
         <title>视图脚本</title>
 
         <para>
-            现在我们看看相关的视图代码"booklist.php"。这是一段普通的代码，但是有一点特别：它是在Zend_View实例的内部运行的，所以$this指向的是Zend_View实例和类方法。(controller传递给Zend_View实例的变量是public的)。一段非常基本的视图代码看起来是这样的：
+            现在我们看看相关的视图代码"booklist.php"。这是一段普通的代码，但是有一点特别：它是在<code>Zend_View</code>实例的内部运行的，所以$this指向的是<code>Zend_View</code>实例和类方法。(controller传递给<code>Zend_View</code>实例的变量是public的)。一段非常基本的视图代码看起来是这样的：
         </para>
 
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -97,7 +97,7 @@ echo $view->render('booklist.php');]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>basePath:</code> 指示一个基本路径，可以在下面设置script、 helper 和 filter 路径。目录结构如下：
+                    <code>basePath</code>: 指示一个基本路径，可以在下面设置script、 helper 和 filter 路径。目录结构如下：
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -113,19 +113,19 @@ base/path/
             </listitem>
 
             <listitem><para>
-                <code>encoding:</code> 指定 <code>htmlentities()</code>、<code>htmlspecialchars()</code>和其它操作所采用的字符集，缺省为 ISO-8859-1 (latin1)。也可以通过<code>setEncoding()</code> 或 <code>encoding</code> 设置给构造器。
+                <code>encoding</code>: 指定 <code>htmlentities()</code>、<code>htmlspecialchars()</code>和其它操作所采用的字符集，缺省为 ISO-8859-1 (latin1)。也可以通过<code>setEncoding()</code> 或 <code>encoding</code> 设置给构造器。
             </para></listitem>
 
             <listitem><para>
-                <code>escape:</code> 指定<code>escape()</code>所使用的回调函数（callback）。也可以通过<code>setEscape()</code>或<code>escape</code>设置给构造器。
+                <code>escape</code>: 指定<code>escape()</code>所使用的回调函数（callback）。也可以通过<code>setEscape()</code>或<code>escape</code>设置给构造器。
             </para></listitem>
 
             <listitem><para>
-                <code>filter:</code> 指示在解析视图脚本后使用的过滤器。可以通过<code>setFilter()</code>、<code>addFilter()</code>或者<code>filter</code>设置给构造器。
+                <code>filter</code>: 指示在解析视图脚本后使用的过滤器。可以通过<code>setFilter()</code>、<code>addFilter()</code>或者<code>filter</code>设置给构造器。
             </para></listitem>
 
             <listitem><para>
-                <code>strictVars:</code> 指定某些未初始化的视图变量被访问时，<code>Zend_View</code>必须发出通知和警告。可以通过调用<code>strictVars(true)</code> 或传递<code>strictVars</code>给构造器来设置。
+                <code>strictVars</code>: 指定某些未初始化的视图变量被访问时，<code>Zend_View</code>必须发出通知和警告。可以通过调用<code>strictVars(true)</code> 或传递<code>strictVars</code>给构造器来设置。
             </para></listitem>
         </itemizedlist>
     </sect2>
