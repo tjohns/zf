@@ -148,7 +148,7 @@ abstract class Zend_Translate_Adapter {
                         $filename = explode('.', (string) $info);
                         array_pop($filename);
                         $filename = implode('.', $filename);
-                        if (Zend_Locale::isLocale($filename)) {
+                        if (Zend_Locale::isLocale((string) $filename)) {
                             $locale = (string) $filename;
                         } else {
                             $found = false;
