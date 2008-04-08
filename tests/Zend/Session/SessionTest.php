@@ -746,6 +746,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpirationSeconds()
     {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
+            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
+        }
+
         $s = new Zend_Session_Namespace('expireAll');
         $s->a = 'apple';
         $s->p = 'pear';
@@ -794,6 +798,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionHops()
     {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
+            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
+        }
+
         $s = new Zend_Session_Namespace('expireAll');
         $s->a = 'apple';
         $s->p = 'pear';
@@ -825,6 +833,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHops1()
     {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
+            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
+        }
+
         $this->setExpireSessionVarsByHops();
     }
 
@@ -835,6 +847,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHops2()
     {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
+            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
+        }
+
         $this->setExpireSessionVarsByHops();
     }
 
@@ -898,6 +914,10 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHopsOnUse()
     {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
+            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
+        }
+
         $s = new Zend_Session_Namespace('expireGuava');
         $expireBeforeHop = 2;
         $s->setExpirationHops($expireBeforeHop, 'g', true); // only count a hop, when namespace is used
