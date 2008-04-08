@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9180 -->
 <sect1 id="zend.gdata.photos">
     <title>Picasa Web Albums の使用法</title>
     
@@ -46,7 +47,7 @@
         <para>
             何らかのトランザクションが発生する際には、
             必ず接続を確立する必要があります。
-            カレンダーサーバとの接続は、まず HTTP クライアントを作成して
+            Picasa サーバとの接続は、まず HTTP クライアントを作成して
             <code>Zend_Gdata_Photos</code>
             サービスのインスタンスをそこにバインドするという手順で行います。
         </para>
@@ -54,20 +55,20 @@
         <sect3 id="zend.gdata.photos.connecting.authentication">
             <title>認証</title>
             <para>
-                Google Calendar API を使用すると、公開カレンダーだけでなく
+                Google Picasa API を使用すると、公開カレンダーだけでなく
                 プライベートカレンダーのフィードにもアクセスすることができます。
                 公開フィードには認証は不要ですが、
                 認証しない場合は読み込み専用となり、機能が制限されます。
                 プライベートフィードでは完全な機能が使用できますが、
-                カレンダーサーバとの認証が必要になります。
-                Google Calendar がサポートしている認証方式は、次の 3 通りです。
+                Picasa サーバとの認証が必要になります。
+                Google Picasa がサポートしている認証方式は、次の 3 通りです。
             </para>
             
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>ClientAuth</firstterm>
-                        は、カレンダーサーバとの間で直接
+                        は、Picasa サーバとの間で直接
                         ユーザ名/パスワード
                         による認証を行います。この方式では
                         ユーザ自身がアプリケーションにパスワードを教える必要があるので、
@@ -77,7 +78,7 @@
                 <listitem>
                     <para>
                         <firstterm>AuthSub</firstterm>
-                        は、Gooble のプロキシサーバを経由してカレンダーサーバとの認証を行ないます。
+                        は、Gooble のプロキシサーバを経由して Picasa サーバとの認証を行ないます。
                         これは ClientAuth と同じくらい便利に使用でき、
                         セキュリティリスクもありません。
                         ウェブベースのアプリケーションでは、
