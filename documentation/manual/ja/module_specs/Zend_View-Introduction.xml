@@ -1,9 +1,10 @@
+<!-- EN-Revision: 9167 -->
 <sect1 id="zend.view.introduction">
 
     <title>導入</title>
 
     <para>
-        Zend_View は、モデル - ビュー - コントローラ パターンにおける
+        <code>Zend_View</code> は、モデル - ビュー - コントローラ パターンにおける
         「ビュー」として働くクラスです。
         ビューのスクリプトを、モデルおよびコントローラから分離するために存在します。
         このクラスでは、
@@ -11,19 +12,19 @@
     </para>
 
     <para>
-        Zend_View は、テンプレートシステムに対しては特にこだわりはありません。
+        <code>Zend_View</code> は、テンプレートシステムに対しては特にこだわりはありません。
         テンプレート言語として PHP を使用するか、
         あるいは他のテンプレートエンジンのインスタンスを作成して、
         それをビュースクリプトの中で操作することができます。
     </para>
 
     <para>
-        基本的に、Zend_View を使用する際には 2 つの段階をとることになります。
+        基本的に、<code>Zend_View</code> を使用する際には 2 つの段階をとることになります。
 
         1.  コントローラスクリプトが Zend_View のインスタンスを作成し、
         そのインスタンスに変数を代入します。
 
-        2. コントローラが Zend_View に対して適切なビューをレンダリングするように指示し、
+        2. コントローラが <code>Zend_View</code> に対して適切なビューをレンダリングするように指示し、
         それによってコントローラがビュースクリプトを制御します。
         そこでビューの出力が作成されます。
     </para>
@@ -73,7 +74,7 @@ echo $view->render('booklist.php');]]>
         <para>
             次に必要なのは、関連付けるビュースクリプト "booklist.php" です。
             これは一般的な PHP スクリプトと同じですが、ひとつだけ違いがあります。
-            Zend_View インスタンスのスコープで実行されるということです。
+            <code>Zend_View</code> インスタンスのスコープで実行されるということです。
             つまり $this への参照は、Zend_View
             のインスタンスのプロパティやメソッドを指すことになるのです
             (コントローラによってインスタンスに代入された変数は、
@@ -124,7 +125,7 @@ echo $view->render('booklist.php');]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>basePath:</code> は
+                    <code>basePath</code> は
                     スクリプトやヘルパー、そしてフィルタを配置する基底パスを指定します。
                     次のようなディレクトリ構成を想定しています。
                 </para>
@@ -144,7 +145,7 @@ base/path/
             </listitem>
 
             <listitem><para>
-                <code>encoding:</code> は <code>htmlentities()</code> や
+                <code>encoding</code> は <code>htmlentities()</code> や
                 <code>htmlspecialchars()</code> などで使用する文字エンコーディングを表します。
                 デフォルトは ISO-8859-1 (latin1) です。
                 <code>setEncoding()</code> か、コンストラクタのオプション
@@ -152,14 +153,14 @@ base/path/
             </para></listitem>
 
             <listitem><para>
-                <code>escape:</code> は <code>escape()</code>
+                <code>escape</code> は <code>escape()</code>
                 で使用するコールバックを表します。<code>setEscape()</code>
                 か、コンストラクタのオプション <code>escape</code>
                 で設定します。
             </para></listitem>
 
             <listitem><para>
-                <code>filter:</code> は、ビュースクリプトをレンダリングした後で使用するフィルタを表します。
+                <code>filter</code> は、ビュースクリプトをレンダリングした後で使用するフィルタを表します。
                 <code>setFilter()</code> か <code>addFilter()</code>、
                 あるいはコンストラクタのオプション <code>filter</code>
                 で設定します。
