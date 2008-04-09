@@ -17,6 +17,7 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Action/Helper/FlashMessenger.php';
 require_once 'Zend/Session.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/_files/HelperFlashMessengerController.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/_files/HelperFlashMessengerStorageMock.php';
 
 class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework_TestCase
 {
@@ -81,7 +82,7 @@ class Zend_Controller_Action_Helper_FlashMessengerTest extends PHPUnit_Framework
         $this->request->setControllerName('helper-flash-messenger');
         $this->response   = new Zend_Controller_Response_Cli();
         $this->controller = new HelperFlashMessengerController($this->request, $this->response, array());
-        $this->helper     = new Zend_Controller_Action_Helper_FlashMessenger($this->controller);
+        $this->helper     = new Zend_Controller_Action_Helper_FlashMessenger(new HelperFlashMessengerStorageMock());
     }
 
     public function testLoadFlashMessenger()
