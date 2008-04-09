@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8396 -->
+<!-- EN-Revision: 9189 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -56,7 +56,7 @@
                 SQLite (<ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
-    
+
     </itemizedlist>
 
     <para>
@@ -84,7 +84,7 @@
             <para>
                 Firebird/Interbase (<ulink url="http://www.php.net/ibase">php_interbase</ulink> を使用します)
             </para>
-        </listitem>     
+        </listitem>
     </itemizedlist>
 
     <note>
@@ -1988,7 +1988,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
             </itemizedlist>
         </sect3>
-        
+
         <sect3 id="zend.db.adapter.adapter-notes.firebird">
             <title>Firebird/Interbase</title>
             <itemizedlist>
@@ -2014,7 +2014,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
             </itemizedlist>
         </sect3>
-        
+
 
     </sect2>
 
