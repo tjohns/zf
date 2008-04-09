@@ -11,7 +11,7 @@ require_once 'Zend/Form/Element/Select.php';
 /**
  * Test class for Zend_Form_Element_Select
  */
-class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase 
+class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -70,6 +70,8 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
 
     public function testSelectElementUsesSelectHelperInViewHelperDecoratorByDefault()
     {
+        $this->_checkZf2794();
+
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
         $decorator->setElement($this->element);
@@ -101,6 +103,19 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
                 $this->fail('Unable to find matching option for ' . $test);
             }
             $this->assertNotRegexp('/<option[^>]*?(disabled="disabled")/', $m[1], var_export($m, 1));
+        }
+    }
+
+    /**
+     * Used by test methods susceptible to ZF-2794, marks a test as incomplete
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2794
+     * @return void
+     */
+    protected function _checkZf2794()
+    {
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
+            $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
         }
     }
 }

@@ -235,6 +235,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testIsValidInsertsNotEmptyValidatorWhenElementIsRequiredByDefault()
     {
+        $this->_checkZf2794();
+
         $this->element->setRequired(true);
         $this->assertFalse($this->element->isValid(''));
         $validator = $this->element->getValidator('NotEmpty');
@@ -247,6 +249,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
      */
     public function testBreakChainOnFailureFlagsForExistingValidatorsRemainSetWhenNotEmptyValidatorAutoInserted()
     {
+        $this->_checkZf2794();
+
         $username = new Zend_Form_Element('username');
         $username->addValidator('stringLength', true, array(5, 20))
                  ->addValidator('regex', true, array('/^[a-zA-Z0-9_]*$/'))
@@ -594,6 +598,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddSingleValidatorAsString()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getValidator('digits'));
 
         $this->element->addValidator('digits');
@@ -626,6 +632,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testOptionsAreCastToArrayWhenAddingValidator()
     {
+        $this->_checkZf2794();
+
         try {
             $this->element->addValidator('Alnum', false, true);
         } catch (Exception $e) {
@@ -638,6 +646,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleValidatorRegisteredAsValidatorObjectUsingShortName()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getValidator('digits'));
 
         require_once 'Zend/Validate/Digits.php';
@@ -650,6 +660,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddMultipleValidators()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getValidator('Zend_Validate_Digits'));
         $this->assertFalse($this->element->getValidator('Zend_Validate_Alnum'));
         $this->element->addValidators(array('digits', 'alnum'));
@@ -700,10 +712,12 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanPassSingleMessageToValidatorToSetValidatorMessages()
     {
+        $this->_checkZf2794();
+
         $message = 'My custom empty message';
         $this->element->setRequired(true)
                       ->addValidator('notEmpty', false, array('messages' => $message));
-        
+
         $this->element->isValid('');
         $messages = $this->element->getMessages();
         $this->assertEquals(1, count($messages));
@@ -775,6 +789,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanRemoveValidator()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getValidator('Zend_Validate_Digits'));
         $this->element->addValidator('digits');
         $digits = $this->element->getValidator('digits');
@@ -785,6 +801,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanClearAllValidators()
     {
+        $this->_checkZf2794();
+
         $this->testCanAddMultipleValidators();
         $validators = $this->element->getValidators();
         $this->element->clearValidators();
@@ -889,6 +907,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddSingleFilterAsString()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getFilter('digits'));
 
         $this->element->addFilter('digits');
@@ -918,6 +938,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleFilterRegisteredAsFilterObjectUsingShortName()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getFilter('digits'));
 
         require_once 'Zend/Filter/Digits.php';
@@ -928,6 +950,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testOptionsAreCastToArrayWhenAddingFilter()
     {
+        $this->_checkZf2794();
+
         try {
             $this->element->addFilter('Alnum', true);
         } catch (Exception $e) {
@@ -940,6 +964,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddMultipleFilters()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getFilter('Zend_Filter_Digits'));
         $this->assertFalse($this->element->getFilter('Zend_Filter_Alnum'));
         $this->element->addFilters(array('digits', 'alnum'));
@@ -956,6 +982,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanRemoveFilter()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->getFilter('Zend_Filter_Digits'));
         $this->element->addFilter('digits');
         $digits = $this->element->getFilter('digits');
@@ -966,6 +994,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanClearAllFilters()
     {
+        $this->_checkZf2794();
+
         $this->testCanAddMultipleFilters();
         $filters = $this->element->getFilters();
         $this->element->clearFilters();
@@ -1002,6 +1032,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testViewHelperDecoratorRegisteredByDefault()
     {
+        $this->_checkZf2794();
+
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
@@ -1025,6 +1057,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddSingleDecoratorAsString()
     {
+        $this->_checkZf2794();
+
         $this->element->clearDecorators();
         $this->assertFalse($this->element->getDecorator('viewHelper'));
 
@@ -1052,6 +1086,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleDecoratorRegisteredAsDecoratorObjectUsingShortName()
     {
+        $this->_checkZf2794();
+
         $this->element->clearDecorators();
         $this->assertFalse($this->element->getDecorator('viewHelper'));
 
@@ -1063,6 +1099,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddMultipleDecorators()
     {
+        $this->_checkZf2794();
+
         $this->element->clearDecorators();
         $this->assertFalse($this->element->getDecorator('viewHelper'));
 
@@ -1080,6 +1118,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testRemovingUnregisteredDecoratorReturnsFalse()
     {
+        $this->_checkZf2794();
+
         $this->assertFalse($this->element->removeDecorator('bogus'));
     }
 
@@ -1100,6 +1140,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddDecoratorAliasesToAllowMultipleDecoratorsOfSameType()
     {
+        $this->_checkZf2794();
+
         $this->element->setDecorators(array(
             array('HtmlTag', array('tag' => 'span')),
             array('decorator' => array('FooBar' => 'HtmlTag'), 'options' => array('tag' => 'div')),
@@ -1151,6 +1193,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testRenderElementRendersErrorsWhenProvided()
     {
+        $this->_checkZf2794();
+
         $this->element->setView($this->getView())
                       ->setRequired(true)
                       ->setName('foo')
@@ -1189,7 +1233,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     {
         $this->element->setDecorators(array(
             array(
-                'decorator' => 'Callback', 
+                'decorator' => 'Callback',
                 'options'   => array('callback' => array($this, 'raiseDecoratorException'))
             ),
         ));
@@ -1250,6 +1294,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfStringValidators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['validators'] = array(
             'notEmpty',
@@ -1264,6 +1310,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfArrayValidators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['validators'] = array(
             array('notEmpty', true, array('bar')),
@@ -1280,17 +1328,19 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfAssociativeArrayValidators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['validators'] = array(
             array(
                 'options'             => array('bar'),
-                'breakChainOnFailure' => true, 
-                'validator'           => 'notEmpty', 
+                'breakChainOnFailure' => true,
+                'validator'           => 'notEmpty',
             ),
             array(
                 'options'             => array('bar'),
-                'validator'           => 'digits', 
-                'breakChainOnFailure' => true, 
+                'validator'           => 'digits',
+                'breakChainOnFailure' => true,
             ),
         );
         $this->element->setOptions($options);
@@ -1304,6 +1354,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfStringFilters()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['filters'] = array('StringToUpper', 'Alpha');
         $this->element->setOptions($options);
@@ -1315,6 +1367,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfArrayFilters()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['filters'] = array(
             array('StringToUpper', array('bar' => 'baz')),
@@ -1329,6 +1383,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfAssociativeArrayFilters()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['filters'] = array(
             array(
@@ -1337,7 +1393,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'options' => array('foo'),
-                'filter'  => 'Alpha', 
+                'filter'  => 'Alpha',
             ),
         );
         $this->element->setOptions($options);
@@ -1349,6 +1405,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfStringDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array('label', 'form');
         $this->element->setOptions($options);
@@ -1362,6 +1420,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfArrayDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array(
             array('label', array('id' => 'mylabel')),
@@ -1384,15 +1444,17 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfAssocArrayDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array(
             array(
                 'options'   => array('id' => 'mylabel'),
-                'decorator' => 'label', 
+                'decorator' => 'label',
             ),
             array(
                 'options'   => array('id' => 'form'),
-                'decorator' => 'form', 
+                'decorator' => 'form',
             ),
         );
         $this->element->setOptions($options);
@@ -1486,6 +1548,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testValueIsFilteredPriorToValidation()
     {
+        $this->_checkZf2794();
+
         $this->element->addFilter('StringTrim')
                       ->addValidator('StringLength', false, array(3, 8));
         $this->assertTrue($this->element->isValid('  foobar  '));
@@ -1504,6 +1568,19 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $element = new Zend_Form_ElementTest_Element('test');
         $decorators = $element->getDecorators();
         $this->assertTrue(empty($decorators));
+    }
+
+    /**
+     * Used by test methods susceptible to ZF-2794, marks a test as incomplete
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2794
+     * @return void
+     */
+    protected function _checkZf2794()
+    {
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
+            $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
+        }
     }
 }
 

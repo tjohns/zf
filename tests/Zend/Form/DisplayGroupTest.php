@@ -183,6 +183,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testDefaultDecoratorsRegistered()
     {
+        $this->_checkZf2794();
+
         $decorator = $this->group->getDecorator('FormElements');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_FormElements);
         $decorator = $this->group->getDecorator('Fieldset');
@@ -212,6 +214,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddSingleDecoratorAsString()
     {
+        $this->_checkZf2794();
+
         $this->group->clearDecorators();
         $this->assertFalse($this->group->getDecorator('form'));
 
@@ -239,6 +243,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleDecoratorRegisteredAsDecoratorObjectUsingShortName()
     {
+        $this->_checkZf2794();
+
         $this->group->clearDecorators();
         $this->assertFalse($this->group->getDecorator('form'));
 
@@ -250,6 +256,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddMultipleDecorators()
     {
+        $this->_checkZf2794();
+
         $this->group->clearDecorators();
         $this->assertFalse($this->group->getDecorator('form'));
 
@@ -267,6 +275,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRemoveDecorator()
     {
+        $this->_checkZf2794();
+
         $this->testDefaultDecoratorsRegistered();
         $this->group->removeDecorator('form');
         $this->assertFalse($this->group->getDecorator('form'));
@@ -274,6 +284,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanClearAllDecorators()
     {
+        $this->_checkZf2794();
+
         $this->testCanAddMultipleDecorators();
         $this->group->clearDecorators();
         $this->assertFalse($this->group->getDecorator('viewHelper'));
@@ -282,6 +294,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddDecoratorAliasesToAllowMultipleDecoratorsOfSameType()
     {
+        $this->_checkZf2794();
+
         $this->group->setDecorators(array(
             array('HtmlTag', array('tag' => 'fieldset')),
             array('decorator' => array('FooBar' => 'HtmlTag'), 'options' => array('tag' => 'dd')),
@@ -336,7 +350,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     {
         $this->group->setDecorators(array(
             array(
-                'decorator' => 'Callback', 
+                'decorator' => 'Callback',
                 'options'   => array('callback' => array($this, 'raiseDecoratorException'))
             ),
         ));
@@ -389,7 +403,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $baz = new Zend_Form_Element('baz');
         $this->group->addElements(array($foo, $bar, $baz));
     }
-    
+
     public function testDisplayGroupIsIterableAndIteratesElements()
     {
         $this->setupIteratorElements();
@@ -473,6 +487,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfStringDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array('label', 'form');
         $this->group->setOptions($options);
@@ -486,6 +502,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfArrayDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array(
             array('label', array('id' => 'mylabel')),
@@ -507,15 +525,17 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testSetOptionsSetsArrayOfAssocArrayDecorators()
     {
+        $this->_checkZf2794();
+
         $options = $this->getOptions();
         $options['decorators'] = array(
             array(
                 'options'   => array('id' => 'mylabel'),
-                'decorator' => 'label', 
+                'decorator' => 'label',
             ),
             array(
                 'options'   => array('id' => 'form'),
-                'decorator' => 'form', 
+                'decorator' => 'form',
             ),
         );
         $this->group->setOptions($options);
@@ -603,6 +623,19 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         );
         $decorators = $group->getDecorators();
         $this->assertTrue(empty($decorators));
+    }
+
+    /**
+     * Used by test methods susceptible to ZF-2794, marks a test as incomplete
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2794
+     * @return void
+     */
+    protected function _checkZf2794()
+    {
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
+            $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
+        }
     }
 }
 

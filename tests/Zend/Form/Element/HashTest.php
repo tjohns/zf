@@ -11,7 +11,7 @@ require_once 'Zend/Form/Element/Hash.php';
 /**
  * Test class for Zend_Form_Element_Hash
  */
-class Zend_Form_Element_HashTest extends PHPUnit_Framework_TestCase 
+class Zend_Form_Element_HashTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -138,6 +138,8 @@ class Zend_Form_Element_HashTest extends PHPUnit_Framework_TestCase
 
     public function testValidatorTokenReceivesSessionHashWhenPresent()
     {
+        $this->_checkZf2794();
+
         $session = $this->element->getSession();
         $session->hash = $this->element->getHash();
         $element = new Zend_Form_Element_Hash('foo', array('session' => $session));
@@ -166,6 +168,19 @@ class Zend_Form_Element_HashTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->element->render($this->getView());
         $this->assertRegexp('/<input[^>]*?type="hidden"/', $html, $html);
+    }
+
+    /**
+     * Used by test methods susceptible to ZF-2794, marks a test as incomplete
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2794
+     * @return void
+     */
+    protected function _checkZf2794()
+    {
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
+            $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
+        }
     }
 }
 
