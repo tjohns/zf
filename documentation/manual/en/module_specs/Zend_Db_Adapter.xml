@@ -55,7 +55,7 @@
                 SQLite, using the <ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP extension
             </para>
         </listitem>
-	
+
     </itemizedlist>
 
     <para>
@@ -83,7 +83,7 @@
             <para>
                 Firebird/Interbase, using the <ulink url="http://www.php.net/ibase">php_interbase</ulink> PHP extension
             </para>
-        </listitem>		
+        </listitem>
     </itemizedlist>
 
     <note>
@@ -662,7 +662,7 @@ $result = $db->fetchAll($sql, 2);]]>
                         both strings as used in the FETCH_ASSOC mode, and
                         integers as used in the FETCH_NUM mode.  Note that the
                         number of elements in the array is double that which
-                        would be in the array if you used iether FETCH_ASSOC
+                        would be in the array if you used either FETCH_ASSOC
                         or FETCH_NUM.
                     </para>
                 </listitem>
@@ -2000,7 +2000,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
             </itemizedlist>
         </sect3>
-		
+
         <sect3 id="zend.db.adapter.adapter-notes.firebird">
             <title>Firebird/Interbase</title>
             <itemizedlist>
@@ -2011,8 +2011,8 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
                 <listitem>
                     <para>
-                        Firebird/interbase does not support auto-incrementing keys, 
-						so you should specify the name of a sequence to
+                        Firebird/interbase does not support auto-incrementing keys,
+                        so you should specify the name of a sequence to
                         <code>lastInsertId()</code> or
                         <code>lastSequenceId()</code>.
                     </para>
@@ -2021,13 +2021,13 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                     <para>
                         Currently the <code>Zend_Db::CASE_FOLDING</code> option
                         is not supported by the Firebird/interbase adapter.
-						Unquoted identifiers are automaticaly returned in
-						upper case.
+                        Unquoted identifiers are automaticaly returned in
+                        upper case.
                     </para>
                 </listitem>
             </itemizedlist>
         </sect3>
-		
+
 
     </sect2>
 
