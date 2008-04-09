@@ -140,7 +140,16 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
         $_SERVER['SERVER_NAME'] = "192.168.1.105";
         $_SERVER['SERVER_PORT'] = 80;
 
-        $infoCard = new Zend_InfoCard();
+        try {
+            $infoCard = new Zend_InfoCard();
+        } catch (Zend_InfoCard_Exception $e) {
+            $message = $e->getMessage();
+            if (preg_match('/requires.+mcrypt/', $message)) {
+                $this->markTestSkipped($message);
+            } else {
+                throw $e;
+            }
+        }
 
         $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
 
@@ -156,7 +165,17 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
         }
 
         $adapter  = new _Zend_InfoCard_Test_Adapter();
-        $infoCard = new Zend_InfoCard();
+
+        try {
+            $infoCard = new Zend_InfoCard();
+        } catch (Zend_InfoCard_Exception $e) {
+            $message = $e->getMessage();
+            if (preg_match('/requires.+mcrypt/', $message)) {
+                $this->markTestSkipped($message);
+            } else {
+                throw $e;
+            }
+        }
 
         $infoCard->setAdapter($adapter);
 
@@ -188,7 +207,16 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('DOMDocument::C14N() not available until PHP 5.2.0');
         }
 
-        $infoCard = new Zend_InfoCard();
+        try {
+            $infoCard = new Zend_InfoCard();
+        } catch (Zend_InfoCard_Exception $e) {
+            $message = $e->getMessage();
+            if (preg_match('/requires.+mcrypt/', $message)) {
+                $this->markTestSkipped($message);
+            } else {
+                throw $e;
+            }
+        }
 
         $infoCard->addCertificatePair($this->sslPrvKey, $this->sslPubKey);
 
