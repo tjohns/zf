@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7805 -->
+<!-- EN-Revision: 9183 -->
 <sect1 id="zend.date.creation">
 
     <title>日付の作成</title>
@@ -148,7 +148,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
         <para>
             配列から日付を作成することもできます。
             これはシンプルで簡単な方法となります。
-            使用する配列の形式は次のようになります。
+            使用する配列のキーは次のようになります。
         </para>
 
         <para>

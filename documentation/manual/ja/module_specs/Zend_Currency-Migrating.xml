@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7805 -->
+<!-- EN-Revision: 9183 -->
 <sect1 id="zend.currency.migration">
 
     <title>以前のバージョンからの移行</title>
@@ -19,7 +19,7 @@
             よりシンプルに作成できるようになりました。
             script パラメータを指定したり null に設定したりする必要がなくなったのです。
             script パラメータはオプションとなり、後で
-            <code>setFormat</code> メソッドで指定できるようになりました。
+            <code>setFormat()</code> メソッドで指定できるようになりました。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -27,8 +27,8 @@ $currency = new Zend_Currency($currency, $locale);]]>
         </programlisting>
 
         <para>
-            <code>setFormat</code> メソッドには、オプションの配列を渡せるようになりました。
-            このオプションへそれ以降もずっと有効で、
+            <code>setFormat()</code> メソッドには、オプションの配列を渡せるようになりました。
+            このオプションはそれ以降もずっと有効で、
             それまでに設定されていた値を上書きします。
             また、新たなオプション 'precision' が組み込まれました。
             現在使用できるオプションは次のとおりです。

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8216 -->
+<!-- EN-Revision: 9183 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -129,7 +129,7 @@ $loader->addPrefixPath('My_Filter', 'My/Filter/');
             デフォルトの識別子はコロン (':') です。
             そしてその後に変数名を続け、たとえば ':script' や ':path'
             のようになります。
-            <code>filter</code> メソッドは、識別子の後に続く変数を探して置換します。
+            <code>filter()</code> メソッドは、識別子の後に続く変数を探して置換します。
         </para>
 
         <para>
