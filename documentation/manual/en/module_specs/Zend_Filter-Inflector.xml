@@ -120,7 +120,7 @@ $loader->addPrefixPath('My_Filter', 'My/Filter/');
             The inflector target is a string with some placeholders for
             variables. Placeholders take the form of an identifier, a colon
             (':') by default, followed by a variable name: ':script', ':path',
-            etc. The <code>filter</code> method looks for the identifier
+            etc. The <code>filter()</code> method looks for the identifier
             followed by the variable name being replaced.
         </para>
 

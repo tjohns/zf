@@ -16,8 +16,8 @@
         <para>
             Creating an object of <code>Zend_Currency</code> has become simpler.
             You now do not longer have to give a script or set it to null. The optional
-            script parameter is now a option which can be set through the
-            <code>setFormat</code> method.
+            script parameter is now an option which can be set through the
+            <code>setFormat()</code> method.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -25,8 +25,8 @@ $currency = new Zend_Currency($currency, $locale);]]>
         </programlisting>
 
         <para>
-            The <code>setFormat</code> method takes now an array of options which
-            can be set. This options are set permanent and override all previous
+            The <code>setFormat()</code> method takes now an array of options which
+            can be set. These options are set permanent and override all previous
             set values. Also a new option 'precision' has been integrated. The
             following options has been integrated:
 

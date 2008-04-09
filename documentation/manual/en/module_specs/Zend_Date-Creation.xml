@@ -85,7 +85,7 @@ $date = Zend_Date::now();]]>
             <title>Quick creation of dates from database date values</title>
 
             <para>
-                All databases are known to handle queries as fast as possible. They are build to act and respond
+                All databases are known to handle queries as fast as possible. They are built to act and respond
                 quick. The quickest way for handling dates is to get unix timestamps from the database. All
                 databases store date values internal as timestamp (not unix timestamp). This means that the time
                 for creating a timestamp through a query is much smaller than converting it to a specified format.
@@ -132,8 +132,8 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
         <title>Create dates from an array</title>
 
         <para>
-            Dates can also be created by the usage of an array. This is an simple and easy way. The used array
-            values are:
+            Dates can also be created by the usage of an array. This is a simple and easy way. The used array
+            keys are:
         </para>
 
         <para>
