@@ -3,20 +3,20 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_Db et ses autres sous classes proposent une interface de connection aux bases de données
-        avec Zend Framework. Zend_Db_Adapter est la classe de base que vous utilisez pour vous connecter
+        <code>Zend_Db</code> et ses autres sous classes proposent une interface de connection aux bases de données
+        avec le Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter
         aux bases de données (SGBDs). Il y a différentes classes d'adaptateur par SGBD.
     </para>
 
     <para>
-        Les classes Adapters de Zend_Db créeent un pont entre les extensions PHP et une interface commune.
+        Les classes Adapters de <code>Zend_Db</code> créent un pont entre les extensions PHP et une interface commune.
         Ceci vous aide à écrire des applications déployables avec de multiples SGBDs, demandant peu d'efforts.
     </para>
 
     <para>
         L'interface de la classe d'adaptateur est semblable à celle de l'extension
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>.
-        Zend_Db propose des classes d'adaptateurs vers les drivers PDO pour les SGBDs suivants :
+        <code>Zend_Db</code> propose des classes d'adaptateurs vers les drivers PDO pour les SGBDs suivants :
     </para>
 
     <itemizedlist>
@@ -54,7 +54,7 @@
     </itemizedlist>
 
     <para>
-        De plus, Zend_Db fournit aussi des classes se connectant avec les extensions PHP propres aux SGBDs (hors PDO donc),
+        De plus, <code>Zend_Db</code> fournit aussi des classes se connectant avec les extensions PHP propres aux SGBDs (hors PDO donc),
         pour les SGBDs suivants :
     </para>
 
@@ -83,8 +83,8 @@
 
     <note>
         <para>
-            Chaque Zend_Db Adapter utilise une extension PHP. Vous devez donc les avoir activées pour utiliser
-            les classes en question. Par exemple, si vous voulez utiliser une classe Zend_Db_Adapter basée sur
+            Chaque <code>Zend_Db_Adapter</code> utilise une extension PHP. Vous devez donc les avoir activées pour utiliser
+            les classes en question. Par exemple, si vous voulez utiliser une classe <code>Zend_Db_Adapter</code> basée sur
             PDO, vous devrez alors avoir l'extension PDO d'installée, ainsi que l'extension représentant le driver
             spécifique à votre SGBD.
         </para>
