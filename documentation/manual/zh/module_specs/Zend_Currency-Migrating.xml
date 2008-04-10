@@ -11,7 +11,7 @@
         <title> 从 1.0.2 到 1.0.3 或更新的迁移 </title>
 
         <para>
-            创建 <code>Zend_Currency</code> 的对象变得容易了。现在你不再需要给一个脚本或把它设置为 null。可选的脚本参数现在可以通过 <code>setFormat</code> 方法来设置。
+            创建 <code>Zend_Currency</code> 的对象变得容易了。现在你不再需要给一个脚本或把它设置为 null。可选的脚本参数现在可以通过 <code>setFormat()</code> 方法来设置。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -19,7 +19,7 @@ $currency = new Zend_Currency($currency, $locale);]]>
         </programlisting>
 
         <para>
-            <code>setFormat</code> 方法现在带有一个可以被设置的选项数组。这些选项被设置成永久并覆盖所有先前设置的值，并且又加了一个新的选项 'precision'，下面的选项都被集成了：
+            <code>setFormat()</code> 方法现在带有一个可以被设置的选项数组。这些选项被设置成永久并覆盖所有先前设置的值，并且又加了一个新的选项 'precision'，下面的选项都被集成了：
 
             <itemizedlist mark='opencircle'>
                 <listitem>
