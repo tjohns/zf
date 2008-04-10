@@ -188,6 +188,14 @@ class Zend_OpenId_Consumer
             $identity = "";
         }
 
+        if ($version < 2.0 && !isset($params["openid_claimed_id"])) {
+            require_once "Zend/Session/Namespace.php";
+            $session = new Zend_Session_Namespace("openid");
+            if ($session->identity == $identity) {
+                $identity = $session->claimed_id;
+            }
+        }
+
         if (empty($params['openid_return_to']) ||
             empty($params['openid_signed']) ||
             empty($params['openid_sig']) ||
@@ -718,6 +726,13 @@ class Zend_OpenId_Consumer
         $params['openid.identity'] = $id;
 
         $params['openid.claimed_id'] = $claimedId;
+
+        if ($version <= 2.0) {
+            require_once "Zend/Session/Namespace.php";
+            $session = new Zend_Session_Namespace("openid");
+            $session->identity = $id;
+            $session->claimed_id = $claimedId;
+        }
 
         if (isset($handle)) {
             $params['openid.assoc_handle'] = $handle;
