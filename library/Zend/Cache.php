@@ -40,7 +40,21 @@ abstract class Zend_Cache
      * @var array
      */
     public static $standardBackends = array('File', 'Sqlite', 'Memcached', 'Apc', 'ZendPlatform');
-        
+    
+    /**
+     * Only for backward compatibily (will be removed in 1.2.0)
+     *
+     * @var array
+     */
+    public static $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
+    
+    /**
+     * Only for backward compatibily (will be removed in 1.2.0)
+     *
+     * @var array
+     */
+    public static $availableBackends = array('File', 'Sqlite', 'Memcached', 'Apc', 'ZendPlatform');
+     
     /**
      * Consts for clean() method
      */
