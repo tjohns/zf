@@ -40,32 +40,32 @@
         
         <para>
             Bevor irgendeine Transaktion stattfinden kann muß diese Verbindung hergestellt werden. Die
-            Erstellung einer Verbindung zum <code>Zend_Gdata_Photos</code> Service beinhaltet zwei Schritte:
-            Erstellung eines HTTP Clients und Binden dieses Clients an eine Service Instanz. 
+            Erstellung einer Verbindung zum Picasa Servern beinhaltet zwei Schritte:
+            Erstellung eines HTTP Clients und Binden einer <code>Zend_Gdata_Photos</code> Instanz an diesen Client. 
         </para>
 
         <sect3 id="zend.gdata.photos.connecting.authentication">
             <title>Authentifikation</title>
             <para>
-                Die Google Calender API erlaubt erlaubt den Zugriff sowohl auf öffentliche als auch auf
+                Die Google Picasa API erlaubt erlaubt den Zugriff sowohl auf öffentliche als auch auf
                 private Kalender Feeds. Öffentliche Feeds benötigen keine Authentifizierung sind aber
                 nur-lesend und bieten eine reduzierte Funktionalität. Private Feeds bieten die kompletteste
-                Funktionalität benötigen aber eine authentifizierte Verbindung zum Kalender Server.
-                Es gibt drei Authentifizierungs Schemata die von Google Kalender unterstützt werden:
+                Funktionalität benötigen aber eine authentifizierte Verbindung zum Picasa Server.
+                Es gibt drei Authentifizierungs Schemata die von Google Picasa unterstützt werden:
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>ClientAuth</firstterm> bietet direkte Benutzername/Passwort Authentifizierung
-                        zu den Kalender Servern. Da dieses Schema erfordert das Benutzer die Anwendung mit Ihrem
+                        zu den Picasa Servern. Da dieses Schema erfordert das Benutzer die Anwendung mit Ihrem
                         Passwort versorgen, ist diese Authentifizierung nur zu empfehlen wenn andere
                         Authentifizierungs Schemas nicht anwendbar sind.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <firstterm>AuthSub</firstterm> erlaubt die Authentifizierung zu den Kalender Servern über
+                        <firstterm>AuthSub</firstterm> erlaubt die Authentifizierung zu den Picasa Servern über
                         einen Google Proxy Server. Das bietet den gleichen Level von Bequemlichkeit wie
                         ClientAuth aber ohne die Sicherheits Risiken, was es zu einer idealen Wahl für Web
                         basierende Anwendungen macht.
