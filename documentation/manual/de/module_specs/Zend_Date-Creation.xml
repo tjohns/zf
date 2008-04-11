@@ -137,7 +137,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
 
         <para>
             Datumswerte können auch durch die Verwendung eines Arrays erstellt werden. Das ist ein einfacher
-            und leichter Weg. Die verwendeten Array Werte sind:
+            und leichter Weg. Die verwendeten Array Schlüssel sind:
         </para>
 
         <para>

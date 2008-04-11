@@ -113,7 +113,7 @@ $loader->addPrefixPath('My_Filter', 'My/Filter/');
         <para>
             Das Ziel der Beugung ist ein String mit einigen Platzhaltern für Variablen. Platzhalter haben die
             Form eines Identifizierers, standardmäßig einem Doppelpunkt (':'), gefolgt von einem Variablennamen:
-            ':script', ':path', usw. Die <code>filter</code> Methode sieht nach dem Identifizierer gefolgt von
+            ':script', ':path', usw. Die <code>filter()</code> Methode sieht nach dem Identifizierer gefolgt von
             dem Variablennamen der ersetzt werden soll.
         </para>
 

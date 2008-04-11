@@ -18,7 +18,7 @@
             Die Erstellung von <code>Zend_Currency</code> wurde vereinfacht.
             Es muß nicht länger ein Skript angegeben oder auf null gesetzt werden.
             Der optionale script Parameter ist jetzt eine Option welche durch die
-            <code>setFormat</code> Methode gesetzt werden kann.
+            <code>setFormat()</code> Methode gesetzt werden kann.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -26,7 +26,7 @@ $currency = new Zend_Currency($currency, $locale);]]>
         </programlisting>
 
         <para>
-            Die <code>setFormat</code> Methode nimmt jetzt ein Array von Optionen welche gesetzt
+            Die <code>setFormat()</code> Methode nimmt jetzt ein Array von Optionen welche gesetzt
             werden können. Diese Optionen werden permanent gesetzt und überschreiben alle vorher
             gesetzten Werte. Auch eine neue Option 'precision' wurde integriert. Die folgenden
             Optionen wurden integriert:
