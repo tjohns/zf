@@ -30,128 +30,128 @@
  */
 class Zend_Db_Xml_XmlContent
 {
-	/**
-	 * @var integer
-	 */
-	public $id;
+    /**
+     * @var integer
+     */
+    public $id;
 
-	/**
-	 *
-	 */
-	public $attachment;
+    /**
+     *
+     */
+    public $attachment;
 
-	/**
-	 * @var DOMDocument
-	 */
-	public $data;
+    /**
+     * @var DOMDocument
+     */
+    public $data;
 
-	/**
-	 * @var DOMDocument
-	 */
-	public $about;
+    /**
+     * @var DOMDocument
+     */
+    public $about;
 
 
-	/**
-	 * Zend_Db_Xml_XmlContent constructor
-	 *
-	 * @param DOMDocument $element The DOMDocument we're encapsulating.
-	 */
-	public function __construct($element = null)
-	{
-		$numArgs = func_num_args();
-		
-		if ($numArgs == 0 || $numArgs == 1) {
-			$this->data = $element;
-		} else if ($numArgs == 4) {
-			$args = func_get_args();
-			$this->id = $args[0];
-			$this->data = $args[1];
-			$this->about = $args[2];
-			$this->attachment = $args[3];
-		} else {
-			throw new Zend_Db_Xml_XmlException('Wrong number of arguments passed in to constructor');
-		}
-	}
+    /**
+     * Zend_Db_Xml_XmlContent constructor
+     *
+     * @param DOMDocument $element The DOMDocument we're encapsulating.
+     */
+    public function __construct($element = null)
+    {
+        $numArgs = func_num_args();
 
-	/**
-	 * Retrieve the attachment associated with this XML content object
-	 */
-	public function getAttachment()
-	{
-		return $this->attachment;
-	}
+        if ($numArgs == 0 || $numArgs == 1) {
+            $this->data = $element;
+        } else if ($numArgs == 4) {
+            $args = func_get_args();
+            $this->id = $args[0];
+            $this->data = $args[1];
+            $this->about = $args[2];
+            $this->attachment = $args[3];
+        } else {
+            throw new Zend_Db_Xml_XmlException('Wrong number of arguments passed in to constructor');
+        }
+    }
 
-	/**
-	 * set the attachment associated with
-	 * this XML content object
-	 *
-	 * @param var $attach
-	 */
-	public function setAttachment($attach)
-	{
-		$this->attachment = $attach;
-	}
+    /**
+     * Retrieve the attachment associated with this XML content object
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
 
-	/**
-	 * returns true if an attachment has been set for this XML content
-	 * object, false otherwise
-	 *
-	 * @return boolean
-	 */
-	public function hasAttachment()
-	{
-		return !is_null($this->attachment);
-	}
+    /**
+     * set the attachment associated with
+     * this XML content object
+     *
+     * @param var $attach
+     */
+    public function setAttachment($attach)
+    {
+        $this->attachment = $attach;
+    }
 
-	/**
-	 * returns the $about XML document
-	 *
-	 * @return DOMDocument
-	 */
-	public function getAbout()
-	{
-		return $this->about;
-	}
+    /**
+     * returns true if an attachment has been set for this XML content
+     * object, false otherwise
+     *
+     * @return boolean
+     */
+    public function hasAttachment()
+    {
+        return !is_null($this->attachment);
+    }
 
-	/**
-	 * replaces the existing $about document with the
-	 * DOMDocument parameter
-	 *
-	 * @param DOMDocument $about
-	 */
-	public function setAbout($about)
-	{
-		$this->about = $about;
-	}
+    /**
+     * returns the $about XML document
+     *
+     * @return DOMDocument
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
 
-	/**
-	 * return $data
-	 *
-	 * @return DOMDocument
-	 */
-	public function getData()
-	{
-		return $this->data;
-	}
+    /**
+     * replaces the existing $about document with the
+     * DOMDocument parameter
+     *
+     * @param DOMDocument $about
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+    }
 
-	/**
-	 * set the $data document for
-	 * this object
-	 *
-	 * @param DOMDocument
-	 */
-	public function setData($data)
-	{
-		$this->data = $data;
-	}
+    /**
+     * return $data
+     *
+     * @return DOMDocument
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 
-	/**
-	 * set the XML content document id with $id
-	 *
-	 * @param integer $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
+    /**
+     * set the $data document for
+     * this object
+     *
+     * @param DOMDocument
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * set the XML content document id with $id
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }
