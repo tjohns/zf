@@ -33,200 +33,200 @@ require_once( "Zend/Http/Response.php" );
  */
 class Server
 {
-	private $socket;
+    private $socket;
 
-	private $connections = array();
+    private $connections = array();
 
-	public $handler = "DefaultHandler";
-	public $handler_options = array();
-	public $document_root = "";
+    public $handler = "DefaultHandler";
+    public $handler_options = array();
+    public $document_root = "";
 
-	private $connection_timeout = 30; // Connection timeout in seconds
+    private $connection_timeout = 30; // Connection timeout in seconds
 
-	private $packet_size = 2048;
+    private $packet_size = 2048;
 
-	public function __construct( $address = '127.0.0.1', $port = 8000 )
-	{
-		if( !function_exists( "socket_create" ) )
-		{
-			throw new Zend_Http_Server_Exception( "Socket extension not found" );
-		}
-		
-		// Make sure pcntl functions are available
-		if (! function_exists('pcntl_fork')) {
-			throw new Zend_Http_Server_Exception('PCNTL exntension not found');
-		}
+    public function __construct( $address = '127.0.0.1', $port = 8000 )
+    {
+        if( !function_exists( "socket_create" ) )
+        {
+            throw new Zend_Http_Server_Exception( "Socket extension not found" );
+        }
 
-		if( ( $this->socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) < 0 )
-		{
-			throw new Zend_Http_Server_Exception( "socket_create() failed: Reason: " . socket_strerror( $this->socket ) );
-		}
+        // Make sure pcntl functions are available
+        if (! function_exists('pcntl_fork')) {
+            throw new Zend_Http_Server_Exception('PCNTL exntension not found');
+        }
 
-		socket_set_option( $this->socket, SOL_SOCKET, SO_REUSEADDR, 1 );
+        if( ( $this->socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) < 0 )
+        {
+            throw new Zend_Http_Server_Exception( "socket_create() failed: Reason: " . socket_strerror( $this->socket ) );
+        }
 
-		if( ( $bind_result = socket_bind( $this->socket, $address, $port ) ) < 0 )
-		{
-			throw new Zend_Http_Server_Exception( "socket_bind() failed: Reason: " . socket_strerror( $bind_result ) );
-		}
+        socket_set_option( $this->socket, SOL_SOCKET, SO_REUSEADDR, 1 );
 
-		if( !( $nonblock_result = socket_set_nonblock( $this->socket ) ) )
-		{
-			throw new Zend_Http_Server_Exception( "socket_set_nonblock() failed: Reason: " . socket_strerror( $nonblock_result ) );
-		}
-	}
+        if( ( $bind_result = socket_bind( $this->socket, $address, $port ) ) < 0 )
+        {
+            throw new Zend_Http_Server_Exception( "socket_bind() failed: Reason: " . socket_strerror( $bind_result ) );
+        }
 
-	public function __destruct()
-	{
-		socket_close( $this->socket );
+        if( !( $nonblock_result = socket_set_nonblock( $this->socket ) ) )
+        {
+            throw new Zend_Http_Server_Exception( "socket_set_nonblock() failed: Reason: " . socket_strerror( $nonblock_result ) );
+        }
+    }
 
-		foreach( $this->connections as $connection )
-		{
-			socket_close( $connection );
-		}
-	}
+    public function __destruct()
+    {
+        socket_close( $this->socket );
 
-	public function setHandler( $handler_class )
-	{
-		$this->handler = $handler_class;
-	}
+        foreach( $this->connections as $connection )
+        {
+            socket_close( $connection );
+        }
+    }
 
-	public function getHandler()
-	{
-		return $this->handler;
-	}
+    public function setHandler( $handler_class )
+    {
+        $this->handler = $handler_class;
+    }
 
-	public function setTimeout( $timeout )
-	{
-		$this->timeout = $timeout;
-	}
+    public function getHandler()
+    {
+        return $this->handler;
+    }
 
-	public function getTimeout()
-	{
-		return $this->connection_timeout;
-	}
+    public function setTimeout( $timeout )
+    {
+        $this->timeout = $timeout;
+    }
 
-	public function listen()
-	{
-		if( ( $ret = socket_listen( $this->socket, 5 ) ) < 0 )
-		{
-			throw new Zend_Http_Server_Exception( "socket_listen() failed: Reason: " . socket_strerror($ret) );
-		}
+    public function getTimeout()
+    {
+        return $this->connection_timeout;
+    }
 
-		// Listening...
+    public function listen()
+    {
+        if( ( $ret = socket_listen( $this->socket, 5 ) ) < 0 )
+        {
+            throw new Zend_Http_Server_Exception( "socket_listen() failed: Reason: " . socket_strerror($ret) );
+        }
 
-		while( true )
-		{
-			$client = $this->getNewConnection();
+        // Listening...
 
-			// New connection, forking.
-			if( $client )
-			{
-				$pid = pcntl_fork();
+        while( true )
+        {
+            $client = $this->getNewConnection();
 
-				if( $pid == -1 )
-				{
-					die( "Could not fork new process!" );
-				}
-				else if( $pid )
-				{
-					// Parent: Storing socket for $pid
-					$this->connections[ $pid ] = $client;
-				}
-				else
-				{
-					$this->processRequest( $client );
-					exit;
-				}
-			}
+            // New connection, forking.
+            if( $client )
+            {
+                $pid = pcntl_fork();
 
-			// Parent: Check for finished children
-			$this->cleanupChildren();
-		}
-	}
+                if( $pid == -1 )
+                {
+                    die( "Could not fork new process!" );
+                }
+                else if( $pid )
+                {
+                    // Parent: Storing socket for $pid
+                    $this->connections[ $pid ] = $client;
+                }
+                else
+                {
+                    $this->processRequest( $client );
+                    exit;
+                }
+            }
 
-	protected function getNewConnection()
-	{
-		$sockets = array( $this->socket );
-		$client = null;
+            // Parent: Check for finished children
+            $this->cleanupChildren();
+        }
+    }
 
-		if( socket_select( $sockets, $w = NULL, $e = NULL, 0 ) )
-		{
-			// Waiting for connections...
+    protected function getNewConnection()
+    {
+        $sockets = array( $this->socket );
+        $client = null;
 
-			if( ( $client = socket_accept( $this->socket ) ) < 0 )
-			{
-				throw new Zend_Http_Server_Exception( "socket_accept() failed: Reason: " . socket_strerror( $client ) );
-			}
-		}
-		else
-		{
-			// Without this, the server will use 100% of available CPU constantly!
-			usleep( 100 ); // The only sensible place to sleep.  Sleep for 0.0001 seconds if no new connections have arrived. Still allows a potential 10000 requests a second :)
-		}
+        if( socket_select( $sockets, $w = NULL, $e = NULL, 0 ) )
+        {
+            // Waiting for connections...
 
-		return $client;
-	}
+            if( ( $client = socket_accept( $this->socket ) ) < 0 )
+            {
+                throw new Zend_Http_Server_Exception( "socket_accept() failed: Reason: " . socket_strerror( $client ) );
+            }
+        }
+        else
+        {
+            // Without this, the server will use 100% of available CPU constantly!
+            usleep( 100 ); // The only sensible place to sleep.  Sleep for 0.0001 seconds if no new connections have arrived. Still allows a potential 10000 requests a second :)
+        }
 
-	protected function logAccess( $request, $response )
-	{
-		error_log( $request->remote_ip . " - - [" . date( "d/M/Y:H:i:s O" ) . "] \"" . $request->method . " " . $request->uri . " " . $request->protocol_version . "\" " . $response->getStatus() . " " . strlen( $response->getBody() ) . " \"" . trim( $request->headers[ "Referer" ] ) . "\" \"" . trim( $request->headers[ "User-Agent" ] ) . "\"" );
-	}
+        return $client;
+    }
 
-	protected function processRequest( $socket )
-	{
-		$raw_request = "";
+    protected function logAccess( $request, $response )
+    {
+        error_log( $request->remote_ip . " - - [" . date( "d/M/Y:H:i:s O" ) . "] \"" . $request->method . " " . $request->uri . " " . $request->protocol_version . "\" " . $response->getStatus() . " " . strlen( $response->getBody() ) . " \"" . trim( $request->headers[ "Referer" ] ) . "\" \"" . trim( $request->headers[ "User-Agent" ] ) . "\"" );
+    }
 
-		$connection_time = time();
+    protected function processRequest( $socket )
+    {
+        $raw_request = "";
 
-		while( time() < $connection_time + $this->getTimeout() )
-		{
-			// Child: reading
-			$buffer = socket_read( $socket, $this->packet_size, PHP_BINARY_READ );
+        $connection_time = time();
 
-			if( $buffer === false )
-			{
-				// Child: Error or EOF.  Exiting.
-				return false;
-			}
-			else
-			{
-				$raw_request .= $buffer;
+        while( time() < $connection_time + $this->getTimeout() )
+        {
+            // Child: reading
+            $buffer = socket_read( $socket, $this->packet_size, PHP_BINARY_READ );
 
-				if( $buffer === "" || strlen( $buffer ) < $this->packet_size )
-				{
-					$request = new Request( $raw_request );
-					$request->document_root = $this->document_root;
-					socket_getpeername( $socket, $request->remote_ip );
+            if( $buffer === false )
+            {
+                // Child: Error or EOF.  Exiting.
+                return false;
+            }
+            else
+            {
+                $raw_request .= $buffer;
 
-					if( $request->isComplete() )
-					{
-						$handler = new $this->handler( $request, $this->handler_options );
+                if( $buffer === "" || strlen( $buffer ) < $this->packet_size )
+                {
+                    $request = new Request( $raw_request );
+                    $request->document_root = $this->document_root;
+                    socket_getpeername( $socket, $request->remote_ip );
 
-						$response = $handler->handle();
-						socket_write( $socket, $response->asString() );
+                    if( $request->isComplete() )
+                    {
+                        $handler = new $this->handler( $request, $this->handler_options );
 
-						$this->logAccess( $request, $response );
-						return true;
-					}
-					else
-					{
-						unset( $request );
-					}
-				}
-			}
-		}
-		error_log( "Request was not complete after connection timeout reached ({$this->getTimeout()} seconds)" );
-		return false;
-	}
+                        $response = $handler->handle();
+                        socket_write( $socket, $response->asString() );
 
-	protected function cleanupChildren()
-	{
-		while( ( $child = pcntl_wait( $status, WNOHANG ) ) > 0 )
-		{
-			socket_close( $this->connections[ $child ] );
+                        $this->logAccess( $request, $response );
+                        return true;
+                    }
+                    else
+                    {
+                        unset( $request );
+                    }
+                }
+            }
+        }
+        error_log( "Request was not complete after connection timeout reached ({$this->getTimeout()} seconds)" );
+        return false;
+    }
 
-			unset( $this->connections[ $child ] );
-		}
-	}
+    protected function cleanupChildren()
+    {
+        while( ( $child = pcntl_wait( $status, WNOHANG ) ) > 0 )
+        {
+            socket_close( $this->connections[ $child ] );
+
+            unset( $this->connections[ $child ] );
+        }
+    }
 }
 
