@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9183 -->
+<!-- EN-Revision: 9209 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -442,7 +442,7 @@ $inflector->addRules(array(
         <para>
             <code>Zend_Config</code> を使用してルールを設定したり、
             フィルタのプレフィックスのパスやその他のインフレクタの状態を設定することができます。
-            そのためには、Zend_Config オブジェクトをコンストラクタあるいは
+            そのためには、<code>Zend_Config</code> オブジェクトをコンストラクタあるいは
             <code>setConfig()</code> に渡します。
             設定可能な項目は以下のとおりです。
         </para>
