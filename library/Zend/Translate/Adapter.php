@@ -425,6 +425,9 @@ abstract class Zend_Translate_Adapter {
             return $messageId;
         }
 
+        if (is_array($messageId)) {
+            return $messageId;
+        }
         if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
             (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
@@ -485,6 +488,9 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
+        if (is_array($messageId)) {
+            return false;
+        }
         if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
             (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation

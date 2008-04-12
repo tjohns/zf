@@ -31,31 +31,31 @@ require_once( "Request.php" );
  */
 abstract class AbstractHandler
 {
-	/**
-	 * HTTP Request
-	 *
-	 * @var Request
-	 */
-	protected $request;
-	protected $options;
+    /**
+     * HTTP Request
+     *
+     * @var Request
+     */
+    protected $request;
+    protected $options;
 
-	/**
-	 * Class Constructor, sets the request object
-	 *
-	 * @param  Request $request
-	 * @return void
-	 */
-	public function __construct( Request $request, $options = array() )
-	{
-		$this->request = $request;
-		$this->options = $options;
-	}
+    /**
+     * Class Constructor, sets the request object
+     *
+     * @param  Request $request
+     * @return void
+     */
+    public function __construct( Request $request, $options = array() )
+    {
+        $this->request = $request;
+        $this->options = $options;
+    }
 
-	/**
-	 * Process the request object
-	 *
-	 * @return Zend_Http_Response
-	 */
-	abstract public function handle();
+    /**
+     * Process the request object
+     *
+     * @return Zend_Http_Response
+     */
+    abstract public function handle();
 }
 
