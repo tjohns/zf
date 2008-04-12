@@ -128,9 +128,19 @@
             Locale identifiers consist of information about the user's language and preferred/primary geographic region
             (e.g. state or province of home or workplace). The locale identifier strings used in the Zend Framework are
             internationally defined standard abbreviations of language and region, written as
-            <code>language_REGION</code>. Both the language and region parts are abbreviated to 2 alphabetic, ASCII
+            <code>language_REGION</code>. Both the language and region parts are abbreviated to alphabetic, ASCII
             characters.
         </para>
+
+        <note>
+            <para>
+                Be aware that there exist not only locales with 2 characters as most people think. Also there
+                are languages and regions which are not only abbreviated with 2 characters. Therefor you should
+                NOT strip the region and language yourself, but use Zend_Locale when you want to strip language
+                or region from a locale string. Otherwise you could have unexpected behaviour within your code
+                when you do this yourself.
+            </para>
+        </note>
 
         <para>
             A user from USA would expect the language <code>English</code> and the region <code>USA</code>, yielding the
