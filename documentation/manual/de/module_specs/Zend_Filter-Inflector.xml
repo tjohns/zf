@@ -424,7 +424,7 @@ $inflector->addRules(array(
 
         <para>
             <code>Zend_Config</code> kann verwendet werden um Regeln, Filter Präfix Pfade, oder andere
-            Objektstati im Beugungsmachanismus zu setzen, entweder durch die Übergabe eines Zend_Config
+            Objektstati im Beugungsmachanismus zu setzen, entweder durch die Übergabe eines <code>Zend_Config</code>
             Objekts zum Konstruktor, oder durch <code>setConfig()</code>. Die folgenden Einstellungen können
             spezifiziert werden:
         </para>

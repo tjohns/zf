@@ -129,8 +129,18 @@
             bevorzugte/primäre geographische Region (z.B. Staat oder Region von seinem Zuhause oder Arbeitsplatz).
             Die Gebietsschema Zeichenkette welche im Zend Framework benutzt werden sind international definierte
             Standard Abkürzungen von Sprachen und Regionen. Sie werden geschrieben als <code>sprache_REGION</code>.
-            Beide Teile, sowohl Sprache als auch Region, werden abgekürzt zu 2 Buchstaben, ASCII Zeichen.
+            Beide Teile, sowohl Sprache als auch Region, werden mit Buchstaben, ASCII Zeichen, abgekürzt.
         </para>
+
+        <note>
+            <para>
+                Man muß darauf achten das nicht nur Gebietsschemata mit 2 Zeichen existieren wie die meisten
+                Leute denken. Es gibt auch Sprachen und Regionen die nicht nur mit 2 Zeichen abgekürzt werden.
+                Deswegen sollte man die Region und Sprache NICHT selbst trennen, sondern Zend_Locale verwenden
+                um die Sprache oder Region von einem Gebietsschema String zu trennen. Andernfalls kann es zu
+                unerwartetem Verhalten im eigenen Code kommen wenn man versucht das selbst zu machen.
+            </para>
+        </note>
 
         <para>
             Ein Benutzer von den USA würde die Sprache <code>Englisch</code> und die Region <code>USA</code>
