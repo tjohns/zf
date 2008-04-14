@@ -557,7 +557,9 @@ class Zend_OpenId
         if (extension_loaded('gmp')) {
         	$s = gmp_strval($bn, 16);
         	if (strlen($s) % 2 != 0) {
-        		$s = '0' . $s;
+                $s = '0' . $s;
+        	} else if ($s[0] > '7') {
+                $s = '00' . $s;
         	}
             return pack("H*", $s);
         } else if (extension_loaded('bcmath')) {
@@ -573,6 +575,9 @@ class Zend_OpenId
             while (bccomp($bn, 0) > 0) {
                 $bin = chr(bcmod($bn, 256)) . $bin;
                 $bn = bcdiv($bn, 256);
+            }
+        	if (ord($bin[0]) > 127) {
+                $bin = chr(0) . $bin;
             }
             return $bin;
         }
