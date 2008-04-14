@@ -446,7 +446,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
             $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
             $this->assertSame( "0123456789absdef0123456789absdef", $handle );
             $this->assertSame( "sha1", $macFunc );
-            $this->assertSame( "8382aea922560ece833ba55fa53b7a975f597370", bin2hex($secret) );
+            $this->assertSame( "e36624c686748f6b646648f12748ffd157e4d4dd", bin2hex($secret) );
             $this->assertTrue( $storage->delAssociation(self::SERVER) );
 
             // Wrong OpenID 2.0 association response (wrong ns)

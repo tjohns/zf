@@ -670,6 +670,9 @@ class Zend_OpenId
     {
         if (function_exists('openssl_dh_compute_key')) {
             $ret = openssl_dh_compute_key($pub_key, $dh);
+        	if (ord($ret[0]) > 127) {
+                $ret = chr(0) . $ret;
+            }
             return $ret;
         } else if (extension_loaded('gmp')) {
             $bn_pub_key = self::binToBigNum($pub_key);
