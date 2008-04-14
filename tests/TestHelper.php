@@ -44,9 +44,16 @@ error_reporting( E_ALL | E_STRICT );
  * Determine the root, library, and tests directories of the framework
  * distribution.
  */
-$zfRoot        = dirname(dirname(__FILE__));
-$zfCoreLibrary = $zfRoot . DIRECTORY_SEPARATOR . 'library';
-$zfCoreTests   = $zfRoot . DIRECTORY_SEPARATOR . 'tests';
+$zfRoot        = dirname(__FILE__) . '/..';
+$zfCoreLibrary = "$zfRoot/library";
+$zfCoreTests   = "$zfRoot/tests";
+
+/*
+ * Omit from code coverage reports the contents of the tests directory
+ */
+foreach (array('php', 'phtml', 'csv') as $suffix) {
+    PHPUnit_Util_Filter::addDirectoryToFilter($zfCoreTests, ".$suffix");
+}
 
 /*
  * Prepend the Zend Framework library/ and tests/ directories to the
