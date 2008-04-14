@@ -58,7 +58,7 @@ class Zend_OpenId_Consumer
      *
      * @var Zend_OpenId_Consumer_Storage $_storage
      */
-    private $_storage = null;
+    protected $_storage = null;
 
     /**
      * Enables or disables consumer to use association with server based on
@@ -66,7 +66,7 @@ class Zend_OpenId_Consumer
      *
      * @var Zend_OpenId_Consumer_Storage $_dumbMode
      */
-    private $_dumbMode = false;
+    protected $_dumbMode = false;
 
     /**
      * Internal cache to prevent unnecessary access to storage
