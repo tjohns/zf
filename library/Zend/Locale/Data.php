@@ -557,7 +557,10 @@ class Zend_Locale_Data
                 $_temp = self::_getFile($locale, '/ldml/numbers/currencies/currency', 'type');
                 foreach ($_temp as $key => $keyvalue) {
                     $val = self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\'' . $key . '\']/displayName', '', $key);
-                    if (!array_key_exists($val[$key], $temp)) {
+                    if (!isset($val[$key])) {
+                        continue;
+                    }
+                    if (!isset($temp[$val[$key]])) {
                         $temp[$val[$key]] = $key;
                     } else {
                         $temp[$val[$key]] .= " " . $key;
@@ -602,7 +605,10 @@ class Zend_Locale_Data
                 $_temp = self::_getFile('supplementalData', '/supplementalData/currencyData/region', 'iso3166');
                 foreach ($_temp as $key => $keyvalue) {
                     $val = self::_getFile('supplementalData', '/supplementalData/currencyData/region[@iso3166=\'' . $key . '\']/currency', 'iso4217', $key);
-                    if (!array_key_exists($val[$key], $temp)) {
+                    if (!isset($val[$key])) {
+                        continue;
+                    }
+                    if (!isset($temp[$val[$key]])) {
                         $temp[$val[$key]] = $key;
                     } else {
                         $temp[$val[$key]] .= " " . $key;
@@ -626,7 +632,7 @@ class Zend_Locale_Data
                 foreach($_temp as $key => $found) {
                     $_temp3 = explode(" ", $found);
                     foreach($_temp3 as $found3) {
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
@@ -657,7 +663,7 @@ class Zend_Locale_Data
                         if (empty($found3)) {
                             continue;
                         }
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
@@ -688,7 +694,7 @@ class Zend_Locale_Data
                         if (empty($found3)) {
                             continue;
                         }
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
@@ -971,10 +977,10 @@ class Zend_Locale_Data
                 $temp = array();
                 foreach ($_temp as $key => $keyvalue) {
                     $val = self::_getFile($locale, '/ldml/numbers/currencies/currency[@type=\'' . $key . '\']/displayName', '', $key);
-                    if ($val[$key] != $value) {
+                    if (!isset($val[$key]) or ($val[$key] != $value)) {
                         continue;
                     }
-                    if (!array_key_exists($val[$key], $temp)) {
+                    if (!isset($temp[$val[$key]])) {
                         $temp[$val[$key]] = $key;
                     } else {
                         $temp[$val[$key]] .= " " . $key;
@@ -1013,10 +1019,10 @@ class Zend_Locale_Data
                 $temp = array();
                 foreach ($_temp as $key => $keyvalue) {
                     $val = self::_getFile('supplementalData', '/supplementalData/currencyData/region[@iso3166=\'' . $key . '\']/currency', 'iso4217', $key);
-                    if ($val[$key] != $value) {
+                    if (!isset($val[$key]) or ($val[$key] != $value)) {
                         continue;
                     }
-                    if (!array_key_exists($val[$key], $temp)) {
+                    if (!isset($temp[$val[$key]])) {
                         $temp[$val[$key]] = $key;
                     } else {
                         $temp[$val[$key]] .= " " . $key;
@@ -1041,7 +1047,7 @@ class Zend_Locale_Data
                         if ($found3 !== $value) {
                             continue;
                         }
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
@@ -1067,7 +1073,7 @@ class Zend_Locale_Data
                         if ($found3 !== $value) {
                             continue;
                         }
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
@@ -1093,7 +1099,7 @@ class Zend_Locale_Data
                         if ($found3 !== $value) {
                             continue;
                         }
-                        if (!array_key_exists($found3, $temp)) {
+                        if (!isset($temp[$found3])) {
                             $temp[$found3] = (string) $key;
                         } else {
                             $temp[$found3] .= " " . $key;
