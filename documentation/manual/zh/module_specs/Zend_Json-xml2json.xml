@@ -1,5 +1,5 @@
 <sect1 id="zend.json.xml2json">
-    <title>XML 到 JSON 转换 </title>
+    <title> XML 到 JSON 转换 </title>
     <para>
         提供了方便的方法来转换数据格式从 XML 到 JSON。这个功能从一篇 <ulink url="http://www.ibm.com/developerworks/xml/library/x-xml2jsonphp/"> IBM developerWorks 文章 </ulink> 的到启发。
     </para>
