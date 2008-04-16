@@ -17,7 +17,10 @@ set_include_path(CLI_LIBRARY_PATH . PATH_SEPARATOR . ZF_LIBRARY_PATH);
  */
 
 require_once 'Zend/Loader.php';
+
 Zend_Loader::registerAutoload();
+
+
 
 
 require_once 'Zend/Tool/Cli.php';
