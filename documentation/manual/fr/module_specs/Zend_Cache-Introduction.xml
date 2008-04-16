@@ -99,6 +99,9 @@ echo 'Ceci n\' jamais mis en cache ('.time().').';]]>
             </programlisting>
         </para>
         <para>
+           Notez que nous affichons le résultat de <code>time()</code> deux fois ; c'est dans un but de démonstration. Essayez de lancer la page et de la rafraîchir plusieurs fois ; vous allez constater que le premier nombre ne change pas alors que le second change à chaque actualisation. C'est parce que le premier nombre a été mis en cache et sauvegardé. Après 30 secondes ('lifeTime' a été mis à 30 secondes), le premier nombre devrait de nouveau correspondre au second nombre parce que le cache a expiré -- seulement pour être mis en cache de nouveau. Vous devriez essayer ce code dans votre navigateur ou dans une console.
+        </para>
+        <para>
            Notez que nous affichons le résultat de <code>time()</code> deux fois ; c'est dans un but de démonstration. Essayez de lancer la page et de la rafraîchir plusieurs fois ; vous allez constater que le premier nombre ne change pas alors que le second change à chaque actualisation. C'est parce que le premier nombre a été mis en cache et sauvegardé. Après 30 secondes ("lifeTime" a été mis à 30 secondes), le premier nombre devrait de nouveau correspondre au second nombre parce que le cache a expiré -- seulement pour être mis en cache de nouveau. Vous devriez essayer ce code dans votre navigateur ou dans une console.
         </para>
     </example>

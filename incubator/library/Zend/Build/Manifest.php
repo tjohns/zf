@@ -248,8 +248,8 @@ class Zend_Build_Manifest
                 throw new Zend_Build_Exception("Console context in '$file' does not have required 'name' attribute.");
             }
 
-            // Create separate sections in the index so that different kinds of contexts can live
-            // in different namespaces and still be efficiently accessed.
+            // Create separate sections in the index so that different kinds of contexts can live in different namespaces
+            // and still be efficiently accessed.
 
             $type = $consoleContext->type;
             //Index it under key for 'name' after testing it to see if we've already added it

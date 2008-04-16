@@ -14,7 +14,7 @@ require_once 'Zend/Session/Namespace.php';
 
 $monNamespace = new Zend_Session_Namespace('monNamespace');
 
-// $monNamespace corresponds to $_SESSION['monNamespace']]]>
+// $myNamespace corresponds to $_SESSION['monNamespace']]]>
         </programlisting>
 
         Il est possible d'utiliser <code>Zend_Session</code> conjointement avec d'autre code utilisant directement <code>$_SESSION</code>. Cependant, pour éviter les problèmes, il est fortement recommandé que ce code utilise seulement les parties de <code>$_SESSION</code> ne correspondant pas aux instances de <code>Zend_Session_Namespace</code>.
@@ -53,7 +53,7 @@ echo "Page demandée lors de cette session : ", $defaultNamespace->numberOfPageR
         </para>
 
         <example id="zend.session.basic_usage.basic_examples.example.namespaces.new">
-            <title>Nouvelle méthode : les espaces de noms évitent les collisions</title>
+            <title>Nouvelle méthode : les espaces de nommage évitent les collisions</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
@@ -89,7 +89,7 @@ $_SESSION['Un_Service_Web']['user'] = "monwebusername";]]>
         </para>
 
         <example id="zend.session.basic_usage.iteration.example">
-            <title>Enumération des sessions</title>
+            <title>Enumeration des sessions</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 

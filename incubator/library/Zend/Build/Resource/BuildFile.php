@@ -72,7 +72,7 @@ class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
         $_buildFileName = _getBuildFileName($argv);
         $_envFileName = Zend_Loader::getFileName(BUILD_ENV_CLASS);
     }
-
+	
     /**
      * Build specified buildfile.
      *
@@ -96,7 +96,7 @@ class Zend_Build_Resource_BuildFile implements Zend_Build_Resource_File
          * in the build script.
          */
         eval($processedEnv);
-
+		
         // Now execute the build script
         $buildEnv = new BUILD_ENV_CLASS();
         $buildEnv->execute($target);
