@@ -82,7 +82,7 @@ Zend_Session::start();]]>
         </para>
 
         <example id="zend.session.advanced_usage.locking.example.basic">
-            <title>Vérrouillage des espaces de nommage de session</title>
+            <title>Vérrouillage des espaces de noms de session</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
@@ -288,7 +288,7 @@ $tmp['fruit'] = 'poire';
 // ré-assignation de la copie dans l'espace de noms
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // affiche "peach"]]>
+echo $sessionNamespace->array['fruit']; // affiche "poire"]]>
             </programlisting>
 
         </example>

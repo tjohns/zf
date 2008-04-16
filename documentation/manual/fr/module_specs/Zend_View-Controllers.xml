@@ -108,10 +108,10 @@ $view = new Zend_View();
 $view->addScriptPath('/chemin/des/vues');
 $view->addScriptPath('/chemin/des/vues-personnalisees');
 
-// maintenant, lorsque vous appelerez $view->render('booklist.php'),
-// Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/booklist.php", puis
-// dans "/chemin/des/vues/booklist.php", et ensuite dans le répertoire courant
-// pour trouver le fichier &quot;booklist.php&quot;.]]>
+// maintenant, lorsque vous appelerez $view->render('listelivre.php'),
+// Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/listelivre.php", puis
+// dans "/chemin/des/vues/listelivre.php", et ensuite dans le répertoire courant
+// pour trouver le fichier "listelivre.php".]]>
         </programlisting>
 
     </sect2>

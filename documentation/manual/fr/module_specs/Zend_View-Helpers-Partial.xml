@@ -132,7 +132,7 @@ $model = array(
     </example>
 
     <example id="zend.view.helpers.initial.partial.modules">
-        <title>Effectuer le rendu partiel dans d'autres modules</title>
+        <title>Effectuer le rendu partiel dans des modules différents</title>
 
         <para>
             Parfois un partiel existera dans un module différent. Si vous connaissez le nom du module, vous pouvez le fournir comme deuxième argument à <code>partial()</code> ou à <code>partialLoop()</code>, en déplaçant l'argument <code>$model</code> à la troisième position.

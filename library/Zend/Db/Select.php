@@ -230,6 +230,33 @@ class Zend_Db_Select
     }
 
     /**
+     * Adds a UNION clause to the query.
+     *
+     * The first parameter $select can be a string, an existing Zend_Db_Select
+     * object or an array of either of these types.
+     *
+     * @param  array|string|Zend_Db_Select $select One or more select clauses for the UNION.
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function union($select = array(), $type = self::SQL_UNION)
+    {
+        if (!is_array($select)) {
+            $select = array();
+        }
+        
+        if (!in_array($type, self::$_unionTypes)) {
+            require_once 'Zend/Db/Select/Exception.php';
+            throw new Zend_Db_Select_Exception("Invalid union type '{$type}'");
+        }
+
+        foreach ($select as $target) {
+            $this->_parts[self::UNION][] = array($target, $type);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a JOIN table and columns to the query.
      *
      * The $name and $cols parameters follow the same logic

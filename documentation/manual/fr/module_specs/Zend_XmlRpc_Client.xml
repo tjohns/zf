@@ -36,7 +36,9 @@ require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
-print_r( $server->system->listMethods() );]]>
+echo $client->call('test.sayHello');
+
+// hello]]>
             </programlisting>
         </example>
 
@@ -145,16 +147,6 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 Les paramètres peuvant aussi être des objets <code>Zend_XmlRpc_Value</code> qui spécifient
                 alors exactement un type XML-RPC. Les raisons principales d'utiliser un tel procédé sont :
 
-$service->serviceProcedure($p1, $p2);
-...]]>
-            </programlisting>
-        </sect3>
-        <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
-            <title>Passer des objets <code>Zend_XmlRpc_Value</code> comme paramètres</title>
-            <para>
-                Les paramètres passés en tant qu'objet <code>Zend_XmlRpc_Value</code>.
-                Vous pouvez créer une des instances <code>Zend_XmlRpc_Value</code> pour spécifier le type XML-RPC exact de vos paramètres.
-                Les principales raisons pour spécifier explicitement les types XML-RPC peuvent être :
                 <itemizedlist>
                     <listitem>
                         <para>
@@ -240,12 +232,6 @@ $service->serviceProcedure($p1, $p2);
                 </tgroup>
             </table>
 
-$p1 = ZXmlRpcValue::getXmlRpcValue('chaîne encodée', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
-$p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
-
-$service->serviceProcedure($p1, $p2);
-...]]>
-            </programlisting>
             <para>
                 <note>
                     <title>Conversion automatique</title>
@@ -462,17 +448,9 @@ $client->doRequest($request);
         </para>
     </sect2>
 
-/*
-  L'objet $service contient toutes les signatures du server XML-RPC,
-  lorsque serviceProcedure est appelé, son paramètre ($param) est converti
-  dans le type nécessaire, conformément à la signature de la procédure.
-*/
-$service->serviceProcedure($param);]]>
-            </programlisting>
-        </example>
-    </sect2>
-    <sect2 id="zend.xmlrpc.client.response">
-        <title>Récupérer la réponse</title>
+    <sect2 id="zend.xmlrpc.client.http-client">
+        <title>Client HTTP et tests</title>
+
         <para>
             Dans tous les exemples utilisés sur cette page, nous ne parlons jamais du client HTTP. Lorsque c'est
             nécessaire, une instance de <code>Zend_Http_Client</code> sera créée par défaut et injectée dans

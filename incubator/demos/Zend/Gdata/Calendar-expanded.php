@@ -93,7 +93,8 @@ function getCurrentUrl()
     /**
      * Filter php_self to avoid a security vulnerability.
      */
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, 
+                                    strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
 
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
