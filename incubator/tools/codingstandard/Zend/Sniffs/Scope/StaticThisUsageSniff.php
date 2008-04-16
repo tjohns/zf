@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
@@ -24,18 +24,18 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 }
 
 /**
- * ZendFramework_Sniffs_Scope_StaticThisUsageSniff.
+ * Zend_Sniffs_Scope_StaticThisUsageSniff.
  *
  * Checks for usage of "$this" in static methods, which will cause
  * runtime errors
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Zend_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
     /**
      * Constructs the test with the tokens it wishes to listen for.

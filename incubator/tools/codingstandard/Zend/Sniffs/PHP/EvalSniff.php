@@ -20,9 +20,9 @@
  */
 
 /**
- * Zend_Sniffs_PHP_DisallowShortOpenTagSniff.
+ * Zend_Sniffs_PHP_EvalSniff
  *
- * Makes sure that shorthand PHP open tags are not used.
+ * The use of eval() is discouraged
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -30,7 +30,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_PHP_EvalSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -39,39 +39,21 @@ class Zend_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(
-                T_OPEN_TAG,
-                T_OPEN_TAG_WITH_ECHO
-               );
+        return array(T_EVAL);
     }//end register()
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // If short open tags are off, then any short open tags will be converted
-        // to inline_html tags so we can just ignore them.
-        // If its on, then we want to ban the use of them.
-        $option = ini_get('short_open_tag');
-
-        // Ini_get returns a string "0" if short open tags is off.
-        if ($option === '0') {
-            return;
-        }
-
-        $tokens  = $phpcsFile->getTokens();
-        $openTag = $tokens[$stackPtr];
-
-        if ($openTag['content'] === '<?') {
-            $error = 'Short PHP opening tag used. Found "'.$openTag['content'].'" Expected "<?php".';
-            $phpcsFile->addError($error, $stackPtr);
-        }
+        $error = 'Use of eval() is discouraged';
+        $phpcsFile->addWarning($error, $stackPtr);
     }//end process()
 
 }//end class

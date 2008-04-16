@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
@@ -29,12 +29,12 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * Verifies that class variables have scope modifiers
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class Zend_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
     /**
      * Processes the function tokens within the class.

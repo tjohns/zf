@@ -13,14 +13,14 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
 
 /**
- * ZendFramework_Sniffs_Files_IncludingFileSniff
+ * Zend_Sniffs_Files_IncludingFileSniff
  *
  * Checks that the include_once is used in conditional situations, and
  * require_once is used elsewhere. Also checks that brackets do not surround
@@ -28,12 +28,12 @@
  * used instead of require and include
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * Conditions that should use include_once

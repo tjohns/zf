@@ -13,24 +13,24 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
 
 /**
- * ZendFramework_Sniffs_Files_LineEndingsSniff
+ * Zend_Sniffs_Files_LineEndingsSniff
  *
  * Checks for Unix (\n) linetermination, disallowing Windows (\r\n) or Max (\r)
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * The valid EOL character.

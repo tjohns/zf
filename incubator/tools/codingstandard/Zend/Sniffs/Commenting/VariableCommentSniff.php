@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
@@ -27,17 +27,17 @@ if (class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true) === 
 }
 
 /**
- * ZendFramework_Sniffs_Commenting_VariableCommentSniff
+ * Zend_Sniffs_Commenting_VariableCommentSniff
  *
  * Parses and verifies the variable doc comment
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
     /**
      * The header comment parser for the current file.

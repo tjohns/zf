@@ -20,10 +20,9 @@
  */
 
 /**
- * Zend_Sniffs_PHP_ForbiddenFunctionsSniff
+ * Zend_Sniffs_WhiteSpace_CastSpacingSniff
  *
- * Discourages the use of alias functions that are kept in PHP for compatibility
- * with older versions. Can be used to forbid the use of any function
+ * Ensure cast statements dont contain whitespace
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -31,21 +30,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
 {
-    /**
-     * A list of forbidden functions with their alternatives.
-     *
-     * The value is NULL if no alternative exists. IE, the
-     * function should just not be used.
-     *
-     * @var array(string => string|null)
-     */
-    protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
-                                    );
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -53,7 +39,7 @@ class Zend_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return PHP_CodeSniffer_Tokens::$castTokens;
     }//end register()
 
     /**
@@ -68,24 +54,14 @@ class Zend_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prevToken]['code'], array(T_DOUBLE_COLON, T_OBJECT_OPERATOR, T_FUNCTION)) === true) {
-            // Not a call to a PHP function.
-            return;
+        $content  = $tokens[$stackPtr]['content'];
+        $expected = str_replace(' ', '', $content);
+        $expected = str_replace("\t", '', $expected);
+
+        if ($content !== $expected) {
+            $error = "Cast statements must not contain whitespace; expected \"$expected\" but found \"$content\"";
+            $phpcsFile->addError($error, $stackPtr);
         }
-
-        $function = strtolower($tokens[$stackPtr]['content']);
-
-        if (in_array($function, array_keys($this->forbiddenFunctions)) === false) {
-            return;
-        }
-
-        $error = "The use of function $function() is forbidden";
-        if ($this->forbiddenFunctions[$function] !== null) {
-            $error .= '; use '.$this->forbiddenFunctions[$function].'() instead';
-        }
-
-        $phpcsFile->addError($error, $stackPtr);
 
     }//end process()
 

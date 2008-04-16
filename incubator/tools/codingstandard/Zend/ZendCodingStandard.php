@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
@@ -26,12 +26,12 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
  * Zend Framework Coding Standard.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class PHP_CodeSniffer_Standards_ZendFramework_ZendFrameworkCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
+class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
 {
 /**
  * Processed Sniffs
@@ -116,17 +116,23 @@ class PHP_CodeSniffer_Standards_ZendFramework_ZendFrameworkCodingStandard extend
  *
  * PHP SNIFFS
  * ----------
- * DisallowObEndFlushSniff    Disallow ob_end_flush, use ob_get_contents() and ob_end_clean() instead
- * DisallowShortOpenTagSniff  Makes sure that shorthand PHP open tags are not used ("<?"), but allows open
- *                            tag with echo ("<?="). short_open_tag must be set to true for this test to work
- * ForbiddenFunctionsSniff    Discourages the use of alias functions that are kept in PHP for compatibility
- *                            with older versions. Can be used to forbid the use of any function
- * GlobalKeywordSniff         Stops the usage of the "global" keyword
- * InnerFunctionsSniff        Ensures that functions within functions are never used
- * LowerCaseConstantSniff     Checks that all uses of 'true', 'false' and 'null' are lowercase
- * LowercasePHPFunctionsSniff Ensures all calls to inbuilt PHP functions are lowercase
- * NonExecutableCodeSniff     Warns about code that can never been executed. This happens when a function
- *                            returns before the code, or a break ends execution of a statement etc
+ * DisallowCountInLoopsSniff        Disallows the use of count in loop conditions
+ * DisallowMultipleAssignmentsSniff Ensures that there is only one value assignment on a line, and that it is
+ *                                  the first thing on the line
+ * DisallowObEndFlushSniff          Disallow ob_end_flush, use ob_get_contents() and ob_end_clean() instead
+ * DisallowShortOpenTagSniff        Makes sure that shorthand PHP open tags are not used ("<?"), but allows open
+ *                                  tag with echo ("<?="). short_open_tag must be set to true for this test to work
+ * EvalSniff                        The use of eval() is discouraged
+ * ForbiddenFunctionsSniff          Discourages the use of alias functions that are kept in PHP for compatibility
+ *                                  with older versions. Can be used to forbid the use of any function
+ * GlobalKeywordSniff               Stops the usage of the "global" keyword
+ * HeredocSniff                     Heredocs are discuraged
+ * InnerFunctionsSniff              Ensures that functions within functions are never used
+ * LowerCaseConstantSniff           Checks that all uses of 'true', 'false' and 'null' are lowercase
+ * LowercasePHPFunctionsSniff       Ensures all calls to inbuilt PHP functions are lowercase
+ * NonExecutableCodeSniff           Warns about code that can never been executed. This happens when a function
+ *                                  returns before the code, or a break ends execution of a statement etc
+ * ReturnFunctionValueSniff         Warns when function values are returned directly
  *
  * SCOPE SNIFFS
  * ------------
@@ -140,12 +146,13 @@ class PHP_CodeSniffer_Standards_ZendFramework_ZendFrameworkCodingStandard extend
  *
  * WHITESPACE SNIFFS
  * -----------------
- * DisallowTabSniff              Checks if tabs are used and errors if any are found
- * LanguageConstructSpacingSniff Ensures all language constructs (without brackets) contain a
- *                               single space between themselves and their content
- * SemicolonSpacingSniff         Ensure there is no whitespace before a semicolon
+ * CastSpacingSniff               Ensure cast statements dont contain whitespace
+ * DisallowTabSniff               Checks if tabs are used and errors if any are found
+ * FunctionOpeningBraceSpaceSniff Checks that there is no empty line after the opening brace of a function
+ * FunctionSpacingSniff           Checks the separation between methods in a class or interface
+ * LanguageConstructSpacingSniff  Ensures all language constructs (without brackets) contain a
+ *                                single space between themselves and their content
+ * ScopeClosingBraceSniff         Checks that the closing braces of scopes are aligned correctly
+ * SemicolonSpacingSniff          Ensure there is no whitespace before a semicolon
  */
 }//end class
-
-
-// Omit Trailing spaces

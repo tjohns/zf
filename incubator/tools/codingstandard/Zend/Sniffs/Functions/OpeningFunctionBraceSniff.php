@@ -13,25 +13,25 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
 
 /**
- * ZendFramework_Sniffs_Functions_OpeningFunctionBraceSniff
+ * Zend_Sniffs_Functions_OpeningFunctionBraceSniff
  *
  * Checks that the opening brace of a function is on the line after the
  * function declaration.
  *
  * @category   Zend
- * @package    ZendFramework_CodingStandard
+ * @package    Zend_CodingStandard
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class ZendFramework_Sniffs_Functions_OpeningFunctionBraceSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Functions_OpeningFunctionBraceSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * Registers the tokens that this sniff wants to listen for.

@@ -20,10 +20,9 @@
  */
 
 /**
- * Zend_Sniffs_PHP_ForbiddenFunctionsSniff
+ * Zend_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff
  *
- * Discourages the use of alias functions that are kept in PHP for compatibility
- * with older versions. Can be used to forbid the use of any function
+ * Checks that there is no empty line after the opening brace of a function
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -31,21 +30,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff implements PHP_CodeSniffer_Sniff
 {
-    /**
-     * A list of forbidden functions with their alternatives.
-     *
-     * The value is NULL if no alternative exists. IE, the
-     * function should just not be used.
-     *
-     * @var array(string => string|null)
-     */
-    protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
-                                    );
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -53,40 +39,44 @@ class Zend_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return array(T_FUNCTION);
     }//end register()
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token
+     *                                        in the stack passed in $tokens.
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prevToken]['code'], array(T_DOUBLE_COLON, T_OBJECT_OPERATOR, T_FUNCTION)) === true) {
-            // Not a call to a PHP function.
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            // Probably an interface method.
             return;
         }
 
-        $function = strtolower($tokens[$stackPtr]['content']);
+        $openBrace   = $tokens[$stackPtr]['scope_opener'];
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($openBrace + 1), null, true);
 
-        if (in_array($function, array_keys($this->forbiddenFunctions)) === false) {
+        if ($nextContent === $tokens[$stackPtr]['scope_closer']) {
+             // The next bit of content is the closing brace, so this
+             // is an empty function and should have a blank line
+             // between the opening and closing braces.
             return;
         }
 
-        $error = "The use of function $function() is forbidden";
-        if ($this->forbiddenFunctions[$function] !== null) {
-            $error .= '; use '.$this->forbiddenFunctions[$function].'() instead';
+        $braceLine = $tokens[$openBrace]['line'];
+        $nextLine  = $tokens[$nextContent]['line'];
+
+        $found = ($nextLine - $braceLine - 1);
+        if ($found !== 0) {
+            $error = "Expected 0 blank lines after opening function brace; $found found";
+            $phpcsFile->addError($error, $openBrace);
         }
-
-        $phpcsFile->addError($error, $stackPtr);
-
     }//end process()
 
 }//end class
