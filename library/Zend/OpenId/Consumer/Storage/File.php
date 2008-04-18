@@ -125,6 +125,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
         $data = serialize(array($url, $handle, $macFunc, $secret, $expires));
         fwrite($f, $data);
         if (function_exists('symlink')) {
+        	@unlink($name2);
             symlink($name1, $name2);
         } else {
             $f2 = @fopen($name2, 'w+');
