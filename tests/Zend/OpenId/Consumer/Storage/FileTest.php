@@ -19,16 +19,16 @@
  * @version    $Id$
  */
 
+
 /**
- * Zend_OpenId
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
+/**
+ * @see Zend_OpenId_Consumer_Storage_File
  */
 require_once 'Zend/OpenId/Consumer/Storage/File.php';
-
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework.php';
 
 
 /**
