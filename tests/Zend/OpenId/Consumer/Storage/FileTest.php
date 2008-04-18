@@ -45,6 +45,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     const ID       = "http://id.myopenid.com/";
     const REAL_ID  = "http://real_id.myopenid.com/";
     const SERVER   = "http://www.myopenid.com/";
+    const SERVER2  = "http://www.myopenid2.com/";
     const VERSION  = 1.0;
 
     /**
@@ -216,28 +217,31 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     {
         $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
         $storage->purgeNonces();
-        $this->assertTrue( $storage->isUniqueNonce('1') );
-        $this->assertTrue( $storage->isUniqueNonce('2') );
-        $this->assertFalse( $storage->isUniqueNonce('1') );
-        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '2') );
+        $this->assertFalse( $storage->isUniqueNonce(self::SERVER, '1') );
+        $this->assertFalse( $storage->isUniqueNonce(self::SERVER, '2') );
         $storage->purgeNonces();
-        $this->assertTrue( $storage->isUniqueNonce('1') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
         sleep(2);
         $date = @date("r", time());
         sleep(2);
-        $this->assertTrue( $storage->isUniqueNonce('2') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '2') );
         $storage->purgeNonces($date);
-        $this->assertTrue( $storage->isUniqueNonce('1') );
-        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
+        $this->assertFalse( $storage->isUniqueNonce(self::SERVER, '2') );
         $storage->purgeNonces();
-        $this->assertTrue( $storage->isUniqueNonce('1') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
         sleep(2);
         $date = time();
         sleep(2);
-        $this->assertTrue( $storage->isUniqueNonce('2') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '2') );
         $storage->purgeNonces($date);
-        $this->assertTrue( $storage->isUniqueNonce('1') );
-        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
+        $this->assertFalse( $storage->isUniqueNonce(self::SERVER, '2') );
+        $storage->purgeNonces();
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER, '1') );
+        $this->assertTrue( $storage->isUniqueNonce(self::SERVER2, '1') );
         $storage->purgeNonces();
     }
 }
