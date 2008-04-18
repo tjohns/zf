@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,7 +41,7 @@ class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return PHP_CodeSniffer_Tokens::$castTokens;
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -63,6 +64,6 @@ class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }//end process()
+    }
 
-}//end class
+}

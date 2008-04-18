@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -49,7 +50,7 @@ class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer
                 T_VAR,
                 T_CONST
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -67,9 +68,10 @@ class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer
         if ($content !== strtolower($content)) {
             $type     = strtoupper($content);
             $expected = strtolower($content);
-            $error    = "$type keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+            $error    = '$type keyword must be lowercase; '
+                      . "expected \"$expected\" but found \"$content\"";
             $phpcsFile->addError($error, $stackPtr);
         }
-    }//end process()
+    }
 
-}//end class
+}

@@ -19,7 +19,8 @@
  * @version    $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff '
+                                      . 'not found');
 }
 
 /**
@@ -35,15 +36,17 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff
+extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+
     /**
      * Constructs a Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff.
      */
     public function __construct()
     {
         parent::__construct(array(T_FUNCTION), array(T_THROW));
-    }//end __construct()
+    }
 
     /**
      * Processes the function tokens within the class.
@@ -53,7 +56,8 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
      * @param int                  $currScope The current scope opener token.
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr,
+                                               $currScope)
     {
         // Is this the first throw token within the current function scope?
         // If so, we have to validate other throw tokens within the same scope.
@@ -65,11 +69,14 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
         // Parse the function comment.
         $tokens       = $phpcsFile->getTokens();
         $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, ($stackPtr - 1));
-        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
-        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true)
+                      + 1);
+        $comment      = $phpcsFile->getTokensAsString($commentStart,
+                        ($commentEnd - $commentStart + 1));
 
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser(
+                                   $comment, $phpcsFile);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
@@ -96,7 +103,8 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
                     don't know the exception class.
                 */
 
-                $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd, false, null, true);
+                $currException = $phpcsFile->findNext(T_STRING, $currPos, $currScopeEnd, false,
+                                                      null, true);
                 if ($currException !== false) {
                     $throwTokens[] = $tokens[$currException]['content'];
                 }
@@ -137,13 +145,13 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
                 foreach ($throwTags as $i => $throwTag) {
                     $errorPos = ($commentStart + $lineNumber[$throwTag]);
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
-                        $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for @throws tag exception";
+                        $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for "
+                               . '@throws tag exception';
                         $phpcsFile->addError($error, $errorPos);
                     }
                 }
             }
-        }//end if
+        }
+    }
 
-    }//end processTokenWithinScope()
-
-}//end class
+}

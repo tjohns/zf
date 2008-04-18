@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -42,7 +43,7 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
         return array(
                 T_FOREACH
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -72,7 +73,8 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
         $content = $tokens[$asToken]['content'];
         if ($content !== strtolower($content)) {
             $expected = strtolower($content);
-            $errors[] = "AS keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+            $errors[] = 'AS keyword must be lowercase; '
+                      . "expected \"$expected\" but found \"$content\"";
         }
 
         $doubleArrow = $phpcsFile->findNext(T_DOUBLE_ARROW, $openingBracket, $closingBracket);
@@ -98,7 +100,7 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
 
             }
 
-        }//end if
+        }
 
         if ($tokens[($asToken - 1)]['code'] !== T_WHITESPACE) {
             $errors[] = 'Expected 1 space before "as"; 0 found';
@@ -123,6 +125,6 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }//end process()
+    }
 
-}//end class
+}

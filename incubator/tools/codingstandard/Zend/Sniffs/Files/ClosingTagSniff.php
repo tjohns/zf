@@ -33,6 +33,7 @@
  */
 class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -42,7 +43,7 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_CLOSE_TAG);
 
-    }//end register()
+    }
 
     /**
      * Processes this sniff, when one of its tokens is encountered.
@@ -57,6 +58,6 @@ class Zend_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
     {
         $error = 'A closing tag is not permitted within a PHP file';
         $phpcsFile->addError($error, $stackPtr);
-    }//end process()
+    }
 
-}//end class
+}

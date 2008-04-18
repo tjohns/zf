@@ -4,11 +4,11 @@ To test the coding standard you must have the latest
 release of PHP_CodeSniffer installed. You can get it
 from PEAR.
 
-Copy the directory "ZendFramework" to your "standards"
+Copy the directory "Zend" to your "standards"
 directory of CodeSniffer.
 
 Change the standard to use by CodeSniffer:
-phpcs --config-set default_standard ZendFramework
+phpcs --config-set default_standard Zend
 
 Change the tab usage to zero to check for tabs:
 phpcs --config-set tab_width 0

@@ -60,7 +60,7 @@ class Zend_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                 T_REQUIRE,
                 T_INCLUDE
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -126,8 +126,7 @@ class Zend_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
                 $error .= 'use "require_once" instead';
                 $phpcsFile->addError($error, $stackPtr);
             }
-        }//end if
+        }
+    }
 
-    }//end process()
-
-}//end class
+}

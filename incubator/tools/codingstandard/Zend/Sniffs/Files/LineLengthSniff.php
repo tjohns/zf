@@ -63,7 +63,7 @@ class Zend_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_OPEN_TAG);
 
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -116,6 +116,6 @@ class Zend_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end process()
+    }
 
-}//end class
+}

@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,7 +41,7 @@ class Zend_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniffe
     public function register()
     {
         return array(T_COMMENT);
-    }//end register()
+    }
 
     /**
      * Processes this sniff, when one of its tokens is encountered.
@@ -48,7 +49,6 @@ class Zend_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniffe
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token in the
      *                                        stack passed in $tokens.
-     *
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -69,6 +69,6 @@ class Zend_Sniffs_Commenting_PostStatementCommentSniff implements PHP_CodeSniffe
         $error = 'Comments may not appear after statements or brackets';
         $phpcsFile->addError($error, $stackPtr);
 
-    }//end process()
+    }
 
-}//end class
+}

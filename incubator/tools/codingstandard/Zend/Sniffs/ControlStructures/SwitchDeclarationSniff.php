@@ -33,6 +33,7 @@
  */
 class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -41,7 +42,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
     public function register()
     {
         return array(T_SWITCH);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -64,7 +65,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         while (($nextCase = $phpcsFile->findNext(array(T_CASE, T_SWITCH), ($nextCase + 1), $switch['scope_closer'])) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
             if ($tokens[$nextCase]['code'] === T_SWITCH) {
-            	$oldCase  = $nextCase;
+                $oldCase  = $nextCase;
                 $nextCase = $tokens[$nextCase]['scope_closer'];
                 continue;
             }
@@ -74,7 +75,8 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             $content = $tokens[$nextCase]['content'];
             if ($content !== strtolower($content)) {
                 $expected = strtolower($content);
-                $error    = "CASE keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                $error    = 'CASE keyword must be lowercase; '
+                          . "expected \"$expected\" but found \"$content\"";
                 $phpcsFile->addError($error, $nextCase);
             }
 
@@ -122,7 +124,8 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                         	$old = $i;
                             $i = $tokens[$i]['scope_opener'];
                             if ($tokens[$old]['code'] === T_CASE) {
-                                $error = "You must insert a 'break intentionally omitted' comment within an empty case";
+                                $error = "You must insert a 'break intentionally omitted' comment "
+                                       . 'within an empty case';
                                 $phpcsFile->addError($error, $nextCase);
                             }
                             continue;
@@ -177,12 +180,12 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                         $error = 'BREAK statements must be followed by a single blank line';
                         $phpcsFile->addError($error, $nextBreak);
                     }
-                }//end if
+                }
             } else {
             	if (array_key_exists('scope_closer', $tokens[$nextCase])) {
                     $nextBreak = $tokens[$nextCase]['scope_closer'];
                 }
-            }//end if
+            }
 
             /*
                 Ensure CASE statements are not followed by
@@ -202,9 +205,10 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $error = 'Blank lines are not allowed after CASE statements';
                 $phpcsFile->addError($error, $nextCase);
             }
-        }//end while
+        }
 
-        $default = $phpcsFile->findPrevious(T_DEFAULT, $switch['scope_closer'], $switch['scope_opener']);
+        $default = $phpcsFile->findPrevious(T_DEFAULT, $switch['scope_closer'],
+                                            $switch['scope_opener']);
 
         // Make sure this default belongs to us.
         if ($default !== false) {
@@ -219,7 +223,8 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             $content = $tokens[$default]['content'];
             if ($content !== strtolower($content)) {
                 $expected = strtolower($content);
-                $error    = "DEFAULT keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+                $error    = 'DEFAULT keyword must be lowercase; '
+                          . "expected \"$expected\" but found \"$content\"";
                 $phpcsFile->addError($error, $default);
             }
 
@@ -234,7 +239,8 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $phpcsFile->addError($error, $default);
             }
 
-            $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($default + 1), $switch['scope_closer']);
+            $nextBreak = $phpcsFile->findNext(array(T_BREAK), ($default + 1),
+                                              $switch['scope_closer']);
             if ($nextBreak !== false) {
                 if ($tokens[$nextBreak]['column'] !== ($caseAlignment + 4)) {
                     $error = 'BREAK statement must be indented 4 spaces from DEFAULT keyword';
@@ -257,7 +263,8 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 }
 
                 if ($nextLine !== ($breakLine + 1)) {
-                    $error = 'Blank lines are not allowed after the DEFAULT case\'s BREAK statement';
+                    $error = 'Blank lines are not allowed after '
+                           . 'the DEFAULT case\'s BREAK statement';
                     $phpcsFile->addError($error, $nextBreak);
                 }
             } else {
@@ -265,7 +272,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $phpcsFile->addError($error, $default);
 
                 $nextBreak = $tokens[$default]['scope_closer'];
-            }//end if
+            }
 
             /*
                 Ensure empty DEFAULT statements are not allowed.
@@ -308,7 +315,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         } else {
             $error = 'All SWITCH statements must contain a DEFAULT case';
             $phpcsFile->addError($error, $stackPtr);
-        }//end if
+        }
 
         if ($tokens[$switch['scope_closer']]['column'] !== $switch['column']) {
             $error = 'Closing brace of SWITCH statement must be aligned with SWITCH keyword';
@@ -319,7 +326,6 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             $error = 'SWITCH statements must contain at least one CASE statement';
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-}//end class
+}

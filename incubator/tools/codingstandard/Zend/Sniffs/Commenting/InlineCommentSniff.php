@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,7 +41,7 @@ class Zend_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return array(T_COMMENT);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -59,6 +60,6 @@ class Zend_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
             $error .= ' or "/* comment */" instead.';
             $phpcsFile->addError($error, $stackPtr);
         }
-    }//end process()
+    }
 
-}//end class
+}

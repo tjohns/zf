@@ -20,10 +20,10 @@
  */
 
 /**
- * Zend_Sniffs_Classes_ClassFileNameSniff
+ * Zend_Sniffs_Strings_ConcatenationSpacingSniff
  *
- * Tests that the file name and the name of the class contained within the file
- * match.
+ * Makes sure there are no spaces between the concatenation operator (.) and
+ * the strings being concatenated
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -31,7 +31,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -41,10 +41,7 @@ class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE
-               );
+        return array(T_STRING_CONCAT);
     }
 
     /**
@@ -57,21 +54,34 @@ class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $decName   = $phpcsFile->findNext(T_STRING, $stackPtr);
-        $fullPath  = dirname($phpcsFile->getFilename());
-        $fullPath  = substr($fullPath, strpos($fullPath,
-                     DIRECTORY_SEPARATOR . 'Zend' . DIRECTORY_SEPARATOR) + 1);
-        $fullPath  = str_replace(DIRECTORY_SEPARATOR, '_', $fullPath) . '_';
-        $fullPath .= basename($phpcsFile->getFilename());
-        $fileName  = substr($fullPath, 0, strrpos($fullPath, '.'));
+        $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$decName]['content'] !== $fileName) {
-            $error  = ucfirst($tokens[$stackPtr]['content']);
-            $error .= ' name doesn\'t match filename. Expected ';
-            $error .= '"' . $tokens[$stackPtr]['content'] . ' ';
-            $error .= $fileName . '"';
-            $phpcsFile->addError($error, $stackPtr);
+        $found    = '';
+        $expected = '';
+        $error    = false;
+
+        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+            $error     = true;
+        }
+        $expected .= trim(substr($tokens[($stackPtr - 1)]['content'], -5)) . " " . $tokens[$stackPtr]['content'];
+        $found    .= substr($tokens[($stackPtr - 1)]['content'], -5) . $tokens[$stackPtr]['content'];
+
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $error     = true;
+        }
+        $expected .= " " . trim(substr($tokens[($stackPtr + 1)]['content'], 0, 5));
+        $found    .= substr($tokens[($stackPtr + 1)]['content'], 0, 6);
+
+        if ($error === true) {
+            $found    = str_replace("\r\n", '\n', $found);
+            $found    = str_replace("\n", '\n', $found);
+            $found    = str_replace("\r", '\n', $found);
+            $expected = str_replace("\r\n", '\n', $expected);
+            $expected = str_replace("\n", '\n', $expected);
+            $expected = str_replace("\r", '\n', $expected);
+
+            $message = "Concat operator must be surrounded by one space. Found \"$found\"; expected \"$expected\"";
+            $phpcsFile->addError($message, $stackPtr);
         }
 
     }

@@ -34,15 +34,17 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Zend_Sniffs_Classes_SelfMemberReferenceSniff
+extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+
     /**
      * Constructs a Squiz_Sniffs_Classes_SelfMemberReferenceSniff.
      */
     public function __construct()
     {
         parent::__construct(array(T_CLASS), array(T_DOUBLE_COLON));
-    }//end __construct()
+    }
 
     /**
      * Processes the function tokens within the class.
@@ -52,14 +54,16 @@ class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stand
      * @param int                  $currScope The current scope opener token.
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr,
+                                               $currScope)
     {
         $tokens = $phpcsFile->getTokens();
 
         $className = ($stackPtr - 1);
         if ($tokens[$className]['code'] === T_SELF) {
             if (strtolower($tokens[$className]['content']) !== $tokens[$className]['content']) {
-                $error = 'Must use "self::" for local static member reference; found "'.$tokens[$className]['content'].'::"';
+                $error = 'Must use "self::" for local static member reference; found "'
+                       . $tokens[$className]['content'] . '::"';
                 $phpcsFile->addError($error, $className);
                 return;
             }
@@ -85,7 +89,6 @@ class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stand
             $error = "Expected 0 spaces after double colon; $found found";
             $phpcsFile->addError($error, $className);
         }
+    }
 
-    }//end processTokenWithinScope()
-
-}//end class
+}

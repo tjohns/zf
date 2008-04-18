@@ -63,7 +63,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
     {
         return PHP_CodeSniffer_Tokens::$assignmentTokens;
 
-    }//end register()
+    }
 
 
     /**
@@ -180,7 +180,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
 
             $assignments[] = $prevAssignment;
             $lastLine      = $tokens[$prevAssignment]['line'];
-        }//end while
+        }
 
         $assignmentData = array();
         foreach ($assignments as $assignment) {
@@ -209,7 +209,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
                                             'variable_length'   => $contentLength + $tokens[$variable]['column'],
                                             'assignment_length' => strlen($tokens[$assignment]['content']),
                                            );
-        }//end foreach
+        }
 
         foreach ($assignmentData as $assignment => $data) {
             if ($data['assignment_length'] === $maxAssignmentLength) {
@@ -262,10 +262,10 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
                 } else {
                     $phpcsFile->addWarning($error, $assignment);
                 }
-            }//end if
-        }//end foreach
+            }
+        }
 
-    }//end process()
+    }
 
 
     /**
@@ -320,7 +320,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
 
         return true;
 
-    }//end _isAssignment()
+    }
 
 
-}//end class
+}

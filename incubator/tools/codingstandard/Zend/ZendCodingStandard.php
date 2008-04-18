@@ -31,7 +31,8 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
+class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard
+extends PHP_CodeSniffer_Standards_CodingStandard
 {
 /**
  * Processed Sniffs
@@ -52,22 +53,22 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * BlockCommentSniff            Verifies that block comments are used appropriately
  * DocCommentAlignmentSniff     Tests that the stars in a doc comment align correctly
  * EmptyCatchCommentSniff       Checks for empty Catch clause, these must have at least one comment
- * FunctionCommentThrowTagSniff Verifies that a @throws tag exists for a function that throws exceptions
- *                              Verifies the number of @throws tags and the number of throw tokens matches
- *                              Verifies the exception type
+ * FunctionCommentThrowTagSniff Verifies that a @throws tag exists for a function that throws
+ *                              exceptions, verifies the number of @throws tags and the number of
+ *                              throw tokens matches, verifies the exception type
  * InlineCommentSniff           Checks that no perl-style comments (#) are used
  * PostStatementCommentSniff    Checks to ensure that there are no comments after statements
  * VariableCommentSniff         Parses and verifies the variable doc comment
  *
  * CONTROLSTRUCTURE SNIFFS
  * -----------------------
- * ElseIfDeclarationSniff      Verifies that there are not elseif statements. The else and the if should
- *                             be separated by a space
+ * ElseIfDeclarationSniff      Verifies that there are not elseif statements. The else and the if
+ *                             should be separated by a space
  * ForLoopDeclarationSniff     Verifies that there is a space between each condition of for loops
  * ForEachLoopDeclarationSniff Verifies that there is a space between each condition of foreach loops
  * LowercaseDeclarationSniff   Ensures all control structure keywords are lowercase
- * SwitchDeclarationSniff      Ensures all the breaks and cases are aligned correctly according to their
- *                             parent switch's alignment and enforces other switch formatting
+ * SwitchDeclarationSniff      Ensures all the breaks and cases are aligned correctly according to
+ *                             their parent switch's alignment and enforces other switch formatting
  *
  * FILE SNIFFS
  * -----------
@@ -94,6 +95,8 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * LowercaseKeywordsSniff    Ensures all class keywords are lowercase
  * OpeningFunctionBraceSniff Checks that the opening brace of a function is on the line after the
  *                           function declaration
+ * ValidDefaultValueSniff    A Sniff to ensure that parameters defined for a function that have a
+ *                           default value come at the end of the function signature
  *
  * NAMINGCONVENTIONS SNIFFS
  * ------------------------
@@ -107,9 +110,9 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  *
  * OPERATOR SNIFFS
  * ---------------
- * ComparisonOperatorUsageSniff Enforce the use of IDENTICAL type operators rather than EQUAL operators.
- *                              The use of === true is enforced over implicit true statements,
- *                              It also enforces the use of === false over ! operators.
+ * ComparisonOperatorUsageSniff Enforce the use of IDENTICAL type operators rather than EQUAL
+ *                              operators. The use of === true is enforced over implicit true
+ *                              statements, It also enforces the use of === false over ! operators.
  * IncrementDecrementUsageSniff Tests that the ++ operators are used when possible
  * ValidLogicalOperatorsSniff   Checks to ensure that the logical operators 'and' and 'or' are used
  *                              instead of the && and || operators
@@ -117,8 +120,8 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * PHP SNIFFS
  * ----------
  * DisallowCountInLoopsSniff        Disallows the use of count in loop conditions
- * DisallowMultipleAssignmentsSniff Ensures that there is only one value assignment on a line, and that it is
- *                                  the first thing on the line
+ * DisallowMultipleAssignmentsSniff Ensures that there is only one value assignment on a line, and
+ *                                  that it is the first thing on the line
  * DisallowObEndFlushSniff          Disallow ob_end_flush, use ob_get_contents() and ob_end_clean() instead
  * DisallowShortOpenTagSniff        Makes sure that shorthand PHP open tags are not used ("<?"), but allows open
  *                                  tag with echo ("<?="). short_open_tag must be set to true for this test to work
@@ -147,7 +150,10 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * WHITESPACE SNIFFS
  * -----------------
  * CastSpacingSniff               Ensure cast statements dont contain whitespace
+ * ConcatenationSpacingSniff      Makes sure there are no spaces between the concatenation operator (.) and
+ *                                the strings being concatenated
  * DisallowTabSniff               Checks if tabs are used and errors if any are found
+ * DoubleQuoteUsageSniff          Makes sure that any use of Double Quotes ("") are warranted
  * FunctionOpeningBraceSpaceSniff Checks that there is no empty line after the opening brace of a function
  * FunctionSpacingSniff           Checks the separation between methods in a class or interface
  * LanguageConstructSpacingSniff  Ensures all language constructs (without brackets) contain a

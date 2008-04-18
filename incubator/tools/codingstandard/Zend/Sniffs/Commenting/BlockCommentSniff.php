@@ -32,6 +32,7 @@
  */
 class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,7 +41,7 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return array(T_COMMENT);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -62,8 +63,9 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         $commentLines = array($stackPtr);
         $nextComment  = $stackPtr;
         $lastLine     = $tokens[$stackPtr]['line'];
-        // Construct the comment into an array.
-        while (($nextComment = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1), null, false)) !== false) {
+        // Construct the comment into an array
+        $nextComment = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1), null, false);
+        while ($nextComment !== false) {
             if (($tokens[$nextComment]['line'] - 1) !== $lastLine) {
                 // Not part of the block.
                 break;
@@ -71,12 +73,15 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
             $lastLine       = $tokens[$nextComment]['line'];
             $commentLines[] = $nextComment;
+            $nextComment    = $phpcsFile->findNext(array(T_COMMENT), ($nextComment + 1),
+                                                   null, false);
         }
 
         if (count($commentLines) <= 2) {
             // Small comment. Can't be right.
             if (count($commentLines) === 1) {
-                $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
+                $error = 'Single line block comment not allowed; '
+                       . 'use inline ("// text") comment instead';
                 $phpcsFile->addError($error, $stackPtr);
                 return;
             }
@@ -110,7 +115,8 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace !== $starColumn) {
                 $expected  = $starColumn;
                 $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $error     = "First line of comment not aligned correctly; expected $expected but found $leadingSpace";
+                $error     = 'First line of comment not aligned correctly; '
+                           . "expected $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $commentLines[1]);
             }
 
@@ -122,9 +128,11 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Check that each line of the comment is indented past the star.
         foreach ($commentLines as $line) {
-            $leadingSpace = (strlen($tokens[$line]['content']) - strlen(ltrim($tokens[$line]['content'])));
+            $leadingSpace = (strlen($tokens[$line]['content'])
+                          - strlen(ltrim($tokens[$line]['content'])));
             // First and last lines (comment opener and closer) are handled seperately.
-            if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
+            if ($line === $commentLines[(count($commentLines) - 1)] ||
+                $line === $commentLines[0]) {
                 continue;
             }
 
@@ -141,10 +149,11 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace < $starColumn) {
                 $expected  = $starColumn;
                 $expected .= ($starColumn === 1) ? ' space' : ' spaces';
-                $error     = "Comment line indented incorrectly; expected at least $expected but found $leadingSpace";
+                $error     = 'Comment line indented incorrectly; '
+                           . "expected at least $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $line);
             }
-        }//end foreach
+        }
 
         // Finally, test the last line is correct.
         $lastIndex = (count($commentLines) - 1);
@@ -158,7 +167,8 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             if ($leadingSpace !== ($tokens[$stackPtr]['column'] - 1)) {
                 $expected  = ($tokens[$stackPtr]['column'] - 1);
                 $expected .= ($expected === 1) ? ' space' : ' spaces';
-                $error     = "Last line of comment aligned incorrectly; expected $expected but found $leadingSpace";
+                $error     = 'Last line of comment aligned incorrectly; '
+                           . "expected $expected but found $leadingSpace";
                 $phpcsFile->addError($error, $commentLines[$lastIndex]);
             }
 
@@ -177,7 +187,6 @@ class Zend_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'Empty line required after block comment';
             $phpcsFile->addError($error, $commentCloser);
         }
+    }
 
-    }//end process()
-
-}//end class
+}
