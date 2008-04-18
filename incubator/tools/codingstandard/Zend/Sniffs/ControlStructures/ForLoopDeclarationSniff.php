@@ -32,7 +32,6 @@
  */
 class Zend_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -43,7 +42,7 @@ class Zend_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_CodeS
         return array(
                 T_FOR
                );
-    }
+    }//end register()
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -103,6 +102,6 @@ class Zend_Sniffs_ControlStructures_ForLoopDeclarationSniff implements PHP_CodeS
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }
+    }//end process()
 
-}
+}//end class

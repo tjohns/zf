@@ -33,7 +33,6 @@
  */
 class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
 {
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -45,7 +44,7 @@ class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
                 T_CLASS,
                 T_INTERFACE
                );
-    }
+    }//end register()
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -57,23 +56,22 @@ class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $decName   = $phpcsFile->findNext(T_STRING, $stackPtr);
-        $fullPath  = dirname($phpcsFile->getFilename());
-        $fullPath  = substr($fullPath, strpos($fullPath,
-                     DIRECTORY_SEPARATOR . 'Zend' . DIRECTORY_SEPARATOR) + 1);
-        $fullPath  = str_replace(DIRECTORY_SEPARATOR, '_', $fullPath) . '_';
+        $tokens   = $phpcsFile->getTokens();
+        $decName  = $phpcsFile->findNext(T_STRING, $stackPtr);
+        $fullPath = dirname($phpcsFile->getFilename());
+        $fullPath = substr($fullPath, strpos($fullPath, DIRECTORY_SEPARATOR.'Zend'.DIRECTORY_SEPARATOR) + 1);
+        $fullPath = str_replace(DIRECTORY_SEPARATOR, '_', $fullPath) . "_";
         $fullPath .= basename($phpcsFile->getFilename());
-        $fileName  = substr($fullPath, 0, strrpos($fullPath, '.'));
+        $fileName = substr($fullPath, 0, strrpos($fullPath, '.'));
 
         if ($tokens[$decName]['content'] !== $fileName) {
             $error  = ucfirst($tokens[$stackPtr]['content']);
             $error .= ' name doesn\'t match filename. Expected ';
-            $error .= '"' . $tokens[$stackPtr]['content'] . ' ';
-            $error .= $fileName . '"';
+            $error .= '"'.$tokens[$stackPtr]['content'].' ';
+            $error .= $fileName.'".';
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }
+    }//end process()
 
-}
+}//end class

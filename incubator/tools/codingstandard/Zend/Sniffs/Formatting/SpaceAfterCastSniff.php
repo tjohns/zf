@@ -20,9 +20,9 @@
  */
 
 /**
- * Zend_Sniffs_WhiteSpace_CastSpacingSniff
+ * Zend_Sniffs_Formatting_SpaceAfterCastSniff
  *
- * Ensure cast statements dont contain whitespace
+ * Ensures there is a single space after cast tokens
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -30,8 +30,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_Sniff
 {
+
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -40,29 +42,37 @@ class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return PHP_CodeSniffer_Tokens::$castTokens;
+
     }//end register()
+
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
+     *
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content  = $tokens[$stackPtr]['content'];
-        $expected = str_replace(' ', '', $content);
-        $expected = str_replace("\t", '', $expected);
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $error = 'A cast statement must be followed by a single space';
+            $phpcsFile->addError($error, $stackPtr);
+            return;
+        }
 
-        if ($content !== $expected) {
-            $error = "Cast statements must not contain whitespace; expected \"$expected\" but found \"$content\"";
+        if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
+            $error = 'A cast statement must be followed by a single space';
             $phpcsFile->addError($error, $stackPtr);
         }
 
     }//end process()
 
+
 }//end class
+
+?>

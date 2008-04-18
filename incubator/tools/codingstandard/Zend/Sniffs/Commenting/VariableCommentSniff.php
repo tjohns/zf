@@ -19,13 +19,11 @@
  * @version    $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff '
-                                      . 'not found');
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
 }
 
 if (class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_MemberCommentParser '
-                                      . 'not found');
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_MemberCommentParser not found');
 }
 
 /**
@@ -39,10 +37,8 @@ if (class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true) === 
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_Commenting_VariableCommentSniff
-extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
-
     /**
      * The header comment parser for the current file.
      *
@@ -52,8 +48,6 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 
     /**
      * Fix for spacing
-     *
-     * @var integer
      */
     protected $space = 1;
 
@@ -77,31 +71,26 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
         // Extract the var comment docblock.
         $commentEnd = $phpcsFile->findPrevious($commentToken, ($stackPtr - 3));
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a variable comment',
-                                 $stackPtr);
+            $phpcsFile->addError('You must use "/**" style comments for a variable comment', $stackPtr);
             return;
         } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
             $phpcsFile->addError('Missing variable doc comment', $stackPtr);
             return;
         } else {
             // Make sure the comment we have found belongs to us.
-            $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE),
-                                              ($commentEnd + 1));
+            $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE), ($commentEnd + 1));
             if ($commentFor !== $stackPtr) {
                 $phpcsFile->addError('Missing variable doc comment', $stackPtr);
                 return;
             }
         }
 
-        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1),
-                                                  null, true) + 1);
-        $comment      = $phpcsFile->getTokensAsString($commentStart,
-                                                     ($commentEnd - $commentStart + 1));
+        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         // Parse the header comment docblock.
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_MemberCommentParser($comment,
-                                   $phpcsFile);
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_MemberCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
@@ -139,8 +128,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                 $between        = $comment->getWhiteSpaceBetween();
                 $newlineBetween = substr_count($between, $phpcsFile->eolChar);
                 if ($newlineBetween !== 2) {
-                    $error = 'There must be exactly one blank line between descriptions '
-                           . 'in variable comment';
+                    $error = 'There must be exactly one blank line between descriptions in variable comment';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
                 }
 
@@ -151,7 +139,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                     $error = 'Variable comment long description must start with a capital letter';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 }
-            }
+            }//end if
 
             // Short description must be single line and end with a full stop.
             $testShort = trim($short);
@@ -165,7 +153,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                 $error = 'Variable comment short description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + 1));
             }
-        }
+        }//end if
 
         // Exactly one blank line before tags.
         $tags = $this->commentParser->getTagOrders();
@@ -176,12 +164,12 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                 if (isset($long) and ($long !== '')) {
                     $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
                 }
-                if (isset($newlineCount) === false) {
+                if (!isset($newlineCount)) {
                     $phpcsFile->addError($error, $commentStart);
                 } else {
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 }
-                $short = rtrim($short, $phpcsFile->eolChar . ' ');
+                $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
         }
 
@@ -198,7 +186,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
         $this->processVar($commentStart, $commentEnd);
         $this->processSees($commentStart);
 
-    }
+    }//end processMemberVar()
 
     /**
      * Process the var tag.
@@ -234,8 +222,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
             } else {
                 $suggestedType = PHP_CodeSniffer::suggestType($content);
                 if ($content !== $suggestedType) {
-                    $error = "Expected \"$suggestedType\"; found \"$content\" "
-                           . 'for @var tag in variable comment';
+                    $error = "Expected \"$suggestedType\"; found \"$content\" for @var tag in variable comment";
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -243,32 +230,33 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
             $spacing = substr_count($var->getWhitespaceBeforeContent(), ' ');
             if ($spacing !== $this->space) {
                 $error  = '@var tag indented incorrectly. ';
-                $error .= 'Expected ' . $this->space . " spaces but found $spacing.";
+                $error .= "Expected " . $this->space . " spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
         } else {
             $error = 'Missing @var tag in variable comment';
             $this->currentFile->addError($error, $commentEnd);
-        }
+        }//end if
 
-    }
+    }//end processVar()
 
     /**
      * Process the since tag.
      *
      * @param int $commentStart The position in the stack where the comment started.
      * @param int $commentEnd   The position in the stack where the comment ended.
+     *
      * @return void
      */
     protected function processSince($commentStart, $commentEnd)
     {
         $since = $this->commentParser->getSince();
         if ($since !== null) {
-            $this->space = 3;
-            $errorPos    = ($commentStart + $since->getLine());
-            $foundTags   = $this->commentParser->getTagOrders();
-            $index       = array_keys($foundTags, 'since');
-            $var         = array_keys($foundTags, 'var');
+        	$this->space = 3;
+            $errorPos  = ($commentStart + $since->getLine());
+            $foundTags = $this->commentParser->getTagOrders();
+            $index     = array_keys($foundTags, 'since');
+            $var       = array_keys($foundTags, 'var');
 
             if (count($index) > 1) {
                 $error = 'Only 1 @since tag is allowed in variable comment';
@@ -300,8 +288,8 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                 $error .= "Expected 1 space but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
-        }
-    }
+        }//end if
+    }//end processSince()
 
     /**
      * Process the see tags.
@@ -326,12 +314,12 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
                 $spacing = substr_count($see->getWhitespaceBeforeContent(), ' ');
                 if ($spacing !== $this->space) {
                     $error  = '@see tag indented incorrectly. ';
-                    $error .= 'Expected ' . $this->space . " spaces but found $spacing.";
+                    $error .= "Expected " . $this->space . " spaces but found $spacing.";
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
         }
-    }
+    }//end processSees()
 
     /**
      * Called to process a normal variable.
@@ -347,7 +335,7 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         return;
-    }
+    }//end processVariable()
 
     /**
      * Called to process variables found in duoble quoted strings.
@@ -363,6 +351,6 @@ extends PHP_CodeSniffer_Standards_AbstractVariableSniff
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         return;
-    }
+    }//end processVariableInString()
 
-}
+}//end class

@@ -48,7 +48,7 @@ class Zend_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_OPEN_TAG);
 
-    }
+    }//end register()
 
     /**
      * Processes this sniff, when one of its tokens is encountered.
@@ -75,11 +75,10 @@ class Zend_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
             $found    = $phpcsFile->eolChar;
             $found    = str_replace("\n", '\n', $found);
             $found    = str_replace("\r", '\r', $found);
-            $error    = 'End of line character is invalid; '
-                      . "expected \"$expected\" but found \"$found\"";
+            $error    = "End of line character is invalid; expected \"$expected\" but found \"$found\"";
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }
+    }//end process()
 
-}
+}//end class

@@ -33,7 +33,6 @@
  */
 class Zend_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -42,7 +41,7 @@ class Zend_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
     public function register()
     {
         return array(T_ELSEIF);
-    }
+    }//end register()
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -56,6 +55,6 @@ class Zend_Sniffs_ControlStructures_ElseIfDeclarationSniff implements PHP_CodeSn
     {
         $error = 'Usage of ELSEIF discuraged. Use ELSE IF instead.';
         $phpcsFile->addError($error, $stackPtr);
-    }
+    }//end process()
 
-}
+}//end class
