@@ -31,8 +31,7 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard
-extends PHP_CodeSniffer_Standards_CodingStandard
+class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
 {
 /**
  * Processed Sniffs
@@ -53,6 +52,7 @@ extends PHP_CodeSniffer_Standards_CodingStandard
  * BlockCommentSniff            Verifies that block comments are used appropriately
  * DocCommentAlignmentSniff     Tests that the stars in a doc comment align correctly
  * EmptyCatchCommentSniff       Checks for empty Catch clause, these must have at least one comment
+ * FunctionCommentSniff         Parses and verifies the doc comments for functions
  * FunctionCommentThrowTagSniff Verifies that a @throws tag exists for a function that throws
  *                              exceptions, verifies the number of @throws tags and the number of
  *                              throw tokens matches, verifies the exception type
@@ -88,6 +88,9 @@ extends PHP_CodeSniffer_Standards_CodingStandard
  *                             assignments, it will check that the equals signs of each assignment
  *                             are aligned. It will display a warning to advise that the signs
  *                             should be aligned
+ * OperatorBracketSniff        Tests that all arithmetic operations are bracketed
+ * OutputBufferingIndentSniff  Checks the indenting used when an ob_start() call occurs
+ * SpaceAfterCastSniff         Ensures there is a single space after cast tokens
  *
  * FUNCTION SNIFFS
  * ---------------
@@ -97,6 +100,10 @@ extends PHP_CodeSniffer_Standards_CodingStandard
  *                           function declaration
  * ValidDefaultValueSniff    A Sniff to ensure that parameters defined for a function that have a
  *                           default value come at the end of the function signature
+ *
+ * METRICS
+ * -------
+ * NestingLevelSniff Checks the nesting level for methods
  *
  * NAMINGCONVENTIONS SNIFFS
  * ------------------------
@@ -119,7 +126,9 @@ extends PHP_CodeSniffer_Standards_CodingStandard
  *
  * PHP SNIFFS
  * ----------
+ * CommentedOutCodeSniff            Warn about commented out code
  * DisallowCountInLoopsSniff        Disallows the use of count in loop conditions
+ * DisallowInlineIfSniff            Stops inline IF statements from being used
  * DisallowMultipleAssignmentsSniff Ensures that there is only one value assignment on a line, and
  *                                  that it is the first thing on the line
  * DisallowObEndFlushSniff          Disallow ob_end_flush, use ob_get_contents() and ob_end_clean() instead
