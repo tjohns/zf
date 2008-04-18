@@ -259,7 +259,7 @@ class Zend_OpenId
             }
         }
 
-        if (!preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', $res, $reg)) {
+        if (!preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?#]*)?((?:[?](?:[^#]*))?)((?:#.*)?)$|', $res, $reg)) {
             return false;
         }
         $scheme = $reg[1];
@@ -268,6 +268,7 @@ class Zend_OpenId
         $port = $reg[4];
         $path = $reg[5];
         $query = $reg[6];
+        $fragment = $reg[7]; /* strip it */
 
         if (empty($scheme) || empty($host)) {
             return false;
@@ -555,12 +556,12 @@ class Zend_OpenId
     static protected function bigNumToBin($bn)
     {
         if (extension_loaded('gmp')) {
-        	$s = gmp_strval($bn, 16);
-        	if (strlen($s) % 2 != 0) {
+            $s = gmp_strval($bn, 16);
+            if (strlen($s) % 2 != 0) {
                 $s = '0' . $s;
-        	} else if ($s[0] > '7') {
+            } else if ($s[0] > '7') {
                 $s = '00' . $s;
-        	}
+            }
             return pack("H*", $s);
         } else if (extension_loaded('bcmath')) {
             $cmp = bccomp($bn, 0);
@@ -576,7 +577,7 @@ class Zend_OpenId
                 $bin = chr(bcmod($bn, 256)) . $bin;
                 $bn = bcdiv($bn, 256);
             }
-        	if (ord($bin[0]) > 127) {
+            if (ord($bin[0]) > 127) {
                 $bin = chr(0) . $bin;
             }
             return $bin;
@@ -670,7 +671,7 @@ class Zend_OpenId
     {
         if (function_exists('openssl_dh_compute_key')) {
             $ret = openssl_dh_compute_key($pub_key, $dh);
-        	if (ord($ret[0]) > 127) {
+            if (ord($ret[0]) > 127) {
                 $ret = chr(0) . $ret;
             }
             return $ret;
