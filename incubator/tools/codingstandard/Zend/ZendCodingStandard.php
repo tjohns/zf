@@ -50,6 +50,7 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * COMMENTING SNIFFS
  * -----------------
  * BlockCommentSniff            Verifies that block comments are used appropriately
+ * ClassCommentSniff            Parses and verifies the class doc comment
  * DocCommentAlignmentSniff     Tests that the stars in a doc comment align correctly
  * EmptyCatchCommentSniff       Checks for empty Catch clause, these must have at least one comment
  * FunctionCommentSniff         Parses and verifies the doc comments for functions

@@ -4,7 +4,7 @@ To test the coding standard you must have the latest
 release of PHP_CodeSniffer installed. You can get it
 from PEAR.
 
-Copy the directory "Zend" to your "standards"
+Copy all files and the directory "Zend" to the "standards"
 directory of CodeSniffer.
 
 Change the standard to use by CodeSniffer:

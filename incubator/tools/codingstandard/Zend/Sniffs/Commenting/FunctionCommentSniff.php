@@ -236,21 +236,10 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-        // Short description must be single line and end with a full stop.
         $testShort = trim($short);
         $lastChar  = $testShort[(strlen($testShort) - 1)];
-        if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
-            $error = 'Function comment short description must be on a single line';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
         if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
             $error = 'Function comment short description must start with a capital letter';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
-
-        if ($lastChar !== '.') {
-            $error = 'Function comment short description must end with a full stop';
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 
@@ -311,18 +300,12 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             }
 
             $spacing        = substr_count($since->getWhitespaceBeforeContent(), ' ');
-            $return         = $this->commentParser->getReturn();
-            $throws         = $this->commentParser->getThrows();
-            $correctSpacing = ($return !== null || empty($throws) === false) ? 2 : 1;
 
-            if ($spacing !== $correctSpacing) {
+            if ($spacing !== 2) {
                 $error  = '@since tag indented incorrectly; ';
-                $error .= "expected $correctSpacing spaces but found $spacing.";
+                $error .= "expected 2 spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
-        } else {
-            $error = 'Missing @since tag in function comment';
-            $this->currentFile->addError($error, $commentEnd);
         }//end if
 
     }//end processSince()
@@ -347,7 +330,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 if (count($since) === 1 && $this->_tagIndex !== 0) {
                     $this->_tagIndex++;
                     if ($index[$i] !== $this->_tagIndex) {
-                        $error = 'The @see tag is in the wrong order; the tag follows @since';
+                        $error = 'The @see tag is in the wrong order; the tag follows @since (if used) or @param';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
@@ -454,7 +437,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                         }
                     } else {
                         // If return type is not void, there needs to be a
-                        // returns tatement somewhere in the function that
+                        // returns statement somewhere in the function that
                         // returns something.
                         if (isset($tokens[$this->_functionToken]['scope_closer']) === true) {
                             $endToken = $tokens[$this->_functionToken]['scope_closer'];
@@ -520,12 +503,6 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $firstChar = $content{0};
                 if (strtoupper($firstChar) !== $firstChar) {
                     $error = '@throws tag comment must start with a capital letter';
-                    $this->currentFile->addError($error, $errorPos);
-                }
-
-                $lastChar = $content[(strlen($content) - 1)];
-                if ($lastChar !== '.') {
-                    $error = '@throws tag comment must end with a full stop';
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
@@ -700,12 +677,6 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $firstChar = $paramComment{0};
                     if (preg_match('|[A-Z]|', $firstChar) === 0) {
                         $error = 'Param comment must start with a capital letter';
-                        $this->currentFile->addError($error, $errorPos);
-                    }
-
-                    $lastChar = $paramComment[(strlen($paramComment) - 1)];
-                    if ($lastChar !== '.') {
-                        $error = 'Param comment must end with a full stop';
                         $this->currentFile->addError($error, $errorPos);
                     }
                 }
