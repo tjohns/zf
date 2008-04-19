@@ -3235,7 +3235,7 @@ class Zend_Date extends Zend_Date_DateObject {
     {
         $horizon = $this->_checkLocation($location);
         $result = clone $this;
-        $result->set($this->calcSun($location, $horizon, true), 'Zend_Date::TIMESTAMP');
+        $result->set($this->calcSun($location, $horizon, true), Zend_Date::TIMESTAMP);
         return $result;
     }
 
@@ -3255,7 +3255,7 @@ class Zend_Date extends Zend_Date_DateObject {
     {
         $horizon = $this->_checkLocation($location);
         $result = clone $this;
-        $result->set($this->calcSun($location, $horizon, false), 'Zend_Date::TIMESTAMP');
+        $result->set($this->calcSun($location, $horizon, false), Zend_Date::TIMESTAMP);
         return $result;
     }
 
