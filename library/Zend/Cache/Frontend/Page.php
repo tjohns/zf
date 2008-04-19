@@ -94,6 +94,13 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * @var array associative array of options
      */
     protected $_activeOptions = array();
+    
+    /**
+     * If true, the page won't be cached
+     *
+     * @var boolean
+     */
+    private $_cancel = false;
 
     /**
      * Constructor
@@ -184,6 +191,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      */
     public function start($id = false, $doNotDie = false)
     {
+        $this->_cancel = false;
         $lastMatchingRegexp = null;
         foreach ($this->_specificOptions['regexps'] as $regexp => $conf) {
             if (preg_match("`$regexp`", $_SERVER['REQUEST_URI'])) {
@@ -232,6 +240,14 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     }
 
     /**
+     * Cancel the current caching process
+     */
+    public function cancel()
+    {
+        $this->_cancel = true;
+    }
+    
+    /**
      * callback for output buffering
      * (shouldn't really be called manually)
      *
@@ -240,6 +256,9 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      */
     public function _flush($data)
     {
+        if ($this->_cancel) {
+            return $data;
+        }
         $contentType = null;
         if ($this->_specificOptions['content_type_memorization']) {
             if (headers_sent()) {
