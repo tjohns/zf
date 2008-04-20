@@ -84,6 +84,22 @@
                               缓存文件前缀;小心使用此选项,因为当清除缓存时,在系统缓存目录(像 /tmp)中一个太generic的值将导致灾难.
                         </entry>
                       </row>
+                        <row>
+                          <entry><code>cache_file_umask</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0700</code></entry>
+                          <entry>
+                              umask for cache files
+                          </entry>
+                      </row>
+                       <row>
+                          <entry><code>metatadatas_array_max_size</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>100</code></entry>
+                          <entry> 
+                              metadatas 数组的内部最大尺寸（除非你知道你在做什么，不要更改这个值）
+                          </entry>
+                      </row>                 
                   </tbody>
               </tgroup>
           </table>
