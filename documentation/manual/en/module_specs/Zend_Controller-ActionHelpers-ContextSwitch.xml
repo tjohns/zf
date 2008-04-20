@@ -759,7 +759,7 @@ class CommentController extends Zend_Controller_Action
                 '/comment/process', and pass the 'format' parameter:
                 '/comment/view/format/html', '/comment/form/format/html',
                 '/comment/process/format/json'. (Or you can pass the parameter
-                via GET: e.g., "?format=json".)
+                via query string: e.g., "?format=json".)
             </para>
                 
             <para>
