@@ -25,7 +25,7 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
 /**
  * Zend_Sniffs_Commenting_ClassCommentSniff
  *
- * Parses and verifies the doc comments for files.
+ * Parses and verifies the doc comments for files
  *
  * @category   Zend
  * @package    Zend_CodingStandard

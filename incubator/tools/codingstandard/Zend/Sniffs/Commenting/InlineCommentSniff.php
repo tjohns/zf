@@ -132,23 +132,6 @@ class Zend_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $topComment);
         }
 
-        $commentCloser   = $commentText[(strlen($commentText) - 1)];
-        $acceptedClosers = array(
-                            'full-stops'        => '.',
-                            'exclamation marks' => '!',
-                            'or question marks' => '?',
-                           );
-
-        if (in_array($commentCloser, $acceptedClosers) === false) {
-            $error = 'Inline comments must end in';
-            foreach ($acceptedClosers as $closerName => $symbol) {
-                $error .= ' '.$closerName.',';
-            }
-
-            $error = rtrim($error, ',');
-            $phpcsFile->addError($error, $stackPtr);
-        }
-
         // Finally, the line below the last comment cannot be empty.
         $start = false;
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
