@@ -25,7 +25,10 @@
  * @see Zend_Filter_Interface
  */
 require_once 'Zend/Filter/Interface.php';
-
+/**
+ * @see Zend_Locale
+ */
+require_once 'Zend/Locale.php';
 
 /**
  * @category   Zend
@@ -50,6 +53,20 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
     protected static $_unicodeEnabled;
 
     /**
+     * Locale in browser.
+     * 
+     * @var Zend_Locale object
+     */
+    protected $_locale;
+    
+    /**
+     * The Alphabet means english alphabet.
+     * 
+     * @var boolean
+     */
+    protected static $_meansEnglishAlphabet;
+
+    /**
      * Sets default option values for this instance
      *
      * @param  boolean $allowWhiteSpace
@@ -61,6 +78,14 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
         if (null === self::$_unicodeEnabled) {
             self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
         }
+
+        if (null === self::$_meansEnglishAlphabet) {
+        	$this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
+        	self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
+        											array('ja')
+									                );
+        }
+        
     }
 
     /**
@@ -77,12 +102,12 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
         if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative a-zA-Z match
             $pattern = '/[^a-zA-Z' . $whiteSpace . ']/';
-        } else if (extension_loaded('mbstring')) {
-            // Unicode safe filter for the value with mbstring
-            $pattern = '/[^[:alpha:]' . $whiteSpace . ']/u';
+        } else if (self::$_meansEnglishAlphabet) {
+        	//The Alphabet means english alphabet.
+            $pattern = '/[^a-zA-Z'  . $whiteSpace . ']/u';
         } else {
-            // Unicode safe filter for the value without mbstring
-            $pattern = '/[^\p{L}' . $whiteSpace . ']/u';
+        	//The Alphabet means each language's alphabet.
+        	$pattern = '/[^\p{L}' . $whiteSpace . ']/u';
         }
 
         return preg_replace($pattern, '', (string) $value);
