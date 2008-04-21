@@ -23,7 +23,7 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
 }
 
 /**
- * Zend Framework Coding Standard.
+ * Zend Framework Coding Standard
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -65,10 +65,12 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  *
  * CONTROLSTRUCTURE SNIFFS
  * -----------------------
+ * ControlSignatureSniff       Verifies that control statements conform to their coding standards
  * ElseIfDeclarationSniff      Verifies that there are not elseif statements. The else and the if
  *                             should be separated by a space
  * ForLoopDeclarationSniff     Verifies that there is a space between each condition of for loops
  * ForEachLoopDeclarationSniff Verifies that there is a space between each condition of foreach loops
+ * InlineControlStructureSniff Verifies that inline control statements are not present
  * LowercaseDeclarationSniff   Ensures all control structure keywords are lowercase
  * SwitchDeclarationSniff      Ensures all the breaks and cases are aligned correctly according to
  *                             their parent switch's alignment and enforces other switch formatting
@@ -168,12 +170,21 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * WHITESPACE SNIFFS
  * -----------------
  * CastSpacingSniff               Ensure cast statements dont contain whitespace
+ * ControlStructureSpacingSniff   Checks that there is a empty line after control structures for readability
  * DisallowTabSniff               Checks if tabs are used and errors if any are found
  * FunctionOpeningBraceSpaceSniff Checks that there is no empty line after the opening brace of a function
  * FunctionSpacingSniff           Checks the separation between methods in a class or interface
  * LanguageConstructSpacingSniff  Ensures all language constructs (without brackets) contain a
  *                                single space between themselves and their content
+ * ObjectOperatorSpacingSniff     Ensure there is no whitespace before and after the object operator
  * ScopeClosingBraceSniff         Checks that the closing braces of scopes are aligned correctly
+ * ScopeIndentSniff               Checks that control structures are structured correctly, and their content
+ *                                is indented correctly. This sniff will throw errors if tabs are used
+ *                                for indentation rather than spaces
+ * ScopeKeywordSpacingSniff       Ensure there is a single space after scope keywords
  * SemicolonSpacingSniff          Ensure there is no whitespace before a semicolon
+ * SuperflousWhitespaceSniff      Checks that no whitespace proceeds the first content of the file, exists
+ *                                after the last content of the file, resides after content on any line, or
+ *                                are two empty lines in functions
  */
 }//end class
