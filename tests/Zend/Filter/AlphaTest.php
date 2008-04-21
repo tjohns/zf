@@ -57,6 +57,20 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     protected static $_unicodeEnabled;
 
     /**
+     * Locale in browser.
+     * 
+     * @var Zend_Locale object
+     */
+    protected $_locale;
+    
+    /**
+     * The Alphabet means english alphabet.
+     * 
+     * @var boolean
+     */
+    protected static $_meansEnglishAlphabet;
+    
+    /**
      * Creates a new Zend_Filter_Alpha object for each test method
      *
      * @return void
@@ -66,6 +80,12 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
         $this->_filter = new Zend_Filter_Alpha();
         if (null === self::$_unicodeEnabled) {
             self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
+        }
+        if (null === self::$_meansEnglishAlphabet) {
+        	$this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
+        	self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
+        											array('ja')
+									                );
         }
     }
 
@@ -77,14 +97,15 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         if (!self::$_unicodeEnabled) {
-            // Sorry folks, no unicode tests for you
+            // POSIX named classes are not supported, use alternative a-zA-Z match
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc',
                 'abcxyz'        => 'abcxyz',
                 ''              => ''
                 );
-        } else if (extension_loaded('mbstring')) {
+        } else if (self::$_meansEnglishAlphabet) {
+        	//The Alphabet means english alphabet.
             /**
              * The first element contains multibyte alphabets.
              *  But , Zend_Filter_Alpha is expected to return only singlebyte alphabets.
@@ -101,7 +122,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 'onml' => 'onml'
                 );               
         } else {
-            //without mbstring
+        	//The Alphabet means each language's alphabet.
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc',
@@ -132,7 +153,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     {
         $this->_filter->allowWhiteSpace = true;
         if (!self::$_unicodeEnabled) {
-            // Sorry folks, no unicode tests for you
+            // POSIX named classes are not supported, use alternative a-zA-Z match
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc ',
@@ -141,13 +162,14 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 "\n"            => "\n",
                 " \t "          => " \t "
                 );
-        } if (extension_loaded('mbstring')) {
+        } if (self::$_meansEnglishAlphabet) {
+        	//The Alphabet means english alphabet.
             $valuesExpected = array(
                 'a B'  => 'a B',
                 'zＹ　x'  => 'zx'
                 );
         } else {
-            //without mbstring
+        	//The Alphabet means each language's alphabet.
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc ',
