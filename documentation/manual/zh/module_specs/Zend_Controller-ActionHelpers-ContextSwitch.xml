@@ -578,7 +578,7 @@ class CommentController extends Zend_Controller_Action
 ?>]]></programlisting>
 
             <para>
-                在客户端，AJAX 库将请求终点  '/comment/view'、 '/comment/form' 和 '/comment/process'，并传递 'format' 参数：'/comment/view/format/html'、'/comment/form/format/html' 和 '/comment/process/format/json'。（或者你可以通过 GET 传递参数，如："?format=json"）
+                在客户端，AJAX 库将请求终点  '/comment/view'、 '/comment/form' 和 '/comment/process'，并传递 'format' 参数：'/comment/view/format/html'、'/comment/form/format/html' 和 '/comment/process/format/json'。（或者你可以通过查询字符串（ query string） 传递参数，如："?format=json"）
             </para>
                 
             <para>
