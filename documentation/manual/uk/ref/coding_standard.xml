@@ -1,37 +1,36 @@
 <appendix id="coding-standard">
-  <title>Zend Framework PHP Coding Standard</title>
+  <title>Стандарт Написання PHP Коду в Zend Framework</title>
     <sect1 id="coding-standard.overview">
-        <title>Overview</title>
+        <title>Огляд</title>
 
         <sect2 id="coding-standard.overview.scope">
-            <title>Scope</title>
+            <title>Сфера застосування</title>
 
             <para>
-                This document provides the code guidelines for developers
-                and teams contributing to Zend Framework. The subjects covered are:
-
+            	Цей документ подає вказівки щодо написання коду для розробників та 
+            	команд що вносять свій вклад в розробку Zend Framework. Теми що висвітлюються: 
                 <itemizedlist>
                     <listitem>
-                        <para>PHP File Formatting</para>
+                        <para>Форматування PHP Файлів</para>
                     </listitem>
 
                     <listitem>
-                        <para>Naming Conventions</para>
+                        <para>Принципи Іменування</para>
                     </listitem>
 
                     <listitem>
-                        <para>Coding Style</para>
+                        <para>Стиль Написання Коду</para>
                     </listitem>
 
                     <listitem>
-                        <para>Inline Documentation</para>
+                        <para>Вбудована Документація</para>
                     </listitem>
                 </itemizedlist>
             </para>
         </sect2>
 
         <sect2 id="coding-standard.overview.goals">
-            <title>Goals</title>
+            <title>Цілі</title>
 
             <para>
                 Good coding standards are important in any development project, but particularly
