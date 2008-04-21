@@ -46,11 +46,11 @@
     </para>
 
     <para>
-        Una volta che una copia del Framework Zend è a disposizione, l'applicazione necessita di poter accedere alle classi del framework. Sebbene ci siano <ulink url="http://www.php.net/manual/en/configuration.changes.php">diversi modi per farlo</ulink>, la direttiva PHP <ulink url="http://www.php.net/manual/en/ini.core.php#ini.include-path"><code>include_path</code></ulink> deve contenere il percorso alla libreria del Framework Zend (ndt. sottocartella library disponibile nella cartella library del framework).
+        Una volta che una copia del Framework Zend è a disposizione, l'applicazione necessita di poter accedere alle classi del framework. Sebbene ci siano <ulink url="http://www.php.net/manual/it/configuration.changes.php">diversi modi per farlo</ulink>, la direttiva PHP <ulink url="http://www.php.net/manual/it/ini.core.php#ini.include-path"><code>include_path</code></ulink> deve contenere il percorso alla libreria del Framework Zend (ndt. sottocartella library disponibile nella cartella library del framework).
     </para>
 
     <para>
-        Una delle funzionalità più utili del Framework Zend è la sua implementazione dei pattern <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> e <ulink url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink> (MVC).
+        Una delle funzionalità più utili del Framework Zend è la sua implementazione dei pattern <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> e <ulink url="http://it.wikipedia.org/wiki/Model-View-Controller">Model-View-Controller</ulink> (MVC).
         <link linkend="zend.controller.quickstart">Ecco un'introduzione all'MVC nel Framework Zend!</link>
     </para>
 
