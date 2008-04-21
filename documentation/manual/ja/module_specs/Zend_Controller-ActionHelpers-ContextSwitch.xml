@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8158 -->
+<!-- EN-Revision: 9263 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch および AjaxContext</title>
 
@@ -780,7 +780,7 @@ class CommentController extends Zend_Controller_Action
                 その際に、'format' パラメータを
                 '/comment/view/format/html'、'/comment/form/format/html' そして
                 '/comment/process/format/json' のように指定します
-                (あるいは GET パラメータで "?format=json" のようにしてもかまいません)。
+                (あるいはクエリ文字列で "?format=json" のようにしてもかまいません)。
             </para>
                 
             <para>
