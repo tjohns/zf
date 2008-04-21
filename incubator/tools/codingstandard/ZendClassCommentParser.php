@@ -53,7 +53,6 @@ class PHP_CodeSniffer_Standards_ZendClassCommentParser extends PHP_CodeSniffer_C
                 'category'   => false,
                 'package'    => true,
                 'subpackage' => true,
-                'author'     => false,
                 'uses'       => false,
                 'copyright'  => true,
                 'license'    => false,

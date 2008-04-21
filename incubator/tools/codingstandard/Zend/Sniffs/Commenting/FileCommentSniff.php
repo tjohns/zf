@@ -25,7 +25,7 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
 /**
  * Zend_Sniffs_Commenting_ClassCommentSniff
  *
- * Parses and verifies the class doc comment
+ * Parses and verifies the doc comments for files.
  *
  * @category   Zend
  * @package    Zend_CodingStandard
@@ -33,8 +33,22 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
  */
-class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
+class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 {
+
+    /**
+     * The header comment parser for the current file.
+     *
+     * @var PHP_CodeSniffer_Comment_Parser_ClassCommentParser
+     */
+    protected $commentParser = null;
+
+    /**
+     * The current PHP_CodeSniffer_File object we are processing.
+     *
+     * @var PHP_CodeSniffer_File
+     */
+    protected $currentFile = null;
 
 
     /**
@@ -44,7 +58,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
-        return array(T_CLASS);
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -62,162 +76,202 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     {
         $this->currentFile = $phpcsFile;
 
-        $tokens = $phpcsFile->getTokens();
-        $find   = array (
-                   T_ABSTRACT,
-                   T_WHITESPACE,
-                   T_FINAL,
-                  );
-
-        // Extract the class comment docblock.
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-
-        if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr);
-            return;
-        } else if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            $phpcsFile->addError('Missing class doc comment', $stackPtr);
-            return;
+        // We are only interested if this is the first open tag.
+        if ($stackPtr !== 0) {
+            if ($phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1)) !== false) {
+                return;
+            }
         }
 
-        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
-        $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
+        $tokens = $phpcsFile->getTokens();
 
-        // Distinguish file and class comment.
-        $prevClassToken = $phpcsFile->findPrevious(T_CLASS, ($stackPtr - 1));
-        if ($prevClassToken === false) {
-            // This is the first class token in this file, need extra checks.
-            $prevNonComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentStart - 1), null, true);
-            if ($prevNonComment !== false) {
-                $prevComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($prevNonComment - 1));
-                if ($prevComment === false) {
-                    // There is only 1 doc comment between open tag and class token.
-                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
-                    if ($newlineToken !== false) {
-                        $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, $phpcsFile->eolChar);
-                        if ($newlineToken !== false) {
-                            // Blank line between the class and the doc block.
-                            // The doc block is most likely a file comment.
-                            $phpcsFile->addError('Missing class doc comment', ($stackPtr + 1));
-                            return;
-                        }
-                    }//end if
-                }//end if
+        // Find the next non whitespace token.
+        $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
 
-                // Exactly one blank line before the class comment.
-                $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
-                if ($prevTokenEnd !== false) {
-                    $blankLineBefore = 0;
-                    for ($i = ($prevTokenEnd + 1); $i < $commentStart; $i++) {
-                        if ($tokens[$i]['code'] === T_WHITESPACE && $tokens[$i]['content'] === $phpcsFile->eolChar) {
-                            $blankLineBefore++;
-                        }
-                    }
+        if ($tokens[$commentStart]['code'] === T_CLOSE_TAG) {
+            // We are only interested if this is the first open tag.
+            return;
+        } else if ($tokens[$commentStart]['code'] === T_COMMENT) {
+            $phpcsFile->addError('You must use "/**" style comments for a file comment', ($stackPtr + 1));
+            return;
+        } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT) {
+            $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+            return;
+        } else {
 
-                    if ($blankLineBefore !== 2) {
-                        $error = 'There must be exactly one blank line before the class comment';
-                        $phpcsFile->addError($error, ($commentStart - 1));
+            if ($tokens[$commentStart]['line'] !== 2) {
+                $phpcsFile->addError('File doc comment must be in the second line, no whitespace allowed', ($stackPtr + 1));
+                return;
+            }
+            // Extract the header comment docblock.
+            $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
+
+            // Check if there is only 1 doc comment between the open tag and class token.
+            $nextToken   = array(
+                            T_ABSTRACT,
+                            T_CLASS,
+                            T_FUNCTION,
+                            T_DOC_COMMENT,
+                           );
+            $commentNext = $phpcsFile->findNext($nextToken, ($commentEnd + 1));
+            if ($commentNext !== false && $tokens[$commentNext]['code'] !== T_DOC_COMMENT) {
+                // Found a class token right after comment doc block.
+                $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $commentNext, false, $phpcsFile->eolChar);
+                if ($newlineToken !== false) {
+                    $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $commentNext, false, $phpcsFile->eolChar);
+                    if ($newlineToken === false) {
+                        // No blank line between the class token and the doc block.
+                        // The doc block is most likely a class comment.
+                        $phpcsFile->addError('Missing file doc comment', ($stackPtr + 1));
+                        return;
                     }
                 }
+            }
 
-            }//end if
-        }//end if
+            $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
-        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
+            // Parse the header comment docblock.
+            try {
+                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
+                $this->commentParser->parse();
+            } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
+                $line = ($e->getLineWithinComment() + $commentStart);
+                $phpcsFile->addError($e->getMessage(), $line);
+                return;
+            }
 
-        // Parse the class comment docblock.
-        try {
-            $this->commentParser = new PHP_CodeSniffer_Standards_ZendClassCommentParser($comment, $phpcsFile);
-            $this->commentParser->parse();
-        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-            $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line);
-            return;
-        }
+            $comment = $this->commentParser->getComment();
+            if (is_null($comment) === true) {
+                $error = 'File doc comment is empty';
+                $phpcsFile->addError($error, $commentStart);
+                return;
+            }
 
-        $comment = $this->commentParser->getComment();
-        if (is_null($comment) === true) {
-            $error = 'Class doc comment is empty';
-            $phpcsFile->addError($error, $commentStart);
-            return;
-        }
+            // No extra newline before short description.
+            $short        = $comment->getShortComment();
+            $newlineCount = 0;
+            $newlineSpan  = strspn($short, $phpcsFile->eolChar);
+            if ($short !== '' && $newlineSpan > 0) {
+                $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
+                $error = "Extra $line found before file comment short description";
+                $phpcsFile->addError($error, ($commentStart + 1));
+            }
 
-        // Check for a comment description.
-        $short = rtrim($comment->getShortComment(), $phpcsFile->eolChar);
-        if (trim($short) === '') {
-            $error = 'Missing short description in class doc comment';
-            $phpcsFile->addError($error, $commentStart);
-            return;
-        }
+            $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
-        // No extra newline before short description.
-        $newlineCount = 0;
-        $newlineSpan  = strspn($short, $phpcsFile->eolChar);
-        if ($short !== '' && $newlineSpan > 0) {
-            $line  = ($newlineSpan > 1) ? 'newlines' : 'newline';
-            $error = "Extra $line found before class comment short description";
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
+            // Exactly one blank line between short and long description.
+            $long = $comment->getLongComment();
+            if (empty($long) === false) {
+                $between        = $comment->getWhiteSpaceBetween();
+                $newlineBetween = substr_count($between, $phpcsFile->eolChar);
+                if ($newlineBetween !== 2) {
+                    $error = 'There must be exactly one blank line between descriptions in file comment';
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
+                }
 
-        $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
-
-        // Exactly one blank line between short and long description.
-        $long = $comment->getLongComment();
-        if (empty($long) === false) {
-            $between        = $comment->getWhiteSpaceBetween();
-            $newlineBetween = substr_count($between, $phpcsFile->eolChar);
-            if ($newlineBetween !== 2) {
-                $error = 'There must be exactly one blank line between descriptions in class comment';
+                $newlineCount += $newlineBetween;
+            } else {
+                $error = 'File Doc Block incomplete... missing LICENSE on line 4';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount + 1));
             }
 
-            $newlineCount += $newlineBetween;
+            // Exactly one blank line before tags.
+            $tags = $this->commentParser->getTagOrders();
+            if (count($tags) > 1) {
+                $newlineSpan = $comment->getNewlineAfter();
+                if ($newlineSpan !== 2) {
+                    $error = 'There must be exactly one blank line before the tags in file comment';
+                    if ($long !== '') {
+                        $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
+                    }
 
-            $testLong = trim($long);
-            if (preg_match('|[A-Z]|', $testLong[0]) === 0) {
-                $error = 'Class comment long description must start with a capital letter';
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
-            }
-        }
-
-        // Exactly one blank line before tags.
-        $tags = $this->commentParser->getTagOrders();
-        if (count($tags) > 1) {
-            $newlineSpan = $comment->getNewlineAfter();
-            if ($newlineSpan !== 2) {
-                $error = 'There must be exactly one blank line before the tags in class comment';
-                if ($long !== '') {
-                    $newlineCount += (substr_count($long, $phpcsFile->eolChar) - $newlineSpan + 1);
+                    $phpcsFile->addError($error, ($commentStart + $newlineCount));
+                    $short = rtrim($short, $phpcsFile->eolChar.' ');
                 }
-
-                $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                $short = rtrim($short, $phpcsFile->eolChar.' ');
             }
-        }
 
-        // Short description must be single line and end with a full stop.
-        $testShort = trim($short);
-        $lastChar  = $testShort[(strlen($testShort) - 1)];
-        if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
-            $error = 'Class comment short description must be on a single line';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
+            if ($short !== " Zend Framework") {
+                $error = "Line 2 of the file comment should read 'Zend Framework', found '$short'";
+                $phpcsFile->addError($error, $commentStart);
+            }
 
-        if (preg_match('|[A-Z]|', $testShort[0]) === 0) {
-            $error = 'Class comment short description must start with a capital letter';
-            $phpcsFile->addError($error, ($commentStart + 1));
-        }
+            $longcomment = explode("\n", $long);
+            $error = array();
+            foreach ($longcomment as $line => $comm) {
+            	switch ($line) {
+            		case 0:
+            		    $check = "LICENSE";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 1:
+            		    $row = $line + 5;
+            		    if ($comm !== "") {
+            		    	$error[$row] = "Line $row of the file comment should be empty, found '$comm'";
+            		    }
+            		    break;
+            		case 2:
+            		    $check = " This source file is subject to the new BSD license that is bundled";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 3:
+            		    $check = " with this package in the file LICENSE.txt.";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 4:
+            		    $check = " It is also available through the world-wide-web at this URL:";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 5:
+            		    $check = " http://framework.zend.com/license/new-bsd";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 6:
+            		    $check = " If you did not receive a copy of the license and are unable to";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 7:
+            		    $check = " obtain it through the world-wide-web, please send an email";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            		case 8:
+            		    $check = " to license@zend.com so we can send you a copy immediately.";
+            		    $row   = $line + 5;
+            		    if ($comm !== $check) {
+            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+            		    }
+            		    break;
+            	}
+            }
+            if (!empty($error)) {
+            	foreach ($error as $line => $comm) {
+                    $phpcsFile->addError($comm, $line);
+                }
+            }
 
-        // Check for unknown/deprecated tags.
-        $unknownTags = $this->commentParser->getUnknown();
-        foreach ($unknownTags as $errorTag) {
-            $error = "@$errorTag[tag] tag is not allowed in class comment";
-            $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
-            return;
-        }
-
-        // Check each tag.
-        $this->processTags($commentStart, $commentEnd);
+            // Check each tag.
+            $this->processTags($commentStart, $commentEnd);
+        }//end if
 
     }//end process()
 
@@ -249,35 +303,25 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                                   'allow_multiple' => false,
                                   'order_text'     => 'follows @package',
                                  ),
-                 'uses'       => array(
-                                  'required'       => false,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @subpackage (if used) or @package',
-                                 ),
-                 'see'        => array(
-                                  'required'       => false,
-                                  'allow_multiple' => true,
-                                  'order_text'     => 'follows @uses (if used) or @subpackage (if used) or @package',
-                                 ),
-                 'since'      => array(
-                                  'required'       => false,
-                                  'allow_multiple' => false,
-                                  'order_text'     => 'follows @see (if used) or @uses (if used) or @subpackage (if used) or @package',
-                                 ),
                  'copyright'  => array(
                                   'required'       => true,
                                   'allow_multiple' => false,
-                                  'order_text'     => 'follows @since (if used) or @see (if used) or @uses (if used) or @subpackage (if used) or @package',
+                                  'order_text'     => 'follows @subpackage (if used) or @package',
                                  ),
                  'license'    => array(
                                   'required'       => true,
                                   'allow_multiple' => false,
                                   'order_text'     => 'follows @copyright',
                                  ),
+                 'version'    => array(
+                                  'required'       => true,
+                                  'allow_multiple' => false,
+                                  'order_text'     => 'follows @license',
+                                 ),
                  'deprecated' => array(
                                   'required'       => false,
                                   'allow_multiple' => false,
-                                  'order_text'     => 'follows @license',
+                                  'order_text'     => 'follows @version',
                                  ),
                 );
 
@@ -290,7 +334,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         foreach ($foundTags as $tag => $info) {
         	if ((array_key_exists($info, $tags) === false) and ($info !== "comment")) {
         		$error = "Tag @$info is not allowed";
-                $this->currentFile->addError($error, ($commentStart + $tag));
+                $this->currentFile->addError($error, ($commentStart + $tag + 13));
         	}
         }
 
@@ -298,23 +342,19 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Required tag missing.
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
-                $error = "Missing @$tag tag in class comment";
+                $error = "Missing @$tag tag in file comment";
                 $this->currentFile->addError($error, $commentEnd);
                 continue;
             }
 
              // Get the line number for current tag.
             $tagName = ucfirst($tag);
-            if ((($info['allow_multiple'] === true) and ($tag != 'uses')) or ($tag == 'copyright')) {
+            if (($info['allow_multiple'] === true) or ($tag == 'copyright')) {
                 $tagName .= 's';
             }
 
             $getMethod  = 'get'.$tagName;
-//            if ($tagName === 'Uses') {
-//            	$tagElement = $this->getUses();
-//            } else {
-                $tagElement = $this->commentParser->$getMethod();
-//            }
+            $tagElement = $this->commentParser->$getMethod();
             if (is_null($tagElement) === true || empty($tagElement) === true) {
                 continue;
             }
@@ -330,7 +370,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             if (count($foundIndexes) > 1) {
                 // Multiple occurance not allowed.
                 if ($info['allow_multiple'] === false) {
-                    $error = "Only 1 @$tag tag is allowed in a class comment";
+                    $error = "Only 1 @$tag tag is allowed in a file comment";
                     $this->currentFile->addError($error, $errorPos);
                 } else {
                     // Make sure same tags are grouped together.
@@ -390,10 +430,10 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             } else {
                 if (is_array($tagElement) === true) {
                     foreach ($tagElement as $key => $element) {
-                        $element->process($this->currentFile, $commentStart, 'class');
+                        $element->process($this->currentFile, $commentStart, 'file');
                     }
                 } else {
-                     $tagElement->process($this->currentFile, $commentStart, 'class');
+                     $tagElement->process($this->currentFile, $commentStart, 'file');
                 }
             }
         }//end foreach
@@ -536,109 +576,14 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Process the uses tag.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processUses($errorPos)
-    {
-        $package = $this->commentParser->getUses();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
-
-                    $validName = trim($newName, '_');
-                    $error     = "Uses name \"$content\" is not valid; consider \"$validName\" instead";
-                    $this->currentFile->addError($error, $errorPos);
-                }
-            } else {
-                $error = '@uses tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
-            }
-        }
-
-    }
-
-
-    /**
-     * Process the see tag.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processSee($errorPos)
-    {
-        $package = $this->commentParser->getSee();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
-
-                    $validName = trim($newName, '_');
-                    $error     = "See name \"$content\" is not valid; consider \"$validName\" instead";
-                    $this->currentFile->addError($error, $errorPos);
-                }
-            } else {
-                $error = '@see tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
-            }
-        }
-
-    }
-
-
-    /**
-     * Process the since tag.
-     *
-     * @param int $errorPos The line number where the error occurs.
-     *
-     * @return void
-     */
-    protected function processSince($errorPos)
-    {
-        $package = $this->commentParser->getSince();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in @since tag';
-                    $this->currentFile->addError($error, $errorPos);
-                }
-            } else {
-                $error = '@since tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
-            }
-        }
-
-    }
-
-
-    /**
      * Process the copyright tags.
      *
-     * @param int $errorPos The line number where the error occurs.
+     * @param int $commentStart The position in the stack where
+     *                          the comment started.
      *
      * @return void
      */
-    protected function processCopyrights($errorPos)
+    protected function processCopyrights($commentStart)
     {
         $copyrights = $this->commentParser->getCopyrights();
         if (count($copyrights) > 1) {
@@ -678,33 +623,30 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Process the depreciated tag.
+     * Process the version tag.
      *
      * @param int $errorPos The line number where the error occurs.
      *
      * @return void
      */
-    protected function processDepreciated($errorPos)
+    protected function processVersion($errorPos)
     {
-        $depr = $this->commentParser->getDepreciated();
-        if ($depr !== null) {
-            $content = $depr->getContent();
-            if ($content !== '') {
-                if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
-                    $error = 'Expected version number to be in the form x.x.x in @depreciated tag';
-                    $this->currentFile->addError($error, $errorPos);
-                }
-            } else {
-                $error = '@depreciated tag must contain a version';
+        $version = $this->commentParser->getVersion();
+        if ($version !== null) {
+            $content = $version->getContent();
+            $matches = array();
+            if (empty($content) === true) {
+                $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
+            } else if (strstr($content, '$Id: ') === false) {
+                $error = "Invalid version \"$content\" in file comment; consider \"$Id: $\"";
+                $this->currentFile->addWarning($error, $errorPos);
             }
         }
-    }
 
-    protected function getUses()
-    {
-    }
+    }//end processVersion()
 
 
 }//end class
+
 ?>
