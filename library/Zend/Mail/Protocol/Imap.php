@@ -643,7 +643,7 @@ class Zend_Mail_Protocol_Imap
     {
         $result = array();
         $list = $this->requestAndResponse('LIST', $this->escapeString($reference, $mailbox));
-        if (!$list) {
+        if (!$list || $list === true) {
             return $result;
         }
 
