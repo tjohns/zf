@@ -327,6 +327,9 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
         chmod($this->_mboxFile, $stat['mode']);
 
         if (!$check) {
+            if (function_exists('posix_getuid') && posix_getuid() === 0) {
+                $this->markTestSkipped('seems like you are root and we therefore cannot test the error handling');
+            }
             $this->fail('no exception while waking with non readable file');
          }
     }
