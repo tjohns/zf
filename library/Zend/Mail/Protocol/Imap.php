@@ -344,7 +344,7 @@ class Zend_Mail_Protocol_Imap
                     require_once 'Zend/Mail/Protocol/Exception.php';
                     throw new Zend_Mail_Protocol_Exception('cannot write - connection closed?');
                 }
-                if (!$this->_assumedNextLine('+ OK')) {
+                if (!$this->_assumedNextLine('+ ')) {
                     /**
                      * @see Zend_Mail_Protocol_Exception
                      */
