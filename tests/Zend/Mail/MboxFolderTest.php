@@ -384,7 +384,10 @@ class Zend_Mail_MboxFolderTest extends PHPUnit_Framework_TestCase
         chmod($this->_params['dirname'] . 'subfolder', $stat['mode']);
 
         if (!$check) {
-           $this->fail('no exception while loading invalid dir with subfolder not readable');
+            if (function_exists('posix_getuid') && posix_getuid() === 0) {
+                $this->markTestSkipped('seems like you are root and we therefore cannot test the error handling');
+            }
+            $this->fail('no exception while loading invalid dir with subfolder not readable');
         }
     }
 
