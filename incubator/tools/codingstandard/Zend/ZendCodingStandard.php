@@ -71,6 +71,7 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * ForLoopDeclarationSniff     Verifies that there is a space between each condition of for loops
  * ForEachLoopDeclarationSniff Verifies that there is a space between each condition of foreach loops
  * InlineControlStructureSniff Verifies that inline control statements are not present
+ * InlineIfDeclarationSniff    Tests the spacing of shorthand IF statements
  * LowercaseDeclarationSniff   Ensures all control structure keywords are lowercase
  * SwitchDeclarationSniff      Ensures all the breaks and cases are aligned correctly according to
  *                             their parent switch's alignment and enforces other switch formatting
@@ -99,6 +100,8 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  *
  * FUNCTION SNIFFS
  * ---------------
+ * FunctionCallArgumentSpacingSniff        Checks that calls to methods and functions are spaced correctly
+ * FunctionCallSignatureSniff              Checks for the right spacing in fuction declaration
  * FunctionDeclarationArgumentSpacingSniff Checks that arguments in function declarations are spaced correctly
  * FunctionDeclarationSniff                Checks the function declaration is correct
  * FunctionDuplicateArgumentSniff          Checks that duplicate arguments are not used in function declarations
@@ -118,6 +121,9 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * UpperCaseConstantNameSniff Ensures that constant names are all uppercase
  * ValidClassNameSniff        Ensures class and interface names start with a capital letter
  *                            and use _ separators
+ * ValidFunctionNameSniff     Ensures method names are correct depending on whether they are public
+ *                            or private, and that functions are named correctly
+ * ValidVariableNameSniff     Checks the naming of variables and member variables
  *
  * OBJECT SNIFFS
  * -------------
@@ -176,7 +182,9 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
  * FunctionSpacingSniff           Checks the separation between methods in a class or interface
  * LanguageConstructSpacingSniff  Ensures all language constructs (without brackets) contain a
  *                                single space between themselves and their content
+ * MemberVarSpacingSniff          Verifies that class members are spaced correctly
  * ObjectOperatorSpacingSniff     Ensure there is no whitespace before and after the object operator
+ * OperatorSpacingSniff           Verifies that operators have valid spacing surrounding them
  * ScopeClosingBraceSniff         Checks that the closing braces of scopes are aligned correctly
  * ScopeIndentSniff               Checks that control structures are structured correctly, and their content
  *                                is indented correctly. This sniff will throw errors if tabs are used

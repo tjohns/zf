@@ -71,8 +71,9 @@ class PHP_CodeSniffer_Standards_ZendClassCommentParser extends PHP_CodeSniffer_C
      */
     protected function parseUses($tokens)
     {
-        $this->_uses = new PHP_CodeSniffer_CommentParser_PairElement($this->previousElement, $tokens, 'uses', $this->phpcsFile);
-        return $this->_uses;
+        $uses          = new PHP_CodeSniffer_CommentParser_SingleElement($this->previousElement, $tokens, 'uses', $this->phpcsFile);
+        $this->_uses[] = $uses;
+        return $uses;
 
     }//end parseLicense()
 
@@ -85,7 +86,7 @@ class PHP_CodeSniffer_Standards_ZendClassCommentParser extends PHP_CodeSniffer_C
     public function getUses()
     {
         return $this->_uses;
-    }//end getLicense()
+    }
 
 }//end class
 

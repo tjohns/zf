@@ -509,9 +509,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processSubpackage($errorPos)
     {
-        $package = $this->commentParser->getSubpackage();
-        if ($package !== null) {
-            $content = $package->getContent();
+        $subpackage = $this->commentParser->getSubpackage();
+        if ($subpackage !== null) {
+            $content = $subpackage->getContent();
             if ($content !== '') {
                 if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
                     $newContent = str_replace(' ', '_', $content);
@@ -544,26 +544,28 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processUses($errorPos)
     {
-        $package = $this->commentParser->getUses();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
+        $uses = $this->commentParser->getUses();
+        if ($uses !== null) {
+            foreach ($uses as $use) {
+                $content = $use->getContent();
+                if ($content !== '') {
+                    if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+                        $newContent = str_replace(' ', '_', $content);
+                        $nameBits   = explode('_', $newContent);
+                        $firstBit   = array_shift($nameBits);
+                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        foreach ($nameBits as $bit) {
+                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        }
 
-                    $validName = trim($newName, '_');
-                    $error     = "Uses name \"$content\" is not valid; consider \"$validName\" instead";
+                        $validName = trim($newName, '_');
+                        $error     = "Uses name \"$content\" is not valid; consider \"$validName\" instead";
+                        $this->currentFile->addError($error, $errorPos);
+                    }
+                } else {
+                    $error = '@uses tag must contain a name';
                     $this->currentFile->addError($error, $errorPos);
                 }
-            } else {
-                $error = '@uses tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
             }
         }
 
@@ -579,26 +581,28 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processSee($errorPos)
     {
-        $package = $this->commentParser->getSee();
-        if ($package !== null) {
-            $content = $package->getContent();
-            if ($content !== '') {
-                if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
-                    $newContent = str_replace(' ', '_', $content);
-                    $nameBits   = explode('_', $newContent);
-                    $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-                    foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                    }
+        $sees = $this->commentParser->getSee();
+        if ($sees !== null) {
+        	foreach($sees as $see) {
+                $content = $see->getContent();
+                if ($content !== '') {
+                    if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+                        $newContent = str_replace(' ', '_', $content);
+                        $nameBits   = explode('_', $newContent);
+                        $firstBit   = array_shift($nameBits);
+                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        foreach ($nameBits as $bit) {
+                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        }
 
-                    $validName = trim($newName, '_');
-                    $error     = "See name \"$content\" is not valid; consider \"$validName\" instead";
+                        $validName = trim($newName, '_');
+                        $error     = "See name \"$content\" is not valid; consider \"$validName\" instead";
+                        $this->currentFile->addError($error, $errorPos);
+                    }
+                } else {
+                    $error = '@see tag must contain a name';
                     $this->currentFile->addError($error, $errorPos);
                 }
-            } else {
-                $error = '@see tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
             }
         }
 
@@ -614,9 +618,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processSince($errorPos)
     {
-        $package = $this->commentParser->getSince();
-        if ($package !== null) {
-            $content = $package->getContent();
+        $since = $this->commentParser->getSince();
+        if ($since !== null) {
+            $content = $since->getContent();
             if ($content !== '') {
                 if (preg_match('/^([0-9]+)\.([0-9]+)\.([0-9]+)/', $content) === 0) {
                     $error = 'Expected version number to be in the form x.x.x in @since tag';
@@ -703,6 +707,30 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
     protected function getUses()
     {
+        $uses = $this->commentParser->getSee();
+        if ($uses !== null) {
+        	foreach($uses as $use) {
+                $content = $use->getContent();
+                if ($content !== '') {
+                    if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
+                        $newContent = str_replace(' ', '_', $content);
+                        $nameBits   = explode('_', $newContent);
+                        $firstBit   = array_shift($nameBits);
+                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        foreach ($nameBits as $bit) {
+                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        }
+
+                        $validName = trim($newName, '_');
+                        $error     = "Uses name \"$content\" is not valid; consider \"$validName\" instead";
+                        $this->currentFile->addError($error, $errorPos);
+                    }
+                } else {
+                    $error = '@uses tag must contain a name';
+                    $this->currentFile->addError($error, $errorPos);
+                }
+            }
+        }
     }
 
 

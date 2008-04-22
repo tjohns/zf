@@ -583,7 +583,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    protected function processCopyrights($commentStart)
+    protected function processCopyrights($errorPos)
     {
         $copyrights = $this->commentParser->getCopyrights();
         if (count($copyrights) > 1) {
@@ -639,7 +639,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($error, $errorPos);
             } else if (strstr($content, '$Id: ') === false) {
-                $error = "Invalid version \"$content\" in file comment; consider \"$Id: $\"";
+                $error = "Invalid version \"$content\" in file comment; consider \"\$Id: $\"";
                 $this->currentFile->addWarning($error, $errorPos);
             }
         }
