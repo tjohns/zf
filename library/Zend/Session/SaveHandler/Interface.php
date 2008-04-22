@@ -23,12 +23,12 @@
 /**
  * Zend_Session_SaveHandler_Interface
  *
- * @category Zend
- * @package Zend_Session
- * @subpackage SaveHandlers
+ * @category   Zend
+ * @package    Zend_Session
+ * @subpackage SaveHandler
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @see http://us3.php.net/manual/en/function.session-set-save-handler.php
+ * @see        http://php.net/session_set_save_handler
  */
 interface Zend_Session_SaveHandler_Interface
 {
