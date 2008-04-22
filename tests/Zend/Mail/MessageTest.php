@@ -411,4 +411,11 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'Foo'), 'this is a test');
         $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'bar'), null);
     }
+
+    public function testSpaceInFieldName()
+    {
+        $header = 'test; foo =bar; baz      =42';
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'foo'), 'bar');
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'baz'), 42);
+    }
 }
