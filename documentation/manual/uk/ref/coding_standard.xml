@@ -8,7 +8,7 @@
 
             <para>
             	Цей документ подає вказівки щодо написання коду для розробників та 
-            	команд що вносять свій вклад в розробку Zend Framework. Теми що висвітлюються: 
+            	команд що роблять свій вклад в розробку Zend Framework. Теми що висвітлюються: 
                 <itemizedlist>
                     <listitem>
                         <para>Форматування PHP Файлів</para>
@@ -33,27 +33,30 @@
             <title>Цілі</title>
 
             <para>
-                Good coding standards are important in any development project, but particularly
-                when multiple developers are working on the same project. Having coding standards
-                helps ensure that the code is of high quality, has fewer bugs, and is easily maintained.
+                Дотримання стандартів написання коду є важливим для будь якого проекту, 
+				зокрема коли над одним проектом працюють кілька розробників.
+				Наявність стандартів написання коду забезпечує високу якість написаного коду,
+				меншу кількість помилок, та легкий супровід.
             </para>
         </sect2>
     </sect1>
 
     <sect1 id="coding-standard.php-file-formatting">
-        <title>PHP File Formatting</title>
+        <title>Форматування PHP Файлів</title>
 
         <sect2 id="coding-standard.php-file-formatting.general">
-            <title>General</title>
+            <title>Загальні Положення</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
-                not required by PHP.  Not including it prevents trailing whitespace from being accidentally
-                injected into the output.
+                Для файлів що містять виключно PHP код, не дозволено ставити закриваючий тег ("?>"). Він не є 
+				обовязковим для PHP, а відсутність закриваючого тегу забезпечує уникнути випадкового 
+				передчасного старту виведення, причиною чого можуть бути пробіли та інші символи 
+				після закриваючого тегу.
             </para>
 
             <para>
-                <emphasis>IMPORTANT:</emphasis> Inclusion of arbitrary binary data as permitted by <code>__HALT_COMPILER()</code>
+                <emphasis>ВАЖЛИВО:</emphasis>
+				Inclusion of arbitrary binary data as permitted by <code>__HALT_COMPILER()</code>
                 is prohibited from any Zend framework PHP file or files derived from them. Use of
                 this feature is only permitted for special installation scripts.
             </para>
