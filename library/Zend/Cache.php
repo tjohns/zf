@@ -188,7 +188,7 @@ abstract class Zend_Cache
      */
     private static function _isReadable($filename)
     {
-        if (!$fh = @fopen($filename, 'r', true)) {
+        if (!file_exists($filename) || !$fh = @fopen($filename, 'r', true)) {
             return false;
         }
         return true;
