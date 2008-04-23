@@ -298,7 +298,10 @@ class Zend_OpenId_Consumer
                 $params2[$key] = $val;
             }
             $params2['openid.mode'] = 'check_authentication';
-            $ret = $this->_httpRequest($server, 'POST', $params2);
+            $ret = $this->_httpRequest($server, 'POST', $params2, $status);
+            if ($status != 200) {
+                return false;
+            }
             $r = array();
             if (is_string($ret)) {
                 foreach(explode("\n", $ret) as $line) {
@@ -394,10 +397,11 @@ class Zend_OpenId_Consumer
      * @param string $url OpenID server url
      * @param string $method HTTP request method 'GET' or 'POST'
      * @param array $params additional qwery parameters to be passed with
+     * @param int &$staus HTTP status code
      *  request
      * @return mixed
      */
-    protected function _httpRequest($url, $method = 'GET', array $params = array())
+    protected function _httpRequest($url, $method = 'GET', array $params = array(), &$status = null)
     {
         $client = $this->_httpClient;
         if ($client === null) {
@@ -427,8 +431,10 @@ class Zend_OpenId_Consumer
         } catch (Exception $e) {
             return false;
         }
-        if ($response->getStatus() == 200) {
-            return $response->getBody();
+        $status = $response->getStatus();
+        $body = $response->getBody();
+        if ($status == 200 || ($status == 400 && !empty($body))) {
+            return $body;
         }else{
             return false;
         }
@@ -491,23 +497,43 @@ class Zend_OpenId_Consumer
         $params['openid.dh_consumer_public'] = base64_encode(
             Zend_OpenId::btwoc($dh_details['pub_key']));
 
-        $ret = $this->_httpRequest($url, 'POST', $params);
-        if ($ret === false) {
-            return false;
-        }
+        while(1) {
+            $ret = $this->_httpRequest($url, 'POST', $params, $status);
+            if ($ret === false) {
+                return false;
+            }
 
-        $r = array();
-        foreach(explode("\n", $ret) as $line) {
-            $line = trim($line);
-            if (!empty($line)) {
-                $x = explode(':', $line, 2);
-                if (is_array($x) && count($x) == 2) {
-                    list($key, $value) = $x;
-                    $r[trim($key)] = trim($value);
+            $r = array();
+            foreach(explode("\n", $ret) as $line) {
+                $line = trim($line);
+                if (!empty($line)) {
+                    $x = explode(':', $line, 2);
+                    if (is_array($x) && count($x) == 2) {
+                        list($key, $value) = $x;
+                        $r[trim($key)] = trim($value);
+                    }
                 }
             }
+            $ret = $r;
+
+            if (isset($ret['error_code']) &&
+                $ret['error_code'] == 'unsupported-type') {
+                if ($params['openid.session_type'] == 'DH-SHA256') {
+                    $params['openid.session_type'] = 'DH-SHA1';
+                    $params['openid.assoc_type'] = 'HMAC-SHA1';
+                } else if ($params['openid.session_type'] == 'DH-SHA1') {
+                    $params['openid.session_type'] = 'no-encryption';
+                } else {
+                    return false;
+                }
+            } else {
+                break;
+            }
         }
-        $ret = $r;
+
+        if ($status != 200) {
+            return false;
+        }
 
         if ($version >= 2.0 &&
             isset($ret['ns']) &&
@@ -609,8 +635,8 @@ class Zend_OpenId_Consumer
         /* TODO: OpenID 2.0 (7.3) XRI and Yadis discovery */
 
         /* HTML-based discovery */
-        $response = $this->_httpRequest($id);
-        if (!is_string($response)) {
+        $response = $this->_httpRequest($id, 'GET', array(), $status);
+        if ($status != 200 || !is_string($response)) {
             return false;
         }
         if (preg_match(
