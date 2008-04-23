@@ -185,7 +185,7 @@ class Zend_Form_Element_Checkbox extends Zend_Form_Element_Xhtml
      * 
      * @return bool
      */
-    public function isChecked($flag)
+    public function isChecked()
     {
         return $this->checked;
     }
