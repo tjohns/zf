@@ -14,12 +14,12 @@
 
         <para>
             Probably most dates you will get as input are strings. But the problem with strings is that
-            you can not be sure if the string is a real date. Therefor <code>Zend_Date</code> has spend
-            a own static function to check date strings. <code>Zend_Locale</code> has a own function
+            you can not be sure if the string is a real date. Therefor <code>Zend_Date</code> has spent
+            an own static function to check date strings. <code>Zend_Locale</code> has an own function
             <code>getDate($date, $locale);</code> which parses a date and returns the proper and normalized
             date parts. A monthname for example will be recognised and returned just a month number.
             But as <code>Zend_Locale</code> does not know anything about dates because it is a
-            normalizing and localizing class we have integrated a own function <code>isDate($date);</code>
+            normalizing and localizing class we have integrated an own function <code>isDate($date);</code>
             which checks this.
         </para>
 
@@ -67,7 +67,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "String $date is NO date";
 }
 
-// Checking imposible dates
+// Checking impossible dates
 $date = '30 February 2000';
 if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "String $date is a date";
@@ -220,7 +220,7 @@ foreach ($info as $sun) {
         <title>Timezones</title>
 
         <para>
-            Timezones are as important as dates itself. There are several timezones depending on where
+            Timezones are as important as dates themselves. There are several timezones depending on where
             in the world a user lives. So working with dates also means to set the proper timezone.
             This may sound complicated but it's easier as expected. As already mentioned in the first chapter
             of <code>Zend_Date</code> the default timezone has to be set. Eigther by <code>php.ini</code> or
@@ -231,7 +231,7 @@ foreach ($info as $sun) {
             A <code>Zend_Date</code> object of course also stores the actual timezone. Even if the timezone
             is changed after the creation of the object it remembers the original timezone and works with it.
             It is also not necessary to change the timezone within the code with php functions.
-            <code>Zend_Date</code> has two build in functions which makes it possible to handle this.
+            <code>Zend_Date</code> has two built-in functions which makes it possible to handle this.
         </para>
 
         <para>
@@ -275,7 +275,7 @@ print $date->getIso();]]>
         </example>
 
         <para>
-            <code>Zend_Date</code> always takes the actual timezone for object creation as showed in the first
+            <code>Zend_Date</code> always takes the actual timezone for object creation as shown in the first
             lines of the example. Changing the timezone within the created object also has an effect to the
             date itself. Dates are always related to a timezone. Changing the timezone for a <code>Zend_Date</code>
             object does not change the time of <code>Zend_Date</code>. Remember that internally dates are always
