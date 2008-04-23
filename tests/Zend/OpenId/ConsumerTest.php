@@ -752,9 +752,14 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $storage->purgeNonces();
         $this->assertTrue( $consumer->verify($params) );
 
+        $storage->delDiscoveryInfo(self::ID);
+        $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 2.0, $expiresIn);
+
         // HMAC-SHA256
         $consumer->clearAssociation();
         $params = array(
+            "openid_ns" => Zend_OpenId::NS_2_0,
+            "openid_op_endpoint" => self::SERVER,
             "openid_return_to" => "http://www.zf-test.com/test.php",
             "openid_assoc_handle" => self::HANDLE,
             "openid_claimed_id" => self::ID,
@@ -772,6 +777,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         // HMAC-SHA256 (duplicate response_nonce)
         $consumer->clearAssociation();
         $params = array(
+            "openid_ns" => Zend_OpenId::NS_2_0,
+            "openid_op_endpoint" => self::SERVER,
             "openid_return_to" => "http://www.zf-test.com/test.php",
             "openid_assoc_handle" => self::HANDLE,
             "openid_claimed_id" => self::ID,
@@ -784,6 +791,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $storage->delAssociation(self::SERVER);
         $storage->addAssociation(self::SERVER, self::HANDLE, "sha256", pack("H*", "ed901bc561c29fd7bb42862e5f09fa37e7944a7ee72142322f34a21bfe1384b8"), $expiresIn);
         $this->assertFalse( $consumer->verify($params) );
+
+        $storage->delDiscoveryInfo(self::ID);
+        $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
 
         // wrong signature
         $consumer->clearAssociation();

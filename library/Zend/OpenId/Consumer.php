@@ -206,18 +206,16 @@ class Zend_OpenId_Consumer
             return false;
         }
 
-        if ($version >= 2.0 &&
-            (empty($params['openid_response_nonce']) ||
-             empty($params['openid_op_endpoint']))) {
-            return false;
-        }
-
-        /* OpenID 2.0 (11.3) Checking the Nonce */
-        if (isset($params['openid_response_nonce'])) {
-            if (!$this->_storage->isUniqueNonce($params['openid_response_nonce'])) {
+        if ($version >= 2.0) {
+            if (empty($params['openid_response_nonce']) ||
+                empty($params['openid_op_endpoint'])) {
+                return false;
+            /* OpenID 2.0 (11.3) Checking the Nonce */
+            } else if (!$this->_storage->isUniqueNonce($params['openid_op_endpoint'], $params['openid_response_nonce'])) {
                 return false;
             }
         }
+
 
         if (!empty($params['openid_invalidate_handle'])) {
             if ($this->_storage->getAssociationByHandle(
@@ -769,7 +767,7 @@ class Zend_OpenId_Consumer
         if (empty($root)) {
             $root = Zend_OpenId::selfUrl();
             if ($root[strlen($root)-1] != '/') {
-            	$root = dirname($root);
+                $root = dirname($root);
             }
         }
         if ($version >= 2.0) {

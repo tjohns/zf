@@ -393,12 +393,13 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
     /**
      * The function checks the uniqueness of openid.response_nonce
      *
+     * @param string $provider openid.openid_op_endpoint field from authentication response
      * @param  string $nonce openid.response_nonce field from authentication response
      * @return bool
      */
-    public function isUniqueNonce($nonce)
+    public function isUniqueNonce($provider, $nonce)
     {
-        $name = $this->_dir . '/nonce_' . md5($nonce);
+        $name = $this->_dir . '/nonce_' . md5($provider.';'.$nonce);
         $lock = @fopen($this->_dir . '/nonce.lock', 'w+');
         if ($lock === false) {
             return false;
@@ -412,7 +413,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
             fclose($lock);
             return false;
         }
-        fwrite($f, $nonce);
+        fwrite($f, $provider.';'.$nonce);
         fclose($f);
         fclose($lock);
         return true;
