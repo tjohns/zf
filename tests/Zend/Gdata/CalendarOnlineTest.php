@@ -58,6 +58,10 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($calCount > 0);
     } 
 
+    /**
+     * @see ZF-1701
+     */
+    /*
     public function testCalendarOnlineFeed()
     {
         $eventFeed = $this->gdata->getCalendarEventFeed();
@@ -68,6 +72,7 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
             $recurrence = $event->recurrence;
         }
     }
+	*/
 
     function getEvent($eventId)
     {
