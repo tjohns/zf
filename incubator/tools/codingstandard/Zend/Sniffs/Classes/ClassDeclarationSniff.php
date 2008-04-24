@@ -152,14 +152,24 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check that the closing brace has one blank line after it.
-        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closeBrace + 1), null, true);
+        $nextContent = $phpcsFile->findNext(array(T_COMMENT, T_WHITESPACE), ($closeBrace + 1), null, true);
         if ($nextContent === false) {
-            // No content found, so we reached the end of the file.
-            // That means there was no closing tag either.
-            $error  = 'Closing brace of a ';
-            $error .= $tokens[$stackPtr]['content'];
-            $error .= ' must be followed by a blank line';
-            $phpcsFile->addError($error, $closeBrace);
+        	if (array_key_exists(($closeBrace + 1), $tokens)) {
+        		if ($tokens[($closeBrace + 1)]['content'] != "\n") {
+                    // No content found, we expect to have a line break at this point
+                    $error  = 'Closing brace of a ';
+                    $error .= $tokens[$stackPtr]['content'];
+                    $error .= ' must be followed by a blank line';
+                    $phpcsFile->addError($error, $closeBrace+1);
+                }
+            }
+            if (array_key_exists(($closeBrace + 2), $tokens)) {
+                // More than one linebreak or other content found
+                $error  = 'Content after closing brace of a ';
+                $error .= $tokens[$stackPtr]['content'];
+                $error .= ' found. Only one empty line allowed.';
+                $phpcsFile->addError($error, $closeBrace);
+            }
         } else {
             $nextLine  = $tokens[$nextContent]['line'];
             $braceLine = $tokens[$closeBrace]['line'];

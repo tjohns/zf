@@ -31,7 +31,6 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
  * @package   Zend_CodingStandard
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -532,7 +531,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     /**
      * Process the uses tag.
      *
-     * @param int $errorPos The line number where the error occurs.
+     * @param integer $errorPos The line number where the error occurs.
      *
      * @return void
      */

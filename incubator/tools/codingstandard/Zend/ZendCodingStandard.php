@@ -31,7 +31,6 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
  * @package   Zend_CodingStandard
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: $
  */
 class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard
 {

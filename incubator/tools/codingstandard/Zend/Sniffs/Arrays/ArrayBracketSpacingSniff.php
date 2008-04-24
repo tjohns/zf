@@ -87,4 +87,3 @@ class Zend_Sniffs_Arrays_ArrayBracketSpacingSniff implements PHP_CodeSniffer_Sni
     }
 
 }
-

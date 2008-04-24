@@ -31,7 +31,6 @@ if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) ==
  * @package   Zend_CodingStandard
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -95,7 +94,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -256,8 +255,8 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     /**
      * Process the since tag.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param integer $commentStart The position in the stack where the comment started.
+     * @param integer $commentEnd   The position in the stack where the comment ended.
      *
      * @return void
      */
@@ -314,7 +313,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     /**
      * Process the see tags.
      *
-     * @param int $commentStart The position in the stack where the comment started.
+     * @param integer $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -357,8 +356,8 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     /**
      * Process the return comment of this function comment.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param integer $commentStart The position in the stack where the comment started.
+     * @param integer $commentEnd   The position in the stack where the comment ended.
      *
      * @return void
      */
@@ -475,7 +474,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     /**
      * Process any throw tags that this function comment has.
      *
-     * @param int $commentStart The position in the stack where the comment started.
+     * @param integer $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
