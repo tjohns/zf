@@ -74,4 +74,12 @@ class Zend_Gdata_App_HttpException extends Zend_Gdata_App_Exception
         return $this->_response;
     }
 
+    public function getRawResponseBody()
+    {
+        if ($this->getResponse()) {
+            $response = $this->getResponse();
+            return $response->getRawBody();
+        }
+    }
+
 }
