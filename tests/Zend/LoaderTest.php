@@ -192,6 +192,9 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(Zend_Loader::isReadable(__FILE__));
         $this->assertFalse(Zend_Loader::isReadable(__FILE__ . '.foobaar'));
+        
+        // test that a file in include_path gets loaded, see ZF-2985
+        $this->assertTrue(Zend_Loader::isReadable('Zend/Controller/Front.php'));
     }
 
     /**
