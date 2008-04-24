@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
@@ -27,11 +27,11 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  *
  * Checks the naming of variables and member variables.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
@@ -103,7 +103,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                     $phpcsFile->addWarning($warning, $stackPtr);
                 }
             }
-        }//end if
+        }
 
         // There is no way for us to know if the var is public or private,
         // so we have to ignore a leading underscore if there is one and just
@@ -131,8 +131,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
             $warning = "Variable \"$originalVarName\" contains numbers but this is discouraged";
             $phpcsFile->addWarning($warning, $stackPtr);
         }
-
-    }//end processVariable()
+    }
 
 
     /**
@@ -174,8 +173,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
             $warning = "Variable \"$varName\" contains numbers but this is discouraged";
             $phpcsFile->addWarning($warning, $stackPtr);
         }
-
-    }//end processMemberVar()
+    }
 
 
     /**
@@ -229,11 +227,7 @@ class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniff
                     $phpcsFile->addWarning($warning, $stackPtr);
                 }
             }
-        }//end if
+        }
+    }
 
-    }//end processVariableInString()
-
-
-}//end class
-
-?>
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Checks for empty Catch clause, these must have at least one comment
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -42,14 +42,14 @@ class Zend_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_S
         return array(
                 T_CATCH
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
+     * @param  PHP_CodeSniffer_File $phpcsFile All the tokens found in the document.
+     * @param  integer              $stackPtr  The position of the current token in the
+     *                                         stack passed in $tokens.
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -64,6 +64,6 @@ class Zend_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_S
             $phpcsFile->addError($error, $scopeStart);
         }
 
-    }//end process()
+    }
 
-}//end class
+}

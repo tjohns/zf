@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -25,11 +25,11 @@
  * Ensures that there is only one value assignment on a line, and that it is
  * the first thing on the line
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniffer_Sniff
 {
@@ -41,7 +41,7 @@ class Zend_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniffe
     public function register()
     {
         return array(T_EQUAL);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -166,6 +166,6 @@ class Zend_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniffe
             $error = 'Assignments must be the first block of code on a line';
             $phpcsFile->addError($error, $stackPtr);
         }
-    }//end process()
+    }
 
-}//end class
+}

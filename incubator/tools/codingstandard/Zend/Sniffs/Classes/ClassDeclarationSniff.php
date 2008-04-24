@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,15 +24,13 @@
  *
  * Checks the declaration of the class and its inheritance is correct
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -45,17 +43,14 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                 T_CLASS,
                 T_INTERFACE,
                );
-
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param  integer              $stackPtr  The position of the current token
      *                                         in the stack passed in $tokens.
-     *
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -79,7 +74,7 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             $error      .= $tokens[$stackPtr]['content'];
             $error      .= ' must be on the line following the ';
             $error      .= $tokens[$stackPtr]['content'];
-            $error      .= ' declaration; found '.$difference;
+            $error      .= ' declaration; found ' . $difference;
             $phpcsFile->addError($error, $curlyBrace);
             return;
         }
@@ -124,7 +119,8 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
 
-                if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === false) {
+                if (in_array($tokens[($stackPtr - 2)]['code'],
+                             array(T_ABSTRACT, T_FINAL)) === false) {
                     if ($spaces !== 0) {
                         $type  = strtolower($tokens[$stackPtr]['content']);
                         $error = "Expected 0 spaces before $type keyword; $spaces found";
@@ -134,12 +130,13 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                     if ($spaces !== 1) {
                         $type        = strtolower($tokens[$stackPtr]['content']);
                         $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
-                        $error       = "Expected 1 space between $prevContent and $type keywords; $spaces found";
+                        $error       = "Expected 1 space between $prevContent and "
+                                     . "$type keywords; $spaces found";
                         $phpcsFile->addError($error, $stackPtr);
                     }
                 }
             }
-        }//end if
+        }
 
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
         if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
@@ -155,7 +152,7 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check that the closing brace has one blank line after it.
-        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
+        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($closeBrace + 1), null, true);
         if ($nextContent === false) {
             // No content found, so we reached the end of the file.
             // That means there was no closing tag either.
@@ -172,18 +169,19 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $error .= ' must be followed by a single blank line';
                 $phpcsFile->addError($error, $closeBrace);
             } else if ($nextLine !== ($braceLine + 2)) {
-                $difference = ($nextLine - $braceLine - 1).' lines';
+                $difference = ($nextLine - $braceLine - 1) . ' lines';
                 $error      = 'Closing brace of a ';
                 $error     .= $tokens[$stackPtr]['content'];
-                $error     .= ' must be followed by a single blank line; found '.$difference;
+                $error     .= ' must be followed by a single blank line; found ' . $difference;
                 $phpcsFile->addError($error, $closeBrace);
             }
-        }//end if
+        }
 
         // Check the closing brace is on it's own line, but allow
         // for comments like "//end class".
         $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
-        if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']) {
+        if (($tokens[$nextContent]['content'] !== $phpcsFile->eolChar) &&
+            ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line'])) {
             $type  = strtolower($tokens[$stackPtr]['content']);
             $error = "Closing $type brace must be on a line by itself";
             $phpcsFile->addError($error, $closeBrace);
@@ -224,8 +222,11 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         // Now check each of the parents.
         $parents    = array();
         $nextParent = ($className + 1);
-        while (($nextParent = $phpcsFile->findNext(array(T_STRING, T_IMPLEMENTS), ($nextParent + 1), ($openingBrace - 1))) !== false) {
-            $parents[] = $nextParent;
+        $token      = array(T_STRING, T_IMPLEMENTS);
+        $nextParent = $phpcsFile->findNext($token, ($nextParent + 1), ($openingBrace - 1));
+        while (($nextParent) !== false) {
+            $parents[]  = $nextParent;
+            $nextParent = $phpcsFile->findNext($token, ($nextParent + 1), ($openingBrace - 1));
         }
 
         $parentCount = count($parents);
@@ -264,11 +265,7 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             } else {
                 $nextComma = ($parents[$i] + 1);
             }
-        }//end for
+        }
+    }
 
-    }//end process()
-
-
-}//end class
-
-?>
+}

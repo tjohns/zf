@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
@@ -29,11 +29,11 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * Verifies the number of @throws tags and the number of throw tokens matches.
  * Verifies the exception type.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
@@ -43,7 +43,7 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
     public function __construct()
     {
         parent::__construct(array(T_FUNCTION), array(T_THROW));
-    }//end __construct()
+    }
 
     /**
      * Processes the function tokens within the class.
@@ -142,8 +142,7 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
                     }
                 }
             }
-        }//end if
+        }
+    }
 
-    }//end processTokenWithinScope()
-
-}//end class
+}

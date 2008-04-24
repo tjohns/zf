@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Ensures there is a single space after cast tokens
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_Sniff
 {
@@ -43,7 +43,7 @@ class Zend_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_Snif
     {
         return PHP_CodeSniffer_Tokens::$castTokens;
 
-    }//end register()
+    }
 
 
     /**
@@ -70,9 +70,7 @@ class Zend_Sniffs_Formatting_SpaceAfterCastSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }//end process()
+    }
 
 
-}//end class
-
-?>
+}

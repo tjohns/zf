@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
@@ -28,11 +28,11 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * Ensures method names are correct depending on whether they are public
  * or private, and that functions are named correctly
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
@@ -75,7 +75,7 @@ class Zend_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
     {
         parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION), true);
 
-    }//end __construct()
+    }
 
 
     /**
@@ -154,7 +154,7 @@ class Zend_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             return;
         }
 
-    }//end processTokenWithinScope()
+    }
 
 
     /**
@@ -255,10 +255,6 @@ class Zend_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             $error = "Function name \"$functionName\" is invalid; consider \"$newName\" instead";
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end processTokenOutsideScope()
-
-
-}//end class
-
-?>
+}

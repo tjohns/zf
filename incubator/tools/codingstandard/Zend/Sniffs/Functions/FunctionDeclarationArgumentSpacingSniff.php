@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Checks that arguments in function declarations are spaced correctly
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements PHP_CodeSniffer_Sniff
 {
@@ -43,7 +43,7 @@ class Zend_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements P
     {
         return array(T_FUNCTION);
 
-    }//end register()
+    }
 
 
     /**
@@ -148,11 +148,11 @@ class Zend_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements P
                     } else if ($gap !== 1) {
                         $error = "Expected 1 space between comma and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
-                    }//end if
+                    }
                 } else {
                     $error = "Expected 1 space between comma and argument \"$arg\"; 0 found";
                     $phpcsFile->addError($error, $nextToken);
-                }//end if
+                }
             } else {
                 // First argument in function declaration.
                 if ($whitespace['code'] === T_WHITESPACE) {
@@ -185,12 +185,12 @@ class Zend_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements P
                         $error = "Expected 0 spaces between opening bracket and argument \"$arg\"; $gap found";
                         $phpcsFile->addError($error, $nextToken);
                     }
-                }//end if
-            }//end if
+                }
+            }
 
             $params[] = $nextParam;
 
-        }//end while
+        }
 
         if (empty($params) === true) {
             // There are no parameters for this function.
@@ -206,10 +206,6 @@ class Zend_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements P
             $error     = "Expected 0 spaces between argument \"$arg\" and closing bracket; $gap found";
             $phpcsFile->addError($error, $closeBracket);
         }
+    }
 
-    }//end process()
-
-
-}//end class
-
-?>
+}

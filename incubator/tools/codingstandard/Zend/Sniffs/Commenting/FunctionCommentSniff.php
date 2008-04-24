@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_FunctionCommentParser not found');
@@ -27,11 +27,11 @@ if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) ==
  *
  * Parses and verifies the doc comments for functions
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -88,7 +88,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     {
         return array(T_FUNCTION);
 
-    }//end register()
+    }
 
 
     /**
@@ -219,7 +219,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $error = 'Function comment long description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
             }
-        }//end if
+        }
 
         // Exactly one blank line before tags.
         $params = $this->commentParser->getTagOrders();
@@ -250,7 +250,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $phpcsFile->addWarning($error, ($commentStart + $errorTag['line']));
         }
 
-    }//end process()
+    }
 
 
     /**
@@ -306,9 +306,9 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $error .= "expected 2 spaces but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
-        }//end if
+        }
 
-    }//end processSince()
+    }
 
 
     /**
@@ -348,10 +348,10 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $error .= "expected 4 spaces but found $spacing";
                     $this->currentFile->addError($error, $errorPos);
                 }
-            }//end foreach
-        }//end if
+            }
+        }
 
-    }//end processSees()
+    }
 
 
     /**
@@ -453,12 +453,12 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                                 }
                             }
                         }
-                    }//end if
-                }//end if
+                    }
+                }
             } else {
                 $error = 'Missing @return tag in function comment';
                 $this->currentFile->addError($error, $commentEnd);
-            }//end if
+            }
 
         } else {
             // No return tag for constructor and destructor.
@@ -467,9 +467,9 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $error    = '@return tag is not required for constructor and destructor';
                 $this->currentFile->addError($error, $errorPos);
             }
-        }//end if
+        }
 
-    }//end processReturn()
+    }
 
 
     /**
@@ -515,9 +515,9 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     $this->currentFile->addError($error, $errorPos);
                 }
             }
-        }//end foreach
+        }
 
-    }//end processThrows()
+    }
 
 
     /**
@@ -563,8 +563,8 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $errorPos     = ($param->getLine() + $commentStart);
 
                 // Make sure that there is only one space before the var type.
-                if ($param->getWhitespaceBeforeType() !== ' ') {
-                    $error = 'Expected 1 space before variable type';
+                if ($param->getWhitespaceBeforeType() !== '  ') {
+                    $error = 'Expected 2 space before variable type';
                     $this->currentFile->addError($error, $errorPos);
                 }
 
@@ -632,8 +632,8 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                                 $this->currentFile->addError($error, ($commentEnd + 2));
                             }
                         }
-                    }//end if
-                }//end foreach
+                    }
+                }
 
                 // Make sure the names of the parameter comment matches the
                 // actual parameter.
@@ -683,7 +683,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
                 $previousParam = $param;
 
-            }//end foreach
+            }
 
             if ($spaceBeforeVar !== 1 && $spaceBeforeVar !== 10000 && $spaceBeforeComment !== 10000) {
                 $error = 'Expected 1 space after the longest type';
@@ -695,7 +695,7 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $this->currentFile->addError($error, $longestVar);
             }
 
-        }//end if
+        }
 
         $realNames = array();
         foreach ($realParams as $realParam) {
@@ -714,10 +714,6 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $error = 'Doc comment for "'.$neededParam.'" missing';
             $this->currentFile->addError($error, $errorPos);
         }
+    }
 
-    }//end processParams()
-
-
-}//end class
-
-?>
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
@@ -28,28 +28,28 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  *
  * Tests self member references
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+
     /**
      * Constructs a Squiz_Sniffs_Classes_SelfMemberReferenceSniff.
      */
     public function __construct()
     {
         parent::__construct(array(T_CLASS), array(T_DOUBLE_COLON));
-    }//end __construct()
+    }
 
     /**
      * Processes the function tokens within the class.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
+     * @param  PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param  integer              $stackPtr  The position where the token was found.
+     * @param  integer              $currScope The current scope opener token.
      * @return void
      */
     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
@@ -59,7 +59,8 @@ class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stand
         $className = ($stackPtr - 1);
         if ($tokens[$className]['code'] === T_SELF) {
             if (strtolower($tokens[$className]['content']) !== $tokens[$className]['content']) {
-                $error = 'Must use "self::" for local static member reference; found "'.$tokens[$className]['content'].'::"';
+                $error = 'Must use "self::" for local static member reference; found "'
+                       . $tokens[$className]['content'] . '::"';
                 $phpcsFile->addError($error, $className);
                 return;
             }
@@ -86,6 +87,6 @@ class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stand
             $phpcsFile->addError($error, $className);
         }
 
-    }//end processTokenWithinScope()
+    }
 
-}//end class
+}

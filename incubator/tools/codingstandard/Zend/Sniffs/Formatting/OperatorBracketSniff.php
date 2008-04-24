@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Tests that all arithmetic operations are bracketed
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sniff
 {
@@ -43,7 +43,7 @@ class Zend_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sni
     {
         return PHP_CodeSniffer_Tokens::$operators;
 
-    }//end register()
+    }
 
 
     /**
@@ -93,7 +93,7 @@ class Zend_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sni
                     }
                 }
             }
-        }//end if
+        }
 
         $lastBracket = false;
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
@@ -130,8 +130,8 @@ class Zend_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sni
 
                 $lastBracket = $bracket;
                 break;
-            }//end foreach
-        }//end if
+            }
+        }
 
         if ($lastBracket === false) {
             // It is not in a bracketed statement at all.
@@ -176,17 +176,13 @@ class Zend_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sni
             }
 
             return;
-        }//end if
+        }
 
         $lastAssignment = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {
             $error = 'Arithmetic operation must be bracketed';
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-
-}//end class
-
-?>
+}

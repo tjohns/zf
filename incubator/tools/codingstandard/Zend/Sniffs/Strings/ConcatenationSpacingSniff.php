@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -25,11 +25,11 @@
  * Makes sure there is one spaces between the concatenation operator (.) and
  * the strings being concatenated
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_Sniff
 {
@@ -63,13 +63,13 @@ class Zend_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_S
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
             $error     = true;
         }
-        $expected .= trim(substr($tokens[($stackPtr - 1)]['content'], -5)) . " " . $tokens[$stackPtr]['content'];
+        $expected .= trim(substr($tokens[($stackPtr - 1)]['content'], -5)) . ' ' . $tokens[$stackPtr]['content'];
         $found    .= substr($tokens[($stackPtr - 1)]['content'], -5) . $tokens[$stackPtr]['content'];
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error     = true;
         }
-        $expected .= " " . trim(substr($tokens[($stackPtr + 1)]['content'], 0, 5));
+        $expected .= ' ' . trim(substr($tokens[($stackPtr + 1)]['content'], 0, 5));
         $found    .= substr($tokens[($stackPtr + 1)]['content'], 0, 6);
 
         if ($error === true) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
@@ -29,11 +29,11 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * Checks for usage of "$this" in static methods, which will cause
  * runtime errors
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
@@ -45,7 +45,7 @@ class Zend_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_A
     public function __construct()
     {
         parent::__construct(array(T_CLASS), array(T_FUNCTION));
-    }//end __construct()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -87,8 +87,7 @@ class Zend_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_A
                 $error = 'Usage of "$this" in static methods will cause runtime errors';
                 $phpcsFile->addError($error, $thisUsage);
             }
-        }//end if
+        }
+    }
 
-    }//end processTokenWithinScope()
-
-}//end class
+}

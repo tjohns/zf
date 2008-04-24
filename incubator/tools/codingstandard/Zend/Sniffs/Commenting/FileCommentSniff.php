@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_ZendClassCommentParser not found');
@@ -27,11 +27,11 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
  *
  * Parses and verifies the doc comments for files
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -60,16 +60,15 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_OPEN_TAG);
 
-    }//end register()
+    }
 
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
-     *
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param  integer              $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens.
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -271,17 +270,16 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Check each tag.
             $this->processTags($commentStart, $commentEnd);
-        }//end if
+        }
 
-    }//end process()
+    }
 
 
     /**
      * Processes each required or optional tag.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
+     * @param  integer $commentEnd   The position in the stack where the comment ended.
      * @return void
      */
     protected function processTags($commentStart, $commentEnd)
@@ -387,7 +385,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         $count++;
                     }
                 }
-            }//end if
+            }
 
             // Check tag order.
             if ($foundIndexes[0] > $orderIndex) {
@@ -436,7 +434,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                      $tagElement->process($this->currentFile, $commentStart, 'file');
                 }
             }
-        }//end foreach
+        }
 
         foreach ($indentation as $indentInfo) {
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
@@ -456,7 +454,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processTags()
+    }
 
 
     /**
@@ -481,14 +479,13 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         return 0;
 
-    }//end getIndentation()
+    }
 
 
     /**
      * Process the category tag.
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processCategory($errorPos)
@@ -502,7 +499,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processCategory()
+    }
 
 
     /**
@@ -537,7 +534,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processPackage()
+    }
 
 
     /**
@@ -572,7 +569,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processSubpackage()
+    }
 
 
     /**
@@ -594,10 +591,10 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             if ($content !== 'Copyright (c) 2005-' . date('Y') . ' Zend Technologies USA Inc. (http://www.zend.com)') {
                 $error = "@copyright tag must be 'Copyright (c) 2005-" . date('Y') . " Zend Technologies USA Inc. (http://www.zend.com)'";
                 $this->currentFile->addError($error, $errorPos);
-            }//end if
-        }//end if
+            }
+        }
 
-    }//end processCopyrights()
+    }
 
 
     /**
@@ -618,8 +615,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $this->currentFile->addError($error, $errorPos);
             }
         }
-
-    }//end processLicense()
+    }
 
 
     /**
@@ -643,10 +639,6 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $this->currentFile->addWarning($error, $errorPos);
             }
         }
+    }
 
-    }//end processVersion()
-
-
-}//end class
-
-?>
+}

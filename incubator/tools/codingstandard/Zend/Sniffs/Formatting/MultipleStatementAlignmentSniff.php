@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -26,11 +26,11 @@
  * it will check that the equals signs of each assignment are aligned. It will
  * display a warning to advise that the signs should be aligned.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
@@ -63,7 +63,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
     {
         return PHP_CodeSniffer_Tokens::$assignmentTokens;
 
-    }//end register()
+    }
 
 
     /**
@@ -180,7 +180,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
 
             $assignments[] = $prevAssignment;
             $lastLine      = $tokens[$prevAssignment]['line'];
-        }//end while
+        }
 
         $assignmentData = array();
         foreach ($assignments as $assignment) {
@@ -209,7 +209,7 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
                                             'variable_length'   => $contentLength + $tokens[$variable]['column'],
                                             'assignment_length' => strlen($tokens[$assignment]['content']),
                                            );
-        }//end foreach
+        }
 
         foreach ($assignmentData as $assignment => $data) {
             if ($data['assignment_length'] === $maxAssignmentLength) {
@@ -262,10 +262,9 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
                 } else {
                     $phpcsFile->addWarning($error, $assignment);
                 }
-            }//end if
-        }//end foreach
-
-    }//end process()
+            }
+        }
+    }
 
 
     /**
@@ -319,8 +318,6 @@ class Zend_Sniffs_Formatting_MultipleStatementAlignmentSniff implements PHP_Code
         }
 
         return true;
+    }
 
-    }//end _isAssignment()
-
-
-}//end class
+}

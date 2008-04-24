@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractVariableSniff not found');
@@ -31,11 +31,11 @@ if (class_exists('PHP_CodeSniffer_CommentParser_MemberCommentParser', true) === 
  *
  * Parses and verifies the variable doc comment
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
@@ -139,7 +139,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
                     $error = 'Variable comment long description must start with a capital letter';
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
                 }
-            }//end if
+            }
 
             // Short description must be single line and end with a full stop.
             $testShort = trim($short);
@@ -153,7 +153,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
                 $error = 'Variable comment short description must start with a capital letter';
                 $phpcsFile->addError($error, ($commentStart + 1));
             }
-        }//end if
+        }
 
         // Exactly one blank line before tags.
         $tags = $this->commentParser->getTagOrders();
@@ -186,7 +186,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
         $this->processVar($commentStart, $commentEnd);
         $this->processSees($commentStart);
 
-    }//end processMemberVar()
+    }
 
     /**
      * Process the var tag.
@@ -236,9 +236,9 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
         } else {
             $error = 'Missing @var tag in variable comment';
             $this->currentFile->addError($error, $commentEnd);
-        }//end if
+        }
 
-    }//end processVar()
+    }
 
     /**
      * Process the since tag.
@@ -288,8 +288,8 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
                 $error .= "Expected 1 space but found $spacing.";
                 $this->currentFile->addError($error, $errorPos);
             }
-        }//end if
-    }//end processSince()
+        }
+    }
 
     /**
      * Process the see tags.
@@ -319,7 +319,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
                 }
             }
         }
-    }//end processSees()
+    }
 
     /**
      * Called to process a normal variable.
@@ -335,7 +335,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         return;
-    }//end processVariable()
+    }
 
     /**
      * Called to process variables found in duoble quoted strings.
@@ -351,6 +351,6 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         return;
-    }//end processVariableInString()
+    }
 
-}//end class
+}

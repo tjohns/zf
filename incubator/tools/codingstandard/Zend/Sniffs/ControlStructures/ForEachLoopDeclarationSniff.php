@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Verifies that there is a space between each condition of foreach loops
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
@@ -42,7 +42,7 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
         return array(
                 T_FOREACH
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -95,10 +95,8 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
                     $spaces   = strlen($tokens[($doubleArrow + 1)]['content']);
                     $errors[] = "Expected 1 space after \"=>\"; $spaces found";
                 }
-
             }
-
-        }//end if
+        }
 
         if ($tokens[($asToken - 1)]['code'] !== T_WHITESPACE) {
             $errors[] = 'Expected 1 space before "as"; 0 found';
@@ -122,7 +120,6 @@ class Zend_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_C
         foreach ($errors as $error) {
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-}//end class
+}

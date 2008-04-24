@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -25,11 +25,11 @@
  * Warns about code that can never been executed. This happens when a function
  * returns before the code, or a break ends execution of a statement etc.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
 {
@@ -46,7 +46,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 T_RETURN,
                 T_EXIT
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -97,7 +97,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 if (in_array($condition, $ourConditions) === true) {
                     return;
                 }
-            }//end for
+            }
         } else {
             // Look for other end of execution tokens in the global scope.
             for ($i = ($stackPtr - 1); $i >= 1; $i--) {
@@ -113,7 +113,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                 // global scope, so we are not executable.
                 return;
             }
-        }//end if
+        }
 
         if ($hasConditions === false) {
             $condition = array_pop($ourConditions);
@@ -134,7 +134,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                                 break;
                             }
                         }
-                    }//end for
+                    }
 
                     $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
 
@@ -148,7 +148,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     // cannot be executed.
                     $start = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
                     $end   = $tokens[$condition]['scope_closer'];
-                }//end if
+                }
 
                 $lastLine = $tokens[$start]['line'];
                 $endLine  = $tokens[$end]['line'];
@@ -166,7 +166,7 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                         $lastLine = $line;
                     }
                 }
-            }//end if
+            }
         } else {
             // This token is in the global scope.
             if ($tokens[$stackPtr]['code'] === T_BREAK) {
@@ -193,8 +193,8 @@ class Zend_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
                     $lastLine = $line;
                 }
             }
-        }//end if
+        }
 
-    }//end process()
+    }
 
-}//end class
+}

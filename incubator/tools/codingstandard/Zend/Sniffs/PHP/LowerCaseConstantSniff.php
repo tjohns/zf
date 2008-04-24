@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Checks that all uses of 'true', 'false' and 'null' are lowercase
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
 {
@@ -44,7 +44,7 @@ class Zend_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
                 T_FALSE,
                 T_NULL,
                );
-    }//end register()
+    }
 
     /**
      * Processes this sniff, when one of its tokens is encountered.
@@ -64,6 +64,6 @@ class Zend_Sniffs_PHP_LowerCaseConstantSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }//end process()
+    }
 
-}//end class
+}

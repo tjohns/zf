@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Ensures objects are assigned to a variable when instantiated
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
 {
@@ -40,7 +40,7 @@ class Zend_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_Sn
     public function register()
     {
         return array(T_NEW);
-    }//end register()
+    }
 
     /**
      * Process the tokens that this sniff is listening for.
@@ -69,7 +69,6 @@ class Zend_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_Sn
             $error = 'New objects must be assigned to a variable';
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-}//end class
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,11 +24,11 @@
  *
  * Ensure cast statements dont contain whitespace
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
 {
@@ -40,7 +40,7 @@ class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return PHP_CodeSniffer_Tokens::$castTokens;
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -62,7 +62,6 @@ class Zend_Sniffs_WhiteSpace_CastSpacingSniff implements PHP_CodeSniffer_Sniff
             $error = "Cast statements must not contain whitespace; expected \"$expected\" but found \"$content\"";
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-}//end class
+}

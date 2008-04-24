@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,23 +12,23 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
- * Zend Framework Coding Standard.
+ * Zend Framework.
  *
  * Checks the nesting level for methods
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
 {
@@ -57,7 +57,7 @@ class Zend_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_FUNCTION);
 
-    }//end register()
+    }
 
 
     /**
@@ -102,8 +102,6 @@ class Zend_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
             $warning = "Function's nesting level ($nestingLevel) exceeds ".$this->nestingLevel.'; consider refactoring the function';
             $phpcsFile->addWarning($warning, $stackPtr);
         }
+    }
 
-    }//end process()
-
-
-}//end class
+}

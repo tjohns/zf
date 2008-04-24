@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_ZendClassCommentParser not found');
@@ -27,18 +27,18 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
  *
  * Parses and verifies the class doc comment
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
 
     /**
-     * Returns an array of tokens this test wants to listen for.
+     * Returns an array of tokens this test wants to listen for
      *
      * @return array
      */
@@ -46,16 +46,15 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_CLASS);
 
-    }//end register()
+    }
 
 
     /**
-     * Processes this test, when one of its tokens is encountered.
+     * Processes this test, when one of its tokens is encountered
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
-     *
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned
+     * @param  integer              $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -69,7 +68,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                    T_FINAL,
                   );
 
-        // Extract the class comment docblock.
+        // Extract the class comment docblock
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         if ($commentEnd !== false && $tokens[$commentEnd]['code'] === T_COMMENT) {
@@ -83,28 +82,28 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
         $commentNext  = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
 
-        // Distinguish file and class comment.
+        // Distinguish file and class comment
         $prevClassToken = $phpcsFile->findPrevious(T_CLASS, ($stackPtr - 1));
         if ($prevClassToken === false) {
-            // This is the first class token in this file, need extra checks.
+            // This is the first class token in this file, need extra checks
             $prevNonComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentStart - 1), null, true);
             if ($prevNonComment !== false) {
                 $prevComment = $phpcsFile->findPrevious(T_DOC_COMMENT, ($prevNonComment - 1));
                 if ($prevComment === false) {
-                    // There is only 1 doc comment between open tag and class token.
+                    // There is only 1 doc comment between open tag and class token
                     $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($commentEnd + 1), $stackPtr, false, $phpcsFile->eolChar);
                     if ($newlineToken !== false) {
                         $newlineToken = $phpcsFile->findNext(T_WHITESPACE, ($newlineToken + 1), $stackPtr, false, $phpcsFile->eolChar);
                         if ($newlineToken !== false) {
-                            // Blank line between the class and the doc block.
-                            // The doc block is most likely a file comment.
+                            // Blank line between the class and the doc block
+                            // The doc block is most likely a file comment
                             $phpcsFile->addError('Missing class doc comment', ($stackPtr + 1));
                             return;
                         }
-                    }//end if
-                }//end if
+                    }
+                }
 
-                // Exactly one blank line before the class comment.
+                // Exactly one blank line before the class comment
                 $prevTokenEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
                 if ($prevTokenEnd !== false) {
                     $blankLineBefore = 0;
@@ -120,12 +119,12 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     }
                 }
 
-            }//end if
-        }//end if
+            }
+        }
 
         $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
-        // Parse the class comment docblock.
+        // Parse the class comment docblock
         try {
             $this->commentParser = new PHP_CodeSniffer_Standards_ZendClassCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
@@ -142,7 +141,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // Check for a comment description.
+        // Check for a comment description
         $short = rtrim($comment->getShortComment(), $phpcsFile->eolChar);
         if (trim($short) === '') {
             $error = 'Missing short description in class doc comment';
@@ -150,7 +149,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // No extra newline before short description.
+        // No extra newline before short description
         $newlineCount = 0;
         $newlineSpan  = strspn($short, $phpcsFile->eolChar);
         if ($short !== '' && $newlineSpan > 0) {
@@ -161,7 +160,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         $newlineCount = (substr_count($short, $phpcsFile->eolChar) + 1);
 
-        // Exactly one blank line between short and long description.
+        // Exactly one blank line between short and long description
         $long = $comment->getLongComment();
         if (empty($long) === false) {
             $between        = $comment->getWhiteSpaceBetween();
@@ -180,7 +179,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        // Exactly one blank line before tags.
+        // Exactly one blank line before tags
         $tags = $this->commentParser->getTagOrders();
         if (count($tags) > 1) {
             $newlineSpan = $comment->getNewlineAfter();
@@ -195,7 +194,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        // Short description must be single line and end with a full stop.
+        // Short description must be single line and end with a full stop
         $testShort = trim($short);
         $lastChar  = $testShort[(strlen($testShort) - 1)];
         if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
@@ -208,7 +207,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, ($commentStart + 1));
         }
 
-        // Check for unknown/deprecated tags.
+        // Check for unknown/deprecated tags
         $unknownTags = $this->commentParser->getUnknown();
         foreach ($unknownTags as $errorTag) {
             $error = "@$errorTag[tag] tag is not allowed in class comment";
@@ -216,23 +215,22 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        // Check each tag.
+        // Check each tag
         $this->processTags($commentStart, $commentEnd);
 
-    }//end process()
+    }
 
 
     /**
-     * Processes each required or optional tag.
+     * Processes each required or optional tag
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started
+     * @param  integer $commentEnd   The position in the stack where the comment ended
      * @return void
      */
     protected function processTags($commentStart, $commentEnd)
     {
-        // Tags in correct order and related info.
+        // Tags in correct order and related info
         $tags = array(
                  'category'   => array(
                                   'required'       => true,
@@ -296,14 +294,14 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         foreach ($tags as $tag => $info) {
 
-            // Required tag missing.
+            // Required tag missing
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
                 $error = "Missing @$tag tag in class comment";
                 $this->currentFile->addError($error, $commentEnd);
                 continue;
             }
 
-             // Get the line number for current tag.
+             // Get the line number for current tag
             $tagName = ucfirst($tag);
             if ((($info['allow_multiple'] === true) and ($tag != 'uses')) or ($tag == 'copyright')) {
                 $tagName .= 's';
@@ -347,7 +345,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         $count++;
                     }
                 }
-            }//end if
+            }
 
             // Check tag order.
             if ($foundIndexes[0] > $orderIndex) {
@@ -396,7 +394,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                      $tagElement->process($this->currentFile, $commentStart, 'class');
                 }
             }
-        }//end foreach
+        }
 
         foreach ($indentation as $indentInfo) {
             if ($indentInfo['space'] !== 0 && $indentInfo['space'] !== ($longestTag + 1)) {
@@ -416,7 +414,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processTags()
+    }
 
 
     /**
@@ -441,14 +439,13 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
         return 0;
 
-    }//end getIndentation()
+    }
 
 
     /**
      * Process the category tag.
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processCategory($errorPos)
@@ -462,14 +459,13 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processCategory()
+    }
 
 
     /**
-     * Process the package tag.
+     * Process the package tag
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processPackage($errorPos)
@@ -497,14 +493,12 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processPackage()
-
+    }
 
     /**
-     * Process the subpackage tag.
+     * Process the subpackage tag
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processSubpackage($errorPos)
@@ -532,7 +526,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }//end processSubpackage()
+    }
 
 
     /**
@@ -568,15 +562,12 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 }
             }
         }
-
     }
 
-
     /**
-     * Process the see tag.
+     * Process the see tag
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processSee($errorPos)
@@ -590,9 +581,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         $newContent = str_replace(' ', '_', $content);
                         $nameBits   = explode('_', $newContent);
                         $firstBit   = array_shift($nameBits);
-                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                         foreach ($nameBits as $bit) {
-                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                            $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                         }
 
                         $validName = trim($newName, '_');
@@ -610,10 +601,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Process the since tag.
+     * Process the since tag
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processSince($errorPos)
@@ -636,10 +626,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Process the copyright tags.
+     * Process the copyright tags
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processCopyrights($errorPos)
@@ -653,17 +642,14 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             if ($content !== 'Copyright (c) 2005-' . date('Y') . ' Zend Technologies USA Inc. (http://www.zend.com)') {
                 $error = "@copyright tag must be 'Copyright (c) 2005-" . date('Y') . " Zend Technologies USA Inc. (http://www.zend.com)'";
                 $this->currentFile->addError($error, $errorPos);
-            }//end if
-        }//end if
-
-    }//end processCopyrights()
-
+            }
+        }
+    }
 
     /**
      * Process the license tag.
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processLicense($errorPos)
@@ -677,15 +663,13 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 $this->currentFile->addError($error, $errorPos);
             }
         }
-
-    }//end processLicense()
+    }
 
 
     /**
-     * Process the depreciated tag.
+     * Process the depreciated tag
      *
-     * @param int $errorPos The line number where the error occurs.
-     *
+     * @param integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processDepreciated($errorPos)
@@ -716,9 +700,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         $newContent = str_replace(' ', '_', $content);
                         $nameBits   = explode('_', $newContent);
                         $firstBit   = array_shift($nameBits);
-                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1) . '_';
                         foreach ($nameBits as $bit) {
-                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                            $newName .= strtoupper($bit{0}).substr($bit, 1) . '_';
                         }
 
                         $validName = trim($newName, '_');
@@ -734,5 +718,4 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     }
 
 
-}//end class
-?>
+}

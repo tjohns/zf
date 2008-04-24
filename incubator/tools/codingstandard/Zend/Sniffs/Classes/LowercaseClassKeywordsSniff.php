@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -24,14 +24,14 @@
  *
  * Ensures all class keywords are lowercase.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -49,14 +49,14 @@ class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer
                 T_VAR,
                 T_CONST
                );
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param  integer              $stackPtr  The position of the current token in
+     *                                         the stack passed in $tokens.
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -67,9 +67,10 @@ class Zend_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffer
         if ($content !== strtolower($content)) {
             $type     = strtoupper($content);
             $expected = strtolower($content);
-            $error    = "$type keyword must be lowercase; expected \"$expected\" but found \"$content\"";
+            $error    = "$type keyword must be lowercase; "
+                      . "expected \"$expected\" but found \"$content\"";
             $phpcsFile->addError($error, $stackPtr);
         }
-    }//end process()
+    }
 
-}//end class
+}

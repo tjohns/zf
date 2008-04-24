@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -25,11 +25,11 @@
  * Ensures all the breaks and cases are aligned correctly according to their
  * parent switch's alignment and enforces other switch formatting.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
@@ -41,7 +41,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
     public function register()
     {
         return array(T_SWITCH);
-    }//end register()
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -177,12 +177,12 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                         $error = 'BREAK statements must be followed by a single blank line';
                         $phpcsFile->addError($error, $nextBreak);
                     }
-                }//end if
+                }
             } else {
             	if (array_key_exists('scope_closer', $tokens[$nextCase])) {
                     $nextBreak = $tokens[$nextCase]['scope_closer'];
                 }
-            }//end if
+            }
 
             /*
                 Ensure CASE statements are not followed by
@@ -202,7 +202,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $error = 'Blank lines are not allowed after CASE statements';
                 $phpcsFile->addError($error, $nextCase);
             }
-        }//end while
+        }
 
         $default = $phpcsFile->findPrevious(T_DEFAULT, $switch['scope_closer'], $switch['scope_opener']);
 
@@ -265,7 +265,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 $phpcsFile->addError($error, $default);
 
                 $nextBreak = $tokens[$default]['scope_closer'];
-            }//end if
+            }
 
             /*
                 Ensure empty DEFAULT statements are not allowed.
@@ -308,7 +308,7 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         } else {
             $error = 'All SWITCH statements must contain a DEFAULT case';
             $phpcsFile->addError($error, $stackPtr);
-        }//end if
+        }
 
         if ($tokens[$switch['scope_closer']]['column'] !== $switch['column']) {
             $error = 'Closing brace of SWITCH statement must be aligned with SWITCH keyword';
@@ -319,7 +319,6 @@ class Zend_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
             $error = 'SWITCH statements must contain at least one CASE statement';
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-}//end class
+}

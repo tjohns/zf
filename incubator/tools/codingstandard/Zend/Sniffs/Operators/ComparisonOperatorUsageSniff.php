@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 /**
@@ -26,11 +26,11 @@
  * The use of === true is enforced over implicit true statements,
  * It also enforces the use of === false over ! operators.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSniffer_Sniff
 {
@@ -74,7 +74,7 @@ class Zend_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSnif
                 T_INLINE_THEN,
                );
 
-    }//end register()
+    }
 
 
     /**
@@ -116,7 +116,7 @@ class Zend_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSnif
                             break;
                         }
                     }
-                }//end for
+                }
 
                 $start = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
             } else {
@@ -154,7 +154,7 @@ class Zend_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSnif
                     $foundOps++;
                 }
             }
-        }//end for
+        }
 
         $requiredOps++;
 
@@ -162,10 +162,6 @@ class Zend_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSnif
             $error = 'Implicit true comparisons prohibited; use === TRUE instead';
             $phpcsFile->addError($error, $stackPtr);
         }
+    }
 
-    }//end process()
-
-
-}//end class
-
-?>
+}

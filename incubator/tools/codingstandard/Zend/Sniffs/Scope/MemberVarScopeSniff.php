@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend Framework Coding Standard
+ * Zend Framework
  *
  * LICENSE
  *
@@ -12,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
@@ -24,15 +24,15 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
 }
 
 /**
- * Zend Framework Coding Standard.
+ * Zend Framework.
  *
  * Verifies that class variables have scope modifiers
  *
- * @category   Zend
- * @package    Zend_CodingStandard
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @category  Zend
+ * @package   Zend_CodingStandard
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 class Zend_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
@@ -55,7 +55,7 @@ class Zend_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_Ab
             $phpcsFile->addError($error, $stackPtr);
         }
 
-    }//end processMemberVar()
+    }
 
     /**
      * Processes normal variables.
@@ -69,7 +69,7 @@ class Zend_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_Ab
         // We don't care about normal variables.
         return;
 
-    }//end processVariable()
+    }
 
     /**
      * Processes variables in double quoted strings.
@@ -84,6 +84,6 @@ class Zend_Sniffs_Scope_MemberVarScopeSniff extends PHP_CodeSniffer_Standards_Ab
         // We don't care about normal variables.
         return;
 
-    }//end processVariableInString()
+    }
 
-}//end class
+}
