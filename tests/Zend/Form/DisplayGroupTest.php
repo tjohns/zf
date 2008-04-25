@@ -429,6 +429,29 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testDisplayGroupIteratesElementsInExpectedOrderWhenFirstElementHasNoOrderSpecified()
+    {
+        $a = new Zend_Form_Element('a',array('label'=>'a'));
+        $b = new Zend_Form_Element('b',array('label'=>'b', 'order' => 0));
+        $c = new Zend_Form_Element('c',array('label'=>'c', 'order' => 1));
+        $this->group->addElement($a)
+                    ->addElement($b)
+                    ->addElement($c)
+                    ->setView($this->getView());
+        $test = $this->group->render();
+        $this->assertContains('name="a"', $test);
+        if (!preg_match_all('/(<input[^>]+>)/', $test, $matches)) {
+            $this->fail('Expected markup not found');
+        }
+        $order = array();
+        foreach ($matches[1] as $element) {
+            if (preg_match('/name="(a|b|c)"/', $element, $m)) {
+                $order[] = $m[1];
+            }
+        }
+        $this->assertSame(array('b', 'c', 'a'), $order);
+    }
+
     public function testRemovingElementsShouldNotRaiseExceptionsDuringIteration()
     {
         $this->setupIteratorElements();

@@ -2461,6 +2461,26 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
+    public function testFormObjectIteratesElementsInExpectedOrderWhenFirstElementHasNoOrderSpecified()
+    {
+        $this->form->addElement(new Zend_Form_Element('a',array('label'=>'a')))
+                   ->addElement(new Zend_Form_Element('b',array('label'=>'b', 'order' => 0)))
+                   ->addElement(new Zend_Form_Element('c',array('label'=>'c', 'order' => 1)))
+                   ->setView($this->getView());
+        $test = $this->form->render();
+        $this->assertContains('name="a"', $test);
+        if (!preg_match_all('/(<input[^>]+>)/', $test, $matches)) {
+            $this->fail('Expected markup not found');
+        }
+        $order = array();
+        foreach ($matches[1] as $element) {
+            if (preg_match('/name="(a|b|c)"/', $element, $m)) {
+                $order[] = $m[1];
+            }
+        }
+        $this->assertSame(array('b', 'c', 'a'), $order);
+    }
+
     public function testFormObjectIteratesElementsAndSubforms()
     {
         $this->setupElements();

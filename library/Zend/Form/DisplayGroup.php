@@ -970,7 +970,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
             $index = 0;
             foreach ($elementOrder as $key => $order) {
                 if (null === $order) {
-                    if (array_search($index, $elementOrder, true)) {
+                    while (array_search($index, $elementOrder, true)) {
                         ++$index;
                     }
                     $items[$index] = $key;
