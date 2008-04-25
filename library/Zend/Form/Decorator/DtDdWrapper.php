@@ -55,6 +55,6 @@ class Zend_Form_Decorator_DtDdWrapper extends Zend_Form_Decorator_Abstract
      */
     public function render($content)
     {
-        return '<dt></dt><dd>' . $content . '</dd>';
+        return '<dt>&nbsp;</dt><dd>' . $content . '</dd>';
     }
 }

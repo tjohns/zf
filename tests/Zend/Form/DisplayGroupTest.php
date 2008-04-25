@@ -316,7 +316,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
         $this->group->addElements(array($foo, $bar));
         $html = $this->group->render($this->getView());
-        $this->assertRegexp('#^<dt></dt><dd><fieldset.*?</fieldset></dd>$#s', $html, $html);
+        $this->assertRegexp('#^<dt>&nbsp;</dt><dd><fieldset.*?</fieldset></dd>$#s', $html, $html);
         $this->assertContains('<input', $html, $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
@@ -330,7 +330,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->group->addElements(array($foo, $bar))
                     ->setView($this->getView());
         $html = $this->group->__toString();
-        $this->assertRegexp('#^<dt></dt><dd><fieldset.*?</fieldset></dd>$#s', $html, $html);
+        $this->assertRegexp('#^<dt>&nbsp;</dt><dd><fieldset.*?</fieldset></dd>$#s', $html, $html);
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
