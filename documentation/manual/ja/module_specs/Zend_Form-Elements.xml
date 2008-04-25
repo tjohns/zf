@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8981 -->
+<!-- EN-Revision: 9308 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -656,7 +656,7 @@ $messages = $element->getMessages();
         <itemizedlist>
             <listitem><para>
                     <code>setRequired($flag)</code> および
-                    <code>getRequired()</code> は、'required' フラグを設定あるいは取得します。
+                    <code>isRequired()</code> は、'required' フラグの状態を設定あるいは取得します。
                     これを <code>true</code> に設定すると、
                     <code>Zend_Form</code> が処理したデータにその要素が必須であるものとします。
             </para></listitem>
