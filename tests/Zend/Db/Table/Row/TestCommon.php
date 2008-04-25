@@ -153,6 +153,12 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $a = $row1->toArray();
 
         $this->assertTrue(is_array($a));
+        
+        // fix for #ZF-1898
+        $arrayObject = new ArrayObject($row1->toArray(),ArrayObject::ARRAY_AS_PROPS);
+        $arrayObject->bug_status = 'foobar';
+        $this->assertNotEquals('foobar',$row1->bug_status);
+        
         $cols = array(
             'bug_id',
             'bug_description',
