@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9037 -->
+<!-- EN-Revision: 9311 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -1484,6 +1484,9 @@ $messages = $form->getMessages('username');
             全般的なルールとして、もし 'set' + オプションのキー
             という名前のメソッドが <code>Zend_Form</code>
             にあった場合は、そのメソッドを使用するとオプションを設定することができます。
+            アクセサが存在しない場合は
+            キーが属性への参照とみなされ、
+            <code>setAttrib()</code> に渡されます。
         </para>
 
         <para>
