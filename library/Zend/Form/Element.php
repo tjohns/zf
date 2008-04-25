@@ -1199,8 +1199,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 if ($result) {
                     continue;
                 }
-            }
-            if ($validator->isValid($value, $context)) {
+            } elseif ($validator->isValid($value, $context)) {
                 continue;
             } else {
                 $result = false;
