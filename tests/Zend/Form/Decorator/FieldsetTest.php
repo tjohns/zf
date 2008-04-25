@@ -102,6 +102,22 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
         $this->decorator->setLegend('this is a legend');
         $this->assertEquals('this is a legend', $this->decorator->getLegend());
     }
+
+    /**
+     * @see ZF-2981
+     */
+    public function testActionAndMethodAttributsShouldNotBePresentInFieldsetTag()
+    {
+        $form = new Zend_Form();
+        $form->setAction('/foo/bar')
+             ->setMethod('post')
+             ->setView($this->getView());
+        $this->decorator->setElement($form);
+        $test = $this->decorator->render('content');
+        $this->assertContains('<fieldset ', $test, $test);
+        $this->assertNotContains('action="', $test);
+        $this->assertNotContains('method="', $test);
+    }
 }
 
 // Call Zend_Form_Decorator_FieldsetTest::main() if this source file is executed directly.
