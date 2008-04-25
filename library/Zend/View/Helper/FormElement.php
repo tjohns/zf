@@ -182,10 +182,11 @@ abstract class Zend_View_Helper_FormElement
      */
     protected function _hidden($name, $value = null, $attribs = null)
     {
+        $endTag = ($this->view->doctype()->isXhtml()) ? ' />' : '>';
         return '<input type="hidden"'
              . ' name="' . $this->view->escape($name) . '"'
              . ' value="' . $this->view->escape($value) . '"'
-             . $this->_htmlAttribs($attribs) . ' />';
+             . $this->_htmlAttribs($attribs) . $endTag;
     }
 
     /**

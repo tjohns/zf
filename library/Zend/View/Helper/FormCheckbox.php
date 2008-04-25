@@ -38,6 +38,15 @@ require_once 'Zend/View/Helper/FormElement.php';
 class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
 {
     /**
+     * Default checked/unchecked options
+     * @var array
+     */
+    protected $_defaultCheckedOptions = array(
+        'checked'   => '1',
+        'unChecked' => '0'
+    );
+
+    /**
      * Generates a 'checkbox' element.
      *
      * @access public
@@ -50,18 +59,50 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
      * @param mixed $options 
      * @return string The element XHTML.
      */
-    public function formCheckbox($name, $value = null, $attribs = null)
+    public function formCheckbox($name, $value = null, $attribs = null, array $checkedOptions = null)
     {
         $info = $this->_getInfo($name, $value, $attribs);
         extract($info); // name, id, value, attribs, options, listsep, disable
 
+        // Checked/unchecked values
+        $checkedValue   = null;
+        $unCheckedValue = null;
+        if (is_array($checkedOptions)) {
+            if (array_key_exists('checked', $checkedOptions)) {
+                $checkedValue = (string) $checkedOptions['checked'];
+                unset($checkedOptions['checked']);
+            }
+            if (array_key_exists('unChecked', $checkedOptions)) {
+                $unCheckedValue = (string) $checkedOptions['unChecked'];
+                unset($checkedOptions['unChecked']);
+            }
+            if (null === $checkedValue) {
+                $checkedValue = array_shift($checkedOptions);
+            }
+            if (null === $unCheckedValue) {
+                $unCheckedValue = array_shift($checkedOptions);
+            }
+        } elseif ($value !== null) {
+            $unCheckedValue = $this->_defaultCheckedOptions['unChecked'];
+        } else {
+            $checkedValue   = $this->_defaultCheckedOptions['checked'];
+            $unCheckedValue = $this->_defaultCheckedOptions['unChecked'];
+        }
+
         // is the element checked?
         $checked = '';
-        if (isset($attribs['checked']) && $attribs['checked']) {
+        if (empty($checked) && isset($attribs['checked']) && $attribs['checked']) {
             $checked = ' checked="checked"';
             unset($attribs['checked']);
         } elseif (isset($attribs['checked'])) {
             unset($attribs['checked']);
+        } elseif ($value === $checkedValue) {
+            $checked = ' checked="checked"';
+        }
+
+        // Checked value should be value if no checked options provided
+        if ($checkedValue == null) {
+            $checkedValue = $value;
         }
 
         // is the element disabled?
@@ -77,14 +118,18 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
         }
 
         // build the element
-        $xhtml = '<input type="checkbox"'
-               . ' name="' . $this->view->escape($name) . '"'
-               . ' id="' . $this->view->escape($id) . '"'
-               . ' value="' . $this->view->escape($value) . '"'
-               . $checked
-               . $disabled
-               . $this->_htmlAttribs($attribs)
-               . $endTag;
+        $xhtml = '';
+        if (!strstr($name, '[]')) {
+            $xhtml = $this->_hidden($name, $unCheckedValue);
+        }
+        $xhtml .= '<input type="checkbox"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' value="' . $this->view->escape($checkedValue) . '"'
+                . $checked
+                . $disabled
+                . $this->_htmlAttribs($attribs)
+                . $endTag;
 
         return $xhtml;
     }
