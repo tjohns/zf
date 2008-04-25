@@ -189,4 +189,21 @@ class Zend_Form_Element_Checkbox extends Zend_Form_Element_Xhtml
     {
         return $this->checked;
     }
+
+    /**
+     * Render
+     *
+     * Ensure that options property is set when rendering.
+     * 
+     * @param  Zend_View_Interface $view 
+     * @return string
+     */
+    public function render(Zend_View_Interface $view = null)
+    {
+        $this->options = array(
+            'checked'   => $this->getCheckedValue(),
+            'unChecked' => $this->getUncheckedValue(),
+        );
+        return parent::render($view);
+    }
 }
