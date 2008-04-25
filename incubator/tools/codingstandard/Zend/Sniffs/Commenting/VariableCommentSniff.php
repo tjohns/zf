@@ -53,9 +53,9 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     /**
      * Called to process class member vars.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param  integer              $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens.
      * @return void
      */
     public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -190,8 +190,8 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     /**
      * Process the var tag.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
+     * @param  integer $commentStart The position in the stack where the comment started.
+     * @param  integer $commentEnd   The position in the stack where the comment ended.
      * @return void
      */
     protected function processVar($commentStart, $commentEnd)
@@ -242,9 +242,8 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     /**
      * Process the since tag.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     * @param int $commentEnd   The position in the stack where the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
+     * @param  integer $commentEnd   The position in the stack where the comment ended.
      * @return void
      */
     protected function processSince($commentStart, $commentEnd)
@@ -293,8 +292,7 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     /**
      * Process the see tags.
      *
-     * @param int $commentStart The position in the stack where the comment started.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
      * @return void
      */
     protected function processSees($commentStart)
@@ -321,14 +319,11 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     }
 
     /**
-     * Called to process a normal variable.
+     * Called to process a normal variable
+     * Not required for this sniff
      *
-     * Not required for this sniff.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
-     * @param int                  $stackPtr  The position where the double quoted
-     *                                        string was found.
-     *
+     * @param  PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found
+     * @param  integer              $stackPtr  The position where the double quoted string was found
      * @return void
      */
     protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -337,19 +332,15 @@ class Zend_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Standa
     }
 
     /**
-     * Called to process variables found in duoble quoted strings.
+     * Called to process variables found in duoble quoted strings
+     * Not required for this sniff
      *
-     * Not required for this sniff.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found.
-     * @param int                  $stackPtr  The position where the double quoted
-     *                                        string was found.
-     *
+     * @param  PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this token was found
+     * @param  integer              $stackPtr  The position where the double quoted string was found
      * @return void
      */
     protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         return;
     }
-
 }

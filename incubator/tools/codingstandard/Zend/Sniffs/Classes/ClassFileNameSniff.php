@@ -59,7 +59,7 @@ class Zend_Sniffs_Classes_ClassFileNameSniff implements PHP_CodeSniffer_Sniff
         $tokens    = $phpcsFile->getTokens();
         $decName   = $phpcsFile->findNext(T_STRING, $stackPtr);
         $fullPath  = dirname($phpcsFile->getFilename());
-        $fullPath  = substr($fullPath, strrpos($fullPath, DIRECTORY_SEPARATOR . 'Zend') + 1);
+        $fullPath  = substr($fullPath, (strrpos($fullPath, DIRECTORY_SEPARATOR . 'Zend') + 1));
         $fullPath  = str_replace(DIRECTORY_SEPARATOR, '_', $fullPath) . '_';
         $fullPath .= basename($phpcsFile->getFilename());
         $fileName  = substr($fullPath, 0, strrpos($fullPath, '.'));

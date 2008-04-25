@@ -77,7 +77,6 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
      */
     protected $currentFile = null;
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -89,14 +88,12 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
-     * Processes this test, when one of its tokens is encountered.
+     * Processes this test, when one of its tokens is encountered
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param integer              $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
-     *
+     * @param  PHP_CodeSniffer_File $phpcsFile The file being scanned
+     * @param  integer              $stackPtr  The position of the current token
+     *                                         in the stack passed in $tokens
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
@@ -251,13 +248,11 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
      * Process the since tag.
      *
-     * @param integer $commentStart The position in the stack where the comment started.
-     * @param integer $commentEnd   The position in the stack where the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
+     * @param  integer $commentEnd   The position in the stack where the comment ended.
      * @return void
      */
     protected function processSince($commentStart, $commentEnd)
@@ -309,12 +304,10 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
      * Process the see tags.
      *
-     * @param integer $commentStart The position in the stack where the comment started.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
      * @return void
      */
     protected function processSees($commentStart)
@@ -352,13 +345,11 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
      * Process the return comment of this function comment.
      *
-     * @param integer $commentStart The position in the stack where the comment started.
-     * @param integer $commentEnd   The position in the stack where the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
+     * @param  integer $commentEnd   The position in the stack where the comment ended.
      * @return void
      */
     protected function processReturn($commentStart, $commentEnd)
@@ -470,12 +461,10 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
      * Process any throw tags that this function comment has.
      *
-     * @param integer $commentStart The position in the stack where the comment started.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started.
      * @return void
      */
     protected function processThrows($commentStart)
@@ -518,15 +507,11 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
     }
 
-
     /**
      * Process the function parameter comments.
      *
-     * @param int $commentStart The position in the stack where
-     *                          the comment started.
-     * @param int $commentEnd   The position in the stack where
-     *                          the comment ended.
-     *
+     * @param  integer $commentStart The position in the stack where the comment started
+     * @param  integer $commentEnd   The position in the stack where the comment ended
      * @return void
      */
     protected function processParams($commentStart, $commentEnd)
@@ -537,10 +522,10 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if (empty($params) === false) {
 
-            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 2) {
-                $error    = 'Last parameter comment requires a blank newline after it';
+            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 1) {
+                $error    = 'No empty line after last parameter comment allowed';
                 $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
-                $this->currentFile->addError($error, $errorPos);
+                $this->currentFile->addError($error, $errorPos + 1);
             }
 
             // Parameters must appear immediately after the comment.

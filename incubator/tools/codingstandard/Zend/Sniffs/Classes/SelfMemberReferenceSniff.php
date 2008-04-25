@@ -33,7 +33,8 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends
+      PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
     /**
@@ -52,7 +53,8 @@ class Zend_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stand
      * @param  integer              $currScope The current scope opener token.
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile,
+                                               $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
 

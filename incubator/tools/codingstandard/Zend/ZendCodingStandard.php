@@ -197,3 +197,9 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends PHP_CodeSniffer_
      *                                are two empty lines in functions
      */
 }
+
+/**
+ * TODO:
+ * class end  - no empty line before closing brace of a class
+ * if / foreach / for / function - when linebreak indended to = or 1 after (
+ */ 

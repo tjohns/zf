@@ -152,18 +152,20 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
         }
 
         // Check that the closing brace has one blank line after it.
-        $nextContent = $phpcsFile->findNext(array(T_COMMENT, T_WHITESPACE), ($closeBrace + 1), null, true);
+        $nextContent = $phpcsFile->findNext(array(T_COMMENT, T_WHITESPACE),
+                                           ($closeBrace + 1), null, true);
         if ($nextContent === false) {
-        	if (array_key_exists(($closeBrace + 1), $tokens)) {
-        		if ($tokens[($closeBrace + 1)]['content'] != "\n") {
+            if (array_key_exists(($closeBrace + 1), $tokens) === true) {
+                if ($tokens[($closeBrace + 1)]['content'] !== "\n") {
                     // No content found, we expect to have a line break at this point
                     $error  = 'Closing brace of a ';
                     $error .= $tokens[$stackPtr]['content'];
                     $error .= ' must be followed by a blank line';
-                    $phpcsFile->addError($error, $closeBrace+1);
+                    $phpcsFile->addError($error, ($closeBrace + 1));
                 }
             }
-            if (array_key_exists(($closeBrace + 2), $tokens)) {
+
+            if (array_key_exists(($closeBrace + 2), $tokens) === true) {
                 // More than one linebreak or other content found
                 $error  = 'Content after closing brace of a ';
                 $error .= $tokens[$stackPtr]['content'];
@@ -251,10 +253,16 @@ class Zend_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
                 $error = "Expected 1 space before \"$name\"; 0 found";
                 $phpcsFile->addError($error, ($nextComma + 1));
             } else {
+            	if ($tokens[($parents[$i] - 2)]['content'] === "\n") {
+            		$before = 6;
+            	} else {
+            		$before = 1;
+            	}
+
                 $spaceBefore = strlen($tokens[($parents[$i] - 1)]['content']);
-                if ($spaceBefore !== 1) {
+                if ($spaceBefore !== $before) {
                     $name  = $tokens[$parents[$i]]['content'];
-                    $error = "Expected 1 space before \"$name\"; $spaceBefore found";
+                    $error = "Expected $before space before \"$name\"; $spaceBefore found";
                     $phpcsFile->addError($error, $stackPtr);
                 }
             }

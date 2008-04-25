@@ -34,8 +34,10 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends
+      PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
+
     /**
      * Constructs a Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff.
      */
@@ -47,9 +49,9 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
     /**
      * Processes the function tokens within the class.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
+     * @param  PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param  integer              $stackPtr  The position where the token was found.
+     * @param  integer              $currScope The current scope opener token.
      * @return void
      */
     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
@@ -123,7 +125,7 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
             $throwTags = array_unique($throwTags);
             sort($throwTags);
 
-            // @throw tag count matches throw token count.
+            // Look if @throw tag count matches throw token count.
             $tokenCount = count($throwTokens);
             $tagCount   = count($throwTags);
             if ($tokenCount !== $tagCount) {
@@ -136,7 +138,8 @@ class Zend_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffe
                 foreach ($throwTags as $i => $throwTag) {
                     $errorPos = ($commentStart + $lineNumber[$throwTag]);
                     if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
-                        $error = "Expected \"$throwTokens[$i]\" but found \"$throwTag\" for @throws tag exception";
+                        $error = "Expected \"$throwTokens[$i]\" "
+                               . "but found \"$throwTag\" for @throws tag";
                         $phpcsFile->addError($error, $errorPos);
                     }
                 }

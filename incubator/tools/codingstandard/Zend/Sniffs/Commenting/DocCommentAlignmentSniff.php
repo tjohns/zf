@@ -31,6 +31,7 @@
  */
 class Zend_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -67,10 +68,12 @@ class Zend_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffer
         $comments       = array($stackPtr);
         $currentComment = $stackPtr;
         $lastComment    = $stackPtr;
-        while (($currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1))) !== false) {
+        $currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1));
+        while ($currentComment !== false) {
             if ($tokens[$lastComment]['line'] === ($tokens[$currentComment]['line'] - 1)) {
-                $comments[]  = $currentComment;
-                $lastComment = $currentComment;
+                $comments[]     = $currentComment;
+                $lastComment    = $currentComment;
+                $currentComment = $phpcsFile->findNext(T_DOC_COMMENT, ($currentComment + 1));
             } else {
                 break;
             }
@@ -91,7 +94,7 @@ class Zend_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffer
                 preg_match('|^(\s+)?\*(\s+)?@|', $content, $matches);
                 if (empty($matches) === false) {
                     if (isset($matches[2]) === false) {
-                        $error = "Expected 1 space between asterisk and tag; 0 found";
+                        $error = 'Expected 1 space between asterisk and tag; 0 found';
                         $phpcsFile->addError($error, $commentPointer);
                     } else {
                         $length = strlen($matches[2]);

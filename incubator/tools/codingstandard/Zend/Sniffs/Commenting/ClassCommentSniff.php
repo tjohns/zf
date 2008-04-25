@@ -35,7 +35,6 @@ if (class_exists('PHP_CodeSniffer_Standards_ZendClassCommentParser', true) === f
 class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
-
     /**
      * Returns an array of tokens this test wants to listen for
      *
@@ -46,7 +45,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         return array(T_CLASS);
 
     }
-
 
     /**
      * Processes this test, when one of its tokens is encountered
@@ -189,7 +187,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 }
 
                 $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                $short = rtrim($short, $phpcsFile->eolChar.' ');
+                $short = rtrim($short, $phpcsFile->eolChar . ' ');
             }
         }
 
@@ -218,7 +216,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         $this->processTags($commentStart, $commentEnd);
 
     }
-
 
     /**
      * Processes each required or optional tag
@@ -285,10 +282,10 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         $errorPos    = 0;
 
         foreach ($foundTags as $tag => $info) {
-        	if ((array_key_exists($info, $tags) === false) and ($info !== "comment")) {
-        		$error = "Tag @$info is not allowed";
+            if ((array_key_exists($info, $tags) === false) and ($info !== 'comment')) {
+                $error = "Tag @$info is not allowed";
                 $this->currentFile->addError($error, ($commentStart + $tag));
-        	}
+            }
         }
 
         foreach ($tags as $tag => $info) {
@@ -302,16 +299,12 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
              // Get the line number for current tag
             $tagName = ucfirst($tag);
-            if ((($info['allow_multiple'] === true) and ($tag != 'uses')) or ($tag == 'copyright')) {
+            if ((($info['allow_multiple'] === true) and ($tag !== 'uses')) or ($tag === 'copyright')) {
                 $tagName .= 's';
             }
 
-            $getMethod  = 'get'.$tagName;
-//            if ($tagName === 'Uses') {
-//            	$tagElement = $this->getUses();
-//            } else {
-                $tagElement = $this->commentParser->$getMethod();
-//            }
+            $getMethod  = 'get' . $tagName;
+            $tagElement = $this->commentParser->$getMethod();
             if (is_null($tagElement) === true || empty($tagElement) === true) {
                 continue;
             }
@@ -380,7 +373,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                                  );
             }
 
-            $method = 'process'.$tagName;
+            $method = 'process' . $tagName;
             if (method_exists($this, $method) === true) {
                 // Process each tag if a method is defined.
                 call_user_func(array($this, $method), $errorPos);
@@ -401,8 +394,8 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                 $space        = ($indentInfo['space'] - strlen($indentInfo['tag']));
                 $error        = "@$indentInfo[tag] tag comment indented incorrectly. ";
                 $error       .= "Expected $expected spaces but found $space.";
-                $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
-                if (($tags[$indentInfo['tag']]['allow_multiple'] === true) or ($indentInfo['tag'] == 'copyright')) {
+                $getTagMethod = 'get' . ucfirst($indentInfo['tag']);
+                if (($tags[$indentInfo['tag']]['allow_multiple'] === true) or ($indentInfo['tag'] === 'copyright')) {
                     $line = $indentInfo['line'];
                 } else {
                     $tagElem = $this->commentParser->$getTagMethod();
@@ -415,14 +408,12 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Get the indentation information of each tag.
      *
-     * @param string                                   $tagName    The name of the doc comment element.
-     * @param PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment element.
-     *
-     * @return void
+     * @param  string                                   $tagName    The name of the doc comment element.
+     * @param  PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment element.
+     * @return string
      */
     protected function getIndentation($tagName, $tagElement)
     {
@@ -439,7 +430,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         return 0;
 
     }
-
 
     /**
      * Process the category tag.
@@ -460,7 +450,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Process the package tag
      *
@@ -477,9 +466,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     $newContent = str_replace(' ', '_', $content);
                     $nameBits   = explode('_', $newContent);
                     $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                     foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                     }
 
                     $validName = trim($newName, '_');
@@ -510,9 +499,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                     $newContent = str_replace(' ', '_', $content);
                     $nameBits   = explode('_', $newContent);
                     $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                     foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                     }
 
                     $validName = trim($newName, '_');
@@ -527,12 +516,10 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Process the uses tag.
      *
-     * @param integer $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processUses($errorPos)
@@ -546,9 +533,9 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
                         $newContent = str_replace(' ', '_', $content);
                         $nameBits   = explode('_', $newContent);
                         $firstBit   = array_shift($nameBits);
-                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                        $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                         foreach ($nameBits as $bit) {
-                            $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                            $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                         }
 
                         $validName = trim($newName, '_');
@@ -573,7 +560,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     {
         $sees = $this->commentParser->getSee();
         if ($sees !== null) {
-        	foreach($sees as $see) {
+            foreach($sees as $see) {
                 $content = $see->getContent();
                 if ($content !== '') {
                     if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
@@ -597,7 +584,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }
-
 
     /**
      * Process the since tag
@@ -623,7 +609,6 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Process the copyright tags
      *
@@ -637,7 +622,7 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'Only one @copyright tag allowed';
             $this->currentFile->addError($error, $errorPos);
         } else {
-            $content  = $copyrights[0]->getContent();
+            $content = $copyrights[0]->getContent();
             if ($content !== 'Copyright (c) 2005-' . date('Y') . ' Zend Technologies USA Inc. (http://www.zend.com)') {
                 $error = "@copyright tag must be 'Copyright (c) 2005-" . date('Y') . " Zend Technologies USA Inc. (http://www.zend.com)'";
                 $this->currentFile->addError($error, $errorPos);
@@ -664,11 +649,10 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
     }
 
-
     /**
      * Process the depreciated tag
      *
-     * @param integer $errorPos The line number where the error occurs
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processDepreciated($errorPos)
@@ -688,20 +672,26 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
     }
 
+    /**
+     * Process the depreciated tag
+     *
+     * @param  integer $errorPos The line number where the error occurs
+     * @return void
+     */
     protected function getUses()
     {
         $uses = $this->commentParser->getSee();
         if ($uses !== null) {
-        	foreach($uses as $use) {
+            foreach ($uses as $use) {
                 $content = $use->getContent();
                 if ($content !== '') {
                     if (PHP_CodeSniffer::isUnderscoreName($content) !== true) {
                         $newContent = str_replace(' ', '_', $content);
                         $nameBits   = explode('_', $newContent);
                         $firstBit   = array_shift($nameBits);
-                        $newName    = strtoupper($firstBit{0}).substr($firstBit, 1) . '_';
+                        $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                         foreach ($nameBits as $bit) {
-                            $newName .= strtoupper($bit{0}).substr($bit, 1) . '_';
+                            $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                         }
 
                         $validName = trim($newName, '_');
@@ -715,6 +705,5 @@ class Zend_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }
     }
-
 
 }

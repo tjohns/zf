@@ -40,15 +40,14 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @var PHP_CodeSniffer_Comment_Parser_ClassCommentParser
      */
-    protected $commentParser = null;
+    protected $_commentParser = null;
 
     /**
      * The current PHP_CodeSniffer_File object we are processing.
      *
      * @var PHP_CodeSniffer_File
      */
-    protected $currentFile = null;
-
+    protected $_currentFile = null;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -61,7 +60,6 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Processes this test, when one of its tokens is encountered.
      *
@@ -72,7 +70,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $this->currentFile = $phpcsFile;
+        $this->_currentFile = $phpcsFile;
 
         // We are only interested if this is the first open tag.
         if ($stackPtr !== 0) {
@@ -101,6 +99,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addError('File doc comment must be in the second line, no whitespace allowed', ($stackPtr + 1));
                 return;
             }
+
             // Extract the header comment docblock.
             $commentEnd = ($phpcsFile->findNext(T_DOC_COMMENT, ($commentStart + 1), null, true) - 1);
 
@@ -130,15 +129,15 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
             // Parse the header comment docblock.
             try {
-                $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
-                $this->commentParser->parse();
+                $this->_commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($comment, $phpcsFile);
+                $this->_commentParser->parse();
             } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
                 $line = ($e->getLineWithinComment() + $commentStart);
                 $phpcsFile->addError($e->getMessage(), $line);
                 return;
             }
 
-            $comment = $this->commentParser->getComment();
+            $comment = $this->_commentParser->getComment();
             if (is_null($comment) === true) {
                 $error = 'File doc comment is empty';
                 $phpcsFile->addError($error, $commentStart);
@@ -174,7 +173,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             // Exactly one blank line before tags.
-            $tags = $this->commentParser->getTagOrders();
+            $tags = $this->_commentParser->getTagOrders();
             if (count($tags) > 1) {
                 $newlineSpan = $comment->getNewlineAfter();
                 if ($newlineSpan !== 2) {
@@ -184,85 +183,86 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     }
 
                     $phpcsFile->addError($error, ($commentStart + $newlineCount));
-                    $short = rtrim($short, $phpcsFile->eolChar.' ');
+                    $short = rtrim($short, $phpcsFile->eolChar . ' ');
                 }
             }
 
-            if ($short !== " Zend Framework") {
+            if ($short !== ' Zend Framework') {
                 $error = "Line 2 of the file comment should read 'Zend Framework', found '$short'";
                 $phpcsFile->addError($error, $commentStart);
             }
 
             $longcomment = explode("\n", $long);
-            $error = array();
+            $error       = array();
             foreach ($longcomment as $line => $comm) {
-            	switch ($line) {
-            		case 0:
-            		    $check = "LICENSE";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 1:
-            		    $row = $line + 5;
-            		    if ($comm !== "") {
-            		    	$error[$row] = "Line $row of the file comment should be empty, found '$comm'";
-            		    }
-            		    break;
-            		case 2:
-            		    $check = " This source file is subject to the new BSD license that is bundled";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 3:
-            		    $check = " with this package in the file LICENSE.txt.";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 4:
-            		    $check = " It is also available through the world-wide-web at this URL:";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 5:
-            		    $check = " http://framework.zend.com/license/new-bsd";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 6:
-            		    $check = " If you did not receive a copy of the license and are unable to";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 7:
-            		    $check = " obtain it through the world-wide-web, please send an email";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
-            		    break;
-            		case 8:
-            		    $check = " to license@zend.com so we can send you a copy immediately.";
-            		    $row   = $line + 5;
-            		    if ($comm !== $check) {
-            		    	$error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
-            		    }
+                switch ($line) {
+                    case 0:
+                        $check = "LICENSE";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 1:
+                        $row = $line + 5;
+                        if ($comm !== "") {
+                            $error[$row] = "Line $row of the file comment should be empty, found '$comm'";
+                        }
+                        break;
+                    case 2:
+                        $check = " This source file is subject to the new BSD license that is bundled";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 3:
+                        $check = " with this package in the file LICENSE.txt.";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 4:
+                        $check = " It is also available through the world-wide-web at this URL:";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 5:
+                        $check = " http://framework.zend.com/license/new-bsd";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 6:
+                        $check = " If you did not receive a copy of the license and are unable to";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 7:
+                        $check = " obtain it through the world-wide-web, please send an email";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
+                        break;
+                    case 8:
+                        $check = " to license@zend.com so we can send you a copy immediately.";
+                        $row   = $line + 5;
+                        if ($comm !== $check) {
+                            $error[$row] = "Line $row of the file comment should read '$check', found '$comm'";
+                        }
             		    break;
             	}
             }
-            if (!empty($error)) {
-            	foreach ($error as $line => $comm) {
+
+            if (empty($error) === false) {
+                foreach ($error as $line => $comm) {
                     $phpcsFile->addError($comm, $line);
                 }
             }
@@ -272,7 +272,6 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }
-
 
     /**
      * Processes each required or optional tag.
@@ -322,17 +321,17 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                  ),
                 );
 
-        $foundTags   = $this->commentParser->getTagOrders();
+        $foundTags   = $this->_commentParser->getTagOrders();
         $orderIndex  = 0;
         $indentation = array();
         $longestTag  = 0;
         $errorPos    = 0;
 
         foreach ($foundTags as $tag => $info) {
-        	if ((array_key_exists($info, $tags) === false) and ($info !== "comment")) {
-        		$error = "Tag @$info is not allowed";
-                $this->currentFile->addError($error, ($commentStart + $tag + 13));
-        	}
+            if ((array_key_exists($info, $tags) === false) and ($info !== 'comment')) {
+                $error = "Tag @$info is not allowed";
+                $this->_currentFile->addError($error, ($commentStart + $tag + 13));
+            }
         }
 
         foreach ($tags as $tag => $info) {
@@ -340,18 +339,18 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             // Required tag missing.
             if ($info['required'] === true && in_array($tag, $foundTags) === false) {
                 $error = "Missing @$tag tag in file comment";
-                $this->currentFile->addError($error, $commentEnd);
+                $this->_currentFile->addError($error, $commentEnd);
                 continue;
             }
 
              // Get the line number for current tag.
             $tagName = ucfirst($tag);
-            if (($info['allow_multiple'] === true) or ($tag == 'copyright')) {
+            if (($info['allow_multiple'] === true) or ($tag === 'copyright')) {
                 $tagName .= 's';
             }
 
-            $getMethod  = 'get'.$tagName;
-            $tagElement = $this->commentParser->$getMethod();
+            $getMethod  = 'get' . $tagName;
+            $tagElement = $this->_commentParser->$getMethod();
             if (is_null($tagElement) === true || empty($tagElement) === true) {
                 continue;
             }
@@ -368,7 +367,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Multiple occurance not allowed.
                 if ($info['allow_multiple'] === false) {
                     $error = "Only 1 @$tag tag is allowed in a file comment";
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->_currentFile->addError($error, $errorPos);
                 } else {
                     // Make sure same tags are grouped together.
                     $i     = 0;
@@ -377,7 +376,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                         if ($index !== $count) {
                             $errorPosIndex = ($errorPos + $tagElement[$i]->getLine());
                             $error         = "@$tag tags must be grouped together";
-                            $this->currentFile->addError($error, $errorPosIndex);
+                            $this->_currentFile->addError($error, $errorPosIndex);
                         }
 
                         $i++;
@@ -396,7 +395,7 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
                 $orderText = $info['order_text'];
                 $error     = "The @$tag tag is in the wrong order; the tag $orderText";
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
 
             // Store the indentation for checking.
@@ -420,17 +419,17 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                  );
             }
 
-            $method = 'process'.$tagName;
+            $method = 'process' . $tagName;
             if (method_exists($this, $method) === true) {
                 // Process each tag if a method is defined.
                 call_user_func(array($this, $method), $errorPos);
             } else {
                 if (is_array($tagElement) === true) {
                     foreach ($tagElement as $key => $element) {
-                        $element->process($this->currentFile, $commentStart, 'file');
+                        $element->process($this->_currentFile, $commentStart, 'file');
                     }
                 } else {
-                     $tagElement->process($this->currentFile, $commentStart, 'file');
+                     $tagElement->process($this->_currentFile, $commentStart, 'file');
                 }
             }
         }
@@ -441,28 +440,26 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $space        = ($indentInfo['space'] - strlen($indentInfo['tag']));
                 $error        = "@$indentInfo[tag] tag comment indented incorrectly. ";
                 $error       .= "Expected $expected spaces but found $space.";
-                $getTagMethod = 'get'.ucfirst($indentInfo['tag']);
-                if (($tags[$indentInfo['tag']]['allow_multiple'] === true) or ($indentInfo['tag'] == 'copyright')) {
+                $getTagMethod = 'get' . ucfirst($indentInfo['tag']);
+                if (($tags[$indentInfo['tag']]['allow_multiple'] === true) or ($indentInfo['tag'] === 'copyright')) {
                     $line = $indentInfo['line'];
                 } else {
-                    $tagElem = $this->commentParser->$getTagMethod();
+                    $tagElem = $this->_commentParser->$getTagMethod();
                     $line    = $tagElem->getLine();
                 }
 
-                $this->currentFile->addError($error, ($commentStart + $line));
+                $this->_currentFile->addError($error, ($commentStart + $line));
             }
         }
 
     }
 
-
     /**
      * Get the indentation information of each tag.
      *
-     * @param string                                   $tagName    The name of the doc comment element.
-     * @param PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment element.
-     *
-     * @return void
+     * @param  string                                   $tagName    The name of the doc comment element.
+     * @param  PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment element.
+     * @return string
      */
     protected function getIndentation($tagName, $tagElement)
     {
@@ -480,7 +477,6 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
     }
 
-
     /**
      * Process the category tag.
      *
@@ -489,28 +485,26 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      */
     protected function processCategory($errorPos)
     {
-        $category = $this->commentParser->getCategory();
+        $category = $this->_commentParser->getCategory();
         if ($category !== null) {
             $content = $category->getContent();
             if ($content !== 'Zend') {
                 $error = "Category name \"$content\" is not valid; consider \"Zend\" instead";
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
         }
 
     }
-
 
     /**
      * Process the package tag.
      *
-     * @param integer $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processPackage($errorPos)
     {
-        $package = $this->commentParser->getPackage();
+        $package = $this->_commentParser->getPackage();
         if ($package !== null) {
             $content = $package->getContent();
             if ($content !== '') {
@@ -518,34 +512,32 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $newContent = str_replace(' ', '_', $content);
                     $nameBits   = explode('_', $newContent);
                     $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                     foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                     }
 
                     $validName = trim($newName, '_');
                     $error     = "Package name \"$content\" is not valid; consider \"$validName\" instead";
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->_currentFile->addError($error, $errorPos);
                 }
             } else {
                 $error = '@package tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
         }
 
     }
 
-
     /**
-     * Process the subpackage tag.
+     * Process the subpackage tag
      *
-     * @param integer $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processSubpackage($errorPos)
     {
-        $package = $this->commentParser->getSubpackage();
+        $package = $this->_commentParser->getSubpackage();
         if ($package !== null) {
             $content = $package->getContent();
             if ($content !== '') {
@@ -553,89 +545,82 @@ class Zend_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                     $newContent = str_replace(' ', '_', $content);
                     $nameBits   = explode('_', $newContent);
                     $firstBit   = array_shift($nameBits);
-                    $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                    $newName    = strtoupper($firstBit{0}) . substr($firstBit, 1) . '_';
                     foreach ($nameBits as $bit) {
-                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                        $newName .= strtoupper($bit{0}) . substr($bit, 1) . '_';
                     }
 
                     $validName = trim($newName, '_');
                     $error     = "Subpackage name \"$content\" is not valid; consider \"$validName\" instead";
-                    $this->currentFile->addError($error, $errorPos);
+                    $this->_currentFile->addError($error, $errorPos);
                 }
             } else {
                 $error = '@subpackage tag must contain a name';
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
         }
 
     }
-
 
     /**
      * Process the copyright tags.
      *
-     * @param integer $commentStart The position in the stack where
-     *                          the comment started.
-     *
+     * @param  integer $errorPos The line number where the error occurs
      * @return void
      */
     protected function processCopyrights($errorPos)
     {
-        $copyrights = $this->commentParser->getCopyrights();
+        $copyrights = $this->_commentParser->getCopyrights();
         if (count($copyrights) > 1) {
             $error = 'Only one @copyright tag allowed';
-            $this->currentFile->addError($error, $errorPos);
+            $this->_currentFile->addError($error, $errorPos);
         } else {
-            $content  = $copyrights[0]->getContent();
+            $content = $copyrights[0]->getContent();
             if ($content !== 'Copyright (c) 2005-' . date('Y') . ' Zend Technologies USA Inc. (http://www.zend.com)') {
                 $error = "@copyright tag must be 'Copyright (c) 2005-" . date('Y') . " Zend Technologies USA Inc. (http://www.zend.com)'";
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
         }
 
     }
 
-
     /**
      * Process the license tag.
      *
-     * @param integer $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processLicense($errorPos)
     {
-        $license = $this->commentParser->getLicense();
+        $license = $this->_commentParser->getLicense();
         if ($license !== null) {
             $value   = $license->getValue();
             $comment = $license->getComment();
             if ($value !== 'http://framework.zend.com/license/new-bsd' and $comment !== 'New BSD License') {
                 $error = "@license tag 'http://framework.zend.com/license/new-bsd     New BSD License' expected '$comment' found";
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             }
         }
     }
 
-
     /**
      * Process the version tag.
      *
-     * @param integer $errorPos The line number where the error occurs.
-     *
+     * @param  integer $errorPos The line number where the error occurs.
      * @return void
      */
     protected function processVersion($errorPos)
     {
-        $version = $this->commentParser->getVersion();
+        $version = $this->_commentParser->getVersion();
         if ($version !== null) {
             $content = $version->getContent();
             $matches = array();
             if (empty($content) === true) {
                 $error = 'Content missing for @version tag in file comment';
-                $this->currentFile->addError($error, $errorPos);
+                $this->_currentFile->addError($error, $errorPos);
             } else if (strstr($content, '$Id: ') === false) {
                 $error = "Invalid version \"$content\" in file comment; consider \"\$Id: $\"";
-                $this->currentFile->addWarning($error, $errorPos);
+                $this->_currentFile->addWarning($error, $errorPos);
             }
         }
     }

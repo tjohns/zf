@@ -31,8 +31,9 @@
  */
 class Zend_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
 {
+
     /**
-     * Registers the token types that this sniff wishes to listen to.
+     * Registers the token types that this sniff wishes to listen to
      *
      * @return array
      */
@@ -42,11 +43,10 @@ class Zend_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_Sn
     }
 
     /**
-     * Process the tokens that this sniff is listening for.
+     * Process the tokens that this sniff is listening for
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
-     * @param int                  $stackPtr  The position in the stack where
-     *                                        the token was found.
+     * @param  PHP_CodeSniffer_File $phpcsFile The file where the token was found
+     * @param  integer              $stackPtr  The position in the stack where the token was found
      * @return void
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
