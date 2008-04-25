@@ -652,8 +652,8 @@ $messages = $element->getMessages();
         <itemizedlist>
             <listitem><para>
                     <code>setRequired($flag)</code> and
-                    <code>getRequired()</code> allow you to set and retrieve the
-                    'required' flag. When set to boolean <code>true</code>, this
+                    <code>isRequired()</code> allow you to set and retrieve the
+                    status of the 'required' flag. When set to boolean <code>true</code>, this
                     flag requires that the element be in the data processed by
                     <code>Zend_Form</code>.
             </para></listitem>
