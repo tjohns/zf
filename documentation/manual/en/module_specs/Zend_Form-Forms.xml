@@ -1479,7 +1479,9 @@ $messages = $form->getMessages('username');
         <para>
             As a general rule, if 'set' + the option key refers to a
             <code>Zend_Form</code> method, then the value provided will be
-            passed to that method.
+            passed to that method. If the accessor does not exist, the key is
+            assumed to reference an attribute, and will be passed to
+            <code>setAttrib()</code>.
         </para>
 
         <para>
