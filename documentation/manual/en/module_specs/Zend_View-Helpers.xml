@@ -97,12 +97,77 @@
                 &lt;input type="button" /&gt; element.
             </para></listitem>
 
-            <listitem><para>
-                <code>formCheckbox($name, $value, $attribs):</code>
-                Creates an &lt;input type="checkbox" /&gt; element.
-                If $value matches the "checked" value, the box will be checked
-                for you.
-            </para></listitem>
+            <listitem>
+                <para>
+                    <code>formCheckbox($name, $value, $attribs,
+                        $options):</code> Creates an &lt;input type="checkbox"
+                    /&gt; element.  
+                </para>
+
+                <para>
+                    By default, when no $value is provided and no $options are
+                    present, '0' is assumed to be the unchecked value, and '1'
+                    the checked value. If a $value is passed, but no $options
+                    are present, the checked value is assumed to be the value
+                    passed.
+                </para>
+
+                <para>
+                    $options should be an array. If the array is indexed, the
+                    first value is the checked value, and the second the
+                    unchecked value; all other values are ignored. You may also
+                    pass an associative array with the keys 'checked' and
+                    'unChecked'.
+                </para>
+
+                <para>
+                    If $options has been passed, if $value matches the checked
+                    value, then the element will be marked as checked. You may
+                    also mark the element as checked or unchecked by passing a
+                    boolean value for the attribute 'checked'.
+                </para>
+
+                <para>
+                    The above is probably best summed up with some examples:
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' and '0' as checked/unchecked options; not checked
+echo $this->formCheckbox('foo');
+
+// '1' and '0' as checked/unchecked options; checked
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' and '0' as checked/unchecked options; not checked 
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' and '0' as checked/unchecked options; checked 
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' and 'baz' as checked/unchecked options; checked 
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    In all cases, the markup prepends a hidden element with the
+                    unchecked value; this way, if the value is unchecked, you
+                    will still get a valid value returned to your form.
+                </para>
+            </listitem>
 
             <listitem>
                 <para>
