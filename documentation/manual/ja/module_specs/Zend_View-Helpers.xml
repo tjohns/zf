@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8512 -->
+<!-- EN-Revision: 9327 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -98,12 +98,78 @@
                 type="button" /&gt; 要素を作成します。
             </para></listitem>
 
-            <listitem><para>
-                <code>formCheckbox($name, $value, $attribs):</code>
-                &lt;input type="checkbox" /&gt; 要素を作成します。
-                $value が"checked" の値に一致すると、チェックボックスがチェック
-                された状態になります。
-            </para></listitem>
+            <listitem>
+                <para>
+                    <code>formCheckbox($name, $value, $attribs,
+                        $options):</code>
+                    &lt;input type="checkbox" /&gt; 要素を作成します。
+                </para>
+
+                <para>
+                    デフォルトでは、$value を指定せず $options
+                    が存在しなかった場合は、未チェックの値として '0'
+                    そしてチェック状態の値として '1' を使用します。
+                    $value が渡されたけれど $options が存在しなかった場合は、
+                    渡された値をチェック状態の値とみなします。
+                </para>
+
+                <para>
+                    $options は配列でなければなりません。
+                    数値添字形式の配列の場合は、最初の要素がチェック状態の値となり、
+                    その次の要素が未チェック状態の値となります。
+                    3 番目以降の要素の内容は無視されます。
+                    キー 'checked' および 'unChecked' を持つ連想配列を指定することもできます。
+                </para>
+
+                <para>
+                    $options を渡した場合は、$value
+                    が「チェック状態の値」と一致した場合にその要素がチェック状態だとみなされます。
+                    チェック状態あるいは未チェック状態は、
+                    属性 'checked' に boolean 値を渡して指定することもできます。
+                </para>
+
+                <para>
+                    これらの内容を簡単にまとめた例を示します。
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' および '0' でチェック状態と未チェック状態を表します。これはチェックされていません
+echo $this->formCheckbox('foo');
+
+// '1' および '0' でチェック状態と未チェック状態を表します。これはチェックされています
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' および '0' でチェック状態と未チェック状態を表します。これはチェックされていません
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' および '0' でチェック状態と未チェック状態を表します。これはチェックされています
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされていません
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされていません
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされています
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされていません
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    どの場合についても、マークアップの先頭に hidden
+                    要素を追加してそこに「未チェック状態」を表す値を保持します。
+                    そうすることで、仮に未チェック状態であったとしても
+                    フォームから何らかの値が返されるようになるのです。
+                </para>
+            </listitem>
 
             <listitem>
                 <para>
