@@ -1236,6 +1236,7 @@ $messages = $form->getMessages('username');
 
         <para>
             作为通用的规则，如果 'set' + 选项键涉及 <code>Zend_Form</code> 方法，那么提供的值将传递给那个方法。
+            如果访问器不存在，键被假定引用一个属性并将传递给 <code>setAttrib()</code> 。
         </para>
 
         <para>

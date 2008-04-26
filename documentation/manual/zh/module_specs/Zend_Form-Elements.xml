@@ -505,7 +505,7 @@ $messages = $element->getMessages();
 
         <itemizedlist>
             <listitem><para>
-                    <code>setRequired($flag)</code> 和 <code>getRequired()</code> 让你设置和读取 'required' 标志。当设置为布尔 <code>true</code>，这个标志要求元素在由 <code>Zend_Form</code> 处理的数据中。
+                    <code>setRequired($flag)</code> 和 <code>isRequired()</code> 让你设置和读取 'required' 标志的状态。当设置为布尔 <code>true</code>，这个标志要求元素在由 <code>Zend_Form</code> 处理的数据中。
             </para></listitem>
 
             <listitem><para>
