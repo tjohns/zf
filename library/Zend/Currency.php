@@ -12,13 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Currency
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Currency.php 6137 2007-08-19 14:55:27Z shreef $
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Currency
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: Currency.php 6137 2007-08-19 14:55:27Z shreef $
  */
-
 
 /**
  * include needed classes
@@ -27,28 +26,29 @@ require_once 'Zend/Locale.php';
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Format.php';
 
-
 /**
- * @category   Zend
- * @package    Zend_Currency
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * Class for handling currency notations
+ *
+ * @category  Zend
+ * @package   Zend_Currency
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Currency
 {
-    // constants for defining what currency symbol should be displayed
+    // Constants for defining what currency symbol should be displayed
     const NO_SYMBOL     = 1;
     const USE_SYMBOL    = 2;
     const USE_SHORTNAME = 3;
     const USE_NAME      = 4;
 
-    // constants for defining the position of the currencysign
+    // Constants for defining the position of the currencysign
     const STANDARD = 8;
     const RIGHT    = 16;
     const LEFT     = 32;
 
     /**
-     * locale for this currency
+     * Locale for this currency
      *
      * @var string
      */
@@ -68,10 +68,9 @@ class Zend_Currency
     /**
      * Creates a currency instance. Every supressed parameter is used from the actual or the given locale.
      *
-     * @param  string              $currency  OPTIONAL currency short name
-     * @param  string|Zend_Locale  $locale    OPTIONAL locale name
-     * @return Zend_Currency
-     * @throws Zend_Currency_Exception
+     * @param  string             $currency  OPTIONAL currency short name
+     * @param  string|Zend_Locale $locale    OPTIONAL locale name
+     * @throws Zend_Currency_Exception on invalid currency
      */
     public function __construct($currency = null, $locale = null)
     {
@@ -83,26 +82,26 @@ class Zend_Currency
 
         $this->setLocale($locale);
 
-        // get currency details
+        // Get currency details
         $this->_options['currency'] = self::getShortName($currency, $this->_locale);
-        $this->_options['name']     = self::getName     ($currency, $this->_locale);
-        $this->_options['symbol']   = self::getSymbol   ($currency, $this->_locale);
+        $this->_options['name']     = self::getName($currency, $this->_locale);
+        $this->_options['symbol']   = self::getSymbol($currency, $this->_locale);
 
         if (($this->_options['currency'] === null) and ($this->_options['name'] === null)) {
             require_once 'Zend/Currency/Exception.php';
             throw new Zend_Currency_Exception("Currency '$currency' not found");
         }
-        // get the format
+
+        // Get the format
         $this->_options['position'] = $this->_updateFormat();
-        $this->_options['display']     = self::NO_SYMBOL;
-        if (!empty($this->_options['symbol'])) {
+        $this->_options['display']  = self::NO_SYMBOL;
+        if (empty($this->_options['symbol']) === false) {
             $this->_options['display'] = self::USE_SYMBOL;
-        } else if (!empty($this->_options['currency'])) {
+        } else if (empty($this->_options['currency']) === false) {
             $this->_options['display'] = self::USE_SHORTNAME;
         }
         return $this;
     }
-
 
     /**
      * Gets the information required for formating the currency from Zend_Locale
@@ -114,7 +113,7 @@ class Zend_Currency
     {
         $locale = empty($this->_options['format']) ? $this->_locale : $this->_options['format'];
 
-        //getting the format information of the currency
+        //Getting the format information of the currency
         $format = Zend_Locale_Data::getContent($locale, 'currencynumber');
 
         iconv_set_encoding('internal_encoding', 'UTF-8');
@@ -122,7 +121,7 @@ class Zend_Currency
             $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
         }
 
-        //knowing the sign positioning information
+        //Knowing the sign positioning information
         if (iconv_strpos($format, '¤') == 0) {
             $position = self::LEFT;
         } else if (iconv_strpos($format, '¤') == iconv_strlen($format)-1) {
@@ -142,7 +141,7 @@ class Zend_Currency
      */
     public function toCurrency($value, array $options = array())
     {
-        //validate the passed number
+        //Validate the passed number
         if (!isset($value) || !is_numeric($value)) {
             require_once 'Zend/Currency/Exception.php';
             throw new Zend_Currency_Exception("Value '$value' has to be numeric");
@@ -150,17 +149,17 @@ class Zend_Currency
 
         $options = array_merge($this->_options, $this->checkOptions($options));
 
-        //format the number
+        //Format the number
         if (empty($options['format'])) {
             $options['format'] = $this->_locale;
         }
         $value = Zend_Locale_Format::toNumber($value, array('locale' => $options['format'], 'precision' => $options['precision']));
 
-        //localize the number digits
+        //Localize the number digits
         if (!empty ($options['script'])) {
             $value = Zend_Locale_Format::convertNumerals($value, 'Latn', $options['script']);
         }
-        //get the sign to be placed next to the number
+        //Get the sign to be placed next to the number
         if (!is_numeric($options['display'])) {
             $sign = " " . $options['display'] . " ";
         } else {
@@ -180,7 +179,7 @@ class Zend_Currency
             }
         }
 
-        //place the sign next to the number
+        //Place the sign next to the number
         if ($options['position'] == self::RIGHT) {
             $value = $value . $sign;
         } else if ($options['position'] == self::LEFT) {
