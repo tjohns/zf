@@ -57,9 +57,65 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs):</code> 生成 &lt;input type="checkbox" /&gt; ，如果$value匹配"checked"值，则这个 checkbox 显示为已选中。
+                <code>formCheckbox($name, $value, $attribs,$options):</code> 生成 &lt;input type="checkbox" /&gt; 元素。
             </para></listitem>
-            
+             
+            <para>
+                缺省地，当没有提供 $value 并且没有 $options，'0' 被假定为未选的值，'1'为选中的值。
+                如果传递 $value，但没有 $options，选中的值就被假定为传递的值。
+             </para>
+
+             <para>
+                 $options 应当是数组。如果数组被索引，第一个值就是选中的值，第二个是未选的值，
+                  所有其它值被忽略。 你也可传递一个带有键为 'checked' 和 'unChecked' 的联合数组。
+             </para>
+
+             <para>
+                 如果传递了 $options，如果 $value 匹配选中的值，元素将标记为选中。你也通过传递
+                 一个布尔值给属性 'checked' 来标记元素为选中或未选。
+             </para>
+
+             <para>
+                  上述内容可能最好汇总成一些例子：
+             </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' and '0' as checked/unchecked options; not checked
+echo $this->formCheckbox('foo');
+
+// '1' and '0' as checked/unchecked options; checked
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' and '0' as checked/unchecked options; not checked 
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' and '0' as checked/unchecked options; checked 
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' and 'baz' as checked/unchecked options; checked 
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' and 'baz' as checked/unchecked options; unchecked 
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    对所有情况，标记预先准备一个带有未选的值的隐藏元素。
+                    这样，如果值是未选的，你将仍获得有效的返回到表单的值。
+                </para>
+            </listitem>
+ 
             <listitem>
                 <para>
                     <code>formErrors($errors, $options):</code> 生成一个无顺序的 XHTML 列表来显示错误。 <code>$errors</code> 是个字符串或字符串数组；<code>$options</code> 是你想放入开头列表标签的任何属性。
