@@ -13,8 +13,8 @@
         <title>Prüfen von Daten</title>
 
         <para>
-            Die meisten Daten werden normalerweise als Zeichenketten übergeben. Aber das Problem mit Zeichenketten
-            is das man nicht sicher sein kann ob eine Zeichenkette ein echtes Datum enthält. Hierfür gibt es
+            Normalerweise werden die meisten Daten als Zeichenketten übergeben. Aber das Problem mit Zeichenketten
+            ist das man nicht sicher sein kann ob eine Zeichenkette ein echtes Datum enthält. Hierfür gibt es
             in <code>Zend_Date</code> eine eigene statische Funktion um Datums-Zeichenketten zu prüfen.
             <code>Zend_Locale</code> hat eine eigene Funktion <code>getDate($date, $locale);</code> welche ein
             Datum analysiert und die gültigen normalisierten Datumsabschnitte zurück gibt. Ein Monatsname

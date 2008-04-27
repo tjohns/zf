@@ -634,8 +634,8 @@ $messages = $element->getMessages();
 
         <itemizedlist>
             <listitem><para>
-                    <code>setRequired($flag)</code> und <code>getRequired()</code> erlauben es das
-                    'required' Flag zu setzen und zu empfangen. Wenn der boolsche Wert
+                    <code>setRequired($flag)</code> und <code>isRequired()</code> erlauben es den
+                    Status des 'required' Flag zu setzen und zu empfangen. Wenn der boolsche Wert
                     <code>true</code> gesetzt wird, erzwingt dieses Flag das das Element, in den
                     Daten die von <code>Zend_Form</code> bearbeitet werden, vorhanden ist.
             </para></listitem>

@@ -1,5 +1,5 @@
 <sect1 id="zend.json.xml2json">
-    <title>Konvertieren von XML zu JSON</title>
+    <title>XML zu JSON Konvertierung</title>
     <para>
         <code>Zend_Json</code> bietet eine bequeme Methode für das transformieren von XML formatierten Daten
         in das JSON Format. Dieses Feature wurde inspiriert durch einen

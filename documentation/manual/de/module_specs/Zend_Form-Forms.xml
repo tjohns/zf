@@ -1438,7 +1438,9 @@ $messages = $form->getMessages('username');
 
         <para>
             Als generelle Regel, wenn 'set' + der Optionsschlüssel zu einer <code>Zend_Form</code>
-            Methode referieren, wird der angebotene Wert zu dieser Methode übergeben.
+            Methode referieren, wird der angebotene Wert zu dieser Methode übergeben. Wenn die
+            Methode nicht existiert, wird angenommen das der Schlüssel eine Referenz zu einem
+            Attribut ist, und wird an <code>setAttrib()</code> übergeben.
         </para>
 
         <para>

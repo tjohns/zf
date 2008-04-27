@@ -92,11 +92,75 @@
                 &lt;input type="button" /&gt; Element.
             </para></listitem>
 
-            <listitem><para>
-                <code>formCheckbox($name, $value, $attribs)</code>: Erstellt ein
-                &lt;input type="checkbox" /&gt; Element. Wenn $value mit dem ausgewählten Wert
-                ("checked") übereinstimmt, wird die Checkbox ausgewählt.
-            </para></listitem>
+            <listitem>
+                <para>
+                    <code>formCheckbox($name, $value, $attribs, $options):</code>
+                    Erstellt ein &lt;input type="checkbox" /&gt; Element.
+                </para>
+
+                <para>
+                    Standardmäßig, wenn kein $value angegeben und keine $options vorhanden sind,
+                    wird '0' als ungecheckter Wert, und '1' als gecheckter Wert angenommen. Wenn
+                    ein $value übergeben wird, aber keine $options vorhanden sind, wird der
+                    gecheckte Wert and der übergebene Wert angenommen.
+                </para>
+
+                <para>
+                    $options sollte ein Array sein. Wenn das Array indiziert ist, ist der erste
+                    Wert der gecheckte Wert, und der zweite der ungecheckte Wert; alle anderen
+                    Werte werden ignoriert. Es kann auch ein assoziatives Array mit den Schlüsseln
+                    'checked' und 'unChecked' übergeben werden. 
+                </para>
+
+                <para>
+                    Wenn $options übergeben wurden und $value mit dem gecheckten Wert
+                    übereinstimmt, dann wird das Element als gecheckt markiert. Das Element kann
+                    auch als gecheckt oder ungecheckt markiert werden indem ein boolscher Wert
+                    für das Attribut 'checked' übergeben wird.
+                </para>
+
+                <para>
+                    Das obige wird möglicherweise am besten mit einigen Beispielen zusammengefasst:
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' und '0' als gecheckte/ungecheckte Optionen; nicht gecheckt
+echo $this->formCheckbox('foo');
+
+// '1' und '0' als gecheckte/ungecheckte Optionen; gecheckt
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' und '0' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' und '0' als gecheckte/ungecheckte Optionen; gecheckt 
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; gecheckt 
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    In allen Fällen, wird das Markup einem versteckten Element mit dem
+                    nicht gecheckten Wert vorangestellt; auf diesem Weg erhält man
+                    trotzdem einen gültigen Wert von der Form selbst wenn der Wert nicht
+                    gecheckt wird.
+                </para>
+            </listitem>
 
             <listitem>
                 <para>
