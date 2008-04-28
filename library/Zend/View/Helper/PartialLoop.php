@@ -59,9 +59,16 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
             $module = null;
         } 
 
-        if (!is_array($model) && (!$model instanceof Iterator)) {
+        if (!is_array($model) 
+            && (!$model instanceof Traversable) 
+            && (is_object($model) && !method_exists($model, 'toArray'))
+        ) {
             require_once 'Zend/View/Helper/Partial/Exception.php';
             throw new Zend_View_Helper_Partial_Exception('PartialLoop helper requires iterable data');
+        }
+
+        if (is_object($model) && method_exists($model, 'toArray')) {
+            $model = $model->toArray();
         }
 
         $content = '';

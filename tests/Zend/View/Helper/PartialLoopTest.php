@@ -203,6 +203,50 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->partialLoop();
         $this->assertSame($this->helper, $test);
     }
+
+    public function testShouldAllowIteratingOverTraversableObjects()
+    {
+        $data = array(
+            array('message' => 'foo'),
+            array('message' => 'bar'),
+            array('message' => 'baz'),
+            array('message' => 'bat')
+        );
+        $o = new ArrayObject($data);
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+
+        $result = $this->helper->partialLoop('partialLoop.phtml', $o);
+        foreach ($data as $item) {
+            $string = 'This is an iteration: ' . $item['message'];
+            $this->assertContains($string, $result);
+        }
+    }
+
+    public function testShouldAllowIteratingOverObjectsImplementingToArray()
+    {
+        $data = array(
+            array('message' => 'foo'),
+            array('message' => 'bar'),
+            array('message' => 'baz'),
+            array('message' => 'bat')
+        );
+        $o = new Zend_View_Helper_PartialLoop_ToArrayTest($data);
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+
+        $result = $this->helper->partialLoop('partialLoop.phtml', $o);
+        foreach ($data as $item) {
+            $string = 'This is an iteration: ' . $item['message'];
+            $this->assertContains($string, $result, $result);
+        }
+    }
 }
 
 class Zend_View_Helper_PartialLoop_IteratorTest implements Iterator
@@ -288,6 +332,19 @@ class Zend_View_Helper_PartialLoop_RecursiveIteratorTest implements Iterator
 
 class Zend_View_Helper_PartialLoop_BogusIteratorTest
 {
+}
+
+class Zend_View_Helper_PartialLoop_ToArrayTest
+{
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function toArray()
+    {
+        return $this->data;
+    }
 }
 
 // Call Zend_View_Helper_PartialLoopTest::main() if this source file is executed directly.
