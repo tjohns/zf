@@ -151,6 +151,21 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @see ZF-2851
+     */
+    public function testSetNameShouldNotAllowEmptyString()
+    {
+        foreach (array('', ' ', '   ') as $name) {
+            try {
+                $this->element->setName($name);
+                $this->fail('setName() should not allow empty string');
+            } catch (Zend_Form_Exception $e) {
+                $this->assertContains('Invalid name', $e->getMessage());
+            }
+        }
+    }
+
     public function testElementValueInitiallyNull()
     {
         $this->assertNull($this->element->getValue());
@@ -830,6 +845,12 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->element->setIsArray(true)
              ->addValidator('InArray', false, array(array('foo', 'bar', 'baz', 'bat')));
         $this->assertTrue($this->element->isValid(array('foo', 'bat')));
+    }
+
+    public function testShouldAllowZeroAsNonEmptyValue()
+    {
+        $this->element->addValidator('between', false, array(1, 100));
+        $this->assertFalse($this->element->isValid('0'));
     }
 
     public function testIsValidPopulatesElementValue()
