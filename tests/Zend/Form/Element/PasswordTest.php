@@ -9,6 +9,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Password.php';
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_Form_Element_Password
@@ -122,6 +123,32 @@ class Zend_Form_Element_PasswordTest extends PHPUnit_Framework_TestCase
         if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
             $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
         }
+    }
+
+    public function testRenderPasswordAttributeShouldDefaultToFalse()
+    {
+        $this->assertFalse($this->element->renderPassword());
+    }
+
+    public function testShouldAllowSettingRenderPasswordFlag()
+    {
+        $this->testRenderPasswordAttributeShouldDefaultToFalse();
+        $this->element->setRenderPassword(true);
+        $this->assertTrue($this->element->renderPassword());
+        $this->element->setRenderPassword(false);
+        $this->assertFalse($this->element->renderPassword());
+    }
+
+    public function testShouldPassRenderPasswordAttributeToViewHelper()
+    {
+        $this->element->setValue('foobar')
+                      ->setView(new Zend_View());
+        $test = $this->element->render();
+        $this->assertContains('value=""', $test);
+
+        $this->element->setRenderPassword(true);
+        $test = $this->element->render();
+        $this->assertContains('value="foobar"', $test);
     }
 }
 
