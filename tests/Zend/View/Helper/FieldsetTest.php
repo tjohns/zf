@@ -67,6 +67,17 @@ class Zend_View_Helper_FieldsetTest extends PHPUnit_Framework_TestCase
         $html = $this->helper->fieldset('foo', 'foobar', array('legend' => 'Great Scott!'));
         $this->assertRegexp('#<legend>Great Scott!</legend>#', $html);
     }
+
+    /**
+     * @see ZF-2913
+     */
+    public function testEmptyLegendShouldNotRenderLegendTag()
+    {
+        foreach (array(null, '', ' ', false) as $legend) {
+            $html = $this->helper->fieldset('foo', 'foobar', array('legend' => $legend));
+            $this->assertNotContains('<legend>', $html, 'Failed with value ' . var_export($legend, 1) . ': ' . $html);
+        }
+    }
 }
 
 // Call Zend_View_Helper_FieldsetTest::main() if this source file is executed directly.
