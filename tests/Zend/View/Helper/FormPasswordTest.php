@@ -49,7 +49,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-1666
+     * @see ZF-1666
      */
     public function testCanDisableElement()
     {
@@ -63,7 +63,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-1666
+     * @see ZF-1666
      */
     public function testDisablingElementDoesNotRenderHiddenElements()
     {
@@ -76,23 +76,43 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
         $this->assertNotRegexp('/<input[^>]*?(type="hidden")/', $html);
     }
 
-    public function testRendersAsHtmlByDefault()
+    public function testShouldRenderAsHtmlByDefault()
     {
         $test = $this->helper->formPassword('foo', 'bar');
         $this->assertNotContains(' />', $test);
     }
 
-    public function testCanRendersAsXHtml()
+    public function testShouldAllowRenderingAsXhtml()
     {
         $this->view->doctype('XHTML1_STRICT');
         $test = $this->helper->formPassword('foo', 'bar');
         $this->assertContains(' />', $test);
     }
 
-    public function testDoesNotRenderValue()
+    public function testShouldNotRenderValueByDefault()
     {
         $test = $this->helper->formPassword('foo', 'bar');
         $this->assertNotContains('bar', $test);
+    }
+
+    /**
+     * @see ZF-2860
+     */
+    public function testShouldRenderValueWhenRenderPasswordFlagPresentAndTrue()
+    {
+        $test = $this->helper->formPassword('foo', 'bar', array('renderPassword' => true));
+        $this->assertContains('value="bar"', $test);
+    }
+
+    /**
+     * @see ZF-2860
+     */
+    public function testRenderPasswordAttribShouldNeverBeRendered()
+    {
+        $test = $this->helper->formPassword('foo', 'bar', array('renderPassword' => true));
+        $this->assertNotContains('renderPassword', $test);
+        $test = $this->helper->formPassword('foo', 'bar', array('renderPassword' => false));
+        $this->assertNotContains('renderPassword', $test);
     }
 }
 
