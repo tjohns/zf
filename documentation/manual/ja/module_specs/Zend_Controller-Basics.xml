@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7203 -->
+<!-- EN-Revision: 9345 -->
 <sect1 id="zend.controller.basics">
     <title>Zend_Controller の基本</title>
 
@@ -114,7 +114,7 @@
                 <para>
                     デフォルトのディスパッチャは
                     <code>Zend_Controller_Dispatcher_Standard</code> です。
-                    これは、CamelCasedClasses 形式の名前の最後に
+                    これは、MixedCasedClasses 形式の名前の最後に
                     Controller がついたクラスをコントローラとして使用し、
                     アクションメソッドの名前は camelCasedMethods
                     形式 (最後に Action をつける) となります。たとえば
@@ -125,7 +125,7 @@
                 </para>
 
                 <note>
-                    <title>CamelCase 命名規約</title>
+                    <title>Case 命名規約</title>
 
                     <para>
                         人はみな、リンクをタイプする際に大文字小文字の区別をあまり気にしないものです。
@@ -136,7 +136,7 @@
 
                     <para>
                         コントローラクラスやアクションメソッドの名前に
-                        CamelCase の単語を複数使用したい場合は、
+                        MixedCase あるいは camelCase の単語を複数使用したい場合は、
                         URL 上での単語の区切り文字として '-' あるいは
                         '.' のいずれかを使用しなければなりません
                         (とは言え、ここで使用する文字は変更することができます)。

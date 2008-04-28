@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8932 -->
+<!-- EN-Revision: 9345 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -441,7 +441,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:module</code>:
-                        CamelCase 形式の単語がダッシュで分割され、
+                        MixedCase および camelCase 形式の単語がダッシュで分割され、
                         すべて小文字になります。たとえば
                         "FooBarBaz" は "foo-bar-baz" となります。
                     </para>
@@ -456,7 +456,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:controller</code>:
-                        CamelCase 形式の単語がダッシュで分割され、
+                        MixedCase および camelCase 形式の単語がダッシュで分割され、
                         アンダースコアはディレクトリ区切り文字に変換され、
                         すべて小文字になります。たとえば
                         "FooBar" は "foo-bar" となり、そして "FooBar_Admin"
@@ -474,7 +474,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:action</code>:
-                        CamelCase 形式の単語がダッシュで分割され、
+                        MixedCase および camelCase 形式の単語がダッシュで分割され、
                         英数字以外の文字はダッシュに変換され、
                         すべて小文字になります。たとえば
                         "fooBar" は "foo-bar" となり、"foo-barBaz"

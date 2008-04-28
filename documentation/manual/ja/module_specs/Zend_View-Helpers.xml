@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9327 -->
+<!-- EN-Revision: 9345 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -24,7 +24,7 @@
         <para>
             ヘルパー名は常に camelCase 形式となります。
             つまり、最初は常に小文字となります。
-            クラス名は CamelCase 形式ですが、実際に実行されるメソッドは
+            クラス名は MixedCase 形式ですが、実際に実行されるメソッドは
             camelCase 形式となります。
         </para>
     </note>
@@ -417,7 +417,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 クラス名は、少なくとも最後はヘルパーの名前と同じである必要があります。
-                CamelCaps 方式を使用します。たとえば
+                MixedCaps 方式を使用します。たとえば
                 "specialPurpose" という名前のヘルパーを作成した場合は、そのクラス名には
                 最低限 "SpecialPurpose" が含まれている必要があります。
                 このクラス名にプレフィックスを指定することができます。

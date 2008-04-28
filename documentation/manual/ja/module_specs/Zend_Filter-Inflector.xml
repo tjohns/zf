@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9209 -->
+<!-- EN-Revision: 9345 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        たとえば、CamelCase 形式の単語をパス形式に変換したりするような作業を行います。
+        たとえば、MixedCase あるいは camelCase 形式の単語をパス形式に変換したりするような作業を行います。
         読みやすさや OS のポリシーなどの理由で、小文字への変換を行ったりダッシュ
         ('-') で単語を区切ったりといったこともあるでしょう。
         インフレクタは、このような作業を行うことができます。
@@ -23,7 +23,7 @@
     </para>
 
     <example id="zend.filter.inflector.camel_case_example">
-        <title>CamelCaseText を別形式に変換する</title>
+        <title>MixedCase あるいは camelCase のテキストを別形式に変換する</title>
 
         <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
@@ -32,7 +32,7 @@ $inflector->setRules(array(
     'suffix' => 'html'
 ));
 
-$string   = 'CamelCasedWords';
+$string   = 'camelCasedWords';
 $filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';

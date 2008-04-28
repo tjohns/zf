@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7160 --> 
+<!-- EN-Revision: 9345 --> 
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout の高度な使用法</title>
 
@@ -217,7 +217,7 @@ $layout->setViewSuffix('php');
 
             <para>
                 たとえば、レイアウトスクリプトのサフィックスを
-                'html' に変更して、CamelCase
+                'html' に変更して、MixedCase および camelCase
                 形式の名前をダッシュではなくアンダースコアで区切るようにし、
                 かつ小文字への変換もやめてみましょう。
                 さらに、スクリプトの格納先を 'layouts'
