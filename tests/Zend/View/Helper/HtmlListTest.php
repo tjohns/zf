@@ -160,7 +160,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
     } 
 
     /**
-     * ZF-2527
+     * @see ZF-2527
      */
     public function testEscapeFlagHonoredForMultidimensionalLists()
     {
@@ -174,7 +174,7 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-2527
+     * @see ZF-2527
      */
     public function testAttribsPassedIntoMultidimensionalLists()
     {
@@ -185,6 +185,36 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         foreach ($items[1] as $item) {
             $this->assertRegexp('#<ul[^>]*?class="foo"[^>]*>.*?(<li>' . $item . ')#', $list);
         }
+    }
+
+    /**
+     * @see ZF-2870
+     */
+    public function testEscapeFlagShouldBePassedRecursively()
+    {
+        $items = array(
+            '<b>one</b>',
+            array(
+                '<b>four</b>', 
+                '<b>five</b>', 
+                '<b>six</b>',
+                array(
+                    '<b>two</b>', 
+                    '<b>three</b>',
+                ),
+            ), 
+        );
+
+        $list = $this->helper->htmlList($items, false, false, false);
+
+        $this->assertContains('<ul>', $list);
+        $this->assertContains('</ul>', $list);
+        array_walk_recursive($items, array($this, 'validateItems'), $list);
+    }
+
+    public function validateItems($value, $key, $userdata)
+    {
+        $this->assertContains('<li>' . $value, $userdata);
     }
 }
 
