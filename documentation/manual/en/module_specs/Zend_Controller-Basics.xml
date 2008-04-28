@@ -121,7 +121,7 @@
                 <para>
                     The default dispatcher is
                     <code>Zend_Controller_Dispatcher_Standard</code>. It defines
-                    controllers as CamelCasedClasses ending in the word
+                    controllers as MixedCasedClasses ending in the word
                     Controller, and action methods as camelCasedMethods ending
                     in the word Action:
                     <code>FooController::barAction()</code>. In this case, the
@@ -130,7 +130,7 @@
                 </para>
 
                 <note>
-                    <title>CamelCasedNamingConventions</title>
+                    <title>CaseNamingConventions</title>
 
                     <para>
                         Since humans are notoriously inconsistent at
@@ -143,9 +143,10 @@
 
                     <para>
                         If you wish to have your controller class or action
-                        method name have multiple CamelCasedWords, you will need
-                        to separate those words on the url with either a '-' or
-                        '.' (though you can configure the character used).
+                        method name have multiple MixedCasedWords or
+                        camelCasedWords, you will need to separate those words
+                        on the url with either a '-' or '.' (though you can
+                        configure the character used).
                     </para>
 
                     <para>

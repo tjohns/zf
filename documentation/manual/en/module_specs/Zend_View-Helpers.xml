@@ -23,7 +23,7 @@
         <title>Watch the Case</title>
         <para>
             Helper names are always camelCased, i.e., they never begin with an
-            uppercase character. The class name itself is CamelCased, but the
+            uppercase character. The class name itself is MixedCased, but the
             method that is actually executed is camelCased.
         </para>
     </note>
@@ -415,7 +415,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 The class name must, at the very minimum, end with the helper
-                name itself, using CamelCaps.  E.g., if you were writing a
+                name itself, using MixedCaps.  E.g., if you were writing a
                 helper called "specialPurpose", the class name would minimally
                 need to be "SpecialPurpose". You may, and should, give the class
                 name a prefix, and it is recommended that you use 'View_Helper'

@@ -204,7 +204,7 @@ $layout->setViewSuffix('php');
 
             <para>
                 Let's say you want the layout script to end in the suffix
-                'html', and that you want to separate CamelCased words with
+                'html', and that you want to separate MixedCase and camelCased words with
                 underscores instead of dashes, and not lowercase the name.
                 Additionally, you want it to look in a 'layouts' subdirectory
                 for the script.

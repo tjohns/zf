@@ -7,7 +7,7 @@
     </para>
 
     <para>
-        As an example, you may find you need to transform CamelCasedWords into a
+        As an example, you may find you need to transform MixedCase or camelCasedWords into a
         path; for readability, OS policies, or other reasons, you also need to
         lower case this, and you want to separate the words using a dash ('-').
         An inflector can do this for you.
@@ -20,7 +20,7 @@
     </para>
 
     <example id="zend.filter.inflector.camel_case_example">
-        <title>Transforming CamelCaseText to another format</title>
+        <title>Transforming MixedCase and camelCaseText to another format</title>
 
         <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
@@ -29,7 +29,7 @@ $inflector->setRules(array(
     'suffix' => 'html'
 ));
 
-$string   = 'CamelCasedWords';
+$string   = 'camelCasedWords';
 $filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';

@@ -438,7 +438,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>:module</code>: CamelCasedWords are separated by
+                        <code>:module</code>: MixedCase and camelCasedWords are separated by
                         dashes, and the entire string cast to lowercase. E.g.:
                         "FooBarBaz" becomes "foo-bar-baz".
                     </para>
@@ -452,7 +452,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:controller</code>: CamelCasedWords are separated
+                        <code>:controller</code>: MixedCase and camelCasedWords are separated
                         by dashes; underscores are converted to directory
                         separators, and the entire string cast to lower case.
                         Examples: "FooBar" becomes "foo-bar"; "FooBar_Admin"
@@ -469,7 +469,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:action</code>: CamelCasedWords are separated
+                        <code>:action</code>: MixedCase and camelCasedWords are separated
                         by dashes; non-alphanumeric characters are translated to
                         dashes, and the entire string cast to lower case.
                         Examples: "fooBar" becomes "foo-bar"; "foo-barBaz"
