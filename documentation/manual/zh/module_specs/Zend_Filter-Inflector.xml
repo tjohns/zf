@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        例如，你可能发现你需要把驼峰字符（ CamelCasedWords） 变成路径，对于可读性，OS 策略或其它原因，
+        例如，你可能发现你需要把混合大小写字（MixedCase）或驼峰字符（ camelCasedWords） 变成路径，对于可读性，OS 策略或其它原因，
         你也需要把它变成小写，并且你想用短横线（'-'）来隔离单词。变形器（inflector）可以帮你做这些。
     </para>
 
@@ -16,7 +16,7 @@
     </para>
 
     <example id="zend.filter.inflector.camel_case_example">
-        <title> 把驼峰字符 （CamelCaseText） 变成其它格式 </title>
+        <title> 把混合大小写字（MixedCase）和驼峰字符 （camelCaseText） 变成其它格式 </title>
 
         <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
@@ -25,7 +25,7 @@ $inflector->setRules(array(
     'suffix' => 'html'
 ));
 
-$string   = 'CamelCasedWords';
+$string   = 'camelCasedWords';
 $filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';

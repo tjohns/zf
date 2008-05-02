@@ -11,9 +11,9 @@
     </para>
 
     <note>
-        <title>Watch the Case</title>
+        <title> 注意大小写 </title>
         <para>
-            助手名称总是遵循驼峰格式，例如，它们从不以大写字母开头。类名是驼峰格式，但方法在执行时是驼峰格式。
+            助手名称总是遵循驼峰格式，例如，它们从不以大写字母开头。类名是混合大小写字格式，但方法在执行时是驼峰格式。
         </para>
     </note>
     <note>
@@ -311,7 +311,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         <itemizedlist>
 
             <listitem><para>
-                helper的类名最后部分必须是helper的名称，并使用驼峰格式。例如，你在写一个名为“specialPurpose”的类，类名将至少是"SpecialPurpose"，另外你还应该给类名加上前缀，建议将“View_Helper”作为前缀的一部份：“My_View_Helper_SpecialPurpose”。（注意大小写）你将需要将前缀（包含或不包含下划线）传递给<code>addHelperPath()</code> 或 <code>setHelperPath()</code>。
+                helper的类名最后部分必须是helper的名称，并使用混合大小写字格式。例如，你在写一个名为“specialPurpose”的类，类名将至少是"SpecialPurpose"，另外你还应该给类名加上前缀，建议将“View_Helper”作为前缀的一部份：“My_View_Helper_SpecialPurpose”。（注意大小写）你将需要将前缀（包含或不包含下划线）传递给<code>addHelperPath()</code> 或 <code>setHelperPath()</code>。
             </para></listitem>
 
             <listitem><para>

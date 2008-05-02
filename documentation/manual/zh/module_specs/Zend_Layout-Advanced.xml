@@ -134,7 +134,7 @@ $layout->setViewSuffix('php');
             </para>
 
             <para>
-                让我们假设你想用后缀'html'做为布局脚本的文件扩展名，并且想分离驼峰字为下划线而不是短横线，还不想使用小写字母。另外，你想让它去'layouts'子目录去找脚本。
+                让我们假设你想用后缀'html'做为布局脚本的文件扩展名，并且想分离混合大小写字和驼峰字为下划线而不是短横线，还不想使用小写字母。另外，你想让它去'layouts'子目录去找脚本。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
