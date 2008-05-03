@@ -7,7 +7,7 @@
     </para>
 
     <para>
-        Par exemple, transformer des MotsEnCamelCase vers un chemin. Vous pourriez avoir besoin de passer
+        Par exemple, transformer des MotsEncasseMélangée ou des motsEnCamelCase vers un chemin. Vous pourriez avoir besoin de passer
         les caractères en minuscules, et séparer les mots en utilisant un tiret ('-').
         Un inflecteur sert à ceci.
     </para>
@@ -19,7 +19,7 @@
     </para>
 
     <example id="zend.filter.inflector.camel_case_example">
-        <title>Transformer du TexteCamelCase vers un autre format</title>
+        <title>Transformer du texteencasseMelangée ou du texteCamelCase vers un autre format</title>
 
         <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
@@ -28,7 +28,7 @@ $inflector->setRules(array(
     'suffix' => 'html'
 ));
 
-$string   = 'MotsEnNotationCamel';
+$string   = 'motsEnNotationCamel';
 $filtered = $inflector->filter(array('page' => $string)); // pages/mots-en-notation-camel.html
 
 $string   = 'ceci_n_est_pas_en_notation_camel';

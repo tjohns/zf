@@ -195,8 +195,8 @@ $layout->setViewSuffix('php');
 
             <para>
                 Imaginons que vous vouliez que le suffixe du script de layout soit
-                "html", et que vous vouliez séparer les mots en CamelCase avec des
-                underscores au lieu des tirets. De plus, vous voulez chercher vos
+                "html", et que vous vouliez séparer les mots en CasseMélangée ou en notationCamel
+                avec des underscores au lieu des tirets. De plus, vous voulez chercher vos
                 scripts dans un sous-dossier "layouts" :
             </para>
 

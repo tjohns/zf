@@ -58,18 +58,18 @@
                 </para>
 
                 <para>
-                    Le dispatcheur par défaut est <code>Zend_Controller_Dispatcher_Standard</code>. Il définit les contrôleurs comme des classes se nommant suivant la <ulink url="http://en.wikipedia.org/wiki/CamelCase">NotationCamel</ulink> et se terminant par le mot Controller, et des méthodes d'action suivant le notationCamel se terminant avec le mot Action : <code>FooController::barAction()</code>. Dans ce cas-ci, le contrôleur est désigné comme <code>foo</code> et l'action comme <code>bar</code>.
+                    Le dispatcheur par défaut est <code>Zend_Controller_Dispatcher_Standard</code>. Il définit les contrôleurs comme des classes pouvant se nommer avec une série de caractère majuscules et/ou minuscules et se terminant par le mot Controller, et des méthodes d'action suivant le notationCamel se terminant avec le mot Action : <code>FooController::barAction()</code>. Dans ce cas-ci, le contrôleur est désigné comme <code>foo</code> et l'action comme <code>bar</code>.
                 </para>
 
                 <note>
-                    <title>Conventions de nommage suivant la NotationCamel</title>
+                    <title>Conventions de nommage (casse)</title>
 
                     <para>
                         Puisque les humains sont notoirement incompatibles avec le respect des majuscules et des minuscules quand il tape des liens, le Zend Framework normalise les chemins en lettres minuscules. Ceci, naturellement, affectera votre manière d'appeler vos contrôleurs et actions... ou vous vous référez à eux dans les liens.
                     </para>
 
                     <para>
-                        Si vous souhaitez que votre classe ou action de contrôleur ait de multiples MotsEnNotationCamel, vous devrez séparer ces mots dans l'URL avec soit un tiret ("-"), soit un point (".") (bien que vous puissiez configurer le caractère utilisé).
+                        Si vous souhaitez que votre classe ou action de contrôleur ait de multiples motsEncasseMélangées ou motsEnNotationCamel, vous devrez séparer ces mots dans l'URL avec soit un tiret ("-"), soit un point (".") (bien que vous puissiez configurer le caractère utilisé).
                     </para>
 
                     <para>

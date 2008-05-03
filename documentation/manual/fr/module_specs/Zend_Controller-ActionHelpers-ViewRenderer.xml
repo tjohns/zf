@@ -400,7 +400,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>:module</code> : MotsCamelCase qui deviennent des mots 
+                        <code>:module</code> : casseMélangée et motsCamelCase qui deviennent des mots 
                         séparés par des tirets, et en minuscule.
                         "FooBarBaz" devient "foo-bar-baz".
                     </para>
@@ -414,7 +414,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:controller</code>  MotsCamelCase qui deviennent des mots
+                        <code>:controller</code> : casseMélangée et motsCamelCase qui deviennent des mots
                         séparés par des tiret; les underscores eux, se transforment en 
                         séparateur de dossier et tout est passé en minuscules.
                         "FooBar" devient "foo-bar"; "FooBar_Admin" devient "foo-bar/admin".
@@ -430,7 +430,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:action</code> : MotsCamelCase qui se transforment en 
+                        <code>:action</code> : casseMélangée et motsCamelCase qui se transforment en 
                         mots séparés par des tirets, minuscules.
                         Les caractères non alphanumeriques deviennent des tirets.
                         "fooBar" devient "foo-bar"; "foo-barBaz" devient "foo-bar-baz".

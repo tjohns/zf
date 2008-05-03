@@ -1,5 +1,5 @@
 <sect1 id="zend.json.xml2json">
-    <title>XML to JSON coversion</title>
+    <title>XML to JSON conversion</title>
     <para>
         <code>Zend_Json</code> fournit une méthode de convenance pour transformer des données au format XML en un format JSON. Ce dispositif est inspiré <ulink url="http://www.ibm.com/developerworks/xml/library/x-xml2jsonphp/">d'un article de developerWorks d'IBM</ulink>.
     </para>
@@ -85,7 +85,7 @@
     </programlisting>
 
     <para>
-        Plus de détails au sujet de ce dispositif xml2json peuvent être trouvés dans la proposition originale elle-même. Jetez un oeil à la <ulink url="http://tinyurl.com/2tfa8z">proposition Zend_xml2json</ulink>.
+        Plus de détails au sujet de ce dispositif xml2json peuvent être trouvés dans la proposition originale elle-même. Jetez un oeil à la <ulink url="http://framework.zend.com/wiki/display/ZFPROP/Zend_xml2json+-+Senthil+Nathan">proposition Zend_xml2json</ulink>.
     </para>
 
 </sect1>
