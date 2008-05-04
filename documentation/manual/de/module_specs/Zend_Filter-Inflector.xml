@@ -7,10 +7,10 @@
     </para>
 
     <para>
-        Als Beispiel, kann es gewünscht sein CamelCaseWörter in einen Pfad zu transformieren; für die
-        Lesbarkeit, OS Policies, oder andere Gründe, sollen diese auch kleingeschrieben werden, und die
-        Wörter sollen mit einem Bindestrich ('-') getrennt werden. Eine Beugung (Inflector) kann das
-        erledigen.
+        Als Beispiel, kann es gewünscht sein MixedCase oder camelCaseWörter in einen Pfad zu
+        transformieren; für die Lesbarkeit, OS Policies, oder andere Gründe, sollen diese auch
+        kleingeschrieben werden, und die Wörter sollen mit einem Bindestrich ('-') getrennt werden.
+        Eine Beugung (Inflector) kann das erledigen.
     </para>
 
     <para>
@@ -19,7 +19,7 @@
     </para>
 
     <example id="zend.filter.inflector.camel_case_example">
-        <title>CamelCaseText in ein anderes Format transformieren</title>
+        <title>MixedCase und camelCaseText in ein anderes Format transformieren</title>
 
         <programlisting role="php"><![CDATA[<?php
 $inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
@@ -28,7 +28,7 @@ $inflector->setRules(array(
     'suffix' => 'html'
 ));
 
-$string   = 'CamelCasedWords';
+$string   = 'camelCasedWords';
 $filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';

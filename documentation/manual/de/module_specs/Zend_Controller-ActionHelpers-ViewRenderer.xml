@@ -401,9 +401,9 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>:module</code>: CamelCaseWörter werden durch Bindestriche getrennt,
-                        und der komplette String wird auf Kleinschreibung geändert. z.B.:
-                        "FooBarBaz" wird "foo-bar-baz".
+                        <code>:module</code>: MixedCase und camelCaseWörter werden durch
+                        Bindestriche getrennt, und der komplette String wird auf
+                        Kleinschreibung geändert. z.B.: "FooBarBaz" wird "foo-bar-baz".
                     </para>
 
                     <para>
@@ -414,10 +414,10 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:controller</code>: CamelCaseWörter werden durch Bindestriche getrennt;
-                        Unterstriche werden in Verzeichnistrennzeichen konvertiert, und der komplette
-                        String wird auf Kleinschreibung geändert. Beispiele: "FooBar" wird "foo-bar";
-                        "FooBar_Admin" wird "foo-bar/admin".
+                        <code>:controller</code>: MixedCase und camelCaseWörter werden durch
+                        Bindestriche getrennt; Unterstriche werden in Verzeichnistrennzeichen
+                        konvertiert, und der komplette String wird auf Kleinschreibung geändert.
+                        Beispiele: "FooBar" wird "foo-bar"; "FooBar_Admin" wird "foo-bar/admin".
                     </para>
 
                     <para>
@@ -429,10 +429,11 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <listitem>
                     <para>
-                        <code>:action</code>: CamelCaseWörter werden durch Bindestriche getrennt;
-                        nicht-anphanummerische Zeichen werden zu Bindestrichen übersetzt, und der
-                        komplette String wird auf Kleinschreibung geändert. Beispiele: "fooBar" wird
-                        "foo-bar"; "foo-barBaz" wird "foo-bar-baz".
+                        <code>:action</code>: MixedCase und camelCaseWörter werden durch
+                        Bindestriche getrennt; nicht-anphanummerische Zeichen werden zu
+                        Bindestrichen übersetzt, und der komplette String wird auf
+                        Kleinschreibung geändert. Beispiele: "fooBar" wird "foo-bar"; "foo-barBaz"
+                        wird "foo-bar-baz".
                     </para>
 
                     <para>

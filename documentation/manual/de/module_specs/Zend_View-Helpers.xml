@@ -23,7 +23,7 @@
         <title>Betrachte den Fall</title>
         <para>
             Namen von Helfern sind immer camelCased, bzw. beginnen Sie nie mit einem
-            großgeschriebenen Zeichen. Der Klassenname selbst ist CamelCased, aber die Methode die
+            großgeschriebenen Zeichen. Der Klassenname selbst ist MixedCased, aber die Methode die
             aktuell ausgeführt wird ist camelCased.
         </para>
     </note>
@@ -416,7 +416,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         <itemizedlist>
 
             <listitem><para>
-                Der Klassenname muss mindestens auf den Helfernamen unter Verwendung der CamelCaps
+                Der Klassenname muss mindestens auf den Helfernamen unter Verwendung der MixedCaps
                 selber enden. Wenn du z.B. einen Helfer mit Namen "specialPurpose" schreibst, muss
                 der Klassenname mindestens "SpecialPurpose" lauten. Man kann, und sollte, dem
                 Klassennamen einen Präfix geben und es wird empfohlen, 'View_Helper' als Teil des

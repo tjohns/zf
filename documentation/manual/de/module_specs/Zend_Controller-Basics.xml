@@ -111,15 +111,15 @@
 
                 <para>
                     Der Standarddispatcher ist <code>Zend_Controller_Dispatcher_Standard</code>.
-                    Er definiert Controller als CamelCasedClasses, die auf das Wort Controller
-                    enden, und Aktionsmethoden als camelCasedMethods, die auf das Wort Action
+                    Er definiert Controller als MixedCasedKlassen, die auf das Wort Controller
+                    enden, und Aktionsmethoden als camelCasedMethoden, die auf das Wort Action
                     enden: <code>SomeFooController::barAction</code>. In diesem Fall wird auf
                     den Controller über <code>somefoo</code> und auf die Aktion über
                     <code>bar</code> zugegriffen.
                 </para>
 
                 <note>
-                    <title>CamelCaseNamensKonvention</title>
+                    <title>CaseNamensKonvention</title>
 
                     <para>
                         Da Menschen grundsätzlich inkonsistent sind im Behandeln und der Gründlichkeit beim
@@ -129,10 +129,11 @@
                     </para>
 
                     <para>
-                        Wenn es gewünscht ist das die eigene Kontrollerklasse oder Aktionsmethodenname mehrfache
-                        CamelCaseWörter enthält, dann müssen diese zu getrennten Wörtern in der URL seperiert
-                        werden, entweder mit einem '-' oder '.' (das zu verwendende Zeichen kann konfiguriert
-                        werden).
+                        Wenn es gewünscht ist das die eigene Kontrollerklasse oder
+                        Aktionsmethodenname mehrfache MixedCasedWörter oder camelCasedWörter
+                        enthält, dann müssen diese zu getrennten Wörtern in der URL seperiert
+                        werden, entweder mit einem '-' oder '.' (das zu verwendende Zeichen kann
+                        konfiguriert werden).
                     </para>
 
                     <para>

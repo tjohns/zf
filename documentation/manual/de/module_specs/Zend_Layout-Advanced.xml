@@ -195,10 +195,10 @@ $layout->setViewSuffix('php');
             </para>
 
             <para>
-                Angenommen man will das das Layout Skript mit der Endung 'html' endet, und es ist gewünscht
-                das CamelCase Wörter mit Unterstrichen statt Bindestrichen getrennt werden und der Name nicht
-                kleingeschrieben wird. Zusätzlich ist es gewünscht in einem 'layouts' Unterverzeichnis nach den
-                Skripts nachzuschauen.
+                Angenommen man will das das Layout Skript mit der Endung 'html' endet, und es ist
+                gewünscht das MixedCase und camelCased Wörter mit Unterstrichen statt Bindestrichen
+                getrennt werden und der Name nicht kleingeschrieben wird. Zusätzlich ist es
+                gewünscht in einem 'layouts' Unterverzeichnis nach den Skripten nachzuschauen.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
