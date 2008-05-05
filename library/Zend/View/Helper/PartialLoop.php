@@ -54,7 +54,7 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
             return $this;
         }
 
-        if ((null == $model) && (null !== $module)) {
+        if ((null === $model) && (null !== $module)) {
             $model  = $module;
             $module = null;
         } 
