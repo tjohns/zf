@@ -1577,8 +1577,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     {
         $decorator = $this->getDecorator($name);
         if ($decorator) {
-            $name = get_class($decorator);
-            unset($this->_decorators[$name]);
+            if (array_key_exists($name, $this->_decorators)) {
+                unset($this->_decorators[$name]);
+            } else {
+                $class = get_class($decorator);
+                unset($this->_decorators[$class]);
+            }
             return true;
         }
 
