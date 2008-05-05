@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -35,7 +34,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @see Zend_Db_Adapter_Static
  */
 require_once 'Zend/Db/Adapter/Static.php';
-
 
 /**
  * Class for connecting to SQL databases and performing common operations.

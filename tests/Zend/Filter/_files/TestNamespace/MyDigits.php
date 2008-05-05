@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -13,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Digits.php 4135 2007-03-20 12:46:11Z darby $
+ * @category  Zend
+ * @package   Zend_Filter
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id: $
  */
 
 
@@ -29,10 +28,12 @@ require_once 'Zend/Validate/Digits.php';
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
- * @category   Zend
- * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * Mock file for testbed 
+ *
+ * @category  Zend
+ * @package   Zend_Filter
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class TestNamespace_MyDigits extends Zend_Validate_Digits
 {
