@@ -2149,6 +2149,26 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->form->getDecorator('form'));
     }
 
+    /**
+     * @see ZF-3069
+     */
+    public function testRemovingNamedDecoratorShouldWork()
+    {
+        $this->_checkZf2794();
+        $this->form->setDecorators(array(
+            'FormElements',
+            array(array('div' => 'HtmlTag'), array('tag' => 'div')),
+            array(array('fieldset' => 'HtmlTag'), array('tag' => 'fieldset')),
+        ));
+        $decorators = $this->form->getDecorators();
+        $this->assertTrue(array_key_exists('div', $decorators));
+        $this->assertTrue(array_key_exists('fieldset', $decorators));
+        $this->form->removeDecorator('div');
+        $decorators = $this->form->getDecorators();
+        $this->assertFalse(array_key_exists('div', $decorators));
+        $this->assertTrue(array_key_exists('fieldset', $decorators));
+    }
+
     public function testCanClearAllDecorators()
     {
         $this->_checkZf2794();
