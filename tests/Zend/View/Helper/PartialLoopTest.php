@@ -247,6 +247,29 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
             $this->assertContains($string, $result, $result);
         }
     }
+
+    /**
+     * @see ZF-3083
+     */
+    public function testEmptyArrayPassedToPartialLoopShouldNotThrowException()
+    {
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+
+        try {
+            $result = $this->helper->partialLoop('partialLoop.phtml', array());
+        } catch (Exception $e) {
+            $this->fail('Empty array should not cause partialLoop to throw exception');
+        }
+
+        try {
+            $result = $this->helper->partialLoop('partialLoop.phtml', null, array());
+        } catch (Exception $e) {
+            $this->fail('Empty array should not cause partialLoop to throw exception');
+        }
+    }
 }
 
 class Zend_View_Helper_PartialLoop_IteratorTest implements Iterator
