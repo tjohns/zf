@@ -1,0 +1,28 @@
+The coding standard is based upon Codesniffer.
+
+To test the coding standard you must have the release 1.1.0.a of PHP_CodeSniffer installed.
+You can get it from PEAR.
+
+Delete the existing directory "Zend" within the "Standards" subdirectory in CodeSniffer.
+Copy all files and the directory "Zend" from the frameworks Coding Standard to the "Standards"
+directory of CodeSniffer.
+
+Change the standard to use by CodeSniffer:
+phpcs --config-set default_standard Zend
+
+Change the tab usage to zero to check for tabs:
+phpcs --config-set tab_width 0
+
+Change your working directory to the basepath of the framework
+
+Then call CodeSniffer on the wished directories
+We are always testing the complete framework
+You can simply reroute the output to a file like this
+phpcs build-tools demos incubator library scripts tests > codingstandard.txt
+
+This codingstandard is still in progress and not finished
+Details about progressed tests can be found within the file
+ZendCodingStandard.php
+
+You can write us comments at
+http://framework.zend.com/wiki/display/ZFDEV/ZF+Coding+Standards+%28RC%29
