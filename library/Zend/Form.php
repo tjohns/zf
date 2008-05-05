@@ -473,6 +473,10 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $element->addPrefixPath($prefix, $path, $type);
         }
 
+        foreach ($this->getSubForms() as $subForm) {
+            $subForm->addElementPrefixPath($prefix, $path, $type);
+        }
+
         return $this;
     }
 
