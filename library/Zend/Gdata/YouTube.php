@@ -94,7 +94,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const UPLOADS_URI_SUFFIX = 'uploads';
     const RESPONSES_URI_SUFFIX = 'responses';
     const RELATED_URI_SUFFIX = 'related';
-
+    
     public static $namespaces = array(
             'yt' => 'http://gdata.youtube.com/schemas/2007',
             'georss' => 'http://www.georss.org/georss',
@@ -108,12 +108,47 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      * @param Zend_Http_Client $client (optional) The HTTP client to use when
      *          when communicating with the Google servers.
      * @param string $applicationId The identity of the app in the form of Company-AppName-Version
+     * @param string $clientId The clientId issued by the YouTube dashboard
+     * @param string $developerKey The developerKey issued by the YouTube dashboard
      */
-    public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0')
+    public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0', $clientId = null, $developerKey = null)
     {
         $this->registerPackage('Zend_Gdata_YouTube');
         $this->registerPackage('Zend_Gdata_YouTube_Extension');
-        parent::__construct($client, $applicationId);
+        $this->registerPackage('Zend_Gdata_Media');
+        $this->registerPackage('Zend_Gdata_Media_Extension');
+
+
+        // NOTE This constructor no longer calls the parent constructor
+        $this->setHttpClient($client, $applicationId, $clientId, $developerKey);
+    }
+
+    /**
+     * Set the Zend_Http_Client object used for communication
+     *
+     * @param Zend_Http_Client $client The client to use for communication
+     * @throws Zend_Gdata_App_HttpException
+     * @return Zend_Gdata_App Provides a fluent interface
+     */
+    public function setHttpClient($client, $applicationId = 'MyCompany-MyApp-1.0', $clientId = null, $developerKey = null)
+    {
+        if ($client === null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_HttpException('Argument is not an instance of Zend_Http_Client.');
+        }
+
+        if ($clientId != null) {
+            $client->setHeaders('X-GData-Client', $clientId);
+        }
+
+        if ($developerKey != null) {
+            $client->setHeaders('X-GData-Key', 'key='. $developerKey);
+        }
+
+        return parent::setHttpClient($client, $applicationId);
     }
 
     /**
