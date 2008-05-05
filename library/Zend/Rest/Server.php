@@ -55,8 +55,14 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 
     /**
      * Class Constructor Args
+     * @var array
      */
     protected $_args = array();
+
+    /**
+     * @var string Encoding
+     */
+    protected $_encoding = 'UTF-8';
 
     /**
      * @var array An array of Zend_Server_Reflect_Method
@@ -86,6 +92,28 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
     {
         set_exception_handler(array($this, "fault"));
         $this->_reflection = new Zend_Server_Reflection();
+    }
+
+    /**
+     * Set XML encoding
+     * 
+     * @param  string $encoding 
+     * @return Zend_Rest_Server
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_encoding = (string) $encoding;
+        return $this;
+    }
+
+    /**
+     * Get XML encoding
+     * 
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
     }
 
     /**
@@ -253,7 +281,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 
         $method = $function->getName();
 
-        $dom    = new DOMDocument('1.0', 'UTF-8');
+        $dom    = new DOMDocument('1.0', $this->getEncoding());
         if ($class) {
             $root   = $dom->createElement($class);
             $method = $dom->createElement($method);
@@ -332,7 +360,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 
         $method = $function->getName();
 
-        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', $this->getEncoding());
         if ($class) {
             $xml = $dom->createElement($class);
             $methodNode = $dom->createElement($method);
@@ -395,7 +423,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
             $method = $function;
         }
 
-        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', $this->getEncoding());
         if ($class) {
             $xml       = $dom->createElement($class);
             $xmlMethod = $dom->createElement($method);
