@@ -530,7 +530,7 @@ class UserController extends Zend_Controller_Action
         $form = $this->getForm();
         if (!$form->isValid($_POST)) {
             // Failed validation; redisplay form
-            $this->form = $form;
+            $this->view->form = $form;
             return $this->render('form');
         }
         
