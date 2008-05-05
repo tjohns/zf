@@ -86,7 +86,7 @@ class Zend_Config implements Countable, Iterator
      * @param  boolean $allowModifications
      * @return void
      */
-    public function __construct($array, $allowModifications = false)
+    public function __construct(array $array, $allowModifications = false)
     {
         $this->_allowModifications = (boolean) $allowModifications;
         $this->_loadedSection = null;
