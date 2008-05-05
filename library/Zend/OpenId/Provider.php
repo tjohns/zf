@@ -423,17 +423,11 @@ class Zend_OpenId_Provider
             $params['openid_session_type'] == 'no-encryption') {
             $ret['mac_key'] = base64_encode($secret);
         } else if (isset($params['openid_session_type']) &&
-            $params['openid_session_type'] == 'DH-SHA1' &&
-            !empty($params['openid_dh_modulus']) &&
-            !empty($params['openid_dh_gen']) &&
-            !empty($params['openid_dh_consumer_public'])) {
+            $params['openid_session_type'] == 'DH-SHA1') {
             $dhFunc = 'sha1';
         } else if (isset($params['openid_session_type']) &&
             $params['openid_session_type'] == 'DH-SHA256' &&
-            $version >= 2.0 &&
-            !empty($params['openid_dh_modulus']) &&
-            !empty($params['openid_dh_gen']) &&
-            !empty($params['openid_dh_consumer_public'])) {
+            $version >= 2.0) {
             $dhFunc = 'sha256';
         } else {
             $ret['error'] = 'Wrong "openid.session_type"';
@@ -446,9 +440,22 @@ class Zend_OpenId_Provider
         }
 
         if (isset($dhFunc)) {
-            $dh = Zend_OpenId::createDhKey(
-                base64_decode($params['openid_dh_modulus']),
-                base64_decode($params['openid_dh_gen']));
+            if (empty($params['openid_dh_consumer_public'])) {
+                $ret['error'] = 'Wrong "openid.dh_consumer_public"';
+                return $ret;
+            }
+            if (empty($params['openid_dh_gen'])) {
+                $g = pack('H*', Zend_OpenId::DH_G);
+            } else {
+                $g = base64_decode($params['openid_dh_gen']);
+            }
+            if (empty($params['openid_dh_modulus'])) {
+                $p = pack('H*', Zend_OpenId::DH_P);
+            } else {
+                $p = base64_decode($params['openid_dh_modulus']);
+            }
+
+            $dh = Zend_OpenId::createDhKey($p, $g);
             $dh_details = Zend_OpenId::getDhKeyDetails($dh);
 
             $sec = Zend_OpenId::computeDhSecret(
