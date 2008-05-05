@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8410 -->
+<!-- EN-Revision: 9379 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -546,7 +546,7 @@ class UserController extends Zend_Controller_Action
         $form = $this->getForm();
         if (!$form->isValid($_POST)) {
             // バリデーションに失敗したので、フォームを再描画します
-            $this->form = $form;
+            $this->view->form = $form;
             return $this->render('form');
         }
         
