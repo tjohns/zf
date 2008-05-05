@@ -2712,6 +2712,22 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($label instanceof My_Decorator_Label, get_class($label));
     }
 
+    /**
+     * @see ZF-3093
+     */
+    public function testSettingElementPrefixPathPropagatesToAttachedSubForms()
+    {
+        $subForm = new Zend_Form_SubForm();
+        $subForm->addElement('text', 'foo');
+        $this->form->addSubForm($subForm, 'subForm');
+        $this->form->addElementPrefixPath('Zend_Foo', 'Zend/Foo/');
+        $loader = $this->form->subForm->foo->getPluginLoader('decorator');
+        $paths = $loader->getPaths('Zend_Foo_Decorator');
+        $this->assertFalse(empty($paths));
+        $this->assertContains('Foo', $paths[0]);
+        $this->assertContains('Decorator', $paths[0]);
+    }
+
     public function testCanSetElementValidatorPrefixPath()
     {
         $this->setupElements();
