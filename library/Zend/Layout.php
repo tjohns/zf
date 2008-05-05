@@ -528,6 +528,7 @@ class Zend_Layout
     public function getView() 
     {
         if (null === $this->_view) {
+            require_once 'Zend/Controller/Action/HelperBroker.php';
             $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
             if (null === $viewRenderer->view) {
                 $viewRenderer->initView();
