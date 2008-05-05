@@ -348,6 +348,53 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(15, $this->form->ghiabc->getOrder());
     }
 
+    /**
+     * @see ZF-3112
+     */
+    public function testSetOptionsShouldCreateDisplayGroupsLast()
+    {
+        $options = array();
+        $options['displayGroups'] = array(
+            'barbat' => array(array('bar', 'bat'), array('order' => 20)),
+            array(array('foo', 'baz'), 'foobaz', array('order' => 10)),
+            array(
+                'name'     => 'ghiabc',
+                'elements' => array('ghi', 'abc'),
+                'options'  => array('order' => 15),
+            ),
+        );
+        $options = array_merge($options, $this->getOptions());
+        $options['elements'] = array(
+            'foo' => 'text',
+            'bar' => 'text',
+            'baz' => 'text',
+            'bat' => 'text',
+            'abc' => 'text',
+            'ghi' => 'text',
+            'jkl' => 'text',
+            'mno' => 'text',
+        );
+        $this->form = new Zend_Form($options);
+
+        $this->assertTrue(isset($this->form->barbat));
+        $elements = $this->form->barbat->getElements();
+        $expected = array('bar', 'bat');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(20, $this->form->barbat->getOrder());
+
+        $this->assertTrue(isset($this->form->foobaz));
+        $elements = $this->form->foobaz->getElements();
+        $expected = array('foo', 'baz');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(10, $this->form->foobaz->getOrder());
+
+        $this->assertTrue(isset($this->form->ghiabc));
+        $elements = $this->form->ghiabc->getElements();
+        $expected = array('ghi', 'abc');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(15, $this->form->ghiabc->getOrder());
+    }
+
     public function testSetConfigSetsObjectState()
     {
         $config = new Zend_Config($this->getOptions());
