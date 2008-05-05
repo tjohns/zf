@@ -466,6 +466,26 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result));
         $this->assertContains('testing class method exception &amp; encoding', $response);
     }
+
+    /**
+     * @see ZF-1992
+     */
+    public function testDefaultEncodingShouldBeUtf8()
+    {
+        $server = new Zend_Rest_Server();
+        $this->assertEquals('UTF-8', $server->getEncoding());
+    }
+
+    /**
+     * @see ZF-1992
+     */
+    public function testEncodingShouldBeMutableViaAccessors()
+    {
+        $server = new Zend_Rest_Server();
+        $this->assertEquals('UTF-8', $server->getEncoding());
+        $server->setEncoding('ISO-8859-1');
+        $this->assertEquals('ISO-8859-1', $server->getEncoding());
+    }
 }
 
 /* Test Functions */
