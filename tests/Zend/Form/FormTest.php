@@ -1038,6 +1038,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->form->isArray());
     }
 
+    /**
+     * @see ZF-3146
+     */
+    public function testSetElementsBelongToShouldApplyToBothExistingAndFutureElements()
+    {
+        $this->form->addElement('text', 'testBelongsTo');
+        $this->form->setElementsBelongTo('foo');
+        $this->assertEquals('foo', $this->form->testBelongsTo->getBelongsTo(), 'Failed determining testBelongsTo belongs to array');
+        $this->setupElements();
+        foreach ($this->form->getElements() as $element) {
+            $message = sprintf('Failed determining element "%s" belongs to foo', $element->getName());
+            $this->assertEquals('foo', $element->getBelongsTo(), $message);
+        }
+    }
+
     // Sub forms
 
     public function testCanAddAndRetrieveSingleSubForm()
