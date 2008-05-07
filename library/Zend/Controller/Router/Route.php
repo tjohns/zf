@@ -39,14 +39,56 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     protected $_regexDelimiter = '#';
     protected $_defaultRegex = null;
 
-    protected $_parts;
-    protected $_defaults = array();
-    protected $_requirements = array();
-    protected $_staticCount = 0;
+    /**
+     * Holds names of all route's pattern variable names 
+     * @var int
+     */
     protected $_vars = array();
-    protected $_params = array();
+    
+    /**
+     * Holds Route pattern parts. In case of a variable it stores it's name as well as 
+     * a regex pattern for it's value. In case of a static, it holds only regex representation 
+     * of a static value.
+     *   
+     * Array index indicates a position of the part in a path.
+     *  
+     * @var array
+     */
+    protected $_parts = array();
+    
+    /**
+     * Holds default values for route's variables 
+     * @var array
+     */
+    protected $_defaults = array();
+
+    /**
+     * Holds regex patterns for route's variables' values 
+     * @var array
+     */
+    protected $_requirements = array();
+
+    
+    /**
+     * Assioative array holding path values for a given variable names. 
+     * Key stores variable name; value holds path value. Filled on match()
+     * @var array
+     */
     protected $_values = array();
 
+    /**
+     * Assioative array holding wildcard variable names and values. 
+     * Key stores variable name; value holds path value. Filled on match()
+     * @var array
+     */
+    protected $_wildcardData = array();
+    
+    /**
+     * Helper Holds a count of route pattern's static parts
+     * @var int
+     */
+    private $_staticCount = 0;
+    
     /**
      * Instantiates route based on passed Zend_Config structure
      *
@@ -107,7 +149,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             list($var, $value) = $part;
             $var = urldecode($var);
             if (!array_key_exists($var, $unique)) {
-                $this->_params[$var] = urldecode($value);
+                $this->_wildcardData[$var] = urldecode($value);
                 $unique[$var] = true;
             }
         }
@@ -181,7 +223,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         }
 
-        $return = $this->_values + $this->_params + $this->_defaults;
+        $return = $this->_values + $this->_wildcardData + $this->_defaults;
 
         // Check if all static mappings have been met
         if ($this->_staticCount != $pathStaticCount) {
@@ -226,8 +268,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     unset($data[$part['name']]);
                 } elseif (!$reset && !$resetPart && isset($this->_values[$part['name']])) {
                     $url[$key] = $this->_values[$part['name']];
-                } elseif (!$reset && !$resetPart && isset($this->_params[$part['name']])) {
-                    $url[$key] = $this->_params[$part['name']];
+                } elseif (!$reset && !$resetPart && isset($this->_wildcardData[$part['name']])) {
+                    $url[$key] = $this->_wildcardData[$part['name']];
                 } elseif (isset($this->_defaults[$part['name']])) {
                     $url[$key] = $this->_defaults[$part['name']];
                 } else {
@@ -240,7 +282,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 if ($part['regex'] != '*') {
                     $url[$key] = $part['regex'];
                 } else {
-                    if (!$reset) $data += $this->_params;
+                    if (!$reset) $data += $this->_wildcardData;
                     foreach ($data as $var => $value) {
                         if ($value !== null) {
                             $url[$var] = $var . $this->_urlDelimiter . $value;

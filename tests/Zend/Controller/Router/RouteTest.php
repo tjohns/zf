@@ -472,4 +472,29 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('', $url);
     }
 
+    /**
+     * Test guarding performance. Test may be failing on slow systems and shouldn't be failing on production.
+     * This test is not critical in nature - it allows keeping changes performant.  
+     */
+    public function testRoutePerformance()
+    {
+        $count = 10000;
+        $expectedTime = 1;
+         
+        $info = "This test may be failing on slow systems and shouldn't be failing on production. Tests if " . ($count / 10) . " complicated routes can be matched in a tenth of a second. Actual test matches " . $count . " times to make the test more reliable.";
+        
+        $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
+        
+        $time_start = microtime(true);
+        
+        for ($i = 1; $i <= $count; $i++) {
+            $values = $route->match('archives/2006/' . $i . '/controller/test/year/' . $i . '/sort/author');
+        }
+        
+        $time_end = microtime(true);
+        $time = $time_end - $time_start;
+        
+        $this->assertLessThan($expectedTime, $time, $info);
+    }
+
 }
