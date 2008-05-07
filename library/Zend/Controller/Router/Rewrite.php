@@ -260,10 +260,9 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 
         /** Find the matching route */
         foreach (array_reverse($this->_routes) as $name => $route) {
-            if ($params = $route->match($pathInfo)) {
+            if (($params = $route->match($pathInfo)) && !$this->_currentRoute) {
                 $this->_setRequestParams($request, $params);
                 $this->_currentRoute = $name;
-                break;
             }
         }
 
