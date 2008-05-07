@@ -14,6 +14,9 @@ require_once 'Zend/Controller/Dispatcher/Standard.php';
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';
 
+/** Zend_Controller_Request_Http */
+require_once 'Zend/Controller/Request/Http.php';
+
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -385,7 +388,44 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('first_parameter_value', $token->getParam(0));
     }
 
+    public function testAllRoutesUseUrlValuesTest1() // Test for ZF-3212
+    {
+        $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
+
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/nl/bar');
+        $token = $this->_router->route($request);
+        
+        $this->assertSame('nl/foo', $this->_router->getRoute('foo')->assemble());
+        $this->assertSame('nl/bar', $this->_router->getRoute('bar')->assemble());
+    }
+        
+    public function testAllRoutesUseUrlValuesTest2() // Test for ZF-3212
+    {
+        $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
+        
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/foo');
+        $token = $this->_router->route($request);
+        
+        $this->assertSame('en/foo', $this->_router->getRoute('foo')->assemble());
+        $this->assertSame('en/bar', $this->_router->getRoute('bar')->assemble());
+    }
+        
+    public function testAllRoutesUseUrlValuesTest3() // Test for ZF-3212
+    {
+        $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
+        
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/bar');
+        $token = $this->_router->route($request);
+        
+        $this->assertSame('en/foo', $this->_router->getRoute('foo')->assemble());
+        $this->assertSame('en/bar', $this->_router->getRoute('bar')->assemble());
+    }
+
 }
+
 
 /**
  * Zend_Controller_Router_RewriteTest_Request - request object for router testing
