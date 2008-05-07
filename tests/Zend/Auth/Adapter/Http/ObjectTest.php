@@ -278,7 +278,7 @@ class Zend_Auth_Adapter_Http_ObjectTest extends PHPUnit_Framework_TestCase
           ->setRequest($request)
           ->setResponse($response);
         $result = $a->authenticate();
-        $this->assertEquals($result->getCode(),Zend_Auth_Result::FAILURE_UNCATEGORIZED);
+        $this->assertEquals($result->getCode(),Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID);
     }
     
     public function testUnsupportedScheme()

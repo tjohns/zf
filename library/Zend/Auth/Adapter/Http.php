@@ -389,13 +389,19 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
 
         // The server can issue multiple challenges, but the client should
         // answer with only the selected auth scheme.
-        if (!in_array($clientScheme, $this->_supportedSchemes) || !in_array($clientScheme, $this->_acceptSchemes)) {
+        if (!in_array($clientScheme, $this->_supportedSchemes)) {
             $this->_response->setHttpResponseCode(400);
             return new Zend_Auth_Result(
                 Zend_Auth_Result::FAILURE_UNCATEGORIZED,
                 array(),
                 array('Client requested an incorrect or unsupported authentication scheme')
             );
+        }
+
+        // client sent a scheme that is not the one required
+        if (!in_array($clientScheme, $this->_acceptSchemes)) {
+            // challenge again the client
+            return $this->_challengeClient();
         }
         
         switch ($clientScheme) {
@@ -404,6 +410,13 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
                 break;
             case 'digest':
                 $result = $this->_digestAuth($authHeader);
+            break;
+            default:
+                /**
+                * @see Zend_Auth_Adapter_Exception
+                */
+ 	            require_once 'Zend/Auth/Adapter/Exception.php';
+ 	            throw new Zend_Auth_Adapter_Exception('Unsupported authentication scheme');
         }
 
         return $result;
