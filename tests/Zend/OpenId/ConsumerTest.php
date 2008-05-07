@@ -717,6 +717,19 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "</head><body</body></html>\n");
         $id = self::ID;
         $this->assertFalse( $consumer->discovery($id, $server, $version) );
+
+        // Test HTML based discovery with multivalue rel (OpenID 1.1)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link rel=\" aaa openid.server bbb \" href=\"" . self::SERVER . "\">\n" .
+                           "<link rel=\"aaa openid.delegate\" href=\"" . self::REAL_ID . "\">\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 1.1, $version );
     }
 
     /**
