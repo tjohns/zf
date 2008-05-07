@@ -73,8 +73,8 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
     {
         $options = array_merge($this->_options, $options);
 
-        if ($options['clear']) {
-            $this->_translate = array();
+        if ($options['clear'] || !isset($this->_translate[$locale])) {
+            $this->_translate[$locale] = array();
         }
 
         if (!is_readable($filename)) {
@@ -103,9 +103,6 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
     private function _startElement($file, $name, $attrib)
     {
         switch(strtolower($name)) {
-            case 'ts':
-                $this->_translate[$this->_target] = array();
-                break;
             case 'message':
                 $this->_source = null;
                 $this->_stag = false;
