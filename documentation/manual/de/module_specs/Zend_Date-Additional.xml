@@ -302,7 +302,7 @@ require_once 'Zend/Date.php';
 
 // Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
 // Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
-date_defaut_timezone_set('Europe/Vienna');
+date_default_timezone_set('Europe/Vienna');
 
 // Erstellen des Datumsobjektes
 $date = new Zend_Date('10.03.2007 00:00:00', Zend_Date::ISO_8601, 'de');
