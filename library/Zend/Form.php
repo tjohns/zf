@@ -827,6 +827,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 
         $this->_order[$name] = $this->_elements[$name]->getOrder();
         $this->_orderUpdated = true;
+        $this->_setElementsBelongTo($name);
 
         return $this;
     }
@@ -958,7 +959,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     public function getElement($name)
     {
-        if (isset($this->_elements[$name])) {
+        if (array_key_exists($name, $this->_elements)) {
             return $this->_elements[$name];
         }
         return null;
@@ -1175,17 +1176,49 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     public function setElementsBelongTo($array)
     {
+        $origName = $this->getElementsBelongTo();
         $name = $this->filterName($array, true);
         if (empty($name)) {
             $name = null;
         }
         $this->_elementsBelongTo = $name;
 
-        (null !== $name) 
-            ? $this->setIsArray(true) 
-            : $this->setIsArray(false);
+        if (null === $name) {
+            $this->setIsArray(false);
+            if (null !== $origName) {
+                $this->_setElementsBelongTo();
+            }
+        } else {
+            $this->setIsArray(true);
+            $this->_setElementsBelongTo();
+        }
 
         return $this;
+    }
+
+    /**
+     * Set array to which elements belong
+     * 
+     * @param  string $name Element name
+     * @return void
+     */
+    protected function _setElementsBelongTo($name = null)
+    {
+        $array = $this->getElementsBelongTo();
+
+        if (null === $array) {
+            return;
+        }
+
+        if (null === $name) {
+            foreach ($this->getElements() as $element) {
+                $element->setBelongsTo($array);
+            }
+        } else {
+            if (null !== ($element = $this->getElement($name))) {
+                $element->setBelongsTo($array);
+            }
+        }
     }
 
     /**
