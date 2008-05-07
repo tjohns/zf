@@ -638,25 +638,25 @@ class Zend_OpenId_Consumer
             return false;
         }
         if (preg_match(
-                '/<link[^>]*rel=(["\'])openid2.provider\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
+                '/<link[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid2.provider[ \t]*[^"\']*\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
                 $response,
                 $r)) {
             $version = 2.0;
             $server = $r[3];
         } else if (preg_match(
-                '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])openid2.provider\\3[^>]*\/?>/i',
+                '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid2.provider[ \t]*[^"\']*\\3[^>]*\/?>/i',
                 $response,
                 $r)) {
             $version = 2.0;
             $server = $r[2];
         } else if (preg_match(
-                '/<link[^>]*rel=(["\'])openid.server\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
+                '/<link[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid.server[ \t]*[^"\']*\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
                 $response,
                 $r)) {
             $version = 1.1;
             $server = $r[3];
         } else if (preg_match(
-                '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])openid.server\\3[^>]*\/?>/i',
+                '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid.server[ \t]*[^"\']*\\3[^>]*\/?>/i',
                 $response,
                 $r)) {
             $version = 1.1;
@@ -666,24 +666,24 @@ class Zend_OpenId_Consumer
         }
         if ($version >= 2.0) {
             if (preg_match(
-                    '/<link[^>]*rel=(["\'])openid2.local_id\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
+                    '/<link[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid2.local_id[ \t]*[^"\']*\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
                     $response,
                     $r)) {
                 $realId = $r[3];
             } else if (preg_match(
-                    '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])openid2.local_id\\3[^>]*\/?>/i',
+                    '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid2.local_id[ \t]*[^"\']*\\3[^>]*\/?>/i',
                     $response,
                     $r)) {
                 $realId = $r[2];
             }
         } else {
             if (preg_match(
-                    '/<link[^>]*rel=(["\'])openid.delegate\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
+                    '/<link[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid.delegate[ \t]*[^"\']*\\1[^>]*href=(["\'])([^"\']+)\\2[^>]*\/?>/i',
                     $response,
                     $r)) {
                 $realId = $r[3];
             } else if (preg_match(
-                    '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])openid.delegate\\3[^>]*\/?>/i',
+                    '/<link[^>]*href=(["\'])([^"\']+)\\1[^>]*rel=(["\'])[ \t]*(?:[^ \t"\']+[ \t]+)*?openid.delegate[ \t]*[^"\']*\\3[^>]*\/?>/i',
                     $response,
                     $r)) {
                 $realId = $r[2];
