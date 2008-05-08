@@ -70,14 +70,14 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
     
     /**
-     * Assioative array holding path values for a given variable names. 
+     * Associative array holding path values for a given variable names. 
      * Key stores variable name; value holds path value. Filled on match()
      * @var array
      */
     protected $_values = array();
 
     /**
-     * Assioative array holding wildcard variable names and values. 
+     * Associative array holding wildcard variable names and values. 
      * Key stores variable name; value holds path value. Filled on match()
      * @var array
      */
@@ -167,6 +167,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         $pathStaticCount = 0;
         $defaults = $this->_defaults;
+        $values = array();
 
         if (count($defaults)) {
             $unique = array_combine(array_keys($defaults), array_fill(0, count($defaults), true));
@@ -213,7 +214,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
                 if ($name !== null) {
                     // It's a variable. Setting a value
-                    $this->_values[$name] = $pathPart;
+                    $values[$name] = $pathPart;
                     $unique[$name] = true;
                 } else {
                     $pathStaticCount++;
@@ -223,13 +224,13 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         }
 
-        $return = $this->_values + $this->_wildcardData + $this->_defaults;
-
         // Check if all static mappings have been met
         if ($this->_staticCount != $pathStaticCount) {
             return false;
         }
 
+        $return = $values + $this->_wildcardData + $this->_defaults;
+        
         // Check if all map variables have been initialized
         foreach ($this->_vars as $var) {
             if (!array_key_exists($var, $return)) {
@@ -237,6 +238,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
         }
 
+        $this->_values = $values;
+        
         return $return;
 
     }
