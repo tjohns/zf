@@ -10,6 +10,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 // error_reporting(E_ALL);
 
 require_once 'Zend/Form/SubForm.php';
+require_once 'Zend/View.php';
 
 class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
 {
@@ -64,6 +65,25 @@ class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
         $form = new Zend_Form_SubFormTest_SubForm();
         $decorators = $form->getDecorators();
         $this->assertTrue(empty($decorators));
+    }
+
+    // Bugfixes
+
+    /**
+     * @see ZF-2883
+     */
+    public function testDisplayGroupsShouldInheritSubFormNamespace()
+    {
+        $this->form->addElement('text', 'foo')
+                   ->addElement('text', 'bar')
+                   ->addDisplayGroup(array('foo', 'bar'), 'foobar');
+
+        $form = new Zend_Form();
+        $form->addSubForm($this->form, 'attributes');
+        $html = $form->render(new Zend_View());
+
+        $this->assertContains('name="attributes[foo]"', $html);
+        $this->assertContains('name="attributes[bar]"', $html);
     }
 }
 
