@@ -107,6 +107,33 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * No explicit assertions; just checking for error conditions
+     *
+     * @see ZF-2847
+     */
+    public function testTranslationShouldNotRaiseWarningsWithNestedGroups()
+    {
+        require_once 'Zend/Translate.php';
+        require_once 'Zend/View.php';
+        $translate = new Zend_Translate('array', array('Select Test', 'Select Test Translated'), 'en');
+        $this->element
+             ->setLabel('Select Test')
+             ->setMultiOptions(array(
+                 'Group 1' => array(
+                     '1-1' => 'Hi 1-1',
+                     '1-2' => 'Hi 1-2',
+                 ),
+                 'Group 2' => array(
+                     '2-1' => 'Hi 2-1',
+                     '2-2' => 'Hi 2-2',
+                 ),
+             ))
+             ->setTranslator($translate)
+             ->setView(new Zend_View());
+        $html = $this->element->render();
+    }
+
+    /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
      * @link   http://framework.zend.com/issues/browse/ZF-2794
