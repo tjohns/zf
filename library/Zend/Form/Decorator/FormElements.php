@@ -72,6 +72,10 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
                 } else {
                     $item->setElementsBelongTo($belongsTo, true);
                 }
+            } elseif (!empty($belongsTo) && ($item instanceof Zend_Form_DisplayGroup)) {
+                foreach ($item as $element) {
+                    $element->setBelongsTo($belongsTo);
+                }
             }
             $items[] = $item->render();
         }
