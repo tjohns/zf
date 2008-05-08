@@ -394,6 +394,14 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_dispatcher->isValidModule(array()));
     }
 
+    /**
+     * @see ZF-3034
+     */
+    public function testIsValidModuleShouldNormalizeModuleName()
+    {
+        $this->assertTrue($this->_dispatcher->isValidModule('Admin'));
+    }
+
     public function testSanelyDiscardOutputBufferOnException()
     {
         $request = new Zend_Controller_Request_Http();
