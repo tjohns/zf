@@ -398,13 +398,24 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
     /**
      * Determine if a given module is valid
      *
-     * @param string $module
+     * @param  string $module
      * @return bool
      */
     public function isValidModule($module)
     {
+        if (!is_string($module)) {
+            return false;
+        }
+
+        $module        = strtolower($module);
         $controllerDir = $this->getControllerDirectory();
-        return (is_string($module) && isset($controllerDir[$module]));
+        foreach (array_keys($controllerDir) as $moduleName) {
+            if ($module == strtolower($moduleName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
