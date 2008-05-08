@@ -893,6 +893,15 @@ $input->addNamespace('Other_Namespace');
             zuletzt durchsucht.
         </para>
 
+        <note>
+            <para>
+                Seit Version 1.0.4 wurde <code>Zend_Filter_Input::NAMESPACE</code>, der den Wert
+                <code>namespace</code> hatte, auf <code>Zend_Filter_Input::INPUT_NAMESPACE</code>,
+                mit dem Wert <code>inputNamespace</code> geändert, um der Reservierung des
+                Schlüsselwortes <code>namespace</code> ab PHP 5.3 gerecht zu werden.
+            </para>
+        </note>
+
     </sect2>
 
 </sect1>
