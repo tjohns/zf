@@ -1162,7 +1162,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $this->setValue($value);
         $value = $this->getValue();
 
-        if (('' === $value) && !$this->isRequired() && $this->getAllowEmpty()) {
+        if ((('' === $value) || (null === $value)) 
+            && !$this->isRequired() 
+            && $this->getAllowEmpty()
+        ) {
             return true;
         }
 
