@@ -23,7 +23,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_Acl
@@ -1039,6 +1039,54 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_acl->inheritsRole('child', 'grandparent', true));
     }
 
+    /**
+     * Ensures that the solution for ZF-2234 works as expected
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-2234
+     */
+    public function testZf2234()
+    {
+        $acl = new Zend_AclTest_ExtensionForZf2234();
+
+        $someResource = new Zend_Acl_Resource('someResource');
+        $someRole     = new Zend_Acl_Role('someRole');
+
+        $acl->add($someResource)
+            ->addRole($someRole);
+
+        $nullValue     = null;
+        $nullReference =& $nullValue;
+
+        try {
+            $acl->roleDFSVisitAllPrivileges($someRole, $someResource, $nullReference);
+            $this->fail('Expected Zend_Acl_Exception not thrown');
+        } catch (Zend_Acl_Exception $e) {
+            $this->assertEquals('$dfs parameter may not be null', $e->getMessage());
+        }
+
+        try {
+            $acl->roleDFSOnePrivilege($someRole, $someResource, null);
+            $this->fail('Expected Zend_Acl_Exception not thrown');
+        } catch (Zend_Acl_Exception $e) {
+            $this->assertEquals('$privilege parameter may not be null', $e->getMessage());
+        }
+
+        try {
+            $acl->roleDFSVisitOnePrivilege($someRole, $someResource, null);
+            $this->fail('Expected Zend_Acl_Exception not thrown');
+        } catch (Zend_Acl_Exception $e) {
+            $this->assertEquals('$privilege parameter may not be null', $e->getMessage());
+        }
+
+        try {
+            $acl->roleDFSVisitOnePrivilege($someRole, $someResource, 'somePrivilege', $nullReference);
+            $this->fail('Expected Zend_Acl_Exception not thrown');
+        } catch (Zend_Acl_Exception $e) {
+            $this->assertEquals('$dfs parameter may not be null', $e->getMessage());
+        }
+    }
+
 }
 
 
@@ -1058,5 +1106,26 @@ class Zend_AclTest_AssertTrue implements Zend_Acl_Assert_Interface
                            $privilege = null)
     {
        return true;
+    }
+}
+
+class Zend_AclTest_ExtensionForZf2234 extends Zend_Acl
+{
+    public function roleDFSVisitAllPrivileges(Zend_Acl_Role_Interface $role, Zend_Acl_Resource_Interface $resource = null,
+                                              &$dfs = null)
+    {
+        return $this->_roleDFSVisitAllPrivileges($role, $resource, $dfs);
+    }
+
+    public function roleDFSOnePrivilege(Zend_Acl_Role_Interface $role, Zend_Acl_Resource_Interface $resource = null,
+                                        $privilege = null)
+    {
+        return $this->_roleDFSOnePrivilege($role, $resource, $privilege);
+    }
+
+    public function roleDFSVisitOnePrivilege(Zend_Acl_Role_Interface $role, Zend_Acl_Resource_Interface $resource = null,
+                                             $privilege = null, &$dfs = null)
+    {
+        return $this->_roleDFSVisitOnePrivilege($role, $resource, $privilege, $dfs);
     }
 }
