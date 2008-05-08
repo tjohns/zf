@@ -979,6 +979,15 @@ $input->addNamespace('Other_Namespace');
             first, Zend namespaces are searched last.
         </para>
 
+        <note>
+            <para>
+                As of version 1.0.4, <code>Zend_Filter_Input::NAMESPACE</code>, having value <code>namespace</code>,
+                was changed to <code>Zend_Filter_Input::INPUT_NAMESPACE</code>, having value
+                <code>inputNamespace</code>, in order to comply with the PHP 5.3 reservation of the keyword
+                <code>namespace</code>.
+            </para>
+        </note>
+
     </sect2>
 
 </sect1>
