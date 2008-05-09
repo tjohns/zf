@@ -351,6 +351,173 @@ class Zend_Service_Flickr_OfflineTest extends PHPUnit_Framework_TestCase
             $this->assertContains('parameters are invalid', $e->getMessage());
         }
     }
+    
+    /**
+     * Basic testing to ensure that groupPoolGetPhotos() works as expected
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosBasic()
+    {
+        $this->_flickr->getRestClient()
+                      ->getHttpClient()
+                      ->setAdapter($this->_httpClientAdapterTest);
+
+        $this->_httpClientAdapterTest->setResponse($this->_loadResponse(__FUNCTION__));
+
+        $options = array(
+            'per_page' => 10,
+            'page'     => 1,
+            'extras'   => 'license, date_upload, date_taken, owner_name, icon_server'
+            );
+
+        $resultSet = $this->_flickr->groupPoolGetPhotos('20083316@N00', $options);
+
+        $this->assertEquals(4285, $resultSet->totalResultsAvailable);
+        $this->assertEquals(10, $resultSet->totalResults());
+        $this->assertEquals(10, $resultSet->totalResultsReturned);
+        $this->assertEquals(1, $resultSet->firstResultPosition);
+
+        $this->assertEquals(0, $resultSet->key());
+
+        try {
+            $resultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        $resultSet->seek(9);
+
+        try {
+            $resultSet->seek(10);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        $resultSet->rewind();
+
+        $resultSetIds = array(
+            '428222530',
+            '427883929',
+            '427884403',
+            '427887192',
+            '427883923',
+            '427884394',
+            '427883930',
+            '427884398',
+            '427883924',
+            '427884401'
+            );
+
+        $this->assertTrue($resultSet->valid());
+
+        foreach ($resultSetIds as $resultSetId) {
+            $this->_httpClientAdapterTest->setResponse($this->_loadResponse(__FUNCTION__ . "-result_$resultSetId"));
+            $result = $resultSet->current();
+            $this->assertTrue($result instanceof Zend_Service_Flickr_Result);
+            $resultSet->next();
+        }
+
+        $this->assertFalse($resultSet->valid());
+    }
+
+    /**
+     * Ensures that groupPoolGetPhotos() throws an exception when an option is invalid
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosExceptionOptionInvalid()
+    {
+      try {
+          $this->_flickr->groupPoolGetPhotos('irrelevant', array('unexpected' => null));
+          $this->fail('Expected Zend_Service_Exception not thrown');
+      } catch (Zend_Service_Exception $e) {
+          $this->assertContains('parameters are invalid', $e->getMessage());
+      }
+    }
+
+    /**
+     * Ensures that _validateGroupPoolGetPhotos() throws an exception when the per_page option is invalid
+     *
+     * @return void
+     */
+    public function testValidateGroupPoolGetPhotosExceptionPerPageInvalid()
+    {
+      try {
+          $this->_flickrProxy->proxyValidateGroupPoolGetPhotos(array('per_page' => -1));
+          $this->fail('Expected Zend_Service_Exception not thrown');
+      } catch (Zend_Service_Exception $e) {
+          $this->assertContains('"per_page" option', $e->getMessage());
+      }
+    }
+
+    /**
+     * Ensures that _validateGroupPoolGetPhotos() throws an exception when the page option is invalid
+     *
+     * @return void
+     */
+    public function testValidateGroupPoolGetPhotosExceptionPageInvalid()
+    {
+      try {
+          $this->_flickrProxy->proxyValidateGroupPoolGetPhotos(array('per_page' => 10, 'page' => 1.23));
+          $this->fail('Expected Zend_Service_Exception not thrown');
+      } catch (Zend_Service_Exception $e) {
+          $this->assertContains('"page" option', $e->getMessage());
+      }
+    }
+
+    /**
+     * Ensures that groupPoolGetPhotos() throws an exception when an invalid group_id is given
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosExceptionGroupIdInvalid()
+    {
+        $this->_flickr->getRestClient()
+                      ->getHttpClient()
+                      ->setAdapter($this->_httpClientAdapterTest);
+
+        $this->_httpClientAdapterTest->setResponse($this->_loadResponse(__FUNCTION__));
+
+        try {
+            $this->_flickr->groupPoolGetPhotos('2e38a9d9425d7e2c9d0788455e9ccc61');
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('Group not found', $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that groupPoolGetPhotos() throws an exception when an invalid group_id is given
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosExceptionGroupIdEmpty()
+    {
+        try {
+            $this->_flickr->groupPoolGetPhotos('0');
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('supply a group id', $e->getMessage());
+        }
+    }
+     
+    /**
+     * Ensures that groupPoolGetPhotos() throws an exception when an array is given for group_id
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosExceptionGroupIdArray()
+    {
+        try {
+            $this->_flickr->groupPoolGetPhotos(array());
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('supply a group id', $e->getMessage());
+        }
+    }
 
     /**
      * Utility method that saves an HTTP response to a file
@@ -387,6 +554,11 @@ class Zend_Service_Flickr_OfflineTest_FlickrProtectedMethodProxy extends Zend_Se
     public function proxyValidateTagSearch(array $options)
     {
         $this->_validateTagSearch($options);
+    }
+    
+    public function proxyValidateGroupPoolGetPhotos(array $options)
+    {
+        $this->_validateGroupPoolGetPhotos($options);
     }
 
     public function proxyCompareOptions(array $options, array $validOptions)

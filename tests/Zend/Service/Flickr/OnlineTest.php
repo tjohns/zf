@@ -74,6 +74,53 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
                       ->getHttpClient()
                       ->setAdapter($this->_httpClientAdapterSocket);
     }
+    
+    /**
+     * Basic testing to ensure that groupPoolGetPhotos works as expected
+     *
+     * @return void
+     */
+    public function testGroupPoolGetPhotosBasic()
+    {
+        $options = array('per_page' => 10,
+                         'page'     => 1,
+                         'extras'   => 'license, date_upload, date_taken, owner_name, icon_server');
+                         
+        $resultSet = $this->_flickr->groupPoolGetPhotos('20083316@N00', $options);
+        
+        $this->assertEquals(21770, $resultSet->totalResultsAvailable);
+        $this->assertEquals(10, $resultSet->totalResults());
+        $this->assertEquals(10, $resultSet->totalResultsReturned);
+        $this->assertEquals(1, $resultSet->firstResultPosition);
+
+        $this->assertEquals(0, $resultSet->key());
+        
+        try {
+            $resultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        $resultSet->seek(9);
+
+        try {
+            $resultSet->seek(10);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        $resultSet->rewind();
+
+        $count = 0;
+        foreach ($resultSet as $result) {
+            $this->assertTrue($result instanceof Zend_Service_Flickr_Result);
+            $count++;
+        }
+
+        $this->assertEquals(10, $count);
+    }
 
     /**
      * Basic testing to ensure that userSearch() works as expected
