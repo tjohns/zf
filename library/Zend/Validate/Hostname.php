@@ -415,7 +415,7 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         }
 
         // If local network names are not allowed, add a message
-        if (!$allowLocal) {
+        if ($status && !$allowLocal) {
             $this->_error(self::LOCAL_NAME_NOT_ALLOWED);
         }
 
