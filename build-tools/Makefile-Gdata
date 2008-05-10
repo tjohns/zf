@@ -178,15 +178,15 @@ phpdoc-core:
 	fi
 
 stage-version:
-        @echo "Adding SVN revision and release date to release notes..."
-        @sed -e 's/\[INSERT REV NUMBER HERE\]/$(ZF_SVN_REVISION)/' \
-            < $(GDATA_STAGE_DIR)/README.txt \
-            > $(GDATA_STAGE_DIR)/README.txt.new
-        @ZF_RELEASE_DATE=`date +%Y-%m-%d` ; sed -e "s/\[INSERT DATE HERE\]/$$ZF_RELEASE_DATE/" \
-            < $(GDATA_STAGE_DIR)/README.txt.new \
-            > $(GDATA_STAGE_DIR)/README.txt
-        @rm $(GDATA_STAGE_DIR)/README.txt.new
-        @echo "...Done adding SVN revision and release date to release notes."
+	@echo "Adding SVN revision and release date to release notes..."
+	@sed -e 's/\[INSERT REV NUMBER HERE\]/$(ZF_SVN_REVISION)/' \
+	    < $(GDATA_STAGE_DIR)/README.txt \
+	    > $(GDATA_STAGE_DIR)/README.txt.new
+	@ZF_RELEASE_DATE=`date +%Y-%m-%d` ; sed -e "s/\[INSERT DATE HERE\]/$$ZF_RELEASE_DATE/" \
+	    < $(GDATA_STAGE_DIR)/README.txt.new \
+	    > $(GDATA_STAGE_DIR)/README.txt
+	@rm $(GDATA_STAGE_DIR)/README.txt.new
+	@echo "...Done adding SVN revision and release date to release notes."
 
 zip:
 	@echo "== CREATING ZIP ARCHIVE =="
