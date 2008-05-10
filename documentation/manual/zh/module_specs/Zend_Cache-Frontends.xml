@@ -661,6 +661,27 @@ $cache->start();
 // [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)]]>
             </programlisting>
         </sect3>
+        <sect3 id="zend.cache.frontends.page.cancel">
+            <title> 特殊的取消方法 </title>
+            <para>
+                因为设计问题，在有些情况下（例如使用非 HTTP/200 返回代码时），你可能需要取消当前缓存处理，所以
+                我们引入这个特别的前端，cancel()方法。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+// [...] // require, configuration and factory
+
+$cache->start();
+
+// [...]
+
+if ($someTest) {
+    $cache->cancel();
+    // [...]
+}
+
+// [...]]]>
+            </programlisting>
+        </sect3>
     </sect2>
 </sect1>
 <!--
