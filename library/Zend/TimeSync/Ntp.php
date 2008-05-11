@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -13,11 +12,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_TimeSync
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_TimeSync
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
 
 /**
@@ -26,86 +25,94 @@
 require_once 'Zend/TimeSync/Protocol.php';
 
 /**
- * @category   Zend
- * @package    Zend_TimeSync
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * NTP Protocol handling class
+ *
+ * @category  Zend
+ * @package   Zend_TimeSync
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 {
-    /* This is the NTP port number (123) assigned by the Internet Assigned 
-     * Numbers Authority to NTP
+
+    /**
+     * NTP port number (123) assigned by the Internet Assigned Numbers Authority
      *
-     * @var int
+     * @var integer
      */
     protected $_port = 123;
 
     /**
-     * Class constructor, sets the timeserver and port number
+     * NTP class constructor, sets the timeserver and port number
      *
-     * @param  string $timeserver
-     * @param  int    $port
+     * @param string  $timeserver Adress of the timeserver to connect to
+     * @param integer $port       (Optional) Port for this timeserver
      */
-    public function __construct($timeserver, $port)
+    public function __construct($timeserver, $port = 123)
     {
         $this->_timeserver = 'udp://' . $timeserver;
-        if (!is_null($port)) {
+        if (is_null($port) === false) {
             $this->_port = $port;
         }
     }
 
     /**
      * Prepare local timestamp for transmission in our request packet
-     * 
+     *
      * NTP timestamps are represented as a 64-bit fixed-point number, in
      * seconds relative to 0000 UT on 1 January 1900.  The integer part is
      * in the first 32 bits and the fraction part in the last 32 bits
-     * 
+     *
      * @return string
      */
     protected function _prepare()
     {
         $frac   = microtime();
-        $fracb1 = ($frac & 0xff000000) >> 24;
-        $fracb2 = ($frac & 0x00ff0000) >> 16;
-        $fracb3 = ($frac & 0x0000ff00) >> 8;
-        $fracb4 = ($frac & 0x000000ff);
+        $fracba = ($frac & 0xff000000) >> 24;
+        $fracbb = ($frac & 0x00ff0000) >> 16;
+        $fracbc = ($frac & 0x0000ff00) >> 8;
+        $fracbd = ($frac & 0x000000ff);
 
-        $sec    = time() + 2208988800;
-        $secb1  = ($sec & 0xff000000) >> 24;
-        $secb2  = ($sec & 0x00ff0000) >> 16;
-        $secb3  = ($sec & 0x0000ff00) >> 8;
-        $secb4  = ($sec & 0x000000ff);
+        $sec   = (time() + 2208988800);
+        $secb1 = ($sec & 0xff000000) >> 24;
+        $secb2 = ($sec & 0x00ff0000) >> 16;
+        $secb3 = ($sec & 0x0000ff00) >> 8;
+        $secb4 = ($sec & 0x000000ff);
 
-        $nul = chr(0x00);
-        $nulbyte = $nul . $nul . $nul . $nul;
-        $ntppacket  = chr(0xd9) . $nul . chr(0x0a) . chr(0xfa); // Flags
+        // Flags
+        $nul       = chr(0x00);
+        $nulbyte   = $nul . $nul . $nul . $nul;
+        $ntppacket = chr(0xd9) . $nul . chr(0x0a) . chr(0xfa);
 
-        /* Root delay
+        /*
+         * Root delay
          *
-         * Indicates the total roundtrip delay to the primary reference 
+         * Indicates the total roundtrip delay to the primary reference
          * source at the root of the synchronization subnet, in seconds
          */
         $ntppacket .= $nul . $nul . chr(0x1c) . chr(0x9b);
 
-        /* Clock Dispersion
-         * 
+        /*
+         * Clock Dispersion
+         *
          * Indicates the maximum error relative to the primary reference source at the
          * root of the synchronization subnet, in seconds
          */
         $ntppacket .= $nul . chr(0x08) . chr(0xd7) . chr(0xff);
 
-        /* ReferenceClockID
-         * 
+        /*
+         * ReferenceClockID
+         *
          * Identifying the particular reference clock
          */
         $ntppacket .= $nulbyte;
 
-        /* The local time, in timestamp format, at the peer when its latest NTP message
+        /*
+         * The local time, in timestamp format, at the peer when its latest NTP message
          * was sent. Contanis an integer and a fractional part
          */
         $ntppacket .= chr($secb1)  . chr($secb2)  . chr($secb3)  . chr($secb4);
-        $ntppacket .= chr($fracb1) . chr($fracb2) . chr($fracb3) . chr($fracb4);
+        $ntppacket .= chr($fracba) . chr($fracbb) . chr($fracbc) . chr($fracbd);
 
         /* The local time, in timestamp format, at the peer. Contains an integer
          * and a fractional part.
@@ -124,17 +131,17 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          * NTP message departed the sender. Contanis an integer
          * and a fractional part.
          */
-        $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);
-        $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);
-        
+        $ntppacket .= chr($secb1)  . chr($secb2)  . chr($secb3)  . chr($secb4);
+        $ntppacket .= chr($fracba) . chr($fracbb) . chr($fracbc) . chr($fracbd);
+
         return $ntppacket;
     }
 
     /**
      * Reads the data returned from the timeserver
-     * 
+     *
      * This will return an array with binary data listing:
-     * 
+     *
      * @return array
      * @throws Zend_TimeSync_Exception
      */
@@ -175,7 +182,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
     /**
      * Sends the NTP packet to the server
-     * 
+     *
      * @param  array $data
      */
     protected function _write($data)
@@ -188,7 +195,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
     /**
      * Extracts the binary data returned from the timeserver
-     * 
+     *
      * @param  array $binary
      * @return integer
      */
@@ -217,7 +224,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         /*
          * Version Number bit 0011 1000
-         * 
+         *
          * This should be 3 (RFC 1305)
          */
         $this->_info['version'] = ($binary['flags'] & 0x38) >> 3;
@@ -225,8 +232,8 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         /*
          * Mode bit 0000 0111
          *
-         * Except in broadcast mode, an NTP association is formed when two peers 
-         * exchange messages and one or both of them create and maintain an 
+         * Except in broadcast mode, an NTP association is formed when two peers
+         * exchange messages and one or both of them create and maintain an
          * instantiation of the protocol machine, called an association.
          */
         $mode = ($binary['flags'] & 0x07);
@@ -318,8 +325,8 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                 break;
         }
 
-        /* 
-         * Indicates the total roundtrip delay to the primary reference source at the 
+        /*
+         * Indicates the total roundtrip delay to the primary reference source at the
          * root of the synchronization subnet, in seconds.
          *
          * Both positive and negative values, depending on clock precision and skew, are
@@ -327,11 +334,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          */
         $this->_info['rootdelay']     = $binary['rootdelay'] >> 15;
         $this->_info['rootdelayfrac'] = ($binary['rootdelay'] << 17) >> 17;
-        
+
         /*
          * Indicates the maximum error relative to the primary reference source at the
-         * root of the synchronization subnet, in seconds. 
-         * 
+         * root of the synchronization subnet, in seconds.
+         *
          * Only positive values greater than zero are possible.
          */
         $this->_info['rootdispersion']     = $binary['rootdispersion'] >> 15;
@@ -359,21 +366,23 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $transmit += (float) $binary['transmitmicro'] / 4294967296;
 
         /*
-         * The roundtrip delay of the peer clock relative to the local clock 
-         * over the network path between them, in seconds. 
+         * The roundtrip delay of the peer clock relative to the local clock
+         * over the network path between them, in seconds.
          *
-         * Note that this variable can take on both positive and negative values, 
+         * Note that this variable can take on both positive and negative values,
          * depending on clock precision and skew-error accumulation.
          */
-        $roundtrip = ($binary['clientreceived'] - $original) - ($transmit - $received);
-        $this->_info['roundtrip'] = $roundtrip / 2;
+        $roundtrip                = ($binary['clientreceived'] - $original);
+        $roundtrip               -= ($transmit - $received);
+        $this->_info['roundtrip'] = ($roundtrip / 2);
 
-        // the offset of the peer clock relative to the local clock, in seconds.
-        $offset = $received - $original + $transmit - $binary['clientreceived'];
-        $this->_info['offset'] = $offset / 2;
+        // The offset of the peer clock relative to the local clock, in seconds.
+        $offset                = ($received - $original + $transmit - $binary['clientreceived']);
+        $this->_info['offset'] = ($offset / 2);
 
-        $time = time() - $this->_info['offset'];
+        $time = (time() - $this->_info['offset']);
 
         return $time;
     }
+
 }
