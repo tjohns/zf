@@ -18,7 +18,7 @@
                 Ces options sont passées à la méthode de fabrique comme montrées dans les exemples précédents.
             </para>
             <table id="zend.cache.frontends.core.options.table">
-                <title>Options du frantend Core</title>
+                <title>Options du frontend Core</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -567,6 +567,26 @@ $cache->start();
 // [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutées si on trouve un cache)]]>
                 </programlisting>
             </para>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.cancel">
+            <title>La méthode spécifique cancel</title>
+            <para>
+                A cause de problèmes de design, dans certains cas (par exemple quand on utilise des codes de retour HTTP autres que HTTP/200), vous pouvez avoir besoin de stopper le processus de mise en cache courant. Il a donc été introduit pour ce frontend en particulier, la méthode <code>cancel()<code>.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+// [...] // require, configuration et fabrique
+
+$cache->start();
+
+// [...]
+
+if ($unTest) {
+    $cache->cancel();
+    // [...]
+}
+
+// [...]]]>
+            </programlisting>
         </sect3>
     </sect2>
 </sect1>
