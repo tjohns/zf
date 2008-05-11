@@ -12,13 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Date
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Date
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
-
 
 /**
  * Include needed Date classes
@@ -28,16 +27,16 @@ require_once 'Zend/Locale.php';
 require_once 'Zend/Locale/Format.php';
 require_once 'Zend/Locale/Math.php';
 
-
 /**
- * @category   Zend
- * @package    Zend_Date
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Date
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Date extends Zend_Date_DateObject {
+class Zend_Date extends Zend_Date_DateObject
+{
 
-    private   $_Locale  = null;
+    private $_Locale  = null;
 
     // Fractional second variables
     private $_Fractional = 0;
@@ -166,12 +165,12 @@ class Zend_Date extends Zend_Date_DateObject {
             $part = null;
         } else if (Zend_Locale::isLocale($part)) {
             $locale = $part;
-            $part = null;
+            $part   = null;
         }
 
         $this->setLocale($locale);
 
-        if (is_string($date) && defined("self::".$date)) {
+        if (is_string($date) && defined('self::' . $date)) {
             $part = $date;
             $date = null;
         }
@@ -1410,14 +1409,14 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     private function _calculate($calc, $date, $part, $locale)
     {
-        if (is_null($date)) {
+        if (is_null($date) === true) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $date must be set, null is not allowed');
         }
 
         if (Zend_Locale::isLocale($part)) {
             $locale = $part;
-            $part = null;
+            $part   = null;
         }
 
         if ($locale === null) {
@@ -1428,106 +1427,106 @@ class Zend_Date extends Zend_Date_DateObject {
             $locale = $locale->toString();
         }
 
-        // create date parts
-        $year   = $this->get(Zend_Date::YEAR);
-        $month  = $this->get(Zend_Date::MONTH_SHORT);
-        $day    = $this->get(Zend_Date::DAY_SHORT);
-        $hour   = $this->get(Zend_Date::HOUR_SHORT);
-        $minute = $this->get(Zend_Date::MINUTE_SHORT);
-        $second = $this->get(Zend_Date::SECOND_SHORT);
-        // if object extract value
+        // Create date parts
+        $year   = $this->get(self::YEAR);
+        $month  = $this->get(self::MONTH_SHORT);
+        $day    = $this->get(self::DAY_SHORT);
+        $hour   = $this->get(self::HOUR_SHORT);
+        $minute = $this->get(self::MINUTE_SHORT);
+        $second = $this->get(self::SECOND_SHORT);
+        // If object extract value
         if ($date instanceof Zend_Date) {
             $date = $date->get($part, $locale);
         }
 
-        if (is_array($date)) {
-            if (!empty($part)) {
+        if (is_array($date) === true) {
+            if (empty($part) === false) {
                 switch($part) {
                     // Fall through
-                    case Zend_Date::DAY:
-                    case Zend_Date::DAY_SHORT:
-                        if (array_key_exists('day', $date)) {
+                    case self::DAY:
+                    case self::DAY_SHORT:
+                        if (array_key_exists('day', $date) === true) {
                             $date = $date['day'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::WEEKDAY_SHORT:
-                    case Zend_Date::WEEKDAY:
-                    case Zend_Date::WEEKDAY_8601:
-                    case Zend_Date::WEEKDAY_DIGIT:
-                    case Zend_Date::WEEKDAY_NARROW:
-                    case Zend_Date::WEEKDAY_NAME:
-                        if (array_key_exists('weekday', $date)) {
+                    case self::WEEKDAY_SHORT:
+                    case self::WEEKDAY:
+                    case self::WEEKDAY_8601:
+                    case self::WEEKDAY_DIGIT:
+                    case self::WEEKDAY_NARROW:
+                    case self::WEEKDAY_NAME:
+                        if (array_key_exists('weekday', $date) === true) {
                             $date = $date['weekday'];
-                            $part = Zend_Date::WEEKDAY_DIGIT;
+                            $part = self::WEEKDAY_DIGIT;
                         }
                         break;
-                    case Zend_Date::DAY_OF_YEAR:
-                        if (array_key_exists('day_of_year', $date)) {
+                    case self::DAY_OF_YEAR:
+                        if (array_key_exists('day_of_year', $date) === true) {
                             $date = $date['day_of_year'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::MONTH:
-                    case Zend_Date::MONTH_SHORT:
-                    case Zend_Date::MONTH_NAME:
-                    case Zend_Date::MONTH_NAME_SHORT:
-                    case Zend_Date::MONTH_NAME_NARROW:
-                        if (array_key_exists('month', $date)) {
+                    case self::MONTH:
+                    case self::MONTH_SHORT:
+                    case self::MONTH_NAME:
+                    case self::MONTH_NAME_SHORT:
+                    case self::MONTH_NAME_NARROW:
+                        if (array_key_exists('month', $date) === true) {
                             $date = $date['month'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::YEAR:
-                    case Zend_Date::YEAR_SHORT:
-                    case Zend_Date::YEAR_8601:
-                    case Zend_Date::YEAR_SHORT_8601:
-                        if (array_key_exists('year', $date)) {
+                    case self::YEAR:
+                    case self::YEAR_SHORT:
+                    case self::YEAR_8601:
+                    case self::YEAR_SHORT_8601:
+                        if (array_key_exists('year', $date) === true) {
                             $date = $date['year'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::HOUR:
-                    case Zend_Date::HOUR_AM:
-                    case Zend_Date::HOUR_SHORT:
-                    case Zend_Date::HOUR_SHORT_AM:
-                        if (array_key_exists('hour', $date)) {
+                    case self::HOUR:
+                    case self::HOUR_AM:
+                    case self::HOUR_SHORT:
+                    case self::HOUR_SHORT_AM:
+                        if (array_key_exists('hour', $date) === true) {
                             $date = $date['hour'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::MINUTE:
-                    case Zend_Date::MINUTE_SHORT:
-                        if (array_key_exists('minute', $date)) {
+                    case self::MINUTE:
+                    case self::MINUTE_SHORT:
+                        if (array_key_exists('minute', $date) === true) {
                             $date = $date['minute'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::SECOND:
-                    case Zend_Date::SECOND_SHORT:
-                        if (array_key_exists('second', $date)) {
+                    case self::SECOND:
+                    case self::SECOND_SHORT:
+                        if (array_key_exists('second', $date) === true) {
                             $date = $date['second'];
                         }
                         break;
                     // Fall through
-                    case Zend_Date::TIMEZONE:
-                    case Zend_Date::TIMEZONE_NAME:
-                        if (array_key_exists('timezone', $date)) {
+                    case self::TIMEZONE:
+                    case self::TIMEZONE_NAME:
+                        if (array_key_exists('timezone', $date) === true) {
                             $date = $date['timezone'];
                         }
                         break;
-                    case Zend_Date::TIMESTAMP:
-                        if (array_key_exists('timestamp', $date)) {
+                    case self::TIMESTAMP:
+                        if (array_key_exists('timestamp', $date) === true) {
                             $date = $date['timestamp'];
                         }
                         break;
-                    case Zend_Date::WEEK:
-                        if (array_key_exists('week', $date)) {
+                    case self::WEEK:
+                        if (array_key_exists('week', $date) === true) {
                             $date = $date['week'];
                         }
                         break;
-                    case Zend_Date::TIMEZONE_SECS:
-                        if (array_key_exists('gmtsecs', $date)) {
+                    case self::TIMEZONE_SECS:
+                        if (array_key_exists('gmtsecs', $date) === true) {
                             $date = $date['gmtsecs'];
                         }
                         break;
@@ -1538,27 +1537,27 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
             } else {
                 $hours = 0;
-                if (array_key_exists("hour", $date)) {
+                if (array_key_exists("hour", $date) === true) {
                     $hours = $date['hour'];
                 }
                 $minutes = 0;
-                if (array_key_exists('minute', $date)) {
+                if (array_key_exists('minute', $date) === true) {
                     $minutes = $date['minute'];
                 }
                 $seconds = 0;
-                if (array_key_exists('second', $date)) {
+                if (array_key_exists('second', $date) === true) {
                     $seconds = $date['second'];
                 }
                 $months = 0;
-                if (array_key_exists('month', $date)) {
+                if (array_key_exists('month', $date) === true) {
                     $months = $date['month'];
                 }
                 $days = 0;
-                if (array_key_exists('day', $date)) {
+                if (array_key_exists('day', $date) === true) {
                     $days = $date['day'];
                 }
                 $years = 0;
-                if (array_key_exists('year', $date)) {
+                if (array_key_exists('year', $date) === true) {
                     $years = $date['year'];
                 }
                 return $this->_assign($calc, $this->mktime($hours, $minutes, $seconds, $months, $days, $years, true),
@@ -1570,7 +1569,7 @@ class Zend_Date extends Zend_Date_DateObject {
         switch($part) {
 
             // day formats
-            case Zend_Date::DAY :
+            case self::DAY:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + intval($date), 1970, true),
                                                  $this->mktime(0, 0, 0, 1, 1 + intval($day),  1970, true), $hour);
@@ -1579,7 +1578,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, day expected", $date);
                 break;
 
-            case Zend_Date::WEEKDAY_SHORT :
+            case self::WEEKDAY_SHORT:
                 $daylist = Zend_Locale_Data::getList($locale, 'day');
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
@@ -1603,7 +1602,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, weekday expected", $date);
                 break;
 
-            case Zend_Date::DAY_SHORT :
+            case self::DAY_SHORT:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + intval($date), 1970, true),
                                                  $this->mktime(0, 0, 0, 1, 1 + intval($day),  1970, true), $hour);
@@ -1612,7 +1611,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, day expected", $date);
                 break;
 
-            case Zend_Date::WEEKDAY :
+            case self::WEEKDAY:
                 $daylist = Zend_Locale_Data::getList($locale, 'day');
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
@@ -1636,7 +1635,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, weekday expected", $date);
                 break;
 
-            case Zend_Date::WEEKDAY_8601 :
+            case self::WEEKDAY_8601:
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_8601, $locale);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + intval($date), 1970, true),
@@ -1648,12 +1647,12 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, weekday expected", $date);
                 break;
 
-            case Zend_Date::DAY_SUFFIX :
+            case self::DAY_SUFFIX:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('day suffix not supported', $date);
                 break;
 
-            case Zend_Date::WEEKDAY_DIGIT :
+            case self::WEEKDAY_DIGIT:
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 if (is_numeric($date) and (intval($date) >= 0) and (intval($date) < 7)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + $date,    1970, true),
@@ -1665,7 +1664,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, weekday expected", $date);
                 break;
 
-            case Zend_Date::DAY_OF_YEAR :
+            case self::DAY_OF_YEAR:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1,      1 + $date, 1970, true),
                                                  $this->mktime(0, 0, 0, $month, 1 + $day,  1970, true), $hour);
@@ -1674,7 +1673,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, day expected", $date);
                 break;
 
-            case Zend_Date::WEEKDAY_NARROW :
+            case self::WEEKDAY_NARROW:
                 $daylist = Zend_Locale_Data::getList($locale, 'day', array('gregorian', 'format', 'abbreviated'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
@@ -1697,7 +1696,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, weekday expected", $date);
                 break;
 
-            case Zend_Date::WEEKDAY_NAME :
+            case self::WEEKDAY_NAME:
                 $daylist = Zend_Locale_Data::getList($locale, 'day', array('gregorian', 'format', 'abbreviated'));
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
@@ -1722,7 +1721,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // week formats
-            case Zend_Date::WEEK :
+            case self::WEEK:
                 if (is_numeric($date)) {
                     $week = (int) $this->get(Zend_Date::WEEK, $locale);
                     return $this->_assign($calc, parent::mktime(0, 0, 0, 1, 1 + ($date * 7), 1970, true),
@@ -1734,7 +1733,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // month formats
-            case Zend_Date::MONTH_NAME :
+            case self::MONTH_NAME:
                 $monthlist = Zend_Locale_Data::getList($locale, 'month');
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
@@ -1777,7 +1776,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
 
-            case Zend_Date::MONTH :
+            case self::MONTH:
                 if (is_numeric($date)) {
                     $fixday = 0;
                     if ($calc == 'add') {
@@ -1806,7 +1805,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
 
-            case Zend_Date::MONTH_NAME_SHORT :
+            case self::MONTH_NAME_SHORT:
                 $monthlist = Zend_Locale_Data::getList($locale, 'month', array('gregorian', 'format', 'abbreviated'));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
@@ -1824,7 +1823,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_Options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1833,7 +1832,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_Options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1849,23 +1848,23 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
 
-            case Zend_Date::MONTH_SHORT :
-                if (is_numeric($date)) {
+            case self::MONTH_SHORT:
+                if (is_numeric($date) === true) {
                     $fixday = 0;
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $month;
-                        $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
-                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                        $calc  = 'set';
+                        if (self::$_Options['extend_month'] === false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
                             }
                         }
-                    } else if ($calc == 'sub') {
+                    } else if ($calc === 'sub') {
                         $date = $month - $date;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
-                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
+                        if (self::$_Options['extend_month'] === false) {
+                            $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
                             }
@@ -1879,17 +1878,17 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, month expected", $date);
                 break;
 
-            case Zend_Date::MONTH_DAYS :
+            case self::MONTH_DAYS:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('month days not supported', $date);
                 break;
 
 
-            case Zend_Date::MONTH_NAME_NARROW :
+            case self::MONTH_NAME_NARROW:
                 $monthlist = Zend_Locale_Data::getList($locale, 'month', array('gregorian', 'stand-alone', 'narrow'));
-                $cnt = 0;
+                $cnt       = 0;
                 foreach ($monthlist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
+                    if (strtoupper($value) === strtoupper($date)) {
                         $found = $key;
                         break;
                     }
@@ -1900,19 +1899,19 @@ class Zend_Date extends Zend_Date_DateObject {
                 // Monthname found
                 if ($cnt < 12) {
                     $fixday = 0;
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $found;
-                        $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        $calc  = 'set';
+                        if (self::$_Options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
                             }
                         }
-                    } else if ($calc == 'sub') {
+                    } else if ($calc === 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_Options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, true));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1930,17 +1929,17 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // year formats
-            case Zend_Date::LEAPYEAR :
+            case self::LEAPYEAR:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('leap year not supported', $date);
                 break;
 
-            case Zend_Date::YEAR_8601 :
+            case self::YEAR_8601:
                 if (is_numeric($date)) {
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $year;
-                        $calc = 'set';
-                    } else if ($calc == 'sub') {
+                        $calc  = 'set';
+                    } else if ($calc === 'sub') {
                         $date = $year - $date;
                         $calc = 'set';
                     }
@@ -1951,12 +1950,12 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
 
-            case Zend_Date::YEAR :
+            case self::YEAR:
                 if (is_numeric($date)) {
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $year;
-                        $calc = 'set';
-                    } else if ($calc == 'sub') {
+                        $calc  = 'set';
+                    } else if ($calc === 'sub') {
                         $date = $year - $date;
                         $calc = 'set';
                     }
@@ -1967,16 +1966,16 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, year expected", $date);
                 break;
 
-            case Zend_Date::YEAR_SHORT :
+            case self::YEAR_SHORT:
                 if (is_numeric($date)) {
                     $date = intval($date);
                     if (($calc == 'set') || ($calc == 'cmp')) {
                         $date = self::_century($date);
                     }
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $year;
-                        $calc = 'set';
-                    } else if ($calc == 'sub') {
+                        $calc  = 'set';
+                    } else if ($calc === 'sub') {
                         $date = $year - $date;
                         $calc = 'set';
                     }
@@ -1988,16 +1987,16 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
 
-            case Zend_Date::YEAR_SHORT_8601 :
+            case self::YEAR_SHORT_8601:
                 if (is_numeric($date)) {
                     $date = intval($date);
-                    if (($calc == 'set') || ($calc == 'cmp')) {
+                    if (($calc === 'set') || ($calc === 'cmp')) {
                         $date = self::_century($date);
                     }
-                    if ($calc == 'add') {
+                    if ($calc === 'add') {
                         $date += $year;
-                        $calc = 'set';
-                    } else if ($calc == 'sub') {
+                        $calc  = 'set';
+                    } else if ($calc === 'sub') {
                         $date = $year - $date;
                         $calc = 'set';
                     }
@@ -2010,18 +2009,18 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
             // time formats
-            case Zend_Date::MERIDIEM :
+            case self::MERIDIEM:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('meridiem not supported', $date);
                 break;
 
-            case Zend_Date::SWATCH :
+            case self::SWATCH:
                 if (is_numeric($date)) {
-                    $rest = intval($date);
-                    $hours = floor($rest * 24 / 1000);
-                    $rest = $rest - ($hours * 1000 / 24);
+                    $rest    = intval($date);
+                    $hours   = floor($rest * 24 / 1000);
+                    $rest    = $rest - ($hours * 1000 / 24);
                     $minutes = floor($rest * 1440 / 1000);
-                    $rest = $rest - ($minutes * 1000 / 1440);
+                    $rest    = $rest - ($minutes * 1000 / 1440);
                     $seconds = floor($rest * 86400 / 1000);
                     return $this->_assign($calc, $this->mktime($hours, $minutes, $seconds, 1, 1, 1970, true),
                                                  $this->mktime($hour,  $minute,  $second,  1, 1, 1970, true), false);
@@ -2030,7 +2029,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, swatchstamp expected", $date);
                 break;
 
-            case Zend_Date::HOUR_SHORT_AM :
+            case self::HOUR_SHORT_AM:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(intval($date), 0, 0, 1, 1, 1970, true),
                                                  $this->mktime($hour,         0, 0, 1, 1, 1970, true), false);
@@ -2039,7 +2038,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, hour expected", $date);
                 break;
 
-            case Zend_Date::HOUR_SHORT :
+            case self::HOUR_SHORT:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(intval($date), 0, 0, 1, 1, 1970, true),
                                                  $this->mktime($hour,         0, 0, 1, 1, 1970, true), false);
@@ -2048,7 +2047,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, hour expected", $date);
                 break;
 
-            case Zend_Date::HOUR_AM :
+            case self::HOUR_AM:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(intval($date), 0, 0, 1, 1, 1970, true),
                                                  $this->mktime($hour,         0, 0, 1, 1, 1970, true), false);
@@ -2057,7 +2056,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, hour expected", $date);
                 break;
 
-            case Zend_Date::HOUR :
+            case self::HOUR:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(intval($date), 0, 0, 1, 1, 1970, true),
                                                  $this->mktime($hour,         0, 0, 1, 1, 1970, true), false);
@@ -2066,7 +2065,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, hour expected", $date);
                 break;
 
-            case Zend_Date::MINUTE :
+            case self::MINUTE:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, intval($date), 0, 1, 1, 1970, true),
                                                  $this->mktime(0, $minute,       0, 1, 1, 1970, true), false);
@@ -2075,7 +2074,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, minute expected", $date);
                 break;
 
-            case Zend_Date::SECOND :
+            case self::SECOND:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, 0, intval($date), 1, 1, 1970, true),
                                                  $this->mktime(0, 0, $second,       1, 1, 1970, true), false);
@@ -2084,7 +2083,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, second expected", $date);
                 break;
 
-            case Zend_Date::MILLISECOND :
+            case self::MILLISECOND:
                 if (is_numeric($date)) {
                     switch($calc) {
                         case 'set' :
@@ -2103,7 +2102,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, milliseconds expected", $date);
                 break;
 
-            case Zend_Date::MINUTE_SHORT :
+            case self::MINUTE_SHORT:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, intval($date), 0, 1, 1, 1970, true),
                                                  $this->mktime(0, $minute,       0, 1, 1, 1970, true), false);
@@ -2112,7 +2111,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 throw new Zend_Date_Exception("invalid date ($date) operand, minute expected", $date);
                 break;
 
-            case Zend_Date::SECOND_SHORT :
+            case self::SECOND_SHORT:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $this->mktime(0, 0, intval($date), 1, 1, 1970, true),
                                                  $this->mktime(0, 0, $second,       1, 1, 1970, true), false);
@@ -2124,27 +2123,27 @@ class Zend_Date extends Zend_Date_DateObject {
 
             // timezone formats
             // break intentionally omitted
-            case Zend_Date::TIMEZONE_NAME :
-            case Zend_Date::TIMEZONE :
-            case Zend_Date::TIMEZONE_SECS :
+            case self::TIMEZONE_NAME:
+            case self::TIMEZONE:
+            case self::TIMEZONE_SECS:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('timezone not supported', $date);
                 break;
 
-            case Zend_Date::DAYLIGHT :
+            case self::DAYLIGHT:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('daylight not supported', $date);
                 break;
 
-            case Zend_Date::GMT_DIFF :
-            case Zend_Date::GMT_DIFF_SEP :
+            case self::GMT_DIFF:
+            case self::GMT_DIFF_SEP:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('gmtdiff not supported', $date);
                 break;
 
 
             // date strings
-            case Zend_Date::ISO_8601 :
+            case self::ISO_8601:
                 // (-)YYYY-MM-dd
                 preg_match('/^(-{0,1}\d{4})-(\d{2})-(\d{2})/', $date, $datematch);
                 // (-)YY-MM-dd
@@ -2200,7 +2199,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,         $minute,       $second,       1 + $month,        1 + $day,          1970 + $year,         false), false);
                 break;
 
-            case Zend_Date::RFC_2822 :
+            case self::RFC_2822:
                 $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{4})\s(\d{2}):(\d{2}):(\d{2})\s\+\d{4}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2221,7 +2220,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     false), false);
                 break;
 
-            case Zend_Date::TIMESTAMP :
+            case self::TIMESTAMP:
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $date, $this->getUnixTimestamp());
                 }
@@ -2232,13 +2231,13 @@ class Zend_Date extends Zend_Date_DateObject {
 
             // additional formats
             // break intentionally omitted
-            case Zend_Date::ERA :
-            case Zend_Date::ERA_NAME :
+            case self::ERA:
+            case self::ERA_NAME:
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception('era not supported', $date);
                 break;
 
-            case Zend_Date::DATES :
+            case self::DATES:
                 try {
                     $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'format_type' => 'iso', 'fix_date' => true));
 
@@ -2258,7 +2257,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::DATE_FULL :
+            case self::DATE_FULL:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'full'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2279,7 +2278,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::DATE_LONG :
+            case self::DATE_LONG:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'long'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2300,7 +2299,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::DATE_MEDIUM :
+            case self::DATE_MEDIUM:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'medium'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2321,7 +2320,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::DATE_SHORT :
+            case self::DATE_SHORT:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'short'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2344,7 +2343,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::TIMES :
+            case self::TIMES:
                 try {
                     if ($calc != 'set') {
                         $month = 1;
@@ -2360,7 +2359,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::TIME_FULL :
+            case self::TIME_FULL:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'time', array('gregorian', 'full'));
                     $parsed = Zend_Locale_Format::getTime($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2377,7 +2376,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::TIME_LONG :
+            case self::TIME_LONG:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'time', array('gregorian', 'long'));
                     $parsed = Zend_Locale_Format::getTime($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2394,7 +2393,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::TIME_MEDIUM :
+            case self::TIME_MEDIUM:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'time', array('gregorian', 'medium'));
                     $parsed = Zend_Locale_Format::getTime($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2411,7 +2410,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 }
                 break;
 
-            case Zend_Date::TIME_SHORT :
+            case self::TIME_SHORT:
                 try {
                     $format = Zend_Locale_Data::getContent($locale, 'time', array('gregorian', 'short'));
                     $parsed = Zend_Locale_Format::getTime($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
@@ -2429,8 +2428,8 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             // ATOM and RFC_3339 are identical
-            case Zend_Date::ATOM :
-            case Zend_Date::RFC_3339:
+            case self::ATOM:
+            case self::RFC_3339:
                 $result = preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\d{0,4}([+-]{1}\d{2}:\d{2}|Z)$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2449,7 +2448,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,    1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::COOKIE :
+            case self::COOKIE:
                 $result = preg_match("/^\w{6,9},\s(\d{2})-(\w{3})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})\s.{3,20}$/", $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2472,7 +2471,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::RFC_822 :
+            case self::RFC_822:
                 // new RFC 822 format
                 $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{2})\s(\d{2}):(\d{2}):(\d{2})\s([+-]{1}\d{4}|\w{1,20})$/', $date, $match);
                 if (!$result) {
@@ -2495,7 +2494,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     false), false);
                 break;
 
-            case Zend_Date::RFC_850 :
+            case self::RFC_850:
                 $result = preg_match('/^\w{6,9},\s(\d{2})-(\w{3})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})\s.{3,21}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2517,7 +2516,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::RFC_1036 :
+            case self::RFC_1036:
                 $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{2})\s(\d{2}):(\d{2}):(\d{2})\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2539,7 +2538,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::RFC_1123 :
+            case self::RFC_1123:
                 $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{4})\s(\d{2}):(\d{2}):(\d{2})\s[+-]{1}\d{4}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2560,7 +2559,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::RSS :
+            case self::RSS:
                 $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{2,4})\s(\d{1,2}):(\d{2}):(\d{2})\s.{1,21}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2582,7 +2581,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,  1 + $day,      1970 + $year,     true), false);
                 break;
 
-            case Zend_Date::W3C :
+            case self::W3C:
                 $result = preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-]{1}\d{2}:\d{2}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
@@ -2601,7 +2600,7 @@ class Zend_Date extends Zend_Date_DateObject {
                                              $this->mktime($hour,     $minute,   $second,   1 + $month,    1 + $day,      1970 + $year,     true), false);
                 break;
 
-            default :
+            default:
                 if (!is_numeric($date) || !empty($part)) {
                     try {
                         if (self::$_Options['format_type'] == 'php') {
