@@ -241,7 +241,6 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
             'Squiz/Sniffs/Formatting/OperatorBracketSniff.php',
             'Squiz/Sniffs/Formatting/OutputBufferingIndentSniff.php',
             'Generic/Sniffs/Formatting/SpaceAfterCastSniff.php',
-            'Squiz/Sniffs/Functions/FunctionDeclarationArgumentSpacingSniff.php',
             'Squiz/Sniffs/Functions/FunctionDeclarationSniff.php',
             'Squiz/Sniffs/Functions/FunctionDuplicateArgumentSniff.php',
             'Squiz/Sniffs/Functions/LowercaseFunctionKeywordsSniff.php',

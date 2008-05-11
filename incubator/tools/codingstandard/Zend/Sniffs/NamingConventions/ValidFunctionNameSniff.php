@@ -114,18 +114,18 @@ class Zend_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
-        $isPublic       = ($methodProps['scope'] === 'private') ? false : true;
+        $isPublic       = ($methodProps['scope'] === 'public') ? true : false;
         $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
 
-        // If it's a private method, it must have an underscore on the front.
+        // If it's not a public method, it must have an underscore on the front.
         if ($isPublic === false && $methodName{0} !== '_') {
-            $error = "Private method name \"$className::$methodName\" must be prefixed with an underscore";
+            $error = ucfirst($scope)." method name \"$className::$methodName\" must be prefixed with an underscore";
             $phpcsFile->addError($error, $stackPtr);
             return;
         }
 
-        // If it's not a private method, it must not have an underscore on the front.
+        // If it's a public method, it must not have an underscore on the front.
         if ($isPublic === true && $scopeSpecified === true && $methodName{0} === '_') {
             $error = ucfirst($scope)." method name \"$className::$methodName\" must not be prefixed with an underscore";
             $phpcsFile->addError($error, $stackPtr);

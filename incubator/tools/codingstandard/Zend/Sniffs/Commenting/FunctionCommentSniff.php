@@ -541,14 +541,19 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $longestType        = 0;
             $longestVar         = 0;
 
+            $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
             foreach ($params as $param) {
 
                 $paramComment = trim($param->getComment());
                 $errorPos     = ($param->getLine() + $commentStart);
 
-                // Make sure that there is only one space before the var type.
-                if ($param->getWhitespaceBeforeType() !== '  ') {
-                    $error = 'Expected 2 space before variable type';
+                // Make sure that there is only one or two space before the var type.
+                if (($isSpecialMethod === false) and ($param->getWhitespaceBeforeType() !== '  ')) {
+                    $error = 'Expected 2 spaces before variable type';
+                    $this->currentFile->addError($error, $errorPos);
+                }
+                if (($isSpecialMethod === true) and ($param->getWhitespaceBeforeType() !== ' ')) {
+                    $error = 'Expected 1 space before variable type';
                     $this->currentFile->addError($error, $errorPos);
                 }
 
@@ -659,7 +664,8 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                     // Param comments must start with a capital letter and
                     // end with the full stop.
                     $firstChar = $paramComment{0};
-                    if (preg_match('|[A-Z]|', $firstChar) === 0) {
+                    if (((preg_match('|[A-Z]|', $firstChar) === 0) and ($firstChar !== '(')) or
+                        ((preg_match('|[A-Z]|', $paramComment{1}) === 0) and $firstChar === '(')){
                         $error = 'Param comment must start with a capital letter';
                         $this->currentFile->addError($error, $errorPos);
                     }
