@@ -478,7 +478,7 @@ class Zend_Measure_Length extends Zend_Measure_Abstract
         'KEN'             => array('1.818',            'ken'),
         'KERAT'           => array('0.0286',           'kerat'),
         'KILOFOOT'        => array('304.8',            'kft'),
-        'KILOMETER'       => array('0.001',            'km'),
+        'KILOMETER'       => array('1000',             'km'),
         'KILOPARSEC'      => array('3.0856776e+19',    'kpc'),
         'KILOYARD'        => array('914.4',            'kyd'),
         'KIND'            => array('0.5',              'kind'),
