@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
+<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Aides pour la vue</title>
 
@@ -11,8 +11,9 @@
     </para>
 
     <note>
+        <title>Surveillez la casse</title>
         <para>
-            Les noms des aides sont toujours en notationCamel, c'est-à-dire qu'ils ne commencent pas avec un caractère majuscule.
+            Les noms des aides sont toujours en notationCamel, c'est-à-dire qu'ils ne commencent pas avec un caractère majuscule. Le nom de classe elle-même peut être en casseMélangée, mais la méthode qui est exécutée est en notationCamel.
         </para>
     </note>
 
@@ -46,9 +47,62 @@
                 <code>formButton($name, $value, $attribs)</code> : crée un élément &lt;input type="button" /&gt;.
             </para></listitem>
 
-            <listitem><para>
-                <code>formCheckbox($name, $value, $attribs)</code> : crée un élément &lt;input type="checkbox" /&gt;. Si <code>$value</code> correspond à la valeur "checked", la boite sera cochée.
-            </para></listitem>
+            <listitem>
+                <para>
+                    <code>formCheckbox($name, $value, $attribs, $options):</code> crée un élément &lt;input type="checkbox" /&gt;.  
+                </para>
+
+                <para>
+                    Par défaut, quand aucune <code>$value</code> n'est fournie et qu'aucune <code>$options</code> n'est présente, alors "0" est considéré comme la valeur non cochée et "1" comme la valeur cochée. Si une <code>$value</code> est fournie, mais qu'aucune <code>$options</code> n'est présente, l'état coché est considéré égal à la <code>$value</code> fournie.
+                </para>
+
+                <para>
+                    <code>$options</code> devrait être un tableau. Si ce tableau est indexé, la première valeur est la valeur cochée, la seconde est la valeur non cochée ; et tout autre valeur est ignorée. Vous pouvez aussi passer un tableau associatif avec les clés "checked" et "unChecked".
+                </para>
+
+                <para>
+                    Si <code>$options</code> est fourni, et que <code>$value</code> correspond à la valeur cochée, alors l'élément sera marqué comme coché. Vous pouvez aussi marquer l'élément comme coché ou décoché en passant une valeur booléenne à l'attribut "checked".
+                </para>
+
+                <para>
+                    Ceci pourra surement être plus explicite avec quelques exemples :
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' et '0' en tant qu'options cochée/décochée ; cochée
+echo $this->formCheckbox('foo');
+
+// '1' et '0' en tant qu'options cochée/décochée ; cochée
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' et '0' en tant qu'options cochée/décochée ; décochée 
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' et '0' en tant qu'options cochée/décochée ; cochée 
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' et 'baz' en tant qu'options cochée/décochée ; décochée 
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' et 'baz' en tant qu'options cochée/décochée ; décochée 
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' et 'baz' en tant qu'options cochée/décochée ; cochée 
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' et 'baz' en tant qu'options cochée/décochée ; décochée 
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    Dans tous les cas, la balise est précédée d'une élément masqué ("hidden") avec la valeur de l'état décoché ; ainsi, si la valeur est décochée, vous aurez toujours une valeur valide retournée par votre formulaire.
+                </para>
+            </listitem>
 
             <listitem>
                 <para>
@@ -236,7 +290,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
         <itemizedlist>
 
             <listitem><para>
-                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant la notation Camel. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "Ma_View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans le tiret bas, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
+                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant une notation en casseMélangée. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "Ma_View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans le tiret bas, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
             </para></listitem>
 
             <listitem><para>

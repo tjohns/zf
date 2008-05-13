@@ -238,7 +238,7 @@ require_once 'Zend/Date.php';
 date_default_timezone_set('Europe/Vienna');
 
 // creation d'un objet date
-$date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
+$date = new Zend_Date('10.03.2007', Zend_Date::DATES, 'de');
 
 // affichage de notre date
 print $date->getIso();
@@ -276,7 +276,7 @@ require_once 'Zend/Date.php';
 
 // Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
 // Ici nous le faisons pour l'exemple
-date_defaut_timezone_set('Europe/Vienna');
+date_default_timezone_set('Europe/Vienna');
 
 // creation d'un objet date
 $date = new Zend_Date('10.03.2007 00:00:00', Zend_Date::ISO_8601, 'de');

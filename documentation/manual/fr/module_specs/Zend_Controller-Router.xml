@@ -64,9 +64,11 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
             Si vous utilisez Lighttpd, la règle de réécriture suivante est valide :
         </para>
 
-        <programlisting role="php"><![CDATA[
-url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php")]]>
-        </programlisting>
+        <programlisting role="lighttpd"><![CDATA[url.rewrite-once = (
+    ".*\?(.*)$" => "/index.php?$1",
+    ".*\.(js|ico|gif|jpg|png|css)$" => "$0",
+    "" => "/index.php"
+)]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
