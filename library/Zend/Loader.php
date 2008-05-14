@@ -157,15 +157,11 @@ class Zend_Loader
      */
     public static function isReadable($filename)
     {
-    	$dirs = explode(PATH_SEPARATOR, get_include_path());
-    	$dirs = array_merge($dirs, array('.'));
-    	
-    	foreach ($dirs as $dir) {
-    		if (is_readable($dir . DIRECTORY_SEPARATOR . $filename)) {
-    			return true;
-    		}
-    	}
-    	return false;
+        if (!$fh = @fopen($filename, 'r', true)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
