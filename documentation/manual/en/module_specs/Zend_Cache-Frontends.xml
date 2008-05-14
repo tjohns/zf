@@ -681,28 +681,6 @@ $cache->start();
 // [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)]]>
             </programlisting>
         </sect3>
-        <sect3 id="zend.cache.frontends.page.cancel">
-            <title>The specific cancel method</title>
-            <para>
-                Because of design issues, in some cases (for example when using non HTTP/200 return codes),
-                you could need to cancel the current cache process. So we introduce for this
-                particular frontend, the cancel() method.
-            </para>
-            <programlisting role="php"><![CDATA[<?php
-// [...] // require, configuration and factory
-
-$cache->start();
-
-// [...]
-
-if ($someTest) {
-    $cache->cancel();
-    // [...]
-}
-
-// [...]]]>
-            </programlisting>
-        </sect3>
     </sect2>
 </sect1>
 <!--

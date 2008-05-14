@@ -800,15 +800,6 @@ $input->addNamespace('Other_Namespace');
             你不能删除 Zend_Filter 和 Zend_Validate 的命名空间，只可以添加命名空间，系统首先搜索用户定义的命名空间，然后搜索 Zend 命名空间。
         </para>
 
-        <note>
-           <para>
-               从版本 1.0.4 开始， <code>Zend_Filter_Input::NAMESPACE</code>, 把值 <code>namespace</code>
-               改成 <code>Zend_Filter_Input::INPUT_NAMESPACE</code>，使用值
-               <code>inputNamespace</code> 是为了服从 PHP 5.3 的保留字
-               <code>namespace</code> 。
-           </para>
-       </note>
-
     </sect2>
 
 </sect1>
