@@ -74,10 +74,10 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $fracbd = ($frac & 0x000000ff);
 
         $sec   = (time() + 2208988800);
-        $secb1 = ($sec & 0xff000000) >> 24;
-        $secb2 = ($sec & 0x00ff0000) >> 16;
-        $secb3 = ($sec & 0x0000ff00) >> 8;
-        $secb4 = ($sec & 0x000000ff);
+        $secba = ($sec & 0xff000000) >> 24;
+        $secbb = ($sec & 0x00ff0000) >> 16;
+        $secbc = ($sec & 0x0000ff00) >> 8;
+        $secbd = ($sec & 0x000000ff);
 
         // Flags
         $nul       = chr(0x00);
@@ -111,27 +111,29 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          * The local time, in timestamp format, at the peer when its latest NTP message
          * was sent. Contanis an integer and a fractional part
          */
-        $ntppacket .= chr($secb1)  . chr($secb2)  . chr($secb3)  . chr($secb4);
+        $ntppacket .= chr($secba)  . chr($secbb)  . chr($secbc)  . chr($secbd);
         $ntppacket .= chr($fracba) . chr($fracbb) . chr($fracbc) . chr($fracbd);
 
-        /* The local time, in timestamp format, at the peer. Contains an integer
+        /*
+         * The local time, in timestamp format, at the peer. Contains an integer
          * and a fractional part.
          */
         $ntppacket .= $nulbyte;
         $ntppacket .= $nulbyte;
 
-        /* This is the local time, in timestamp format, when the latest NTP message from
+        /*
+         * This is the local time, in timestamp format, when the latest NTP message from
          * the peer arrived. Contanis an integer and a fractional part.
          */
         $ntppacket .= $nulbyte;
         $ntppacket .= $nulbyte;
 
         /*
-         * the local time, in timestamp format, at which the
+         * The local time, in timestamp format, at which the
          * NTP message departed the sender. Contanis an integer
          * and a fractional part.
          */
-        $ntppacket .= chr($secb1)  . chr($secb2)  . chr($secb3)  . chr($secb4);
+        $ntppacket .= chr($secba)  . chr($secbb)  . chr($secbc)  . chr($secbd);
         $ntppacket .= chr($fracba) . chr($fracbb) . chr($fracbc) . chr($fracbd);
 
         return $ntppacket;
@@ -143,7 +145,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
      * This will return an array with binary data listing:
      *
      * @return array
-     * @throws Zend_TimeSync_Exception
+     * @throws Zend_TimeSync_Exception When timeserver can not be connected
      */
     protected function _read()
     {
@@ -152,7 +154,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         if ($info['timed_out']) {
             fclose($this->_socket);
-            throw new Zend_TimeSync_Exception("could not connect to " .
+            throw new Zend_TimeSync_Exception('could not connect to ' .
                 "'$this->_timeserver' on port '$this->_port', reason: 'server timed out'");
         }
 
@@ -183,7 +185,8 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
     /**
      * Sends the NTP packet to the server
      *
-     * @param  array $data
+     * @param  array $data Data to send to the timeserver
+     * @return void
      */
     protected function _write($data)
     {
@@ -196,8 +199,8 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
     /**
      * Extracts the binary data returned from the timeserver
      *
-     * @param  array $binary
-     * @return integer
+     * @param  array $binary Data returned from the timeserver
+     * @return integer Difference in seconds
      */
     protected function _extract($binary)
     {
@@ -209,17 +212,21 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          */
         $leap = ($binary['flags'] & 0xc0) >> 6;
         switch($leap) {
-            case 0 :
+            case 0:
                 $this->_info['leap'] = '0 - no warning';
                 break;
-            case 1 :
+
+            case 1:
                 $this->_info['leap'] = '1 - last minute has 61 seconds';
                 break;
-            case 2 :
+
+            case 2:
                 $this->_info['leap'] = '2 - last minute has 59 seconds';
                 break;
+
             default:
                 $this->_info['leap'] = '3 - not syncronised';
+                break;
         }
 
         /*
@@ -238,21 +245,26 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          */
         $mode = ($binary['flags'] & 0x07);
         switch($mode) {
-            case 1 :
+            case 1:
                 $this->_info['mode'] = 'symetric active';
                 break;
-            case 2 :
+
+            case 2:
                 $this->_info['mode'] = 'symetric passive';
                 break;
-            case 3 :
+
+            case 3:
                 $this->_info['mode'] = 'client';
                 break;
-            case 4 :
+
+            case 4:
                 $this->_info['mode'] = 'server';
                 break;
-            case 5 :
+
+            case 5:
                 $this->_info['mode'] = 'broadcast';
                 break;
+
             default:
                 $this->_info['mode'] = 'reserved';
                 break;
@@ -317,9 +329,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
             case 0:
                 $this->_info['stratum'] = 'undefined';
                 break;
+
             case 1:
                 $this->_info['stratum'] = 'primary reference';
                 break;
+
             default:
                 $this->_info['stratum'] = 'secondary reference';
                 break;
