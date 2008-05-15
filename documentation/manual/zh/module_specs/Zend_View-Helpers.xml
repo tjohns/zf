@@ -58,7 +58,7 @@
 
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs,$options):</code> 生成 &lt;input type="checkbox" /&gt; 元素。
-            </para></listitem>
+            </para>
              
             <para>
                 缺省地，当没有提供 $value 并且没有 $options，'0' 被假定为未选的值，'1'为选中的值。
