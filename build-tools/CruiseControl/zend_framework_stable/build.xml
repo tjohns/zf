@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="zend_framework_current" default="build" basedir=".">
+
+    <property name="output.dir" value="${basedir}/build" />
+
+    <target name="build" depends="clean, checkout, apidoc, test" />
+
+    <target name="checkout">
+        <exec executable="svn" dir="${basedir}">
+            <arg line="co http://framework.zend.com/svn/framework/branch/release-1.5 source" />
+        </exec>
+    </target>
+
+    <!-- TODO: This step may be augmented with additional configuration, as in the nightly tests -->
+    <target name="test">
+        <mkdir dir="${output.dir}/coverage" />
+        <mkdir dir="${output.dir}/logs" />
+        <exec executable="/bin/bash" dir="${basedir}/source/tests" failonerror="true">
+            <arg line='-c "phpunit
+                       --verbose
+                       --log-xml ${output.dir}/logs/phpunit.xml
+                       --log-pmd ${output.dir}/logs/pmd.xml
+                       --log-metrics ${output.dir}/logs/metrics.xml
+                       --coverage-xml ${output.dir}/logs/coverage.xml
+                       --coverage-html ${output.dir}/coverage
+                       AllTests
+                       &gt; ${output.dir}/logs/phpunit.out 2&gt;&amp;1"' />
+        </exec>
+    </target>
+
+    <target name="apidoc">
+        <mkdir dir="${output.dir}/documentation/api" />
+        <exec executable="phpdoc" dir="${basedir}/source">
+            <arg line="--quiet off
+                       --target ${output.dir}/documentation/api
+                       --directory ${basedir}/source/library
+                       --title 'Zend Framework API Documentation'
+                       --output HTML:frames:DOM/earthli" />
+        </exec>
+    </target>
+
+    <target name="clean">
+        <delete dir="${basedir}/source" />
+        <delete dir="${output.dir}" />
+    </target>
+
+</project>

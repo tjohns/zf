@@ -1,0 +1,51 @@
+<cruisecontrol>
+
+    <project name="zend_framework_current" buildafterfailed="false">
+
+        <schedule interval="86400">
+            <ant anthome="apache-ant-1.7.0" buildfile="projects/${project.name}/build.xml" />
+        </schedule>
+
+        <modificationset quietperiod="0">
+            <svn LocalWorkingCopy="projects/${project.name}/source" />
+        </modificationset>
+
+        <listeners>
+            <currentbuildstatuslistener file="logs/${project.name}/status.txt" />
+        </listeners>
+
+        <log dir="logs/${project.name}">
+            <merge dir="projects/${project.name}/build/logs/" />
+        </log>
+
+        <publishers>
+            <artifactspublisher dir="projects/${project.name}/build" dest="artifacts/${project.name}" />
+        </publishers>
+
+    </project>
+
+    <project name="zend_framework_stable" buildafterfailed="false">
+
+        <schedule interval="86400">
+            <ant anthome="apache-ant-1.7.0" buildfile="projects/${project.name}/build.xml" />
+        </schedule>
+
+        <modificationset quietperiod="0">
+            <svn LocalWorkingCopy="projects/${project.name}/source" />
+        </modificationset>
+
+        <listeners>
+            <currentbuildstatuslistener file="logs/${project.name}/status.txt" />
+        </listeners>
+
+        <log dir="logs/${project.name}">
+            <merge dir="projects/${project.name}/build/logs/" />
+        </log>
+
+        <publishers>
+            <artifactspublisher dir="projects/${project.name}/build" dest="artifacts/${project.name}" />
+        </publishers>
+
+    </project>
+
+</cruisecontrol>
