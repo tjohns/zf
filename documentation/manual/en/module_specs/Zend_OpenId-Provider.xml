@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 <legend>OpenID Login</legend>
 <table border=0>
 <tr><td>Name:</td><td><input type="text" name="openid_identifier" value="<?php
-echo $_GET['openid_identity'];
+echo htmlspecialchars($_GET['openid_identity']);
 ?>"></td></tr>
 <tr><td>Password:</td><td><input type="text" name="openid_password" value=""></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="openid_action" value="login"></td></tr>
@@ -173,10 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 }
 ?>
 <html><body>
-<p>A site identifying as <a href="<?php echo $server->getSiteRoot($_GET);?>">
-<?php echo $server->getSiteRoot($_GET);?></a> has asked us for confirmation that
-<a href="<?php echo $server->getLoggedInUser();?>">
-<?php echo $server->getLoggedInUser();?></a> is your identity URL.</p>
+<p>A site identifying as <a href="<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>">
+<?php echo htmlspecialchars($server->getSiteRoot($_GET));?></a> has asked us for confirmation that
+<a href="<?php echo htmlspecialchars($server->getLoggedInUser());?>">
+<?php echo htmlspecialchars($server->getLoggedInUser());?></a> is your identity URL.</p>
 <form method="post">
 <input type="checkbox" name="forever">
 <label for="forever">forever</label><br>

@@ -61,7 +61,7 @@ if ((isset($_POST['openid_action']) &&
 }
 ?>
 <html><body>
-<?php echo "$status";?>
+<?php echo htmlspecialchars($status);?>
 <form method="post"><fieldset>
 <legend>OpenID Login</legend>
 <input type="text" name="openid_identifier" value="">

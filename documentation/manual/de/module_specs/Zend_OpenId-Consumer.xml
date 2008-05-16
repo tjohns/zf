@@ -113,9 +113,9 @@ require_once "Zend/OpenId/Consumer.php";
 
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id)) {
-    echo "GÜLTIG $id";
+    echo "GÜLTIG ". htmlspecialchars($id);
 } else {
-    echo "UNGÜLTIG $id";
+    echo "UNGÜLTIG" . htmlspecialchars($id);
 }]]>
             </programlisting>
         </example>
@@ -157,9 +157,9 @@ if (isset($_POST['openid_action']) &&
     if ($_GET['openid_mode'] == "id_res") {
         $consumer = new Zend_OpenId_Consumer();
         if ($consumer->verify($_GET, $id)) {
-            $status = "GÜLTIG $id";
+            $status = "GÜLTIG " . htmlspecialchars($id);
         } else {
-            $status = "UNGÜLTIG $id";
+            $status = "UNGÜLTIG " . htmlspecialchars($id);
         }
     } else if ($_GET['openid_mode'] == "cancel") {
         $status = "ABGEBROCHEN";
@@ -563,19 +563,19 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
     'fullname'=>false), null, 1.1);
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id, $sreg)) {
-    echo "GÜLTIG $id<br>\n";
+    echo "GÜLTIG " . htmlspecialchars($id) . "<br>\n";
     $data = $sreg->getProperties();
     if (isset($data['nickname'])) {
-        echo "Spitzname: " . $data['nickname'] . "<br>\n";
+        echo "Spitzname: " . htmlspecialchars($data['nickname']) . "<br>\n";
     }
     if (isset($data['email'])) {
-        echo "Email: " . $data['email'] . "<br>\n";
+        echo "Email: " . htmlspecialchars($data['email']) . "<br>\n";
     }
     if (isset($data['fullname'])) {
-        echo "Vollständiger Name: " . $data['fullname'] . "<br>\n";
+        echo "Vollständiger Name: " . htmlspecialchars($data['fullname']) . "<br>\n";
     }
 } else {
-    echo "UNGÜLTIG $id";
+    echo "UNGÜLTIG " . htmlspecialchars($id);
 }]]>
             </programlisting>
         </example>
@@ -680,7 +680,7 @@ if ((isset($_POST['openid_action']) &&
 }
 ?>
 <html><body>
-<?php echo "$status";?>
+<?php echo htmlspecialchars($status);?>
 <form method="post"><fieldset>
 <legend>OpenID Login</legend>
 <input type="text" name="openid_identifier" value="">

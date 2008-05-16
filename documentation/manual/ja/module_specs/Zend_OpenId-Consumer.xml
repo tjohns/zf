@@ -125,9 +125,9 @@ require_once "Zend/OpenId/Consumer.php";
 
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id)) {
-    echo "有効 $id";
+    echo "有効 " . htmlspecialchars($id);
 } else {
-    echo "無効 $id";
+    echo "無効 " . htmlspecialchars($id);
 }]]>
             </programlisting>
         </example>
@@ -172,9 +172,9 @@ if (isset($_POST['openid_action']) &&
     if ($_GET['openid_mode'] == "id_res") {
         $consumer = new Zend_OpenId_Consumer();
         if ($consumer->verify($_GET, $id)) {
-            $status = "有効 $id";
+            $status = "有効 " . htmlspecialchars($id);
         } else {
-            $status = "無効 $id";
+            $status = "無効 " . htmlspecialchars($id);
         }
     } else if ($_GET['openid_mode'] == "cancel") {
         $status = "キャンセル";
@@ -601,19 +601,19 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
     'fullname'=>false), null, 1.1);
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id, $sreg)) {
-    echo "有効 $id<br>\n";
+    echo "有効 " . htmlspecialchars($id) . "<br>\n";
     $data = $sreg->getProperties();
     if (isset($data['nickname'])) {
-        echo "nickname: " . $data['nickname'] . "<br>\n";
+        echo "nickname: " . htmlspecialchars($data['nickname']) . "<br>\n";
     }
     if (isset($data['email'])) {
-        echo "email: " . $data['email'] . "<br>\n";
+        echo "email: " . htmlspecialchars($data['email']) . "<br>\n";
     }
     if (isset($data['fullname'])) {
-        echo "fullname: " . $data['fullname'] . "<br>\n";
+        echo "fullname: " . htmlspecialchars($data['fullname']) . "<br>\n";
     }
 } else {
-    echo "無効 $id";
+    echo "無効 " . htmlspecialchars($id);
 }]]>
             </programlisting>
         </example>
@@ -726,7 +726,7 @@ if ((isset($_POST['openid_action']) &&
 }
 ?>
 <html><body>
-<?php echo "$status";?>
+<?php echo htmlspecialchars($status);?>
 <form method="post"><fieldset>
 <legend>OpenID ログイン</legend>
 <input type="text" name="openid_identifier" value="">
