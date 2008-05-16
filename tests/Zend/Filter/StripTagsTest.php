@@ -452,4 +452,21 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
         $this->_filter->commentsAllowed = true;
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
+    
+    /**
+     * Ensures that a closing angle bracket in an allowed attribute does not break the parser
+     *
+     * @return void
+     * @link   http://framework.zend.com/issues/browse/ZF-3278
+     */
+    public function testClosingAngleBracketInAllowedAttributeValue()
+    {
+        $tagsAllowed = array(
+            'a' => 'href'
+            );
+        $this->_filter->setTagsAllowed($tagsAllowed);
+        $input    = '<a href="Some > Text">';
+        $expected = '<a href="Some > Text">';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
 }
