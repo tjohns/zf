@@ -465,8 +465,8 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
             'a' => 'href'
             );
         $this->_filter->setTagsAllowed($tagsAllowed);
-        $input    = '<a href="Some > Text">';
-        $expected = '<a href="Some > Text">';
+        $input    = '<a href="Some &gt; Text">';
+        $expected = '<a href="Some &gt; Text">';
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 }
