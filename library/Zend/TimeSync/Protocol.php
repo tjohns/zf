@@ -119,6 +119,10 @@ abstract class Zend_TimeSync_Protocol
      */
     public function getInfo()
     {
+        if (empty($this->_info)) {
+            $this->_write($this->_prepare());
+            $timestamp = $this->_extract($this->_read());
+        }
         return $this->_info;
     }
 
