@@ -690,7 +690,9 @@ $cache->start();
 
 // [...] das Ende der Bootstrap Datei (diese Zeilen werden nicht ausgeführt, wenn der Cache ausgegeben wurde)]]>
             </programlisting>
+
         </sect3>
+
     </sect2>
 
 </sect1>
