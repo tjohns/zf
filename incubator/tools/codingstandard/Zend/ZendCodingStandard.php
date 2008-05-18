@@ -226,7 +226,6 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
             'Generic/Sniffs/CodeAnalysis/UnnecessaryFinalModifierSniff.php',
             'Generic/Sniffs/CodeAnalysis/UnusedFunctionParameterSniff.php',
             'Generic/Sniffs/CodeAnalysis/UselessOverridingMethodSniff.php',
-            'Squiz/Sniffs/Commenting/BlockCommentSniff.php',
             'Squiz/Sniffs/Commenting/DocCommentAlignmentSniff.php',
             'Squiz/Sniffs/Commenting/EmptyCatchCommentSniff.php',
             'Squiz/Sniffs/Commenting/FunctionCommentThrowTagSniff.php',
@@ -234,7 +233,7 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
             'Squiz/Sniffs/ControlStructures/ElseIfDeclarationSniff.php',
             'Squiz/Sniffs/ControlStructures/ForEachLoopDeclarationSniff.php',
             'Squiz/Sniffs/ControlStructures/ForLoopDeclarationSniff.php',
-            'Squiz/Sniffs/ControlStructures/InlineControlStructureSniff.php',
+            'Generic/Sniffs/ControlStructures/InlineControlStructureSniff.php',
             'Squiz/Sniffs/ControlStructures/InlineIfDeclarationSniff.php',
             'Squiz/Sniffs/ControlStructures/LowercaseDeclarationSniff.php',
             'Generic/Sniffs/Files/LineEndingsSniff.php',
@@ -293,9 +292,8 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
  *     (ww = b))
  *
  * Optional descriptions should begin with the Description "(optional)"
- * @param string $variable OPTIONAL my variable
+ * @param string $variable (Optional) my variable
  *
  * Error on @throws tag when no exception is thrown
- *
- * ScopeIndent does not work with EXACT, it should not take in account DOCs or any other multiline-scope
+ * Error on @throws tag in false order
  */

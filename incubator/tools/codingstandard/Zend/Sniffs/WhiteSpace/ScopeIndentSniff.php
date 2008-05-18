@@ -43,6 +43,6 @@ class Zend_Sniffs_WhiteSpace_ScopeIndentSniff extends Generic_Sniffs_WhiteSpace_
      *
      * @var bool
      */
-    protected $exact = true;
+    protected $exact = false;
 
 }//end class

@@ -522,7 +522,9 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         if (empty($params) === false) {
 
-            if (substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 1) {
+            $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
+            if ((substr_count($params[(count($params) - 1)]->getWhitespaceAfter(), $this->currentFile->eolChar) !== 1) and
+                ($isSpecialMethod === false)) {
                 $error    = 'No empty line after last parameter comment allowed';
                 $errorPos = ($params[(count($params) - 1)]->getLine() + $commentStart);
                 $this->currentFile->addError($error, $errorPos + 1);
@@ -541,7 +543,6 @@ class Zend_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $longestType        = 0;
             $longestVar         = 0;
 
-            $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
             foreach ($params as $param) {
 
                 $paramComment = trim($param->getComment());
