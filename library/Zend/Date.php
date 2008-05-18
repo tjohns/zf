@@ -4639,8 +4639,8 @@ class Zend_Date extends Zend_Date_DateObject
             $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale,
                                                   'date_format' => $format, 'format_type' => 'iso',
                                                   'fix_date' => false));
-            if ((strpos(strtoupper($format), 'YY') !== false) and
-                (strpos(strtoupper($format), 'YYYY') === false)) {
+            if (isset($parsed['year']) and ((strpos(strtoupper($format), 'YY') !== false) and
+                (strpos(strtoupper($format), 'YYYY') === false))) {
                 $parsed['year'] = self::_century($parsed['year']);
             }
         } catch (Zend_Locale_Exception $e) {
