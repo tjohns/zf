@@ -261,7 +261,7 @@ require_once 'Zend/Date.php';
 date_default_timezone_set('Europe/Vienna');
 
 // Erstellen des Datumsobjektes
-$date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
+$date = new Zend_Date('10.03.2007', Zend_Date::DATES, 'de');
 
 // Ausgabe des Datumsobjektes
 print $date->getIso();
