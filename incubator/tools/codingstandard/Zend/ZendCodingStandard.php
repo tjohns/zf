@@ -256,7 +256,7 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
             'Squiz/Sniffs/PHP/EvalSniff.php',
             'Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php',
             'Squiz/Sniffs/PHP/GlobalKeywordSniff.php',
-            'Squiz/Sniffs/PHP/HereDocSniff.php',
+            'Squiz/Sniffs/PHP/HeredocSniff.php',
             'Squiz/Sniffs/PHP/InnerFunctionsSniff.php',
             'Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
             'Squiz/Sniffs/PHP/LowercasePHPFunctionsSniff.php',
