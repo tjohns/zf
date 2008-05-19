@@ -98,6 +98,9 @@ xmlns:app='http://purl.org/atom/app#'>
     <media:category label='Music'
     scheme='http://gdata.youtube.com/schemas/2007/categories.cat'>
     Music</media:category>
+    <media:category 
+    scheme='http://gdata.youtube.com/schemas/2007/developertags.cat'>
+    DeveloperTag1</media:category>
     <media:content url='http://www.youtube.com/v/UMFI1hdm96E'
     type='application/x-shockwave-flash' medium='video'
     isDefault='true' expression='full' duration='255'

@@ -113,7 +113,8 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('zfgdata', $entry->username->text);
         $this->assertEquals('I\'m a lonely test account, with little to do but sit around and wait for people to use me.  I get bored in between releases and often sleep to pass the time.  Please use me more often, as I love to show off my talent in breaking your code.',
                 $entry->description->text);
-        $this->assertEquals(31, $entry->age->text);
+        // Assuming that this code will not be around in 68 years :)
+        $this->assertTrue(($entry->age->text >= 32) && ($entry->age->text < 100));
         $this->assertEquals('crime and punishment, ps i love you, the stand', $entry->books->text);
         $this->assertEquals('Google', $entry->company->text);
         $this->assertEquals('software engineering, information architecture, photography, travel', $entry->hobbies->text);
