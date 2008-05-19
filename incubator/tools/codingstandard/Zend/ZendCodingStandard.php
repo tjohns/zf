@@ -270,7 +270,6 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
             'Squiz/Sniffs/WhiteSpace/ControlStructureSpacingSniff.php',
             'Squiz/Sniffs/WhiteSpace/FunctionOpeningBraceSpaceSniff.php',
             'Squiz/Sniffs/WhiteSpace/LanguageConstructSpacingSniff.php',
-            'Squiz/Sniffs/WhiteSpace/MemberVarSpacingSniff.php',
             'Squiz/Sniffs/WhiteSpace/ObjectOperatorSpacingSniff.php',
             'Squiz/Sniffs/WhiteSpace/OperatorSpacingSniff.php',
             'Squiz/Sniffs/WhiteSpace/ScopeKeywordSpacingSniff.php',
@@ -286,6 +285,11 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
  * class end  - no empty line before closing brace of a class
  *    }
  * }
+ *
+ * class begin - no empty line after the beginning brace of a class
+ * class xxxx
+ * {
+ *   /**
  *
  * if / foreach / for / function - when linebreak indended to equality sign or 1 after the opening brace
  * if ((ss = a) or
