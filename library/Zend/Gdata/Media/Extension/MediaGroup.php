@@ -94,6 +94,7 @@ require_once 'Zend/Gdata/Media/Extension/MediaThumbnail.php';
  */
 require_once 'Zend/Gdata/Media/Extension/MediaTitle.php';
 
+
 /**
  * This class represents the media:group element of Media RSS.
  * It allows the grouping of media:content elements that are 

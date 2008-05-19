@@ -30,7 +30,7 @@ require_once 'Zend/Gdata/Entry.php';
 require_once 'Zend/Gdata/Media.php';
 
 /**
- * @see Zend_Gdata_Media_Extension_Group
+ * @see Zend_Gdata_Media_Extension_MediaGroup
  */
 require_once 'Zend/Gdata/Media/Extension/MediaGroup.php';
 
@@ -107,9 +107,27 @@ class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
         }
     }
 
+    /**
+     * Returns the entry's mediaGroup object.
+     *
+     * @return Zend_Gdata_Media_Extension_MediaGroup
+    */
     public function getMediaGroup()
     {
         return $this->_mediaGroup;
     }
+
+    /**
+     * Sets the entry's mediaGroup object.
+     *
+     * @param Zend_Gdata_Media_Extension_MediaGroup $mediaGroup
+     * @return Zend_Gdata_Media_Entry Provides a fluent interface
+     */
+    public function setMediaGroup($mediaGroup)
+    {
+        $this->_mediaGroup = $mediaGroup;
+        return $this;
+    }
+
 
 }

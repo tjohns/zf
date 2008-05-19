@@ -35,6 +35,11 @@ require_once 'Zend/Gdata/YouTube/Extension/MediaContent.php';
 require_once 'Zend/Gdata/YouTube/Extension/Duration.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Private
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Private.php';
+
+/**
  * This class represents the media:group element of Media RSS.
  * It allows the grouping of media:content elements that are 
  * different representations of the same content.  When it exists,
@@ -52,6 +57,7 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
     protected $_rootNamespace = 'media';
 
     protected $_duration = null;
+    protected $_private = null;
 
     public function __construct($element = null)
     {
@@ -66,6 +72,9 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
         $element = parent::getDOM($doc);
         if ($this->_duration !== null) {
             $element->appendChild($this->_duration->getDOM($element->ownerDocument));
+        }
+        if ($this->_private !== null) {
+            $element->appendChild($this->_private->getDOM($element->ownerDocument));
         }
         return $element;
     }
@@ -90,6 +99,12 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
                 $duration->transferFromDOM($child);
                 $this->_duration = $duration;
                 break;
+            case $this->lookupNamespace('yt') . ':' . 'private':
+                $private = new Zend_Gdata_YouTube_Extension_Private();
+                $private->transferFromDOM($child);
+                $this->_private = $private;
+                break;
+
         default:
             parent::takeChildFromDOM($child);
             break;
@@ -115,6 +130,28 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
     public function setDuration($value)
     {
         $this->_duration = $value;
+        return $this;
+    }
+
+    /**
+     * Returns the private value of this element
+     *
+     * @return Zend_Gdata_YouTube_Extension_Private
+     */
+    public function getPrivate()
+    {
+        return $this->_private;
+    }
+
+    /**
+     * Sets the private value of this element
+     *
+     * @param Zend_Gdata_YouTube_Extension_Private $value The private value
+     * @return Zend_Gdata_YouTube_Extension_MediaGroup Provides a fluent interface
+     */
+    public function setPrivate($value)
+    {
+        $this->_private = $value;
         return $this;
     }
 
