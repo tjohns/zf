@@ -34,7 +34,6 @@ require_once 'Zend/Exception.php';
  */
 class Zend_TimeSync_Exception extends Zend_Exception
 {
-
     /**
      * Contains array of exceptions thrown in queried server
      *
@@ -62,5 +61,4 @@ class Zend_TimeSync_Exception extends Zend_Exception
     {
         return $this->_exceptions;
     }
-
 }

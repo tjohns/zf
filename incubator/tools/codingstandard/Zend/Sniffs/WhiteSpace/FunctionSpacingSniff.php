@@ -67,7 +67,7 @@ class Zend_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sni
             $closer = $tokens[$stackPtr]['scope_closer'];
         }
 
-        // There needs to be 2 blank lines after the closer.
+        // There needs to be 1 blank line after the closer.
         $nextLineToken = null;
         for ($i = $closer; $i < $phpcsFile->numTokens; $i++) {
             if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
@@ -92,7 +92,12 @@ class Zend_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-        if ($foundLines !== 1) {
+        if (($tokens[$closer+2]['content'] == '}') or ($tokens[$closer+3]['content'] == '}') or
+            ($tokens[$closer+4]['content'] == '}')) {
+            if ($tokens[$closer + 2]['content'] !== '}' ) {
+                $phpcsFile->addError("Expected 0 blank lines after last function; $foundLines found", $closer + 1);
+        	}
+        } else if ($foundLines !== 1) {
             $phpcsFile->addError("Expected 1 blank lines after function; $foundLines found", $closer);
         }
 

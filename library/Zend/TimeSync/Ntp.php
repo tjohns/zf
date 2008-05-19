@@ -34,7 +34,6 @@ require_once 'Zend/TimeSync/Protocol.php';
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 {
-
     /**
      * NTP port number (123) assigned by the Internet Assigned Numbers Authority
      *
@@ -152,7 +151,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $flags = ord(fread($this->_socket, 1));
         $info  = stream_get_meta_data($this->_socket);
 
-        if ($info['timed_out']) {
+        if ($info['timed_out'] === true) {
             fclose($this->_socket);
             throw new Zend_TimeSync_Exception('could not connect to ' .
                 "'$this->_timeserver' on port '$this->_port', reason: 'server timed out'");
@@ -185,7 +184,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
     /**
      * Sends the NTP packet to the server
      *
-     * @param  array $data Data to send to the timeserver
+     * @param  string $data Data to send to the timeserver
      * @return void
      */
     protected function _write($data)
@@ -199,7 +198,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
     /**
      * Extracts the binary data returned from the timeserver
      *
-     * @param  array $binary Data returned from the timeserver
+     * @param  string|array $binary Data returned from the timeserver
      * @return integer Difference in seconds
      */
     protected function _extract($binary)
@@ -280,29 +279,29 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $refid = strtoupper($binary['referenceid']);
         switch($binary['stratum']) {
             case 0:
-                if (substr($refid, 0, 3) == 'DCN') {
+                if (substr($refid, 0, 3) === 'DCN') {
                     $ntpserviceid = 'DCN routing protocol';
-                } else if (substr($refid, 0, 4) == 'NIST') {
+                } else if (substr($refid, 0, 4) === 'NIST') {
                     $ntpserviceid = 'NIST public modem';
-                } else if (substr($refid, 0, 3) == 'TSP') {
+                } else if (substr($refid, 0, 3) === 'TSP') {
                     $ntpserviceid = 'TSP time protocol';
-                } else if (substr($refid, 0, 3) == 'DTS') {
+                } else if (substr($refid, 0, 3) === 'DTS') {
                     $ntpserviceid = 'Digital Time Service';
                 }
                 break;
 
             case 1:
-                if (substr($refid, 0, 4) == 'ATOM') {
+                if (substr($refid, 0, 4) === 'ATOM') {
                     $ntpserviceid = 'Atomic Clock (calibrated)';
-                } else if (substr($refid, 0, 3) == 'VLF') {
+                } else if (substr($refid, 0, 3) === 'VLF') {
                     $ntpserviceid = 'VLF radio';
-                } else if ($refid == 'CALLSIGN') {
+                } else if ($refid === 'CALLSIGN') {
                     $ntpserviceid = 'Generic radio';
-                } else if (substr($refid, 0, 4) == 'LORC') {
+                } else if (substr($refid, 0, 4) === 'LORC') {
                     $ntpserviceid = 'LORAN-C radionavigation';
-                } else if (substr($refid, 0, 4) == 'GOES') {
+                } else if (substr($refid, 0, 4) === 'GOES') {
                     $ntpserviceid = 'GOES UHF environment satellite';
-                } else if (substr($refid, 0, 3) == 'GPS') {
+                } else if (substr($refid, 0, 3) === 'GPS') {
                     $ntpserviceid = 'GPS UHF satellite positioning';
                 }
                 break;
@@ -363,21 +362,21 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
          * when its latest NTP message was sent.
          */
         $original  = (float) $binary['originatestamp'];
-        $original += (float) $binary['originatemicro'] / 4294967296;
+        $original += (float) ($binary['originatemicro'] / 4294967296);
 
         /*
          * The local time, in timestamp format, when the latest
          * NTP message from the peer arrived.
          */
         $received  = (float) $binary['receivestamp'];
-        $received += (float) $binary['receivemicro'] / 4294967296;
+        $received += (float) ($binary['receivemicro'] / 4294967296);
 
         /*
          * The local time, in timestamp format, at which the
          * NTP message departed the sender.
          */
         $transmit  = (float) $binary['transmitstamp'];
-        $transmit += (float) $binary['transmitmicro'] / 4294967296;
+        $transmit += (float) ($binary['transmitmicro'] / 4294967296);
 
         /*
          * The roundtrip delay of the peer clock relative to the local clock
@@ -398,5 +397,4 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         return $time;
     }
-
 }
