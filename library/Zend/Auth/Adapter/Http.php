@@ -387,6 +387,8 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         list($clientScheme) = explode(' ', $authHeader);
         $clientScheme = strtolower($clientScheme);
 
+        // The server can issue multiple challenges, but the client should
+        // answer with only the selected auth scheme.
         if (!in_array($clientScheme, $this->_supportedSchemes)) {
             $this->_response->setHttpResponseCode(400);
             return new Zend_Auth_Result(
@@ -396,8 +398,12 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
             );
         }
 
-        // The server can issue multiple challenges, but the client should
-        // answer with only one selected auth scheme.
+        // client sent a scheme that is not the one required
+        if (!in_array($clientScheme, $this->_acceptSchemes)) {
+            // challenge again the client
+            return $this->_challengeClient();
+        }
+        
         switch ($clientScheme) {
             case 'basic':
                 $result = $this->_basicAuth($authHeader);

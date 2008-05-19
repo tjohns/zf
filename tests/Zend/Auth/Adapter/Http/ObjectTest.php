@@ -258,4 +258,37 @@ class Zend_Auth_Adapter_Http_ObjectTest extends PHPUnit_Framework_TestCase
             unset($a);
         }
     }
+    
+    public function testWrongResolverUsed()
+    {
+        $response = $this->getMock('Zend_Controller_Response_Http');
+        $request  = $this->getMock('Zend_Controller_Request_Http');
+        $request->expects($this->any())
+                ->method('getHeader')
+                ->will($this->returnValue('Basic <followed by a space caracter')); // A basic Header will be provided by that request
+
+        // Test a Digest auth process while the request is containing a Basic auth header
+        $a = new Zend_Auth_Adapter_Http($this->_digestConfig);
+        $a->setDigestResolver($this->_digestResolver)
+          ->setRequest($request)
+          ->setResponse($response);
+        $result = $a->authenticate();
+        $this->assertEquals($result->getCode(),Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID);
+    }
+    
+    public function testUnsupportedScheme()
+    {
+        $response = $this->getMock('Zend_Controller_Response_Http');
+        $request  = $this->getMock('Zend_Controller_Request_Http');
+        $request->expects($this->any())
+                ->method('getHeader')
+                ->will($this->returnValue('NotSupportedScheme <followed by a space caracter'));
+
+        $a = new Zend_Auth_Adapter_Http($this->_digestConfig);
+        $a->setDigestResolver($this->_digestResolver)
+          ->setRequest($request)
+          ->setResponse($response);            
+        $result = $a->authenticate();
+        $this->assertEquals($result->getCode(),Zend_Auth_Result::FAILURE_UNCATEGORIZED);
+    }
 }
