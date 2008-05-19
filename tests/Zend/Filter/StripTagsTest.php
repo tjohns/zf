@@ -469,4 +469,20 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
         $expected = '<a href="Some &gt; Text">';
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
+    
+    /**
+     * Ensures that an allowed attribute's value may end with an equals sign '='
+     * 
+     * @return void
+     * @link   http://framework.zend.com/issues/browse/ZF-3293
+     */
+    public function testSomething()
+    {
+        $tagsAllowed = array(
+            'element' => 'attribute'
+        );
+        $this->_filter->setTagsAllowed($tagsAllowed);
+        $input = '<element attribute="a=">contents</element>';
+        $this->assertEquals($input, $this->_filter->filter($input));
+    }
 }
