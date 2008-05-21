@@ -109,7 +109,7 @@ class Zend_Cache_Backend_Test extends Zend_Cache_Backend implements Zend_Cache_B
             return serialize(array('foo'));
         }
         if ($id=='serialized2') {
-            return serialize(array('contentType' => null, 'data' => 'foo'));
+            return serialize(array('headers' => array(), 'data' => 'foo'));
         }
         if (($id=='71769f39054f75894288e397df04e445') or ($id=='615d222619fb20b527168340cebd0578')) {
             return serialize(array('foo', 'bar'));
