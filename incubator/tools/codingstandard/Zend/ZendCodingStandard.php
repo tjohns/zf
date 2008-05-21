@@ -282,14 +282,6 @@ class PHP_CodeSniffer_Standards_Zend_ZendCodingStandard extends
 
 /**
  * TODO:
- * class end  - no empty line before closing brace of a class
- *    }
- * }
- *
- * class begin - no empty line after the beginning brace of a class
- * class xxxx
- * {
- *   /**
  *
  * if / foreach / for / function - when linebreak indended to equality sign or 1 after the opening brace
  * if ((ss = a) or

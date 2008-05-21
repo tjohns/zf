@@ -158,8 +158,12 @@ class Zend_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sni
             }
         }
 
-        if ($foundLines !== 1) {
-            $phpcsFile->addError("Expected 1 blank lines before function; $foundLines found", $stackPtr);
+        if ($tokens[$prevContent]['content'] == '{') {
+        	if ($foundLines !== 0) {
+                $phpcsFile->addError("Expected 0 blank lines before function; $foundLines found", $stackPtr);
+            }
+        } else if ($foundLines !== 1) {
+            $phpcsFile->addError("Expected 1 blank line before function; $foundLines found", $stackPtr);
         }
 
     }
