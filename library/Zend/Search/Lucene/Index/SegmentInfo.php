@@ -199,21 +199,21 @@ class Zend_Search_Lucene_Index_SegmentInfo
         if (!is_null($isCompound)) {
             $this->_isCompound    = $isCompound;
         } else {
-        	// It's a pre-2.1 segment
-        	// detect if it uses compond file
-        	$this->_isCompound = true;
+            // It's a pre-2.1 segment
+            // detect if it uses compond file
+            $this->_isCompound = true;
 
-        	try {
-        		// Try to open compound file
-        		$this->_directory->getFileObject($name . '.cfs');
-        	} catch (Zend_Search_Lucene_Exception $e) {
-        		if (strpos($e->getMessage(), 'is not readable') !== false) {
-        			// Compound file is not found or is not readable
-        			$this->_isCompound = false;
-        		} else {
-        			throw $e;
-        		}
-        	}
+            try {
+                // Try to open compound file
+                $this->_directory->getFileObject($name . '.cfs');
+            } catch (Zend_Search_Lucene_Exception $e) {
+                if (strpos($e->getMessage(), 'is not readable') !== false) {
+                    // Compound file is not found or is not readable
+                    $this->_isCompound = false;
+                } else {
+                    throw $e;
+                }
+            }
         }
 
         $this->_segFiles = array();
@@ -305,11 +305,35 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $format = $delFile->readInt();
 
             if ($format == (int)0xFFFFFFFF) {
-                /**
-                 * @todo Implement support of DGaps delete file format.
-                 * See Lucene file format for details - http://lucene.apache.org/java/docs/fileformats.html#Deleted%20Documents
-                 */
-                throw new Zend_Search_Lucene_Exception('DGaps delete file format is not supported. Optimize index to use it with Zend_Search_Lucene');
+                if (extension_loaded('bitset')) {
+                    $this->_deleted = bitset_empty();
+                } else {
+                    $this->_deleted = array();
+                }
+
+                $byteCount = $delFile->readInt();
+                $bitCount  = $delFile->readInt();
+                
+                $delFileSize = $this->_directory->fileLength($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
+                $byteNum = 0;
+                
+                do {
+                    $dgap = $delFile->readVInt();
+                    $nonZeroByte = $delFile->readByte();
+                    
+                    $byteNum += $dgap;
+
+                    for ($bit = 0; $bit < 8; $bit++) {
+                        if ($nonZeroByte & (1<<$bit)) {
+                            if (extension_loaded('bitset')) {
+                                bitset_incl($this->_deleted, $byteNum*8 + $bit);
+                            } else {
+                                $this->_deleted[$byteNum*8 + $bit] = 1;
+                            }
+                        }
+                    }
+                } while ($delFile->tell() < $delFileSize);
+                
             } else {
                 // $format is actually byte count
                 $byteCount = ceil($format/8);
@@ -972,23 +996,23 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $delFileList = array();
         foreach ($this->_directory->fileList() as $file) {
-        	if ($file == $this->_name . '.del') {
-        		// Matches <segment_name>.del file name
-        		$delFileList[] = 0;
-        	} else if (preg_match('/^' . $this->_name . '_([a-zA-Z0-9]+)\.del$/i', $file, $matches)) {
-        		// Matches <segment_name>_NNN.del file names
+            if ($file == $this->_name . '.del') {
+                // Matches <segment_name>.del file name
+                $delFileList[] = 0;
+            } else if (preg_match('/^' . $this->_name . '_([a-zA-Z0-9]+)\.del$/i', $file, $matches)) {
+                // Matches <segment_name>_NNN.del file names
                 $delFileList[] = (int)base_convert($matches[1], 36, 10);
             }
         }
 
         if (count($delFileList) == 0) {
-        	// There is no deletions file for current segment in the directory
-        	// Set detetions file generation number to 1
-        	$this->_delGen = 1;
+            // There is no deletions file for current segment in the directory
+            // Set detetions file generation number to 1
+            $this->_delGen = 1;
         } else {
-        	// There are some deletions files for current segment in the directory
-        	// Set detetions file generation number to the highest + 1
-        	$this->_delGen = max($delFileList) + 1;
+            // There are some deletions files for current segment in the directory
+            // Set detetions file generation number to the highest + 1
+            $this->_delGen = max($delFileList) + 1;
         }
 
         $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
