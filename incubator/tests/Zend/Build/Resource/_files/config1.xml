@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<configdata>
-  <webhost>www.example.com</webhost>
-  <database adapter="pdo_mysql">
-    <params host="db.example.com" username="dbuser" password="secret" dbname="mydatabase"/>
-  </database>
-</configdata>
