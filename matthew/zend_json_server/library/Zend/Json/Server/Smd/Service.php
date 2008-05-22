@@ -26,7 +26,7 @@ require_once 'Zend/Json/Server/Smd.php';
  * 
  * @package    Zend_Json
  * @subpackage Server
- * @version    $Id: $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
