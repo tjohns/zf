@@ -423,7 +423,3 @@ $client = new Zend_Http_Client(array(
         </example>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
