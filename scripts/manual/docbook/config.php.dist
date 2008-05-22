@@ -1,7 +1,0 @@
-<?php
-
-$confluenceUser = '';
-$confluencePass = '';
-
-$jiraUser = '';
-$jiraPass = '';
