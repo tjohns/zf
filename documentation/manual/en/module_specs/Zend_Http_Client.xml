@@ -62,7 +62,8 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>strict</entry>
-                            <entry>When set to false, some validation functions will be skipped. Usually this should not be changed</entry>
+                            <entry>Whether perform validation on header names. When set to false, validation functions will be skipped.
+                            Usually this should not be changed</entry>
                             <entry>boolean</entry>
                             <entry>true</entry>
                         </row>
@@ -102,6 +103,13 @@ $client->setConfig(array(
                             consecutive requests to the same server are performned.</entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>storeresponse</entry>
+                            <entry>Whether to store last response for later retrieval with getLastResponse(). If set to false
+                            getLastResponse() will return null.</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
                         </row>
                     </tbody>
                 </tgroup>
