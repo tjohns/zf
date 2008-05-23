@@ -33,7 +33,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    Par défaut, le plugin<link
+                    Par défaut, le plugin <link
                         linkend="zend.controller.plugins.standard.errorhandler">error
                     handler</link> est présent, et activé. Ce plugin a été conçu pour gérer:
                 </para>
@@ -196,8 +196,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);?>]]>
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Dérivez la classe<code>Zend_Controller_Action</code> en redéfinissant sa méthode
-                            <code>__call()</code> method, voyez plutôt :
+                            Dérivez la classe <code>Zend_Controller_Action</code> en redéfinissant sa méthode
+                            <code>__call()</code>, voyez plutôt :
                         </para>
 
                         <programlisting role="php"><![CDATA[<?php

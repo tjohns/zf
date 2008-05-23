@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> enregistre un <link linkend="zend.controller.plugins">plugin broker</link> avec lui, permettant à des événements divers qu'il déclenche d'être observé par plugins. Dans la plupart des cas, cela donne au développeur l'occasion de construire le processus de dispatchage au site sans avoir besoin d'étendre le contrôleur frontal pour ajouter une fonctionnalité.
+            <code>Zend_Controller_Front</code> enregistre un <link linkend="zend.controller.plugins">plugin broker</link> avec lui, permettant à des événements divers qu'il déclenche d'être observés par plugins. Dans la plupart des cas, cela donne au développeur l'occasion de construire le processus de dispatchage au site sans avoir besoin d'étendre le contrôleur frontal pour ajouter une fonctionnalité.
         </para>
 
         <para>
@@ -23,11 +23,11 @@
         <note>
             <title>Comportement par défaut</title>
             <para>
-                Par défaut, le contrôleur frontal charge le plugin <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>, ainsi le plugin d'aide d'action <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>. Ceci est fait repectivement pour simplifier la gestion d'erreur et le rendu des vues dans vos contrôleurs.
+                Par défaut, le contrôleur frontal charge le plugin <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>, ainsi que le plugin d'aide d'action <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>. Ceci est fait respectivement pour simplifier la gestion d'erreur et le rendu des vues dans vos contrôleurs.
             </para>
 
             <para>
-                Pour désactiver <code>ErrorHandler</code>, exécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ErrorHandler</code>, exécutez l'action suivante à n'importe quel point précédant l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -36,7 +36,7 @@ $front->setParam('noErrorHandler', true);]]>
             </programlisting>
 
             <para>
-                Pour désactiver <code>ViewRenderer</code>, exécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ViewRenderer</code>, exécutez l'action suivante à n'importe quel point précédant l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -51,14 +51,14 @@ $front->setParam('noViewRenderer', true);]]>
         <title>Méthodes principales</title>
 
         <para>
-            Le contrôleur frontal a plusieurs accesseurs pour construire son environnement. Cependant, il y a trois méthodes principales clés dans la fonctionnalité de contrôleur frontal :
+            Le contrôleur frontal a plusieurs accesseurs pour construire son environnement. Cependant, il y a trois méthodes principales clées dans la fonctionnalité de contrôleur frontal :
         </para>
 
         <sect3 id="zend.controller.front.methods.primary.getinstance">
             <title>getInstance()</title>
 
             <para>
-                <code>getInstance()</code> est utilisé pour récupérer une instance du contrôleur frontal. Comme le contrôleur frontal implémente un motif de Singleton, c'est aussi le seul moyen possible pour instancier un objet de contrôleur frontal.
+                <code>getInstance()</code> est utilisé pour récupérer une instance du contrôleur frontal. Comme le contrôleur frontal implémente un motif de Singleton, c'est aussi le seul moyen possible pour instancier un objet unique de contrôleur frontal.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -70,7 +70,7 @@ $front = Zend_Controller_Front::getInstance();]]>
             <title>setControllerDirectory() et addControllerDirectory</title>
 
             <para>
-                <code>setControllerDirectory()</code> est utilisé pour infrmer <link linkend="zend.controller.dispatcher">le dispatcheur</link> où chercher les fichiers de classes de <link linkend="zend.controller.action">contrôleurs d'action</link>. Ces méthodes acceptent un chemin unique ou un tableau associatif de paires modules/chemins.
+                <code>setControllerDirectory()</code> est utilisé pour informer <link linkend="zend.controller.dispatcher">le dispatcheur</link> où chercher les fichiers de classes de <link linkend="zend.controller.action">contrôleurs d'action</link>. Ces méthodes acceptent un chemin unique ou un tableau associatif de paires modules/chemins.
             </para>
 
             <para>
@@ -137,7 +137,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
             <title>run()</title>
 
             <para>
-                <code>Zend_Controller_Front::run($path)</code> est une méthode statique prenant simplement un chemin vers un répertoire contenant des contrôleurs. Elle recupère l'instance de contrôleur frontal (via <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de <link linkend="zend.controller.front.methods.primary.setcontrollerdirectory">setControllerDirectory()</link>, et finalement réalise le <link linkend="zend.controller.front.methods.primary.dispatch">dispatchage</link>.
+                <code>Zend_Controller_Front::run($path)</code> est une méthode 'raccourci', statique, prenant simplement un chemin vers un répertoire contenant des contrôleurs. Elle recupère l'instance de contrôleur frontal (via <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de <link linkend="zend.controller.front.methods.primary.setcontrollerdirectory">setControllerDirectory()</link>, et finalement réalise le <link linkend="zend.controller.front.methods.primary.dispatch">dispatchage</link>.
             </para>
 
             <para>
@@ -161,7 +161,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>resetInstance()</code> peut être utilisé pour effacer tous les réglages courants. Son but principal est pour les tests, mais il peut également être employé pour des instances où vous souhaitez enchaîner ensemble les contrôleurs frontaux multiples.
+                    <code>resetInstance()</code> peut être utilisé pour effacer tous les réglages courants. Son but principal est pour les tests, mais elle peut également être employée pour des instances où vous souhaitez enchaîner ensemble les contrôleurs frontaux multiples.
                 </para>
             </listitem>
 
@@ -229,7 +229,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>throwExceptions($flag)</code> est utilisé pour activer/désactiver la possibilité de lever des exceptions durant le processus de dispatchage. Par défaut, les exceptions sont récupérées et placées dans l'objet <link linkend="zend.controller.response">réponse</link> ; activer <code>throwExceptions()</code> surchargera ce comportement.
+                    <code>throwExceptions($flag)</code> est utilisée pour activer/désactiver la possibilité de lever des exceptions durant le processus de dispatchage. Par défaut, les exceptions sont récupérées et placées dans l'objet <link linkend="zend.controller.response">réponse</link> ; activer <code>throwExceptions()</code> surchargera ce comportement et indiquera au contrôleur frontal de ne pas enregistrer le plugin de gestion des erreurs : ErrorHandler.
                 </para>
 
                 <para>
@@ -239,7 +239,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>returnResponse($flag)</code> est utilisé pour informer le contrôleur frontal soit de récupérer la réponse (<code>true</code>) issue de <code>dispatch()</code>, ou si la réponse peut être automatiquement émise (<code>false</code>). Par défaut la réponse est automatiquement émise (en appelant <code>Zend_Controller_Response_Abstract::sendResponse()</code>) ; activer <code>returnResponse()</code> surchargera ce comportement.
+                    <code>returnResponse($flag)</code> est utilisée pour informer le contrôleur frontal soit de récupérer la réponse (<code>true</code>) issue de <code>dispatch()</code>, ou si la réponse peut être automatiquement émise (<code>false</code>). Par défaut la réponse est automatiquement émise (en appelant <code>Zend_Controller_Response_Abstract::sendResponse()</code>) ; activer <code>returnResponse()</code> surchargera ce comportement.
                 </para>
 
                 <para>
@@ -271,7 +271,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>getParam($name)</code> vous permet de récupérer un unique paramètre à la fois, en utilisant <code>$name</code> comme identificateur.
+                    <code>getParam($name)</code> vous permet de récupérer un unique paramètre, en utilisant <code>$name</code> comme identificateur.
                 </para>
             </listitem>
 
@@ -295,7 +295,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>useDefaultControllerAlways</code> est utilisé pour informer <link linkend="zend.controller.dispatcher">le dispatcheur</link> d'utiliser le contrôleur par défaut dans le module par défaut pour toute requête qui ne serait pas dispatchable (par exemple si le module/contrôleur/action n'existe pas). Par défaut, il est désactivé.
+                    <code>useDefaultControllerAlways()</code> est utilisée pour informer <link linkend="zend.controller.dispatcher">le dispatcheur</link> d'utiliser le contrôleur par défaut dans le module par défaut pour toute requête qui ne serait pas dispatchable (par exemple si le module/contrôleur/action n'existe pas). Par défaut, cette fonctionnalité est désactivée.
                 </para>
 
                 <para>
@@ -305,7 +305,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>disableOutputBuffering</code> est utilisé pour informer <link linkend="zend.controller.dispatcher">le dispatcheur</link> qu'il ne doit pas utiliser l'"output buffering" pour capturer le rendu généré par les contrôleurs d'action. Par défaut, le dispatcheur capture tout rendu et l'ajoute au contenu de l'objet réponse.
+                    <code>disableOutputBuffering()</code> est utilisée pour informer <link linkend="zend.controller.dispatcher">le dispatcheur</link> qu'il ne doit pas utiliser l'"output buffering" pour capturer le rendu généré par les contrôleurs d'action. Par défaut, le dispatcheur capture tout rendu et l'ajoute au contenu de l'objet réponse.
                 </para>
             </listitem>
         </itemizedlist>

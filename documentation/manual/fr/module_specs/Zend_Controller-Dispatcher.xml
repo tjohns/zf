@@ -28,11 +28,11 @@ $dispatcher->setParam('prefixDefaultModule', true);]]></programlisting>
         </note>
 
         <para>
-            Le dispatchage se produit dans une boucle dans le contrôleur frontal. Avant que le dispatchage ne se produise, le contrôleur frontal détermine la route de la requête pour récupérer les valeurs spécifiées par l'utilsateur pour le module, le contrôleur , l'action , et les paramètres optionnels. Il entre alors dans la boucle d'expédition, et dispatche la requête.
+            Le dispatchage se produit dans une boucle dans le contrôleur frontal. Avant que le dispatchage ne se produise, le contrôleur frontal détermine la route de la requête pour récupérer les valeurs spécifiées par l'utilisateur pour le module, le contrôleur , l'action , et les paramètres optionnels. Il entre alors dans la boucle d'expédition, et dispatche la requête.
         </para>
 
         <para>
-            Au début de chaque itération, il régle un drapeau dans l'objet requête indiquant que l'action a été dispatchée. Si une action ou le plugin pre/postDispatch remet à zéro ce drapeau, la boucle de dispatchage continue et tente de dispatcher la nouvelle requête. En changeant le contrôleur et/ou l'action dans la requête et en effaçant le drapeau de dispatchage, le développeur peut définir une chaîne de requêtes à réaliser.
+            Au début de chaque itération, il régle un drapeau dans l'objet requête indiquant que l'action a été dispatchée. Si une action ou un plugin pre/postDispatch remet à zéro ce drapeau, la boucle de dispatchage continue et tente de dispatcher la nouvelle requête. En changeant le contrôleur et/ou l'action dans la requête et en effaçant le drapeau de dispatchage, le développeur peut définir une chaîne de requêtes à réaliser.
         </para>
 
         <para>
@@ -160,7 +160,7 @@ interface Zend_Controller_Dispatcher_Interface
     public function getResponse();
 
     /**
-     * Ajoute un dossier de contrôleur dans le tableau des dossier de contrôleurs
+     * Ajoute un dossier de contrôleur dans le tableau des dossiers de contrôleurs
      *
      * @param string $path
      * @param string $args

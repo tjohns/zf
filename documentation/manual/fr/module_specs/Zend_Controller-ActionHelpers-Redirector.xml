@@ -5,7 +5,7 @@
         <title>Introduction</title>
 
         <para>
-            L'aide <code>Redirector</code> vous permet d'utiliser un objet de redirection qui remplit tous les besoins de votre application nécessaire à une redirection vers une nouvelle URL. Il fournit de nombreux avantages par rapport à la méthode <code>_redirect()</code>, comme la capacité de préconfigurer le comportement du site dans l'objet redirector ou d'utiliser l'interface intégrée <code>goto($action, $controller, $module, $params)</code> similaire à <code>Zend_Controller_Action::_forward()</code>.
+            L'aide <code>Redirector</code> vous permet d'utiliser un objet de redirection qui remplit tous les besoins de votre application, nécessaires à une redirection vers une nouvelle URL. Il fournit de nombreux avantages par rapport à la méthode <code>_redirect()</code>, comme la capacité de préconfigurer le comportement du site dans l'objet redirector ou d'utiliser l'interface intégrée <code>goto($action, $controller, $module, $params)</code> similaire à <code>Zend_Controller_Action::_forward()</code>.
         </para>
 
         <para>
@@ -121,7 +121,7 @@ class SomeController extends Zend_Controller_Action
     {
         /* Faire quelquechose */
 
-        // Redirige vers une URL enregistré précédemment, et force une sortie pour finir
+        // Redirige vers une URL enregistrée précédemment, et force une sortie pour finir
         $this->_redirector->redirectAndExit();
         return; // jamais atteint
     }
@@ -167,7 +167,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>Utilisation de l'API _forward() de goto()</title>
 
             <para>
-                L'API de <code>goto()</code> imite celle de <code>Zend_Controller_Action::_forward()</code>. La différence principale est qu'elle construit un URL à partir des paramètres fournis, et du format de route par défaut <code>:module/:controller/:action/*</code> du routeur. Il réalise alors une redirection au lieu d'enchaîner l'action.
+                L'API de <code>goto()</code> imite celle de <code>Zend_Controller_Action::_forward()</code>. La différence principale est qu'elle construit une URL à partir des paramètres fournis, et du format de route par défaut <code>:module/:controller/:action/*</code> du routeur. Il réalise alors une redirection au lieu d'enchaîner l'action.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -235,7 +235,7 @@ class BlogAdminController extends Zend_Controller_Action
     {
         /* Faire quelquechose */
 
-        // Redirige vers les archives de blog. Construit l'URL suivant
+        // Redirige vers les archives de blog. Construit l'URL suivante:
         // /blog/2006/4/24/42
         $this->_redirector->gotoRoute(
             array('year' => 2006, 'month' => 4, 'day' => 24, 'id' => 42),

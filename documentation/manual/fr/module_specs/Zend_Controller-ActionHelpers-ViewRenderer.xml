@@ -55,8 +55,8 @@
 
         <note>
             <para>
-                Su vous utilsez <code>_forward()</code>, redirect, ou
-                <code>render</code> manuellement, le rendu automatique sera annulé car 
+                Su vous utilsez <code>_forward()</code>, <code>redirect()</code>, ou
+                <code>render()</code> manuellement, le rendu automatique sera annulé car 
                 <code>ViewRenderer</code> saura que vous prennez la main.
             </para>
         </note>
@@ -122,7 +122,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');?>]]>
 
         <para>
             La première action demandée instancie ou récupère l'objet de vue. A chaque 
-            instatiation de contrôleur, la méthode <code>init()</code> de l'objet 
+            instantiation de contrôleur, la méthode <code>init()</code> de l'objet 
             <code>ViewRenderer</code> est appelée. Elle va configurer la vue et appeller 
             <code>addScriptPath()</code> avec un chemin relatif au dossier courant.
             Ceci a pour effet de "namespacer" toutes les aides et les filtres de vue 
@@ -148,7 +148,7 @@ class Foo_BarController extends Zend_Controller_Action
     }
 
     // Rend bar/populate.phtml avec une variable 'foo' à la valeur 'bar'.
-    // l'objet de vue est définit dans le preDispatch(), il est donc accessible.
+    // l'objet de vue est défini dans le preDispatch(), il est donc accessible.
     public function populateAction()
     {
         $this->view->foo = 'bar';
@@ -374,7 +374,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 </para>
 
                 <para>
-                    Par défaut, les règles de l'inflecteurs sont statiques autant pour 
+                    Par défaut, les règles de l'inflecteur sont statiques autant pour 
                     le suffixe et le repertoire module, que pour la cible. Ceci permet 
                     au <code>ViewRenderer</code> de modifier ces valeurs dynamiquement.
                 </para>
@@ -401,7 +401,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:module</code> : casseMélangée et motsCamelCase qui deviennent des mots 
-                        séparés par des tirets, et en minuscule.
+                        séparés par des tirets, et en minuscules.
                         "FooBarBaz" devient "foo-bar-baz".
                     </para>
 
@@ -415,7 +415,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:controller</code> : casseMélangée et motsCamelCase qui deviennent des mots
-                        séparés par des tiret; les underscores eux, se transforment en 
+                        séparés par des tirets; les underscores eux, se transforment en 
                         séparateur de dossier et tout est passé en minuscules.
                         "FooBar" devient "foo-bar"; "FooBar_Admin" devient "foo-bar/admin".
                     </para>
@@ -459,7 +459,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                     spécifier pleinement le script de vue à rendre, et éventuellement 
                     un nom de segment de réponse dans lequel rendre.
                     <code>ViewRenderer</code> s'attend à un paramètre <code>$script</code>
-                    représentant un chemin complet vers un script de vue, tel 
+                    représentant un chemin complet vers un script de vue, telle
                     que la méthode de la vue <code>render()</code> l'attend.
                 </para>
 
@@ -799,7 +799,7 @@ class SearchController extends Zend_Controller_Action
         $this->view->results = $this->model->find($this->_getParam('query', '');
 
         // render() est proxiée vers ViewRenderer
-        // Rend d'abord un formaulaire, puis un résultat
+        // Rend d'abord un formulaire, puis un résultat
         $this->render('form');
         $this->render('results');
     }

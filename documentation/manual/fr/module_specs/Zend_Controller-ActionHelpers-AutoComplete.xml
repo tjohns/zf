@@ -1,0 +1,300 @@
+<sect3 id="zend.controller.actionhelpers.autocomplete">
+    <title>AutoComplete</title>
+
+    <para>
+        Beaucoup de librairies javascript AJAX propose une fonctionnalité dite d'auto-complétion. Une liste 
+        de résultats possibles est chargée par AJAX au fur et à mesure que l'utilisateur saisit. L'aide
+        <code>AutoComplete</code> est destinée à simplifier le retour de ces valeurs vers la librairie Javascript.
+    </para>
+
+    <para>
+        Toutes les librairies JS n'implémentant pas l'auto-complétion de la même manière, l'aide <code>AutoComplete</code>
+        propose une solution abstraite, ainsi que des implémentations concrêtes pour certaines librairies. Les types de valeur
+        de retour sont en général des tableaux de chaines JSON, des tableaux de tableaux JSON, ou du HTML.
+    </para>
+
+    <para>
+        L'utilisation basique ressemble à ceci :
+    </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // Ici du travail ....
+
+        // Encode et envoie la réponse
+        $this->_helper->autoCompleteDojo($data);
+
+        // Ou :
+        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+
+        // Ou alors prépare simplement les données :
+        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+    }
+}
+?>]]></programlisting>
+
+    <para>
+        Par défaut, l'auto-complétion :
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                Désactive les layouts et le ViewRenderer.
+        </para></listitem>
+
+        <listitem><para>
+                Affecte des en-têtes de réponse appropriés.
+        </para></listitem>
+
+        <listitem><para>
+                Remplit le corps de la réponse avec les données d'auto-complétion encodées/formatées.
+        </para></listitem>
+
+        <listitem><para>
+                Envoie la réponse.
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        Les méthodes disponibles sont :
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+                <code>disableLayouts()</code> est utilisée pour désactiver les layouts et le ViewRenderer.
+                Cette méthode est appelées par <code>prepareAutoCompletion()</code>.
+        </para></listitem>
+
+        <listitem><para>
+                <code>encodeJson($data, $keepLayouts = false)</code> va encoder les données en JSON.
+                Cette méthode est appelées par <code>prepareAutoCompletion()</code>.
+        </para></listitem>
+
+        <listitem><para>
+                <code>prepareAutoCompletion($data, $keepLayouts = false)</code> prépare les données dans le format
+                de réponse nécéssaire à une implémentation concrète. La valeur de retour va changer en fonction
+                de l'implémentation (de la librairie AJAX utilisée).
+        </para></listitem>
+
+        <listitem><para>
+                <code>sendAutoCompletion($data, $keepLayouts = false)</code> Va appeler
+                <code>prepareAutoCompletion()</code>, puis envoyer la réponse.
+        </para></listitem>
+
+        <listitem><para>
+                <code>direct($data, $sendNow = true, $keepLayouts =
+                    false)</code> est une méthode utilisée par l'agrégateur d'aides (helper broker). La valeur de
+                <code>$sendNow</code> va determiner si c'est <code>sendAutoCompletion()</code> ou 
+                <code>prepareAutoCompletion()</code>, qui doit être appelée.
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        Actuellement, <code>AutoComplete</code> supporte les librairies AJAX Dojo et Scriptaculous.
+    </para>
+
+    <sect4 id="zend.controller.actionhelpers.autocomplete.dojo">
+        <title>AutoCompletion avec Dojo</title>
+
+        <para>
+            Dojo n'a pas une fonctionnalité d'auto-completion, mais deux : ComboBox et FilteringSelect.
+            Dans les deux cas, elle demande une structure de données qui implémente QueryReadStore; voyez la documentation de
+            <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-3-programmatic-dijit-and-dojo/data-retrieval-dojo-data-0">dojo.data</ulink>
+        </para>
+
+        <para>
+            Dans Zend Framework, vous pouvez passer un simple tableau indéxé à l'aide AutoCompleteDojo, elle retournea
+            une réponse JSON compatible avec la structure de données Dojo :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// within a controller action:
+$this->_helper->autoCompleteDojo($data);
+]]></programlisting>
+        
+        <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
+            <title>AutoCompletion avec Dojo en utilisant MVC</title>
+
+            <para>
+                L'auto-completion avec Dojo via MVC requière plusieurs choses: générer un objet formulaire sur le
+                ComboBox sur lequel vous voulez de l'auto-complétion, un contrôleur avec une action pour servir les résultats,
+                la création d'un QueryReadStore à connecter à l'action et la génération du javascript à utiliser pour
+                initialiser l'auto-complétion coté serveur.
+            </para>
+
+            <para>
+                Vpyons le javascript nécéssaire. Dojo est une librairie qui propose des objets haut niveau pour
+                l'auto-complétion (entre autre), un peu comme ZendFramework pour PHP. Il est possible de créer des
+                pseudo-namespaces en utilisant l'arborescence des repertoires. Nous allons créer un repertoire 'custom'
+                au même niveau que le repertoire Dojo. A l'interieur, nous allons créer un fichier javascript,
+                TestNameReadStore.js, avec le contenu suivant :
+            </para>
+
+            <programlisting role="javascript"><![CDATA[
+dojo.provide("custom.TestNameReadStore");
+dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
+    fetch:function (request) {
+        request.serverQuery = { test:request.query.name };
+        return this.inherited("fetch", arguments);
+    }
+});
+]]></programlisting>
+            
+            <para>
+                Cette classe est une simple extension de QueryReadStore, qui est une classe abstraite. Nous définissons
+                simplement une méthode de requête, et on lui assigne notre élément 'test'.
+            </para>
+
+            <para>
+                Ensuite, créons le formulaire sur lequel nous souhaitons une auto-complétion :
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class TestController extends Zend_Controller_Action
+{
+    protected $_form;
+
+    public function getForm()
+    {   
+        if (null === $this->_form) {
+            require_once 'Zend/Form.php';
+            $this->_form = new Zend_Form();
+            $this->_form->setMethod('get')
+                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->addElements(array(
+                    'test' => array('type' => 'text', 'options' => array(
+                        'filters'        => array('StringTrim'),
+                        'dojoType'       => array('dijit.form.ComboBox'),
+                        'store'          => 'testStore',
+                        'autoComplete'   => 'false',
+                        'hasDownArrow'   => 'true',
+                        'label' => 'Your input:',
+                    )),
+                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                ));
+        }
+        return $this->_form;
+    }
+}
+]]></programlisting>
+            
+            <para>
+                Ici, nous créons simplement un formulaire avec des méthodes 'test' et 'go'. La méthode 'test' ajoute
+                plusieurs attributs Dojo spéciaux : dojoType, store, autoComplete, et hasDownArrow. dojoType est utilisé
+                pour indiquer la création d'une ComboBox, et nous allons la relier au conteneur de données('store') de
+                'testStore'. Mettre 'autoComplete' à false dit à Dojo de ne pas selectionner automatiquement la première valeur,
+                mais de plutot montrer une liste de valeurs possibles. Enfin, 'hasDownArrow' crée une flèche bas comme sur
+                les select box.
+            </para>
+
+            <para>
+                Ajoutons une méthode pour afficher le formulaire, et une entrée pour traiter l'auto-complétion :
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+class TestController extends Zend_Controller_Action
+{
+    // ...
+
+    /**
+     * Landing page
+     */
+    public function indexAction()
+    {
+        $this->view->form = $this->getForm();
+    }
+
+    public function autocompleteAction()
+    {
+        if ('ajax' != $this->_getParam('format', false)) {
+            return $this->_helper->redirector('index');
+        }
+        if ($this->getRequest()->isPost()) {
+            return $this->_helper->redirector('index');
+        }
+
+        $match = trim($this->getRequest()->getQuery('test', ''));
+
+        $matches = array();
+        foreach ($this->getData() as $datum) {
+            if (0 === strpos($datum, $match)) {
+                $matches[] = $datum;
+            }
+        }
+        $this->_helper->autoCompleteDojo($matches);
+    }
+}
+]]></programlisting>
+            
+            <para>
+                Dans <code>autocompleteAction()</code>, nous vérifgions que nous avons bien une requête post, et un
+                paramètre 'format' avec la valeur 'ajax'. Ensuite, nous vérifions la présence d'un paramètre 'test',
+                et le comparons avec nos données. (<code>getData()</code> retourne des données quelconques.).Enfin,
+                nous envoyons nos résultats à notre aide AutoCompletion.
+            </para>
+
+            <para>
+                Voyons maintenant notre script de vue. Nous devons configurer notre entrepot de données, puis rendre le
+                formulaire, et s'assurer que les librairies Dojo appropriées sont bien chargées (ainsi que notre entrepot).
+                Voici le script de vue :
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<? // configuration de l'entrepot de données: ?>
+<div dojoType="custom.TestNameReadStore" jsId="testStore"
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+
+<? // rendu du formulaire: ?>
+<?= $this->form ?>
+
+<? // configuration des CSS de Dojo dans le head HTML: ?>
+<? $this->headStyle()->captureStart() ?>
+@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<? $this->headStyle()->captureEnd() ?>
+
+<? // configuration de javascript pour charger les librairies Dojo dans le head HTML: ?>
+<? $this->headScript()
+        ->setAllowArbitraryAttributes(true)
+        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 
+            'text/javascript', 
+            array('djConfig' => 'parseOnLoad: true'))
+        ->captureStart() ?>
+djConfig.usePlainJson=true;
+dojo.registerModulePath("custom","../custom");
+dojo.require("dojo.parser");
+dojo.require("dojox.data.QueryReadStore");
+dojo.require("dijit.form.ComboBox");
+dojo.require("custom.TestNameReadStore");
+<? $this->headScript()->captureEnd() ?>
+]]></programlisting>
+
+            <para>
+                Notez les appels aux aides de vue comme headStyle et headScript.
+            </para>
+
+            <para>
+                Nous pouvons dès lors faire fonctionner l'auto-complétion Dojo.
+            </para>
+        </example>
+    </sect4>
+
+    <sect4 id="zend.controller.actionhelpers.autocomplete.scriptaculous">
+        <title>AutoCompletion avec Scriptaculous</title>
+        <para>
+            <ulink url="http://wiki.script.aculo.us/scriptaculous/show/Ajax.Autocompleter">Scriptaculous</ulink>
+            attend une réponse HTML dans un format sépcifique.
+        </para>
+
+        <para>
+            Utilisez l'aide 'AutoCompleteScriptaculous'. Passez lui un tableau de données et l'aide créera une réponse
+            HTML compatible avec Ajax.Autocompleter.
+        </para>
+    </sect4>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->
