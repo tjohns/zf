@@ -12,13 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Measure
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Measure
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
-
 
 /**
  * Implement needed classes
@@ -27,8 +26,9 @@ require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Measure/Abstract.php';
 require_once 'Zend/Locale.php';
 
-
 /**
+ * Class for handling angle conversions
+ *
  * @category   Zend
  * @package    Zend_Measure
  * @subpackage Zend_Measure_Angle
@@ -37,7 +37,6 @@ require_once 'Zend/Locale.php';
  */
 class Zend_Measure_Angle extends Zend_Measure_Abstract
 {
-    // Angle definitions
     const STANDARD = 'RADIAN';
 
     const RADIAN      = 'RADIAN';
@@ -55,7 +54,12 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
     const CIRCLE_2    = 'CIRCLE_2';
     const FULL_CIRCLE = 'FULL_CIRCLE';
 
-    protected $_UNITS = array(
+    /**
+     * Calculations for all angle units
+     *
+     * @var array
+     */
+    protected $_units = array(
         'RADIAN'      => array('1','rad'),
         'MIL'         => array(array('' => M_PI,'/' => '3200'),   'mil'),
         'GRAD'        => array(array('' => M_PI,'/' => '200'),    'gr'),
