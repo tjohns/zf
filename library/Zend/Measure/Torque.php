@@ -12,13 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Measure
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Measure
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @version   $Id$
  */
-
 
 /**
  * Implement needed classes
@@ -27,8 +26,9 @@ require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Measure/Abstract.php';
 require_once 'Zend/Locale.php';
 
-
 /**
+ * Class for handling torque conversions
+ *
  * @category   Zend
  * @package    Zend_Measure
  * @subpackage Zend_Measure_Torque
@@ -37,7 +37,6 @@ require_once 'Zend/Locale.php';
  */
 class Zend_Measure_Torque extends Zend_Measure_Abstract
 {
-    // Torque definitions
     const STANDARD = 'NEWTON_METER';
 
     const DYNE_CENTIMETER     = 'DYNE_CENTIMETER';
@@ -57,7 +56,12 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
     const POUNDAL_FOOT        = 'POUNDAL_FOOT';
     const POUND_INCH          = 'POUND_INCH';
 
-    protected $_UNITS = array(
+    /**
+     * Calculations for all torque units
+     *
+     * @var array
+     */
+    protected $_units = array(
         'DYNE_CENTIMETER'     => array('0.0000001',          'dyncm'),
         'GRAM_CENTIMETER'     => array('0.0000980665',       'gcm'),
         'KILOGRAM_CENTIMETER' => array('0.0980665',          'kgcm'),
