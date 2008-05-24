@@ -130,25 +130,25 @@ abstract class Zend_Translate_Adapter {
 
         $this->setOptions($options);
         if (is_string($data) and is_dir($data)) {
+            $prev  = '';
             foreach (new RecursiveIteratorIterator(
                      new RecursiveDirectoryIterator($data, RecursiveDirectoryIterator::KEY_AS_PATHNAME), 
                      RecursiveIteratorIterator::SELF_FIRST) as $file => $info) {
                 if ($info->isDir()) {
-
-                    $directory = $info->getPath();
                     // pathname as locale
                     if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale((string) $info))) {
-                        $locale = (string) $info;
+                        if (strlen($prev) <= strlen((string) $info)) {
+                            $locale = (string) $info;
+                            $prev   = $locale;
+                        }
                     }
-
                 } else if ($info->isFile()) {
-
                     // filename as locale
                     if ($this->_options['scan'] === self::LOCALE_FILENAME) {
                         $filename = explode('.', (string) $info);
                         array_pop($filename);
                         $filename = implode('.', $filename);
-                        if (Zend_Locale::isLocale($filename)) {
+                        if (Zend_Locale::isLocale((string) $filename)) {
                             $locale = (string) $filename;
                         } else {
                             $found = false;
@@ -160,9 +160,13 @@ abstract class Zend_Translate_Adapter {
                                 $parts = array_merge(explode('-', $token), $parts);
                             }
                             $parts = array_unique($parts);
+                            $prev  = '';
                             foreach($parts as $token) {
                                 if (Zend_Locale::isLocale($token)) {
-                                    $locale = $token;
+                                    if (strlen($prev) <= strlen($token)) {
+                                        $locale = $token;
+                                        $prev   = $token;
+                                    }
                                 }
                             }
                         }
@@ -425,9 +429,6 @@ abstract class Zend_Translate_Adapter {
             return $messageId;
         }
 
-        if (is_array($messageId)) {
-            return $messageId;
-        }
         if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
             (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
@@ -488,9 +489,6 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if (is_array($messageId)) {
-            return false;
-        }
         if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
             (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
             // return original translation
