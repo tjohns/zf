@@ -62,7 +62,9 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>strict</entry>
-                            <entry>Einige Prüf-Funktionen werden übersprungen wenn auf false gesetzt. Sollte normalerweise nicht geändert werden</entry>
+                            <entry>Ob Prüfungen an Headernamen durchzuführen sind. Einige
+                                Prüf-Funktionen werden übersprungen wenn auf false gesetzt.
+                                Sollte normalerweise nicht geändert werden</entry>
                             <entry>boolean</entry>
                             <entry>true</entry>
                         </row>
@@ -106,6 +108,14 @@ $client->setConfig(array(
                             aufeinanderfolgend Anfragen an den selben Server ausgeführt werden.</entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>storeresponse</entry>
+                            <entry>Ob die letzte Antwort für einen späteren Aufruf von getLastResponse()
+                                gespeichert werden soll. Wird sie auf false gesetzt gibt
+                                getLastResponse() null zurück.</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
                         </row>
                     </tbody>
                 </tgroup>
