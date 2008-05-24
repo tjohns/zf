@@ -625,6 +625,15 @@ $res = $cache->foobar2('1', '2');]]>
                                   only the last one will be used
                               </entry>
                          </row>
+                         <row>
+                              <entry><code>memorize_headers</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                   an array of strings corresponding to some HTTP headers name. Listed headers
+                                   will be stored with cache datas and "replayed" when the cache is hit
+                              </entry>
+                         </row>
                       </tbody>
                   </tgroup>
               </table>
