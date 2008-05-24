@@ -175,7 +175,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     {
         $found = null;
         foreach ($this->_specificOptions['memorize_headers'] as $key => $value) {
-            if (strolower($value) == 'content-type') {
+            if (strtolower($value) == 'content-type') {
                 $found = $key;
             }
         }
@@ -300,10 +300,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             $headersList = headers_list();
             foreach($this->_specificOptions['memorize_headers'] as $key=>$headerName) {
                 foreach ($headersList as $headerSent) {
-                    $tmp = split(':', $header);
-                    $headerSentName = strolower(trim($tmp[0]));
-                    if (strolower($headerName) == $headerSentName) {
-                        $storedHeaders[] = array(trim($tmp[0]), trim($tmp[1]));
+                    $tmp = split(':', $headerSent);
+                    $headerSentName = trim(array_shift($tmp));
+                    if (strolower($headerName) == strtolower($headerSentName)) {
+                        $headerSentValue = trim(implode(':', $tmp));
+                        $storedHeaders[] = array($headerSentName, $headerSentValue);
                     }
                 }
             }
