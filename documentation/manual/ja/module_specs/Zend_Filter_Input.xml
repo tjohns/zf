@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8820 -->
+<!-- EN-Revision: 9506 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -971,6 +971,17 @@ $input->addNamespace('Other_Namespace');
             新しい名前空間を追加することだけが可能となっています。
             追加した名前空間を先に探し、Zend 名前空間を最後に探すという順序になります。
         </para>
+
+        <note>
+            <para>
+                バージョン 1.0.4 で、値 <code>namespace</code>
+                をもつ定数 <code>Zend_Filter_Input::NAMESPACE</code>
+                が値 <code>inputNamespace</code> を持つ定数
+                <code>Zend_Filter_Input::INPUT_NAMESPACE</code> に変わりました。
+                これは、PHP 5.3 以降の予約語 <code>namespace</code>
+                に対応させるためです。
+            </para>
+        </note>
 
     </sect2>
 

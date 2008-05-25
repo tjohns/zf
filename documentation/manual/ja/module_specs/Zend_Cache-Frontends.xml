@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8105 -->
+<!-- EN-Revision: 9514 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -639,6 +639,16 @@ $res = $cache->foobar2('1', '2');]]>
                                   一番最後にマッチしたもののみが使用されます。
                               </entry>
                          </row>
+                         <row>
+                              <entry><code>memorize_headers</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                   HTTP ヘッダ名に対応する文字列の配列です。
+                                   ここにあげられたヘッダがキャッシュデータとともに保存され、
+                                   キャッシュにヒットしたときにそれが "リプレイ" されます。
+                              </entry>
+                         </row>
                       </tbody>
                   </tgroup>
               </table>
@@ -693,6 +703,28 @@ $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
 
 // [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)]]>
+            </programlisting>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.cancel">
+            <title>キャンセル用のメソッド</title>
+            <para>
+                設計上の理由から、場合によっては (HTTP/200 以外のコードを使用する場合など)
+                現在のキャッシュ処理をキャンセルする必要が生じることもあります。
+                そこで、このフロントエンド用に cancel() メソッドを用意しました。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+// [...] // require, configuration そして factory
+
+$cache->start();
+
+// [...]
+
+if ($someTest) {
+    $cache->cancel();
+    // [...]
+}
+
+// [...]]]>
             </programlisting>
         </sect3>
     </sect2>

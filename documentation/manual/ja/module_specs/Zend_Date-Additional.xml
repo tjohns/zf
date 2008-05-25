@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9292 -->
+<!-- EN-Revision: 9506 -->
 <sect1 id="zend.date.additional">
 
     <title>動作例</title>
@@ -276,7 +276,7 @@ require_once 'Zend/Date.php';
 date_default_timezone_set('Europe/Vienna');
 
 // date オブジェクトを作成します
-$date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
+$date = new Zend_Date('10.03.2007', Zend_Date::DATES, 'de');
 
 // date オブジェクトの内容を確認します
 print $date->getIso();
@@ -320,7 +320,7 @@ require_once 'Zend/Date.php';
 
 // デフォルトのタイムゾーンを設定します。これは、起動ファイルか php.ini で設定します。
 // ここで設定しているのは、単体でサンプルとして完結させるためです。
-date_defaut_timezone_set('Europe/Vienna');
+date_default_timezone_set('Europe/Vienna');
 
 // date オブジェクトを作成します
 $date = new Zend_Date('10.03.2007 00:00:00', Zend_Date::ISO_8601, 'de');

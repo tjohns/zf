@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8011 -->
+<!-- EN-Revision: 9507 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - 導入</title>
 
@@ -66,7 +66,7 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>strict</entry>
-                            <entry>false に設定すると、いくつかの検証関数をスキップします。通常はこれを変更してはいけません。</entry>
+                            <entry>ヘッダ名の検証を行うかどうか。false に設定すると、検証関数をスキップします。通常はこれを変更してはいけません。</entry>
                             <entry>boolean</entry>
                             <entry>true</entry>
                         </row>
@@ -108,6 +108,14 @@ $client->setConfig(array(
                             </entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>storeresponse</entry>
+                            <entry>直近のレスポンスを保存して後から
+                            getLastResponse() で取得できるようにするかどうか。false の場合
+                            getLastResponse() は null を返します。</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
                         </row>
                     </tbody>
                 </tgroup>
