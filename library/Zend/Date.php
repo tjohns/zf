@@ -4420,8 +4420,8 @@ class Zend_Date extends Zend_Date_DateObject
 
         $max = pow(10, $this->_Precision);
         // Milli includes seconds
-        if ($this->_Fractional > $max) {
-            while ($this->_Fractional > $max) {
+        if ($this->_Fractional >= $max) {
+            while ($this->_Fractional >= $max) {
                 $this->addSecond(1);
                 $this->_Fractional -= $max;
             }
