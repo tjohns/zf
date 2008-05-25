@@ -77,25 +77,27 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
     /**
      * Stop the cache
      *
-     * @param  array  $tags             Tags array
-     * @param  int    $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
-     * @param  string $forcedDatas      If not null, force written datas with this
+     * @param  array   $tags             Tags array
+     * @param  int     $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
+     * @param  string  $forcedDatas      If not null, force written datas with this
+     * @param  boolean $echoData         If set to true, datas are sent to the browser
      * @return void
      */
-    public function end($tags = array(), $specificLifetime = false, $forcedDatas = null)
+    public function end($tags = array(), $specificLifetime = false, $forcedDatas = null, $echoData = true)
     {
         if (is_null($forcedDatas)) {
             $data = ob_get_contents();
             ob_end_clean();
-            $id = array_pop($this->_idStack);
-            if (is_null($id)) {
-                Zend_Cache::throwException('use of end() without a start()');
-            }
-            $this->save($data, $id, $tags, $specificLifetime);
-            echo($data);
         } else {
-            $this->save($forcedDatas, null, $tags, $specificLifetime);
-            echo($forcedDatas);
+            $data = $forcedDatas;
+        }
+        $id = array_pop($this->_idStack);
+        if (is_null($id)) {
+            Zend_Cache::throwException('use of end() without a start()');
+        }
+        $this->save($data, $id, $tags, $specificLifetime);
+        if ($echoData) {
+            echo($data);
         }
     }
 
