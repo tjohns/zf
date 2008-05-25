@@ -634,6 +634,16 @@ $res = $cache->foobar2('1', '2');]]>
                                     reguläre Ausdrücke auf $_SERVER['REQUEST_URI'] passen, wird nur der letzte verwendet.
                               </entry>
                          </row>
+                         <row>
+                              <entry><code>memorize_headers</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                   Ein Array von Strings die zu einem HTTP Headernamen korrespondieren.
+                                   Aufgelistete Header werden mit den Cache Daten gespeichert und wieder
+                                   "abgespielt" wenn der Cache getroffen wird.
+                              </entry>
+                         </row>
                       </tbody>
                   </tgroup>
               </table>
