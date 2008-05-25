@@ -56,7 +56,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     protected $_options = array(
         'cache_db_complete_path' => null,
-        'automatic_vacuum_factor' => 1
+        'automatic_vacuum_factor' => 10
     );
 
     /**
@@ -65,7 +65,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @var mixed $_db
      */
     private $_db = null;
-    
+
     /**
      * Boolean to store if the structure has benn checked or not
      *
@@ -234,11 +234,11 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     }
 
     /**
-     * Return the connection resource 
-     * 
+     * Return the connection resource
+     *
      * If we are not connected, the connection is made
      *
-     * @throws Zend_Cache_Exception  
+     * @throws Zend_Cache_Exception
      * @return resource Connection resource
      */
     private function _getConnection()
@@ -251,15 +251,15 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
                 Zend_Cache::throwException("Impossible to open " . $this->_options['cache_db_complete_path'] . " cache DB file");
             }
             return $this->_db;
-        }       
+        }
     }
-    
+
     /**
      * Execute an SQL query silently
-     * 
+     *
      * @param string $query SQL query
      * @return mixed|false query results
-     */ 
+     */
     private function _query($query)
     {
         $db = $this->_getConnection();
@@ -269,7 +269,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
                 return false;
             } else {
                 return $res;
-            }           
+            }
         }
         return false;
     }
@@ -434,7 +434,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * Check if the database structure is ok (with the good version), if no : build it
      *
      * @return boolean True if ok
-     */   
+     */
     private function _checkAndBuildStructure()
     {
         if (!($this->_structureChecked)) {
@@ -448,5 +448,5 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         }
         return true;
     }
-    
+
 }
