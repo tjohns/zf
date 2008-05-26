@@ -77,7 +77,7 @@ if ((isset($_POST['openid_action']) &&
     isset($_POST['openid_mode'])) {
     $result = $auth->authenticate(
         new Zend_Auth_Adapter_OpenId(@$_POST['openid_identifier']));
-    if (!$result->isValid()) {
+    if ($result->isValid()) {
         $status = "Sie sind angemeldet als " . $auth->getIdentity() . "<br>\n";
     } else {
         $auth->clearIdentity();
