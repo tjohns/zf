@@ -173,7 +173,7 @@ abstract class Zend_Translate_Adapter {
                     }
                     try {
                         $this->_addTranslationData((string) $info->getPathname(), $locale, $this->_options);
-                        if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
+                        if ((isset($this->_translate[$locale]) === true) and (count($this->_translate[$locale]) > 0)) {
                             $this->setLocale($locale);
                         }
                     } catch (Zend_Translate_Exception $e) {
@@ -183,11 +183,11 @@ abstract class Zend_Translate_Adapter {
             }
         } else {
             $this->_addTranslationData($data, $locale, $this->_options);
-            if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
+            if ((isset($this->_translate[$locale]) === true) and (count($this->_translate[$locale]) > 0)) {
                 $this->setLocale($locale);
             }
         }
-        if ((array_key_exists($originate, $this->_translate)) and (count($this->_translate[$originate]) > 0)) {
+        if ((isset($translate[$originate]) === true) and (count($this->_translate[$originate]) > 0)) {
             $this->setLocale($originate);
         }
         return $this;
@@ -224,8 +224,9 @@ abstract class Zend_Translate_Adapter {
         if ($optionKey === null) {
             return $this->_options;
         }
-        if (array_key_exists(strtolower($optionKey), $this->_options)) {
-            return $this->_options[strtolower($optionKey)];
+        $optionKey = strtolower($optionKey);
+        if (isset($this->_options[$optionKey]) === true) {
+            return $this->_options[$optionKey];
         }
         return null;
     }
@@ -259,9 +260,9 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
-        if (!array_key_exists($locale, $this->_translate) and empty($this->_translate[$locale])) {
+        if (empty($this->_translate[$locale]) === true) {
             $temp = explode('_', $locale);
-            if (!array_key_exists($temp[0], $this->_translate)) {
+            if (isset($this->_translate[$temp[0]]) === false) {
                 /**
                  * @see Zend_Translate_Exception
                  */
@@ -345,7 +346,8 @@ abstract class Zend_Translate_Adapter {
             $locale = $locale->toString();
         }
 
-        return array_key_exists($locale, $this->_translate);
+        $return = isset($this->_translate[$locale]);
+        return $return;
     }
 
     /**
@@ -383,7 +385,7 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
-        if (!array_key_exists($locale, $this->_translate)) {
+        if (isset($this->_translate[$locale]) === false) {
             $this->_translate[$locale] = array();
         }
 
@@ -393,7 +395,7 @@ abstract class Zend_Translate_Adapter {
             $browser = $find->getBrowser() + $find->getEnvironment();
             arsort($browser);
             foreach($browser as $language => $quality) {
-                if (array_key_exists($language, $this->_translate)) {
+                if (isset($this->_translate[$language]) === true) {
                     $this->_options['locale'] = $language;
                     break;
                 }
@@ -429,16 +431,14 @@ abstract class Zend_Translate_Adapter {
             return $messageId;
         }
 
-        if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
-            (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
+        if (isset($this->_translate[$locale][$messageId]) === true) {
             // return original translation
             return $this->_translate[$locale][$messageId];
         } else if (strlen($locale) != 2) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
-                (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
+            if (isset($this->_translate[$locale][$messageId]) === true) {
                 // return regionless translation (en_US -> en)
                 return $this->_translate[$locale][$messageId];
             }
@@ -489,16 +489,14 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
-            (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
+        if (isset($this->_translate[$locale][$messageId]) === true) {
             // return original translation
             return true;
         } else if ((strlen($locale) != 2) and ($original === false)) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if ((is_array($this->_translate) and array_key_exists($locale, $this->_translate)) and
-                (is_array($this->_translate[$locale]) and array_key_exists($messageId, $this->_translate[$locale]))) {
+            if (isset($this->_translate[$locale][$messageId]) === true) {
                 // return regionless translation (en_US -> en)
                 return true;
             }

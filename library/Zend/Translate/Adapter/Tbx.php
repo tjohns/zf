@@ -114,9 +114,9 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
                     $this->_termentry = null;
                     break;
                 case 'langset':
-                    if (array_key_exists('xml:lang', $attrib)) {
+                    if (isset($attrib['xml:lang']) === true) {
                         $this->_langset = $attrib['xml:lang'];
-                        if (!array_key_exists($this->_langset, $this->_translate)) {
+                        if (isset($this->_translate[$this->_langset]) === false) {
                             $this->_translate[$this->_langset] = array();
                         }
                     }
@@ -145,7 +145,7 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
                     if (empty($this->_termentry)) {
                         $this->_termentry = $this->_content;
                     }
-                    if (!empty($this->_content) or !array_key_exists($this->_termentry, $this->_translate[$this->_langset])) {
+                    if (!empty($this->_content) or (isset($this->_translate[$this->_langset][$this->_termentry]) === false)) {
                         $this->_translate[$this->_langset][$this->_termentry] = $this->_content;
                     }
                     break;

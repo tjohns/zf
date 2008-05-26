@@ -158,14 +158,14 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
                     break;
                 case 'source':
                     if (!empty($this->_scontent) and !empty($this->_tcontent) or
-                        !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
+                        (isset($this->_translate[$this->_source][$this->_scontent]) === false)) {
                         $this->_translate[$this->_source][$this->_scontent] = $this->_scontent;
                     }
                     $this->_stag = false;
                     break;
                 case 'target':
                     if (!empty($this->_scontent) and !empty($this->_tcontent) or
-                        !array_key_exists($this->_scontent, $this->_translate[$this->_source])) {
+                        (isset($this->_translate[$this->_source][$this->_scontent]) === false)) {
                         $this->_translate[$this->_target][$this->_scontent] = $this->_tcontent;
                     }
                     $this->_ttag = false;

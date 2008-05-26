@@ -111,14 +111,14 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
         } else {
             switch(strtolower($name)) {
                 case 'tu':
-                    if (array_key_exists('tuid', $attrib)) {
+                    if (isset($attrib['tuid']) === true) {
                         $this->_tu = $attrib['tuid'];
                     }
                     break;
                 case 'tuv':
-                    if (array_key_exists('xml:lang', $attrib)) {
+                    if (isset($attrib['xml:lang']) === true) {
                         $this->_tuv = $attrib['xml:lang'];
-                        if (!array_key_exists($this->_tuv, $this->_translate)) {
+                        if (isset($this->_translate[$this->_tuv]) === false) {
                             $this->_translate[$this->_tuv] = array();
                         }
                     }
@@ -147,7 +147,7 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
                     break;
                 case 'seg':
                     $this->_seg = null;
-                    if (!empty($this->_content) or !array_key_exists($this->_tu, $this->_translate[$this->_tuv])) {
+                    if (!empty($this->_content) or (isset($this->_translate[$this->_tuv][$this->_tu]) === false)) {
                         $this->_translate[$this->_tuv][$this->_tu] = $this->_content;
                     }
                     break;

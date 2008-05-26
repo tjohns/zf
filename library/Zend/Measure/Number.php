@@ -168,7 +168,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $type = $this->_units['STANDARD'];
         }
 
-        if (array_key_exists($type, $this->_units) === false) {
+        if (isset($this->_units[$type]) === false) {
             require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Type ($type) is unknown");
         }

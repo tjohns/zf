@@ -216,7 +216,7 @@ class Zend_Locale {
 
         }
 
-        if (!array_key_exists(self::$_Default, $languages)) {
+        if (isset($languages[self::$_Default]) === false) {
             $languages[self::$_Default] = 0.1;
         }
         return $languages;
@@ -237,12 +237,12 @@ class Zend_Locale {
             require_once 'Zend/Locale/Exception.php';
             throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
         }
-        if (array_key_exists($locale, self::$_localeData)) {
+        if (isset(self::$_localeData[$locale]) === true) {
             self::$_Default = $locale;
             return true;
         } else {
             $locale = explode('_', $locale);
-            if (array_key_exists($locale[0], self::$_localeData)) {
+            if (isset(self::$_localeData[$locale[0]]) === true) {
                 self::$_Default = $locale[0];
                 return true;
             }
@@ -284,7 +284,8 @@ class Zend_Locale {
                     $language = substr($language, 0, strpos($language, '@') - 1);
                 }
                 $splitted = explode('_', $language);
-                if (array_key_exists((string) $language, self::$_localeData)) {
+                $language = (string) $language;
+                if (isset(self::$_localeData[$language]) === true) {
                     $languagearray[$language] = 1;
                     if (strlen($language) > 4) {
                         $languagearray[substr($language, 0, 2)] = 1;
@@ -393,14 +394,14 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        if (!array_key_exists((string) $locale, self::$_localeData)) {
+        if (isset(self::$_localeData[(string) $locale]) === false) {
             $region = substr($locale, 0, 3);
             if (isset($region[2])) {
                 if (($region[2] == '_') or ($region[2] == '-')) {
                     $region = substr($region, 0, 2);
                 }
             }
-            if (array_key_exists((string) $region, self::$_localeData)) {
+            if (isset(self::$_localeData[(string) $region]) === true) {
                 $this->_Locale = $region;
             } else {
                 $this->_Locale = 'root';
@@ -793,11 +794,11 @@ class Zend_Locale {
             $locale = key($locale);
         }
 
-        if (array_key_exists($locale, self::$_localeData)) {
+        if (isset(self::$_localeData[$locale]) === true) {
             return $locale;
         } else {
             $locale = explode('_', $locale);
-            if (array_key_exists($locale[0], self::$_localeData)) {
+            if (isset(self::$_localeData[$locale[0]]) === true) {
                 return $locale[0];
             }
         }
