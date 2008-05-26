@@ -59,6 +59,21 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test empty adapterNamespace issue
+     * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
+     */
+    public function testAdapterZendConfigEmptyNamespace()
+    {
+        Zend_Loader::loadClass('Zend_Config');
+        $params = $this->_util->getParams();
+        $params['adapterNamespace'] = '';
+        $params = new Zend_Config($params);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+    }
+
+    /**
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
      */
