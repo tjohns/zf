@@ -869,7 +869,7 @@ abstract class Zend_Db_Adapter_Abstract
      * @param boolean $auto If true, heed the AUTO_QUOTE_IDENTIFIERS config option.
      * @return string The quoted identifier and alias.
      */
-    public function quoteTableAs($ident, $alias = null, $auto=false)
+    public function quoteTableAs($ident, $alias = null, $auto = false)
     {
         return $this->_quoteIdentifierAs($ident, $alias, $auto);
     }
