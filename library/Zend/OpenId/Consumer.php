@@ -502,6 +502,7 @@ class Zend_OpenId_Consumer
             }
 
             $r = array();
+            $bad_response = false;
             foreach(explode("\n", $ret) as $line) {
                 $line = trim($line);
                 if (!empty($line)) {
@@ -509,8 +510,13 @@ class Zend_OpenId_Consumer
                     if (is_array($x) && count($x) == 2) {
                         list($key, $value) = $x;
                         $r[trim($key)] = trim($value);
+                    } else {
+                        $bad_response = true;
                     }
                 }
+            }
+            if ($bad_response && strpos($ret, 'Unknown session type') !== false) {
+                $r['error_code'] = 'unsupported-type';
             }
             $ret = $r;
 
