@@ -39,27 +39,32 @@
         <title>Doctype Helper Basic Usage</title>
 
         <para>
-            You may specify the doctype at any time. However, probably the
-            simplest use case is to specify it and output it at the same time,
-            at the top of your layout script:
+            You may specify the doctype at any time. However, helpers that 
+            depend on the doctype for their output will recognize it only after 
+            you have set it, so the easyest approach is to specify it in your 
+            bootstrap:
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->doctype('XHTML1_STRICT') ?>
+$doctypeHelper = new Zend_View_Helper_Doctype();
+$doctypeHelper->doctype('XHTML1_STRICT');
 ]]></programlisting>
         
         <para>
-            From this point forward, any helpers that depend on the doctype for
-            their output will be doctype aware -- and the doctype will be
-            present in your document.
+            And then print it out on top of your layout script:
         </para>
+        
+        <programlisting role="php"><![CDATA[
+<?php echo $this->doctype()->getDoctype() ?>
+]]></programlisting>
+        
     </example>
 
     <example id="zend.view.helpers.initial.doctype.retrieving">
         <title>Retrieving the Doctype</title>
 
         <para>
-            If you need to know the doctype later, you can do so by calling
+            If you need to know the doctype, you can do so by calling
             <code>getDoctype()</code> on the object, which is returned by
             invoking the helper.
         </para>

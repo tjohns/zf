@@ -193,7 +193,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
         <para>
             It's often useful and/or necessary to perform some normalization on
-            input prior to validation -- for instance, you may want to strip out
+            input prior to validation – for instance, you may want to strip out
             all HTML, but run your validations on what remains to ensure the
             submission is valid. Or you may want to trim empty space surrounding
             input so that a StringLength validator will not return a false
@@ -219,7 +219,7 @@ $filtered = $element->getValue();
             </para></listitem>
 
             <listitem><para>
-                providing a filter name -- either a short name or fully
+                providing a filter name – either a short name or fully
                 qualified class name
             </para></listitem>
         </itemizedlist>
@@ -337,7 +337,7 @@ $unfiltered = $element->getUnfilteredValue();
             </para></listitem>
 
             <listitem><para>
-                providing a validator name -- either a short name or fully
+                providing a validator name – either a short name or fully
                 qualified class name
             </para></listitem>
         </itemizedlist>
