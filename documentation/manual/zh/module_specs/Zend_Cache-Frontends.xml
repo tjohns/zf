@@ -605,6 +605,14 @@ $res = $cache->foobar2('1', '2');]]>
                                   only the last one will be used
                               </entry>
                          </row>
+                         <row>
+ 	 	             <entry><code>memorize_headers</code></entry>
+ 	 	             <entry><code>array</code></entry>
+ 	 	             <entry><code>array()</code></entry>
+ 	 	             <entry>
+ 	 	                 对应于一些 HTTP 头名称的字符串数组。列表中的头将保存在缓存里，需要的时候就调出来。
+ 	 	             </entry>
+ 	 	          </row>
                       </tbody>
                   </tgroup>
               </table>
