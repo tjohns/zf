@@ -40,6 +40,17 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_TestUtil_Pdo_Mysql extends Zend_Db_TestUtil_Mysqli
 {
+    protected function _rawQuery($sql)
+    {
+        $conn = $this->_db->getConnection();
+        $retval = $conn->exec($sql);
+        if ($retval === false) {
+            $e = $conn->error;
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
+        }
+    }
+
     public function getParams(array $constants = array())
     {
         $constants = parent::getParams($constants);

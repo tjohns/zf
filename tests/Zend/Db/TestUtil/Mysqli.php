@@ -90,4 +90,28 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         }
     }
 
+    public function setUp(Zend_Db_Adapter_Abstract $db)
+    {
+        parent::setUp($db);
+
+        $this->_createTestProcedure();
+    }
+
+    public function tearDown()
+    {
+        $this->_dropTestProcedure();
+
+        parent::tearDown();
+    }
+
+    protected function _createTestProcedure()
+    {
+        $this->_rawQuery('DROP PROCEDURE IF EXISTS zf_test_procedure');
+        $this->_rawQuery('CREATE PROCEDURE zf_test_procedure(IN param1 INTEGER) BEGIN SELECT * FROM zfproducts WHERE product_id = param1; END');
+    }
+
+    protected function _dropTestProcedure()
+    {
+        $this->_rawQuery('DROP PROCEDURE IF EXISTS zf_test_procedure');
+    }
 }

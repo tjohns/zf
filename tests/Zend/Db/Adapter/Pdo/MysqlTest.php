@@ -263,6 +263,39 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->markTestIncomplete('Inconsistent test results');
     }
 
+    /**
+     * Ensures that the PDO Buffered Query does not throw the error
+     * 2014 General error
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2101
+     * @return void
+     */
+    public function testZF2101()
+    {
+        $params = $this->_util->getParams();
+        $params['driver_options'] = array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true);
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        
+        // Set default bound value
+        $customerId = 1;
+
+        // Stored procedure returns a single row
+        $stmt = $db->prepare('CALL zf_test_procedure(:customerId)');
+        $stmt->bindParam('customerId', $customerId, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0]['product_id']);
+
+        // Reset statement
+        $stmt->closeCursor();
+        
+        // Stored procedure returns a single row
+        $stmt = $db->prepare('CALL zf_test_procedure(:customerId)');
+        $stmt->bindParam('customerId', $customerId, PDO::PARAM_INT);
+        $stmt->execute();
+        $this->assertEquals(1, $result[0]['product_id']);
+    }
+
     public function getDriver()
     {
         return 'Pdo_Mysql';

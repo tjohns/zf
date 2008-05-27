@@ -160,6 +160,7 @@ class Zend_Db_Statement_Pdo extends Zend_Db_Statement
     public function closeCursor()
     {
         try {
+            while ($this->_stmt->nextRowset()) {}
             return $this->_stmt->closeCursor();
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
