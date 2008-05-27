@@ -148,7 +148,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
         <title> 过滤器 </title>
 
         <para>
-            在校验之前对输入执行规范化常常是有用的并/或必需的 －－ 例如，你可能想要剥离所有 HTML，在剩下的东东上运行校验来确保提交有效。或者你可能想把输入的数据两边的空格都消掉，这样 StringLength 校验器就不会返回失败。这些操作使用 <code>Zend_Filter</code> 来执行，并且 <code>Zend_Form_Element</code> 对过滤链有支持，让你指定多个连续的过滤器来用。在校验期间和通过 <code>getValue()</code> 读取元素值的时候都会发生校验：
+            在校验之前对输入执行规范化常常是有用的并/或必需的 － 例如，你可能想要剥离所有 HTML，在剩下的东东上运行校验来确保提交有效。或者你可能想把输入的数据两边的空格都消掉，这样 StringLength 校验器就不会返回失败。这些操作使用 <code>Zend_Filter</code> 来执行，并且 <code>Zend_Form_Element</code> 对过滤链有支持，让你指定多个连续的过滤器来用。在校验期间和通过 <code>getValue()</code> 读取元素值的时候都会发生校验：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -165,7 +165,7 @@ $filtered = $element->getValue();
             </para></listitem>
 
             <listitem><para>
-                提供过滤器名称 －－ 短名或完整的类名都可以
+                提供过滤器名称 － 短名或完整的类名都可以
             </para></listitem>
         </itemizedlist>
 
@@ -269,7 +269,7 @@ $unfiltered = $element->getUnfilteredValue();
             </para></listitem>
 
             <listitem><para>
-                提供一个校验器名 －－ 短名或者完整的类名都可以
+                提供一个校验器名 － 短名或者完整的类名都可以
             </para></listitem>
         </itemizedlist>
 
