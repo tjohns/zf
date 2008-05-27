@@ -1,4 +1,4 @@
-﻿<sect3 id="zend.view.helpers.initial.doctype">
+<sect3 id="zend.view.helpers.initial.doctype">
     <title>L'aide de vue Doctype</title>
 
     <para>
@@ -32,15 +32,16 @@
         <title>Utilisation basique de l'aide Doctype</title>
 
         <para>
-            Vous pouvez spécifier le doctype à n'importe quel moment. Cependant, le cas d'utilisation le plus simple et le plus probable est de le spécifier et de l'afficher au même moment, au début du script de disposition ("layout") :
+            Vous pouvez spécifier le doctype à n'importe quel moment. Cependant, les aides de vues qui utilisent pour leur affichage ne le reconnaissent qu'une fois qu'il à été paramètré, donc la manière la plus simple est de le spécifier dans votre fichier d'amorçage :
         </para>
 
-        <programlisting role="php"><![CDATA[
-<?= $this->doctype('XHTML1_STRICT') ?>
+        <programlisting role="php"><![CDATA[<?php
+$doctypeHelper = new Zend_View_Helper_Doctype();
+$doctypeHelper->doctype('XHTML1_STRICT');
 ]]></programlisting>
 
         <para>
-            A partir de ce moment et pour la suite, toute aide qui dépend du doctype pour son affichage sera averti du doctype - et le doctype sera présent dans votre document.
+            Ensuite vous l'affichez en début de votre layout :
         </para>
     </example>
 
@@ -48,7 +49,7 @@
         <title>Récupérer le Doctype</title>
 
         <para>
-            Si vous avez besoin du doctype plus tard, vous pouvez le récupérer par l'appel de <code>getDoctype()</code> sur l'objet.
+            Si vous avez besoin du doctype, vous pouvez le récupérer par l'appel de <code>getDoctype()</code> sur l'objet.
         </para>
 
         <programlisting role="php"><![CDATA[<?php

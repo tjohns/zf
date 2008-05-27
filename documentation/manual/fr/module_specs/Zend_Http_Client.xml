@@ -61,7 +61,8 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>strict</entry>
-                            <entry>Si à false, des fonctions de validation n'interviendront pas</entry>
+                            <entry>Validation faite ou non sur les noms d'entêtes. Si à false, des fonctions de validation n'interviendront pas</entry>
+                            Usually this should not be changed</entry>
                             <entry>booléen</entry>
                             <entry>true</entry>
                         </row>
@@ -100,6 +101,12 @@ $client->setConfig(array(
                             <entry>Utilisation du pipelining HTTP (connexion ouverte après déconnexion du client)</entry>
                             <entry>booléen</entry>
                             <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>storeresponse</entry>
+                            <entry>Stockage ou non de la dernière réponse pour une récupération ultérieure avec getLastResponse(). Si réglez à <code>false</code>, getLastResponse() retournera <code>null</code>.</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
                         </row>
                     </tbody>
                 </tgroup>

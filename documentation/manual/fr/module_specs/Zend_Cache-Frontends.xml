@@ -445,7 +445,7 @@ $res = $cache->foobar2('1', '2');]]>
                               <entry>si true, un text de débogage est ajouté avant chaque page de cache</entry>
                          </row>
                          <row>
-                               <entry><code>default_options</code></entry>
+                              <entry><code>default_options</code></entry>
                               <entry><code>array</code></entry>
                               <entry><code>array(...see below...)</code></entry>
                               <entry>un tableau associatif d'options par défaut :
@@ -513,6 +513,12 @@ $res = $cache->foobar2('1', '2');]]>
                               <entry><code>array</code></entry>
                               <entry><code>array()</code></entry>
                               <entry>un tableau associatif pour définir les options, uniquement pour certaines REQUEST_URI, les clés sont des regex PCRE, les valeurs sont des tableaus associatifs avec des options spécifiques pour définir si les regexs correspondent dans $_SERVER['REQUEST_URI'] (voir les options par défaut pour la liste des options disponibles) ; si plusieurs regex correspondent à un $_SERVER['REQUEST_URI'], seule la dernière sera utilisée.</entry>
+                         </row>
+                         <row>
+                              <entry><code>memorize_headers</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>un tableau de chaînes correspondant aux noms d'entêtes HTTP. Les entêtes listées seront stockées avec les données de cache et renvoyées lorsque le cache sera rappelé.</entry>
                          </row>
                       </tbody>
                   </tgroup>
