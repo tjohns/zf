@@ -32,23 +32,29 @@
         <title>Doctype 助手的基本用法 </title>
 
         <para>
-            在任何时候都可以指定doctype。然而，可能最简单的用法是在布局脚本的顶部指定并输出：
+            在任何时候都可以指定 doctype。然而，依赖 doctype 输出的助手只在你设置后才认识它，所以最简单的用法是在 bootstrap 脚本中指定：
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->doctype('XHTML1_STRICT') ?>
+$doctypeHelper = new Zend_View_Helper_Doctype();
+$doctypeHelper->doctype('XHTML1_STRICT');
 ]]></programlisting>
         
         <para>
-            从这点展开来想，任何依赖doctype来输出的助手都是知道doctype的，并且doctype将出现在文档中。
+            然后在布局脚本中输出：
         </para>
+
+        <programlisting role="php"><![CDATA[
+<?php echo $this->doctype()->getDoctype() ?>
+]]></programlisting>
+ 	
     </example>
 
     <example id="zend.view.helpers.initial.doctype.retrieving">
         <title>获取 Doctype</title>
 
         <para>
-            如果需要在知道文档类型，可以在由调用助手返回的对象中调用<code>getDoctype()</code>。
+            如果需要知道文档类型，可以在由调用助手返回的对象中调用<code>getDoctype()</code>。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
