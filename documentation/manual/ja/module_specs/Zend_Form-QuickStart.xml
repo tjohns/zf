@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9379 -->
+<!-- EN-Revision: 9524 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -495,7 +495,7 @@ if (!$form->isValid($_POST)) {
 
 
 $form = new Zend_Form();
-$form->setAction('/usr/login')
+$form->setAction('/user/login')
      ->setMethod('post');
 
 // username 要素を作成・設定します

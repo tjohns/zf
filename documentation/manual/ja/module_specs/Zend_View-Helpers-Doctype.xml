@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9531 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype ヘルパー</title>
 
@@ -41,26 +42,31 @@
 
         <para>
             doctype は、いつでも指定することができます。
-            しかし、もっともシンプルな使用法は、
+            しかし、doctype によって出力を切りかえるヘルパーを使用する場合は
+            まず doctype を設定してからでないと動作しません。もっともシンプルな使用法は、
             レイアウトスクリプトの先頭で指定と出力を同時に行うことでしょう。
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->doctype('XHTML1_STRICT') ?>
+$doctypeHelper = new Zend_View_Helper_Doctype();
+$doctypeHelper->doctype('XHTML1_STRICT');
 ]]></programlisting>
         
         <para>
-            これ以降、doctype に依存する任意のヘルパーは
-            doctype を考慮した出力を行うようになります。
-            また doctype がドキュメントに指定されるようになります。
+            そして、それをレイアウトスクリプトの先頭で表示します。
         </para>
+        
+        <programlisting role="php"><![CDATA[
+<?php echo $this->doctype()->getDoctype() ?>
+]]></programlisting>
+        
     </example>
 
     <example id="zend.view.helpers.initial.doctype.retrieving">
         <title>Doctype の取得</title>
 
         <para>
-            後で doctype を知りたくなったら、オブジェクトの
+            doctype を知りたくなったら、オブジェクトの
             <code>getDoctype()</code> をコールします。
             このオブジェクトは、ヘルパーを起動した際に取得できるものです。
             invoking the helper.
