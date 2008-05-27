@@ -83,6 +83,13 @@ class Zend_OpenId_Consumer
     private $_httpClient = null;
 
     /**
+     * HTTP session to store climed_id between requests
+     *
+     * @var Zend_Session_Namespace $_session
+     */
+    private $_session = null;
+
+    /**
      * Constructs a Zend_OpenId_Consumer object with given $storage.
      * Enables or disables future association with server based on
      * Diffie-Hellman key agreement.
@@ -189,8 +196,11 @@ class Zend_OpenId_Consumer
         }
 
         if ($version < 2.0 && !isset($params["openid_claimed_id"])) {
-            require_once "Zend/Session/Namespace.php";
-            $session = new Zend_Session_Namespace("openid");
+            if ($this->_session === null) {
+                require_once "Zend/Session/Namespace.php";
+                $this->_session = new Zend_Session_Namespace("openid");
+            }
+            $session = $this->_session;
             if ($session->identity == $identity) {
                 $identity = $session->claimed_id;
             }
@@ -758,8 +768,11 @@ class Zend_OpenId_Consumer
         $params['openid.claimed_id'] = $claimedId;
 
         if ($version <= 2.0) {
-            require_once "Zend/Session/Namespace.php";
-            $session = new Zend_Session_Namespace("openid");
+            if ($this->_session === null) {
+                require_once "Zend/Session/Namespace.php";
+                $this->_session = new Zend_Session_Namespace("openid");
+            }
+            $session = $this->_session;
             $session->identity = $id;
             $session->claimed_id = $claimedId;
         }
@@ -806,5 +819,23 @@ class Zend_OpenId_Consumer
      */
     public function getHttpClient() {
         return $this->_httpClient;
+    }
+
+    /**
+     * Sets session object to store climed_id
+     *
+     * @param Zend_Session_Namespace $session HTTP client object to be used
+     */
+    public function setSession(Zend_Session_Namespace $session) {
+        $this->_session = $session;
+    }
+
+    /**
+     * Returns session object that is used to store climed_id
+     *
+     * @return Zend_Session_Namespace
+     */
+    public function getSession() {
+        return $this->_session;
     }
 }
