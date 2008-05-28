@@ -91,7 +91,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         if (!extension_loaded('memcache')) {
             Zend_Cache::throwException('The memcache extension must be loaded for using this backend !');

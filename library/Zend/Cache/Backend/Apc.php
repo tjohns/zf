@@ -46,7 +46,7 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         if (!extension_loaded('apc')) {
             Zend_Cache::throwException('The apc extension must be loaded for using this backend !');

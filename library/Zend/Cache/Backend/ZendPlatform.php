@@ -53,7 +53,7 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         if (!function_exists('accelerator_license_info')) {
             Zend_Cache::throwException('The Zend Platform extension must be loaded for using this backend !');

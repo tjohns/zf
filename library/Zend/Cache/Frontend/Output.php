@@ -43,7 +43,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
      * @param  array $options Associative array of options
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         parent::__construct($options);
         $this->_idStack = array();

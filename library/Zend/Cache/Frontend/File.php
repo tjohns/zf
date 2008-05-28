@@ -61,7 +61,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);

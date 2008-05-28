@@ -83,12 +83,12 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
 
      /**
       * The class name of the cached object or cached abstract class
-      * 
+      *
       * Used to differentiate between different classes with the same method calls.
       *
       * @var string
       */
-     private $_cachedEntityLabel = ''; 
+     private $_cachedEntityLabel = '';
 
     /**
      * Constructor
@@ -97,7 +97,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
@@ -111,7 +111,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         }
         $this->_cachedEntity = $this->_specificOptions['cached_entity'];
         if(is_string($this->_cachedEntity)){
-            $this->_cachedEntityLabel = $this->_cachedEntity;         
+            $this->_cachedEntityLabel = $this->_cachedEntity;
         } else {
             $ro = new ReflectionObject($this->_cachedEntity);
             $this->_cachedEntityLabel = $ro->getName();

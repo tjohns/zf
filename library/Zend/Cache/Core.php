@@ -113,11 +113,8 @@ class Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct(array $options = array())
     {
-        if (!is_array($options)) {
-            Zend_Cache::throwException('Options parameter must be an array');
-        }
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
