@@ -134,18 +134,19 @@ abstract class Zend_Translate_Adapter {
             foreach (new RecursiveIteratorIterator(
                      new RecursiveDirectoryIterator($data, RecursiveDirectoryIterator::KEY_AS_PATHNAME), 
                      RecursiveIteratorIterator::SELF_FIRST) as $file => $info) {
+                $file = $info->getFilename();
                 if ($info->isDir()) {
                     // pathname as locale
-                    if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale((string) $info))) {
-                        if (strlen($prev) <= strlen((string) $info)) {
-                            $locale = (string) $info;
+                    if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale($file))) {
+                        if (strlen($prev) <= strlen($file)) {
+                            $locale = $file;
                             $prev   = $locale;
                         }
                     }
                 } else if ($info->isFile()) {
                     // filename as locale
                     if ($this->_options['scan'] === self::LOCALE_FILENAME) {
-                        $filename = explode('.', (string) $info);
+                        $filename = explode('.', $file);
                         array_pop($filename);
                         $filename = implode('.', $filename);
                         if (Zend_Locale::isLocale((string) $filename)) {
@@ -172,7 +173,7 @@ abstract class Zend_Translate_Adapter {
                         }
                     }
                     try {
-                        $this->_addTranslationData((string) $info->getPathname(), $locale, $this->_options);
+                        $this->_addTranslationData($info->getPathname(), $locale, $this->_options);
                         if ((isset($this->_translate[$locale]) === true) and (count($this->_translate[$locale]) > 0)) {
                             $this->setLocale($locale);
                         }
