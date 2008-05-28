@@ -119,7 +119,7 @@ class Zend_Locale
      */
     const BROWSER     = 'browser';
     const ENVIRONMENT = 'environment';
-    const FRAMEWORK   = 3;
+    const FRAMEWORK   = 'framework';
 
     /**
      * Actual set locale
@@ -172,9 +172,7 @@ class Zend_Locale
     public function __construct($locale = null)
     {
         if (empty(self::$_auto) === true) {
-            self::$_auto        = $this->getDefault(null, false);
-            self::$_browser     = $this->getDefault(self::BROWSER, false);
-            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
+            self::$_auto = $this->getDefault(null, false);
             if ((empty($locale) === true) and (empty(self::$_auto) === true) and
                 (empty(self::$_default) === true)) {
                 require_once 'Zend/Locale/Exception.php';
@@ -306,12 +304,15 @@ class Zend_Locale
      */
     public function getEnvironment()
     {
-        require_once 'Zend/Locale/Data/Translation.php';
+        if (self::$_environment !== null) {
+            return self::$_environment;
+        }
 
         $language  = setlocale(LC_ALL, 0);
         $languages = explode(';', $language);
 
         $languagearray = array();
+        require_once 'Zend/Locale/Data/Translation.php';
 
         foreach ($languages as $locale) {
             if (strpos($locale, '=') !== false) {
@@ -348,6 +349,7 @@ class Zend_Locale
             }
         }
 
+        self::$_environment = $languagearray;
         return $languagearray;
     }
 
@@ -362,6 +364,9 @@ class Zend_Locale
      */
     public function getBrowser()
     {
+        if (self::$_browser !== null) {
+            return self::$_browser;
+        }
         $httplanguages = getenv('HTTP_ACCEPT_LANGUAGE');
 
         $languages = array();
@@ -404,6 +409,7 @@ class Zend_Locale
             }
         }
 
+        self::$_browser = $languages;
         return $languages;
     }
 
