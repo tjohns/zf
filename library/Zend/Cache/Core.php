@@ -47,7 +47,7 @@ class Zend_Cache_Core
      *
      * =====> (string) cache_id_prefix :
      * - prefix for cache ids (namespace)
-     * 
+     *
      * ====> (boolean) automatic_serialization :
      * - Enable / disable automatic serialization
      * - It can be used to save directly datas which aren't strings (but it's slower)
@@ -66,7 +66,7 @@ class Zend_Cache_Core
      *
      * ====> (boolean) logging :
      * - If set to true, logging is activated (but the system is slower)
-     * 
+     *
      * ====> (boolean) ignore_user_abort
      * - If set to true, the core will set the ignore_user_abort PHP flag inside the
      *   save() method to avoid cache corruptions in some cases (default false)
@@ -142,7 +142,7 @@ class Zend_Cache_Core
         }
         $this->_backend->setDirectives($directives);
     }
-    
+
     /**
      * Returns the backend
      *
@@ -176,6 +176,29 @@ class Zend_Cache_Core
                 // This a specic option of this frontend
                 $this->_specificOptions[$name] = $value;
                 return;
+            }
+        }
+        Zend_Cache::throwException("Incorrect option name : $name");
+    }
+
+    /**
+     * Public frontend to get an option value
+     *
+     * @param  string $name  Name of the option
+     * @throws Zend_Cache_Exception
+     * @return mixed option value
+     */
+    public function getOption($name)
+    {
+        if (is_string($name)) {
+            $name = strtolower($name);
+            if (array_key_exists($name, $this->_options)) {
+                // This is a Core option
+                return $this->_options[$name];
+            }
+            if (array_key_exists($name, $this->_specificOptions)) {
+                // This a specic option of this frontend
+                return $this->_specificOptions[$name];
             }
         }
         Zend_Cache::throwException("Incorrect option name : $name");
@@ -304,7 +327,7 @@ class Zend_Cache_Core
         }
         $result = $this->_backend->save($data, $id, $tags, $specificLifetime);
         if ($this->_options['ignore_user_abort']) {
-            ignore_user_abort($abort); 
+            ignore_user_abort($abort);
         }
         if (!$result) {
             // maybe the cache is corrupted, so we remove it !
@@ -469,7 +492,7 @@ class Zend_Cache_Core
      *
      * @param  string $id Cache id
      * @return string Cache id (with or without prefix)
-     */  
+     */
     private function _id($id)
     {
         if (!is_null($id) && isset($this->_options['cache_id_prefix'])) {
