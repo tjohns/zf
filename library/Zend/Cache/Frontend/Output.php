@@ -89,7 +89,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
             $data = ob_get_contents();
             ob_end_clean();
         } else {
-            $data = $forcedDatas;
+            $data =& $forcedDatas;
         }
         $id = array_pop($this->_idStack);
         if (is_null($id)) {
