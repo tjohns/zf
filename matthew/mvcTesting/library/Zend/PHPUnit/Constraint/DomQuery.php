@@ -4,12 +4,24 @@ require_once 'Zend/Dom/Query.php';
 
 class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 {
-    protected $_contentCount      = false;
-    protected $_contentCountExact = null;
-    protected $_contentCountMax   = null;
-    protected $_contentCountMin   = null;
-    protected $_contentRegex      = null;
-    protected $_contentToMatch    = null;
+    const ASSERT_SELECT           = 'assertSelect';
+    const ASSERT_CONTENT_CONTAINS = 'assertSelectContentContains';
+    const ASSERT_CONTENT_REGEX    = 'assertSelectContentRegex';
+    const ASSERT_CONTENT_COUNT    = 'assertSelectCount';
+    const ASSERT_CONTENT_COUNT_MIN= 'assertSelectCountMin';
+    const ASSERT_CONTENT_COUNT_MAX= 'assertSelectCountMax';
+
+    protected $_assertType        = null;
+    protected $_assertTypes       = array(
+        self::ASSERT_SELECT,
+        self::ASSERT_CONTENT_CONTAINS,
+        self::ASSERT_CONTENT_REGEX,
+        self::ASSERT_CONTENT_COUNT,
+        self::ASSERT_CONTENT_COUNT_MIN,
+        self::ASSERT_CONTENT_COUNT_MAX,
+    );
+
+    protected $_content           = null;
     protected $_negate            = false;
     protected $_path              = null;
 
@@ -24,74 +36,88 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
     public function __construct($path, $spec1 = null, $spec2 = null)
     {
         $this->_path = $path;
-        if (null !== $spec1) {
-            if (false === $spec1) {
-                $this->_negate = true;
-            } elseif (is_string($spec1)) {
-                if ('/' == $spec1[0]) {
-                    $this->_contentRegex = $spec1;
-                } else {
-                    $this->_contentToMatch = $spec1;
-                }
-                if (is_bool($spec2)) {
-                    $this->_negate = !$spec2;
-                }
-            } elseif (is_numeric($spec1)) {
-                $this->_contentCount = true;
-                if ('max' == strtolower($spec2)) {
-                    $this->_contentCountMax   = (int) $spec1;
-                } elseif ('exact' == strtolower($spec2)) {
-                    $this->_contentCountExact = (int) $spec1;
-                } else {
-                    $this->_contentCountMin   = (int) $spec1;
-                }
-            }
-        }
+    }
+
+    /**
+     * Indicate negative match
+     * 
+     * @param  bool $flag 
+     * @return void
+     */
+    public function setNegate($flag = true)
+    {
+        $this->_negate = $flag;
     }
 
     /**
      * Evaluate an object to see if it fits the constraints
      * 
-     * @param   $other 
-     * @return void
+     * @param  string $other String to examine
+     * @param  null|string Assertion type
+     * @return bool
      */
-    public function evaluate($other)
+    public function evaluate($other, $assertType = null)
     {
+        if (strstr($assertType, 'Not')) {
+            $this->setNegate(true);
+            $assertType = str_replace('Not', '', $assertType);
+        }
+
+        if (!in_array($assertType, $this->_assertTypes)) {
+            require_once 'Zend/PHPUnit/Constraint/Exception.php';
+            throw new Zend_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
+        }
+
+        $this->_assertType = $assertType;
+
         $domQuery = new Zend_Dom_Query($other);
         $result   = $domQuery->query($this->_path);
+        $argv     = func_get_args();
+        $argc     = func_num_args();
 
-        if (null !== $this->_contentToMatch) {
-            if ($this->_negate) {
-                return $this->_notMatchContent($result);
-            } else {
-                return $this->_matchContent($result);
-            }
-        } 
-
-        if (null !== $this->_contentRegex) {
-            if ($this->_negate) {
-                return $this->_notRegexContent($result);
-            } else {
-                return $this->_regexContent($result);
-            }
+        switch ($assertType) {
+            case self::ASSERT_CONTENT_CONTAINS:
+                if (3 > $argc) {
+                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_PHPUnit_Constraint_Exception('No content provided against which to match');
+                }
+                $this->_content = $content = $argv[2];
+                return ($this->_negate)
+                    ? $this->_notMatchContent($result, $content)
+                    : $this->_matchContent($result, $content);
+            case self::ASSERT_CONTENT_REGEX:
+                if (3 > $argc) {
+                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_PHPUnit_Constraint_Exception('No pattern provided against which to match');
+                }
+                $this->_content = $content = $argv[2];
+                return ($this->_negate)
+                    ? $this->_notRegexContent($result, $content)
+                    : $this->_regexContent($result, $content);
+            case self::ASSERT_CONTENT_COUNT:
+            case self::ASSERT_CONTENT_COUNT_MIN:
+            case self::ASSERT_CONTENT_COUNT_MAX:
+                if (3 > $argc) {
+                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_PHPUnit_Constraint_Exception('No count provided against which to compare');
+                }
+                $this->_content = $content = $argv[2];
+                return $this->_countContent($result, $content, $assertType);
+            case self::ASSERT_SELECT:
+            default:
+                if ($this->_negate) {
+                    return (0 == count($result));
+                } else {
+                    return (0 != count($result));
+                }
         }
-        
-        if ($this->_contentCount) {
-            return $this->_countContent($result);
-        }
-
-        if ($this->_negate) {
-            return (0 == count($result));
-        }
-
-        return (0 != count($result));
     }
 
     /**
      * Report Failure
      * 
      * @see    PHPUnit_Framework_Constraint for implementation details
-     * @param  mixed $other 
+     * @param  mixed $other CSS selector path
      * @param  string $description 
      * @param  bool $not 
      * @return void
@@ -100,60 +126,51 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
     public function fail($other, $description, $not = false)
     {
         require_once 'Zend/PHPUnit/Constraint/Exception.php';
-        if (null !== $this->_contentToMatch) {
-            if ($this->_negate) {
-                $failure = 'Failed asserting node DENOTED BY %s DOES NOT CONTAIN content "%s"';
-            } else {
+        switch ($this->_assertType) {
+            case self::ASSERT_CONTENT_CONTAINS:
                 $failure = 'Failed asserting node denoted by %s CONTAINS content "%s"';
-            }
-            throw new Zend_PHPUnit_Constraint_Exception(
-                sprintf($failure, $other, $this->_contentToMatch),
-                null
-            );
-        } 
-
-        if (null !== $this->_contentRegex) {
-            if ($this->_negate) {
-                $failure = 'Failed asserting node DENOTED BY %s DOES NOT CONTAIN content MATCHING "%s"';
-            } else {
+                if ($this->_negate) {
+                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT CONTAIN content "%s"';
+                }
+                $failure = sprintf($failure, $other, $this->_content);
+                break;
+            case self::ASSERT_CONTENT_REGEX:
                 $failure = 'Failed asserting node denoted by %s CONTAINS content MATCHING "%s"';
-            }
-            throw new Zend_PHPUnit_Constraint_Exception(
-                sprintf($failure, $other, $this->_contentRegex),
-                null
-            );
-        }
-        
-        if ($this->_contentCount) {
-            if (null !== $this->_contentCountExact) {
+                if ($this->_negate) {
+                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT CONTAIN content MATCHING "%s"';
+                }
+                $failure = sprintf($failure, $other, $this->_content);
+                break;
+            case self::ASSERT_CONTENT_COUNT:
                 $failure = 'Failed asserting node DENOTED BY %s OCCURS EXACTLY %i times';
-                $count   = $this->_contentCountExact;
-            }
-
-            if (null !== $this->_contentCountMin) {
+                if ($this->_negate) {
+                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT OCCUR EXACTLY %i times';
+                }
+                $failure = sprintf($failure, $other, $this->_content);
+                break;
+            case self::ASSERT_CONTENT_COUNT_MIN:
                 $failure = 'Failed asserting node DENOTED BY %s OCCURS AT LEAST %i times';
-                $count   = $this->_contentCountMin;
-            }
-
-            if (null !== $this->_contentCountMax) {
+                $failure = sprintf($failure, $other, $this->_content);
+                break;
+            case self::ASSERT_CONTENT_COUNT_MAX:
                 $failure = 'Failed asserting node DENOTED BY %s OCCURS AT MOST %i times';
-                $count   = $this->_contentCountMax;
-            }
-            throw new Zend_PHPUnit_Constraint_Exception(
-                sprintf($failure, $other, $count),
-                null
-            );
+                $failure = sprintf($failure, $other, $this->_content);
+                break;
+            case self::ASSERT_SELECT:
+            default:
+                $failure = 'Failed asserting node DENOTED BY %s EXISTS';
+                if ($this->_negate) {
+                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT EXIST';
+                }
+                $failure = sprintf($failure, $other);
+                break;
         }
 
-        if ($this->_negate) {
-            $failure = 'Failed asserting node DENOTED BY %s DOES NOT EXIST';
-        } else {
-            $failure = 'Failed asserting node DENOTED BY %s EXISTS';
+        if (!empty($description)) {
+            $failure = $description . "\n" . $failure;
         }
-        throw new Zend_PHPUnit_Constraint_Exception(
-            sprintf($failure, $other),
-            null
-        );
+
+        throw new Zend_PHPUnit_Constraint_Exception($failure);
     }
 
     /**
@@ -170,9 +187,10 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
      * Check to see if content is matched in selected nodes
      * 
      * @param  Zend_Dom_Query_Result $result 
+     * @param  string $match Content to match
      * @return bool
      */
-    protected function _matchContent($result)
+    protected function _matchContent($result, $match)
     {
         if (0 == count($result)) {
             return false;
@@ -180,7 +198,7 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 
         foreach ($result as $node) {
             $content = $this->_getNodeContent($node);
-            if (strstr($content, $this->_contentToMatch)) {
+            if (strstr($content, $match)) {
                 return true;
             }
         }
@@ -192,9 +210,10 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
      * Check to see if content is NOT matched in selected nodes
      * 
      * @param  Zend_Dom_Query_Result $result 
+     * @param  string $match 
      * @return bool
      */
-    protected function _notMatchContent($result)
+    protected function _notMatchContent($result, $match)
     {
         if (0 == count($result)) {
             return true;
@@ -202,7 +221,7 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 
         foreach ($result as $node) {
             $content = $this->_getNodeContent($node);
-            if (strstr($content, $this->_contentToMatch)) {
+            if (strstr($content, $match)) {
                 return false;
             }
         }
@@ -214,9 +233,10 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
      * Check to see if content is matched by regex in selected nodes
      * 
      * @param  Zend_Dom_Query_Result $result 
+     * @param  string $pattern
      * @return bool
      */
-    protected function _regexContent($result)
+    protected function _regexContent($result, $pattern)
     {
         if (0 == count($result)) {
             return false;
@@ -224,7 +244,7 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 
         foreach ($result as $node) {
             $content = $this->_getNodeContent($node);
-            if (preg_match($this->_contentRegex, $content)) {
+            if (preg_match($pattern, $content)) {
                 return true;
             }
         }
@@ -236,9 +256,10 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
      * Check to see if content is NOT matched by regex in selected nodes
      * 
      * @param  Zend_Dom_Query_Result $result 
+     * @param  string $pattern
      * @return bool
      */
-    protected function _notRegexContent($result)
+    protected function _notRegexContent($result, $pattern)
     {
         if (0 == count($result)) {
             return true;
@@ -246,7 +267,7 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 
         foreach ($result as $node) {
             $content = $this->_getNodeContent($node);
-            if (preg_match($this->_contentRegex, $content)) {
+            if (preg_match($pattern, $content)) {
                 return false;
             }
         }
@@ -258,24 +279,26 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
      * Determine if content count matches criteria
      * 
      * @param  Zend_Dom_Query_Result $result 
+     * @param  int $test Value against which to test
+     * @param  string $type assertion type
      * @return boolean
      */
-    protected function _countContent($result)
+    protected function _countContent($result, $test, $type)
     {
         $count = count($result);
-        if (null !== $this->_contentCountExact) {
-            return ($count == $this->_contentCountExact);
-        }
 
-        if (null !== $this->_contentCountMin) {
-            return ($count >= $this->_contentCountMin);
+        switch ($type) {
+            case self::ASSERT_CONTENT_COUNT:
+                return ($this->_negate)
+                    ? ($test != $count)
+                    : ($test == $count);
+            case self::ASSERT_CONTENT_COUNT_MIN:
+                return ($count >= $test);
+            case self::ASSERT_CONTENT_COUNT_MAX:
+                return ($count <= $test);
+            default:
+                return false;
         }
-
-        if (null !== $this->_contentCountMax) {
-            return ($count <= $this->_contentCountMax);
-        }
-
-        return false;
     }
 
     /**

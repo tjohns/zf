@@ -115,17 +115,177 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      * Assert against DOM selection
      * 
      * @param  string $path CSS selector path
-     * @param  bool|string|int $spec1 
-     * @param  bool|string $spec2 
+     * @param  string $message
      * @return void
      */
-    public function assertSelect($path, $spec1 = null, $spec2 = null)
+    public function assertSelect($path, $message = '')
     {
         require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path, $spec1, $spec2);
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
-        if (!$constraint->evaluate($content)) {
-            $constraint->fail($path, '');
+        if (!$constraint->evaluate($content, __FUNCTION__)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $message
+     * @return void
+     */
+    public function assertNotSelect($path, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; node should contain content
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $match content that should be contained in matched nodes
+     * @param  string $message
+     * @return void
+     */
+    public function assertSelectContentContains($path, $match, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; node should NOT contain content
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $match content that should NOT be contained in matched nodes
+     * @param  string $message
+     * @return void
+     */
+    public function assertNotSelectContentContains($path, $match, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; node should match content
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $pattern Pattern that should be contained in matched nodes
+     * @param  string $message
+     * @return void
+     */
+    public function assertSelectContentRegex($path, $pattern, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; node should NOT match content
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $pattern pattern that should NOT be contained in matched nodes
+     * @param  string $message
+     * @return void
+     */
+    public function assertNotSelectContentRegex($path, $pattern, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; should contain exact number of nodes
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $count Number of nodes that should match
+     * @param  string $message
+     * @return void
+     */
+    public function assertSelectCount($path, $count, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; should NOT contain exact number of nodes
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $count Number of nodes that should NOT match
+     * @param  string $message
+     * @return void
+     */
+    public function assertNotSelectCount($path, $count, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; should contain at least this number of nodes
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $count Minimum number of nodes that should match
+     * @param  string $message
+     * @return void
+     */
+    public function assertSelectCountMin($path, $count, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
+            $constraint->fail($path, $message);
+        }
+    }
+
+    /**
+     * Assert against DOM selection; should contain no more than this number of nodes
+     * 
+     * @param  string $path CSS selector path
+     * @param  string $count Maximum number of nodes that should match
+     * @param  string $message
+     * @return void
+     */
+    public function assertSelectCountMax($path, $count, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        $content    = $this->getResponse()->outputBody();
+        if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
+            $constraint->fail($path, $message);
         }
     }
 

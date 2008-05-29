@@ -226,15 +226,15 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         $this->testCase->assertSelect('div#foo legend.bar');
         $this->testCase->assertSelect('div#foo legend.baz');
         $this->testCase->assertSelect('div#foo legend.bat');
-        $this->testCase->assertSelect('div#foo legend.bogus', false);
-        $this->testCase->assertSelect('legend.bat', 'La di da');
-        $this->testCase->assertSelect('legend.bat', 'La do da', false);
-        $this->testCase->assertSelect('legend.bat', '/d[a|i]/i');
-        $this->testCase->assertSelect('legend.bat', '/d[o|e]/i', false);
-        $this->testCase->assertSelect('div#foo legend.bar', 2);
-        $this->testCase->assertSelect('div#foo legend.bar', 2, 'exact');
-        $this->testCase->assertSelect('div#foo legend.bar', 2, 'min');
-        $this->testCase->assertSelect('div#foo legend.bar', 2, 'max');
+        $this->testCase->assertNotSelect('div#foo legend.bogus');
+        $this->testCase->assertSelectContentContains('legend.bat', 'La di da');
+        $this->testCase->assertNotSelectContentContains('legend.bat', 'La do da');
+        $this->testCase->assertSelectContentRegex('legend.bat', '/d[a|i]/i');
+        $this->testCase->assertNotSelectContentRegex('legend.bat', '/d[o|e]/i');
+        $this->testCase->assertSelectCountMin('div#foo legend.bar', 2);
+        $this->testCase->assertSelectCount('div#foo legend.bar', 2);
+        $this->testCase->assertSelectCountMin('div#foo legend.bar', 2);
+        $this->testCase->assertSelectCountMax('div#foo legend.bar', 2);
     }
 
     public function testAssertSelectShouldThrowExceptionsForInValidResponseContent()
@@ -243,7 +243,7 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
         $this->testCase->dispatch('/foo/baz');
         try {
-            $this->testCase->assertSelect('div#foo legend.bar', false);
+            $this->testCase->assertNotSelect('div#foo legend.bar');
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
@@ -253,42 +253,42 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('legend.bat', 'La di da', false);
+            $this->testCase->assertNotSelectContentContains('legend.bat', 'La di da');
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('legend.bat', 'La do da');
+            $this->testCase->assertSelectContentContains('legend.bat', 'La do da');
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('legend.bat', '/d[a|i]/i', false);
+            $this->testCase->assertNotSelectContentRegex('legend.bat', '/d[a|i]/i');
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('legend.bat', '/d[o|e]/i');
+            $this->testCase->assertSelectContentRegex('legend.bat', '/d[o|e]/i');
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('div#foo legend.bar', 3);
+            $this->testCase->assertSelectCountMin('div#foo legend.bar', 3);
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('div#foo legend.bar', 1, 'exact');
+            $this->testCase->assertSelectCount('div#foo legend.bar', 1);
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('div#foo legend.bar', 3, 'min');
+            $this->testCase->assertSelectCountMin('div#foo legend.bar', 3);
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
         try {
-            $this->testCase->assertSelect('div#foo legend.bar', 1, 'max');
+            $this->testCase->assertSelectCountMax('div#foo legend.bar', 1);
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
