@@ -634,7 +634,6 @@ abstract class Zend_Db_Adapter_Abstract
         }
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetch($fetchMode);
-        $stmt->closeCursor();
         return $result;
     }
 
@@ -709,7 +708,6 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchColumn(0);
-        $stmt->closeCursor();
         return $result;
     }
 
@@ -721,8 +719,10 @@ abstract class Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
-        if (is_int($value) || is_float($value)) {
+        if (is_int($value)) {
             return $value;
+        } elseif (is_float($value)) {
+            return sprintf('%F', $value);
         }
         return "'" . addcslashes($value, "\000\n\r\\'\"\032") . "'";
     }
@@ -778,7 +778,7 @@ abstract class Zend_Db_Adapter_Abstract
                     }
                     break;
                 case Zend_Db::FLOAT_TYPE: // float or decimal
-                    return (string) floatval($value);
+                    return sprintf('%F', $value);
                     break;
             }
             return '0';

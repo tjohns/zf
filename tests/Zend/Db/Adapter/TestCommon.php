@@ -1184,7 +1184,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         $value = $this->_db->quoteInto('foo = ?', 12.34, Zend_Db::FLOAT_TYPE);
         $this->assertType('string', $value);
-        $this->assertEquals('foo = 12.34', $value,
+        $this->assertEquals('foo = 12.340000', $value,
             'Incorrect quoteInto() result for FLOAT_TYPE');
 
         $value = $this->_db->quoteInto('foo = ?', 1234, 'CHAR');

@@ -222,6 +222,7 @@ abstract class Zend_Db_TestUtil_Common
         'noquote'       => 'zfnoquote',
         'noprimarykey'  => 'zfnoprimarykey',
         'Documents'     => 'zfdocuments',
+        'Price'         => 'zfprice',
         'AltBugsProducts' => 'zfalt_bugs_products',
     );
 
@@ -275,6 +276,7 @@ abstract class Zend_Db_TestUtil_Common
             'PRIMARY KEY'  => 'bug_id,product_id'
         );
     }
+
     protected function _getColumnsDocuments()
     {
         return array(
@@ -282,6 +284,16 @@ abstract class Zend_Db_TestUtil_Common
             'doc_clob'     => 'CLOB',
             'doc_blob'     => 'BLOB',
             'PRIMARY KEY'  => 'doc_id'
+            );
+    }
+
+    protected function _getColumnsPrice()
+    {
+        return array(
+            'product_id'    => 'INTEGER NOT NULL',
+            'price_name'    => 'VARCHAR(100)',
+            'price_total'   => 'DECIMAL(10,2) NOT NULL',
+            'PRIMARY KEY'   => 'product_id'
             );
     }
 
@@ -390,6 +402,17 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
+    protected function _getDataPrice()
+    {
+        return array(
+            array(
+                'product_id'   => 1,
+                'price_name'   => 'Price 1',
+                'price_total'  => 200.45
+            )
+        );
+    }
+
     public function populateTable($tableId)
     {
         $tableName = $this->getTableName($tableId);
@@ -433,6 +456,9 @@ abstract class Zend_Db_TestUtil_Common
 
         $this->createTable('Documents');
         $this->populateTable('Documents');
+
+        $this->createTable('Price');
+        $this->populateTable('Price');
     }
 
     public function setAdapter(Zend_Db_Adapter_Abstract $db)

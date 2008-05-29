@@ -351,6 +351,18 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2)', $sql);
     }
 
+    /**
+     * Test support for where() with a float parameter,
+     * e.g. where('id = ?', 1).
+     */
+
+    public function testSelectWhereWithTypeFloat()
+    {
+        $select = $this->_selectWhereWithTypeFloat();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfprice".* FROM "zfprice" WHERE ("price_total" = 200.450000)', $sql);
+    }
+
     /** 
      *      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */

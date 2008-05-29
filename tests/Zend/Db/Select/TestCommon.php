@@ -797,6 +797,45 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(2, $result[0]['product_id']);
     }
 
+    /**
+     * Test support for where() with a specified type,
+     * e.g. where('id = ?', 1, 'int').
+     */
+    protected function _selectWhereWithTypeFloat()
+    {
+        $price_total = $this->_db->quoteIdentifier('price_total');
+
+        $select = $this->_db->select()
+            ->from('zfprice')
+            ->where("$price_total = ?", 200.45, Zend_Db::FLOAT_TYPE);
+        return $select;
+    }
+
+    public function testSelectWhereWithTypeFloat()
+    {
+        $locale = setlocale(LC_ALL, null);
+
+        $select = $this->_selectWhereWithTypeFloat();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(200.45, $result[0]['price_total']);
+
+        try {
+            setlocale(LC_ALL, 'fr_BE.UTF-8');
+            $select = $this->_selectWhereWithTypeFloat();
+            $stmt = $this->_db->query($select);
+            $result = $stmt->fetchAll();
+            $this->assertEquals(1, count($result));
+            $this->assertEquals(200.45, $result[0]['price_total']);
+        } catch (Zend_Exception $e) {
+            setlocale(LC_ALL, $locale);
+            throw $e;
+        }
+
+        setlocale(LC_ALL, $locale);
+    }
+
     /** 
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */

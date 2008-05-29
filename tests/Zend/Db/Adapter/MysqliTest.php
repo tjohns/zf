@@ -227,6 +227,41 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals('`foo` AS `bar`', $value);
     }
 
+    /**
+     * Ensures that the PDO Buffered Query does not throw the error
+     * 2014 General error
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2101
+     * @return void
+     */
+    public function testZF2101()
+    {
+        $this->markTestSkipped($this->getDriver() . ' has inconsistent results for this test');
+        /*
+        $params = $this->_util->getParams();
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        
+        // Set default bound value
+        $customerId = 1;
+
+        // Stored procedure returns a single row
+        $stmt = $db->prepare('CALL zf_test_procedure(?)');
+        $stmt->bindParam(1, $customerId);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, $result[0]['product_id']);
+
+        // Reset statement
+        $stmt->closeCursor();
+        
+        // Stored procedure returns a single row
+        $stmt = $db->prepare('CALL zf_test_procedure(?)');
+        $stmt->bindParam(1, $customerId);
+        $stmt->execute();
+        $this->assertEquals(1, $result[0]['product_id']);
+        */
+    }
+
     public function getDriver()
     {
         return 'Mysqli';

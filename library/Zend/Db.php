@@ -231,8 +231,10 @@ class Zend_Db
          * Form full adapter class name
          */
         $adapterNamespace = 'Zend_Db_Adapter';
-        if (isset($config['adapterNamespace']) && $config['adapterNamespace'] != '') {
-            $adapterNamespace = $config['adapterNamespace'];
+        if (isset($config['adapterNamespace'])) {
+            if ($config['adapterNamespace'] != '') {
+                $adapterNamespace = $config['adapterNamespace'];
+            }
             unset($config['adapterNamespace']);
         }
         $adapterName = strtolower($adapterNamespace . '_' . $adapter);
