@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9570 -->
+<!-- EN-Revision: 9574 -->
 <sect3 id="zend.view.helpers.initial.translate">
 
     <title>翻訳ヘルパー</title>
@@ -256,7 +256,7 @@ $date = array("Monday", "April", "11:20:55");
 // これまでの例で設定されているデフォルトロケールである 'de' を返します
 $this->translate()->getLocale();
 
-$this->translate()->setLocale('it')
+$this->translate()->setLocale('it');
 $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 
 // 新たに設定されたデフォルトロケールである 'it' を返します
