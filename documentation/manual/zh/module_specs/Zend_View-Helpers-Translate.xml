@@ -193,7 +193,8 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
         <programlisting role="php"><![CDATA[<?php
 // 在视图里
 $date = array("Monday", "April", "11:20:55");
-$this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate()->setLocale('it'); 
+$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 ?>]]></programlisting>
 
     </example>
@@ -215,12 +216,13 @@ $this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s',
 $date = array("Monday", "April", "11:20:55");
 
 // 从上面的例子里返回 'de' 作为缺省地点
-$this->getLocale();
+$this->translate()->getLocale();
 
-$this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate()->setLocale('it'); 
+$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 
 // 返回 'it' 为新的缺省地点
-$this->getLocale();
+$this->translate()->getLocale();
 ?>]]></programlisting>
 
     </example>
