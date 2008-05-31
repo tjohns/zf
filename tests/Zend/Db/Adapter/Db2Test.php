@@ -201,6 +201,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 4)');
     }
 
+    public function testAdapterAlternateStatement()
+    {
+        $this->_testAdapterAlternateStatement('Test_Db2Statement');
+    }
+
     public function getDriver()
     {
         return 'Db2';

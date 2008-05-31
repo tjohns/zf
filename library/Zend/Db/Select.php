@@ -645,6 +645,23 @@ class Zend_Db_Select
     }
 
     /**
+     * Converts this object to an SQL SELECT string.
+     *
+     * @return string This object as a SELECT string.
+     */
+    public function assemble()
+    {
+        $sql = self::SQL_SELECT;
+        foreach (array_keys(self::$_partsInit) as $part) {
+            $method = '_render' . ucfirst($part);
+            if (method_exists($this, $method)) {
+                $sql = $this->$method($sql);
+            }
+        }
+        return $sql;
+    }
+
+    /**
      * Clear parts of the Select object, or an individual part.
      *
      * @param string $part OPTIONAL
@@ -1020,7 +1037,7 @@ class Zend_Db_Select
             foreach ($this->_parts[self::UNION] as $cnt => $union) {
                 list($target, $type) = $union;
                 if ($target instanceof Zend_Db_Select) {
-                    $target = $target->__toString();
+                    $target = $target->assemble();
                 }
                 $sql .= $target;
                 if ($cnt < $parts - 1) {
@@ -1193,18 +1210,17 @@ class Zend_Db_Select
     }
 
     /**
-     * Converts this object to an SQL SELECT string.
+     * Implements magic method.
      *
      * @return string This object as a SELECT string.
      */
     public function __toString()
     {
-        $sql = self::SQL_SELECT;
-        foreach (array_keys(self::$_partsInit) as $part) {
-            $method = '_render' . ucfirst($part);
-            if (method_exists($this, $method)) {
-                $sql = $this->$method($sql);
-            }
+        try {
+            $sql = $this->assemble();
+        } catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_WARNING);
+            $sql = '';
         }
         return $sql;
     }

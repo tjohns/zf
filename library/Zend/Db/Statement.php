@@ -103,7 +103,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     {
         $this->_adapter = $adapter;
         if ($sql instanceof Zend_Db_Select) {
-            $sql = $sql->__toString();
+            $sql = $sql->assemble();
         }
         $this->_parseParameters($sql);
         $this->_prepare($sql);

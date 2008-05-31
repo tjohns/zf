@@ -193,7 +193,8 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function prepare($sql)
     {
         $this->_connect();
-        $stmt = new Zend_Db_Statement_Pdo_Ibm($this, $sql);
+        $stmtClass = $this->_defaultStmtClass;
+        $stmt = new $stmtClass($this, $sql);
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
     }

@@ -312,6 +312,11 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
     }
 
+    public function testAdapterAlternateStatement()
+    {
+        $this->_testAdapterAlternateStatement('Test_OracleStatement');
+    }
+
     public function getDriver()
     {
         return 'Oracle';

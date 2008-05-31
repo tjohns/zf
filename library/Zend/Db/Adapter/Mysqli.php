@@ -22,6 +22,11 @@
 
 
 /**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+/**
  * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
@@ -86,6 +91,13 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      * @var Zend_Db_Statement_Mysqli
      */
     protected $_stmt = null;
+
+    /**
+     * Default class name for a DB statement.
+     *
+     * @var string
+     */
+    protected $_defaultStmtClass = 'Zend_Db_Statement_Mysqli';
 
     /**
      * Quote a raw string.
@@ -326,7 +338,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         if ($this->_stmt) {
             $this->_stmt->close();
         }
-        $stmt = new Zend_Db_Statement_Mysqli($this, $sql);
+        $stmtClass = $this->_defaultStmtClass;
+        Zend_Loader::loadClass($stmtClass);
+        $stmt = new $stmtClass($this, $sql);
         if ($stmt === false) {
             return false;
         }

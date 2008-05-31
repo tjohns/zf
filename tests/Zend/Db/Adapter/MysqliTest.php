@@ -262,6 +262,11 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         */
     }
 
+    public function testAdapterAlternateStatement()
+    {
+        $this->_testAdapterAlternateStatement('Test_MysqliStatement');
+    }
+
     public function getDriver()
     {
         return 'Mysqli';

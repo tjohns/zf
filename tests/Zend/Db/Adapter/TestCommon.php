@@ -74,6 +74,24 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test empty driver_options issue
+     * Case: $config['driver_options'] == ''
+     */
+    public function testAdapterZendConfigEmptyDriverOptions()
+    {
+        Zend_Loader::loadClass('Zend_Config');
+        $params = $this->_util->getParams();
+        $params['driver_options'] = '';
+        $params = new Zend_Config($params);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $config = $db->getConfig();
+        $this->assertEquals(array(), $config['driver_options']);
+    }
+
+    /**
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
      */
@@ -1696,6 +1714,50 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         $value = $this->_db->fetchCol("SELECT $bug_status FROM $bugs");
         $this->assertEquals(array_fill(0, 4, 'EMPTY'), $value);
+    }
+
+    protected function _testAdapterAlternateStatement($stmtClass)
+    {
+        $ip = get_include_path();
+        $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        $newIp = $dir . PATH_SEPARATOR . $ip;
+        set_include_path($newIp);
+
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+        $db->setStatementClass($stmtClass);
+
+        $currentStmtClass = $db->getStatementClass();
+        $this->assertEquals($stmtClass, $currentStmtClass);
+
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+
+        $stmt = $db->prepare("SELECT COUNT(*) FROM $bugs");
+
+        $this->assertType($stmtClass, $stmt,
+            'Expecting object of type ' . $stmtClass . ', got ' . get_class($stmt));
+    }
+
+    public function testAdapterSetCustomProfiler()
+    {
+        $profilerOptions = array(
+            'enabled'  => true,
+            'class'    => 'stdClass',
+            'instance' => new stdClass()
+        );
+
+        try {
+            $this->_db->setProfiler($profilerOptions);
+            $this->fail('Expected to catch Zend_Db_Profiler_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Profiler_Exception', $e);
+            $this->assertEquals('Class stdClass does not extend Zend_Db_Profiler', $e->getMessage());
+        }
     }
 
 }

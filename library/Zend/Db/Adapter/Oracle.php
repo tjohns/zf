@@ -20,6 +20,11 @@
  */
 
 /**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+/**
  * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
@@ -80,6 +85,13 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * @var integer
      */
     protected $_execute_mode = OCI_COMMIT_ON_SUCCESS;
+
+    /**
+     * Default class name for a DB statement.
+     *
+     * @var string
+     */
+    protected $_defaultStmtClass = 'Zend_Db_Statement_Oracle';
 
     /**
      * Creates a connection resource.
@@ -145,7 +157,9 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function prepare($sql)
     {
         $this->_connect();
-        $stmt = new Zend_Db_Statement_Oracle($this, $sql);
+        $stmtClass = $this->_defaultStmtClass;
+        Zend_Loader::loadClass($stmtClass);
+        $stmt = new $stmtClass($this, $sql);
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
     }

@@ -119,14 +119,20 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
+     * Test adding a join to the select object without setting integrity check to false.
      *
      */
     public function testSelectForJoinZendDbTable()
     {
         $select = $this->_selectForJoinZendDbTable();
-        $query = $select->__toString();
-        $this->assertEquals('',$query);
+
+        try {
+            $query = $select->assemble();
+            $this->fail('Expected to catch Zend_Db_Table_Select_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Select_Exception', $e);
+            $this->assertEquals('Select query cannot join with another table', $e->getMessage());
+        }
     }
 
     /**
@@ -165,17 +171,17 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         // Test for all fields and no default table name on select
         $select1 = $this->_selectForToString1('products', null, false);
         $select2 = $this->_selectForToString2('zfproducts');
-        $this->assertEquals($select1->__toString(), $select2->__toString());
+        $this->assertEquals($select1->assemble(), $select2->assemble());
 
         // Test for all fields by default
         $select1 = $this->_selectForToString1('products');
         $select2 = $this->_selectForToString2('zfproducts');
-        $this->assertEquals($select1->__toString(), $select2->__toString());
+        $this->assertEquals($select1->assemble(), $select2->assemble());
 
         // Test for selected fields
         $select1 = $this->_selectForToString1('products', array('product_id', 'DISTINCT(product_name)'));
         $select2 = $this->_selectForToString2('zfproducts', array('product_id', 'DISTINCT(product_name)'));
-        $this->assertEquals($select1->__toString(), $select2->__toString());
+        $this->assertEquals($select1->assemble(), $select2->assemble());
     }
 
 }

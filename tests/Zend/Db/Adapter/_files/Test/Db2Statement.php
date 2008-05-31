@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,35 +14,36 @@
  *
  * @category   Zend
  * @package    Zend_Db
- * @subpackage UnitTests
+ * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 4608 2007-04-26 19:41:13Z darby $
+ * @version    $Id$
  */
 
 
 /**
- * @see Zend_Db_Adapter_TestCommon
+ * PHPUnit_Util_Filter
  */
-require_once 'Zend/Db/Adapter/TestCommon.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**
+ * @see Zend_Db_Statement_Db2
+ */
+require_once 'Zend/Db/Statement/Db2.php';
+
+/**
+ * Test Class for extending base Zend_Db_Statements
+ *
  * @category   Zend
  * @package    Zend_Db
- * @subpackage UnitTests
+ * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Db_Adapter_Pdo_TestCommon extends Zend_Db_Adapter_TestCommon
+class Test_Db2Statement extends Zend_Db_Statement_Db2
 {
-
-    public function testAdapterAlternateStatement()
-    {
-        $this->_testAdapterAlternateStatement('Test_PdoStatement');
-    }
-
 }

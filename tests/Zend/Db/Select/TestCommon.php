@@ -62,6 +62,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(1, $row['product_id']); // correct data
     }
 
+    public function testSelectToString()
+    {
+        $select = $this->_select();
+        $this->assertEquals($select->__toString(), $select->assemble()); // correct data
+    }
+
     /**
      * Test basic use of the Zend_Db_Select class.
      */
@@ -261,7 +267,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectFromSelectObject()
     {
         $select = $this->_selectFromSelectObject();
-        $query = $select->__toString();
+        $query = $select->assemble();
         $cmp = 'SELECT ' . $this->_db->quoteIdentifier('t') . '.* FROM (SELECT '
                          . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
                          . $this->_db->quoteIdentifier('subqueryTable') . ') AS '
@@ -490,7 +496,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testJoinLeftTableAliasesColumnOrderPreserve()
     {
         $select = $this->_selectJoinLeftTableAliasesColumnOrderPreserve();
-        $this->assertRegExp('/^.*b.*bug_id.*,.*bp.*product_id.*,.*b.*bug_description.*$/s', $select->__toString());
+        $this->assertRegExp('/^.*b.*bug_id.*,.*bp.*product_id.*,.*b.*bug_description.*$/s', $select->assemble());
     }
 
     /**
@@ -594,7 +600,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectJoinUsing()
     {
         $select = $this->_selectJoinUsing();
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $sql = preg_replace('/\\s+/', ' ', $select->assemble());
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -617,7 +623,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectJoinInnerUsing()
     {
         $select = $this->_selectJoinInnerUsing();
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $sql = preg_replace('/\\s+/', ' ', $select->assemble());
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
@@ -702,7 +708,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectWhereSelectObject()
     {
         $select = $this->_selectWhereSelectObject();
-        $query = $select->__toString();
+        $query = $select->assemble();
         $cmp = 'SELECT ' . $this->_db->quoteIdentifier('table') . '.* FROM '
                          . $this->_db->quoteIdentifier('table') . ' WHERE (foo IN (SELECT '
                          . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '

@@ -30,6 +30,11 @@ require_once 'Zend/Db.php';
 require_once 'Zend/Db/Adapter/Abstract.php';
 
 /**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+
+/**
  * @see Zend_Db_Statement_Db2
  */
 require_once 'Zend/Db/Statement/Db2.php';
@@ -74,6 +79,13 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * @var int execution flag (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
      */
     protected $_execute_mode = DB2_AUTOCOMMIT_ON;
+
+    /**
+     * Default class name for a DB statement.
+     *
+     * @var string
+     */
+    protected $_defaultStmtClass = 'Zend_Db_Statement_Db2';
 
     /**
      * Keys are UPPERCASE SQL datatypes or the constants
@@ -194,7 +206,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     public function prepare($sql)
     {
         $this->_connect();
-        $stmt = new Zend_Db_Statement_Db2($this, $sql);
+        $stmtClass = $this->_defaultStmtClass;
+        Zend_Loader::loadClass($stmtClass);
+        $stmt = new $stmtClass($this, $sql);
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
     }
