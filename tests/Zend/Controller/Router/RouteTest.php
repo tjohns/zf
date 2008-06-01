@@ -496,5 +496,16 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         
         $this->assertLessThan($expectedTime, $time, $info);
     }
+    
+    public function testForZF2543() 
+    {
+        $route = new Zend_Controller_Router_Route('families/:action/*', array('module' => 'default', 'controller' => 'categories', 'action' => 'index'));
+        $this->assertEquals('families', $route->assemble());
+        
+        $values = $route->match('families/edit/id/4');
+        $this->assertType('array', $values);
+        
+        $this->assertEquals('families/edit/id/4', $route->assemble());
+    }    
 
 }
