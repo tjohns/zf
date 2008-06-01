@@ -164,11 +164,12 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
      * Set Front Controller
      *
      * @param Zend_Controller_Front $controller
-     * @return Zend_Controller_Router_Abstract
+     * @return Zend_Controller_Router_Interface
      */
     public function setFrontController(Zend_Controller_Front $controller)
     {
         $this->_frontController = $controller;
         return $this;
     }
+
 }

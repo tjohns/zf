@@ -40,51 +40,49 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     protected $_defaultRegex = null;
 
     /**
-     * Holds names of all route's pattern variable names 
-     * @var int
+     * Holds names of all route's pattern variable names. Array index holds a position in URL.  
+     * @var array
      */
     protected $_variables = array();
     
     /**
-     * Holds Route pattern parts. In case of a variable it stores it's name as well as 
-     * a regex pattern for it's value. In case of a static, it holds only regex representation 
-     * of a static value.
-     *   
-     * Array index indicates a position of the part in a path.
-     *  
+     * Holds Route patterns for all URL parts. In case of a variable it stores it's regex 
+     * requirement or null. In case of a static part, it holds only it's direct value. 
+     * In case of a wildcard, it stores an asterisk (*) 
      * @var array
      */
     protected $_parts = array();
     
     /**
-     * Holds default values for route's variables 
+     * Holds user submitted default values for route's variables. Name and value pairs. 
      * @var array
      */
     protected $_defaults = array();
 
     /**
-     * Holds regex patterns for route's variables' values 
+     * Holds user submitted regular expression patterns for route's variables' values. 
+     * Name and value pairs. 
      * @var array
      */
     protected $_requirements = array();
 
-    
     /**
-     * Associative array holding path values for a given variable names. 
-     * Key stores variable name; value holds path value. Filled on match()
+     * Associative array filled on match() that holds matched path values 
+     * for given variable names. 
      * @var array
      */
     protected $_values = array();
 
     /**
-     * Associative array holding wildcard variable names and values. 
-     * Key stores variable name; value holds path value. Filled on match()
+     * Associative array filled on match() that holds wildcard variable 
+     * names and values. 
      * @var array
      */
     protected $_wildcardData = array();
     
     /**
-     * Helper Holds a count of route pattern's static parts
+     * Helper var that holds a count of route pattern's static parts 
+     * for validation
      * @var int
      */
     private $_staticCount = 0;
@@ -187,7 +185,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     return false;
                 }
 
-                // If it's a variable set value for later
+                // If it's a variable store it's value for later
                 if ($name !== null) {
                     $values[$name] = $pathPart;
                 } else {
@@ -198,7 +196,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         }
 
-        // Check if all static mappings have been met
+        // Check if all static mappings have been matched
         if ($this->_staticCount != $pathStaticCount) {
             return false;
         }
@@ -241,7 +239,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
 
             if (isset($name)) {
-
+                
                 if (isset($data[$name]) && !$useDefault) {
                     $url[$key] = $data[$name];
                     unset($data[$name]);
@@ -256,20 +254,16 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
 
+            } elseif ($part != '*') {
+                $url[$key] = $part;
             } else {
-
-                if ($part != '*') {
-                    $url[$key] = $part;
-                } else {
-                    if (!$reset) $data += $this->_wildcardData;
-                    foreach ($data as $var => $value) {
-                        if ($value !== null) {
-                            $url[$var] = $var . $this->_urlDelimiter . $value;
-                            $flag = true;
-                        }
+                if (!$reset) $data += $this->_wildcardData;
+                foreach ($data as $var => $value) {
+                    if ($value !== null) {
+                        $url[$var] = $var . $this->_urlDelimiter . $value;
+                        $flag = true;
                     }
                 }
-
             }
 
         }

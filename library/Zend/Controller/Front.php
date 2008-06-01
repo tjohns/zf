@@ -467,10 +467,12 @@ class Zend_Controller_Front
             Zend_Loader::loadClass($router);
             $router = new $router();
         }
+
         if (!$router instanceof Zend_Controller_Router_Interface) {
             throw new Zend_Controller_Exception('Invalid router class');
         }
 
+        $router->setFrontController($this);
         $this->_router = $router;
 
         return $this;

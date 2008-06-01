@@ -79,12 +79,20 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 
     /**
      * Add route to the route chain
+     * 
+     * If route implements Zend_Controller_Request_Aware interface it is initialized with a request object
      *
      * @param string $name Name of the route
      * @param Zend_Controller_Router_Route_Interface Route
      */
-    public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
+    public function addRoute($name, Zend_Controller_Router_Route_Interface $route) 
+    {
+        if (method_exists($route, 'setRequest')) {
+            $route->setRequest($this->getFrontController()->getRequest());
+        }
+        
         $this->_routes[$name] = $route;
+        
         return $this;
     }
 

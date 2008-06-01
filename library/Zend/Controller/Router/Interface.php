@@ -83,4 +83,19 @@ interface Zend_Controller_Router_Interface
      * @return Zend_Controller_Router_Interface
      */
     public function clearParams($name = null);
+    
+    /**
+     * Retrieve Front Controller
+     *
+     * @return Zend_Controller_Front
+     */
+    public function getFrontController();
+
+    /**
+     * Set Front Controller
+     *
+     * @param Zend_Controller_Front $controller
+     * @return Zend_Controller_Router_Interface
+     */
+    public function setFrontController(Zend_Controller_Front $controller);
 }
