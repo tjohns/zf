@@ -223,7 +223,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      * @param  boolean $reset Whether or not to set route defaults with those provided in $data
      * @return string Route path with user submitted parameters
      */
-    public function assemble($data = array(), $reset = false)
+    public function assemble($data = array(), $reset = false, $encode = false)
     {
 
         $url = array();
@@ -254,13 +254,15 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
 
+                
             } elseif ($part != '*') {
                 $url[$key] = $part;
-            } else {
+            } else { 
                 if (!$reset) $data += $this->_wildcardData;
                 foreach ($data as $var => $value) {
                     if ($value !== null) {
-                        $url[$var] = $var . $this->_urlDelimiter . $value;
+                        $url[$key++] = $var;
+                        $url[$key++] = $value;
                         $flag = true;
                     }
                 }
@@ -272,6 +274,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         foreach (array_reverse($url, true) as $key => $value) {
             if ($flag || !isset($this->_variables[$key]) || $value !== $this->getDefault($this->_variables[$key])) {
+                if ($encode) $value = urlencode($value);
                 $return = $this->_urlDelimiter . $value . $return;
                 $flag = true;
             }

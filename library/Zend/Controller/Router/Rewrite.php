@@ -298,4 +298,52 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         }
     }
 
+    /**
+     * Generates a URL path that can be used in URL creation, redirection, etc.
+     * 
+     * @param  array $userParams Options passed by a user used to override parameters
+     * @param  mixed $name The name of a Route to use
+     * @param  bool $reset Whether to reset to the route defaults ignoring URL params
+     * @param  bool $encode Tells to encode URL parts on output
+     * @throws Zend_Controller_Router_Exception
+     * @return string Resulting absolute URL path
+     */ 
+    public function assemble($userParams, $name = null, $reset = false, $encode = true)
+    {
+        if ($name == null) {
+            try {
+                $name = $this->getCurrentRouteName();
+            } catch (Zend_Controller_Router_Exception $e) {
+                $name = 'default';
+            }
+        }
+        
+        $route = $this->getRoute($name);
+        
+        $url = rtrim($this->getFrontController()->getBaseUrl(), '/') . '/';
+        return $url . $route->assemble($userParams, $reset, $encode);
+    }
+
+    public function testEncodeWithSingleParamReset() 
+    {    
+        $this->_router->removeDefaultRoutes();
+        
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        $router->addRoute('ctrl-act', $route);
+        
+        $req = new Zend_Controller_Request_Http('http://framework.zend.com/news/view/id/3');
+        $this->_router->route($req);
+        
+        $this->assertEquals(3, count($req->getParams()));
+        
+        $url = $this->helper->url(array('controller' => null), 'ctrl-act');
+        $this->assertSame('/index/view/id/3', $url);
+        
+        $url = $this->helper->url(array('action' => null), 'ctrl-act');
+        $this->assertSame('/news/index/id/3', $url);
+
+        $url = $this->helper->url(array('action' => null, 'id' => null), 'ctrl-act');
+        $this->assertSame('/news', $url);
+    }    
+    
 }

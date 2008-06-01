@@ -139,7 +139,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
      * @param array $data An array of name (or index) and value pairs used as parameters
      * @return string Route path with user submitted parameters
      */
-    public function assemble($data = array())
+    public function assemble($data = array(), $reset = false, $encode = false)
     {
         if ($this->_reverse === null) {
             require_once 'Zend/Controller/Router/Exception.php';

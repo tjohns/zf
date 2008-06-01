@@ -187,7 +187,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      * @param bool $reset Weither to reset the current params
      * @return string Route path with user submitted parameters
      */
-    public function assemble($data = array(), $reset = false)
+    public function assemble($data = array(), $reset = false, $encode = true)
     {
         if (!$this->_keysSet) {
             $this->_setRequestKeys();
@@ -221,19 +221,23 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
         unset($params[$this->_actionKey]);
 
         foreach ($params as $key => $value) {
+            if ($encode) $value = urlencode($value);
             $url .= '/' . $key;
             $url .= '/' . $value;
         }
 
         if (!empty($url) || $action !== $this->_defaults[$this->_actionKey]) {
+            if ($encode) $action = urlencode($action);
             $url = '/' . $action . $url;
         }
 
         if (!empty($url) || $controller !== $this->_defaults[$this->_controllerKey]) {
+            if ($encode) $controller = urlencode($controller);
             $url = '/' . $controller . $url;
         }
 
         if (isset($module)) {
+            if ($encode) $module = urlencode($module);
             $url = '/' . $module . $url;
         }
 

@@ -31,11 +31,6 @@
 class Zend_View_Helper_Url {
 
     /**
-     * @var Zend_View Instance
-     */
-    public $view;
-
-    /**
      * Generates an url given the name of a route.
      *
      * @access public
@@ -47,42 +42,8 @@ class Zend_View_Helper_Url {
      */
     public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-
-        $front = Zend_Controller_Front::getInstance();
-
-        $router = $front->getRouter();
-
-        if (empty($name)) {
-            try {
-                $name = $router->getCurrentRouteName();
-            } catch (Zend_Controller_Router_Exception $e) {
-                $name = 'default';
-            }
-        }
-        
-        if ($encode) {
-            foreach ($urlOptions as $key => $option) {
-                $urlOptions[$key] = ($option !== null) ? urlencode($option) : $option;
-            }
-        }
-
-        $route = $router->getRoute($name);
-
-        $url = rtrim($front->getBaseUrl(), '/') . '/';
-        $url .= $route->assemble($urlOptions, $reset);
-
-        return $url;
-
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        return $router->assemble($urlOptions, $name, $reset, $encode);
     }
 
-    /**
-     * Set the view object
-     *
-     * @param Zend_View_Interface $view
-     * @return void
-     */
-    public function setView(Zend_View_Interface $view)
-    {
-        $this->view = $view;
-    }
 }

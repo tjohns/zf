@@ -14,6 +14,8 @@ require_once 'Zend/View/Helper/Url.php';
 /* Test dependency on Front Controller because there is no way to get the Controller out of View instance dynamically */
 require_once 'Zend/Controller/Front.php';
 
+require_once 'Zend/Controller/Request/Http.php';
+
 /**
  * Zend_View_Helper_UrlTest 
  *
@@ -49,9 +51,9 @@ class Zend_View_Helper_UrlTest extends PHPUnit_Framework_TestCase
         $this->front = Zend_Controller_Front::getInstance();
         $this->front->getRouter()->addDefaultRoutes();
 
-        $this->view = new Zend_View();
+        // $this->view = new Zend_View();
         $this->helper = new Zend_View_Helper_Url();
-        $this->helper->setView($this->view);
+        // $this->helper->setView($this->view);
     }
 
     public function testDefaultEmpty()
@@ -65,39 +67,6 @@ class Zend_View_Helper_UrlTest extends PHPUnit_Framework_TestCase
         $url = $this->helper->url(array('controller' => 'ctrl', 'action' => 'act'));
         $this->assertEquals('/ctrl/act', $url);
     }
-    
-    public function testEncode()
-    {
-        $url = $this->helper->url(array('controller' => 'My Controller'));
-        $this->assertEquals('/My+Controller', $url);
-
-        $url = $this->helper->url(array('controller' => 'My Controller'), null, false, false);
-        $this->assertEquals('/My Controller', $url);
-    }
-    
-    public function testEncodeWithSingleParamReset() 
-    {    
-        $router = $this->front->getRouter();
-        $router->removeDefaultRoutes();
-        $router->removeRoute('default');
-        
-        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        $router->addRoute('ctrl-act', $route);
-        
-        $req = new Zend_Controller_Request_Http('http://framework.zend.com/news/view/id/3');
-        $router->route($req);
-        
-        $this->assertEquals(3, count($req->getParams()));
-        
-        $url = $this->helper->url(array('controller' => null), 'ctrl-act');
-        $this->assertSame('/index/view/id/3', $url);
-        
-        $url = $this->helper->url(array('action' => null), 'ctrl-act');
-        $this->assertSame('/news/index/id/3', $url);
-
-        $url = $this->helper->url(array('action' => null, 'id' => null), 'ctrl-act');
-        $this->assertSame('/news', $url);
-    }    
     
 }
 

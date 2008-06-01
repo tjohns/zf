@@ -508,4 +508,27 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('families/edit/id/4', $route->assemble());
     }    
 
+    public function testEncode()
+    {
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        
+        $url = $route->assemble(array('controller' => 'My Controller'), false, true);
+        $this->assertEquals('My+Controller', $url);
+
+        $url = $route->assemble(array('controller' => 'My Controller'), false, false);
+        $this->assertEquals('My Controller', $url);
+
+        $token = $route->match('en/foo/id/My Value');
+    
+        $url = $route->assemble(array(), false, true);
+        $this->assertEquals('en/foo/id/My+Value', $url);
+        
+        $url = $route->assemble(array('id' => 'My Other Value'), false, true);
+        $this->assertEquals('en/foo/id/My+Other+Value', $url);
+        
+        $route = new Zend_Controller_Router_Route(':controller/*', array('controller' => 'My Controller'));
+        $url = $route->assemble(array('id' => 1), false, true);
+        $this->assertEquals('My+Controller/id/1', $url);
+    }
+    
 }
