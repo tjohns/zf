@@ -221,7 +221,8 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
         <programlisting role="php"><![CDATA[<?php
 // innerhalb der View
 $date = array("Monday", "April", "11:20:55");
-$this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate()->setLocale('it');
+$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 ?>]]></programlisting>
 
     </example>
@@ -245,12 +246,13 @@ $this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s',
 $date = array("Monday", "April", "11:20:55");
 
 // gibt 'de' als standardmäßig gesetztes Gebietsschema vom obigen Beispiel zurück
-$this->getLocale();
+$this->translate()->getLocale();
 
-$this->setLocale('it')->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate()->setLocale('it');
+$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 
 // gibt 'it' als neues standardmäßig gesetztes Gebietsschema zurück
-$this->getLocale();
+$this->translate()->getLocale();
 ?>]]></programlisting>
 
     </example>
