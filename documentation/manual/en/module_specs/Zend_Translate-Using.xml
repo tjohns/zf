@@ -486,9 +486,7 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 
         <para>
             If you have to have the separator sign within your translation string you
-            just have to double it to be included within the translation. One separator
-            sign will separate the origin and translation strings and two separator signs
-            will write the separator signs within the string. See the following example
+            just have to set in within a doublequote. See the following example
             for details
         </para>
 
@@ -497,11 +495,11 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
             <programlisting><![CDATA[
 ﻿#Example csv file
 # original 'message,1'
-message,,1,Nachricht1
+"message,1",Nachricht1
 # translation 'Nachricht,2'
-message2,Nachricht,,2
+message2,"Nachricht,2"
 # original 'message3,'
-message3,,,Nachricht3]]>
+"message3,",Nachricht3]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[

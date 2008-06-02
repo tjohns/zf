@@ -71,48 +71,12 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
             throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
         }
 
-        while(!feof($this->_file)) {
-            $content = fgets($this->_file);
-            $content = explode($options['separator'], $content);
-
-            while ((count($content) > 1) and ($content[1] == "")) {
-                $value = array_shift($content);
-                array_shift($content);
-                $value2 = array_shift($content);
-                array_unshift($content, $value . $options['separator'] . $value2);
-            }
-
-            $origin = array_shift($content);
-            while (count($content) > 1) {
-                $value2 = array_pop($content);
-                $value  = array_pop($content);
-
-                if ($value == "") {
-                    $value = $options['separator'];
-                }
-                if ($value2 == "") {
-                    $value2 = $options['separator'];
-                }
-                array_push($content, $value . $value2);
-            }
-            array_unshift($content, $origin);
-
-            // # marks a comment in the translation source
-            if ((!is_array($content) and (substr(trim($content), 0, 1) == "#")) or
-                 (is_array($content) and (substr(trim($content[0]), 0, 1) == "#"))) {
+        while(($data = fgetcsv($this->_file, 4000, $options['separator'])) !== false) {
+            if (substr($data[0], 0, 1) === '#') {
                 continue;
             }
-            if (!empty($content[1])) {
-                if (feof($this->_file)) {
-                    $this->_translate[$locale][$content[0]] = $content[1];
-                } else {
-                    if (substr($content[1], -2, 2) == "\r\n") {
-                        $this->_translate[$locale][$content[0]] = substr($content[1], 0, -2);
-                    } else {
-                        $this->_translate[$locale][$content[0]] = substr($content[1], 0, -1);
-                    }
-                }
-            }
+
+            $this->_translate[$locale][$data[0]] = $data[1];
         }
     }
 
