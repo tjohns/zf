@@ -188,7 +188,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
         <para>
             Es ist oft nützlich und/oder notwendig einige Normalisierungen an Eingaben vorzunehmen
-            bevor diese geprüft werden -- zum Beispiel kann es gewünscht sein alles an HTML zu
+            bevor diese geprüft werden - zum Beispiel kann es gewünscht sein alles an HTML zu
             entfernen, aber die Prüfungen auf dem verbleibenden durchzuführen um sicherzustellen
             das die Übertragung gültig ist. Oder man will Leerzeichen bei Eingaben entfernen damit
             eine StringLength Prüfung kein falsches "Korrekt" zurückgibt. Diese Operationen können
@@ -213,7 +213,7 @@ $filtered = $element->getValue();
             </para></listitem>
 
             <listitem><para>
-                Angabe eines Filternamens -- entweder ein Kurzname oder ein voll qualifizierter
+                Angabe eines Filternamens - entweder ein Kurzname oder ein voll qualifizierter
                 Klassenname
             </para></listitem>
         </itemizedlist>
@@ -330,7 +330,7 @@ $unfiltered = $element->getUnfilteredValue();
             </para></listitem>
 
             <listitem><para>
-                Anbieten eines Prüfnamens -- entweder ein Kurzname oder ein voll qualifizierter
+                Anbieten eines Prüfnamens - entweder ein Kurzname oder ein voll qualifizierter
                 Klassenname
             </para></listitem>
         </itemizedlist>
