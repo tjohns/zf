@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8827 -->
+<!-- EN-Revision: 9585 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -491,9 +491,7 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 
         <para>
             区切り文字を翻訳文字列に埋め込む必要がある場合は、
-            翻訳文字列内でそれをふたつ続けて記述します。
-            最初の区切り文字が元文字列と翻訳文字列を区切り、
-            ふたつ目の区切り文字が文字列の一部として解釈されます。
+            それをダブルクォートで囲みます。
             詳細は、次の例を参照ください。
         </para>
 
@@ -502,11 +500,11 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
             <programlisting><![CDATA[
 # csv ファイルの例
 # 元メッセージは 'message,1'
-message,,1,Nachricht1
+"message,1",Nachricht1
 # 翻訳は 'Nachricht,2'
-message2,Nachricht,,2
+message2,"Nachricht,2"
 # 元メッセージは 'message3,'
-message3,,,Nachricht3]]>
+"message3,",Nachricht3]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
