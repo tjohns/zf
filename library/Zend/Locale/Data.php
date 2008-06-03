@@ -16,18 +16,18 @@
  * @package    Zend_Locale
  * @subpackage Data
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
-
 
 /**
  * include needed classes
  */
 require_once 'Zend/Locale.php';
 
-
 /**
+ * Locale data reader, handles the CLDR
+ *
  * @category   Zend
  * @package    Zend_Locale
  * @subpackage Data
@@ -37,31 +37,28 @@ require_once 'Zend/Locale.php';
 class Zend_Locale_Data
 {
     /**
-     * locale files
+     * Locale files
      *
      * @var ressource
      * @access private
      */
     private static $_ldml = array();
 
-
     /**
-     * list of values which are collected
+     * List of values which are collected
      *
      * @var array
      * @access private
      */
     private static $_list = array();
 
-
     /**
-     * internal cache for ldml values
+     * Internal cache for ldml values
      * 
      * @var Zend_Cache_Core
      * @access private
      */
     private static $_cache = null;
-
 
     /**
      * Read the content from locale
