@@ -17,12 +17,13 @@ class Zend_Controller_Response_HttpTestCase extends Zend_Controller_Response_Htt
         }
         foreach ($this->_headers as $header) {
             $name = $header['name'];
+            $key  = strtolower($name);
             if (array_key_exists($name, $headers)) {
                 if ($header['replace']) {
-                    $headers[$name] = $header['name'] . ': ' . $header['value'];
+                    $headers[$key] = $header['name'] . ': ' . $header['value'];
                 }
             } else {
-                $headers[$name] = $header['name'] . ': ' . $header['value'];
+                $headers[$key] = $header['name'] . ': ' . $header['value'];
             }
         }
         return $headers;
