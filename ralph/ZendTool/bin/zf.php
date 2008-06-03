@@ -1,12 +1,11 @@
-#! /usr/bin/php -d safe_mode=Off
 <?php
 
 /**
- * DEV ONLY START
+ * DEV ONLY START - this will be removed when this hits incubator
  */
 $zendFrameworkPath = getenv('ZF_PATH');
 if ($zendFrameworkPath == '' || !file_exists($zendFrameworkPath)) {
-    die('While in development: please set env var ZF_PATH to your copy of zend framework.');
+    die('While in development: please set env var ZF_PATH to your copy of zend framework.' . PHP_EOL);
 }
 define('ZF_LIBRARY_PATH', $zendFrameworkPath);
 define('CLI_LIBRARY_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/../library/');
