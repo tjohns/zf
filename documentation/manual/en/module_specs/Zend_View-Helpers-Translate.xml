@@ -257,7 +257,7 @@ $date = array("Monday", "April", "11:20:55");
 // returns 'de' as set default locale from our above examples
 $this->translate()->getLocale();
 
-$this->translate()->setLocale('it');
+$this->translate()->setLocale('it')
 $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
 
 // returns 'it' as new set default locale
