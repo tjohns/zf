@@ -34,7 +34,7 @@ abstract class Zend_Tool_Project_Structure_Context_Filesystem_Abstract implement
         foreach ($this->_node as $subNode) {
             $subNode->recursivelySetBaseDirectory($this->getPath());
         }
-;
+
     }
     
     public function getBaseDirectory()

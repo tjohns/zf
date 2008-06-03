@@ -10,4 +10,12 @@ class Zend_Tool_Project_Structure_Context_Zf_PublicIndexFile extends Zend_Tool_P
         return 'PublicIndexFile';
     }
     
+    public function getContents()
+    {
+        $codeGenerator = new Zend_Tool_CodeGenerator_Php_File(array(
+            'body' => 'include \'../bootstrap.php\';'
+            ));
+        return $codeGenerator->toString();
+    }
+    
 }

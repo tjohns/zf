@@ -20,7 +20,10 @@ class Zend_Tool_Project_Structure_Context_Zf_ProjectProfileFile extends Zend_Too
     public function getContents()
     {
         $parser = new Zend_Tool_Project_Structure_Parser_Xml();
+        $isTraverseEnabled = Zend_Tool_Project_Structure_Graph::isTraverseEnabled();
+        Zend_Tool_Project_Structure_Graph::setTraverseEnabled(true);
         $xml = $parser->serialize($this->_graph);
+        Zend_Tool_Project_Structure_Graph::setTraverseEnabled($isTraverseEnabled);
         return $xml;
     }
     

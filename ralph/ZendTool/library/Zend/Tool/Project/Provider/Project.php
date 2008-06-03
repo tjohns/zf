@@ -16,7 +16,7 @@ class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abst
         /**
          * @todo make sure a project doesnt alredy exist here
          */
-        $structureGraph = $this->_getExistingStructureGraph($path);
+        $structureGraph = $this->_loadExistingStructureGraph($path);
 
         if ($structureGraph) {
             throw new Exception('A project already exists here');
@@ -46,11 +46,15 @@ class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abst
         <projectDirectory>
             <projectProfileFile />
             <applicationDirectory>
+                <apisDirectory enabled="false" />
+                <configsDirectory />
                 <controllersDirectory>
-                    <controllerFile controllerName="index" /> 
+                    <controllerFile controllerName="index" />
                     <controllerFile controllerName="error" />
                 </controllersDirectory>
+                <layoutsDirectory enabled="false" />
                 <modelsDirectory />
+                <modulesDirectory enabled="false" />
                 <viewsDirectory>
                     <viewScriptsDirectory>
                         <viewControllerScriptsDirectory forControllerName="index">
@@ -60,17 +64,31 @@ class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abst
                     <viewHelpersDirectory />
                     <viewFiltersDirectory enabled="false" />
                 </viewsDirectory>
-                <modulesDirectory enabled="false" />
                 <bootstrapFile />
             </applicationDirectory>
+            <dataDirectory enabled="false">
+                <cacheDirectory enabled="false" />
+                <searchIndexesDirectory enabled="false" />
+                <localesDirectory enabled="false" />
+                <logsDirectory enabled="false" />
+                <sessionsDirectory enabled="false" />
+                <uploadsDirectory enabled="false" />
+            </dataDirectory>
             <libraryDirectory>
-                <!--<zendFrameworkStandardLibrary />-->
+                <zfStandardLibraryDirectory />
             </libraryDirectory>
             <publicDirectory>
+                <publicStylesheetsDirectory enabled="false" />
+                <publicScriptsDirectory enabled="false" />
+                <publicImagesDirectory enabled="false" />
                 <publicIndexFile />
                 <htaccessFile />
             </publicDirectory>
             <providersDirectory enabled="false" />
+            <!--
+            <temporaryDirectory enabled="false" />
+            <testsDirectory enabled="false" />
+            -->
         </projectDirectory>
     </projectProfile>
 EOS;

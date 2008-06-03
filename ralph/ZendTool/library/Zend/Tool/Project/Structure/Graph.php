@@ -3,11 +3,24 @@
 class Zend_Tool_Project_Structure_Graph
 {
     
+    protected static $_traverseEnabled = false;
+    
     protected $_topNodes = array();
 
+    
+    
+    public static function setTraverseEnabled($traverseEnabled)
+    {
+        self::$_traverseEnabled = (bool) $traverseEnabled;
+    }
+    
+    public static function isTraverseEnabled()
+    {
+        return self::$_traverseEnabled;
+    }
+    
     public function __construct()
     {
-        
     }
     
     /**
@@ -114,17 +127,17 @@ class Zend_Tool_Project_Structure_Graph
     
     public function __get($name)
     {
-        
+        // @todo implement this
     }
     
     public function __isset($name)
     {
-        
+        // @todo implement this
     }
     
     public function __unset($name)
     {
-        
+        // @todo implement this
     }
 
     public function __call($methodName, $arguments)

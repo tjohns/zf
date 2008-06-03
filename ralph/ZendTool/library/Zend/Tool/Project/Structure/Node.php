@@ -5,9 +5,8 @@ class Zend_Tool_Project_Structure_Node implements RecursiveIterator, Countable
     
     protected $_appendable = true;
     protected $_deleted = false;
-    
+    protected $_enabled = true;
     protected $_nodeContext = null;
-    
     protected $_subNodes = array();
     protected $_position = 0;
     
@@ -54,6 +53,8 @@ class Zend_Tool_Project_Structure_Node implements RecursiveIterator, Countable
     {
         return $this->_enabled;
     }
+    
+
     
     public function setDeleted($deleted = true)
     {
@@ -115,6 +116,15 @@ class Zend_Tool_Project_Structure_Node implements RecursiveIterator, Countable
     
     public function valid()
     {
+        if (isset($this->_subNodes[$this->_position]) && Zend_Tool_Project_Structure_Graph::isTraverseEnabled() == false) {
+            while (!$this->_subNodes[$this->_position]->isEnabled()) {
+                $this->next();
+                if (!isset($this->_subNodes[$this->_position])) {
+                    break;
+                }
+            }
+        }
+        
         return (isset($this->_subNodes[$this->_position]));
     }
     
@@ -135,17 +145,6 @@ class Zend_Tool_Project_Structure_Node implements RecursiveIterator, Countable
     
     public function __call($method, $arguments)
     {
-        /*
-        if (stristr($method, 'recurs')) {
-            $subArguments = $arguments;
-            foreach ($this->_subNodes as $subNode) {
-                $subArguments = call_user_func_array(array($subNode, $method), $subArguments);
-                //echo $method . PHP_EOL;
-                //Zend_Debug::dump($subArguments); die();
-            }
-        }
-        */
-        
         if (method_exists($this->_nodeContext, $method)) {
             return call_user_func_array(array($this->_nodeContext, $method), $arguments);
         }

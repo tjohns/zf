@@ -68,6 +68,10 @@ class Zend_Tool_Project_Structure_Parser_Xml implements Zend_Tool_Project_Struct
 
             $reflectionClass = new ReflectionClass($graphNode->getContext());
 
+            if ($graphNode->isEnabled() == false) {
+                $newNode->addAttribute('enabled', 'false');
+            }
+            
             foreach ($graphNode->getPersistentParameters() as $paramName => $paramValue) {
                 $newNode->addAttribute($paramName, $paramValue);
             }
@@ -93,7 +97,9 @@ class Zend_Tool_Project_Structure_Parser_Xml implements Zend_Tool_Project_Struct
             if ($attributes = $nodeData->attributes()) {
                 foreach ($attributes as $attrName => $attrValue) {
                     $method = 'set' . $attrName;
-                    if (method_exists($context, $method)) {
+                    if (method_exists($subNode, $method)) {
+                        $subNode->{$method}((string) $attrValue);
+                    } elseif (method_exists($context, $method)) {
                         $context->{$method}((string) $attrValue);
                     }
                 }

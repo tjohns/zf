@@ -42,11 +42,6 @@ class Zend_Tool_Rpc_Provider_Signature
         return $this->_actionableMethods;
     }
     
-    public function getMethodSignatures()
-    {
-        return $this->_methodSignatures;
-    }
-    
     protected function _process()
     {
         $this->_processName();
@@ -133,6 +128,7 @@ class Zend_Tool_Rpc_Provider_Signature
                 $currentParam = $parameter->getName();
                 $parameterInfo[$currentParam]['position']    = $position++;
                 $parameterInfo[$currentParam]['optional']    = $parameter->isOptional();
+                $parameterInfo[$currentParam]['default']     = ($parameter->isOptional()) ? $parameter->getDefaultValue() : null;
                 $parameterInfo[$currentParam]['name']        = $currentParam;
                 $parameterInfo[$currentParam]['type']        = 'string';
                 $parameterInfo[$currentParam]['description'] = null;

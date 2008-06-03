@@ -138,6 +138,12 @@ class Zend_Tool_Rpc_Endpoint_Cli_GetoptParser
             $endpointRequest->setProviderParameter($option, $value);
         }
         
+        /*
+        Zend_Debug::dump($getoptParser); 
+        Zend_Debug::dump($endpointRequest);
+        die();
+        */        
+
         $this->_workingArguments = $getoptParser->getRemainingArgs();
         return;
     }
