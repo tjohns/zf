@@ -293,6 +293,22 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }
     }
+
+    public function testRedirectAssertionsShouldDoNothingForValidAssertions()
+    {
+        $this->testCase->getResponse()->setRedirect('/foo');
+        $this->testCase->assertRedirect();
+        $this->testCase->assertRedirectTo('/foo', var_export($this->testCase->getResponse()->sendHeaders(), 1));
+        $this->testCase->assertRedirectRegex('/FOO$/i');
+
+        $this->testCase->reset();
+        $this->testCase->assertNotRedirect();
+        $this->testCase->assertNotRedirectTo('/foo');
+        $this->testCase->assertNotRedirectRegex('/FOO$/i');
+        $this->testCase->getResponse()->setRedirect('/foo');
+        $this->testCase->assertNotRedirectTo('/bar');
+        $this->testCase->assertNotRedirectRegex('/bar/i');
+    }
 }
 
 // Call Zend_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.

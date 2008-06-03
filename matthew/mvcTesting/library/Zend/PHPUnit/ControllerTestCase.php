@@ -297,12 +297,64 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
     {
     }
 
-    public function assertRedirect($spec)
+    public function assertRedirect($message = '')
     {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__)) {
+            $constraint->fail($response, $message);
+        }
     }
 
-    public function assertNotRedirect($spec)
+    public function assertNotRedirect($message = '')
     {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__)) {
+            $constraint->fail($response, $message);
+        }
+    }
+
+    public function assertRedirectTo($url, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__, $url)) {
+            $constraint->fail($response, $message);
+        }
+    }
+
+    public function assertNotRedirectTo($url, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__, $url)) {
+            $constraint->fail($response, $message);
+        }
+    }
+
+    public function assertRedirectRegex($pattern, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__, $pattern)) {
+            $constraint->fail($response, $message);
+        }
+    }
+
+    public function assertNotRedirectRegex($pattern, $message = '')
+    {
+        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        $response   = $this->getResponse();
+        if (!$constraint->evaluate($response, __FUNCTION__, $pattern)) {
+            $constraint->fail($response, $message);
+        }
     }
 
     /**
