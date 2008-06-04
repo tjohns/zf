@@ -76,6 +76,10 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
                 continue;
             }
 
+            if (isset($data[1]) !== true) {
+                $data[1] = "";
+            }
+
             $this->_translate[$locale][$data[0]] = $data[1];
         }
     }
