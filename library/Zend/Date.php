@@ -207,7 +207,7 @@ class Zend_Date extends Zend_Date_DateObject
             $this->set($date, $part, $this->_Locale);
 
             // DST fix
-            if (is_array($date) and array_key_exists('hour', $date)) {
+            if ((is_array($date) === true) and (isset($date['hour']) === true)) {
                 $hour = $this->toString('H');
                 $hour = $date['hour'] - $hour;
                 if ($hour !== 0) {
@@ -313,7 +313,7 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         if (is_array($stamp)) {
-            if (array_key_exists('timestamp', $stamp)) {
+            if (isset($stamp['timestamp']) === true) {
                 $stamp = $stamp['timestamp'];
             } else {
                 require_once 'Zend/Date/Exception.php';
@@ -1445,7 +1445,7 @@ class Zend_Date extends Zend_Date_DateObject
                     // Fall through
                     case self::DAY:
                     case self::DAY_SHORT:
-                        if (array_key_exists('day', $date) === true) {
+                        if (isset($date['day']) === true) {
                             $date = $date['day'];
                         }
                         break;
@@ -1456,13 +1456,13 @@ class Zend_Date extends Zend_Date_DateObject
                     case self::WEEKDAY_DIGIT:
                     case self::WEEKDAY_NARROW:
                     case self::WEEKDAY_NAME:
-                        if (array_key_exists('weekday', $date) === true) {
+                        if (isset($date['weekday']) === true) {
                             $date = $date['weekday'];
                             $part = self::WEEKDAY_DIGIT;
                         }
                         break;
                     case self::DAY_OF_YEAR:
-                        if (array_key_exists('day_of_year', $date) === true) {
+                        if (isset($date['day_of_year']) === true) {
                             $date = $date['day_of_year'];
                         }
                         break;
@@ -1472,7 +1472,7 @@ class Zend_Date extends Zend_Date_DateObject
                     case self::MONTH_NAME:
                     case self::MONTH_NAME_SHORT:
                     case self::MONTH_NAME_NARROW:
-                        if (array_key_exists('month', $date) === true) {
+                        if (isset($date['month']) === true) {
                             $date = $date['month'];
                         }
                         break;
@@ -1481,7 +1481,7 @@ class Zend_Date extends Zend_Date_DateObject
                     case self::YEAR_SHORT:
                     case self::YEAR_8601:
                     case self::YEAR_SHORT_8601:
-                        if (array_key_exists('year', $date) === true) {
+                        if (isset($date['year']) === true) {
                             $date = $date['year'];
                         }
                         break;
@@ -1490,43 +1490,43 @@ class Zend_Date extends Zend_Date_DateObject
                     case self::HOUR_AM:
                     case self::HOUR_SHORT:
                     case self::HOUR_SHORT_AM:
-                        if (array_key_exists('hour', $date) === true) {
+                        if (isset($date['hour']) === true) {
                             $date = $date['hour'];
                         }
                         break;
                     // Fall through
                     case self::MINUTE:
                     case self::MINUTE_SHORT:
-                        if (array_key_exists('minute', $date) === true) {
+                        if (isset($date['minute']) === true) {
                             $date = $date['minute'];
                         }
                         break;
                     // Fall through
                     case self::SECOND:
                     case self::SECOND_SHORT:
-                        if (array_key_exists('second', $date) === true) {
+                        if (isset($date['second']) === true) {
                             $date = $date['second'];
                         }
                         break;
                     // Fall through
                     case self::TIMEZONE:
                     case self::TIMEZONE_NAME:
-                        if (array_key_exists('timezone', $date) === true) {
+                        if (isset($date['timezone']) === true) {
                             $date = $date['timezone'];
                         }
                         break;
                     case self::TIMESTAMP:
-                        if (array_key_exists('timestamp', $date) === true) {
+                        if (isset($date['timestamp']) === true) {
                             $date = $date['timestamp'];
                         }
                         break;
                     case self::WEEK:
-                        if (array_key_exists('week', $date) === true) {
+                        if (isset($date['week']) === true) {
                             $date = $date['week'];
                         }
                         break;
                     case self::TIMEZONE_SECS:
-                        if (array_key_exists('gmtsecs', $date) === true) {
+                        if (isset($date['gmtsecs']) === true) {
                             $date = $date['gmtsecs'];
                         }
                         break;
@@ -1537,27 +1537,27 @@ class Zend_Date extends Zend_Date_DateObject
                 }
             } else {
                 $hours = 0;
-                if (array_key_exists("hour", $date) === true) {
+                if (isset($date['hour']) === true) {
                     $hours = $date['hour'];
                 }
                 $minutes = 0;
-                if (array_key_exists('minute', $date) === true) {
+                if (isset($date['minute']) === true) {
                     $minutes = $date['minute'];
                 }
                 $seconds = 0;
-                if (array_key_exists('second', $date) === true) {
+                if (isset($date['second']) === true) {
                     $seconds = $date['second'];
                 }
                 $months = 0;
-                if (array_key_exists('month', $date) === true) {
+                if (isset($date['month']) === true) {
                     $months = $date['month'];
                 }
                 $days = 0;
-                if (array_key_exists('day', $date) === true) {
+                if (isset($date['day']) === true) {
                     $days = $date['day'];
                 }
                 $years = 0;
-                if (array_key_exists('year', $date) === true) {
+                if (isset($date['year']) === true) {
                     $years = $date['year'];
                 }
                 return $this->_assign($calc, $this->mktime($hours, $minutes, $seconds, $months, $days, $years, true),
@@ -2757,8 +2757,8 @@ class Zend_Date extends Zend_Date_DateObject
             $time = $time->get(self::TIME_MEDIUM, $locale);
         } else {
             if (is_array($time)) {
-                if (array_key_exists('hour', $time) or array_key_exists('minute', $time)
-                                                    or array_key_exists('second', $time)) {
+                if ((isset($time['hour']) === true) or (isset($time['minute']) === true) or
+                    (isset($time['second']) === true)) {
                     $parsed = $time;
                 } else {
                     require_once 'Zend/Date/Exception.php';
@@ -2776,6 +2776,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
             }
             $time = new self(0, self::TIMESTAMP, $locale);
+            $time->setTimezone('UTC');
             $time->set($parsed['hour'],   self::HOUR);
             $time->set($parsed['minute'], self::MINUTE);
             $time->set($parsed['second'], self::SECOND);
@@ -2900,8 +2901,8 @@ class Zend_Date extends Zend_Date_DateObject
             $date = $date->get(self::DATE_FULL, $locale);
         } else {
             if (is_array($date)) {
-                if (array_key_exists('year', $time) or array_key_exists('month', $time)
-                                                    or array_key_exists('day', $time)) {
+                if ((isset($time['year']) === true) or (isset($time['month']) === true) or
+                    (isset($time['day']) === true)) {
                     $parsed = $time;
                 } else {
                     require_once 'Zend/Date/Exception.php';
@@ -2922,6 +2923,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
             }
             $date = new self(0, self::TIMESTAMP, $locale);
+            $date->setTimezone('UTC');
             $date->set($parsed['year'], self::YEAR);
             $date->set($parsed['month'], self::MONTH);
             $date->set($parsed['day'], self::DAY);
@@ -3312,7 +3314,7 @@ class Zend_Date extends Zend_Date_DateObject
             $year = (int) $year->get(self::YEAR);
         }
         if (is_array($year)) {
-            if (array_key_exists('year', $year)) {
+            if (isset($year['year']) === true) {
                 $year = $year['year'];
             } else {
                 require_once 'Zend/Date/Exception.php';
@@ -3582,7 +3584,7 @@ class Zend_Date extends Zend_Date_DateObject
             if (is_numeric($month)) {
                 $found = $month;
             } else if (is_array($month)) {
-                if (array_key_exists('month', $month)) {
+                if (isset($month['month']) === true) {
                     $month = $month['month'];
                 } else {
                     require_once 'Zend/Date/Exception.php';
@@ -3737,7 +3739,7 @@ class Zend_Date extends Zend_Date_DateObject
         if (is_numeric($day)) {
             $type = self::DAY_SHORT;
         } else if (is_array($day)) {
-            if (array_key_exists('day', $day)) {
+            if (isset($day['day']) === true) {
                 $day = $day['day'];
                 $type = self::WEEKDAY;
             } else {
@@ -3885,7 +3887,7 @@ class Zend_Date extends Zend_Date_DateObject
         if (is_numeric($weekday)) {
             $type = self::WEEKDAY_8601;
         } else if (is_array($weekday)) {
-            if (array_key_exists('weekday', $weekday)) {
+            if (isset($weekday['weekday']) === true) {
                 $weekday = $weekday['weekday'];
                 $type = self::WEEKDAY;
             } else {

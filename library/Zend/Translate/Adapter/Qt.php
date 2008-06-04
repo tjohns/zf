@@ -127,14 +127,15 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
             case 'source':
                 $this->_stag = false;
                 break;
+
             case 'translation':
                 if (!empty($this->_scontent) and !empty($this->_tcontent) or
-                    !array_key_exists($this->_scontent, $this->_translate[$this->_target])) {
+                    (isset($this->_translate[$this->_target][$this->_scontent]) === false)) {
                     $this->_translate[$this->_target][$this->_scontent] = $this->_tcontent;
                 }
                 $this->_ttag = false;
                 break;
-            case 'message':
+
             default:
                 break;
         }

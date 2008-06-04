@@ -56,7 +56,7 @@ abstract class Zend_Measure_Abstract
     /**
      * Unit types for this measurement
      */
-    protected $_UNITS = array();
+    protected $_units = array();
 
 
     /**
@@ -90,10 +90,10 @@ abstract class Zend_Measure_Abstract
         $this->_Locale = $locale;
 
         if ($type === null) {
-            $type = $this->_UNITS['STANDARD'];
+            $type = $this->_units['STANDARD'];
         }
 
-        if (!array_key_exists($type, $this->_UNITS)) {
+        if (isset($this->_units[$type]) === false) {
             require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Type ($type) is unknown");
         }
@@ -144,10 +144,10 @@ abstract class Zend_Measure_Abstract
         }
 
         if ($type === null) {
-            $type = $this->_UNITS['STANDARD'];
+            $type = $this->_units['STANDARD'];
         }
 
-        if (empty($this->_UNITS[$type])) {
+        if (empty($this->_units[$type])) {
             require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Type ($type) is unknown");
         }
@@ -183,7 +183,7 @@ abstract class Zend_Measure_Abstract
      */
     public function setType($type)
     {
-        if (empty($this->_UNITS[$type])) {
+        if (empty($this->_units[$type])) {
             require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Type ($type) is unknown");
         }
@@ -194,8 +194,8 @@ abstract class Zend_Measure_Abstract
 
             // Convert to standard value
             $value = $this->getValue();
-            if (is_array($this->_UNITS[$this->getType()][0])) {
-                foreach ($this->_UNITS[$this->getType()][0] as $key => $found) {
+            if (is_array($this->_units[$this->getType()][0])) {
+                foreach ($this->_units[$this->getType()][0] as $key => $found) {
                     switch ($key) {
                         case "/":
                             if ($found != 0) {
@@ -214,12 +214,12 @@ abstract class Zend_Measure_Abstract
                     }
                 }
             } else {
-                $value = call_user_func(Zend_Locale_Math::$mul, $value, $this->_UNITS[$this->getType()][0], 25);
+                $value = call_user_func(Zend_Locale_Math::$mul, $value, $this->_units[$this->getType()][0], 25);
             }
             
             // Convert to expected value
-            if (is_array($this->_UNITS[$type][0])) {
-                foreach (array_reverse($this->_UNITS[$type][0]) as $key => $found) {
+            if (is_array($this->_units[$type][0])) {
+                foreach (array_reverse($this->_units[$type][0]) as $key => $found) {
                     switch ($key) {
                         case "/":
                             $value = call_user_func(Zend_Locale_Math::$mul, $value, $found, 25);
@@ -238,7 +238,7 @@ abstract class Zend_Measure_Abstract
                     }
                 }
             } else {
-                $value = @call_user_func(Zend_Locale_Math::$div, $value, $this->_UNITS[$type][0], 25);
+                $value = @call_user_func(Zend_Locale_Math::$div, $value, $this->_units[$type][0], 25);
             }
 
             $this->_value = $value;
@@ -273,7 +273,7 @@ abstract class Zend_Measure_Abstract
      */
     public function toString($round = -1)
     {
-        return $this->getValue($round) . ' ' . $this->_UNITS[$this->getType()][1];
+        return $this->getValue($round) . ' ' . $this->_units[$this->getType()][1];
     }
 
 
@@ -295,7 +295,7 @@ abstract class Zend_Measure_Abstract
      */
     public function getConversionList()
     {
-        return $this->_UNITS;
+        return $this->_units;
     }
 
 
