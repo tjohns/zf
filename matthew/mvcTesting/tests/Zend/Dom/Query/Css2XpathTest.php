@@ -122,6 +122,30 @@ class Zend_Dom_Query_Css2XpathTest extends PHPUnit_Framework_TestCase
             $this->assertContains($xpath, $test);
         }
     }
+
+    public function testShouldAllowEqualitySelectionOfArbitraryAttributes()
+    {
+        $test = Zend_Dom_Query_Css2Xpath::transform('div[foo="bar"]');
+        $this->assertEquals("//div[@foo='bar']", $test);
+    }
+
+    public function testShouldCastAttributeNamesToLowerCase()
+    {
+        $test = Zend_Dom_Query_Css2Xpath::transform('div[dojoType="bar"]');
+        $this->assertEquals("//div[@dojotype='bar']", $test);
+    }
+
+    public function testShouldAllowContentSubSelectionOfArbitraryAttributes()
+    {
+        $test = Zend_Dom_Query_Css2Xpath::transform('div[foo~="bar"]');
+        $this->assertEquals("//div[contains(@foo, ' bar ')]", $test);
+    }
+
+    public function testShouldAllowContentMatchingOfArbitraryAttributes()
+    {
+        $test = Zend_Dom_Query_Css2Xpath::transform('div[foo*="bar"]');
+        $this->assertEquals("//div[contains(@foo, 'bar')]", $test);
+    }
 }
 
 // Call Zend_Dom_Query_Css2XpathTest::main() if this source file is executed directly.

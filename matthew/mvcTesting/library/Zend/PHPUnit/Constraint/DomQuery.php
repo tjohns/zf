@@ -1,17 +1,42 @@
 <?php
+/** PHPUnit_Framework_Constraint */
 require_once 'PHPUnit/Framework/Constraint.php';
+
+/** Zend_Dom_Query */
 require_once 'Zend/Dom/Query.php';
 
+/**
+ * Zend_Dom_Query-based PHPUnit Constraint
+ * 
+ * @uses       PHPUnit_Framework_Constraint
+ * @package    Zend_PHPUnit
+ * @subpackage Constraint
+ * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ */
 class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 {
+    /**#@+
+     * @const string Assertion type constants
+     */
     const ASSERT_SELECT           = 'assertSelect';
     const ASSERT_CONTENT_CONTAINS = 'assertSelectContentContains';
     const ASSERT_CONTENT_REGEX    = 'assertSelectContentRegex';
     const ASSERT_CONTENT_COUNT    = 'assertSelectCount';
     const ASSERT_CONTENT_COUNT_MIN= 'assertSelectCountMin';
     const ASSERT_CONTENT_COUNT_MAX= 'assertSelectCountMax';
+    /**#@-*/
 
+    /**
+     * Current assertion type
+     * @var string
+     */
     protected $_assertType        = null;
+
+    /**
+     * Available assertion types
+     * @var array
+     */
     protected $_assertTypes       = array(
         self::ASSERT_SELECT,
         self::ASSERT_CONTENT_CONTAINS,
@@ -21,19 +46,37 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
         self::ASSERT_CONTENT_COUNT_MAX,
     );
 
+    /**
+     * Content being matched
+     * @var string
+     */
     protected $_content           = null;
+
+    /**
+     * Whether or not assertion is negated
+     * @var bool
+     */
     protected $_negate            = false;
+
+    /**
+     * CSS selector or XPath path to select against
+     * @var string
+     */
     protected $_path              = null;
+
+    /**
+     * Whether or not to use XPath when querying
+     * @var bool
+     */
+    protected $_useXpath          = false;
 
     /**
      * Constructor; setup constraint state
      * 
      * @param  string $path CSS selector path
-     * @param  null|false|string|int $spec1 If false, no nodes should be found; if string, content in or regex of content contained by selected nodes; if int, min or max number of matching nodes
-     * @param  null|bool|string $spec2 If $spec1 is a string and $spec2 is false, content should not match; if $spec1 is numeric and $spec2 is 'max' or 'exact', indicate max or exact number of nodes that should be returned
      * @return void
      */
-    public function __construct($path, $spec1 = null, $spec2 = null)
+    public function __construct($path)
     {
         $this->_path = $path;
     }
@@ -50,6 +93,18 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
     }
 
     /**
+     * Whether or not path is a straight XPath expression
+     * 
+     * @param  bool $flag 
+     * @return Zend_PHPUnit_Constraint_DomQuery
+     */
+    public function setUseXpath($flag = true)
+    {
+        $this->_useXpath = (bool) $flag;
+        return $this;
+    }
+
+    /**
      * Evaluate an object to see if it fits the constraints
      * 
      * @param  string $other String to examine
@@ -63,6 +118,11 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
             $assertType = str_replace('Not', '', $assertType);
         }
 
+        if (strstr($assertType, 'Xpath')) {
+            $this->setUseXpath(true);
+            $assertType = str_replace('Xpath', 'Select', $assertType);
+        }
+
         if (!in_array($assertType, $this->_assertTypes)) {
             require_once 'Zend/PHPUnit/Constraint/Exception.php';
             throw new Zend_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
@@ -70,8 +130,9 @@ class Zend_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
 
         $this->_assertType = $assertType;
 
+        $method   = $this->_useXpath ? 'queryXpath' : 'query';
         $domQuery = new Zend_Dom_Query($other);
-        $result   = $domQuery->query($this->_path);
+        $result   = $domQuery->$method($this->_path);
         $argv     = func_get_args();
         $argc     = func_num_args();
 

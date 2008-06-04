@@ -239,7 +239,6 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
 
     public function testAssertSelectShouldThrowExceptionsForInValidResponseContent()
     {
-        // $this->markTestIncomplete('PHPUnit evidently has an exception handler for its own exceptions');
         $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
         $this->testCase->dispatch('/foo/baz');
         try {
@@ -289,6 +288,80 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         }
         try {
             $this->testCase->assertSelectCountMax('div#foo legend.bar', 1);
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+    }
+
+    public function testAssertXpathShouldDoNothingForValidResponseContent()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $this->testCase->dispatch('/foo/baz');
+        $this->testCase->assertXpath("//div[@id='foo']//legend[contains(@class, ' bar ')]");
+        $this->testCase->assertXpath("//div[@id='foo']//legend[contains(@class, ' baz ')]");
+        $this->testCase->assertXpath("//div[@id='foo']//legend[contains(@class, ' bat ')]");
+        $this->testCase->assertNotXpath("//div[@id='foo']//legend[contains(@class, ' bogus ')]");
+        $this->testCase->assertXpathContentContains("//legend[contains(@class, ' bat ')]", "La di da");
+        $this->testCase->assertNotXpathContentContains("//legend[contains(@class, ' bat ')]", "La do da");
+        $this->testCase->assertXpathContentRegex("//legend[contains(@class, ' bat ')]", "/d[a'i]/i");
+        $this->testCase->assertNotXpathContentRegex("//legend[contains(@class, ' bat ')]", "/d[o'e]/i");
+        $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 2);
+        $this->testCase->assertXpathCount("//div[@id='foo']//legend[contains(@class, ' bar ')]", 2);
+        $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 2);
+        $this->testCase->assertXpathCountMax("//div[@id='foo']//legend[contains(@class, ' bar ')]", 2);
+    }
+
+    public function testAssertXpathShouldThrowExceptionsForInValidResponseContent()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $this->testCase->dispatch('/foo/baz');
+        try {
+            $this->testCase->assertNotXpath("//div[@id='foo']//legend[contains(@class, ' bar ')]");
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpath("//div[@id='foo']//legend[contains(@class, ' bogus ')]");
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertNotXpathContentContains("//legend[contains(@class, ' bat ')]", "La di da");
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathContentContains("//legend[contains(@class, ' bat ')]", 'La do da');
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertNotXpathContentRegex("//legend[contains(@class, ' bat ')]", '/d[a|i]/i');
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathContentRegex("//legend[contains(@class, ' bat ')]", '/d[o|e]/i');
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 3);
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathCount("//div[@id='foo']//legend[contains(@class, ' bar ')]", 1);
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 3);
+            $this->fail('Invalid assertions should throw exceptions');
+        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        }
+        try {
+            $this->testCase->assertXpathCountMax("//div[@id='foo']//legend[contains(@class, ' bar ')]", 1);
             $this->fail('Invalid assertions should throw exceptions');
         } catch (Zend_PHPUnit_Constraint_Exception $e) {
         }

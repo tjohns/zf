@@ -1,20 +1,52 @@
 <?php
+/** PHPUnit_Framework_Constraint */
 require_once 'PHPUnit/Framework/Constraint.php';
 
+/**
+ * Redirection constraints
+ * 
+ * @uses       PHPUnit_Framework_Constraint
+ * @package    Zend_PHPUnit
+ * @subpackage Constraint
+ * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ */
 class Zend_PHPUnit_Constraint_Redirect extends PHPUnit_Framework_Constraint
 {
+    /**#@+
+     * @const string Assertion type constants
+     */
     const ASSERT_REDIRECT       = 'assertRedirect';
     const ASSERT_REDIRECT_TO    = 'assertRedirectTo';
     const ASSERT_REDIRECT_REGEX = 'assertRedirectRegex';
+    /**#@-*/
 
+    /**
+     * Current assertion type
+     * @var string
+     */
     protected $_assertType      = null;
+
+    /**
+     * Available assertion types
+     * @var array
+     */
     protected $_assertTypes     = array(
         self::ASSERT_REDIRECT,
         self::ASSERT_REDIRECT_TO,
         self::ASSERT_REDIRECT_REGEX,
     );
 
+    /**
+     * Pattern to match against
+     * @var string
+     */
     protected $_match             = null;
+
+    /**
+     * Whether or not assertion is negated
+     * @var bool
+     */
     protected $_negate            = false;
 
     /**

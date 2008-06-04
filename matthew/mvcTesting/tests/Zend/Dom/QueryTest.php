@@ -152,6 +152,34 @@ class Zend_Dom_QueryTest extends PHPUnit_Framework_TestCase
         $result = $this->query->query('.footerblock .last');
         $this->assertEquals(1, count($result), $result->getXpathQuery());
     }
+
+    public function testQueryShouldFindNodesWithArbitraryAttributeSelectorsExactly()
+    {
+        $this->loadHtml();
+        $result = $this->query->query('div[dojoType="FilteringSelect"]');
+        $this->assertEquals(1, count($result), $result->getXpathQuery());
+    }
+
+    public function testQueryShouldFindNodesWithArbitraryAttributeSelectorsAsDiscreteWords()
+    {
+        $this->loadHtml();
+        $result = $this->query->query('li[dojoType~="bar"]');
+        $this->assertEquals(2, count($result), $result->getXpathQuery());
+    }
+
+    public function testQueryShouldFindNodesWithArbitraryAttributeSelectorsAndAttributeValue()
+    {
+        $this->loadHtml();
+        $result = $this->query->query('li[dojoType*="bar"]');
+        $this->assertEquals(2, count($result), $result->getXpathQuery());
+    }
+
+    public function testQueryXpathShouldAllowQueryingArbitraryUsingXpath()
+    {
+        $this->loadHtml();
+        $result = $this->query->queryXpath('//li[contains(@dojotype, "bar")]');
+        $this->assertEquals(2, count($result), $result->getXpathQuery());
+    }
 }
 
 // Call Zend_Dom_QueryTest::main() if this source file is executed directly.

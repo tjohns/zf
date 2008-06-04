@@ -1,14 +1,37 @@
 <?php
+/** PHPUnit_Framework_Constraint */
 require_once 'PHPUnit/Framework/Constraint.php';
 
+/**
+ * Response header PHPUnit Constraint
+ * 
+ * @uses       PHPUnit_Framework_Constraint
+ * @package    Zend_PHPUnit
+ * @subpackage Constraint
+ * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ */
 class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constraint
 {
+    /**#@+
+     * @const string Assertion type constants
+     */
     const ASSERT_RESPONSE_CODE   = 'assertResponseCode';
     const ASSERT_HEADER          = 'assertHeader';
     const ASSERT_HEADER_CONTAINS = 'assertHeaderContains';
     const ASSERT_HEADER_REGEX    = 'assertHeaderRegex';
+    /**#@-*/
 
+    /**
+     * Current assertion type
+     * @var string
+     */
     protected $_assertType      = null;
+
+    /**
+     * Available assertion types
+     * @var array
+     */
     protected $_assertTypes     = array(
         self::ASSERT_RESPONSE_CODE,
         self::ASSERT_HEADER,
@@ -16,9 +39,25 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         self::ASSERT_HEADER_REGEX,
     );
 
+    /**
+     * @var int Response code
+     */
     protected $_code              = 200;
+
+    /**
+     * @var string Header
+     */
     protected $_header            = null;
+
+    /**
+     * @var string pattern against which to compare header content
+     */
     protected $_match             = null;
+
+    /**
+     * Whether or not assertion is negated
+     * @var bool
+     */
     protected $_negate            = false;
 
     /**
@@ -179,18 +218,38 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return '';
     }
 
+    /**
+     * Compare response code for positive match
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  int $code 
+     * @return bool
+     */
     protected function _code(Zend_Controller_Response_Abstract $response, $code)
     {
         $test = $this->_getCode($response);
         return ($test == $code);
     }
 
+    /**
+     * Compare response code for negative match
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  int $code 
+     * @return bool
+     */
     protected function _notCode(Zend_Controller_Response_Abstract $response, $code)
     {
         $test = $this->_getCode($response);
         return ($test != $code);
     }
 
+    /**
+     * Retrieve response code
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @return int
+     */
     protected function _getCode(Zend_Controller_Response_Abstract $response)
     {
         $test = $response->getHttpResponseCode();
@@ -200,16 +259,37 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return $test;
     }
 
+    /**
+     * Positive check for response header presence
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @return bool
+     */
     protected function _header(Zend_Controller_Response_Abstract $response, $header)
     {
         return (null !== $this->_getHeader($response, $header));
     }
 
+    /**
+     * Negative check for response header presence
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @return bool
+     */
     protected function _notHeader(Zend_Controller_Response_Abstract $response, $header)
     {
         return (null === $this->_getHeader($response, $header));
     }
 
+    /**
+     * Retrieve response header
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @return string|null
+     */
     protected function _getHeader(Zend_Controller_Response_Abstract $response, $header)
     {
         $headers = $response->sendHeaders();
@@ -220,6 +300,14 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return null;
     }
 
+    /**
+     * Positive check for header contents matching pattern
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @param  string $match 
+     * @return bool
+     */
     protected function _headerContains(Zend_Controller_Response_Abstract $response, $header, $match)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
@@ -231,6 +319,14 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return (strstr($contents, $match));
     }
 
+    /**
+     * Negative check for header contents matching pattern
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @param  string $match 
+     * @return bool
+     */
     protected function _notHeaderContains(Zend_Controller_Response_Abstract $response, $header, $match)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
@@ -242,6 +338,14 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return (!strstr($contents, $match));
     }
 
+    /**
+     * Positive check for header contents matching regex
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @param  string $pattern 
+     * @return bool
+     */
     protected function _headerRegex(Zend_Controller_Response_Abstract $response, $header, $pattern)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {
@@ -253,6 +357,14 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         return preg_match($pattern, $contents);
     }
 
+    /**
+     * Negative check for header contents matching regex
+     * 
+     * @param  Zend_Controller_Response_Abstract $response 
+     * @param  string $header 
+     * @param  string $pattern 
+     * @return bool
+     */
     protected function _notHeaderRegex(Zend_Controller_Response_Abstract $response, $header, $pattern)
     {
         if (null === ($fullHeader = $this->_getHeader($response, $header))) {

@@ -78,6 +78,42 @@ class Zend_Dom_Query_Css2Xpath
         $expression = preg_replace('|#([a-z][a-z0-9_-]*)|i', '[@id=\'$1\']', $expression);
         $expression = preg_replace('|(?<![a-z0-9_-])(\[@id=)|i', '*$1', $expression);
 
+        // arbitrary attribute strict equality
+        if (preg_match('|([a-z]+)\[([a-z0-9_-]+)=[\'"]([^\'"]+)[\'"]\]|i', $expression)) {
+            $expression = preg_replace_callback(
+                '|([a-z]+)\[([a-z0-9_-]+)=[\'"]([^\'"]+)[\'"]\]|i', 
+                create_function(
+                    '$matches',
+                    'return $matches[1] . "[@" . strtolower($matches[2]) . "=\'" . $matches[3] . "\']";'
+                ),
+                $expression
+            );
+        }
+
+        // arbitrary attribute contains full word
+        if (preg_match('|([a-z]+)\[([a-z0-9_-]+)~=[\'"]([^\'"]+)[\'"]\]|i', $expression)) {
+            $expression = preg_replace_callback(
+                '|([a-z]+)\[([a-z0-9_-]+)~=[\'"]([^\'"]+)[\'"]\]|i', 
+                create_function(
+                    '$matches',
+                    'return $matches[1] . "[contains(@" . strtolower($matches[2]) . ", \' $matches[3] \')]";'
+                ),
+                $expression
+            );
+        }
+
+        // arbitrary attribute contains specified content
+        if (preg_match('|([a-z]+)\[([a-z0-9_-]+)\*=[\'"]([^\'"]+)[\'"]\]|i', $expression)) {
+            $expression = preg_replace_callback(
+                '|([a-z]+)\[([a-z0-9_-]+)\*=[\'"]([^\'"]+)[\'"]\]|i', 
+                create_function(
+                    '$matches',
+                    'return $matches[1] . "[contains(@" . strtolower($matches[2]) . ", \'" . $matches[3] . "\')]";'
+                ),
+                $expression
+            );
+        }
+
         // Classes
         $expression = preg_replace('|\.([a-z][a-z0-9_-]*)|i', "[contains(@class, ' \$1 ')]", $expression);
 

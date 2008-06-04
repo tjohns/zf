@@ -6,6 +6,14 @@ require_once 'Zend/Dom/Query/Css2Xpath.php';
 /** Zend_Dom_Query_Result */
 require_once 'Zend/Dom/Query/Result.php';
 
+/**
+ * Query DOM structures based on CSS selectors and/or XPath
+ * 
+ * @package    Zend_Dom
+ * @subpackage Query
+ * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ */
 class Zend_Dom_Query
 {
     /**#@+
@@ -110,7 +118,26 @@ class Zend_Dom_Query
         return $this->_docType;
     }
 
+    /**
+     * Perform a CSS selector query
+     * 
+     * @param  string $query 
+     * @return Zend_Dom_Query_Result
+     */
     public function query($query)
+    {
+        $xpathQuery = Zend_Dom_Query_Css2Xpath::transform($query);
+        return $this->queryXpath($xpathQuery, $query);
+    }
+
+    /**
+     * Perform an XPath query
+     * 
+     * @param  string $xpathQuery
+     * @param  string $query CSS selector query
+     * @return Zend_Dom_Query_Result
+     */
+    public function queryXpath($xpathQuery, $query = null)
     {
         if (null === ($document = $this->getDocument())) {
             require_once 'Zend/Dom/Exception.php';
@@ -135,7 +162,6 @@ class Zend_Dom_Query
             throw new Zend_Dom_Exception('Error parsing document');
         }
 
-        $xpathQuery = Zend_Dom_Query_Css2Xpath::transform($query);
         $nodeList   = $this->_getNodeList($domDoc, $xpathQuery);
         return new Zend_Dom_Query_Result($query, $xpathQuery, $domDoc, $nodeList);
     }
@@ -151,11 +177,15 @@ class Zend_Dom_Query
     {
         $xpath      = new DOMXPath($document);
         $xpathQuery = (string) $xpathQuery;
-        if (strstr($xpathQuery, '[contains(@class')) {
-            $nodes = $xpath->query('//*[@class]');
-            foreach ($nodes as $node) {
-                $class = $node->attributes->getNamedItem('class');
-                $class->value = ' ' . $class->value . ' ';
+        if (preg_match_all('|\[contains\((@[a-z0-9_-]+),\s?\' |i', $xpathQuery, $matches)) {
+            foreach ($matches[1] as $attribute) {
+                $queryString = '//*[' . $attribute . ']';
+                $attributeName = substr($attribute, 1);
+                $nodes = $xpath->query($queryString);
+                foreach ($nodes as $node) {
+                    $attr = $node->attributes->getNamedItem($attributeName);
+                    $attr->value = ' ' . $attr->value . ' ';
+                }
             }
         }
         return $xpath->query($xpathQuery);
