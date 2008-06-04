@@ -2776,6 +2776,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
             }
             $time = new self(0, self::TIMESTAMP, $locale);
+            $time->setTimezone('UTC');
             $time->set($parsed['hour'],   self::HOUR);
             $time->set($parsed['minute'], self::MINUTE);
             $time->set($parsed['second'], self::SECOND);
@@ -2922,6 +2923,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
             }
             $date = new self(0, self::TIMESTAMP, $locale);
+            $date->setTimezone('UTC');
             $date->set($parsed['year'], self::YEAR);
             $date->set($parsed['month'], self::MONTH);
             $date->set($parsed['day'], self::DAY);
