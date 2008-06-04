@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_PHPUnit
+ * @package    Zend_Test
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -23,22 +23,22 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_PHPUnit_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Test_PHPUnit_AllTests::main');
 }
 
-require_once 'Zend/PHPUnit/ControllerTestCaseTest.php';
+require_once 'Zend/Test/PHPUnit/ControllerTestCaseTest.php';
 
 /**
  * @category   Zend
- * @package    Zend_PHPUnit
+ * @package    Zend_Test
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_PHPUnit_AllTests
+class Zend_Test_PHPUnit_AllTests
 {
     public static function main()
     {
@@ -47,14 +47,14 @@ class Zend_PHPUnit_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_PHPUnit');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Test- Zend_Test_PHPUnit');
 
-        $suite->addTestSuite('Zend_PHPUnit_ControllerTestCaseTest');
+        $suite->addTestSuite('Zend_Test_PHPUnit_ControllerTestCaseTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_PHPUnit_AllTests::main') {
-    Zend_PHPUnit_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Test_PHPUnit_AllTests::main') {
+    Zend_Test_PHPUnit_AllTests::main();
 }

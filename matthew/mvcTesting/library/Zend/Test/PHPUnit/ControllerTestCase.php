@@ -5,12 +5,13 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /**
  * Functional testing scaffold for MVC applications
  * 
- * @uses      PHPUnit_Framework_TestCase
- * @package   Zend_PHPUnit
- * @copyright Copyright (C) 2008 - Present, Zend Technologies, Inc.
- * @license New BSD {@link http://framework.zend.com/license/new-bsd}
+ * @uses       PHPUnit_Framework_TestCase
+ * @package    Zend_Test
+ * @subpackage PHPUnit
+ * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
  */
-class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
+class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @var mixed Bootstrap file path or callback
@@ -128,8 +129,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelect($path, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__)) {
             $constraint->fail($path, $message);
@@ -145,8 +146,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotSelect($path, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__)) {
             $constraint->fail($path, $message);
@@ -163,8 +164,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelectContentContains($path, $match, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
             $constraint->fail($path, $message);
@@ -181,8 +182,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotSelectContentContains($path, $match, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
             $constraint->fail($path, $message);
@@ -199,8 +200,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelectContentRegex($path, $pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
             $constraint->fail($path, $message);
@@ -217,8 +218,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotSelectContentRegex($path, $pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
             $constraint->fail($path, $message);
@@ -235,8 +236,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelectCount($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -253,8 +254,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotSelectCount($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -271,8 +272,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelectCountMin($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -289,8 +290,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertSelectCountMax($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -306,8 +307,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpath($path, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__)) {
             $constraint->fail($path, $message);
@@ -323,8 +324,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotXpath($path, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__)) {
             $constraint->fail($path, $message);
@@ -341,8 +342,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpathContentContains($path, $match, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
             $constraint->fail($path, $message);
@@ -359,8 +360,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotXpathContentContains($path, $match, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $match)) {
             $constraint->fail($path, $message);
@@ -377,8 +378,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpathContentRegex($path, $pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
             $constraint->fail($path, $message);
@@ -395,8 +396,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotXpathContentRegex($path, $pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $pattern)) {
             $constraint->fail($path, $message);
@@ -413,8 +414,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpathCount($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -431,8 +432,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotXpathCount($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -449,8 +450,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpathCountMin($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -467,8 +468,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertXpathCountMax($path, $count, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/DomQuery.php';
-        $constraint = new Zend_PHPUnit_Constraint_DomQuery($path);
+        require_once 'Zend/Test/PHPUnit/Constraint/DomQuery.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_DomQuery($path);
         $content    = $this->getResponse()->outputBody();
         if (!$constraint->evaluate($content, __FUNCTION__, $count)) {
             $constraint->fail($path, $message);
@@ -483,8 +484,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertRedirect($message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__)) {
             $constraint->fail($response, $message);
@@ -499,8 +500,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotRedirect($message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__)) {
             $constraint->fail($response, $message);
@@ -516,8 +517,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertRedirectTo($url, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__, $url)) {
             $constraint->fail($response, $message);
@@ -533,8 +534,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotRedirectTo($url, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__, $url)) {
             $constraint->fail($response, $message);
@@ -550,8 +551,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertRedirectRegex($pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__, $pattern)) {
             $constraint->fail($response, $message);
@@ -567,8 +568,8 @@ class Zend_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertNotRedirectRegex($pattern, $message = '')
     {
-        require_once 'Zend/PHPUnit/Constraint/Redirect.php';
-        $constraint = new Zend_PHPUnit_Constraint_Redirect();
+        require_once 'Zend/Test/PHPUnit/Constraint/Redirect.php';
+        $constraint = new Zend_Test_PHPUnit_Constraint_Redirect();
         $response   = $this->getResponse();
         if (!$constraint->evaluate($response, __FUNCTION__, $pattern)) {
             $constraint->fail($response, $message);

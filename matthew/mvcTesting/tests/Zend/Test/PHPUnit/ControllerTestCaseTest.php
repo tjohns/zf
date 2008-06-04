@@ -1,13 +1,13 @@
 <?php
-// Call Zend_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
+// Call Zend_Test_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    define("PHPUnit_MAIN_METHOD", "Zend_PHPUnit_ControllerTestCaseTest::main");
+    define("PHPUnit_MAIN_METHOD", "Zend_Test_PHPUnit_ControllerTestCaseTest::main");
 }
 
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
-/** Zend_PHPUnit_ControllerTestCase */
-require_once 'Zend/PHPUnit/ControllerTestCase.php';
+/** Zend_Test_PHPUnit_ControllerTestCase */
+require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
@@ -16,9 +16,9 @@ require_once 'Zend/Registry.php';
 require_once 'Zend/Controller/Action.php';
 
 /**
- * Test class for Zend_PHPUnit_ControllerTestCase.
+ * Test class for Zend_Test_PHPUnit_ControllerTestCase.
  */
-class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase 
+class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Runs the test methods of this class.
@@ -27,7 +27,7 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_PHPUnit_ControllerTestCaseTest");
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Test_PHPUnit_ControllerTestCaseTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
@@ -39,7 +39,7 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->testCase = new Zend_PHPUnit_ControllerTestCase();
+        $this->testCase = new Zend_Test_PHPUnit_ControllerTestCase();
     }
 
     /**
@@ -244,52 +244,52 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         try {
             $this->testCase->assertNotSelect('div#foo legend.bar');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelect('div#foo legend.bogus');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertNotSelectContentContains('legend.bat', 'La di da');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectContentContains('legend.bat', 'La do da');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertNotSelectContentRegex('legend.bat', '/d[a|i]/i');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectContentRegex('legend.bat', '/d[o|e]/i');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectCountMin('div#foo legend.bar', 3);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectCount('div#foo legend.bar', 1);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectCountMin('div#foo legend.bar', 3);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertSelectCountMax('div#foo legend.bar', 1);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
     }
 
@@ -318,52 +318,52 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
         try {
             $this->testCase->assertNotXpath("//div[@id='foo']//legend[contains(@class, ' bar ')]");
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpath("//div[@id='foo']//legend[contains(@class, ' bogus ')]");
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertNotXpathContentContains("//legend[contains(@class, ' bat ')]", "La di da");
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathContentContains("//legend[contains(@class, ' bat ')]", 'La do da');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertNotXpathContentRegex("//legend[contains(@class, ' bat ')]", '/d[a|i]/i');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathContentRegex("//legend[contains(@class, ' bat ')]", '/d[o|e]/i');
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 3);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathCount("//div[@id='foo']//legend[contains(@class, ' bar ')]", 1);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathCountMin("//div[@id='foo']//legend[contains(@class, ' bar ')]", 3);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
         try {
             $this->testCase->assertXpathCountMax("//div[@id='foo']//legend[contains(@class, ' bar ')]", 1);
             $this->fail('Invalid assertions should throw exceptions');
-        } catch (Zend_PHPUnit_Constraint_Exception $e) {
+        } catch (Zend_Test_PHPUnit_Constraint_Exception $e) {
         }
     }
 
@@ -384,7 +384,7 @@ class Zend_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCase
     }
 }
 
-// Call Zend_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_PHPUnit_ControllerTestCaseTest::main") {
-    Zend_PHPUnit_ControllerTestCaseTest::main();
+// Call Zend_Test_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Test_PHPUnit_ControllerTestCaseTest::main") {
+    Zend_Test_PHPUnit_ControllerTestCaseTest::main();
 }

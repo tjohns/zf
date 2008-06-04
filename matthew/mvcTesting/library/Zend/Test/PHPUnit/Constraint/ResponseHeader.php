@@ -6,12 +6,12 @@ require_once 'PHPUnit/Framework/Constraint.php';
  * Response header PHPUnit Constraint
  * 
  * @uses       PHPUnit_Framework_Constraint
- * @package    Zend_PHPUnit
- * @subpackage Constraint
+ * @package    Zend_Test
+ * @subpackage PHPUnit
  * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
  * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
  */
-class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constraint
+class Zend_Test_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constraint
 {
     /**#@+
      * @const string Assertion type constants
@@ -90,8 +90,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
     public function evaluate($other, $assertType = null)
     {
         if (!$other instanceof Zend_Controller_Response_Abstract) {
-            require_once 'Zend/PHPUnit/Constraint/Exception.php';
-            throw new Zend_PHPUnit_Constraint_Exception('Header constraint assertions require a response object');
+            require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+            throw new Zend_Test_PHPUnit_Constraint_Exception('Header constraint assertions require a response object');
         }
 
         if (strstr($assertType, 'Not')) {
@@ -100,8 +100,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         }
 
         if (!in_array($assertType, $this->_assertTypes)) {
-            require_once 'Zend/PHPUnit/Constraint/Exception.php';
-            throw new Zend_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
+            require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+            throw new Zend_Test_PHPUnit_Constraint_Exception(sprintf('Invalid assertion type "%s" provided to %s constraint', $assertType, __CLASS__));
         }
 
         $this->_assertType = $assertType;
@@ -113,8 +113,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
         switch ($assertType) {
             case self::ASSERT_RESPONSE_CODE:
                 if (3 > $argc) {
-                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
-                    throw new Zend_PHPUnit_Constraint_Exception('No response code provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No response code provided against which to match');
                 }
                 $this->_code = $code = $argv[2];
                 return ($this->_negate)
@@ -122,8 +122,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
                     : $this->_code($response, $code);
             case self::ASSERT_HEADER:
                 if (3 > $argc) {
-                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
-                    throw new Zend_PHPUnit_Constraint_Exception('No header provided against which to match');
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('No header provided against which to match');
                 }
                 $this->_header = $header = $argv[2];
                 return ($this->_negate)
@@ -131,8 +131,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
                     : $this->_header($response, $header);
             case self::ASSERT_HEADER_CONTAINS:
                 if (4 > $argc) {
-                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
-                    throw new Zend_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
                 }
                 $this->_header = $header = $argv[2];
                 $this->_match  = $match  = $argv[3];
@@ -141,8 +141,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
                     : $this->_headerContains($response, $header, $match);
             case self::ASSERT_HEADER_REGEX:
                 if (4 > $argc) {
-                    require_once 'Zend/PHPUnit/Constraint/Exception.php';
-                    throw new Zend_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
+                    require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                    throw new Zend_Test_PHPUnit_Constraint_Exception('Both a header name and content to match are required for ' . __FUNCTION__);
                 }
                 $this->_header = $header = $argv[2];
                 $this->_match  = $match  = $argv[3];
@@ -150,8 +150,8 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
                     ? $this->_notHeaderRegex($response, $header, $match)
                     : $this->_headerRegex($response, $header, $match);
             default:
-                require_once 'Zend/PHPUnit/Constraint/Exception.php';
-                throw new Zend_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
+                require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
+                throw new Zend_Test_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
         }
     }
 
@@ -167,7 +167,7 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
      */
     public function fail($other, $description, $not = false)
     {
-        require_once 'Zend/PHPUnit/Constraint/Exception.php';
+        require_once 'Zend/Test/PHPUnit/Constraint/Exception.php';
         switch ($this->_assertType) {
             case self::ASSERT_RESPONSE_CODE:
                 $failure = 'Failed asserting response code "%s"';
@@ -198,14 +198,14 @@ class Zend_PHPUnit_Constraint_ResponseHeader extends PHPUnit_Framework_Constrain
                 $failure = sprintf($failure, $this->_header, $this->_match);
                 break;
             default:
-                throw new Zend_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
+                throw new Zend_Test_PHPUnit_Constraint_Exception('Invalid assertion type ' . __FUNCTION__);
         }
 
         if (!empty($description)) {
             $failure = $description . "\n" . $failure;
         }
 
-        throw new Zend_PHPUnit_Constraint_Exception($failure);
+        throw new Zend_Test_PHPUnit_Constraint_Exception($failure);
     }
 
     /**
