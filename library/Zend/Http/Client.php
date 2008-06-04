@@ -927,7 +927,7 @@ class Zend_Http_Client
 
             $headers[] = "Content-type: {$this->enctype}";
         }
-
+        
         // Set the user agent header
         if (! isset($this->headers['user-agent']) && isset($this->config['useragent'])) {
             $headers[] = "User-agent: {$this->config['useragent']}";
@@ -1020,8 +1020,12 @@ class Zend_Http_Client
                     break;
             }
         }
+        
+        // Set the content-length if we have a body or if request is POST/PUT
+        if ($body || $this->method == self::POST || $this->method == self::PUT) {
+            $this->setHeaders('Content-length', strlen($body));
+        }
 
-        if ($body) $this->setHeaders('Content-length', strlen($body));
         return $body;
     }
 

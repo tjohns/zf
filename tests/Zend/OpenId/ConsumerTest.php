@@ -330,7 +330,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
                            "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "User-agent: Zend_OpenId\r\n\r\n",
+                           "User-agent: Zend_OpenId\r\n" . 
+                           "Content-length: 0\r\n\r\n",
                            $http->getLastRequest() );
 
         // Test GET request with parameters
