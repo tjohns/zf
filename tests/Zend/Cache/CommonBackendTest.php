@@ -52,12 +52,27 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
 
     public function rmdir()
     {
-        @rmdir($this->getTmpDir());
+        $tmpDir = $this->getTmpDir(false);
+        foreach (glob("$tmpDir*") as $dirname) {
+            @rmdir($dirname);
+        }
     }
 
-    public function getTmpDir()
+    public function getTmpDir($date = true)
     {
-        return $this->_root . DIRECTORY_SEPARATOR . 'zend_cache_tmp_dir';
+        $suffix = '';
+        if ($date) {
+            $suffix = date('mdyHis');
+        }
+        if (is_writeable($this->_root)) {
+            return $this->_root . DIRECTORY_SEPARATOR . 'zend_cache_tmp_dir_' . $suffix;
+        } else {
+            if (getenv('TMPDIR')){
+                return getenv('TMPDIR') . DIRECTORY_SEPARATOR . 'zend_cache_tmp_dir_' . $suffix;
+            } else {
+                die("no writable tmpdir found");
+            }
+        }
     }
 
     public function tearDown()
