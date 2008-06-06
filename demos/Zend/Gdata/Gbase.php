@@ -19,593 +19,657 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @see Zend_Loader
- */
+/* Load the Zend Gdata classes. */
 require_once 'Zend/Loader.php';
-
-/**
- * @see Zend_Gdata_AuthSub
- */
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
-
-/**
- * @see Zend_Gdata_ClientLogin
- */
-Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
-
-/**
- * @see Zend_Gdata_Gbase
- */
 Zend_Loader::loadClass('Zend_Gdata_Gbase');
 
+/* The items feed URL, used for queries, insertions and batch commands. */
+$itemsFeedURL = 'http://www.google.com/base/feeds/items';
+
+/* Types of cuisine the user may select when inserting a recipe. */
+$cuisines = array('African', 'American', 'Asian', 'Caribbean', 'Chinese',
+  'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Jewish', 
+  'Mediterranean', 'Mexican', 'Middle Eastern', 'Moroccan', 
+  'North American', 'Spanish', 'Thai', 'Vietnamese', 'Other');
+
+
 /**
- * Returns the full URL of the current page, based upon env variables
- * 
- * Env variables used:
- * $_SERVER['HTTPS'] = (on|off|)
- * $_SERVER['HTTP_HOST'] = value of the Host: header
- * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443
- * $_SERVER['REQUEST_URI'] = the URI after the method of the HTTP request
- *
- * @return string Current URL
+ * Inserts a new recipe by performing an HTTP POST to the
+ * items feed.
+ * @param boolean $dryRun (optional) True if this should be a dry run insert
+ * @return Zend_Gdata_Gbase_ItemFeed The newly created entry 
  */
-function getCurrentUrl() 
-{
-  global $_SERVER;
+function postItem($dryRun = false) { 
+  $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
+  $gdata = new Zend_Gdata_Gbase($client);
 
-  /**
-   * Filter php_self to avoid a security vulnerability.
-   */
-  $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+  $newEntry = $gdata->newItemEntry();
+  
+  // Add title
+  $newEntry->title = $gdata->newTitle(trim($_POST['recipe_title']));
 
-  if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
-    $protocol = 'https://';
-  } else {
-    $protocol = 'http://';
+  // Add some content
+  $newEntry->content = $gdata->newContent($_POST['recipe_text']);
+  $newEntry->content->type = 'text';
+
+  // Define item type
+  $newEntry->itemType = 'testrecipes';
+  $newEntry->itemType->type = 'text';
+
+  // Add item-specific attributes
+  $newEntry->addGbaseAttribute('cuisine', $_POST['cuisine'], 'text');
+  $newEntry->addGbaseAttribute('cooking_time', $_POST['time_val'] . ' ' . 
+      $_POST['time_units'], 'intUnit');
+  $newEntry->addGbaseAttribute('main_ingredient', 
+                               $_POST['main_ingredient'], 
+                              'text');
+  $newEntry->addGbaseAttribute('serving_count', $_POST['serves'], 'number');
+
+  // Post the item
+  $createdEntry = $gdata->insertGbaseItem($newEntry, $dryRun);
+
+  return $createdEntry;
+}
+
+/**
+ * Updates an existing recipe by performing an HTTP PUT
+ * on its feed URI, using the updated values as the data.
+ * @return true
+ */
+function updateItem() { 
+  $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
+  $gdata = new Zend_Gdata_Gbase($client);
+  
+  $itemUrl = $_POST['link'];
+  $updatedEntry = $gdata->getGbaseItemEntry($itemUrl);
+  
+  // Update title
+  $updatedEntry->title = $gdata->newTitle(trim($_POST['recipe_title']));
+
+  // Update content
+  $updatedEntry->content = $gdata->newContent($_POST['recipe_text']);
+  $updatedEntry->content->type = 'text';
+
+  // Update item-specific attributes
+  $baseAttributeArr = $updatedEntry->getGbaseAttribute('cuisine');
+  if (is_object($baseAttributeArr[0])) {
+    $baseAttributeArr[0]->text = $_POST['cuisine'];
   }
-  $host = $_SERVER['HTTP_HOST'];
-  if ($_SERVER['SERVER_PORT'] != '' &&
-     (($protocol == 'http://' && $_SERVER['SERVER_PORT'] != '80') ||
-     ($protocol == 'https://' && $_SERVER['SERVER_PORT'] != '443'))) {
-    $port = ':' . $_SERVER['SERVER_PORT'];
-  } else {
-    $port = '';
+  
+  $baseAttributeArr = $updatedEntry->getGbaseAttribute('cooking_time');
+  if (is_object($baseAttributeArr[0])) {
+    $baseAttributeArr[0]->text = 
+        $_POST['time_val'] . ' ' . $_POST['time_units'];
   }
-  return $protocol . $host . $port . $php_request_uri;
-}
-
-/**
- * Returns the AuthSub URL which the user must visit to authenticate requests 
- * from this application.
- *
- * Uses getCurrentUrl() to get the next URL which the user will be redirected
- * to after successfully authenticating with the Google service.
- *
- * @return string AuthSub URL
- */
-function getAuthSubUrl() 
-{
-  $next = getCurrentUrl();
-  $scope = 'http://www.google.com/base/feeds/';
-  $secure = false;
-  $session = true;
-  return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, 
-      $session);
-}
-
-/**
- * Outputs a request to the user to login to their Google account, including
- * a link to the AuthSub URL.
- * 
- * Uses getAuthSubUrl() to get the URL which the user must visit to authenticate
- *
- * @return void
- */
-function requestUserLogin($linkText) 
-{
-  $authSubUrl = getAuthSubUrl();
-  echo "<a href=\"{$authSubUrl}\">{$linkText}</a>"; 
-}
-
-/**
- * Returns a HTTP client object with the appropriate headers for communicating
- * with Google using AuthSub authentication.
- *
- * Uses the $_SESSION['sessionToken'] to store the AuthSub session token after
- * it is obtained.  The single use token supplied in the URL when redirected 
- * after the user succesfully authenticated to Google is retrieved from the 
- * $_GET['token'] variable.
- *
- * @return Zend_Http_Client
- */
-function getAuthSubHttpClient() 
-{
-  global $_SESSION, $_GET;
-  if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
-    $_SESSION['sessionToken'] = 
-        Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-  } 
-  $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
-  return $client;
-}
-
-/**
- * Returns a HTTP client object with the appropriate headers for communicating
- * with Google using the ClientLogin credentials supplied.
- *
- * @param  string $user The username, in e-mail address format, to authenticate
- * @param  string $pass The password for the user specified
- * @return Zend_Http_Client
- */
-function getClientLoginHttpClient($user, $pass) 
-{
-  $service = Zend_Gdata_Gbase::AUTH_SERVICE_NAME;
-
-  $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-  return $client;
-}
-
-/**
- * Processes loading of this sample code through a web browser.  Uses AuthSub
- * authentication and outputs a list of a user's base items if succesfully 
- * authenticated.
- *
- * @return void
- */
-function processPageLoad() 
-{
-  global $_SESSION, $_GET;
-  if (!isset($_SESSION['sessionToken']) && !isset($_GET['token'])) 
-  {
-    requestUserLogin('Please login to your Google Account.');
-  } 
-  else 
-  {
-    startHTML();
-    $client = getAuthSubHttpClient();
-    $itemUrl = insertItem($client, false);
-    updateItem($client, $itemUrl, false);
-    listAllMyItems($client);
-    deleteItem($client, $itemUrl, true);
-    querySnippetFeed();
-    endHTML();
+  
+  $baseAttributeArr = $updatedEntry->getGbaseAttribute('main_ingredient');
+  if (is_object($baseAttributeArr[0])) {
+    $baseAttributeArr[0]->text = $_POST['main_ingredient'];
   }
+  
+  $baseAttributeArr = $updatedEntry->getGbaseAttribute('serving_count');
+  if (is_object($baseAttributeArr[0])) {
+    $baseAttributeArr[0]->text = $_POST['serves'];
+  }
+
+  $dryRun = false;
+  $gdata->updateGbaseItem($updatedEntry, $dryRun); 
+  
+  // Alternatively, you can call the save() method directly on the entry
+  // $updatedEntry->save();
+  
+  return true;
 }
 
 /**
- * Writes the HTML prologue for the demo.
+ * Deletes a recipe by performing an HTTP DELETE on its feed URI.
+ * @return void 
+ */
+function deleteItem() {
+  $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
+  $gdata = new Zend_Gdata_Gbase($client);
+
+  $itemUrl = $_POST['link'];
+  $deleteEntry = $gdata->getGbaseItemEntry($itemUrl);
+  
+  $dryRun = false;
+  $gdata->deleteGbaseItem($deleteEntry, $dryRun);
+  
+  // Alternatively, you can call the save() method directly on the entry
+  // $gdata->delete($itemUrl);
+}
+
+/**
+ * Creates the XML content used to perform a batch delete.
+ * @return string The constructed XML to be used for the batch delete 
+ */
+function buildBatchXML() {
+  $result =  '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . 
+             '<feed xmlns="http://www.w3.org/2005/Atom"' . "\n" . 
+             ' xmlns:g="http://base.google.com/ns/1.0"' . "\n" . 
+             ' xmlns:batch="http://schemas.google.com/gdata/batch">' . "\n";
+  
+  $counter = 0;
+  foreach($_POST as $key => $value) {
+    if(substr($key, 0, 5) == "link_") {
+      $counter++;
+
+      $result .= '<entry>' . "\n" . 
+                 '<id>' . $value . '</id>' . "\n" . 
+                 '<batch:operation type="delete"/>' . "\n" . 
+                 '<batch:id>' . $counter . '</batch:id>' . "\n" . 
+                 '</entry>' . "\n";
+    }
+  }
+  $result .= '</feed>' . "\n";
+
+  return $result;
+}
+
+/**
+ * Deletes all recipes by performing an HTTP POST to the
+ * batch URI.
+ * @return Zend_Http_Response The reponse of the post 
+ */
+function batchDelete() {
+  global $itemsFeedURL;
+        
+  $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
+  $gdata = new Zend_Gdata_Gbase($client);
+  
+  $response = $gdata->post(buildBatchXML(), $itemsFeedURL . '/batch');
+  
+  return $response;
+}
+
+/**
+ * Writes the HTML header for the demo.
  *
  * NOTE: We would normally keep the HTML/CSS markup separate from the business
  *       logic above, but have decided to include it here for simplicity of
  *       having a single-file sample.
- *
  * @return void
  */
-function startHTML()
+function printHTMLHeader()
 {
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"' . "\n" . 
+        '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\n" . 
+        '<html xmlns="http://www.w3.org/1999/xhtml" lang="en">' . "\n" . 
+        '<head><meta http-equiv="Content-Type" ' . 
+        'content="text/html;charset=utf-8"/>' . "\n" . 
+        '<title>PHP Demo: Google Base API</title>' . "\n" . 
+        '<link rel="stylesheet" type="text/css" ' . 
+        'href="http://code.google.com/css/dev_docs.css">' . "\n" . 
+        '</head>' . "\n" . 
+        '<body><center>' . "\n";
+}
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+/**
+ * Writes the HTML footer for the demo.
+ *
+ * NOTE: We would normally keep the HTML/CSS markup separate from the business
+ *       logic above, but have decided to include it here for simplicity of
+ *       having a single-file sample.
+ * @return void 
+ */
+function printHTMLFooter() {
+  print '</center></body></html>' . "\n";
+}
 
-    <title>Google Base API API Demo</title>
+/**
+ * We arrive here when the user first comes to the form. The first step is
+ * to have them get a single-use token.
+ */
+function showIntroPage() {
+  global $itemsFeedURL;
 
-    <style type="text/css" media="screen">
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: small;
-        }
+  $next_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+  $scope = $itemsFeedURL;
+  $secure = false;
+  $session = true;
+  $redirect_url = Zend_Gdata_AuthSub::getAuthSubTokenUri($next_url, 
+                                                         $scope, 
+                                                         $secure, 
+                                                         $session);
+
+  printHTMLHeader();
+  
+  print '<table style="width:50%;">' . "\n" . 
+        '<tr>' . "\n" .  
+        '<th colspan="2" style="text-align:center;">' . 
+        'PHP Demo: Google Base data API<br/>' . 
+        '<small><span style="font-variant: small-caps;">Powered By</span>' . 
+        ' <a href="http://framework.zend.com/download/gdata">' . 
+        'Zend Google Data Client Library</a></small></th>' . "\n" . 
+        '</tr>' . "\n" . 
+        '<tr><td>Before you get started, please <a href="' . $redirect_url . 
+        '">sign in</a> to your personal Google Base account.</td></tr>' . "\n" . 
+        '</table>' . "\n";
+  
+  printHTMLFooter();
+}
+
+/**
+ * Prints the table of recipes the user has already entered
+ * on the left-hand side of the page.
+ * @param string $token The session token
+ * @return void 
+ */
+function showRecipeListPane($token) {
+  global $itemsFeedURL;
+  
+  $client = Zend_Gdata_AuthSub::getHttpClient($token);
+  $gdata = new Zend_Gdata_Gbase($client);
+  try {
+    $feed = $gdata->getGbaseItemFeed($itemsFeedURL . '/-/testrecipes');
+   
+    print '<td style="width:50%;text-align:center;vertical-align:top">' . "\n" .
+          '<a href="http://www.google.com/base/dashboard" target="_blank">' . 
+          'View all of your items</a>' . 
+          '<table>' . "\n" . 
+          '<tr><th colspan="5" style="text-align:center">' . 
+          'Recipes you have added (that are Published and Searchable)</th></tr>' . "\n";
     
-        #header {
-            background-color: #9cF;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            padding-left: 5px;
-            height: 2.4em;
-        }
+    if ($feed->count() == 0) {
+      print '<tr style="font-style:italic">' . 
+            '<td colspan="5" style="text-align:center">(none)</td>' . 
+            '</tr>' . "\n";
+    } else {
+      print '<tr style="font-style:italic">' . "\n" . 
+            '<td style="text-align:center">Name</td>' . "\n" . 
+            '<td style="text-align:center">Cuisine</td>' . "\n" . 
+            '<td style="text-align:center">Serves</td>' . "\n" . 
+            '<td colspan="2" style="text-align:center">Actions</td>' . "\n" . 
+            '</tr>' . "\n";
+
+      foreach ($feed->entries as $feed_entry) {    
+        $href = $feed_entry->link[0]->href;
+        $title = $feed_entry->title->text;
+        $id = $feed_entry->id->text;
         
-        #header h1 {
-            width: 49%;
-            display: inline;
-            float: left;
-            margin: 0;
-            padding: 0;
-            font-size: 2em;
-        }
+        $baseAttributeArr = $feed_entry->getGbaseAttribute('cuisine');
+        // Only want first cuisine
+        if (isset($baseAttributeArr[0]) && is_object($baseAttributeArr[0])) {
+          $cuisine = $baseAttributeArr[0]->text;
+        } 
         
-        .clear {
-            clear : both;
-        }
-        
-        h2 {
-            background-color: #E5ECF9;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            margin-top: 1em;
-            padding-left: 5px;
-        }
-        
-        .error {
-            color: red;
-        }
-                
-        #content {
-            width: 600px;
-            margin: 0 auto;
-            padding: 0;
-            text-align: left;
-        }
-    </style>
+        $baseAttributeArr = $feed_entry->getGbaseAttribute('serving_count');
+        // Only want first serving_count
+        if (isset($baseAttributeArr[0]) && is_object($baseAttributeArr[0])) {
+          $serving_count = $baseAttributeArr[0]->text;
+        } 
 
-</head>
+        print '<tr>' . "\n" .      
+              '<td align="left" valign="top"><b><a href="' . $href . '">' .
+              $title . '</a></b></td>' . "\n" .
+              '<td style="text-align:center;vertical-align:top">' .
+              $cuisine . '</td>' . "\n" .
+              '<td style="text-align:center;vertical-align:top">' .
+              $serving_count . '</td>' . "\n";
 
-<body>
+        /* Create an Edit button for each existing recipe. */
+        print '<td style="text-align:center;vertical-align:top">' . "\n" .
+              '<form method="post" action="' . $_SERVER['PHP_SELF'] .
+              '" style="margin-top:0;margin-bottom:0;">' . "\n" .
+              '<input type="hidden" name="action" value="edit">' . "\n" .
+              "<input type=\"hidden\" name=\"token\" value=\"$token\">" . "\n" .
+              '<input type="hidden" name="edit" value="' . $id . '">' . "\n" .
+              '<input type="submit" value="Edit">' . "\n" .
+              '</form>' . "\n" .
+              '</td>' . "\n";
 
-<div id="header">
-    <h1>Google Base API Demo</h1>
-</div>
-
-<div id="content">
-<?php
-}
-
-/**
- * Writes the HTML epilogue for this app and exit.
- *
- * @param  boolean $displayBackButton (optional) If true, displays a link to go back at the bottom
- *                                    of the page. Defaults to false.
- * @return void
- */
-function endHTML($displayBackButton = false)
-{
-?>
-</div>
-</body>
-</html>
-<?php
-exit();
-}
-
-/** 
- * Inserts a Base item into the Customer Items feed
- *
- * @param  Zend_Http_Client $client The authenticated client object
- * @param  boolean          $dryRun 
- * @return string The URL of the newly created entry
- */
-function insertItem($client, $dryRun = false)
-{
-  echo "<h2>Insert an item</h2>\n";
-
-  $service = new Zend_Gdata_Gbase($client);
-  $newEntry = $service->newItemEntry();
-
-  // Add title
-  $title = "PHP Developer Handbook";
-  $newEntry->title = $service->newTitle(trim($title));
-
-  // Add some content
-  $content = "Essential handbook for PHP developers. This is a test item.";
-  $newEntry->content = $service->newContent($content);
-  $newEntry->content->type = 'text';
-
-  // Define product type
-  $itemType = "Products";
-  $newEntry->itemType = $itemType;
-  $newEntry->itemType->type = 'text';
-
-  // Add item-specific attributes
-  $newEntry->addGbaseAttribute('product_type', 'book', 'text');
-  $newEntry->addGbaseAttribute('price', '12.99 USD', 'floatUnit');
-  $newEntry->addGbaseAttribute('quantity', '10', 'int');
-  $newEntry->addGbaseAttribute('weight', '2.2 lbs', 'numberUnit');
-  $newEntry->addGbaseAttribute('condition', 'New', 'text');
-  $newEntry->addGbaseAttribute('UPC', 'UPC12345', 'text');
-  $newEntry->addGbaseAttribute('ISBN', 'ISBN12345', 'text');
-  $newEntry->addGbaseAttribute('author', 'John Doe', 'text');
-  $newEntry->addGbaseAttribute('edition', 'First Edition', 'text');
-  $newEntry->addGbaseAttribute('pages', '253', 'number');
-  $newEntry->addGbaseAttribute('publisher', 'My Press', 'text');
-  $newEntry->addGbaseAttribute('year', '2007', 'number');
-  $newEntry->addGbaseAttribute('label', 'PHP 4', 'text');
-  $newEntry->addGbaseAttribute('label', 'development', 'text');
-  
-  /**
-   * If you'd like to use Google Base-hosted item pages and accept Google Checkout, 
-   * simply uncomment the following statement to make Google Checkout as a payment option.
-   * Don't include the link attribute. If you do, your listing will direct 
-   * buyers to your website instead of a Google Base-hosted page that displays the 
-   * Google Checkout Buy button.
-   *   Note: Google Checkout can be used for products only:
-   *         <g:item_type>Products</g:item_type>
-   *         Also, make sure that 'price' and 'quantity' attributes are defined.
-   */
-
-  $newEntry->addGbaseAttribute('payment_accepted', 'Google Checkout', 'text');
-
-  /**
-   * If you're already using Google Checkout on your website, include 
-   * 'Google Checkout' as a payment option by including payment_notes attribute.
-   * In this case, you should include the link attribute, as users will be 
-   * directed to your Google Checkout-integrated website. 
-   */
-
-  //$newEntry->addGbaseAttribute('payment_notes', 'Google Checkout', 'text');
-
-  //$link = $service->newLink('http://www.mysite.com/products/item123.php');
-  //$link->type = 'text/html';
-  //$link->rel = 'alternate';
-  //$newEntry->link = array($link);
-
-  // Post the item
-  $createdEntry = $service->insertGbaseItem($newEntry, $dryRun);
-  $itemUrl = $createdEntry->id->text;
-  echo "\t<ol><li><b>" . $createdEntry->title->text . "</b><br />\n";
-  echo "\t<span>" . $createdEntry->id->text . "</span><br />\n";
-  echo "\t<p>" . $createdEntry->content->text . "</p></li></ol>\n";
-  echo "\tSuccessfully inserted an item at " . $itemUrl . "<br /><br />\n";
-
-  return $itemUrl;
-}
-
-/** 
- * Outputs an HTML unordered list (ul), with each list item representing a
- * Base item in the authenticated user's Customer Items list.  
- *
- * @param  Zend_Http_Client $client The authenticated client object
- * @return void
- */
-function listAllMyItems($client) 
-{
-  echo "<h2>List all my items</h2>\n";
-
-  $service = new Zend_Gdata_Gbase($client);
-  $feed = $service->getGbaseItemFeed();
-
-  printEntries($feed);
-}
-
-/** 
- * Updates a Base item entry. It demonstrates how to access and 
- * update/remove Base attributes
- *
- * @param  Zend_Http_Client $client The authenticated client object
- * @param  string           $itemUrl
- * @param  boolean          $dryRun         
- * @return void
- */
-function updateItem($client, $itemUrl, $dryRun = false)
-{
-  echo "<h2>Update my item</h2>\n";
-  
-  $service = new Zend_Gdata_Gbase($client);
-  if ($entry = $service->getGbaseItemEntry($itemUrl)) {
-    echo "\t<ol>\n";
-
-    // Update the title
-    $oldTitle = $entry->title->text;
-    $newTitle = 'PHP Developer Handbook Second Edition';
-    $entry->title = $service->newTitle($newTitle);
-
-    // Find <g:price> attribute and update the price
-    $baseAttributeArr = $entry->getGbaseAttribute('price');
-    if (is_object($baseAttributeArr[0])) {
-      $oldPrice = $baseAttributeArr[0]->text;
-      $newPrice = '16.99 USD';
-      $baseAttributeArr[0]->text = $newPrice;
-    }
-
-    // Find <g:edition> attribute and update the edition
-    $baseAttributeArr = $entry->getGbaseAttribute('edition');
-    if (is_object($baseAttributeArr[0])) {
-      $oldEdition = $baseAttributeArr[0]->text;
-      $newEdition = 'Second Edition';
-      $baseAttributeArr[0]->text = $newEdition;
-    }
-
-    // Find <g:pages> attribute and update the number of pages
-    $baseAttributeArr = $entry->getGbaseAttribute('pages');
-    if (is_object($baseAttributeArr[0])) {
-      $oldPages = $baseAttributeArr[0]->text;
-      $newPages = '278';
-      $baseAttributeArr[0]->text = $newPages;
-
-      // Update the attribute type from 'number' to 'int'
-      if ($baseAttributeArr[0]->type == 'number') {
-        $newType = 'int';
-        $baseAttributeArr[0]->type = $newType;
+        /* Create a Delete button for each existing recipe. */
+        print '<td style="text-align:center; vertical-align:top">' . "\n" .
+              '<form method="post" action="' . $_SERVER['PHP_SELF'] .
+              '" style="margin-top:0;margin-bottom:0;">' . "\n" .
+              '<input type="hidden" name="action" value="delete">' . "\n" .
+              "<input type=\"hidden\" name=\"token\" value=\"$token\">" . "\n" .
+              '<input type="hidden" name="link" value="' . $id . '">' . "\n" .
+              '<input type="submit" value="Delete">' . "\n" .
+              '</form>' . "\n" .
+              '</td>' . "\n" .
+              '</tr>' . "\n";
       }
     }
 
-    // Remove <g:label> attributes and add new attributes
-    $baseAttributeArr = $entry->getGbaseAttribute('label');
-    foreach ($baseAttributeArr as $note) {
-      $entry->removeGbaseAttribute($note);
+    /* Create a "Delete all" button" to demonstrate batch requests. */
+    print '<tr><td colspan="5" style="text-align:center">' . "\n" .
+          '<form method="post" action="' . $_SERVER['PHP_SELF'] .
+          '" style="margin-top:0;margin-bottom:0">' . "\n" .
+          '<input type="hidden" name="action" value="delete_all">' . "\n" .
+          '<input type="hidden" name="token" value="' . $token . '">' . "\n";
+
+    $i = 0;
+    foreach ($feed as $feed_entry) {
+      print '<input type="hidden" name="link_' . $i . '" value="' .
+            $feed_entry->id->text . '">' . "\n";
+      $i++;
     }
 
-    $entry->addGbaseAttribute('note', 'PHP 5', 'text');
-    $entry->addGbaseAttribute('note', 'Web Programming', 'text');
-
-    try {
-      $entry->save($dryRun);
-      echo "\t<li><b>" . $entry->title->text . "</b><br />\n";
-      echo "\t<span>" . $entry->id->text . "</span><br />\n";
-      echo "\t<p>" . $entry->content->text . "</p></li>\n";
-      echo "\tSuccessfully updated entry at " . $entry->id->text . "</li><br />\n";
-    } catch (Zend_Gdata_App_Exception $e) {
-      echo "<div class='error'>ERROR:</div><br />\n";
-      var_dump($e);
-      return null;
+    print '<input type="submit" value="Delete All"';
+    if ($feed->count() == 0) {
+      print ' disabled="true"';
     }
+    print '></form></td></tr>' . "\n";
+    print '</table>' . "\n";
+    
+    print '</td>' . "\n";
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu("Error: " . $e->getMessage(), $token);
+  }
+}
 
-    echo "\t</ol>\n";
+/**
+ * Prints a small form allowing the user to insert a new
+ * recipe.
+ * @param string $sessionToken A session token
+ * @return void 
+ */
+function showRecipeInsertPane($sessionToken) {
+  global $cuisines;
+
+  print '<td valign="top" width="50%">' . "\n" .
+        '<table width="90%">' . "\n" .
+        '<tr><th colspan="2" style="text-align:center">' . 
+        'Insert a new recipe</th></tr>' . "\n" .
+        '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">' . "\n" .
+        '<input type="hidden" name="action" value="insert">' . "\n" .
+        "<input type=\"hidden\" name=\"token\" value=\"$sessionToken\">\n" .
+        '<tr><td align="right">Title:</td>' . "\n" .
+        '<td><input type="text" name="recipe_title" class="half">' .
+        '</td></tr>' . "\n" .
+        '<tr><td align="right">Main ingredient:</td>' . "\n" .
+        '<td><input type="text" name="main_ingredient" class="half">' .
+        '</td></tr>' . "\n" .
+        '<tr><td align="right">Cuisine:</td>' . "\n" .
+        '<td><select name="cuisine" class="half">' . "\n";
+
+  foreach ($cuisines as $curCuisine) {
+    print "<option value=\"$curCuisine\">$curCuisine</option>\n";
+  }
+
+  print '</select></td></tr>' . "\n" .
+        '<tr><td align="right">Cooking Time:</td>' .
+        '<td><input type="text" name="time_val" size=2 maxlength=2>&nbsp;' .
+        '<select name="time_units"><option value="minutes">minutes</option>' .
+        '<option value="hours">hours</option></select></td></tr>' . "\n" .
+        '<tr><td align="right">Serves:</td>' . "\n" .
+        '<td><input type="text" name="serves" size=2 maxlength=3></td>' . 
+        '</tr>' . "\n" .
+        '<tr><td align="right">Recipe:</td>' . "\n" .
+        '<td><textarea class="full" name="recipe_text"></textarea></td>' . 
+        '</tr>' . "\n" .
+        '<td>&nbsp;</td><td><input type="submit" value="Submit"></td>' . "\n" .
+        '</form></tr></table>' . "\n" .
+        '</td>' . "\n";
+}
+
+/**
+ * Shows a menu allowing the user to update an existing
+ * recipe with the Base API update feature.
+ * @return void  
+ */
+function showEditMenu() {
+  global $cuisines, $itemsFeedURL;
+
+  $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
+  $gdata = new Zend_Gdata_Gbase($client);
+
+  try {
+    $feed = $gdata->getGbaseItemFeed($itemsFeedURL);
+    foreach ($feed->entries as $feed_entry) {
+      $editLink = $feed_entry->link[2]->href;
+      
+      if ($editLink == $_POST['edit']) {
+        $baseAttributeArr = $feed_entry->getGbaseAttribute('cooking_time');
+        if (isset($baseAttributeArr[0]) && is_object($baseAttributeArr[0])) {
+          $splitCookingTime = split(' ', $baseAttributeArr[0]->text);
+        }
+        
+        $baseAttributeArr = $feed_entry->getGbaseAttribute('cuisine');
+        // Cuisine can have multiple entries
+        if (isset($baseAttributeArr[0]) && is_object($baseAttributeArr[0])) {
+          $cuisine = $baseAttributeArr[0]->text;
+        }
+        
+        $baseAttributeArr = $feed_entry->getGbaseAttribute('serving_count');
+        // $serving_count can have multiple entries
+        if (isset($baseAttributeArr[0]) && is_object($baseAttributeArr[0])) {
+          $serving_count = $baseAttributeArr[0]->text;
+        } 
+        
+        $main_ingredient = $feed_entry->getGbaseAttribute('main_ingredient');
+        // Main_ingredient can have multiple entries
+        if (is_array($main_ingredient)) {
+          $main_ingredient = $main_ingredient[0]->text;
+        } 
+        
+        printHTMLHeader();
+
+        print '<table style="width:50%">' . "\n";
+        print '<tr>' . 
+              '<th colspan="2" style="text-align:center">Edit recipe:</th>' . 
+              '</tr>' . "\n";
+
+        print "<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">\n" .
+              '<input type="hidden" name="action" value="update">' . "\n" . 
+              '<input type="hidden" name="link" value="' .
+              $_POST['edit'] . '">' . "\n" .
+              '<input type="hidden" name="token" value="' .
+              $_POST['token'] . '">' . "\n";
+
+        print '<tr><td align="right">Title:</td>' . "\n" . 
+              '<td>' . 
+              '<input type="text" name="recipe_title" class="half" value="' .
+              $feed_entry->title->text . '">' . 
+              '</td></tr>' . "\n";
+
+        print '<tr><td align="right">Main ingredient:</td>' . "\n" .
+              '<td><input type="text" name="main_ingredient" value="' .
+               $main_ingredient . '" class="half"></td></tr>' . "\n";
+
+        print '<tr><td align="right">Cuisine:</td>' . "\n" . 
+              '<td><select name="cuisine" class="half">' . "\n";
+
+        foreach ($cuisines as $curCuisine) {
+          print '<option value="' . $curCuisine . '"';
+          if ($curCuisine == $cuisine) {
+            print ' selected="selected"';
+          }
+          print '>' . $curCuisine . "</option>\n";
+        }
+
+        print '</select></td></tr>' . "\n";
+        print '<tr><td align="right">Cooking Time:</td>' .
+              '<td><input type="text" name="time_val" size="2" maxlength="2" ' . 
+              'value="' . $splitCookingTime[0] . '">&nbsp;' . "\n" . 
+              '<select name="time_units">' . "\n";
+        if ($splitCookingTime[1] == "minutes") {
+          print '<option value="minutes" selected="selected">minutes</option>' .
+            "\n";
+          print '<option value="hours">hours</option>' . "\n";
+        } else {
+          print '<option value="minutes">minutes</option>' . "\n";
+          print '<option value="hours" selected="selected">hours</option>' .
+            "\n";
+        }
+
+        print '</select></td></tr>' . "\n" . 
+              '<tr><td align="right">Serves:</td>' . "\n" . 
+              '<td><input type="text" name="serves" value="' .
+              $serving_count . '" size="2" maxlength="3"></td></tr>' . "\n" . 
+              '<tr><td align="right">Recipe:</td>' . "\n" . 
+              '<td><textarea class="full" name="recipe_text">' .
+              $feed_entry->content->text . '</textarea></td></tr>' . "\n" . 
+              '<td>&nbsp;</td><td><input type="submit" value="Update">' . 
+              '</td>' . "\n" . 
+              '</form></tr></table>' . "\n";
+        
+        printHTMLFooter();
+
+        break;
+      }
+    }
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu($e->getMessage(), $_POST['token']);
+  }
+}
+
+/**
+ * Displays both the "List of current recipes" and
+ * "Insert a new recipe" panels in a single table.
+ * @param string $tableTitle The title to display in the html table
+ * @param string $sessionToken A session token 
+ * @return void  
+ */
+function showMainMenu($tableTitle, $sessionToken) {
+  printHTMLHeader();
+  
+  print '<table style="width: 75%;text-align:center">' . "\n" . 
+        '<tr>' . "\n" . 
+        '<th colspan="2" style="text-align:center;">' . 
+        'PHP Demo: Google Base data API<br />' . 
+        '<font size="-1">' . 
+        '<span style="font-variant: small-caps;">Powered By</span> ' .
+        '<a href="http://framework.zend.com/download/gdata">' .
+        'Zend Google Data Client Library</a></font></th>' . "\n" . 
+        '</tr>' . "\n" . 
+        '<tr><td colspan="2" align="center">' . $tableTitle . "</td></tr>\n" . 
+        '<tr>' . "\n";
+
+  // Create the two sub-tables.
+  showRecipeListPane($sessionToken);
+  showRecipeInsertPane($sessionToken);
+
+  // Add a "Sign out" link.
+  print '<tr><th colspan="2" style="text-align: center">Or click here to' .
+        ' <a href="http://www.google.com/accounts/Logout">sign out</a>' .
+        ' of your Google account.</th></tr>' . "\n";
+
+  // Close the master table.
+  print '</table>' . "\n";
+  
+  printHTMLFooter();
+}
+
+/**
+ * Exchanges the given single-use token for a session
+ * token using AuthSubSessionToken, and returns the result.
+ * @param string $token The single-use token from AuthSubRequest
+ * @return string The upgraded (session) token
+ */
+function exchangeToken($token) {
+  return Zend_Gdata_AuthSub::getAuthSubSessionToken($token);
+}
+
+/**
+ * We arrive here after the user first authenticates and we get back
+ * a single-use token.
+ * @return void 
+ */
+function showFirstAuthScreen() {
+  $singleUseToken = $_GET['token'];
+  $sessionToken = exchangeToken($singleUseToken);
+
+  if (!$sessionToken) {
+    showIntroPage();
   } else {
-    echo "\tNo item exists at " . $itemUrl . "<br />\n";
-    return null;
+    $tableTitle = "Here's your <b>single use token:</b> " . 
+      "<code>$singleUseToken</code><br/>" . "\n" . 
+      "And here's the <b>session token:</b> <code>$sessionToken</code>";
+    
+      showMainMenu($tableTitle, $sessionToken);
   }
 }
 
-/** 
- * Deletes a Base item entry
- *
- * @param  Zend_Http_Client $client  The authenticated client object
- * @param  string           $itemUrl The URL of the item to be deleted
- * @return void
+/**
+ * Main logic to handle the POST operation of inserting an item.
+ * @return void 
  */
-function deleteItem($client, $itemUrl, $dryRun = false) 
-{
-  echo "<h2>Delete an item</h2>\n";
+function handlePost() {
+  try {
+    $newEntry= postItem();
+    if ($newEntry) {
+      showMainMenu('Recipe inserted!', $_POST['token']);
+    } 
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu('Recipe insertion failed: ' . $e->getMessage(),
+                 $_POST['token']);
+  }
+}
 
-  $service = new Zend_Gdata_Gbase($client);
-  if ($entry = $service->getGbaseItemEntry($itemUrl)) {
-    try {
-      echo "\t<ol><li><b>" . $entry->title->text . "</b><br />\n";
-      echo "\t<span>" . $entry->id->text . "</span><br />\n";
-      echo "\t<p>" . $entry->content->text . "</p></li></ol>\n";
-      $entry->delete($dryRun);
-      echo "\tSuccessfully deleted entry at " . $itemUrl . "<br /><br />\n";
-    } catch (Zend_Gdata_App_Exception $e) {
-      echo "<div class='error'>ERROR:</div><br />\n";
-      var_dump($e);
-      return null;
+/**
+ * Main logic to handle deleting an item.
+ * @return void 
+ */
+function handleDelete() {
+  try {
+    deleteItem();
+    showMainMenu('Recipe deleted.', $_POST['token']);
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu('Recipe deletion failed: ' . $e->getMessage(), 
+                 $_POST['token']);
+  }
+}
+
+/**
+ * Main logic to handle a batch deletion of items.
+ * @return void 
+ */
+function handleBatch() {
+  try {
+    $batch_response = batchDelete();
+    if ($batch_response->isSuccessful()) {
+      showMainMenu('All recipes deleted.', $_POST['token']);
+    } else {
+      showMainMenu('Batch deletion failed: ' . $batch_response->getMessage(),
+                   $_POST['token']);
     }
-  } else {
-    echo "\tNo items match.<br />\n";
-    return null;
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu('Batch deletion failed: ' . $e->getMessage(), $_POST['token']);
   }
 }
 
-/** 
- * Executes a query on the Snippets Feed. No authentication is required
- * since the Snippets Feed is public information.
- *
- * @return void
- */
-function querySnippetFeed() 
-{
-  echo "<h2>Execute a query on the snippets feed</h2>\n";
-
-  $service = new Zend_Gdata_Gbase();
-  $query = $service->newSnippetQuery();
-  $query->setBq('[title:Programming]');
-  $query->setOrderBy('modification_time');
-  $query->setSortOrder('descending');
-  $query->setMaxResults('5');
-  $query->setCategory('jobs');
-  $feed = $service->getGbaseSnippetFeed($query);
-  
-  printEntries($feed);
-}
-
 /**
- * Prints each entry in a given feed
- *
- * @param  Zend_Gdata_Gbase_Feed $feed CustomerItems or Snippets feed to be printed
- * @return void
+ * Main logic to handle updating an item
+ * @return void 
  */
-function printEntries($feed) 
-{
-  echo "<ol>";
-  foreach ($feed->entries as $entry) {
-    echo "\t\t<li><b>" . $entry->title->text . "</b><br />\n";
-    echo "\t\t<span>" . $entry->id->text . "</span><br />\n";
-    echo "\t\t<p>" . $entry->content->text . "</p></li>\n";
+function handleUpdate() {
+  try {
+    if (updateItem()) {
+      showMainMenu('Recipe successfully updated.', $_POST['token']);
+    } else {
+      showMainMenu('Recipe update failed.', $_POST['token']);
+    }
+  } catch (Zend_Gdata_App_Exception $e) {
+    showMainMenu('Recipe update failed: ' . $e->getMessage(), $_POST['token']);
   }
-  echo "</ol>";
-  echo "<br />\n";
 }
 
 /**
- * Main logic for running this sample code via the command line or,
- * for AuthSub functionality only, via a web browser.  The output of
- * many of the functions is in HTML format for demonstration purposes,
- * so you may wish to pipe the output to Tidy when running from the 
- * command-line for clearer results.
- *
- * Run without any arguments to get usage information
+ * Main logic to handle requests
  */
-if (isset($argc) && $argc >= 2) {
-  switch ($argv[1]) {
-    case 'listAllMyItems':
-      if ($argc == 4) { 
-        $client = getClientLoginHttpClient($argv[2], $argv[3]);
-        listAllMyItems($client);
-      } else {
-        echo "Usage: php {$argv[0]} {$argv[1]} " .
-             "<username> <password>\n";
-      }
-      break;
-    case 'insertItem':
-      if ($argc == 5) { 
-        if (strtolower($argv[4]) == 'false') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          insertItem($client, false);
-        } elseif (strtolower($argv[4]) == 'true') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          insertItem($client, true);
-        } else {
-          echo "Possible values for <dryRun> are 'true' and 'false'";
-        }
-      } else {
-        echo "Usage: php {$argv[0]} {$argv[1]} " .
-             "<username> <password> <dryRun>\n";
-      }
-      break;
-    case 'updateItem':
-      if ($argc == 6) {
-        if (strtolower($argv[5]) == 'false') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          updateItem($client, $argv[4], false);
-        } elseif (strtolower($argv[5]) == 'true') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          updateItem($client, $argv[4], true);
-        } else {
-          echo "Possible values for <dryRun> are 'true' and 'false'";
-        }
-      } else {
-        echo "Usage: php {$argv[0]} {$argv[1]} " . 
-             "<username> <password> <itemUrl> <dryRun>\n";
-      }
-      break;
-    case 'deleteItem':
-      if ($argc == 6) {
-        if (strtolower($argv[5]) == 'false') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          deleteItem($client, $argv[4], false);
-        } elseif (strtolower($argv[5]) == 'true') {
-          $client = getClientLoginHttpClient($argv[2], $argv[3]);
-          deleteItem($client, $argv[4], true);
-        } else {
-          echo "Possible values for <dryRun> are 'true' and 'false'";
-        }
-      } else {
-        echo "Usage: php {$argv[0]} {$argv[1]} " . 
-             "<username> <password> <itemUrl> <dryRun>\n";
-      }
-      break;
-    case 'querySnippetFeed':
-      if ($argc == 2) { 
-        querySnippetFeed();
-      } else {
-        echo "Usage: php {$argv[0]} {$argv[1]} ";
-      }
-      break;
-  } 
-} else if (!isset($_SERVER["HTTP_HOST"]))  {
-  // running from command line, but action left unspecified
-  echo "Usage: php {$argv[0]} <action> [<username>] [<password>] " .
-      "[<arg1> <arg2> ...]\n\n";
-  echo "Possible action values include:\n" .
-       "listAllMyItems\n" . 
-       "insertItem\n" . 
-       "updateItem\n" .
-       "deleteItem\n" .
-       "querySnippetFeed\n";
+if (count($_GET) == 1 && array_key_exists('token', $_GET)) {
+  showFirstAuthScreen();
 } else {
-  // running through web server - demonstrate AuthSub
-  processPageLoad();
+  if (count($_POST) == 0) {
+    showIntroPage();
+  } else {
+    if ($_POST['action'] == 'insert') {
+      handlePost();
+    } else if ($_POST['action'] == 'delete') {
+      handleDelete();
+    } else if ($_POST['action'] == 'delete_all') {
+      handleBatch();
+    } else if ($_POST['action'] == 'edit') {
+      showEditMenu();
+    } else if ($_POST['action'] == 'update') {
+      handleUpdate();
+    } else {
+      showIntroPage();
+    }
+  }
 }
+
+?>
