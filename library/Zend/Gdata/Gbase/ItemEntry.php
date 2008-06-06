@@ -86,7 +86,7 @@ class Zend_Gdata_Gbase_ItemEntry extends Zend_Gdata_Gbase_Entry
             }
         }
         $this->_baseAttributes = $baseAttributes;
-        return this;
+        return $this;
     }
 
     /**
