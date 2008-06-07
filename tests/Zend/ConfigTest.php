@@ -387,5 +387,18 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         }        
         $this->fail('Expected read only exception has not been raised.');
     }
+    
+    public function testZF3408_countNotDecreasingOnUnset()
+    {
+        $configData = array(
+            'a' => 'a',
+            'b' => 'b',
+            'c' => 'c',
+            );
+        $config = new Zend_Config($configData, true);
+        $this->assertEquals(count($config), 3);
+        unset($config->b);
+        $this->assertEquals(count($config), 2);
+    }
 }
 
