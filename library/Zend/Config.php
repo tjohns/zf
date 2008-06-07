@@ -194,6 +194,7 @@ class Zend_Config implements Countable, Iterator
     {
         if ($this->_allowModifications) {
             unset($this->_data[$name]);
+            $this->_count = count($this->_data);
         } else {
             /** @see Zend_Config_Exception */
             require_once 'Zend/Config/Exception.php';
