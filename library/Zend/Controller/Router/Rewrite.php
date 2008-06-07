@@ -324,26 +324,4 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         return $url . $route->assemble($userParams, $reset, $encode);
     }
 
-    public function testEncodeWithSingleParamReset() 
-    {    
-        $this->_router->removeDefaultRoutes();
-        
-        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        $router->addRoute('ctrl-act', $route);
-        
-        $req = new Zend_Controller_Request_Http('http://framework.zend.com/news/view/id/3');
-        $this->_router->route($req);
-        
-        $this->assertEquals(3, count($req->getParams()));
-        
-        $url = $this->helper->url(array('controller' => null), 'ctrl-act');
-        $this->assertSame('/index/view/id/3', $url);
-        
-        $url = $this->helper->url(array('action' => null), 'ctrl-act');
-        $this->assertSame('/news/index/id/3', $url);
-
-        $url = $this->helper->url(array('action' => null, 'id' => null), 'ctrl-act');
-        $this->assertSame('/news', $url);
-    }    
-    
 }
