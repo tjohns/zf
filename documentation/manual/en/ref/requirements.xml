@@ -1,32 +1,30 @@
 <appendix id="requirements">
 
-    <title>System Requirements</title>
+    <title>Zend Framework Requirements</title>
 
     <para>
-        This section documents requirements for Zend Framework.
+        Zend Framework requires a PHP 5 interpreter with a web server configured
+        to handle PHP scripts correctly. Some features require additional extensions or
+        web server features; in most cases the framework can be used without them, although
+        performance may suffer or ancillary features may not be fully functional. An example
+        of such a dependency is mod_rewrite in an Apache environment, which can be used to
+        implement "pretty URL's" like "http://www.example.com/user/edit. If mod_rewrite is
+        not enabled, ZF can be configured to support URL's such as "http://www.example.com?controller=user&action=edit".
+        Pretty URL's may be used to shorten URL's for textual representation or search engine optimization (SEO),
+        but they do not directly affect the functionality of the application.
     </para>
 
     <sect1 id="requirements.version">
 
-        <title>PHP Version Required</title>
+        <title>PHP Version</title>
 
         <para>
-            Zend Framework requires PHP 5.1.4 or later.  Some SPL interfaces
-            such as <code>Countable</code> were not stable in earlier versions
-            of PHP.
+            Zend recommends PHP 5.2.3 or higher for critical security and performance enhancements, although
+            Zend Framework requires only PHP 5.1.4 or later.
         </para>
 
         <para>
-            Zend Framework has an extensive collection of automated tests,
-            which you can run using PHPUnit 3.0 or later.  This version of
-            PHPUnit also requires PHP 5.1.4 or later.
-        </para>
-
-        <para>
-            Although Zend Framework will function correctly with the PHP version
-            mentioned above, you are strongly recommended to use PHP 5.2.3 or
-            later.  There are important security and performance improvements
-            available in the newer version of PHP.
+            Zend Framework has an extensive collection of unit tests, which you can run using PHPUnit 3.0 or later.
         </para>
 
     </sect1>
@@ -36,23 +34,24 @@
         <title>PHP Extensions</title>
 
         <para>
-            Below is a table that lists all extensions typically found in PHP,
-            and how they are used in Zend Framework.  This can help guide you
-            to know which extensions are required for your application.
-            Not all extensions used by Zend Framework are required for every
-            application.
+            You will find a table listing all extensions typically found in PHP
+            and how they are used in Zend Framework below. You should verify that the extensions on
+            which ZF components you'll be using in your application are available in your PHP environments.
+            Many applications will not require every extension listed below.
         </para>
 
         <para>
-            A usage type of "Dependency" means that the components or classes
-            are not usable if the respective extension is not available.  A
-            usage type of "Optional" means that if the extension is not
-            available, the components or classes automatically fall back to
-            use alternative code.
+            A dependency of type "hard" indicates that the components or classes
+            cannot function properly if the respective extension is not available,
+            while a dependency of type "soft" indicates that the component may use
+            the extension if it is available but will function properly if it is not.
+            Many components will automatically use certain extensions if they are available
+            to optimize performance but will execute code with similar functionality in the
+            component itself if the extensions are unavailable.
         </para>
 
         <table frame='all' id="requirements.extensions.table-1">
-            <title>PHP Extensions Used in Zend Framework</title>
+            <title>PHP Extensions Used in Zend Framework by Component</title>
             <tgroup cols='3'>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='1in'/>
@@ -60,24 +59,24 @@
                 <thead>
                     <row>
                         <entry>Extension</entry>
-                        <entry>Usage Type</entry>
+                        <entry>Dependency Type</entry>
                         <entry>Used by Zend Framework Components</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.apc.php"><code>apc</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.bc.php"><code>bcmath</code></ulink></entry>
-                        <entry>Optional</entry>
+                        <entry>Soft</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.locale.html"><code>Zend_Locale_Math</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://pecl.php.net/package/Bitset"><code>bitset</code></ulink></entry>
-                        <entry>Optional</entry>
+                        <entry>Soft</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink></entry>
                     </row>
                     <row>
@@ -97,7 +96,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                            <ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink>,
                            <ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata_App</code></ulink>,
@@ -112,7 +111,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.curl.php"><code>curl</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.http.client.adapters.html"><code>Zend_Http_Client_Adapter_Curl</code></ulink></entry>
                     </row>
                     <row>
@@ -132,7 +131,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
@@ -174,7 +173,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.image.php"><code>gd</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
                     </row>
                     <row>
@@ -189,17 +188,17 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.hash.php"><code>hash</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.ibm-db2.php"><code>ibm_db2</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Db2</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.iconv.php"><code>iconv</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.locale.parsing.html"><code>Zend_Locale_Format</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.mime.html"><code>Zend_Mime_Decode</code></ulink>,
@@ -222,12 +221,12 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.ibase.php"><code>interbase</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>Zend_Db_Adapter_Firebird</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.json.php"><code>json</code></ulink></entry>
-                        <entry>Optional</entry>
+                        <entry>Soft</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.json.html"><code>Zend_Json</code></ulink></entry>
                     </row>
                     <row>
@@ -237,7 +236,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://www.php.net/manual/en/ref.dom.php"><code>DOM</code></ulink>,
                             <ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink>,
@@ -246,7 +245,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.mbstring.php"><code>mbstring</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink></entry>
                     </row>
                     <row>
@@ -256,7 +255,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>memcache</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcached</code></ulink></entry>
                     </row>
                     <row>
@@ -266,7 +265,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.mime-magic.php"><code>mime_magic</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.http.html"><code>Zend_Http_Client</code></ulink></entry>
                     </row>
                     <row>
@@ -291,7 +290,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.mysqli.php"><code>mysqli</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Mysqli</code></ulink></entry>
                     </row>
                     <row>
@@ -301,7 +300,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.oci8.php"><code>oci8</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Oracle</code></ulink></entry>
                     </row>
                     <row>
@@ -321,12 +320,12 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pcre.php"><code>pcre</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pdo.php"><code>pdo</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>All PDO database adapters</entry>
                     </row>
                     <row>
@@ -341,27 +340,27 @@
                     </row>
                     <row>
                         <entry><code>pdo_mssql</code></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mssql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pdo-mysql.php"><code>pdo_mysql</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mysql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pdo-oci.php"><code>pdo_oci</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Oci</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pdo-pgsql.php"><code>pdo_pgsql</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Pgsql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pdo-sqlite.php"><code>pdo_sqlite</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.db.html"><code>Zend_Db_Adapter_Pdo_Sqlite</code></ulink></entry>
                     </row>
                     <row>
@@ -371,7 +370,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.posix.php"><code>posix</code></ulink></entry>
-                        <entry>Optional</entry>
+                        <entry>Soft</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.mail.html"><code>Zend_Mail</code></ulink></entry>
                     </row>
                     <row>
@@ -391,7 +390,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.controller.html"><code>Zend_Controller</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.filter.html"><code>Zend_Filter</code></ulink>,
@@ -407,7 +406,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.session.php"><code>session</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.controller.actionhelpers.html"><code>Zend_Controller_Action_Helper_Redirector</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.session.html"><code>Zend_Session</code></ulink>
@@ -420,7 +419,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.config.adapters.xml.html"><code>Zend_Config_Xml</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink>,
@@ -431,7 +430,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.soap.php"><code>soap</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.service.strikeiron.html"><code>Zend_Service_StrikeIron</code></ulink></entry>
                     </row>
                     <row>
@@ -441,17 +440,17 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.spl.php"><code>SPL</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html">Zend_Cache_Backend_Sqlite</ulink></entry>
                     </row>
                     <row>
                         <entry><code>standard</code></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
@@ -491,7 +490,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.xml.php"><code>xml</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Qt</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/en/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Tmx</code></ulink>,
@@ -525,7 +524,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink></entry>
-                        <entry>Dependency</entry>
+                        <entry>Hard</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink>,
                             <ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>Memcache</code></ulink>
