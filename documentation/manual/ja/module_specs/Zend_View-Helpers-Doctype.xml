@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9531 -->
+<!-- EN-Revision: 9626 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype ヘルパー</title>
 
@@ -57,7 +57,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
         </para>
         
         <programlisting role="php"><![CDATA[
-<?php echo $this->doctype()->getDoctype() ?>
+<?php echo $this->doctype() ?>
 ]]></programlisting>
         
     </example>

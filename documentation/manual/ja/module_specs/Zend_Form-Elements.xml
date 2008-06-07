@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9531 -->
+<!-- EN-Revision: 9626 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -289,7 +289,7 @@ $unfiltered = $element->getUnfilteredValue();
 
         <itemizedlist>
             <listitem><para>
-                <code>addFilter($nameOrFilter, array $options = null)</code>
+                <code>addFilter($nameOfFilter, array $options = null)</code>
             </para></listitem>
 
             <listitem><para>
