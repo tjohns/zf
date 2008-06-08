@@ -129,7 +129,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                 $this->_params['time'] = 'all_time';
                 break;
             case null:
-                unsert($this->_params['time']);
+                unset($this->_params['time']);
             default:
                 require_once 'Zend/Gdata/App/Exception.php';
                 throw new Zend_Gdata_App_Exception('Unknown time value');
