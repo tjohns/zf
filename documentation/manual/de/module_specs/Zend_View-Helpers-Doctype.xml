@@ -51,7 +51,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->doctype()->getDoctype() ?>
+<?php echo $this->doctype() ?>
 ]]></programlisting>
 
     </example>
