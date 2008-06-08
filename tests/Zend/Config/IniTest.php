@@ -52,6 +52,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->_iniFileSeparatorConfig = dirname(__FILE__) . '/_files/separator.ini';
         $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.ini';
         $this->_iniFileNoSectionsConfig = dirname(__FILE__) . '/_files/nosections.ini';
+        $this->_iniFileInvalid = dirname(__FILE__) . '/_files/invalid.ini';
     }
 
     public function testLoadSingleSection()
@@ -252,4 +253,14 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('jkl', $config->ghi);
     }
 
+    public function testZF3196_InvalidIniFile()
+    {
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileInvalid);
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Error parsing', $expected->getMessage());
+        }
+        
+    }
 }

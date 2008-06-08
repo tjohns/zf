@@ -105,7 +105,10 @@ class Zend_Config_Ini extends Zend_Config
             }
         }
 
-        $iniArray = parse_ini_file($filename, true);
+        $old_error_handler = set_error_handler(array('Zend_Config_Ini', 'parseIniFileErrorHandler'));
+        $iniArray = parse_ini_file($filename, true); // convert any warnings into exceptions
+        restore_error_handler();
+        
         $preProcessedArray = array();
         foreach ($iniArray as $key => $data)
         {
@@ -167,7 +170,7 @@ class Zend_Config_Ini extends Zend_Config
 
         $this->_loadedSection = $section;
     }
-
+    
     /**
      * Helper function to process each element in the section and handle
      * the "extends" inheritance keyword. Passes control to _processKey()
@@ -241,4 +244,20 @@ class Zend_Config_Ini extends Zend_Config
         return $config;
     }
 
+    /**
+     * Handle any errors from parse_ini_file
+     *
+     * @param unknown_type $errno
+     * @param unknown_type $errstr
+     * @param unknown_type $errfile
+     * @param unknown_type $errline
+     */
+    public static function parseIniFileErrorHandler($errno, $errstr, $errfile, $errline)
+    { 
+        /**
+         * @see Zend_Config_Exception
+         */
+        require_once 'Zend/Config/Exception.php';
+        throw new Zend_Config_Exception($errstr);
+    }
 }
