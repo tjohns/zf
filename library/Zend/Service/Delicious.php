@@ -441,16 +441,17 @@ class Zend_Service_Delicious
      * @param  string $url URL for which to get details
      * @return array 
      */
-    public function getUrlDetails($url) {
-	    $parms = array('hash' => md5($url));
-	    
-	    $res = $this->makeRequest(self::JSON_URL, $parms, 'json');
-	    
-	    if(isset($res[0])) {
-		    return $res[0];
-	    } else {
-		    return null;
-    	}
+    public function getUrlDetails($url) 
+    {
+        $parms = array('hash' => md5($url));
+        
+        $res = $this->makeRequest(self::JSON_URL, $parms, 'json');
+        
+        if(isset($res[0])) {
+            return $res[0];
+        } else {
+            return null;
+        }
     }
 
     /**
