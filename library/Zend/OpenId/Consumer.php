@@ -257,7 +257,8 @@ class Zend_OpenId_Consumer
                 /* OpenID 2.0 (11.2) Verifying Discovered Information */
                 if (isset($params['openid_claimed_id'])) {
                     $id = $params['openid_claimed_id'];
-                    if (!$this->_discovery($id, $discovered_server, $discovered_version) ||
+                    if (!Zend_OpenId::normalize($id) ||
+                        !$this->_discovery($id, $discovered_server, $discovered_version) ||
                         (isset($params['openid_identity']) &&
                          $params["openid_identity"] != $id) ||
                         (isset($params['openid_op_endpoint']) &&
