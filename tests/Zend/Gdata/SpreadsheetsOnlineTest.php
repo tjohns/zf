@@ -43,6 +43,37 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $this->gdata = new Zend_Gdata_Spreadsheets($client);
     }
 
+    public function testGetSpreadsheetsAndWorksheetsAndData()
+    {
+        $spreadsheetCount = 0;
+
+        $spreadsheets = $this->gdata->getSpreadsheets();
+        $testedContents = false;
+        foreach($spreadsheets as $spreadsheet) {
+            $spreadsheetCount++;
+            $worksheetCount = 0;
+            $this->assertTrue($spreadsheet instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry, 'not instance of SpreadsheetEntry');
+            foreach($spreadsheet->getWorksheets() as $worksheet) {
+                $this->assertTrue($worksheet instanceof Zend_Gdata_Spreadsheets_WorksheetEntry, 'not instance of WorksheetEntry');
+                $worksheetCount++;
+                if ($spreadsheet->getTitle()->getText() == 'PHP Unit Test Sheet') {
+                    $testedContents = true;
+                    $contentAsCells = $worksheet->getContentsAsCells();
+                    $this->assertEquals('a1', $contentAsCells['A1']['value']);
+                    $this->assertEquals('new', $contentAsCells['A2']['value']);
+                    $this->assertEquals('row', $contentAsCells['B2']['value']);
+                    $contentAsRows = $worksheet->getContentsAsRows();
+                    $this->assertEquals('new', $contentAsRows[0]['a1']);
+                    $this->assertEquals('data', $contentAsRows[0]['c1']);
+                    $this->assertEquals('here', $contentAsRows[0]['d1']);
+                }
+            }
+            $this->assertTrue($worksheetCount >= 1, 'didn\'t get >= 1 worksheet');
+        }
+        $this->assertTrue($spreadsheetCount > 1, 'didn\'t get >1 spreadsheet');
+        $this->assertTrue($testedContents, 'didn\'t test the contents of the worksheet');
+    }
+
     public function testGetSpreadsheetFeed()
     {
         $feed = $this->gdata->getSpreadsheetFeed();

@@ -49,4 +49,15 @@ class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
         parent::__construct($element);
     }
 
+    /**
+     * Returns the worksheets in this spreadsheet
+     *
+     * @return Zend_Gdata_Spreadsheets_WorksheetFeed The worksheets 
+     */
+    public function getWorksheets()
+    {
+        $service = new Zend_Gdata_Spreadsheets($this->getHttpClient());
+        return $service->getWorksheetFeed($this);
+    }
+
 }
