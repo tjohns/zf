@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9648 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink ヘルパー</title>
 
@@ -5,7 +6,7 @@
         HTML の <code>&lt;link&gt;</code> 要素は複数使用することができ、
         スタイルシートやフィード、favicon、トラックバック
         などのさまざまなリソースへのリンクを表します。
-        <code>HeadTitle</code> ヘルパーは、
+        <code>HeadLink</code> ヘルパーは、
         シンプルなインターフェイスでこれらの要素を作成し、
         後でそれを取得してレイアウトスクリプトで出力することができます。
     </para>
