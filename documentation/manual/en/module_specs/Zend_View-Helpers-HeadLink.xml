@@ -4,7 +4,7 @@
     <para>
         The HTML <code>&lt;link&gt;</code> element is increasingly used for
         linking a variety of resources for your site: stylesheets, feeds,
-        favicons, trackbacks, and more. The <code>HeadTitle</code> helper
+        favicons, trackbacks, and more. The <code>HeadLink</code> helper
         provides a simple interface for creating and aggregating these elements
         for later retrieval and output in your layout script.
     </para>
