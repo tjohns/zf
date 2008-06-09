@@ -665,7 +665,7 @@ class OpenIdAdapter implements Zend_Auth_Adapter_Interface {
             $consumer = new Zend_OpenId_Consumer();
             if (!$consumer->login($id)) {
                 $ret = false;
-                $mdg = "Authentication failed.";
+                $msg = "Authentication failed.";
             }
         } else {
             $consumer = new Zend_OpenId_Consumer();
