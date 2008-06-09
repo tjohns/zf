@@ -223,7 +223,7 @@ $unfiltered = $element->getUnfilteredValue();
 
         <itemizedlist>
             <listitem><para>
-                <code>addFilter($nameOrFilter, array $options = null)</code>
+                <code>addFilter($nameOfFilter, array $options = null)</code>
             </para></listitem>
 
             <listitem><para>
