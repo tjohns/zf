@@ -1,10 +1,21 @@
-<!-- EN-Revision: 9506 -->
+<!-- EN-Revision: 9630 -->
 <appendix id="requirements">
 
-    <title>システム要件</title>
+    <title>Zend Framework のシステム要件</title>
 
     <para>
-        この節では、Zend Framework に必要な要件を説明します。
+        Zend Framework を使用するには、PHP 5 のインタプリタおよび
+        PHP スクリプトを処理できるよう設定されたウェブサーバが必要です。
+        使用する機能によっては、それ以外に追加の拡張モジュールやウェブサーバの機能が必要となります。
+        ほとんどの場合は特に何も追加しなくても動作しますが、
+        パフォーマンスが多少落ちたり一部の機能に制限があったりすることがあります。
+        たとえば、一つの例としては Apache 環境の mod_rewrite があります。
+        これは、"http://www.example.com/user/edit" のようないわゆる "pretty URL"
+        を実装するために使用します。mod_rewrite が有効になっていない場合は、
+        ZF は "http://www.example.com?controller=user&action=edit"
+        のような URL をサポートするように設定されます。Pretty URL
+        を使うのは URL を短縮したりサーチエンジン対策の最適化 (SEO)
+        をしたりするためですが、これがアプリケーションの機能に直接影響することはありません。
     </para>
 
     <sect1 id="requirements.version">
@@ -12,22 +23,14 @@
         <title>PHP のバージョン</title>
 
         <para>
-            Zend Framework は PHP 5.1.4 以降で動作します。それより前のバージョンの
-            PHP では、いくつかの SPL インターフェイス、たとえば
-            <code>Countable</code> などが不安定です。
+            Zend では PHP 5.2.3 以降を使うことを推奨します。
+            重要なセキュリティ修正が行われ、パフォーマンスも改善されているためです。
+            しかし、Zend Framework は PHP 5.1.4 以降のバージョンで動作します。
         </para>
 
         <para>
-            Zend Framework には自動テスト用のスクリプトが多数含まれています。
+            Zend Framework には広範囲におよぶユニットテストも存在します。
             これらを実行するには PHPUnit 3.0 以降が必要です。
-            このバージョンの PHPUnit を動かすにも PHP 5.1.4 以降が必要です。
-        </para>
-
-        <para>
-            上で述べた以降のバージョンの PHP なら Zend Framework
-            は正しく動作しますが、PHP 5.2.3 以降を使用することを強く推奨します。
-            新しいバージョンの PHP では、重要なセキュリティ修正や
-            パフォーマンスの改善が行われています。
         </para>
 
     </sect1>
@@ -39,22 +42,24 @@
         <para>
             以下の表は、PHP に含まれる拡張モジュールと
             それが Zend Framework でどのように用いられているかをまとめたものです。
-            これを参考にすれば、あなたの作成するアプリケーションで
-            どの拡張モジュールが必要になるかがわかるでしょう。
-            Zend Framework が必要とする拡張モジュールのすべてが
-            そのアプリケーションでも必要となるというわけではありません。
+            あなたの環境で ZF のコンポーネントを使用するにはどんな拡張モジュールが必要なのかを
+            この表で確認できます。
+            ここにあげられている拡張モジュールをすべて必要とするアプリケーションは、
+            それほど多くありません。
         </para>
 
         <para>
-            "依存" とは、あるコンポーネントやクラスを使用するためには
-            その拡張モジュールが必須であることを表します。
-            "任意" とは、もしその拡張モジュールがなければ
-            コンポーネントやクラスが代替コードで動作することを表します。
-            use alternative code.
+            依存形式の "ハード" は、対応する拡張モジュールがなければ
+            そのコンポーネントあるいはクラスが正しく動作しないことを意味します。
+            また "ソフト" は、もしその拡張モジュールが使用可能ならばそれを利用するけれど
+            使用できなくても動作に支障はないということを意味します。
+            多くのコンポーネントは、
+            何らかの拡張モジュールでパフォーマンスを最適化できる場合は自動的にそれを使用します。
+            使用できない場合は、同等の機能をコンポーネント自身で提供します。
         </para>
 
         <table frame='all' id="requirements.extensions.table-1">
-            <title>Zend Framework が使用する PHP 拡張モジュール</title>
+            <title>Zend Framework の各コンポーネントが使用する PHP 拡張モジュール</title>
             <tgroup cols='3'>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='1in'/>
@@ -62,24 +67,24 @@
                 <thead>
                     <row>
                         <entry>拡張モジュール</entry>
-                        <entry>使用形式</entry>
+                        <entry>依存形式</entry>
                         <entry>使用している Zend Framework コンポーネント</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.apc.php"><code>apc</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.bc.php"><code>bcmath</code></ulink></entry>
-                        <entry>任意</entry>
+                        <entry>ソフト</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.locale.html"><code>Zend_Locale_Math</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://pecl.php.net/package/Bitset"><code>bitset</code></ulink></entry>
-                        <entry>任意</entry>
+                        <entry>ソフト</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink></entry>
                     </row>
                     <row>
@@ -99,7 +104,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.ctype.php"><code>ctype</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                            <ulink url="http://framework.zend.com/manual/ja/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink>,
                            <ulink url="http://framework.zend.com/manual/ja/zend.gdata.html"><code>Zend_Gdata_App</code></ulink>,
@@ -114,7 +119,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.curl.php"><code>curl</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.http.client.adapters.html"><code>Zend_Http_Client_Adapter_Curl</code></ulink></entry>
                     </row>
                     <row>
@@ -134,7 +139,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.dom.php"><code>dom</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.feed.html"><code>Zend_Feed</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
@@ -176,7 +181,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.image.php"><code>gd</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
                     </row>
                     <row>
@@ -191,17 +196,17 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.hash.php"><code>hash</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.auth.adapter.http.html"><code>Zend_Auth_Adapter_Http</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.ibm-db2.php"><code>ibm_db2</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Db2</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.iconv.php"><code>iconv</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.locale.parsing.html"><code>Zend_Locale_Format</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.mime.html"><code>Zend_Mime_Decode</code></ulink>,
@@ -224,12 +229,12 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.ibase.php"><code>interbase</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>Zend_Db_Adapter_Firebird</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.json.php"><code>json</code></ulink></entry>
-                        <entry>任意</entry>
+                        <entry>ソフト</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.json.html"><code>Zend_Json</code></ulink></entry>
                     </row>
                     <row>
@@ -239,7 +244,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.libxml.php"><code>libxml</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://www.php.net/manual/ja/ref.dom.php"><code>DOM</code></ulink>,
                             <ulink url="http://www.php.net/manual/ja/ref.simplexml.php"><code>SimpleXML</code></ulink>,
@@ -248,7 +253,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.mbstring.php"><code>mbstring</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.feed.html"><code>Zend_Feed</code></ulink></entry>
                     </row>
                     <row>
@@ -258,7 +263,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.memcache.php"><code>memcache</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcached</code></ulink></entry>
                     </row>
                     <row>
@@ -268,7 +273,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.mime-magic.php"><code>mime_magic</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.http.html"><code>Zend_Http_Client</code></ulink></entry>
                     </row>
                     <row>
@@ -293,7 +298,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.mysqli.php"><code>mysqli</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Mysqli</code></ulink></entry>
                     </row>
                     <row>
@@ -303,7 +308,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.oci8.php"><code>oci8</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Oracle</code></ulink></entry>
                     </row>
                     <row>
@@ -323,12 +328,12 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pcre.php"><code>pcre</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>事実上すべてのコンポーネント</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pdo.php"><code>pdo</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>すべての PDO データベースアダプタ</entry>
                     </row>
                     <row>
@@ -343,27 +348,27 @@
                     </row>
                     <row>
                         <entry><code>pdo_mssql</code></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mssql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pdo-mysql.php"><code>pdo_mysql</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Pdo_Mysql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pdo-oci.php"><code>pdo_oci</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Pdo_Oci</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pdo-pgsql.php"><code>pdo_pgsql</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Pdo_Pgsql</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.pdo-sqlite.php"><code>pdo_sqlite</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.db.html"><code>Zend_Db_Adapter_Pdo_Sqlite</code></ulink></entry>
                     </row>
                     <row>
@@ -373,7 +378,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.posix.php"><code>posix</code></ulink></entry>
-                        <entry>任意</entry>
+                        <entry>ソフト</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.mail.html"><code>Zend_Mail</code></ulink></entry>
                     </row>
                     <row>
@@ -393,7 +398,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/language.oop5.reflection.php"><code>Reflection</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.controller.html"><code>Zend_Controller</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.filter.html"><code>Zend_Filter</code></ulink>,
@@ -409,7 +414,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.session.php"><code>session</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.controller.actionhelpers.html"><code>Zend_Controller_Action_Helper_Redirector</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.session.html"><code>Zend_Session</code></ulink>
@@ -422,7 +427,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.config.adapters.xml.html"><code>Zend_Config_Xml</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.feed.html"><code>Zend_Feed</code></ulink>,
@@ -433,7 +438,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.soap.php"><code>soap</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/ja/zend.service.strikeiron.html"><code>Zend_Service_StrikeIron</code></ulink></entry>
                     </row>
                     <row>
@@ -443,17 +448,17 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.spl.php"><code>SPL</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>事実上すべてのコンポーネント</entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html">Zend_Cache_Backend_Sqlite</ulink></entry>
                     </row>
                     <row>
                         <entry><code>standard</code></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>事実上すべてのコンポーネント</entry>
                     </row>
                     <row>
@@ -493,7 +498,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.xml.php"><code>xml</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Qt</code></ulink>,
                             <ulink url="http://framework.zend.com/manual/ja/zend.translate.adapter.html"><code>Zend_Translate_Adapter_Tmx</code></ulink>,
@@ -527,7 +532,7 @@
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/ja/ref.zlib.php"><code>zlib</code></ulink></entry>
-                        <entry>依存</entry>
+                        <entry>ハード</entry>
                         <entry>
                             <ulink url="http://framework.zend.com/manual/ja/zend.pdf.html"><code>Zend_Pdf</code></ulink>,
                             <ulink url="http://www.php.net/manual/ja/ref.memcache.php"><code>Memcache</code></ulink>

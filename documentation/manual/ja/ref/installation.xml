@@ -1,18 +1,21 @@
-<!-- EN-Revision: 8888 -->
+<!-- EN-Revision: 9630 -->
 <sect1 id="introduction.installation">
 
     <title>インストール</title>
 
     <para>
-        Zend Framework は PHP 5 のオブジェクト指向機能を使用しており、
-        PHP 5.1.4 以降でないと動作しません。詳細な情報は
-        <link linkend="requirements">システム要件</link>
+        Zend Framework は PHP 5.1.4 以降でないと動作しません。しかし、Zend
+        としては 5.2.3 以降を使うことを強く推奨します。というのも、5.2.3
+        より前のバージョンと比べて安全性やパフォーマンスが劇的に向上しているからです。
+        詳細な情報は<link linkend="requirements">システム要件</link>
         を参照ください。
     </para>
 
     <para>
-        適切な PHP 環境が用意できれば、次は Zend Framework を取得する番です。
-        これは、以下のいずれかの方法で取得することができます。
+        Zend Framework のインストールは非常に簡単です。
+        フレームワークをダウンロードして展開したら、その中の
+        /library フォルダをインクルードパスの先頭に追加するだけです。
+        library フォルダを別の場所 (おそらく共有ライブラリの場所) に移動してもよいでしょう。
 
         <itemizedlist>
             <listitem>
@@ -84,18 +87,15 @@
     </para>
 
     <para>
-        Zend Framework の最も便利な機能のひとつは、
-        <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">フロントコントローラ</ulink> および
-        <ulink url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink> (MVC)
-        パターンの実装です。
-        <link linkend="zend.controller.quickstart">Zend Framework の MVC 機能</link>
-        をぜひ使ってみましょう!
+        Zend が提供する <a href="http://framework.zend.com/docs/quickstart">クイックスタート</a>
+        を見れば、手っ取り早く実行してみることができます。
+        これは、実際に動作するサンプルを用いてフレームワークについて学ぶためのドキュメントです。
     </para>
 
     <para>
         Zend Framework の各コンポーネントは疎結合なので、
-        必要に応じて特定のコンポーネントのみを使用することもできます。
-        これ以降の各章では、各コンポーネントの使用法を説明します。
+        必要に応じて特定のコンポーネントのみを自作のアプリケーションで使用することもできます。
+        これ以降の章では、Zend Framework の包括的な使用法をコンポーネント単位で説明します。
     </para>
 
 </sect1>
