@@ -2,7 +2,7 @@
     <title>L'aide de vue HeadLink</title>
 
     <para>
-        L'élément HTML <code>&lt;link&gt;</code> est de plus en plus employé pour lier différents types de ressources à votre site : feuilles de styles, syndication, icônes, trackbacks et d'autres. L'aide <code>HeadTitle</code> fournit une interface simple pour créer et agréger ces éléments pour la récupération postérieure et le rendement dans votre script d'affichage.
+        L'élément HTML <code>&lt;link&gt;</code> est de plus en plus employé pour lier différents types de ressources à votre site : feuilles de styles, syndication, icônes, trackbacks et d'autres. L'aide <code>HeadLink</code> fournit une interface simple pour créer et agréger ces éléments pour la récupération postérieure et le rendement dans votre script d'affichage.
     </para>
 
     <para>
