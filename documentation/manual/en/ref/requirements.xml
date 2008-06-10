@@ -9,7 +9,7 @@
         performance may suffer or ancillary features may not be fully functional. An example
         of such a dependency is mod_rewrite in an Apache environment, which can be used to
         implement "pretty URL's" like "http://www.example.com/user/edit". If mod_rewrite is
-        not enabled, ZF can be configured to support URL's such as "http://www.example.com?controller=user&action=edit".
+        not enabled, ZF can be configured to support URL's such as "http://www.example.com?controller=user&amp;action=edit".
         Pretty URL's may be used to shorten URL's for textual representation or search engine optimization (SEO),
         but they do not directly affect the functionality of the application.
     </para>
@@ -963,10 +963,10 @@
                         <entry><ulink url="http://www.php.net/manual/en/ref.ctype.php"><code>ctype</code></ulink></entry>
                     </row>
                     <row>
-                        <entry><ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink></ulink></entry>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink></entry>
                     </row>
                     <row>
-                        <entry><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></ulink></entry>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></entry>
                     </row>
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/language.oop5.reflection.php"><code>Reflection</code></ulink></entry>

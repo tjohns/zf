@@ -16,7 +16,7 @@
                 Note: Sometimes developers consider the establishment of a standard more important than what that
                 standard actually suggests at the most detailed level of design. The guidelines in the Zend Framework
                 coding standards capture practices that have worked well on the ZF project. You may modify these standards
-                or use them as is in accordance with the terms of our <a href="http://framework.zend.com/license">license</a>
+                or use them as is in accordance with the terms of our <ulink url="http://framework.zend.com/license">license</ulink>
             </para>
             <para>
                 Topics covered in the ZF coding standards include:

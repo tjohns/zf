@@ -23,8 +23,8 @@
         foundation.
     </para>
     <para>
-        The principal sponsor of the Zend Framework project is <a href="http://www.zend.com">
-        Zend Technologies</a>, but many companies have contributed components or significant features
+        The principal sponsor of the Zend Framework project is <ulink url="http://www.zend.com">
+        Zend Technologies</ulink>, but many companies have contributed components or significant features
         to the framework. Companies such as Google, Microsoft, and StikeIron have partnered
         with Zend to provide interfaces to web services and other technologies that they wish to make
         available to Zend Framework developers.
@@ -32,8 +32,8 @@
     <para>
         Zend Framework could not deliver and support all of these features without the help of the vibrant
         ZF community. Community members, including contributors, make themselves available
-        on <a href="http://framework.zend.com/archives">mailing lists</a>, <a href="http://www.zftalk.com">
-        IRC channels</a>, and other forums. Whatever question you have about ZF, the community
+        on <ulink url="http://framework.zend.com/archives">mailing lists</ulink>, <ulink url="http://www.zftalk.com">
+        IRC channels</ulink>, and other forums. Whatever question you have about ZF, the community
         is always available to address it.
     </para>
 </sect1>
