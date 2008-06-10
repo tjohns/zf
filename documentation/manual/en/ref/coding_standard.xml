@@ -129,8 +129,9 @@
             </para>
             
             <para>
-            	These conventions define a pseudo-namespace mechanism for Zend Framework. Zend Framework
-            	will adopt the PHP namespace feature when it becomes available and is feasible for our developers to use in their applications.
+                These conventions define a pseudo-namespace mechanism for Zend Framework. Zend Framework
+                will adopt the PHP namespace feature when it becomes available and is feasible for our developers to use in their applications.
+            </para>
 
             <para>
                 See the class names in the standard and extras libraries for examples of this classname convention. 
