@@ -54,6 +54,14 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
         $this->_testValidUri('http://www.zend.com');
     }
 
+    public function testSimpleFromString()
+    {
+        $uri = 'http://www.zend.com';
+
+        $obj = Zend_Uri_Http::fromString($uri);
+        $this->assertEquals($uri, $obj->getUri(), 'getUri() returned value that differs from input');
+    }
+
     public function testAllParts()
     {
         $this->_testValidUri('http://andi:password@www.zend.com:8080/path/to/file?a=1&b=2#top');
@@ -159,19 +167,19 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
     public function testUnencodedQueryParameters()
     {
          $uri = Zend_Uri::factory('http://foo.com/bar');
-         
+
          // First, make sure no exceptions are thrown
-         try { 
+         try {
              $uri->setQuery('id=123&url=http://example.com/?bar=foo baz');
          } catch (Exception $e) {
              $this->fail('setQuery() was expected to handle unencoded parameters, but failed');
          }
-         
+
          // Second, make sure the query string was properly encoded
          $parts = parse_url($uri->getUri());
          $this->assertEquals('id=123&url=http%3A%2F%2Fexample.com%2F%3Fbar%3Dfoo+baz', $parts['query']);
     }
-    
+
     /**
      * Test a known valid URI
      *
