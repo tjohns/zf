@@ -577,7 +577,7 @@ $cache->start();
         <sect3 id="zend.cache.frontends.page.cancel">
             <title>La méthode spécifique cancel</title>
             <para>
-                A cause de problèmes de design, dans certains cas (par exemple quand on utilise des codes de retour HTTP autres que HTTP/200), vous pouvez avoir besoin de stopper le processus de mise en cache courant. Il a donc été introduit pour ce frontend en particulier, la méthode <code>cancel()<code>.
+                A cause de problèmes de design, dans certains cas (par exemple quand on utilise des codes de retour HTTP autres que HTTP/200), vous pouvez avoir besoin de stopper le processus de mise en cache courant. Il a donc été introduit pour ce frontend en particulier, la méthode <code>cancel()</code>.
             </para>
             <programlisting role="php"><![CDATA[<?php
 // [...] // require, configuration et fabrique

@@ -61,8 +61,8 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>strict</entry>
-                            <entry>Validation faite ou non sur les noms d'entêtes. Si à false, des fonctions de validation n'interviendront pas</entry>
-                            Usually this should not be changed</entry>
+                            <entry>Validation faite ou non sur les noms d'entêtes. Si à false, des fonctions de validation n'interviendront pas. Habituellement ceci ne devrait pas être changé
+</entry>
                             <entry>booléen</entry>
                             <entry>true</entry>
                         </row>
