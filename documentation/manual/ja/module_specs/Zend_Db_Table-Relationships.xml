@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8344 -->
+<!-- EN-Revision: 9652 -->
 <sect1 id="zend.db.table.relationships">
 
     <title>導入</title>
@@ -226,7 +226,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
             使用するメソッドは、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<
+        <programlisting role="php"><![CDATA[
 $row->findDependentRowset($table, [$rule]);]]>
         </programlisting>
 
@@ -410,7 +410,7 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
             使用するメソッドは、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<
+        <programlisting role="php"><![CDATA[
 $row->findParentRow($table, [$rule]);]]>
         </programlisting>
 
@@ -563,7 +563,7 @@ $engineer          = $bug1->findParentAccountsByEngineer();]]>
             使用するメソッドは、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<
+        <programlisting role="php"><![CDATA[
 $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);]]>
         </programlisting>
 
