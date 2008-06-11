@@ -1053,7 +1053,7 @@ class Zend_Db_Select
      * @return Zend_Db_Select
      * @throws Zend_Db_Select_Exception If an invalid method is called.
      */
-    protected function __call($method, array $args)
+    public function __call($method, array $args)
     {
         $matches = array();
 

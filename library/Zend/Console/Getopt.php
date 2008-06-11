@@ -265,7 +265,7 @@ class Zend_Console_Getopt
      * @param  string $key
      * @return string
      */
-    protected function __get($key)
+    public function __get($key)
     {
         return $this->getOption($key);
     }
@@ -276,7 +276,7 @@ class Zend_Console_Getopt
      * @param  string $key
      * @return boolean
      */
-    protected function __isset($key)
+    public function __isset($key)
     {
         $this->parse();
         if (isset($this->_ruleMap[$key])) {
@@ -293,7 +293,7 @@ class Zend_Console_Getopt
      * @param  string $value
      * @return void
      */
-    protected function __set($key, $value)
+    public function __set($key, $value)
     {
         $this->parse();
         if (isset($this->_ruleMap[$key])) {
