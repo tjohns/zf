@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Auth
- * @subpackage Zend_Ath_Adapter
+ * @subpackage Zend_Auth_Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
