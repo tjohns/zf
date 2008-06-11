@@ -25,7 +25,7 @@ Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_Gbase');
 
 /* The items feed URL, used for queries, insertions and batch commands. */
-$itemsFeedURL = 'http://www.google.com/base/feeds/items';
+define('ITEMS_FEED_URI', 'http://www.google.com/base/feeds/items');
 
 /* Types of cuisine the user may select when inserting a recipe. */
 $cuisines = array('African', 'American', 'Asian', 'Caribbean', 'Chinese',
@@ -173,12 +173,10 @@ function buildBatchXML() {
  * @return Zend_Http_Response The reponse of the post 
  */
 function batchDelete() {
-  global $itemsFeedURL;
-        
   $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
   $gdata = new Zend_Gdata_Gbase($client);
   
-  $response = $gdata->post(buildBatchXML(), $itemsFeedURL . '/batch');
+  $response = $gdata->post(buildBatchXML(), ITEMS_FEED_URI . '/batch');
   
   return $response;
 }
@@ -222,10 +220,8 @@ function printHTMLFooter() {
  * to have them get a single-use token.
  */
 function showIntroPage() {
-  global $itemsFeedURL;
-
   $next_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-  $scope = $itemsFeedURL;
+  $scope = ITEMS_FEED_URI;
   $secure = false;
   $session = true;
   $redirect_url = Zend_Gdata_AuthSub::getAuthSubTokenUri($next_url, 
@@ -257,19 +253,17 @@ function showIntroPage() {
  * @return void 
  */
 function showRecipeListPane($token) {
-  global $itemsFeedURL;
-  
   $client = Zend_Gdata_AuthSub::getHttpClient($token);
   $gdata = new Zend_Gdata_Gbase($client);
   try {
-    $feed = $gdata->getGbaseItemFeed($itemsFeedURL . '/-/testrecipes');
+    $feed = $gdata->getGbaseItemFeed(ITEMS_FEED_URI . '/-/testrecipes');
    
     print '<td style="width:50%;text-align:center;vertical-align:top">' . "\n" .
           '<a href="http://www.google.com/base/dashboard" target="_blank">' . 
-          'View all of your items</a>' . 
+          'View all of your published items</a>' . 
           '<table>' . "\n" . 
           '<tr><th colspan="5" style="text-align:center">' . 
-          'Recipes you have added (that are Published and Searchable)</th></tr>' . "\n";
+          'Recipes you have added that searchable via the API</th></tr>' . "\n";
     
     if ($feed->count() == 0) {
       print '<tr style="font-style:italic">' . 
@@ -411,13 +405,13 @@ function showRecipeInsertPane($sessionToken) {
  * @return void  
  */
 function showEditMenu() {
-  global $cuisines, $itemsFeedURL;
+  global $cuisines;
 
   $client = Zend_Gdata_AuthSub::getHttpClient($_POST['token']);
   $gdata = new Zend_Gdata_Gbase($client);
 
   try {
-    $feed = $gdata->getGbaseItemFeed($itemsFeedURL);
+    $feed = $gdata->getGbaseItemFeed(ITEMS_FEED_URI);
     foreach ($feed->entries as $feed_entry) {
       $editLink = $feed_entry->link[2]->href;
       
@@ -591,7 +585,8 @@ function handlePost() {
   try {
     $newEntry= postItem();
     if ($newEntry) {
-      showMainMenu('Recipe inserted!', $_POST['token']);
+      showMainMenu('Recipe inserted!  It will be searchable by the API soon...',
+                    $_POST['token']);
     } 
   } catch (Zend_Gdata_App_Exception $e) {
     showMainMenu('Recipe insertion failed: ' . $e->getMessage(),
