@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage UnitTests
  */
-
 
 /**
  * Zend_Translate_Adapter_Tbx
@@ -130,5 +128,14 @@ class Zend_Translate_TbxTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('en');
         $this->assertTrue( $adapter->isAvailable($locale));
         $this->assertFalse($adapter->isAvailable('sr'   ));
+    }
+
+    public function testIsoEncoding()
+    {
+        $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en3.tbx', 'fr');
+        $this->assertEquals('Message 1 (fr)',         $adapter->translate('Nachricht 1'        ));
+        $this->assertEquals('Message 1 (fr)',         $adapter->_('Nachricht 1'                ));
+        $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking Furniture'));
+        $this->assertEquals('Cooking Furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
     }
 }

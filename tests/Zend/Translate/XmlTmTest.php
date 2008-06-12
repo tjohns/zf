@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage UnitTests
  */
-
 
 /**
  * Zend_Translate_Adapter_XmlTm
@@ -129,5 +127,14 @@ class Zend_Translate_XmlTmTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($adapter->isAvailable('fr'));
         $locale = new Zend_Locale('en');
         $this->assertTrue($adapter->isAvailable($locale));
+    }
+
+    public function testIsoEncoding()
+    {
+        $adapter = new Zend_Translate_Adapter_XmlTm(dirname(__FILE__) . '/_files/XmlTm_test_en2.xml', 'en');
+        $this->assertEquals('Message 1 (en)',         $adapter->translate('Mess1'        ));
+        $this->assertEquals('Message 1 (en)',         $adapter->_('Mess1'                ));
+        $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking Furniture'));
+        $this->assertEquals('Cooking Furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
     }
 }

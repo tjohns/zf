@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
@@ -127,5 +126,16 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('en');
         $this->assertTrue( $adapter->isAvailable($locale));
         $this->assertFalse($adapter->isAvailable('sr'   ));
+    }
+
+    public function testIsoEncoding()
+    {
+        $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en3.tmx', 'en');
+        $this->assertEquals('Message 1 (en)',         $adapter->translate('Message 1'        ));
+        $this->assertEquals('Message 1 (en)',         $adapter->_('Message 1'                ));
+        $this->assertEquals('Message 1 (it)',         $adapter->translate('Message 1', 'it'  ));
+        $this->assertEquals('Message 5 (en)',         $adapter->translate('Message 5'        ));
+        $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking furniture'));
+        $this->assertEquals('Cooking furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
     }
 }

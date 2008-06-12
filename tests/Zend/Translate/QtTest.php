@@ -121,4 +121,13 @@ class Zend_Translate_QtTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $adapter->isAvailable($locale));
         $this->assertFalse($adapter->isAvailable('sr'   ));
     }
+
+    public function testIsoEncoding()
+    {
+        $adapter = new Zend_Translate_Adapter_Qt(dirname(__FILE__) . '/_files/translation_de2.ts', 'de');
+        $this->assertEquals('Nachricht 1',         $adapter->translate('Message 1'        ));
+        $this->assertEquals('Nachricht 1',         $adapter->_('Message 1'                ));
+        $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking Furniture'));
+        $this->assertEquals('Cooking Furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
+    }
 }

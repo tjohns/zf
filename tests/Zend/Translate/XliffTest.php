@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage UnitTests
  */
-
 
 /**
  * Zend_Translate_Adapter_Xliff
@@ -128,5 +126,14 @@ class Zend_Translate_XliffTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('en');
         $this->assertTrue( $adapter->isAvailable($locale));
         $this->assertFalse($adapter->isAvailable('sr'   ));
+    }
+
+    public function testIsoEncoding()
+    {
+        $adapter = new Zend_Translate_Adapter_Xliff(dirname(__FILE__) . '/_files/translation_en3.xliff', 'en');
+        $this->assertEquals('Message 1 (en)',         $adapter->translate('Message 1'        ));
+        $this->assertEquals('Message 1 (en)',         $adapter->_('Message 1'                ));
+        $this->assertEquals('Küchen Möbel (en)', $adapter->translate('Cooking Furniture'));
+        $this->assertEquals('Cooking Furniture (en)', $adapter->translate('Küchen Möbel'));
     }
 }
