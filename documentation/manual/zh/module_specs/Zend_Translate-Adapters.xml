@@ -74,6 +74,19 @@
             你应该决定对Zend_Translate使用哪种适配器，常常，外部条件,例如一个项目需求或者客户需求为你决定了使用哪种适配器，但是入你站在决策的位置,下面的提示可能有对你的决定帮助。
         </para>
 
+        <note>
+            <para>
+                决定适配器的时候，应当知道编码的使用。即便 Zend Framework 声明 UTF-8 为缺省编码，你有时候也需要其它编码。
+                <code>Zend_Translate</code> 不改变任何定义在源文件种的编码，意味着如果你的 Gettext 源建立在 ISO-8859-1  之上，它也俺此编码返回字符串而不需要转换。
+                只有一个唯一的限制：
+            </para>
+
+            <para>
+                当使用基于 xml 源格式如 TMX 或 XLIFF，你必需在 xml 文件头内定义编码，因为不定义编码，xml 文件将被 xml 解析器缺省地当作 UTF-8。
+                你也应当知道实际上 xml 文件的编码局限于 PHP 支持的编码是 UTF-8，ISO-8859-1 和 US-ASCII。
+            </para>
+        </note> 
+        
         <sect3 id="zend.translate.adapter.array">
 
             <title>Zend_Translate_Adapter_Array</title>
