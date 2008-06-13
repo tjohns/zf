@@ -54,7 +54,7 @@ Zend_Registry::set('Zend_Translate', $adapter);
 
 // 在视图中
 echo $this->translate('simple');
-// this returns 'einfach'
+// 返回 'einfach'
 ?>]]></programlisting>
 
     </example>
@@ -119,7 +119,7 @@ print $translate->translate('simple'); // this returns 'einfach'
 // 在视图里
 $date = "Monday";
 $this->translate('Today is %1\$s', $date);
-// could return 'Heute ist Monday'
+// 应当返回 'Heute ist Monday'
 ?>]]></programlisting>
 
     </example>
@@ -144,7 +144,7 @@ $date = "Monday";
 $month = "April";
 $time = "11:20:55";
 $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $time);
-// Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
+// 应当返回 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
 ?>]]></programlisting>
 
     </example>
@@ -161,7 +161,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $
 // 在视图里
 $date = array("Monday", "April", "11:20:55");
 $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
-// Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
+// 应当返回 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
 ?>]]></programlisting>
 
     </example>
