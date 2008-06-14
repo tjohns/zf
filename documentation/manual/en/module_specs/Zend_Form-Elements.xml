@@ -253,7 +253,7 @@ $element->addFilter('alnum');
                 If you have your own set of filter classes, you can tell
                 <code>Zend_Form_Element</code> about these using
                 <code>addPrefixPath()</code>. For instance, if you have
-                validators under the 'My_Filter' prefix, you can tell
+                filters under the 'My_Filter' prefix, you can tell
                 <code>Zend_Form_Element</code> about this as follows:
             </para>
 
