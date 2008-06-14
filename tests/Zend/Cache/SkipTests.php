@@ -60,6 +60,10 @@ class Zend_Cache_ApcBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTes
 {
 }
 
+class Zend_Cache_XcacheBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
+{
+}
+
 class Zend_Cache_MemcachedBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
 {
 }

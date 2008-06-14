@@ -37,6 +37,7 @@ require_once 'Zend/Cache/FunctionFrontendTest.php';
 require_once 'Zend/Cache/ClassFrontendTest.php';
 require_once 'Zend/Cache/FileFrontendTest.php';
 require_once 'Zend/Cache/ApcBackendTest.php';
+require_once 'Zend/Cache/XcacheBackendTest.php';
 require_once 'Zend/Cache/MemcachedBackendTest.php';
 require_once 'Zend/Cache/PageFrontendTest.php';
 require_once 'Zend/Cache/ZendPlatformBackendTest.php';
@@ -75,11 +76,11 @@ class Zend_Cache_AllTests
         if (!defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') ||
             constant('TESTS_ZEND_CACHE_SQLITE_ENABLED') === false) {
             $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
-	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
         } else if (!extension_loaded('sqlite')) {
-	    $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
-	    $skipTest->message = "Extension 'sqlite' is not loaded";
+            $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
+            $skipTest->message = "Extension 'sqlite' is not loaded";
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
@@ -91,14 +92,30 @@ class Zend_Cache_AllTests
         if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') ||
             constant('TESTS_ZEND_CACHE_APC_ENABLED') === false) {
             $skipTest = new Zend_Cache_ApcBackendTest_SkipTests();
-	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
         } else if (!extension_loaded('apc')) {
             $skipTest = new Zend_Cache_ApcBackendTest_SkipTests();
-	    $skipTest->message = "Extension 'APC' is not loaded";
+            $skipTest->message = "Extension 'APC' is not loaded";
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_ApcBackendTest');
+        }
+
+        /*
+         * Check if Xcache tests are enabled, and if extension is available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_XCACHE_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_XCACHE_ENABLED') === false) {
+            $skipTest = new Zend_Cache_XCacheBackendTest_SkipTests();
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('xcache')) {
+            $skipTest = new Zend_Cache_XCacheBackendTest_SkipTests();
+            $skipTest->message = "Extension 'XCache' is not loaded";
+            $suite->addTest($skipTest);
+        } else {
+            $suite->addTestSuite('Zend_Cache_XCacheBackendTest');
         }
 
         /*
@@ -107,14 +124,14 @@ class Zend_Cache_AllTests
         if (!defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') ||
             constant('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') === false) {
             $skipTest = new Zend_Cache_MemcachedBackendTest_SkipTests();
-	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
         } else if (!extension_loaded('memcache')) {
             $skipTest = new Zend_Cache_MemcachedBackendTest_SkipTests();
-	    $skipTest->message = "Extension 'APC' is not loaded";
+            $skipTest->message = "Extension 'APC' is not loaded";
             $suite->addTest($skipTest);
         } else {
-            if (!defined('TESTS_ZEND_CACHE_MEMCACHED_HOST')) { 
+            if (!defined('TESTS_ZEND_CACHE_MEMCACHED_HOST')) {
                 define('TESTS_ZEND_CACHE_MEMCACHED_HOST', '127.0.0.1');
             }
             if (!defined('TESTS_ZEND_CACHE_MEMCACHED_PORT')) {
@@ -132,11 +149,11 @@ class Zend_Cache_AllTests
         if (!defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') ||
             constant('TESTS_ZEND_CACHE_PLATFORM_ENABLED') === false) {
             $skipTest = new Zend_Cache_ZendPlatformBackendTest_SkipTests();
-	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
         } else if (!function_exists('accelerator_license_info')) {
             $skipTest = new Zend_Cache_ZendPlatformBackendTest_SkipTests();
-	    $skipTest->message = 'Extension for Zend Platform is not loaded';
+            $skipTest->message = 'Extension for Zend Platform is not loaded';
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_ZendPlatformBackendTest');
