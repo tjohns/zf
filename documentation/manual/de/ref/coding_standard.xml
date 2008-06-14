@@ -1,5 +1,5 @@
 <appendix id="coding-standard">
-  <title>Zend Framework PHP Code Standard</title>
+  <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
         <title>Übersicht</title>
 
@@ -7,8 +7,22 @@
             <title>Geltungsbereich</title>
 
             <para>
-                Dieses Dokument bietet Code Richtlinien für Entwickler und Teams welche am
-                Zend Framework entwickeln. Die enthaltenen Maßnahmen sind:
+                Dieses Dokument bietet Richtlinien für die Formatierung von Code und Dokumentation für
+                Individuen und Teams die im Zend Framework mitarbeiten. Viele Entwickler die den
+                Zend Framework verwenden haben diese Code Standards als nützlich empfunden weil Ihr
+                Code Stil mit jedem Zend Framework Code konsistent bleibt. Es ist auch anzumerken das
+                es signifikant viel Arbeit erfordert einen kompletten Coding Standard zu definieren.
+                 
+                Beachte: Manchmal entscheiden Entwickler das die Verfügbarkeit eines Standards wichtiger
+                ist als was der Standard aktuell im höchsten Level des Designs empfiehlt. Diese
+                Richtlinien im Zend Framework Coding Standard beschreiben die Praxis die im ZF Projekt
+                sehr gut funktionieren. Diese Standard können geändert oder so wie sie sind verwendet
+                werden solange Sie sich an unsere <ulink href="http://framework.zend.com/license">Lizenz</ulink>
+                halten.
+            </para> 
+
+            <para>
+                Die Bereiche die im ZF Coding Standard abgedeckt werden enthalten: 
 
                 <itemizedlist>
                     <listitem>
@@ -34,10 +48,10 @@
             <title>Ziele</title>
 
             <para>
-                Gute Programmierstandards sind in jedem Entwicklungsprojekt wichtig, aber speziell wenn
-                mehrere Entwickler am gleichen Projekt arbeiten. Programmierstandards helfen einem
-                sicherzustellen das der Code von hoher Qualität ist, weniger Fehler hat, und einfach
-                zu warten ist.
+                Coding Standards sind in jedem Entwicklungs Projekt wichtig, aber sie sid speziell dann
+                wichtig wenn viele Entwickler an dem gleichen Projekt arbeiten. Coding Standards helfen
+                sicherzustellen das der Code von hoher Qualität ist, weniger Fehler hat, und einfach zu
+                warten ist.
             </para>
         </sect2>
     </sect1>
@@ -50,30 +64,29 @@
 
             <para>
                 Für Dateien, welche nur PHP Code beinhalten ist der schliessende Tag ("?>") nicht
-                zugelassen.  Er wird von PHP nicht benötigt.  Durch das Weglassen wird verhindert,
-                dass ausversehen Leerzeilen in die Ausgabe eingefügt werden.
+                zugelassen.  Er wird von PHP nicht benötigt, und das Weglassen verhindert das
+                versehentlich Leerzeilen in die Antwort eingefügt werden.
             </para>
 
             <para>
                 <emphasis>WICHTIG:</emphasis> Einbeziehen von beliebigen binärischen Daten durch <code>__HALT_COMPILER()</code>
-                ist in jeder Zend Framework PHP Datei oder einer ihr abgeleiteten Datei verboten. Das Benutzen
-                ist nur bei speziellen Installationsskirpten erlaubt.
+                ist in den PHP Dateien im Zend Framework oder abgeleiteten Datei verboten. Das Benutzen
+                ist nur für einige Installationsskirpte erlaubt.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.indentation">
             <title>Einrücken</title>
-            <para>Benutze einen Einzug von 4 Leerzeichen, jedoch ohne Tabs.</para>
+            <para>Ein Einzug sollte aus 4 Leerzeichen bestehen. Tabulatoren sind nicht erlaubt.</para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
             <title>Maximale Zeilenlänge</title>
 
             <para>
-                Die Zielzeilenlänge ist 80 Zeichen. Entwickler sollten so nah wie
-                möglich an der 80 Zeichen Grenze bleiben, soweit dies praktikabel
-                ist. Längere Zeilen sind aber erlaubt. Die maximale Länge einer
-                Zeile beträgt 120 Zeichen.
+                Die Zielzeilenlänge ist 80 Zeichen. Entwickler sollten jede Zeile Ihres Codes unter
+                80 Zeichen halten, soweit dies möglich und praktikabel ist. Trotzdem sind längere Zeilen
+                in einigen Fällen erlaubt. Die maximale Länge einer Zeile beträgt 120 Zeichen.
             </para>
         </sect2>
 
@@ -81,16 +94,15 @@
             <title>Zeilenbegrenzung</title>
 
             <para>
-                Zeilenbegrenzung ist der normale Weg für Unix Textdateien. Zeilen müssen mit
-                einem Zeilenvorschub (LF) enden. Zeilenvorschübe werden duch eine ordinale 10,
-                oder durch 0x0A (hexadecimal) dargestellt.
+                Die Zeilenbegrenzung folgt der Unix Textdatei Konvention. Zeilen müssen mit
+                einem einzelnen Zeilenvorschubzeichen (LF) enden. Zeilenvorschub Zeicen werden duch eine
+                ordinale 10, oder durch 0x0A (hexadecimal) dargestellt.
             </para>
 
-            <para>Benutze kein Wagenrücklauf (CR) wie bei Macintosh (0x0D).</para>
-
             <para>
-                Benutze nicht die Kombination aus Wagenrücklauf und Zeilenvorschub (CRLF) wie
-                bei Windows (0x0D, 0x0A).
+                Beachte: Benutze nicht den Wagenrücklauf (CR) wie in den Konventionen von Apple's OS
+                (0x0D) oder die Kombination aus Wagenrücklauf und Zeilenvorschub (CRLF) wie im Standard für
+                das Windows OS (0x0D, 0x0A).
             </para>
         </sect2>
     </sect1>
@@ -102,17 +114,18 @@
             <title>Klassen</title>
 
             <para>
-                Der Zend Framework benutzt eine Klassennamen Konvention wobei die Namen der Klassen
+                Zend Framework standartisiert eine Klassennamen Konvention wobei die Namen der Klassen
                 direkt mit den Verzeichnissen übereinstimmen muß in welchen Sie gespeichert sind.
-                Das Basisverzeichnis des Zend Framework ist das "Zend/" Verzeichnis, in welchem
-                alle Klassen hierarchisch gespeichert werden.
+                Das Basisverzeichnis der ZF Standard Bibliothek ist das "Zend/" Verzeichnis, wobei das
+                Basisverzeichnis der ZF Extras Bibliothek im "ZendX/" Verzeichnis ist. Alle Zend
+                Framework Klassen werden hierarchisch unter dem gleichen Basisverzeichnis gespeichert.
             </para>
 
             <para>
                 Klassennamen dürfen nur alphanumerische Zeichen enthalten. Nummern sind in Klassennamen
-                gestattet es wird aber von Ihnen abgeraten. Unterstriche sind nur gestattet im Platz des
-                Pfadseperators -- der Dateiname "Zend/Db/Table.php" muß übereinstimmen mit dem Klassennamen
-                "Zend_Db_Table".
+                gestattet es wird aber von Ihnen in den meisten Fällen abgeraten. Unterstriche sind nur
+                gestattet im Platz des Pfadseperators -- der Dateiname "Zend/Db/Table.php" muß
+                übereinstimmen mit dem Klassennamen "Zend_Db_Table".
             </para>
 
             <para>
@@ -122,39 +135,19 @@
             </para>
 
             <para>
-                Zend Framework Klassen welche von Zend oder einer der teilnehmenden Partnerfirmen authorisiert
-                und mit dem Framework ausgeliefert werden, müssen immer mit "Zend_" beginnen und im
-                "Zend/" Verzeichnis hierarchisch geordnet gespeichert werden.
+                Diese Konventionen definieren einen Pseudo-Namespace Mechanismus für Zend Framework.
+                Zend Framework wird das PHP Namespace Feature einbauen sobald es verfügbar ist und es
+                für unsere Entwickler in deren Anwendungen ohne Bedenken verwendbar ist.
             </para>
 
             <para>
-                Das sind Beispiel von akzeptierbaren Namen für Klassen:
+                Siehe die Klassennamen in der Standard und Extra Bibliothek für Beispiel dieser
+                Klassennamen Konvention.
 
-                <programlisting role="php"><![CDATA[
-Zend_Db
-
-Zend_View
-
-Zend_View_Helper]]>
-                </programlisting>
-
-                <emphasis>WICHTIG:</emphasis> Code welche mit dem Framework arbeitet, aber nicht Teil des
-                Frameworks ist, z.B. Code der von Framework Benutzern und nicht von Zend oder einer der
-                Partnerfirmen des Frameworks geschrieben wurde, darf nie mit "Zend_" beginnen.
-            </para>
-        </sect2>
-
-        <sect2 id="coding-standard.naming-conventions.interfaces">
-            <title>Interfaces</title>
-
-            <para>
-                Interfaceklassen müssen den gleichen Konventionen folgen wie die anderen Klassen (siehe oben),
-                müssen aber mit dem Wort "Interface" enden, wie in diesen Beispielen:
-
-                <programlisting role="php"><![CDATA[
-Zend_Log_Adapter_Interface
-Zend_Controller_Dispatcher_Interface]]>
-                </programlisting>
+                <emphasis>WICHTIG:</emphasis> Code welcher mit dem Framework ausgeliefert werden muß,
+                aber nicht Teil der Standard oder Extras Bibliothek ist (z.B. Anwendungscode oder
+                Bibliotheken die nicht von Zend ausgeliefert werden), dürfen nie mit "Zend_" oder "ZendX_"
+                beginnen.
             </para>
         </sect2>
 
@@ -163,13 +156,13 @@ Zend_Controller_Dispatcher_Interface]]>
 
             <para>
                 Für alle anderen Dateien sind nur alphanummerische Zeichen, Unterstriche, und der
-                Bindestrich ("-") gestattet. Leerzeichen sind verboten.
+                Bindestrich ("-") gestattet. Leerzeichen sind völlig verboten.
             </para>
 
             <para>
-                Jede Datei die irgendeinen PHP Code enthält muß mit der Endung ".php" enden. Diese
-                Beispiele zeigen akzeptierbare Dateinamen welche die Klassennamen der Beispiele der
-                obigen Sektion enthalten:
+                Jede Datei die irgendeinen PHP Code enthält sollte mit der Endung ".php" enden, mit Ausnahme
+                der View Skripte. Die folgenden Beispiele zeigen akzeptierbare Dateinamen für Zend
+                Framework Klassen:
 
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
@@ -179,7 +172,7 @@ Zend/Controller/Front.php
 Zend/View/Helper/FormRadio.php]]>
                 </programlisting>
 
-                Dateinamen müssen mit dem Mapping der Klassennamen übereinstimmen wie oben beschrieben.
+                Dateinamen müssen den Klassennamen wie oben beschrieben entsprechen.
             </para>
         </sect2>
 
@@ -188,7 +181,8 @@ Zend/View/Helper/FormRadio.php]]>
 
             <para>
                 Funktionsnamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Funktionsnamen gestattet es wird aber von Ihnen abgeraten.
+                gestattet. Nummern sind in Funktionsnamen gestattet aber in den meisten Fällen nicht
+                empfohlen.
             </para>
 
             <para>
@@ -198,8 +192,8 @@ Zend/View/Helper/FormRadio.php]]>
             </para>
 
             <para>
-                Wortreichtum wird beführwortet. Funktionsnamen sollten so wortreich wie möglich sein um die
-                Verständlichkeit des Codes zu erhöhen.
+                Wortreichtum wird generell befürwortet. Funktionsnamen sollten so wortreich wie möglich
+                sein um deren Zweck und Verhalten zu erklären.
             </para>
 
             <para>
@@ -215,23 +209,23 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Für objekt-orientiertes Programmieren, sollten Zugriffspunkte für Objekte immer mit
-                "get" oder "set" beginnen. Wenn Design-Pattern verwendet werden, wie Singleton oder das
-                Factory Pattern, sollte der Name der Methode den Namen des Pattern enthalten wo es
-                praktikabel ist, um das Pattern schneller begreifbar zu machen.
+                Für objekt-orientiertes Programmieren, sollten Zugriffspunkte für Instanzen oder statische
+                Variablen immer mit "get" oder "set" beginnen. Wenn Design-Pattern implementiert werden,
+                wie Singleton oder das Factory Pattern, sollte der Name der Methode den Namen des Pattern
+                enthalten wo es praktikabel ist, um das Verhalten besser zu beschreiben.
             </para>
             
             <para>
-                 Für Methoden in Objekten die mit dem "private" oder "protected" Konstrukt deklariert
+                 Für Methoden in Objekten die mit dem "private" oder "protected" Modifikator deklariert
                  sind, muß das erste Zeichen des variablen Namens ein einzelner Unterstrich sein. Das
-                 ist die einzige akzeptable Verwendung von einem Unterstrich im Namen einer Methode.
-                 Methoden die als "public" deklariert sind dürfen nie mit einem Unterstrich beginnen.
+                 ist die einzige akzeptable Anwendung von einem Unterstrich im Namen einer Methode.
+                 Methoden die als "public" deklariert sind sollten nie einem Unterstrich enthalten.
             </para>
 
             <para>
-                Funktionen im globalen Bereich ("floating functions") sind gestattet aber es wird von Ihnen
-                abgeraten. Es wird vorgeschlagen das diese Funktionen in einer statischen Klasse gewrappt
-                werden.
+                Funktionen im globalen Bereich (auch "floating functions" genannt) sind gestattet
+                aber es wird von Ihnen in den meisten Fällen abgeraten. Diese Funktionen sollten
+                in einer statischen Klasse gewrappt werden.
             </para>
         </sect2>
 
@@ -240,26 +234,27 @@ widgetFactory()]]>
 
             <para>
                 Variablennamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Variablen gestattet es wird aber von Ihnen abgeraten.
+                gestattet. Nummern sind in Variablen gestattet in den meisten Fällen aber nicht empfohlen.
             </para>
 
             <para>
-                Für Klassenvariablen die mit dem "private" oder "protected" Konstrukt deklariert werden,
+                Für Instanzvariablen die mit dem "private" oder "protected" Modifikator deklariert werden,
                 muß das erste Zeichen des Funktionsnamens ein einzelner Unterstrich sein. Das ist die
-                einzige akzeptierte Verwendung eines Unterstriches in einem variablen Namen. Klassenvariablen
-                welche als "public" deklariert werden dürfen nie mit einem Unterstrich beginnen.
+                einzige akzeptierte Anwendung eines Unterstriches in einem variablen Namen. Klassenvariablen
+                welche als "public" deklariert werden sollten nie mit einem Unterstrich beginnen.
             </para>
 
             <para>
-                Wie Funktionsnamen (siehe Abschnitt 3.3, darüber) müssen Variablennamen immer mit einem
+                Wie bei Funktionsnamen (siehe Abschnitt 3.3) müssen Variablennamen immer mit einem
                 Kleinbuchstaben starten und der "camelCaps" Schreibweise folgen.
             </para>
 
             <para>
-                Wortreichtum wird beführwortet. Variablen sollen immer so wortreich wie möglich sein.
-                Von gedrängte Variablennamen wie "$i" und "$n" wird abgeraten für alles andere als die kleinsten
-                Schleifen. Wenn eine Schleife mehr als 20 Codezeilen enthält, benötigen die Variablen der Indezes
-                einen ausführlicheren Namen.
+                Wortreichtum wird generell befürwortet. Variablen sollen immer so wortreich wie möglich sein
+                um die Daten zu beschreiben die der Entwickler in Ihnen zu speichern gedenkt.
+                Von gedrängte Variablennamen wie "$i" und "$n" wird abgeraten für alles außer die kleinsten
+                Schleifen. Wenn eine Schleife mehr als 20 Codezeilen enthält sollten die Index-Variablen
+                einen ausführlicheren Namen haben.
             </para>
         </sect2>
 
@@ -267,18 +262,24 @@ widgetFactory()]]>
             <title>Konstanten</title>
 
             <para>
-                Konstanten können beides enthalten, sowohl Alphanummerische Zeichen als auch den Unterstrich.
+                Konstanten können beides enthalten, sowohl Alphanummerische Zeichen als auch Unterstriche.
                 Nummern sind in Konstantennamen gestattet.
             </para>
 
             <para>
-                Konstanten müssen alle Buchstaben immer großgeschrieben haben.
+                Alle Buchstaben die in Konstantenname verwendet werden müssen großgeschrieben haben.
             </para>
 
             <para>
-                Konstanten müssen als Klassenkonstanten definiert werden mithilfe des "const" Konstruktes.
-                Die Definition von Konstanten im globalen Bereich mit "define" ist gestattet aber es wird
-                hiervon abgeraten.
+                Wörter in Konstantennamen müssen durch ein Unterstrich Zeichen geteilt werden. Zum
+                Beispiel ist <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> gestattet aber
+                <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> nicht.
+            </para> 
+
+            <para>
+                Konstanten müssen als Klassenkonstanten definiert werden mit dem "const" Modifikator.
+                Die Definition von Konstanten im globalen Bereich mit der "define" Funktion ist gestattet
+                aber es wird es wird stärkstens davon abgeraten.
             </para>
         </sect2>
     </sect1>
@@ -311,8 +312,9 @@ widgetFactory()]]>
                 <title>String Literale</title>
 
                 <para>
-                    Wenn ein String ein Literal ist (er also keine Variablenvertreter enthält), muß immer das
-                    Apostroph oder "einzelne Anführungszeichen" verwendet werden um den String abzugrenzen:
+                    Wenn ein String ein Literal ist (er also keine Variablenvertreter enthält), sollte
+                    immer das Apostroph oder "einzelne Anführungszeichen" verwendet werden um den String
+                    abzugrenzen:
 
                     <programlisting role="php"><![CDATA[
 $a = 'Beispiel String';]]>
@@ -326,13 +328,14 @@ $a = 'Beispiel String';]]>
                 <para>
                     Wenn ein literaler String selbst Apostrophe enthält, ist es gestattet den String mit
                     Anführungszeichen oder "doppeltes Anführungszeichen" abzugrenzen. Das ist speziell für
-                    SQL Anweisungen zu befürworten:
+                    SQL Anweisungen nützlich:
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
                     </programlisting>
 
-                    Der obige Syntax ist zu bevorzugen im Gegensatz zum Ausbruch von Apostrophs.
+                    Diese Syntax ist zu bevorzugen, im Gegensatz zum Ausbruch von Apostrophs, da Sie viel
+                    einfacher lesbar ist.
                 </para>
             </sect3>
 
@@ -340,7 +343,7 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                 <title>Variabler Austausch</title>
 
                 <para>
-                    Variabler Austausch ist gestatten bei Verwendung einer der zwei Formen:
+                    Variabler Austausch ist gestatten bei Verwendung einer der Formen:
 
                     <programlisting role="php"><![CDATA[
 $greeting = "Halle $name, willkommen zurück!";
@@ -362,7 +365,7 @@ $greeting = "Hallo ${name}, willkommen zurück!";]]>
                 <title>Verbinden von Strings</title>
 
                 <para>
-                    Strings können verbunden werden indem man den "." Operator verwendet. Ein Leerzeichen muß
+                    Strings müssen verbunden werden indem man den "." Operator verwendet. Ein Leerzeichen muß
                     immer vor und nach dem "." Operator hinzugefügt werden um die Lesbarkeit zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
@@ -371,7 +374,7 @@ $company = 'Zend' . ' ' . 'Technologies';]]>
                 </para>
 
                 <para>
-                    Wenn Strings mit dem "." Operator verbunden werden, ist es gestattet die Anweisung in
+                    Wenn Strings mit dem "." Operator verbunden werden, ist es empfohlen die Anweisung in
                     mehrere Zeilen umzubrechen um die Lesbarkeit zu erhöhen. In diesen Fällen sollte jede
                     folgende Zeile mit Leerraum aufgefüllt werden so das der "." Operator genau unterhalb
                     des "=" Operators ist:
@@ -395,12 +398,11 @@ $sql = "SELECT `id`, `name` FROM `people` "
 
                 <para>
                     Ein indiziertes Array kann mit mit irgendeiner nicht-negativen Nummer beginnen, trotzdem
-                    wird davon abgeraten und es wird vorgeschlagen das alle Arrays einen BasisIndex von 0
-                    besitzen.
+                    sind alle BasisIndex neben 0 nicht erlaubt.
                 </para>
 
                 <para>
-                    Wenn indizierte Arrays mit dem <code>array</code> Konstrukt deklariert werden, muß ein
+                    Wenn indizierte Arrays mit dem <code>array</code> Funktion deklariert werden, muß ein
                     folgendes Leerzeichen nach jeder Kommabegrenzung hinzugefügt werden um die Lesbarkeit
                     zu erhöhen:
 
@@ -410,9 +412,9 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                 </para>
 
                 <para>
-                    Es ist auch gestattet mehrzeilige indizierte Arrays zu definieren bei Verwendung des
+                    Es ist gestattet mehrzeilige indizierte Arrays zu definieren bei Verwendung des
                     "array" Konstrukts. In diesem Fall, muß jede folgende Zeile mit Leerzeichen aufgefüllt
-                    werden so das der Beginn jeder Zeile wie folgt erscheint:
+                    werden so das der Beginn jeder Zeile ausgerichtet ist:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
@@ -426,8 +428,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                 <title>Assoziative Arrays</title>
 
                 <para>
-                    Wenn assoziative Arrays mit dem <code>array</code> Konstrukt deklariert werden, ist es
-                    gestattet die Anweisung in mehrere Zeilen zu brechen. In diesem Fall muß jede folgende
+                    Wenn assoziative Arrays mit dem <code>array</code> Konstrukt deklariert werden, ist das
+                    Umbrechen der Anweisung in mehrere Zeilen gestattet. In diesem Fall muß jede folgende
                     Linie mit Leerraum aufgefüllt werden so das beide, der Schlüssel und der Wert untereinander
                     stehen:
 
@@ -446,21 +448,21 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <title>Klassen Deklarationen</title>
 
                 <para>
-                    Klassen müssen nach der folgenden Namenskonvention benannt werden.
+                    Klassen müssen entsprechend der Zend Framework Namenskonvention benannt werden.
                 </para><para>
-                    Die Klammer wird immer in der Zeile unter dem Klassennamen geschrieben ("one true brace" Form).
+                    Die Klammer sollte immer in der Zeile unter dem Klassennamen geschrieben werden (die "one true brace" Form).
                 </para><para>
                     Jede Klasse muß einen Dokumentationsblock haben der dem PHPDocumentor Standard entspricht.
                 </para><para>
-                    Jeglicher Code innerhalb der Klasse muß vier Leerzeichen eingerückt sein.
+                    Jeder Code in der Klasse muß mit vier Leerzeichen eingerückt sein.
                 </para><para>
-                    Nur eine Klasse ist pro PHP Datei gestattet.
+                    Nur eine Klasse ist in jeder PHP Datei gestattet.
                 </para><para>
-                    Das Platzieren von zusätzlichem Code in einer Klassendatei ist gestattet aber es wird davon
-                    abgeraten. In diesem Dateien müssen zwei leere Zeilen die Klasse von jedem zusätzlichen PHP
+                    Das Platzieren von zusätzlichem Code in Klassendateien ist gestattet aber es wird davon
+                    abgeraten. In solchen Dateien müssen zwei leere Zeilen die Klasse von jedem zusätzlichen PHP
                     Code in der Datei seperieren.
                 </para><para>
-                    Das ist ein Beispiel einer akzeptierbaren Klassendeklaration:
+                    Das folgende ist ein Beispiel einer akzeptierbaren Klassendeklaration:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -479,16 +481,19 @@ class SampleClass
                 <title>Klassenvariablen</title>
 
                 <para>
-                    Klassenvariablen müssen nach den folgenden Variablen-Benennungs-Konventionen benannt werden.
-                </para><para>
+                    Klassenvariablen müssen entsprechend den Variablen-Benennungs-Konventionen des
+                    Zend Frameworks benannt werden.
+                </para>
+                <para>
                     Jede Variable die in der Klasse deklariert wird muß am Beginn der Klasse ausgelistet werden,
-                    bevor irgendeine Methode deklariert wird.
-                </para><para>
+                    vor der Deklaration von allen Methoden.
+                </para>
+                <para>
                     Das <code>var</code> Konstrukt ist nicht gestattet.  Klassenvariablen definieren Ihre
                     Sichtbarkeit durch die Verwendung des <code>private</code>, <code>protected</code>,
-                    oder <code>public</code> Konstrukts. Der direkte Zugriff auf Klassenvariablen durch das
-                    öffentlich machen ist gestattet aber es wird davon abgeraten da hierfür Zugriffsmethoden
-                    verwendet werden sollten (set/get).
+                    oder <code>public</code> Modifikatoren. Das gestatten von direktem Zugriff auf
+                    Klassenvariablen durch deren Deklaration als public ist gestattet aber es wird davon
+                    abgeraten da hierfür Zugriffsmethoden verwendet werden sollten (set/get).
                 </para>
             </sect3>
         </sect2>
@@ -500,19 +505,25 @@ class SampleClass
                 <title>Deklaration von Funktionen und Methoden</title>
 
                 <para>
-                    Funktionen müssen nach der folgenden Namenskonvention benannt werden.
-                </para><para>
+                    Funktionen müssen nach der Funktions-Namenskonvention des Zend Frameworks benannt werden.
+                </para>
+                <para>
                     Methoden innerhalb von Klassen müssen immer Ihre Sichtbarkeit durch Verwendung einer der
-                    <code>private</code>, <code>protected</code>, oder <code>public</code> Konstrukte definieren.
-                </para><para>
-                    Wie bei Klassen, wird die Klassem immer in der Zeile unterhalb des Funktionsnamens geschrieben
-                    werden ("one true brace" Form).
+                    <code>private</code>, <code>protected</code>, oder <code>public</code> Modifikatoren
+                    definieren.
+                </para>
+                <para>
+                    Wie bei Klassen, sollte die Klammer immer in der Zeile unterhalb des Funktionsnamens
+                    geschrieben werden (die "one true brace" Form).
 
-                    Es gibt kein Leerzeichen zwischen dem Funktionsnamen und der öffnenden Klammer für die Argumente.
-                </para><para>
+                    Leerzeichen zwischen dem Funktionsnamen und der öffnenden Klammer für die Argumente
+                    sind nicht erlaubt.
+                </para>
+                <para>
                     Von Funktionen im globalen Raum wird komplett abgeraten.
-                </para><para>
-                    Das ist ein Beispiel einer akzeptierbaren Funktionsdeklaration in einer Klasse:
+                </para>
+                <para>
+                    Das folgende ist ein Beispiel einer akzeptierbaren Funktionsdeklaration in einer Klasse:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -533,8 +544,8 @@ class Foo
                 </para>
 
                 <para>
-                    <emphasis>NOTIZ:</emphasis> Die Übergabe per Referenz ist nur in der Deklaration der Funktion
-                    gestattet:
+                    <emphasis>NOTIZ:</emphasis> Die Übergabe per Referenz ist die einzige erlaubt Mechanismus
+                    für die Übergabe von Parametern in der Deklaration einer Funktion:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -555,11 +566,10 @@ class Foo
                     Der Aufruf durch Referenz ist nicht gestattet.
                 </para>
 
-
                 <para>
-                    Der Rückgabewert darf nicht in Klammern stehen. Das kann die Lesbarkeit behindern und auch
-                    den Code unterbrechen wenn eine Methode später später auf Rückgabe durch Referenz geändert
-                    wird.
+                    Der Rückgabewert darf nicht in Klammern stehen. Das kann die Lesbarkeit behindern und
+                    zusätzlich den Code unterbrechen wenn eine Methode später später auf Rückgabe durch
+                    Referenz geändert wird.
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -592,9 +602,9 @@ class Foo
                 <title>Verwendung von Funktionen und Methoden</title>
 
                 <para>
-                    Funktionsargumente sind durch ein einzelnes trennendes Leerzeichen nach dem Komma Trennzeichen
-                    getrennt. Das ist ein Beispiel für einen akzeptierbaren Funktionsaufruf für eine Funktion die
-                    drei Argumente benötigt:
+                    Funktionsargumente sollten durch ein einzelnes trennendes Leerzeichen nach dem Komma
+                    Trennzeichen getrennt werden. Das folgende ist ein Beispiel für einen akzeptierbaren
+                    Aufruf einer Funktion die drei Argumente benötigt:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]>
@@ -602,12 +612,15 @@ threeArguments(1, 2, 3);]]>
                 </para>
 
                 <para>
-                    Übergabe von Referenzen zur Laufzeit ist gestattet. Siehe die Sektion für Funktions Deklarationen
-                    für den richtigen Weg um Funktionsargumente per Referenz zu übergeben.
-                </para><para>
-                    Für Funktionen deren Argumente Arrays gestatten, kann der Funktionsaufruf das "array"
-                    Konstrukt beinhalten und in mehrere Zeilen gespalten werden um die Lesbarkeit zu erhöhen.
-                    In diesen Fällen ist der Standard für das Schreiben von Arrays trotzdem:
+                    Übergabe von Referenzen zur Laufzeit ist strengstens verboten. Siehe die Sektion für
+                    Funktions Deklarationen für den richtigen Weg um Funktionsargumente per Referenz
+                    zu übergeben.
+                </para>
+                <para>
+                    Durch die Übergabe von Arrays als Argument für eine Funktion, kann der
+                    Funktionsaufruf den "array" Hinweis enthalten und kann in mehrere Zeilen geteilt werden
+                    um die Lesbarkeit zu erhöhen. In solchen Fällen sind die normalen Richtlinien für
+                    das Schreiben von Arrays trotzdem noch anzuwenden:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -624,24 +637,24 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
             <title>Kontrollanweisungen</title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
-                <title>If / Else / Elseif</title>
+                <title>If/Else/Elseif</title>
 
                 <para>
                     Kontrollanweisungen die auf den <code>if</code> und <code>elseif</code> Konstrukten
-                    beruhen müssen ein einzelnes Leerzeichen vor der öffnenden Klammer der bedingten Anweisung,
+                    beruhen müssen ein einzelnes Leerzeichen vor der öffnenden Klammer der bedingten Anweisung
                     und ein einzelnes Leerzeichen nach der schließenden Klammer.
                 </para>
 
                 <para>
                     Innerhalb der bedingten Anweisungen zwischen den Klammern, müssen die Operationen, für die
-                    Lesbarkeit, durch Leerzeichen getrennt werden. Innere Klammern sind zu beführworten um
-                    die logische Gruppierung von größeren Bedingungen zu erhöhen.
+                    Lesbarkeit, durch Leerzeichen getrennt werden. Innere Klammern sind zu befürworten um
+                    die logische Gruppierung für größeren bedingte Anweisungen zu erhöhen.
                 </para>
 
                 <para>
                     Die öffnende Klammer wird in der selben Zeile geschrieben wie die Bedingungsanweisung.
                     Die schließende Klammer wird immer in einer eigenen Zeile geschrieben. Jeder Inhalt innerhalb
-                    der Klammer muß vier Leerzeichen eingerückt werden.
+                    der Klammer muß durch Verwendung von vier Leerzeichen eingerückt werden.
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -652,7 +665,8 @@ if ($a != 2) {
 
                 <para>
                     Für "if" Anweisungen die "elseif" oder "else" beinhalten, sind die Konventionen
-                    der Formatierung wie in den folgenden Beispielen gezeigt:
+                    der Formatierung ähnlich dem "if" Konstrukt. Das folgende Beispiel zeigt gültige
+                    Formatierungen für "if" Anweisungen mit "else" und/oder "elseif" Konstrukten:
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -670,13 +684,13 @@ if ($a != 2) {
    $a = 7;
 }]]>
                     </programlisting>
-                    PHP erlaubt es solche Anweisungen in einigen Fällen auch ohne Klammern zu schreiben.
-                    Der Code Standard macht keine Unterscheidungen und es müssen alle "if", "elseif" oder "else"
+                    PHP erlaubt das Anweisungen in einigen Fällen auch ohne Klammern zu schreiben.
+                    Dieser Coding Standard macht keine Unterscheidungen und es müssen alle "if", "elseif" oder "else"
                     Anweisungen in Klammern geschrieben werden.
                 </para>
 
                 <para>
-                    Die Verwendung des "elseif" Konstruktes ist erlaubt es wird aber sehr stark davon abgeraten
+                    Die Verwendung des "elseif" Konstruktes ist erlaubt es wird aber strengstens davon abgeraten
                     und es ist die "else if" Kombination zu bevorzugen.
                 </para>
             </sect3>
@@ -685,14 +699,15 @@ if ($a != 2) {
                 <title>Switch</title>
 
                 <para>
-                    Kontrollanweisungen die mit dem "switch" Konstrukt geschrieben werden müssen ein einzelnes
-                    Leerzeichen vor der öffnenden Klammer der Bedingten Anweisung besitzen, und auch ein einzelnes
-                    Leerzeichen nach der schließenden Klammer.
+                    Kontrollanweisungen die mit der "switch" Anweisung geschrieben werden müssen ein einzelnes
+                    Leerzeichen vor der öffnenden Klammer der Bedingten Anweisung besitzen, und auch
+                    nach der schließenden Klammer.
                 </para>
 
                 <para>
-                    Jeglicher Inhalt innerhalb der "switch" Anweisung muß um vier Leerzeichen eingerückt sein.
-                    Der Inhalt unter jeder "case" Anweisung muß um vier zusätzliche Leerzeichen eingerückt werden.
+                    Jeglicher Inhalt innerhalb der "switch" Anweisung muß durch Verwendung von vier Leerzeichen
+                    eingerückt sein. Der Inhalt unter jeder "case" Anweisung muß durch Verwendung von vier
+                    zusätzlichen Leerzeichen eingerückt werden.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -715,10 +730,11 @@ switch ($numPeople) {
 
                 <para>
                     <emphasis>NOTIZ:</emphasis> Es ist machmal nützlich eine <code>case</code> Anweisung zu
-                    schreiben, die durch das nächste case fällt indem in solchen Fällen kein  <code>break</code>
-                    oder <code>return</code> angegeben wird. Um diese Fälle von Fehlern zu unterscheiden, muß jede
-                    <code>case</code> Anweisung wo <code>break</code> oder <code>return</code> unterlassen werden
-                    den Kommentar "// break intentionally omitted" enthalten.
+                    schreiben, die durch das nächste case fällt indem innerhalb solcher Fälle kein
+                     <code>break</code> oder <code>return</code> angegeben wird. Um diese Fälle von Fehlern
+                     zu unterscheiden, sollte jede <code>case</code> Anweisung in der <code>break</code>
+                     oder <code>return</code> unterlassen werden einen Kommentar enthalten der anzeigt das
+                     das break gewünschtermaßen unterdrückt wurde.
                 </para>
             </sect3>
         </sect2>
@@ -737,10 +753,9 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    Alle Sourcecode Dateien welche für Zend Framework geschrieben werden, oder welche mit
-                    dem Framework arbeiten müssen einen "file-level" Docblock am Beginn jeder Datei und einen
-                    "class-level" Docblock direkt überhalb jeder Klasse enthalten. Anbei sind Beispiele solcher
-                    Docblocks.
+                    Alle Klassen Dateien müssen einen "file-level" Docblock am Beginn jeder Datei und einen
+                    "class-level" Docblock direkt überhalb jeder Klasse enthalten. Beispiele solcher
+                    Docblocks können anbei gefunden werden.
                 </para>
             </sect3>
 
@@ -748,7 +763,7 @@ switch ($numPeople) {
                 <title>Dateien</title>
 
                 <para>
-                    Jede Datei die PHP Code enthält muß einen Header Block am Beginn der Datei besitzen welcher
+                    Jede Datei die PHP Code enthält muß einen Docblock am Beginn der Datei besitzen welcher
                     mindestens diese phpDocumentor Tags enthält:
 
                     <programlisting role="php"><![CDATA[
@@ -759,10 +774,10 @@ switch ($numPeople) {
  *
  * LICENSE: Einige Lizenz Informationen
  *
- * @copyright  2005 Zend Technologies
- * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
+ * @copyright  2008 Zend Technologies
+ * @license    http://framework.zend.com/license   BSD License
  * @version    $Id:$
- * @link       http://dev.zend.com/package/PackageName
+ * @link       http://framework.zend.com/package/PackageName
  * @since      Datei vorhanden seit Release 1.2.0
 */]]>
                     </programlisting>
@@ -781,11 +796,11 @@ switch ($numPeople) {
  *
  * Lange Beschreibung für die Klasse (wenn vorhanden)...
  *
- * @copyright  2005 Zend Technologies
- * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
+ * @copyright  2008 Zend Technologies
+ * @license    http://framework.zend.com/license   BSD License
  * @version    Release: @package_version@
- * @link       http://dev.zend.com/package/PackageName
- * @since      Klasse vorhanden seit Release 1.2.0
+ * @link       http://framework.zend.com/package/PackageName
+ * @since      Klasse vorhanden seit Release 1.5.0
  * @deprecated Klasse abgeraten ab Release 2.0.0
  */]]>
                     </programlisting>
@@ -808,11 +823,12 @@ switch ($numPeople) {
 
                 <para>
                     Es ist nicht notwendig das "@access" Tag zu verwenden, weil das Accesslevel bereits vom
-                    "public", "private" oder "protected" Konstrukt bekannt ist wenn die Funktion deklariert wird.
+                    "public", "private" oder "protected" Modifikator bekannt ist wenn die Funktion deklariert wird.
                 </para>
 
                 <para>
-                    Wenn eine Funktion/Methode eine Ausnahme werfen könnte, muß @throws verwendet werden:
+                    Wenn eine Funktion/Methode eine Ausnahme werfen könnte, muß @throws für alle bekannten
+                    Exception Klassen verwendet werden:
 
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [Beschreibung]

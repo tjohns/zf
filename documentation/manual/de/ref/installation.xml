@@ -3,14 +3,17 @@
     <title>Installation</title>
 
     <para>
-        Zend Framework wurde mit objekt-orientiertem PHP 5 erstellt und benötigt PHP 5.1.4 oder eine spätere
-        Version. Für detailiertere Informationen sollte in den
-        <link linkend="requirements">Anhang für System Voraussetzungen</link> gesehen werden.
+        Zend Framework benötigt PHP 5.1.4 oder höher, auch wenn Zend stärkstens 5.2.3 oder höher
+        empfiehlt weil einige kritische Sicherheits- und Performance-Verbesserungen zwischen
+        diesen zwei Versionen eingeführt wurden. Mehr Details hierzu kann im
+        <link linkend="requirements">Anhang Voraussetzungen</link> gefunden werden.
     </para>
 
     <para>
-        Sobald eine angemessene PHP Umgebung verfügbar ist, besteht der nächste Schritt darin eine Kopie des Zend
-        Frameworks zu erhalten, welche offiziell über eine der folgenden Methoden bekommen werden kann:
+        Die Installation des Zend Frameworks ist extrem einfach. Sobald der Framework heruntergeladen und
+        extrahiert wurde wurde, sollte das /library Verzeichnis der Distribution dem Anfang des
+        Includepfades angefügt werden. Es kann auch gewünscht sein das library Verzeichnis in eine
+        andere - möglicherweise geteilte - Lokation auf dem Dateisystem zu verschieben.
 
         <itemizedlist>
             <listitem>
@@ -74,17 +77,15 @@
     </para>
 
     <para>
-        Eines von den nützlichsten Features des Zend Frameworks ist die Implementation der
-        <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> und
-        <ulink url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink> (MVC)
-        Pattern.
-        <link linkend="zend.controller.quickstart">Fang an mit Zend Framework MVC!</link>
+        Zend bietet einen <ulink href="http://framework.zend.com/docs/quickstart">QuickStart</ulink> um so
+        schnell wie möglich in Funktion zu treten. Das ist ein exzellenter Weg um zu lernen mit dem
+        Framework umzugehen mit einem Beispiel aus der wirklichen Welt auf dem aufgebaut werden kann.
     </para>
 
     <para>
-        Da die Komponenten des Zend Frameworks sehr lose verbunden sind, können verschiedene Komponenten
-        ausgewählt werden um Sie unabhängig zu verwenden. Jedes der folgenden Kapitel dokumentiert die
-        Verwendung einer speziellen Komponente.
+        Da die Komponenten vom Zend Framework lose verbunden sind, können beliebige Kombinationen von Ihnen
+        in eigenen Anwendungen verwendet werden. Die folgenden Kapietl bieten eine komprimierten Referenz
+        zum Zend Framework auf Basis der Komponenten.
     </para>
 
 </sect1>

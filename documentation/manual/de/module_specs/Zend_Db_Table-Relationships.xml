@@ -906,7 +906,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                Kaskadierendes Löschen und Aktualisieren das in den eigenen Zend_Db_Table Klassen
+                Kaskadierendes Löschen und Aktualisieren welches in den eigenen Zend_Db_Table Klassen
                 definiert wurde werden ausgeführt wenn die <code>save()</code> oder
                 <code>delete()</code> Methoden der Zeilenklasse ausgeführt werden. Trotzdem, wenn
                 ein Update oder Löschen von Daten durch Verwendung eines anderen Interfaces

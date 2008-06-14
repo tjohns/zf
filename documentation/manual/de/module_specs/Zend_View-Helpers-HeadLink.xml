@@ -4,7 +4,7 @@
     <para>
         Das HTML <code>&lt;link&gt;</code> Element wird immer mehr für das Verlinken einer Vielzahl von
         Ressourcen der eigenen Site verwendet: Stylesheets, Feeds, FavIcons, Trackbacks, und andere. Der
-        <code>HeadTitle</code> Helfer bietet ein einfaches Interface für die Erstellung und das Anhäufen
+        <code>HeadLink</code> Helfer bietet ein einfaches Interface für die Erstellung und das Anhäufen
         dieser Elemente für das spätere Empfangen und deren Ausgabe im eigenen Layout Skript.
     </para>
 
