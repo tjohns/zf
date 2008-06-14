@@ -39,6 +39,23 @@ require_once 'Zend/Cache/Backend.php';
  */
 class Zend_Cache_Backend_Xcache extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface
 {
+
+    /**
+     * Available options
+     *
+     * =====> (string) user :
+     * xcache.admin.user (necessary for the clean() method)
+     *
+     * =====> (string) password :
+     * xcache.admin.pass (clear, not MD5) (necessary for the clean() method)
+     *
+     * @var array available options
+     */
+    protected $_options = array(
+        'user' => null,
+        'password' => null
+    );
+
     /**
      * Constructor
      *
@@ -143,7 +160,25 @@ class Zend_Cache_Backend_Xcache extends Zend_Cache_Backend implements Zend_Cache
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
+            // Necessary because xcache_clear_cache() need basic authentification
+            $backup = array();
+            if (isset($_SERVER['PHP_AUTH_USER'])) {
+                $backup['PHP_AUTH_USER'] = $_SERVER['PHP_AUTH_USER'];
+            }
+            if (isset($_SERVER['PHP_AUTH_PW'])) {
+                $backup['PHP_AUTH_PW'] = $_SERVER['PHP_AUTH_PW'];
+            }
+            if ($this->_options['user']) {
+                $_SERVER['PHP_AUTH_USER'] = $this->_options['user'];
+            }
+            if ($this->_options['password']) {
+                $_SERVER['PHP_AUTH_PW'] = $this->_options['password'];
+            }
             xcache_clear_cache(XC_TYPE_VAR, 0);
+            if (isset($backup['PHP_AUTH_USER'])) {
+                $_SERVER['PHP_AUTH_USER'] = $backup['PHP_AUTH_USER'];
+                $_SERVER['PHP_AUTH_PW'] = $backup['PHP_AUTH_PW'];
+            }
             return true;
         }
         if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
