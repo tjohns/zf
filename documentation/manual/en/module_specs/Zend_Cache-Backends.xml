@@ -232,8 +232,39 @@
             the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
-            There is no option for this backend.
+            Available options are :
         </para>
+        <table id="zend.cache.backends.xcache.table">
+            <title>Xcache backend options</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Data Type</entry>
+                        <entry>Default Value</entry>
+                        <entry>Description</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>user</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.user, necessary for the clean() method
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>password</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.pass (in clear form, not MD5), necessary for the clean() method
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
     </sect2>
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
