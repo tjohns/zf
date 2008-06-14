@@ -106,7 +106,7 @@
                               internal max size for the metadatas array (don't change this value unless you
                               know what you are doing)
                           </entry>
-                      </row>                     
+                      </row>
                   </tbody>
               </tgroup>
           </table>
@@ -210,6 +210,21 @@
         <para>
             This backends stores cache records in shared memory through
             the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
+            (which is of course need for using this backend).
+        </para>
+        <para>
+            Be careful : with this backend, "tags" are not supported for the moment as
+            the "doNotTestCacheValidity=true" argument.
+        </para>
+        <para>
+            There is no option for this backend.
+        </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.xcache">
+        <title>Zend_Cache_Backend_Xcache</title>
+        <para>
+            This backends stores cache records in shared memory through
+            the <ulink url="http://xcache.lighttpd.net/">XCache</ulink> extension
             (which is of course need for using this backend).
         </para>
         <para>
