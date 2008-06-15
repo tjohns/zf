@@ -6,6 +6,139 @@
         Zend Framework we wczesnej wersji, postępuj według poniższych wskazówek
         aby przeprowadzić migrację swoich skryptów aby używały nowej architektury.
     </para>
+    
+    <sect2 id="zend.controller.migration.fromoneohtoonefive">
+        <title>Migracja z wersji 1.0.x do 1.5.0 lub nowszej</title>
+
+        <para>
+            O ile większość z podstawowych funkcjonalności i cała udokumentowana 
+            funkcjonalność pozostały te same, to nastąpiła jedna istotna zmiana
+            w jednej <emphasis>nieudokumentowanej</emphasis> funkcjonalności.
+        </para>
+
+        <para>
+            Udokumentowanym sposobem tworzenia adresów URL w postaci camelCased 
+            jest użycie znaku separatora w nazwie akcji; domyślnie separatorem 
+            mogą być znaki '.' lub '-', jednak może to być skonfigurowane w 
+            obiekcie uruchamiającym. Obiekt uruchamiający zmienia litery w 
+            nazwie akcji na małe i używa separatorów aby otrzymać nazwę metody 
+            akcji w postaci camelCasing. Jednak z tego powodu, że funkcje PHP 
+            nie są wrażliwe na wielkość liter, <emphasis>mogłeś</emphasis> wciąż 
+            tworzyć adresy w postaci camelCasing, a obiekt uruchamiający wciąż 
+            otrzymywał na ich podstawie nazwę tej samej akcji. Na przykład adres 
+            'camel-cased' zostałby zamieniony przez obiekt uruchamiający na 
+            'camelCasedAction', a adres 'camelCased' na 'camelcasedAction'; 
+            z tego powodu że PHP nie jest wrażliwe na wielkość liter, w obu
+            przypadkach zostanie uruchomiona ta sama metoda.
+        </para>
+
+        <para>
+            Powoduje to problemy w klasie ViewRenderer gdy szuka ona skryptów 
+            widoku. Podstawowym udokumentowanym sposobem jest zastępowanie 
+            wszystkich separatorów wyrazów znakiem podkreślenia oraz zmiana 
+            liter na małe.
+
+            This creates
+            a semantic tie between the actions and view scripts, and the
+            normalization ensures that the scripts can be found. 
+
+            However, if the
+            action 'camelCased' is called and actually resolves, the word
+            separator is no longer present, and the ViewRenderer attempts to
+            resolve to a different location -- 'camelcased.phtml' instead of
+            'camel-cased.phtml'.
+        </para>
+
+        <para>
+            Niektórzy programiści polegali na tej "funkcjonalności", która nigdy
+            nie była zamierzona. Wiele zmian w wersji 1.5.0 spowodowało, że 
+            klasa ViewRenderer nie znajduje już plików widoków w taki sposób;
+
+            the semantic tie is now enforced. 
+
+            Po pierwsze, obiekt uruchamiający wymusza teraz wrażliwość na wielkość
+            liter w nazwach akcji.
+            Oznacza to, że odwoływanie się do akcji używając w adresie
+            formy camelCasing nie będzie już dłużej prowadzić do tej samej 
+            metody, do której prowadziło odwołanie za pomocą separatorów 
+            wyrazów (np., 'camel-casing'). Teraz klasa ViewRenderer podczas 
+            szukania skryptów widoku akceptuje jedynie formę z separatorami 
+            wyrazów.
+        </para>
+
+        <para>
+            Jeśli okazało się, że polegałeś na tej "funkcjonalności", masz kilka
+            rozwiązań:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    Najlepsza opcja: zmień nazwy skwoich skryptów wiodku. Plus: 
+                    kompatybilność wsteczna. Minus: jeśli masz dużo skryptów
+                    widoku, które polegają na tym niezamierzonym zachowaniu,
+                    możesz mieć dużo plików do zmiany.
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    Druga najlepsza opcja: klasa ViewRenderer teraz określa 
+                    nazwę skryptu widoku za pomocą klasy <code>Zend_Filter_Inflector</code>; 
+                    możesz zmodyfikować reguły określania nazwy, aby nie używać
+                    separatorów wyrazów w nazwach akcji.
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$inflector = $viewRenderer->getInflector();
+$inflector->setFilterRule(':action', array(
+    new Zend_Filter_PregReplace(
+        '#[^a-z0-9' . preg_quote(DIRECTORY_SEPARATOR, '#') . ']+#i',
+        ''
+    ),
+    'StringToLower'
+));
+?>]]></programlisting>
+
+                <para>
+                    Powyższy kod zmodyfikuje 
+                    The above code will modify the inflector to no longer
+                    separate the words with dash; you may also want to remove
+                    the 'StringToLower' filter if you <emphasis>do</emphasis>
+                    want the actual view script names camelCased as well.
+                </para>
+
+                <para>
+                    Jeśli zmiana nazw skryptów widoku zajmie zbyt dużo czasu,
+                    najlepszym sposobem będzie tymczasowe użycie powyższego kodu.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Najgorsza opcja: Możesz spowodować aby obiekt uruchamiający
+                    uruchamiał akcje w postaci camelCased za pomocą nowej flagi
+                    kontrolera frontowego, 'useCaseSensitiveActions':
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$front->setParam('useCaseSensitiveActions', true);
+?>]]></programlisting>
+
+                <para>
+                    Pozwoli ci to wciąż używać formy camelCasing w adresach URL
+                    i taie wywołanie będzie uruchamiać tę samą akcję jak podczas
+                    użycia separatorów wyrazów. Jednak oznacza to, że oryginalny 
+                    błąd będzie wciąż występował; jeśli nie chcesz aby wystąpiły 
+                    problemy, użyj przynajmniej drugiej z przedstawionych opcji.
+                </para>
+
+                <para>
+                    Zauważ też, że użycie tej flagi spowoduje wyświetlenie 
+                    informacji o tym, że jej użycie jest przestarzałe.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromzeroninethree">
         <title>Migracja z wersji 0.9.3 do 1.0.0RC1 lub nowszej</title>
@@ -44,10 +177,10 @@ $front->setParam('noErrorHandler', true);]]>
         </para>
 
         <para>
-            There are several strategies you can take to update your code. 
-            In the short term, you can globally disable the
-            <code>ViewRenderer</code> in your front controller bootstrap prior
-            to dispatching:
+            Jest kilka strategii które możesz podjąc aby zaktualizować swój kod. 
+            Krótkoterminowo możesz globalnie wyłączyć użycie klasy 
+            <code>ViewRenderer</code> w kontrolerze frontowym w pliku uruchamiającym
+            przed uruchomieniem żądania:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -61,22 +194,23 @@ $front->setParam('noViewRenderer', true);]]>
         </para>
 
         <para>
-            When you're ready to start using the <code>ViewRenderer</code> functionality,
-            there are several things to look for in your controller code. First,
-            look at your action methods (the methods ending in 'Action'), and
-            determine what each is doing. If none of the following is happening,
-            you'll need to make changes:
+            Kiedy będziesz gotowy do użycia funkcjonalności klasy <code>ViewRenderer</code>,
+            będzie kilka rzeczy które będziesz musiał sprawdzić w kodzie swoich kontrolerów.
+            
+            Wpierw spójrz na metody akcji (metody kończące się na 'Action') i
+            sprawdź co one robią. Będziesz musiał wprowadzić zmiany, jeśli w 
+            metodzie nie jest przeprowadzana żadna z poniższych czynności:
         </para>
 
         <itemizedlist>
-            <listitem><para>Wywołania metody <code>$this-&gt;render()</code></para></listitem>
-            <listitem><para>Wywołania metody <code>$this-&gt;_forward()</code></para></listitem>
-            <listitem><para>Wywołania metody <code>$this-&gt;_redirect()</code></para></listitem>
-            <listitem><para>Wywołania pomocniczej klasy akcji <code>Redirector</code></para></listitem>
+            <listitem><para>Wywołanie metody <code>$this-&gt;render()</code></para></listitem>
+            <listitem><para>Wywołanie metody <code>$this-&gt;_forward()</code></para></listitem>
+            <listitem><para>Wywołanie metody <code>$this-&gt;_redirect()</code></para></listitem>
+            <listitem><para>Wywołanie pomocniczej klasy akcji <code>Redirector</code></para></listitem>
         </itemizedlist>
 
         <para>
-            The easiest change is to disable auto-rendering for that method:
+            Najprostszym sposobem jest wyłączenie automatycznego renderowania dla tej metody:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -93,17 +227,18 @@ $this->_helper->viewRenderer->setNoRender();]]>
         <programlisting role="php"><![CDATA[
 public function preDispatch()
 {
-    // disable view script autorendering
+    // wyłączamy automatyczne renderowanie skryptu widoku
     $this->_helper->viewRenderer->setNoRender()
-    // .. do other things...
+    // .. robimy coś dalej...
 }]]>
         </programlisting>
 
         <para>
-            If you are calling <code>render()</code>, and you're using <link
+            Jeśli wywołujesz metodę <code>render()</code>, 
+            i używasz <link
                 linkend="zend.controller.modular">the Conventional Modular
-                directory structure</link>, you'll want to change your code to
-            make use of autorendering:
+                directory structure</link>, 
+            you'll want to change your code to make use of autorendering:
         </para>
 
         <itemizedlist>
@@ -121,9 +256,10 @@ public function preDispatch()
             </listitem>
             <listitem>
                 <para>
-                    If you're calling <code>render()</code> with arguments, and
-                    not doing any processing afterwards or rendering multiple
-                    view scripts, you can change these calls to read
+                    Jeśli wywołujesz metodę <code>render()</code> używając
+                    argumentów i nie wykonujesz później innego kodu ani nie
+                    renderujesz kolejnych skryptów widoku, możesz zmienić
+                    wywołania aby korzystały z metody o tej samej nazwie, obiektu
                     <code>$this-&gt;_helper-&gt;viewRenderer()</code>.
                 </para>
             </listitem>
@@ -139,16 +275,16 @@ public function preDispatch()
         </para>
 
         <para>
-            If you're using a view object from the registry, or customizing your
-            view object, or using a different view implementation, you'll want
-            to inject the <code>ViewRenderer</code> with this object. This can
-            be done easily at any time.
+            Jeśli używasz obiektu widoku z rejestru, konfigurujesz swój własny 
+            obiekt lub używasz innej implementacji widoku, możesz przekazać ten 
+            obiekt do obiektu <code>ViewRenderer</code>. Możesz to łatwo zrobić 
+            w dowolnym momencie.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    Prior to dispatching a front controller instance:
+                    Przed uruchomieniem kontrolera frontowego:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -171,12 +307,14 @@ $viewRenderer->setView($view);]]>
         </itemizedlist>
 
         <para>
-            There are many ways to modify the <code>ViewRenderer</code>, 
-            including setting a different view script to render, specifying 
-            replacements for all replaceable elements of a view script path 
-            (including the suffix), choosing a response named segment to 
-            utilize, and more. If you aren't using the conventional modular 
-            directory structure, you can even associate different path 
+            Jest wiele sposobów na zmodyfikowanie obiektu <code>ViewRenderer</code>, 
+            włączając w to ustawienie innego skryptu widoku do renderowania, 
+            zastąpienie wszystkich części ścieżki skrytu widoku (także przyrostka), 
+            wybranie segmentu obiektu odpowiedzi w którym ma być zrenderowany
+            i kilka innych.
+
+            If you aren't using the conventional modular directory structure, 
+            you can even associate different path 
             specifications with the <code>ViewRenderer</code>.
         </para>
 

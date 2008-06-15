@@ -400,6 +400,112 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
             </programlisting>
         </example>
     </sect2>
+    
+    <sect2 id="zend.pdf.drawing.extracting-fonts">
+        <title>Począwszy od 1.5, wyciąganie czcionek.</title>
+        <para>
+            Moduł <code>Zend_Pdf</code> zapewnia możliwość wyciągania czcionek z
+            załadowanych dokumentów.
+        </para>
+
+        <para>
+            Może być to użyteczne przy inkrementalnych aktualizacjach dokumentów.
+            Bez tej funkcjonalności musiałbyś dołączać czcionkę do dokumentu za każdym
+            razem gdy go aktualizujesz.
+        </para>
+        
+        <para>
+            Obiekty <code>Zend_Pdf</code> oraz <code>Zend_Pdf_Page</code> zapewniają
+            specjalne metody do wyciągania czcionek użytych w dokumencie lub stronie:
+        </para>
+        <example id="zend.pdf.drawing.extracting-fonts.example-1">
+            <title>Wyciąganie czcionek z załadowanego dokumentu.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($documentPath);
+...
+// Pobieramy wszystkie czcionki z dokumentu
+$fontList = $pdf->extractFonts();
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+$yPosition = 700;
+foreach ($fontList as $font) {
+    $page->setFont($font, 15);
+    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
+                  . ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $yPosition -= 30;
+}
+...
+// Pobieramy czcionki z pierwszej strony dokumentu
+$firstPage = reset($pdf->pages);
+$firstPageFonts = $firstPage->extractFonts();
+...]]>
+            </programlisting>
+        </example>
+        <example id="zend.pdf.drawing.extracting-fonts.example-2">
+            <title>Wyciąganie czcionki z załadowanego dokumentu określając jej nazwę.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = new Zend_Pdf();
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = Zend_Pdf_Font::fontWithPath($fontPath);
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+// Nazwa tej czcionki powinna zostać gdzieś zapisana
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+...
+$pdf->save($docPath);
+...]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdf = Zend_Pdf::load($docPath);
+...
+$pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
+
+$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) can also be used here */
+$page->setFont($font, $fontSize);
+$page->drawText($text, $x, $y);
+...
+$pdf->save($docPath, true /* incremental update mode */);
+...]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Wyciągnięte czcionki mogą być użyte w miejscu dowolnej innej czcionki
+            z następującymi ograniczeniami:
+            <itemizedlist>
+                <listitem><para>Wyciągnieta czcionka może być użyta tylko w kontekście
+                dokumentu z którego została wyciągnięta.</para></listitem>
+                <listitem>
+                    <para>
+                        Osadzona czcionka nie jest wyciągnięta.
+                        Wyciągnięta czcionka nie może być użyta do obliczenia
+                        poprawnych rozmiarów więc do tych obliczeń powinna być
+                        użyta oryginalna czcionka.
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = $pdf->extractFont($fontName);
+$originalFont = Zend_Pdf_Font::fontWithPath($fontPath);
+
+$page->setFont($font /* używamy wyciągniętej czcionki do rysowania */, $fontSize);
+$xPosition = $x;
+for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
+    $page->drawText($text[$charIndex], xPosition, $y);
+
+    // Używamy oryginalnej czcionki do obliczenia szerokości tekstu
+    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+}
+...]]>
+            </programlisting>
+                    </para>
+                </listitem>
+            </itemizedlist> 
+        </para>
+    </sect2>
 
     <sect2 id="zend.pdf.drawing.image-drawing">
         <title>Wstawianie obrazów.</title>

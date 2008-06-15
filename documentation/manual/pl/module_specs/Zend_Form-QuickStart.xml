@@ -482,7 +482,7 @@ if (!$form->isValid($_POST)) {
 
 
 $form = new Zend_Form();
-$form->setAction('/usr/login')
+$form->setAction('/user/login')
      ->setMethod('post');
 
 // Utwórz i skonfiguruj element zawierający nazwę użytkownika:
@@ -533,7 +533,7 @@ class UserController extends Zend_Controller_Action
         $form = $this->getForm();
         if (!$form->isValid($_POST)) {
             // Nieudana weryfikacja; wyświetl formularz
-            $this->form = $form;
+            $this->view->form = $form;
             return $this->render('form');
         }
         

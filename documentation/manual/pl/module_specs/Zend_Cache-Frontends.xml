@@ -654,6 +654,16 @@ $res = $cache->foobar2('1', '2');]]>
                                     do $_SERVER['REQUEST_URI'], zostanie użyte tylko te ostatnie
                               </entry>
                          </row>
+                         <row>
+                             <entry><code>memorize_headers</code></entry>
+                             <entry><code>array</code></entry>
+                             <entry><code>array()</code></entry>
+                             <entry>
+                                 tablica łańcuchów znaków odpowiadająca nazwom nagłówków
+                                 HTTP. Wymienione nagłówki będą przechowane wraz
+                                 z danymi buforu i odtworzone gdy bufor zostanie użyty
+                             </entry>
+                         </row>
                       </tbody>
                   </tgroup>
               </table>
@@ -708,6 +718,28 @@ $cache->start();
 // jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 
 // [...] koniec pliku uruchamiającego (te linie nie będą wykonane jeśli bufor jest trafiony)]]>
+            </programlisting>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.cancel">
+            <title>Metoda zaniechania buforowania</title>
+            <para>
+                Z powodu wymagań projektowych, w niektórych przypadkach (na przykład
+                gdy używamy kodów innych niż HTTP/200), możesz potrzebować zaniechać 
+                proces buforowania. Dlatego dla tego frontendu udostępniamy metodę cancel().
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+// [...] // konfiguracja itp.
+
+$cache->start();
+
+// [...]
+
+if ($someTest) {
+    $cache->cancel();
+    // [...]
+}
+
+// [...]]]>
             </programlisting>
         </sect3>
     </sect2>

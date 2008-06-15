@@ -499,18 +499,22 @@ class MyController extends Zend_Controller_Action
             <title>Jak obsługiwać nieistniejące akcje</title>
 
             <para>
-                If a request to a controller is made that includes an undefined
-                action method, <code>Zend_Controller_Action::__call()</code>
-                will be invoked. <code>__call()</code> is, of course, PHP's
-                magic method for method overloading.
+                Jeśli zażądamy nieistniejącej akcji kontrolera, wywołana zostanie
+                metoda <code>Zend_Controller_Action::__call()</code>. Metoda 
+                <code>__call()</code> jest oczywiście magiczną metodą PHP 
+                służącą do przeładowania metod.
             </para>
 
             <para>
                 Domyślnie, ta metoda wyrzuca wyjątek
                 <code>Zend_Controller_Action_Exception</code> oznaczający, że
-                zażądana akcja nie została znaleziona w kontrolerze. Powinieneś
-                nadpisać tę funkcjonalność jeśli chcesz przeprowadzić inne
-                operacje.
+                zażądana metoda nie została znaleziona w kontrolerze. Jeśli nazwa 
+                zażądanej metody zakończona jest słowem 'Action', zakładane jest, 
+                że zażądana została akcja i że ona nie istnieje; taki błąd 
+                powoduje wyrzucenie wyjątku z kodem 404. Próby wywołania 
+                wszystkich innych metod powodują wyrzucenie wyjątku z kodem 500. 
+                Pozwala to na rozróżnienie błędu nie znalezionej strony od 
+                innych błędów aplikacji.
             </para>
 
             <para>
@@ -529,7 +533,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // wszystkie inne metody wyrzucają wyjątek
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>
@@ -554,7 +558,7 @@ class MyController extends Zend_Controller_Action
         }
 
         // wszystkie inne metody wyrzucają wyjątek
-        throw new Exception('Invalid method "' . $method . '" called');
+        throw new Exception('Invalid method "' . $method . '" called', 500);
     }
 }]]>
             </programlisting>

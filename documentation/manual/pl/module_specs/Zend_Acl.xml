@@ -305,6 +305,13 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             zasoby oraz role dziedziczą reguły, które są definiowane dla ich
             przodków.
         </para>
+        
+        <note>
+            <para>
+                W zasadzie Zend_Acl przestrzega danej reguły tylko wtedy, gdy
+                nie ma zastosowania bardziej szczegółowa reguła.
+            </para>
+        </note>
 
         <para>
             Możemy więc zdefiniować rozsądny kompleksowy zestaw reguł przy
