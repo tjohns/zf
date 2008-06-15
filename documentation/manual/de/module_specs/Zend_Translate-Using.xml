@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9585 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -481,9 +482,8 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 
         <para>
             Wenn das Trennzeichen im zu übersetzenden String enthalten ist, dann muß es einfach
-            verdoppelt werden. Ein Trennzeichen trennt die Original Zeichenkette von der
-            Übersetzung. Zwei Trennzeichen schreiben ein Trennzeichen als normales Zeichen in
-            den String. Am besten wird das folgende Beispiel für Details betrachtet:
+            in einem doppelten Anführungszeichen gesetzt werden. Am besten wird das folgende Beispiel
+            für Details betrachtet:
         </para>
 
         <example id="zend.translate.using.source.csv.example2">
@@ -491,11 +491,11 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
             <programlisting><![CDATA[
 ﻿#Example csv file
 # original 'message,1'
-message,,1,Nachricht1
+"message,1",Nachricht1
 # translation 'Nachricht,2'
-message2,Nachricht,,2
+message2,"Nachricht,2"
 # original 'message3,'
-message3,,,Nachricht3]]>
+"message3,",Nachricht3]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
