@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9630 -->
+<!-- EN-Revision: 9694 -->
 <sect1 id="introduction.installation">
 
     <title>インストール</title>
@@ -70,7 +70,7 @@
                 </para>
                 <para>
                     Zend Framework の SVN リポジトリの最先端の URL は
-                    <ulink url="http://framework.zend.com/svn/framework/trunk">http://framework.zend.com/svn/framework/trunk</ulink>
+                    <ulink url="http://framework.zend.com/svn/framework/standard/trunk">http://framework.zend.com/svn/framework/standard/trunk</ulink>
                     です。
                 </para>
             </listitem>
@@ -87,7 +87,7 @@
     </para>
 
     <para>
-        Zend が提供する <a href="http://framework.zend.com/docs/quickstart">クイックスタート</a>
+        Zend が提供する <ulink url="http://framework.zend.com/docs/quickstart">クイックスタート</ulink>
         を見れば、手っ取り早く実行してみることができます。
         これは、実際に動作するサンプルを用いてフレームワークについて学ぶためのドキュメントです。
     </para>
