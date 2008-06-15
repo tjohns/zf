@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9694 -->
 <sect1 id="introduction.installation">
 
     <title>Installation</title>
@@ -61,7 +62,7 @@
                 </para>
                 <para>
                     Die URL für den Stamm des Zend Framework SVN Repositories ist:
-                    <ulink url="http://framework.zend.com/svn/framework/trunk">http://framework.zend.com/svn/framework/trunk</ulink>
+                    <ulink url="http://framework.zend.com/svn/framework/standard/trunk">http://framework.zend.com/svn/framework/standard/trunk</ulink>
                 </para>
             </listitem>
         </itemizedlist>
