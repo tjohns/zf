@@ -80,6 +80,25 @@
             Hinweise die Entscheidung vereinfachen.
         </para>
 
+        <note> 
+            <para>
+                Wenn man den Adapter auswählt sollte man auch auf das Verwendete Encoding achten.
+                Selbst wenn Zend Framework UTF-8 als Standard Encoding definiert besteht manchmal die
+                Notwendigkeit andere Encodings zu verwenden. <code>Zend_Translate</code> ändert kein
+                Encoding welches in Quelldateien definiert ist was bedeutet das, wenn eine Gettext Quelle
+                auf ISO-8859-1 aufgebaut ist, die Strings auch in diesem Encoding zurückgegeben werden
+                ohne das diese Konvertiert werden. Es gibt nur eine Einschränkung: 
+            </para> 
+
+            <para>
+                Wenn XML basierende Quellformate wie TMX oder XLIFF verwendet werden muß das Encoding in
+                den XML Dateiheadern definiert werden weil XML Dateien ohne definiertes Encoding durch jeden
+                Parser standardmäßig als UTF-8 angesehen werden. Man sollte auch darauf achten das aktuell
+                das Encoding von XML Dateien auf die Encodings limitiert ist welche durch PHP unterstützt
+                werden. Das sind aktuell UTF-8, ISO-8859-1 und US-ASCII.
+            </para> 
+        </note> 
+
         <sect3 id="zend.translate.adapter.array">
 
             <title>Zend_Translate_Adapter_Array</title>
