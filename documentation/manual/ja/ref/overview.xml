@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9630 -->
+<!-- EN-Revision: 9658 -->
 <sect1 id="introduction.overview">
 
     <title>概要</title>
@@ -31,8 +31,8 @@
         また十分にテスト済みの仕組みを使用することができます。
     </para>
     <para>
-        Zend Framework プロジェクトの主なスポンサーは <a href="http://www.zend.com">
-        Zend Technologies</a> ですが、
+        Zend Framework プロジェクトの主なスポンサーは <ulink url="http://www.zend.com">
+        Zend Technologies</ulink> ですが、
         それ以外にも多くの企業がコンポーネントを提供したり機能を追加したりしています。
         Google や Microsoft そして StikeIron といった企業は、
         Zend と提携してウェブサービスへのインターフェイスやその他の技術を提供しています。
@@ -41,9 +41,9 @@
     <para>
         Zend Framework がこれらの仕組みを提供できるのもすべて、
         活発な ZF コミュニティのおかげです。コミュニティのメンバーは、
-        <a href="http://framework.zend.com/archives">メーリングリスト</a> や
-        <a href="http://www.zftalk.com">
-        IRC チャネル</a>、そしてその他の掲示板などで活動しています。
+        <ulink url="http://framework.zend.com/archives">メーリングリスト</ulink>や
+        <ulink url="http://www.zftalk.com">
+        IRC チャネル</ulink>、そしてその他の掲示板などで活動しています。
         ZF に対して何か質問がある方は、これらのいずれかに参加してみるといいでしょう。
     </para>
 </sect1>
