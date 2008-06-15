@@ -57,7 +57,7 @@
                 </para>
                 <para>
                     The URL for the trunk of the Zend Framework SVN repository is:
-                    <ulink url="http://framework.zend.com/svn/framework/trunk">http://framework.zend.com/svn/framework/trunk</ulink>
+                    <ulink url="http://framework.zend.com/svn/framework/standard/trunk">http://framework.zend.com/svn/framework/standard/trunk</ulink>
                 </para>
             </listitem>
         </itemizedlist>
