@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9260 -->
+<!-- EN-Revision: 9684 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache のバックエンド</title>
 
@@ -114,7 +114,7 @@
                               メタデータ配列の内部最大サイズを設定します
                               (よくわからない場合はこの値を変更してはいけません)。
                           </entry>
-                      </row>                     
+                      </row>
                   </tbody>
               </tgroup>
           </table>
@@ -236,6 +236,54 @@
         <para>
             このバックエンドではオプションを使用しません。
         </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.xcache">
+        <title>Zend_Cache_Backend_Xcache</title>
+        <para>
+            このバックエンドは、キャッシュレコードを共有メモリに保存する際に
+            <ulink url="http://xcache.lighttpd.net/">XCache</ulink>
+            拡張モジュールを使用します
+            (当然、このバックエンドを使うにはこの拡張モジュールが必要となります)。
+        </para>
+        <para>
+            注意: このバックエンドでは、今のところ "タグ" がサポートされていません。
+            また、引数 "doNotTestCacheValidity=true" もサポートされていません。
+        </para>
+        <para>
+            使用可能なオプションは次のとおりです。
+        </para>
+        <table id="zend.cache.backends.xcache.table">
+            <title>Xcache バックエンドのオプション</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>オプション</entry>
+                        <entry>データ型</entry>
+                        <entry>デフォルト値</entry>
+                        <entry>説明</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>user</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.user です。clean() メソッドを使う際に必要です。
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>password</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.pass (MD5 ではない平文形式) です。
+                              clean() メソッドを使う際に必要です。
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
     </sect2>
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
