@@ -210,6 +210,50 @@
             此后端没有选项.
         </para>
     </sect2>
+        <sect2 id="zend.cache.backends.xcache">
+        <title>Zend_Cache_Backend_Xcache</title>
+        <para>
+            整个后端通过 <ulink url="http://xcache.lighttpd.net/">XCache</ulink> 扩展（它当然需要使用这个后端）
+            在共享内存里存储了缓存记录。
+        </para>
+        <para>
+            小心：用这个后端，目前不支持 ”tags“，因为 "doNotTestCacheValidity=true" 参数。
+        </para>
+        <para>
+            可用的选项如下：
+        </para>
+        <table id="zend.cache.backends.xcache.table">
+            <title>Xcache backend 选项</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>选项</entry>
+                        <entry>数据类型</entry>
+                        <entry>缺省值</entry>
+                        <entry>描述</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>user</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.user, necessary for the clean() method
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>password</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              xcache.admin.pass (in clear form, not MD5), necessary for the clean() method
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
         <para>
