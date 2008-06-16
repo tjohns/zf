@@ -174,13 +174,13 @@ $filtered = $element->getValue();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Concrete filter instance:
+// 具体的过滤器实例：
 $element->addFilter(new Zend_Filter_Alnum());
 
-// Fully qualified class name:
+// 合格的全类名：
 $element->addFilter('Zend_Filter_Alnum');
 
-// Short filter name:
+// 短过滤器名：
 $element->addFilter('Alnum');
 $element->addFilter('alnum');
 ?>]]></programlisting>
