@@ -1,18 +1,16 @@
-﻿<sect1 id="zend.pdf.usage">
+<sect1 id="zend.pdf.usage">
     <title>Exemple d'utilisation du module Zend_Pdf</title>
-    <para>
-     Cette section propose un exemple d'utilisation du module <code>Zend_Pdf</code>.
-    </para>
 
-    <para>
-     Le code source de l'exemple est disponible dans le fichier <filename>demos/Zend/Pdf/demo.php</filename>.
-    </para>
-    <para>
-     Il y a aussi un fichier <filename>test.pdf</filename>, qui peut être utilisé pour réaliser des tests.
-    </para>
+    <para>Cette section propose un exemple d'utilisation du module <code>Zend_Pdf</code>.</para>
+
+    <para>Le code source de l'exemple est disponible dans le fichier
+    <filename>demos/Zend/Pdf/demo.php</filename>.</para>
+
+    <para>Il y a aussi un fichier <filename>test.pdf</filename>, qui peut être utilisé pour réaliser des tests.</para>
 
     <example id="zend.pdf.usage.example-1">
         <title>Exemple d'utilisation du module Zend_Pdf</title>
+
         <programlisting role="php"><![CDATA[<?php
 /**
  * @package Zend_Pdf
@@ -55,8 +53,17 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32)
 
-// Crée un nouvel objet image
-$stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+try {
+    // Crée un nouvel objet image
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+} catch (Zend_Pdf_Exception $e) {
+    // Exemple de gestion des exceptions lors du chargement d'image
+    if ($e->getMessage() != 'Image extension is not installed.' &&
+        $e->getMessage() != 'JPG support is not configured properly.') {
+        throw $e;
+    }
+    $stampImage = null;
+}
 
 // Marque la page comme modifiée
 foreach ($pdf->pages as $page){
@@ -66,7 +73,9 @@ foreach ($pdf->pages as $page){
 
     $page->saveGS();
     $page->clipCircle(550, -10, 50);
-    $page->drawImage($stampImage, 500, -60, 600, 40);
+    if ($stampImage != null) {
+        $page->drawImage($stampImage, 500, -60, 600, 40);
+    }
     $page->restoreGS();
 
     $page->drawText('Modified by Zend Framework!', 150, 0);
@@ -141,8 +150,6 @@ if (isset($argv[2])) {
     $pdf->save($argv[2]);
 } else {
     $pdf->save($argv[1], true ); /* met à jour */
-}]]>
-        </programlisting>
+}]]></programlisting>
     </example>
-
 </sect1>
