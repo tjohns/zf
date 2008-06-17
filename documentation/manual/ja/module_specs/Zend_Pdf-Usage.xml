@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9715 -->
 <sect1 id="zend.pdf.usage">
     <title>Zend_Pdf モジュールの使用例</title>
     <para>
@@ -57,8 +58,17 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
-// 新しい画像オブジェクトを作成します。
-$stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+try {
+    // 新しい画像オブジェクトを作成します。
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+} catch (Zend_Pdf_Exception $e) {
+    // 画像読み込み時の例外処理の例
+    if ($e->getMessage() != 'Image extension is not installed.' &&
+        $e->getMessage() != 'JPG support is not configured properly.') {
+        throw $e;
+    }
+    $stampImage = null;
+}
 
 // ページに修正マークをつけます。
 foreach ($pdf->pages as $page){
