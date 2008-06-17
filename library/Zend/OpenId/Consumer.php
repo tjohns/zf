@@ -198,7 +198,7 @@ class Zend_OpenId_Consumer
         if ($version < 2.0 && !isset($params["openid_claimed_id"])) {
             if ($this->_session === null) {
                 require_once "Zend/Session/Namespace.php";
-                $this->_session = new Zend_Session_Namespace("openid");
+                $this->_session = new Zend_Session_Namespace("zend_openid");
             }
             $session = $this->_session;
             if ($session->identity == $identity) {
@@ -771,7 +771,7 @@ class Zend_OpenId_Consumer
         if ($version <= 2.0) {
             if ($this->_session === null) {
                 require_once "Zend/Session/Namespace.php";
-                $this->_session = new Zend_Session_Namespace("openid");
+                $this->_session = new Zend_Session_Namespace("zend_openid");
             }
             $session = $this->_session;
             $session->identity = $id;
