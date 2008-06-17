@@ -57,8 +57,17 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
-// Create new image object
-$stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+try {
+    // Create new image object
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+} catch (Zend_Pdf_Exception $e) {
+    // Example of operating with image loading exceptions. 
+    if ($e->getMessage() != 'Image extension is not installed.' &&
+        $e->getMessage() != 'JPG support is not configured properly.') {
+        throw $e;
+    }
+    $stampImage = null;
+}
 
 // Mark page as modified
 foreach ($pdf->pages as $page){
@@ -68,7 +77,9 @@ foreach ($pdf->pages as $page){
 
     $page->saveGS();
     $page->clipCircle(550, -10, 50);
-    $page->drawImage($stampImage, 500, -60, 600, 40);
+    if ($stampImage != null) {
+        $page->drawImage($stampImage, 500, -60, 600, 40);
+    }
     $page->restoreGS();
 
     $page->drawText('Modified by Zend Framework!', 150, 0);
