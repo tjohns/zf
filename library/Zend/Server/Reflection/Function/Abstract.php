@@ -339,6 +339,11 @@ abstract class Zend_Server_Reflection_Function_Abstract
             }
         }
 
+        if (count($paramTypesTmp) != $paramCount) {
+            throw new Zend_Server_Reflection_Exception(
+               'Variable number of arguments is not supported for services (except optional parameters). '
+             . 'Number of function arguments must currespond to actual number of arguments described in a docblock.');
+        }
 
         $paramTypes = array();
         foreach ($paramTypesTmp as $i => $param) {
