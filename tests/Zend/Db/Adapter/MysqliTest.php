@@ -236,8 +236,6 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      */
     public function testZF2101()
     {
-        $this->markTestSkipped($this->getDriver() . ' has inconsistent results for this test');
-        /*
         $params = $this->_util->getParams();
         $db = Zend_Db::factory($this->getDriver(), $params);
         
@@ -259,7 +257,6 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $stmt->bindParam(1, $customerId);
         $stmt->execute();
         $this->assertEquals(1, $result[0]['product_id']);
-        */
     }
 
     public function testAdapterAlternateStatement()

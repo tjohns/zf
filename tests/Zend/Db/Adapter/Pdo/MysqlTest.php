@@ -293,6 +293,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $stmt = $db->prepare('CALL zf_test_procedure(:customerId)');
         $stmt->bindParam('customerId', $customerId, PDO::PARAM_INT);
         $stmt->execute();
+        $result = $stmt->fetchAll();
         $this->assertEquals(1, $result[0]['product_id']);
     }
 
