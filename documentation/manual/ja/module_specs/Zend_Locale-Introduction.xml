@@ -170,7 +170,7 @@
         <example id="zend.locale.representation.example-1">
             <title>特定のロケールの選択</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend_Locale';
+require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_DE'); // ドイツ語 _ ドイツ]]>
             </programlisting>
         </example>

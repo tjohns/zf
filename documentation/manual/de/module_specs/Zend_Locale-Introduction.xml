@@ -154,7 +154,7 @@
         <example id="zend.locale.representation.example-1">
             <title>Auswählen eines speziellen Gebietsschemas</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend_Locale';
+require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland]]>
             </programlisting>
         </example>
