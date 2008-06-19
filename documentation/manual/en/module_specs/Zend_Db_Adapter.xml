@@ -1582,6 +1582,37 @@ try {
             </tgroup>
         </table>
 
+        <note>
+            <title>How the IDENTITY metadata field relates to specific RDBMS</title>
+            <para>
+                The IDENTITY metadata field was chosen as an 'idiomatic' term to
+                represent a relation to surrogate keys. This field can be
+                commonly known by the following values:-
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>IDENTITY</code> - DB2, MSSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>AUTO_INCREMENT</code> - MySQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SERIAL</code> - PostgreSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SEQUENCE</code> - Oracle
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
         <para>
             If no table exists matching the table name and optional schema name
             specified, then <code>describeTable()</code> returns an empty array.
