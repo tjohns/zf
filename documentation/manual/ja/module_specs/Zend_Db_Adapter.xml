@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9189 -->
+<!-- EN-Revision: 9726 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1559,6 +1559,37 @@ try {
                 </tbody>
             </tgroup>
         </table>
+
+        <note>
+            <title>各 RDBMS における IDENTITY メタデータフィールドの対応</title>
+            <para>
+                IDENTITY メタデータフィールドの名前は、サロゲートキーを表す
+                '慣用的な' 名前として選択されたものです。
+                このフィールドは、それぞれの RDBMS においては以下のような名前で知られています。
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>IDENTITY</code> - DB2, MSSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>AUTO_INCREMENT</code> - MySQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SERIAL</code> - PostgreSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SEQUENCE</code> - Oracle
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
 
         <para>
             指定したテーブル名とスキーマ名に対応するテーブルが存在しない場合は、
