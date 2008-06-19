@@ -178,13 +178,13 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         // get the value used as an escaped quote,
         // e.g. \' or ''
         $qe = $this->_adapter->quote($q);
-        $qe = substr($q, 1, 2);
+        $qe = substr($qe, 1, 2);
         $qe = str_replace('\\', '\\\\', $qe);
 
         // get a version of the SQL statement with all quoted
         // values and delimited identifiers stripped out
         // remove "foo\"bar"
-        $sql = preg_replace("/$d($de|[^$d])*$d/", '', $sql);
+        $sql = preg_replace("/$q($qe|\\\\{2}|[^$q])*$q/", '', $sql);
         // remove 'foo\'bar'
         if (!empty($q)) {
             $sql = preg_replace("/$q($qe|[^$q])*$q/", '', $sql);
@@ -265,7 +265,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function bindValue($parameter, $value, $type = null)
     {
-        return $this->bindParam($parameter, $value);
+        return $this->bindParam($parameter, $value, $type);
     }
 
     /**

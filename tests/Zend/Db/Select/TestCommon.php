@@ -327,6 +327,24 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         }
     }
 
+    protected function _selectColumnWithColonQuotedParameter()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where($product_id . ' = ?', "as'as:x");
+        return $select;
+    }
+
+    public function testSelectColumnWithColonQuotedParameter()
+    {
+        $stmt = $select = $this->_selectColumnWithColonQuotedParameter()
+            ->query();
+        $result = $stmt->fetchAll();
+        $this->assertEquals(0, count($result));
+    }
+
     /**
      * Test support for FOR UPDATE
      * e.g. from('schema.table').
