@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9585 -->
+<!-- EN-Revision: 9745 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -477,6 +477,12 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         </example>
 
         <para>
+            CSV アダプタで使用できるオプションは、
+            <code>'delimiter'</code> と <code>'limit'</code> そして
+            <code>'enclosure'</code> の 3 つです。
+        </para>
+
+        <para>
             CSV 文字列の標準の区切り文字は '<code>;</code>' 記号です
             <footnote>
                 <para>
@@ -485,14 +491,21 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
                 </para>
             </footnote>。
             しかし、必ずこれでなければならないというわけではありません。
-            オプション '<code>separator</code>' を使用すると、
+            オプション '<code>delimiter</code>' を使用すると、
             別の区切り文字を使用することができます。
         </para>
 
         <para>
-            区切り文字を翻訳文字列に埋め込む必要がある場合は、
-            それをダブルクォートで囲みます。
-            詳細は、次の例を参照ください。
+            CSV ファイルのデフォルトの行長制限は '<code>0</code>' です。
+            この場合は、CSV ファイルの行末を自動的に検出します。
+            '<code>limit</code>' オプションに何らかの値を設定すると
+            CSV ファイルの読み込みが高速になりますが、
+            その長さを超えた部分は切り捨てられます。
+        </para>
+
+        <para>
+            CSV ファイルの値を囲む文字のデフォルトは '<code>"</code>' です。
+            別の文字を使用する場合は '<code>enclosure</code>' オプションを設定します。
         </para>
 
         <example id="zend.translate.using.source.csv.example2">
@@ -508,7 +521,7 @@ message2,"Nachricht,2"
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('separator' => ','));
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
 $translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
@@ -596,11 +609,23 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                     </row>
                     <row>
                         <entry>Csv</entry>
-                        <entry>separator</entry>
+                        <entry>delimiter</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
                         <entry>
                             ソースと翻訳を区切る際に使用する記号を指定します。
                         </entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>length</entry>
+                        <entry><emphasis role="strong">0</emphasis></entry>
+                        <entry>CSV の行の長さの最大値を定義します。0 にすると、自動的に検出します。</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>enclosure</entry>
+                        <entry><emphasis role="strong">"</emphasis></entry>
+                        <entry>値を囲むための文字を定義します。デフォルトはダブルクォートです。</entry>
                     </row>
                 </tbody>
             </tgroup>
