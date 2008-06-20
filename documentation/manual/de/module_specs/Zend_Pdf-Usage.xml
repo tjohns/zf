@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9715 -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
@@ -57,8 +58,17 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
-// Erstelle ein neues Grafikobjekt
-$stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+try {
+    // Erstelle ein neues Grafikobjekt
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+} catch (Zend_Pdf_Exception $e) {
+    // Beispiel wie man mit Ladefehlern bei Grafiken umgeht. 
+    if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
+        $e->getMessage() != 'JPG Unterstützung ist nicht richtig konfiguriert.') {
+        throw $e;
+    }
+    $stampImage = null;
+}
 
 // Kennzeichne Seiten als verändert
 foreach ($pdf->pages as $page){
@@ -68,7 +78,9 @@ foreach ($pdf->pages as $page){
 
     $page->saveGS();
     $page->clipCircle(550, -10, 50);
-    $page->drawImage($stampImage, 500, -60, 600, 40);
+    if ($stampImage != null) {
+        $page->drawImage($stampImage, 500, -60, 600, 40);
+    }
     $page->restoreGS();
 
     $page->drawText('Modified by Zend Framework!', 150, 0);

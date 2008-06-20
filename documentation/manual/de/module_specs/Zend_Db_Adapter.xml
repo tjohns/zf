@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9726 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1453,6 +1454,37 @@ try {
                 </tbody>
             </tgroup>
         </table>
+
+        <note>
+            <title>Wie das IDENTITY Metadata Feld zu speziellen RDBMS zuzuordnen ist</title>
+            <para>
+                Das IDENTITY Metadata Feld wurd gewählt als ein 'idiomatischer' Ausdruck um eine Relation
+                von Ersatzschlüsseln zu repräsentieren. Dieses Feld ist üblicherweise durch die
+                folgenden Werte bekannt:-
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>IDENTITY</code> - DB2, MSSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>AUTO_INCREMENT</code> - MySQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SERIAL</code> - PostgreSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SEQUENCE</code> - Oracle
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
 
         <para>
             Wenn keine Tabelle mit dem Tabellennamen und dem optional angegebenen Schemanamen existiert, gibt
