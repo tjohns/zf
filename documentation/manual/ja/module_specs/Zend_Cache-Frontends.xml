@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9514 -->
+<!-- EN-Revision: 9744 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -195,6 +195,48 @@ if (!($data = $cache->load($id2))) {
 
 }
 echo($data);]]>
+            </programlisting>
+            <para>
+                特殊な値 (boolean 値に "automatic_serialization" オプションを指定したものなど)
+                や空の文字列をキャッシュしたい場合は、
+                上で示したコンパクトな例を使用することはできません。
+                キャッシュレコードを正式に調べる必要があります。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+// コンパクトな構文 (空の文字列や boolean をキャッシュする場合はうまくいきません)
+if (!($data = $cache->load($id))) {
+
+    // キャッシュが存在しませんでした
+
+    // [...] $data を作成します
+
+    $cache->save($data);
+
+}
+
+// $data に対して何らかの操作をします
+
+// [...]
+
+// 完全な構文 (どんな場合でも動作します)
+if (!($cache->test($id))) {
+
+    // キャッシュが存在しませんでした
+
+    // [...] $data を作成します
+
+    $cache->save($data);
+
+} else {
+
+    // キャッシュが見つかりました
+
+    $data = $cache->load($id);
+
+}
+
+// $data に対して何らかの操作をします]]>
             </programlisting>
         </sect3>
     </sect2>
