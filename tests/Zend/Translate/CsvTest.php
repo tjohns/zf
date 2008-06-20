@@ -51,7 +51,7 @@ class Zend_Translate_CsvTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Message 1 (en)', $adapter->_(        'Message 1'));
         $this->assertEquals('Message 5 (en)', $adapter->translate('Message 5'));
 
-        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en2.csv', 'en', array('separator' => ','));
+        $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en2.csv', 'en', array('delimiter' => ','));
         $this->assertEquals('Message 1 (en)',  $adapter->translate('Message 1' ));
         $this->assertEquals('Message 4 (en)',  $adapter->translate('Message 4,'));
         $this->assertEquals('Message 5, (en)', $adapter->translate('Message 5' ));
@@ -89,7 +89,9 @@ class Zend_Translate_CsvTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(array('separator' => ';', 'testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en'), $adapter->getOptions());
+        $this->assertEquals(array('delimiter' => ';', 'testoption' => 'testkey', 'clear' => false,
+                                  'scan' => null, 'locale' => 'en', 'length' => 0, 'enclosure' => '"'),
+                                  $adapter->getOptions());
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }

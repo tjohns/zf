@@ -479,15 +479,27 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         </example>
 
         <para>
-            The standard separator for CSV string is the '<code>;</code>' sign.
-            But it has not to be that sign. With the option '<code>separator</code>'
-            you can decide to use another separator sign.
+            There are three different options for the CSV adapter.
+            You can set <code>'delimiter'</code>, <code>'limit'</code> and
+            <code>'enclosure'</code>.
         </para>
 
         <para>
-            If you have to have the separator sign within your translation string you
-            just have to set in within a doublequote. See the following example
-            for details
+            The default delimiter for CSV string is the '<code>;</code>' sign.
+            But it has not to be that sign. With the option '<code>delimiter</code>'
+            you can decide to use another delimiter sign.
+        </para>
+
+        <para>
+            The default limit for a line within a CSV file is '<code>0</code>'. This means
+            that the end of a CSV line is searched automatically. If you set the
+            '<code>limit</code>' option to any value, then the CSV file will be
+            read faster, but any line exceeding this limit will be truncated.
+        </para>
+
+        <para>
+            The default enclosure to use for CSV files is '<code>"</code>'. You can
+            set a different one with the option '<code>enclosure</code>'.
         </para>
 
         <example id="zend.translate.using.source.csv.example2">
@@ -503,7 +515,7 @@ message2,"Nachricht,2"
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('separator' => ','));
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
 $translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
@@ -579,9 +591,21 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                     </row>
                     <row>
                         <entry>Csv</entry>
-                        <entry>separator</entry>
+                        <entry>delimiter</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
-                        <entry>Defines which sign is used for seperating source and translation</entry>
+                        <entry>Defines which sign is used as delimiter for seperating source and translation</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>length</entry>
+                        <entry><emphasis role="strong">0</emphasis></entry>
+                        <entry>Defines the maximum length of a csv line. When set to 0 it will be detected automatically</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>enclosure</entry>
+                        <entry><emphasis role="strong">"</emphasis></entry>
+                        <entry>Defines the enclosure character to be used. Defaults to a doublequote</entry>
                     </row>
                 </tbody>
             </tgroup>

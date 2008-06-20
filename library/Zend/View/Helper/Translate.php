@@ -73,18 +73,22 @@ class Zend_View_Helper_Translate
 
         $options = func_get_args();
         array_shift($options);
-
-        $count   = count($options);
         $locale  = null;
         if ($count > 0) {
             if (Zend_Locale::isLocale($options[$count - 1])) {
                 $locale = array_pop($options);
             }
         }
+
         if ((count($options) == 1) and (is_array($options[0]))) {
             $options = $options[0];
         }
+
         $message = $translate->translate($messageid, $locale);
+        if ($count === 0) {
+            return $message;
+        }
+
         return vsprintf($message, $options);
     }
 

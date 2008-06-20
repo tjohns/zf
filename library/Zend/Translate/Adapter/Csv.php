@@ -45,7 +45,9 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
      */
     public function __construct($data, $locale = null, array $options = array())
     {
-        $this->_options['separator'] = ";";
+        $this->_options['delimiter'] = ";";
+        $this->_options['length']    = 0;
+        $this->_options['enclosure'] = '"';
         parent::__construct($data, $locale, $options);
     }
 
@@ -71,7 +73,7 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
             throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
         }
 
-        while(($data = fgetcsv($this->_file, 4000, $options['separator'])) !== false) {
+        while(($data = fgetcsv($this->_file, $options['length'], $options['delimiter'], $options['enclosure'])) !== false) {
             if (substr($data[0], 0, 1) === '#') {
                 continue;
             }
