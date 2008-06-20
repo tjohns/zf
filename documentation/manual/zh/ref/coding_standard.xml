@@ -1,5 +1,5 @@
 <appendix id="coding-standard">
-  <title>Zend Framework PHP 编码标准 </title>
+  <title>Zend Framework 的 PHP 编码标准 </title>
     <sect1 id="coding-standard.overview">
         <title> 绪论 </title>
 
@@ -7,8 +7,16 @@
             <title> 适用范围 </title>
 
             <para>
-                本文档提供的编码指南是给参与 Zend Framework 的开发者和团队使用的，它包含下列内容：
-
+                本文档提供的代码格式和文档的指南是给参与 Zend Framework 的个人和团队使用的，许多使用 Zend Framework 的开发者
+                也发现编码标准很有用，因为他们的代码风格和 Zend Framework 的代码保持一致。值得注意的是它要求切实努力来全面
+                详细说明编码标准。
+                 
+                注：有时候开发者认为在最详细的设计级别上标准的建立比标准所建议的更重要。Zend Framework 编码标准的指南
+                实践上很好地工作于 ZF 项目。你可以根据我们的 <ulink url="http://framework.zend.com/license">license</ulink> 中的条款来修改或使用它们。
+            </para>
+            <para>
+                ZF 编码标准的话题包括：
+                 
                 <itemizedlist>
                     <listitem>
                         <para>PHP File 文件格式</para>
@@ -33,7 +41,7 @@
             <title> 目标 </title>
 
             <para>
-                好的编码标准对任何开发项目都很重要，特别是很多开发者共同在同一项目上工作。编码标准帮助确保代码的高质量、少 bug 和容易维护。
+                编码标准对任何开发项目都很重要，特别是很多开发者在同一项目上工作。编码标准帮助确保代码的高质量、少 bug 和容易维护。
             </para>
         </sect2>
     </sect1>
@@ -45,25 +53,26 @@
             <title> 常规 </title>
 
             <para>
-                对于只包含有 PHP 代码的文件，结束标志（"?>"）是不允许存在的，PHP自身不需要（"?>"）, 这样做, 可以防止它的末尾的被意外地注入空白并显示输出。
+                对于只包含有 PHP 代码的文件，结束标志（"?>"）是不允许存在的，PHP自身不需要（"?>"）, 这样做, 可以防止它的末尾的被意外地注入相应。
             </para>
 
             <para>
-                <emphasis> 重要：</emphasis> 由 <code>__HALT_COMPILER()</code> 允许的任意的二进制代码的内容被 Zend Framework PHP 文件或由它们产生的文件禁止。这个功能的使用只对特殊的安装脚本开放。
+                <emphasis> 重要：</emphasis> 由 <code>__HALT_COMPILER()</code> 允许的任意的二进制代码的内容被 Zend Framework 中的 PHP 文件或由它们产生的文件禁止。
+                这个功能的使用只对一些安装脚本开放。
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.indentation">
             <title> 缩进 </title>
 
-            <para> 使用四个空格的缩进，而不使用制表符 TAB 。</para>
+            <para> 缩进由四个空格组成，禁止使用制表符 TAB 。</para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
             <title> 行的最大长度 </title>
 
             <para>
-                一行 80 字符以内是比较合适, 长点也可以, 但最多为 120 个字符。
+                一行 80 字符以内是比较合适，就是说，ZF 的开发者应当努力在可能的情况下保持每行代码少于 80 个字符，在有些情况下，长点也可以, 但最多为 120 个字符。
             </para>
         </sect2>
 
@@ -71,13 +80,11 @@
             <title> 行结束标志 </title>
 
             <para>
-                行结束标志只能是标准的 unix 文本文件的换行，换行符在文件中表示为 10，或16进制的 0x0A。
+                行结束标志遵循 Unix 文本文件的约定，行必需以单个换行符（LF）结束。换行符在文件中表示为 10，或16进制的 0x0A。
             </para>
 
-            <para> 不要使用 Macintosh 电脑的回车如（0x0D）。</para>
-
             <para>
-                不要使用 Windows 电脑的回车换行组合如（0x0D,0x0A）。
+                注：不要使用 苹果操作系统的回车（0x0D）或 Windows 电脑的回车换行组合如（0x0D,0x0A）。
             </para>
         </sect2>
     </sect1>
@@ -89,11 +96,11 @@
             <title> 类 </title>
 
             <para>
-                Zend Framework 的类命名总是对应于其所属文件的目录结构的，Zend Framework 的根目录是 “Zend/”，所有的类在其下按等级存放。
+                Zend Framework 的类命名总是对应于其所属文件的目录结构的，ZF 标准库的根目录是 “Zend/”，ZF 特别（extras）库的根目录是 "ZendX/"，所有 Zend Framework 的类在其下按等级存放。
             </para>
 
             <para>
-                类名只允许有字母数字字符，但不鼓励使用数字。下划线只允许做路径分隔符，例如 Zend/Db/Table.php 文件里对应的类名称是 Zend_Db_Table。
+                类名只允许有字母数字字符，在大部分情况下不鼓励使用数字。下划线只允许做路径分隔符；例如 Zend/Db/Table.php 文件里对应的类名称是 Zend_Db_Table。
             </para>
 
             <para>
@@ -101,34 +108,13 @@
             </para>
 
             <para>
-                由 Zend 或其参与 Zend Framework 项目的伙伴公司发行的类必须以 "Zend_" 开头并且必须按等级放在 "Zend/"目录下。
+                这些约定为 Zend Framework 定义了一个伪命名空间机制。如果对开发者在他们的程序中切实可行，Zend Framework 将采用 PHP 命名空间特性（如果有的话）。
             </para>
 
             <para>
-                可接受的类名的例子：
+                参见在标准和特别库中类名作为类名约定的例子。
 
-                <programlisting role="php"><![CDATA[
-Zend_Db
-
-Zend_View
-
-Zend_View_Helper]]>
-                </programlisting>
-
-                <emphasis>重要：</emphasis> 最终用户写的代码，不要以 "Zend_" 开头。
-            </para>
-        </sect2>
-
-        <sect2 id="coding-standard.naming-conventions.interfaces">
-            <title> 接口 </title>
-
-            <para>
-                接口类也必须遵循同样的约定（如上所述），但必须以 "Interface" 结尾，比如这些例子：
-
-                <programlisting role="php"><![CDATA[
-Zend_Log_Adapter_Interface
-Zend_Controller_Dispatcher_Interface]]>
-                </programlisting>
+                <emphasis>重要：</emphasis> 依靠 ZF 库展开的代码，但又不是标准或特别库的一部分（例如程序代码或不是 Zend 发行的库），不要以 "Zend_" 或 "ZendX_" 开头。
             </para>
         </sect2>
 
@@ -136,11 +122,11 @@ Zend_Controller_Dispatcher_Interface]]>
             <title> 文件名 </title>
 
             <para>
-                对于其它文件，只有字母数字字符、下划线和短横线（"-"）可用，空格是不允许的。
+                对于其它文件，只有字母数字字符、下划线和短横线（"-"）可用，空格是绝对不允许的。
             </para>
 
             <para>
-                包含任何 PHP 代码的任何文件必须以 ".php" 扩展名结尾。这些例子给出可接受的文件名，它们包含的类名都在上述章节的例子中：
+                包含任何 PHP 代码的任何文件应当以 ".php" 扩展名结尾，众所周知的视图脚本除外。下面这些例子给出 Zend Framework 类可接受的文件名：
 
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
@@ -158,7 +144,7 @@ Zend/View/Helper/FormRadio.php]]>
             <title> 函数和方法 </title>
 
             <para>
-                函数名只包含字母数字字符，但不鼓励使用数字，下划线是不允许的。
+                函数名只包含字母数字字符，下划线是不允许的。数字是允许的但大多数情况下不鼓励。
             </para>
 
             <para>
@@ -166,7 +152,7 @@ Zend/View/Helper/FormRadio.php]]>
             </para>
 
             <para>
-                我们鼓励使用冗长的名字，这样容易理解代码。
+                我们一般鼓励使用冗长的名字，函数名应当长到足以说明函数的意图和行为。
             </para>
 
             <para>
@@ -182,15 +168,16 @@ widgetFactory()]]>
             </para>
 
             <para>
-                对于面向对象编程，对象的访问器总是以 "get" 或 "set" 为前缀。当使用设计模式如 单态模式（singleton）或工厂模式（factory），方法的名字应当包含模式的名字，这样容易从名字识别设计模式。
+                对于面向对象编程，实例或静态变量的访问器总是以 "get" 或 "set" 为前缀。在设计模式实现方面，如单态模式（singleton）或工厂模式（factory），
+                方法的名字应当包含模式的名字，这样名字更能描述整个行为。
             </para>
             
             <para>
-                在对象中的方法，声明为 "private" 或 "protected" 的， 名称的首字符必须是一个单个的下划线，这是唯一的下划线在方法名字中的用法。声明为 "public" 的从不以下划线开头。
+                在对象中的方法，声明为 "private" 或 "protected" 的， 名称的首字符必须是一个单个的下划线，这是唯一的下划线在方法名字中的用法。声明为 "public" 的从不包含下划线。
             </para>
 
             <para>
-                全局函数 ("floating functions") 允许但不鼓励，建议把这类函数封装到静态类里。
+                全局函数 (如："floating functions") 允许但大多数情况下不鼓励，建议把这类函数封装到静态类里。
                 
             </para>
         </sect2>
@@ -199,19 +186,19 @@ widgetFactory()]]>
             <title> 变量 </title>
 
             <para>
-                变量只包含数字字母字符，不鼓励使用数字，下划线不接受。
+                变量只包含数字字母字符，大多数情况下不鼓励使用数字，下划线不接受。
             </para>
 
             <para>
-                声明为 "private" 或 "protected" 的类成员变量名必须以一个单个下划线开头，这是唯一的下划线在变量名中的用法，声明为 "public" 的从不以下划线开头。
+                声明为 "private" 或 "protected" 的实例变量名必须以一个单个下划线开头，这是唯一的下划线在程序中的用法，声明为 "public" 的不应当以下划线开头。
             </para>
 
             <para>
-                象函数名（见上面 3.3 节）一样，变量名总以小写字母开头并遵循“驼峰式”命名约定。
+                对函数名（见上面 3.3 节）一样，变量名总以小写字母开头并遵循“驼峰式”命名约定。
             </para>
 
             <para>
-                我们鼓励使用冗长的名字，这样容易理解代码。除非在小循环里，不鼓励使用简洁的名字如 "$i" 和 "$n" 。如果一个循环超过 20 行代码，索引的变量名必须有个具有描述意义的名字。
+                我们一般鼓励使用冗长的名字，这样容易理解代码，开发者知道把数据存到哪里。除非在小循环里，不鼓励使用简洁的名字如 "$i" 和 "$n" 。如果一个循环超过 20 行代码，索引的变量名必须有个具有描述意义的名字。
             </para>
         </sect2>
 
@@ -227,11 +214,11 @@ widgetFactory()]]>
             </para>
 
             <para>
-                为加强可读性，常量中的单词必须以下划线分隔，例如可以这样 <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> 但不许这样 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code>。
+                常量中的单词必须以下划线分隔，例如可以这样 <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> 但不许这样 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code>。
             </para>
 
             <para>
-                常量必须通过 "const" 定义为类的成员，不鼓励使用 "define" 定义的全局常量。
+                常量必须通过 "const" 定义为类的成员，强烈不鼓励使用 "define" 定义的全局常量。
             </para>
         </sect2>
     </sect1>
@@ -262,7 +249,7 @@ widgetFactory()]]>
                 <title> 字符串文字 </title>
 
                 <para>
-                    当字符串是文字(不包含变量)，用单引号（ apostrophe ）来括起来：
+                    当字符串是文字(不包含变量)，应当用单引号（ apostrophe ）来括起来：
 
                     <programlisting role="php"><![CDATA[
 $a = 'Example String';]]>
@@ -274,13 +261,13 @@ $a = 'Example String';]]>
                 <title> 包含单引号（'）的字符串文字 </title>
 
                 <para>
-                    当文字字符串包含单引号（apostrophe ）就用双引号括起来，特别在 SQL 语句中：
+                    当文字字符串包含单引号（apostrophe ）就用双引号括起来，特别在 SQL 语句中有用：
                     
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
                     </programlisting>
 
-                    在转义单引号时，上述语法是首选的。
+                    在转义单引号时，上述语法是首选的，因为很容易阅读。
                 </para>
             </sect3>
 
@@ -288,7 +275,7 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                 <title> 变量替换 </title>
 
                 <para>
-                    变量替换有下面两种形式：
+                    变量替换有下面这些形式：
 
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello $name, welcome back!";
@@ -310,7 +297,7 @@ $greeting = "Hello ${name}, welcome back!";]]>
                 <title> 字符串连接 </title>
 
                 <para>
-                    字符串用 "." 操作符连接，在它的前后加上空格以提高可读性：
+                    字符串必需用 "." 操作符连接，在它的前后加上空格以提高可读性：
                         
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . ' ' . 'Technologies';]]>
@@ -318,7 +305,7 @@ $company = 'Zend' . ' ' . 'Technologies';]]>
                 </para>
 
                 <para>
-                    当用 "." 操作符连接字符串，代码可以分成多个行，也是为提高可读性。在这些例子中，每个连续的行应当由 whitespace 来填补，例如 "." 和 "=" 对齐：
+                    当用 "." 操作符连接字符串，鼓励把代码可以分成多个行，也是为提高可读性。在这些例子中，每个连续的行应当由 whitespace 来填补，例如 "." 和 "=" 对齐：
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
@@ -333,7 +320,7 @@ $sql = "SELECT `id`, `name` FROM `people` "
             <title> 数组 </title>
 
             <sect3 id="coding-standard.coding-style.arrays.numerically-indexed">
-                <title> 数字索引数组 Numerically Indexed Arrays</title>
+                <title> 数字索引数组 </title>
 
                 <para> 索引不能为负数 </para>
 
@@ -342,7 +329,7 @@ $sql = "SELECT `id`, `name` FROM `people` "
                 </para>
 
                 <para>
-                    当用 <code>array</code> 声明有索引的数组，在每个逗号的后面价格空格以提高可读性：
+                    当用 <code>array</code> 函数声明有索引的数组，在每个逗号的后面间隔空格以提高可读性：
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
@@ -350,7 +337,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                 </para>
 
                 <para>
-                    也可以用 "array" 声明多行有索引的数组，在每个连续行的开头要用空格填补对齐：
+                    可以用 "array" 声明多行有索引的数组，在每个连续行的开头要用空格填补对齐：
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
@@ -364,7 +351,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                 <title> 关联数组 </title>
 
                 <para>
-                    当用 声明关联数组，<code>array</code> 我们鼓励把代码分成多行，在每个连续行的开头用空格填补来对齐键和值：
+                    当用声明关联数组，<code>array</code> 我们鼓励把代码分成多行，在每个连续行的开头用空格填补来对齐键和值：
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
@@ -381,28 +368,28 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <title> 类的声明 </title>
 
                 <para>
-                    用下面的约定来命名类。
+                    用 Zend Framework 的命名约定来命名类。
                 </para><para>
-                    花括号总是从类名下一行开始。
+                    花括号应当从类名下一行开始(the "one true brace" form)。
                 </para><para>
                     每个类必须有一个符合 PHPDocumentor 标准的文档块。
                 </para><para>
-                    四个空格的缩进。
+                    类中所有代码必需用四个空格的缩进。
                 </para><para>
                     每个 PHP 文件中只有一个类。
                 </para><para>
-                    放另外的代码到类里允许但不鼓励。在这些文件中，用两行空格来分隔类和其它代码。                    
+                    放另外的代码到类里允许但不鼓励。在这样的文件中，用两行空格来分隔类和其它代码。                    
                 </para><para>
-                    这是个可接受的类的例子：
-
+                    下面是个可接受的类的例子：
+// 459 9506 － 441 9658 下次从这里开始
                     <programlisting role="php"><![CDATA[
 /**
  * Documentation Block Here
  */
 class SampleClass
 {
-    // entire content of class
-    // must be indented four spaces
+    // 类的所有内容
+    // 必需缩进四个空格
 }]]>
                     </programlisting>
                 </para>
@@ -412,11 +399,12 @@ class SampleClass
                 <title> 类成员变量 </title>
 
                 <para>
-                    必须用下面的变量名约定来命名类成员变量。
+                    必须用Zend Framework的变量名约定来命名类成员变量。
                 </para><para>
-                    变量的声明必须在类的顶部，要先于方法的声明。
+                    变量的声明必须在类的顶部，在方法的上方声明。
                 </para><para>
-                    不允许使用 <code>var</code> （因为 ZF 是基于 PHP 5 的 ），要用 <code>private</code>、 <code>protected</code> 或  <code>public</code>。直接访问变量允许但不鼓励，最好使用访问器 （set/get）。
+                    不允许使用 <code>var</code> （因为 ZF 是基于 PHP 5 的 ），要用 <code>private</code>、 <code>protected</code> 或  <code>public</code>。
+                    直接访问 public 变量是允许的但不鼓励，最好使用访问器 （set/get）。
                 </para>
             </sect3>
         </sect2>
@@ -425,18 +413,21 @@ class SampleClass
             <title> 函数和方法 </title>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.declaration">
-                <title> 函数和方方声明 </title>
+                <title> 函数和方法声明 </title>
 
                 <para>
-                    必须用下面的变量名约定来命名函数。
+                    必须用Zend Framework的函数名约定来命名函数。
                 </para><para>
                     在类中的函数必须用 <code>private</code>、 <code>protected</code> 或 <code>public</code> 声明它们的可见性。
                 </para><para>
-                    象类一样，花括号从函数名的下一行开始，函数名和括参数的圆括号中间没有空格。
-                </para><para>
+                    象类一样，花括号从函数名的下一行开始(the "one true brace" form)。
+                </para><para>  
+                    函数名和括参数的圆括号中间没有空格。
+                </para>
+                <para>
                     强烈反对使用全局函数。
                 </para><para>
-                    可接受的在类中的函数声明的例子：
+                    下面是可接受的在类中的函数声明的例子：
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -449,15 +440,15 @@ class Foo
      */
     public function bar()
     {
-        // entire content of function
-        // must be indented four spaces
+        // 函数的所有内容
+        // 必需缩进四个空格
     }
 }]]>
                     </programlisting>
                 </para>
 
                 <para>
-                    <emphasis>注：</emphasis> 传址（Pass-by-reference）只在函数声明中允许：
+                    <emphasis>注：</emphasis> 传址（Pass-by-reference）是在方法声明中允许的唯一的参数传递机制。
                     
                     <programlisting role="php"><![CDATA[
 /**
@@ -475,7 +466,7 @@ class Foo
                 </para>
 
                 <para>
-                    传址在调用时是禁止的。
+                    传址在调用时是严格禁止的。
                 </para>
 
 
@@ -513,7 +504,7 @@ class Foo
                 <title> 函数和方法的用法 </title>
 
                 <para>
-                    函数的参数用逗号和紧接着的空格分开，下面的例子中的函数带有三个参数：
+                    函数的参数应当用逗号和紧接着的空格分开，下面可接受的调用的例子中的函数带有三个参数：
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]>
@@ -521,9 +512,10 @@ threeArguments(1, 2, 3);]]>
                 </para>
 
                 <para>
-                    传址方式在调用的时候是禁止的，参见函数的声明一节如何正确使用函数的传址方式。
-                </para><para>
-                    带有数组参数的函数，函数的调用可包括 "array" 并分成多行来提高可读性，同时，书写数组的标准仍然适用：
+                    传址方式在调用的时候是严格禁止的，参见函数的声明一节如何正确使用函数的传址方式。
+                </para>
+                <para>
+                    带有数组参数的函数，函数的调用可包括 "array" 提示并可以分成多行来提高可读性，同时，书写数组的标准仍然适用：
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -540,7 +532,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
             <title> 控制语句 </title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
-                <title>If / Else / Elseif</title>
+                <title>if/Else/Elseif</title>
 
                 <para>
                     使用 <code>if</code> and <code>elseif</code> 的控制语句在条件语句的圆括号前后都必须有一个空格。
@@ -561,7 +553,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    下面的例子示例 "if" 语句， 包括 "elseif" 或 "else" 的格式约定：
+                      对包括"elseif" 或 "else"的 "if" 语句，和 "if" 结构的格式类似，
+                      下面的例子示例 "if" 语句， 包括 "elseif" 或 "else" 的格式约定：
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -579,7 +572,7 @@ if ($a != 2) {
    $a = 7;
 }]]>
                     </programlisting>
-                    在有些情况下， PHP 允许这些语句不用花括号，但在 ZF 代码标准里，它们（"if"、 "elseif" 或 "else" 语句）必须使用花括号。
+                    在有些情况下， PHP 允许这些语句不用花括号，但在(ZF) 代码标准里，它们（"if"、 "elseif" 或 "else" 语句）必须使用花括号。
                 </para>
 
                 <para>
@@ -612,11 +605,12 @@ switch ($numPeople) {
                 </programlisting>
 
                 <para>
-                    <code>switch</code> 语句中必须有 <code>default</code>。
+                    <code>switch</code> 语句应当有 <code>default</code>。
                 </para>
 
                 <para>
-                    <emphasis>注：</emphasis> 有时候，在 falls through 到下个 case 的 <code>case</code> 语句中不写 <code>break</code> or <code>return</code> 很有用。为了区别于 bug，任何 <code>case</code> 语句中，所有不写 <code>break</code> or <code>return</code> 的地方必须有 "// break intentionally omitted" 这样的注释。
+                    <emphasis>注：</emphasis> 有时候，在 falls through 到下个 case 的 <code>case</code> 语句中不写 <code>break</code> or <code>return</code> 很有用。
+                    为了区别于 bug，任何 <code>case</code> 语句中，所有不写 <code>break</code> or <code>return</code> 的地方应当有一个 "// break intentionally omitted" 这样的注释来表明 break 是故意忽略的。
                 </para>
             </sect3>
         </sect2>
@@ -632,7 +626,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    所有 Zend Framework 或和它一起工作的源代码必须在每个文件的顶部包含文件级 （"file-level"）的 docblock ，在每个类的顶部放置一个 "class-level" 的 docblock。下面是一些例子：
+                    所有类文件必须在文件的顶部包含文件级 （"file-level"）的 docblock ，在每个类的顶部放置一个 "class-level" 的 docblock。下面是一些例子：
                 </para>
             </sect3>
 
@@ -640,7 +634,7 @@ switch ($numPeople) {
                 <title> 文件 </title>
 
                 <para>
-                    每个包含 PHP 代码的文件必须至少在文件顶部包含这些 phpDocumentor 标签：
+                    每个包含 PHP 代码的文件必须至少在文件顶部的 docblock 包含这些 phpDocumentor 标签：
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -650,11 +644,11 @@ switch ($numPeople) {
  *
  * LICENSE: 一些 license 信息
  *
- * @copyright  2005 Zend Technologies
- * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
+ * @copyright  2008 Zend Technologies
+ * @license    http://framework.zend.com/license/3_0.txt   BSD License 
  * @version    $Id:$
- * @link       http://dev.zend.com/package/PackageName
- * @since      File available since Release 1.2.0
+ * @link       http://framework.zend.com/package/PackageName
+ * @since      File available since Release 1.5.0
 */]]>
                     </programlisting>
                 </para>
@@ -672,11 +666,11 @@ switch ($numPeople) {
  *
  * 类的详细描述 （如果有的话）... ...
  *
- * @copyright  2005 Zend Technologies
- * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
+ * @copyright  2008 Zend Technologies
+ * @license    http://framework.zend.com/license/   BSD License
  * @version    Release: @package_version@
- * @link       http://dev.zend.com/package/PackageName
- * @since      Class available since Release 1.2.0
+ * @link       http://framework.zend.com/package/PackageName
+ * @since      Class available since Release 1.5.0
  * @deprecated Class deprecated in Release 2.0.0
  */]]>
                     </programlisting>
@@ -701,7 +695,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    如果函数/方法抛出一个异常，使用 @throws：
+                    如果函数/方法抛出一个异常，使用 @throws 于所有已知的异常类：
 
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [description]]]>

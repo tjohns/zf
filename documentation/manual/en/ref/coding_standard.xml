@@ -575,7 +575,7 @@ class Foo
 
                 <para>
                     Function arguments should be separated by a single trailing space after the comma delimiter.
-                    The following is an example of an acceptable invokation of a function that takes three arguments:
+                    The following is an example of an acceptable invocation of a function that takes three arguments:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]>
