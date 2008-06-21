@@ -434,8 +434,19 @@ class Zend_Currency
     }
 
     /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        $cache = Zend_Locale_Data::getCache();
+        return $cache;
+    }
+
+    /**
      * Sets a new locale for data retreivement
-     * Returned is the really set locale.
+     * Returned is the really set locale
      * Example: 'de_XX' will be set to 'de' because 'de_XX' does not exist
      * 'xx_YY' will be set to 'root' because 'xx' does not exist
      *

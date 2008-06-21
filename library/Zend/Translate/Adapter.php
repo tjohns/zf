@@ -503,7 +503,7 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        // no translation found, return original
+        // No translation found, return original
         return false;
     }
 
@@ -515,6 +515,16 @@ abstract class Zend_Translate_Adapter {
     public static function setCache(Zend_Cache_Core $cache)
     {
         self::$_cache = $cache;
+    }
+
+    /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        return self::$_cache;
     }
 
     /**

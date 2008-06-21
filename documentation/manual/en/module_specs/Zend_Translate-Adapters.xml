@@ -319,7 +319,8 @@ try {
             To use caching you will just have to give a cache object to the
             <code>Zend_Translate::setCache()</code> method. It takes a instance of
             <code>Zend_Cache</code> as only parameter. Also if you use any adapter direct you
-            can use the <code>setCache()</code> method.
+            can use the <code>setCache()</code> method. For convenience there is also static method
+            <code>Zend_Translate::getCache()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php

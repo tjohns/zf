@@ -497,8 +497,9 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD, '
             Use the static method <code>Zend_Locale::setCache($cache)</code> if you are using
             <code>Zend_Locale</code>. <code>Zend_Locale_Format</code> can be speed up the using the option
             <code>cache</code> within <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code>.
-            If you are using both classes you should only set an cache for <code>Zend_Locale</code>, otherwise
-            the data would be cached twice.
+            If you are using both classes you should only set the cache for <code>Zend_Locale</code>, otherwise
+            the last set cache will overwrite the previous set cache. For convenience there is also static method
+            <code>Zend_Locale::getCache()</code>.
         </para>
 
     </sect2>
