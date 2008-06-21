@@ -63,7 +63,7 @@ $date = Zend_Date::now();]]>
 
     <sect2 id="zend.date.creation.database">
 
-        <title>Erstellen von Datumswerden von einer Datenbank</title>
+        <title>Erstellen von Datumswerten von einer Datenbank</title>
 
         <para>
             Datenbanken werden oft verwendet um Datumswerte zu speichern. Aber das Problem ist, das jede Datenbank
