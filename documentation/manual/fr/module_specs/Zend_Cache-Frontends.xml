@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9751 -->
 <sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
@@ -57,10 +58,10 @@
 
                             <entry><code>null</code></entry>
 
-                            <entry>Un préfixe pour tous les id de cache, si réglé à <code>null</code>, aucun préfixe
-                            d'id de cache ne sera utilisé. Le préfixe d'id de cache sert essentiellement à créer des
-                            espaces de noms dans le cache, permettant à plusieurs applications ou sites webs d'utiliser
-                            un cache partagé. Chaque application ou site web peut utilisé un préfixe d'id de cache
+                            <entry>Un préfixe pour tous les ID de cache, si réglé à <code>null</code>, aucun préfixe
+                            d'ID de cache ne sera utilisé. Le préfixe d'ID de cache sert essentiellement à créer des
+                            espaces de noms dans le cache, permettant à plusieurs applications ou sites Web d'utiliser
+                            un cache partagé. Chaque application ou site web peut utilisé un préfixe d'ID de cache
                             différent et un préfixe peut aussi être utilisé plusieurs fois.</entry>
                         </row>
 
@@ -118,7 +119,7 @@
 
                             <entry><code>0</code></entry>
 
-                            <entry>Active / désactive le nettoyage automatique (garbage collector): 0 signifie aucun
+                            <entry>Active / désactive le nettoyage automatique ("garbage collector"): 0 signifie aucun
                             nettoyage automatique de cache, 1 signifie un nettoyage systématique du cache et x &gt; 1
                             signifie le nettoyage aléatoire 1 fois toute les x écritures.</entry>
                         </row>
@@ -146,13 +147,13 @@
 
             <para>Si vous stocker uniquement des chaînes de caractères dans le cache (parce qu'avec l'option
             "<code>automatic_serialization</code>", il est possible de stocker des booléens), vous pouvez utiliser une
-            construction plus compact comme : <programlisting role="php"><![CDATA[<?php
+            construction plus compact comme :<programlisting role="php"><![CDATA[<?php
 // nous avons déjà $cache
 
 $id = 'myBigLoop'; // id de cache de "ce que l'on veut cacher"
 
 if (!($data = $cache->load($id))) {
-    // cache manquant
+    // cache absent
 
     $data = '';
     for ($i = 0; $i < 10000; $i++) {
@@ -173,7 +174,7 @@ $id2 = 'bar';
 
 // block 1
 if (!($data = $cache->load($id1))) {
-    // cache missed
+    // cache absent
 
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -201,6 +202,47 @@ if (!($data = $cache->load($id2))) {
 
 }
 echo($data);]]></programlisting></para>
+
+            <para>Si vous voulez cacher des valeurs "spéciales" (des booléens avec l'option
+            "<code>automatic_serialization</code>") ou des chaînes vides, vous ne pouvez pas utiliser la construction
+            compacte montrée ci-dessus. Vous devez tester de manière formelle l'état du cache.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// La construction compacte (ne pas utiliser si vous cachez des chaînes et/ou des booléens)
+if (!($data = $cache->load($id))) {
+
+    // cache absent
+
+    // [...] on crée $data
+
+    $cache->save($data);
+
+}
+
+// on fait qqch avec $data
+
+// [...]
+
+// La construction complète (fonctionne dans tous les cas)
+if (!($cache->test($id))) {
+
+    // cache absent
+
+    // [...] on crée $data
+
+    $cache->save($data);
+
+} else {
+
+    // lecture du cache
+
+    $data = $cache->load($id);
+
+}
+
+// on fait qqch avec $data
+            ]]></programlisting>
         </sect3>
     </sect2>
 
@@ -212,7 +254,7 @@ echo($data);]]></programlisting></para>
 
             <para><code>Zend_Cache_Frontend_Output</code> est un frontend capturant la sortie. Il utilise la
             bufferisation de sortie de PHP pour capturer tout ce qui passe entre les méthodes <code>start()</code> et
-            <code>end()</code> .</para>
+            <code>end()</code>.</para>
         </sect3>
 
         <sect3 id="zend.cache.frontends.output.options">
@@ -281,7 +323,7 @@ echo 'This is never cached ('.time().').';]]></programlisting></para>
 
                             <entry><code>true</code></entry>
 
-                            <entry>si true, les appels de fonction seront mis en cache par défaut</entry>
+                            <entry>si <code>true</code>, les appels de fonction seront mis en cache par défaut</entry>
                         </row>
 
                         <row>
@@ -362,7 +404,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));]]></programlisting></
 
                     <tbody>
                         <row>
-                            <entry><code>cached_entity</code> (required)</entry>
+                            <entry><code>cached_entity</code> (requis)</entry>
 
                             <entry><code>mixed</code></entry>
 
@@ -530,7 +572,7 @@ $res = $cache->foobar2('1', '2');]]></programlisting></para>
             terminé.</para>
 
             <para>Pour le moment, ceci n'est pas implémenté mais nous prévoyons d'ajouter un système de condition HTTP
-            pour économiser de la bande passante (le système enverra une entête HTTP 304 Not Modified si le cache est
+            pour économiser de la bande passante (le système enverra une entête "HTTP 304 Not Modified" si le cache est
             trouvé, et si le navigateur a déjà la bonne version).</para>
         </sect3>
 
