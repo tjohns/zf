@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9753 -->
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
 
@@ -257,7 +258,8 @@ try {
         <para>Pour utiliser le cache, vous devez juste fournir un objet de cache à la méthode
         <code>Zend_Translate::setCache()</code>. Elle prend une instance de <code>Zend_Cache</code> comme seul
         paramètre. En outre si vous utilisez n'importe quel adaptateur direct, vous pouvez employer la méthode
-        <code>setCache()</code>.</para>
+        <code>setCache()</code>. Par commodité, il existe aussi une méthode statique
+        <code>Zend_Translate::getCache()</code>.</para>
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Translate.php';
