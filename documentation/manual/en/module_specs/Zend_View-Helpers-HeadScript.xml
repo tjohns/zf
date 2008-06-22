@@ -92,7 +92,7 @@
         <para>
             By default, <code>HeadScript</code> only will render
             <code>&lt;script&gt;</code> attributes that are blessed by the W3C.
-            These include 'type', 'charset', 'defer', 'language', and 'src.'
+            These include 'type', 'charset', 'defer', 'language', and 'src'.
             However, some javascript frameworks, notably <ulink
                 url="http://www.dojotoolkit.org/">Dojo</ulink>, utilize custom
             attributes in order to modify behavior. To allow such attributes,
@@ -110,7 +110,7 @@ $this->headScript()->setAllowArbitraryAttributes(true);
 
         <para>
             You may specify a new script tag at any time. As noted above, these
-            may be links to outside resource files or scripts theselves.
+            may be links to outside resource files or scripts themselves.
         </para>
 
         <programlisting role="php"><![CDATA[
