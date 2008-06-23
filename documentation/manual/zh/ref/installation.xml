@@ -3,12 +3,13 @@
     <title>安装</title>
 
     <para>
-        Zend Framework 使用面向对象的 PHP 5 构建，需要 PHP 5.1.4 或更高版本。
-        请查阅 <link linkend="requirements">附录 系统需求</link> 了解更多信息。
+        Zend Framework 要求 PHP 5.1.4 或更高版本，但 Zend 强烈建议 5.2.3 或更高，因为在这两个版本之间有
+        许多重大安全和性能方面的改善和提高。请查阅 <link linkend="requirements">附录 需求</link> 了解更多信息。
     </para>
 
     <para>
-        一旦合适的 PHP 环境建立起来，下一步是拥有一个 Zend Framework 的副本，可以通过下面的官方认可的途径获得：
+    	  安装 Zend Framework 非常简单。只要你下载并解压它，并把发行版里的 /library 文件夹加到你的 include 路径里就行了。
+    	  你也可以把 library 文件夹移动到其它可共享的位置。
         <itemizedlist>
             <listitem>
                 <para>
@@ -48,7 +49,7 @@
                 </para>
                 <para>
                     Zend Framework 的 SVN 仓库 URL 地址是：
-                    <ulink url="http://framework.zend.com/svn/framework/trunk">http://framework.zend.com/svn/framework/trunk</ulink>
+                    <ulink url="http://framework.zend.com/svn/framework/standard/trunk">http://framework.zend.com/svn/framework/standard/trunk</ulink>
                 </para>
             </listitem>
         </itemizedlist>
@@ -62,14 +63,13 @@
     </para>
 
     <para>
-        <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> 和 
-        <ulink url="http://zh.wikipedia.org/wiki/MVC">Model-View-Controller</ulink>（MVC）
-        的实现是 Zend Framework 最有用的功能之一。
-        <link linkend="zend.controller.quickstart">Zend Framework MVC 入门</link>
+    	  Zend 提供了 <ulink url="http://framework.zend.com/docs/quickstart">QuickStart</ulink> 可以让你尽快入门。
+    	  这是一个极好的用实际的例子来学习 Zend Framework的方法。
     </para>
 
     <para>
-        Zend Framework 的组件不但能够轻松的配合，不同的组件也可以根据需求独立使用。下面的每一章文档都会专门介绍一个组件。
+        因为 Zend Framework 的组件是松耦合的， 在你的程序里可以使用一些独一无二的它们的组合。
+        下面的每章节提供基于组件的 Zend Framework 全面的参考文档。
     </para>
 
 </sect1>
