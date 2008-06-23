@@ -89,15 +89,12 @@ $this->headScript()->appendFile('/js/prototype.js')
         <programlisting role="php"><![CDATA[
 <?php // 按顺序放置脚本文件
 
-// place at a particular offset to ensure loaded last
 //设置偏移量来确保这个文件最后加载
 $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
 
-// use scriptaculous effects (append uses next index, 101)
 //使用scriptaculous效果文件，这时append动作使用索引101，接上行代码的索引
 $this->headScript()->appendScript('/js/scriptaculous.js');
 
-// but always have base prototype script load first:
 //但总是保证prototype文件首先加载
 $this->headScript()->prependScript('/js/prototype.js');
 ?>
