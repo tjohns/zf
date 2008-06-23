@@ -306,7 +306,8 @@ class Zend_Http_Client
      */
     public function setMethod($method = self::GET)
     {
-        if (! preg_match('/^[A-Za-z_]+$/', $method)) {
+        $regex = '/^[^\x00-\x1f\x7f-\xff\(\)<>@,;:\\\\"\/\[\]\?={}\s]+$/';
+        if (! preg_match($regex, $method)) {
             /** @see Zend_Http_Client_Exception */
             require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
