@@ -425,6 +425,7 @@ print $currency->toCurrency(1000);
 
         <para>
             通过 <code>Zend_Cache</code>  的使用可以加速 <code>Zend_Currency</code> 的工作。通过使用静态方法 <code>Zend_Currency::setCache($cache)</code> ，它接受一个选项，<code>Zend_Cache</code> 适配器，当设置它，Zend_Currency 方法的本地化数据就被缓存。
+            也有个静态方法 <code>Zend_Currency::getCache()</code> 方便你的使用。
          </para>
 
         <example id="zend.currency.usage.cache.example">

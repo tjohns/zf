@@ -231,6 +231,7 @@ try {
 
         <para>
             为使用缓存，将只需要给 <code>Zend_Translate::setCache()</code>  方法一个缓存对象， 它把 <code>Zend_Cache</code> 的实例做为唯一的参数，并且，如果直接使用任何适配器，你可以使用 <code>setCache()</code> 方法。
+            也有个静态方法 <code>Zend_Translate::getCache()</code> 方便你的使用
         </para>
 
         <programlisting role="php"><![CDATA[<?php

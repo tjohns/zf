@@ -170,7 +170,7 @@ echo($data);]]>
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-// the compact construction (not good if you cache empy strings and/or booleans)
+// the compact construction (not good if you cache empty strings and/or booleans)
 if (!($data = $cache->load($id))) {
 
     // cache missed
