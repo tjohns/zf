@@ -666,12 +666,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         $f = @fopen($file, 'rb');
         if ($f) {
             if ($this->_options['file_locking']) @flock($f, LOCK_SH);
-            $fsize = @filesize($file);
-            if ($fsize == 0) {
-                $result = '';
-            } else {
-                $result = fread($f, $fsize);
-            }
+            $result = stream_get_contents($f);
             if ($this->_options['file_locking']) @flock($f, LOCK_UN);
             @fclose($f);
         }
@@ -691,14 +686,15 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     private function _filePutContents($file, $string)
     {
         $result = false;
-        $f = @fopen($file, 'wb');
+        $f = @fopen($file, 'ab+');
         if ($f) {
             if ($this->_options['file_locking']) @flock($f, LOCK_EX);
+            fseek($f, 0);
+            ftruncate($f, 0);
             $tmp = @fwrite($f, $string);
             if (!($tmp === FALSE)) {
                 $result = true;
             }
-            if ($this->_options['file_locking']) @flock($f, LOCK_UN);
             @fclose($f);
         }
         @chmod($file, $this->_options['cache_file_umask']);
