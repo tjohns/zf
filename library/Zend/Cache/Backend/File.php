@@ -310,7 +310,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             if (!$metadatas) {
                 return false;
             }
-            $this->_setMetadatas($id, $metadatas);
+            $this->_setMetadatas($id, $metadatas, false);
             return $metadatas;
         }
     }
@@ -320,17 +320,20 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *
      * @param  string $id        Cache id
      * @param  array  $metadatas Associative array of metadatas
+     * @param  boolean $save     optional pass false to disable saving to file
      * @return boolean True if no problem
      */
-    private function _setMetadatas($id, $metadatas)
+    private function _setMetadatas($id, $metadatas, $save = true)
     {
         if (count($this->_metadatasArray) >= $this->_options['metadatas_array_max_size']) {
             $n = (int) ($this->_options['metadatas_array_max_size'] / 10);
             $this->_metadatasArray = array_slice($this->_metadatasArray, $n);
         }
-        $result = $this->_saveMetadatas($id, $metadatas);
-        if (!$result) {
-            return false;
+        if ($save) {
+            $result = $this->_saveMetadatas($id, $metadatas);
+            if (!$result) {
+                return false;
+            }
         }
         $this->_metadatasArray[$id] = $metadatas;
         return true;
