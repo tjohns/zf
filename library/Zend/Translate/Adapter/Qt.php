@@ -71,7 +71,7 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
-        $options = array_merge($this->_options, $options);
+        $options = $options + $this->_options;
 
         if ($options['clear'] || !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();

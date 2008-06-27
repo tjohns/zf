@@ -79,7 +79,7 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
         $this->_bigEndian = false;
-        $options = array_merge($this->_options, $options);
+        $options = $options + $this->_options;
 
         if ($options['clear']  ||  !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();

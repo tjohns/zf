@@ -67,7 +67,7 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
-        $options = array_merge($this->_options, $options);
+        $options = $options + $this->_options;
         $this->_lang = $locale;
 
         if ($options['clear']  ||  !isset($this->_translate[$locale])) {

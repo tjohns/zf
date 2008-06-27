@@ -238,20 +238,20 @@ class Zend_Locale
         if ($searchorder === self::ENVIRONMENT) {
             $languages = $this->getEnvironment();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = array_merge($languages, $this->getFramework());
-                $languages = array_merge($languages, $this->getBrowser());
+                $languages = $this->getFramework() + $languages;
+                $languages = $this->getBrowser() + $languages;
             }
         } else if ($searchorder === self::FRAMEWORK) {
             $languages = $this->getFramework();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = array_merge($languages, $this->getEnvironment());
-                $languages = array_merge($languages, $this->getBrowser());
+                $languages = $this->getEnvironment() + $languages;
+                $languages = $this->getBrowser() + $languages;
             }
         } else {
             $languages = $this->getBrowser();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = array_merge($languages, $this->getEnvironment());
-                $languages = array_merge($languages, $this->getFramework());
+                $languages = $this->getEnvironment() + $languages;
+                $languages = $this->getFramework() + $languages;
             }
         }
 

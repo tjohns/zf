@@ -159,10 +159,10 @@ abstract class Zend_Translate_Adapter {
                             $found = false;
                             $parts = explode('.', $filename);
                             foreach($parts as $token) {
-                                $parts = array_merge(explode('_', $token), $parts);
+                                $parts = $parts + explode('_', $token);
                             }
                             foreach($parts as $token) {
-                                $parts = array_merge(explode('-', $token), $parts);
+                                $parts = $parts + explode('-', $token);
                             }
                             $parts = array_unique($parts);
                             $prev  = '';
@@ -398,7 +398,7 @@ abstract class Zend_Translate_Adapter {
         $this->_loadTranslationData($data, $locale, $options);
         if ($this->_automatic === true) {
             $find = new Zend_Locale($locale);
-            $browser = $find->getBrowser() + $find->getEnvironment();
+            $browser = $find->getEnvironment() + $find->getBrowser();
             arsort($browser);
             foreach($browser as $language => $quality) {
                 if (isset($this->_translate[$language]) === true) {

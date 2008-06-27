@@ -88,7 +88,7 @@ class Zend_Locale_Format
      */
     public static function setOptions(array $options = array())
     {
-        self::$_Options = array_merge(self::$_Options, self::checkOptions($options));
+        self::$_Options = self::checkOptions($options) + self::$_Options;
         return self::$_Options;
     }
 
@@ -273,7 +273,7 @@ class Zend_Locale_Format
      */
     public static function getNumber($input, array $options = array())
     {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
         if (!is_string($input)) {
             return $input;
         }
@@ -332,7 +332,7 @@ class Zend_Locale_Format
         require_once 'Zend/Locale/Math.php';
 
         $value = Zend_Locale_Math::normalize($value);
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
         if ($options['locale'] instanceof Zend_Locale) {
             $options['locale'] = $options['locale']->toString();
         }
@@ -503,7 +503,7 @@ class Zend_Locale_Format
      */
     public static function isNumber($input, array $options = array())
     {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
 
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getList($options['locale'],'symbols');
@@ -653,7 +653,7 @@ class Zend_Locale_Format
      */
     private static function _parseDate($date, $options)
     {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
         $test = array('h', 'H', 'm', 's', 'y', 'Y', 'M', 'd', 'D', 'E', 'S', 'l', 'B', 'I',
                        'X', 'r', 'U', 'G', 'w', 'e', 'a', 'A', 'Z', 'z', 'v');
 
@@ -978,7 +978,7 @@ class Zend_Locale_Format
      */
     public static function getDate($date, array $options = array())
     {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
         if (empty($options['date_format'])) {
             $options['format_type'] = 'iso';
             $options['date_format'] = self::getDateFormat($options['locale']);
@@ -1008,7 +1008,7 @@ class Zend_Locale_Format
             $options['format_type'] = 'iso';
             $options['date_format'] = self::getDateFormat($options['locale']);
         }
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
 
         // day expected but not parsed
         if ((iconv_strpos($options['date_format'], 'd') !== false) and (!isset($date['day']) or ($date['day'] == ""))) {
@@ -1076,7 +1076,7 @@ class Zend_Locale_Format
      */
     public static function getTime($time, array $options = array())
     {
-        $options = array_merge(self::$_Options, self::checkOptions($options));
+        $options = self::checkOptions($options) + self::$_Options;
         if (empty($options['date_format'])) {
             $options['format_type'] = 'iso';
             $options['date_format'] = self::getTimeFormat($options['locale']);
