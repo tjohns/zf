@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9585 -->
+<!-- EN-Revision: 9745 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -475,15 +475,28 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         </example>
 
         <para>
-            Das standardmäßige Trennzeichen für CSV Strings ist das '<code>;</code>' Zeichen.
-            Aber es muß nicht dieses Zeichen verwendet werden. Mit der Option '<code>separator</code>'
-            kann man ein anderes Trennzeichen definieren das verwendet werden soll.
+            Es gibt drei verschiedene Optionen für den CSV Adapter. Es können
+            <code>'delimiter'</code>, <code>'limit'</code> und <code>'enclosure'</code>
+            gesetzt werden.
         </para>
 
         <para>
-            Wenn das Trennzeichen im zu übersetzenden String enthalten ist, dann muß es einfach
-            in einem doppelten Anführungszeichen gesetzt werden. Am besten wird das folgende Beispiel
-            für Details betrachtet:
+            Das Standard Trennzeichen für CSV Strings ist das '<code>;</code> Zeichen.
+            Aber es muß nicht dieses Zeichen sein. Mit der Option '<code>delimiter</code>'
+            kann ein anderes Trennzeichen ausgesucht werden.
+        </para>
+
+        <para>
+            Das Standardlimit für eine Zeile in einer CSV Datei ist '<code>0</code>'.
+            Das bedeutet das das Ende der CSV Zeile automatisch gesucht wird. Wenn die
+            '<code>limit</code>' auf irgendeinen Wert gesetzt wird, dann wird die CSV
+            Datei schneller gelesen, aber jede Zeile die dieses Limit überschreitet wird
+            abgeschnitten.
+        </para>
+
+        <para>
+            The default enclosure to use for CSV files is '<code>"</code>'. You can
+            set a different one with the option '<code>enclosure</code>'.
         </para>
 
         <example id="zend.translate.using.source.csv.example2">
@@ -499,7 +512,7 @@ message2,"Nachricht,2"
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('separator' => ','));
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
 $translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
@@ -579,9 +592,21 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                     </row>
                     <row>
                         <entry>Csv</entry>
-                        <entry>separator</entry>
+                        <entry>delimiter</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
-                        <entry>Definiert welches Zeichen verwendet wird um Quelle und Übersetzung zu trennen</entry>
+                        <entry>Definiert welches Zeichen als Trenner für Quelle und Übersetzung verwendet wird</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>length</entry>
+                        <entry><emphasis role="strong">0</emphasis></entry>
+                        <entry>Definiert die maximale Länge einer CSV Zeile. Auf 0 gesetzt wird sie automatisch erkannt</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>enclosure</entry>
+                        <entry><emphasis role="strong">"</emphasis></entry>
+                        <entry>Definiert das zu verwendende Einschließungszeichen. Standard ist das doppelte Hochkomma</entry>
                     </row>
                 </tbody>
             </tgroup>

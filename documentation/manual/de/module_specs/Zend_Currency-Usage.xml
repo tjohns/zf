@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9753 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -534,7 +535,8 @@ print $currency->toCurrency(1000);
             <code>Zend_Currency</code> kann schneller gemacht werden indem <code>Zend_Cache</code> verwendet
             wird. Durch die Verwendung der statischen Methode <code>Zend_Currency::setCache($cache)</code>
             welche eine Option akzeptiert, nämlich einen <code>Zend_Cache</code> Adapter. Wenn dieser
-            gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached.
+            gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached. Der
+            Bequemlichkeit halber gibt es auch die statische Methode <code>Zend_Currency::getCache()</code>.
         </para>
 
         <example id="zend.currency.usage.cache.example">

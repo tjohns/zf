@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9751 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -189,7 +190,52 @@ if (!($data = $cache->load($id2))) {
 }
 echo($data);]]>
             </programlisting>
-        </sect3>
+
+            <para>
+                Wenn spezielle Werte gecached werden sollen (boolean mit der "automatic_serialization" Option)
+                oder leere Strings kann die kompakte Erstellung wie oben gezeigt nicht verwendet werden.
+                Der Cache Eintrag muß formell getestet werden.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// Die kompakte Erstellung (nicht gut wenn leere Strings und/oder boolsche Werte gecached werden)
+if (!($data = $cache->load($id))) {
+
+    // Cache fehlgeschlagen
+
+    // [...] wir erstellen $data
+
+    $cache->save($data);
+
+}
+
+// wir machen etwas mit $data
+
+// [...]
+
+// die komplette Erstellung (funktioniert in jedem Fall)
+if (!($cache->test($id))) {
+
+    // Cache fehlgeschlagen
+
+    // [...] wir erstellen $data
+
+    $cache->save($data);
+
+} else {
+
+    // Cache getroffen
+
+    $data = $cache->load($id);
+
+}
+
+// Wir machen irgendetwas mit $data]]>
+            </programlisting>
+
+       </sect3>
+
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">

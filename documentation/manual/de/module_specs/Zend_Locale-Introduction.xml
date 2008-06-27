@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9753 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -516,8 +517,9 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD, '
             <code>Zend_Locale_Format</code> kann schneller gemacht werden indem die Option
             <code>cache</code> innerhalb von
             <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code> aufgerufen wird. Wenn beide
-            Klassen verwendet werden sollte nur für <code>Zend_Locale</code> ein Cache verwendet werden, da
-            sonst die Daten zweimal gespeichert werden würden.
+            Klassen verwendet werden sollte nur für <code>Zend_Locale</code> ein Cache gesetzt werden, da der
+            zuletzt gesetzte Cache den vorher gesetzten Cache überschreibt. Der Bequemlichkeit halber gibt es
+            auch eine statische Methode <code>Zend_Locale::getCache()</code>.
         </para>
 
     </sect2>
