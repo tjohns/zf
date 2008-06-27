@@ -39,7 +39,7 @@ abstract class Zend_Translate_Adapter {
      * Shows if locale detection is in automatic level
      * @var boolean
      */
-    private          $_automatic = true;
+    private $_automatic = true;
 
     /**
      * Internal cache for all adapters
@@ -100,8 +100,12 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
+        if (($locale === "auto") or ($locale === null)) {
+            $this->_automatic = true;
+        } else {
+            $this->_automatic = false;
+        }
         $this->addTranslation($data, $locale, $options);
-        $this->_automatic = true;
     }
 
     /**
@@ -274,11 +278,12 @@ abstract class Zend_Translate_Adapter {
         }
 
         $this->_options['locale'] = $locale;
-        if ($locale == "auto") {
+        if ($locale === "auto") {
             $this->_automatic = true;
         } else {
             $this->_automatic = false;
         }
+
         return $this;
     }
 
