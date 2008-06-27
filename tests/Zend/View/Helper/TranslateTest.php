@@ -152,6 +152,7 @@ class Zend_View_Helper_TranslateTest extends PHPUnit_Framework_TestCase
     {
         $trans = new Zend_Translate('array', array('one' => 'eins', 'two %1\$s' => 'zwei %1\$s'), 'de');
         $trans->addTranslation(array('one' => 'uno', 'two %1\$s' => 'duo %2\$s'), 'it');
+        $trans->setLocale('de');
 
         $this->helper->setTranslator($trans);
         $this->assertEquals('eins', $this->helper->translate('one'));
@@ -165,6 +166,7 @@ class Zend_View_Helper_TranslateTest extends PHPUnit_Framework_TestCase
     {
         $trans = new Zend_Translate('array', array('one' => 'eins', 'two %1\$s' => 'zwei %1\$s'), 'de');
         $trans->addTranslation(array('one' => 'uno', 'two %1\$s' => 'duo %2\$s'), 'it');
+        $trans->setLocale('de');
 
         $locale = $this->helper->translate()->setTranslator($trans)->getLocale();
 
@@ -177,6 +179,7 @@ class Zend_View_Helper_TranslateTest extends PHPUnit_Framework_TestCase
             "three %1\$s %2\$s" => "drei %1\$s %2\$s"), 'de');
         $trans->addTranslation(array('one' => 'uno', "two %1\$s" => "duo %2\$s",
             "three %1\$s %2\$s" => "tre %1\$s %2\$s"), 'it');
+        $trans->setLocale('de');
 
         $this->helper->setTranslator($trans);
         $this->assertEquals("drei 100 200", $this->helper->translate("three %1\$s %2\$s", "100", "200"));

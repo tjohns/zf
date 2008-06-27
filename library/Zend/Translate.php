@@ -132,17 +132,26 @@ class Zend_Translate {
         return $this->_adapter;
     }
 
-
     /**
      * Sets a cache for all instances of Zend_Translate
      *
-     * @param Zend_Cache_Core $cache Cache to store to
+     * @param  Zend_Cache_Core $cache Cache to store to
+     * @return void
      */
     public static function setCache(Zend_Cache_Core $cache)
     {
         self::$_cache = $cache;
     }
 
+    /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        return self::$_cache;
+    }
 
     /**
      * Calls all methods from the adapter

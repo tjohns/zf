@@ -888,4 +888,16 @@ class Zend_Locale
         require_once 'Zend/Locale/Data.php';
         Zend_Locale_Data::setCache($cache);
     }
+
+    /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        require_once 'Zend/Locale/Data.php';
+        $cache = Zend_Locale_Data::getCache();
+        return $cache;
+    }
 }

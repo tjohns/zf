@@ -1155,14 +1155,23 @@ class Zend_Locale_Data
         return $temp;
     }
 
-
     /**
      * Set a cache for Zend_Locale_Data
      * 
-     * @param Zend_Cache_Core $cache a cache frontend
+     * @param Zend_Cache_Core $cache A cache frontend
      */
     public static function setCache(Zend_Cache_Core $cache)
     {
         self::$_cache = $cache;
+    }
+
+    /**
+     * Returns the set cache
+     * 
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        return self::$_cache;
     }
 }
