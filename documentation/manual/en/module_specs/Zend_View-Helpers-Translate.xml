@@ -146,7 +146,7 @@ print $translate->translate('simple'); // this returns 'einfach'
         <programlisting role="php"><![CDATA[<?php
 // within your view
 $date = "Monday";
-$this->translate('Today is %1\$s', $date);
+$this->translate("Today is %1\$s", $date);
 // could return 'Heute ist Monday'
 ?>]]></programlisting>
 
@@ -172,7 +172,7 @@ $this->translate('Today is %1\$s', $date);
 $date = "Monday";
 $month = "April";
 $time = "11:20:55";
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $time);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $time);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
 ?>]]></programlisting>
 
@@ -189,7 +189,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $
         <programlisting role="php"><![CDATA[<?php
 // within your view
 $date = array("Monday", "April", "11:20:55");
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
 ?>]]></programlisting>
 
@@ -210,7 +210,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
         <programlisting role="php"><![CDATA[<?php
 // within your view
 $date = array("Monday", "April", "11:20:55");
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 ?>]]></programlisting>
 
     </example>
@@ -231,7 +231,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
 // within your view
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 ?>]]></programlisting>
 
     </example>
@@ -258,7 +258,7 @@ $date = array("Monday", "April", "11:20:55");
 $this->translate()->getLocale();
 
 $this->translate()->setLocale('it');
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
 // returns 'it' as new set default locale
 $this->translate()->getLocale();
