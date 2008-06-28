@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9615 -->
+<!-- EN-Revision: 9817 -->
 <sect3 id="zend.view.helpers.initial.translate">
 
     <title>Übersetzungs Helfer</title>
@@ -140,7 +140,7 @@ print $translate->translate('simple'); // das gibt 'einfach' zurück
         <programlisting role="php"><![CDATA[<?php
 // innerhalb der View
 $date = "Montag";
-$this->translate('Today is %1\$s', $date);
+$this->translate("Today is %1\$s", $date);
 // könnte 'Heute ist Montag' zurückgeben
 ?>]]></programlisting>
 
@@ -166,7 +166,7 @@ $this->translate('Today is %1\$s', $date);
 $date = "Monday";
 $month = "April";
 $time = "11:20:55";
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $time);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $time);
 // könnte 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55' zurückgeben
 ?>]]></programlisting>
 
@@ -183,7 +183,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, $month, $
         <programlisting role="php"><![CDATA[<?php
 // innerhalb der View
 $date = array("Monday", "April", "11:20:55");
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // könnte 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55' zurückgeben
 ?>]]></programlisting>
 
@@ -203,7 +203,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
         <programlisting role="php"><![CDATA[<?php
 // innerhalb der View
 $date = array("Monday", "April", "11:20:55");
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 ?>]]></programlisting>
 
     </example>
@@ -223,7 +223,7 @@ $this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date, 'it');
 // innerhalb der View
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 ?>]]></programlisting>
 
     </example>
@@ -250,7 +250,7 @@ $date = array("Monday", "April", "11:20:55");
 $this->translate()->getLocale();
 
 $this->translate()->setLocale('it');
-$this->translate('Today is %1\$s in %2\$s. Actual time: %3\$s', $date);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
 // gibt 'it' als neues standardmäßig gesetztes Gebietsschema zurück
 $this->translate()->getLocale();
