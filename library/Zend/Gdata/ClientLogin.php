@@ -67,6 +67,10 @@ class Zend_Gdata_ClientLogin
      * @param string $source
      * @param string $loginToken The token identifier as provided by the server.
      * @param string $loginCaptcha The user's response to the CAPTCHA challenge.
+     * @param string $loginUri An optional URI to which to send the authentication request.
+     * @param string $accountType An optional string to identify whether the
+     * account to be authenticated is a google or a hosted account. Defaults to 
+     * 'HOSTED_OR_GOOGLE'. See: http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Request
      * @return Zend_Http_Client
      * @throws Zend_Gdata_App_AuthException
      * @throws Zend_Gdata_App_HttpException
@@ -77,7 +81,8 @@ class Zend_Gdata_ClientLogin
         $source = self::DEFAULT_SOURCE,
         $loginToken = null,
         $loginCaptcha = null,
-        $loginUri = self::CLIENTLOGIN_URI)
+        $loginUri = self::CLIENTLOGIN_URI,
+        $accountType = 'HOSTED_OR_GOOGLE')
     {
         if (! ($email && $password)) {
             require_once 'Zend/Gdata/App/AuthException.php';
@@ -101,7 +106,7 @@ class Zend_Gdata_ClientLogin
                 'useragent' => $useragent
             )
         );
-        $client->setParameterPost('accountType', 'HOSTED_OR_GOOGLE');
+        $client->setParameterPost('accountType', $accountType);
         $client->setParameterPost('Email', (string) $email);
         $client->setParameterPost('Passwd', (string) $password);
         $client->setParameterPost('service', (string) $service);
