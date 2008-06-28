@@ -7,7 +7,7 @@
         <title>简介</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code>提供一个大部分符合<ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>的<ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">基本</ulink> 和 <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">数字</ulink> HTTP 认证。数字认证是一个认证的方法，它在基本认证的基础上做了改进，不需要在网络上传输明文密码。
+            <code>Zend_Auth_Adapter_Http</code>提供一个大部分符合<ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>的<ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">基本</ulink> 和 <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">摘要</ulink> HTTP 认证。摘要认证是一个认证的方法，它在基本认证的基础上做了改进，不需要在网络上传输明文密码。
         </para>
 
         <para>
@@ -15,7 +15,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        支持基本和数字认证。
+                        支持基本和摘要认证。
                     </para>
                 </listitem>
                 <listitem>
@@ -64,7 +64,7 @@
         <title>设计回顾</title>
 
         <para>
-            这个适配器包括两个子组件，HTTP authentication类本身和所谓的 "Resolvers"。HTTP authentication类封装了实现基本和数字认证的逻辑。它使用Resolver在数据存储（缺省是文本文件）中查找客户的身份并取出证书。"resolved" 的证书和客户的输入相比较来决定认证是否成功。
+            这个适配器包括两个子组件，HTTP authentication类本身和所谓的 "Resolvers"。HTTP authentication类封装了实现基本和摘要认证的逻辑。它使用Resolver在数据存储（缺省是文本文件）中查找客户的身份并取出证书。"resolved" 的证书和客户的输入相比较来决定认证是否成功。
         </para>
 
     </sect2>
@@ -139,7 +139,7 @@
         <title>Resolvers</title>
 
         <para>
-            Resolver的作用是接受用户名和领域，并返回证书值。基本认证期望接收用户密码的Base64编码版本。数字认证期望接收用户的用户名，领域和密码（用冒号分隔）的hash。当前，唯一支持的hash算法是MD5。
+            Resolver的作用是接受用户名和领域，并返回证书值。基本认证期望接收用户密码的Base64编码版本。摘要认证期望接收用户的用户名，领域和密码（用冒号分隔）的hash。当前，唯一支持的hash算法是MD5。
         </para>
 
         <para>
@@ -151,7 +151,7 @@
             <title>文件 Resolver</title>
 
             <para>
-                文件resolver是一个非常简单的类。它有一个单个的属性指定一个文件名，它也可以被传递给构造器。它的<code>resolve()</code>方法遍历文本文件，用匹配用户名和领域来搜索一行。文本文件的格式和Apache htpasswd文件类似： <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>每行包含三个字段 - 用户名，领域 和 证书 - 用冒号分隔。证书字段对文件resolver不透明；它被简单地不做修改地返回给调用者。所以，这同样的文件格式对基本和数字认证都适合。对基本认证，证书字段应该是Base64编码的用户的密码。对数字认证，它应该是上述的MD5 hash。
+                文件resolver是一个非常简单的类。它有一个单个的属性指定一个文件名，它也可以被传递给构造器。它的<code>resolve()</code>方法遍历文本文件，用匹配用户名和领域来搜索一行。文本文件的格式和Apache htpasswd文件类似： <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>每行包含三个字段 - 用户名，领域 和 证书 - 用冒号分隔。证书字段对文件resolver不透明；它被简单地不做修改地返回给调用者。所以，这同样的文件格式对基本和摘要认证都适合。对基本认证，证书字段应该是Base64编码的用户的密码。对摘要认证，它应该是上述的MD5 hash。
             </para>
 
             <para>
@@ -187,7 +187,7 @@ $config = array(
     'nonce_timeout'  => 3600,
 );]]>
             </programlisting>
-            这个数组将使适配器接收基本或者数字认证，并将请求对所有在<code>/members_only</code> 和<code>/my_account</code>之下的区域认证访问。领域值通常在浏览器中密码对话框中显示。<code>nonce_timeout</code>，当然，会有上述的行为。
+            这个数组将使适配器接收基本或者摘要认证，并将请求对所有在<code>/members_only</code> 和<code>/my_account</code>之下的区域认证访问。领域值通常在浏览器中密码对话框中显示。<code>nonce_timeout</code>，当然，会有上述的行为。
         </para>
 
         <para>
@@ -199,7 +199,7 @@ $adapter = new Zend_Auth_Adapter_Http($config);]]>
         </para>
 
         <para>
-            因为我们对基本和数字认证都支持，所以我们需要两个不同的resolver对象。注意这仅仅简单地是两个不同的类：
+            因为我们对基本和摘要认证都支持，所以我们需要两个不同的resolver对象。注意这仅仅简单地是两个不同的类：
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
 
