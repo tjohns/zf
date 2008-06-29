@@ -49,7 +49,7 @@ $date = Zend_Date::now();]]></programlisting>
         <para>Il est possible de demander au serveur de base de données de formater la date dans un certain format. Mais
         ceci reste en général assez lourd, et doit être pensé à chaque fois.</para>
 
-        <para>Nous avons donc des méthodes très patiques et rapides dans <code>Zend_Date</code>, pour récupérer les
+        <para>Nous avons donc des méthodes très pratiques et rapides dans <code>Zend_Date</code>, pour récupérer les
         dates depuis une base de données.</para>
 
         <example id="zend.date.creation.database.example-1">
@@ -73,11 +73,11 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]></programlisting>
             <para>La sortie de chaque base de données est différente même si elles se ressemblent. Cependant elles ont
             toutes des formats compatibles <code>ISO</code>. La manière la plus simple de créer une date depuis une base
             de données est d'utiliser <code>Zend_Date::ISO_8601</code>. Les SGBDs connus pour être conformes pour
-            <code>Zend_Date::ISO_8601</code> sont MySQL, MSSQL par exemple, mais ils sont tous
-            capables de retourner une représentation <code>ISO8601</code> d'une donnée date. <code>ISO8601</code>
-            possède l'avantage d'être lisible et compréhensible par un humain. Son inconvénient est qu'il est légèrement
-            plus lourd à traiter qu'un simple timestamp UNIX. En revanche ceux-ci ne supportent pas les dates
-            inférieures au 1er Janvier 1970.</para>
+            <code>Zend_Date::ISO_8601</code> sont MySQL, MSSQL par exemple, mais ils sont tous capables de retourner une
+            représentation <code>ISO8601</code> d'une donnée date. <code>ISO8601</code> possède l'avantage d'être
+            lisible et compréhensible par un humain. Son inconvénient est qu'il est légèrement plus lourd à traiter
+            qu'un simple timestamp UNIX. En revanche ceux-ci ne supportent pas les dates inférieures au 1er Janvier
+            1970.</para>
 
             <programlisting role="php"><![CDATA[<?php
 // SELECT datecolumn FROM my_table
