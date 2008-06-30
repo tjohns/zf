@@ -74,6 +74,21 @@ class Zend_Gdata_App
     protected static $_httpMethodOverride = false;
 
     /**
+     * Enable gzipped responses?
+     *
+     * @var boolean
+     */
+    protected static $_gzipEnabled = false;
+
+    /**
+     * Use verbose exception messages.  In the case of HTTP errors,
+     * use the body of the HTTP response in the exception message.
+     *
+     * @var boolean
+     */
+    protected static $_verboseExceptionMessages = true;
+
+    /**
      * Default URI to which to POST.
      *
      * @var string
@@ -129,7 +144,7 @@ class Zend_Gdata_App
      */
     public function getFeed($uri, $className='Zend_Gdata_App_Feed')
     {
-        return $this->import($uri, $this->_httpClient, $className);
+        return $this->importUrl($uri, $className);
     }
 
     /**
@@ -141,7 +156,7 @@ class Zend_Gdata_App
      */
     public function getEntry($uri, $className='Zend_Gdata_App_Entry')
     {
-        return $this->import($uri, $this->_httpClient, $className);
+        return $this->importUrl($uri, $className);
     }
 
     /**
@@ -170,10 +185,10 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException('Argument is not an instance of Zend_Http_Client.');
         }
-        $useragent = $applicationId . ' Zend_Framework_Gdata/' . Zend_Version::VERSION;
+        $userAgent = $applicationId . ' Zend_Framework_Gdata/' . Zend_Version::VERSION;
+        $client->setHeaders('User-Agent', $userAgent);
         $client->setConfig(array(
-            'strictredirects' => true,
-            'useragent' => $useragent
+            'strictredirects' => true
             )
         );
         $this->_httpClient = $client;
@@ -205,10 +220,10 @@ class Zend_Gdata_App
     {
         if (!self::$_staticHttpClient instanceof Zend_Http_Client) {
             $client = new Zend_Http_Client();
-            $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+            $userAgent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
+            $client->setHeaders('User-Agent', $userAgent);
             $client->setConfig(array(
-                'strictredirects' => true,
-                'useragent' => $useragent
+                'strictredirects' => true
                 )
             );
             self::$_staticHttpClient = $client;
@@ -245,6 +260,60 @@ class Zend_Gdata_App
     }
 
     /**
+     * Toggle requesting gzip encoded responses
+     *
+     * @param  boolean $enabled Whether or not to enable gzipped responses
+     * @return void
+     */
+    public static function setGzipEnabled($enabled = false)
+    {
+        if ($enabled && !function_exists('gzinflate')) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'You cannot enable gzipped responses if the zlib module ' .
+                    'is not enabled in your PHP installation.');
+        
+        }
+        self::$_gzipEnabled = $enabled;
+    }
+
+    /**
+     * Get the HTTP override state
+     *
+     * @return boolean
+     */
+    public static function getGzipEnabled()
+    {
+        return self::$_gzipEnabled;
+    }
+
+    /**
+     * Get whether to use verbose exception messages
+     *
+     * In the case of HTTP errors,  use the body of the HTTP response 
+     * in the exception message.
+     *
+     * @return boolean
+     */
+    public static function getVerboseExceptionMessages()
+    {
+        return self::$_verboseExceptionMessages;
+    }
+
+    /**
+     * Set whether to use verbose exception messages
+     *
+     * In the case of HTTP errors, use the body of the HTTP response 
+     * in the exception message.
+     *
+     * @param boolean $verbose Whether to use verbose exception messages
+     */
+    public static function setVerboseExceptionMessages($verbose)
+    {
+        self::$_verboseExceptionMessages = $verbose;
+    }
+
+    /**
      * Set the maximum number of redirects to follow during HTTP operations
      *
      * @param int $maxRedirects Maximum number of redirects to follow
@@ -266,6 +335,177 @@ class Zend_Gdata_App
     }
 
     /**
+     * Provides pre-processing for HTTP requests to APP services.  
+     *
+     * 1. Checks the $data element and, if it's an entry, extracts the XML, 
+     *    multipart data, edit link (PUT,DELETE), etc.
+     * 2. If $data is a string, sets the default content-type  header as 
+     *    'application/atom+xml' if it's not already been set.
+     * 3. Adds a x-http-method override header and changes the HTTP method 
+     *    to 'POST' if necessary as per getHttpMethodOverride()
+     *
+     * @param string $method The HTTP method for the request - 'GET', 'POST', 
+     *                       'PUT', 'DELETE'
+     * @param string $url The URL to which this request is being performed, 
+     *                    or null if found in $data
+     * @param array $headers An associative array of HTTP headers for this 
+     *                       request
+     * @param mixed $data The Zend_Gdata_App_Entry or XML for the  
+     *                    body of the request
+     * @param string $contentTypeOverride The override value for the 
+     *                                    content type of the request body
+     * @return array An associative array containing the determined 
+     *               'method', 'url', 'data', 'headers', 'contentType'
+     */
+    public function prepareRequest($method, $url = null, $headers = array(), $data = null, $contentTypeOverride = null)
+    {
+        $rawData = null;
+        $finalContentType = null;
+        if ($url == null) {
+            $url = $this->_defaultPostUri;
+        }
+
+        if (is_string($data)) {
+            $rawData = $data;
+            if ($contentTypeOverride === null) {
+                $finalContentType = 'application/atom+xml';
+            }
+        } elseif ($data instanceof Zend_Gdata_App_MediaEntry) {
+            $rawData = $data->encode();
+            if ($data->getMediaSource() !== null) {
+                $finalContentType = 'multipart/related; boundary="' . $data->getBoundary() . '"';
+                $headers['MIME-version'] = '1.0'; 
+                $headers['Slug'] = $data->getMediaSource()->getSlug();
+            } else {
+                $finalContentType = 'application/atom+xml';
+            }
+            if ($method == 'PUT' || $method == 'DELETE') {
+                $editLink = $data->getEditLink();
+                if ($editLink != null) {
+                    $url = $editLink->getHref();
+                }
+            }
+        } elseif ($data instanceof Zend_Gdata_App_Entry) {
+            $rawData = $data->saveXML();
+            $finalContentType = 'application/atom+xml';
+            if ($method == 'PUT' || $method == 'DELETE') {
+                $editLink = $data->getEditLink();
+                if ($editLink != null) {
+                    $url = $editLink->getHref();
+                }
+            }
+        } elseif ($data instanceof Zend_Gdata_App_MediaSource) {
+            $rawData = $data->encode();
+            if ($data->getSlug() !== null) {
+                $headers['Slug'] = $data->getSlug();
+            }
+            $finalContentType = $data->getContentType();
+        }
+        if ($method == 'DELETE') {
+            $rawData = null;
+        }
+        if ($method != 'POST' && $method != 'GET' && Zend_Gdata_App::getHttpMethodOverride()) {
+            $headers['x-http-method-override'] = $method;
+            $method = 'POST';
+        } else {
+            $headers['x-http-method-override'] = null;
+        }
+
+        if ($contentTypeOverride != null) {
+            $finalContentType = $contentTypeOverride;
+        }
+
+        return array('method' => $method, 'url' => $url, 'data' => $rawData, 'headers' => $headers, 'contentType' => $finalContentType);
+    }
+
+    /**
+     * Performs a HTTP request using the specified method
+     *
+     * @param string $method The HTTP method for the request - 'GET', 'POST', 
+     *                       'PUT', 'DELETE'
+     * @param string $url The URL to which this request is being performed
+     * @param array $headers An associative array of HTTP headers 
+     *                       for this request
+     * @param string $body The body of the HTTP request
+     * @param string $contentType The value for the content type 
+     *                                of the request body
+     * @param int $remainingRedirects Number of redirects to follow if request
+     *                              s results in one
+     * @return Zend_Http_Response The response object
+     */
+    public function performHttpRequest($method, $url, $headers = null, $body = null, $contentType = null, $remainingRedirects = null)
+    {
+        require_once 'Zend/Http/Client/Exception.php';
+        if ($remainingRedirects === null) {
+            $remainingRedirects = self::getMaxRedirects();
+        }
+        if ($headers === null) {
+            $headers = array();
+        }
+        // check the overridden method
+        if (($method == 'POST' || $method == 'PUT') && $body === null && $headers['x-http-method-override'] != 'DELETE') {
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                        'You must specify the data to post as either a ' . 
+                        'string or a child of Zend_Gdata_App_Entry');
+        }
+        if ($url === null) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to post.');
+        }
+        $headers['Content-Type'] = $contentType;
+        if (Zend_Gdata_App::getGzipEnabled()) {
+            // some services require the word 'gzip' to be in the user-agent header
+            // in addition to the accept-encoding header
+            if (strpos($this->_httpClient->getHeader('User-Agent'), 'gzip') === false) {
+                $headers['User-Agent'] = $this->_httpClient->getHeader('User-Agent') . ' (gzip)';
+            }
+            $headers['Accept-encoding'] = 'gzip, deflate';
+        } else {
+            $headers['Accept-encoding'] = 'identity';
+        }
+
+        // Make sure the HTTP client object is 'clean' before making a request
+        // In addition to standard headers to reset via resetParameters(), 
+        // also reset the Slug header
+        $this->_httpClient->resetParameters();
+        $this->_httpClient->setHeaders('Slug', null);
+
+        // Set the params for the new request to be performed
+        $this->_httpClient->setHeaders($headers);
+        $this->_httpClient->setUri($url);
+        $this->_httpClient->setConfig(array('maxredirects' => 0));
+        $this->_httpClient->setRawData($body, $contentType);
+        try {
+            $response = $this->_httpClient->request($method);
+        } catch (Zend_Http_Client_Exception $e) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
+        }
+        if ($response->isRedirect()) {
+            if ($remainingRedirects > 0) {
+                $newUrl = $response->getHeader('Location');
+                $response = $this->performHttpRequest($method, $newUrl, $headers, $body, $contentType, $remainingRedirects);
+            } else {
+                require_once 'Zend/Gdata/App/HttpException.php';
+                throw new Zend_Gdata_App_HttpException(
+                        'Number of redirects exceeds maximum', null, $response);
+            }
+        }
+        if (!$response->isSuccessful()) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            $exceptionMessage = 'Expected response code 200, got ' . $response->getStatus();
+            if (self::getVerboseExceptionMessages()) {
+                $exceptionMessage .= "\n" . $response->getBody();
+            }
+            $exception = new Zend_Gdata_App_HttpException($exceptionMessage);
+            $exception->setResponse($response);
+            throw $exception;
+        }
+        return $response;
+    }
+
+    /**
      * Imports a feed located at $uri.
      *
      * @param  string $uri
@@ -276,26 +516,37 @@ class Zend_Gdata_App
      */
     public static function import($uri, $client = null, $className='Zend_Gdata_App_Feed')
     {
-        $client->resetParameters();
-        $client->setHeaders('x-http-method-override', null);
-        $client->setUri($uri);
-        $client->setConfig(array('maxredirects' => self::getMaxRedirects()));
-        $response = $client->request('GET');
-        if ($response->getStatus() !== 200) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-            $exception->setResponse($response);
-            throw $exception;
-        }
+        $app = new Zend_Gdata_App($client);
+        $requestData = $app->prepareRequest('GET', $uri);
+        $response = $app->performHttpRequest($requestData['method'], $requestData['url']);
+
         $feedContent = $response->getBody();
         $feed = self::importString($feedContent, $className);
         if ($client != null) {
             $feed->setHttpClient($client);
-        } else {
-            $feed->setHttpClient(self::getStaticHttpClient());
         }
         return $feed;
     }
+
+    /**
+     * Imports the specified URL (non-statically).
+     *
+     * @param  string $url The URL to import
+     * @param  string $className The class which is used as the return type
+     * @throws Zend_Gdata_App_Exception
+     * @return Zend_Gdata_App_Feed
+     */
+    public function importUrl($url, $className='Zend_Gdata_App_Feed')
+    {
+        $response = $this->get($url);
+        
+        $feedContent = $response->getBody();
+        $feed = self::importString($feedContent, $className);
+        if ($this->getHttpClient() != null) {
+            $feed->setHttpClient($this->getHttpClient());
+        }   
+        return $feed;
+    }   
 
 
     /**
@@ -355,18 +606,8 @@ class Zend_Gdata_App
      */
     public function get($uri)
     {
-        $client->setConfig(array('maxredirects' => self::getMaxRedirects()));
-        $client->resetParameters();
-        $client->setHeaders('x-http-method-override', null);
-        $client->setUri($uri);
-        $response = $client->request('GET');
-        if ($response->getStatus() !== 200) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-            $exception->setResponse($response);
-            throw $exception;
-        }
-        return $response;
+        $requestData = $this->prepareRequest('GET', $uri);
+        return $this->performHttpRequest($requestData['method'], $requestData['url']);
     }
 
     /**
@@ -376,7 +617,7 @@ class Zend_Gdata_App
      * @param string $uri POST URI
      * @param array $headers Additional HTTP headers to insert.
      * @param string $contentType Content-type of the data
-     * @param array $extraHaders Extra headers to add tot he request
+     * @param array $extraHaders Extra headers to add to the request
      * @return Zend_Http_Response
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
@@ -385,91 +626,12 @@ class Zend_Gdata_App
     public function post($data, $uri = null, $remainingRedirects = null,
             $contentType = null, $extraHeaders = null)
     {
-        require_once 'Zend/Http/Client/Exception.php';
-        if ($remainingRedirects === null) {
-            $remainingRedirects = self::getMaxRedirects();
-        }
-        if ($extraHeaders === null) {
-            $extraHeaders = array();
-        }
-        if (is_string($data)) {
-            $rawData = $data;
-        } elseif ($data instanceof Zend_Gdata_App_MediaEntry) {
-            $rawData = $data->encode();
-            if ($data->getMediaSource() !== null) {
-                $contentType = 'multipart/related; boundary="' . $data->getBoundary() . '"';
-                $headers = array('MIME-version' => '1.0');
-                $extraHeaders['Slug'] = $data->getMediaSource()->getSlug();
-            } else {
-                $contentType = 'application/atom+xml';
-            }
-        } elseif ($data instanceof Zend_Gdata_App_Entry) {
-            $rawData = $data->saveXML();
-            $contentType = 'application/atom+xml';
-        } elseif ($data instanceof Zend_Gdata_App_MediaSource) {
-            $rawData = $data->encode();
-            if ($data->getSlug() !== null) {
-                $extraHeaders['Slug'] = $data->getSlug();
-            }
-            if ($contentType === null) {
-                $contentType = $data->getContentType();
-            }
-        } else {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException(
-                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
-        }
-        if ($uri === null) {
-            $uri = $this->_defaultPostUri;
-        }
-        if ($uri === null) {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to post.');
-        }
-        if ($contentType === null) {
-            $contentType = 'application/atom+xml';
-        }
-        $headers = array('x-http-method-override' => null);
-        if ($extraHeaders !== null) {
-            $headers = array_merge($headers, $extraHeaders);
-        }
-        $this->_httpClient->resetParameters();
-        $this->_httpClient->setHeaders($headers);
-        $this->_httpClient->setUri($uri);
-        $this->_httpClient->setConfig(array('maxredirects' => 0));
-        $this->_httpClient->setRawData($rawData, $contentType);
-        try {
-            $response = $this->_httpClient->request('POST');
-        } catch (Zend_Http_Client_Exception $e) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
-        }
-        /**
-         * set "S" cookie to avoid future redirects.
-         * TEMPORARILY removed until Zend_Http_Client has a method to set
-         * raw cookie data
-        if($cookie = $response->getHeader('Set-cookie')) {
-            list($cookieName, $cookieValue) = explode('=', $cookie, 2);
-            $this->_httpClient->setCookie($cookieName, $cookieValue);
-        }
-         */
-        if ($response->isRedirect()) {
-            if ($remainingRedirects > 0) {
-                $newUri = $response->getHeader('Location');
-                $response = $this->post($data, $newUri, $remainingRedirects - 1, $contentType, $extraHeaders);
-            } else {
-                require_once 'Zend/Gdata/App/HttpException.php';
-                throw new Zend_Gdata_App_HttpException(
-                        'No more redirects allowed', null, $response);
-            }
-        }
-        if (!$response->isSuccessful()) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-            $exception->setResponse($response);
-            throw $exception;
-        }
-        return $response;
+        $requestData = $this->prepareRequest('POST', $uri, $extraHeaders, 
+                                             $data, $contentType);
+        return $this->performHttpRequest(
+                $requestData['method'], $requestData['url'], 
+                $requestData['headers'], $requestData['data'], 
+                $requestData['contentType']);
     }
 
     /**
@@ -479,7 +641,7 @@ class Zend_Gdata_App
      * @param string $uri PUT URI
      * @param array $headers Additional HTTP headers to insert.
      * @param string $contentType Content-type of the data
-     * @param array $extraHaders Extra headers to add tot he request
+     * @param array $extraHaders Extra headers to add to the request
      * @return Zend_Http_Response
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
@@ -488,101 +650,11 @@ class Zend_Gdata_App
     public function put($data, $uri = null, $remainingRedirects = null,
             $contentType = null, $extraHeaders = null)
     {
-        require_once 'Zend/Http/Client/Exception.php';
-        if ($remainingRedirects === null) {
-            $remainingRedirects = self::getMaxRedirects();
-        }
-        if ($extraHeaders === null) {
-            $extraHeaders = array();
-        }
-        if (is_string($data)) {
-            $rawData = $data;
-        } elseif ($data instanceof Zend_Gdata_App_MediaEntry) {
-            $rawData = $data->encode();
-            if ($data->getMediaSource() !== null) {
-                $contentType = 'multipart/related; boundary="' . $data->getBoundary() . '"';
-                $headers = array('MIME-version' => '1.0');
-                $extraHeaders['Slug'] = $data->getMediaSource()->getSlug();
-            } else {
-                $contentType = 'application/atom+xml';
-            }
-        } elseif ($data instanceof Zend_Gdata_App_Entry) {
-            $rawData = $data->saveXML();
-        } elseif ($data instanceof Zend_Gdata_App_MediaSource) {
-            $rawData = $data->encode();
-            if ($data->getSlug() !== null) {
-                $extraHeaders['Slug'] = $data->getSlug();
-            }
-            if ($contentType === null) {
-                $contentType = $data->getContentType();
-            }
-        } else {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException(
-                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
-        }
-        if ($uri === null) {
-            if ($data instanceof Zend_Gdata_App_Entry) {
-                $editLink = $data->getEditLink();
-                if ($editLink != null) {
-                    $uri = $editLink->getHref();
-                }
-            }
-        }
-        if ($uri === null) {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI to which to put.');
-        }
-        if ($contentType === null) {
-            $contentType = 'application/atom+xml';
-        }
-        $headers = array('x-http-method-override' => null);
-        if ($extraHeaders !== null) {
-            $headers = array_merge($headers, $extraHeaders);
-        }
-        $this->_httpClient->resetParameters();
-        $this->_httpClient->setUri($uri);
-        $this->_httpClient->setConfig(array('maxredirects' => 0));
-        $this->_httpClient->setRawData($rawData, $contentType);
-        try {
-            if (Zend_Gdata_App::getHttpMethodOverride()) {
-                $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: PUT',
-                    'Content-Type: ' . $contentType));
-                $response = $this->_httpClient->request('POST');
-            } else {
-                $this->_httpClient->setHeaders('Content-Type', $contentType);
-                $response = $this->_httpClient->request('PUT');
-            }
-        } catch (Zend_Http_Client_Exception $e) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
-        }
-        /**
-         * set "S" cookie to avoid future redirects.
-         * TEMPORARILY removed until Zend_Http_Client has a method to set
-         * raw cookie data
-        if($cookie = $response->getHeader('Set-cookie')) {
-            list($cookieName, $cookieValue) = explode('=', $cookie, 2);
-            $this->_httpClient->setCookie($cookieName, $cookieValue);
-        }
-         */
-        if ($response->isRedirect()) {
-            if ($remainingRedirects > 0) {
-                $newUri = $response->getHeader('Location');
-                $response = $this->put($data, $newUri, $remainingRedirects - 1, $contentType, $extraHeaders);
-            } else {
-                require_once 'Zend/Gdata/App/HttpException.php';
-                throw new Zend_Gdata_App_HttpException(
-                        'No more redirects allowed', null, $response);
-            }
-        }
-        if (!$response->isSuccessful()) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-            $exception->setResponse($response);
-            throw $exception;
-        }
-        return $response;
+        $requestData = $this->prepareRequest('PUT', $uri, $extraHeaders, $data, $contentType);
+        return $this->performHttpRequest(
+                $requestData['method'], $requestData['url'], 
+                $requestData['headers'], $requestData['data'], 
+                $requestData['contentType']);
     }
 
     /**
@@ -596,59 +668,14 @@ class Zend_Gdata_App
      */
     public function delete($data, $remainingRedirects = null)
     {
-        require_once 'Zend/Http/Client/Exception.php';
-        if ($remainingRedirects === null) {
-            $remainingRedirects = self::getMaxRedirects();
-        }
         if (is_string($data)) {
-            $uri = $data;
-        } elseif ($data instanceof Zend_Gdata_App_Entry) {
-            $editLink = $data->getEditLink();
-            if ($editLink != null) {
-                $uri = $editLink->getHref();
-            }
+            $requestData = $this->prepareRequest('DELETE', $data);
         } else {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException(
-                    'You must specify the data to post as either a string or a child of Zend_Gdata_App_Entry');
+            $requestData = $this->prepareRequest('DELETE', null, null, $data); 
         }
-        if ($uri === null) {
-            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-            throw new Zend_Gdata_App_InvalidArgumentException('You must specify an URI which needs deleted.');
-        }
-        $this->_httpClient->resetParameters();
-        $this->_httpClient->setHeaders('x-http-method-override', null);
-        $this->_httpClient->setUri($uri);
-        $this->_httpClient->setConfig(array('maxredirects' => 0));
-        try {
-            if (Zend_Gdata_App::getHttpMethodOverride()) {
-                $this->_httpClient->setHeaders(array('X-HTTP-Method-Override: DELETE'));
-                $this->_httpClient->setRawData('');
-                $response = $this->_httpClient->request('POST');
-            } else {
-                $response = $this->_httpClient->request('DELETE');
-            }
-        } catch (Zend_Http_Client_Exception $e) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
-        }
-        if ($response->isRedirect()) {
-            if ($remainingRedirects > 0) {
-                $newUri = $response->getHeader('Location');
-                $response = $this->delete($newUri, $remainingRedirects - 1);
-            } else {
-                require_once 'Zend/Gdata/App/HttpException.php';
-                throw new Zend_Gdata_App_HttpException(
-                        'No more redirects allowed', null, $response);
-            }
-        }
-        if (!$response->isSuccessful()) {
-            require_once 'Zend/Gdata/App/HttpException.php';
-            $exception = new Zend_Gdata_App_HttpException('Expected response code 200, got ' . $response->getStatus());
-            $exception->setResponse($response);
-            throw $exception;
-        }
-        return $response;
+        return $this->performHttpRequest($requestData['method'], $requestData['url'], 
+                                         $requestData['headers'], '', $requestData['contentType'], 
+                                         $remainingRedirects);
     }
 
     /**
@@ -670,20 +697,12 @@ class Zend_Gdata_App
     /**
      * Update an entry
      *
-     * TODO Determine if App should call Entry to Update or the opposite.
-     * Suspecect opposite would mkae more sense.  Also, this possibly should
-     * take an optional URL to override URL used in the entry, or if an
-     * edit URI/ID is not present in the entry
-     *
      * @param mixed $data Zend_Gdata_App_Entry or XML (w/ID and link rel='edit')
      * @return Zend_Gdata_App_Entry The entry returned from the server
      * @throws Zend_Gdata_App_Exception
      */
     public function updateEntry($data, $uri = null, $className = null)
     {
-        // [FIXME] This will blow up if $data is not an instance of
-        //         Zend_Gdata_App_Entry and $className is null.
-        //         --tjohns 2007-08-24
         if ($className === null && $data instanceof Zend_Gdata_App_Entry) {
             $className = get_class($data);
         } elseif ($className === null) {
@@ -768,8 +787,8 @@ class Zend_Gdata_App
     }
 
     /**
-     * This method enables logging of requests by changing the 
-     * Zend_Http_Client_Adapter used for performing the requests.  
+     * This method enables logging of requests by changing the
+     * Zend_Http_Client_Adapter used for performing the requests.
      * NOTE: This will not work if you have customized the adapter
      * already to use a proxy server or other interface.
      * 
