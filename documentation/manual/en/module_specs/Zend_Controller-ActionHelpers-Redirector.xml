@@ -10,7 +10,7 @@
             URL. It provides numerous benefits over the
             <code>_redirect()</code> method, such as being able to preconfigure
             sitewide behavior into the redirector object or using the built in
-            <code>goto($action, $controller, $module, $params)</code> interface
+            <code>gotoSimple($action, $controller, $module, $params)</code> interface
             similar to that of <code>Zend_Controller_Action::_forward()</code>.
         </para>
 
@@ -37,10 +37,10 @@
 
             <listitem>
                 <para>
-                    <code>setGoto()</code> can be used to set a default URL to
-                    use if none is passed to <code>goto()</code>. Uses the API
+                    <code>setGotoSimple()</code> can be used to set a default URL to
+                    use if none is passed to <code>gotoSimple()</code>. Uses the API
                     of <code>Zend_Controller_Action::_forward()</code>:
-                    setgoto($action, $controller = null, $module = null, array
+                    setGotoSimple($action, $controller = null, $module = null, array
                     $params = array());
                 </para>
             </listitem>
@@ -93,7 +93,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>goto()</code> uses <code>setGoto()</code>
+                    <code>gotoSimple()</code> uses <code>setGotoSimple()</code>
                     (<code>_forward()-like API</code>) to build a URL and
                     perform a redirect.
                 </para>
@@ -154,7 +154,7 @@ class SomeController extends Zend_Controller_Action
         // relevant for all actions from this point forward
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGoto("this-action", "some-controller");
+                          ->setGotoSimple("this-action", "some-controller");
     }
 
     public function myAction()
@@ -210,7 +210,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>Using goto()'s _forward() API</title>
 
             <para>
-                <code>goto()</code>'s API mimics that of
+                <code>gotoSimple()</code>'s API mimics that of
                 <code>Zend_Controller_Action::_forward()</code>. The primary
                 difference is that it builds a URL from the parameters passed,
                 and using the default <code>:module/:controller/:action/*</code>
@@ -239,7 +239,7 @@ class ForwardController extends Zend_Controller_Action
 
         // Redirect to 'my-action' of 'my-controller' in the current module,
         // using the params param1 => test and param2 => test2
-        $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }]]>
             </programlisting>
