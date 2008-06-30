@@ -410,7 +410,7 @@ class FooController extends Zend_Controller_Action
 
             <listitem><para>
                     <code>hasActionContext($action, $context)</code>: determine
-                    if a particular action has a give context.
+                    if a particular action has a given context.
             </para></listitem>
 
             <listitem><para>
@@ -651,7 +651,7 @@ $contextSwitch->initContext();
                     normal responses, and have no meaning in alternate contexts.
                     However, if you wish to use layouts (perhaps you may have a
                     layout for the new context), you can change this behaviour
-                    by passing a true value to
+                    by passing a false value to
                     <code>setAutoDisableLayout()</code>. You should do this
                     <emphasis>before</emphasis> calling
                     <code>initContext()</code>.
