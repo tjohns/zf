@@ -207,6 +207,14 @@
                         </entry>
                 </row>
                 <row>
+                    <entry>Time</entry>
+                    <entry>Zend_Measure_Time</entry>
+                    <entry>Second | <code>s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Time</code> covers the physical factor of time.
+                        </entry>
+                </row>
+                <row>
                     <entry>Torque</entry>
                     <entry>Zend_Measure_Torque</entry>
                     <entry>Newton meter | <code>Nm</code>
