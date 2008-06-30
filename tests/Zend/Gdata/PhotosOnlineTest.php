@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -19,6 +18,8 @@
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Gdata/Photos.php';
 require_once 'Zend/Http/Client.php';
@@ -109,6 +110,22 @@ class Zend_Gdata_PhotosOnlineTest extends PHPUnit_Framework_TestCase
         return $newPhoto;
     }
     
+    public function updatePhotoMetaData()
+    {
+        $client = $this->photos;
+        $album = $this->createAlbum();
+        $insertedEntry = $this->createPhoto($album);
+
+        $insertedEntry->title->text = "New Photo";
+        $insertedEntry->summary->text = "Photo caption";
+        $keywords = new Zend_Gdata_Media_Extension_MediaKeywords();
+        $keywords->setText("foo, bar, baz");
+        $insertedEntry->mediaGroup->keywords = $keywords;
+    
+        $updatedEntry = $insertedEntry->save();
+        return array($updatedEntry, $album);
+    }
+    
     public function createComment($photo)
     {
         $client = $this->photos;
@@ -145,18 +162,30 @@ class Zend_Gdata_PhotosOnlineTest extends PHPUnit_Framework_TestCase
         return $newTag;
     }
 
-  public function testCreateAlbumAndUploadPhoto()
-  {
-    $client = $this->photos;
-        
+    public function testCreateAlbumAndUploadPhoto()
+    {
+        $client = $this->photos;
         $album = $this->createAlbum();
-    
         $photo = $this->createPhoto($album);
         
         // Clean up the mess
         $client->deletePhotoEntry($photo, true);
         $client->deleteAlbumEntry($album, true);
-  }
+    }
+
+    public function testUpdatePhotoMetadata()
+    {
+        $client = $this->photos;
+        $dataArray = $this->updatePhotoMetaData();
+        $updatedPhoto = $dataArray[0];
+        $album = $dataArray[1];
+      
+        $this->assertTrue($updatedPhoto instanceof Zend_Gdata_Photos_PhotoEntry);
+      
+        // Clean up the mess
+        $client->deletePhotoEntry($updatedPhoto, true);
+        $client->deleteAlbumEntry($album, true);
+    }
 
     public function testUserFeedAndEntry()
     {
@@ -180,13 +209,9 @@ class Zend_Gdata_PhotosOnlineTest extends PHPUnit_Framework_TestCase
     public function testCreatePhotoCommentAndTag()
     {
         $client = $this->photos;
-        
         $album = $this->createAlbum();
-    
         $photo = $this->createPhoto($album);
-        
         $comment = $this->createComment($photo);
-        
         $tag = $this->createTag($photo);
         
         // Clean up the mess
@@ -225,7 +250,6 @@ class Zend_Gdata_PhotosOnlineTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertTrue($e instanceof Zend_Gdata_App_InvalidArgumentException);
         }
-        
         try {
             $photo = new Zend_Gdata_Photos_PhotoEntry();
             $result = $client->insertPhotoEntry($photo, null);
