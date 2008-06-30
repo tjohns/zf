@@ -242,7 +242,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array  $params
      * @return void
      */
-    public function setGoto($action, $controller = null, $module = null, array $params = array())
+    public function setGotoSimple($action, $controller = null, $module = null, array $params = array())
     {
         $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
         $request    = $this->getRequest();
@@ -380,9 +380,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array  $params
      * @return void
      */
-    public function goto($action, $controller = null, $module = null, array $params = array())
+    public function gotoSimple($action, $controller = null, $module = null, array $params = array())
     {
-        $this->setGoto($action, $controller, $module, $params);
+        $this->setGotoSimple($action, $controller, $module, $params);
 
         if ($this->getExit()) {
             $this->redirectAndExit();
@@ -398,9 +398,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array $params
      * @return void
      */
-    public function gotoAndExit($action, $controller = null, $module = null, array $params = array())
+    public function gotoSimpleAndExit($action, $controller = null, $module = null, array $params = array())
     {
-        $this->setGoto($action, $controller, $module, $params);
+        $this->setGotoSimple($action, $controller, $module, $params);
         $this->redirectAndExit();
     }
 
@@ -500,6 +500,33 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      */
     public function direct($action, $controller = null, $module = null, array $params = array())
     {
-        $this->goto($action, $controller, $module, $params);
+        $this->gotoSimple($action, $controller, $module, $params);
+    }
+
+    /**
+     * Overloading
+     *
+     * Overloading for old 'goto', 'setGoto', and 'gotoAndExit' methods
+     * 
+     * @param  string $method 
+     * @param  array $args 
+     * @return mixed
+     * @throws Zend_Controller_Action_Exception for invalid methods
+     */
+    public function __call($method, $args)
+    {
+        $method = strtolower($method);
+        if ('goto' == $method) {
+            return call_user_func_array(array($this, 'gotoSimple'), $args);
+        }
+        if ('setgoto' == $method) {
+            return call_user_func_array(array($this, 'setGotoSimple'), $args);
+        }
+        if ('gotoandexit' == $method) {
+            return call_user_func_array(array($this, 'gotoSimpleAndExit'), $args);
+        }
+
+        require_once 'Zend/Controller/Action/Exception.php';
+        throw new Zend_Controller_Action_Exception(sprintf('Invalid method "%s" called on redirector', $method));
     }
 }
