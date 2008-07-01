@@ -500,7 +500,7 @@ $contextSwitch->initContext();
 
             <listitem>
                 <para>
-                    <code>setAutoDisableLayout($flag)</code>: 缺省地，当上下文开关出现，布局是关闭的；这是因为一般布局将只用来返回正常的相应，对备用的（alternate）上下文没有意义。然而，如果想使用布局（也许你对新的上下文有个布局），你可以通过传递一个 true 的值给 <code>setAutoDisableLayout()</code> 来改变它的行为。这应当 <emphasis> 在 </emphasis>调用 <code>initContext()</code> <emphasis> 之前 </emphasis> 来做。
+                    <code>setAutoDisableLayout($flag)</code>: 缺省地，当上下文开关出现，布局是关闭的；这是因为一般布局将只用来返回正常的相应，对备用的（alternate）上下文没有意义。然而，如果想使用布局（也许你对新的上下文有个布局），你可以通过传递一个 false 的值给 <code>setAutoDisableLayout()</code> 来改变它的行为。这应当 <emphasis> 在 </emphasis>调用 <code>initContext()</code> <emphasis> 之前 </emphasis> 来做。
                 </para>
 
                 <para>
