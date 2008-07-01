@@ -46,7 +46,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getSubscriptionFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('zfgdata\'s Subscriptions', $feed->title->text);
+        $this->assertEquals('Subscriptions of zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
@@ -57,7 +57,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getContactFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('zfgdata\'s Contacts', $feed->title->text);
+        $this->assertEquals('Contacts of zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
@@ -68,7 +68,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     public function testRetrieveUserVideos()
     {
         $feed = $this->gdata->getUserUploads($this->ytAccount);
-        $this->assertEquals('Zfgdata\'s Videos', $feed->title->text);
+        $this->assertEquals('Videos of zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) === 1);
     }
 
@@ -113,8 +113,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('zfgdata', $entry->username->text);
         $this->assertEquals('I\'m a lonely test account, with little to do but sit around and wait for people to use me.  I get bored in between releases and often sleep to pass the time.  Please use me more often, as I love to show off my talent in breaking your code.',
                 $entry->description->text);
-        // Assuming that this code will not be around in 68 years :)
-        $this->assertTrue(($entry->age->text >= 32) && ($entry->age->text < 100));
+        $this->assertEquals(32, $entry->age->text);
         $this->assertEquals('crime and punishment, ps i love you, the stand', $entry->books->text);
         $this->assertEquals('Google', $entry->company->text);
         $this->assertEquals('software engineering, information architecture, photography, travel', $entry->hobbies->text);
@@ -132,7 +131,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getPlaylistListFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('zfgdata\'s Playlists', $feed->title->text);
+        $this->assertEquals('Playlists of zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
