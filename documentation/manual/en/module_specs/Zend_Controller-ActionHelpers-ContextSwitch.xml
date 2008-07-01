@@ -26,7 +26,7 @@
         </para></listitem>
 
         <listitem><para>
-                Send approprite response headers for the context desired.
+                Send appropriate response headers for the context desired.
         </para></listitem>
 
         <listitem><para>
@@ -435,7 +435,7 @@ class FooController extends Zend_Controller_Action
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.initcontext">
-        <title>Initializizing Context Switching</title>
+        <title>Initializing Context Switching</title>
 
         <para>
             To initialize context switching, you need to call
