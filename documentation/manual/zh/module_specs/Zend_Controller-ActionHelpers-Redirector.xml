@@ -5,7 +5,7 @@
         <title>介绍</title>
 
         <para>
-	   转向器<code>(Redirector)</code>助手允许使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>goto($action, $controller, $module, $params)</code>接口。
+	         转向器<code>(Redirector)</code>助手允许使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>gotoSimple($action, $controller, $module, $params)</code>接口。
         </para>
 
         <para>
@@ -27,7 +27,7 @@
 
             <listitem>
                 <para>
-                   <code>setGoto()</code>设置默认的URL，当没有提供参数给<code>goto()</code>方法时转向该URL。可以使用类似<code>Zend_Controller_Action::_forward()</code>的API：<code>setgoto($action, $controller = null, $module = null, array $params = array())</code>;
+                   <code>setGotoSimple()</code>设置默认的URL，当没有提供参数给<code>gotoSimple()</code>方法时转向该URL。可以使用类似<code>Zend_Controller_Action::_forward()</code>的API：<code>setGotoSimple($action, $controller = null, $module = null, array $params = array())</code>;
                 </para>
             </listitem>
 
@@ -63,7 +63,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                   <code>goto()</code>使用<code>setGoto()</code>(<code>类似_forward()的API</code>)来构建URL并执行重定向。
+                   <code>gotoSimple()</code>使用<code>setGotoSimple()</code>(<code>类似_forward()的API</code>)来构建URL并执行重定向。
                 </para>
             </listitem>
 
@@ -114,7 +114,7 @@ class SomeController extends Zend_Controller_Action
         // relevant for all actions from this point forward
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGoto("this-action", "some-controller");
+                          ->setGotoSimple("this-action", "some-controller");
     }
 
     public function myAction()
@@ -168,7 +168,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>使用<code>goto()</code>的<code>_forward()</code>API</title>
 
             <para>
-                <code>goto()</code>'s API 模拟了<code>Zend_Controller_Action::_forward()</code>。主要的不同在于它通过传入的参数构造URL，使用默认路由器的默认格式<code>:module/:controller/:action/*</code>。然后重定向而不是继续动作链循环。
+                <code>gotoSimple()</code>'s API 模拟了<code>Zend_Controller_Action::_forward()</code>。主要的不同在于它通过传入的参数构造URL，使用默认路由器的默认格式<code>:module/:controller/:action/*</code>。然后重定向而不是继续动作链循环。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -192,7 +192,7 @@ class ForwardController extends Zend_Controller_Action
 
         // Redirect to 'my-action' of 'my-controller' in the current module,
         // using the params param1 => test and param2 => test2
-        $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }]]>
             </programlisting>
