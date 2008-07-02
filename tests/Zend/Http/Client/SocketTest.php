@@ -9,6 +9,7 @@ if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
 
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'Zend/Uri/Http.php';
 
 /**
  * This Testsuite includes all Zend_Http_Client that require a working web 

@@ -56,6 +56,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      * @var array
      */
     protected $config = array(
+        'persistent'    => false,
         'ssltransport'  => 'ssl',
         'sslcert'       => null,
         'sslpassphrase' => null
@@ -132,11 +133,14 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 }
             }
 
+            $flags = STREAM_CLIENT_CONNECT;
+            if ($this->config['persistent']) $flags |= STREAM_CLIENT_PERSISTENT;
+            
             $this->socket = @stream_socket_client($host . ':' . $port,
                                                   $errno,
                                                   $errstr,
                                                   (int) $this->config['timeout'],
-                                                  STREAM_CLIENT_CONNECT,
+                                                  $flags,
                                                   $context);
             if (! $this->socket) {
                 $this->close();
@@ -309,11 +313,15 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     }
 
     /**
-     * Destructor: make sure the socket is disconnected
+     * Destructor: make sure the socket is disconnected 
+     * 
+     * If we are in persistent TCP mode, will not close the connection
      *
      */
     public function __destruct()
     {
-        if ($this->socket) $this->close();
+        if (! $this->config['persistent']) {
+            if ($this->socket) $this->close();
+        }
     }
 }
