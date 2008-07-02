@@ -1,4 +1,5 @@
 <sect1 id="zend.mail.boundary">
+	<!-- en:9879 -->
     <title>MIME バウンダリの制御</title>
     <para>
         マルチパートメッセージで個々のパートを区切るための
@@ -12,7 +13,7 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-$mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
+$mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
 // メッセージを作成します...]]>
         </programlisting>
     </example>
