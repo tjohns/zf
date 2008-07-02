@@ -93,7 +93,7 @@
         <listitem>
             <para>
                 <emphasis role="strong">Automatic source detection:</emphasis>
-                Zend_Translate is captable of detecting and integrating multiple source files
+                Zend_Translate is capable of detecting and integrating multiple source files
                 and additionally detect the locale to be used depending on directory or filenames.
             </para>
         </listitem>
