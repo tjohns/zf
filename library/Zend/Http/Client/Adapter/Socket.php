@@ -227,12 +227,17 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             }
         }
 
+        $statusCode = Zend_Http_Response::extractCode($response);
+         
         // Handle 100 and 101 responses internally by restarting the read again
-        if (Zend_Http_Response::extractCode($response) == 100 ||
-            Zend_Http_Response::extractCode($response) == 101) return $this->read();
+        if ($statusCode == 100 || $statusCode == 101) return $this->read();
 
-        // If this was a HEAD request, return after reading the header (no need to read body)
-        if ($this->method == Zend_Http_Client::HEAD) return $response;
+        /**
+         * Responses to HEAD requests and 204 or 304 responses are not expected
+         * to have a body - stop reading here
+         */
+        if ($statusCode == 304 || $statusCode == 204 || 
+            $this->method == Zend_Http_Client::HEAD) return $response;
 
         // Check headers to see what kind of connection / transfer encoding we have
         $headers = Zend_Http_Response::extractHeaders($response);
@@ -288,7 +293,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 $left_to_read -= strlen($chunk);
                 $response .= $chunk;
             }
-
+        
         // Fallback: just read the response (should not happen)
         } else {
             while ($buff = @fread($this->socket, 8192)) {
