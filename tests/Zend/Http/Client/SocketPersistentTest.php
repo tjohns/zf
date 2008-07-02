@@ -31,7 +31,7 @@ require_once 'SocketTest.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Client_SocketKeepaliveTest extends Zend_Http_Client_SocketTest
+class Zend_Http_Client_SocketPersistentTest extends Zend_Http_Client_SocketTest
 {
 	/**
 	 * Configuration array
@@ -39,7 +39,8 @@ class Zend_Http_Client_SocketKeepaliveTest extends Zend_Http_Client_SocketTest
 	 * @var array
 	 */
 	protected $config = array(
-		'adapter'     => 'Zend_Http_Client_Adapter_Socket',
-		'keepalive'   => true
+		'adapter'    => 'Zend_Http_Client_Adapter_Socket',
+		'persistent' => true,
+	    'keepalive'  => true
 	);
 }

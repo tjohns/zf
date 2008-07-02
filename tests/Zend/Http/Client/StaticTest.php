@@ -315,7 +315,8 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			'POST',
 			'DOSOMETHING',
 			'PROPFIND',
-			'Some_Characters'
+			'Some_Characters',
+			'X-MS-ENUMATTS'
 		);
 		
 		foreach ($goodMethods as $method) {

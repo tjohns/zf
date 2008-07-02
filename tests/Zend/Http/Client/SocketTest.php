@@ -9,6 +9,7 @@ if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
 
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'Zend/Uri/Http.php';
 
 /**
  * This Testsuite includes all Zend_Http_Client that require a working web 
@@ -27,7 +28,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Http_Client
  * @subpackage UnitTests
  * @version    $Id$
- * @copyright 
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase 
