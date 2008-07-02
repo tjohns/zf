@@ -409,6 +409,30 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Session-GlobalSessionManagement.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.soap">
+        <title>Zend_Soap</title>
+        <xi:include href="module_specs/Zend_Soap_Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Server.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_Client.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Client.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_Wsdl.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Wsdl.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
         <xi:include href="module_specs/Zend_TimeSync.xml" />

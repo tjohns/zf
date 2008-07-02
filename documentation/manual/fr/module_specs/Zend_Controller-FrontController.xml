@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 9877 -->
 <sect1 id="zend.controller.front">
     <title>Le contrôleur frontal (Front Controller)</title>
 
@@ -186,7 +186,7 @@ Zend_Controller_Front::run('../application/controllers');]]></programlisting>
             </listitem>
 
             <listitem>
-                <para><code>(set|get)DefaultActionName()</code> vous permet d'indiquer un nom différent pour
+                <para><code>(set|get)DefaultAction()</code> vous permet d'indiquer un nom différent pour
                 l'utilisation de l'action par défaut ("index" est employé sinon) et de rechercher la valeur courante.
                 Ils mandatent <link linkend="zend.controller.dispatcher">le dispatcheur</link>.</para>
             </listitem>
