@@ -5,7 +5,7 @@
     <para>
         Within this chapter, we will describe several additional functions which are also available through
         <code>Zend_Date</code>. Of course all described functions have additional examples to show the
-        expexted working and the simple API for the proper using of them.
+        expected working and the simple API for the proper using of them.
     </para>
 
     <sect2 id="zend.date.additional.checking">
@@ -85,7 +85,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <para>
             <code>Zend_Date</code> has also functions integrated for getting informations from the sun. Often it is
-            necessary to get the time for sunrise or sunset within a particulary day. This is quite easy with
+            necessary to get the time for sunrise or sunset within a particularly day. This is quite easy with
             <code>Zend_Date</code> as just the expected day has to be given and additionally location for which
             the sunrise or sunset has to be calculated.
         </para>
@@ -223,7 +223,7 @@ foreach ($info as $sun) {
             Timezones are as important as dates themselves. There are several timezones depending on where
             in the world a user lives. So working with dates also means to set the proper timezone.
             This may sound complicated but it's easier as expected. As already mentioned in the first chapter
-            of <code>Zend_Date</code> the default timezone has to be set. Eigther by <code>php.ini</code> or
+            of <code>Zend_Date</code> the default timezone has to be set. Either by <code>php.ini</code> or
             by definition within the bootstrap file.
         </para>
 
