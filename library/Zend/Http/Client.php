@@ -810,8 +810,8 @@ class Zend_Http_Client
                 $uri->setQuery($query);
             }
 
-            $body = $this->prepareBody();
-            $headers = $this->prepareHeaders();
+            $body = $this->_prepareBody();
+            $headers = $this->_prepareHeaders();
 
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(),
@@ -890,7 +890,7 @@ class Zend_Http_Client
      *
      * @return array
      */
-    protected function prepareHeaders()
+    protected function _prepareHeaders()
     {
         $headers = array();
 
@@ -966,7 +966,7 @@ class Zend_Http_Client
      * @return string
      * @throws Zend_Http_Client_Exception
      */
-    protected function prepareBody()
+    protected function _prepareBody()
     {
         // According to RFC2616, a TRACE request should not have a body.
         if ($this->method == self::TRACE) {
