@@ -256,7 +256,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)DefaultActionName()</code> let you specify a
+                    <code>(set|get)DefaultAction()</code> let you specify a
                     different name to use for the default action ('index' is
                     used otherwise) and retrieve the current value.  They proxy
                     to <link linkend="zend.controller.dispatcher">the
