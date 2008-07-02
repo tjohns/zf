@@ -12,7 +12,7 @@
         times and dates becomes a burden in many situations. Since <code>Zend_Date</code> methods support working with
         ambiguous dates that might not include all parts (era, year, month, day, hour, minute, second, timezone),
         developers enjoy the flexibility and ease of using the same class and the same methods to perform the same
-        manipulations (e.g. addition, subtraction, comparision, merging of date parts, etc.). Splitting the handling of
+        manipulations (e.g. addition, subtraction, comparison, merging of date parts, etc.). Splitting the handling of
         these date fragments into multiple classes would create complications when smooth interoperation is desired with
         a small learning curve. A single class reduces code duplication for similar operations, without the need for a
         complex inheritance hierarchy.
