@@ -306,7 +306,8 @@ class Zend_Http_Client
      */
     public function setMethod($method = self::GET)
     {
-        if (! preg_match('/^[A-Za-z_]+$/', $method)) {
+        $regex = '/^[^\x00-\x1f\x7f-\xff\(\)<>@,;:\\\\"\/\[\]\?={}\s]+$/';
+        if (! preg_match($regex, $method)) {
             /** @see Zend_Http_Client_Exception */
             require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
@@ -809,8 +810,8 @@ class Zend_Http_Client
                 $uri->setQuery($query);
             }
 
-            $body = $this->prepareBody();
-            $headers = $this->prepareHeaders();
+            $body = $this->_prepareBody();
+            $headers = $this->_prepareHeaders();
 
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(),
@@ -889,7 +890,7 @@ class Zend_Http_Client
      *
      * @return array
      */
-    protected function prepareHeaders()
+    protected function _prepareHeaders()
     {
         $headers = array();
 
@@ -927,7 +928,7 @@ class Zend_Http_Client
 
             $headers[] = "Content-type: {$this->enctype}";
         }
-
+        
         // Set the user agent header
         if (! isset($this->headers['user-agent']) && isset($this->config['useragent'])) {
             $headers[] = "User-agent: {$this->config['useragent']}";
@@ -965,7 +966,7 @@ class Zend_Http_Client
      * @return string
      * @throws Zend_Http_Client_Exception
      */
-    protected function prepareBody()
+    protected function _prepareBody()
     {
         // According to RFC2616, a TRACE request should not have a body.
         if ($this->method == self::TRACE) {
@@ -1020,8 +1021,12 @@ class Zend_Http_Client
                     break;
             }
         }
+        
+        // Set the content-length if we have a body or if request is POST/PUT
+        if ($body || $this->method == self::POST || $this->method == self::PUT) {
+            $this->setHeaders('Content-length', strlen($body));
+        }
 
-        if ($body) $this->setHeaders('Content-length', strlen($body));
         return $body;
     }
 
