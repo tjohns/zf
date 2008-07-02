@@ -1,4 +1,5 @@
 <sect1 id="zend.controller.front">
+	<!-- en:9877 -->
     <title>フロントコントローラ</title>
 
     <sect2 id="zend.controller.front.overview">
@@ -246,7 +247,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)DefaultActionName()</code>
+                    <code>(set|get)DefaultAction()</code>
                     で、デフォルトのアクションとして使用する名前を指定したり
                     (指定しなければ 'index' となります) 現在の設定を取得したりできます。
                     これらのメソッドは <link linkend="zend.controller.dispatcher">
