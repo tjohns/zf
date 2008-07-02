@@ -56,7 +56,7 @@ print $date;]]>
 
         <sect3 id="zend.date.simple.functions.get">
 
-            <title>Ouput a Date</title>
+            <title>Output a Date</title>
 
             <para>
                 The date in a <code>Zend_Date</code> object may be obtained as a localized integer or string using the
@@ -133,7 +133,7 @@ echo "Date via toString() = ", $date, "\n";]]>
 
         <sect3 id="zend.date.simple.functions.compare">
 
-            <title>Comparation of dates</title>
+            <title>Comparison of dates</title>
 
             <para>
                 All basic <code>Zend_Date</code> methods can operate on entire dates contained in the objects, or can
