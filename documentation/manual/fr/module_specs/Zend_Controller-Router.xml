@@ -1,68 +1,47 @@
-<sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
+<!-- EN-Revision: 9420 -->
+<sect1 id="zend.controller.router" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Routeur Standard : Zend_Controller_Router_Rewrite</title>
+
     <sect2 id="zend.controller.router.introduction">
         <title>Introduction</title>
-        <para>
-            <code>Zend_Controller_Router_Rewrite</code> est le routeur par défaut
-            du framework. Le routage consiste à analyser l'URI définie (la partie
-            après l'URL de base) et la décomposer en valeurs determinant quels
-            module, contrôleur et action doivent recevoir la requête. Ces valeurs
-            sont encapsulées dans un objet de requête
-            <code>Zend_Controller_Request_Http</code> qui est alors injecté dans
-            <code>Zend_Controller_Dispatcher_Standard</code> pour y être traité
-            Le routage n'est effectué qu'une seule fois par requête : juste avant
-            que le premier contrôleur ne soit traité (dispatché)
-        </para>
 
-        <para>
-            <code>Zend_Controller_Router_Rewrite</code> intervient pour fournir un
-            environnement de requête similaire à 'mod_rewrite', tout en utilisant
-            uniquement du php. Il est désigné sur les principes de Ruby on Rails
-            et ne requière pas de connaissances particulières en réécriture d'URL.
-            Il est destiné à fonctionner avec une seule règle de réécriture
-            Apache, dont voici des exemples :
-        </para>
+        <para><code>Zend_Controller_Router_Rewrite</code> est le routeur par défaut du framework. Le routage consiste à
+        analyser l'URI définie (la partie après l'URL de base) et la décomposer en valeurs déterminant quels module,
+        contrôleur et action doivent recevoir la requête. Ces valeurs sont encapsulées dans un objet de requête
+        <code>Zend_Controller_Request_Http</code> qui est alors injecté dans
+        <code>Zend_Controller_Dispatcher_Standard</code> pour y être traité Le routage n'est effectué qu'une seule fois
+        par requête : juste avant que le premier contrôleur ne soit traité (dispatché)</para>
 
-        <programlisting role="php"><![CDATA[
-RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
-        </programlisting>
+        <para><code>Zend_Controller_Router_Rewrite</code> intervient pour fournir un environnement de requête similaire
+        à "mod_rewrite", tout en utilisant uniquement du PHP. Il est désigné sur les principes de Ruby on Rails et ne
+        requière pas de connaissances particulières en réécriture d'URL. Il est destiné à fonctionner avec une seule
+        règle de réécriture Apache, dont voici des exemples :</para>
 
-        <para>
-            ou:
-        </para>
+        <programlisting role="php"><![CDATA[RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
 
-        <programlisting role="php"><![CDATA[
-RewriteEngine on
+        <para>ou:</para>
+
+        <programlisting role="php"><![CDATA[RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 ]]>
-        </programlisting>
+RewriteRule ^(.*)$ index.php/$1]]></programlisting>
 
-        <para>
-            Le routeur de réécriture peut aussi être utilisé avec un serveur web IIS
-            si <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> a été
-            installée comme une extension Isap avec la règle suivante :
-        </para>
+        <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS si <ulink
+        url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> a été installée comme une extension Isap avec la règle
+        suivante :</para>
 
-        <programlisting role="php"><![CDATA[
-RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
 
         <note>
             <title>IIS Isapi_Rewrite</title>
-            <para>
-                Lorsque IIS est utilisé, <code>$_SERVER['REQUEST_URI']</code> n'existera
-                pas ou vaudra une chaine vide. Dans ce cas,
-                <code>Zend_Controller_Request_Http</code> essaiera d'utiliser la valeur de
-                <code>$_SERVER['HTTP_X_REWRITE_URL']</code>, initialisée par l'extension
-                Isapi_Rewrite.
-            </para>
+
+            <para>Lorsque IIS est utilisé, <code>$_SERVER['REQUEST_URI']</code> n'existera pas ou vaudra une chaîne
+            vide. Dans ce cas, <code>Zend_Controller_Request_Http</code> essaiera d'utiliser la valeur de
+            <code>$_SERVER['HTTP_X_REWRITE_URL']</code>, initialisée par l'extension Isapi_Rewrite.</para>
         </note>
 
-        <para>
-            Si vous utilisez Lighttpd, la règle de réécriture suivante est valide :
-        </para>
+        <para>Si vous utilisez Lighttpd, la règle de réécriture suivante est valide :</para>
 
         <programlisting role="lighttpd"><![CDATA[url.rewrite-once = (
     ".*\?(.*)$" => "/index.php?$1",
@@ -74,10 +53,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
     <sect2 id="zend.controller.router.usage">
         <title>Utilisation d'un routeur</title>
 
-        <para>
-            Pour utiliser un routeur et le configurer, vous devez le récupérer et ajouter
-            des routes :
-        </para>
+        <para>Pour utiliser un routeur et le configurer, vous devez le récupérer et ajouter des routes :</para>
 
         <programlisting role="php"><![CDATA[<?php
 /* Create a router */
@@ -86,119 +62,103 @@ $router = $frontctrl->getRouter(); // retourne un routeur de réécriture par d�
 $router->addRoute(
     'user',
     new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
-);]]>
-        </programlisting>
+);]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.basic">
         <title>Utilisation basique du routeur de réécriture</title>
 
-        <para>
-            Le coeur de ce routeur repose sur le concept de routes personnalisées. Les
-            routes sont ajoutées en appelant la méthode addRoute() et en lui passant une
-            instance implémentant <code>Zend_Controller_Router_Route_Interface</code>.
-            Exemple :
-        </para>
+        <para>Le coeur de ce routeur repose sur le concept de routes personnalisées. Les routes sont ajoutées en
+        appelant la méthode <code>addRoute()</code> et en lui passant une instance implémentant
+        <code>Zend_Controller_Router_Route_Interface</code>. Exemple :</para>
 
         <programlisting role="php"><![CDATA[<?php
-$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]>
-        </programlisting>
+$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
-        <para>
-            Le routeur de réécriture est fourni avec quatre types de route, dont une spéciale :
-        </para>
+        <para>Le routeur de réécriture est fourni avec quatre types de route, dont une spéciale :</para>
 
         <itemizedlist mark="opencircle">
-            <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
-            <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
-            <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
-            <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
+            <listitem>
+                <para>
+                    <xref linkend="zend.controller.router.routes.standard" />
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <xref linkend="zend.controller.router.routes.static" />
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <xref linkend="zend.controller.router.routes.regex" />
+                </para>
+            </listitem>
+
+            <listitem>
+                <para><xref linkend="zend.controller.router.default-routes" /> *</para>
+            </listitem>
         </itemizedlist>
 
-        <para>
-            Chaque route peut être utilisée plusieurs fois pour créer un chaine de routes représentant
-            un schéma de routage personnalisé. La route du module, en revanche, ne devrait être utilisée
-            qu'une seule fois, elle est en générale la route la plus générique (par défaut).
-            Chaque route sera définie un peu plus tard.
-        </para>
+        <para>Chaque route peut être utilisée plusieurs fois pour créer un chaîne de routes représentant un schéma de
+        routage personnalisé. La route du module, en revanche, ne devrait être utilisée qu'une seule fois, elle est en
+        générale la route la plus générique (par défaut). Chaque route sera définie un peu plus tard.</para>
 
-        <para>
-            Le premier paramètre de addRoute est le nom de la route. Il sera utilisé plus tard pour la
-            selectionner (par exemple pour générer une url. Le deuxième paramètre étant l'objet route
-            lui-même.
-        </para>
+        <para>Le premier paramètre de <code>addRoute</code> est le nom de la route. Il sera utilisé plus tard pour la
+        sélectionner (par exemple pour générer un URL. Le deuxième paramètre étant l'objet route lui-même.</para>
 
         <note>
-            <para>
-                L'utilisation la plus plausible du nom de la route est illustrée dans l'aide vue 'url':
-            </para>
+            <para>L'utilisation la plus plausible du nom de la route est illustrée dans l'aide vue "url":</para>
 
-            <programlisting role="php"><![CDATA[
-<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]></programlisting>
 
-            <para>
-                Ce qui donnera un href: <code>user/martel</code>.
-            </para>
+            <para>Ce qui donnera un "href" : <code>user/martel</code>.</para>
         </note>
 
-        <para>
-            Le routage consiste simplement à itérer toutes les routes reçues et à les faire correspondre
-            à l'URI de la requête courante. Dès qu'une correspondance est établie, les variables sont injectées
-            dans l'objet <code>Zend_Controller_Request</code> utilisé après dans le dispatcheur et dans les
-            contrôleurs. Si aucune correspondance n'est trouvée, la route suivante dans la pile est analysée.
-        </para>
+        <para>Le routage consiste simplement à itérer toutes les routes reçues et à les faire correspondre à l'URI de la
+        requête courante. Dès qu'une correspondance est établie, les variables sont injectées dans l'objet
+        <code>Zend_Controller_Request</code> utilisé après dans le dispatcheur et dans les contrôleurs. Si aucune
+        correspondance n'est trouvée, la route suivante dans la pile est analysée.</para>
 
         <note>
             <title>Pile LIFO</title>
-            <para>
-                Les routes sont analysées dans l'ordre LIFO : dernière fournie, première analysée.
-                Veillez à défninir les routes les génériques en premier donc.
-            </para>
+
+            <para>Les routes sont analysées dans l'ordre LIFO : dernière fournie, première analysée. Veillez à définir
+            les routes les génériques en premier donc.</para>
         </note>
 
         <note>
             <title>Paramètres de la requête</title>
-            <para>
-                Les paramètres de la requête proviennent de l'utilisateur, ou des routes définies.
-                Ils seront plus tard accessibles via <code>Zend_Controller_Request::getParam()</code> ou la
-                méthode <code>Zend_Controller_Action::_getParam()</code>.
-            </para>
+
+            <para>Les paramètres de la requête proviennent de l'utilisateur, ou des routes définies. Ils seront plus
+            tard accessibles via <code>Zend_Controller_Request::getParam()</code> ou la méthode
+            <code>Zend_Controller_Action::_getParam()</code>.</para>
         </note>
 
-        <para>
-            Il y a trois valeurs spéciales qui peuvent être utilisées dans la définition de vos routes :
-            - 'module', 'controller' et 'action' -. Ces valeurs sont utilisées par
-            Zend_Controller_Dispatcher pour trouver les contrôleurs et action à dispatcher.
-        </para>
+        <para>Il y a trois valeurs spéciales qui peuvent être utilisées dans la définition de vos routes : - "module",
+        "controller" et "action" -. Ces valeurs sont utilisées par Zend_Controller_Dispatcher pour trouver les
+        contrôleurs et action à dispatcher.</para>
 
         <note>
             <title>Valeurs spéciales</title>
-            <para>
-                Le nom de ces valeurs peut être changé dans <code>Zend_Controller_Request_Http</code>
-                avec les méthodes <code>setControllerKey</code> et <code>setActionKey</code>.
-            </para>
-        </note>
 
+            <para>Le nom de ces valeurs peut être changé dans <code>Zend_Controller_Request_Http</code> avec les
+            méthodes <code>setControllerKey</code> et <code>setActionKey</code>.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.router.default-routes">
         <title>Routes par défaut</title>
 
-        <para>
-            Zend_Controller_Router_Rewrite possède des routes par défaut qui vont correspondre pour
-            des URI du type <code>controller/action</code>. De plus, un nom de module peut être spécifié
-            comme premier élément du chemin, autorisant ainsi des URI du type
-            <code>module/controller/action</code>. Enfin, chaque paramètres de la requête sera trouvé à
-            la fin de la requête, comme <code>controller/action/var1/value1/var2/value2</code>.
-        </para>
+        <para>Zend_Controller_Router_Rewrite possède des routes par défaut qui vont correspondre pour des URI du type
+        <code>controller/action</code>. De plus, un nom de module peut être spécifié comme premier élément du chemin,
+        autorisant ainsi des URI du type <code>module/controller/action</code>. Enfin, chaque paramètres de la requête
+        sera trouvé à la fin de la requête, comme <code>controller/action/var1/value1/var2/value2</code>.</para>
 
-        <para>
-            Exemples avec ces routes :
-        </para>
+        <para>Exemples avec ces routes :</para>
 
-        <programlisting role="php"><![CDATA[
-// Considérons :
+        <programlisting role="php"><![CDATA[// Considérons :
 $ctrl->setControllerDirectory(
     array(
         'default' => '/path/to/default/controllers',
@@ -232,59 +192,42 @@ http://example/blog/archive/list/sort/alpha/date/desc
     controller == archive
     action     == list
     sort       == alpha
-    date       == desc
-]]>
-        </programlisting>
+    date       == desc]]></programlisting>
 
-        <para>
-            La route par défaut est simplement un objet
-            <code>Zend_Controller_Router_Route_Module</code>, stocké sous le nom 'default'
-            dans le routeur de réécriture(RewriteRouter). Il est conçu comme ceci :
-        </para>
+        <para>La route par défaut est simplement un objet <code>Zend_Controller_Router_Route_Module</code>, stocké sous
+        le nom "default" dans le routeur de réécriture(RewriteRouter). Il est conçu comme ceci :</para>
 
         <programlisting role="php"><![CDATA[<?php
 $compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
-$this->addRoute('default', $compat);]]>
-        </programlisting>
+$this->addRoute('default', $compat);]]></programlisting>
 
-        <para>
-            Si vous ne souhaitez pas cette route par défaut, créez en une et stocker la avec le
-            nom 'default' (écrasement), ou supprimez la route avec <code>removeDefaultRoutes()</code>:
-        </para>
+        <para>Si vous ne souhaitez pas cette route par défaut, créez en une et stocker la avec le nom "default"
+        (écrasement), ou supprimez la route avec <code>removeDefaultRoutes()</code>:</para>
 
         <programlisting role="php"><![CDATA[<?php
 // Supprime les routes par défaut
-$router->removeDefaultRoutes();]]>
-        </programlisting>
-
+$router->removeDefaultRoutes();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.rewritebase">
         <title>Base URL et sous dossiers</title>
 
-        <para>
-            Le routeur de réécriture peut être utilisé dans des sous dossiers
-            (comme <code>http://domain.com/~user/application-root/</code>), dans un
-            tél cas, l'URL de base de l'application
-            (<code>/~user/application-root</code>) devrait être automatiquement détectée
-            par <code>Zend_Controller_Request_Http</code> et utilisée ensuite.
-        </para>
+        <para>Le routeur de réécriture peut être utilisé dans des sous dossiers (comme
+        <code>http://domain.com/~user/application-root/</code>), dans un tél cas, l'URL de base de l'application
+        (<code>/~user/application-root</code>) devrait être automatiquement détectée par
+        <code>Zend_Controller_Request_Http</code> et utilisée ensuite.</para>
 
-        <para>
-            Si ça n'était pas le cas, vous pouvez spécifier votre propre base url
-            dans <code>Zend_Controller_Request_Http</code> en appelant
-            <code>setBaseUrl()</code> (voyez <xref
-                linkend="zend.controller.request.http.baseurl" />):
-        </para>
+        <para>Si ça n'était pas le cas, vous pouvez spécifier votre propre base URL dans
+        <code>Zend_Controller_Request_Http</code> en appelant <code>setBaseUrl()</code> (voyez <xref
+        linkend="zend.controller.request.http.baseurl" />):</para>
 
         <programlisting role="php"><![CDATA[<?php
-$request->setBaseUrl('/~user/application-root/');]]>
-        </programlisting>
-
+$request->setBaseUrl('/~user/application-root/');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">
         <title>Types de route</title>
+
         <xi:include href="Zend_Controller-Router-Route.xml" />
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
@@ -293,19 +236,13 @@ $request->setBaseUrl('/~user/application-root/');]]>
     <sect2 id="zend.controller.router.add-config">
         <title>Utiliser Zend_Config avec le RewriteRouter</title>
 
-        <para>
-            Il arrive qu'il soit plus comode d'éditer un fichier de configuration de routes,
-            plutôt que d'éditer un code source. Ceci est rendu possible par la méthode
-            <code>addConfig()</code>. Vous créez un objet compatible Zend_Config et vous le
-            passez à cette méthode.
-        </para>
+        <para>Il arrive qu'il soit plus commode d'éditer un fichier de configuration de routes, plutôt que d'éditer un
+        code source. Ceci est rendu possible par la méthode <code>addConfig()</code>. Vous créez un objet compatible
+        Zend_Config et vous le passez à cette méthode.</para>
 
-        <para>
-            Par exemple, voyons un fichier INI:
-        </para>
+        <para>Par exemple, voyons un fichier INI :</para>
 
-        <programlisting role="php"><![CDATA[
-[production]
+        <programlisting role="php"><![CDATA[[production]
 routes.archive.route = "archive/:year/*"
 routes.archive.defaults.controller = archive
 routes.archive.defaults.action = show
@@ -322,44 +259,32 @@ routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
 routes.archive.map.1 = "year"
-; OU: routes.archive.map.year = 1]]>
-        </programlisting>
+; OU: routes.archive.map.year = 1]]></programlisting>
 
-        <para>
-            Ce fichier INI peut être lu dans grâce à un objet <code>Zend_Config</code> comme suit :
-        </para>
+        <para>Ce fichier INI peut être lu dans grâce à un objet <code>Zend_Config</code> comme suit :</para>
 
-        <programlisting role="php"><![CDATA[
-$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
-$router->addConfig($config, 'routes');]]>
-        </programlisting>
+$router->addConfig($config, 'routes');]]></programlisting>
 
-        <para>
-            Nous indiquons au routeur d'utiliser la section 'routes' du fichier INI. Chaque clé
-            de premier niveau représente le nom de la route, ainsi nous avons dans l'exemple ci dessus
-            'archive' et 'news'. Chaque route attend alors au moins une entrée 'route' avec une ou
-            plusieurs entrées 'defaults'; optionellement nous pouvons rajouter des paramètres obligatoires.
-            Tout ceci correspond aux trois arguments fournis par l'objet implémentant
-            <code>Zend_Controller_Router_Route_Interface</code>.
-            Une entrée optionnelle 'type' peut être utilisée pour indiquer le type de classe de routage
-            à utiliser, il s'agit par défaut de <code>Zend_Controller_Router_Route</code>. Dans l'exemple au
-            dessus, la route 'news' va utiliser <code>Zend_Controller_Router_Route_Static</code>.
-        </para>
+        <para>Nous indiquons au routeur d'utiliser la section "routes" du fichier INI. Chaque clé de premier niveau
+        représente le nom de la route, ainsi nous avons dans l'exemple ci dessus "archive" et "news". Chaque route
+        attend alors au moins une entrée "route" avec une ou plusieurs entrées "defaults" ; optionnellement nous pouvons
+        rajouter des paramètres obligatoires. Tout ceci correspond aux trois arguments fournis par l'objet implémentant
+        <code>Zend_Controller_Router_Route_Interface</code>. Une entrée optionnelle "type" peut être utilisée pour
+        indiquer le type de classe de routage à utiliser, il s'agit par défaut de
+        <code>Zend_Controller_Router_Route</code>. Dans l'exemple au dessus, la route "news" va utiliser
+        <code>Zend_Controller_Router_Route_Static</code>.</para>
     </sect2>
 
     <sect2 id="zend.controller.router.subclassing">
         <title>Dérivation de l'objet Router</title>
 
-        <para>
-            Le routeur par défaut, dit de réécriture, devrait suffir dans la majorité des projets. Tout ce
-            qu'il peut être nécessaire de faire, est d'ajouter des routes particulières selon vos besoins.
-        </para>
+        <para>Le routeur par défaut, dit de réécriture, devrait suffire dans la majorité des projets. Tout ce qu'il peut
+        être nécessaire de faire, est d'ajouter des routes particulières selon vos besoins.</para>
 
-        <para>
-            Cependant, si vous voulez utiliser votre propre logique de routage, une interface est disponible.
-            <code>Zend_Controller_Router_Interface</code> ne définit qu'une seule méthode :
-        </para>
+        <para>Cependant, si vous voulez utiliser votre propre logique de routage, une interface est disponible.
+        <code>Zend_Controller_Router_Interface</code> ne définit qu'une seule méthode :</para>
 
         <programlisting role="php"><![CDATA[<?php
 interface Zend_Controller_Router_Interface
@@ -370,15 +295,12 @@ interface Zend_Controller_Router_Interface
    * @return Zend_Controller_Request_Abstract
    */
   public function route(Zend_Controller_Request_Abstract $request);
-}]]>
-        </programlisting>
+}]]></programlisting>
 
-        <para>
-            Le processus de routage n'intervient qu'une fois : lorsque la requête est reçue par le système.
-            Le routeur doit alors determiner un contrôleur, une action et de paramètres optionnel et les
-            spécifier dans un objet de requête, qui est ensuite passé au dispatcher.
-            Si il n'est pas possible de router une requête, alors l'objet de requêtre devrait être laissé tel-quel.
-        </para>
+        <para>Le processus de routage n'intervient qu'une fois : lorsque la requête est reçue par le système. Le routeur
+        doit alors déterminer un contrôleur, une action et de paramètres optionnel et les spécifier dans un objet de
+        requête, qui est ensuite passé au dispatcher. Si il n'est pas possible de router une requête, alors l'objet de
+        requête devrait être laissé tel-quel.</para>
     </sect2>
 </sect1>
 <!--
