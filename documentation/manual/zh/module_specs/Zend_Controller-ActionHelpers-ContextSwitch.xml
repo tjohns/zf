@@ -19,7 +19,7 @@
         </para></listitem>
 
         <listitem><para>
-                为上下文发送适当的响应头。
+                为期望的上下文发送适当的响应头。
         </para></listitem>
 
         <listitem><para>

@@ -173,7 +173,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)DefaultActionName()</code>方法可以为默认的动作指定另外一个名字（否则使用'index'）,以及获取当前值。它们将代理<link linkend="zend.controller.dispatcher">分发器</link>。
+                    <code>(set|get)DefaultAction()</code>方法可以为默认的动作指定另外一个名字（否则使用'index'）,以及获取当前值。它们将代理<link linkend="zend.controller.dispatcher">分发器</link>。
                 </para>
             </listitem>
 
