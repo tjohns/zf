@@ -30,11 +30,11 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Reuseable currency definitions</emphasis>
+                    <emphasis role="strong">Reusable currency definitions</emphasis>
                 </para>
                 <para>
                     <code>Zend_Currency</code> does not include the value of the currency. This is the reason why
-                    it's functionallity is not included in <code>Zend_Locale_Format</code>. But this gives the
+                    it's functionality is not included in <code>Zend_Locale_Format</code>. But this gives the
                     advantage that already defined currency representations can be reused.
                 </para>
             </listitem>
