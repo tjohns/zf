@@ -12,7 +12,7 @@
     <para>
         The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
         Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
-        for convinience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+        for convenience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
     </para>
     <example id="zend.cache.introduction.example-1">
         <title>Getting a frontend with <code>Zend_Cache::factory()</code></title>
@@ -123,7 +123,7 @@ echo 'This is never cached ('.time().').';]]>
            number was output in the cached section and is saved among other output.
            After half a minute (we've set lifetime to 30 seconds) the
            numbers should match again because the cache record expired -- only to be cached again. You
-           should try this in your brower or console.
+           should try this in your browser or console.
        </para>
     </example>
     <note><para>

@@ -1,7 +1,7 @@
 <sect1 id="zend.cache.theory">
     <title>The theory of caching</title>
     <para>
-        There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
+        There are three key concepts in Zend_Cache. One is the unique identifier (a string) that is used
         to identify cache records. The second one is the <code>'lifetime'</code> directive as seen in the
         examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
         is conditional execution so that parts of your code can be skipped entirely, boosting performance.
@@ -49,7 +49,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         </programlisting>
         <para>
             In the following examples we will assume that the <code>$cache</code> variable holds a
-            valid, instantiated frontend as shown and that you understand how to pass parametres
+            valid, instantiated frontend as shown and that you understand how to pass parameters
             to your chosen backends.
         </para>
         <note><para>

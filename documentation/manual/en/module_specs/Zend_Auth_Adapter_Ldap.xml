@@ -231,7 +231,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
 
         <para>
             Each set of server options <emphasis>in the context of Zend_Auth_Adapter_Ldap</emphasis> consists of the
-            following options, which are passed, largely unmodifed, to <code>Zend_Ldap::setOptions()</code>:
+            following options, which are passed, largely unmodified, to <code>Zend_Ldap::setOptions()</code>:
 
             <table id="zend.auth.adapter.ldap.server-options.table">
               <title>Server Options</title>
@@ -499,7 +499,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                         <entry><emphasis role="strong">accountCanonicalForm</emphasis></entry>
                         <entry>
                             You almost certainly want this to be 3 for backslash style names (e.g.,
-                            <emphasis>FOO\alice</emphasis>), which are most familar to Windows users. You should
+                            <emphasis>FOO\alice</emphasis>), which are most familiar to Windows users. You should
                             <emphasis>not</emphasis> use the unqualified form 2 (e.g., <emphasis>alice</emphasis>), as
                             this may grant access to your application to users with the same username in other trusted
                             domains (e.g., <emphasis>BAR\alice</emphasis> and <emphasis>FOO\alice</emphasis> will be
