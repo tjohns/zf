@@ -37,7 +37,7 @@ $currency = new Zend_Currency();]]>
 
     <para>
         Of course, depending on your needs, several parameters can be given at creation. Each of this parameters
-        is optional and can be supressed. Even the order of the parameters can be switched. The meaning of each
+        is optional and can be suppressed. Even the order of the parameters can be switched. The meaning of each
         parameter is described in this list:
     </para>
 
@@ -98,17 +98,17 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
     <para>
         So you can supress any of these parameters if you want to use the default ones. This has no negative effect
-        on handling the currencies. It can be useful f.e. if you dont know the default currency for a region.
+        on handling the currencies. It can be useful f.e. if you don't know the default currency for a region.
     </para>
 
     <note>
         <para>
             For many countries there are several known currencies. One currency will actually be used and
             maybe several ancient currencies. If the '<emphasis role="strong">currency</emphasis>' parameter
-            is supressed the actual currency will be used. The region '<emphasis role="strong">de</emphasis>' for
+            is suppressed the actual currency will be used. The region '<emphasis role="strong">de</emphasis>' for
             example knows the currencies '<emphasis role="strong">EUR</emphasis>' and
             '<emphasis role="strong">DEM</emphasis>'... '<emphasis role="strong">EUR</emphasis>' is the actual one
-            and will be used if the parameter is supressed.
+            and will be used if the parameter is suppressed.
         </para>
     </note>
 
@@ -130,7 +130,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
         <para>
             <code>toCurrency(array $options)</code> accepts an array with options which can be used to temporary set another
-            format or currency represenation. For details about which options can be used see 
+            format or currency representation. For details about which options can be used see 
             <link linkend="zend.currency.usage.setformat">Changing the format of a currency</link>.
         </para>
 
@@ -176,7 +176,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">Currency symbol, shortname or name</emphasis>:
                 </para>
                 <para>
-                    The symbol of the currency is normally displayed within an currency output. It can be supressed
+                    The symbol of the currency is normally displayed within an currency output. It can be suppressed
                     when needed or even overwritten.
                 </para>
             </listitem>
@@ -205,8 +205,8 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                 </para>
                 <para>
                     The amount of currency (formally known as value of money) is formatted by the usage of
-                    formatting rules within the locale. For example is in english the ',' sign used as seperator for
-                    thousands, and in german the '.' sign.
+                    formatting rules within the locale. For example is in English the ',' sign used as separator for
+                    thousands, and in German the '.' sign.
                 </para>
             </listitem>
         </itemizedlist>
@@ -231,14 +231,14 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     <emphasis role="strong">script</emphasis>: Defined which script has to be used for
                     displaying digits. The default script for most locales is
                     <emphasis role="strong">'Latn'</emphasis>, which includes the digits 0 to 9. Also other
-                    scripts like 'Arab' (arabian) can be used. All supported scripts can be found in
+                    scripts like 'Arab' (Arabian) can be used. All supported scripts can be found in
                     <link linkend="zend.locale.appendix.numberscripts.supported">this table</link>.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">format</emphasis>: Defines which locale has to be used for displaying
-                    numbers. This number-format includes for example the thousand seperator. If no format is set
+                    numbers. This number-format includes for example the thousand separator. If no format is set
                     the locale from the <code>Zend_Currency</code> object will be used. 
                 </para>
             </listitem>
@@ -253,7 +253,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             <listitem>
                 <para>
                     <emphasis role="strong">precision</emphasis>: Defines the precision which has to be used for
-                    the currency represenation. The default value is <emphasis role="strong">2</emphasis>.
+                    the currency representation. The default value is <emphasis role="strong">2</emphasis>.
                 </para>
             </listitem>
             <listitem>
@@ -330,11 +330,11 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
                     </row>
                     <row>
                         <entry>RIGHT</entry>
-                        <entry>Display the currency represenation at the right side of the value</entry>
+                        <entry>Display the currency representation at the right side of the value</entry>
                     </row>
                     <row>
                         <entry>LEFT</entry>
-                        <entry>Display the currency represenation at the left side of the value</entry>
+                        <entry>Display the currency representation at the left side of the value</entry>
                     </row>
                 </tbody>
             </tgroup>
