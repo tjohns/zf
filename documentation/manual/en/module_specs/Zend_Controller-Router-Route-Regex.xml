@@ -11,7 +11,7 @@
     <para>
         Like the standard route, this route has to be initialized with a route
         definition and some defaults. Let's create an archive route as an
-        example, similar to the previoulsy defined one, only using the Regex
+        example, similar to the previously defined one, only using the Regex
         route this time:
     </para>
 

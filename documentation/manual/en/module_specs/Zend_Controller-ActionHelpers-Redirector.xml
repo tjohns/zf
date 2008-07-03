@@ -6,7 +6,7 @@
 
         <para>
             The <code>Redirector</code> helper allows you to use a redirector
-            object to fufill your application's needs for redirecting to a new
+            object to fulfill your application's needs for redirecting to a new
             URL. It provides numerous benefits over the
             <code>_redirect()</code> method, such as being able to preconfigure
             sitewide behavior into the redirector object or using the built in

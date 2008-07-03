@@ -30,7 +30,7 @@
             </para></listitem>
 
             <listitem><para>
-                Parameters to be accesible by the action are an associative array
+                Parameters to be accessible by the action are an associative array
                 of key/value pairs that are retrieved by <code>getParams()</code>
                 and set with <code>setParams()</code>, or individually by
                 <code>getParam()</code> and <code>setParam()</code>.

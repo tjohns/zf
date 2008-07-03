@@ -276,7 +276,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                         </para>
 
                         <para>
-                            This method is nice becauase you can transparently
+                            This method is nice because you can transparently
                             alter the action prior to final dispatch. However,
                             it also means that typos in the URL may still
                             dispatch correctly, which is not great for search

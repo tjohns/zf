@@ -63,7 +63,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
         </para>
 
         <para>
-            The action controller method that controlls such dispatching is
+            The action controller method that controls such dispatching is
             <code>_forward()</code>; call this method from any of the
             pre/postDispatch() or action methods, providing an action, controller,
             module, and optionally any additional parameters you may wish to

@@ -11,7 +11,7 @@
     </para>
 
     <note>
-        <title>Invoking ActionStack helper initializees ActionStack Plugin</title>
+        <title>Invoking ActionStack helper initializes ActionStack Plugin</title>
 
         <para>
             Invoking the <code>ActionStack</code> helper implicitly registers

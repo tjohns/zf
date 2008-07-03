@@ -166,7 +166,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
 ]]></programlisting>
             
             <para>
-                This class is simply an extenstion of Dojo's own QueryReadStore,
+                This class is simply an extension of Dojo's own QueryReadStore,
                 which is itself an abstract class. We simply define a method by
                 which to request, and assigning it to the 'test' element.
             </para>

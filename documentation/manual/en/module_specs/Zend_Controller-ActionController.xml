@@ -95,7 +95,7 @@ class FooController extends Zend_Controller_Action
             </para>
 
             <para>
-                You can also simply disable rendering for an invididual view by
+                You can also simply disable rendering for an individual view by
                 setting the <code>ViewRenderer</code>'s <code>noRender</code>
                 flag:
             </para>
