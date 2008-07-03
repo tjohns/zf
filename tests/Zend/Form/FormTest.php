@@ -95,8 +95,9 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
     {
         $options = $this->getOptions();
-        $options['config']  = new Zend_Config($options);
-        $options['options'] = $options;
+        $config  = new Zend_Config($options);
+        $options['config']  = $config;
+        $options['options'] = $config->toArray();
         $this->form->setOptions($options);
     }
 
@@ -2146,10 +2147,9 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
+    public function testNotCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $decorator = $this->form->getDecorator('Zend_Form_Decorator_Form');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
+        $this->assertFalse($this->form->getDecorator('Zend_Form_Decorator_Form'));
     }
 
     public function testCanAddSingleDecoratorAsDecoratorObject()

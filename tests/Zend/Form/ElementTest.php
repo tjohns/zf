@@ -619,18 +619,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
         $this->element->addValidator('digits');
         $validator = $this->element->getValidator('digits');
-        $this->assertTrue($validator instanceof Zend_Validate_Digits);
+        $this->assertTrue($validator instanceof Zend_Validate_Digits, var_export($validator, 1));
         $this->assertFalse($validator->zfBreakChainOnFailure);
     }
 
-    public function testCanRetrieveSingleValidatorRegisteredAsStringUsingClassName()
+    public function testCanNotRetrieveSingleValidatorRegisteredAsStringUsingClassName()
     {
         $this->assertFalse($this->element->getValidator('digits'));
 
         $this->element->addValidator('digits');
-        $validator = $this->element->getValidator('Zend_Validate_Digits');
-        $this->assertTrue($validator instanceof Zend_Validate_Digits);
-        $this->assertFalse($validator->zfBreakChainOnFailure);
+        $this->assertFalse($this->element->getValidator('Zend_Validate_Digits'));
     }
 
     public function testCanAddSingleValidatorAsValidatorObject()
@@ -686,9 +684,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($alnum instanceof Zend_Validate_Alnum);
     }
 
-    public function testRemovingUnregisteredValidatorReturnsFalse()
+    public function testRemovingUnregisteredValidatorReturnsObjectInstance()
     {
-        $this->assertFalse($this->element->removeValidator('bogus'));
+        $this->assertSame($this->element, $this->element->removeValidator('bogus'));
     }
 
     public function testPassingMessagesOptionToAddValidatorSetsValidatorMessages()
@@ -937,13 +935,12 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($filter instanceof Zend_Filter_Digits);
     }
 
-    public function testCanRetrieveSingleFilterRegisteredAsStringUsingClassName()
+    public function testCanNotRetrieveSingleFilterRegisteredAsStringUsingClassName()
     {
         $this->assertFalse($this->element->getFilter('digits'));
 
         $this->element->addFilter('digits');
-        $filter = $this->element->getFilter('Zend_Filter_Digits');
-        $this->assertTrue($filter instanceof Zend_Filter_Digits);
+        $this->assertFalse($this->element->getFilter('Zend_Filter_Digits'));
     }
 
     public function testCanAddSingleFilterAsFilterObject()
@@ -996,9 +993,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($alnum instanceof Zend_Filter_Alnum);
     }
 
-    public function testRemovingUnregisteredFilterReturnsFalse()
+    public function testRemovingUnregisteredFilterReturnsObjectInstance()
     {
-        $this->assertFalse($this->element->removeFilter('bogus'));
+        $this->assertSame($this->element, $this->element->removeFilter('bogus'));
     }
 
     public function testCanRemoveFilter()
@@ -1088,10 +1085,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
+    public function testCanNotRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $decorator = $this->element->getDecorator('Zend_Form_Decorator_ViewHelper');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
+        $this->assertFalse($this->element->getDecorator('Zend_Form_Decorator_ViewHelper'));
     }
 
     public function testCanAddSingleDecoratorAsDecoratorObject()
@@ -1137,11 +1133,11 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertSame($testDecorator, $decorator);
     }
 
-    public function testRemovingUnregisteredDecoratorReturnsFalse()
+    public function testRemovingUnregisteredDecoratorReturnsObjectInstance()
     {
         $this->_checkZf2794();
 
-        $this->assertFalse($this->element->removeDecorator('bogus'));
+        $this->assertSame($this->element, $this->element->removeDecorator('bogus'));
     }
 
     public function testCanRemoveDecorator()
@@ -1319,8 +1315,9 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
     {
         $options = $this->getOptions();
-        $options['config']  = new Zend_Config($options);
-        $options['options'] = $options;
+        $config  = new Zend_Config($options);
+        $options['config']  = $config;
+        $options['options'] = $config->toArray();
         $this->element->setOptions($options);
     }
 

@@ -11,6 +11,7 @@ require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Form.php';
+require_once 'Zend/Form/Decorator/HtmlTag.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Loader/PluginLoader.php';
@@ -224,10 +225,9 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
+    public function testCanNotRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $decorator = $this->group->getDecorator('Zend_Form_Decorator_FormElements');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_FormElements);
+        $this->assertFalse($this->group->getDecorator('Zend_Form_Decorator_FormElements'));
     }
 
     public function testCanAddSingleDecoratorAsDecoratorObject()
@@ -520,8 +520,9 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsOmitsAccessorsRequiringObjectsOrMultipleParams()
     {
         $options = $this->getOptions();
-        $options['config']       = new Zend_Config($options);
-        $options['options']      = $options;
+        $config  = new Zend_Config($options);
+        $options['config']       = $config;
+        $options['options']      = $config->toArray();
         $options['pluginLoader'] = true;
         $options['view']         = true;
         $options['translator']   = true;
