@@ -160,7 +160,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
     {
         $element = $this->getElement();
         $desc    = $element->getDescription();
-        if (empty($messages)) {
+        if (empty($desc)) {
             return '';
         }
         return '<div class="description">' . $desc . '</div>';
