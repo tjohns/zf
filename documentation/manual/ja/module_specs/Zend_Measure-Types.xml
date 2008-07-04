@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9848 -->
 <sect1 id="zend.measure.types">
 
     <title>計測値の型</title>
@@ -201,6 +202,14 @@
                     <entry>
                         <code>Zend_Measure_Temperature</code> は温度を扱います。
                     </entry>
+                </row>
+                <row>
+                    <entry>時間</entry>
+                    <entry>Zend_Measure_Time</entry>
+                    <entry>秒 | <code>s</code>
+                    </entry>
+                    <entry><code>Zend_Measure_Time</code> は物理的な時間を扱います。
+                        </entry>
                 </row>
                 <row>
                     <entry>トルク</entry>
