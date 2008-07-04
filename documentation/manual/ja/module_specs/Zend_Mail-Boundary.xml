@@ -1,5 +1,5 @@
+<!-- EN-Revision: 9879 -->
 <sect1 id="zend.mail.boundary">
-	<!-- en:9879 -->
     <title>MIME バウンダリの制御</title>
     <para>
         マルチパートメッセージで個々のパートを区切るための
