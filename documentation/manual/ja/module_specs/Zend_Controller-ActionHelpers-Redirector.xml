@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9916 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -11,7 +12,7 @@
             サイト全体で使用する設定を事前に組み込んでおけることがあります。また、
             <code>Zend_Controller_Action::_forward()</code>
             の場合と同様に、組み込みのインターフェイス
-            <code>goto($action, $controller, $module, $params)</code>
+            <code>gotoSimple($action, $controller, $module, $params)</code>
             が使用できることも利点となります。
         </para>
 
@@ -38,10 +39,10 @@
 
             <listitem>
                 <para>
-                    <code>setGoto()</code> を使用して、<code>goto()</code>
+                    <code>setGotoSimple()</code> を使用して、<code>gotoSimple()</code>
                     に何も渡されなかったときのデフォルトの URL を設定します。
                     <code>Zend_Controller_Action::_forward()</code> の API である
-                    setgoto($action, $controller = null, $module = null, array
+                    setGotoSimple($action, $controller = null, $module = null, array
                     $params = array()); を使用します。
                 </para>
             </listitem>
@@ -95,7 +96,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>goto()</code> は、<code>setGoto()</code>
+                    <code>gotoSimple()</code> は、<code>setGotoSimple()</code>
                     (<code>_forward() 風の API</code>) を用いて作成した URL
                     にリダイレクトします。
                 </para>
@@ -157,7 +158,7 @@ class SomeController extends Zend_Controller_Action
         // これ以降のすべてのアクションで有効となります
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGoto("this-action", "some-controller");
+                          ->setGotoSimple("this-action", "some-controller");
     }
 
     public function myAction()
@@ -213,7 +214,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>goto() での _forward() API の使用</title>
 
             <para>
-                <code>goto()</code> の API は、
+                <code>gotoSimple()</code> の API は、
                 <code>Zend_Controller_Action::_forward()</code>
                 と同じ形式です。違う点は、このメソッドは渡されたパラメータから URL
                 を作成し、デフォルトルータのデフォルトフォーマットである
@@ -243,7 +244,7 @@ class ForwardController extends Zend_Controller_Action
         // 現在のモジュールの 'my-controller' コントローラの
         // 'my-action' アクションにリダイレクトします。
         // パラメータは param1 => test、param2 => test2 となります。
-        $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }]]>
             </programlisting>
