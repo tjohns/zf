@@ -204,7 +204,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
                   <row>
                     <entry><emphasis role="strong">username</emphasis></entry>
                     <entry>
-<input type="password" <textarea></textarea>>                        账户的 DN， 用来执行账户 DN 查找。LDAP servers that require the username to be in DN form when performing the "bind" require this option （这句没有理解）。
+                        账户的 DN， 用来执行账户 DN 查找。LDAP servers that require the username to be in DN form when performing the "bind" require this option （这句没有理解）。
                         如果 <emphasis role="strong">bindRequiresDn</emphasis> 是 <code>true</code>，这个选项是必需的。这个账户不需要是优先账户 － a account with read-only
                         access to objects under the <emphasis role="strong">baseDn</emphasis> is all that is necessary (and preferred based on the <emphasis>Principle of Least Privilege</emphasis>).
                     </entry>

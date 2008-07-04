@@ -225,7 +225,7 @@ $adapter->setResponse($response);
 
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
-    // Bad userame/password, or canceled password prompt
+    // 错误的 userame/password，或者取消了密码提示
 }]]>
             </programlisting>
         </para>
