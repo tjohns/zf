@@ -44,7 +44,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formButton($name, $value, $attribs)</code> : crée un élément &lt;input type="button" /&gt;.
+                <code>formButton($name, $value, $attribs)</code> : crée un élément &lt;button /&gt;.
             </para></listitem>
 
             <listitem>
