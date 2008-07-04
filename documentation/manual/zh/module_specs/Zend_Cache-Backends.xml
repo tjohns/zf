@@ -89,7 +89,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>0700</code></entry>
                           <entry>
-                              umask for cache files
+                              缓存文件掩码
                           </entry>
                       </row>
                        <row>

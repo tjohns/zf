@@ -7,7 +7,7 @@
      语句中的条件,包含代码中他们所要缓存(或者跳过)的部分,最后是否必须保存这些你曾经生成的块(例如: <code>Zend_Cache_Core::save()</code>).
     </para>
     <note><para>
-                在有些前端<code>Function</code>中不需要条件执行,例如,当整个逻辑在前端内部实现的时候.
+       在有些前端<code>Function</code>中不需要条件执行,例如,当整个逻辑在前端内部实现的时候.
     </para></note>
     <note><para>
     '缓存命中'是一个术语,它表示当一个缓存纪录发现可用,是有效的并且是'fresh'的(换言之,就是还没有过期).'Cache miss' 表示当在缓存中找不到需要的数据时,发生缓存不命中.
@@ -50,8 +50,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
     <sect2 id="zend.cache.tags">
         <title>标记纪录</title>
         <para>
-        标记是给缓存纪录分类的一种方法.当你使用<code>save()</code>方法保存一个缓存时,你可以给该缓存纪录设置一个或多个标记,多个标记以数组形式组织在一起
-        此后你不再需要该缓存纪录使,你可以清除所有指定标记的缓存纪录.
+           标记是给缓存纪录分类的一种方法.当你使用<code>save()</code>方法保存一个缓存时,你可以给该缓存纪录设置一个或多个标记,多个标记以数组形式组织在一起
+           此后你不再需要该缓存纪录使,你可以清除所有指定标记的缓存纪录.
         </para>
         <programlisting role="php"><![CDATA[<?php
 

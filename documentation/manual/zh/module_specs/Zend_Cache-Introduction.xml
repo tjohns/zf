@@ -21,12 +21,12 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // cache lifetime of 2 hours
+   'lifeTime' => 7200, // 两小时的缓存生命期
    'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cache_dir' => './tmp/' // Directory where to put the cache files
+    'cache_dir' => './tmp/' // 放缓存文件的目录
 );
 
 // 取得一个Zend_Cache_Core 对象

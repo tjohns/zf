@@ -108,7 +108,7 @@
                 如果你只向缓存中存储字符串(由于"automatic_serialization"选项,可能会存储一些布尔值),你可以使用更加简介的构造:
             </para>
             <programlisting role="php"><![CDATA[<?php
-// we assume you already have $cache
+// 假定你已经有 $cache
 
 $id = 'myBigLoop'; // cache id of "what we want to cache"
 
@@ -130,7 +130,7 @@ if (!($data = $cache->load($id))) {
                 如果你缓存多个块或则数据实例,意思是一样的:
             </para>
             <programlisting role="php"><![CDATA[<?php
-// make sure you use unique identifiers:
+// 确保使用独一无二的 identifiers:
 $id1 = 'foo';
 $id2 = 'bar';
 
@@ -319,7 +319,7 @@ $cache->call('veryExpensiveFunc', $params);
                 return value of the function and its internal output.
             </para>
             <note><para>
-                You can pass any builtin or user defined function with the exception of
+                You can pass any built in or user defined function with the exception of
                 <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
                 <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
                 and <code>unset()</code>.
@@ -456,7 +456,7 @@ $res = $cache->foobar2('1', '2');]]>
                 <code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
                 cache (to avoid the parsing of the XML config file at each time) but with a
                 sort of strong dependency on the "master file". So, if the XML config file
-                is modified, the cache is immediatly invalidated.
+                is modified, the cache is immediately invalidated.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
@@ -513,7 +513,7 @@ $res = $cache->foobar2('1', '2');]]>
             </para>
             <para>
                 For the moment, it's not implemented but we plan to add a HTTP conditional system
-                to save bandwith (the system will send a HTTP 304 Not Modified if the cache is hit
+                to save bandwidth (the system will send a HTTP 304 Not Modified if the cache is hit
                 and if the browser has already the good version).
             </para>
         </sect3>
