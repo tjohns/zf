@@ -3,7 +3,7 @@
     <title>Introduction to Zend_Currency</title>
 
     <para>
-        <code>Zend_Currency</code> is part of the I18N core of the Zend_Framework. It handles all issues
+        <code>Zend_Currency</code> is part of the I18n core of the Zend_Framework. It handles all issues
         related to currency, money representation and formating. And it also provides additional informational
         methods which include localized informations on currencies, informations about which currency is used
         in which region and more.

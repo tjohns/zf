@@ -15,12 +15,12 @@
         <ulink url="http://en.wikipedia.org/wiki/L10n">Localization</ulink>
         and complementary
         <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalization</ulink>
-        . Both are often abbreviated to <code>L10N</code> and <code>I18N</code>. Internationalization refers more to
+        . Both are often abbreviated to <code>L10n</code> and <code>I18n</code>. Internationalization refers more to
         support for use of systems, regardless of special needs unique to groups of users related by language, region,
         number format conventions, financial conventions, time and date conventions, etc. Localization involves adding
         explicit support to systems for special needs of these unique groups, such as language translation, and support
         for local customs or conventions for communicating plurals, dates, times, currencies, names, symbols, sorting
-        and ordering, etc. <code>L10N</code> and <code>I18N</code> compliment each other. The Zend Framework provides
+        and ordering, etc. <code>L10n</code> and <code>I18n</code> compliment each other. The Zend Framework provides
         support for these through a combination of components, including Zend_Locale, Zend_Date, Zend_Measure,
         Zend_Translate, Zend_Currency, and Zend_TimeSync.
     </para>

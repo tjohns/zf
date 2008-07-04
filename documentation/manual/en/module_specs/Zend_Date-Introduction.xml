@@ -103,7 +103,7 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
                     precision of roughly 14 decimal digits is a common value (that's 64 bit IEEE format)." [
                     <ulink url="http://www.php.net/float">http://www.php.net/float</ulink>
                     ].  Additionally, inherent limitations of float data types, and rounding error of float numbers
-                    may introduce errors into calculations.  To avoid these problems, the ZF i18n components use
+                    may introduce errors into calculations.  To avoid these problems, the ZF I18n components use
                     BCMath extension, if available.
                 </para>
             </listitem>

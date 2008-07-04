@@ -1055,7 +1055,7 @@ $element->class = 'text;
                 </itemizedlist>
             </listitem>
 
-            <listitem><para>I18N:</para>
+            <listitem><para>I18n:</para>
                 <itemizedlist>
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
                     <listitem><para><code>getTranslator()</code></para></listitem>

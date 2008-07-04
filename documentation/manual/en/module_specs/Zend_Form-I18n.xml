@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        By default, no internationalisation (i18n) is performed. To turn on i18n
+        By default, no internationalisation (I18n) is performed. To turn on I18n
         features in <code>Zend_Form</code>, you will need to instantiate a
         <code>Zend_Translate</code> object with an appropriate adapter, and
         attach it to <code>Zend_Form</code> and/or <code>Zend_Validate</code>.
@@ -35,7 +35,7 @@
         <title>Initializing I18n in Forms</title>
 
         <para>
-            In order to initialize i18n in forms, you will need either a
+            In order to initialize I18n in forms, you will need either a
             <code>Zend_Translate</code> object or a
             <code>Zend_Translate_Adapter</code> object, as detailed in the
             <code>Zend_Translate</code> documentation.  Once you have a
@@ -45,7 +45,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis>Easiest:</emphasis> add it to the registry. All i18n
+                    <emphasis>Easiest:</emphasis> add it to the registry. All I18n
                     aware components of Zend Framework will autodiscover a translate
                     object that is in the registry under the 'Zend_Translate' key
                     and use it to perform translation and/or localization:
@@ -111,7 +111,7 @@ $element->setTranslator($translate);
     </sect2>
 
     <sect2 id="zend.form.i18n.standard">
-        <title>Standard I18N Targets</title>
+        <title>Standard I18n Targets</title>
 
         <para>
             Now that you've attached a translation object to, what exactly can
