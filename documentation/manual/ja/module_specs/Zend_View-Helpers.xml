@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 9936 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -94,8 +94,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formButton($name, $value, $attribs):</code> &lt;input
-                type="button" /&gt; 要素を作成します。
+                <code>formButton($name, $value, $attribs):</code> &lt;button /&gt; 要素を作成します。
             </para></listitem>
 
             <listitem>
