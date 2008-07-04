@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9263 -->
+<!-- EN-Revision: 9860 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch および AjaxContext</title>
 
@@ -671,7 +671,7 @@ $contextSwitch->initContext();
                     しかし、時にはレイアウト機能を使いたいこともあるでしょう
                     (新しいコンテキスト用のレイアウトがある場合など)。
                     その場合は、<code>setAutoDisableLayout()</code>
-                    に true を渡します。これは、
+                    に false を渡します。これは、
                     <code>initContext()</code> をコールするより
                     <emphasis>前に</emphasis> 行わなければなりません。
                 </para>
