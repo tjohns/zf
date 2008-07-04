@@ -94,7 +94,7 @@
 
             <listitem><para>
                 <code>formButton($name, $value, $attribs):</code> Creates an
-                &lt;input type="button" /&gt; element.
+                &lt;button /&gt; element.
             </para></listitem>
 
             <listitem>
