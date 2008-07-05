@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7809 -->
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.date.introduction">
     <title>Introduction</title>
 
@@ -64,7 +64,7 @@ date_default_timezone_set('Europe/Berlin');       // timezone pour un allemand e
             </listitem>
 
             <listitem>
-                <para>timestamps infinis</para>
+                <para>Timestamps infinis</para>
 
                 <para>La documentation de PHP 5.2 indique, "L'intervalle de validité des timestamps est du 13 Dec 1901
                 20:45:54 GMT au 19 Jan 2038 03:14:07 GMT", <code>Zend_Date</code> supporte un intervalle quasi illimité
@@ -99,6 +99,3 @@ date_default_timezone_set('Europe/Berlin');       // timezone pour un allemand e
         </itemizedlist>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
