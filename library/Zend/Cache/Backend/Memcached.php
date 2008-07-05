@@ -241,7 +241,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     public function setDirectives($directives)
     {
         parent::setDirectives($directives);
-        $lifetime = $this->getLifetime();
+        $lifetime = $this->getLifetime(false);
         if ($lifetime > 2592000) {
             # ZF-3490 : For the memcached backend, there is a lifetime limit of 30 days (2592000 seconds)
             $this->_log('memcached backend has a limit of 30 days (2592000 seconds) for the lifetime');
