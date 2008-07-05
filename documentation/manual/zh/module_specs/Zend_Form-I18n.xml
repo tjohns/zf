@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        缺省地，<code>Zend_Form</code> 不支持国际化（i18n）。要打开在 <code>Zend_Form</code> 中的 i18n 功能，需要带适当的适配器实例化一个 <code>Zend_Translate</code> 对象，并把它附加到 <code>Zend_Form</code> 和/或 <code>Zend_Validate</code> 中。参见 <link linkend="zend.translate">Zend_Translate 文档 </link> 有更多关于生成翻译对象和翻译文件的信息。
+        缺省地，<code>Zend_Form</code> 不支持国际化（I18n）。要打开在 <code>Zend_Form</code> 中的 I18n 功能，需要带适当的适配器实例化一个 <code>Zend_Translate</code> 对象，并把它附加到 <code>Zend_Form</code> 和/或 <code>Zend_Validate</code> 中。参见 <link linkend="zend.translate">Zend_Translate 文档 </link> 有更多关于生成翻译对象和翻译文件的信息。
     </para>
 
     <note>
@@ -21,13 +21,13 @@
         <title> 在表单中初始化 I18n </title>
 
         <para>
-            要在表单中初始化 i18n，你需要或者 <code>Zend_Translate</code> 对象或者 <code>Zend_Translate_Adapter</code> 对象，详细请见 <code>Zend_Translate</code> 文档。一旦你有一个翻译对象，你将有若干选项：
+            要在表单中初始化 I18n，你需要或者 <code>Zend_Translate</code> 对象或者 <code>Zend_Translate_Adapter</code> 对象，详细请见 <code>Zend_Translate</code> 文档。一旦你有一个翻译对象，你将有若干选项：
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis>Easiest:</emphasis> 添加它到注册表。Zend Framework 中所有 i18n 相关的组件将自动发现一个翻译对象（这个对象在注册表中在 'Zend_Translate' 键之下）并用它翻译和/或本地化：
+                    <emphasis>Easiest:</emphasis> 添加它到注册表。Zend Framework 中所有 I18n 相关的组件将自动发现一个翻译对象（这个对象在注册表中在 'Zend_Translate' 键之下）并用它翻译和/或本地化：
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -82,7 +82,7 @@ $element->setTranslator($translate);
     </sect2>
 
     <sect2 id="zend.form.i18n.standard">
-        <title> 标准 I18N 目标 </title>
+        <title> 标准 I18n 目标 </title>
 
         <para>
             既然你已经附加了翻译对象，那么到底什么是缺省翻译？
