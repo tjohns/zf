@@ -20,7 +20,7 @@
             </para></listitem>
 
             <listitem><para>
-                          可选参数是一个键值对的关联数组。数组可通过<code>getParams()</code>和 <code>setParams()</code>获取及设置，单个参数可以通过 <code>getParam()</code> 和 <code>setParam()</code>获取及设置。
+                          可访问的参数是一个键值对的关联数组。数组可通过<code>getParams()</code>和 <code>setParams()</code>获取及设置，单个参数可以通过 <code>getParam()</code> 和 <code>setParam()</code>获取及设置。
             </para></listitem>
         </itemizedlist>
 

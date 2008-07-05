@@ -5,7 +5,7 @@
         <title>介绍</title>
 
         <para>
-	         转向器<code>(Redirector)</code>助手允许使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>gotoSimple($action, $controller, $module, $params)</code>接口。
+	         转向器<code>(Redirector)</code>助手让你使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>gotoSimple($action, $controller, $module, $params)</code>接口。
         </para>
 
         <para>

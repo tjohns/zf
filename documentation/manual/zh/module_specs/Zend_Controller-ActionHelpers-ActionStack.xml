@@ -6,7 +6,7 @@
     </para>
 
     <note>
-        <title>调用动作堆栈助手初始化动作堆栈插件</title>
+        <title>调用动作堆栈助手来初始化动作堆栈插件</title>
 
         <para>
             调用<code>动作堆栈</code> 助手暗中注册<code>动作堆栈</code> 插件 -- 这就意味着你不需要显性地注册<code>动作堆栈</code> 插件来用这个功能。

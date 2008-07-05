@@ -51,14 +51,13 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Local to this controller only; affects all actions, as loaded in init:
+        // 对这个控制器的所有动作有效：
         $this->_helper->viewRenderer->setNoRender(true);
 
-        // Globally:
+        // 全局：
         $this->_helper->removeHelper('viewRenderer');
 
-        // Also globally, but would need to be in conjunction with the local
-        // version in order to propagate for this controller:
+        // 也是全局，但需要和本地版本协作，以便繁殖这个控制器：
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
 }]]>

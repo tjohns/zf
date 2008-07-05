@@ -16,10 +16,10 @@
              </para>
 
             <programlisting role="php"><![CDATA[<?php 
-// In your front controller:
+// 在你的前端控制器中：
 $front->setParam('prefixDefaultModule', true);
 
-// In your dispatcher:
+// 在你的分发器中：
 $dispatcher->setParam('prefixDefaultModule', true);
 ?>]]></programlisting>
 

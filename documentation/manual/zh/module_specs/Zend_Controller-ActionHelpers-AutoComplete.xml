@@ -122,7 +122,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
 ]]></programlisting>
             
             <para>
-                该类是 Dojo 自己的 QueryReadStore 的扩展，QueryReadStore 是一个抽象类。我们通过请求定义一个方法，并把它分配给 'test' 元素。
+                该类是 Dojo 自己的 QueryReadStore 的扩展，QueryReadStore 是一个抽象类。我们简单地通过请求定义一个方法，并把它分配给 'test' 元素。
             </para>
 
             <para>

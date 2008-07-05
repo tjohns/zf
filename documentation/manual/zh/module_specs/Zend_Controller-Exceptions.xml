@@ -206,7 +206,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 						</para>
 
 						<para>
-							  这个方法好在你可以在最终分发前透明的改变动作。但是，同样意味着URL中的拼写错误会导致不正确的分发，这对搜索引擎的优化很不利。
+							  这个方法好在你可以在最终分发前透明的改变动作。然而，同样意味着URL中的拼写错误会导致不正确的分发，这对搜索引擎的优化很不利。
 						</para>
 					</listitem>
 
