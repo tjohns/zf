@@ -3,7 +3,7 @@
     <title> Zend_Currency 简介 </title>
 
     <para>
-        <code>Zend_Currency</code> 是Zend_Framework I18N 核心的一部分。它处理所有关于货币、钱的表示和格式。它也提供另外的信息方法，包括货币的本地化信息、关于哪个货币在哪个地区使用等等。
+        <code>Zend_Currency</code> 是Zend_Framework I18n 核心的一部分。它处理所有关于货币、钱的表示和格式。它也提供另外的信息方法，包括货币的本地化信息、关于哪个货币在哪个地区使用等等。
     </para>
 
     <sect2 id="zend.currency.introduction.list">

@@ -82,7 +82,7 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
                     <code>Zend_Date</code> 在 BCMath 扩展的帮助下，还是支持一个几乎无限制的范围。
                     如果 BCMath 不可用，Zend_Date 将只把对时间戳的支持范围减小到你的服务器所支持的 <code>float</code> 类型的范围。
                     “浮点数的大小和平台无关，虽然最大数 ~1.8e308 是带有大概精确到 14 位十进制数的一个值（64位 IEEE 格式）”[<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>]。
-                    另外，由于浮点数本身的限制，浮点数的误差可能会带来计算的错误。为避免这个问题，如果 BCMath 扩展可用，ZF i18n 组件就使用它。
+                    另外，由于浮点数本身的限制，浮点数的误差可能会带来计算的错误。为避免这个问题，如果 BCMath 扩展可用，ZF I18n 组件就使用它。
                 </para>
             </listitem>
             <listitem>
