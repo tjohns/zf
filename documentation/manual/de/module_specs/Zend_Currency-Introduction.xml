@@ -1,9 +1,10 @@
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.currency.introduction">
 
     <title>Einführung in Zend_Currency</title>
 
     <para>
-        <code>Zend_Currency</code> ist Teil des I18N Kerns des Zend Frameworks. Es behandelt alle Arbeiten
+        <code>Zend_Currency</code> ist Teil des I18n Kerns des Zend Frameworks. Es behandelt alle Arbeiten
         betreffend Währungen, Geld Darstellung und Formatierung. Ausserdem bietet es zusätzliche informative
         Methoden welche lokalisierte Informationen zu Währungen und Informationen darüber enthalten welche
         Währung in welcher Region verwendet wird und mehr.

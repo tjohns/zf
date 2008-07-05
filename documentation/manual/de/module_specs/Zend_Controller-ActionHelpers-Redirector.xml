@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9916 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -9,7 +10,7 @@
             Notwendigkeiten der Anwendung für das Umleiten zu einer neuen URL zu erfüllen. Er bietet vielfache
             Vorteile gegenüber der <code>_redirect()</code> Methode. Er ist zum Beispiel fähig seitenweises
             Verhalten im Redirector Objekt vorzudefinieren oder bietet ein eingebautes
-            <code>goto($action, $controller, $module, $params)</code> Interface ähnlich dem von
+            <code>gotoSimple($action, $controller, $module, $params)</code> Interface ähnlich dem von
             <code>Zend_Controller_Action::_forward()</code>.
         </para>
 
@@ -35,10 +36,10 @@
 
             <listitem>
                 <para>
-                    <code>setGoto()</code> kann verwendet werden um eine Standard URL zu setzen die verwendet wird
-                    wenn keine an <code>goto()</code> übergeben wird. Verwendet die API von
+                    <code>setGotoSimple()</code> kann verwendet werden um eine Standard URL zu setzen die verwendet wird
+                    wenn keine an <code>gotoSimple()</code> übergeben wird. Verwendet die API von
                     <code>Zend_Controller_Action::_forward()</code>:
-                    setgoto($action, $controller = null, $module = null, array $params = array());
+                    setGotoSimple($action, $controller = null, $module = null, array $params = array());
                 </para>
             </listitem>
 
@@ -85,7 +86,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>goto()</code> verwendet <code>setGoto()</code> (<code>_forward()-ähnlcihe API</code>)
+                    <code>gotoSimple()</code> verwendet <code>setGotoSimple()</code> (<code>_forward()-ähnlcihe API</code>)
                     um eine URL zu erstellen und eine Umleitung durchzuführen.
                 </para>
             </listitem>
@@ -142,7 +143,7 @@ class SomeController extends Zend_Controller_Action
         // Zeitpunkt relevant
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGoto("this-action", "some-controller");
+                          ->setGotoSimple("this-action", "some-controller");
     }
 
     public function myAction()
@@ -197,7 +198,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>Verwenden von goto()'s _forward() API</title>
 
             <para>
-                <code>goto()</code>'s API entspricht der von <code>Zend_Controller_Action::_forward()</code>. Der
+                <code>gotoSimple()</code>'s API entspricht der von <code>Zend_Controller_Action::_forward()</code>. Der
                 primäre Unterschied ist das Sie eine URL von den übergebenen Parametern erstellt und das
                 Standardformat <code>:module/:controller/:action/*</code> des Standardrouters verwendet. Dann leitet
                 es um statt die Aktion zu verketten.
@@ -224,7 +225,7 @@ class ForwardController extends Zend_Controller_Action
 
         // Umleiten zu 'my-action' von 'my-controller' im aktuellen Modul, und verwenden der Parameter
         // param1 => test und param2 => test2
-        $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
 }]]>
             </programlisting>

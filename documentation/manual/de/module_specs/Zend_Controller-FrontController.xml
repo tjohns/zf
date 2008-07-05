@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9877 -->
 <sect1 id="zend.controller.front">
     <title>Der Front Controller</title>
 
@@ -242,7 +243,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)DefaultActionName()</code> erlaubt analog, den Standard-Aktionsnamen zu setzen -
+                    <code>(set|get)DefaultAction()</code> erlaubt analog, den Standard-Aktionsnamen zu setzen -
                     ohne Einstellung wird 'index' verwendet - und den aktuellen Wert auszulesen. Auch diese beiden
                     leiten an den <link linkend="zend.controller.dispatcher">Dispatcher</link> weiter.
                 </para>

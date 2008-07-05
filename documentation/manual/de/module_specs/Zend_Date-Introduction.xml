@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.date.introduction">
 
     <title>Einführung</title>
@@ -111,7 +112,7 @@ date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland]]
                     [<ulink url="http://www.php.net/float">http://www.php.net/float</ulink>].
                     Zusätzlich können inhärente Beschränkungen der Float-Datentypen sowie Rundungsfehler
                     von Fließkommazahlen Berechnungsfehler verursachen. Um diese Probleme zu vermeiden,
-                    verwenden die ZF i18n Komponenten die BCMatch Extension, wenn verfügbar.
+                    verwenden die ZF I18n Komponenten die BCMatch Extension, wenn verfügbar.
                 </para>
             </listitem>
             <listitem>

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9868 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -54,8 +55,7 @@
         <para>
             Der Socket Adapter erlaubt verschiedene zusätzliche Konfigurations Optionen die gesetzt werden
             können durch Verwendung von <code>Zend_Http_Client->setConfig()</code> oder deren Übergabe an
-            den Konstruktor des Clients. Alle von Ihnen sind bezogen auf HTTPS Verbindungen, und sind für
-            Verbindungen zu nicht sicheren HTTP Servern nicht notwendig:
+            den Konstruktor des Clients.
             <table id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket Konfigurations Parameter</title>
                 <tgroup cols="4">
@@ -63,11 +63,17 @@
                         <row>
                             <entry>Parameter</entry>
                             <entry>Beschreibung</entry>
-                            <entry>Erwarteter Wert</entry>
+                            <entry>Erwarteter Typ</entry>
                             <entry>Standardwert</entry>
                         </row>
                     </thead>
                     <tbody>
+                        <row>
+                            <entry>persistent</entry>
+                            <entry>Ob eine persistente TCP Verbindung verwendet werden soll oder nicht</entry>
+                            <entry>boolean</entry>
+                            <entry>false</entry>
+                        </row>
                         <row>
                             <entry>ssltransport</entry>
                             <entry>SSL Transport Layer (eg. 'sslv2', 'tls')</entry>
@@ -76,31 +82,56 @@
                         </row>
                         <row>
                             <entry>sslcert</entry>
-                            <entry>Pfad zum PEM verschlüsselten SSL Zertifikat</entry>
+                            <entry>Pfad zu einem PEM verschlüsselten SSL Zertifikat</entry>
                             <entry>string</entry>
-                            <entry>'/pfad/zu/cert.pem'</entry>
+                            <entry>null</entry>
                         </row>
                         <row>
                             <entry>sslpassphrase</entry>
                             <entry>Die PassPhrase für die SSL zertifizierte Datei</entry>
                             <entry>string</entry>
-                            <entry>'s0mes3cre7'</entry>
+                            <entry>null</entry>
                         </row>
                     </tbody>
                 </tgroup>
             </table>
 
             <note>
+                <title>Persistente TCP Verbindungen</title>
+                <para>
+                    Die Verwendung persistenter TCP Verbindungen kann HTTP Anfragen potentiell schneller
+                    machen - aber in den meisten Fällen, wird es nur einen kleinen positiven Effekt haben
+                    und könnte den HTTP Server überladen zu dem man sich verbindet.
+                </para>
+                <para>
+                    Es wird empfohlen persistente TCP Verbindungen nur dann zu verwenden wenn man sich
+                    zu dem gleichen Server sehr oft verbindet, und man sicher ist das der Server eine
+                    große Anzahl an gleichzeitigen Verbindungen behandeln kann. In jedem Fall wird
+                    empfohlen das der Effekt von persistenten Verbindungen auf beiden, der Geschwindigkeit
+                    des Clients und dem Serverload gemessen wird bevor diese Option verwendet wird. 
+                </para>
+                <para>
+                    Zusätzlich, wenn persistente Verbindungen verwendet werden, sollte man Keep-Alive
+                    HTTP Anfragen aktivieren wie in <xref linkend="zend.http.client.configuration" />
+                    beschrieben - andernfalls werden persistente Verbindungen nur wenig oder gar keinen
+                    Effekt haben.
+                </para> 
+            </note>
+             
+            <note>
                 <title>HTTPS SSL Stream Parameter</title>
                 <para>
-                    Alle der oben gezeigten Parameter sind relevant für den SSL Layer der in HTTPS
-                    Verbindungen verwendet wird. Wärend die Standardeinstellungen für die meisten
-                    Anwendungen funktionieren sollten, kann es notwendig werden diese zu Ändern wenn
-                    man sich zu Server verbinden muß die ein spezielles Client Setup benötigen. Wenn
-                    dem so ist, sollte
-                    <ulink url="http://www.php.net/manual/de/transports.phphttp://framework.zend.com/manual/de/zend.search.lucene.searching.html#transports.inet">hier</ulink>
-                    im Kapitel über SSL Transport Layer und Optionen nachgelesen werden.
+                    <code>ssltransport, sslcert</code> und <code>sslpassphrase</code> sind nur relevant
+                    wenn HTTPS für die Verbindung verwendet wird.
                 </para>
+                <para>
+                    Wärend die Standard SSL Einstellungen für die meisten Anwendungen funktionieren, kann
+                    es notwendig sein diese zu Ändern wenn der Server zu dem man sich verbindet ein
+                    spezielles Client Setup benötigt. Wenn dem so ist, sollte man das Kapitel über SSL
+                    Transport Layer und Optionen lesen das
+                    <ulink url="http://www.php.net/manual/en/transports.php#transports.inet">hier</ulink>
+                    zu finden ist.
+                </para> 
             </note>
         </para>
         <example id="zend.http.client.adapters.socket.example-1">

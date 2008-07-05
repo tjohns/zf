@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9848 -->
 <sect1 id="zend.measure.types">
 
     <title>Arten von Maßeinheiten</title>
@@ -181,6 +182,12 @@
                     <entry>Zend_Measure_Temperature</entry>
                     <entry>Kelvin | <code>K</code></entry>
                     <entry><code>Zend_Measure_Temperature</code> behandelt den physikalischen Faktor der Temperatur</entry>
+                </row>
+                <row>
+                    <entry>Time</entry>
+                    <entry>Zend_Measure_Time</entry>
+                    <entry>Sekunde | <code>s</code></entry>
+                    <entry><code>Zend_Measure_Time</code> behandelt den physikalischen Faktor der Zeit</entry>
                 </row>
                 <row>
                     <entry>Drehmoment</entry>

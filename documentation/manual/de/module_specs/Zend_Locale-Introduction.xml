@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -16,10 +16,10 @@
         <ulink url="http://en.wikipedia.org/wiki/L10n">Lokalisierung</ulink>
         und die vergleichbare
         <ulink url="http://en.wikipedia.org/wiki/L10n">Internationalisierung</ulink>
-        . Beide werden oft abgekürzt zu <code>L10N</code> und <code>I18N</code>. Internationalisierung bezeichnet
+        . Beide werden oft abgekürzt zu <code>L10n</code> und <code>I18n</code>. Internationalisierung bezeichnet
         mehr die Benutzung von Systemen für die spezielle Benutzung durch eindeutige Gruppen wie zum Beispiel
         Sprachübersetzung, Unterstützung von lokalen Konventionen für Plurale, Daten, Zeiten, Währungen, Namen,
-        Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10N</code> und <code>I18N</code> sind einander
+        Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10n</code> und <code>I18n</code> sind einander
         sehr ähnlich. Der Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
         Komponenten wie Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency und Zend_TimeSync.
     </para>

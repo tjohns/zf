@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9936 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -89,7 +90,7 @@
 
             <listitem><para>
                 <code>formButton($name, $value, $attribs)</code>: Erstellt ein
-                &lt;input type="button" /&gt; Element.
+                &lt;button /&gt; Element.
             </para></listitem>
 
             <listitem>

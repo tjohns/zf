@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9860 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch und AjaxContext</title>
 
@@ -623,7 +624,7 @@ $contextSwitch->initContext();
                     typischerweise dafür verwendet werden um normale Antworten darzustellen, und
                     Sie in alternativen Kontexten keine Bedeutung haben. Wenn man trotzdem Layouts
                     verwenden will (möglicherweise hat man ein Layout für einen neuen Kontext),
-                    kann dieses Verhalten mit der Übergabe eines true Wertes an
+                    kann dieses Verhalten mit der Übergabe eines false Wertes an
                     <code>setAutoDisableLayout()</code> geändert werden. Das sollte aber
                     <emphasis>before</emphasis> dem Aufruf von <code>initContext()</code>
                     geschehen.

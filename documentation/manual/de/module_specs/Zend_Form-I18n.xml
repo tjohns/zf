@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        Standardmäßig wird keine Internationalisiernug (i18n) durchgeführt. Um i18n Features in
+        Standardmäßig wird keine Internationalisiernug (I18n) durchgeführt. Um I18n Features in
         <code>Zend_Form</code> einzuschalten, muß ein <code>Zend_Translate</code> Objekt mit einem
         gewünschten Adapter instanziert werden, und es mit <code>Zend_Form</code> und/oder
         <code>Zend_Validate</code> verbunden werden. Siehe in die 
@@ -30,10 +30,10 @@
     </note>
 
     <sect2 id="zend.form.i18n.initialization">
-        <title>I18N in Formen initialisieren</title>
+        <title>I18n in Formen initialisieren</title>
 
         <para>
-            Um i18n in Forms zu initialisieren, muß man entweder ein <code>Zend_Translate</code>
+            Um I18n in Forms zu initialisieren, muß man entweder ein <code>Zend_Translate</code>
             Objekt oder ein <code>Zend_Translate_Adapter</code> haben, wie in der
             <code>Zend_Translate</code> Dokumentation beschrieben. Soband man ein
             Übersetzungsobjekt hat, besitzt man verschiedene Möglichkeiten:
@@ -42,7 +42,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis>Einfachste:</emphasis> es der Registry hinzufügen. Alle i18n fähigen
+                    <emphasis>Einfachste:</emphasis> es der Registry hinzufügen. Alle I18n fähigen
                     Komponenten vom Zend Framework erkennen ein Übersetzungsobjekt automatisch
                     wenn es in der Registrierung unter dem 'Zend_Translate' Schlüssel vorhanden ist
                     und verwenden es um eine Übersetzung und/oder Lokalisierung durchzuführen:
@@ -106,7 +106,7 @@ $element->setTranslator($translate);
     </sect2>
 
     <sect2 id="zend.form.i18n.standard">
-        <title>Standard I18N Ziele</title>
+        <title>Standard I18n Ziele</title>
 
         <para>
             Was kann nun standardmäßig übersetzt werden nachdem nun ein Übersetzungs Objekt
