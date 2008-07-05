@@ -83,8 +83,12 @@ abstract class Zend_Cache
     {
 
         // because lowercase will fail
-        $frontend = self::_normalizeName($frontend);
-        $backend  = self::_normalizeName($backend);
+        if (!$customFrontendNaming) {
+            $frontend = self::_normalizeName($frontend);
+        }
+        if (!$customBackendNaming) {
+            $backend  = self::_normalizeName($backend);
+        }
 
         // working on the frontend
         if (in_array($frontend, self::$standardFrontends)) {
