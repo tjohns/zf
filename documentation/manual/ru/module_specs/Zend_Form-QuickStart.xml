@@ -481,7 +481,7 @@ if (!$form->isValid($_POST)) {
 
 
 $form = new Zend_Form();
-$form->setAction('/usr/login')
+$form->setAction('/user/login')
      ->setMethod('post');
 
 // Создание и конфигурирование элемента username

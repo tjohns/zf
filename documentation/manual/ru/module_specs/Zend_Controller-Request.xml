@@ -27,8 +27,8 @@
 
             <listitem><para>
                 Доступ к имени действия производится через
-                <code>getControllerName()</code> и
-                <code>setControllerName()</code>.
+                <code>getActionName()</code> и
+                <code>setActionName()</code>.
             </para></listitem>
 
             <listitem><para>

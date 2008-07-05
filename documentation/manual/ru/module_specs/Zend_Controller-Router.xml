@@ -196,7 +196,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 
         <para>
             Есть три специальные переменные, которые могут использоваться в
-            маршрутах - 'module', 'controller' and 'action'. Эти специальные
+            маршрутах: 'module', 'controller' и 'action'. Эти
             переменные используются диспетчером Zend_Controller_Dispatcher для
             нахождения контроллера и действия, которым передается управление.
         </para>
@@ -387,7 +387,7 @@ $router->addConfig($config, 'routes');]]>
             соответствует трем аргументам, передаваемым объекту
             <code>Zend_Controller_Router_Route_Interface</code>.
             Опция с ключом 'type' может использоваться для определения класса,
-            используемого для данного маршрут;, по умолчанию используется
+            используемого для данного маршрута; по умолчанию используется
             класс <code>Zend_Controller_Router_Route</code>. В примере выше
             для маршрута 'news' должен использоваться класс
             <code>Zend_Controller_Router_Route_Static</code>.    

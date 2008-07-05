@@ -48,8 +48,6 @@ echo $config->webhost;
 // Использование конфигурационных данных для соединения с базой данных
 $db = Zend_Db::factory($config->database->adapter,
                        $config->database->params->toArray());
-$db = Zend_Db::factory($config->database->adapter,
-                       $config->database->params->toArray());
 
 // Альтернативный способ - просто передавайте объект Zend_Config.
 // Фабрика Zend_Db знает, как его интерпретировать.
