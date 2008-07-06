@@ -1094,7 +1094,7 @@ $rows = $table->fetchAll($select);]]>
                 The <classname>Zend_Db_Table_Select</classname> is primarily used to constrain and
                 validate so that it may enforce the criteria for a legal SELECT query. However
                 there may be certain cases where you require the flexibility of the
-                Zend_Db_Table_Row component and do not require a writeable or deletable row. For
+                Zend_Db_Table_Row component and do not require a writable or deletable row. For
                 this specific user case, it is possible to retrieve a row/rowset by passing a false
                 value to setIntegrityCheck. The resulting row/rowset will be returned as a 'locked'
                 row (meaning the save(), delete() and any field-setting methods will throw an

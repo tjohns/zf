@@ -552,7 +552,7 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_D
             <title>Fetching a Rowset with the Many-to-many Method</title>
 
             <para>
-                This example shows geting a Row object from from the origin table
+                This example shows getting a Row object from from the origin table
                 <code>Bugs</code>, and finding rows from the destination table
                 <code>Products</code>, representing products related to that bug.
             </para>

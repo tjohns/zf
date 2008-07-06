@@ -44,7 +44,7 @@ $stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?'
         </para>
 
         <para>
-            You can create a statement with its contructor, but this is less
+            You can create a statement with its constructor, but this is less
             typical usage.  There is no factory method to create this object,
             so you need to load the specific statement class and call its
             constructor.  Pass the Adapter object as the first argument, and

@@ -998,7 +998,7 @@ $select = $db->select()
             <para>
                 In Zend_Db_Select, you can use the <code>order()</code> method to specify a column
                 or an array of columns by which to sort. Each element of the array is a string
-                naming a column. optionally with the <code>ASC</code> <code>DESC</code> keyword
+                naming a column. Optionally with the <code>ASC</code> <code>DESC</code> keyword
                 following it, separated by a space.
             </para>
 

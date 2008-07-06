@@ -2052,7 +2052,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                     <para>
                         Currently the <code>Zend_Db::CASE_FOLDING</code> option
                         is not supported by the Firebird/interbase adapter.
-                        Unquoted identifiers are automaticaly returned in
+                        Unquoted identifiers are automatically returned in
                         upper case.
                     </para>
                 </listitem>

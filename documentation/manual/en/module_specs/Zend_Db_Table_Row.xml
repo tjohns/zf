@@ -106,7 +106,7 @@ echo $row->bug_description;]]>
 
             <para>
                 You can access the row's data as an array using the <code>toArray()</code> method
-                of the Row object. This returns an associative array of the colum names to the
+                of the Row object. This returns an associative array of the column names to the
                 column values.
             </para>
 
