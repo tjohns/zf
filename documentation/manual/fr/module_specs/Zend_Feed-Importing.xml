@@ -1,41 +1,40 @@
-﻿<sect1 id="zend.feed.importing">
-
+<!-- EN-Revision: 5617 -->
+<sect1 id="zend.feed.importing">
     <title>Importer des flux</title>
 
-    <para>
-        <code>Zend_Feed</code> permet aux développeurs d'obtenir très facilement des flux. Si vous connaissez l'URI d'un flux, utilisez simplement la méthode <code>Zend_Feed::import()</code> :
-    </para>
+    <para><code>Zend_Feed</code> permet aux développeurs d'obtenir très facilement des flux. Si vous connaissez l'URI
+    d'un flux, utilisez simplement la méthode <code>Zend_Feed::import()</code> :</para>
 
     <programlisting role="php"><![CDATA[<?php
-$flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');]]>
-    </programlisting>
+$flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');]]></programlisting>
 
-    <para>
-        Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
-    </para>
+    <para>Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le contenu d'un flux à partir d'un
+    fichier ou d'une chaîne PHP :</para>
 
     <programlisting role="php"><![CDATA[<?php
 // on importe un flux à partir d'un fichier texte
 $fluxAPartirDeFichierTexte = Zend_Feed::importFile('flux.xml');
 
 // on importe un flux à partir d'une variable PHP de type chaîne
-$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);]]>
-    </programlisting>
+$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);]]></programlisting>
 
-    <para>
-        Dans chacun des exemples ci-dessus, une instance d'une classe étendant <code>Zend_Feed_Abstract</code> est renvoyée en cas de succès, selon le type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes d'importation décrites ci-dessus, alors un objet <code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux Atom a été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les méthodes d'importation déclencheront aussi une exception <code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux est illisible ou malformé.
-    </para>
+    <para>Dans chacun des exemples ci-dessus, une instance d'une classe étendant <code>Zend_Feed_Abstract</code> est
+    renvoyée en cas de succès, selon le type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes
+    d'importation décrites ci-dessus, alors un objet <code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux
+    Atom a été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les méthodes d'importation déclencheront
+    aussi une exception <code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux est illisible ou
+    malformé.</para>
 
     <sect2 id="zend.feed.importing.custom">
-
         <title>Flux personnalisés</title>
 
-        <para>
-            <code>Zend_Feed</code> permet aux développeurs de créer du flux personnalisé très facilement. Vous devez juste créer un tableau et l'importer avec Zend_Feed. Ce tableau peut être importé avec <code>Zend_Feed::importArray()</code> ou avec <code>Zend_Feed::importBuilder()</code>. Dans ce dernier cas, le tableau sera calculé instantanément par une source de données personnalisée implémentant <code>Zend_Feed_Builder_Interface</code>.
-        </para>
+        <para><code>Zend_Feed</code> permet aux développeurs de créer du flux personnalisé très facilement. Vous devez
+        juste créer un tableau et l'importer avec Zend_Feed. Ce tableau peut être importé avec
+        <code>Zend_Feed::importArray()</code> ou avec <code>Zend_Feed::importBuilder()</code>. Dans ce dernier cas, le
+        tableau sera calculé instantanément par une source de données personnalisée implémentant
+        <code>Zend_Feed_Builder_Interface</code>.</para>
 
         <sect3 id="zend.feed.importing.custom.importarray">
-
             <title>Importer un tableau personnalisé</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -46,12 +45,9 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // on importe un flux rss à partir d'un tableau
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
-            </programlisting>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]></programlisting>
 
-            <para>
-                Le format du tableau doit être conforme à cette structure :
-            </para>
+            <para>Le format du tableau doit être conforme à cette structure :</para>
 
             <programlisting role="php"><![CDATA[<?php
 array(
@@ -149,57 +145,51 @@ array(
                                    //données du second item et ainsi de suite
                                    )
                              )
-       );]]>
-            </programlisting>
+       );]]></programlisting>
 
-            <para>
-                Références :
-                <itemizedlist>
+            <para>Références : <itemizedlist>
                     <listitem>
-                        <para>
-                            Spécification RSS 2.0 : <ulink url="http://blogs.law.harvard.edu/tech/rss">RSS 2.0</ulink>
-                        </para>
+                        <para>Spécification RSS 2.0 : <ulink url="http://blogs.law.harvard.edu/tech/rss">RSS
+                        2.0</ulink></para>
                     </listitem>
-                    <listitem>
-                        <para>
-                            Spécification Atom : <ulink url="http://tools.ietf.org/html/rfc4287">RFC 4287</ulink>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Spécification WFW : <ulink url="http://wellformedweb.org/news/wfw_namespace_elements">Well
-                            Formed Web</ulink>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            Spécification iTunes :
-                            <ulink url="http://www.apple.com/itunes/store/podcaststechspecs.html">iTunes Technical
-                            Specifications</ulink>
-                        </para>
-                    </listitem>
-                </itemizedlist>
-            </para>
 
+                    <listitem>
+                        <para>Spécification Atom : <ulink url="http://tools.ietf.org/html/rfc4287">RFC
+                        4287</ulink></para>
+                    </listitem>
+
+                    <listitem>
+                        <para>Spécification WFW : <ulink url="http://wellformedweb.org/news/wfw_namespace_elements">Well
+                        Formed Web</ulink></para>
+                    </listitem>
+
+                    <listitem>
+                        <para>Spécification iTunes : <ulink
+                        url="http://www.apple.com/itunes/store/podcaststechspecs.html">iTunes Technical
+                        Specifications</ulink></para>
+                    </listitem>
+                </itemizedlist></para>
         </sect3>
 
         <sect3 id="zend.feed.importing.custom.importbuilder">
-
             <title>Importer une source de données personnalisée</title>
 
-            <para>
-                Vous pouvez créer une instance Zeed_Feed à partir de n'importe quelle source de données implémentant <code>Zend_Feed_Builder_Interface</code>. Vous devez juste implémenter les méthodes <code>getHeader()</code> et <code>getEntries()</code> pour pouvoir utiliser votre objet avec <code>Zend_Feed::importBuilder()</code>. Par une simple référence d'implémentation vous pouvez utiliser <code>Zend_Feed_Builder</code>, qui prend un tableau dans son constructeur, réalise quelques validations mineures, et peut être utilisé dans la méthode <code>importBuilder()</code>. La méthode <code>getHeader()</code> doit retourner une instance de <code>Zend_Feed_Builder_Header</code>, et <code>getEntries()</code> doit retourner un tableau d'instances <code>Zend_Feed_Builder_Entry</code>
-            </para>
+            <para>Vous pouvez créer une instance Zeed_Feed à partir de n'importe quelle source de données implémentant
+            <code>Zend_Feed_Builder_Interface</code>. Vous devez juste implémenter les méthodes <code>getHeader()</code>
+            et <code>getEntries()</code> pour pouvoir utiliser votre objet avec <code>Zend_Feed::importBuilder()</code>.
+            Par une simple référence d'implémentation vous pouvez utiliser <code>Zend_Feed_Builder</code>, qui prend un
+            tableau dans son constructeur, réalise quelques validations mineures, et peut être utilisé dans la méthode
+            <code>importBuilder()</code>. La méthode <code>getHeader()</code> doit retourner une instance de
+            <code>Zend_Feed_Builder_Header</code>, et <code>getEntries()</code> doit retourner un tableau d'instances
+            <code>Zend_Feed_Builder_Entry</code></para>
 
             <note>
-                <para>
-                    <code>Zend_Feed_Builder</code> fournit une mise en oeuvre concrète afin de montrer l'utilisation. Les utilisateurs sont encouragés à faire leurs classes propres mettre en oeuvre <code>Zend_Feed_Builder_Interface</code>.
-                </para>
+                <para><code>Zend_Feed_Builder</code> fournit une mise en oeuvre concrète afin de montrer l'utilisation.
+                Les utilisateurs sont encouragés à faire leurs classes propres mettre en oeuvre
+                <code>Zend_Feed_Builder_Interface</code>.</para>
             </note>
 
-            <para>
-                Voici un exemple d'utilisation de <code>Zend_Feed::importBuilder()</code> :
-            </para>
+            <para>Voici un exemple d'utilisation de <code>Zend_Feed::importBuilder()</code> :</para>
 
             <programlisting role="php"><![CDATA[<?php
 // importe un flux atom à partir d'un constructeur personnalisé
@@ -209,18 +199,14 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importe un flux rss à partir d'un constructeur personnalisé
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
-            </programlisting>
-
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]></programlisting>
         </sect3>
 
         <sect3 id="zend.feed.importing.custom.dump">
-
             <title>Décharger le contenu d'un flux</title>
 
-            <para>
-                Pour décharger le contenu d'une instance <code>Zend_Feed_Abstract</code>, vous pouvez utiliser les méthodes <code>send()</code> ou <code>saveXml()</code>
-            </para>
+            <para>Pour décharger le contenu d'une instance <code>Zend_Feed_Abstract</code>, vous pouvez utiliser les
+            méthodes <code>send()</code> ou <code>saveXml().</code></para>
 
             <programlisting role="php"><![CDATA[<?php
 assert($feed instanceof Zend_Feed_Abstract);
@@ -229,11 +215,7 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // envoie les entêtes et décharge le flux
-$feed->send();]]>
-            </programlisting>
-
+$feed->send();]]></programlisting>
         </sect3>
-
     </sect2>
-
 </sect1>
