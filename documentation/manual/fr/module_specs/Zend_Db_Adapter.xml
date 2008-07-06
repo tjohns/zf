@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9966 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
@@ -93,8 +94,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));
-                ]]></programlisting>
+));]]></programlisting>
             </example>
         </sect3>
 
@@ -105,9 +105,10 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
             Celle-ci charge dynamiquement la classe d'adaptateur correspondant en utilisant <link
             linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.</para>
 
-            <para>Le premier argument est une chaîne désignant l'adaptateur souhaité. Par exemple, 'Pdo_Mysql' va
-            correspondre à la classe Zend_Db_Adapter_Pdo_Mysql. Le second paramètre est un tableau d'options. C'est le
-            même que celui que vous auriez passé au constructeur de la classe directement.</para>
+            <para>Le premier argument est une chaîne désignant l'adaptateur souhaité. Par exemple,
+            "<code>Pdo_Mysql</code>" va correspondre à la classe <code>Zend_Db_Adapter_Pdo_Mysql</code>. Le second
+            paramètre est un tableau d'options. C'est le même que celui que vous auriez passé au constructeur de la
+            classe directement.</para>
 
             <example id="zend.db.adapter.connecting.factory.example">
                 <title>Utilisation de la méthode statique de fabrique de Zend_Db</title>
@@ -121,14 +122,13 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));
-                ]]></programlisting>
+));]]></programlisting>
             </example>
 
-            <para>Si vous créez votre propre classe d'adaptateur qui étend Zend_Db_Adapter_Abstract et que celle-ci ne
-            respecte pas la syntaxe du préfixe package "Zend_Db_Adapter", utilisez alors la clé 'adapterNamespace' dans
-            le tableau de configuration passé à la méthode <code>factory()</code> afin de charger votre
-            adaptateur.</para>
+            <para>Si vous créez votre propre classe d'adaptateur qui étend <code>Zend_Db_Adapter_Abstract</code> et que
+            celle-ci ne respecte pas la syntaxe du préfixe package "<code>Zend_Db_Adapter</code>", utilisez alors la clé
+            "<code>adapterNamespace</code>" dans le tableau de configuration passé à la méthode <code>factory()</code>
+            afin de charger votre adaptateur.</para>
 
             <example id="zend.db.adapter.connecting.factory.example2">
                 <title>Utilisation de la fabrique avec une classe personnalisée</title>
@@ -143,8 +143,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     'password'         => 'xxxxxxxx',
     'dbname'           => 'test',
     'adapterNamespace' => 'MyProject_Db_Adapter'
-));
-                ]]></programlisting>
+));]]></programlisting>
             </example>
         </sect3>
 
@@ -162,8 +161,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             <example id="zend.db.adapter.connecting.factory.example1">
                 <title>Utilisation de la fabrique avec un objet de type Zend_Config</title>
 
-                <para>Dans l'exemple qui va suivre, l'objet Zend_Config est crée à partir d'un tableau. Il eut été
-                possible de le créer à partir de fichiers externes, grâce à <link
+                <para>Dans l'exemple qui va suivre, l'objet <code>Zend_Config</code> est crée à partir d'un tableau. Il
+                eut été possible de le créer à partir de fichiers externes, grâce à <link
                 linkend="zend.config.adapters.ini">Zend_Config_Ini</link> ou <link
                 linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.</para>
 
@@ -184,14 +183,13 @@ $config = new Zend_Config(
     )
 );
 
-$db = Zend_Db::factory($config->database);
-                ]]></programlisting>
+$db = Zend_Db::factory($config->database);]]></programlisting>
             </example>
 
             <para>Le second paramètre de la méthode <code>factory()</code> doit être un tableau associatif décrivant les
-            paramètres de l'adaptateur à utiliser. Cet argument est optionnel, si un objet de type Zend_Config est
-            utilisé en ptremier paramètre, alors il est supposé contenir les paramètres, et le second paramètre de
-            <code>factory()</code> est alors ignoré.</para>
+            paramètres de l'adaptateur à utiliser. Cet argument est optionnel, si un objet de type
+            <code>Zend_Config</code> est utilisé en premier paramètre, alors il est supposé contenir les paramètres, et
+            le second paramètre de <code>factory()</code> est alors ignoré.</para>
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.parameters">
@@ -202,46 +200,46 @@ $db = Zend_Db::factory($config->database);
 
             <itemizedlist>
                 <listitem>
-                    <para><emphasis role="strong">host</emphasis>: le nom de l'hôte hébergeant le SGBD. Vous pouvez
+                    <para><emphasis role="strong">host</emphasis> : le nom de l'hôte hébergeant le SGBD. Vous pouvez
                     aussi spécifier une adresse IP. Si le SGBD se situe sur la même machine que l'application PHP,
-                    'localhost' ou '127.0.0.1' devraient alors être utilisés.</para>
+                    "localhost" ou "127.0.0.1" devraient alors être utilisés.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">username</emphasis>: nom d'utilisateur du compte de connexion au
+                    <para><emphasis role="strong">username </emphasis>: nom d'utilisateur du compte de connexion au
                     SGBD.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">password</emphasis>: mot de passe de l'utilisateur du compte de
+                    <para><emphasis role="strong">password</emphasis> : mot de passe de l'utilisateur du compte de
                     connexion au SGBD.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">dbname</emphasis>: nom de la base de données située dans le
+                    <para><emphasis role="strong">dbname</emphasis> : nom de la base de données située dans le
                     SGBD.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">port</emphasis>: Certains SGBDs acceptent que l'on spécifie un port
+                    <para><emphasis role="strong">port</emphasis> : Certains SGBDs acceptent que l'on spécifie un port
                     pour d'y connecter. Indiquez le alors ici.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">options</emphasis>: Ce paramètre est un tableau associatif d'options
-                    génériques à toutes les classes Zend_Db_Adapter.</para>
+                    <para><emphasis role="strong">options</emphasis> : Ce paramètre est un tableau associatif d'options
+                    génériques à toutes les classes <code>Zend_Db_Adapter</code>.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">driver_options</emphasis>: Ce paramètre est un tableau associatif
+                    <para><emphasis role="strong">driver_options</emphasis> : Ce paramètre est un tableau associatif
                     d'options spécifiques à une extension de SGBD spécifique. Typiquement, il est possible avec ce
                     paramètre de passer des options (attributs) au driver PDO.</para>
                 </listitem>
 
                 <listitem>
-                    <para><emphasis role="strong">adapterNamespace</emphasis>: fournit le commencement du nom de la
-                    classe d'adaptateur, à utiliser la place de 'Zend_Db_Adapter'. Utilisez ceci si vous désirez que
-                    <code>factory()</code> charge une classe non Zend.</para>
+                    <para><emphasis role="strong">adapterNamespace</emphasis> : fournit le commencement du nom de la
+                    classe d'adaptateur, à utiliser la place de "<code>Zend_Db_Adapter</code>". Utilisez ceci si vous
+                    désirez que <code>factory()</code> charge une classe non Zend.</para>
                 </listitem>
             </itemizedlist>
 
@@ -267,8 +265,7 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Db2', $params);
-                ]]></programlisting>
+$db = Zend_Db::factory('Db2', $params);]]></programlisting>
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example2">
@@ -294,8 +291,7 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Pdo_Mysql', $params);
-                ]]></programlisting>
+$db = Zend_Db::factory('Pdo_Mysql', $params);]]></programlisting>
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
@@ -316,8 +312,7 @@ $params = array(
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
 
-echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
-                ]]></programlisting>
+echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);]]></programlisting>
             </example>
         </sect3>
 
@@ -351,8 +346,7 @@ try {
     // probablement mauvais identifiants, ou alors le SGBD n'est pas joignable
 } catch (Zend_Exception $e) {
     // probablement que factory() n'a pas réussi à charger la classe de l'adaptateur demandé
-}
-                ]]></programlisting>
+}]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -360,9 +354,9 @@ try {
     <sect2 id="zend.db.adapter.example-database">
         <title>La base de données d'exemple</title>
 
-        <para>Dans cette documentation concernant Zend_Db, nous utilisons un exemple simple de tables pour illustrer nos
-        exemples. Ces tables peuvent servir à stocker des informations sur la gestion des bugs dans une application. La
-        base de données contient quatre tables :</para>
+        <para>Dans cette documentation concernant <code>Zend_Db</code>, nous utilisons un exemple simple de tables pour
+        illustrer nos exemples. Ces tables peuvent servir à stocker des informations sur la gestion des bugs dans une
+        application. La base de données contient quatre tables :</para>
 
         <itemizedlist>
             <listitem>
@@ -389,7 +383,7 @@ try {
         </itemizedlist>
 
         <para>Le pseudo-code SQL suivant représente les tables de notre base de données d'exemple. Ces tables sont
-        utilisées aussi pour les tests unitaires automatisés de Zend_Db.</para>
+        utilisées aussi pour les tests unitaires automatisés de <code>Zend_Db</code>.</para>
 
         <programlisting role="sql"><![CDATA[
 CREATE TABLE accounts (
@@ -504,8 +498,9 @@ $result = $db->fetchAll($sql, 2);
 
                 <listitem>
                     <para><emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>: Retourne les enregistrements dans un
-                    tableau d'objets. La classe de ces objets par défaut est la classe intégrée à PHP : stdClass. Les
-                    colonnes des enregistrements sont représentées par les propriétés publiques des objets.</para>
+                    tableau d'objets. La classe de ces objets par défaut est la classe intégrée à PHP :
+                    <code>stdClass</code>. Les colonnes des enregistrements sont représentées par les propriétés
+                    publiques des objets.</para>
                 </listitem>
             </itemizedlist>
 
@@ -518,8 +513,7 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 $result = $db->fetchAll('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
 // $result est un tableau d'objets
-echo $result[0]->bug_description;
-                ]]></programlisting>
+echo $result[0]->bug_description;]]></programlisting>
             </example>
         </sect3>
 
@@ -538,8 +532,7 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 $result = $db->fetchAssoc('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
 // $result est un tableau de tableaux associatifs
-echo $result[0]['bug_description'];
-                ]]></programlisting>
+echo $result[0]['bug_description'];]]></programlisting>
             </example>
         </sect3>
 
@@ -560,9 +553,8 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
-// Contient bug_description; bug_id n'est pas retourné
-echo $result[0];
-                ]]></programlisting>
+// Contient bug_description ; bug_id n'est pas retourné
+echo $result[0];]]></programlisting>
             </example>
         </sect3>
 
@@ -587,8 +579,7 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchPairs('SELECT bug_id, bug_status FROM bugs');
 
-echo $result[2]; // le bug_status correspondant au bug_id numéro 2
-                ]]></programlisting>
+echo $result[2]; // le bug_status correspondant au bug_id numéro 2]]></programlisting>
             </example>
         </sect3>
 
@@ -609,8 +600,7 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
 // Ce résultat sera un objet, car le fetch mode en a décidé ainsi
-echo $result->bug_description;
-                ]]></programlisting>
+echo $result->bug_description;]]></programlisting>
             </example>
         </sect3>
 
@@ -629,8 +619,7 @@ echo $result->bug_description;
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
 
 // ceci est une chaine
-echo $result;
-                ]]></programlisting>
+echo $result;]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -659,8 +648,7 @@ $data = array(
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);
-                ]]></programlisting>
+$db->insert('bugs', $data);]]></programlisting>
             </example>
 
             <para>Les colonnes non citées dans le tableau associatif sont laissées telles quelles. Ainsi, si le SGBD
@@ -673,7 +661,8 @@ $db->insert('bugs', $data);
             <para>Si vous avez besoin d'écrire de la syntaxe SQL, comme des mots réservés, des noms de fonctions SQL,
             vous voulez que ceux-ci ne soient pas échappés, et ne soient pas traités comme de vulgaires chaînes de
             caractères, mais plutôt comme des expressions. Pour ceci, vous devriez passer ces valeurs dans votre tableau
-            de données, en tant qu'objets de type Zend_Db_Expr au lieu de chaînes de caractères banales.</para>
+            de données, en tant qu'objets de type <code>Zend_Db_Expr</code> au lieu de chaînes de caractères
+            banales.</para>
 
             <example id="zend.db.adapter.write.insert.example2">
                 <title>Insérer des expressions dans une table</title>
@@ -685,8 +674,7 @@ $data = array(
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);
-                ]]></programlisting>
+$db->insert('bugs', $data);]]></programlisting>
             </example>
         </sect3>
 
@@ -710,8 +698,7 @@ $db->insert('bugs', $data);
 $db->insert('bugs', $data);
 
 // retourne la dernière valeur générée par la clé auto-incrémentée
-$id = $db->lastInsertId();
-                ]]></programlisting>
+$id = $db->lastInsertId();]]></programlisting>
             </example>
 
             <para>Certains SGBD supporte un objet de séquence, qui sert à générer des valeurs uniques qui vont servir
@@ -732,8 +719,7 @@ $db->insert('bugs', $data);
 $id = $db->lastInsertId('bugs', 'bug_id');
 
 // ceci retourne la dernière valeur générée par la séquence 'bugs_seq'.
-$id = $db->lastInsertId('bugs');
-                ]]></programlisting>
+$id = $db->lastInsertId('bugs');]]></programlisting>
             </example>
 
             <para>Si le nom de votre objet de séquence ne suit pas ces conventions de nommage, utilisez alors
@@ -746,8 +732,7 @@ $id = $db->lastInsertId('bugs');
 $db->insert('bugs', $data);
 
 // retourne la dernière valeur générée par la séquence 'bugs_id_gen'.
-$id = $db->lastSequenceId('bugs_id_gen');
-                ]]></programlisting>
+$id = $db->lastSequenceId('bugs_id_gen');]]></programlisting>
             </example>
 
             <para>Pour les SGBDs ne supportant pas les séquences, comme MySQL, Microsoft SQL Server, et SQLite, les
@@ -794,7 +779,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
             linkend="zend.db.adapter.quoting" /> pour plus d'informations.</para>
 
             <para>La valeur de retour de cette méthode est le nombre d'enregistrements affectés par l'opération de mise
-            à jour (update).</para>
+            à jour (UPDATE).</para>
 
             <example id="zend.db.adapter.write.update.example">
                 <title>Mettre à jour des enregistrements</title>
@@ -805,8 +790,7 @@ $data = array(
     'bug_status'      => 'FIXED'
 );
 
-$n = $db->update('bugs', $data, 'bug_id = 2');
-                ]]></programlisting>
+$n = $db->update('bugs', $data, 'bug_id = 2');]]></programlisting>
             </example>
 
             <para>Si vous oubliez le troisième paramètre, alors tous les enregistrements de la table sont mis à jour
@@ -831,8 +815,7 @@ $n = $db->update('bugs', $data, $where);
 
 // la requête SQL executée est:
 //  UPDATE "bugs" SET "update_on" = '2007-03-23', "bug_status" = 'FIXED'
-//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')
-                ]]></programlisting>
+//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')]]></programlisting>
             </example>
         </sect3>
 
@@ -854,8 +837,7 @@ $n = $db->update('bugs', $data, $where);
                 <title>Supprimer des enregistrements</title>
 
                 <programlisting role="php"><![CDATA[<?php
-$n = $db->delete('bugs', 'bug_id = 3');
-                ]]></programlisting>
+$n = $db->delete('bugs', 'bug_id = 3');]]></programlisting>
             </example>
 
             <para>Si vous ne spécifiez pas le second paramètres, tous les enregistrements de la table seront alors
@@ -872,13 +854,11 @@ $n = $db->delete('bugs', 'bug_id = 3');
         <para>Lorsque vous envoyez des requêtes SQL au SGBD, il est souvent nécessaire d'y inclure des paramètres
         dynamiques, PHP. Ceci est risqué car si un des paramètres contient certains caractères, comme l'apostrophe ('),
         alors la requête résultante risque d'être mal formée. Par exemple, notez le caractère indésirable dans la
-        requête suivante : <programlisting role="php"><![CDATA[
-$name = "O'Reilly";
+        requête suivante : <programlisting role="php"><![CDATA[$name = "O'Reilly";
 $sql = "SELECT * FROM bugs WHERE reported_by = '$name'";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O'Reilly'
-            ]]></programlisting></para>
+// SELECT * FROM bugs WHERE reported_by = 'O'Reilly']]></programlisting></para>
 
         <para>Pire encore est le cas où de telles erreurs SQL peuvent être utilisées délibérément par une personne afin
         de manipuler la logique de votre requête. Si une personne peut manipuler un paramètre de votre requête, par
@@ -911,8 +891,7 @@ echo $name;
 $sql = "SELECT * FROM bugs WHERE reported_by = $name";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
-                ]]></programlisting>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]></programlisting>
             </example>
 
             <para>Notez que la valeur de retour contient les apostrophes de délimitation autour de la chaîne. Ceci est
@@ -934,9 +913,7 @@ SELECT * FROM atable WHERE intColumn = '123'
                 <programlisting role="php"><![CDATA[<?php
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
-     . $db->quote($value, 'INTEGER');
-
-                ]]></programlisting>
+     . $db->quote($value, 'INTEGER');]]></programlisting>
             </example>
 
             <para>De plus, chaque classe Zend_Db_Adapter possèdent des constantes représentant les différents type SQL
@@ -968,8 +945,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
-                ]]></programlisting>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]></programlisting>
             </example>
 
             <para>Le troisième paramètre optionnel s'utilise comme avec la méthode <code>quote</code>. Il sert à
@@ -982,8 +958,7 @@ echo $sql;
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 1234
-                ]]></programlisting>
+// SELECT * FROM bugs WHERE reported_by = 1234]]></programlisting>
             </example>
         </sect3>
 
@@ -995,7 +970,7 @@ echo $sql;
             la requête peuvent aussi être dynamiques. En général, les identifiant spéciaux d'une requête ont une syntaxe
             identique à celle des variables PHP : pas d'espaces dans les noms, certains autres caractères interdits, la
             ponctuation est interdite, etc... Aussi, les identifiant ne peuvent valoir certaines valeurs de mots
-            réservés : une table ne peut s'appeler 'FROM'. Il se peut donc que vous ayez besoin aussi d'échapper des
+            réservés : une table ne peut s'appeler "FROM". Il se peut donc que vous ayez besoin aussi d'échapper des
             paramètres voués à être substitués à des identifiant dans la requête SQL, et non plus à des valeurs.</para>
 
             <para>Le langage SQL possède une caractéristique appelée <emphasis>identifiant délimités</emphasis>. Si vous
@@ -1018,8 +993,7 @@ $tableName = $db->quoteIdentifier("order");
 $sql = "SELECT * FROM $tableName";
 
 echo $sql
-// SELECT * FROM "order"
-                ]]></programlisting>
+// SELECT * FROM "order"]]></programlisting>
             </example>
 
             <para>Les identifiant SQL délimités sont sensibles à la casse. Vous devriez toujours utiliser la casse telle
@@ -1078,11 +1052,10 @@ try {
 } catch (Exception $e) {
     // Si une des requête s'est mal déroulée, alors nous voulons annuler les changements
     // de toutes les requêtes faisant partie de la transaction, même celles qui se sont
-    // bien déroulées. Tous les changements sont annulés d'un seul coup
+    // bien déroulées. Tous les changements sont annulés d'un seul coup.
     $db->rollBack();
     echo $e->getMessage();
-}
-            ]]></programlisting>
+}]]></programlisting>
         </example>
     </sect2>
 
@@ -1273,23 +1246,22 @@ try {
             <title>Fermer une connexion à un SGBD</title>
 
             <programlisting role="php"><![CDATA[<?php
-$db->closeConnection();
-            ]]></programlisting>
+$db->closeConnection();]]></programlisting>
         </example>
 
         <note>
             <title>Zend_Db supporte-t-il les connexions persistantes ?</title>
 
             <para>L'utilisation de connexions persistantes n'est pas supporté, ni conseillé, par le composant
-            Zend_Db.</para>
+            <code>Zend_Db</code>.</para>
 
             <para>Utiliser des connexions persistantes peut mener à un trop grand nombre de connexions en attente
             (idle), ce qui causera plus de problème que cela n'est sensé en résoudre.</para>
 
             <para>Les connexions aux bases de données possède un état. Dans cet état sont mémorisés des objets propres
             au SGBD. Par exemples des verrous, des variables utilisateur, des tables temporaires, des informations sur
-            les requêtes récentes, les derniers enregistrements affectés, les dernières valeurs auto-générées, etc...
-            Avec des connexions persistantes, il se peut que vous accédiez à des données ne faisant pas partie de votre
+            les requêtes récentes, les derniers enregistrements affectés, les dernières valeurs auto-générées, etc. Avec
+            des connexions persistantes, il se peut que vous accédiez à des données ne faisant pas partie de votre
             session de travail avec le SGBD, ce qui peut s'avérer dangereux.</para>
         </note>
     </sect2>
@@ -1298,13 +1270,13 @@ $db->closeConnection();
         <title>Exécuter des requêtes sur le driver directement</title>
 
         <para>Il peut y avoir des cas où vous souhaitez accéder directement à la connexion 'bas niveau', sous
-        Zend_Db_Adapter.</para>
+        <code>Zend_Db_Adapter</code>.</para>
 
-        <para>Par exemple, toute requête effectuée par Zend_Db est préparée, et exécutée. Cependant, certaines
-        caractéristiques des bases de données ne sont pas compatibles avec les requêtes préparées. Par exemple, des
-        requêtes du type CREATE ou ALTER ne peuvent pas être préparées sous MySQL. De même, les requêtes préparées ne
-        bénéficient pas du <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html"> cache de
-        requêtes</ulink>, avant MySQL 5.1.17.</para>
+        <para>Par exemple, toute requête effectuée par <code>Zend_Db</code> est préparée, et exécutée. Cependant,
+        certaines caractéristiques des bases de données ne sont pas compatibles avec les requêtes préparées. Par
+        exemple, des requêtes du type CREATE ou ALTER ne peuvent pas être préparées sous MySQL. De même, les requêtes
+        préparées ne bénéficient pas du <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html"> cache
+        de requêtes</ulink>, avant MySQL 5.1.17.</para>
 
         <para>La plupart des extensions PHP pour les bases de données proposent une méthode permettant d'envoyer une
         requête directe, sans préparation. Par exemple, PDO propose pour ceci la méthode <code>exec()</code>. Vous
@@ -1314,16 +1286,16 @@ $db->closeConnection();
             <title>Envoyer une requête directe dans un adaptateur PDO</title>
 
             <programlisting role="php"><![CDATA[<?php
-$result = $db->getConnection()->exec('DROP TABLE bugs');
-            ]]></programlisting>
+$result = $db->getConnection()->exec('DROP TABLE bugs');]]></programlisting>
         </example>
 
         <para>De la même manière, vous pouvez accéder à toutes les propriétés ou méthodes de l'objet "bas niveau",
-        utilisé par Zend_Db. Attention toutefois en utilisant ce procédé, vous risquez de rendre votre application
-        dépendante du SGBD qu'elle utilise, en manipulant des méthodes propres à l'extension utilisée.</para>
+        utilisé par <code>Zend_Db</code>. Attention toutefois en utilisant ce procédé, vous risquez de rendre votre
+        application dépendante du SGBD qu'elle utilise, en manipulant des méthodes propres à l'extension
+        utilisée.</para>
 
-        <para>Dans de futures versions de Zend_Db, il sera possible d'ajouter des méthodes pour des fonctionnalités
-        communes aux extensions de bases de données de PHP. Ceci ne rompra pas la compatibilité.</para>
+        <para>Dans de futures versions de <code>Zend_Db</code>, il sera possible d'ajouter des méthodes pour des
+        fonctionnalités communes aux extensions de bases de données de PHP. Ceci ne rompra pas la compatibilité.</para>
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
