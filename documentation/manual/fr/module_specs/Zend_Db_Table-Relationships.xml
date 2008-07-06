@@ -1,5 +1,6 @@
+<!-- EN-Revision: 9966 -->
 <sect1 id="zend.db.table.relationships">
-    <title>Zend_Db_Table Relations</title>
+    <title>Relations Zend_Db_Table</title>
 
     <sect2 id="zend.db.table.relationships.introduction">
         <title>Introduction</title>
@@ -97,8 +98,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
         relation, et pourra faire partie du nom de certaines méthodes, comme nous le verrons plus tard. Choisissez ainsi
         un nom de rôle de manière intelligente.</para>
 
-        <para>Dans l'exemple du dessus, les rôles dans la classe Bugs sont : <code>'Reporter'</code>,
-        <code>'Engineer'</code>,<code>'Verifier'</code>, et <code>'Product'</code>.</para>
+        <para>Dans l'exemple du dessus, les rôles dans la classe Bugs sont : <code>"Reporter"</code>,
+        <code>"Engineer"</code>, <code>"Verifier"</code> et <code>"Product"</code>.</para>
 
         <para>La valeur de chaque rôle dans le tableau <code>$_referenceMap</code> est aussi un tableau associatif. Les
         éléments de chaque rôle sont décrits ci-après.</para>
@@ -155,9 +156,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
         <para>Si vous possédez un enregistrement actif (<code>Row</code>), il est possible de récupérer ses enfants
         dépendants, si les dépendances ont été déclarées suivant la procédure ci-dessus. Utilisez la méthode :</para>
 
-        <programlisting role="php"><![CDATA[
-$row->findDependentRowset($table, [$rule]);
-        ]]></programlisting>
+        <programlisting role="php"><![CDATA[$row->findDependentRowset($table, [$rule]);]]></programlisting>
 
         <para>Cette méthode retourne un objet instance de <code>Zend_Db_Table_Rowset_Abstract</code>, qui contient tous
         les enregistrements (<code>Row</code>) de la table dépendante <code>$table</code> faisant référence à
@@ -178,8 +177,7 @@ $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
 
-$bugsReportedByUser = $user1234->findDependentRowset('Bugs');
-            ]]></programlisting>
+$bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]></programlisting>
         </example>
 
         <para>Le second paramètre <code>$rule</code> est optionnel. Il s'agit du nom du rôle à utiliser depuis le
@@ -187,22 +185,21 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
         rôle sera utilisé. Il n'y a dans la majorité des cas qu'un seul rôle.</para>
 
         <para>Dans l'exemple ci dessus, nous ne fournissons pas de nom de rôle, le premier est donc pris en
-        considération, et il s'agit de <code>'Reporter'</code>.</para>
+        considération, et il s'agit de <code>"Reporter"</code>.</para>
 
         <example id="zend.db.table.relationships.fetching.dependent.example-by">
             <title>Récupérer des enregistrements dépendants avec un rôle spécifique</title>
 
             <para>Dans cet exemple nous montrons comment obtenir un enregistrement (<code>Row</code>) depuis la table
             <code>Accounts</code>, et comment trouver les <code>Bugs</code> assignés à ce compte (<code>Account</code>).
-            Nous devrons alors nommer le rôle <code>'Engineer'</code>.</para>
+            Nous devrons alors nommer le rôle <code>"Engineer"</code>.</para>
 
             <programlisting role="php"><![CDATA[<?php
 $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
-            ]]></programlisting>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]></programlisting>
         </example>
 
         <para>Vous pouvez rajouter des critères à vos relations, comme l'ordre ou la limite, ceci en utilisant l'objet
@@ -214,7 +211,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
                 <para>Dans cet exemple nous montrons comment obtenir un enregistrement (<code>Row</code>) depuis la
                 table <code>Accounts</code>, et comment trouver les <code>Bugs</code> assignés à ce compte
                 (<code>Account</code>), mais limités seulement à trois enregistrements, et ordonnés par nom. Nous
-                devrons nommer le rôle <code>'Engineer'</code>.</para>
+                devrons nommer le rôle <code>"Engineer"</code>.</para>
 
                 <programlisting role="php"><![CDATA[<?php
 $accountsTable      = new Accounts();
@@ -223,8 +220,7 @@ $user1234           = $accountsRowset->current();
 $select             = $accountsTable->select()->order('name ASC')
                                               ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);
-            ]]></programlisting>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);]]></programlisting>
             </example>Vous pouvez récupérer les enregistrements dépendants d'une autre manière. En utilisant les
         "méthodes magiques". En effet, <code>Zend_Db_Table_Row_Abstract</code> va utiliser la méthode
         <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code> si vous appelez sur l'enregistrement une
@@ -246,7 +242,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
         <note>
             <para>Certains frameworks tels que Rails pour Ruby, utilise un mécanisme dit d'inflexion, qui permet de
             transformer les noms des identifiants (nom de table, de rôle...) d'une certaine manière bien spécifique dans
-            les méthodes appelées. Ça n'est pas le cas de Zend Framework : vous devez, dans vos méthodes magiques,
+            les méthodes appelées. Cela n'est pas le cas du Zend Framework : vous devez, dans vos méthodes magiques,
             utiliser l'orthographe exacte des noms des rôles et classes, tels que vous les définissez.</para>
         </note>
 
@@ -265,8 +261,7 @@ $user1234         = $accountsRowset->current();
 $bugsReportedBy   = $user1234->findBugs();
 
 // Utilise un rôle spécifique
-$bugsAssignedTo   = $user1234->findBugsByEngineer();
-            ]]></programlisting>
+$bugsAssignedTo   = $user1234->findBugsByEngineer();]]></programlisting>
         </example>
     </sect2>
 
@@ -276,9 +271,7 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();
         <para>Si vous possédez un enregistrement (<code>Row</code>) dont la table possède une table parente, il est
         possible alors de récupérer l'enregistrement parent. Utilisez pour cela la méthode :</para>
 
-        <programlisting role="php"><![CDATA[
-$row->findParentRow($table, [$rule]);
-        ]]></programlisting>
+        <programlisting role="php"><![CDATA[$row->findParentRow($table, [$rule]);]]></programlisting>
 
         <para>La logique veut qu'il ne puisse y avoir qu'un et un seul parent par enregistrement. Ainsi, cette méthode
         retourne un objet <code>Row</code> et non un objet <code>Rowset</code></para>
@@ -290,7 +283,7 @@ $row->findParentRow($table, [$rule]);
             <title>Récupérer l'enregistrement parent</title>
 
             <para>Cet exemple illustre la récupération d'un enregistrement <code>Bugs</code> ( disons par exemple ceux
-            avec le statut 'NEW'), et l'obtention de l'enregistrement parent correspondant à <code>Accounts</code> (la
+            avec le statut "NEW"), et l'obtention de l'enregistrement parent correspondant à <code>Accounts</code> (la
             personne ayant reporté le bug)</para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -298,8 +291,7 @@ $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
 $bug1              = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');
-            ]]></programlisting>
+$reporter          = $bug1->findParentRow('Accounts');]]></programlisting>
         </example>
 
         <para>Le second paramètre <code>$rule</code> est optionnel. Il s'agit du nom du rôle à utiliser depuis le
@@ -307,21 +299,20 @@ $reporter          = $bug1->findParentRow('Accounts');
         rôle sera utilisé. Il n'y a dans la majorité des cas qu'un seul rôle.</para>
 
         <para>Dans l'exemple ci dessus, nous ne fournissons pas de nom de rôle, le premier est donc pris en
-        considération, et il s'agit de <code>'Reporter'</code>.</para>
+        considération, et il s'agit de <code>"Reporter"</code>.</para>
 
         <example id="zend.db.table.relationships.fetching.parent.example-by">
             <title>Récupérer un enregistrement parent avec un rôle spécifique</title>
 
             <para>Cet exemple va démontrer comment, à partir d'un enregistrement de <code>Bugs</code>, récupérer la
-            personne en étant assignée. Il va falloir utiliser le rôle <code>'Engineer'</code>.</para>
+            personne en étant assignée. Il va falloir utiliser le rôle <code>"Engineer"</code>.</para>
 
             <programlisting role="php"><![CDATA[<?php
 $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
 $bug1              = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
-            ]]></programlisting>
+$engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]></programlisting>
         </example>
 
         <para>Vous pouvez récupérer l'enregistrement parent d'une autre manière. En utilisant les "méthodes magiques".
@@ -363,25 +354,22 @@ $bug1              = $bugsRowset->current();
 $reporter          = $bug1->findParentAccounts();
 
 // Utilise un rôle spécifique
-$engineer          = $bug1->findParentAccountsByEngineer();
-            ]]></programlisting>
+$engineer          = $bug1->findParentAccountsByEngineer();]]></programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.db.table.relationships.fetching.many-to-many">
         <title>Récupérer des enregistrements dans une relation N-N (plusieurs-à-plusieurs ou "many-to-many")</title>
 
-        <para>Si vous possédez un enregistrement sur une table(appelons la "table d'origine") ayant une relation
-        plusieurs à plusieurs vers une autre table(appelons la "table de destination"), vous pouvez alors accéder aux
+        <para>Si vous possédez un enregistrement sur une table (appelons la "table d'origine") ayant une relation
+        plusieurs à plusieurs vers une autre table (appelons la "table de destination"), vous pouvez alors accéder aux
         enregistrements de la table de destination, via une table dite "d'intersection". Utilisez la méthode :</para>
 
-        <programlisting role="php"><![CDATA[
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);
-        ]]></programlisting>
+        <programlisting role="php"><![CDATA[$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);]]></programlisting>
 
         <para>Cette méthode retourne un objet instance de <code>Zend_Db_Table_Rowset_Abstract</code> qui contient les
         enregistrements de la table <code>$table</code> qui correspondent à la relation plusieurs à plusieurs.
-        L'enregistrement courant de la table courante,<code>$row</code>, est utilisé comme point de départ pour
+        L'enregistrement courant de la table courante, <code>$row</code>, est utilisé comme point de départ pour
         effectuer une jointure vers la table de destination, via la table d'intersection.</para>
 
         <para>Le premier paramètre <code>$table</code> peut être soit une chaîne soit un objet instance de la classe de
@@ -402,8 +390,7 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');
-            ]]></programlisting>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]]></programlisting>
         </example>
 
         <para>Les troisième et quatrième paramètres, <code>$rule1</code> et <code>$rule2</code>, sont optionnels. Ce
@@ -420,7 +407,7 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');
         <code>$_referenceMap</code>, sera utilisé. Dans la grande majorité des cas, il n'y a qu'un rôle.</para>
 
         <para>Dans l'exemple ci-dessus, les rôles ne sont pas spécifiés. Ainsi <code>$rule1</code> prend la valeur
-        <code>'Reporter'</code> et <code>$rule2</code> prend la valeur <code>'Product'</code>.</para>
+        <code>"Reporter"</code> et <code>$rule2</code> prend la valeur <code>"Product"</code>.</para>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example-by">
             <title>Récupérer des enregistrements dans une relation plusieurs-à-plusieurs avec un rôle spécifique</title>
@@ -433,8 +420,7 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');
-            ]]></programlisting>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');]]></programlisting>
         </example>
 
         <para>Vous pouvez récupérer l'enregistrement de destination d'une autre manière. En utilisant les "méthodes
@@ -486,8 +472,7 @@ $bug1234          = $bugsRowset->current();
 $products          = $bug1234->findProductsViaBugsProducts();
 
 // Utilisation d'un rôle spécifique
-$products          = $bug1234->findProductsViaBugsProductsByBug();
-            ]]></programlisting>
+$products          = $bug1234->findProductsViaBugsProductsByBug();]]></programlisting>
         </example>
     </sect2>
 
@@ -553,12 +538,12 @@ $product1234->delete();
 
             <para>Dans l'exemple ci-après, les enregistrements de <code>Bugs</code> sont automatiquement supprimés si
             l'enregistrement dans la table <code>Products</code> auquel ils font référence est supprimé. L'élément
-            <code>'onDelete'</code> de la <code>$_referenceMap</code> est mis à <code>self::CASCADE</code>.</para>
+            <code>"onDelete"</code> de la <code>$_referenceMap</code> est mis à <code>self::CASCADE</code>.</para>
 
             <para>Pas de mise à jour en cascade en revanche pour cette table, si la clé primaire de la table parente est
-            changée. En effet, l'élément <code>'onUpdate'</code> est mis à <code>self::RESTRICT</code>. Vous auriez
+            changée. En effet, l'élément <code>"onUpdate"</code> est mis à <code>self::RESTRICT</code>. Vous auriez
             aussi pu utiliser la valeur <code>self::NO_ACTION</code>, ou tout simplement pas spécifier
-            <code>'onUpdate'</code> .</para>
+            <code>"onUpdate"</code> .</para>
 
             <programlisting role="php"><![CDATA[<?php
 class BugsProducts extends Zend_Db_Table_Abstract
@@ -584,11 +569,11 @@ class BugsProducts extends Zend_Db_Table_Abstract
             atomiques.</emphasis></para>
 
             <para>Ceci signifie que si votre SGBD possède un moyen de gérer les cascades, comme l'intégrité
-            référentielle (et les clé étrangères), alors vous ne devriez pas utiliser les cascades INSERT via
+            référentielle (et les clés étrangères), alors vous ne devriez pas utiliser les cascades INSERT via
             <code>Zend_Db_Table</code>, car elles vont entrer en conflit avec le système d'intégrité référentielle du
             SGBD qui lui, est atomique.</para>
 
-            <para>le problème est plus mitigé concernant <code>DELETE</code>. Vous pouvez détruire de manière non
+            <para>Le problème est plus mitigé concernant <code>DELETE</code>. Vous pouvez détruire de manière non
             atomique un enregistrement dépendant, avant de détruire son parent.</para>
 
             <para>Cependant, les deux opérations <code>UPDATE</code> et <code>DELETE</code> utilisées de manière non
