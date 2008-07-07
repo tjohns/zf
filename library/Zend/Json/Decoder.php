@@ -189,8 +189,8 @@ class Zend_Json_Decoder
      * Decodes an object of the form:
      *  { "attribute: value, "attribute2" : value,...}
      *
-     * If ZJsonEnoder or ZJAjax was used to encode the original object
-     * then a special attribute called __className which specifies a class
+     * If Zend_Json_Encoder was used to encode the original object then 
+     * a special attribute called __className which specifies a class
      * name that should wrap the data contained within the encoded source.
      *
      * Decodes to either an array or StdClass object, based on the value of

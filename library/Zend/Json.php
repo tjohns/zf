@@ -61,7 +61,7 @@ class Zend_Json
      *
      * @param string $encodedValue Encoded in JSON format
      * @param int $objectDecodeType Optional; flag indicating how to decode
-     * objects. See {@link ZJsonDecoder::decode()} for details.
+     * objects. See {@link Zend_Json_Decoder::decode()} for details.
      * @return mixed
      */
     public static function decode($encodedValue, $objectDecodeType = Zend_Json::TYPE_ARRAY)
