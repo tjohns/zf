@@ -397,8 +397,8 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
-// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
+// "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
+// then for "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
 // and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".]]>
         </programlisting>
 
