@@ -149,6 +149,17 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
                                                            'string testFunc4()'));
     }
 
+    /**
+     * @todo Implement testGetTypes().
+     */
+    public function testGetTypes()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
     public function testGetLastRequest()
     {
         $server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
