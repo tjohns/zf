@@ -270,8 +270,8 @@ $view->addHelperPath('/chemin/vers/des/aides', 'Ma_View_Helper');
 $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
 
 // maintenant, lorsque vous appelerez $this->helperName(), Zend_View
-// va rechercher en premier /chemin/vers/des/aides/HelperName.php en utilisant la classe "Ma_View_Helper_HelperName",
-// et ensuite dans /autre/chemin/vers/des/aides/HelperName.php en utilisant la classe "Votre_View_Helper_HelperName",
+// va rechercher en premier /autre/chemin/vers/des/aides/HelperName.php en utilisant la classe "Votre_View_Helper_HelperName",
+// et ensuite dans /chemin/vers/des/aides/HelperName.php en utilisant la classe "Ma_View_Helper_HelperName",
 // et finalement dans Zend/View/Helpers/HelperName.php en utilisant la classe "Zend_View_Helper_HelperName"]]>
         </programlisting>
 
