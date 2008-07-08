@@ -66,43 +66,47 @@ class Zend_Gdata_AuthSubTest extends PHPUnit_Framework_TestCase
 
     public function testSecureAuthSubSigning()
     {
-        $c = new Zend_Gdata_HttpClient();
-        $c->setAuthSubPrivateKeyFile("Zend/Gdata/_files/RsaKey.pem", 
-                                     null, true);
-        $c->setAuthSubToken('abcdefg');
-        $requestData = $c->filterHttpRequest('POST', 
-                                             'http://www.example.com/feed', 
-                                              array(),
-                                              'foo bar', 
-                                              'text/plain');
-
-        $authHeaderCheckPassed = false;
-        $headers = $requestData['headers'];
-        foreach ($headers as $headerName => $headerValue) {
-            if (strtolower($headerName) == 'authorization') {
-                preg_match('/data="([^"]*)"/', $headerValue, $matches);
-                $dataToSign = $matches[1];
-                preg_match('/sig="([^"]*)"/', $headerValue, $matches);
-                $sig = $matches[1];
-                if (function_exists('openssl_verify')) {
-                    $fp = fopen('Zend/Gdata/_files/RsaCert.pem', 'r', true);
-                    $cert = '';
-                    while (!feof($fp)) {
-                        $cert .= fread($fp, 8192);
-                    }
-                    fclose($fp);
-                    $pubkeyid = openssl_get_publickey($cert);
-                    $verified = openssl_verify($dataToSign, 
+        if (!extension_loaded('openssl')) {
+            $this->markTestSkipped('The openssl extension is not available');
+        } else {
+            $c = new Zend_Gdata_HttpClient();
+            $c->setAuthSubPrivateKeyFile("Zend/Gdata/_files/RsaKey.pem", 
+                                         null, true);
+            $c->setAuthSubToken('abcdefg');
+            $requestData = $c->filterHttpRequest('POST', 
+                                                 'http://www.example.com/feed', 
+                                                  array(),
+                                                  'foo bar', 
+                                                  'text/plain');
+    
+            $authHeaderCheckPassed = false;
+            $headers = $requestData['headers'];
+            foreach ($headers as $headerName => $headerValue) {
+                if (strtolower($headerName) == 'authorization') {
+                    preg_match('/data="([^"]*)"/', $headerValue, $matches);
+                    $dataToSign = $matches[1];
+                    preg_match('/sig="([^"]*)"/', $headerValue, $matches);
+                    $sig = $matches[1];
+                    if (function_exists('openssl_verify')) {
+                        $fp = fopen('Zend/Gdata/_files/RsaCert.pem', 'r', true);
+                        $cert = '';
+                        while (!feof($fp)) {
+                            $cert .= fread($fp, 8192);
+                        }
+                        fclose($fp);
+                        $pubkeyid = openssl_get_publickey($cert);
+                        $verified = openssl_verify($dataToSign, 
                                                base64_decode($sig), $pubkeyid);
-                    $this->assertEquals(1, $verified, 
-                                        'The generated signature was unable ' .
-                                        'to be verified.');
-                    $authHeaderCheckPassed = true;
+                        $this->assertEquals(
+                            1, $verified, 
+                            'The generated signature was unable ' .
+                            'to be verified.');
+                        $authHeaderCheckPassed = true;
+                    }
                 }
             }
+            $this->assertEquals(true, $authHeaderCheckPassed, 
+                                'Auth header not found for sig verification.');
         }
-        $this->assertEquals(true, $authHeaderCheckPassed, 
-                            'Auth header not found for sig verification.');
     }
-
 }
