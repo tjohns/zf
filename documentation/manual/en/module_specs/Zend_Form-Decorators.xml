@@ -184,7 +184,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        if ($element->getRequired()) {
+        if ($element->isRequired()) {
             $label .= '*';
         }
         $label .= ':';
