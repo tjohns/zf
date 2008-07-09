@@ -438,6 +438,57 @@ class Zend_Form_Element implements Zend_Validate_Interface
     }
 
     /**
+     * Get fully qualified name
+     *
+     * Places name as subitem of array and/or appends brackets.
+     * 
+     * @return string
+     */
+    public function getFullyQualifiedName()
+    {
+        $name = $this->getName();
+
+        if (null !== ($belongsTo = $this->getBelongsTo())) {
+            $name = $belongsTo . '[' . $name . ']';
+        }
+
+        if ($this->isArray()) {
+            $name .= '[]';
+        }
+
+        return $name;
+    }
+
+    /**
+     * Get element id
+     * 
+     * @return string
+     */
+    public function getId()
+    {
+        if (isset($this->id)) {
+            return $this->id;
+        }
+
+        $id = $this->getFullyQualifiedName();
+
+        // Bail early if no array notation detected
+        if (!strstr($id, '[')) {
+            return $id;
+        }
+
+        // Strip array notation
+        if ('[]' == substr($id, -2)) {
+            $id = substr($id, 0, strlen($id) - 2);
+        }
+        $id = str_replace('][', '-', $id);
+        $id = str_replace(array(']', '['), '-', $id);
+        $id = trim($id, '-');
+
+        return $id;
+    }
+
+    /**
      * Set element value
      * 
      * @param  mixed $value 

@@ -82,13 +82,8 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
         $id = $this->getOption('id');
         if (null === $id) {
             if (null !== ($element = $this->getElement())) {
-                if (isset($element->id)) {
-                    $id = $element->id;
-                    $this->setId($id);
-                } else {
-                    $id = $element->getName();
-                    $this->setId($id);
-                }
+                $id = $element->getId();
+                $this->setId($id);
             }
         }
 
@@ -297,7 +292,7 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
 
         if (!empty($label)) {
             $options['class'] = $class;
-            $label = $view->formLabel($element->getName(), trim($label), $options); 
+            $label = $view->formLabel($element->getFullyQualifiedName(), trim($label), $options); 
         }
 
         if (null !== $tag) {

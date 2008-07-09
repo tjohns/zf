@@ -124,8 +124,10 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $legend  = $this->getLegend();
-        $attribs = $this->getOptions();
+        $legend        = $this->getLegend();
+        $attribs       = $this->getOptions();
+        $name          = $element->getFullyQualifiedName();
+        $attribs['id'] = $element->getId() . '-fieldset';
 
         if (null !== $legend) {
             if (null !== ($translator = $element->getTranslator())) {
@@ -141,6 +143,6 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
             }
         }
 
-        return $view->fieldset($element->getName(), $content, $attribs);
+        return $view->fieldset($name, $content, $attribs);
     }
 }

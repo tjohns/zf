@@ -240,11 +240,15 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
             $element->getMultiOptions();
         }
 
-        $helper    = $this->getHelper();
-        $separator = $this->getSeparator();
-        $value     = $this->getValue($element);
+        $helper        = $this->getHelper();
+        $separator     = $this->getSeparator();
+        $value         = $this->getValue($element);
+        $attribs       = $this->getElementAttribs();
+        $name          = $element->getFullyQualifiedName();
+        $id            = $element->getId();
+        $attribs['id'] = $id;
 
-        $elementContent = $view->$helper($this->getName(), $value, $this->getElementAttribs(), $element->options);
+        $elementContent = $view->$helper($name, $value, $attribs, $element->options);
         switch ($this->getPlacement()) {
             case self::APPEND:
                 return $content . $separator . $elementContent;

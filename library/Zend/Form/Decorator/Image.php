@@ -127,11 +127,14 @@ class Zend_Form_Decorator_Image extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $tag       = $this->getTag();
-        $placement = $this->getPlacement();
-        $separator = $this->getSeparator();
+        $tag           = $this->getTag();
+        $placement     = $this->getPlacement();
+        $separator     = $this->getSeparator();
+        $name          = $element->getFullyQualifiedName();
+        $attribs       = $this->getAttribs();
+        $attribs['id'] = $element->getId();
 
-        $image = $view->formImage($element->getName(), $element->getImageValue(), $this->getAttribs()); 
+        $image = $view->formImage($name, $element->getImageValue(), $attribs); 
 
         if (null !== $tag) {
             require_once 'Zend/Form/Decorator/HtmlTag.php';
