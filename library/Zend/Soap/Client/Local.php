@@ -25,6 +25,7 @@ require_once 'Zend/Soap/Server/Exception.php';
 /** Zend_Soap_Server */
 require_once 'Zend/Soap/Server.php';
 
+if (extension_loaded('soap')) {
 
 /**
  * @category   Zend
@@ -62,3 +63,4 @@ class Zend_Soap_Client_Local extends SoapClient
 
 }
 
+} // end if (extension_loaded('soap')

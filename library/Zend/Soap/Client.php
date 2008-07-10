@@ -109,6 +109,10 @@ class Zend_Soap_Client
      */
     public function __construct($wsdl = null, $options = null)
     {
+    	if (!extension_loaded('soap')) {
+    		throw new Zend_Soap_Client_Exception('SOAP extension is not loaded.');
+    	}
+
         if ($wsdl !== null) {
             $this->setWsdl($wsdl);
         }
