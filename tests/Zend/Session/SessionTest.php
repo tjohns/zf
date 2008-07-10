@@ -746,15 +746,16 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpirationSeconds()
     {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
-            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
-        }
+        // Calculate common script execution time
+        $startTime = time();
+        exec($this->_script, $result, $returnValue);
+        $execTime = time() - $startTime;
 
         $s = new Zend_Session_Namespace('expireAll');
         $s->a = 'apple';
         $s->p = 'pear';
         $s->o = 'orange';
-        $s->setExpirationSeconds(5);
+        $s->setExpirationSeconds($execTime*2 + 5);
 
         Zend_Session::regenerateId();
         $id = Zend_Session::getId();
@@ -770,7 +771,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result === $expect,
             "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
 
-        sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+        sleep($execTime*2 + 2); // long enough for things to expire (total of $execTime*2 + 6 seconds waiting, but expires in $execTime*2 + 5)
 
         session_write_close(); // release session so process below can use it
         exec("$this->_script expireAll $id expireAll", $result, $returnValue);
@@ -804,10 +805,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionHops()
     {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
-            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
-        }
-
         $s = new Zend_Session_Namespace('expireAll');
         $s->a = 'apple';
         $s->p = 'pear';
@@ -840,10 +837,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHops1()
     {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
-            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
-        }
-
         $this->setExpireSessionVarsByHops();
     }
 
@@ -854,10 +847,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHops2()
     {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
-            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
-        }
-
         $this->setExpireSessionVarsByHops();
     }
 
@@ -923,10 +912,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExpireSessionVarsByHopsOnUse()
     {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win') {
-            $this->markTestIncomplete('Fails on Windows, see ZF-2629');
-        }
-
         $s = new Zend_Session_Namespace('expireGuava');
         $expireBeforeHop = 2;
         $s->setExpirationHops($expireBeforeHop, 'g', true); // only count a hop, when namespace is used
