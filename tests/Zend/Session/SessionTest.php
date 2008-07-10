@@ -123,19 +123,26 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      */
     public function testRegenerateId()
     {
-        Zend_Session::setId('myid123');
-        Zend_Session::regenerateId();
+        // Check if session hasn't already been started by another test
+        if (!Zend_Session::isStarted()) {
+            Zend_Session::setId('myid123');
+            Zend_Session::regenerateId();
 
-        $this->assertFalse(Zend_Session::isRegenerated());
-        $id = Zend_Session::getId();
-        $this->assertTrue($id === 'myid123',
-            'getId() reported something different than set via setId("myid123")');
+            $this->assertFalse(Zend_Session::isRegenerated());
+            $id = Zend_Session::getId();
+            $this->assertTrue($id === 'myid123',
+                'getId() reported something different than set via setId("myid123")');
 
-        Zend_Session::start();
+            Zend_Session::start();
+        } else {
+            // only regenerate session id if session has already been started
+            Zend_Session::regenerateId();
+        }
+
         $this->assertTrue(Zend_Session::isRegenerated());
 
         try {
-            Zend_Session::setId($id);
+            Zend_Session::setId('someo_therid_123');
             $this->fail('No exception was returned when trying to set the session id, after session_start()');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/already.*started/i', $e->getMessage());
