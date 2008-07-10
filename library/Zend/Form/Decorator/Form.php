@@ -127,8 +127,8 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
 
         $helper        = $this->getHelper();
         $attribs       = $this->getOptions();
-        $name          = $element->getFullyQualifiedName();
-        $attribs['id'] = $element->getId();
+        $name          = $form->getFullyQualifiedName();
+        $attribs['id'] = $form->getId();
         return $view->$helper($name, $attribs, $content); 
     }
 }
