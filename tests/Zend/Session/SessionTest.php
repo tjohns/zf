@@ -758,9 +758,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
         Zend_Session::regenerateId();
         $id = Zend_Session::getId();
-        session_write_close(); // release session so process below can use it
+
         sleep(4); // not long enough for things to expire
+
+        session_write_close(); // release session so process below can use it
         exec("$this->_script expireAll $id expireAll", $result, $returnValue);
+        session_start(); // resume artificially suspended session
 
         $result = $this->sortResult($result);
         $expect = ';a === apple;o === orange;p === pear';
@@ -768,11 +771,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
 
         sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+
+        session_write_close(); // release session so process below can use it
         exec("$this->_script expireAll $id expireAll", $result, $returnValue);
+        session_start(); // resume artificially suspended session
 
         $this->assertNull(array_pop($result));
-
-        session_start(); // resume artificially suspended session
 
         // We could split this into a separate test, but actually, if anything leftover from above
         // contaminates the tests below, that is also a bug that we want to know about.
@@ -782,11 +786,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'peach';
         $s->p = 'plum';
 
-        session_write_close(); // release session so process below can use it
         sleep(6); // not long enough for things to expire
+
+        session_write_close(); // release session so process below can use it
         exec("$this->_script expireAll $id expireGuava", $result, $returnValue);
-        $result = $this->sortResult($result);
         session_start(); // resume artificially suspended session
+
+        $result = $this->sortResult($result);
         $this->assertTrue($result === ';p === plum',
             "iteration over named Zend_Session namespace failed (result=$result)");
     }
@@ -810,10 +816,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->setExpirationHops($expireBeforeHop);
 
         $id = session_id();
-        session_write_close(); // release session so process below can use it
 
         for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            session_write_close(); // release session so process below can use it
             exec("$this->_script expireAll $id expireAll", $result, $returnValue);
+            session_start(); // resume artificially suspended session
+
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $this->assertTrue($result === '',
@@ -823,7 +831,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
                     "iteration over default Zend_Session namespace failed (result='$result'; hop #$i)");
             }
         }
-        session_start(); // resume artificially suspended session
     }
 
     /**
@@ -869,10 +876,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'plum';
 
         $id = session_id();
-        session_write_close(); // release session so process below can use it
 
         for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            session_write_close(); // release session so process below can use it
             exec("$this->_script expireAll $id expireGuava", $result);
+            session_start(); // resume artificially suspended session
+
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $this->assertTrue($result === ';p === plum',
@@ -882,8 +891,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
                     "iteration over named Zend_Session namespace failed (result='$result'; hop #$i)");
             }
         }
-
-        session_start(); // resume artificially suspended session
     }
 
     /**
@@ -897,14 +904,16 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $id = Zend_Session::getId();
         $this->assertSame($id, session_id());
         $s->top = 'begin';
+
         session_write_close(); // release session so process below can use it
         exec("$this->_script setArray $id aspace 1 2 3 4 5", $result);
         exec("$this->_script getArray $id aspace", $result);
+        session_start(); // resume artificially suspended session
+
         $result = array_pop($result);
         $expect = 'top === begin;astring === happy;someArray === Array;(;[0]=>aspace;[1]=>1;[2]=>2;[3]=>3;[4]=>4;[5]=>5;[bee]=>honey;[ant]=>sugar;[dog]=>cat;);;serializedArray === a:8:{i:0;s:6:"aspace";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";s:3:"ant";s:5:"sugar";s:3:"dog";s:3:"cat";};';
         $this->assertTrue($result === $expect,
             "iteration over default Zend_Session namespace failed; expecting result ===\n$expect\n, but got\n$result\n)");
-        session_start(); // resume artificially suspended session
     }
 
     /**
@@ -926,17 +935,23 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'plum';
 
         $id = session_id();
-        session_write_close(); // release session so process below can use it
+
         // we are not accessing (using) the "expireGuava" namespace, so these hops should have no effect
         for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            session_write_close(); // release session so process below can use it
             exec("$this->_script expireAll $id notused", $result);
+            session_start(); // resume artificially suspended session
+
             $result = $this->sortResult($result);
             $this->assertTrue($result === '',
                     "iteration over named Zend_Session namespace failed (result='$result'; hop #$i)");
         }
 
         for ($i = 1; $i <= ($expireBeforeHop + 2); $i++) {
+            session_write_close(); // release session so process below can use it
             exec("$this->_script expireAll $id expireGuava", $result);
+            session_start(); // resume artificially suspended session
+
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $expect = ';p === plum';
@@ -949,7 +964,6 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        session_start(); // resume artificially suspended session
         Zend_Session::destroy();
     }
 
