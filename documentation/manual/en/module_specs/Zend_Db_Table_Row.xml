@@ -504,7 +504,7 @@ class MyApplicationRow extends Zend_Db_Table_Row_Abstract
 {
     protected $_role;
 
-    protected function init()
+    public function init()
     {
         $this->_role = new MyRoleClass();
     }
