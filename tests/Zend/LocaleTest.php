@@ -254,7 +254,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $value = new Zend_Locale();
         $list = $value->getScriptTranslationList();
         $this->assertTrue(is_array($list));
-        
+
         $list = $value->getScriptTranslationList('de');
         $this->assertTrue(is_array($list));
     }
@@ -543,6 +543,8 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetBrowser()
     {
+        Zend_Locale::resetDAutoDetection();
+
         putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $value = new Zend_Locale();
         $list = $value->getBrowser();
@@ -556,11 +558,14 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetHttpCharset()
     {
+        Zend_Locale::resetDAutoDetection();
+
         putenv("HTTP_ACCEPT_CHARSET=");
         $value = new Zend_Locale();
         $list = $value->getHttpCharset();
         $this->assertTrue(empty($list));
 
+        Zend_Locale::resetDAutoDetection();
         putenv("HTTP_ACCEPT_CHARSET=,iso-8859-1, utf-8, utf-16, *;q=0.1");
         $value = new Zend_Locale();
         $list = $value->getHttpCharset();

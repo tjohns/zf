@@ -187,6 +187,12 @@ class Zend_Locale
         $this->setLocale($locale);
     }
 
+    public static function resetDAutoDetection()
+    {
+    	self::$_auto        = null;
+    	self::$_browser     = null;
+    	self::$_environment = null;
+    }
 
     /**
      * Retrieve automatically detected locale
