@@ -1500,7 +1500,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         if (null === $this->_view) {
             require_once 'Zend/Controller/Action/HelperBroker.php';
             $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-            $this->_view = $viewRenderer->view;
+            $this->setView($viewRenderer->view);
         }
         return $this->_view;
     }
