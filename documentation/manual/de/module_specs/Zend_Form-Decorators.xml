@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9912 -->
+<!-- EN-Revision: 9988 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -176,7 +176,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        if ($element->getRequired()) {
+        if ($element->isRequired()) {
             $label .= '*';
         }
         $label .= ':';

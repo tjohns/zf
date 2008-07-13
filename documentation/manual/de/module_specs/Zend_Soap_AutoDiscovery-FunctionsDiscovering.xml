@@ -1,10 +1,10 @@
 <!-- EN-Revision: 9886 -->
 <sect1 id="zend.soap.autodiscovery.functions">
-    <title>Functions autodiscovering.</title>
+    <title>Funktionen für Autodiscovery.</title>
 
     <para>
-        If set of functions are used to provide SOAP server functionality, then the same set should be provided to 
-        <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
+        Wenn ein Set von Funktionen verwendet wird um SOAP Server Funktionalität anzubieten, dann sollte
+        das selbe Set mit <code>Zend_Soap_AutoDiscovery</code> für die WSDL Erzeugung verwendet werden:
         <programlisting role="php"><![CDATA[<?php
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->addFunction('function1');
@@ -15,51 +15,56 @@ $autodiscover->handle();]]></programlisting>
     </para>
     
     <para>
-        The following rules are used while WSDL generation:
+        Die folgenden Regeln werden wärend der WSDL Erzeugung verwendet:
         <itemizedlist>
             <listitem>
-                <para>Generated WSDL describes an RPC style Web Service.</para>
-            </listitem>
-            <listitem>
-                <para>Current script name is used as a name of the Web Service being described.</para>
+                <para>Ein erstelltes WSDL beschreibt einen RPC artigen Web Service.</para>
             </listitem>
             <listitem>
                 <para>
-                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
-                    as an URI where the WSDL is available.
-                </para>
-                <para>
-                     It's also used as a target namespace for all service related names (including 
-                     described complex types).
+                    Der aktuelle Skriptname wird als Name des Web Services verwendet der beschrieben wird.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Functions are joined into one <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Type</ulink>.
+                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> wird als URI
+                    verwendet wo WSDL vorhanden ist.
                 </para>
                 <para>
-                    <code>$functionName . 'Port'</code> is used as Port Type name.
+                    Wird als Ziel Namespace für alle Service bezogenen Namen verwendet (inklusive der
+                    beschriebenen komplexen Typen).
                 </para>
             </listitem>
             <listitem>
-                <para>Each function is registered as a corresponding port operation.</para>
+                <para>
+                    Funktionen werden in einem <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Typ</ulink>
+                    verbunden.
+                </para>
+                <para>
+                    <code>$functionName . 'Port'</code> wird als Port Typ Name verwendet.
+                </para>
             </listitem>
             <listitem>
-                <para>Each function prototype genrerates corresponding Request/Response messages.</para>
-                <para>Function may have several prototypes if some method parameters are optional.</para>
+                <para>Jede Funktion wird als korrespondierende Port Operation registriert.</para>
+            </listitem>
+            <listitem>
+                <para>Jeder Funktions Prototyp erzeugt eine korrespondierende Anfrage/Antwort Nachricht.</para>
+                <para>Funktionen können verschiedene Prototypen haben wenn einige Parameter der Methode
+                optional sind.</para>
             </listitem>
         </itemizedlist>
     </para>
     
     <note>
-        <title>Important!</title>
+        <title>Wichtig!</title>
         <para>
-            WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-            In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
-            only way to determine them.
+            WSDL Autodiscovery verwendet PHP Docblocks die vom Entwickler angeboten werden um die Parameter
+            und Return Typen zu erkennen. Faktisch ist das, für skalare Typen, der einzige Weg um die
+            Parameter Typen zu erkennen und für Return Typen ist das der einzige Weg um Sie zu erkennen.
         </para>
         <para>
-            That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+            Das bedeutet, das Anbieten von richtigen und komplett detailierten Docblocks ist nicht nur
+            beste Praxis, sondern wird für das erkunden der Klasse benötigt.
         </para>
     </note>
 </sect1>

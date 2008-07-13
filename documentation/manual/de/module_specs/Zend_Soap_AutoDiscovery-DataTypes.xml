@@ -1,54 +1,57 @@
 <!-- EN-Revision: 9885 -->
 <sect1 id="zend.soap.autodiscovery.datatypes">
-    <title>Autodiscovering. Datatypes.</title>
+    <title>Automatische Erkennung. Datentypen.</title>
 
     <para>
-        Input/utput datatypes are converted into network service types using the following mapping:
+        Eingabe/Ausgabe Datentypen werden in Netzwerk Service Typen konvertiert indem das folgende
+        Mapping verwendet wird:
 
         <itemizedlist>
             <listitem>
-                <para>PHP strings &lt;-&gt; <code>xsd:string</code>.</para>
+                <para>PHP Strings &lt;-&gt; <code>xsd:string</code>.</para>
             </listitem>
             <listitem>
-                <para>PHP integers &lt;-&gt; <code>xsd:int</code>.</para>
+                <para>PHP Integer &lt;-&gt; <code>xsd:int</code>.</para>
             </listitem>
             <listitem>
-                <para>PHP floats and doubles &lt;-&gt; <code>xsd:float</code>.</para>
+                <para>PHP Float und Double &lt;-&gt; <code>xsd:float</code>.</para>
             </listitem>
             <listitem>
-                <para>PHP booleans &lt;-&gt; <code>xsd:boolean</code>.</para>
+                <para>PHP Boolean &lt;-&gt; <code>xsd:boolean</code>.</para>
             </listitem>
             <listitem>
-                <para>PHP arrays &lt;-&gt; <code>soap-enc:Array</code>.</para>
+                <para>PHP Arrays &lt;-&gt; <code>soap-enc:Array</code>.</para>
             </listitem>
             <listitem>
-                <para>PHP object &lt;-&gt; <code>xsd:struct</code>.</para>
+                <para>PHP Objekt &lt;-&gt; <code>xsd:struct</code>.</para>
             </listitem>
             <listitem>
                 <para>
-                    PHP class &lt;-&gt; <code>tns:$className</code>
+                    PHP Klasse &lt;-&gt; <code>tns:$className</code>
                     <footnote>
                         <para>
-                            If <code>Zend_Soap_AutoDiscover</code> object is created with <code>$extractComplexTypes</code>
-                            parameter turned off, then classes are translated to <code>xsd:anyType</code>.
+                            Wenn ein <code>Zend_Soap_AutoDiscover</code> Objekt mit ausgeschaltetem
+                            <code>$extractComplexTypes</code> Parameter erstellt wurde, dann werden die
+                            Klassen zu <code>xsd:anyType</code> übersetzt.
                         </para>
                         <para>
-                            Otherwise, <code>tns:$className</code> is used and type is described in details in &lt;types&gt;
-                            WSDL section.
+                            Andernfalls wird <code>tns:$className</code> verwendet und die Typen die im
+                            Detail in der &lt;types&gt; WSDL Sektion beschrieben sind.
                         </para>
                     </footnote>.
                 </para>
             </listitem>
             <listitem>
-                <para>PHP void &lt;-&gt; empty type.</para>
+                <para>PHP Void &lt;-&gt; Leerer Typ.</para>
             </listitem>
             <listitem>
-                <para>If type is not matched to any of these types by some reason, then <code>xsd:anyType</code> is used.</para>
+                <para>Wenn der Typ aus irgendeinem Grund keinem dieser Typen entspricht, dann wird
+                <code>xsd:anyType</code> verwendet.</para>
             </listitem>
         </itemizedlist>
         
-        Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace, 
-        <code>soap-enc:</code> is a "http://schemas.xmlsoap.org/soap/encoding/" namespace,
-        <code>tns:</code> is a "target namespace" for a service.
+        Wo <code>xsd:</code> ein "http://www.w3.org/2001/XMLSchema" Namespace ist, ist
+        <code>soap-enc:</code> ein "http://schemas.xmlsoap.org/soap/encoding/" Namespace, und
+        <code>tns:</code> ist ein "Ziel Namespace" für einen Service.
     </para>
 </sect1>

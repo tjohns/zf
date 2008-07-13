@@ -1,62 +1,65 @@
 <!-- EN-Revision: 9884 -->
 <sect1 id="zend.soap.autodiscovery.class">
-    <title>Class autodiscovering.</title>
+    <title>Automatische Erkennung von Klassen.</title>
 
     <para>
-        If class is used to provide SOAP server functionality, then the same class should be provided to 
-        <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
+        Wenn eine Klasse verwendet wird um SOAP Server Funktionalitäten anzubieten, dann sollte die selbe
+        Klasse an <code>Zend_Soap_AutoDiscovery</code> für die WSDL Erzeugung übergeben werden:
         <programlisting role="php"><![CDATA[<?php
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();]]></programlisting>
     </para>
-    
+
     <para>
-        The following rules are used while WSDL generation:
+        Die folgenden Regeln werden wärend der WSDL Erzeugung verwendet:
         <itemizedlist>
             <listitem>
-                <para>Generated WSDL describes an RPC style Web Service.</para>
+                <para>Erzeugtes WSDL beschreibt einen RPC srtigen Web Service.</para>
             </listitem>
             <listitem>
-                <para>Class name is used as a name of the Web Service being described.</para>
-            </listitem>
-            <listitem>
-                <para>
-                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
-                    as an URI where the WSDL is available.
-                </para>
-                <para>
-                     It's also used as a target namespace for all service related names (including 
-                     described complex types).
-                </para>
+                <para>Klassen Namen werden als Name des Web Services verwendet der beschrieben wird.</para>
             </listitem>
             <listitem>
                 <para>
-                    Class methods are joined into one <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Type</ulink>.
+                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> wird als URI
+                    verwendet so das WSDL vorhanden ist.
                 </para>
                 <para>
-                    <code>$className . 'Port'</code> is used as Port Type name.
+                     Es wird auch als Ziel Namespace für alle Service bezogenen Namen verwendet (inklusive
+                     der beschriebenen komplexen Typen).
                 </para>
             </listitem>
             <listitem>
-                <para>Each class method is registered as a corresponding port operation.</para>
+                <para>
+                    Klassen Methoden werden in einen
+                    <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Typ</ulink> übernommen.
+                </para>
+                <para>
+                    <code>$className . 'Port'</code> wird als Port Typ Name verwendet.
+                </para>
             </listitem>
             <listitem>
-                <para>Each method prototype genrerates corresponding Request/Response messages.</para>
-                <para>Method may have several prototypes if some method parameters are optional.</para>
+                <para>Jede Klassen Methode wird als korrespondierende Port Operation registriert.</para>
+            </listitem>
+            <listitem>
+                <para>Jeder Methoden Prototyp erzeugt korrespondierende Anfrage/Antwort Nachrichten.</para>
+                <para>Eine Methode kann verschiedene Prototypen haben wenn einige Parameter der Methode
+                optional sind.</para>
             </listitem>
         </itemizedlist>
     </para>
     
     <note>
-        <title>Important!</title>
+        <title>Wichtig!</title>
         <para>
-            WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-            In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
-            only way to determine them.
+            WSDL Autodiscovery verwendet PHP Docblocks die vom Entwickler angeboten werden um die Parameter
+            und Return Typen zu erkennen. Faktisch ist das, für skalare Typen, der einzige Weg um die
+            Parameter Typen zu erkennen und für Return Typen ist das der einzige Weg um Sie zu erkennen.
         </para>
         <para>
-            That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+            Das bedeutet, das Anbieten von richtigen und komplett detailierten Docblocks ist nicht nur
+            beste Praxis, sondern wird für das erkunden der Klasse benötigt.
         </para>
     </note>
 </sect1>

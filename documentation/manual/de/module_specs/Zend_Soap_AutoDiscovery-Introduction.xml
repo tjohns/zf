@@ -1,74 +1,78 @@
 <!-- EN-Revision: 9887 -->
 <sect1 id="zend.soap.autodiscovery.introduction">
-    <title>AutoDiscovery. Introduction</title>
+    <title>AutoDiscovery. Einführung</title>
     <para>
-        SOAP functionality implemented within Zend Framework is intended to make all steps
-        required for SOAP communications more simple.
+        Die SOAP Funktionalität die im Zend Framework implementiert ist, ist dazu gedacht alle benötigten
+        Schritte für die SOAP Kommunikation einfacher zu gestalten.
     </para>
 
     <para>
-        SOAP is language inedpendent protocol. So it may be used not inly for PHP-to-PHP communications.
+        SOAP ist ein von der Sprache unabhängiges Protokoll. Deshalb kann es nicht nur für
+        PHP-zu-PHP Kommunikation verwendet werden.
     </para>
     
     <para>
-        There are three configurations for SOAP applications where Zend Framework may be utilized:
+        Es gibt drei Konfigurationen für SOAP Anwendungen wo Zend Framework verwendet werden kann:
         <orderedlist>
             <listitem>
-                <simpara>SOAP server PHP application &lt;---&gt; SOAP client PHP application</simpara>
+                <simpara>SOAP Server PHP Anwendung &lt;---&gt; SOAP Client PHP Anwendung</simpara>
             </listitem>
             <listitem>
-                <simpara>SOAP server non-PHP application &lt;---&gt; SOAP client PHP application</simpara>
+                <simpara>SOAP Server nicht-PHP Anwendung &lt;---&gt; SOAP Client PHP Anwendung</simpara>
             </listitem>
             <listitem>
-                <simpara>SOAP server PHP application &lt;---&gt; SOAP client non-PHP application</simpara>
+                <simpara>SOAP Server PHP Anwendung &lt;---&gt; SOAP Client nicht-PHP Anwendung</simpara>
             </listitem>
         </orderedlist>
     </para>
     
     <para>
-        We always have to know, which functionality is provided by SOAP server to operate with it.
-        <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> is used to describe network service API
-        in details.  
+        Wir müssen immer wissen, welche Funktionalität vom SOAP Server angeboten wird um mit Ihm zu
+        arbeiten. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> wird verwendet um die Netzwerk
+        Service API im Detail zu beschreiben.
     </para>
 
     <para>
-        WSDL language is complex enough (see <ulink url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> 
-        for the details). So it's difficult to prepare correct WSDL description.      
+        Die WSDL Sprache ist komplex genug (siehe <ulink url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink>
+        für die Details). Es ist also kompliziert genug die richtige WSDL Beschreibung vorzubereiten.
     </para>
     
     <para>
-        Another problem is synchronizing changes in network service API with already existing WSDL.      
+        Ein anderes Problem ist die Synchronisation von Änderungen in der Netzwerk Service API mit schon
+        existierendem WSDL.
     </para>
 
     <para>
-        Both these problem may be solved by WSDL autogeneration. A prerequisite for this is a SOAP server autodiscovery.
-        It constructs object similar to object used in SOAP server application, extracts necessary information and generates 
-        correct WSDL using this information. 
+        Aber dieses Problem kann durch WSDL Autogeneration gelöst werden. Eine Vorbedingung dafür ist ein
+        SOAP Server Autodiscovery. Es erzeugt ein Objekt ähnlich dem Objekt das in der SOAP Server
+        Anwendung verwendet wird, extrahiert notwendige Informationen und erzeugt ein korrektes WSDL indem
+        es die Information verwendet.
     </para>
 
     <para>
-        There are two ways for using Zend Framework for SOAP server application:     
+        Es gibt zwei Wege für die Verwendung des Zend Framworks für SOAP Server Anwendungen:
         <itemizedlist>
             <listitem>
-                <para>Use separated class.</para>
+                <para>Verwendung von eigenen Klassen.</para>
             </listitem>
             <listitem>
-                <para>Use set of functions</para>
+                <para>Verwendung eines Sets von Funktionen</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        Both methods are supported by Zend Framework Autodiscovery functionality. 
+        Beide Methoden werden von der Zend Framework Autodiscovery Funktionalität unterstützt.
     </para>
 
     <para>
-        Zend_Soap_AutoDiscovery class also supports datatypes mapping from PHP to <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD types</ulink>. 
+        Die Zend_Soap_AutoDiscovery Klasse unterstützt auch das Mapping von Datentypen von PHP zu
+        <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD Typen</ulink>. 
     </para>
 
 
     <para>
-        Here is an example of common usage of the autodiscovery functionality:
+        Hier ist ein Beispiel einer üblichen Verwendung der Autodiscovery Funktionalität:
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Soap/AutoDiscover.php';
 

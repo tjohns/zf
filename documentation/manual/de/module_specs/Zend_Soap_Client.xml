@@ -3,132 +3,143 @@
     <title>Zend_Soap_Client</title>
     
     <para>
-        <code>Zend_Soap_Client</code> class is intended to simplify Web Services client part development for PHP programmers. 
+        Die <code>Zend_Soap_Client</code> Klasse ist dazu gedacht den Client Teil der Web Service
+        Entwicklung für PHP Programmierer zu vereinfachen.
     </para>
 
     <para>
-        It may be used in WSDL or non-WSDL mode.
+        Sie kann im WSDL oder im nicht-WSDL Modus verwendet werden.
     </para>
 
     <para>
-        When Zend_Soap_Client component works in the WSDL mode, it uses already prepared WSDL document to define transport 
-        layer options.  
+        Wenn die Zend_Soap_Client Komponente im WSDL Modus arbeitet, verwendet Sie ein bereits vorbereitetes
+        WSDL Dokument um die Optionen des Transport Layers zu definieren. 
     </para>
     
     <para>
-        WSDL description is usually provided by a Web Service you plan to access to. If not, you may want 
-        to use Zend_Soap_Client in non-WSDL mode. All protocol options have to be set using options mechanism in this case.
+        Die WSDL Beschreibung wird normalerweise vom Web Service auf das man den Zugriff plant zur Verfügung
+        gestellt. Wenn das nicht der Fall ist, kann man Zend_Soap_Client im nicht-WSDL Modus verwenden. Alle
+        Protokoll-Optionen müssen in diesem Fall durch Verwendung des Options-Mechanismus gesetzt werden.
     </para>
 
     <sect2 id="zend.soap.client.constructor">
-        <title><code>Zend_Soap_Client</code> constructor.</title>
+        <title>Der <code>Zend_Soap_Client</code> Konstruktor.</title>
         <para>
-            <code>Zend_Soap_Client</code> constructor takes two parameters:
+            Der <code>Zend_Soap_Client</code> Konstruktor nimmt zwei Parameter:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>$wsdl</code> - an URI of a WSDL file.
+                        <code>$wsdl</code> - eine URI einer WSDL Datei.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>$options</code> - options to create SOAP server object.
+                        <code>$options</code> - Optionen um ein SOAP Server Objekt zu erstellen.
                     </para>
                 </listitem>
             </itemizedlist>
             
-            Both of these parameters may be set later using <code>setWsdl($wsdl)</code> and 
-            <code>setOptions($options)</code> methods correspondingly.
+            Beide Parameter können später gesetzt werden indem die <code>setWsdl($wsdl)</code> und
+            <code>setOptions($options)</code> Methoden entsprechend verwendet werden.
         </para>
         
         <note>
-            <title>Important!</title>
+            <title>Wichtig!</title>
             <para>
-                If you use Zend_Soap_Client component in non-WSDL mode, you <emphasis>must</emphasis> set 
-                the 'location' and 'uri' options. 
+                Wenn die Zend_Soap_Client Komponente im nicht-WSDL Modus verwendet wird,
+                <emphasis>müssen</emphasis> die 'location' und 'uri' Optionen gesetzt werden.
             </para>
         </note>
         
         <para>
-            The following options are recognized:
+            Die folgenden Optionen werden erkannt:
             <itemizedlist>
                 <listitem>
                     <para>
-                        'soap_version' ('soapVersion') - soap version to use (SOAP_1_1 or SOAP_1_2).
+                        'soap_version' ('soapVersion') - Die zu verwendende SOAP Version
+                        (SOAP_1_1 oder SOAP_1_2).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'classmap' ('classMap') - can be used to map some WSDL types to PHP classes. 
+                        'classmap' ('classMap') welche verwendet werden kann um einige WSDL Typen auf PHP
+                        Klassen zu mappen.
                     </para>
                     <para>
-                        The option must be an array with WSDL types as keys and names of PHP classes as values. 
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        'encoding' - internal character encoding (UTF-8 is always used as an external encoding).
+                        Die Option muß ein Array mit WSDL Typen als Schlüssel und Namen von PHP Klassen
+                        als Werte sein.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'wsdl' which is equivalent to <code>setWsdl($wsdlValue)</code> call.
-                    </para>
-                    <para>
-                        Changing this option may switch Zend_Soap_Client object to or from WSDL mode.
+                        'encoding' - Interne Zeichen Kodierung (UTF-8 wird immer als externe Kodierung verwendet).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'uri' - target namespace for the SOAP servevice (required for non-WSDL-mode, doesn't work for WSDL mode). 
+                        'wsdl' welcher dem Aufruf von <code>setWsdl($wsdlValue)</code> entspricht.
+                    </para>
+                    <para>
+                        Das Ändern dieser Option kann das Zend_Soap_Client Objekt von oder zum WSDL Modus
+                        wechseln.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'location' - the URL to request (required for non-WSDL-mode, doesn't work for WSDL mode). 
+                        'uri' - Der Ziel-Namespace für den SOAP Service (benötigt im nicht-WSDL Modus,
+                        funktioniert nicht im WSDL Modus).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'style' - request style (doesn't work for WSDL mode): <code>SOAP_RPC</code> or <code>SOAP_DOCUMENT</code>. 
+                        'location' - Die URL der Anfrage (benötigt im nicht-WSDL Modus, funktioniert nicht
+                        im WSDL Modus).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'use' - method to encode messages (doesn't work for WSDL mode): <code>SOAP_ENCODED</code> or 
-                        <code>SOAP_LITERAL</code>. 
+                        'style' - Anfrage Stil (funktioniert nicht im WSDL Modus): <code>SOAP_RPC</code> oder
+                        <code>SOAP_DOCUMENT</code>. 
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'login' and 'password' - login and password for an HTTP authentication. 
+                        'use' - Methode zum Verschlüsseln von Nachrichten (funktioniert nicht im WSDL
+                        Modus): <code>SOAP_ENCODED</code> oder <code>SOAP_LITERAL</code>. 
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'proxy_host', 'proxy_port', 'proxy_login', and 'proxy_password' - an HTTP connection through a proxy server. 
+                        'login' und 'password' - Login und Passwort für eine HTTP Authentifizierung. 
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'local_cert' and 'passphrase' - HTTPS client certificate authentication options.
+                        'proxy_host', 'proxy_port', 'proxy_login', und 'proxy_password' - Eine HTTP
+                        Verbindung über einen Proxy Server.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'compression' - compression options; it's a combination of <code>SOAP_COMPRESSION_ACCEPT</code>,
-                        <code>SOAP_COMPRESSION_GZIP</code> and <code>SOAP_COMPRESSION_DEFLATE</code> options which 
-                        may be used like this:
+                        'local_cert' und 'passphrase' - HTTPS Client Authentifizierungs Optionen für Zertifikate.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        'compression' - Komprimierungs Optionen; das ist eine Kombination von
+                        <code>SOAP_COMPRESSION_ACCEPT</code>, <code>SOAP_COMPRESSION_GZIP</code> und
+                        <code>SOAP_COMPRESSION_DEFLATE</code> Optionen welche wie folgt verwendet werden
+                        können:
                         <programlisting role="php"><![CDATA[<?php
-// Accept response compression
+// Komprimierung der Antworten akzeptieren
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
-// Compress requests using gzip with compression level 5
+// Anfragen komprimieren durch Verwendung von gzip mit Komprimierungs-Level 5
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
-// Compress requests using deflate compression
+// Anfragen komprimieren durch Verwendung der Deflate Komprimierung
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));]]></programlisting>
                     </para>
@@ -139,26 +150,27 @@ $client = new SoapClient("some.wsdl",
     
 
     <sect2 id="zend.soap.client.calls"> 
-        <title>Performing SOAP requests.</title>
+        <title>SOAP Anfragen durchführen.</title>
         
         <para>
-            When we've created a <code>Zend_Soap_Client</code> object we are completely ready to perform soap requests.  
+            Wenn ein <code>Zend_Soap_Client</code> Objekt erstellt wurde sind wir vollständig bereit um
+            SOAP Anfragen durchzuführen.
         </para>
         <para>
-            Each Web Service method is mapped to the virtual <code>Zend_Soap_Client</code> object method which takes 
-            parameters with common PHP types.
+            Jede Methode des Web Services wird auf eine virtuelle <code>Zend_Soap_Client</code> Objekt-Methode
+            gemappt welche Parameter mit üblichen PHP Typen entgegen nimmt. 
         </para>
         
         <para>
-            Use it like in the following example:
+            Es ist wie im folgenden Beispiel zu verwenden:
             <programlisting role="php"><![CDATA[<?php
 ...
 //****************************************************************
-//                Server code
+//                Server Code
 //****************************************************************
 // class MyClass {
 //     /**
-//      * This method takes ...
+//      * Diese Methode nimmt ...
 //      *
 //      * @param integer $inputParam
 //      * @return string
@@ -168,7 +180,7 @@ $client = new SoapClient("some.wsdl",
 //     }
 //     
 //     /**
-//      * This method takes ...
+//      * Diese Methode nimmt ...
 //      *
 //      * @param integer $inputParam1
 //      * @param string  $inputParam2
@@ -187,16 +199,16 @@ $client = new SoapClient("some.wsdl",
 // $server->handle();
 //
 //****************************************************************
-//                End of server code
+//                Ende des Server Codes
 //****************************************************************
 
 $client = new SoapClient("MyService.wsdl");
 ...
-// $result1 is a string
+// $result1 ist ein String
 $result1 = $client->method1(10); 
 ...
-// $result2 is a float
-$result2 = $client->method2(22, 'some string');]]></programlisting>
+// $result2 ist ein Float
+$result2 = $client->method2(22, 'irgendein String');]]></programlisting>
         </para>
     </sect2>
 </sect1>
