@@ -126,35 +126,35 @@ class Zend_Locale
      *
      * @var string Locale
      */
-    private $_locale;
+    protected $_locale;
 
     /**
      * Automatic detected locale
      *
      * @var string Locales
      */
-    private static $_auto;
+    protected static $_auto;
 
     /**
      * Browser detected locale
      *
      * @var string Locales
      */
-    private static $_browser;
+    protected static $_browser;
 
     /**
      * Environment detected locale
      *
      * @var string Locales
      */
-    private static $_environment;
+    protected static $_environment;
 
     /**
      * Default locale
      *
      * @var string Locales
      */
-    private static $_default = 'en';
+    protected static $_default = 'en';
 
     /**
      * Generates a locale object
