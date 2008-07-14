@@ -172,8 +172,10 @@ class Zend_Locale
     public function __construct($locale = null)
     {
         if (empty(self::$_auto) === true) {
-            $auto = self::_getAuto();
-            if ((empty($locale) === true) and (empty($auto) === true) and
+            self::$_auto        = $this->getDefault(null, false);
+            self::$_browser     = $this->getDefault(self::BROWSER, false);
+            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
+            if ((empty($locale) === true) and (empty(self::$_auto) === true) and
                 (empty(self::$_default) === true)) {
                 require_once 'Zend/Locale/Exception.php';
                 throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
@@ -186,53 +188,6 @@ class Zend_Locale
 
         $this->setLocale($locale);
     }
-
-    public static function resetDAutoDetection()
-    {
-    	self::$_auto        = null;
-    	self::$_browser     = null;
-    	self::$_environment = null;
-    }
-
-    /**
-     * Retrieve automatically detected locale
-     *
-     * @return string
-     */
-    private static function _getAuto()
-    {
-        if (empty(self::$_auto) === true) {
-            self::$_auto = self::getDefault(null, false);
-        }
-    	return self::$_auto;
-    }
-
-    /**
-     * Retrieve browser detected locale
-     *
-     * @return string
-     */
-    private static function _getBrowser()
-    {
-    	if (empty(self::$_browser) === true) {
-    		self::$_browser = self::getDefault(self::BROWSER, false);
-    	}
-        return self::$_browser;
-    }
-
-    /**
-     * Retrieve environment detected locale
-     *
-     * @return string
-     */
-    private static function _getEnvironment()
-    {
-        if (empty(self::$_environment) === true) {
-            self::$_environment = self::getDefault(self::ENVIRONMENT, false);
-        }
-    	return self::$_environment;
-    }
-
 
     /**
      * Serialization Interface
@@ -279,26 +234,26 @@ class Zend_Locale
      *                              otherwise all found default locales will be returned
      * @return array Returns an array of all locale string
      */
-    public static function getDefault($searchorder = null, $fastsearch = null)
+    public function getDefault($searchorder = null, $fastsearch = null)
     {
         $languages = array();
         if ($searchorder === self::ENVIRONMENT) {
-            $languages = self::getEnvironment();
+            $languages = $this->getEnvironment();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = self::getFramework() + $languages;
-                $languages = self::getBrowser() + $languages;
+                $languages = $this->getFramework() + $languages;
+                $languages = $this->getBrowser() + $languages;
             }
         } else if ($searchorder === self::FRAMEWORK) {
-            $languages = self::getFramework();
+            $languages = $this->getFramework();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = self::getEnvironment() + $languages;
-                $languages = self::getBrowser() + $languages;
+                $languages = $this->getEnvironment() + $languages;
+                $languages = $this->getBrowser() + $languages;
             }
         } else {
-            $languages = self::getBrowser();
+            $languages = $this->getBrowser();
             if ((empty($languages) === true) or ($fastsearch === false)) {
-                $languages = self::getEnvironment() + $languages;
-                $languages = self::getFramework() + $languages;
+                $languages = $this->getEnvironment() + $languages;
+                $languages = $this->getFramework() + $languages;
             }
         }
 
@@ -349,7 +304,7 @@ class Zend_Locale
      *
      * @return array
      */
-    public static function getEnvironment()
+    public function getEnvironment()
     {
         if (self::$_environment !== null) {
             return self::$_environment;
@@ -409,7 +364,7 @@ class Zend_Locale
      *
      * @return array - list of accepted languages including quality
      */
-    public static function getBrowser()
+    public function getBrowser()
     {
         if (self::$_browser !== null) {
             return self::$_browser;
@@ -462,10 +417,10 @@ class Zend_Locale
 
     /**
      * Returns the locale which the framework is set to
-     *
+     * 
      * @return array
      */
-    public static function getFramework()
+    public function getFramework()
     {
         $languages = array();
         return $languages;
@@ -480,15 +435,15 @@ class Zend_Locale
     public function setLocale($locale = null)
     {
         if (($locale === 'auto') or ($locale === null)) {
-            $locale = self::_getAuto();
+            $locale = self::$_auto;
         }
 
         if ($locale === 'browser') {
-            $locale = self::_getBrowser();
+            $locale = self::$_browser;
         }
 
         if ($locale === 'environment') {
-            $locale = self::_getEnvironment();
+            $locale = self::$_environment;
         }
 
         if (is_array($locale) === true) {
@@ -541,7 +496,7 @@ class Zend_Locale
 
     /**
      * Return the accepted charset of the client
-     *
+     * 
      * @return string
      */
     public function getHttpCharset()
@@ -604,15 +559,15 @@ class Zend_Locale
         }
 
         if ($locale === 'auto') {
-            $locale = self::_getAuto();
+            $locale = self::$_auto;
         }
 
         if ($locale === 'browser') {
-            $locale = self::_getBrowser();
+            $locale = self::$_browser;
         }
 
         if ($locale === 'environment') {
-            $locale = self::_getEnvironment();
+            $locale = self::$_environment;
         }
 
         if (is_array($locale) === true) {
@@ -689,15 +644,15 @@ class Zend_Locale
         }
 
         if ($locale === 'auto') {
-            $locale = self::_getAuto();
+            $locale = self::$_auto;
         }
 
         if ($locale === 'browser') {
-            $locale = self::_getBrowser();
+            $locale = self::$_browser;
         }
 
         if ($locale === 'environment') {
-            $locale = self::_getEnvironment();
+            $locale = self::$_environment;
         }
 
         if (is_array($locale) === true) {
@@ -775,15 +730,15 @@ class Zend_Locale
         }
 
         if ($locale === 'auto') {
-            $locale = self::_getAuto();
+            $locale = self::$_auto;
         }
 
         if ($locale === 'browser') {
-            $locale = self::_getBrowser();
+            $locale = self::$_browser;
         }
 
         if ($locale === 'environment') {
-            $locale = self::_getEnvironment();
+            $locale = self::$_environment;
         }
 
         if (is_array($locale) === true) {
@@ -872,16 +827,23 @@ class Zend_Locale
             return false;
         }
 
+        if (empty(self::$_auto) === true) {
+            $temp               = new self($locale);
+            self::$_auto        = $temp->getDefault(null, false);
+            self::$_browser     = $temp->getDefault(self::BROWSER, false);
+            self::$_environment = $temp->getDefault(self::ENVIRONMENT, false);
+        }
+
         if ($locale === 'auto') {
-            $locale = self::_getAuto();
+            $locale = self::$_auto;
         }
 
         if ($locale === 'browser') {
-            $locale = self::_getBrowser();
+            $locale = self::$_browser;
         }
 
         if ($locale === 'environment') {
-            $locale = self::_getEnvironment();
+            $locale = self::$_environment;
         }
 
         if (is_array($locale) === true) {
@@ -904,7 +866,7 @@ class Zend_Locale
      * Returns a list of all known locales where the locale is the key
      * Only real locales are returned, the internal locales 'root', 'auto', 'browser'
      * and 'environment' are suppressed
-     *
+     * 
      * @return array List of all Locales
      */
     public static function getLocaleList()
