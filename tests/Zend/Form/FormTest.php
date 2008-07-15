@@ -2258,6 +2258,27 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('div', $decorator->getOption('tag'));
     }
 
+    public function testRetrievingNamedDecoratorShouldNotReorderDecorators()
+    {
+        $this->form->setDecorators(array(
+            'FormElements',
+            array(array('div' => 'HtmlTag'), array('tag' => 'div')),
+            array(array('fieldset' => 'HtmlTag'), array('tag' => 'fieldset')),
+            'Form',
+        ));
+
+        $decorator  = $this->form->getDecorator('fieldset');
+        $decorators = $this->form->getDecorators();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($decorators) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(2, $order['fieldset'], var_export($order, 1));
+    }
+
     // Rendering
 
     public function checkMarkup($html)

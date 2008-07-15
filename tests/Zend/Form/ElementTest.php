@@ -671,6 +671,27 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($validator->zfBreakChainOnFailure);
     }
 
+    public function testRetrievingNamedValidatorShouldNotReorderValidators()
+    {
+        $this->element->addValidators(array(
+            'NotEmpty',
+            'Alnum',
+            'Digits', 
+        ));
+
+        $validator  = $this->element->getValidator('Alnum');
+        $validators = $this->element->getValidators();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($validators) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(1, $order['Zend_Validate_Alnum'], var_export($order, 1));
+    }
+
+
     public function testCanAddMultipleValidators()
     {
         $this->_checkZf2794();
@@ -966,6 +987,26 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $test = $this->element->getFilter('digits');
     }
 
+    public function testRetrievingNamedFilterShouldNotReorderFilters()
+    {
+        $this->element->addFilters(array(
+            'Alpha',
+            'Alnum',
+            'Digits', 
+        ));
+
+        $filter  = $this->element->getFilter('Alnum');
+        $filters = $this->element->getFilters();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($filters) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(1, $order['Zend_Filter_Alnum'], var_export($order, 1));
+    }
+
     public function testOptionsAreCastToArrayWhenAddingFilter()
     {
         $this->_checkZf2794();
@@ -1191,6 +1232,29 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_HtmlTag);
         $this->assertEquals('span', $decorator->getOption('tag'));
     }
+
+    public function testRetrievingNamedDecoratorShouldNotReorderDecorators()
+    {
+        $this->element->setDecorators(array(
+            'ViewHelper',
+            'Errors',
+            array(array('inner' => 'HtmlTag'), array('tag' => 'div', 'class' => 'element')),
+            'Label',
+            array(array('outer' => 'HtmlTag'), array('tag' => 'div')),
+        ));
+
+        $decorator  = $this->element->getDecorator('inner');
+        $decorators = $this->element->getDecorators();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($decorators) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(2, $order['inner'], var_export($order, 1));
+    }
+
 
     public function testRenderElementReturnsMarkup()
     {

@@ -2639,18 +2639,31 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     protected function _loadDecorator(array $decorator, $name)
     {
-        unset($this->_decorators[$name]);
-
+        $sameName = false;
         if ($name == $decorator['decorator']) {
-            $name = null;
+            $sameName = true;
         }
 
         $instance = $this->_getDecorator($decorator['decorator'], $decorator['options']);
-        if (null === $name) {
-            $name = get_class($instance);
+        if ($sameName) {
+            $newName            = get_class($instance);
+            $decoratorNames     = array_keys($this->_decorators);
+            $order              = array_flip($decoratorNames);
+            $order[$newName]    = $order[$name];
+            $decoratorsExchange = array();
+            unset($order[$name]);
+            asort($order);
+            foreach ($order as $key => $index) {
+                if ($key == $newName) {
+                    $decoratorsExchange[$key] = $instance;
+                    continue;
+                }
+                $decoratorsExchange[$key] = $this->_decorators[$key];
+            }
+            $this->_decorators = $decoratorsExchange;
+        } else {
+            $this->_decorators[$name] = $instance;
         }
-
-        $this->_decorators[$name] = $instance;
 
         return $instance;
     }

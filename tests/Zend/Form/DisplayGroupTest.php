@@ -330,6 +330,27 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fieldset', $decorator->getOption('tag'));
     }
 
+    public function testRetrievingNamedDecoratorShouldNotReorderDecorators()
+    {
+        $this->group->setDecorators(array(
+            'FormElements',
+            array(array('dl' => 'HtmlTag'), array('tag' => 'dl')),
+            array(array('div' => 'HtmlTag'), array('tag' => 'div')),
+            array(array('fieldset' => 'HtmlTag'), array('tag' => 'fieldset')),
+        ));
+
+        $decorator  = $this->group->getDecorator('div');
+        $decorators = $this->group->getDecorators();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($decorators) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(2, $order['div'], var_export($order, 1));
+    }
+
     public function testRenderingRendersAllElementsWithinFieldsetByDefault()
     {
         $foo  = new Zend_Form_Element_Text('foo');

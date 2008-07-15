@@ -1754,9 +1754,8 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     protected function _loadFilter(array $filter)
     {
-        unset($this->_filters[$filter['filter']]);
-
-        $name = $this->getPluginLoader(self::FILTER)->load($filter['filter']);
+        $origName = $filter['filter'];
+        $name     = $this->getPluginLoader(self::FILTER)->load($filter['filter']);
 
         if (array_key_exists($name, $this->_filters)) {
             require_once 'Zend/Form/Exception.php';
@@ -1774,8 +1773,25 @@ class Zend_Form_Element implements Zend_Validate_Interface
             }
         }
 
-        unset($this->_filters[$filter['filter']]);
-        $this->_filters[$name] = $instance;
+        if ($origName != $name) {
+            $filterNames  = array_keys($this->_filters);
+            $order        = array_flip($filterNames);
+            $order[$name] = $order[$origName];
+            $filtersExchange = array();
+            unset($order[$origName]);
+            asort($order);
+            foreach ($order as $key => $index) {
+                if ($key == $name) {
+                    $filtersExchange[$key] = $instance;
+                    continue;
+                }
+                $filtersExchange[$key] = $this->_filters[$key];
+            }
+            $this->_filters = $filtersExchange;
+        } else {
+            $this->_filters[$name] = $instance;
+        }
+
         return $instance;
     }
 
@@ -1787,9 +1803,8 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     protected function _loadValidator(array $validator)
     {
-        unset($this->_validators[$validator['validator']]);
-
-        $name = $this->getPluginLoader(self::VALIDATE)->load($validator['validator']);
+        $origName = $validator['validator'];
+        $name     = $this->getPluginLoader(self::VALIDATE)->load($validator['validator']);
 
         if (array_key_exists($name, $this->_validators)) {
             require_once 'Zend/Form/Exception.php';
@@ -1822,8 +1837,25 @@ class Zend_Form_Element implements Zend_Validate_Interface
         }
 
         $instance->zfBreakChainOnFailure = $validator['breakChainOnFailure'];
-        unset($this->_validators[$validator['validator']]);
-        $this->_validators[$name] = $instance;
+
+        if ($origName != $name) {
+            $validatorNames     = array_keys($this->_validators);
+            $order              = array_flip($validatorNames);
+            $order[$name]       = $order[$origName];
+            $validatorsExchange = array();
+            unset($order[$origName]);
+            asort($order);
+            foreach ($order as $key => $index) {
+                if ($key == $name) {
+                    $validatorsExchange[$key] = $instance;
+                    continue;
+                }
+                $validatorsExchange[$key] = $this->_validators[$key];
+            }
+            $this->_validators = $validatorsExchange;
+        } else {
+            $this->_validators[$name] = $instance;
+        }
 
         return $instance;
     }
@@ -1837,18 +1869,31 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     protected function _loadDecorator(array $decorator, $name)
     {
-        unset($this->_decorators[$name]);
-
+        $sameName = false;
         if ($name == $decorator['decorator']) {
-            $name = null;
+            $sameName = true;
         }
 
         $instance = $this->_getDecorator($decorator['decorator'], $decorator['options']);
-        if (null === $name) {
-            $name = get_class($instance);
+        if ($sameName) {
+            $newName            = get_class($instance);
+            $decoratorNames     = array_keys($this->_decorators);
+            $order              = array_flip($decoratorNames);
+            $order[$newName]    = $order[$name];
+            $decoratorsExchange = array();
+            unset($order[$name]);
+            asort($order);
+            foreach ($order as $key => $index) {
+                if ($key == $newName) {
+                    $decoratorsExchange[$key] = $instance;
+                    continue;
+                }
+                $decoratorsExchange[$key] = $this->_decorators[$key];
+            }
+            $this->_decorators = $decoratorsExchange;
+        } else {
+            $this->_decorators[$name] = $instance;
         }
-
-        $this->_decorators[$name] = $instance;
 
         return $instance;
     }
