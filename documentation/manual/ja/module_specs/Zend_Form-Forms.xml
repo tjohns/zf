@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9311 -->
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -784,7 +784,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
                     </itemizedlist>
                 </listitem>
 
-                <listitem><para>I18N</para>
+                <listitem><para>I18n</para>
                     <itemizedlist>
                         <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
@@ -1453,7 +1453,7 @@ $messages = $form->getMessages('username');
                 </itemizedlist>
             </listitem>
 
-            <listitem><para>I18N</para>
+            <listitem><para>I18n</para>
                 <itemizedlist>
                     <listitem><para><code>setTranslator(Zend_Translate_Adapter $translator = null)</code></para></listitem>
 
