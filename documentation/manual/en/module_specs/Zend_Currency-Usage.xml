@@ -354,11 +354,11 @@ $currency = new Zend_Currency('en_US');
 // prints 'US$ 1,000.00'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat(Zend_Currency::USE_NAME&Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
 // prints '1.000,00 US Dollar'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat("American Dollar");
+$currency->setFormat('name' => 'American Dollar');
 // prints '1.000,00 American Dollar'
 echo $currency->toCurrency(1000);]]>
             </programlisting>
