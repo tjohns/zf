@@ -21,6 +21,7 @@ require_once 'Zend/Controller/Response/Cli.php';
 require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'Zend/Controller/Router/Rewrite.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Action/Helper/Url.php';
 require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
 
 class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
@@ -67,6 +68,23 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->_controller->getParam('bar'));
         $this->assertSame(array(), $this->_controller->getParams());
         $this->assertSame(array(), $this->_controller->getControllerDirectory());
+    }
+
+    /**
+     * @see ZF-3145
+     */
+    public function testResetInstanceShouldResetHelperBroker()
+    {
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_Url());
+        $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
+        $this->assertTrue(is_array($helpers));
+        $this->assertFalse(empty($helpers));
+
+        $this->_controller->resetInstance();
+        $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
+        $this->assertTrue(is_array($helpers));
+        $this->assertTrue(empty($helpers));
     }
 
     public function testSetGetRequest()

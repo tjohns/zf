@@ -174,6 +174,8 @@ class Zend_Controller_Front
      *
      * Primarily used for testing; could be used to chain front controllers.
      *
+     * Also resets action helper broker, clearing all registered helpers.
+     *
      * @return void
      */
     public function resetInstance()
@@ -203,6 +205,7 @@ class Zend_Controller_Front
                     break;
             }
         }
+        Zend_Controller_Action_HelperBroker::resetHelpers();
     }
 
     /**
