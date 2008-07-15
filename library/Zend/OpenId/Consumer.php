@@ -282,7 +282,9 @@ class Zend_OpenId_Consumer
             } else {
                 return false;
             }
-            if (!$this->_discovery($id, $server, $discovered_version)) {
+
+            if (!Zend_OpenId::normalize($id) ||
+                !$this->_discovery($id, $server, $discovered_version)) {
                 return false;
             }
 
