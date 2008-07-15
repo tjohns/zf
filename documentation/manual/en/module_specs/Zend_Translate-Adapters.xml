@@ -36,6 +36,11 @@
                     <entry>GNU standard for linux; very fast; thread-safe; needs tools for translation</entry>
                 </row>
                 <row>
+                    <entry>Ini</entry>
+                    <entry>Use simple ini (*.ini) files</entry>
+                    <entry>Simple text file format; very fast; possible problems with unicode characters</entry>
+                </row>
+                <row>
                     <entry>Tbx</entry>
                     <entry>Use termbase exchange (*.tbx/*.xml) files</entry>
                     <entry>Industry standard for inter application terminology strings; XML format</entry>
@@ -162,6 +167,23 @@
                 With the available tools, professional translation is
                 very simple.  But gettext data are is stored in a
                 machine-readable format, which is not readable without tools.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.ini">
+
+            <title>Zend_Translate_Adapter_Ini</title>
+
+            <para>
+                The Ini Adapter is a very simple Adapter which can even be used
+                directly by customers.
+                INI files are readable by standard text editors, but
+                text editors often do not support utf8 character sets.
+            </para>
+
+            <para>
+                You should only use this Adapter when your customer wants to do translations
+                himself. Do not use this adapter as generic translation source.
             </para>
         </sect3>
 
@@ -319,7 +341,7 @@ try {
             To use caching you will just have to give a cache object to the
             <code>Zend_Translate::setCache()</code> method. It takes a instance of
             <code>Zend_Cache</code> as only parameter. Also if you use any adapter direct you
-            can use the <code>setCache()</code> method. For convenience there is also static method
+            can use the <code>setCache()</code> method. For convenience there is the static method
             <code>Zend_Translate::getCache()</code>.
         </para>
 

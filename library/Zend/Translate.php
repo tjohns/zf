@@ -38,6 +38,7 @@ class Zend_Translate {
     const AN_ARRAY   = 'array';
     const AN_CSV     = 'csv';
     const AN_GETTEXT = 'gettext';
+    const AN_INI     = 'ini';
     const AN_QT      = 'qt';
     const AN_TBX     = 'tbx';
     const AN_TMX     = 'tmx';
@@ -92,6 +93,9 @@ class Zend_Translate {
                 break;
             case 'gettext':
                 $adapter = 'Zend_Translate_Adapter_Gettext';
+                break;
+            case 'ini':
+                $adapter = 'Zend_Translate_Adapter_Ini';
                 break;
             case 'qt':
                 $adapter = 'Zend_Translate_Adapter_Qt';
