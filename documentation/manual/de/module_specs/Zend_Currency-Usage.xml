@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9918 -->
+<!-- EN-Revision: 10092 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -384,11 +384,11 @@ $currency = new Zend_Currency('en_US');
 // Gibt 'US$ 1,000.00' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat(Zend_Currency::USE_NAME&Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
 // Gibt '1.000,00 US Dollar' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat("Amerikanische Dollar");
+$currency->setFormat('name' => 'Amerikanische Dollar');
 // Gibt '1.000,00 Amerikanische Dollar' aus
 echo $currency->toCurrency(1000);]]>
             </programlisting>
