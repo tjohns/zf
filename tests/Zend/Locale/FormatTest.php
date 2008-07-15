@@ -787,7 +787,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         }
         // test interaction between class-wide default date format and using locale's default format
         try {
-            $result = array('date_format' => 'MMM d, yyyy', 'locale' => 'en_US', 'month' => '07',
+            $result = array('date_format' => 'MMM d, yyyy', 'locale' => 'en_US', 'month' => '7',
                     'day' => '4', 'year' => '2007');
             Zend_Locale_Format::setOptions(array('format_type' => 'iso', 'date_format' => 'MMM d, yyyy', 'locale' => 'en_US')); // test setUp
         } catch (Zend_Locale_Exception $e) {

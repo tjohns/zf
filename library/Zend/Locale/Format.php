@@ -768,7 +768,7 @@ class Zend_Locale_Format
                             $result['day']    = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['day']    = iconv_substr($splitted[0][0], $split, 2);
+                        $result['day'] = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -779,7 +779,7 @@ class Zend_Locale_Format
                             $result['month']  = $splitted[0][$cnt];
                         }
                     } else {
-                        $result['month']  = iconv_substr($splitted[0][0], $split, 2);
+                        $result['month'] = iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
                     }
                     ++$cnt;
@@ -933,9 +933,6 @@ class Zend_Locale_Format
         if ($monthlist && $monthlist[1] != 1) {
             foreach($monthlist as $key => $name) {
                 if (($position = iconv_strpos($number, $name)) !== false) {
-                    if ($key < 10) {
-                        $key = "0" . $key;
-                    }
                     $number   = str_replace($name, $key, $number);
                     return $position;
                 }
