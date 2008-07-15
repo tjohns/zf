@@ -56,6 +56,11 @@ require_once 'Zend/Auth/Adapter/OpenId.php';
 require_once 'Zend/OpenId/Consumer/Storage/File.php';
 
 /**
+ * Zend_Http_Client_Adapter_Test
+ */
+require_once 'Zend/Http/Client/Adapter/Test.php';
+
+/**
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
@@ -468,4 +473,28 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http%3A%2F%2Fwww.zf-test.com%2Ftest.php', $query['openid.return_to'] );
         $this->assertSame( 'http%3A%2F%2Fwww.zf-test.com', $query['openid.trust_root'] );
     }
+
+    function testSetHttpClient() {
+        $storage = new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files");
+        $storage->delDiscoveryInfo(self::ID);
+        $storage->delAssociation(self::SERVER);
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
+        $http = new Zend_Http_Client(null,
+            array(
+                'maxredirects' => 4,
+                'timeout'      => 15,
+                'useragent'    => 'Zend_OpenId'
+            ));
+        $test = new Zend_Http_Client_Adapter_Test();
+        $http->setAdapter($test);
+        $adapter->SetHttpClient($http);
+        $ret = $adapter->authenticate();
+        $this->assertSame("GET / HTTP/1.1\r\n".
+                          "Host: id.myopenid.com\r\n".
+                          "Connection: close\r\n".
+                          "Accept-encoding: gzip, deflate\r\n".
+                          "User-agent: Zend_OpenId\r\n\r\n",
+                          $http->getLastRequest());
+    }
+
 }

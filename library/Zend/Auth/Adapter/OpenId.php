@@ -96,6 +96,13 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
     private $_check_immediate = false;
 
     /**
+     * HTTP client to make HTTP requests
+     *
+     * @var Zend_Http_Client $_httpClient
+     */
+    private $_httpClient = null;
+
+    /**
      * Constructor
      *
      * @param string $id the identity value
@@ -208,6 +215,15 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
     }
 
     /**
+     * Sets HTTP client object to make HTTP requests
+     *
+     * @param Zend_Http_Client $client HTTP client object to be used
+     */
+    public function setHttpClient($client) {
+        $this->_httpClient = $client;
+    }
+
+    /**
      * Authenticates the given OpenId identity.
      * Defined by Zend_Auth_Adapter_Interface.
      *
@@ -218,6 +234,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
         $id = $this->_id;
         if (!empty($id)) {
             $consumer = new Zend_OpenId_Consumer($this->_storage);
+			$consumer->setHttpClient($this->_httpClient);
             /* login() is never returns on success */
             if (!$this->_check_immediate) {
                 if (!$consumer->login($id,
@@ -252,6 +269,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
                     array("Authentication failed"));
             }
             $consumer = new Zend_OpenId_Consumer($this->_storage);
+			$consumer->setHttpClient($this->_httpClient);
             if ($consumer->verify(
                     $params,
                     $id,
