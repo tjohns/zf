@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 10092 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -386,11 +386,11 @@ $currency = new Zend_Currency('en_US');
 // 'US$ 1,000.00' と表示します
 echo $currency->toCurrency(1000);
 
-$currency->setFormat(Zend_Currency::USE_NAME&Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
 // '1.000,00 US Dollar' と表示します
 echo $currency->toCurrency(1000);
 
-$currency->setFormat("American Dollar");
+$currency->setFormat('name' => 'American Dollar');
 // '1.000,00 American Dollar' と表示します
 echo $currency->toCurrency(1000);]]>
             </programlisting>
