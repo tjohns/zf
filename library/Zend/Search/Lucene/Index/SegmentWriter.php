@@ -268,7 +268,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
     {
         return $this->_name;
     }
-    
+
     /**
      * Dump Field Info (.fnm) segment file
      */

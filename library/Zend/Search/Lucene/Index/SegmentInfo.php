@@ -177,24 +177,72 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     private $_deletedDirty = false;
 
+    /**
+     * True if segment uses shared doc store
+     *
+     * @var boolean
+     */
+    private $_usesSharedDocStore;
+
+    /*
+     * Shared doc store options.
+     * It's an assotiative array with the following items:
+     * - 'offset'     => $docStoreOffset           The starting document in the shared doc store files where this segment's documents begin
+     * - 'segment'    => $docStoreSegment          The name of the segment that has the shared doc store files.
+     * - 'isCompound' => $docStoreIsCompoundFile   True, if compound file format is used for the shared doc store files (.cfx file).
+     */
+    private $_sharedDocStoreOptions;
+
 
     /**
      * Zend_Search_Lucene_Index_SegmentInfo constructor
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
-     * @param string $name
-     * @param integer $docCount
-     * @param integer $delGen
-     * @param boolean $isCompound
+     * @param string     $name
+     * @param integer    $docCount
+     * @param integer    $delGen
+     * @param array|null $docStoreOptions
+     * @param boolean    $hasSingleNormFile
+     * @param boolean    $isCompound
      */
-    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $hasSingleNormFile = false, $isCompound = null)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $docStoreOptions = null, $hasSingleNormFile = false, $isCompound = null)
     {
         $this->_directory = $directory;
-        $this->_name              = $name;
-        $this->_docCount          = $docCount;
+        $this->_name      = $name;
+        $this->_docCount  = $docCount;
+
+        if ($docStoreOptions !== null) {
+        	$this->_usesSharedDocStore    = true;
+        	$this->_sharedDocStoreOptions = $docStoreOptions;
+
+        	if ($docStoreOptions['isCompound']) {
+        		$cfxFile       = $this->_directory->getFileObject($docStoreOptions['segment'] . '.cfx');
+                $cfxFilesCount = $cfxFile->readVInt();
+
+                $cfxFiles     = array();
+                $cfxFileSizes = array();
+
+                for ($count = 0; $count < $cfxFilesCount; $count++) {
+                    $dataOffset = $cfxFile->readLong();
+                    if ($count != 0) {
+                        $cfxFileSizes[$fileName] = $dataOffset - end($cfxFiles);
+                    }
+                    $fileName            = $cfxFile->readString();
+                    $cfxFiles[$fileName] = $dataOffset;
+                }
+                if ($count != 0) {
+                    $cfxFileSizes[$fileName] = $this->_directory->fileLength($docStoreOptions['segment'] . '.cfx') - $dataOffset;
+                }
+
+                $this->_sharedDocStoreOptions['files']     = $cfxFiles;
+                $this->_sharedDocStoreOptions['fileSizes'] = $cfxFileSizes;
+        	}
+        }
+
         $this->_hasSingleNormFile = $hasSingleNormFile;
         $this->_delGen            = $delGen;
         $this->_termDictionary    = null;
+
 
         if (!is_null($isCompound)) {
             $this->_isCompound    = $isCompound;
@@ -313,14 +361,14 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
                 $byteCount = $delFile->readInt();
                 $bitCount  = $delFile->readInt();
-                
+
                 $delFileSize = $this->_directory->fileLength($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
                 $byteNum = 0;
-                
+
                 do {
                     $dgap = $delFile->readVInt();
                     $nonZeroByte = $delFile->readByte();
-                    
+
                     $byteNum += $dgap;
 
                     for ($bit = 0; $bit < 8; $bit++) {
@@ -333,7 +381,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
                         }
                     }
                 } while ($delFile->tell() < $delFileSize);
-                
+
             } else {
                 // $format is actually byte count
                 $byteCount = ceil($format/8);
@@ -372,6 +420,44 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     public function openCompoundFile($extension, $shareHandler = true)
     {
+        if (($extension == '.fdx'  || $extension == '.fdt')  &&  $this->_usesSharedDocStore) {
+        	$fdxFName = $this->_sharedDocStoreOptions['segment'] . '.fdx';
+            $fdtFName = $this->_sharedDocStoreOptions['segment'] . '.fdt';
+
+            if (!$this->_sharedDocStoreOptions['isCompound']) {
+            	$fdxFile = $this->_directory->getFileObject($fdxFName, $shareHandler);
+            	$fdxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
+
+            	if ($extension == '.fdx') {
+            		// '.fdx' file is requested
+            		return $fdxFile;
+            	} else {
+            		// '.fdt' file is requested
+            		$fdtStartOffset = $fdxFile->readLong();
+
+                    $fdtFile = $this->_directory->getFileObject($fdеFName, $shareHandler);
+                    $fdtFile->seek($fdtStartOffset, SEEK_CUR);
+
+                    return $fdtFile;
+            	}
+            }
+
+            if( !isset($this->_sharedDocStoreOptions['files'][$fdxFName]) ) {
+                throw new Zend_Search_Lucene_Exception('Shared doc storage segment compound file doesn\'t contain '
+                                       . $fdxFName . ' file.' );
+            }
+            if( !isset($this->_sharedDocStoreOptions['files'][$fdtFName]) ) {
+                throw new Zend_Search_Lucene_Exception('Shared doc storage segment compound file doesn\'t contain '
+                                       . $fdtFName . ' file.' );
+            }
+
+            $file = $this->_directory->getFileObject($this->_sharedDocStoreOptions['segment'] . '.cfx', $shareHandler);
+            $file->seek($this->_sharedDocStoreOptions['files'][$filename]);
+
+            $this->_sharedDocStoreOptions['files']     = $fdxFName;
+            $this->_sharedDocStoreOptions['fileSizes'] = $cfxFileSizes;
+        }
+
         $filename = $this->_name . $extension;
 
         if (!$this->_isCompound) {
@@ -567,7 +653,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Load terms dictionary index
-     * 
+     *
      * @throws Zend_Search_Lucene_Exception
      */
     private function _loadDictionaryIndex()

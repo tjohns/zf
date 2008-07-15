@@ -144,6 +144,7 @@ class Zend_Search_Lucene_Index_Writer
      * @var array
      */
     private static $_indexExtensions = array('.cfs' => '.cfs',
+                                             '.cfx' => '.cfx',
                                              '.fnm' => '.fnm',
                                              '.fdx' => '.fdx',
                                              '.fdt' => '.fdt',
@@ -482,6 +483,7 @@ class Zend_Search_Lucene_Index_Writer
                                                                              $segName,
                                                                              $segSize,
                                                                              $delGen,
+                                                                             null, /** @todo !!!!!! update to be compatible with 2.3 index format */
                                                                              $hasSingleNormFile,
                                                                              $isCompound);
                     } else {

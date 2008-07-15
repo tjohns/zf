@@ -90,6 +90,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
                                                         $this->_name,
                                                         $this->_docCount,
                                                         -1,
+                                                        null,
                                                         true,
                                                         true);
     }

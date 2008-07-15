@@ -163,7 +163,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     private $_generation;
 
-    
+
     /**
      * Create index
      *
@@ -278,6 +278,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
     /**
      * Read segments file for pre-2.1 Lucene index format
+     *
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _readPre21SegmentsFile()
     {
@@ -324,7 +326,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         $format = $segmentsFile->readInt();
 
-        if ($format != (int)0xFFFFFFFD) {
+        if ($format == (int)0xFFFFFFFC) {
+        	$is_2_3_IndexFormat = true;
+        } else if ($format == (int)0xFFFFFFFD) {
+        	$is_2_3_IndexFormat = false;
+        } else {
             throw new Zend_Search_Lucene_Exception('Wrong segments file format');
         }
 
@@ -354,6 +360,23 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $delGen = ($delGenHigh << 32) | $delGenLow;
             }
 
+            if ($is_2_3_IndexFormat) {
+            	$docStoreOffset = $segmentsFile->readInt();
+
+            	if ($docStoreOffset != -1) {
+            		$docStoreSegment         = $segmentsFile->readString();
+            		$docStoreIsCompoundFile = $segmentsFile->readByte();
+
+            		$docStoreOptions = array('offset'     => $docStoreOffset,
+            		                         'segment'    => $docStoreSegment,
+            		                         'isCompound' => ($docStoreIsCompoundFile == 1));
+            	} else {
+                    $docStoreOptions = null;;
+            	}
+            } else {
+                $docStoreOptions = null;
+            }
+
             $hasSingleNormFile = $segmentsFile->readByte();
             $numField          = $segmentsFile->readInt();
 
@@ -376,6 +399,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                                                                          $segName,
                                                                          $segSize,
                                                                          $delGen,
+                                                                         $docStoreOptions,
                                                                          $hasSingleNormFile,
                                                                          $isCompound);
         }
@@ -408,13 +432,13 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         // Mark index as "under processing" to prevent other processes from premature index cleaning
         Zend_Search_Lucene_LockManager::obtainReadLock($this->_directory);
-        
-        // Escalate read lock to prevent current generation index files to be deleted while opening process is not done 
+
+        // Escalate read lock to prevent current generation index files to be deleted while opening process is not done
 //        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
-        
-        
+
+
         $this->_generation = self::getActualGeneration($this->_directory);
-        
+
         if ($create) {
         	try {
         		Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
@@ -451,8 +475,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         } else {
             $this->_readSegmentsFile();
         }
-        
-        // De-escalate read lock to prevent current generation index files to be deleted while opening process is not done 
+
+        // De-escalate read lock to prevent current generation index files to be deleted while opening process is not done
 //        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
     }
 
@@ -470,7 +494,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         // Release "under processing" flag
         Zend_Search_Lucene_LockManager::releaseReadLock($this->_directory);
-                
+
         if ($this->_closeDirOnExit) {
             $this->_directory->close();
         }
@@ -947,7 +971,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         }
 
         $fdxFile = $segmentInfo->openCompoundFile('.fdx');
-        $fdxFile->seek( ($id-$segmentStartId)*8, SEEK_CUR );
+        $fdxFile->seek(($id-$segmentStartId)*8, SEEK_CUR);
         $fieldValuesPosition = $fdxFile->readLong();
 
         $fdtFile = $segmentInfo->openCompoundFile('.fdt');
@@ -1206,7 +1230,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     {
         $this->getIndexWriter()->addDocument($document);
         $this->_docCount++;
-        
+
         $this->_hasChanges = true;
     }
 
@@ -1233,11 +1257,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             foreach ($this->_segmentInfos as $segInfo) {
                 $segInfo->writeChanges();
             }
-            
+
             $this->getIndexWriter()->commit();
-            
+
             $this->_updateDocCount();
-            
+
             $this->_hasChanges = false;
         }
     }
