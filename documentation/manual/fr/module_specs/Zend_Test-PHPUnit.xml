@@ -85,9 +85,7 @@
         applications.</para>
     </example>
 
-    <xi:include href="Zend_Test-PHPUnit-Bootstrapping.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_Test-PHPUnit-Bootstrapping.xml" /></xi:fallback>
-        </xi:include>
+    <xi:include href="Zend_Test-PHPUnit-Bootstrapping.xml" />
     <xi:include href="Zend_Test-PHPUnit-Testing.xml" />
     <xi:include href="Zend_Test-PHPUnit-Assertions.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Test-PHPUnit-Assertions.xml" /></xi:fallback>
