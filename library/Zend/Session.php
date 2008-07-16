@@ -49,6 +49,12 @@ require_once 'Zend/Session/SaveHandler/Interface.php';
 class Zend_Session extends Zend_Session_Abstract
 {
     /**
+     * Whether or not Zend_Session is being used with unit tests
+     * @var bool
+     */
+    public static $_unitTestEnabled = false;
+
+    /**
      * Check whether or not the session was started
      *
      * @var bool
@@ -221,6 +227,10 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function setSaveHandler(Zend_Session_SaveHandler_Interface $saveHandler)
     {
+        if (self::$_unitTestEnabled) {
+            return;
+        }
+
         session_set_save_handler(
             array(&$saveHandler, 'open'),
             array(&$saveHandler, 'close'),
@@ -254,7 +264,7 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function regenerateId()
     {
-        if (headers_sent($filename, $linenum)) {
+        if (!self::$_unitTestEnabled && headers_sent($filename, $linenum)) {
             /** @see Zend_Session_Exception */
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("You must call " . __CLASS__ . '::' . __FUNCTION__ .
@@ -262,7 +272,9 @@ class Zend_Session extends Zend_Session_Abstract
         }
 
         if (self::$_sessionStarted && self::$_regenerateIdState <= 0) {
-            session_regenerate_id(true);
+            if (!self::$_unitTestEnabled) {
+                session_regenerate_id(true);
+            }
             self::$_regenerateIdState = 1;
         } else {
             /**
@@ -319,6 +331,11 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function rememberUntil($seconds = 0)
     {
+        if (self::$_unitTestEnabled) {
+            self::regenerateId();
+            return;
+        }
+
         $cookieParams = session_get_cookie_params();
 
         session_set_cookie_params(
@@ -343,6 +360,8 @@ class Zend_Session extends Zend_Session_Abstract
         if (ini_get('session.use_cookies') == '1' && isset($_COOKIE[session_name()])) {
             return true;
         } elseif (!empty($_REQUEST[session_name()])) {
+            return true;
+        } elseif (self::$_unitTestEnabled) {
             return true;
         }
 
@@ -380,7 +399,7 @@ class Zend_Session extends Zend_Session_Abstract
             throw new Zend_Session_Exception('You must explicitly start the session with Zend_Session::start() when session options are set to strict.');
         }
 
-        if (headers_sent($filename, $linenum)) {
+        if (!self::$_unitTestEnabled && headers_sent($filename, $linenum)) {
             /** @see Zend_Session_Exception */
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("Session must be started before any output has been sent to the browser;"
@@ -388,7 +407,7 @@ class Zend_Session extends Zend_Session_Abstract
         }
 
         // See http://www.php.net/manual/en/ref.session.php for explanation
-        if (defined('SID')) {
+        if (!self::$_unitTestEnabled && defined('SID')) {
             /** @see Zend_Session_Exception */
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('session has already been started by session.auto-start or session_start()');
@@ -399,15 +418,17 @@ class Zend_Session extends Zend_Session_Abstract
          * @see http://framework.zend.com/issues/browse/ZF-1325
          */
         /** @see Zend_Session_Exception */
-        require_once 'Zend/Session/Exception.php';
-        set_error_handler(array('Zend_Session_Exception', 'handleSessionStartError'), E_ALL);
-        session_start();
-        restore_error_handler();
-        if (Zend_Session_Exception::$sessionStartError !== null) {
-           set_error_handler(array('Zend_Session_Exception', 'handleSilentWriteClose'), E_ALL);
-           session_write_close();
-           restore_error_handler();
-           throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
+        if (!self::$_unitTestEnabled) {
+            require_once 'Zend/Session/Exception.php';
+            set_error_handler(array('Zend_Session_Exception', 'handleSessionStartError'), E_ALL);
+            session_start();
+            restore_error_handler();
+            if (Zend_Session_Exception::$sessionStartError !== null) {
+            set_error_handler(array('Zend_Session_Exception', 'handleSilentWriteClose'), E_ALL);
+            session_write_close();
+            restore_error_handler();
+            throw new Zend_Session_Exception(__CLASS__ . '::' . __FUNCTION__ . '() - ' . Zend_Session_Exception::$sessionStartError);
+            }
         }
 
         parent::$_readable = true;
@@ -544,13 +565,13 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function setId($id)
     {
-        if (defined('SID')) {
+        if (!self::$_unitTestEnabled && defined('SID')) {
             /** @see Zend_Session_Exception */
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('The session has already been started.  The session id must be set first.');
         }
 
-        if (headers_sent($filename, $linenum)) {
+        if (!self::$_unitTestEnabled && headers_sent($filename, $linenum)) {
             /** @see Zend_Session_Exception */
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("You must call ".__CLASS__.'::'.__FUNCTION__.
@@ -600,6 +621,10 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function writeClose($readonly = true)
     {
+        if (self::$_unitTestEnabled) {
+            return;
+        }
+
         if (self::$_writeClosed) {
             return;
         }
@@ -622,6 +647,10 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function destroy($remove_cookie = true, $readonly = true)
     {
+        if (self::$_unitTestEnabled) {
+            return;
+        }
+
         if (self::$_destroyed) {
             return;
         }
@@ -646,6 +675,10 @@ class Zend_Session extends Zend_Session_Abstract
      */
     public static function expireSessionCookie()
     {
+        if (self::$_unitTestEnabled) {
+            return;
+        }
+
         if (self::$_sessionCookieDeleted) {
             return;
         }
