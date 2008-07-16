@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10118 -->
 <sect3 id="zend.view.helpers.initial.placeholder">
     <title>Placeholder ヘルパー</title>
 
@@ -173,12 +174,13 @@ echo $foo['bar'];
 
         <programlisting role="php"><![CDATA[
 <!-- デフォルトのキャプチャは追記モードです -->
-<?php $this->placeholder('foo')->captureStart() 
+<?php $this->placeholder('foo')->captureStart(); 
 foreach ($this->data as $datum): ?>
 <div class="foo">
     <h2><?= $datum->title ?></h2>
     <p><?= $datum->content ?></p>
 </div>
+<?php endforeach; ?>
 <?php $this->placeholder('foo')->captureEnd() ?>
 
 <?php echo $this->placeholder('foo') ?>
@@ -186,12 +188,13 @@ foreach ($this->data as $datum): ?>
 
         <programlisting role="php"><![CDATA[
 <!-- 特定のキーにキャプチャします -->
-<?php $this->placeholder('foo')->captureStart('SET', 'data') 
+<?php $this->placeholder('foo')->captureStart('SET', 'data'); 
 foreach ($this->data as $datum): ?>
 <div class="foo">
     <h2><?= $datum->title ?></h2>
     <p><?= $datum->content ?></p>
 </div>
+ <?php endforeach; ?>
 <?php $this->placeholder('foo')->captureEnd() ?>
 
 <?php echo $this->placeholder('foo')->data ?>
