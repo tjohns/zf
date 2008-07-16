@@ -435,7 +435,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
             		// '.fdt' file is requested
             		$fdtStartOffset = $fdxFile->readLong();
 
-                    $fdtFile = $this->_directory->getFileObject($fdеFName, $shareHandler);
+                    $fdtFile = $this->_directory->getFileObject($fdtFName, $shareHandler);
                     $fdtFile->seek($fdtStartOffset, SEEK_CUR);
 
                     return $fdtFile;
@@ -451,11 +451,27 @@ class Zend_Search_Lucene_Index_SegmentInfo
                                        . $fdtFName . ' file.' );
             }
 
-            $file = $this->_directory->getFileObject($this->_sharedDocStoreOptions['segment'] . '.cfx', $shareHandler);
-            $file->seek($this->_sharedDocStoreOptions['files'][$filename]);
+            // Open shared docstore segment file
+            $cfxFile = $this->_directory->getFileObject($this->_sharedDocStoreOptions['segment'] . '.cfx', $shareHandler);
+            // Seek to the start of '.fdx' file within compound file
+            $cfxFile->seek($this->_sharedDocStoreOptions['files'][$fdxFName]);
+            // Seek to the start of current segment documents section
+            $cfxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
 
-            $this->_sharedDocStoreOptions['files']     = $fdxFName;
-            $this->_sharedDocStoreOptions['fileSizes'] = $cfxFileSizes;
+            if ($extension == '.fdx') {
+                // '.fdx' file is requested
+                return $cfxFile;
+            } else {
+                // '.fdt' file is requested
+                $fdtStartOffset = $cfxFile->readLong();
+
+                // Seek to the start of '.fdt' file within compound file
+                $cfxFile->seek($this->_sharedDocStoreOptions['files'][$fdtFName]);
+                // Seek to the start of current segment documents section
+                $cfxFile->seek($fdtStartOffset, SEEK_CUR);
+
+                return $fdtFile;
+            }
         }
 
         $filename = $this->_name . $extension;
@@ -482,6 +498,22 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     public function compoundFileLength($extension)
     {
+        if (($extension == '.fdx'  || $extension == '.fdt')  &&  $this->_usesSharedDocStore) {
+        	$filename = $this->_sharedDocStoreOptions['segment'] . $extension;
+
+            if (!$this->_sharedDocStoreOptions['isCompound']) {
+            	return $this->_directory->fileLength($filename);
+            }
+
+            if( !isset($this->_sharedDocStoreOptions['fileSizes'][$filename]) ) {
+                throw new Zend_Search_Lucene_Exception('Shared doc store compound file doesn\'t contain '
+                                           . $filename . ' file.' );
+            }
+
+            return $this->_sharedDocStoreOptions['fileSizes'][$filename];
+        }
+
+
         $filename = $this->_name . $extension;
 
         // Try to get common file first

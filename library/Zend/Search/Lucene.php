@@ -163,6 +163,16 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     private $_generation;
 
+    const FORMAT_PRE_2_1 = 0;
+    const FORMAT_2_1     = 1;
+    const FORMAT_2_3     = 2;
+
+    /**
+     * Index format version
+     *
+     * @var integer
+     */
+    private $_formatVersion;
 
     /**
      * Create index
@@ -277,6 +287,16 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     }
 
     /**
+     * Get index format version
+     *
+     * @return integer
+     */
+    public function getFormatVersion($generation)
+    {
+        return $this->_formatVersion;
+    }
+
+    /**
      * Read segments file for pre-2.1 Lucene index format
      *
      * @throws Zend_Search_Lucene_Exception
@@ -313,6 +333,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                                                                          $segName,
                                                                          $segSize);
         }
+
+        // Use 2.1 as a target version. Index will be reorganized at update time.
+        $this->_formatVersion = self::FORMAT_2_1;
     }
 
     /**
@@ -327,11 +350,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         $format = $segmentsFile->readInt();
 
         if ($format == (int)0xFFFFFFFC) {
-        	$is_2_3_IndexFormat = true;
+            $this->_formatVersion = self::FORMAT_2_3;
         } else if ($format == (int)0xFFFFFFFD) {
-        	$is_2_3_IndexFormat = false;
+            $this->_formatVersion = self::FORMAT_2_1;
         } else {
-            throw new Zend_Search_Lucene_Exception('Wrong segments file format');
+            throw new Zend_Search_Lucene_Exception('Unsupported segments file format');
         }
 
         // read version
@@ -360,18 +383,18 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $delGen = ($delGenHigh << 32) | $delGenLow;
             }
 
-            if ($is_2_3_IndexFormat) {
+            if ($this->_formatVersion == self::FORMAT_2_3) {
             	$docStoreOffset = $segmentsFile->readInt();
 
             	if ($docStoreOffset != -1) {
-            		$docStoreSegment         = $segmentsFile->readString();
+            		$docStoreSegment        = $segmentsFile->readString();
             		$docStoreIsCompoundFile = $segmentsFile->readByte();
 
             		$docStoreOptions = array('offset'     => $docStoreOffset,
             		                         'segment'    => $docStoreSegment,
             		                         'isCompound' => ($docStoreIsCompoundFile == 1));
             	} else {
-                    $docStoreOptions = null;;
+                    $docStoreOptions = null;
             	}
             } else {
                 $docStoreOptions = null;
@@ -549,7 +572,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     public function getIndexWriter()
     {
         if (!$this->_writer instanceof Zend_Search_Lucene_Index_Writer) {
-            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos);
+            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos, $this->_formatVersion);
         }
 
         return $this->_writer;
