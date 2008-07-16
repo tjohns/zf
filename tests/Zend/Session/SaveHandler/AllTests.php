@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,29 +20,16 @@
  * @version    $Id$
  */
 
-
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Session_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Session_SaveHandler_AllTests::main');
 }
-
 
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
-
-/**
- * Zend_Session tests need to be output buffered because they depend on headers_sent() === false
- *
- * @see http://framework.zend.com/issues/browse/ZF-700
- */
-ob_start();
-
-require_once 'SessionTest.php';
-
-/** Zend_Session_SaveHandler_AllTests */
-require_once 'Zend/Session/SaveHandler/AllTests.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @category   Zend
@@ -52,7 +38,7 @@ require_once 'Zend/Session/SaveHandler/AllTests.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Session_AllTests
+class Zend_Session_SaveHandler_AllTests
 {
     /**
      * Runs this test suite
@@ -61,11 +47,6 @@ class Zend_Session_AllTests
      */
     public static function main()
     {
-        /**
-         * PHPUnit_TextUI_TestRunner
-         */
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 
@@ -76,21 +57,23 @@ class Zend_Session_AllTests
      */
     public static function suite()
     {
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Session_SaveHandler');
+
         /**
-         * PHPUnit_Framework_TestSuite
+         * @see Zend_Session_SaveHandler_DbTableTest
          */
-        require_once 'PHPUnit/Framework/TestSuite.php';
+        require_once 'Zend/Session/SaveHandler/DbTableTest.php';
 
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Session');
-
-
-        $suite->addTestSuite('Zend_SessionTest');
-        $suite->addTest(Zend_Session_SaveHandler_AllTests::suite());
+        if (!extension_loaded('pdo_sqlite')) {
+            $suite->addTestSuite('Zend_Session_SaveHandler_DbTableTestSkip');
+        } else {
+            $suite->addTestSuite('Zend_Session_SaveHandler_DbTableTest');
+        }
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Session_AllTests::main') {
-    Zend_Session_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Session_SaveHandler_AllTests::main') {
+    Zend_Session_SaveHandler_AllTests::main();
 }

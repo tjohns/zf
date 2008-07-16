@@ -321,6 +321,7 @@
         <xi:include href="module_specs/Zend_Session-BasicUsage.xml" />
         <xi:include href="module_specs/Zend_Session-AdvancedUsage.xml" />
         <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml" />
+        <xi:include href="module_specs/Zend_Session-SaveHandler-DbTable.xml" />
     </chapter>
 
     <chapter id="zend.soap">
