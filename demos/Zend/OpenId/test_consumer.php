@@ -53,8 +53,7 @@ if (isset($_POST['openid_action']) &&
     $sreg = new Zend_OpenId_Extension_Sreg($props, null, 1.1);
     $id = $_POST['openid_identifier'];
     if (!$consumer->login($id, null, null, $sreg)) {
-        $status = "OpenID login failed";
-
+        $status = "OpenID login failed (".$consumer->getError().")";
     }
 } else if (isset($_GET['openid_mode'])) {
     if ($_GET['openid_mode'] == "id_res") {
@@ -64,7 +63,7 @@ if (isset($_POST['openid_action']) &&
             $status = "VALID $id";
             $data = $sreg->getProperties();
         } else {
-            $status = "INVALID $id";
+            $status = "INVALID $id (".$consumer->getError().")";
         }
     } else if ($_GET['openid_mode'] == "cancel") {
         $status = "CANCELED";
