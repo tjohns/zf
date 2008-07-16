@@ -123,11 +123,24 @@
         <title>Zend_Debug</title>
         <xi:include href="module_specs/Zend_Debug.xml" />
     </chapter>
+    <chapter id="zend.dojo">
+        <title>Zend_Dojo</title>
+        <xi:include href="module_specs/Zend_Dojo.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-Data.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-Data.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-View.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-View.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-Form.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-Form.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.dom">
         <title>Zend_Dom</title>
-        <xi:include href="module_specs/Zend_Dom.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Dom.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Dom.xml" />
         <xi:include href="module_specs/Zend_Dom-Query.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Dom-Query.xml" /></xi:fallback>
         </xi:include>
@@ -224,6 +237,9 @@
         <xi:include href="module_specs/Zend_Json-Basics.xml" />
         <xi:include href="module_specs/Zend_Json-Objects.xml" />
         <xi:include href="module_specs/Zend_Json-xml2json.xml" />
+        <xi:include href="module_specs/Zend_Json-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Json-Server.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.layout">
         <title>Zend_Layout</title>
@@ -443,12 +459,8 @@
     </chapter>
     <chapter id="zend.test">
         <title>Zend_Test</title>
-        <xi:include href="module_specs/Zend_Test.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Test.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Test-PHPUnit.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Test.xml" />
+        <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml" />
     </chapter>
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
