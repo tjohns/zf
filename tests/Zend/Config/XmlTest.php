@@ -42,6 +42,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
     protected $_xmlFileConfig;
     protected $_xmlFileAllSectionsConfig;
     protected $_xmlFileCircularConfig;
+    protected $_xmlFileInvalid;
 
     public function setUp()
     {
@@ -52,6 +53,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->_xmlFileOneTopLevelStringConfig = dirname(__FILE__) . '/_files/onetoplevelstring.xml';
         $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.xml';
         $this->_xmlFileSameNameKeysConfig = dirname(__FILE__) . '/_files/array.xml';
+        $this->_xmlFileInvalid = dirname(__FILE__) . '/_files/invalid.xml';
     }
 
     public function testLoadSingleSection()
@@ -196,6 +198,22 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $config->six->seven->{0}->nine);
         $this->assertEquals('2', $config->six->seven->{1}->nine);
         $this->assertEquals('3', $config->six->seven->{2}->nine);
+    }
+
+    public function testZF3578_InvalidOrMissingfXmlFile()
+    {
+        try {
+            $config = new Zend_Config_Xml($this->_xmlFileInvalid);
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('parser error', $expected->getMessage());
+        }
+        try {
+            $config = new Zend_Config_Xml('I/dont/exist');
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('failed to load', $expected->getMessage());
+        }
     }
 
 }

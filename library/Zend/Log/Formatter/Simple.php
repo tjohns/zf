@@ -38,6 +38,8 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
      */
     protected $_format;
 
+    const DEFAULT_FORMAT = '%timestamp% %priorityName% (%priority%): %message%';
+
     /**
      * Class constructor
      *
@@ -47,7 +49,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
     public function __construct($format = null)
     {
         if ($format === null) {
-            $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
+            $format = self::DEFAULT_FORMAT . PHP_EOL;
         }
 
         if (! is_string($format)) {
