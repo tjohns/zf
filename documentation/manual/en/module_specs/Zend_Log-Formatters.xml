@@ -48,6 +48,8 @@ $logger->info('there');
       parameter: the format string.  This string contains keys surrounded by
       percent signs (e.g. <code>%message%</code>).  The format string may
       contain any key from the event data array.
+      You can retrieve the default keys by using the DEFAULT_FORMAT constant from
+      <code>Zend_Log_Formatter_Simple</code>.
     </para>
   </sect2>
 
