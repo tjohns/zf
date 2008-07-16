@@ -115,6 +115,13 @@
         <title>Zend_Debug</title>
         <xi:include href="module_specs/Zend_Debug.xml" />
     </chapter>
+    <chapter id="zend.dojo">
+        <title>Zend_Dojo</title>
+        <xi:include href="module_specs/Zend_Dojo.xml" />
+        <xi:include href="module_specs/Zend_Dojo-Data.xml" />
+        <xi:include href="module_specs/Zend_Dojo-View.xml" parse="xml" />
+        <xi:include href="module_specs/Zend_Dojo-Form.xml" parse="xml" />
+    </chapter>
     <chapter id="zend.dom">
         <title>Zend_Dom</title>
         <xi:include href="module_specs/Zend_Dom.xml" />
@@ -188,6 +195,7 @@
         <xi:include href="module_specs/Zend_Json-Basics.xml" />
         <xi:include href="module_specs/Zend_Json-Objects.xml" />
         <xi:include href="module_specs/Zend_Json-xml2json.xml" />
+        <xi:include href="module_specs/Zend_Json-Server.xml" />
     </chapter>
     <chapter id="zend.layout">
         <title>Zend_Layout</title>
