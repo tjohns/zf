@@ -354,6 +354,11 @@
         <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml" />
     </chapter>
 
+    <chapter id="zend.text">
+        <title>Zend_Text</title>
+        <xi:include href="module_specs/Zend_Text_Figlet.xml" />
+    </chapter>
+
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
         <xi:include href="module_specs/Zend_TimeSync.xml" />

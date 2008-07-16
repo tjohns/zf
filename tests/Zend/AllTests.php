@@ -76,6 +76,7 @@ require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/Session/AllTests.php';
 require_once 'Zend/Soap/AllTests.php';
 require_once 'Zend/Test/AllTests.php';
+require_once 'Zend/Text/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/TranslateTest.php';
 require_once 'Zend/Translate/AllTests.php';
@@ -151,6 +152,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTest(Zend_Soap_AllTests::suite());
         $suite->addTest(Zend_Test_AllTests::suite());
+        $suite->addTest(Zend_Text_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
         $suite->addTestSuite('Zend_TranslateTest');
         $suite->addTest(Zend_Translate_AllTests::suite());
