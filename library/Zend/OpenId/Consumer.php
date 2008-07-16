@@ -240,9 +240,15 @@ class Zend_OpenId_Consumer
             return false;
         }
         if ($params['openid_return_to'] != Zend_OpenId::selfUrl()) {
-            $this->_setError("Wrong openid.return_to '".
-                $params['openid_return_to']."' != '" . Zend_OpenId::selfUrl() ."'");
-            return false;
+            /* Ignore query part in openid.return_to */
+            $pos = strpos($params['openid_return_to'], '?');
+            if ($pos === false ||
+                SUBSTR($params['openid_return_to'], 0 , $pos) != Zend_OpenId::selfUrl()) {
+                
+                $this->_setError("Wrong openid.return_to '".
+                    $params['openid_return_to']."' != '" . Zend_OpenId::selfUrl() ."'");
+                return false;
+            }
         }
 
         if ($version >= 2.0) {
