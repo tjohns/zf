@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
 
@@ -44,6 +44,15 @@
                     <entry>Utilise les fichiers binaires gettext (*.mo)</entry>
 
                     <entry>Norme GNU pour Linux ; très rapide ; thread-safe ; besoin d'outils pour la traduction</entry>
+                </row>
+
+                <row>
+                    <entry>Ini</entry>
+
+                    <entry>Utilise de simples fichiers ini (*.ini)</entry>
+
+                    <entry>Format simple de fichier texte ; très rapide ; problèmes possibles avec les caractères
+                    Unicode</entry>
                 </row>
 
                 <row>
@@ -157,6 +166,17 @@
             une machine, qui n'est pas lisible sans outils.</para>
         </sect3>
 
+        <sect3 id="zend.translate.adapter.ini">
+            <title>Zend_Translate_Adapter_Ini</title>
+
+            <para>L'adaptateur Ini est un adaptateur qui peut être directement utiliser par les clients. Les fichiers
+            INI sont lisibles par les éditeurs de texte standard, mais souvent les éditeurs de texte ne supportent pas
+            les jeux de caractères utf8.</para>
+
+            <para>Vous devriez utiliser cet adaptateur seulement si votre client veut faire les traductions lui-même.
+            N'utilisez pas cet adaptateur comme source de traduction générique.</para>
+        </sect3>
+
         <sect3 id="zend.translate.adapter.tbx">
             <title>Zend_Translate_Adapter_Tbx</title>
 
@@ -258,7 +278,7 @@ try {
         <para>Pour utiliser le cache, vous devez juste fournir un objet de cache à la méthode
         <code>Zend_Translate::setCache()</code>. Elle prend une instance de <code>Zend_Cache</code> comme seul
         paramètre. En outre si vous utilisez n'importe quel adaptateur direct, vous pouvez employer la méthode
-        <code>setCache()</code>. Par commodité, il existe aussi une méthode statique
+        <code>setCache()</code>. Par commodité, il existe la méthode statique
         <code>Zend_Translate::getCache()</code>.</para>
 
         <programlisting role="php"><![CDATA[<?php

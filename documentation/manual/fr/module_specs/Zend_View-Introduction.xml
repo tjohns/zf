@@ -1,30 +1,25 @@
-﻿<sect1 id="zend.view.introduction">
-
+<!-- EN-Revision: 10117 -->
+<sect1 id="zend.view.introduction">
     <title>Introduction</title>
 
-    <para>
-        <code>Zend_View</code> est une classe qui permet de travailler avec la partie "Vue" du motif de conception Modèle-Vue-Contrôleur. Elle existe pour aider à garder la vue séparée du modèle et des scripts du contrôleur. Elle fournie un système d'aide, de filtres d'affichage, et d'échappement de variables.
-    </para>
+    <para><code>Zend_View</code> est une classe qui permet de travailler avec la partie "Vue" du motif de conception
+    Modèle-Vue-Contrôleur. Elle existe pour aider à garder la vue séparée du modèle et des scripts du contrôleur. Elle
+    fournie un système d'aide, de filtres d'affichage, et d'échappement de variables.</para>
 
-    <para>
-        <code>Zend_View</code> est un système de template agnostique ; vous pouvez utiliser PHP comme langage de template, ou créer des instances d'autres systèmes de templates, et les manipuler à travers les scripts de vue.
-    </para>
+    <para><code>Zend_View</code> est un système de template agnostique ; vous pouvez utiliser PHP comme langage de
+    template, ou créer des instances d'autres systèmes de templates, et les manipuler à travers les scripts de
+    vue.</para>
 
-    <para>
-        L'utilisation de <code>Zend_View</code> se déroule en deux étapes principales :
-
-        1. Votre script de contrôleur crée une instance de <code>Zend_View</code> et assigne des variables à cette instance.
-
-        2. Le contrôleur dit à <code>Zend_View</code> d'effectuer le rendu d'une vue particulière, et de ce fait va donner le contrôle au script de vue, qui va générer l'affichage.
-    </para>
+    <para>L'utilisation de <code>Zend_View</code> se déroule en deux étapes principales : 1. Votre script de contrôleur
+    crée une instance de <code>Zend_View</code> et assigne des variables à cette instance. 2. Le contrôleur dit à
+    <code>Zend_View</code> d'effectuer le rendu d'une vue particulière, et de ce fait va donner le contrôle au script de
+    vue, qui va générer l'affichage.</para>
 
     <sect2 id="zend.view.introduction.controller">
-
         <title>Script du Contrôleur</title>
 
-        <para>
-            Comme exemple simple, imaginons que votre contrôleur aie une liste de données sur des livres qu'il veut afficher en passant par une vue. Le contrôleur pourrait alors ressembler à ceci :
-        </para>
+        <para>Comme exemple simple, imaginons que votre contrôleur aie une liste de données sur des livres qu'il veut
+        afficher en passant par une vue. Le contrôleur pourrait alors ressembler à ceci :</para>
 
         <programlisting role="php"><![CDATA[<?php
 // utilise un modèle pour obtenir les données sur les livres : auteurs et titres
@@ -49,18 +44,17 @@ $view = new Zend_View();
 $view->books = $data;
 
 // et appel du script de rendu d'affichage appelé "booklist.php"
-echo $view->render('booklist.php');]]>
-        </programlisting>
-
+echo $view->render('booklist.php');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.view.introduction.view">
-
         <title>Script de vue</title>
 
-        <para>
-            Maintenant, nous avons besoin d'associer le script de vue "booklist.php". C'est un script PHP comme les autres, à une exception près : il s'exécute dans la portée de l'instance <code>Zend_View</code>, ce qui veut dire que les référence à <code>$this</code> pointent vers les attributs et les méthodes de <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôleur sont des propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base pourrait ressembler à ceci:
-      </para>
+        <para>Maintenant, nous avons besoin d'associer le script de vue "booklist.php". C'est un script PHP comme les
+        autres, à une exception près : il s'exécute dans la portée de l'instance <code>Zend_View</code>, ce qui veut
+        dire que les référence à <code>$this</code> pointent vers les attributs et les méthodes de
+        <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôleur sont des propriétés publiques de
+        l'instance <code>Zend_View</code>). Ainsi un script de vue de base pourrait ressembler à ceci :</para>
 
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
 
@@ -84,114 +78,102 @@ echo $view->render('booklist.php');]]>
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; ?>]]>
-        </programlisting>
+<?php endif; ?>]]></programlisting>
 
-        <para>
-            Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.
-        </para>
-
+        <para>Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.</para>
     </sect2>
 
     <sect2 id="zend.view.introduction.options">
         <title>Options</title>
 
-        <para>
-            <code>Zend_View</code> possède plusieurs options qui peuvent être réglées pour changer le comportement de vos scripts de vues.
-        </para>
+        <para><code>Zend_View</code> possède plusieurs options qui peuvent être réglées pour changer le comportement de
+        vos scripts de vues.</para>
 
         <itemizedlist>
             <listitem>
-                <para>
-                    <code>basePath :</code> indique le chemin de base où peuvent être trouvés les dossiers de scripts, d'aides et de filtres. Il considère une structure de dossiers de ce type :
-                </para>
+                <para><code>basePath</code> : indique le chemin de base où peuvent être trouvés les dossiers de scripts,
+                d'aides et de filtres. Il considère une structure de dossiers de ce type :</para>
 
-                <programlisting role="php"><![CDATA[
-chemin/vers/
+                <programlisting role="php"><![CDATA[chemin/vers/
     helpers/
     filters/
-    scripts/]]>
-                </programlisting>
+    scripts/]]></programlisting>
 
-                <para>
-                    Ceci peut être paramètré via les méthodes <code>setBasePath()</code>, <code>addBasePath()</code>, ou l'option <code>basePath</code> du constructeur.
-                </para>
+                <para>Ceci peut être paramétré via les méthodes <code>setBasePath()</code>, <code>addBasePath()</code>,
+                ou l'option <code>basePath</code> du constructeur.</para>
             </listitem>
 
-            <listitem><para>
-                <code>encoding</code> : indique l'encodage de caractère à utiliser avec <code>htmlentities()</code>, <code>htmlspecialchars()</code>, et tout autre opération. La valeur par défaut est ISO-8859-1 (latin1). Il peut être paramètré avec la méthode <code>setEncoding()</code> ou l'option <code>encoding</code> du constructeur.
-            </para></listitem>
+            <listitem>
+                <para><code>encoding</code> : indique l'encodage de caractère à utiliser avec
+                <code>htmlentities()</code>, <code>htmlspecialchars()</code>, et tout autre opération. La valeur par
+                défaut est ISO-8859-1 (latin1). Il peut être paramétré avec la méthode <code>setEncoding()</code> ou
+                l'option <code>encoding</code> du constructeur.</para>
+            </listitem>
 
-            <listitem><para>
-                <code>escape</code> : indique le callback que doit utiliser <code>escape()</code>. Ceci pet être paramètré avec la méthode <code>setEscape()</code> ou l'option <code>escape</code> du constructeur.
-            </para></listitem>
+            <listitem>
+                <para><code>escape</code> : indique le callback que doit utiliser <code>escape()</code>. Ceci pet être
+                paramétré avec la méthode <code>setEscape()</code> ou l'option <code>escape</code> du
+                constructeur.</para>
+            </listitem>
 
-            <listitem><para>
-                <code>filter</code> : indique un filtre à utiliser avant d'effectuer le rendu d'un script de vue. Ceci peut être paramètré avec les méthodes <code>setFilter()</code>, <code>addFilter()</code>, ou l'option <code>filter</code> du constructeur.
-            </para></listitem>
+            <listitem>
+                <para><code>filter</code> : indique un filtre à utiliser avant d'effectuer le rendu d'un script de vue.
+                Ceci peut être paramétré avec les méthodes <code>setFilter()</code>, <code>addFilter()</code>, ou
+                l'option <code>filter</code> du constructeur.</para>
+            </listitem>
 
-            <listitem><para>
-                <code>strictVars</code> : force <code>Zend_View</code> à émettre des "notices" et des "warnings" quand des variables non initialisées sont lues. Ceci peut être activé en appelant <code>strictVars(true)</code> ou en passant l'option <code>strictVars</code> au constructeur.
-            </para></listitem>
+            <listitem>
+                <para><code>strictVars</code> : force <code>Zend_View</code> à émettre des "notices" et des "warnings"
+                quand des variables non initialisées sont lues. Ceci peut être activé en appelant
+                <code>strictVars(true)</code> ou en passant l'option <code>strictVars</code> au constructeur.</para>
+            </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.view.introduction.accessors">
         <title>Accesseurs utiles</title>
 
-        <para>
-            Typiquement, vous ne devriez seulement avoir besoin d'appeler les méthodes <code>assign()</code>, <code>render()</code>, ou une des méthodes pour le paramétrage/l'ajout de chemins de filtre, d'aide et de script de vues. Cependant, si vous souhaitez étendre <code>Zend_View</code> vous-même, ou avez besoin d'accéder à quelques unes de ces méthodes internes, un certain nombre d'accesseurs existent :
-        </para>
+        <para>Typiquement, vous ne devriez seulement avoir besoin d'appeler les méthodes <code>assign()</code>,
+        <code>render()</code>, ou une des méthodes pour le paramétrage/l'ajout de chemins de filtre, d'aide et de script
+        de vues. Cependant, si vous souhaitez étendre <code>Zend_View</code> vous-même, ou avez besoin d'accéder à
+        quelques unes de ces méthodes internes, un certain nombre d'accesseurs existent :</para>
 
         <itemizedlist>
             <listitem>
-                <para>
-                    <code>getVars()</code> retournera toutes les variables assignées.
-                </para>
+                <para><code>getVars()</code> retournera toutes les variables assignées.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>clearVars()</code> effacera toutes les variables assignées ; utile si vous souhaitez ré-utiliser un objet de vue, ou contrôler les variables qui sont disponibles.
-                </para>
+                <para><code>clearVars()</code> effacera toutes les variables assignées ; utile si vous souhaitez
+                ré-utiliser un objet de vue, ou contrôler les variables qui sont disponibles.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getScriptPath($script)</code> récupèrera le chemin résolu vers un script donné..
-                </para>
+                <para><code>getScriptPath($script)</code> récupérera le chemin résolu vers un script donné..</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getScriptPaths()</code> récupèrera tous les chemins vers les scripts de vues enregistrés.
-                </para>
+                <para><code>getScriptPaths()</code> récupérera tous les chemins vers les scripts de vues
+                enregistrés.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getHelperPath($helper)</code> récupèrera le chemin résolu vers une classe d'aide nommée.
-                </para>
+                <para><code>getHelperPath($helper)</code> récupérera le chemin résolu vers une classe d'aide
+                nommée.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getHelperPaths()</code> récupèrera tous les chemins vers les aides enregistrés.
-                </para>
+                <para><code>getHelperPaths()</code> récupérera tous les chemins vers les aides enregistrés.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getFilterPath($filter)</code> récupèrera le chemin résolu vers une classe de filtre nommée.
-                </para>
+                <para><code>getFilterPath($filter)</code> récupérera le chemin résolu vers une classe de filtre
+                nommée.</para>
             </listitem>
 
             <listitem>
-                <para>
-                    <code>getFilterPaths()</code> récupèrera tous les chemins vers les filtres enregistrés.
-                </para>
+                <para><code>getFilterPaths()</code> récupérera tous les chemins vers les filtres enregistrés.</para>
             </listitem>
         </itemizedlist>
     </sect2>
-
 </sect1>

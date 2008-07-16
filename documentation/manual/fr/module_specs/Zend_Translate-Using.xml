@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9745 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.using">
     <title>Utiliser les adaptateurs de traduction</title>
 
@@ -354,6 +354,35 @@ message2,"Nachricht,2"
             <programlisting role="php"><![CDATA[$translate = new Zend_Translate('csv', 'chemin/vers/matraduction.csv', 'de', array('delimiter' => ','));
 $translate->addTranslation('chemin/vers/autretraduction.csv', 'fr');]]></programlisting>
         </example>
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.ini">
+        <title>Créer des fichiers source INI</title>
+
+        <para>Les fichiers source INI sont lisibles par l'homme mais habituellement pas très petits puisqu'ils incluent
+        également d'autres données à côté des traductions. Si vous avez des données qui seront éditables par vos
+        clients, vous pouvez aussi utiliser l'adaptateur INI dans ce cas.</para>
+
+        <example id="zend.translate.using.source.ini.example">
+            <title>Exemple avec un fichier INI</title>
+
+            <programlisting><![CDATA[[Test]
+;Commentaires possibles
+Message_1="Nachricht 1 (de)"
+Message_2="Nachricht 2 (de)"
+Message_3="Nachricht :3 (de)"]]></programlisting>
+
+            <programlisting role="php"><![CDATA[$translate = new Zend_Translate('ini', 'path/to/mytranslation.ini', 'de');
+$translate->addTranslation('path/to/other.ini', 'it');]]></programlisting>
+        </example>
+
+        <para>Les fichiers INI ont de multiples restrictions. Si une valeur dans le fichier INI contient un caractère
+        non-alphanumérique, il doit être entouré avec des guillemets doubles ("). Il y a aussi des mots réservés qui ne
+        doivent pas être utilisés en tant que clés des fichiers INI. Ceci inclue : <code>null</code>, <code>yes</code>,
+        <code>no</code>, <code>true</code> et <code>false</code>. Les valeurs <code>null</code>, <code>no</code> et
+        <code>false</code> sont retournées sous la forme "". <code>yes</code> et <code>true</code> sont retournés en
+        "1". Les caractères {}|&amp;~![()" ne doivent pas être utilisés dans la clé et ont une signification
+        particulière dans la valeur. Ne les utilisez pas ou vous rencontrerez des comportements inattendus.</para>
     </sect2>
 
     <sect2 id="zend.translate.using.options">

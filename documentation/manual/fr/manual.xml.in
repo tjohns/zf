@@ -123,6 +123,15 @@
         <title>Zend_Debug</title>
         <xi:include href="module_specs/Zend_Debug.xml" />
     </chapter>
+    <chapter id="zend.dom">
+        <title>Zend_Dom</title>
+        <xi:include href="module_specs/Zend_Dom.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dom.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dom-Query.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dom-Query.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.exception">
         <title>Zend_Exception</title>
         <xi:include href="module_specs/Zend_Exception.xml" />
@@ -406,6 +415,7 @@
         <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Session-GlobalSessionManagement.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Session-SaveHandler-DbTable.xml" />
     </chapter>
     <chapter id="zend.soap">
         <title>Zend_Soap</title>
@@ -429,6 +439,15 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+    <chapter id="zend.test">
+        <title>Zend_Test</title>
+        <xi:include href="module_specs/Zend_Test.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Test.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Test-PHPUnit.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.timesync">
