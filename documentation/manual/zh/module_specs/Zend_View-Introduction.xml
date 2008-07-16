@@ -78,11 +78,11 @@ echo $view->render('booklist.php');]]>
 
     <p>There are no books to display.</p>
 
-<?php endif;]]>
+<?php endif; ?>]]>
         </programlisting>
 
         <para>
-            注意我们使用escapte()来转义输出。
+            注意我们使用escape()来转义输出。
         </para>
 
     </sect2>

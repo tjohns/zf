@@ -101,7 +101,7 @@ echo $view->render('booklist.php');]]>
 
     <p>There are no books to display.</p>
 
-<?php endif;]]>
+<?php endif;?>]]>
         </programlisting>
 
         <para>
