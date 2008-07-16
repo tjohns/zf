@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9936 -->
+<!-- EN-Revision: 9980 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -398,8 +398,8 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // $this->helperName() をコールすると、Zend_View は
-// まず最初に "/other/path/to/helpers/HelperName.php" で "My_View_Helper_HelperName" という名前のクラスを探し、
-// 次に "/path/to/some/helpers/HelperName" で "Your_View_Helper_HelperName" という名前のクラスを探し、
+// まず最初に "/path/to/some/helpers/HelperName" で "Your_View_Helper_HelperName" という名前のクラスを探し、
+// 次に "/other/path/to/helpers/HelperName.php" で "My_View_Helper_HelperName" という名前のクラスを探し、
 // そして最後に "Zend/View/Helpers/HelperName.php" で "Zend_View_Helper_HelperName" という名前のクラスを探します。]]>
         </programlisting>
 
