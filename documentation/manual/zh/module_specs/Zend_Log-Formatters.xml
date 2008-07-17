@@ -39,7 +39,7 @@ $logger->info('there');
 
     <para>
       <code>Zend_Log_Formatter_Simple</code>的构造函数接受单个参数: 格式化字符串.该字符串包含有单个百分号包裹的键(例如,<code>%message%</code>).
-      格式化字符串可以包含来自于任何事件数据数组的键.
+      格式化字符串可以包含来自于任何事件数据数组的键。在 <code>Zend_Log_Formatter_Simple</code> 里使用 DEFAULT_FORMAT 常量，可以获取缺省键。
     </para>
   </sect2>
 
