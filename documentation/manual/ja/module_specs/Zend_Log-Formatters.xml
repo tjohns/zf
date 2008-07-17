@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10145 -->
 <sect1 id="zend.log.formatters">
   <title>フォーマッタ</title>
   <para>
@@ -50,6 +51,8 @@ $logger->info('there');
       この文字列には、キーをパーセント記号で囲んだもの
       (例. <code>%message%</code>) を含めます。
       書式指定文字列には、イベントデータの配列の任意のキーを含めることができます。
+      デフォルトのキーを取得するには、<code>Zend_Log_Formatter_Simple</code>
+      の定数 DEFAULT_FORMAT を使用します。
     </para>
   </sect2>
 
