@@ -593,6 +593,29 @@ echo $view->currencyTextBox(
     array('maxlength' => 20)
 );
 ]]></programlisting>
+
+                <note>
+                    <title>Issues with Builds</title>
+
+                    <para>
+                        There are currently <ulink
+                            url="http://trac.dojotoolkit.org/ticket/7183">known
+                        issues with using CurrencyTextBox with build
+                        layers</ulink>. A known work-around is to ensure that
+                        your document's Content-Type http-equiv meta tag sets the
+                        character set to utf-8, which you can do by calling:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+?>]]></programlisting>
+
+                    <para>
+                        This will mean, of course, that you will need to ensure
+                        that the <code>headMeta()</code> placeholder is echoed
+                        in your layout script.
+                    </para>
+                </note>
             </listitem>
 
             <listitem>
