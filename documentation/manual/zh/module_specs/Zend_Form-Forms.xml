@@ -1031,6 +1031,59 @@ $messages = $form->getMessages('username');
                 注意：当校验元素时，<code>Zend_Form</code> 发送第二个参数给每个元素的 <code>isValid()</code> 方法：被校验的数据的数组。当确定数据和合法性时，单个的校验器可以用这个来让它们来利用其它提交的值。一个典型的例子是注册表单，密码和密码确认都是必需的；密码元素可以使用密码确认做为它的校验的一部分。
             </para>
         </note>
+
+        <sect3 id="zend.form.forms.validation.errors">
+            <title> 定制错误消息 </title>
+
+            <para>
+                有时，你想定制一条或多条特定的错误消息来替代由附加到元素上的校验器所带的错误消息。
+                另外，有时候你想自己标记表单无效，从 1.6.0 版开始，通过下列方法来实现这个功能。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>addErrorMessage($message)</code>: 添加一条来显示当校验失败时的错误消息。
+                    可以多次调用，新消息就追加到堆栈。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrorMessages(array $messages)</code>: 添加多条错误消息来显示校验错误。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrorMessages(array $messages)</code>: 添加多条错误消息来显示校验错误，并覆盖先前的错误消息。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getErrorMessages()</code>: 读取已定义的定制的错误消息列表。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>clearErrorMessages()</code>: 删除已定义的定制的错误消息。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>markAsError()</code>: 标记表单已经有失败的校验。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addError($message)</code>: 添加一条消息给定制错误消息栈并标记表单无效。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrors(array $messages)</code>: 添加数条消息给定制错误消息栈并标记表单无效。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrors(array $messages)</code>: 覆盖定制的错误消息堆栈并标记表单无效。
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                所有用这个方式设置的错误可以被翻译。
+ 	 	另外，你可以插入占位符 "%value%" 来表示元素的值；当读取到错误消息时，这个当前元素值将被替换。
+            </para>
+        </sect3>        
     </sect2>
 
     <sect2 id="zend.form.forms.methods">
