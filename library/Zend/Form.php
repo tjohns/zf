@@ -109,6 +109,12 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     protected $_elementsBelongTo;
 
     /**
+     * Custom form-level error messages
+     * @var array
+     */
+    protected $_errorMessages = array();
+
+    /**
      * Are there errors in the form?
      * @var bool
      */
@@ -1869,6 +1875,116 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         return Zend_Json::encode($messages);
     }
 
+    /**
+     * Add a custom error message to return in the event of failed validation
+     * 
+     * @param  string $message 
+     * @return Zend_Form_Element
+     */
+    public function addErrorMessage($message)
+    {
+        $this->_errorMessages[] = (string) $message;
+        return $this;
+    }
+
+    /**
+     * Add multiple custom error messages to return in the event of failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function addErrorMessages(array $messages)
+    {
+        foreach ($messages as $message) {
+            $this->addErrorMessage($message);
+        }
+        return $this;
+    }
+
+    /**
+     * Same as addErrorMessages(), but clears custom error message stack first
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function setErrorMessages(array $messages)
+    {
+        $this->clearErrorMessages();
+        return $this->addErrorMessages($messages);
+    }
+
+    /**
+     * Retrieve custom error messages
+     * 
+     * @return array
+     */
+    public function getErrorMessages()
+    {
+        return $this->_errorMessages;
+    }
+
+    /**
+     * Clear custom error messages stack
+     * 
+     * @return Zend_Form_Element
+     */
+    public function clearErrorMessages()
+    {
+        $this->_errorMessages = array();
+        return $this;
+    }
+
+    /**
+     * Mark the element as being in a failed validation state
+     * 
+     * @return Zend_Form_Element
+     */
+    public function markAsError()
+    {
+        $this->_errorsExist = true;
+        return $this;
+    }
+
+    /**
+     * Add an error message and mark element as failed validation
+     * 
+     * @param  string $message 
+     * @return Zend_Form_Element
+     */
+    public function addError($message)
+    {
+        $this->addErrorMessage($message);
+        $this->markAsError();
+        return $this;
+    }
+
+    /**
+     * Add multiple error messages and flag element as failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function addErrors(array $messages)
+    {
+        foreach ($messages as $message) {
+            $this->addError($message);
+        }
+        return $this;
+    }
+
+    /**
+     * Overwrite any previously set error messages and flag as failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function setErrors(array $messages)
+    {
+        $this->clearErrorMessages();
+        return $this->addErrors($messages);
+    }
+
+
     public function persistData()
     {
     }
@@ -1938,6 +2054,11 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 }
                 $arrayKeys[$key] = $array;
             }
+        }
+
+        $customMessages = $this->_getErrorMessages();
+        if ($this->isErrors() && !empty($customMessages)) {
+            return $customMessages;
         }
 
         $messages = array();
@@ -2666,5 +2787,22 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         }
 
         return $instance;
+    }
+
+    /**
+     * Retrieve optionally translated custom error messages
+     * 
+     * @return array
+     */
+    protected function _getErrorMessages()
+    {
+        $messages   = $this->getErrorMessages();
+        $translator = $this->getTranslator();
+        if (null !== $translator) {
+            foreach ($messages as $key => $message) {
+                $messages[$key] = $translator->translate($message);
+            }
+        }
+        return $messages;
     }
 }

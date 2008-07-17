@@ -2085,6 +2085,102 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**#@+
+     * @see ZF-2988
+     */
+    public function testSettingErrorMessageShouldOverrideValidationErrorMessages()
+    {
+        $this->form->addElement('text', 'foo', array('validators' => array('Alpha')));
+        $this->form->addErrorMessage('Invalid values entered');
+        $this->assertFalse($this->form->isValid(array('foo' => 123)));
+        $messages = $this->form->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Invalid values entered', array_shift($messages));
+    }
+
+    public function testCustomErrorMessagesShouldBeManagedInAStack()
+    {
+        $this->form->addElement('text', 'foo', array('validators' => array('Alpha')));
+        $this->form->addErrorMessage('Invalid values entered');
+        $this->form->addErrorMessage('Really, they are not valid');
+        $messages = $this->form->getErrorMessages();
+        $this->assertEquals(2, count($messages));
+
+        $this->assertFalse($this->form->isValid(array('foo' => 123)));
+        $messages = $this->form->getMessages();
+        $this->assertEquals(2, count($messages));
+        $this->assertEquals('Invalid values entered', array_shift($messages));
+        $this->assertEquals('Really, they are not valid', array_shift($messages));
+    }
+
+    public function testShouldAllowSettingMultipleErrorMessagesAtOnce()
+    {
+        $set1 = array('foo', 'bar', 'baz');
+        $this->form->addErrorMessages($set1);
+        $this->assertSame($set1, $this->form->getErrorMessages());
+    }
+
+    public function testSetErrorMessagesShouldOverwriteMessages()
+    {
+        $set1 = array('foo', 'bar', 'baz');
+        $set2 = array('bat', 'cat');
+        $this->form->addErrorMessages($set1);
+        $this->assertSame($set1, $this->form->getErrorMessages());
+        $this->form->setErrorMessages($set2);
+        $this->assertSame($set2, $this->form->getErrorMessages());
+    }
+
+    public function testCustomErrorMessageStackShouldBeClearable()
+    {
+        $this->testCustomErrorMessagesShouldBeManagedInAStack();
+        $this->form->clearErrorMessages();
+        $messages = $this->form->getErrorMessages();
+        $this->assertTrue(empty($messages));
+    }
+
+    public function testCustomErrorMessagesShouldBeTranslated()
+    {
+        $translations = array(
+            'foo' => 'Foo message',
+        );
+        $translate = new Zend_Translate('array', $translations);
+        $this->form->addElement('text', 'foo', array('validators' => array('Alpha')));
+        $this->form->setTranslator($translate)
+                      ->addErrorMessage('foo');
+        $this->assertFalse($this->form->isValid(array('foo' => 123)));
+        $messages = $this->form->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Foo message', array_shift($messages));
+    }
+
+    public function testShouldAllowMarkingFormAsInvalid()
+    {
+        $this->form->addErrorMessage('Invalid values entered');
+        $this->assertFalse($this->form->isErrors());
+        $this->form->markAsError();
+        $this->assertTrue($this->form->isErrors());
+        $messages = $this->form->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Invalid values entered', array_shift($messages));
+    }
+
+    public function testShouldAllowPushingErrorsOntoErrorStackWithErrorMessages()
+    {
+        $this->assertFalse($this->form->isErrors());
+        $this->form->setErrors(array('Error 1', 'Error 2'))
+                   ->addError('Error 3')
+                   ->addErrors(array('Error 4', 'Error 5'));
+        $this->assertTrue($this->form->isErrors());
+        $messages = $this->form->getMessages();
+        $this->assertEquals(5, count($messages));
+        foreach (range(1, 5) as $id) {
+            $message = 'Error ' . $id;
+            $this->assertContains($message, $messages);
+        }
+    }
+
+    /**#@-*/
+
     // View object
 
     public function getView()
