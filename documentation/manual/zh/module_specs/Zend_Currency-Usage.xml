@@ -184,7 +184,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">script</emphasis>: 定义哪个 script 被用来显示数字，大部分地方的缺省的 script 是 <emphasis role="strong">'Latn'</emphasis> ，它包括数字 0 到 9 。并且其它的 scripts 如 'Arab'(arabian) 也可以用。所有被支持的 scipts 可以从 <link linkend="zend.locale.appendix.numberscripts.supported">this table</link> 找到。
+                    <emphasis role="strong">script</emphasis>: 定义哪个 script 被用来显示数字，大部分地方的缺省的 script 是 <emphasis role="strong">'Latn'</emphasis> ，它包括数字 0 到 9 。并且其它的 scripts 如 'Arab'(Arabian) 也可以用。所有被支持的 scipts 可以从 <link linkend="zend.locale.appendix.numberscripts.supported">this table</link> 找到。
                 </para>
             </listitem>
             <listitem>
@@ -294,11 +294,11 @@ $currency = new Zend_Currency('en_US');
 // prints 'US$ 1,000.00'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat(Zend_Currency::USE_NAME&Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
 // prints '1.000,00 US Dollar'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat("American Dollar");
+$currency->setFormat('name' => 'American Dollar');
 // prints '1.000,00 American Dollar'
 echo $currency->toCurrency(1000);]]>
             </programlisting>
