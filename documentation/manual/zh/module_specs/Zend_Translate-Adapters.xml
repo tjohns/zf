@@ -33,6 +33,11 @@
                     <entry>Linux GNU标准;非常快;线程安全;需要工具进行转换</entry>
                 </row>
                 <row>
+                    <entry>Ini</entry>
+                    <entry>使用简单的 ini (*.ini) 文件</entry>
+                    <entry>简单文本文件格式；非常块；可能有 unicode 字符问题</entry>
+                </row>
+                <row>
                     <entry>Tbx</entry>
                     <entry>使用基于术语交换 (*.tbx/*.xml) 文件</entry>
                     <entry>程序间术语字符串工业标准；XML 格式 </entry>
@@ -125,6 +130,19 @@
                 大多数人使用本适配器，可用的工具，专业的翻译非常简单。但是 gettext 数据存储为机器可读的格式，没有工具，它是不可读的。
             </para>
         </sect3>
+        <sect3 id="zend.translate.adapter.ini">
+
+            <title>Zend_Translate_Adapter_Ini</title>
+
+            <para>
+                Ini 适配器非常简单，客户都可以直接使用。INI 文件可以用标准文本编辑器读出，但文本编辑器一般不支持 utf8 字符集。
+            </para>
+
+            <para>
+                在客户想自己翻译的情况下你只能用这个适配器，对于一般的翻译源，不要使用它。
+            </para>
+        </sect3>
+        
         <sect3 id="zend.translate.adapter.tbx">
 
             <title>Zend_Translate_Adapter_Tbx</title>
@@ -231,7 +249,7 @@ try {
 
         <para>
             为使用缓存，将只需要给 <code>Zend_Translate::setCache()</code>  方法一个缓存对象， 它把 <code>Zend_Cache</code> 的实例做为唯一的参数，并且，如果直接使用任何适配器，你可以使用 <code>setCache()</code> 方法。
-            也有个静态方法 <code>Zend_Translate::getCache()</code> 方便你的使用
+            静态方法 <code>Zend_Translate::getCache()</code> 可以方便你的使用
         </para>
 
         <programlisting role="php"><![CDATA[<?php
