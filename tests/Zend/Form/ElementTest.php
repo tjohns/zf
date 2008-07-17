@@ -1021,6 +1021,15 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($filter->allowWhiteSpace);
     }
 
+    public function testShouldUseFilterConstructorOptionsAsPassedToAddFilter()
+    {
+        $this->element->addFilter('HtmlEntities', array('quoteStyle' => ENT_QUOTES, 'charSet' => 'UTF-8'));
+        $filter = $this->element->getFilter('HtmlEntities');
+        $this->assertTrue($filter instanceof Zend_Filter_HtmlEntities);
+        $this->assertEquals(ENT_QUOTES, $filter->getQuoteStyle());
+        $this->assertEquals('UTF-8', $filter->getCharSet());
+    }
+
     public function testCanAddMultipleFilters()
     {
         $this->_checkZf2794();
