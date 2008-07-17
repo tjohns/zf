@@ -86,6 +86,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_disableLoadDefaultDecorators = false;
 
     /**
+     * Custom error messages
+     * @var array
+     */
+    protected $_errorMessages = array();
+
+    /**
      * Validation errors
      * @var array
      */
@@ -108,6 +114,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @var bool
      */
     protected $_isArray = false;
+
+    /**
+     * Is the error marked as in an invalid state?
+     * @var bool
+     */
+    protected $_isError = false;
 
     /**
      * Element label
@@ -1253,8 +1265,13 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 foreach ($value as $val) {
                     if (!$validator->isValid($val, $context)) {
                         $result = false;
-                        $messages = array_merge($messages, $validator->getMessages());
-                        $errors   = array_merge($errors,   $validator->getErrors());
+                        if ($this->_hasErrorMessages()) {
+                            $messages = $this->_getErrorMessages();
+                            $errors   = $messages;
+                        } else {
+                            $messages = array_merge($messages, $validator->getMessages());
+                            $errors   = array_merge($errors,   $validator->getErrors());
+                        }
                     }
                 }
                 if ($result) {
@@ -1264,8 +1281,13 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 continue;
             } else {
                 $result = false;
-                $messages = $validator->getMessages();
-                $errors   = array_keys($messages);
+                if ($this->_hasErrorMessages()) {
+                    $messages = $this->_getErrorMessages();
+                    $errors   = $messages;
+                } else {
+                    $messages = $validator->getMessages();
+                    $errors   = array_keys($messages);
+                }
             }
 
             $result          = false;
@@ -1278,6 +1300,132 @@ class Zend_Form_Element implements Zend_Validate_Interface
         }
 
         return $result;
+    }
+
+    /**
+     * Add a custom error message to return in the event of failed validation
+     * 
+     * @param  string $message 
+     * @return Zend_Form_Element
+     */
+    public function addErrorMessage($message)
+    {
+        $this->_errorMessages[] = (string) $message;
+        return $this;
+    }
+
+    /**
+     * Add multiple custom error messages to return in the event of failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function addErrorMessages(array $messages)
+    {
+        foreach ($messages as $message) {
+            $this->addErrorMessage($message);
+        }
+        return $this;
+    }
+
+    /**
+     * Same as addErrorMessages(), but clears custom error message stack first
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function setErrorMessages(array $messages)
+    {
+        $this->clearErrorMessages();
+        return $this->addErrorMessages($messages);
+    }
+
+    /**
+     * Retrieve custom error messages
+     * 
+     * @return array
+     */
+    public function getErrorMessages()
+    {
+        return $this->_errorMessages;
+    }
+
+    /**
+     * Clear custom error messages stack
+     * 
+     * @return Zend_Form_Element
+     */
+    public function clearErrorMessages()
+    {
+        $this->_errorMessages = array();
+        return $this;
+    }
+
+    /**
+     * Mark the element as being in a failed validation state
+     * 
+     * @return Zend_Form_Element
+     */
+    public function markAsError()
+    {
+        $messages       = $this->getMessages();
+        $customMessages = $this->_getErrorMessages();
+        $messages       = $messages + $customMessages;
+        if (empty($messages)) {
+            $this->_isError = true;
+        } else {
+            $this->_messages = $messages;
+        }
+        return $this;
+    }
+
+    /**
+     * Add an error message and mark element as failed validation
+     * 
+     * @param  string $message 
+     * @return Zend_Form_Element
+     */
+    public function addError($message)
+    {
+        $this->addErrorMessage($message);
+        $this->markAsError();
+        return $this;
+    }
+
+    /**
+     * Add multiple error messages and flag element as failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function addErrors(array $messages)
+    {
+        foreach ($messages as $message) {
+            $this->addError($message);
+        }
+        return $this;
+    }
+
+    /**
+     * Overwrite any previously set error messages and flag as failed validation
+     * 
+     * @param  array $messages 
+     * @return Zend_Form_Element
+     */
+    public function setErrors(array $messages)
+    {
+        $this->clearErrorMessages();
+        return $this->addErrors($messages);
+    }
+
+    /**
+     * Are there errors registered?
+     * 
+     * @return bool
+     */
+    public function hasErrors()
+    {
+        return (!empty($this->_messages) || $this->_isError);
     }
 
     /**
@@ -1896,5 +2044,34 @@ class Zend_Form_Element implements Zend_Validate_Interface
         }
 
         return $instance;
+    }
+
+    /**
+     * Retrieve error messages and perform translation and value substitution
+     * 
+     * @return array
+     */
+    protected function _getErrorMessages()
+    {
+        $translator = $this->getTranslator();
+        $messages   = $this->getErrorMessages();
+        $value      = $this->getValue();
+        foreach ($messages as $key => $message) {
+            if (null !== $translator) {
+                $message = $translator->translate($message);
+            }
+            $messages[$key] = str_replace('%value%', $value, $message);
+        }
+        return $messages;
+    }
+
+    /**
+     * Are there custom error messages registered?
+     * 
+     * @return bool
+     */
+    protected function _hasErrorMessages()
+    {
+        return !empty($this->_errorMessages);
     }
 }

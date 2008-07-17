@@ -794,6 +794,123 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($translations['notDigits'], $message);
     }
 
+    /**#@+
+     * @see ZF-2988
+     */
+    public function testSettingErrorMessageShouldOverrideValidationErrorMessages()
+    {
+        $this->element->addValidator('Alpha');
+        $this->element->addErrorMessage('Invalid value entered');
+        $this->assertFalse($this->element->isValid(123));
+        $messages = $this->element->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Invalid value entered', array_shift($messages));
+    }
+
+    public function testCustomErrorMessagesShouldBeManagedInAStack()
+    {
+        $this->element->addValidator('Alpha');
+        $this->element->addErrorMessage('Invalid value entered');
+        $this->element->addErrorMessage('Really, it is not valid');
+        $messages = $this->element->getErrorMessages();
+        $this->assertEquals(2, count($messages));
+
+        $this->assertFalse($this->element->isValid(123));
+        $messages = $this->element->getMessages();
+        $this->assertEquals(2, count($messages));
+        $this->assertEquals('Invalid value entered', array_shift($messages));
+        $this->assertEquals('Really, it is not valid', array_shift($messages));
+    }
+
+    public function testShouldAllowSettingMultipleErrorMessagesAtOnce()
+    {
+        $set1 = array('foo', 'bar', 'baz');
+        $this->element->addErrorMessages($set1);
+        $this->assertSame($set1, $this->element->getErrorMessages());
+    }
+
+    public function testSetErrorMessagesShouldOverwriteMessages()
+    {
+        $set1 = array('foo', 'bar', 'baz');
+        $set2 = array('bat', 'cat');
+        $this->element->addErrorMessages($set1);
+        $this->assertSame($set1, $this->element->getErrorMessages());
+        $this->element->setErrorMessages($set2);
+        $this->assertSame($set2, $this->element->getErrorMessages());
+    }
+
+    public function testCustomErrorMessageStackShouldBeClearable()
+    {
+        $this->testCustomErrorMessagesShouldBeManagedInAStack();
+        $this->element->clearErrorMessages();
+        $messages = $this->element->getErrorMessages();
+        $this->assertTrue(empty($messages));
+    }
+
+    public function testCustomErrorMessagesShouldBeTranslated()
+    {
+        $translations = array(
+            'foo' => 'Foo message',
+        );
+        $translate = new Zend_Translate('array', $translations);
+        $this->element->setTranslator($translate)
+                      ->addErrorMessage('foo')
+                      ->addValidator('Alpha');
+        $this->assertFalse($this->element->isValid(123));
+        $messages = $this->element->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Foo message', array_shift($messages));
+    }
+
+    public function testCustomErrorMessagesShouldAllowValueSubstitution()
+    {
+        $this->element->addErrorMessage('"%value%" is an invalid value')
+                      ->addValidator('Alpha');
+        $this->assertFalse($this->element->isValid(123));
+        $this->assertTrue($this->element->hasErrors());
+        $messages = $this->element->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('"123" is an invalid value', array_shift($messages));
+    }
+
+    public function testShouldAllowMarkingElementAsInvalid()
+    {
+        $this->element->setValue('foo');
+        $this->element->addErrorMessage('Invalid value entered');
+        $this->assertFalse($this->element->hasErrors());
+        $this->element->markAsError();
+        $this->assertTrue($this->element->hasErrors());
+        $messages = $this->element->getMessages();
+        $this->assertEquals(1, count($messages));
+        $this->assertEquals('Invalid value entered', array_shift($messages));
+    }
+
+    public function testShouldAllowPushingErrorsOntoErrorStackWithErrorMessages()
+    {
+        $this->element->setValue('foo');
+        $this->assertFalse($this->element->hasErrors());
+        $this->element->setErrors(array('Error 1', 'Error 2'))
+                      ->addError('Error 3')
+                      ->addErrors(array('Error 4', 'Error 5'));
+        $this->assertTrue($this->element->hasErrors());
+        $messages = $this->element->getMessages();
+        $this->assertEquals(5, count($messages));
+        foreach (range(1, 5) as $id) {
+            $message = 'Error ' . $id;
+            $this->assertContains($message, $messages);
+        }
+    }
+
+    public function testHasErrorsShouldIndicateStatusOfValidationErrors()
+    {
+        $this->element->setValue('foo');
+        $this->assertFalse($this->element->hasErrors());
+        $this->element->markAsError();
+        $this->assertTrue($this->element->hasErrors());
+    }
+
+    /**#@-*/
+
     /** ZF-2568 */
     public function testTranslatedMessagesCanContainVariableSubstitution()
     {
