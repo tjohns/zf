@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10189 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -182,6 +183,60 @@ $router->addRoute('archive', $route);]]>
             <code>http://example.com/archive/test</code> はマッチしません。
             この場合はチェイン内の次のルートに処理を移します。
         </para>
+    </sect4>
+    
+    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
+        <title>ホスト名によるルーティング</title>
+
+        <para>
+            ホスト名を使用してルートのマッチングを行うこともできます。
+            シンプルなマッチングには、静的なホスト名を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    array(
+        'host' => 'blog.mysite.com',
+        'path' => 'archive'
+    ),
+    array(
+        'module'     => 'blog',
+        'controller' => 'archive',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);]]>
+        </programlisting>
+
+        <para>
+            ホスト名の中のパラメータにマッチさせたい場合は、
+            regex オプションを使用します。
+            次の例では、アクションコントローラの username
+            パラメータをサブドメインとして使用します。
+            このルートを構成する際には、
+            username パラメータをその他のパス変数と同様に渡します。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$route = new Zend_Controller_Router_Route(
+    array(
+        'host' => array(
+            'regex'   => '([a-z]+).mysite.com',
+            'reverse' => '%s.mysite.com'
+            'params'  => array(
+                1 => 'username'
+            ) 
+        ),
+        'path' => ''
+    ),
+    array(
+        'module'     => 'users',
+        'controller' => 'profile',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('profile', $route);]]>
+        </programlisting>
     </sect4>
 </sect3>
 <!--
