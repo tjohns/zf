@@ -1024,7 +1024,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     public function hasSingleNormFile()
     {
-        return $this->_hasSingleNormFile ? 1 : 0;
+        return $this->_hasSingleNormFile ? true : false;
     }
 
     /**
@@ -1034,7 +1034,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     public function isCompound()
     {
-        return $this->_isCompound ? 1 : 0;
+        return $this->_isCompound ? true : false;
     }
 
     /**
