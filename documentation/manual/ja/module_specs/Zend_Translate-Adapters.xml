@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
@@ -34,6 +34,11 @@
                     <entry>Gettext</entry>
                     <entry>gettext のバイナリファイル (*.mo)</entry>
                     <entry>linux における GNU の標準形式。非常に高速。スレッドセーフ。翻訳用ツールが必要。</entry>
+                </row>
+                <row>
+                    <entry>Ini</entry>
+                    <entry>シンプルな ini ファイル (*.ini)</entry>
+                    <entry>シンプルなテキスト形式。非常に高速。Unicode 文字で問題が発生する可能性がある。</entry>
                 </row>
                 <row>
                     <entry>Tbx</entry>
@@ -162,6 +167,24 @@
                 便利なツールを使用することで、高品質な翻訳が簡単に作成できます。
                 しかし、gettext のデータは機械が読める形式で保存されるので、
                 何らかのツールがないと人間が読むことはできません。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.ini">
+
+            <title>Zend_Translate_Adapter_Ini</title>
+
+            <para>
+                Ini アダプタは非常にシンプルなアダプタであり、
+                顧客が直接触ることができます。
+                INI ファイルは標準的なテキストエディタで読むことができますが、
+                エディタによっては utf8 文字セットをサポートしていないものもあります。
+            </para>
+
+            <para>
+                このアダプタを使うのは、
+                顧客が自分で翻訳を行いたいという場合だけにしましょう。
+                汎用的な翻訳ソースとしては使用しないようにしましょう。
             </para>
         </sect3>
 

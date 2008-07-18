@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9745 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -525,6 +525,47 @@ $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array(
 $translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.ini">
+
+        <title>INI ソースファイルの作成</title>
+
+        <para>
+            INI ソースファイルは可読性がありますが、
+            翻訳以外のデータを含めるとサイズはそれほど小さくなりません。
+            直接顧客に変更させるようなデータの場合にも
+            INI アダプタが使えるでしょう。
+        </para>
+
+        <example id="zend.translate.using.source.ini.example">
+            <title>INI ファイルの例</title>
+            <programlisting><![CDATA[
+[Test]
+;TestPage Comment
+Message_1="Nachricht 1 (de)"
+Message_2="Nachricht 2 (de)"
+Message_3="Nachricht :3 (de)"]]>
+            </programlisting>
+
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('ini', 'path/to/mytranslation.ini', 'de');
+$translate->addTranslation('path/to/other.ini', 'it');]]>
+            </programlisting>
+        </example>
+
+        <para>
+            INI にはいくつかの制約があります。
+            INI ファイルの値に非英数字が含まれる場合は、値をダブルクォート (")
+            で囲まなければなりません。また、ini ファイルのキーとしては使えない予約語があります。
+            予約語には null, yes, no, true, そして false があります。
+            値に null, no および false を指定するとそれは ""
+            と同じ扱いとなり、yes と true を指定するとそれは "1" と同じ扱いとなります。
+            {}|&amp;~![()" といった文字はキーの中では使えず、
+            また値の中で使用すると特別な意味を持つことになります。
+            予期せぬ挙動を起こすようなら、このアダプタを使わないようにしましょう。
+        </para>
 
     </sect2>
 
