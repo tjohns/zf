@@ -761,7 +761,7 @@ class Zend_Soap_Client
     /**
      * Initialize SOAP Client object
      *
-     * @throws Zend_Search_Client_Exception
+     * @throws Zend_Soap_Client_Exception
      */
     protected function _initSoapClientObject()
     {
@@ -771,17 +771,17 @@ class Zend_Soap_Client
 
         if ($wsdl == null) {
             if (!isset($options['location'])) {
-                throw new Zend_Search_Client_Exception('\'location\' parameter is required in non-WSDL mode.');
+                throw new Zend_Soap_Client_Exception('\'location\' parameter is required in non-WSDL mode.');
             }
             if (!isset($options['uri'])) {
-                throw new Zend_Search_Client_Exception('\'uri\' parameter is required in non-WSDL mode.');
+                throw new Zend_Soap_Client_Exception('\'uri\' parameter is required in non-WSDL mode.');
             }
         } else {
             if (isset($options['use'])) {
-                throw new Zend_Search_Client_Exception('\'use\' parameter only works in non-WSDL mode.');
+                throw new Zend_Soap_Client_Exception('\'use\' parameter only works in non-WSDL mode.');
             }
             if (isset($options['style'])) {
-                throw new Zend_Search_Client_Exception('\'style\' parameter only works in non-WSDL mode.');
+                throw new Zend_Soap_Client_Exception('\'style\' parameter only works in non-WSDL mode.');
             }
         }
         unset($options['wsdl']);
@@ -813,12 +813,12 @@ class Zend_Soap_Client
      * Return a list of available functions
      *
      * @return array
-     * @throws Zend_Search_Client_Exception
+     * @throws Zend_Soap_Client_Exception
      */
     public function getFunctions()
     {
     	if ($this->getWsdl() == null) {
-    		throw new Zend_Search_Client_Exception('\'getFunctions\' method is available only in WSDL mode.');
+    		throw new Zend_Soap_Client_Exception('\'getFunctions\' method is available only in WSDL mode.');
     	}
 
         if ($this->_soapClient == null) {
@@ -832,12 +832,12 @@ class Zend_Soap_Client
      * Return a list of SOAP types
      *
      * @return array
-     * @throws Zend_Search_Client_Exception
+     * @throws Zend_Soap_Client_Exception
      */
     public function getTypes()
     {
         if ($this->getWsdl() == null) {
-            throw new Zend_Search_Client_Exception('\'getTypes\' method is available only in WSDL mode.');
+            throw new Zend_Soap_Client_Exception('\'getTypes\' method is available only in WSDL mode.');
         }
 
         if ($this->_soapClient == null) {
