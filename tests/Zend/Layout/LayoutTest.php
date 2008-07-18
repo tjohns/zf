@@ -404,7 +404,7 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         $this->assertNull(Zend_Layout::getMvcInstance());
     }
 
-    public function testGetMvcInstanceReturnsLayoutInstancelWhenStartMvcHasBeenCalled()
+    public function testGetMvcInstanceReturnsLayoutInstanceWhenStartMvcHasBeenCalled()
     {
         $layout = Zend_Layout::startMvc();
         $received = Zend_Layout::getMvcInstance();
@@ -482,6 +482,21 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foobar-helper-output', $layout->render());
     }
     
+    public function testResettingMvcInstanceUnregistersHelperAndPlugin()
+    {
+        $this->testGetMvcInstanceReturnsLayoutInstanceWhenStartMvcHasBeenCalled();
+        Zend_Layout::resetMvcInstance();
+        $front = Zend_Controller_Front::getInstance();
+        $this->assertFalse($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout'), 'Plugin not unregistered');
+        $this->assertFalse(Zend_Controller_Action_HelperBroker::hasHelper('Layout'), 'Helper not unregistered');
+    }
+
+    public function testResettingMvcInstanceRemovesMvcSingleton()
+    {
+        $this->testGetMvcInstanceReturnsLayoutInstanceWhenStartMvcHasBeenCalled();
+        Zend_Layout::resetMvcInstance();
+        $this->assertNull(Zend_Layout::getMvcInstance());
+    }
 }
 
 /**

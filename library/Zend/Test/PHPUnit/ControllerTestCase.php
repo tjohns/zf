@@ -9,6 +9,9 @@ require_once 'Zend/Controller/Front.php';
 /** Zend_Controller_Action_HelperBroker */
 require_once 'Zend/Controller/Action/HelperBroker.php';
 
+/** Zend_Layout */
+require_once 'Zend/Layout.php';
+
 /** Zend_Session */
 require_once 'Zend/Session.php';
 
@@ -180,6 +183,7 @@ class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
         $_SESSION = array();
         $this->_request  = null;
         $this->_response = null;
+        Zend_Layout::resetMvcInstance();
         Zend_Controller_Action_HelperBroker::resetHelpers();
         $this->frontController->resetInstance();
         Zend_Session::$_unitTestEnabled = true;

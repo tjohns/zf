@@ -192,6 +192,32 @@ class Zend_Layout
     }
 
     /**
+     * Reset MVC instance
+     *
+     * Unregisters plugins and helpers, and destroys MVC layout instance.
+     * 
+     * @return void
+     */
+    public static function resetMvcInstance()
+    {
+        if (null !== self::$_mvcInstance) {
+            $layout = self::$_mvcInstance;
+            $pluginClass = $layout->getPluginClass();
+            $front = Zend_Controller_Front::getInstance();
+            if ($front->hasPlugin($pluginClass)) {
+                $front->unregisterPlugin($pluginClass);
+            }
+
+            if (Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
+                Zend_Controller_Action_HelperBroker::removeHelper('layout');
+            }
+
+            unset($layout);
+            self::$_mvcInstance = null;
+        }
+    }
+
+    /**
      * Set options en masse
      * 
      * @param  array $options 
