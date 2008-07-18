@@ -1,25 +1,24 @@
 <?php
-// Call Zend_FormTest::main() if this source file is executed directly.
+// Call Zend_View_Helper_FormTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormTest::main");
 }
 
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
-require_once 'Zend/View/Helper/Form.php';
 require_once 'Zend/View.php';
+require_once 'Zend/View/Helper/Form.php';
 
 /**
- * Test class for Zend_View_Helper_Form
+ * Test class for Zend_View_Helper_Form.
  */
-class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
      *
-     * @return void
+     * @access public
+     * @static
      */
     public static function main()
     {
@@ -33,52 +32,44 @@ class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
-     * @return void
+     * @access protected
      */
-    public function setUp()
+    protected function setUp()
     {
-        $this->view   = new Zend_View();
+        $this->view = new Zend_View();
         $this->helper = new Zend_View_Helper_Form();
         $this->helper->setView($this->view);
-        ob_start();
     }
 
     /**
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      *
-     * @return void
+     * @access protected
      */
-    public function tearDown()
+    protected function tearDown()
     {
-        ob_end_clean();
     }
 
-    public function testFormHelperCreatesFormWithProvidedContent()
+    public function testFormWithSaneInput()
     {
-        $html = $this->helper->form('foo', null, 'foobar');
-        $this->assertRegexp('#<form[^>]+id="foo".*?>#', $html);
-        $this->assertContains('</form>', $html);
-        $this->assertContains('foobar', $html);
+        $form = $this->helper->form('foo', array('action' => '/foo', 'method' => 'get'));
+        $this->assertRegexp('/<form[^>]*(id="foo")/', $form);
+        $this->assertRegexp('/<form[^>]*(action="\/foo")/', $form);
+        $this->assertRegexp('/<form[^>]*(method="get")/', $form);
     }
 
-    public function testFormHelperOmitsIdAndNamePropertiesIfBlank()
+    public function testFormWithInputNeedingEscapesUsesViewEscaping()
     {
-        $html = $this->helper->form('', 'foobar');
-        $this->assertNotRegexp('/id="/', $html);
+        $form = $this->helper->form('<&foo');
+        $this->assertContains($this->view->escape('<&foo'), $form);
     }
 
-    public function testPassingBooleanFalseContentRendersOnlyOpeningTag()
+    public function testPassingIdAsAttributeShouldRenderIdAttribAndNotName()
     {
-        $html = $this->helper->form('login', false);
-        $this->assertContains('<form', $html);
-        $this->assertNotContains('</form>', $html);
-    }
-
-    public function testFormShouldNotRenderNameAttribute()
-    {
-        $html = $this->helper->form('foo', null, 'foobar');
-        $this->assertNotRegexp('#<form[^>]+name="foo".*?>#', $html);
+        $form = $this->helper->form('foo', array('action' => '/foo', 'method' => 'get', 'id' => 'bar'));
+        $this->assertRegexp('/<form[^>]*(id="bar")/', $form);
+        $this->assertNotRegexp('/<form[^>]*(name="foo")/', $form);
     }
 }
 

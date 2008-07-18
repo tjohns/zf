@@ -120,6 +120,12 @@ class Zend_Dojo_View_Helper_FormTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('/<form[^>]*(dojoType="dijit.form.Form")/', $html, $html);
         $this->assertRegexp('/<form[^>]*(id="foo")/', $html, $html);
     }
+
+    public function testShouldNotRenderIdAsHtmlIdWhenIdPassedAsAttrib()
+    {
+        $html = $this->helper->form('foo', array('id' => 'bar'));
+        $this->assertRegexp('/<form[^>]*(id="bar")/', $html);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_FormTest::main() if this source file is executed directly.

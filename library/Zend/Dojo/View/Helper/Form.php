@@ -47,9 +47,14 @@ class Zend_Dojo_View_Helper_Form extends Zend_Dojo_View_Helper_Dijit
     protected $_module = 'dijit.form.Form';
 
     /**
+     * @var Zend_View_Helper_Form
+     */
+    protected $_helper;
+
+    /**
      * dijit.form.Form
      * 
-     * @param  int $id 
+     * @param  string $id 
      * @param  null|array $attribs HTML attributes
      * @param  false|string $content 
      * @return string
@@ -59,7 +64,11 @@ class Zend_Dojo_View_Helper_Form extends Zend_Dojo_View_Helper_Dijit
         if (!is_array($attribs)) {
             $attribs = (array) $attribs;
         }
-        $attribs['id'] = $id;
+        if (array_key_exists('id', $attribs)) {
+            $attribs['name'] = $id;
+        } else {
+            $attribs['id'] = $id;
+        }
 
         if (false === $content) {
             $content = '';
@@ -67,10 +76,21 @@ class Zend_Dojo_View_Helper_Form extends Zend_Dojo_View_Helper_Dijit
 
         $attribs = $this->_prepareDijit($attribs, array(), 'layout');
 
-        $html = '<form' . $this->_htmlAttribs($attribs) . '>'
-              . $content
-              . '</form>';
+        return $this->getFormHelper()->form($id, $attribs, $content);
+    }
 
-        return $html;
+    /**
+     * Get standard form helper
+     * 
+     * @return Zend_View_Helper_Form
+     */
+    public function getFormHelper()
+    {
+        if (null === $this->_helper) {
+            require_once 'Zend/View/Helper/Form.php';
+            $this->_helper = new Zend_View_Helper_Form;
+            $this->_helper->setView($this->view);
+        }
+        return $this->_helper;
     }
 }
