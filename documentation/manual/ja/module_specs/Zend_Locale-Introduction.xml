@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 9943 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -18,7 +18,7 @@
         <ulink url="http://en.wikipedia.org/wiki/L10n">地域化 (Localization)</ulink>
         だけでなく、
         <ulink url="http://en.wikipedia.org/wiki/L10n">国際化 (Internationalization)</ulink>
-        も必要となります。これらは、それぞれ <code>L10N</code> および <code>I18N</code>
+        も必要となります。これらは、それぞれ <code>L10n</code> および <code>I18n</code>
         と略されることもあります。国際化とは、そのシステムを特定のユーザ集団の
         (言語、地域、数値書式、財務規約、日付時刻書式などの)
         ニーズにかかわらず使用できるようにすることを言います。
@@ -26,7 +26,7 @@
         システムに明示的なサポートを追加することを言います。
         たとえば言語の翻訳や、各地域の規約 (複数形の扱い、日付、時刻、通貨、名前、
         記号、並び順など) が該当します。
-        <code>L10N</code> と <code>I18N</code> は、お互い補完しあうものです。
+        <code>L10n</code> と <code>I18n</code> は、お互い補完しあうものです。
         Zend Framework では、いくつかのコンポーネントを組み合わせることで
         これらのサポートを提供しています。たとえば Zend_Locale、Zend_Date、
         Zend_Measure、Zend_Translate、Zend_Currency そして Zend_TimeSync
