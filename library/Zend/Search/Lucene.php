@@ -291,9 +291,27 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      *
      * @return integer
      */
-    public function getFormatVersion($generation)
+    public function getFormatVersion()
     {
         return $this->_formatVersion;
+    }
+
+    /**
+     * Set index format version.
+     * Index is converted to this format at the nearest upfdate time
+     *
+     * @param int $formatVersion
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function setFormatVersion($formatVersion)
+    {
+    	if ($formatVersion != self::FORMAT_PRE_2_1  &&
+    	    $formatVersion != self::FORMAT_2_1  &&
+            $formatVersion != self::FORMAT_2_3) {
+    		throw new Zend_Search_Lucene_Exception('Unsupported index format');
+    	}
+
+    	$this->_formatVersion = $formatVersion;
     }
 
     /**
@@ -566,10 +584,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     /**
      * Returns an instance of Zend_Search_Lucene_Index_Writer for the index
      *
-     * @internal
      * @return Zend_Search_Lucene_Index_Writer
      */
-    public function getIndexWriter()
+    private function _getIndexWriter()
     {
         if (!$this->_writer instanceof Zend_Search_Lucene_Index_Writer) {
             $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos, $this->_formatVersion);
@@ -715,7 +732,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function getMaxBufferedDocs()
     {
-        return $this->getIndexWriter()->maxBufferedDocs;
+        return $this->_getIndexWriter()->maxBufferedDocs;
     }
 
     /**
@@ -730,7 +747,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function setMaxBufferedDocs($maxBufferedDocs)
     {
-        $this->getIndexWriter()->maxBufferedDocs = $maxBufferedDocs;
+        $this->_getIndexWriter()->maxBufferedDocs = $maxBufferedDocs;
     }
 
     /**
@@ -747,7 +764,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function getMaxMergeDocs()
     {
-        return $this->getIndexWriter()->maxMergeDocs;
+        return $this->_getIndexWriter()->maxMergeDocs;
     }
 
     /**
@@ -764,7 +781,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function setMaxMergeDocs($maxMergeDocs)
     {
-        $this->getIndexWriter()->maxMergeDocs = $maxMergeDocs;
+        $this->_getIndexWriter()->maxMergeDocs = $maxMergeDocs;
     }
 
     /**
@@ -786,7 +803,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function getMergeFactor()
     {
-        return $this->getIndexWriter()->mergeFactor;
+        return $this->_getIndexWriter()->mergeFactor;
     }
 
     /**
@@ -808,7 +825,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function setMergeFactor($mergeFactor)
     {
-        $this->getIndexWriter()->mergeFactor = $mergeFactor;
+        $this->_getIndexWriter()->mergeFactor = $mergeFactor;
     }
 
     /**
@@ -1251,7 +1268,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {
-        $this->getIndexWriter()->addDocument($document);
+        $this->_getIndexWriter()->addDocument($document);
         $this->_docCount++;
 
         $this->_hasChanges = true;
@@ -1281,7 +1298,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $segInfo->writeChanges();
             }
 
-            $this->getIndexWriter()->commit();
+            $this->_getIndexWriter()->commit();
 
             $this->_updateDocCount();
 
@@ -1301,7 +1318,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         $this->commit();
 
         if (count($this->_segmentInfos) > 1 || $this->hasDeletions()) {
-            $this->getIndexWriter()->optimize();
+            $this->_getIndexWriter()->optimize();
             $this->_updateDocCount();
         }
     }

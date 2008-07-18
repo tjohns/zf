@@ -106,7 +106,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         foreach ($queries as $id => $queryString) {
             $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
-            
+
             $this->assertTrue($query instanceof Zend_Search_Lucene_Search_Query);
 
             $this->assertEquals($query->rewrite($index)->__toString(), $rewritedQueries[$id]);
@@ -116,31 +116,31 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
     public function testQueryParserExceptionsHandling()
     {
         $this->assertTrue(Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed());
-        
+
         try {
             $query = Zend_Search_Lucene_Search_QueryParser::parse('contents:[business TO by}');
         } catch (Zend_Search_Lucene_Exception $e) {
             $this->fail('exception raised while parsing a query');
         }
-        
+
         $this->assertEquals('contents business to by', $query->__toString());
-        
+
         Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions();
         $this->assertFalse(Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed());
-        
+
         try {
             $query = Zend_Search_Lucene_Search_QueryParser::parse('contents:[business TO by}');
-            
+
             $this->fail('exception wasn\'t raised while parsing a query');
         } catch (Zend_Search_Lucene_Exception $e) {
             $this->assertEquals('Syntax error at char position 25.', $e->getMessage());
         }
-                
-        
+
+
         Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions();
         $this->assertTrue(Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed());
     }
-    
+
     public function testEmptyQuery()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
@@ -379,7 +379,10 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
     public function testQueryHit()
     {
-        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
+        // Restore default search field if it wasn't done by previous test because of failure
+        Zend_Search_Lucene::setDefaultSearchField(null);
+
+    	$index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
 
         $hits = $index->find('submitting AND wishlists');
         $hit = $hits[0];

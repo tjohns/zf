@@ -379,10 +379,14 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
     public function testQueryHit()
     {
-        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
+    	// Restore default search field if it wasn't done by previous test because of failure
+        Zend_Search_Lucene::setDefaultSearchField(null);
+
+    	$index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
 
         $hits = $index->find('submitting AND wishlists');
         $hit = $hits[0];
+
 
         $this->assertTrue($hit instanceof Zend_Search_Lucene_Search_QueryHit);
         $this->assertTrue($hit->getIndex() instanceof Zend_Search_Lucene_Interface);
@@ -399,7 +403,6 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
         $hits = $index->find('submitting AND wishlists');
         unset($index);
-
 
         $hit = $hits[0];
         $this->assertTrue($hit instanceof Zend_Search_Lucene_Search_QueryHit);

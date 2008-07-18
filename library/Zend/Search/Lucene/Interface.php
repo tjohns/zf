@@ -28,6 +28,43 @@
 interface Zend_Search_Lucene_Interface
 {
     /**
+     * Get current generation number
+     *
+     * Returns generation number
+     * 0 means pre-2.1 index format
+     * -1 means there are no segments files.
+     *
+     * @param Zend_Search_Lucene_Storage_Directory $directory
+     * @return integer
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory);
+
+    /**
+     * Get segments file name
+     *
+     * @param integer $generation
+     * @return string
+     */
+    public static function getSegmentFileName($generation);
+
+    /**
+     * Get index format version
+     *
+     * @return integer
+     */
+    public function getFormatVersion();
+
+    /**
+     * Set index format version.
+     * Index is converted to this format at the nearest upfdate time
+     *
+     * @param int $formatVersion
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function setFormatVersion($formatVersion);
+
+	/**
      * Returns the Zend_Search_Lucene_Storage_Directory instance for this index.
      *
      * @return Zend_Search_Lucene_Storage_Directory

@@ -177,7 +177,6 @@ class Zend_Search_Lucene_Index_Writer
     {
         if ($generation == 0) {
             // Create index in pre-2.1 mode
-
             foreach ($directory->fileList() as $file) {
                 if ($file == 'deletable' ||
                     $file == 'segments'  ||
@@ -524,7 +523,7 @@ class Zend_Search_Lucene_Index_Writer
                                                                              $hasSingleNormFile,
                                                                              $isCompound);
                     } else {
-                        // Retrieve actual detetions file generation number
+                        // Retrieve actual deletions file generation number
                         $delGen = $this->_segmentInfos[$segName]->getDelGen();
 
                         if ($delGen >= 0) {
@@ -546,7 +545,7 @@ class Zend_Search_Lucene_Index_Writer
                     		$newSegmentFile->writeByte($docStoreIsCompoundFile);
                     	} else {
                     		// Set DocStoreOffset to -1
-                    		$newSegmentFile->writeInt(-1);
+                    		$newSegmentFile->writeInt((int)0xFFFFFFFF);
                     	}
                     } else if ($docStoreOptions !== null) {
                         throw new Zend_Search_Lucene_Exception('Index conversion to lower format version is not supported.');
@@ -574,6 +573,10 @@ class Zend_Search_Lucene_Index_Writer
 
                 // delete file generation: -1 (there is no delete file yet)
                 $newSegmentFile->writeInt((int)0xFFFFFFFF);$newSegmentFile->writeInt((int)0xFFFFFFFF);
+                if ($this->_targetFormatVersion == Zend_Search_Lucene::FORMAT_2_3) {
+                    // docStoreOffset: -1 (segment doesn't use shared doc store)
+                    $newSegmentFile->writeInt((int)0xFFFFFFFF);
+                }
                 // HasSingleNormFile
                 $newSegmentFile->writeByte($segmentInfo->hasSingleNormFile());
                 // NumField
@@ -705,7 +708,11 @@ class Zend_Search_Lucene_Index_Writer
 
             foreach ($filesToDelete as $file) {
                 try {
-                    $this->_directory->deleteFile($file);
+                	/** Skip shared docstore segments deleting */
+                    /** @todo Process '.cfx' files to check if them are already unused */
+                	if (substr($file, strlen($file)-4) != '.cfx') {
+                        $this->_directory->deleteFile($file);
+                	}
                 } catch (Zend_Search_Lucene_Exception $e) {
                     if (strpos($e->getMessage(), 'Can\'t delete file') === false) {
                         // That's not "file is under processing or already deleted" exception
