@@ -948,9 +948,9 @@ class Zend_Search_Lucene_Index_SegmentInfo
                 throw new  Zend_Search_Lucene_Exception('Wrong norms file format.');
             }
 
-            foreach ($this->_fields as $fieldNum => $fieldInfo) {
+            foreach ($this->_fields as $fNum => $fieldInfo) {
                 if ($fieldInfo->isIndexed) {
-                    $this->_norms[$fieldNum] = $normfFile->readBytes($this->_docCount);
+                    $this->_norms[$fNum] = $normfFile->readBytes($this->_docCount);
                 }
             }
         } else {
