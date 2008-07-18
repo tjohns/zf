@@ -319,9 +319,12 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         }
         
         $route = $this->getRoute($name);
-        
-        $url = rtrim($this->getFrontController()->getBaseUrl(), '/') . '/';
-        return $url . $route->assemble($userParams, $reset, $encode);
-    }
+        $url   = $route->assemble($userParams, $reset, $encode);
 
+        if (!preg_match('|^[a-z]+://|', $url)) {
+            $url = rtrim($this->getFrontController()->getBaseUrl(), '/') . '/' . $url;
+        }
+
+        return $url;
+    }
 }

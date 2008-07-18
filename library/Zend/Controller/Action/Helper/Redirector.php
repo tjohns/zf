@@ -294,27 +294,13 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array   $urlOptions
      * @param  string  $name Route name
      * @param  boolean $reset
+     * @param  boolean $encode
      * @return void
      */
-    public function setGotoRoute(array $urlOptions = array(), $name = null, $reset = false)
+    public function setGotoRoute(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-        $router = Zend_Controller_Front::getInstance()->getRouter();
-
-        if (empty($name)) {
-            try {
-                $name = $router->getCurrentRouteName();
-            } catch (Zend_Controller_Router_Exception $e) {
-                if ($router->hasRoute('default')) {
-                    $name = 'default';
-                }
-            }
-        }
-
-        $route   = $router->getRoute($name);
-        $request = $this->getRequest();
-
-        $url  = rtrim($request->getBaseUrl(), '/') . '/';
-        $url .= $route->assemble($urlOptions, $reset);
+        $router = $this->getFrontController()->getRouter();
+        $url    = $router->assemble($urlOptions, $name, $reset, $encode);
 
         $this->_redirect($url);
     }
@@ -413,11 +399,12 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array   $urlOptions Array of key/value pairs used to assemble URL
      * @param  string  $name
      * @param  boolean $reset
+     * @param  boolean $encode
      * @return void
      */
-    public function gotoRoute(array $urlOptions = array(), $name = null, $reset = false)
+    public function gotoRoute(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-        $this->setGotoRoute($urlOptions, $name, $reset);
+        $this->setGotoRoute($urlOptions, $name, $reset, $encode);
 
         if ($this->getExit()) {
             $this->redirectAndExit();

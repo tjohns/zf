@@ -96,31 +96,10 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
      */
     public function url($urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
-        $front  = Zend_Controller_Front::getInstance();
-        $router = $front->getRouter();
-
-        if (empty($name)) {
-            try {
-                $name = $router->getCurrentRouteName();
-            } catch (Zend_Controller_Router_Exception $e) {
-                $name = 'default';
-            }
-        }
-
-        if ($encode) {
-            foreach ($urlOptions as $key => $option) {
-	        $urlOptions[$key] = urlencode($option);
-            }
-        }
-
-        $route   = $router->getRoute($name);
-
-        $url  = rtrim($front->getBaseUrl(), '/') . '/';
-        $url .= $route->assemble($urlOptions, $reset);
-
-        return $url;
+        $router = $this->getFrontController()->getRouter();
+        return $router->assemble($urlOptions, $name, $reset, $encode);
     }
-
+    
     /**
      * Perform helper when called as $this->_helper->url() from an action controller
      *

@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Interface */
-require_once 'Zend/Controller/Router/Route/Interface.php';
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Route
@@ -31,7 +31,7 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
 {
 
     protected $_urlVariable = ':';
@@ -94,9 +94,10 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      */
     public static function getInstance(Zend_Config $config)
     {
-        $reqs = ($config->reqs instanceof Zend_Config) ? $config->reqs->toArray() : array();
-        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
-        return new self($config->route, $defs, $reqs);
+        $route = ($config->route instanceof Zend_Config)    ? $config->route->toArray()    : $config->route;
+        $reqs  = ($config->reqs instanceof Zend_Config)     ? $config->reqs->toArray()     : array();
+        $defs  = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
+        return new self($route, $defs, $reqs);
     }
 
     /**
@@ -104,12 +105,26 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      * to a corresponding atomic parts. These parts are assigned
      * a position which is later used for matching and preparing values.
      *
-     * @param string $route Map used to match with later submitted URL path
+     * @param string|array $route Map used to match with later submitted URL path
      * @param array $defaults Defaults for map variables with keys as variable names
      * @param array $reqs Regular expression requirements for variables (keys as variable names)
      */
     public function __construct($route, $defaults = array(), $reqs = array())
     {
+        $host = null;
+        if (is_array($route)) {
+            if (!isset($route['path'])) {
+                /** @see Zend_Controller_Router_Exception */
+                require_once 'Zend/Controller/Router/Exception.php';
+                throw new Zend_Controller_Router_Exception('$route array must contain a "path" element');
+            }
+            
+            if (isset($route['host'])) {
+                $host = $route['host'];
+            }
+            
+            $route = $route['path'];
+        }
 
         $route = trim($route, $this->_urlDelimiter);
         $this->_defaults = (array) $defaults;
@@ -131,7 +146,10 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
 
         }
-
+        
+        if ($host !== null) {
+            $this->_initHostMatch($host);
+        }
     }
 
     /**
@@ -143,7 +161,11 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      */
     public function match($path)
     {
-
+        $hostResult = $this->_evalHostMatch();
+        if ($hostResult === false) {
+            return false;
+        }
+        
         $pathStaticCount = 0;
         $values = array();
 
@@ -200,8 +222,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         if ($this->_staticCount != $pathStaticCount) {
             return false;
         }
-
-        $return = $values + $this->_wildcardData + $this->_defaults;
+        
+        $return = $values + $this->_wildcardData + $this->_defaults + $hostResult;
         
         // Check if all map variables have been initialized
         foreach ($this->_variables as $var) {
@@ -210,7 +232,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
         }
 
-        $this->_values = $values;
+        $this->_values = $values + $hostResult;
         
         return $return;
 
@@ -280,8 +302,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
         }
 
-        return trim($return, $this->_urlDelimiter);
-
+        $route = trim($return, $this->_urlDelimiter);
+        $route = $this->_prependHost($route, array_merge($this->_defaults, $this->_values, $data));
+        return $route;
     }
 
     /**
