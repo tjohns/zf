@@ -60,6 +60,8 @@ class Zend_Ldap_BindTest extends PHPUnit_Framework_TestCase
         );
         if (defined('TESTS_ZEND_LDAP_PORT') && TESTS_ZEND_LDAP_PORT != 389)
             $this->_options['port'] = TESTS_ZEND_LDAP_PORT;
+        if (defined('TESTS_ZEND_LDAP_USE_START_TLS'))
+            $this->_options['useStartTls'] = TESTS_ZEND_LDAP_USE_START_TLS;
         if (defined('TESTS_ZEND_LDAP_USE_SSL'))
             $this->_options['useSsl'] = TESTS_ZEND_LDAP_USE_SSL;
         if (defined('TESTS_ZEND_LDAP_BIND_REQUIRES_DN'))
@@ -78,7 +80,7 @@ class Zend_Ldap_BindTest extends PHPUnit_Framework_TestCase
             $ldap->bind();
             $this->fail('Expected exception for empty options');
         } catch (Zend_Ldap_Exception $zle) {
-            $this->assertContains('Cannot determine username', $zle->getMessage());
+            $this->assertContains('A host parameter is required', $zle->getMessage());
         }
     }
     public function testAnonymousBind()
@@ -180,6 +182,8 @@ class Zend_Ldap_BindTest extends PHPUnit_Framework_TestCase
         try {
             $ldap->bind($this->_principalName);
         } catch (Zend_Ldap_Exception $zle) {
+			/* Note that if your server actually allows anonymous binds this test will fail.
+			 */
             $this->assertContains('Failed to retrieve DN', $zle->getMessage());
         }
     }

@@ -62,7 +62,7 @@ require_once 'Zend/Ldap.php';
 
 $options = array(
     'host' => 'dc1.w.net',
-    'useSsl' => true,
+    'useStartTls' => true,
     'username' => 'user1@w.net',
     'password' => 'pass1',
     'accountDomainName' => 'w.net',
@@ -155,12 +155,22 @@ echo "$acctname\n";]]></programlisting>
                         </entry>
                       </row>
                       <row>
-                        <entry>useSsl</entry>
+                        <entry>useStartTls</entry>
                         <entry>
-                            Whether or not the LDAP client should use SSL / TLS encrypted transport. A value of
+                            Whether or not the LDAP client should use TLS (aka SSLv2) encrypted transport. A value of
                             <code>true</code> is strongly favored in production environments to prevent passwords from
                             be transmitted in clear text. The default value is <code>false</code>, as servers
                             frequently require that a certificate be installed separately after installation.
+                            The <code>useSsl</code> and <code>useStartTls</code> options are mutually exclusive.
+                            The <code>useStartTls</code> option should be favored over <code>useSsl</code> but
+                            not all servers support this newer mechanism.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>useSsl</entry>
+                        <entry>
+                            Whether or not the LDAP client should use SSL encrypted transport. The <code>useSsl</code>
+                            and <code>useStartTls</code> options are mutually exclusive.
                         </entry>
                       </row>
                       <row>
@@ -222,6 +232,16 @@ echo "$acctname\n";]]></programlisting>
                             <code>bindRequiresDn</code> is set to <code>true</code>, in which case the default is
                             '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'. Users of custom schemas may need
                             to change this option.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>allowEmptyPassword</entry>
+                        <entry>
+                            Some LDAP servers can be configured to accept an empty string
+                            password as an anonymous bind. This behavior is almost always
+                            undesirable. For this reason, empty passwords are explicitly
+                            disallowed. Set this value to <code>true</code> to allow an
+                            empty string password to be submitted during the bind.
                         </entry>
                       </row>
                     </tbody>

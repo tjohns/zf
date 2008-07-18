@@ -73,13 +73,36 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
      */
     public function __construct(array $options = array(), $username = null, $password = null)
     {
-        $this->_options = $options;
+        $this->setOptions($options);
         if ($username !== null) {
             $this->setUsername($username);
         }
         if ($password !== null) {
             $this->setPassword($password);
         }
+    }
+
+    /**
+     * Returns the array of arrays of Zend_Ldap options of this adapter.
+     *
+     * @return array|null
+     */
+    public function getOptions()
+    {
+        return $this->_options;
+    }
+
+    /**
+     * Sets the array of arrays of Zend_Ldap options to be used by
+     * this adapter.
+     *
+     * @param  array $options The array of arrays of Zend_Ldap options
+     * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
+     */
+    public function setOptions($options)
+    {
+        $this->_options = is_array($options) ? $options : array();
+        return $this;
     }
 
     /**

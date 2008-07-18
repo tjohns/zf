@@ -289,7 +289,8 @@ define('TESTS_ZEND_LDAP_ONLINE_ENABLED', false);
  *
  * Example Configuration for Active Directory:
  *                      HOST: dc1.w.net
- *                   USE_SSL: true
+ *             USE_START_TLS: true
+ *                   USE_SSL: false
  *                  USERNAME: CN=User 1,CN=Users,DC=w,DC=net
  *            PRINCIPAL_NAME: user1@w.net
  *             LDAP_PASSWORD: pass1
@@ -315,6 +316,7 @@ define('TESTS_ZEND_LDAP_ONLINE_ENABLED', false);
  */
 define('TESTS_ZEND_LDAP_HOST', 'localhost');
 //define('TESTS_ZEND_LDAP_PORT', 389);
+define('TESTS_ZEND_LDAP_USE_START_TLS', true);
 //define('TESTS_ZEND_LDAP_USE_SSL', false);
 define('TESTS_ZEND_LDAP_USERNAME', 'CN=someUser,DC=example,DC=com');
 define('TESTS_ZEND_LDAP_PRINCIPAL_NAME', 'someUser@example.com');
