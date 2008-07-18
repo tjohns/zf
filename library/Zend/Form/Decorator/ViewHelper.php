@@ -54,14 +54,6 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
     );
 
     /**
-     * Element types representing checkboxes
-     * @var array
-     */
-    protected $_checkboxTypes = array(
-        'Zend_Form_Element_Checkbox'
-    );
-
-    /**
      * View helper to use when rendering
      * @var string
      */
@@ -203,12 +195,6 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
         foreach ($this->_buttonTypes as $type) {
             if ($element instanceof $type) {
                 return $element->getLabel();
-            }
-        }
-
-        foreach ($this->_checkboxTypes as $type) {
-            if ($element instanceof $type) {
-                return $element->getCheckedValue();
             }
         }
 

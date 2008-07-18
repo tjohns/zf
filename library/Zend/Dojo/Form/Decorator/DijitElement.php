@@ -60,14 +60,6 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
     );
 
     /**
-     * Element types passing extra options
-     * @var array
-     */
-    protected $_checkboxTypes = array(
-        'Zend_Dojo_Form_Element_CheckBox',
-    );
-
-    /**
      * Dijit option parameters
      * @var array
      */
