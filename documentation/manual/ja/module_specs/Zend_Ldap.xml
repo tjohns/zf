@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8808 -->
+<!-- EN-Revision: 10171 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -66,7 +66,7 @@ require_once 'Zend/Ldap.php';
 
 $options = array(
     'host' => 'dc1.w.net',
-    'useSsl' => true,
+    'useStartTls' => true,
     'username' => 'user1@w.net',
     'password' => 'pass1',
     'accountDomainName' => 'w.net',
@@ -168,13 +168,23 @@ echo "$acctname\n";]]></programlisting>
                         </entry>
                       </row>
                       <row>
-                        <entry>useSsl</entry>
+                        <entry>useStartTls</entry>
                         <entry>
-                            LDAP クライアント側に SSL / TLS での暗号化トランスポートを要求するか否か。
+                            LDAP クライアント側に TLS (SSLv2) での暗号化トランスポートを要求するか否か。
                             実運用環境では <code>true</code> を指定することを強く推奨します。
                             これにより、パスワードが平文で送られてしまうことを防ぎます。
                             デフォルト値は <code>false</code> です。というのも、
                             この機能を使用するにはサーバ側に別途証明書のインストールが必要となることが多いからです。
+                            <code>useSsl</code> オプションと <code>useStartTls</code> オプションは共存できません。
+                            <code>useStartTls</code> オプションのほうが <code>useSsl</code>
+                            より推奨されていますが、中にはこの新しい仕組みをサポートしていないサーバもあります。
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>useSsl</entry>
+                        <entry>
+                            LDAP クライアント側に SSL での暗号化トランスポートを要求するか否か。
+                            <code>useSsl</code> オプションと <code>useStartTls</code> オプションは共存できません。
                         </entry>
                       </row>
                       <row>
@@ -241,6 +251,16 @@ echo "$acctname\n";]]></programlisting>
                             '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'
                             となります。独自のスキーマを使用している場合は、
                             それにあわせてこのオプションを変更しなければなりません。
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>allowEmptyPassword</entry>
+                        <entry>
+                            LDAP サーバによっては、匿名バインドの際のパスワードに空文字を設定できるものもあります。
+                            この挙動は、ほとんどの場合において好ましくないものです。
+                            そのため、空のパスワードは明示的に無効にしています。
+                            この値を <code>true</code> にすると、
+                            バインド時に空文字列のパスワードを使用できるようになります。
                         </entry>
                       </row>
                     </tbody>
