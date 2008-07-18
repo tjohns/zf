@@ -401,7 +401,7 @@ function() {
                     $this->assertContains('/>', $script);
                     break;
                 case 2:
-                    $this->assertContains('dojo.registerModulePath("../custom")', $script, $script);
+                    $this->assertContains('dojo.registerModulePath("custom", "../custom")', $script, $script);
                     $this->assertContains('dojo.require("dijit.layout.ContentPane")', $script, $script);
                     $this->assertContains('dojo.require("custom.foo")', $script, $script);
                     $this->assertContains('dojo.addOnLoad(foo)', $script, $script);

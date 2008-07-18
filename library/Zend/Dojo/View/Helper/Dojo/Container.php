@@ -982,8 +982,8 @@ EOJ;
         $js = array();
         $modulePaths = $this->getModulePaths();
         if (!empty($modulePaths)) {
-            foreach ($modulePaths as $path) {
-                $js[] =  'dojo.registerModulePath("' . $this->view->escape($path) . '");';
+            foreach ($modulePaths as $module => $path) {
+                $js[] =  'dojo.registerModulePath("' . $this->view->escape($module) . '", "' . $this->view->escape($path) . '");';
             }
         }
 
