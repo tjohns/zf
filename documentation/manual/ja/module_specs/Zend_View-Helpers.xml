@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9980 -->
+<!-- EN-Revision: 10192 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -354,6 +354,7 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         <xi:include href="Zend_View-Helpers-HeadScript.xml" />
         <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
+        <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
         <xi:include href="Zend_View-Helpers-Translate.xml" />
