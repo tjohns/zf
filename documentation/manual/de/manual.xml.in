@@ -692,6 +692,9 @@
         <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Session-GlobalSessionManagement.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Session-SaveHandler-DbTable.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Session-SaveHandler-DbTable.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
 
     <chapter id="zend.soap">
