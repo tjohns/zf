@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9745 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -516,6 +516,44 @@ $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array(
 $translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.source.ini">
+
+        <title>Erstellung von INI Quelldateien</title>
+
+        <para>
+            INI Quelldateien sind menschlich lesbar aber normalerweise nicht sehr klein da Sie neben der
+            Übersetzung auch andere Daten enthalten. Wenn Sie Daten haben die von Ihrem Kunden bearbeitet
+            werden sollten können Sie auch den INI Adapter für diesen Zweck verwenden.
+        </para>
+
+        <example id="zend.translate.using.source.ini.example">
+            <title>Beispiel einer INI Datei</title>
+            <programlisting><![CDATA[
+[Test]
+;TestPage Comment
+Message_1="Nachricht 1 (de)"
+Message_2="Nachricht 2 (de)"
+Message_3="Nachricht :3 (de)"]]>
+            </programlisting>
+
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('ini', 'path/to/mytranslation.ini', 'de');
+$translate->addTranslation('path/to/other.ini', 'it');]]>
+            </programlisting>
+        </example>
+
+        <para>
+            INI Dateien haben diverse Einschränkungen. Wenn ein Wert in einer INI Datei irgendein nicht
+            alphanummerisches Zeichen enthält, muß er in doppelte Anführungszeichen (") eingeklammert werden.
+            Es gibt auch reservierte Wörter welche nicht als Schlüssel für INI Dateien verwendet werden
+            dürfen. Diese enthalten: null, no, true und false. Die Werte null, no und false führen zu "",
+            yes und true resultieren in "1". Die Zeichen {}|&amp;~![()" dürfen nirgendwo im Schlüssel
+            verwendet werden und haben im Wert eine spezielle Bedeutung. Sie sollten nicht verwendet werden
+            da sie sonst zu unerwartetem Verhlaten führen können.
+        </para>
 
     </sect2>
 
