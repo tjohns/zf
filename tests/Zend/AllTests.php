@@ -144,7 +144,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Mime_AllTests::suite());
         $suite->addTestSuite('Zend_OpenIdTest');
         $suite->addTest(Zend_OpenId_AllTests::suite());
-        $suite->addTest(Zend_Paginator_AllTests::suite());
+        $suite->addTestSuite('Zend_PaginatorTest');
         $suite->addTest(Zend_Pdf_AllTests::suite());
         $suite->addTestSuite('Zend_RegistryTest');
         $suite->addTest(Zend_Rest_AllTests::suite());
