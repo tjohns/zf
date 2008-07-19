@@ -429,8 +429,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
         }
         
         $page = $this->getItemsByPage($pageNumber);
+        $itemCount = $this->getItemCount($page);
         
-        if ($page->count() == 0) {
+        if ($itemCount == 0) {
             /**
              * @see Zend_Paginator_Exception
              */
@@ -440,7 +441,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
                                              . 'Probably no data to paginate.');
         }
         
-        if ($itemNumber > $page->count()) {
+        if ($itemNumber > $itemCount) {
             /**
              * @see Zend_Paginator_Exception
              */
