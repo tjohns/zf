@@ -150,8 +150,8 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $helperPaths = $this->helper->view->getHelperPaths();
         $test        = ucfirst($module) . '_View_Helper_';
         $found       = false;
-        foreach ($helperPaths as $info) {
-            if ($test == $info['prefix']) {
+        foreach ($helperPaths as $prefix => $paths) {
+            if ($test == $prefix) {
                 $found = true;
             }
         }
@@ -160,8 +160,8 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $filterPaths = $this->helper->view->getFilterPaths();
         $test        = ucfirst($module) . '_View_Filter_';
         $found = false;
-        foreach ($filterPaths as $info) {
-            if ($test == $info['prefix']) {
+        foreach ($filterPaths as $prefix => $paths) {
+            if ($test == $prefix) {
                 $found = true;
             }
         }
@@ -252,8 +252,8 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
 
         $helperPaths = $this->helper->view->getHelperPaths();
         $found       = false;
-        foreach ($helperPaths as $path) {
-            if ('Baz_Bat_Helper_' == $path['prefix']) {
+        foreach ($helperPaths as $prefix => $paths) {
+            if ('Baz_Bat_Helper_' == $prefix) {
                 $found = true;
             }
         }
@@ -261,8 +261,8 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
 
         $filterPaths = $this->helper->view->getFilterPaths();
         $found       = false;
-        foreach ($filterPaths as $path) {
-            if ('Baz_Bat_Filter_' == $path['prefix']) {
+        foreach ($filterPaths as $prefix => $paths) {
+            if ('Baz_Bat_Filter_' == $prefix) {
                 $found = true;
             }
         }
