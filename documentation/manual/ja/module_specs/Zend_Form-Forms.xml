@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10162 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -1271,6 +1271,73 @@ $messages = $form->getMessages('username');
                 要素の検証には「パスワード（確認）」の入力内容を使用することになるでしょう。
             </para>
         </note>
+
+        <sect3 id="zend.form.forms.validation.errors">
+            <title>独自のエラーメッセージ</title>
+
+            <para>
+                時には、要素にアタッチされたバリデータが生成するエラーメッセージではなく
+                独自のエラーメッセージを指定したくなることもあるでしょう。
+                さらに、時には自分自身でフォームを無効だとマークしたいこともあるでしょう。
+                1.6.0 以降、次のメソッドでこの機能を使用できるようになりました。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>addErrorMessage($message)</code>:
+                    フォームの検証エラーの際に表示するエラーメッセージを追加します。
+                    複数回コールすると、新しいメッセージはスタックに追加されます。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrorMessages(array $messages)</code>:
+                    フォームの検証エラーの際に表示する複数のエラーメッセージを追加します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrorMessages(array $messages)</code>:
+                    フォームの検証エラーの際に表示する複数のエラーメッセージを追加します。
+                    それまでに設定されていたすべてのメッセージを上書きします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getErrorMessages()</code>:
+                    定義済みのカスタムエラーメッセージの一覧を取得します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>clearErrorMessages()</code>:
+                    定義済みのカスタムエラーメッセージをすべて削除します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>markAsError()</code>:
+                    検証に失敗したものとしてフォームにマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addError($message)</code>:
+                    エラーメッセージをカスタムエラーメッセージスタックに追加し、
+                    フォームを無効とマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrors(array $messages)</code>:
+                    複数のエラーメッセージをカスタムエラーメッセージスタックに追加し、
+                    フォームを無効とマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrors(array $messages)</code>:
+                    指定したメッセージでカスタムエラーメッセージスタックを上書きし、
+                    フォームを無効とマークします。
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                この方式で設定したすべてのエラーは翻訳されることになります。
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.form.forms.methods">

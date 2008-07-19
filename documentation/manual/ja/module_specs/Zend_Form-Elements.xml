@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10162 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -704,6 +704,80 @@ $messages = $element->getMessages();
                 <code>clearValidators()</code> (すべてのバリデータを削除します)
             </para></listitem>
         </itemizedlist>
+
+        <sect3 id="zend.form.elements.validators.errors">
+            <title>独自のエラーメッセージ</title>
+
+            <para>
+                時には、要素にアタッチされたバリデータが生成するエラーメッセージではなく
+                独自のエラーメッセージを指定したくなることもあるでしょう。
+                さらに、時には自分自身でフォームを無効だとマークしたいこともあるでしょう。
+                1.6.0 以降、次のメソッドでこの機能を使用できるようになりました。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>addErrorMessage($message)</code>:
+                    フォームの検証エラーの際に表示するエラーメッセージを追加します。
+                    複数回コールすると、新しいメッセージはスタックに追加されます。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrorMessages(array $messages)</code>:
+                    フォームの検証エラーの際に表示する複数のエラーメッセージを追加します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrorMessages(array $messages)</code>:
+                    フォームの検証エラーの際に表示する複数のエラーメッセージを追加します。
+                    それまでに設定されていたすべてのメッセージを上書きします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getErrorMessages()</code>:
+                    定義済みのカスタムエラーメッセージの一覧を取得します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>clearErrorMessages()</code>:
+                    定義済みのカスタムエラーメッセージをすべて削除します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>markAsError()</code>:
+                    検証に失敗したものとしてフォームにマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>hasErrors()</code>:
+                    要素が、検証失敗か無効とマークのいずれかの状態になっているかどうかを取得します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addError($message)</code>: add a message to the custom
+                    エラーメッセージをカスタムエラーメッセージスタックに追加し、
+                    要素を無効とマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrors(array $messages)</code>:
+                    複数のエラーメッセージをカスタムエラーメッセージスタックに追加し、
+                    要素を無効とマークします。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrors(array $messages)</code>:
+                    指定したメッセージでカスタムエラーメッセージスタックを上書きし、
+                    要素を無効とマークします。
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                この方式で設定したすべてのエラーは翻訳されることになります。
+                さらに、プレースホルダ "%value%" を使用して要素の値を表すこともできます。
+                エラーメッセージを取得する際に、この部分が現在の要素の値に置き換えられます。
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.form.elements.decorators">
