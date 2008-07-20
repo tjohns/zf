@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10171 -->
 <sect1 id="zend.ldap.using">
 
     <title>Einleitung</title>
@@ -64,7 +65,7 @@ require_once 'Zend/Ldap.php';
 
 $options = array(
     'host' => 'dc1.w.net',
-    'useSsl' => true,
+    'useStartTls' => true,
     'username' => 'user1@w.net',
     'password' => 'pass1',
     'accountDomainName' => 'w.net',
@@ -164,15 +165,23 @@ echo "$acctname\n";]]></programlisting>
                         </entry>
                       </row>
                       <row>
-                        <entry>useSsl</entry>
+                        <entry>useStartTls</entry>
                         <entry>
-                            Ob der LDAP-Client SSL / TLS-verschlüsselte Übertragung verwenden soll.
+                            Ob der LDAP-Client TLS (auch SSL-v2) verschlüsselte Übertragung verwenden soll.
                             Der Wert <code>true</code> ist auf jeden Fall in Produktivumgebungen
-                            empfohlen, dmait Passwörter nicht im Klartext übertragen werden.
+                            empfohlen, damit Passwörter nicht im Klartext übertragen werden.
                             Der Standardwert ist <code>false</code>, weil Server fast immer
                             verlangen, dass ein Verschlüsselungszertifikat nachinstalliert wird.
                         </entry>
                       </row>
+                      <row>
+                          <entry>useSsl</entry>
+                          <entry>
+                            Ob der LDAP Client SSL verschüsselte Übertragung unterstützen sollten oder nicht.
+                            Die <code>useSsl</code> und <code>useStartTls</code> Optionen sind gegenseitig
+                            exklusiv.
+                          </entry>
+                        </row>
                       <row>
                         <entry>username</entry>
                         <entry>
@@ -238,6 +247,16 @@ echo "$acctname\n";]]></programlisting>
                             der Standardwert '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'.
                             Wenn eigene Schemata benutzt werden, muss diese Option vielleicht
                             geändert werden.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>allowEmptyPassword</entry>
+                        <entry>
+                            Einige LDAP Server können so konfiguriert werden das Sie ein leeres Passwort
+                            als anonyme Bindung akzeptieren. Dieses Verhalten ist fast immer unerwünscht.
+                            Aus diesem Grund sind leere Passwörter explizit nicht erlaubt. Wenn dieser
+                            Wert auf <code>true</code> gesetzt wird ist die Übermittlung eines leeres Passwortes
+                            wärend des Bindens erlaubt. 
                         </entry>
                       </row>
                     </tbody>
