@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9980 -->
+<!-- EN-Revision: 10192 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -350,6 +350,9 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         </xi:include>
         <xi:include href="Zend_View-Helpers-HeadTitle.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-HeadTitle.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_View-Helpers-HtmlObject.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-HtmlObject.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="Zend_View-Helpers-InlineScript.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-InlineScript.xml" /></xi:fallback>
