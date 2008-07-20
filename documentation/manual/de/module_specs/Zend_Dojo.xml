@@ -1,31 +1,29 @@
 <!-- EN-Revision: 10130 -->
 <sect1 id="zend.dojo.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        As of version 1.6.0, Zend Framework ships <ulink
-            url="http://dojotoolkit.org">Dojo Toolkit</ulink> to support
-        out-of-the-box rich internet application development. Integration
-        points with Dojo include:
+        Ab Version 1.6.0, wird der Zend Framework mit dem
+        <ulink url="http://dojotoolkit.org">Dojo Toolkit</ulink> ausgeliefert um Out-Of-The-Box reiche
+        Entwicklung von Internet Anwendungen zu unterstützen. Die Integrationspunkte mit Dojo enthalten:
     </para>
 
     <itemizedlist>
-        <listitem><para>JSON-RPC support</para></listitem>
-        <listitem><para>dojo.data compatibility</para></listitem>
-        <listitem><para>View helper to help setup the Dojo environment</para></listitem>
-        <listitem><para>Dijit-specific Zend_View helpres</para></listitem>
-        <listitem><para>Dijit-specific Zend_Form elements and decorators</para></listitem>
+        <listitem><para>JSON-RPC Unterstützung</para></listitem>
+        <listitem><para>dojo.data Kompatibilität</para></listitem>
+        <listitem><para>View Helfer um beim Setup der Dojo Umgebung zu helfen</para></listitem>
+        <listitem><para>Dijit-spezifische Zend_View Helfer</para></listitem>
+        <listitem><para>Dijit-spezifische Zend_Form Elemente und Dekoratore</para></listitem>
     </itemizedlist>
 
     <para>
-        The Dojo distribution itself may be found in the
-        <code>externals/dojo/</code> directory of the Zend Framework
-        distribution. This is a source distribution, which includes Dojo's full
-        javascript source, unit tests, and build tools. You can symlink this
-        into your javascript directory, copy it, or use the build tool to create
-        your own custom build to include in your project. Alternately, you can
-        use one of the Content Delivery Networks that offer Dojo (ZF supports
-        both the official AOL CDN as well as the Google CDN). 
+        Die Dojo Distribution selbst kann im <code>externals/dojo/</code> Verzeichnis der Zend Framework
+        Distribution gefunden werden. Es ist eine Source Distribution, welche Dojo's kompletten
+        Javascript Source enthält, Unit Tests und Build Tools. Man kann das ins eigene Javascript
+        Verzeichnis symbolisch linken, es kopieren, oder das Build Tool verwenden um einen eigenen
+        Build zu erstellen und ins eigene Projekt zu inkludieren. Alternativ kann eines der Content
+        Delivery Networks verwendet werden die Dojo anbietet (ZF unterstützt beide, den offiziellen AOL CDN
+        sowie den Google CDN).
     </para>
 </sect1>
 <!--
