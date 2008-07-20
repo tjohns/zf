@@ -225,6 +225,21 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Debug.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.dojo"> 
+        <title>Zend_Dojo</title> 
+        <xi:include href="module_specs/Zend_Dojo.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-Data.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-Data.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-View.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-View.xml" parse="xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-Form.xml" parse="xml" >
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-Form.xml" parse="xml" /></xi:fallback>
+        </xi:include>
+    </chapter> 
     <chapter id="zend.dom"> 
         <title>Zend_Dom</title> 
         <xi:include href="module_specs/Zend_Dom.xml">
@@ -391,6 +406,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Json-xml2json.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Json-xml2json.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Json-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Json-Server.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.layout">
