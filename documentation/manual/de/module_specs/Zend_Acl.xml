@@ -139,7 +139,7 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]>
             <para>
                 Wenn Zend_Acl fortfahren würde, die für weitere übergeordnete Rollen definierten
                 Regeln zu untersuchen, würde heraus gefunden werden, dass "<code>guest</code>" der
-                Zugriff auf "<code>someResource</code>"´verboten ist. Diese Tatsache führt eine
+                Zugriff auf "<code>someResource</code>" verboten ist. Diese Tatsache führt eine
                 Mehrdeutigkeit ein, weil nun "<code>someUser</code>" der Zugriff auf
                 "<code>someResource</code>" sowohl verboten als auch erlaubt ist, aufgrund der
                 vererbten Regeln von verschiedenen übergeordnete Rollen, die miteinander im Konflikt
@@ -290,7 +290,7 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
 
         <note>
             <para>
-                Generell, wendet Zend_Act eine angegebene Regel dann und nur dann an wenn eine
+                Generell, wendet Zend_Acl eine angegebene Regel dann und nur dann an, wenn eine
                 speziellere Regel nicht passt.
             </para>
         </note>
