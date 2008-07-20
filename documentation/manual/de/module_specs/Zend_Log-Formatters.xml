@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10145 -->
 <sect1 id="zend.log.formatters">
   <title>Formatter</title>
   <para>
@@ -45,6 +46,8 @@ $logger->info('dort');
       Der Konstruktor von <code>Zend_Log_Formatter_Simple</code> akzeptiert einen einzelnen Parameter: Den
       Format String. Dieser String enthält Schlüssel die durch Prozentzeichen begrenzt sind
       (z.B. <code>%message%</code>). Der Format String kann jeden Schlüssel des Event Data Arrays enthalten.
+      Die Standardschlüssel können durch Verwendung der DEFAULT_FORMAT Konstante von
+      <code>Zend_Log_Formatter_Simple</code> empfangen werden. 
     </para>
   </sect2>
 
