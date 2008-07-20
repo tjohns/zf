@@ -576,6 +576,21 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_OpenId-Provider.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.paginator"> 
+        <title>Zend_Paginator</title> 
+        <xi:include href="module_specs/Zend_Paginator-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Paginator-Usage.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Usage.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Paginator-Configuration.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Configuration.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Paginator-Advanced.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Advanced.xml" /></xi:fallback>
+        </xi:include>
+    </chapter> 
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
         <xi:include href="module_specs/Zend_Pdf-Introduction.xml">
