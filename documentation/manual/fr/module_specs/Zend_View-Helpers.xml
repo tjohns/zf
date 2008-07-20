@@ -272,9 +272,7 @@ tableau $pays =  array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagn
         <xi:include href="Zend_View-Helpers-HeadScript.xml" />
         <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
         <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
-        <xi:include href="Zend_View-Helpers-HtmlObject.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-HtmlObject.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
         <xi:include href="Zend_View-Helpers-Translate.xml">
