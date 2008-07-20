@@ -91,7 +91,7 @@
             "Sally" direkt Regeln zugeordnet werden müssen.
         </para>
         <para>
-            Auch die Möglichkeit der Vererbung von verschiedenen Rollen sehr nützlich ist, führt
+            Auch wenn die Möglichkeit der Vererbung von verschiedenen Rollen sehr nützlich ist, führt
             die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende
             Beispiel illustriert die mehrdeutigen Bedingungen und wie Zend_Acl sie auflöst.
         </para>
