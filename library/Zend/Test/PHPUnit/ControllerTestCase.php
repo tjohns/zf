@@ -64,7 +64,7 @@ class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
             throw new Zend_Exception(sprintf('Setting %s object manually is not allowed', $name));
         }
 
-        if ('_' == substr($name, 0, 1)) {
+        if ('_' == substr($name, 0, 1) && ('__' != substr($name, 0, 2))) {
             throw new Zend_Exception('Overloading of non-public properties is prohibited');
         }
 
