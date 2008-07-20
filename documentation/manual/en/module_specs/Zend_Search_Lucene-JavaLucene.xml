@@ -10,8 +10,8 @@
 
         <para>
           A detailed description of this format is available here:
-          <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
-          <footnote><para>The currently supported Lucene index file format version is v2.1.</para></footnote>.
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>
+          <footnote><para>The currently supported Lucene index file format version is 2.3 (starting from ZF 1.6).</para></footnote>.
         </para>
     </sect2>
 
