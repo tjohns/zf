@@ -609,6 +609,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
             require_once 'Zend/Controller/Action/HelperBroker.php';
             
             $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+            if (null === $viewRenderer->view) {
+                $viewRenderer->initView();
+            }
             $this->_view = $viewRenderer->view;
         }
 

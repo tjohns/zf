@@ -94,6 +94,8 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->_paginator = Zend_Paginator::factory($this->_testCollection);
         
         $this->_config = new Zend_Config_Xml(dirname(__FILE__) . '/Paginator/_files/config.xml');
+        // get a fresh new copy of ViewRenderer in each tests
+        Zend_Controller_Action_HelperBroker::resetHelpers();
         
         $this->_restorePaginatorDefaults();
     }
@@ -169,8 +171,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testAddSingleScrollingStylePrefixPath()
     {
-        $this->_restorePaginatorDefaults();
-        
         Zend_Paginator::addScrollingStylePrefixPath('prefix1', 'path1');
         $loader = Zend_Paginator::getScrollingStyleLoader();
         $paths = $loader->getPaths();
@@ -181,8 +181,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testAddSingleScrollingStylePrefixPathWithArray()
     {
-        $this->_restorePaginatorDefaults();
-        
         Zend_Paginator::addScrollingStylePrefixPaths(array('prefix' => 'prefix2',
                                                            'path'   => 'path2'));
         $loader = Zend_Paginator::getScrollingStyleLoader();
@@ -194,8 +192,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testAddMultipleScrollingStylePrefixPaths()
     {
-        $this->_restorePaginatorDefaults();
-        
         $paths = array('prefix3' => 'path3',
                        'prefix4' => 'path4',
                        'prefix5' => 'path5');
@@ -215,8 +211,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetSetDefaultScrollingStyle()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(Zend_Paginator::getDefaultScrollingStyle(), 'Sliding');
         Zend_Paginator::setDefaultScrollingStyle('Scrolling');
         $this->assertEquals(Zend_Paginator::getDefaultScrollingStyle(), 'Scrolling');
@@ -231,8 +225,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testLoadFromConfig()
     {
-        $this->_restorePaginatorDefaults();
-        
         Zend_Paginator::setConfig($this->_config->testing);
         $this->assertEquals('Scrolling', Zend_Paginator::getDefaultScrollingStyle());
         
@@ -258,8 +250,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetPagesForPageOne()
     {
-        $this->_restorePaginatorDefaults();
-        
         $expected = new stdClass();
         $expected->pageCount        = 11;
         $expected->first            = 1;
@@ -281,8 +271,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetPagesForPageTwo()
     {
-        $this->_restorePaginatorDefaults();
-        
         $expected = new stdClass();
         $expected->pageCount        = 11;
         $expected->first            = 1;
@@ -306,8 +294,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testToStringWithoutPartial()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->_paginator->setView(new Zend_View());
         $string = @$this->_paginator->__toString();
         $this->assertEquals('', $string);
@@ -315,8 +301,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testToStringWithPartial()
     {
-        $this->_restorePaginatorDefaults();
-        
         $view = new Zend_View();
         $view->addBasePath(dirname(__FILE__) . '/Paginator/_files');
         $view->addHelperPath(dirname(__FILE__) . '/../../../trunk/library/Zend/View/Helper', 'Zend_View_Helper');
@@ -331,15 +315,11 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetPageCount()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(11, $this->_paginator->count());
     }
     
     public function testGetSetItemCountPerPage()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(10, $this->_paginator->getItemCountPerPage());
         $this->_paginator->setItemCountPerPage(15);
         $this->assertEquals(15, $this->_paginator->getItemCountPerPage());
@@ -348,8 +328,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetCurrentItemCount()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->_paginator->setItemCountPerPage(10);
         $this->_paginator->setPageRange(10);
         
@@ -364,8 +342,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetCurrentItems()
     {
-        $this->_restorePaginatorDefaults();
-        
         $items = $this->_paginator->getCurrentItems();
         $this->assertType('ArrayIterator', $items);
         
@@ -380,8 +356,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetIterator()
     {
-        $this->_restorePaginatorDefaults();
-        
         $items = $this->_paginator->getIterator();
         $this->assertType('ArrayIterator', $items);
         
@@ -396,8 +370,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetSetCurrentPageNumber()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(1, $this->_paginator->getCurrentPageNumber());
         $this->_paginator->setCurrentPageNumber(-1);
         $this->assertEquals(1, $this->_paginator->getCurrentPageNumber());
@@ -411,8 +383,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetAbsoluteItemNumber()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(1, $this->_paginator->getAbsoluteItemNumber(1));
         $this->assertEquals(11, $this->_paginator->getAbsoluteItemNumber(1, 2));
         $this->assertEquals(24, $this->_paginator->getAbsoluteItemNumber(4, 3));
@@ -420,8 +390,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetItem()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(1, $this->_paginator->getItem(1));
         $this->assertEquals(11, $this->_paginator->getItem(1, 2));
         $this->assertEquals(24, $this->_paginator->getItem(4, 3));
@@ -429,8 +397,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetItemFromEmptyCollection()
     {
-        $this->_restorePaginatorDefaults();
-        
         $paginator = Zend_Paginator::factory(array());
         
         try {
@@ -443,8 +409,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetNonExistingItemFromLastPage()
     {
-        $this->_restorePaginatorDefaults();
-        
         try {
             $this->_paginator->getItem(10, 11);
         } catch (Exception $e) {
@@ -455,8 +419,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testNormalizePageNumber()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(1, $this->_paginator->normalizePageNumber(0));
         $this->assertEquals(1, $this->_paginator->normalizePageNumber(1));
         $this->assertEquals(2, $this->_paginator->normalizePageNumber(2));
@@ -468,8 +430,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testNormalizeItemNumber()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(1, $this->_paginator->normalizeItemNumber(0));
         $this->assertEquals(1, $this->_paginator->normalizeItemNumber(1));
         $this->assertEquals(2, $this->_paginator->normalizeItemNumber(2));
@@ -481,24 +441,18 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetPagesInRangeSubRange()
     {
-        $this->_restorePaginatorDefaults();
-        
         $actual = $this->_paginator->getPagesInRange(3, 8);
         $this->assertEquals(array_combine(range(3, 8), range(3, 8)), $actual);
     }
     
     public function testGetPagesInRangeOutOfBounds()
     {
-        $this->_restorePaginatorDefaults();
-        
         $actual = $this->_paginator->getPagesInRange(-1, 12);
         $this->assertEquals(array_combine(range(1, 11), range(1, 11)), $actual);
     }
     
     public function testGetItemsByPage()
     {
-        $this->_restorePaginatorDefaults();
-        
         $expected = new ArrayIterator(range(1, 10));
         
         $page1 = $this->_paginator->getItemsByPage(1);
@@ -517,26 +471,25 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetViewFromViewRenderer()
     {
-        $this->_restorePaginatorDefaults();
-        
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
         $viewRenderer->setView(new Zend_View());
                 
         $this->assertType('Zend_View_Interface', $this->_paginator->getView());
     }
     
+    public function testGetViewFromRendererWillGenerateViewIfNonexistent()
+    {
+        $this->assertType('Zend_View_Interface', $this->_paginator->getView());
+    }
+    
     public function testGetSetView()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->_paginator->setView(new Zend_View());
         $this->assertType('Zend_View_Interface', $this->_paginator->getView());
     }
     
     public function testRender()
     {
-        $this->_restorePaginatorDefaults();
-        
         try {
             $this->_paginator->render(new Zend_View());
         } catch (Exception $e) {
@@ -547,8 +500,6 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     public function testGetSetPageRange()
     {
-        $this->_restorePaginatorDefaults();
-        
         $this->assertEquals(10, $this->_paginator->getPageRange());
         $this->_paginator->setPageRange(15);
         $this->assertEquals(15, $this->_paginator->getPageRange());
