@@ -117,6 +117,12 @@ class Zend_Dojo_View_Helper_TextareaTest extends PHPUnit_Framework_TestCase
         $this->assertNotRegexp('/<textarea[^>]*(dojoType="dijit.form.Textarea")/', $html);
         $this->assertNotNull($this->view->dojo()->getDijit('elementId'));
     }
+
+    public function testPassingIdAsAttributeShouldOverrideUsingNameAsId()
+    {
+        $html = $this->helper->textarea('foo[bar]', '', array(), array('id' => 'foo-bar'));
+        $this->assertContains('id="foo-bar"', $html);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_TextareaTest::main() if this source file is executed directly.
