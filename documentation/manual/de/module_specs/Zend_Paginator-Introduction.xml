@@ -1,38 +1,37 @@
 <!-- EN-Revision: 10200 -->
 <sect1 id="zend.paginator.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        <code>Zend_Paginator</code> is a flexible component for paginating
-        collections of data and presenting that data to users.
+        <code>Zend_Paginator</code> ist eine flexible Komponente für die seitenweise Verarbeitung
+        von Sammlungen von Daten und deren Darstellung zum Benutzer.
     </para>
     
     <para>
-        The primary design goals of <code>Zend_Paginator</code> are as follows:
+        Die primären Designziele von <code>Zend_Paginator</code> sind wie folgt:
         
         <itemizedlist>
             <listitem>
                 <para>
-                    Paginate arbitrary data, not just relational databases
+                    Seitenweise Verarbeitung jeglicher Daten, nicht nur relationale Datenbanken
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Fetch only the results that need to be displayed
+                    Nur die Ergebnisse holen die Dargestellt werden sollen
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Do not force users to adhere to only one way of displaying
-                    data or rendering pagination controls
+                    Benutzer nicht dazu zwingen nur einen Weg der Anzeige von Daten oder der Darstellung
+                    von Seitenweisen Kontrollen anzuhängen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Loosely couple <code>Zend_Paginator</code> to other Zend 
-                    Framework components so that users who wish to use it 
-                    independently of <code>Zend_View</code>, 
-                    <code>Zend_Db</code>, etc. can do so
+                    Lose Kopplung von <code>Zend_Paginator</code> zu anderen Zend Framework Komponenten damit
+                    Benutzer welche es wünschen Sie auch unabhängig von <code>Zend_View</code>,
+                    <code>Zend_Db</code> usw, verwenden können
                 </para>
             </listitem>
         </itemizedlist>

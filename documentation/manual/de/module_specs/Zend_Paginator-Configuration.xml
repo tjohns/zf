@@ -1,50 +1,48 @@
 <!-- EN-Revision: 10200 -->
 <sect1 id="zend.paginator.configuration">
-    <title>Configuration</title>
+    <title>Konfiguration</title>
 
     <para>
-        <code>Zend_Paginator</code> has several configuration methods that can
-        be called:
+        <code>Zend_Paginator</code> hat verschiedene Konfigurationsmethoden die aufgerufen werden können:
     </para>
         
     <table id="zend.paginator.configuration.table">
-        <title>Configuration methods for <code>Zend_Paginator</code></title>
+        <title>Konfigurationsmethoden für <code>Zend_Paginator</code></title>
 
         <tgroup cols="2">
             <thead>
                 <row>
-                    <entry>Method</entry>
-                    <entry>Description</entry>
+                    <entry>Methode</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
                 <row>
                     <entry>setCurrentPageNumber</entry>
                     <entry>
-                        Sets the current page number (default 1).
+                        Setzt die aktuelle Seitennummer (Standardwert 1).
                     </entry>
                 </row>
                 <row>
                     <entry>setItemCountPerPage</entry>
                     <entry>
-                        Sets the maximum number of items to display on a page
-                        (default 10).
+                        Setzt die maximale Anzahl an Einträgen zu auf einer Seite angezeigt werden sollen
+                        (Standardwert 10).
                     </entry>
                 </row>
                 <row>
                     <entry>setPageRange</entry>
                     <entry>
-                        Sets the number of items to display in the pagination
-                        control (default 10). Note: Most of the time this 
-                        number will be adhered to exactly, but scrolling styles
-                        do have the option of only using it as a guideline or
-                        starting value (e.g., Elastic).
+                        Setzt eine Anzahl an Einträgen die im der Seitenkontrolle angezeigt werden sollen
+                        (Standardwert 10). Achtung: Die meiste Zeit wird diese Zahl exakt verwendet, aber
+                        Scrolling Styles haben die Option Sie nur als Richtlinie oder Startwert zu verwenden
+                        (z.B., Elastic).
                     </entry>
                 </row>
                 <row>
                     <entry>setView</entry>
                     <entry>
-                        Sets the view instance, for rendering convenience.
+                        Setzt die View Instanz für die Bequemlichkeit der Darstellung.
                     </entry>
                 </row>
             </tbody>
