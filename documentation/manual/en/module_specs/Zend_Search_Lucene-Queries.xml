@@ -347,7 +347,7 @@ $hits  = $index->find($query);]]>
 
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>Starting in 1.5, Wildcard Query</title>
+        <title>Wildcard Query</title>
         <para>
             Wildcard queries can be used to search for documents containing strings matching specified patterns.
         </para>
@@ -388,7 +388,7 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.fuzzy">
-        <title>Starting in 1.5, Fuzzy Query</title>
+        <title>Fuzzy Query</title>
         <para>
             Fuzzy queries can be used to search for documents containing strings matching terms similar to specified term.
         </para>
@@ -621,7 +621,7 @@ $hits2 = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.range">
-        <title>Starting in 1.5, Range Query</title>
+        <title>Range Query</title>
         <para>
             <link linkend="zend.search.lucene.query-language.range">Range queries</link> are intended for searching terms within specified interval.
         </para>

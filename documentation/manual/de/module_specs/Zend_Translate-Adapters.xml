@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9753 -->
+<!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
@@ -34,6 +34,11 @@
                     <entry>Gettext</entry>
                     <entry>Für binäre Gettext (*.mo) Dateien</entry>
                     <entry>GNU Standard für Linux; sehr schnell; Threadsicher; benötigt Tools für die Übersetzung</entry>
+                </row>
+                <row>
+                    <entry>Ini</entry>
+                    <entry>Für einfache ini (*.ini) Dateien</entry>
+                    <entry>Einfaches Testdatei Format; sehr schnell; mögliche Probleme mit Unicode Zeichen</entry>
                 </row>
                 <row>
                     <entry>Tbx</entry>
@@ -157,6 +162,22 @@
                 Mit den vorhandenen Tools ist eine Professionelle Übersetzung sehr einfach.
                 Aber Gettext Dateien werden in einem machinen-lesbaren Format gespeichert
                 und sind nicht ohne Tools lesbar.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.ini">
+
+            <title>Zend_Translate_Adapter_Ini</title>
+
+            <para>
+                Der INI Adapter ist ein sehr einfacher Adapter welcher sogar direkt von Kunden verwendet
+                werden kann. INI Dateien sind von standardmäßigen Texteditoren lesbar, aber Texteditoren
+                unterstützen oftmals keine UTF8 Zeichensets.
+            </para>
+
+            <para>
+                Dieser Adapter sollte nur dann verwendet werden wenn ein Kunde Übersetzungen selbst machen
+                will. Verwenden Sie diesen Adapter nicht als generelle Übersetzungsquelle.
             </para>
         </sect3>
 
