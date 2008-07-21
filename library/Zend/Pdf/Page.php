@@ -168,12 +168,12 @@ class Zend_Pdf_Page
 
     /**
      * Safe Graphics State semafore
-     * 
-     * If it's false, than we can't be sure Graphics State is restored withing 
+     *
+     * If it's false, than we can't be sure Graphics State is restored withing
      * context of previous contents stream (ex. drawing coordinate system may be rotated).
      * We should encompass existing content with save/restore GS operators
-     * 
-     * @var boolean 
+     *
+     * @var boolean
      */
     private $_safeGS;
 
@@ -251,7 +251,7 @@ class Zend_Pdf_Page
             $this->_objFactory = $param1->_objFactory;
             $this->_attached   = &$param1->_attached;
             $this->_safeGS     = false;
-            
+
             $this->_pageDictionary = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
 
             foreach ($param1->_pageDictionary->getKeys() as $key) {
@@ -384,7 +384,7 @@ class Zend_Pdf_Page
 
         return $newResName;
     }
-    
+
     /**
      * Add procedureSet to the Page description
      *
@@ -452,26 +452,26 @@ class Zend_Pdf_Page
         }
 
         if ((!$this->_safeGS)  &&  (count($this->_pageDictionary->Contents->items) != 0)) {
-        	/**
-        	 * Page already has some content which is not treated as safe.
-        	 * 
-        	 * Add save/restore GS operators
-        	 */
+            /**
+             * Page already has some content which is not treated as safe.
+             *
+             * Add save/restore GS operators
+             */
             $this->_addProcSet('PDF');
-        	
-        	$newContentsArray = new Zend_Pdf_Element_Array();
-        	$newContentsArray->items[] = $this->_objFactory->newStreamObject(" q\n");
-        	foreach ($this->_pageDictionary->Contents->items as $contentStream) {
-        		$newContentsArray->items[] = $contentStream;
-        	}
+
+            $newContentsArray = new Zend_Pdf_Element_Array();
+            $newContentsArray->items[] = $this->_objFactory->newStreamObject(" q\n");
+            foreach ($this->_pageDictionary->Contents->items as $contentStream) {
+                $newContentsArray->items[] = $contentStream;
+            }
             $newContentsArray->items[] = $this->_objFactory->newStreamObject(" Q\n");
 
-        	$this->_pageDictionary->touch();
-        	$this->_pageDictionary->Contents = $newContentsArray;
-        	
-        	$this->_safeGS = true;
+            $this->_pageDictionary->touch();
+            $this->_pageDictionary->Contents = $newContentsArray;
+
+            $this->_safeGS = true;
         }
-        
+
         $this->_pageDictionary->Contents->items[] =
                 $this->_objFactory->newStreamObject($this->_contents);
 
@@ -628,22 +628,22 @@ class Zend_Pdf_Page
      * Extract resources attached to the page
      *
      * This method is not intended to be used in userland, but helps to optimize some document wide operations
-     * 
+     *
      * returns array of Zend_Pdf_Element_Dictionary objects
-     * 
-     * @internal 
+     *
+     * @internal
      * @return array
      */
     public function extractResources()
     {
         return $this->_pageDictionary->Resources;
     }
-    
+
     /**
      * Extract fonts attached to the page
      *
      * returns array of Zend_Pdf_Resource_Font_Extracted objects
-     * 
+     *
      * @return array
      */
     public function extractFonts()
@@ -653,7 +653,7 @@ class Zend_Pdf_Page
             // Return empty array
             return array();
         }
-        
+
         $fontResources = $this->_pageDictionary->Resources->Font;
 
         $fontResourcesUnique = array();
@@ -668,27 +668,27 @@ class Zend_Pdf_Page
 
             $fontResourcesUnique[$fontDictionary->toString($this->_objFactory)] = $fontDictionary;
         }
-        
+
         $fonts = array();
         foreach ($fontResourcesUnique as $resourceReference => $fontDictionary) {
             try {
                 // Try to extract font
                 $extractedFont = new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
 
-                $fonts[$resourceReference] = $extractedFont; 
+                $fonts[$resourceReference] = $extractedFont;
             } catch (Zend_Pdf_Exception $e) {
                 if ($e->getMessage() != 'Unsupported font type.') {
                     throw $e;
                 }
             }
         }
-        
+
         return $fonts;
-    } 
+    }
 
     /**
      * Extract font attached to the page by specific font name
-     * 
+     *
      * $fontName should be specified in UTF-8 encoding
      *
      * @return Zend_Pdf_Resource_Font_Extracted|null
@@ -699,36 +699,36 @@ class Zend_Pdf_Page
             // Page doesn't have any font attached
             return null;
         }
-        
+
         $fontResources = $this->_pageDictionary->Resources->Font;
 
         foreach ($fontResources->getKeys() as $fontResourceName) {
             $fontDictionary = $fontResources->$fontResourceName;
-            
+
             if (! ($fontDictionary instanceof Zend_Pdf_Element_Reference  ||
                    $fontDictionary instanceof Zend_Pdf_Element_Object) ) {
                 // Font dictionary has to be an indirect object or object reference
                 continue;
             }
-            
+
             if ($fontDictionary->BaseFont->value != $fontName) {
                 continue;
             }
-            
+
             try {
                 // Try to extract font
-                return new Zend_Pdf_Resource_Font_Extracted($fontDictionary); 
+                return new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
             } catch (Zend_Pdf_Exception $e) {
                 if ($e->getMessage() != 'Unsupported font type.') {
                     throw $e;
                 }
-                
+
                 // Continue searhing font with specified name
             }
         }
-        
+
         return null;
-    } 
+    }
 
     /**
      * Get current font size
@@ -1349,12 +1349,20 @@ class Zend_Pdf_Page
     }
 
     /**
-     * Write raw PDF commands to the page.
+     * Writes the raw data to the page's content stream.
+     *
+     * Be sure to consult the PDF reference to ensure your syntax is correct. No
+     * attempt is made to ensure the validity of the stream data.
      *
      * @param string $data
+     * @param string $procSet (optional) Name of ProcSet to add.
      */
-    public function rawWrite($data)
+    public function rawWrite($data, $procSet = null)
     {
+        if (! empty($procSet)) {
+            $this->_addProcSet($procSet);
+        }
+        $this->_contents .= $data;
     }
 
     /**
