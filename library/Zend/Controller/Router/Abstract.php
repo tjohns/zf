@@ -149,7 +149,7 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
             return $this->_frontController;
         }
 
-        if (class_exists('Zend_Controller_Front', false)) {
+        if (!class_exists('Zend_Controller_Front', false)) {
             require_once 'Zend/Controller/Front.php';
             $this->_frontController = Zend_Controller_Front::getInstance();
             return $this->_frontController;
