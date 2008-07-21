@@ -50,19 +50,6 @@ require_once 'Zend/OpenId/ResponseHelper.php';
  */
 class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
 {
-    private $_serverVariables;
-
-    public function setUp()
-    {
-        $this->_serverVariables = $_SERVER;
-    }
-
-    public function tearDown()
-    {
-        $_SERVER = $this->_serverVariables;
-    }
-
-
     /**
      * testing testSelfUrl
      *
