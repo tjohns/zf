@@ -63,7 +63,9 @@ class Zend_Dojo_View_Helper_Textarea extends Zend_Dojo_View_Helper_Dijit
      */
     public function textarea($id, $value = null, array $params = array(), array $attribs = array())
     {
-        $attribs['id']    = $id;
+        if (!array_key_exists('id', $attribs)) {
+            $attribs['id']    = $id;
+        }
         $attribs['name']  = $id;
         $attribs['type']  = $this->_elementType;
 
