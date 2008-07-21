@@ -157,13 +157,17 @@ abstract class Zend_Translate_Adapter {
                             $locale = (string) $filename;
                         } else {
                             $found = false;
-                            $parts = explode('.', $filename);
+                            $parts  = explode('.', $filename);
+                            $parts2 = array();
                             foreach($parts as $token) {
-                                $parts = $parts + explode('_', $token);
+                                $parts2 += explode('_', $token);
                             }
+                            $parts  = array_merge($parts, $parts2);
+                            $parts2 = array();
                             foreach($parts as $token) {
-                                $parts = $parts + explode('-', $token);
+                                $parts2 += explode('-', $token);
                             }
+                            $parts = array_merge($parts, $parts2);
                             $parts = array_unique($parts);
                             $prev  = '';
                             foreach($parts as $token) {

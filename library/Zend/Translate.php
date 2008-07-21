@@ -121,7 +121,7 @@ class Zend_Translate {
         $this->_adapter = new $adapter($data, $locale, $options);
         if (!$this->_adapter instanceof Zend_Translate_Adapter) {
             require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("Adapter " . $adapter . " does not extend Zend_Translate_Adapter'");
+            throw new Zend_Translate_Exception("Adapter " . $adapter . " does not extend Zend_Translate_Adapter");
         }
     }
 
