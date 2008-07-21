@@ -599,7 +599,7 @@ abstract class Zend_Db_Table_Row_Abstract
     public function setFromArray(array $data)
     {
         foreach ($data as $columnName => $value) {
-            $this->$columnName = $value;
+            $this->__set($columnName, $value);
         }
 
         return $this;
