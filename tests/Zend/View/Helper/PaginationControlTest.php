@@ -43,8 +43,8 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $view = new Zend_View();
-        $view->addBasePath(dirname(__FILE__) . '/../_files');
-        $view->addHelperPath(dirname(__FILE__) . '/../../../../trunk/library/Zend/View/Helper', 'Zend_View_Helper');
+        $view->addBasePath(dirname(__FILE__) . '/_files');
+        $view->addHelperPath('Zend/View/Helper/', 'Zend_View_Helper');
         
         $this->_viewHelper = new Zend_View_Helper_PaginationControl();
         $this->_viewHelper->setView($view);
@@ -88,7 +88,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     {
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
         $output = $this->_viewHelper->paginationControl($this->_paginator);
-        $this->assertEquals('pagination control', $output);
+        $this->assertContains('pagination control', $output, $output);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(null);
     }
 }

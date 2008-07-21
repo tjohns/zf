@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10117 -->
 <sect1 id="zend.view.introduction">
     <title>Einführung</title>
 
@@ -95,7 +96,7 @@ echo $view->render('booklist.php');]]>
 
     <p>Es gibt keine Bücher zum Anzeigen.</p>
 
-<?php endif;]]>
+<?php endif;?>]]>
         </programlisting>
 
         <para>

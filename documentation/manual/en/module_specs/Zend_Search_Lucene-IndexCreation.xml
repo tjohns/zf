@@ -129,10 +129,10 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         <para>
             Lucene index segment files can't be updated by design. A segment update needs full segment
             reorganization. See Lucene index file formats for details
-            (<ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>)
+            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>)
             <footnote>
-        		<para>The currently supported Lucene index file format is version 2.1.</para>
-        	</footnote>.
+                <para>The currently supported Lucene index file format is version 2.3 (starting from ZF 1.6).</para>
+            </footnote>.
             New documents are added to the index by creating new segment.
         </para>
         <para>
@@ -215,10 +215,18 @@ $index->optimize();]]>
                 Default value is 10.
             </para>
             <para>
-                Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/luke-0.6/">http://www.getopt.org/luke/luke-0.6/</ulink>)
-                can also be used to optimize an index. Luke v0.6 must be used to be compatible with Zend_Search_Lucene component. Later Luke versions are
-                based on Lucene v2.1 which uses the newer index file format. Full Luke project information can be found here -
-                <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>
+                Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                can also be used to optimize an index. Latest Luke release (v0.8) is based on Lucene v2.3 and compatible with
+                current implementation of Zend_Search_Lucene component (ZF 1.6). Earlier versions of Zend_Search_Lucene implementations
+                need another versions of Java Lucene tools to be compatible:
+                <itemizedlist>
+                    <listitem>
+                        <para>ZF 1.5 - Java Lucene 2.1 (Luke tool v0.7.1 - <ulink url="http://www.getopt.org/luke/luke-0.7.1/"/>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke tool v0.6 - <ulink url="http://www.getopt.org/luke/luke-0.6/"/>)</para>
+                    </listitem>
+                </itemizedlist>
             </para>
         </sect3>
     </sect2>

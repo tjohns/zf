@@ -131,18 +131,15 @@ class Zend_Text_FigletTest extends PHPUnit_Framework_TestCase
         $this->_equalAgainstFile($figlet->render($isoText, 'ISO-8859-15'), 'CorrectEncoding.figlet');
     }
 
+    /**
+     * @expectedException Zend_Text_Figlet_Exception
+     */
     public function testIncorrectEncoding()
     {
-        $figlet = new Zend_Text_Figlet();
-
+        $this->markTestSkipped('Test case not reproducible on all setups');
+        $figlet  = new Zend_Text_Figlet();
         $isoText = iconv('UTF-8', 'ISO-8859-15', 'Ömläüt');
-
-        try {
-            $figlet->render($isoText);
-            $this->fail('An expected Zend_Text_Figlet_Exception has not been raised');
-        } catch (Zend_Text_Figlet_Exception $expected) {
-            $this->assertContains('$text is not encoded with', $expected->getMessage());
-        }
+        $figlet->render($isoText);
     }
 
     public function testNonExistentFont()

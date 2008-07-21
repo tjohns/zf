@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10162 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -1230,6 +1230,70 @@ $messages = $form->getMessages('username');
                 Passwort Bestätigung als Teil seiner Prüfung verwenden.
             </para>
         </note>
+
+        <sect3 id="zend.form.forms.validation.errors">
+            <title>Selbst definierte Fehlermeldungen</title>
+
+            <para>
+                Von Zeit zu Zeit ist es gewünscht ein oder mehrere spezielle Fehlermeldungen zu spezifizieren
+                die statt den Fehlermeldungen verwendet werden sollen die von den Validatoren verwendet werden
+                die dem Element angehängt sind. Zusätzlich will man von Zeit zu Zeit ein Element selbst als
+                ungültig markieren. Ab 1.6.0 ist diese Funktionalität über die folgenden Methoden ermöglicht.
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>addErrorMessage($message)</code>: Fügt eine Fehlermeldung hinzu die bei
+                    Form-Überprüfungs-Fehlern angezeigt wird. Sie kann mehr als einmal aufgerufen
+                    werden, und neue Meldungen werden dem Stack angehängt.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrorMessages(array $messages)</code>: Fügt mehrere Fehlermeldungen hinzu
+                    die bei Form-Überprüfungs-Fehlern angezeigt werden.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrorMessages(array $messages)</code>: Fügt mehrere Fehlermeldungen hinzu die
+                    bei Form-Überprüfungs-Fehlern angezeigt werden, und überschreibt alle vorher gesetzten
+                    Fehlermeldungen.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getErrorMessages()</code>: Empfängt eine Liste von selbstdefinierten Fehlermeldungen
+                    die vorher definiert wurden.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>clearErrorMessages()</code>: Entfernt alle eigenen Fehlermeldungen die vorher
+                    definiert wurden.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>markAsError()</code>: Markiert das Element wie wenn die Überprüfung fehlgeschlagen
+                    wäre.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addError($message)</code>: Fügt einen Fehler zum eigenen Stack der Fehlermeldungen
+                    hinzu und markiert das Element als ungültig.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>addErrors(array $messages)</code>: Fügt mehrere Nachrichten zum eigenen Stack der
+                    Fehlermeldungen hinzu und markiert das Element als ungültig.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>setErrors(array $messages)</code>: Überschreibt den eigenen Stack der Fehlermeldungen
+                    mit den angegebenen Meldungen und markiert das Element als ungültig.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                Alle auf diesem Weg gesetzten Fehler können übersetzt werden.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.form.forms.methods">
