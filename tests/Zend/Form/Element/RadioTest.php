@@ -130,6 +130,19 @@ class Zend_Form_Element_RadioTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(4, $count);
     }
 
+    public function testRadioElementRendersDtDdWrapper()
+    {
+        $this->element->setMultiOptions(array(
+                'foo'  => 'Foo',
+                'bar'  => 'Bar',
+                'baz'  => 'Baz',
+                'bat'  => 'Bat',
+                'test' => 'Test',
+            ));
+        $html = $this->element->render($this->getView());
+        $this->assertRegexp('#<dt>&nbsp;</dt>.*?<dd#s', $html, $html);
+    }
+
     /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
