@@ -67,7 +67,10 @@ class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
             throw new Zend_View_Helper_Partial_Exception('PartialLoop helper requires iterable data');
         }
 
-        if (is_object($model) && method_exists($model, 'toArray')) {
+        if (is_object($model) 
+            && (!$model instanceof Traversable) 
+            && method_exists($model, 'toArray')
+        ) {
             $model = $model->toArray();
         }
 
