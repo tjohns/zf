@@ -298,6 +298,8 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
         if (!empty($label)) {
             $options['class'] = $class;
             $label = $view->formLabel($element->getName(), trim($label), $options); 
+        } else {
+            $label = '&nbsp;';
         }
 
         if (null !== $tag) {
