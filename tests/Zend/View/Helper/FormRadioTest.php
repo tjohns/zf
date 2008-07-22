@@ -85,6 +85,25 @@ class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @see ZF-3206
+     */
+    public function testSpecifyingLabelPlacementShouldNotOverwriteValue()
+    {
+        $options = array(
+            'bar' => 'Bar',
+        );
+        $html = $this->helper->formRadio(array(
+            'name'    => 'foo',
+            'value'   => 'bar',
+            'options' => $options,
+            'attribs' => array(
+                'labelPlacement' => 'append',
+            )
+        ));
+        $this->assertRegexp('#<input[^>]*(checked="checked")#', $html, $html);
+    }
+
     public function testCanSpecifyRadioLabelAttribs()
     {
         $options = array(
