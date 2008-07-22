@@ -98,7 +98,7 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement
             switch (strtolower($key)) {
                 case 'placement':
                     unset($label_attribs[$key]);
-                    $value = strtolower($val);
+                    $val = strtolower($val);
                     if (in_array($val, array('prepend', 'append'))) {
                         $labelPlacement = $val;
                     }
