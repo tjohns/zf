@@ -196,6 +196,29 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
             <listitem><para><code>clearMultiOptions()</code></para></listitem>
         </itemizedlist>
+
+        <para>
+            To mark checked items, you need to pass an array of values to
+            <code>setValue()</code>. The following will check the values "bar"
+            and "bat":
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_MultiCheckbox('foo', array(
+    'multiOptions' => array(
+        'foo' => 'Foo Option',
+        'bar' => 'Bar Option',
+        'baz' => 'Baz Option',
+        'bat' => 'Bat Option',
+    );
+));
+
+$element->setValue(array('bar', 'bat'));
+]]></programlisting>
+
+        <para>
+            Note that even when setting a single value, you must pass an array.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.multiselect">
