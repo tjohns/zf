@@ -199,11 +199,9 @@
             Additionally, on the element level, you can specify individual
             elements may belong to particular arrays using
             <code>Zend_Form_Element::setBelongsTo()</code> method.
-            However, doing this may cause issues when validating your element,
-            and is not recommended in most cases. However, you may occasionally
-            want to know <emphasis>which</emphasis> array an element belongs to,
-            which you may discover using the <code>getBelongsTo()</code>
-            accessor. 
+            To discover what this value is -- whether set explicitly or
+            implicitly via theform -- you may use the
+            <code>getBelongsTo()</code> accessor. 
         </para>
     </sect2>
 

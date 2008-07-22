@@ -42,6 +42,26 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
 {
     /**
+     * Merges given two belongsTo (array notation) strings
+     *
+     * @param  string $baseBelongsTo
+     * @param  string $belongsTo
+     * @return string
+     */
+    protected function _mergeBelongsTo($baseBelongsTo, $belongsTo)
+    {
+        $endOfArrayName = strpos($belongsTo, '[');
+
+        if ($endOfArrayName === false) {
+            return $baseBelongsTo . '[' . $belongsTo . ']';
+        }
+
+        $arrayName = substr($belongsTo, 0, $endOfArrayName);
+
+        return $baseBelongsTo . '[' . $arrayName . ']' . substr($belongsTo, $endOfArrayName);
+    }
+
+    /**
      * Render form elements
      *
      * @param  string $content 
@@ -67,7 +87,7 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
                 $item->setBelongsTo($belongsTo);
             } elseif (!empty($belongsTo) && ($item instanceof Zend_Form)) {
                 if ($item->isArray()) {
-                    $name = $belongsTo . '[' . $item->getName() . ']';
+                    $name = $this->_mergeBelongsTo($belongsTo, $item->getElementsBelongTo());
                     $item->setElementsBelongTo($name, true);
                 } else {
                     $item->setElementsBelongTo($belongsTo, true);
