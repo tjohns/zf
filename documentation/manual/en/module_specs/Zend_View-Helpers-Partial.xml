@@ -83,6 +83,31 @@
                         properties of the object) to the view object.
                 </para></listitem>
             </itemizedlist>
+
+            <para>
+                If your model is an object, you may want to have it passed
+                <emphasis>as an object</emphasis> to the partial script, instead
+                of serializing it to an array of variables. You can do this by
+                setting the 'objectKey' property of the appropriate helper:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Tell partial to pass objects as 'model' variable
+$view->partial()->setObjectKey('model');
+
+// Tell partial to pass objects from partialLoop as 'model' variable in final
+// partial view script:
+$view->partialLoop()->setObjectKey('model');
+]]></programlisting>
+            
+            <para>
+                This technique is particularly useful when passing 
+                <code>Zend_Db_Table_Rowset</code>s to
+                <code>partialLoop()</code>, as you then have full access to your
+                row objects within the view scripts, allowing you to call
+                methods on them (such as retrieving values from parent or
+                dependent rows).
+            </para>
         </note>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
