@@ -249,6 +249,33 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @see ZF-3350
+     * @see ZF-3352
+     */
+    public function testShouldNotCastToArrayIfObjectIsTraversable()
+    {
+        $data = array(
+            new Zend_View_Helper_PartialLoop_IteratorWithToArrayTestContainer(array('message' => 'foo')),
+            new Zend_View_Helper_PartialLoop_IteratorWithToArrayTestContainer(array('message' => 'bar')),
+            new Zend_View_Helper_PartialLoop_IteratorWithToArrayTestContainer(array('message' => 'baz')),
+            new Zend_View_Helper_PartialLoop_IteratorWithToArrayTestContainer(array('message' => 'bat')),
+        );
+        $o = new Zend_View_Helper_PartialLoop_IteratorWithToArrayTest($data);
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+        $this->helper->setObjectKey('obj');
+
+        $result = $this->helper->partialLoop('partialLoopObject.phtml', $o);
+        foreach ($data as $item) {
+            $string = 'This is an iteration: ' . $item->message;
+            $this->assertContains($string, $result, $result);
+        }
+    }
+
+    /**
      * @see ZF-3083
      */
     public function testEmptyArrayPassedToPartialLoopShouldNotThrowException()
@@ -367,6 +394,64 @@ class Zend_View_Helper_PartialLoop_ToArrayTest
     public function toArray()
     {
         return $this->data;
+    }
+}
+
+class Zend_View_Helper_PartialLoop_IteratorWithToArrayTest implements Iterator
+{
+    public $items;
+
+    public function __construct(array $array)
+    {
+        $this->items = $array;
+    }
+
+    public function toArray()
+    {
+        return $this->items;
+    }
+
+    public function current()
+    {
+        return current($this->items);
+    }
+
+    public function key()
+    {
+        return key($this->items);
+    }
+
+    public function next()
+    {
+        return next($this->items);
+    }
+
+    public function rewind()
+    {
+        return reset($this->items);
+    }
+
+    public function valid()
+    {
+        return (current($this->items) !== false);
+    }
+}
+
+class Zend_View_Helper_PartialLoop_IteratorWithToArrayTestContainer
+{
+    protected $_info;
+
+    public function __construct(array $info)
+    {
+        foreach ($info as $key => $value) {
+            $this->$key = $value;
+        }
+        $this->_info = $info;
+    }
+
+    public function toArray()
+    {
+        return $this->_info;
     }
 }
 
