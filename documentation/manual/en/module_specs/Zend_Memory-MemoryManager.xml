@@ -136,7 +136,7 @@ function foo()
 
     ...
     // $memObject1 is destroyed here
-    // but $memObject2 object is still referenced by $memList and is not destroyed
+    // but $memObject3 object is still referenced by $memList and is not destroyed
 }]]>
                 </programlisting>
             </para>
@@ -183,7 +183,7 @@ $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes]]>
             </para>
 
             <para>
-                The default vaule is two-thirds of the value of
+                The default value is two-thirds of the value of
                 '<code>memory_limit</code>' in php.ini or 'no limit' (-1)
                 if '<code>memory_limit</code>' is not set in php.ini.
             </para>
