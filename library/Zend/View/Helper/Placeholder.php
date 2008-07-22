@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Registry */
-require_once 'Zend/Registry.php';
+/** Zend_View_Helper_Placeholder_Registry */
+require_once 'Zend/View/Helper/Placeholder/Registry.php';
 
 /**
  * Helper for passing data between otherwise segregated Views. It's called
