@@ -1155,18 +1155,12 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             }
         }
         foreach ($this->getSubForms() as $key => $subForm) {
-            $array = $this->_getArrayName($subForm->getElementsBelongTo());
-            if (empty($array)) {
-                $values[$key] = $subForm->getValues(true);
-            } else {
-                $values[$array] = $subForm->getValues(true);
-            }
+            $fValues = $this->_attachToArray($subForm->getValues(true), $subForm->getElementsBelongTo());
+            $values = array_merge($values, $fValues);
         }
 
         if (!$suppressArrayNotation && $this->isArray()) {
-            $values = array(
-                $this->getElementsBelongTo() => $values
-            );
+            $values = $this->_attachToArray($values, $this->getElementsBelongTo());
         }
 
         return $values;
@@ -1288,7 +1282,6 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Set flag indicating elements belong to array
      * 
      * @param  bool $flag Value of flag
-     * @param  bool $setName Whether or not to set the name the elements belong to
      * @return Zend_Form
      */
     public function setIsArray($flag)
@@ -1753,6 +1746,65 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         $name = substr($value, $start, $endPos - $start);
         return $name;
     }
+    
+    /**
+     * Extract the value by walking the array using given array path.
+     *
+     * Given an array path such as foo[bar][baz], returns the value of the last
+     * element (in this case, 'baz').
+     * 
+     * @param  array $value Array to walk
+     * @param  string $arrayPath Array notation path of the part to extract
+     * @return string
+     */
+    protected function _dissolveArrayValue($value, $arrayPath)
+    {
+        // As long as we have more levels
+        while ($arrayPos = strpos($arrayPath, '[')) {
+            // Get the next key in the path
+            $arrayKey = trim(substr($arrayPath, 0, $arrayPos), ']');
+
+            // Set the potentially final value or the next search point in the array
+            if (isset($value[$arrayKey])) {
+                $value = $value[$arrayKey];
+            }
+            
+            // Set the next search point in the path
+            $arrayPath = trim(substr($arrayPath, $arrayPos + 1), ']');
+        }
+
+        if (isset($value[$arrayPath])) {
+            $value = $value[$arrayPath];
+        }
+
+        return $value;
+    }
+
+    /**
+     * Converts given arrayPath to an array and attaches given value at the end of it.
+     *
+     * @param  mixed $value The value to attach
+     * @param  string $arrayPath Given array path to convert and attach to.
+     * @return array 
+     */
+    protected function _attachToArray($value, $arrayPath)
+    {
+        // As long as we have more levels
+        while ($arrayPos = strrpos($arrayPath, '[')) {
+            // Get the next key in the path
+            $arrayKey = trim(substr($arrayPath, $arrayPos + 1), ']');
+
+            // Attach
+            $value = array($arrayKey => $value);
+            
+            // Set the next search point in the path
+            $arrayPath = trim(substr($arrayPath, 0, $arrayPos), ']');
+        }
+
+        $value = array($arrayPath => $value);
+
+        return $value;
+    }
 
     /**
      * Validate the form
@@ -1770,10 +1822,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         $valid      = true;
 
         if ($this->isArray()) {
-            $key = $this->_getArrayName($this->getElementsBelongTo());
-            if (isset($data[$key])) {
-                $data = $data[$key];
-            }
+            $data = $this->_dissolveArrayValue($data, $this->getElementsBelongTo());
         }
 
         foreach ($this->getElements() as $key => $element) {
@@ -1789,12 +1838,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             if (isset($data[$key])) {
                 $valid = $form->isValid($data[$key]) && $valid;
             } else {
-                $array = $this->_getArrayName($form->getElementsBelongTo());
-                if (empty($array) || !isset($data[$array])) {
-                    $valid = $form->isValid($data) && $valid;
-                } else {
-                    $valid = $form->isValid($data[$array]) && $valid;
-                }
+                $valid = $form->isValid($data) && $valid;
             }
         }
 
@@ -1813,10 +1857,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     public function isValidPartial(array $data)
     {
         if ($this->isArray()) {
-            $key = $this->_getArrayName($this->getElementsBelongTo());
-            if (isset($data[$key])) {
-                $data = $data[$key];
-            }
+            $data = $this->_dissolveArrayValue($data, $this->getElementsBelongTo());
         }
 
         $translator        = $this->getTranslator();
@@ -1842,12 +1883,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 if (null !== $translator) {
                     $subForm->setTranslator($translator);
                 }
-                $array = $this->_getArrayName($subForm->getElementsBelongTo());
-                if (empty($array) || !isset($data[$array])) {
-                    $valid = $subForm->isValidPartial($data) && $valid;
-                } else {
-                    $valid = $subForm->isValidPartial($data[$array]) && $valid;
-                }
+
+                $valid = $subForm->isValidPartial($data) && $valid;
             }
         }
 
@@ -2017,12 +2054,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 $errors[$key] = $element->getErrors();
             }
             foreach ($this->getSubForms() as $key => $subForm) {
-                $array = $this->_getArrayName($subForm->getElementsBelongTo());
-                if (empty($array) || !isset($data[$array])) {
-                    $errors[$key] = $subForm->getErrors();
-                } else {
-                    $errors[$array] = $subForm->getErrors();
-                }
+                $fErrors = $this->_attachToArray($subForm->getErrors(), $subForm->getElementsBelongTo());
+                $errors = array_merge($errors, $fErrors);
             }
         }
         return $errors;
@@ -2052,7 +2085,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
                 if ($name == $array) {
                     return $subForm->getMessages(null, true);
                 }
-                $arrayKeys[$key] = $array;
+                $arrayKeys[$key] = $subForm->getElementsBelongTo();
             }
         }
 
@@ -2074,7 +2107,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $fMessages = $subForm->getMessages(null, true);
             if (!empty($fMessages)) {
                 if (array_key_exists($key, $arrayKeys)) {
-                    $messages[$arrayKeys[$key]] = $fMessages;
+                    $fMessages = $this->_attachToArray($fMessages, $arrayKeys[$key]);
+                    $messages = array_merge($messages, $fMessages);
                 } else {
                     $messages[$key] = $fMessages;
                 }
@@ -2082,9 +2116,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         }
 
         if (!$suppressArrayNotation && $this->isArray()) {
-            $messages = array(
-                $this->getElementsBelongTo() => $messages
-            );
+            $messages = $this->_attachToArray($messages, $this->getElementsBelongTo());
         }
 
         return $messages;
