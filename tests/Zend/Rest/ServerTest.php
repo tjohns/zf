@@ -6,12 +6,10 @@
 
 // Call Zend_Rest_ServerTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Rest_ServerTest::main");
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Rest_Server
@@ -184,7 +182,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         ob_start();
         $server->handle(array('method' => 'testFunc4'));
         $result = ob_get_clean();
-        $this->assertContains('<Zend_Rest_Server_Test generator="zend" version="1.0"><testFunc4><response>Hello World</response><status>success</status></testFunc4></Zend_Rest_Server_Test>', $result, 'Bad Result');
+        $this->assertContains('<Zend_Rest_Server_Test generator="zend" version="1.0"><testFunc4><response>Hello World</response><status>success</status></testFunc4></Zend_Rest_Server_Test>', $result, var_export($result, 1));
     }
     
     public function testHandleAnonymousArgStatic()
