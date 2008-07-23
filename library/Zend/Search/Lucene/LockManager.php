@@ -199,7 +199,7 @@ class Zend_Search_Lucene_LockManager
         $lock->lock(LOCK_SH);
 
         self::_stopReadLockProcessing($lockDirectory);
-        return true;
+        return false;
     }
 
     /**
