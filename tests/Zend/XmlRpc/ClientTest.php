@@ -198,6 +198,27 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($response->isFault());
     }
 
+    /**#@+
+     * @see ZF-2978
+     */
+    public function testSkippingSystemCallDisabledByDefault()
+    {
+        $this->assertFalse($this->xmlrpcClient->skipSystemLookup());
+    }
+
+    public function testAllowsSkippingSystemCallForArrayStructLookup()
+    {
+        $this->xmlrpcClient->setSkipSystemLookup(true);
+        $this->assertTrue($this->xmlrpcClient->skipSystemLookup());
+    }
+
+    public function testSkipsSystemCallWhenDirected()
+    {
+        $this->markTestIncomplete('Cannot complete this test until we add logging of requests sent to HTTP test client');
+    }
+
+    /**#@-*/
+
     // Faults
     
     public function testRpcMethodCallThrowsOnHttpFailure()

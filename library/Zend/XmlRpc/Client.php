@@ -96,6 +96,8 @@ class Zend_XmlRpc_Client
     /** @var array of Zend_XmlRpc_Client_ServerProxy */
     private $_proxyCache = array();
 
+    /** @var bool */
+    private $_skipSystemLookup = false;
 
     /**
      * Create a new XML-RPC client to a remote server
@@ -201,6 +203,27 @@ class Zend_XmlRpc_Client
         return $this->_proxyCache[$namespace];
     }
 
+    /**
+     * Set skip system lookup flag
+     * 
+     * @param  bool $flag 
+     * @return Zend_XmlRpc_Client
+     */
+    public function setSkipSystemLookup($flag = true)
+    {
+        $this->_skipSystemLookup = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Skip system lookup when determining if parameter should be array or struct?
+     * 
+     * @return bool
+     */
+    public function skipSystemLookup()
+    {
+        return $this->_skipSystemLookup;
+    }
 
     /**
      * Perform an XML-RPC request and return a response.
@@ -252,7 +275,7 @@ class Zend_XmlRpc_Client
      */
     public function call($method, $params=array())
     {
-        if ('system.' != substr($method, 0, 7)) {
+        if (!$this->skipSystemLookup() && ('system.' != substr($method, 0, 7))) {
             // Ensure empty array/struct params are cast correctly
             // If system.* methods are not available, bypass. (ZF-2978)
             $success = true;
