@@ -474,16 +474,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         // Mark index as "under processing" to prevent other processes from premature index cleaning
         Zend_Search_Lucene_LockManager::obtainReadLock($this->_directory);
 
-        // Escalate read lock to prevent current generation index files to be deleted while opening process is not done
-//        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
-
-
         $this->_generation = self::getActualGeneration($this->_directory);
 
         if ($create) {
         	try {
         		Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
         	} catch (Zend_Search_Lucene_Exception $e) {
+        		Zend_Search_Lucene_LockManager::releaseReadLock($this->_directory);
+
         		if (strpos($e->getMessage(), 'Can\'t obtain exclusive index lock') === false) {
         			throw $e;
         		} else {
@@ -516,9 +514,6 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         } else {
             $this->_readSegmentsFile();
         }
-
-        // De-escalate read lock to prevent current generation index files to be deleted while opening process is not done
-//        Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory);
     }
 
     /**
