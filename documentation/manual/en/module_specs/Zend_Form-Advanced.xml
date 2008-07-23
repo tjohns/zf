@@ -200,7 +200,7 @@
             elements may belong to particular arrays using
             <code>Zend_Form_Element::setBelongsTo()</code> method.
             To discover what this value is -- whether set explicitly or
-            implicitly via theform -- you may use the
+            implicitly via the form -- you may use the
             <code>getBelongsTo()</code> accessor. 
         </para>
     </sect2>

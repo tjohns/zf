@@ -159,7 +159,8 @@
         </itemizedlist>
 
         <para>
-            另外，在元素一级，你可以用 <code>Zend_Form_Element::setBelongsTo()</code> 方法指定可能属于特定的数组的独立的元素。然而，当校验元素时，这样做会有问题，在大多数情况下不推荐使用。但是，你偶尔想知道元素属于 <emphasis> 哪个 </emphasis> 数组，可以用 <code>getBelongsTo()</code> 访问器来做。
+            另外，在元素一级，你可以用 <code>Zend_Form_Element::setBelongsTo()</code> 方法指定可能属于特定的数组的独立的元素。
+            为了找出这个值是什么 － 是否显式或隐式地通过表单 － 可以用 <code>getBelongsTo()</code> 访问器来做。
         </para>
     </sect2>
 
