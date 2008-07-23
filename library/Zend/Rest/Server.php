@@ -173,6 +173,9 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
                         }
                     }
 
+                    // Sort arguments by key -- @see ZF-2279
+                    ksort($calling_args);
+
                     if (count($calling_args) < count($func_args)) {
                         throw new Zend_Rest_Server_Exception('Invalid Method Call to ' . $this->_method . '. Requires ' . count($func_args) . ', ' . count($calling_args) . ' given.', 400);
                     }
