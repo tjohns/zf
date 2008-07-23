@@ -128,6 +128,27 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
             <listitem><para><code>clearMultiOptions()</code></para></listitem>
         </itemizedlist>
+
+        <para>
+            为了标记选中的条目，需要传递一个数组给 <code>setValue()</code> 。下面代码片段将检查 "bar" 和 "bat":
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_MultiCheckbox('foo', array(
+    'multiOptions' => array(
+        'foo' => 'Foo Option',
+        'bar' => 'Bar Option',
+        'baz' => 'Baz Option',
+        'bat' => 'Bat Option',
+    );
+));
+
+$element->setValue(array('bar', 'bat'));
+]]></programlisting>
+
+        <para>
+            注意即使是设置一个单个的值，也必需传递一个数组。
+        </para>        
     </sect2>
 
     <sect2 id="zend.form.standardElements.multiselect">
