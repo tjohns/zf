@@ -29,7 +29,7 @@ figlet -f $UTFLF -m-1 Dummy > NoSmush.figlet
 figlet -f $UTFLF -m-1 -R Dummy > NoSmushRightToLeft.figlet
 figlet -f $UTFLF -m0 Dummy > SmushDefault.figlet
 figlet -f $UTFLF -m5 Dummy > SmushForced.figlet
-echo 'Ömläut' | iconv -f UTF-8 -t ISO-8859-15 | figlet -f $UTFLF > CorrectEncoding.figlet
+echo 'Ömläüt' | iconv -f UTF-8 -t ISO-8859-15 | figlet -f $UTFLF > CorrectEncoding.figlet
 figlet -f $UTFLF Dummy Dummy Dummy > WordWrapLeftToRight.figlet
 figlet -f $UTFLF -R Dummy Dummy Dummy > WordWrapRightToLeft.figlet
 figlet -f $UTFLF DummyDumDummy > CharWrapLeftToRight.figlet
