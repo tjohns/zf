@@ -185,25 +185,10 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
                             // for some reason, invokeArgs() does not work the same as
                             // invoke(), and expects the first argument to be an object.
                             // So, using a callback if the method is static.
-                            $result = call_user_func_array(array($class, $this->_functions[$this->_method]->getName()), $calling_args);
-                        }
-
-                        // Object methods
-                        try {
-                            if ($this->_functions[$this->_method]->getDeclaringClass()->getConstructor()) {
-                                $object = $this->_functions[$this->_method]->getDeclaringClass()->newInstanceArgs($this->_args);
-                            } else {
-                                $object = $this->_functions[$this->_method]->getDeclaringClass()->newInstance();
-                            }
-                        } catch (Exception $e) {
-                            echo $e->getMessage();
-                            throw new Zend_Rest_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $this->_functions[$this->_method]->getName(), 500);
-                        }
-
-                        try {
-                            $result = $this->_functions[$this->_method]->invokeArgs($object, $calling_args);
-                        } catch (Exception $e) {
-                            $result = $this->fault($e);
+                            $result = $this->_callStaticMethod($class, $calling_args);
+                        } else {
+                            // Object method
+                            $result = $this->_callObjectMethod($class, $calling_args);
                         }
                     } else {
                         try {
@@ -523,5 +508,52 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
      */
     public function setPersistence($mode)
     {
+    }
+
+    /**
+     * Call a static class method and return the result
+     * 
+     * @param  string $class 
+     * @param  array $args 
+     * @return mixed
+     */
+    protected function _callStaticMethod($class, array $args)
+    {
+        try {
+            $result = call_user_func_array(array($class, $this->_functions[$this->_method]->getName()), $args);
+        } catch (Exception $e) {
+            $result = $this->fault($e);
+        }
+        return $result;
+    }
+
+    /**
+     * Call an instance method of an object
+     * 
+     * @param  string $class
+     * @param  array $args
+     * @return mixed
+     * @throws Zend_Rest_Server_Exception For invalid class name
+     */
+    protected function _callObjectMethod($class, array $args)
+    {
+        try {
+            if ($this->_functions[$this->_method]->getDeclaringClass()->getConstructor()) {
+                $object = $this->_functions[$this->_method]->getDeclaringClass()->newInstanceArgs($this->_args);
+            } else {
+                $object = $this->_functions[$this->_method]->getDeclaringClass()->newInstance();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            throw new Zend_Rest_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $this->_functions[$this->_method]->getName(), 500);
+        }
+
+        try {
+            $result = $this->_functions[$this->_method]->invokeArgs($object, $args);
+        } catch (Exception $e) {
+            $result = $this->fault($e);
+        }
+
+        return $result;
     }
 }
