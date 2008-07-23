@@ -158,6 +158,40 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                     </tbody>
                 </tgroup>
             </table>
+
+            <note>
+                <title>What type do empty arrays get cast to?</title>
+
+                <para>
+                    Passing an empty array to an XML-RPC method is problematic,
+                    as it could represent either an array or a struct.
+                    <code>Zend_XmlRpc_Client</code> detects such conditions and
+                    makes a request to the server's
+                    <code>system.methodSignature</code> method to determine the
+                    appropriate XML-RPC type to cast to.
+                </para>
+
+                <para>
+                    However, this in itself can lead to issues. First off,
+                    servers that do not support
+                    <code>system.methodSignature</code> will log failed
+                    requests, and <code>Zend_XmlRpc_Client</code> will resort to
+                    casting the value to an XML-RPC array type. Additionally,
+                    this means that any call with array arguments will result in
+                    an additional call to the remote server.
+                </para>
+
+                <para>
+                    To disable the lookup entirely, you can call the
+                    <code>setSkipSystemLookup()</code> method prior to making
+                    your XML-RPC call:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$client->setSkipSystemLookup(true);
+$result = $client->call('foo.bar', array(array()));
+]]></programlisting>
+            </note>
         </sect3>
 
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
