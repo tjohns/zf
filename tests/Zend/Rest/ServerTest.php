@@ -484,6 +484,19 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $server->setEncoding('ISO-8859-1');
         $this->assertEquals('ISO-8859-1', $server->getEncoding());
     }
+
+    /**
+     * @see ZF-2279
+     */
+    public function testNamesOfArgumentsShouldDetermineArgumentOrder()
+    {
+        $server = new Zend_Rest_Server();
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $server->handle(array('method' => 'testFunc6', 'arg2' => 'today', 'arg1' => "Davey"));
+        $result = ob_get_clean();
+        $this->assertContains('<Zend_Rest_Server_Test generator="zend" version="1.0"><testFunc6><response>Hello Davey, How are you today</response><status>success</status></testFunc6></Zend_Rest_Server_Test>', $result, var_export($result, 1));
+    }
 }
 
 /* Test Functions */
