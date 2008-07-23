@@ -66,6 +66,25 @@
                         <emphasis> 标准对象 </emphasis>。 任何其它对象将把<code>object_get_vars()</code>的结果（对象的所有公共属性）赋值给视图对象。
                 </para></listitem>
             </itemizedlist>
+
+            <para>
+                如果你的模型是一个对象，你可能想让它<emphasis>作为对象</emphasis>传递给 partial 脚本，而不是把它系列化成一个数组变量。
+                你可以通过设置适当的助手的 'objectKey' 属性来完成这个：
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Tell partial to pass objects as 'model' variable
+$view->partial()->setObjectKey('model');
+
+// Tell partial to pass objects from partialLoop as 'model' variable in final
+// partial view script:
+$view->partialLoop()->setObjectKey('model');
+]]></programlisting>
+            
+            <para>
+                当传递 <code>Zend_Db_Table_Rowset</code>s 给 <code>partialLoop()</code>时这个技术相当有用，
+                因为你在视图脚本里有全部访问 row 对象的权限，允许你调用它们的方法（如从父或依赖的 rows 获取数据）。
+            </para>            
         </note>
 
 
