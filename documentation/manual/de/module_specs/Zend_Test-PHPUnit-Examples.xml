@@ -152,11 +152,10 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
         <para>
-            Once we have that in place, we can write our tests. However, what
-            about those tests that require a user is logged in? The easy
-            solution is to use our application logic to do so... and fudge a
-            little by using the <code>resetResponse()</code> method, which will
-            allow us to dispatch another request.
+            Sobald das fertig ist, können wir unsere Tests schreiben. Trotzdem, was ist mit den Tests die
+            erfordern das der Benutzer angemeldet ist? Die einfache Lösung besteht darin das unsere
+            Anwendungslogik das macht... und ein bischen trickst indem die <code>resetResponse()</code>
+            Methode verwendet wird, die es uns erlaubt eine andere Anfrage abzusetzen.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -183,7 +182,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
         
         <para>
-            Now let's write tests:
+            Jetzt schreiben wir Tests:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -266,33 +265,28 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
         <para>
-            Notice that these are terse, and, for the most part, don't look for
-            actual content. Instead, they look for artifacts within the
-            response -- response codes and headers, and DOM nodes. This allows
-            you to verify that the structure is as expected -- preventing your
-            tests from choking every time new content is added to the site.
+            Es ist zu beachten das die Tests knapp sind und, für die meisten von Ihnen, nicht den aktuellen
+            Inhalt berücksichtigen. Stattdessen sehen Sie nach Teilen in der Anfrage -- Anfrage Codes und Header
+            sowie DOM Knoten. Das erlaubt es schnell zu prüfen das die Strukturen wie erwartet sind -- und
+            verhinter das die Tests jedesmal wenn der Site neue Inhalte hinzugefügt werden darin ersticken. 
         </para>
 
         <para>
-            Also notice that we use the structure of the document in our tests.
-            For instance, in the final test, we look for a form that has a node
-            with the class of "errors"; this allows us to test merely for the
-            presence of form validation errors, and not worry about what
-            specific errors might have been thrown.
+            Es ist auch zu beachten das wir die Struktur des Dokuments in unseren Tests verwenden. Zum Beispiel
+            schauen wir im letzten Test nach einer Form die einen Node mit der Klasse "errors" hat; das erlaubt
+            es uns lediglich nach dem Vorhandensein von Form-Prüfungsfehlern zu testen, und uns keine Sorgen
+            darüber zu machen warum spezielle Fehler überhaupt geworfen werden.
         </para>
 
         <para>
-            This application <emphasis>may</emphasis> utilize a database. If
-            so, you will probably need some scaffolding to ensure that the
-            database is in a pristine, testable configuration at the beginning
-            of each test. PHPUnit already provides functionality for doing so;
-            <ulink
-                url="http://www.phpunit.de/pocket_guide/3.3/en/database.html">read
-                about it in the PHPUnit documentation</ulink>. We recommend
-            using a separate database for testing versus production, and in
-            particular recommend using either a SQLite file or in-memory
-            database, as both options perform very well, do not require a
-            separate server, and can utilize most SQL syntax.
+            Diese Anwendung <emphasis>könnte</emphasis> eine Datenbank verwenden. Wenn dem so ist, muß man
+            warscheinlich einige Grundlagen ändern um sicherzustellen das die Datenbank am Anfang jeden Tests,
+            in einer unverfälschten, testbaren Konfiguration ist. PHPUnit bietet bereits Funktionalität um
+            das sicherzustellen; <ulink url="http://www.phpunit.de/pocket_guide/3.3/en/database.html">Lesen Sie
+            darüber in der PHPUnit Dokumentation nach</ulink>. Wir empfehlen eine separate Datenbank für das
+            Testen zu verwenden statt der Produktionsdatenbank, und entweder eine SQLite Datei oder eine
+            Datenbank im Speicher zu verwenden, da beide Optionen sehr performant sind, keinen seperaten
+            Server benötigen, und die meisten SQL Syntaxe verwenden können.
         </para>
     </example>
 </sect2>
