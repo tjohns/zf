@@ -102,7 +102,7 @@ class Zend_Search_Lucene_LockManager
 
     private static function _startReadLockProcessing(Zend_Search_Lucene_Storage_Directory $lockDirectory)
     {
-        $lock = $lockDirectory->createFile(self::READ_LOCK_PROCESSING_LOCK_FILE);
+    	$lock = $lockDirectory->createFile(self::READ_LOCK_PROCESSING_LOCK_FILE);
         if (!$lock->lock(LOCK_EX)) {
             throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive lock for the read lock processing file');
         }
@@ -119,7 +119,7 @@ class Zend_Search_Lucene_LockManager
      */
     private static function _stopReadLockProcessing(Zend_Search_Lucene_Storage_Directory $lockDirectory)
     {
-        $lock = $lockDirectory->getFileObject(self::READ_LOCK_PROCESSING_LOCK_FILE);
+    	$lock = $lockDirectory->getFileObject(self::READ_LOCK_PROCESSING_LOCK_FILE);
         $lock->unlock();
     }
 
@@ -135,15 +135,11 @@ class Zend_Search_Lucene_LockManager
      */
     public static function obtainReadLock(Zend_Search_Lucene_Storage_Directory $lockDirectory)
     {
-    	self::_startReadLockProcessing($lockDirectory);
-
         $lock = $lockDirectory->createFile(self::READ_LOCK_FILE);
         if (!$lock->lock(LOCK_SH)) {
         	self::_stopReadLockProcessing($lockDirectory);
             throw new Zend_Search_Lucene_Exception('Can\'t obtain shared reading index lock');
         }
-
-        self::_stopReadLockProcessing($lockDirectory);
         return $lock;
     }
 
@@ -209,14 +205,8 @@ class Zend_Search_Lucene_LockManager
      */
     public static function deEscalateReadLock(Zend_Search_Lucene_Storage_Directory $lockDirectory)
     {
-        self::_startReadLockProcessing($lockDirectory);
-
     	$lock = $lockDirectory->getFileObject(self::READ_LOCK_FILE);
-
-    	$lock->unlock();
     	$lock->lock(LOCK_SH);
-
-        self::_stopReadLockProcessing($lockDirectory);
     }
 
     /**
