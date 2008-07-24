@@ -510,7 +510,7 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     /**
      * Test for ZF-3720
      */
-    public function testSettingCurrentPageNumberGivesCorrectItemCount()
+    public function testSetCurrentPageNumberGivesCorrectItemCount()
     {
         $paginator = Zend_Paginator::factory(range(1, 101));
         $paginator->setCurrentPageNumber(5)
@@ -519,4 +519,18 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals($expected, $paginator->getCurrentItems());
     }
+    
+    /**
+     * Test for ZF-3737
+     */
+    public function testKeepCurrentPageNumberAfterSetItemCountPerPage()
+    {
+        $paginator = Zend_Paginator::factory(array('item1', 'item2'));
+        $paginator->setCurrentPageNumber(2)
+                  ->setItemCountPerPage(1);
+
+        $items = $paginator->getCurrentItems();
+
+        $this->assertEquals('item2', $items[0]);
+    } 
 }
