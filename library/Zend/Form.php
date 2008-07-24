@@ -245,6 +245,11 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             unset($options['elementPrefixPath']);                             
         }
 
+        if (isset($options['displayGroupPrefixPath'])) {                          
+            $this->addDisplayGroupPrefixPaths($options['displayGroupPrefixPath']);      
+            unset($options['elementPrefixPath']);                             
+        }
+
         if (isset($options['elements'])) {
             $this->setElements($options['elements']);
             unset($options['elements']);
@@ -512,12 +517,52 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     public function addDisplayGroupPrefixPath($prefix, $path)
     {
-        $this->_displayGroupPrefixPaths[] = array($prefix, $path);
+        $this->_displayGroupPrefixPaths[] = array(
+            'prefix' => $prefix, 
+            'path'   => $path,
+        );
 
         foreach ($this->getDisplayGroups() as $group) {
             $group->addPrefixPath($prefix, $path);
         }
 
+        return $this;
+    }
+
+    /**
+     * Add multiple display group prefix paths at once
+     * 
+     * @param  array $spec 
+     * @return Zend_Form
+     */
+    public function addDisplayGroupPrefixPaths(array $spec)
+    {
+        foreach ($spec as $key => $value) {
+            if (is_string($value) && !is_numeric($key)) {
+                $this->addDisplayGroupPrefixPath($key, $value);
+                continue;
+            }
+
+            if (is_string($value) && is_numeric($key)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $count = count($value);
+                if (array_keys($value) === range(0, $count - 1)) {
+                    if ($count < 2) {
+                        continue;
+                    }
+                    $prefix = array_shift($value);
+                    $path   = array_shift($value);
+                    $this->addDisplayGroupPrefixPath($prefix, $path);
+                    continue;
+                }
+                if (array_key_exists('prefix', $value) && array_key_exists('path', $value)) {
+                    $this->addDisplayGroupPrefixPath($value['prefix'], $value['path']);
+                }
+            }
+        }
         return $this;
     }
 

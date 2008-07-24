@@ -3265,6 +3265,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @see ZF-3213
+     */
+    public function testShouldAllowSettingDisplayGroupPrefixPathViaConfigOptions()
+    {
+        require_once 'Zend/Config/Ini.php';
+        $config = new Zend_Config_Ini(dirname(__FILE__) . '/_files/config/zf3213.ini', 'form');
+        $form   = new Zend_Form($config);
+        $dg     = $form->foofoo;
+        $paths  = $dg->getPluginLoader()->getPaths('My_Decorator');
+        $this->assertTrue($paths !== false);
+    }
+
     // Subform decorators
 
     public function testCanSetAllSubFormDecoratorsAtOnce()
