@@ -80,10 +80,11 @@ class Zend_View_Helper_PaginationControl
      * @param  Zend_Paginator $paginator
      * @param  string $scrollingStyle (Optional) Scrolling style
      * @param  string $partial (Optional) View partial
+     * @param  array|string $params (Optional) params to pass to the partial
      * @return string
      * @throws Zend_View_Exception
      */
-    public function paginationControl(Zend_Paginator $paginator, $scrollingStyle = null, $partial = null)
+    public function paginationControl(Zend_Paginator $paginator, $scrollingStyle = null, $partial = null, $params = null)
     {
         if (empty($partial)) {
             if (empty(self::$_defaultViewPartial)) {
@@ -98,6 +99,12 @@ class Zend_View_Helper_PaginationControl
             $partial = self::$_defaultViewPartial;
         }
 
-        return $this->view->partial($partial, $paginator->getPages($scrollingStyle));
+        $pages = get_object_vars($paginator->getPages($scrollingStyle));
+        
+        if ($params != null) {
+            $pages = array_merge($pages, (array) $params);
+        }
+
+        return $this->view->partial($partial, $pages);
     }
 }
