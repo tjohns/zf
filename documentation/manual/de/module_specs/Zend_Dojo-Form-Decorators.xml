@@ -1,51 +1,47 @@
 <!-- EN-Revision: 10130 -->
 <sect2 id="zend.dojo.form.decorators">
-    <title>Dijit-Specific Form Decorators</title>
+    <title>Dijit-Spezifische Formular Dekoratore</title>
 
     <para>
-        Most form elements can use the DijitElement decorator, which will grab
-        the dijit parameters from the elements, and pass these and other
-        metadata to the view helper specified by the element. For decorating
-        forms, sub forms, and display groups, however, there are a set of
-        decorators corresponding to the various layout dijits.
+        Die meisten Formular Elemente können den DijitElement Dekorator verwenden, welche die Dijit Parameter
+        von den Elementen nimmt und Sie, und andere Metadaten, dem View Helfer übergibt der vom Element
+        spezifiziert wurde. Für die Dekoration von Formularen, Unterformularen und Anzeigegruppen gibt es
+        trotzdem ein Set von Dekoratoren die den verschiedenen Layout Dijits entsprechen. 
     </para>
 
     <para>
-        All dijit decorators look for the <code>dijitParams</code> property of
-        the given element being decorated, and push them as the
-        <code>$params</code> array to the dijit view helper being used; these
-        are then separated from any other properties so that no duplication of
-        information occurs.
+        Alle Dijit Dekoratore schauen nach der <code>dijitParams</code> Eigenschaft des gegebenen Elements das
+        dekoriert werden soll, und gibt Sie als <code>$params</code> Array an den verwendeten Dijit View Helfer;
+        diese werden dann von den anderen Eigenschaften seperiert damit keine Duplikation von Informationen
+        stattfindet.
     </para>
 
     <sect3 id="zend.dojo.form.decorators.dijitElement">
-        <title>DijitElement Decorator</title>
+        <title>DijitElement Dekorator</title>
 
         <para>
-            Just like <link linkend="zend.form.standardDecorators.viewHelper">the
-                ViewHelper decorator</link>, DijitElement expects a
-            <code>helper</code> property in the element which it will then use
-            as the view helper when rendering. Dijit parameters will typically
-            be pulled directly from the element, but may also be passed in as
-            options via the <code>dijitParams</code> key (the value of that key
-            should be an associative array of options).
+            Die der <link linkend="zend.form.standardDecorators.viewHelper">ViewHelper Dekorator</link>
+            erwartet DijitElement eine <code>helper</code> Eigenschaft im Elemente welche dann verwendet
+            wird wenn der View Helfer sich um die Darstellung kümmert. Dijit Parameter werden typischerweise
+            direkt vom Element geholt, können aber auch als Optionen über den <code>dijitParams</code>
+            Schlüssel übergeben werden (der Wert des Schlüssels sollte ein assoziatives Array von Optionen
+            sein).
         </para>
 
         <para>
-            It is important that each element have a unique ID (as fetched from
-            the element's <code>getId()</code> method). If duplicates are
-            detected within the <code>dojo()</code> view helper, the decorator
-            will trigger a notice, but then create a unique ID by appending the
-            return of <code>uniqid()</code> to the identifier.
+            Es ist wichtig das jedes Element eine einzigartige ID hat (die wird vom der <code>getId()</code>
+            Methode des Elements geholt). Wenn doppelte im <code>dojo()</code> View Helfer erkannt werden,
+            wird der Dekorator eine Notiz auswerfen, aber dann eine eindeutige ID erstellen indem die
+            Rückgabe von <code>uniqid()</code> an den Identifikator angehängt wird.
         </para>
 
         <para>
-            Standard usage is to simply associate this decorator as the first
-            in your decorator chain, with no additional options.
+            Die Standardverwendung besteht einfach darin diesen Dekorator als ersten in der Dekoratorkette
+            assoziieren, und keine zusätzlichen Optionen zu setzen.
         </para>
 
         <example id="zend.dojo.form.decorators.dijitElement.usage">
-            <title>DijitElement Decorator Usage</title>
+            <title>Verwendung des DijitElement Dekorators</title>
 
             <programlisting role="php"><![CDATA[
 $element->setDecorators(array(
@@ -59,44 +55,37 @@ $element->setDecorators(array(
     </sect3>
 
     <sect3 id="zend.dojo.form.decorators.dijitForm">
-        <title>DijitForm Decorator</title>
+        <title>DijitForm Dekorator</title>
 
         <para>
-            The DijitForm decorator is very similar to the <link
-                linkend="zend.form.standardDecorators.form">Form
-                decorator</link>; in fact, it can be used basically
-            interchangeably with it, as it utilizes the same view helper name
-            ('form').
+            Der DijitForm Dekorator ist dem <link linkend="zend.form.standardDecorators.form">Form
+            Dekorator</link> sehr ähnlich; faktisch kann er mit diesem grundsätzlich getauscht werden, da
+            er den selben View Helfernamen verwendet ('form').
         </para>
 
         <para>
-            Since dijit.form.Form does not require any dijit parameters for
-            configuration, the main difference is that the dijit form view
-            helper require that a DOM ID is passed to ensure that programmatic
-            dijit creation can work. The decorator ensures this, by passing the
-            form name as the identifier.
+            Da dijit.form.Form keine dijit Parameter für die Konfiguration benötigt, besteht der grundsätzliche
+            Unterschied darin das dem Dijit Fomular Viewhelfer eine DOM ID übergeben werden muß um
+            sicherzustellen das die programtechnische Dijiterstellung funktionieren kann. Der Dekorator stellt
+            das sicher indem der Formularname als Identifikator übergeben wird.
         </para>
     </sect3>
 
     <sect3 id="zend.dojo.form.decorators.dijitContainer">
-        <title>DijitContainer-based Decorators</title>
+        <title>DijitContainer-basierende Dekoratore</title>
 
         <para>
-            The <code>DijitContainer</code> decorator is actually an abstract
-            class from which a variety of other decorators derive. It offers
-            the same functionality of <link
-                linkend="zend.dojo.form.decorators.dijitElement">DijitElement</link>,
-            with the addition of title support. Many layout dijits require or
-            can utilize a title; DijitContainer will utilize the element's
-            legend property, if available, and can also utilize either the
-            'legend' or 'title' decorator option, if passed. The title will be
-            translated if a translation adapter with a corresponding
-            translation is present.
+            Der <code>DijitContainer</code> Dekorator ist in Wirklichkeit eine abstrakte Klasse von der eine
+            Anzahl an anderen Dekoratoren erbt. Er bietet die selbe Funktionalität wie
+            <link linkend="zend.dojo.form.decorators.dijitElement">DijitElement</link> mit der zusätzlichen
+            Unterstützung des Titels. Viele Layout Dijits benötigen den Titel oder können Ihn verwenden;
+            DijitContainer verwendet die Legend Eigenschaft des Elements wenn Sie vorhanden ist, und kann auch
+            die 'legend' oder die 'titel' Dekoratoroption verwenden, wenn diese übergeben werden. Der Titel
+            wird übersetzt wenn ein Übersetzungsadapter mit einer entsprechenden Übersetzung vorhanden ist.
         </para>
 
         <para>
-            The following is a list of decorators that inherit from
-            <code>DijitContainer</code>:
+            Nachfolgend ist eine Liste an Dekoratoren die von <code>DijitContainer</code> erben:
         </para>
 
         <itemizedlist>
@@ -110,10 +99,10 @@ $element->setDecorators(array(
         </itemizedlist>
 
         <example id="zend.dojo.form.decorators.dijitContainer.usage">
-            <title>DijitContainer Decorator Usage</title>
+            <title>Verwendung des DijitContainer Dekorators</title>
 
             <programlisting role="php"><![CDATA[
-// Use a TabContainer for your form:
+// Einen TabContainer im eigenen Formular verwenden:
 $form->setDecorators(array(
     'FormElements',
     array('TabContainer', array(
@@ -126,8 +115,8 @@ $form->setDecorators(array(
     'DijitForm',
 ));
 
-// Use a ContentPane in your sub form (which can be used with all but 
-// AccordionContainer):
+// Ein ContentPane im eigenen Unterformular verwenden (welches mit allen ausser AccordionContainer
+// verwendet werden kann):
 $subForm->setDecorators(array(
     'FormElements',
     array('HtmlTag', array('tag' => 'dl')),
