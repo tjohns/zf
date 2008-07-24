@@ -116,6 +116,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
     /**
      * Delete file generation number
      *
+     * -2 means autodetect latest delete generation
      * -1 means 'there is no delete file'
      *  0 means pre-2.1 format delete file
      *  X specifies used delete file
@@ -304,6 +305,10 @@ class Zend_Search_Lucene_Index_SegmentInfo
         }
         array_multisort($fieldNames, SORT_ASC, SORT_REGULAR, $fieldNums);
         $this->_fieldsDicPositions = array_flip($fieldNums);
+
+        if ($this->_delGen == -2) {
+        	$this->_detectLatestDelGen();
+        }
 
         if ($this->_delGen == -1) {
             // There is no delete file for this segment
@@ -1082,7 +1087,43 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
     /**
+     * Detect latest delete generation
+     *
+     * Is actualy used from writeChanges() method or from the constructor if it's invoked from
+     * Index writer. In both cases index write lock is already obtained, so we shouldn't care
+     * about it
+     */
+    private function _detectLatestDelGen()
+    {
+        $delFileList = array();
+        foreach ($this->_directory->fileList() as $file) {
+            if ($file == $this->_name . '.del') {
+                // Matches <segment_name>.del file name
+                $delFileList[] = 0;
+            } else if (preg_match('/^' . $this->_name . '_([a-zA-Z0-9]+)\.del$/i', $file, $matches)) {
+                // Matches <segment_name>_NNN.del file names
+                $delFileList[] = (int)base_convert($matches[1], 36, 10);
+            }
+        }
+
+        if (count($delFileList) == 0) {
+            // There is no deletions file for current segment in the directory
+            // Set detetions file generation number to 1
+            $this->_delGen = -1;
+        } else {
+            // There are some deletions files for current segment in the directory
+            // Set deletions file generation number to the highest nuber
+            $this->_delGen = max($delFileList);
+        }
+    }
+
+    /**
      * Write changes if it's necessary.
+     *
+     * This method must be invoked only from the Writer _updateSegments() method,
+     * so index Write lock has to be already obtained.
+     *
+     * @internal
      */
     public function writeChanges()
     {
@@ -1110,34 +1151,17 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
         // Get new generation number
-        Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
+        $this->_detectLatestDelGen();
 
-        $delFileList = array();
-        foreach ($this->_directory->fileList() as $file) {
-            if ($file == $this->_name . '.del') {
-                // Matches <segment_name>.del file name
-                $delFileList[] = 0;
-            } else if (preg_match('/^' . $this->_name . '_([a-zA-Z0-9]+)\.del$/i', $file, $matches)) {
-                // Matches <segment_name>_NNN.del file names
-                $delFileList[] = (int)base_convert($matches[1], 36, 10);
-            }
-        }
-
-        if (count($delFileList) == 0) {
-            // There is no deletions file for current segment in the directory
-            // Set detetions file generation number to 1
-            $this->_delGen = 1;
+        if ($this->_delGen == -1) {
+        	// Set delete file generation number to 1
+        	$this->_delGen = 1;
         } else {
-            // There are some deletions files for current segment in the directory
-            // Set detetions file generation number to the highest + 1
-            $this->_delGen = max($delFileList) + 1;
+        	// Increase delete file generation number by 1
+        	$this->_delGen++;
         }
 
         $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
-
-        Zend_Search_Lucene_LockManager::releaseWriteLock($this->_directory);
-
-
         $delFile->writeInt($this->_docCount);
         $delFile->writeInt($bitCount);
         $delFile->writeBytes($delBytes);

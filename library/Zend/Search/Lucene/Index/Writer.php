@@ -409,6 +409,12 @@ class Zend_Search_Lucene_Index_Writer
         // Get an exclusive index lock
         Zend_Search_Lucene_LockManager::obtainWriteLock($this->_directory);
 
+        // Write down changes for the segments
+        foreach ($this->_segmentInfos as $segInfo) {
+            $segInfo->writeChanges();
+        }
+
+
         $generation = Zend_Search_Lucene::getActualGeneration($this->_directory);
         $segmentsFile   = $this->_directory->getFileObject(Zend_Search_Lucene::getSegmentFileName($generation), false);
         $newSegmentFile = $this->_directory->createFile(Zend_Search_Lucene::getSegmentFileName(++$generation), false);
