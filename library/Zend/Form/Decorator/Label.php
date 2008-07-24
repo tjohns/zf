@@ -98,7 +98,11 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      */
     public function setTag($tag)
     {
-        $this->_tag = (string) $tag;
+        if (empty($tag)) {
+            $this->_tag = null;
+        } else {
+            $this->_tag = (string) $tag;
+        }
         return $this;
     }
 
