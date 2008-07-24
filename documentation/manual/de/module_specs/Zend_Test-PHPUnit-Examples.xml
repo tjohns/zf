@@ -1,72 +1,67 @@
 <!-- EN-Revision: 10125 -->
 <sect2 id="zend.test.phpunit.examples">
-    <title>Examples</title>
+    <title>Beispiele</title>
 
     <para>
-        Knowing how to setup your testing infrastructure and how to make
-        assertions is only half the battle; now it's time to start looking at
-        some actual testing scenarios to see how you can leverage them.
+        Zu wissen wir man die eigene Infrastruktur für Tests einstellt und wir Ausnahmen zu erstellen sind ist
+        nur der halbe Kampf; jetzt ist es Zeit auf einige Testszenarien zu schauen und zu eruieren wie diese
+        verwendet werden können.
     </para>
 
     <example id="zend.test.phpunit.examples.userController">
-        <title>Testing a UserController</title>
+        <title>Den UserController testen</title>
 
         <para>
-            Let's consider a standard task for a website: authenticating and registering users. In our example, we'll define a UserController for handling this, and have the following requirements:
+            Nehmen wir einen standard Task für eine Webseite an: Authentifizierung und Registrierung von
+            Benutzern. In unserem Beispiel definieren wir einen UserController um das zu behandeln, und haben
+            die folgenden Notwendigkeiten:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                If a user is not authenticated, they will always be redirected
-                to the login page of the controller, regardless of the action
-                specified.
+                Wenn ein Benutzer nicht authentifiziert ist, wird er immer zur Login Seite des Kontrollers
+                umgeleitet, unabhängig von der spezifizierten Aktion.
             </para></listitem>
 
             <listitem><para>
-                The login form page will show both the login form and the
-                registration form.
+                Die Login Formularseite wird beides zeigen, das Login Formular und das Registrations Formular.
             </para></listitem>
 
             <listitem><para>
-                Providing invalid credentials should result in returning to the
-                login form.
+                Die angabe von ungültigen Anmeldedaten sollte in der Rückgabe des Login Formulars resultieren.
             </para></listitem>
 
             <listitem><para>
-                Valid credentials should result in redirecting to the user
-                profile page.
+                Das Ansehen der Anmeldedaten sollte in einer Umleitung zur Profilseite des Benutzers resultieren.
             </para></listitem>
 
             <listitem><para>
-                The profile page should be customized to contain the user's
-                username.
+                Die Profilseite sollte verändert werden um den Benutzernamen des Benutzers zu enthalten.
             </para></listitem>
 
             <listitem><para>
-                Authenticated users who visit the login page should be
-                redirected to their profile page.
+                Authentifizierte Benutzer welche die Loginseite besuchen sollten zu Ihrer Profilseite
+                umgeleitet werden.
             </para></listitem>
 
             <listitem><para>
-                On logout, a user should be redirected to the login page.
+                Bei der Abmeldung, sollten ein Benutzer zur Loginseite umgeleitet werden.
             </para></listitem>
 
             <listitem><para>
-                With invalid data, registration should fail.
+                Mit ungültigen Daten sollte die Registrierung fehlschlagen.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            We could, and should define further tests, but these will do for
-            now. 
+            Wir können, und sollten zusätzliche Tests definieren, aber diese reichen für jetzt.
         </para>
 
         <para>
-            For our application, we will define a plugin, 'Initialize', that
-            runs at <code>routeStartup()</code>. This allows us to encapsulate
-            our bootstrap in an OOP interface, which also provides an easy way
-            to provide a callback. Let's look at the basics of this class
-            first:
+            Für unsere Anwendung definieren wir ein Plugin, 'Initialisieren' es, damit es bei
+            <code>routeStartup()</code> läuft. Das erlaubt es uns das Bootstrapping in einem OOP Interface
+            zu kapseln, was auch einen einfachen Weg bietet um ein Callback zu ermöglichen. Schauen wir uns
+            erstmals die Basics dieser Klasse an:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -78,7 +73,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
     protected static $_config;
 
     /**
-     * @var string Current environment
+     * @var string Aktuelle Umgebung
      */
     protected $_env;
 
@@ -88,14 +83,14 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
     protected $_front;
 
     /**
-     * @var string Path to application root
+     * @var string Pfad zum Root der Anwendung
      */
     protected $_root;
 
     /**
      * Constructor
      *
-     * Initialize environment, root path, and configuration.
+     * Umgebung, Root Pfad und Konfiguration initialisieren
      * 
      * @param  string $env 
      * @param  string|null $root 
@@ -115,7 +110,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * Route startup
+     * Route beginnen
      * 
      * @return void
      */
@@ -129,12 +124,12 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
         $this->initControllers();
     }
 
-    // definition of methods would follow...
+    // Die Definition von Methoden würde hier folgen...
 }
 ]]></programlisting>
 
         <para>
-            This allows us to create a bootstrap callback like the following:
+            Das erlaubt es uns einen Bootstrap Callback wie folgt zu erstellen:
         </para>
 
         <programlisting role="php"><![CDATA[

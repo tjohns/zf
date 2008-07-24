@@ -3,20 +3,18 @@
     <title>Advanced usage</title>
 
     <sect2 id="zend.paginator.advanced.adapters">
-        <title>Custom data source adapters</title>
-        
+        <title>Eigene Adapter für Quelldaten</title>
+
         <para>
-            At some point you may run across a data type that is not covered by
-            the packaged adapters.  In this case, you will need to write your 
-            own.
+            An irgendeinem Punkt kann es passieren das man auf einen Datentyp stößt der nicht von den
+            mitgelieferten Adaptern abgedeckt wird. In diesem Fall muß man seinen eigenen schreiben.
         </para>
-        
+
         <para>
-            To do so, you must implement 
-            <code>Zend_Paginator_Adapter_Interface</code>.  There are two 
-            methods required to do this:
+            Um das zu tun, muß man <code>Zend_Paginator_Adapter_Interface</code> implementieren. Es gibt
+            zwei Methoden die hierfür benötigt werden:
         </para>
-        
+
         <itemizedlist>
             <listitem>
                 <para>count()</para>
@@ -25,66 +23,61 @@
                 <para>getItems($offset, $itemCountPerPage)</para>
             </listitem>
         </itemizedlist>
-        
+
         <para>
-            Additionally, you'll want to implement a constructor that takes 
-            your data source as a parameter and stores it as a protected or 
-            private property.  How you wish to go about doing this 
-            specifically is up to you.
+            Zusätzlich kann es gewünscht sein einen Konstruktor zu implementieren der die Datenquelle als
+            Parameter entgegennimmt und als geschützte oder private Eigenschaft abspeichert. Wie man das
+            realisieren will liegt komplett in Eigenverantwortung.
         </para>
-        
+
         <para>
-            If you've ever used the SPL interface 
-            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>, 
-            you're familiar with <code>count()</code>.  As used with 
-            <code>Zend_Paginator</code>, this is the total number of items 
-            in the data collection.
+            Wenn man jemals schon das SPL Interface
+            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>
+            verwendet hat, wird man mit <code>count()</code> umgehen können. <code>Zend_Paginator</code> verwendet
+            es als totale Anzahl an Elementen in der Datensammlung.
         </para>
-        
+
         <para>
-            The <code>getItems()</code> method is only slightly more 
-            complicated.  For this, your adapter is supplied with an offset and
-            the number of items to display per page.  You must return the 
-            appropriate slice of data.  For an array, that would be:
+            Die <code>getItems()</code> Methode ist nur etwas komplizierter. Hierfür, wird der Adapter mit einem
+            Offset und der Anzahl an Einträgen die pro Seite dargestellt werden sollen, gefüttert. Man muß den
+            entsprechenden Bereich an Daten zurückgeben. Für ein Array wurde das wie folgt funktionieren:
         </para>
-        
+
         <para>
             <programlisting role="php"><![CDATA[return array_slice($this->_array, $offset, $itemCountPerPage);]]>
             </programlisting>
         </para>
-        
+
         <para>
-            Take a look at the packaged adapters (all of which implement the 
-            <code>Zend_Paginator_Adapter_Interface</code>) for ideas of how you
-            might go about implementing your own.
+            Man sollte einen Blick auf die mitgelieferten Adapter werfen (alle welche
+            <code>Zend_Paginator_Adapter_Interface</code> implementieren) um eine Idee zu bekommen wie man das
+            selbst implementieren könnte.
         </para>
     </sect2>
 
     <sect2 id="zend.paginator.advanced.scrolling-styles">
-        <title>Custom scrolling styles</title>
-        
+        <title>Eigene Scrolling Stile</title>
+
         <para>
-            Creating your own scrolling style requires that you implement 
-            <code>Zend_Paginator_ScrollingStyle_Interface</code>, which defines
-            a single method, <code>getPages()</code>.  Specifically,
+            Das Erstellen von eigenen Scrolling Stilen erfordert das man
+            <code>Zend_Paginator_ScrollingStyle_Interface</code> implementiert, welche eine eizelne Methode,
+            <code>getPages()</code>, definiert. Speziell,
         </para>
-        
+
         <para>
             <programlisting role="php"><![CDATA[public function getPages(Zend_Paginator $paginator, $pageRange = null);]]>
             </programlisting>
         </para>
         
         <para>
-            This method should calculate a lower and upper bound for page 
-            numbers within the range of so-called "local" pages (that is, pages
-            that are nearby the current page).
+            Diese Methode sollten eine untere und obere Grenze für die Seitenzahl innerhalb der sogenannten
+            "lokalen" Seiten berechnen (das sind Seiten nahe der aktuellen Seite).
         </para>
         
         <para>
-            Unless it extends another scrolling style (see 
-            <code>Zend_Paginator_ScrollingStyle_Elastic</code> for an example),
-            your custom scrolling style will inevitably end with something 
-            similar to the following line of code:
+            Solange es keinen anderen Scrolling Stil erweitert (siehe zum Beispiel
+            <code>Zend_Paginator_ScrollingStyle_Elastic</code>, wird der eigene Scrolling Stil üblicherweise mit
+            etwas ähnlichem sie der folgenden Codezeile enden:
         </para>
         
         <para>
@@ -93,15 +86,14 @@
         </para>
         
         <para>
-            There's nothing special about this call; it's merely a convenience 
-            method to check the validity of the lower and upper bound and 
-            return an array of the range to the paginator.
+            Es ist nichts speziellen an diesem Aufruf; es ist mehr eine übliche Methode um die Gültigkeit der
+            unteren und oberen Grenze zu prüfen und ein Array des Bereichs an den Paginator zurückzugeben.
         </para>
         
         <para>
-            When you're ready to use your new scrolling style, you'll need to 
-            tell <code>Zend_Paginator</code> what directory to look in.  To do
-            that, do the following:
+            Wenn man bereit ist den neuen Scrolling Stil zu benutzen, muß man <code>Zend_Paginator</code>
+            bekanntgeben in welchem Verzeichnis er nachschauen muß. Um das zu tun muß das folgende ausgeführt
+            werden:
         </para>
         
         <para>

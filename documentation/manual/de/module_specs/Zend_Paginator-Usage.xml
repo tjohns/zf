@@ -242,9 +242,8 @@ routes.example.reqs.pageNumber = \d+]]>
         </table>
         
         <para>
-            By setting the default view partial, default scrolling style, and 
-            view instance, you can eliminate the calls to PaginationControl
-            completely:
+            Durch das Setzen des standard View Partials, den standard Scrolling Stils, und der View Instanz
+            kann der Aufruf von PaginatingControl komplett entfallen:
         </para>
         
         <para>
@@ -255,8 +254,8 @@ $paginator->setView($view);]]>
         </para>
         
         <para>
-            When all of these values are set, you can render the pagination
-            control inside your view script with a simple echo statement:
+            Wenn alle diese Werte gesetzt sind, kann die Seitenkontrolle im View Skript mit einem einfachen
+            echo Statement dargestellt werden:
         </para>
         
         <para>
@@ -265,30 +264,30 @@ $paginator->setView($view);]]>
         </para>
         
         <sect3 id="zend.paginator.usage.rendering.example-controls">
-            <title>Example pagination controls</title>
+            <title>Beispiel der Seitenkontrolle</title>
             
             <para>
-                The following example pagination controls will hopefully help
-                you get started:
+                Das folgende Beispiel von Seitenkontrollen wird Ihnen hoffentlich helfen um erstmals
+                anzufangen:
             </para>
             
             <para>
-                Search pagination
+                Such-Seitendarstellung
                 
                 <programlisting role="php"><![CDATA[<!-- 
-See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 -->
 
 <?php if ($this->pageCount): ?> 
 <div id="paginationControl">
-<!-- Previous page link --> 
+<!-- Vorheriger Seitenlink --> 
 <?php if (isset($this->previous)): ?> 
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Previous</a> | 
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorher</a> | 
 <?php else: ?> 
-  <span class="disabled">&lt; Previous</span> | 
+  <span class="disabled">&lt; Vorher</span> | 
 <?php endif; ?> 
 
-<!-- Numbered page links -->
+<!-- Anzahl an Seitenlinks -->
 <?php foreach ($this->pagesInRange as $page): ?> 
   <?php if ($page != $this->current): ?>
     <a href="<?= $this->url(array('page' => $page)); ?>"><?= $page; ?></a> | 
@@ -297,11 +296,11 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
   <?php endif; ?>
 <?php endforeach; ?>
 
-<!-- Next page link --> 
+<!-- Nächster Seitenlink --> 
 <?php if (isset($this->next)): ?> 
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">Next &gt;</a>
+  <a href="<?= $this->url(array('page' => $this->next)); ?>">Nächster &gt;</a>
 <?php else: ?> 
-  <span class="disabled">Next &gt;</span>
+  <span class="disabled">Nächster &gt;</span>
 <?php endif; ?> 
 </div> 
 <?php endif; ?>]]>
@@ -309,10 +308,10 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
             </para>
             
             <para>
-                Item pagination
+                Element Seitendarstellung
 
                 <programlisting role="php"><![CDATA[<!-- 
-See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
+Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 -->
 
 <?php if ($this->pageCount): ?> 
@@ -322,18 +321,18 @@ of <?= $this->totalItemCount; ?>
 
 <a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> | 
 
-<!-- Previous page link --> 
+<!-- Vorheriger Seitenlink --> 
 <?php if (isset($this->previous)): ?> 
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Previous</a> | 
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorheriger</a> | 
 <?php else: ?> 
-  <span class="disabled">&lt; Previous</span> | 
+  <span class="disabled">&lt; Vorheriger</span> | 
 <?php endif; ?> 
 
 <!-- Next page link --> 
 <?php if (isset($this->next)): ?> 
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">Next &gt;</a> |
+  <a href="<?= $this->url(array('page' => $this->next)); ?>">Nächster &gt;</a> |
 <?php else: ?> 
-  <span class="disabled">Next &gt;</span> |
+  <span class="disabled">Nächster &gt;</span> |
 <?php endif; ?>
 
 <a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
@@ -344,7 +343,7 @@ of <?= $this->totalItemCount; ?>
             </para>
 
             <para>
-                Dropdown pagination
+                Dropdown Seitendarstellung
 
                 <programlisting role="php"><![CDATA[<?php if ($this->pageCount): ?> 
 <select id="paginationControl" size="1"> 
@@ -366,101 +365,98 @@ $('paginationControl').observe('change', function() {
         </sect3>
         
         <sect3 id="zend.paginator.usage.rendering.properties">
-            <title>Listing of properties</title>
+            <title>Tabelle von Eigenschaften</title>
             
             <para>
-                The following options are available to pagination control
-                view partials:
+                Die folgenden Optionen von für eine Seitenkontrolle bei View Partials vorhanden:
             </para>
             
             <table id="zend.paginator.usage.rendering.properties.table">
-                <title>Properties available to view partials</title>
+                <title>Eigenschaften die bei View Partials vorhanden sind</title>
 
                 <tgroup cols="3">
                     <thead>
                         <row>
-                            <entry>Property</entry>
-                            <entry>Type</entry>
-                            <entry>Description</entry>
+                            <entry>Eigenschaft</entry>
+                            <entry>Typ</entry>
+                            <entry>Beschreibung</entry>
                         </row>
                     </thead>
                     <tbody>
                         <row>
                             <entry>first</entry>
                             <entry>integer</entry>
-                            <entry>First page number (i.e., 1)</entry>
+                            <entry>Erste Seitennummer (z.B., 1)</entry>
                         </row>
                         <row>
                             <entry>firstItemNumber</entry>
                             <entry>integer</entry>
                             <entry>
-                                Absolute number of the first item on this page
+                                Absolute Nummer des ersten Elements auf dieser Seite
                             </entry>
                         </row>
                         <row>
                             <entry>firstPageInRange</entry>
                             <entry>integer</entry>
                             <entry>
-                                First page in the range returned by the 
-                                scrolling style
+                                Erste Seite des Bereichs der vom Scrolling Stil zurückgegeben wird
                             </entry>
                         </row>
                         <row>
                             <entry>current</entry>
                             <entry>integer</entry>
-                            <entry>Current page number</entry>
+                            <entry>Aktuelle Seitenzahl</entry>
                         </row>
                         <row>
                             <entry>currentItemCount</entry>
                             <entry>integer</entry>
-                            <entry>Number of items on this page</entry>
+                            <entry>Anzahl der Elemente auf dieser Seite</entry>
                         </row>
                         <row>
                             <entry>last</entry>
                             <entry>integer</entry>
-                            <entry>Last page number</entry>
+                            <entry>Letzte Seitennummer</entry>
                         </row>
                         <row>
                             <entry>lastItemNumber</entry>
                             <entry>integer</entry>
                             <entry>
-                                Absolute number of the last item on this page
+                                Absolute Zahl des letzten Elements auf dieser Seite
                             </entry>
                         </row>
                         <row>
                             <entry>lastPageInRange</entry>
                             <entry>integer</entry>
                             <entry>
-                                Last page in the range returned by the 
-                                scrolling style
+                                Letzte Seite im Bereich der vom Scrolling Stil zurückgegeben wird
                             </entry>
                         </row>
                         <row>
                             <entry>next</entry>
                             <entry>integer</entry>
-                            <entry>Next page number</entry>
+                            <entry>Nächste Seitenzahl</entry>
                         </row>
                         <row>
                             <entry>pageCount</entry>
                             <entry>integer</entry>
-                            <entry>Number of pages</entry>
+                            <entry>Anzahl an Seiten</entry>
                         </row>
                         <row>
                             <entry>pagesInRange</entry>
                             <entry>array</entry>
                             <entry>
-                                Array of pages returned by the scrolling style
+                                Array von Seiten das vom Scrolling Stil zurückgegeben wird
                             </entry>
                         </row>
                         <row>
                             <entry>previous</entry>
                             <entry>integer</entry>
-                            <entry>Previous page number</entry>
+                            <entry>Vorherige Seitenzahl</entry>
                         </row>
                         <row>
                             <entry>totalItemCount</entry>
                             <entry>integer</entry>
-                            <entry>Total number of items</entry>
+                            <entry>Komplette Anzahl an Elementen</entry>
                         </row>
                     </tbody>
                 </tgroup>

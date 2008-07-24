@@ -3,109 +3,99 @@
     <title>Zend_Dom_Query</title>
 
     <para>
-        <code>Zend_Dom_Query</code> provides mechanisms for querying XML and
-        (X)HTML documents utilizing either XPath or CSS selectors. It was
-        developed to aid with functional testing of MVC applications, but could
-        also be used for rapid development of screen scrapers.
+        <code>Zend_Dom_Query</code> bietet einen Mechanismus für die Abfrage von XML und (X)HTML Dokumenten
+        indem entweder XPath oder CSS Selektoren verwendet werden. Sie wurde entwickelt um bei funktionalem
+        Testen von MVC Anwendungen zu helfen, könnte aber auch für schnelle Entwicklung von Screen Scraper
+        verwendet werden. 
     </para>
 
     <para>
-        CSS selector notation is provided as a simpler and more familiar
-        notation for web developers to utilize when querying documents with XML
-        structures. The notation should be familiar to anybody who has developed
-        Cascading Style Sheets or who utilizes Javascript toolkits that provide
-        functionality for selecting nodes utilizing CSS selectors 
+        Die CSS Selektor Schreibweise wird als einfachere und für Web Entwickler bekannterer Weg angeboten um
+        bei der Anfrage von Dokumenten mit XML Strukturen zu helfen. Diese Schreibweise sollte jedem der
+        Cascading Style Sheets entwickelt hat bekannt sein, oder jedem der Javascript Toolkits verwendet die
+        Funktionalität für das Auswählen von Knoten bei der Anpassung von SCC Selektoren anbieten
         (<ulink url="http://prototypejs.org/api/utility/dollar-dollar">Prototype's
-            $$()</ulink> and 
+            $$()</ulink> und 
         <ulink url="http://api.dojotoolkit.org/jsdoc/dojo/HEAD/dojo.query">Dojo's 
-            dojo.query</ulink> were both inspirations for the component).
+            dojo.query</ulink> sind beides Inspirationen für diese Komponente).
     </para>
 
     <sect2 id="zend.dom.query.operation">
-        <title>Theory of Operation</title>
+        <title>Theorie der Anwendung</title>
 
         <para>
-            To use <code>Zend_Dom_Query</code>, you instantiate a
-            <code>Zend_Dom_Query</code> object, optionally passing a document to
-            query (a string). Once you have a document, you can use either the
-            <code>query()</code> or <code>queryXpath()</code> methods; each
-            method will return a <code>Zend_Dom_Query_Result</code> object with
-            any matching nodes.
+            Um <code>Zend_Dom_Query</code> zu verwenden muß ein <code>Zend_Dom_Query</code> Objekt instanziert
+            werden, optional kann ein zu parsendes Dokument (ein String) übergeben werden. Sobald man ein
+            Dokument hat, kann die <code>query()</code> oder die <code>queryXpath()</code> Methode verwendet
+            werden; jede Methode gibt ein <code>Zend_Dom_Query_Result</code> Objekt mit allen passenden
+            Knoten zurück.
         </para>
 
         <para>
-            The primary difference between <code>Zend_Dom_Query</code> and using
-            DOMDocument + DOMXPath is the ability to select against CSS
-            selectors. You can utilize any of the following, in any combination:
+            Der Grundsätzliche Unterschied zwischen <code>Zend_Dom_Query</code> und der Verwendung von
+            DOMDocument + DOMXPath ist die Möglichkeit CSS Selektoren auszuwählen. Alle folgenden Elemente
+            können in jeder Kombination verwendet werden:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <emphasis>element types</emphasis>: provide an element type to
-                match: 'div', 'a', 'span', 'h2', etc.
+                <emphasis>Element Typen</emphasis>: Bietet einen Elementtypen an der zu den folgenden passt:
+                'div', 'a', 'span', 'h2', usw.
             </para></listitem>
 
             <listitem><para>
-                <emphasis>style attributes</emphasis>: CSS style attributes to
-                match: '.error', 'div.error', 'label.required', etc. If an
-                element defines more than one style, this will match as long as
-                the named style is present anywhere in the style declaration.
+                <emphasis>Stil Attribute</emphasis>: CSS Stil Attribute passen zu folgenden:
+                '.error', 'div.error', 'label.required', usw. Wenn ein Element mehr als einen Stil definiert
+                wird er entsprechen solange der benannte Stil irgendwo in der Stil Definition vorhanden ist.
             </para></listitem>
 
             <listitem><para>
-                <emphasis>id attributes</emphasis>: element ID attributes to
-                match: '#content', 'div#nav', etc.
+                <emphasis>Id Attribute</emphasis>: ID Attribute von Elementen passen zu folgenden:
+                '#content', 'div#nav', usw.
             </para></listitem>
 
             <listitem>
                 <para>
-                    <emphasis>arbitrary attributes</emphasis>: arbitrary element
-                    attributes to match. Three different types of matching are
-                    provided:
+                    <emphasis>Andere Attribute</emphasis>: Andere Attribute von Elementen die passen. Drei
+                    verschiedene Typen die passen werden angeboten:
                 </para>
 
                 <itemizedlist>
                     <listitem><para>
-                        <emphasis>exact match</emphasis>: the attribute exactly
-                        matches the string: 'div[bar="baz"]' would match a div
-                        element with a "bar" attribute that exactly matches the
-                        value "baz".
+                        <emphasis>Exakte Entsprechung</emphasis>: Das Attribute passt exakt zum String:
+                        'div[bar="baz"]' würde zu einem Div Element mit einem "bar" Attribut passen das
+                        exakt den Wert "baz" enthält.
                     </para></listitem>
 
                     <listitem><para>
-                        <emphasis>word match</emphasis>: the attribute contains
-                        a word matching the string: 'div[bar~="baz"]' would match a div
-                        element with a "bar" attribute that contains the
-                        word "baz". '&lt;div bar="foo baz"&gt;' would match, but '&lt;div
-                                bar="foo bazbat"&gt;' would not.
+                        <emphasis>Wort Entsprechung</emphasis>: Das Attribut enthält ein Wort das dem String
+                        entspricht: 'div[bar~="baz"]' würde einem Div Element mit einem "bat" Attribut
+                        entsprechen  das das Wort "baz" enthält.  '&lt;div bar="foo baz"&gt;' würde passen
+                        aber '&lt;div bar="foo bazbat"&gt;' würde nicht entsprechen.
                     </para></listitem>
 
                     <listitem><para>
-                        <emphasis>substring match</emphasis>: the attribute contains
-                        the string: 'div[bar~="baz"]' would match a div
-                        element with a "bar" attribute that contains the
-                        string "baz" anywhere within it.
+                        <emphasis>Substring Entsprechung</emphasis>: Das Atribut enthält den String:
+                        'div[bar~="baz"]' würde einem Div Element mit einem "bar" Attribut entsprechen das den
+                        String "baz" irgendwo in Ihm enthält.
                     </para></listitem>
                 </itemizedlist>
 
                 <itemizedlist><para>
-                    <emphasis>direct descendents</emphasis>: utilize '&gt;' between
-                    selectors to denote direct descendents. 'div > span' would
-                    select only 'span' elements that are direct descendents of a
-                    'div'. Can also be used with any of the selectors above.
+                    <emphasis>Direkt abhängig</emphasis>: Verwende '&gt;' zwischen Selektoren um direkte
+                    Abhängigkeit auszudrücken. 'div > span' würde nur 'span' Elemente auswählen die direkt
+                    Abhängig von 'div' sind. Kann auch mit jedem Selektor darüber verwendet werden.
                 </para></itemizedlist>
 
                 <itemizedlist>
                     <para>
-                        <emphasis>descendents</emphasis>: string together
-                        multiple selectors to indicate a hierarchy along which
-                        to search.  'div .foo span #one' would select an element
-                        of id 'one' that is a descendent of arbitrary depth
-                        beneath a 'span' element, which is in turn a descendent
-                        of arbitrary depth beneath an element with a class of
-                        'foo', that is an descendent of arbitrary depth beneath
-                        a 'div' element. For example, it would match the link to
-                        the word 'One' in the listing below:
+                        <emphasis>Abhängigkeit</emphasis>: Mehrere Selektoren zusammenschreiben um eine
+                        Hirarchie zwischen Ihnen auszudrücken nach welcher gesucht werden soll.
+                        'div .foo span #one' würde ein Element mit der Id 'one' auswählen das Abhängig ist
+                        in einer beliebigen Tiefe unter einem 'span' Element, welches seinerseits in einer
+                        beliebigen Tiefe darunter abhängig ist von einer Klase von 'foo', welche in einer
+                        beliebigen Tiefe abhängig ist von einem 'div' Element. Der Link zum Wort 'One' im
+                        Beispiel anbei würde passen:
                     </para>
 
                     <programlisting role="html"><![CDATA[
@@ -131,91 +121,85 @@
         </itemizedlist>
 
         <para>
-            Once you've performed your query, you can then work with the result
-            object to determine information about the nodes, as well as to pull
-            them and/or their content directly for examination and manipulation.
-            <code>Zend_Dom_Query_Result</code> implements <code>Countable</code>
-            and <code>Iterator</code>, and store the results internally as
-            DOMNodes/DOMElements.  As an example, consider the following call,
-            that selects against the HTML above:
+            Wenn man eine Abfrage ausgeführt hat, kann man mit dem Ergebnis Objekt arbeiten um Informationen
+            über die Knoten zu bekommen, sowie um Sie und/oder Ihren Inhalt direkt für die Extrahierung und
+            Manipulation herauszuholen. <code>Zend_Dom_Query_Result</code> implementiert <code>Countable</code>
+            und <code>Iterator</code> und speichert die Ergebnisse intern als DOMNodes/DOMElements. Als Beispiel
+            nehmen wir erstmal den folgenden Aufruf an der das obige HTML auswählt:
         </para>
 
         <programlisting role="php"><![CDATA[
 $dom = new Zend_Dom_Query($html);
 $results = $dom->query('.foo .bar a');
 
-$count = count($results); // get number of matches: 4
+$count = count($results); // Gib die Anzahl an Gefundenen Nodes zurück: 4
 foreach ($results as $result) {
-    // $result is a DOMElement
+    // $result ist ein DOMElement
 }
 ]]></programlisting>
 
         <para>
-            <code>Zend_Dom_Query</code> also allows straight XPath queries
-            utilizing the <code>queryXpath()</code> method; you can pass any
-            valid XPath query to this method, and it will return a
-            <code>Zend_Dom_Query_Result</code> object.
+            <code>Zend_Dom_Query</code> erlaubt auch strenge XPath Abfragen durch Verwendung der
+            <code>queryXpath()</code> Methode; man kann eine gültige XPath Abfrage an diese Methode übergeben,
+            und Sie wird ein <code>Zend_Dom_Query_Result</code> Objekt zurückgeben.
         </para>
     </sect2>
 
     <sect2 id="zend.dom.query.methods">
-        <title>Methods Available</title>
+        <title>Vorhandene Methoden</title>
 
         <para>
-            The <code>Zend_Dom_Query</code> family of classes have the following
-            methods available.
+            Die <code>Zend_Dom_Query</code> Familie an Klassen enthält die folgenden Methoden.
         </para>
 
         <sect3 id="zend.dom.query.methods.zenddomquery">
             <title>Zend_Dom_Query</title>
 
             <para>
-                The following methods are available to
-                <code>Zend_Dom_Query</code>:
+                Die folgenden Methoden sind in <code>Zend_Dom_Query</code> vorhanden:
             </para>
 
             <itemizedlist>
                 <listitem><para>
-                    <code>setDocumentXml($document)</code>: specify an XML
-                    string to query against.
+                    <code>setDocumentXml($document)</code>: Spezifiziert einen XML String der Abgefragt
+                    werden soll.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>setDocumentXhtml($document)</code>: specify an XHTML
-                    string to query against.
+                    <code>setDocumentXhtml($document)</code>: Spezifiziert einen XHTML String der Abgefragt
+                    werden soll.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>setDocumentHtml($document)</code>: specify an HTML
-                    string to query against.
+                    <code>setDocumentHtml($document)</code>: Spezifiziert einen HTML String der Abgefragt
+                    werden soll.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>setDocument($document)</code>: specify a
-                    string to query against; <code>Zend_Dom_Query</code> will
-                    then attempt to autodetect the document type.
+                    <code>setDocument($document)</code>: Spezifiziert einen String der abgefragt werden soll;
+                    <code>Zend_Dom_Query</code> wird anschließend versuchen den Typ des Dokument automatisch
+                    herauszufinden.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getDocument()</code>: retrieve the original document
-                    string provided to the object.
+                    <code>getDocument()</code>: Empfängt den String des Original Dokuments das an das Objekt
+                    übergeben wurde.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getDocumentType()</code>: retrieve the document
-                    type of the document provided to the object; will be one of
-                    the <code>DOC_XML</code>, <code>DOC_XHTML</code>, or
-                    <code>DOC_HTML</code> class constants.
+                    <code>getDocumentType()</code>: Empfängt den Typ des Dokuments das dem Objekt übergeben
+                    wurde; das wird eine der Klassenkonstanten <code>DOC_XML</code>, <code>DOC_XHTML</code>,
+                    oder <code>DOC_HTML</code> sein.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>query($query)</code>: query the document using CSS
-                    selector notation.
+                    <code>query($query)</code>: Abfrage des Dokuments bei Verwendung der CSS Selektor
+                    Schreibweise.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>queryXpath($xPathQuery)</code>: query the document
-                    using XPath notation.
+                    <code>queryXpath($xPathQuery)</code>: Abfrage des Dokuments bei Verwendung der XPath
+                    Schreibweise.
                 </para></listitem>
             </itemizedlist>
         </sect3>
@@ -224,30 +208,26 @@ foreach ($results as $result) {
             <title>Zend_Dom_Query_Result</title>
 
             <para>
-                As mentioned previously, <code>Zend_Dom_Query_Result</code>
-                implements both <code>Iterator</code> and
-                <code>Countable</code>, and as such can be used in a
-                <code>foreach</code> loop as well as with the
-                <code>count()</code> function. Additionally, it exposes the
-                following methods:
+                Wie vorher erwähnt, implementiert <code>Zend_Dom_Query_Result</code> beide, <code>Iterator</code>
+                und <code>Countable</code>, und kann deswegen in einer <code>foreach</code> Schleife
+                verwendet werden wie auch mit der <code>count()</code> Funktion. Zusätzlich bietet es die
+                folgenden Methoden an:
             </para>
 
             <itemizedlist>
                 <listitem><para>
-                    <code>getCssQuery()</code>: return the CSS selector query
-                    used to produce the result (if any).
+                    <code>getCssQuery()</code>: Gibt die CSS Selektor Abfrage zurück die für die Erstellung
+                    des Ergebnisses verwendet wurde (wenn vorhanden).
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getXpathQuery()</code>: return the XPath query
-                    used to produce the result. Internally,
-                    <code>Zend_Dom_Query</code> converts CSS selector queries to
-                    XPath, so this value will always be populated.
+                    <code>getXpathQuery()</code>: Gibt die XPath Abfrage zurück die für die Erstellung des
+                    Ergebnisses verwendet wurde. Intern konvertiert <code>Zend_Dom_Query</code> CSS
+                    Selektor Abfragen zu XPath, so das dieser Wert immer angeboten wird.
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getDocument()</code>: retrieve the DOMDocument the
-                    selection was made against.
+                    <code>getDocument()</code>: Empfängt das DOMDocument auf das die Abfrage ausgeführt wurde.
                 </para></listitem>
             </itemizedlist>
         </sect3>

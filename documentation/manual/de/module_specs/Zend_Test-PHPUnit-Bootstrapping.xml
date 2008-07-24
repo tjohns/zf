@@ -1,28 +1,25 @@
 <!-- EN-Revision: 10125 -->
 <sect2 id="zend.test.phpunit.bootstrapping">
-    <title>Bootstrapping your TestCase</title>
+    <title>Bootstrapping des eigeen TestCases</title>
 
     <para>
-        As noted in the <link linkend="zend.test.phpunit.loginexample">Login
-            example</link>, all MVC test cases should extend
-        <code>Zend_Test_PHPUnit_ControllerTestCase</code>. This class in turn
-        extends <code>PHPUnit_Framework_TestCase</code>, and gives you all the
-        structure and assertions you'd expect from PHPUnit -- as well as some
-        scaffolding and assertions specific to Zend Framework's MVC
-        implementation.
+        Wie im <link linkend="zend.test.phpunit.loginexample">Login Beispiel</link> gezeigt sollten alle
+        MVC Testcases <code>Zend_Test_PHPUnit_ControllerTestCase</code> erweitern. Diese Klasse ihrerseits
+        erweitert <code>PHPUnit_Framework_TestCase</code>, und gibt einem alle Strukturen und Ausnahmen
+        die man von PHPUnit erwartet -- sowie einiges an Scaffolding und Ausnahme spezifisches der
+        Zend Framework MVC Implementation.
     </para>
 
     <para>
-        In order to test your MVC application, you will need to bootstrap it.
-        There are several ways to do this, all of which hinge on the public
-        <code>$bootstrap</code> property.
+        Um die eigene MVC Anwendung zu testen muß diese ein Bootstrap ausführen. Es gibt verschiedene Wege
+        um das zu tun, wobei alle von Ihnen sich der öffentlichen <code>$bootstrap</code> Eigenschaft
+        bedienen.
     </para>
 
     <para>
-        First, you can set this property to point to a file. If you do
-        this, the file should <emphasis>not</emphasis> dispatch the front
-        controller, but merely setup the front controller and any application
-        specific needs.
+        Zuerst kann diese Eigenschaft so gesetzt werden das Sie auf eine Datei zeigt. Wenn das getan wurde
+        sollte diese Datei <emphasis>nicht</emphasis> den Front Kontroller ausführen, aber stattdessen den
+        Front Kontroller konfigurieren und alles was die Anwendung an speziellen Dingen benötigt.
     </para>
 
 
@@ -36,11 +33,10 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
     <para>
-        Second, you can provide a PHP callback to execute in order to bootstrap
-        your application. This method is seen in the <link
-            linkend="zend.test.phpunit.loginexample">Login example</link>. If
-        the callback is a function or static method, this could be set at the
-        class level:
+        Zweitens kann ein PHP Callback angegeben werden der nach dem Bootstrap der Anwendung ausgeführt wird.
+        Diese Methode kann im <link linkend="zend.test.phpunit.loginexample">Login Beispiel</link> gesehen
+        werden. Wenn das Callback eine Funktion oder statische Methode ist, könnte Sie auch in der Klasse
+        gesetzt werden: 
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -53,8 +49,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
     <para>
-        In cases where an object instance is necessary, we recommend performing
-        this in your <code>setUp()</code> method:
+        In Fällen in denen eine Objekt Instanz notwendig ist, empfehlen wir die Durchführung in der eigenen
+        <code>setUp()</code> Methode:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -62,7 +58,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function setUp()
     {
-        // Use the 'start' method of a Bootstrap object instance:
+        // Verwende die 'start' Methode einer Bootstrap Objekt Instanz:
         $bootstrap = new Bootstrap('test');
         $this->bootstrap = array($bootstrap, 'start');
         parent::setUp();
@@ -71,53 +67,45 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
     <para>
-        Note the call to <code>parent::setUp()</code>; this is necessary, as
-        the <code>setUp()</code> method of
-        <code>Zend_Test_PHPUnit_Controller_TestCase</code> will perform the
-        remainder of the bootstrapping process (which includes calling the
-        callback).
+        Beachte das <code>parent::setUp()</code> aufgerufen wird; das ist notwendig, da die <code>setUp()</code>
+        Methode von <code>Zend_Test_PHPUnit_Controller_TestCase</code> die Erinnerung des Bootstrap Prozesses
+        durchführen wird (was den Aufruf des Callbacks inkludiert).
     </para>
 
     <para>
-        During normal operation, the <code>setUp()</code> method will bootstrap
-        the application. This process first  will include cleaning up the
-        environment to a clean request state, resetting any plugins and
-        helpers, resetting the front controller instance, and creating new
-        request and response objects. Once this is done, it will then either
-        <code>include</code> the file specified in <code>$bootstrap</code>, or
-        call the callback specified.
+        Wärend der normalen Anwendung wird die <code>setUp()</code> Methode das Bootstrap der Anwendung
+        ausführen. Dieser Prozess wird zuerst das Löschen der Umgebung enthalten um einen reinen
+        Anfragestatus zu erhalten, das Resetieren jedes Plugins, Helfers und Antwort Objektes. Sobald das
+        getan wurde, wird sie anschließend die Datei <code>laden(include)</code> die in <code>$bootstrap</code>
+        spezifiziert wurde, oder den spezifizierten Callback aufrufen.
     </para>
 
     <para>
-        Bootstrapping should be as close as possible to how the application
-        will be bootstrapped. However, there are several caveats:
+        Das Bootstrappen sollte so nahe wie möglich daran sein wie die Anwendung das Bootstrap durchführt.
+        Trotzdem gibt es einige Fallstricke:
     </para>
 
     <itemizedlist>
         <listitem><para>
-            Do not provide alternate implementations of the Request and
-            Response objects; they will not be used.
-            <code>Zend_Test_PHPUnit_Controller_TestCase</code> uses custom
-            request and response objects,
-            <code>Zend_Controller_Request_HttpTestCase</code> and
-            <code>Zend_Controller_Response_HttpTestCase</code>, respectively.
-            These objects provide methods for setting up the request
-            environment in targetted ways, and pulling response artifacts in
-            specific ways.
+            Wir bieten keine alternative Implementierung der Anfrage und Antwort Objekte; diese werden nicht
+            verwendet. <code>Zend_Test_PHPUnit_Controller_TestCase</code> verwendet eigene Anfrage und
+            Antwort Objekte, <code>Zend_Controller_Request_HttpTestCase</code> und
+            <code>Zend_Controller_Response_HttpTestCase</code>. Diese Objekte bieten Methoden für das
+            Konfigurieren der Anfrageumgebung auf gezieltem Wege an, und dem holen von Antwort Artefakten auf
+            speziellem Weg.
         </para></listitem>
 
         <listitem><para>
-            Do not expect to test server specifics. In other words, the tests
-            are not a guarantee that the code will run on a specific server
-            configuration, but merely that the application should run as
-            expected should the router be able to route the given request. To
-            this end, do not set server-specific headers in the request object.
+            Man sollte nicht erwarten Server spezielles zu testen. In anderen Worten, die Tests garantieren
+            nicht das der Code in einer speziellen Serverkonfiguration läuft, aber das die Anwendung wie
+            erwartet funktionieren sollte, und der Router eine gegebene Anfrage routen kann. Um das
+            Abzuschließen sollten keine Server-speziellen Header im Anfrage Objekt gesetzt werden.
         </para></listitem>
     </itemizedlist>
 
     <para>
-        Once the application is bootstrapped, you can then start creating
-        your tests.
+        Sobald die Anwendung das Bootstrapping ausgeführt hat, kann damit begonnen werden eigene Tests zu
+        erstellen.
     </para>
 </sect2>
 <!--
