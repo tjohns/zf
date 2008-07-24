@@ -15,6 +15,9 @@ require_once 'Zend/Layout.php';
 /** Zend_Session */
 require_once 'Zend/Session.php';
 
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
+
 /**
  * Functional testing scaffold for MVC applications
  * 
