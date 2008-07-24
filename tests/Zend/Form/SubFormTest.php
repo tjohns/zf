@@ -85,6 +85,24 @@ class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('name="attributes[foo]"', $html);
         $this->assertContains('name="attributes[bar]"', $html);
     }
+
+    /**
+     * @see ZF-3272
+     */
+    public function testRenderedSubFormDtShouldContainNoBreakSpace()
+    {
+        $subForm = new Zend_Form_SubForm(array(
+            'elements' => array(
+                'foo' => 'text',
+                'bar' => 'text',
+            ),
+        ));
+        $form = new Zend_Form();
+        $form->addSubForm($subForm, 'foobar')
+             ->setView(new Zend_View);
+        $html = $form->render();
+        $this->assertContains('<dt>&nbsp;</dt>', $html);
+    }
 }
 
 class Zend_Form_SubFormTest_SubForm extends Zend_Form_SubForm
