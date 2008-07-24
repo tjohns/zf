@@ -714,10 +714,11 @@ class Zend_Paginator implements Countable, IteratorAggregate
         $currentPageNumber = $this->getCurrentPageNumber();
         
         $pages = new stdClass();
-        $pages->pageCount = $pageCount;
-        $pages->first     = 1;
-        $pages->current   = $currentPageNumber;
-        $pages->last      = $pageCount;
+        $pages->pageCount        = $pageCount;
+        $pages->itemCountPerPage = $this->getItemCountPerPage();
+        $pages->first            = 1;
+        $pages->current          = $currentPageNumber;
+        $pages->last             = $pageCount;
 
         // Previous and next
         if ($currentPageNumber - 1 > 0) {
