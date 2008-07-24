@@ -81,7 +81,7 @@
 
                     <listitem><para>
                         <emphasis>substring match</emphasis>: the attribute contains
-                        the string: 'div[bar~="baz"]' would match a div
+                        the string: 'div[bar*="baz"]' would match a div
                         element with a "bar" attribute that contains the
                         string "baz" anywhere within it.
                     </para></listitem>
