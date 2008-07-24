@@ -497,6 +497,34 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $result = ob_get_clean();
         $this->assertContains('<Zend_Rest_Server_Test generator="zend" version="1.0"><testFunc6><response>Hello Davey, How are you today</response><status>success</status></testFunc6></Zend_Rest_Server_Test>', $result, var_export($result, 1));
     }
+
+    /**
+     * @see ZF-1949
+     */
+    public function testMissingArgumentsShouldResultInFaultResponse()
+    {
+        $server = new Zend_Rest_Server();
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $server->handle(array('method' => 'testFunc6', 'arg1' => "Davey"));
+        $result = ob_get_clean();
+        $this->assertRegexp('#<message>Invalid Method Call to(.*?)(Requires).*?(given).*?(</message>)#', $result);
+        $this->assertContains('<status>failed</status>', $result);
+    }
+
+    /**
+     * @see ZF-1949
+     */
+    public function testMissingArgumentsWithDefaultsShouldNotResultInFaultResponse()
+    {
+        $server = new Zend_Rest_Server();
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $server->handle(array('method' => 'testFunc7', 'arg1' => "Davey"));
+        $result = ob_get_clean();
+        $this->assertContains('<status>success</status>', $result, var_export($result, 1));
+        $this->assertContains('<response>Hello today, How are you Davey</response>', $result, var_export($result, 1));
+    }
 }
 
 /* Test Functions */
@@ -684,6 +712,17 @@ class Zend_Rest_Server_Test
      * @param int $when Some Arg2
      */
     public static function testFunc6($who, $when)
+    {
+        return "Hello $who, How are you $when";
+    }
+
+    /**
+     * Test Function 7
+     * 
+     * @param string $who Some Arg
+     * @param int $when Some Arg2
+     */
+    public static function testFunc7($who, $when = 'today')
     {
         return "Hello $who, How are you $when";
     }
