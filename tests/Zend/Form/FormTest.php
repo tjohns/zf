@@ -96,8 +96,9 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
     {
         $options = $this->getOptions();
-        $options['config']  = new Zend_Config($options);
-        $options['options'] = $options;
+        $config  = new Zend_Config($options);
+        $options['config']  = $config;
+        $options['options'] = $config->toArray();
         $this->form->setOptions($options);
     }
 
@@ -3122,6 +3123,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->assertFalse(empty($paths));
             $this->assertContains('Foo', $paths[0]);
         }
+    }
+
+    /**
+     * @see ZF-3213
+     */
+    public function testShouldAllowSettingDisplayGroupPrefixPathViaConfigOptions()
+    {
+        require_once 'Zend/Config/Ini.php';
+        $config = new Zend_Config_Ini(dirname(__FILE__) . '/_files/config/zf3213.ini', 'form');
+        $form   = new Zend_Form($config);
+        $dg     = $form->foofoo;
+        $paths  = $dg->getPluginLoader()->getPaths('My_Decorator');
+        $this->assertTrue($paths !== false);
     }
 
     // Subform decorators
