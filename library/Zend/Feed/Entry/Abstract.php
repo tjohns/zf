@@ -79,7 +79,8 @@ abstract class Zend_Feed_Entry_Abstract extends Zend_Feed_Element
             if ($element) {
                 // Load the feed as an XML DOMDocument object
                 @ini_set('track_errors', 1);
-                $doc = @DOMDocument::loadXML($element);
+                $doc = new DOMDocument();
+                $doc = @$doc->loadXML($element);
                 @ini_restore('track_errors');
 
                 if (!$doc) {

@@ -192,7 +192,8 @@ class Zend_Feed
     {
         // Load the feed as an XML DOMDocument object
         @ini_set('track_errors', 1);
-        $doc = @DOMDocument::loadXML($string);
+        $doc = new DOMDocument;
+        $doc = @$doc->loadXML($string);
         @ini_restore('track_errors');
 
         if (!$doc) {

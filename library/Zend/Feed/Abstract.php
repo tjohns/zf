@@ -110,7 +110,8 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
     public function __wakeup()
     {
         @ini_set('track_errors', 1);
-        $doc = @DOMDocument::loadXML($this->_element);
+        $doc = new DOMDocument;
+        $doc = @$doc->loadXML($this->_element);
         @ini_restore('track_errors');
 
         if (!$doc) {

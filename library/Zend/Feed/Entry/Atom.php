@@ -187,7 +187,8 @@ class Zend_Feed_Entry_Atom extends Zend_Feed_Entry_Abstract
 
         // Update internal properties using $client->responseBody;
         @ini_set('track_errors', 1);
-        $newEntry = @DOMDocument::loadXML($response->getBody());
+        $newEntry = new DOMDocument;
+        $newEntry = @$newEntry->loadXML($response->getBody());
         @ini_restore('track_errors');
 
         if (!$newEntry) {
