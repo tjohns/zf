@@ -5,12 +5,11 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 }
 
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Decorator/Label.php';
 
 require_once 'Zend/Form/Element.php';
+require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/View.php';
 
 /**
@@ -246,6 +245,15 @@ class Zend_Form_Decorator_LabelTest extends PHPUnit_Framework_TestCase
         $element->setRequired(true);
         $label = $this->decorator->getLabel();
         $this->assertEquals('! Translation*:', $label);
+    }
+
+    public function testSettingTagToEmptyValueShouldDisableTag()
+    {
+        $element = new Zend_Form_Element_Text('foo', array('label' => 'Foo'));
+        $this->decorator->setElement($element)
+                        ->setTag('');
+        $content = $this->decorator->render('');
+        $this->assertTrue(empty($content), $content);
     }
 }
 
