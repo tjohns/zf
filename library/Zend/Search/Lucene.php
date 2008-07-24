@@ -1289,10 +1289,6 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     public function commit()
     {
         if ($this->_hasChanges) {
-            foreach ($this->_segmentInfos as $segInfo) {
-                $segInfo->writeChanges();
-            }
-
             $this->_getIndexWriter()->commit();
 
             $this->_updateDocCount();
