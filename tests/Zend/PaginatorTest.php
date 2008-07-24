@@ -252,7 +252,7 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     {
         $expected = new stdClass();
         $expected->pageCount        = 11;
-        $expected->perPage          = 10;
+        $expected->itemCountPerPage = 10;
         $expected->first            = 1;
         $expected->current          = 1;
         $expected->last             = 11;
@@ -274,7 +274,7 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     {
         $expected = new stdClass();
         $expected->pageCount        = 11;
-        $expected->perPage          = 10;
+        $expected->itemCountPerPage = 10;
         $expected->first            = 1;
         $expected->current          = 2;
         $expected->last             = 11;
