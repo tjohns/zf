@@ -765,7 +765,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     protected function _updateCurrentItems()
     {
-        $this->_currentItems      = $this->getItemsByPage($this->_currentPageNumber);
-        $this->_currentItemCount  = $this->getItemCount($this->_currentItems);
+        $this->_currentItems      = null;
+        $this->_currentItemCount  = null;
     }
 }
