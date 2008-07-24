@@ -382,7 +382,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     public function getCurrentItems()
     {
         if ($this->_currentItems === null) {
-            $this->_currentItems = $this->getItemsByPage($this->_currentPageNumber);
+            $this->_currentItems = $this->getItemsByPage($this->getCurrentPageNumber());
         }
         
         return $this->_currentItems;
@@ -711,22 +711,22 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected function _createPages($scrollingStyle = null)
     {
         $pageCount = $this->count();
-        $current = $this->getCurrentPageNumber();
+        $currentPageNumber = $this->getCurrentPageNumber();
         
         $pages = new stdClass();
         $pages->pageCount = $pageCount;
         $pages->perPage   = $this->getItemCountPerPage();
         $pages->first     = 1;
-        $pages->current   = $current;
+        $pages->current   = $currentPageNumber;
         $pages->last      = $pageCount;
 
         // Previous and next
-        if ($current - 1 > 0) {
-            $pages->previous = $this->_currentPageNumber - 1;
+        if ($currentPageNumber - 1 > 0) {
+            $pages->previous = $currentPageNumber - 1;
         }
 
-        if ($current + 1 <= $pageCount) {
-            $pages->next = $this->_currentPageNumber + 1;
+        if ($currentPageNumber + 1 <= $pageCount) {
+            $pages->next = $currentPageNumber + 1;
         }
 
         // Pages in range
@@ -739,7 +739,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         if ($this->getCurrentItems() !== null) {
             $pages->currentItemCount = $this->getCurrentItemCount();
             $pages->totalItemCount   = $this->_adapter->count();
-            $pages->firstItemNumber  = (($current - 1) * $this->_itemCountPerPage) + 1;
+            $pages->firstItemNumber  = (($currentPageNumber - 1) * $this->_itemCountPerPage) + 1;
             $pages->lastItemNumber   = $pages->firstItemNumber + $pages->currentItemCount - 1;
         }
 
