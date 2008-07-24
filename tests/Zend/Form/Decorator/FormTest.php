@@ -7,6 +7,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Form/Decorator/Form.php';
+require_once 'Zend/Form.php';
 
 
 /**
@@ -79,6 +80,21 @@ class Zend_Form_Decorator_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($attribs['enctype'], $options['enctype']);
         $this->assertTrue(isset($options['charset']));
         $this->assertEquals($attribs['charset'], $options['charset']);
+    }
+
+    /**
+     * @see ZF-3643
+     */
+    public function testShouldPreferFormIdAttributeOverFormName()
+    {
+        $form = new Zend_Form();
+        $form->setMethod('post')
+             ->setAction('/foo/bar')
+             ->setName('foobar')
+             ->setAttrib('id', 'bazbat')
+             ->setView($this->getView());
+        $html = $form->render();
+        $this->assertContains('id="bazbat"', $html, $html);
     }
 }
 

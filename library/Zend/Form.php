@@ -787,8 +787,8 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      */
     public function getId()
     {
-        if (isset($this->id)) {
-            return $this->id;
+        if (null !== ($id = $this->getAttrib('id'))) {
+            return $id;
         }
 
         $id = $this->getFullyQualifiedName();
