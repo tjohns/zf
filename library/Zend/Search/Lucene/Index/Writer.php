@@ -318,15 +318,22 @@ class Zend_Search_Lucene_Index_Writer
             return;
         }
 
-
         if (!$this->_hasAnythingToMerge()) {
             Zend_Search_Lucene_LockManager::releaseOptimizationLock($this->_directory);
             return;
         }
 
-        // Update segments list to be sure all segments are not merged yet by other process
+        // Update segments list to be sure all segments are not merged yet by another process
+        //
+        // Segment merging functionality is concentrated in this class and surrounded
+        // by optimization lock obtaining/releasing.
+        // _updateSegments() refreshes segments list from the latest index generation.
+        // So only new segments can be added to the index while we are merging some already existing
+        // segments.
+        // Newly added segments will be also included into the index by the _updateSegments() call
+        // either by another process or by the current process with the commit() call at the end of _mergeSegments() method.
+        // That's guaranteed by the serialisation of _updateSegments() execution using exclusive locks.
         $this->_updateSegments();
-
 
         // Perform standard auto-optimization procedure
         $segmentSizes = array();
@@ -548,6 +555,9 @@ class Zend_Search_Lucene_Index_Writer
                     		$newSegmentFile->writeInt((int)0xFFFFFFFF);
                     	}
                     } else if ($docStoreOptions !== null) {
+                        // Release index write lock
+                        Zend_Search_Lucene_LockManager::releaseWriteLock($this->_directory);
+
                         throw new Zend_Search_Lucene_Exception('Index conversion to lower format version is not supported.');
                     }
 
@@ -610,7 +620,7 @@ class Zend_Search_Lucene_Index_Writer
         $genFile->writeLong($generation);
 
 
-        // Check if another update process is not running now
+        // Check if another update or read process is not running now
         // If yes, skip clean-up procedure
         if (Zend_Search_Lucene_LockManager::escalateReadLock($this->_directory)) {
             /**
@@ -633,7 +643,6 @@ class Zend_Search_Lucene_Index_Writer
                     $filesNumbers[]  = 0;
                 } else if ($file == 'segments') {
                     // 'segments' file
-
                     $filesToDelete[] = $file;
                     $filesTypes[]    = 1; // second file to be deleted "zero" version of segments file (Lucene pre-2.1)
                     $filesNumbers[]  = 0;
@@ -791,6 +800,18 @@ class Zend_Search_Lucene_Index_Writer
         if (Zend_Search_Lucene_LockManager::obtainOptimizationLock($this->_directory) === false) {
             return false;
         }
+
+        // Update segments list to be sure all segments are not merged yet by another process
+        //
+        // Segment merging functionality is concentrated in this class and surrounded
+        // by optimization lock obtaining/releasing.
+        // _updateSegments() refreshes segments list from the latest index generation.
+        // So only new segments can be added to the index while we are merging some already existing
+        // segments.
+        // Newly added segments will be also included into the index by the _updateSegments() call
+        // either by another process or by the current process with the commit() call at the end of _mergeSegments() method.
+        // That's guaranteed by the serialisation of _updateSegments() execution using exclusive locks.
+        $this->_updateSegments();
 
         $this->_mergeSegments($this->_segmentInfos);
 
