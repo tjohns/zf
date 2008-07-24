@@ -103,13 +103,6 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    public function testAdapterReturnsRowset()
-    {
-        $actual = $this->_adapter->getItems(0, 10);
-        var_dump($actual);die();
-        $this->assertEquals('Zend_Db_Table_Rowset_Abstract', get_class($actual));
-    }
-    
     public function testGetItemsOffsetTen()
     {
         $actual = $this->_adapter->getItems(10, 10);
@@ -143,6 +136,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         
         $rowCount   = clone $this->_query;
         $rowCount->reset(Zend_Db_Select::COLUMNS)
+                 ->reset(Zend_Db_Select::ORDER)
                  ->columns($expression);
         
         $this->_adapter->setRowCount($rowCount);
