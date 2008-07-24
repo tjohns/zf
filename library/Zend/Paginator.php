@@ -382,7 +382,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     public function getCurrentItems()
     {
         if ($this->_currentItems === null) {
-            $this->_currentItems = $this->getItemsByPage($this->_currentPageNumber);
+            $this->_currentItems = $this->getItemsByPage($this->getCurrentPageNumber());
         }
         
         return $this->_currentItems;
@@ -395,7 +395,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function getCurrentPageNumber()
     {
-        return $this->_currentPageNumber;
+        return $this->normalizePageNumber($this->_currentPageNumber);
     }
     
     /**
@@ -406,9 +406,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function setCurrentPageNumber($pageNumber)
     {
-        $this->_currentPageNumber = $this->normalizePageNumber($pageNumber);
-
-        $this->_updateCurrentItems();
+        $this->_currentPageNumber = $pageNumber;
+        $this->_currentItems      = null;
+        $this->_currentItemCount  = null;
         
         return $this;
     }
@@ -475,8 +475,8 @@ class Zend_Paginator implements Countable, IteratorAggregate
         $this->_itemCountPerPage = $itemCountPerPage;
         $this->_pageCount        = $this->_calculatePageCount();
         $this->_pageItems        = array();
-        
-        $this->_updateCurrentItems();
+        $this->_currentItems     = null;
+        $this->_currentItemCount = null;
         
         return $this;
     }
@@ -508,7 +508,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @return ArrayIterator
      */
     public function getItemsByPage($pageNumber)
-    {        
+    {
+        $pageNumber = $this->normalizePageNumber($pageNumber);
+        
         if (isset($this->_pageItems[$pageNumber])) {
             return $this->_pageItems[$pageNumber];
         }
@@ -709,20 +711,21 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected function _createPages($scrollingStyle = null)
     {
         $pageCount = $this->count();
+        $currentPageNumber = $this->getCurrentPageNumber();
         
         $pages = new stdClass();
         $pages->pageCount = $pageCount;
         $pages->first     = 1;
-        $pages->current   = $this->_currentPageNumber;
+        $pages->current   = $currentPageNumber;
         $pages->last      = $pageCount;
 
         // Previous and next
-        if ($this->_currentPageNumber - 1 > 0) {
-            $pages->previous = $this->_currentPageNumber - 1;
+        if ($currentPageNumber - 1 > 0) {
+            $pages->previous = $currentPageNumber - 1;
         }
 
-        if ($this->_currentPageNumber + 1 <= $pageCount) {
-            $pages->next = $this->_currentPageNumber + 1;
+        if ($currentPageNumber + 1 <= $pageCount) {
+            $pages->next = $currentPageNumber + 1;
         }
 
         // Pages in range
@@ -735,7 +738,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         if ($this->getCurrentItems() !== null) {
             $pages->currentItemCount = $this->getCurrentItemCount();
             $pages->totalItemCount   = $this->_adapter->count();
-            $pages->firstItemNumber  = (($this->_currentPageNumber - 1) * $this->_itemCountPerPage) + 1;
+            $pages->firstItemNumber  = (($currentPageNumber - 1) * $this->_itemCountPerPage) + 1;
             $pages->lastItemNumber   = $pages->firstItemNumber + $pages->currentItemCount - 1;
         }
 
@@ -757,14 +760,5 @@ class Zend_Paginator implements Countable, IteratorAggregate
         $className = self::getScrollingStyleLoader()->load($scrollingStyle);
         
         return new $className();
-    }
-    
-    /**
-     * Update the items for the current page
-     */
-    protected function _updateCurrentItems()
-    {
-        $this->_currentItems      = $this->getItemsByPage($this->_currentPageNumber);
-        $this->_currentItemCount  = $this->getItemCount($this->_currentItems);
     }
 }
