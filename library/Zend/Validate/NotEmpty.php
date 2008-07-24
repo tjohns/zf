@@ -55,11 +55,15 @@ class Zend_Validate_NotEmpty extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        $valueString = (string) $value;
+        $this->_setValue((string) $value);
 
-        $this->_setValue($valueString);
-
-        if (empty($value)) {
+        if (is_string($value)
+            && (('' === $value) 
+                || preg_match('/^\s+$/s', $value))
+        ) {
+            $this->_error();
+            return false;
+        } elseif (!is_string($value) && empty($value)) {
             $this->_error();
             return false;
         }
