@@ -26,8 +26,8 @@
         <programlisting role="php"><![CDATA[
 <?php // partial.phtml ?>
 <ul>
-    <li>From: <?= $this->escape($this->from) >?</li>
-    <li>Subject: <?= $this->escape($this->subject) >?</li>
+    <li>From: <?= $this->escape($this->from) ?></li>
+    <li>Subject: <?= $this->escape($this->subject) ?></li>
 </ul>
 ]]></programlisting>
 
