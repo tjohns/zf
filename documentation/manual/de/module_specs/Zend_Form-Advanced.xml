@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10294 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -194,11 +195,9 @@
         <para>
             Zusätzlich können auf dem Element Level, individuelle Elemente spezifiziert werden die
             bestimmten Arrays angehören indem die <code>Zend_Form_Element::setBelongsTo()</code>
-            Methode verwendet wird. Trotzdem kan das Probleme verursachen wenn Elemente
-            geprüft werden, und ist in den meisten Fällen nicht zu empfehlen. Trotzdem kann es
-            fallweise gewünscht sein zu wissen <emphasis>welchem</emphasis> Array ein Element
-            angehört, was man mit Hilfe der Zugriffsmethode <code>getBelongsTo()</code>
-            herausfinden kann.
+            Methode verwendet wird. Um herauszufinden welcher Wert gesetzt ist -- egal ob dieser
+            explizit gesetzt wurde oder implzit über das Formular -- kann die Zugriffsmethode
+            <code>getBelongsTo()</code> verwendet werden.
         </para>
     </sect2>
 

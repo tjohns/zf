@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10274 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -191,6 +192,28 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
             <listitem><para><code>clearMultiOptions()</code></para></listitem>
         </itemizedlist>
+
+        <para>
+            Um gecheckte Elemente zu markieren, muß ein Array an Werte an <code>setValue()</code> übergeben
+            werden. Der folgende Code prüft die Werte "bar" und "bat":
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_MultiCheckbox('foo', array(
+    'multiOptions' => array(
+        'foo' => 'Foo Option',
+        'bar' => 'Bar Option',
+        'baz' => 'Baz Option',
+        'bat' => 'Bat Option',
+    );
+));
+
+$element->setValue(array('bar', 'bat'));
+]]></programlisting>
+
+        <para>
+            Beachte das man auch für das Setzen eines einzelnen Wertes ein Array übergeben muß.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.multiselect">

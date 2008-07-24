@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10330 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -24,8 +25,8 @@
         <programlisting role="php"><![CDATA[
 <?php // partial.phtml ?>
 <ul>
-    <li>Von: <?= $this->escape($this->from) >?</li>
-    <li>Subjekt: <?= $this->escape($this->subject) >?</li>
+    <li>Von: <?= $this->escape($this->from) ?></li>
+    <li>Subjekt: <?= $this->escape($this->subject) ?></li>
 </ul>
 ]]></programlisting>
 
@@ -85,6 +86,28 @@
                 </para>
             </listitem>
         </itemizedlist>
+
+        <para>
+            Wenn das eigene Modell ein Objekt ist, kann es gewünscht sein, es <emphasis>als Objekt</emphasis>
+            an das Partielle Skript zu übergeben, statt es in ein Array von Variablen zu serialisieren. Das
+            kann durch das Setzen der 'objectKey' Eigenschaft des betreffenden Helfers getan werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Dem Partiellen mitteilen das ein Objekt als 'model' Variable übergeben wird
+$view->partial()->setObjectKey('model');
+
+// Dem Partiellen mitteilen das ein Objekt von partialLoop als 'model' Variable im letzten Partiellen View
+// Skript übergeben wird
+$view->partialLoop()->setObjectKey('model');
+]]></programlisting>
+            
+         <para>
+             Diese Technik ist speziell dann sinnvoll wenn <code>Zend_Db_Table_Rowset</code>s an
+             <code>partialLoop()</code> übergeben werden, da man dann kompletten Zugriff auf die Zeilenobjekte
+             im View Skript hat, was es einem erlaubt Ihre Methoden auszurufen (wie das empfangen von Werten
+             bei Eltern- oder abhängigen Zeilen).
+        </para>
     </note>
 
     <example id="zend.view.helpers.initial.partial.partialloop">

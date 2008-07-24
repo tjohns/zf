@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 10377 -->
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
@@ -76,7 +76,7 @@
 
                     <listitem><para>
                         <emphasis>Substring Entsprechung</emphasis>: Das Atribut enthält den String:
-                        'div[bar~="baz"]' würde einem Div Element mit einem "bar" Attribut entsprechen das den
+                        'div[bar*="baz"]' würde einem Div Element mit einem "bar" Attribut entsprechen das den
                         String "baz" irgendwo in Ihm enthält.
                     </para></listitem>
                 </itemizedlist>
