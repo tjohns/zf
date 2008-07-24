@@ -163,24 +163,27 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
                     foreach ($func_args as $arg) {
                         if (isset($request[strtolower($arg->getName())])) {
                             $calling_args[] = $request[strtolower($arg->getName())];
+                        } elseif ($arg->isOptional()) {
+                            $calling_args[] = $arg->getDefaultValue();
                         }
                     }
 
                     foreach ($request as $key => $value) {
                         if (substr($key, 0, 3) == 'arg') {
                             $key = str_replace('arg', '', $key);
-                            $calling_args[$key]= $value;
+                            $calling_args[$key] = $value;
                         }
                     }
 
                     // Sort arguments by key -- @see ZF-2279
                     ksort($calling_args);
 
+                    $result = false;
                     if (count($calling_args) < count($func_args)) {
-                        throw new Zend_Rest_Server_Exception('Invalid Method Call to ' . $this->_method . '. Requires ' . count($func_args) . ', ' . count($calling_args) . ' given.', 400);
+                        $result = $this->fault(new Zend_Rest_Server_Exception('Invalid Method Call to ' . $this->_method . '. Requires ' . count($func_args) . ', ' . count($calling_args) . ' given.'), 400);
                     }
 
-                    if ($this->_functions[$this->_method] instanceof Zend_Server_Reflection_Method) {
+                    if (!$result && $this->_functions[$this->_method] instanceof Zend_Server_Reflection_Method) {
                         // Get class
                         $class = $this->_functions[$this->_method]->getDeclaringClass()->getName();
 
@@ -193,14 +196,13 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
                             // Object method
                             $result = $this->_callObjectMethod($class, $calling_args);
                         }
-                    } else {
+                    } elseif (!$result) {
                         try {
                             $result = call_user_func_array($this->_functions[$this->_method]->getName(), $calling_args); //$this->_functions[$this->_method]->invokeArgs($calling_args);
                         } catch (Exception $e) {
                             $result = $this->fault($e);
                         }
                     }
-
                 } else {
                     $result = $this->fault("Unknown Method '$this->_method'.", 404);
                 }
