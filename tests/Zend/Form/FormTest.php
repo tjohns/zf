@@ -1851,7 +1851,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $messages = $form->getMessages();
         $this->assertFalse(empty($messages));
         $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']), var_export($messages, 1));
-        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']['isEmpty']), var_export($messages, 1));
+        $this->assertTrue(isset($messages['foobar']['baz']['bat']['home']['notInArray']), var_export($messages, 1));
     }
 
     public function testCanValidatePartialNestedFormsWithMultiLevelElementsBelongingToArrays()
@@ -1960,7 +1960,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $messages = $form->getMessages();
         $this->assertFalse(empty($messages));
         $this->assertTrue(isset($messages['foo']['bar']['baz']['bat']['quux']['home']), var_export($messages, 1));
-        $this->assertTrue(isset($messages['foo']['bar']['baz']['bat']['quux']['home']['isEmpty']), var_export($messages, 1));
+        $this->assertTrue(isset($messages['foo']['bar']['baz']['bat']['quux']['home']['notInArray']), var_export($messages, 1));
     }
 
     public function testValidatingFormWithDisplayGroupsDoesSameAsWithout()
