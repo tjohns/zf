@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8683 -->
+<!-- EN-Revision: 10274 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -208,6 +208,29 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
             <listitem><para><code>clearMultiOptions()</code></para></listitem>
         </itemizedlist>
+
+        <para>
+            チェックされた項目を指定するには、値の配列を
+            <code>setValue()</code> に渡す必要があります。
+            次の例は、値 "bar" と "bat" をチェックします。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_MultiCheckbox('foo', array(
+    'multiOptions' => array(
+        'foo' => 'Foo Option',
+        'bar' => 'Bar Option',
+        'baz' => 'Baz Option',
+        'bat' => 'Bat Option',
+    );
+));
+
+$element->setValue(array('bar', 'bat'));
+]]></programlisting>
+
+        <para>
+            値をひとつだけ指定する場合でも、配列形式でなければならないことに注意しましょう。
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.multiselect">
