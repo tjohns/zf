@@ -2005,7 +2005,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 <listitem>
                     <para>
                         To connect to an SQLite2 database, specify
-                        <code>'dsnprefix'=>'sqlite2'</code> in the array of
+                        <code>'sqlite2'=>true</code> in the array of
                         parameters when creating an instance of the
                         Pdo_Sqlite Adapter.
                     </para>
