@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8981 -->
+<!-- EN-Revision: 10294 -->
 <sect1 id="zend.form.advanced">
     <title>Zend_Form の高度な使用法</title>
 
@@ -197,11 +197,9 @@
         <para>
             さらに、要素レベルでは、特定の要素を特定の配列に属させるために
             <code>Zend_Form_Element::setBelongsTo()</code> メソッドを使うこともできます。
-            しかし、これは要素を検証する際に問題を引き起こす可能性があり、
-            あまりお勧めできません。
-            時には、特定の要素がどの配列に属しているのかを知りたいこともあるでしょう。
-            そんな場合には <code>getBelongsTo()</code>
-            アクセサを使用します。
+            この値が何者なのか (明示的に設定されたものなのか
+            フォームを経由して暗黙的に設定されたものなのか)
+            を知るには <code>getBelongsTo()</code> アクセサを使用します。
         </para>
     </sect2>
 
