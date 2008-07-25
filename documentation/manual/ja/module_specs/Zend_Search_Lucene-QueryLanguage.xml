@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7481 -->
+<!-- EN-Revision: 10376 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>クエリ言語</title>
 
@@ -13,7 +13,7 @@
 
     <para>
         Java Lucene のクエリ言語の文法についての完全な文書は
-        <ulink url="http://lucene.apache.org/java/2_0_0/queryparsersyntax.html">ここ</ulink>
+        <ulink url="http://lucene.apache.org/java/docs/queryparsersyntax.html">ここ</ulink>
         にあります。
     </para>
 
@@ -102,11 +102,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>1.5 以降でサポートするワイルドカード
-          <footnote><para>ワイルドカードクエリのサポートは
-          SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para></footnote>
-        </title>
+        <title>ワイルドカード</title>
         <para>
             Lucene は、単一の文字あるいは複数の文字を表すワイルドカードをサポートしています
             これは、単語検索でのみ使用可能です (フレーズクエリでは使用できません)。
@@ -155,20 +151,11 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <para>
             "~" 修正子を使用すると、
             フレーズに対する近接検索や個別の単語に対するあいまい検索が可能となります。
-            <footnote>
-                <para>
-                    あいまい検索は、ZF 1.5 以降でのみ使用可能となります。
-                </para>
-            </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>1.5 以降でサポートする範囲検索
-          <footnote><para>範囲指定クエリのサポートは
-          SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para></footnote>
-        </title>
+        <title>範囲検索</title>
 
         <para>
             範囲検索は、フィールドの値の下限と上限を指定して
@@ -198,11 +185,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.fuzzy">
-        <title>1.5 以降でサポートするあいまい検索
-          <footnote><para>あいまい検索クエリのサポートは
-          SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para></footnote>
-        </title>
+        <title>あいまい検索</title>
         <para>
             Zend_Search_Lucene は、Java Lucene と同様にあいまい検索をサポートします。
             これは、レーベンシュタイン距離のアルゴリズムにもとづくものです。

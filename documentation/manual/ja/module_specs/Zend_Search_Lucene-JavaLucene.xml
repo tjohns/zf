@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Java Lucene との相互運用</title>
 
@@ -10,10 +11,10 @@
 
         <para>
           このファイルフォーマットについての詳細な説明は
-          <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>
           にあります。
-          <footnote><para>現在サポートしている Lucene
-          インデックスファイルフォーマットのバージョンは v2.1 です</para></footnote>。
+          <footnote><para>現在 (ZF 1.6 以降) サポートしている Lucene
+          インデックスファイルフォーマットのバージョンは 2.1 です</para></footnote>。
         </para>
     </sect2>
 

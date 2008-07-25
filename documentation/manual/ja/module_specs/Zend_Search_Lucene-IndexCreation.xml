@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>インデックスの構築</title>
 
@@ -139,9 +140,9 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             Lucene インデックスセグメントのファイルは、その性質上更新することはできません。
             セグメントを更新するには、セグメント全体を再構成する必要があります
             (Lucene インデックスファイルのフォーマットについての詳細は、
-            <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>
+            <ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>
             を参照ください)
-            <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.1 です</para></footnote>。
+            <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.3 (ZF 1.6 以降) です</para></footnote>。
             このことより、新しいドキュメントをインデックスに追加する際には、
             新しいセグメントを作成することになります。
         </para>
@@ -236,14 +237,20 @@ $index->optimize();]]>
                 デフォルト値は 10 です。
             </para>
             <para>
-                Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/luke-0.6/">http://www.getopt.org/luke/luke-0.6/</ulink>)
+                Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
                 を使用してインデックスを最適化することもできます。
-                Zend_Search_Lucene コンポーネントとの互換性を保つためには、Luke v0.6
-                を使用する必要があります。それより新しいバージョンの Luke は Lucene v2.1
-                の新しいインデックスファイルフォーマットを使用しています。
-                Luke プロジェクトについての情報は、
-                <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>
-                を参照ください。
+                Luke の最新リリース (v0.8) は Lucene v2.3 をベースにしており、
+                現在の Zend_Search_Lucene コンポーネントの実装 (ZF 1.6) と互換性があります。
+                古いのバージョンの Zend_Search_Lucene の実装を使う場合は、
+                それと互換性のある別のバージョンの Java Lucene ツールを使う必要があります。
+                <itemizedlist>
+                    <listitem>
+                        <para>ZF 1.5 - Java Lucene 2.1 (Luke tool v0.7.1 - <ulink url="http://www.getopt.org/luke/luke-0.7.1/"/>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke tool v0.6 - <ulink url="http://www.getopt.org/luke/luke-0.6/"/>)</para>
+                    </listitem>
+                </itemizedlist>
             </para>
         </sect3>
     </sect2>

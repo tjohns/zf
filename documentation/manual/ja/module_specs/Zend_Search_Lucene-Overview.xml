@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8387 -->
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -33,23 +33,9 @@
             </itemizedlist>
 
             Zend_Search_Lucene は Apache Lucene プロジェクトから派生したものです。
-            現在サポートしているのは、Lucene バージョン 2.2 です。
-            <footnote>
-               <para>
-                   Lucene 2.1 インデックスフォーマット (これは Lucene 2.2
-                   でも用いられています) に対応しているものは、現在の "trunk" ブランチに存在します。
-                   このバージョンは、SVN リポジトリあるいは最新の nightly
-                   スナップショットから取得できます。
-               </para>
-               <para>
-                   Lucene 2.1 インデックスフォーマットのサポートは
-                   ZF 1.5.0 に組み込まれる予定です。現在のリリース版 (ZF V1.0.4) は
-                   Lucene 1.9-2.0 に対応しています。
-               </para>
-            </footnote>.
+            現在 (ZF 1.6 以降) サポートしているのは、Lucene バージョン 2.3 です。
             Lucene についての詳細は
             <ulink url="http://lucene.apache.org/java/docs/"/>
-            (<ulink url="http://lucene.apache.org/java/2_2_0/"/>)
             を参照ください。
         </para>
         <note>

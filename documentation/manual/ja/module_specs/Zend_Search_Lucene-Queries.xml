@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7720 -->
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>クエリ作成用の API</title>
 
@@ -357,7 +357,7 @@ $hits  = $index->find($query);]]>
 
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>1.5 以降でサポートするワイルドカードクエリ</title>
+        <title>ワイルドカードクエリ</title>
         <para>
             ワイルドカードクエリは、指定したパターンに一致する複数の単語を探すためのものです。
         </para>
@@ -399,7 +399,7 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.fuzzy">
-        <title>1.5 以降でサポートするあいまいクエリ</title>
+        <title>あいまいクエリ</title>
         <para>
             あいまいクエリは、指定した単語に似た単語を含むドキュメントを探すためのものです。
         </para>
@@ -647,7 +647,7 @@ $hits2 = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.range">
-        <title>1.5 以降でサポートする範囲クエリ</title>
+        <title>範囲クエリ</title>
         <para>
             <link linkend="zend.search.lucene.query-language.range">範囲クエリ</link>
             は、指定した範囲にある単語を探すためのものです。

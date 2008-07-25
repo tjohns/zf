@@ -1,5 +1,93 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>応用</title>
+
+    <sect2 id="zend.search.lucene.advanced.format_migration">
+        <title>1.6 以降でサポートするインデックスフォーマット変換</title>
+
+        <para>
+            Zend_Search_Lucene コンポーネントは、Java Lucene 1.4-1.9、2.1 そして 2.3
+            形式のインデックスフォーマットに対応しています。
+        </para>
+
+        <para>
+            現在のインデックスフォーマットを知るには <code>$index->getFormatVersion()</code>
+            を使用します。これは、次のいずれかの値を返します。
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> は
+                        Java Lucene 1.4-1.9 のインデックスフォーマットを表します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_1</code> は
+                        Java Lucene 2.1 のインデックスフォーマット
+                        (Lucene 2.2 でも使用可能) を表します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_3</code> は
+                        Java Lucene 2.3 のインデックスフォーマットを表します。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        
+        <para>
+            インデックスの変更は、インデックスが更新されたときに <emphasis role="strong">のみ</emphasis>
+            行います。インデックスの更新が行われるのは、
+            新しいドキュメントがインデックスに追加された場合や
+            <code>$index->optimize()</code> による最適化を手動で開始した場合です。
+        </para>
+        
+        <para>
+            Zend_Search_Lucene が、インデックスを上位バージョンのフォーマットに変換することがあります。
+            <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> フォーマットの場合はこれが
+            <emphasis role="strong">常に</emphasis> 起こり、
+            自動的に 2.1 フォーマットに変換されます。
+        </para>
+
+        <para>
+            変換作業を管理するために、対象となるインデックスフォーマットを
+            <code>$index->setFormatVersion()</code> で指定することができます。ここでは定数
+            <code>Zend_Search_Lucene::FORMAT_2_1</code> あるいは <code>Zend_Search_Lucene::FORMAT_2_3</code>
+            を使用します。
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_1</code> は実際には何もしません。
+                        2.1 より前のバージョンのインデックスは自動的に
+                        2.1 フォーマットに変換されるからです。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_3</code>
+                        は、強制的に 2.3 フォーマットへの変換を行います。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        
+        <para>
+            下位バージョンへの変換はサポートしていません。
+        </para>
+        
+        <note>
+            <title>重要!</title>
+            <para>
+                一度インデックスを上位バージョンに変換してしまうと、
+                元に戻すことはできません。
+                上位バージョンに変換したいけれど元に戻す可能性も残しておきたいという場合は、
+                インデックスのバックアップを取得しておきましょう。
+            </para>
+        </note>
+        
+    </sect2>
+
 
     <sect2 id="zend.search.lucene.advanced.static">
         <title>静的プロパティとしてのインデックスの使用</title>
@@ -97,5 +185,4 @@ Searcher::commit();
             </programlisting>
         </para>
     </sect2>
-
 </sect1>
