@@ -431,13 +431,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             }
 
             $isCompoundByte     = $segmentsFile->readByte();
-            if ($isCompoundByte == -1) {
+
+            if ($isCompoundByte == 0xFF) {
             	// The segment is not a compound file
             	$isCompound = false;
-            } else if ($isCompoundByte == 0) {
+            } else if ($isCompoundByte == 0x00) {
                 // The status is unknown
                 $isCompound = null;
-            } else if ($isCompoundByte == 1) {
+            } else if ($isCompoundByte == 0x01) {
                 // The segment is a compound file
                 $isCompound = true;
             }

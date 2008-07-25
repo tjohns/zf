@@ -527,13 +527,13 @@ class Zend_Search_Lucene_Index_Writer
                     if (!isset($this->_segmentInfos[$segName])) {
                         $delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
                                      (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
-                        if ($isCompoundByte == -1) {
+                        if ($isCompoundByte == 0xFF) {
                             // The segment is not a compound file
                             $isCompound = false;
-                        } else if ($isCompoundByte == 0) {
+                        } else if ($isCompoundByte == 0x00) {
                             // The status is unknown
                             $isCompound = null;
-                        } else if ($isCompoundByte == 1) {
+                        } else if ($isCompoundByte == 0x01) {
                             // The segment is a compound file
                             $isCompound = true;
                         }
