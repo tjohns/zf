@@ -850,6 +850,12 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
      */
     public function getView()
     {
+        if (null === $this->_view) {
+            require_once 'Zend/Controller/Action/HelperBroker.php';
+            $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+            $this->setView($viewRenderer->view);
+        }
+
         return $this->_view;
     }
 
