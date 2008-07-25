@@ -330,6 +330,39 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fieldset', $decorator->getOption('tag'));
     }
 
+    /**
+     * @see ZF-3494
+     */
+    public function testGetViewShouldNotReturnNullWhenViewRendererIsActive()
+    {
+        require_once 'Zend/Controller/Action/HelperBroker.php';
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+        $viewRenderer->initView();
+        $view = $this->group->getView();
+        $this->assertSame($viewRenderer->view, $view);
+    }
+
+    public function testRetrievingNamedDecoratorShouldNotReorderDecorators()
+    {
+        $this->group->setDecorators(array(
+            'FormElements',
+            array(array('dl' => 'HtmlTag'), array('tag' => 'dl')),
+            array(array('div' => 'HtmlTag'), array('tag' => 'div')),
+            array(array('fieldset' => 'HtmlTag'), array('tag' => 'fieldset')),
+        ));
+
+        $decorator  = $this->group->getDecorator('div');
+        $decorators = $this->group->getDecorators();
+        $i          = 0;
+        $order      = array();
+
+        foreach (array_keys($decorators) as $name) {
+            $order[$name] = $i;
+            ++$i;
+        }
+        $this->assertEquals(2, $order['div'], var_export($order, 1));
+    }
+
     public function testRenderingRendersAllElementsWithinFieldsetByDefault()
     {
         $foo  = new Zend_Form_Element_Text('foo');
@@ -520,8 +553,9 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsOmitsAccessorsRequiringObjectsOrMultipleParams()
     {
         $options = $this->getOptions();
-        $options['config']       = new Zend_Config($options);
-        $options['options']      = $options;
+        $config                  = new Zend_Config($options);
+        $options['config']       = $config;
+        $options['options']      = $config->toArray();
         $options['pluginLoader'] = true;
         $options['view']         = true;
         $options['translator']   = true;
