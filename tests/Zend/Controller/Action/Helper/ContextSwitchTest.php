@@ -810,6 +810,19 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->helper->setConfig($config);
         $this->checkOptionsAreSet();
     }
+
+    public function testOptionsPassedToConstructorShouldSetInstanceState()
+    {
+        $this->helper = new Zend_Controller_Action_Helper_ContextSwitch($this->getOptions());
+        $this->checkOptionsAreSet();
+    }
+
+    public function testConfigPassedToConstructorShouldSetInstanceState()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $this->helper = new Zend_Controller_Action_Helper_ContextSwitch($config);
+        $this->checkOptionsAreSet();
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Controller_Action
