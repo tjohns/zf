@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9966 -->
+<!-- EN-Revision: 10414 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1996,7 +1996,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         SQLite2 データベースに接続するには、
                         Pdo_Sqlite アダプタのインスタンスを作成する際に
                         パラメータの配列で
-                        <code>'dsnprefix'=>'sqlite2'</code> を指定します。
+                        <code>'sqlite2'=>true</code> を指定します。
                     </para>
                 </listitem>
                 <listitem>
