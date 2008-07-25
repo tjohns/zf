@@ -142,7 +142,6 @@ class Zend_Date extends Zend_Date_DateObject
     const RSS            = 'RSS';            // --- DATE_RSS
     const W3C            = 'W3C';            // --- DATE_W3C
 
-
     /**
      * Generates the standard date object, could be a unix timestamp, localized date,
      * string, integer, array and so on. Also parts of dates or time are supported
@@ -219,7 +218,6 @@ class Zend_Date extends Zend_Date_DateObject
         }
     }
 
-
     /**
      * Sets class wide options, if no option was given, the actual set options will be returned
      *
@@ -281,7 +279,6 @@ class Zend_Date extends Zend_Date_DateObject
         }
     }
 
-
     /**
      * Returns this object's internal UNIX timestamp (equivalent to Zend_Date::TIMESTAMP).
      * If the timestamp is too large for integers, then the return value will be a string.
@@ -294,7 +291,6 @@ class Zend_Date extends Zend_Date_DateObject
     {
         return $this->getUnixTimestamp();
     }
-
 
     /**
      * Returns the calculated timestamp
@@ -332,7 +328,6 @@ class Zend_Date extends Zend_Date_DateObject
         return $return;
     }
 
-
     /**
      * Sets a new timestamp
      *
@@ -344,7 +339,6 @@ class Zend_Date extends Zend_Date_DateObject
     {
         return $this->_timestamp('set', $timestamp);
     }
-
 
     /**
      * Adds a timestamp
@@ -358,7 +352,6 @@ class Zend_Date extends Zend_Date_DateObject
         return $this->_timestamp('add', $timestamp);
     }
 
-
     /**
      * Subtracts a timestamp
      *
@@ -371,7 +364,6 @@ class Zend_Date extends Zend_Date_DateObject
         return $this->_timestamp('sub', $timestamp);
     }
 
-
     /**
      * Compares two timestamps, returning the difference as integer
      *
@@ -383,7 +375,6 @@ class Zend_Date extends Zend_Date_DateObject
     {
         return $this->_timestamp('cmp', $timestamp);
     }
-
 
     /**
      * Returns a string representation of the object
@@ -551,7 +542,6 @@ class Zend_Date extends Zend_Date_DateObject
                     $output[$i] = $this->get(self::MONTH_SHORT, $locale);
                     break;
 
-
                 // week
                 case 'ww' :
                     $output[$i] = str_pad($this->get(self::WEEK, $locale), 2, '0', STR_PAD_LEFT);
@@ -561,7 +551,6 @@ class Zend_Date extends Zend_Date_DateObject
                     $output[$i] = $this->get(self::WEEK, $locale);
                     break;
 
-
                 // monthday
                 case 'dd' :
                     $output[$i] = $this->get(self::DAY, $locale);
@@ -570,7 +559,6 @@ class Zend_Date extends Zend_Date_DateObject
                 case 'd' :
                     $output[$i] = $this->get(self::DAY_SHORT, $locale);
                     break;
-
 
                 // yearday
                 case 'DDD' :
@@ -1336,7 +1324,8 @@ class Zend_Date extends Zend_Date_DateObject
         try {
             if (!empty($match)) {
                 $oldzone = $this->getTimezone();
-                $result = $this->setTimezone($match[count($match) - 1]);
+                $this->setTimezone($match[count($match) - 1]);
+                $result = $this->getTimezone();
                 $this->setTimezone($oldzone);
                 if ($result !== $oldzone) {
                     return $match[count($match) - 1];
