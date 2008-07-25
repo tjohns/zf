@@ -430,8 +430,18 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 throw new Zend_Search_Lucene_Exception('Separate norm files are not supported. Optimize index to use it with Zend_Search_Lucene.');
             }
 
-            $isCompound        = $segmentsFile->readByte();
+            $isCompoundByte     = $segmentsFile->readByte();
 
+            if ($isCompoundByte == 0xFF) {
+            	// The segment is not a compound file
+            	$isCompound = false;
+            } else if ($isCompoundByte == 0x00) {
+                // The status is unknown
+                $isCompound = null;
+            } else if ($isCompoundByte == 0x01) {
+                // The segment is a compound file
+                $isCompound = true;
+            }
 
             $this->_docCount += $segSize;
 

@@ -245,16 +245,17 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_termDictionary    = null;
 
 
-        if (!is_null($isCompound)) {
+        if ($isCompound !== null) {
             $this->_isCompound    = $isCompound;
         } else {
-            // It's a pre-2.1 segment
-            // detect if it uses compond file
-            $this->_isCompound = true;
-
+            // It's a pre-2.1 segment or isCompound is set to 'unknown'
+            // Detect if segment uses compound file
             try {
                 // Try to open compound file
                 $this->_directory->getFileObject($name . '.cfs');
+
+                // Compound file is found
+                $this->_isCompound = true;
             } catch (Zend_Search_Lucene_Exception $e) {
                 if (strpos($e->getMessage(), 'is not readable') !== false) {
                     // Compound file is not found or is not readable
@@ -1039,7 +1040,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     public function isCompound()
     {
-        return $this->_isCompound ? true : false;
+        return $this->_isCompound;
     }
 
     /**

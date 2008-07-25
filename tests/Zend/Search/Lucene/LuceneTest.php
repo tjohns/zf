@@ -35,19 +35,26 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         }
         closedir($dir);
 	}
-	
+
     public function testCreate()
     {
         $index = Zend_Search_Lucene::create(dirname(__FILE__) . '/_index/_files');
 
         $this->assertTrue($index instanceof Zend_Search_Lucene_Interface);
-        
+
         $this->_clearDirectory(dirname(__FILE__) . '/_index/_files');
     }
 
     public function testOpen()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
+
+        $this->assertTrue($index instanceof Zend_Search_Lucene_Interface);
+    }
+
+    public function testOpenNonCompound()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_nonCompoundIndexFiles');
 
         $this->assertTrue($index instanceof Zend_Search_Lucene_Interface);
     }
@@ -214,7 +221,7 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         // Copy index sample into _files directory
     	$sampleIndexDir = dirname(__FILE__) . '/_indexSample/_files';
         $tempIndexDir = dirname(__FILE__) . '/_files';
-        
+
     	$this->_clearDirectory($tempIndexDir);
 
     	$indexDir = opendir($sampleIndexDir);
@@ -225,7 +232,7 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         }
         closedir($indexDir);
 
-        
+
         $index = Zend_Search_Lucene::open($tempIndexDir);
 
         $this->assertFalse($index->isDeleted(2));
@@ -283,7 +290,7 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
 
         $index1 = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index/_files');
         $this->assertTrue($index1 instanceof Zend_Search_Lucene_Interface);
-        
+
         $this->_clearDirectory(dirname(__FILE__) . '/_index/_files');
     }
 
@@ -335,13 +342,13 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         }
         $index1->optimize();
         unset($index1);
-        
+
         $index2 = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index/_files');
         $this->assertTrue($index2 instanceof Zend_Search_Lucene_Interface);
 
         $hits = $index2->find('submitting');
         $this->assertEquals(count($hits), 3);
-        
+
         $this->_clearDirectory(dirname(__FILE__) . '/_index/_files');
     }
 
@@ -426,7 +433,7 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($index->currentTerm() === null);
 
         $index->closeTermsStream();
-        
+
         $this->_clearDirectory(dirname(__FILE__) . '/_index/_files');
     }
 
