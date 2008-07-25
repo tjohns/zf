@@ -1055,6 +1055,29 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @see ZF-3742
+     */
+    public function testElementsInDisplayGroupsShouldInheritFormElementsBelongToSetting()
+    {
+        $subForm = new Zend_Form_SubForm();
+        $subForm->addElements(array(
+                    new Zend_Form_Element_Text('foo'),
+                    new Zend_Form_Element_Text('bar'),
+                    new Zend_Form_Element_Text('baz'),
+                    new Zend_Form_Element_Text('bat'),
+                ))
+                ->addDisplayGroup(array('bar', 'baz'), 'barbaz');
+        $this->form->addSubForm($subForm, 'sub')
+                   ->setElementsBelongTo('myform')
+                   ->setView(new Zend_View);
+        $html = $this->form->render();
+        foreach (array('foo', 'bar', 'baz', 'bat') as $test) {
+            $this->assertContains('id="myform-sub-' . $test . '"', $html);
+            $this->assertContains('name="myform[sub][' . $test . ']"', $html);
+        }
+    }
+
     public function testIsValidWithOneLevelElementsBelongTo()
     {
         $this->form->addElement('text', 'test')->test
