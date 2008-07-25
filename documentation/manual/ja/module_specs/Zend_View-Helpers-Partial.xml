@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9044 -->
+<!-- EN-Revision: 10330 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partial ヘルパー</title>
 
@@ -28,8 +28,8 @@
         <programlisting role="php"><![CDATA[
 <?php // partial.phtml ?>
 <ul>
-    <li>From: <?= $this->escape($this->from) >?</li>
-    <li>Subject: <?= $this->escape($this->subject) >?</li>
+    <li>From: <?= $this->escape($this->from) ?></li>
+    <li>Subject: <?= $this->escape($this->subject) ?></li>
 </ul>
 ]]></programlisting>
 
@@ -85,6 +85,33 @@
                         がビューオブジェクトに渡されます。
                 </para></listitem>
             </itemizedlist>
+
+            <para>
+                使用するモデルがオブジェクトである場合は、
+                それを変数の配列などに変換するのではなく
+                <emphasis>オブジェクトのまま</emphasis> 直接
+                partial スクリプトに渡したくなるものでしょう。
+                そのためには、しかるべきヘルパーでプロパティ
+                'objectKey' を設定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// オブジェクトを、変数 'model' として渡すよう通知します
+$view->partial()->setObjectKey('model');
+
+// partialLoop のオブジェクトを、最終的なビュースクリプト内で
+// 変数 'model' として渡すよう通知します
+$view->partialLoop()->setObjectKey('model');
+]]></programlisting>
+            
+            <para>
+                このテクニックが特に役立つのは、
+                <code>Zend_Db_Table_Rowset</code> を
+                <code>partialLoop()</code> に渡すような場合です。
+                ビュースクリプト内で row オブジェクトに自由にアクセスでき、
+                そのメソッド (親の値を取得したり従属行を取得したりなど)
+                を自在に使えるようになります。
+            </para>
         </note>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
