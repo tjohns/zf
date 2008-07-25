@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9506 -->
+<!-- EN-Revision: 10289 -->
 <sect1 id="zend.memory.memory-manager">
     <title>メモリマネージャ</title>
 
@@ -139,7 +139,7 @@ function foo()
 
     ...
     // $memObject1 はここで破棄されますが、
-    // $memObject2 オブジェクトはまだ $memList に参照されており、破棄されていません
+    // $memObject3 オブジェクトはまだ $memList に参照されており、破棄されていません
 }]]>
                 </programlisting>
             </para>
