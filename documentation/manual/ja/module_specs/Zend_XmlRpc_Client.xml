@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9137 -->
+<!-- EN-Revision: 10301 -->
 <sect1 id="zend.xmlrpc.client">
     <title>Zend_XmlRpc_Client</title>
 
@@ -159,6 +159,43 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                     </tbody>
                 </tgroup>
             </table>
+
+            <note>
+                <title>空の配列はどの型に変換されるの?</title>
+
+                <para>
+                    空の配列を XML-RPC メソッドに渡すことには問題があります。
+                    それが array と struct のどちらにでもとれるからです。
+                    <code>Zend_XmlRpc_Client</code>
+                    は、このような状況を検出した場合にはサーバの
+                    <code>system.methodSignature</code>
+                    メソッドにリクエストを送り、どの XML-RPC
+                    型に変換すべきかを判断します。
+                </para>
+
+                <para>
+                    しかし、このやりかた自体にも別の問題があります。
+                    まず、サーバが <code>system.methodSignature</code>
+                    をサポートしていない場合には「リクエストに失敗した」
+                    記録がサーバに残ってしまいます。この場合、
+                    <code>Zend_XmlRpc_Client</code> は値を
+                    XML-RPC の array 型に変換します。
+                    さらに、このやりかたを使用すると
+                    「配列形式の引数を指定してコールすると、
+                    毎回リモートサーバへの余計な呼び出しが発生する」
+                    ということになります。
+                </para>
+
+                <para>
+                    この仕組みを無効にするには、XML-RPC コールの前に
+                    <code>setSkipSystemLookup()</code> メソッドをコールします。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$client->setSkipSystemLookup(true);
+$result = $client->call('foo.bar', array(array()));
+]]></programlisting>
+            </note>
         </sect3>
 
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
