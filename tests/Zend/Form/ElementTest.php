@@ -1381,6 +1381,22 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $order['inner'], var_export($order, 1));
     }
 
+    /**
+     * @see ZF-3376
+     */
+    public function testSetDecoratorsShouldAcceptReturnOfGetDecorators()
+    {
+        $this->element->setDecorators(array(
+            'ViewHelper',
+            'Errors',
+            array('input' => 'HtmlTag', array('tag' => 'div', 'class' => 'input')),
+            'Label',
+            array('element' => 'HtmlTag', array('tag' => 'div', 'class' => 'element')),
+        ));
+        $decorators = $this->element->getDecorators();
+        $this->element->setDecorators($decorators);
+        $this->assertSame($decorators, $this->element->getDecorators());
+    }
 
     public function testRenderElementReturnsMarkup()
     {
