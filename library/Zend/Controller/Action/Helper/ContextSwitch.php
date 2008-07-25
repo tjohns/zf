@@ -122,6 +122,12 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
      */
     public function __construct($options = null)
     {
+        if ($options instanceof Zend_Config) {
+            $this->setConfig($options);
+        } elseif (is_array($options)) {
+            $this->setOptions($options);
+        }
+
         if (empty($this->_contexts)) {
             $this->addContexts(array(
                 'json' => array(
