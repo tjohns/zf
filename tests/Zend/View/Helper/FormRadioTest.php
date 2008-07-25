@@ -306,7 +306,7 @@ class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
             'baz' => 'Baz'
         );
         $html = $this->helper->formRadio(array(
-            'name'    => 'foo',
+            'name'    => 'foo[]',
             'value'   => 'bar',
             'options' => $options,
         ));
