@@ -330,6 +330,18 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fieldset', $decorator->getOption('tag'));
     }
 
+    /**
+     * @see ZF-3494
+     */
+    public function testGetViewShouldNotReturnNullWhenViewRendererIsActive()
+    {
+        require_once 'Zend/Controller/Action/HelperBroker.php';
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+        $viewRenderer->initView();
+        $view = $this->group->getView();
+        $this->assertSame($viewRenderer->view, $view);
+    }
+
     public function testRetrievingNamedDecoratorShouldNotReorderDecorators()
     {
         $this->group->setDecorators(array(
