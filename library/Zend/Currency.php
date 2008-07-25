@@ -96,6 +96,13 @@ class Zend_Currency
             $currency = $temp;
         }
 
+        if (empty($locale)) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
+                $locale = Zend_Registry::get('Zend_Locale');
+            }
+        }
+
         $this->setLocale($locale);
 
         // Get currency details
