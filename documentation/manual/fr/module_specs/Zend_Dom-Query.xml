@@ -15,7 +15,7 @@
     composant).</para>
 
     <sect2 id="zend.dom.query.operation">
-        <title>Point de vue théorique</title>
+        <title>Aspect théorique</title>
 
         <para>Pour utiliser <code>Zend_Dom_Query</code>, vous instanciez un objet <code>Zend_Dom_Query</code>, en
         fournissant optionnellement un document à analyser (sous la forme d'une chaîne). Une fois que vous avez un

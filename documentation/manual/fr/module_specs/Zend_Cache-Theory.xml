@@ -1,6 +1,6 @@
 <!-- EN-Revision: 9914 -->
 <sect1 id="zend.cache.theory">
-    <title>La théorie du cache</title>
+    <title>Aspect théorique</title>
 
     <para>Il y a trois concepts clés dans <code>Zend_Cache</code>. Le premier est l'identifiant unique (une chaîne) qui
     est utilisé pour identifier les enregistrements de cache. Le second est la directive <code>"lifeTime"</code> vue

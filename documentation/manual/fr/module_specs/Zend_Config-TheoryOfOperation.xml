@@ -1,5 +1,6 @@
+<!-- EN-Revision: 6430 -->
 <sect1 id="zend.config.theory_of_operation">
-    <title>Point de vue théorique</title>
+    <title>Aspect théorique</title>
 
     <para>Les données de configuration sont transmis au constructeur de <code>Zend_Config</code> sous la forme d'un
     tableau associatif, qui peut être multidimensionnel, afin de supporter une organisation des données du général vers

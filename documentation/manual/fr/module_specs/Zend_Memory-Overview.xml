@@ -50,7 +50,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]></programlisting>
     </sect2>
 
     <sect2 id="zend.memory.theory-of-operation">
-        <title>Point de vue théorique</title>
+        <title>Aspect théorique</title>
 
         <para><code>Zend_Memory</code> travaille avec les concepts suivants : <itemizedlist>
                 <listitem>
