@@ -146,7 +146,7 @@ class Zend_View_Helper_Action
         } 
  
         $return = $this->response->getBody();
-        
+        $this->resetObjects(); 
         return $return;
     }
     
