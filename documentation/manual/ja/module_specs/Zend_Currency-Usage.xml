@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10092 -->
+<!-- EN-Revision: 10428 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -31,14 +31,33 @@ $currency = new Zend_Currency();]]>
 
 
     </example>
-        <note>
-            <para>
-                システムでデフォルトのロケールが設定されていないかったり
-                システムのロケールの検出に失敗したりした場合は、
-                <code>Zend_Currency</code> は例外をスローします。
-                このような場合は、ロケールを明示的に指定する必要があります。
-            </para>
-        </note>
+
+    <para>
+        Zend Framework 1.6 以降、<code>Zend_Currency</code>
+        アプリケーション単位でのロケールの指定をサポートするようになりました。
+        下の例のように、<code>Zend_Locale</code> のインスタンスをレジストリに登録します。
+        このようにすると、インスタンスを作成する際に
+        いちいちロケールの設定を気にする必要がなくなります。
+        これは同じロケールを何度も使用する場合に便利です。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+// 起動ファイル内で
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// アプリケーションのどこかで
+$currency = new Zend_Currency();]]>
+    </programlisting>
+
+    <note>
+        <para>
+            システムでデフォルトのロケールが設定されていないかったり
+            システムのロケールの検出に失敗したりした場合は、
+            <code>Zend_Currency</code> は例外をスローします。
+            このような場合は、ロケールを明示的に指定する必要があります。
+        </para>
+    </note>
 
     <para>
         もちろん、必要に応じてパラメータを指定してインスタンスを作成することもできます。
