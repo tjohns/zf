@@ -486,7 +486,7 @@ class Zend_Search_Lucene_Index_Writer
                     $delGenLow         = 0;
                     $hasSingleNormFile = false;
                     $numField          = (int)0xFFFFFFFF;
-                    $isCompound        = 1;
+                    $isCompoundByte    = 0;
                     $docStoreOptions   = null;
                 } else {
                     //$delGen          = $segmentsFile->readLong();
@@ -519,7 +519,7 @@ class Zend_Search_Lucene_Index_Writer
                             $normGens[] = $segmentsFile->readLong();
                         }
                     }
-                    $isCompound        = $segmentsFile->readByte();
+                    $isCompoundByte    = $segmentsFile->readByte();
                 }
 
                 if (!in_array($segName, $this->_segmentsToDelete)) {
@@ -527,6 +527,17 @@ class Zend_Search_Lucene_Index_Writer
                     if (!isset($this->_segmentInfos[$segName])) {
                         $delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
                                      (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
+                        if ($isCompoundByte == -1) {
+                            // The segment is not a compound file
+                            $isCompound = false;
+                        } else if ($isCompoundByte == 0) {
+                            // The status is unknown
+                            $isCompound = null;
+                        } else if ($isCompoundByte == 1) {
+                            // The segment is a compound file
+                            $isCompound = true;
+                        }
+
                         $this->_segmentInfos[$segName] =
                                     new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
                                                                              $segName,
@@ -574,7 +585,7 @@ class Zend_Search_Lucene_Index_Writer
                             $newSegmentFile->writeLong($normGen);
                         }
                     }
-                    $newSegmentFile->writeByte($isCompound);
+                    $newSegmentFile->writeByte($isCompoundByte);
 
                     $segments[$segName] = $segSize;
                 }
@@ -598,7 +609,7 @@ class Zend_Search_Lucene_Index_Writer
                 // NumField
                 $newSegmentFile->writeInt((int)0xFFFFFFFF);
                 // IsCompoundFile
-                $newSegmentFile->writeByte($segmentInfo->isCompound());
+                $newSegmentFile->writeByte($segmentInfo->isCompound() ? 1 : -1);
 
                 $segments[$segmentInfo->getName()] = $segmentInfo->count();
                 $this->_segmentInfos[$segName] = $segmentInfo;
