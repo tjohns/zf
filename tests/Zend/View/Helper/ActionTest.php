@@ -286,6 +286,18 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertSame($viewRenderer, $viewRendererPostAction);
     }
     
+    /**
+     * Multiple call state issue
+     * 
+     * 
+     * @group ZF-3456
+     */
+    public function testActionCalledWithinActionResetsResponseState()
+    {
+        $value = $this->helper->action('bar-one', 'baz', 'foo');
+        $this->assertEquals('Baz-Three-View-Script|Baz-Two-View-Script|Baz-One-View-Script', $value);
+    }
+    
     
     
 }
