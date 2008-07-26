@@ -56,8 +56,9 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($document->getFieldValue('body'),       'Document body, document body, document body...');
 
 
-        $document->addField(Zend_Search_Lucene_Field::Text('description', 'Words with umlauts: åãü...', 'ISO-8859-1'));
-        $this->assertEquals($document->description, 'Words with umlauts: åãü...');
+        $wordsWithUmlautsIso88591 = iconv('UTF-8', 'ISO-8859-1', 'Words with umlauts: Ã¥Ã£Ã¼...');
+        $document->addField(Zend_Search_Lucene_Field::Text('description', $wordsWithUmlautsIso88591, 'ISO-8859-1'));
+        $this->assertEquals($document->description, $wordsWithUmlautsIso88591);
         $this->assertEquals($document->getFieldUtf8Value('description'), 'Words with umlauts: Ã¥Ã£Ã¼...');
     }
 
@@ -72,15 +73,39 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $doc =  Zend_Search_Lucene_Document_Html::loadHTMLFile(dirname(__FILE__) . '/_indexSource/_files/contributing.documentation.html', true);
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
 
-        $this->assertTrue(array_values($doc->getHeaderLinks()) == 
+        $this->assertTrue(array_values($doc->getHeaderLinks()) ==
                           array('index.html', 'contributing.html', 'contributing.bugs.html', 'contributing.wishlist.html'));
-        $this->assertTrue(array_values($doc->getLinks()) == 
+        $this->assertTrue(array_values($doc->getLinks()) ==
                           array('contributing.bugs.html',
                                 'contributing.wishlist.html',
                                 'developers.documentation.html',
                                 'faq.translators-revision-tracking.html',
                                 'index.html',
                                 'contributing.html'));
+    }
+
+    public function testHtmlNoFollowLinks()
+    {
+    	$html = '<HTML>'
+                . '<HEAD><TITLE>Page title</TITLE></HEAD>'
+                . '<BODY>'
+                .   'Document body.'
+                .   '<a href="link1.html">Link 1</a>.'
+                .   '<a href="link2.html" rel="nofollow">Link 1</a>.'
+                . '</BODY>'
+              . '</HTML>';
+
+        $oldNoFollowValue = Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks();
+
+        Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks(false);
+        $doc1 = Zend_Search_Lucene_Document_Html::loadHTML($html);
+        $this->assertTrue($doc1 instanceof Zend_Search_Lucene_Document_Html);
+        $this->assertTrue(array_values($doc1->getLinks()) == array('link1.html', 'link2.html'));
+
+        Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks(true);
+        $doc2 = Zend_Search_Lucene_Document_Html::loadHTML($html);
+        $this->assertTrue($doc2 instanceof Zend_Search_Lucene_Document_Html);
+        $this->assertTrue(array_values($doc2->getLinks()) == array('link1.html'));
     }
 }
 
