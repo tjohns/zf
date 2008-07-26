@@ -160,7 +160,7 @@ class Zend_Loader
         if (!$fh = @fopen($filename, 'r', true)) {
             return false;
         }
-
+        @fclose($fh);
         return true;
     }
 
