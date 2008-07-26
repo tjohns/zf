@@ -126,35 +126,35 @@ class Zend_Locale
      *
      * @var string Locale
      */
-    private $_locale;
+    protected $_locale;
 
     /**
      * Automatic detected locale
      *
      * @var string Locales
      */
-    private static $_auto;
+    protected static $_auto;
 
     /**
      * Browser detected locale
      *
      * @var string Locales
      */
-    private static $_browser;
+    protected static $_browser;
 
     /**
      * Environment detected locale
      *
      * @var string Locales
      */
-    private static $_environment;
+    protected static $_environment;
 
     /**
      * Default locale
      *
      * @var string Locales
      */
-    private static $_default = 'en';
+    protected static $_default = 'en';
 
     /**
      * Generates a locale object
@@ -172,7 +172,9 @@ class Zend_Locale
     public function __construct($locale = null)
     {
         if (empty(self::$_auto) === true) {
-            self::$_auto = $this->getDefault(null, false);
+            self::$_auto        = $this->getDefault(null, false);
+            self::$_browser     = $this->getDefault(self::BROWSER, false);
+            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
             if ((empty($locale) === true) and (empty(self::$_auto) === true) and
                 (empty(self::$_default) === true)) {
                 require_once 'Zend/Locale/Exception.php';
