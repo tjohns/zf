@@ -1,4 +1,4 @@
-Welcome to Zend Framework 1.5.2! This is a maintenance release of the 
+Welcome to Zend Framework 1.5.3! This is a maintenance release of the 
 Zend Framework 1.5 series. This release maintains backwards compatibility with
 the Zend Framework 1.0 series and has been rigorously tested with many
 applications written for 1.0.
@@ -8,8 +8,8 @@ UPGRADING APPLICATIONS WRITTEN ON ZF 1.0 TO ZF 1.5.
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.5.2 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-05-15.
+Zend Framework 1.5.3 (revision [INSERT REV NUMBER HERE]).
+Released on 2008-07-28.
 
 SPECIAL NOTICES FOR UPGRADING TO ZF 1.5
 ---------------------------------------
@@ -74,6 +74,10 @@ http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10710
 A detailed list of all bug fixes between 1.5.1 and 1.5.2 release may be found at:
 
 http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10743
+
+A detailed list of all bug fixes between 1.5.2 and 1.5.3 release may be found at:
+
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10811
 
 SYSTEM REQUIREMENTS
 -------------------
