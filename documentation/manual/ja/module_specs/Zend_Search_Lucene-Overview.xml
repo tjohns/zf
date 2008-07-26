@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10235 -->
+<!-- EN-Revision: 10464 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -17,14 +17,8 @@
                 </listitem>
                 <listitem>
                     <para>
-                       さまざまな強力な検索方式: フレーズ検索、ワイルドカード検索、
+                       さまざまな強力な検索方式: フレーズ検索、boolean 検索、ワイルドカード検索、
                        あいまい検索、範囲指定検索などなど
-                        <footnote>
-                           <para>
-                             現在サポートしているのは、単語検索および複数単語検索、
-                             そしてフレーズ検索、論理式およびサブクエリです。
-                           </para>
-                        </footnote>
                     </para>
                 </listitem>
                 <listitem>
@@ -41,7 +35,7 @@
         <note>
             <title/>
             <para>
-                以前の Zend_Search_Lucene の実装は Lucene 1.9 インデックスフォーマットに対応しています。
+                以前の Zend_Search_Lucene の実装は Lucene 1.9 および 2.1 インデックスフォーマットに対応しています。
             </para>
             <para>
                 現時点では、これらのバージョンで作成されたインデックスは
@@ -346,6 +340,19 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();]]>
             </programlisting>
+        </para>
+
+        <para>
+            ZF 1.6 以降では、<code>rel</code> 属性が
+            <code>'nofollow'</code> に設定されているリンクを除外できるようになりました。
+            このオプションを有効にするには
+            <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code>
+            を使用します。
+        </para>
+        <para>
+            <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code>
+            メソッドは、この "nofollow リンクを除外する"
+            フラグの現在の状態を返します。
         </para>
     </sect2>
 
