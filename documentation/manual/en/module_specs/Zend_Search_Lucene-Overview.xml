@@ -12,13 +12,8 @@
                 </listitem>
                 <listitem>
                     <para>
-                       Many powerful query types: phrase queries, wildcard queries,
-                       proximity queries, range queries and more
-                        <footnote>
-                           <para>
-                             Term, multi-term, phrase queries, boolean expressions and subqueries are supported at this time.
-                           </para>
-                        </footnote>
+                       Many powerful query types: phrase queries, boolean queries, wildcard queries,
+                       proximity queries, range queries and many others.
                     </para>
                 </listitem>
                 <listitem>
@@ -32,7 +27,7 @@
         <note>
             <title/>
             <para>
-                Previous Zend_Search_Lucene implementations support the Lucene 1.9 index format. 
+                Previous Zend_Search_Lucene implementations support the Lucene 1.9 and 2.1 index formats. 
             </para>
             <para>
                 Currently any index created using these versions is automatically upgraded to Lucene 2.1 format after the Zend_Search_Lucene update and
@@ -305,6 +300,15 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();]]>
             </programlisting>
+        </para>
+
+        <para>
+            Starting from ZF 1.6 it's also possible to exclude links with <code>rel</code> attribute set to <code>'nofollow'</code>.
+            Use <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code> to turn on this option.
+        </para>
+        <para>
+            <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code> method returns current state of 
+            "Exclude nofollow links" flag.
         </para>
     </sect2>
 
