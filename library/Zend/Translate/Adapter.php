@@ -157,13 +157,17 @@ abstract class Zend_Translate_Adapter {
                             $locale = (string) $filename;
                         } else {
                             $found = false;
-                            $parts = explode('.', $filename);
+                            $parts  = explode('.', $filename);
+                            $parts2 = array();
                             foreach($parts as $token) {
-                                $parts = array_merge(explode('_', $token), $parts);
+                                $parts2 += explode('_', $token);
                             }
+                            $parts  = array_merge($parts, $parts2);
+                            $parts2 = array();
                             foreach($parts as $token) {
-                                $parts = array_merge(explode('-', $token), $parts);
+                                $parts2 += explode('-', $token);
                             }
+                            $parts = array_merge($parts, $parts2);
                             $parts = array_unique($parts);
                             $prev  = '';
                             foreach($parts as $token) {
@@ -316,7 +320,8 @@ abstract class Zend_Translate_Adapter {
         if (empty($locale) or !$this->isAvailable($locale)) {
             $locale = $this->_options['locale'];
         }
-        return array_keys($this->_translate[$locale]);
+
+        return array_keys($this->_translate[(string) $locale]);
     }
 
     /**
@@ -329,13 +334,15 @@ abstract class Zend_Translate_Adapter {
      */
     public function getMessages($locale = null)
     {
-        if ($locale == 'all') {
+        if ($locale === 'all') {
             return $this->_translate;
         }
-        if (empty($locale) or !$this->isAvailable($locale)) {
+
+        if ((empty($locale) === true) or ($this->isAvailable($locale) === false)) {
             $locale = $this->_options['locale'];
         }
-        return $this->_translate[$locale];
+
+        return $this->_translate[(string) $locale];
     }
 
     /**
@@ -348,11 +355,7 @@ abstract class Zend_Translate_Adapter {
      */
     public function isAvailable($locale)
     {
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-
-        $return = isset($this->_translate[$locale]);
+        $return = isset($this->_translate[(string) $locale]);
         return $return;
     }
 
@@ -398,7 +401,7 @@ abstract class Zend_Translate_Adapter {
         $this->_loadTranslationData($data, $locale, $options);
         if ($this->_automatic === true) {
             $find = new Zend_Locale($locale);
-            $browser = $find->getBrowser() + $find->getEnvironment();
+            $browser = $find->getEnvironment() + $find->getBrowser();
             arsort($browser);
             foreach($browser as $language => $quality) {
                 if (isset($this->_translate[$language]) === true) {

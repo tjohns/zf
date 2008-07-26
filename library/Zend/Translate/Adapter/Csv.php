@@ -61,7 +61,7 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
-        $options = array_merge($this->_options, $options);
+        $options = $options + $this->_options;
 
         if ($options['clear']  ||  !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();
@@ -79,7 +79,7 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
             }
 
             if (isset($data[1]) !== true) {
-                $data[1] = "";
+                continue;
             }
 
             $this->_translate[$locale][$data[0]] = $data[1];

@@ -69,7 +69,7 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
-        $options = array_merge($this->_options, $options);
+        $options = $options + $this->_options;
 
         if ($options['clear']) {
             $this->_translate = array();

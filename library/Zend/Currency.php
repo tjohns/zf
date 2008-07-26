@@ -163,7 +163,7 @@ class Zend_Currency
             throw new Zend_Currency_Exception("Value '$value' has to be numeric");
         }
 
-        $options = array_merge($this->_options, $this->_checkOptions($options));
+        $options = $this->_checkOptions($options) + $this->_options;
 
         // Format the number
         if (empty($options['format']) === true) {
@@ -221,7 +221,7 @@ class Zend_Currency
      */
     public function setFormat(array $options = array())
     {
-        $this->_options = array_merge($this->_options, $this->_checkOptions($options));
+        $this->_options = $this->_checkOptions($options) + $this->_options;
         return $this;
     }
 
