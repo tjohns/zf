@@ -142,7 +142,7 @@
         <title>Registering the Dojo View Helper Prefix Path</title>
 
         <programlisting role="php"><![CDATA[
-$view->addPrefixPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
+$view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 ]]></programlisting>
     </example>
 
