@@ -268,7 +268,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
 
         $container = $this->getContainer();
         foreach ($container->getArrayCopy() as $index => $item) {
-            if ($item->type == $value->type) {
+            if ($item->type == $value->type && $item->{$item->type} == $value->{$value->type}) {
                 $this->offsetUnset($index);
             }
         }

@@ -338,6 +338,24 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
             );
     }
     
+    /**
+     * @issue ZF-2663
+     */
+    public function testSetNameDoesntClobberPart2()
+    {
+        $view = new Zend_View();
+        $view->headMeta()->setName('keywords', 'foo');                     
+        $view->headMeta()->setName('description', 'foo');
+        $view->headMeta()->appendHttpEquiv('pragma', 'baz');
+        $view->headMeta()->appendHttpEquiv('Cache-control', 'baz');
+        $view->headMeta()->setName('keywords', 'bar'); 
+ 
+        $this->assertEquals(
+            '<meta name="description" content="foo" />' . PHP_EOL . '<meta http-equiv="pragma" content="baz" />' . PHP_EOL . '<meta http-equiv="Cache-control" content="baz" />' . PHP_EOL . '<meta name="keywords" content="bar" />',
+            $view->headMeta()->toString()
+            );
+    }
+    
 }
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.
