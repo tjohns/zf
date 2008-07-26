@@ -1,0 +1,601 @@
+<!-- EN-Revision: 10130 -->
+<sect1 id="zend.json.server">
+    <title>Zend_Json_Server - JSON-RPC server</title>
+
+    <para>
+        <code>Zend_Json_Server</code> ist eine
+        <ulink url="http://groups.google.com/group/json-rpc/">JSON-RPC</ulink> Server Implementierung. Sie
+        unterstützt sowohl <ulink url="http://json-rpc.org/wiki/specification">dieSpezifikation von JSON-RPC Version 1</ulink>
+        als auch die <ulink url="http://groups.google.com/group/json-rpc/web/json-rpc-1-2-proposal">Spezifikation der Version 2</ulink>;
+        zusätzlich bietet Sie eine PHP Implementierung der
+        <ulink url="http://groups.google.com/group/json-schema/web/service-mapping-description-proposal">Spezifikation für Service Mapping Description (SMD)</ulink>
+        Um Kunden von Services deren Metadaten anzubieten. 
+    </para>
+
+    <para>
+        JSON-RPC ist ein leichgewichtiges Remoce Procedure Call Protokoll das JSON für seine Nachrichten
+        verwendet. Diese JSON-RPC Implementierung folgt PHP's 
+        <ulink url="http://us.php.net/manual/en/function.soap-soapserver-construct.php">SoapServer</ulink> API.
+        Das bedeutet das in einer typischen Situation einfach folgendes getan wird:
+    </para>
+
+    <itemizedlist>
+        <listitem><para>Instanzieren des Server Objekts</para></listitem>
+        <listitem><para>Eine oder mehrere Funktionen und/oder Klassen/Objekte dem Server Objekt hinzufügen</para></listitem>
+        <listitem><para>Die Anfrage mit handle() ausführen</para></listitem>
+    </itemizedlist>
+
+    <para>
+        <code>Zend_Json_Server</code> verwendet
+        <xref linkend="zend.server.reflection">Zend_Server_Reflection</xref> um Reflektion durchzuführen um
+        den SMD zu erstellen und die Signaturen der Methodenaufrufe zu erzwingen. Als solche, ist es
+        zwingend notwendig das alle hinzugefügten Funktionen und/oder Klassenmethoden komplette PHP
+        Docblocks dokumentiert haben mindestens aber:
+    </para>
+
+    <itemizedlist>
+        <listitem><para>Alle Parameter und deren erwarteter Variablentypen</para></listitem>
+        <listitem><para>Den Variablentyp des Rückgabewertes</para></listitem>
+    </itemizedlist>
+
+    <para>
+        <code>Zend_Json_Server</code> hört aktuell nur auf POST Anfragen; glücklicherweise bieten die meisten
+        JSON-RPC Client Implementierungen die zur aktuell vorhanden sind nur POST Anfragen. Das macht es einfach
+        den gleichen Endpunkt des Servers so zu verwenden das er beide Anfragen behandelt sowie die Service SMD
+        liefert, wie im nächsten Beispiel gezeigt.
+    </para>
+
+    <example id="zend.json.server.usage">
+        <title>Zend_Json_Server Verwendung</title>
+
+        <para>
+            Zuerst müssen wir eine Klasse definieren die wir über den JSON-RPC Server ausliefern wollen.
+            Wir nennen die Klasse 'Calculator', und definieren die Methoden 'add', 'substract', 'multiple',
+            und 'divide':
+        </para>
+
+        <programlisting role="php"><![CDATA[
+/**
+ * Calculator - Einfache Klasse zur Auslieferung über JSON-RPC
+ */
+class Calculator
+{
+    /**
+     * Summe von zwei Variablen zurückgeben
+     * 
+     * @param  int $x 
+     * @param  int $y 
+     * @return int
+     */
+    public function add($x, $y)
+    {
+        return $x + $y;
+    }
+
+    /**
+     * Differenz von zwei Variablen zurückgeben
+     * 
+     * @param  int $x 
+     * @param  int $y 
+     * @return int
+     */
+    public function subtract($x, $y)
+    {
+        return $x - $y;
+    }
+
+    /**
+     * Produkt von zwei Variablen zurückgeben 
+     * 
+     * @param  int $x 
+     * @param  int $y 
+     * @return int
+     */
+    public function multiply($x, $y)
+    {
+        return $x * $y;
+    }
+
+    /**
+     * Division von zwei Variablen zurückgeben
+     * 
+     * @param  int $x 
+     * @param  int $y 
+     * @return float
+     */
+    public function divide($x, $y)
+    {
+        return $x / $y;
+    }
+}
+?>]]></programlisting>
+
+        <para>
+            Es ist zu beachten das jede Methode einen Docblock mit Einträgen besitzt die jeden Parameter und
+            seinen Typ beschreiben, sowie einen Eintrag für den Rückgabewert. Das ist
+            <emphasis>absolut kritisch</emphasis> wenn <code>Zend_Json_Server</code> verwendet wird -- oder auch
+            jede andere Server Komponente für diesen Zweck im Zend Framework. 
+        </para>
+
+        <para>
+            Erstellen wir also ein Skript um die Anfrage zu behandeln:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_Json_Server();
+
+// Zeigt welche Funktionalität vorhanden ist:
+$server->setClass('Calculator');
+
+// Behandelt die Anfrage:
+$server->handle();
+?>]]></programlisting>
+
+        <para>
+            Trotzdem behandelt das noch immer nicht das Problem der Rückgabe eines SMD damit der JSON-RPC
+            Client die Methoden selbstständig erkennen kann. Das kann getan werden indem die HTTP Anfragemethode
+            erkannt wird, und anschließend einige Metadaten des Servers spezifiziert werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_Json_Server();
+$server->setClass('Calculator');
+
+if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    // Zeigt den Endpunkt der URL, und die verwendete JSON-RPC Version:
+    $server->setTarget('/json-rpc.php')
+           ->setEnvelope(Zend_Json_Server_Smd::ENV_JSONRPC_2);
+
+    // Den SMD holen
+    $smd = $server->getServiceMap();
+
+    // Den SMD an den Client zurückgeben
+    header('Content-Type: application/json');
+    echo $smd;
+    return;
+}
+
+$server->handle();
+?>]]></programlisting>
+
+        <para>
+            Wenn der JSON-RPC Server mit dem Dojo Toolkit verwendet wird muß auch ein spezielles
+            Kompatibilitätsflag gesetzt werden um sicherzustellen das die zwei korrekt miteinander arbeiten:
+        </para>
+
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_Json_Server();
+$server->setClass('Calculator');
+
+if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    $server->setTarget('/json-rpc.php')
+           ->setEnvelope(Zend_Json_Server_Smd::ENV_JSONRPC_2);
+    $smd = $server->getServiceMap();
+
+    // Die Kompatibilität zu Dojo setzen:
+    $smd->setDojoCompatible(true);
+
+    header('Content-Type: application/json');
+    echo $smd;
+    return;
+}
+
+$server->handle();
+?>]]></programlisting>
+    </example>
+
+    <sect2 id="zend.json.server.details">
+        <title>Fortgescrittene Details</title>
+
+        <para>
+            Obwohl das meiste an Funktionalität für <code>Zend_Json_Server</code> in
+            <xref linkend="zend.json.server.usage" /> beschrieben wurde, ist noch weitere fortgeschrittenere
+            Funktionalität vorhanden.
+        </para>
+
+        <sect3 id="zend.json.server.details.zendjsonserver">
+            <title>Zend_Json_Server</title>
+
+            <para>
+                <code>Zend_Json_Server</code> ist die Kernklasse von JSON-RPC; die bearbeitet alle Anfragen und
+                gibt den Antwort Payload zurück. Sie hat die folgenden Methoden:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>addFunction($function)</code>: Spezifiziert eine benutzerdefinierte
+                        Funktion die dem Server hinzugefügt werden soll.</para></listitem>
+                <listitem><para><code>setClass($class)</code>: Spezifiziert eine Klasse oder ein Objekt das dem
+                        Server hinzugefügt werden soll; alle öffentlichen Methoden dieses Elemente werden als
+                        JSON-RPC Methoden bekanntgegeben.</para></listitem>
+                <listitem><para><code>fault($fault = null, $code = 404, $data =
+                        null)</code>: Erstellt und retourniert ein
+                        <code>Zend_Json_Server_Error</code> Objekt.</para></listitem>
+                <listitem><para><code>handle($request = false)</code>: Behandelt eine JSON-RPC Anfrage; optional
+                        kann ein <code>Zend_Json_Server_Request</code> Objekt für die Anpassung übergeben werden
+                        (standardmäßig wird eines erstellt).</para></listitem>
+                <listitem><para><code>getFunctions()</code>: Gibt eine Liste aller hinzugefügten Methoden
+                        zurück.</para></listitem>
+                <listitem><para><code>setRequest(Zend_Json_Server_Request
+                        $request)</code>: Spezifiziert ein Anfrageobjekt um es für den Server zu verwenden.</para></listitem>
+                <listitem><para><code>getRequest()</code>: Empfängt das Anfrageobjekt das vom Server verwendet
+                        wird.</para></listitem>
+                <listitem><para><code>setResponse(Zend_Json_Server_Response
+                        $response)</code>: Setzt das Antwort Objekt das der Server verwendet.</para></listitem>
+                <listitem><para><code>getResponse()</code>: Empfängt das Anfrageobjekt das vom Server
+                        verwendet wird.</para></listitem>
+                <listitem><para><code>setAutoEmitResponse($flag)</code>:
+                        Zeigt ob der Server die Antworten und alle Header automatisch ausgeben sollte;
+                        standardmäßig ist das aktiviert.</para></listitem>
+                <listitem><para><code>autoEmitResponse()</code>: Stellt fest ob das automatische senden der
+                        Antwort eingeschaltet ist.</para></listitem>
+                <listitem><para><code>getServiceMap()</code>: Empfängt die Service Map Description in der Form
+                        eines <code>Zend_Json_Server_Smd</code> Objekts</para></listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.json.server.details.zendjsonserverrequest">
+            <title>Zend_Json_Server_Request</title>
+
+            <para>
+                The JSON-RPC request environment is encapsulated in the
+                <code>Zend_Json_Server_Request</code> object. This object allows
+                you to set necessary portions of the JSON-RPC request, including
+                the request ID, parameters, and JSON-RPC specification version.
+                It has the ability to load itself via JSON or a set of options,
+                and can render itself as JSON via the <code>toJson()</code>
+                method.
+            </para>
+
+            <para>
+                The request object has the following methods available:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>setOptions(array $options)</code>: Specify
+                        object configuration. <code>$options</code> may contain
+                        keys matching any 'set' method:
+                        <code>setParams()</code>, <code>setMethod()</code>,
+                        <code>setId()</code>, and
+                        <code>setVersion()</code>.</para></listitem>
+                <listitem><para><code>addParam($value, $key = null)</code>: Add
+                        a parameter to use with the method call. Parameters can be
+                        just the values, or can optionally include the parameter
+                        name.</para></listitem>
+                <listitem><para><code>addParams(array $params)</code>: Add
+                        multiple parameters at once; proxies to
+                        <code>addParam()</code></para></listitem>
+                <listitem><para><code>setParams(array $params)</code>: Set all
+                        parameters at once; overwrites any existing
+                        parameters.</para></listitem>
+                <listitem><para><code>getParam($index)</code>: Retrieve a
+                        parameter by position or name.</para></listitem>
+                <listitem><para><code>getParams()</code>: Retrieve all
+                        parameters at once.</para></listitem>
+                <listitem><para><code>setMethod($name)</code>: Set the method to
+                        call.</para></listitem>
+                <listitem><para><code>getMethod()</code>: Retrieve the method
+                        that will be called.</para></listitem>
+                <listitem><para><code>isMethodError()</code>: Determine whether
+                        or not the request is malformed and would result in an
+                        error.</para></listitem>
+                <listitem><para><code>setId($name)</code>: Set the request
+                        identifier (used by the client to match requests to
+                        responses).</para></listitem>
+                <listitem><para><code>getId()</code>: Retrieve the request
+                        identifier.</para></listitem>
+                <listitem><para><code>setVersion($version)</code>: Set the
+                        JSON-RPC specification version the request conforms to.
+                        May be either '1.0' or '2.0'.</para></listitem>
+                <listitem><para><code>getVersion()</code>: Retrieve the JSON-RPC
+                        specification version used by the
+                        request.</para></listitem>
+                <listitem><para><code>loadJson($json)</code>: Load the request
+                        object from a JSON string.</para></listitem>
+                <listitem><para><code>toJson()</code>: Render the request as
+                        a JSON string.</para></listitem>
+            </itemizedlist>
+
+            <para>
+                An HTTP specific version is available via
+                <code>Zend_Json_Server_Request_Http</code>. This class will
+                retrieve the request via <code>php://input</code>, and allows
+                access to the raw JSON via the <code>getRawJson()</code> method.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.json.server.details.zendjsonserverresponse">
+            <title>Zend_Json_Server_Response</title>
+
+            <para>
+                The JSON-RPC response payload is encapsulated in the
+                <code>Zend_Json_Server_Response</code> object. This object allows
+                you to set the return value of the request, whether or not the
+                response is an error, the request identifier, the JSON-RPC
+                specification version the response conforms to, and optionally
+                the service map.
+            </para>
+
+            <para>
+                The response object has the following methods available:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>setResult($value)</code>: Set the response
+                    result.</para></listitem>
+                <listitem><para><code>getResult()</code>: Retrieve the response
+                    result.</para></listitem>
+                <listitem><para><code>setError(Zend_Json_Server_Error
+                    $error)</code>: Set an error object. If set, this will be
+                    used as the response when serializing to JSON.</para></listitem>
+                <listitem><para><code>getError()</code>: Retrieve the error
+                    object, if any.</para></listitem>
+                <listitem><para><code>isError()</code>: Whether or not the
+                    response is an error response.</para></listitem>
+                <listitem><para><code>setId($name)</code>: Set the request
+                    identifier (so the client may match the response with
+                    the original request).</para></listitem>
+                <listitem><para><code>getId()</code>: Retrieve the request
+                    identifier.</para></listitem>
+                <listitem><para><code>setVersion($version)</code>: Set the
+                    JSON-RPC version the response conforms to.</para></listitem>
+                <listitem><para><code>getVersion()</code>: Retrieve the JSON-RPC
+                    version the response conforms to.</para></listitem>
+                <listitem><para><code>toJson()</code>: Serialize the response to
+                    JSON. If the response is an error response, serializes the
+                    error object.</para></listitem>
+                <listitem><para><code>setServiceMap($serviceMap)</code>: Set the
+                    service map object for the response.</para></listitem>
+                <listitem><para><code>getServiceMap()</code>: Retrieve the
+                    service map object, if any.</para></listitem>
+            </itemizedlist>
+
+            <para>
+                An HTTP specific version is available via
+                <code>Zend_Json_Server_Response_Http</code>. This class will
+                send the appropriate HTTP headers as well as serialize the
+                response as JSON.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.json.server.details.zendjsonservererror">
+            <title>Zend_Json_Server_Error</title>
+
+            <para>
+                JSON-RPC has a special format for reporting error conditions.
+                All errors need to provide, minimally, an error message and error
+                code; optionally, they can provide additional data, such as a
+                backtrace.
+            </para>
+
+            <para>
+                Error codes are derived from those recommended by <ulink
+                    url="http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php">the
+                    XML-RPC EPI project</ulink>. <code>Zend_Json_Server</code>
+                appropriately assigns the code based on the error condition. For
+                application exceptions, the code '-32000' is used.
+            </para>
+
+            <para>
+                <code>Zend_Json_Server_Error</code> exposes the following
+                methods:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>setCode($code)</code>: Set the error code;
+                    if the code is not in the accepted XML-RPC error code range,
+                    -32000 will be assigned.</para></listitem>
+                <listitem><para><code>getCode()</code>: Retrieve the current
+                    error code.</para></listitem>
+                <listitem><para><code>setMessage($message)</code>: Set the error
+                    message.</para></listitem>
+                <listitem><para><code>getMessage()</code>: Retrieve the current
+                    error message.</para></listitem>
+                <listitem><para><code>setData($data)</code>: Set auxiliary data
+                    further qualifying the error, such as a
+                    backtrace.</para></listitem>
+                <listitem><para><code>getData()</code>: Retrieve any current
+                    auxiliary error data.</para></listitem>
+                <listitem><para><code>toArray()</code>: Cast the error to an
+                    array. The array will contain the keys 'code', 'message',
+                    and 'data'.</para></listitem>
+                <listitem><para><code>toJson()</code>: Cast the error to a
+                    JSON-RPC error representation.</para></listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.json.server.details.zendjsonserversmd">
+            <title>Zend_Json_Server_Smd</title>
+
+            <para>
+                SMD stands for Service Mapping Description, a JSON schema that
+                defines how a client can interact with a particular web service.
+                At the time of this writing, the <ulink
+                    url="http://groups.google.com/group/json-schema/web/service-mapping-description-proposal">specification</ulink>
+                has not yet been formally ratified, but it is in use already
+                within Dojo toolkit as well as other JSON-RPC consumer clients.
+            </para>
+
+            <para>
+                At its most basic, a Service Mapping Description indicates the
+                method of transport (POST, GET, TCP/IP, etc), the request
+                envelope type (usually based on the protocol of the server), the
+                target URL of the service provider, and a map of services
+                available. In the case of JSON-RPC, the service map is a list of
+                available methods, which each method documenting the available
+                parameters and their types, as well as the expected return value
+                type.
+            </para>
+
+            <para>
+                <code>Zend_Json_Server_Smd</code> provides an object oriented
+                way to build service maps. At its most basic, you pass it
+                metadata describing the service using mutators, and specify
+                services (methods and functions).
+            </para>
+
+            <para>
+                The service descriptions themselves are typically instances of
+                <code>Zend_Json_Server_Smd_Service</code>; you can also pass all
+                information as an array to the various service mutators in
+                <code>Zend_Json_Server_Smd</code>, and it will instantiate a
+                service object for you. The service objects contain information
+                such as the name of the service (typically the function or
+                method name), the parameters (names, types, and position), and
+                the return value type. Optionally, each service can have its own
+                target and envelope, though this functionality is rarely used. 
+            </para>
+
+            <para>
+                <code>Zend_Json_Server</code> actually does all of this behind
+                the scenes for you, by using reflection on the attached classes
+                and functions; you should create your own service maps only if
+                you need to provide custom functionality that class and function
+                introspection cannot offer.
+            </para>
+
+            <para>
+                Methods available in <code>Zend_Json_Server_Smd</code> include:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>setOptions(array $options)</code>: Setup
+                        an SMD object from an array of options. All mutators
+                        (methods beginning with 'set') can be used as
+                        keys.</para></listitem>
+                <listitem><para><code>setTransport($transport)</code>: Set the
+                        transport used to access the service; only POST is
+                        currently supported.</para></listitem>
+                <listitem><para><code>getTransport()</code>: Get the current
+                        service transport.</para></listitem>
+                <listitem><para><code>setEnvelope($envelopeType)</code>: Set the
+                        request envelope that should be used to access the
+                        service. Currently, supports the constants
+                        <code>Zend_Json_Server_Smd::ENV_JSONRPC_1</code> and
+                        <code>Zend_Json_Server_Smd::ENV_JSONRPC_1</code>.</para></listitem>
+                <listitem><para><code>getEnvelope()</code>: Get the current
+                        request envelope.</para></listitem>
+                <listitem><para><code>setContentType($type)</code>: Set the
+                        content type requests should use (by default, this is
+                        'application/json').</para></listitem>
+                <listitem><para><code>getContentType()</code>: Get the current
+                        content type for requests to the service.</para></listitem>
+                <listitem><para><code>setTarget($target)</code>: Set the URL
+                        endpoint for the service.</para></listitem>
+                <listitem><para><code>getTarget()</code>: Get the URL endpoint
+                        for the service.</para></listitem>
+                <listitem><para><code>setId($id)</code>: Typically, this is the
+                        URL endpoint of the service (same as the
+                        target).</para></listitem>
+                <listitem><para><code>getId()</code>: Retrieve the service ID
+                        (typically the URL endpoint of the
+                        service).</para></listitem>
+                <listitem><para><code>setDescription($description)</code>: Set a
+                        service description (typically narrative information
+                        describing the purpose of the service).</para></listitem>
+                <listitem><para><code>getDescription()</code>: Get the service
+                        description.</para></listitem>
+                <listitem><para><code>setDojoCompatible($flag)</code>: Set a
+                        flag indicating whether or not the SMD is compatible
+                        with Dojo toolkit. When true, the generated JSON SMD
+                        will be formatted to comply with the format that Dojo's
+                        JSON-RPC client expects.</para></listitem>
+                <listitem><para><code>isDojoCompatible()</code>: Returns the
+                        value of the Dojo compatability flag (false, by
+                        default).</para></listitem>
+                <listitem><para><code>addService($service)</code>: Add a service
+                        to the map. May be an array of information to pass to
+                        the constructor of
+                        <code>Zend_Json_Server_Smd_Service</code>, or an
+                        instance of that class.</para></listitem>
+                <listitem><para><code>addServices(array $services)</code>: Add
+                        multiple services at once.</para></listitem>
+                <listitem><para><code>setServices(array $services)</code>: Add
+                        multiple services at once, overwriting any previously
+                        set services.</para></listitem>
+                <listitem><para><code>getService($name)</code>: Get a service by
+                        its name.</para></listitem>
+                <listitem><para><code>getServices()</code>: Get all attached
+                        services.</para></listitem>
+                <listitem><para><code>removeService($name)</code>: Remove a
+                        service from the map.</para></listitem>
+                <listitem><para><code>toArray()</code>: Cast the service map to
+                        an array.</para></listitem>
+                <listitem><para><code>toDojoArray()</code>: Cast the service map
+                        to an array compatible with Dojo Toolkit.</para></listitem>
+                <listitem><para><code>toJson()</code>: Cast the service map to a
+                        JSON representation.</para></listitem>
+            </itemizedlist>
+
+            <para>
+                <code>Zend_Json_Server_Smd_Service</code> has the following
+                methods:
+            </para>
+
+            <itemizedlist>
+                <listitem><para><code>setOptions(array $options)</code>: Set
+                        object state from an array. Any mutator (methods
+                        beginning with 'set') may be used as a key and set via
+                        this method.</para></listitem>
+                <listitem><para><code>setName($name)</code>: Set the service
+                        name (typically, the function or method name).</para></listitem>
+                <listitem><para><code>getName()</code>: Retrieve the service
+                        name.</para></listitem>
+                <listitem><para><code>setTransport($transport)</code>: Set the
+                        service transport (currently, only transports supported
+                        by <code>Zend_Json_Server_Smd</code> are allowed).</para></listitem>
+                <listitem><para><code>getTransport()</code>: Retrieve the
+                        current transport.</para></listitem>
+                <listitem><para><code>setTarget($target)</code>: Set the URL
+                        endpoint of the service (typically, this will be the
+                        same as the overal SMD to which the service is
+                        attached).</para></listitem>
+                <listitem><para><code>getTarget()</code>: Get the URL endpoint
+                        of the service.</para></listitem>
+                <listitem><para><code>setEnvelope($envelopeType)</code>: Set the
+                        service envelope (currently, only envelopes supported
+                        by <code>Zend_Json_Server_Smd</code> are allowed).</para></listitem>
+                <listitem><para><code>getEnvelope()</code>: Retrieve the service
+                        envelope type.</para></listitem>
+                <listitem><para><code>addParam($type, array $options = array(),
+                            $order = null)</code>: Add a parameter to the
+                        service. By default, only the parameter type is
+                        necessary. However, you may also specify the order, as
+                        well as options such as:</para>
+                    <itemizedlist>
+                        <listitem><para><emphasis>name</emphasis>: the parameter
+                            name</para></listitem>
+                        <listitem><para><emphasis>optional</emphasis>: whether
+                            or not the parameter is optional</para></listitem>
+                        <listitem><para><emphasis>default</emphasis>: a default
+                            value for the parameter</para></listitem>
+                        <listitem><para><emphasis>description</emphasis>: text
+                            describing the parameter</para></listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem><para><code>addParams(array $params)</code>: Add
+                    several parameters at once; each param should be an assoc
+                    array containing minimally the key 'type' describing the
+                    parameter type, and optionally the key 'order'; any other
+                    keys will be passed as <code>$options</code> to
+                    <code>addOption()</code>.</para></listitem>
+                <listitem><para><code>setParams(array $params)</code>: Set many
+                    parameters at once, overwriting any existing
+                    parameters.</para></listitem>
+                <listitem><para><code>getParams()</code>: Retrieve all currently
+                    set parameters.</para></listitem>
+                <listitem><para><code>setReturn($type)</code>: Set the return
+                    value type of the service.</para></listitem>
+                <listitem><para><code>getReturn()</code>: Get the return value
+                    type of the service.</para></listitem>
+                <listitem><para><code>toArray()</code>: Cast the service to an
+                    array.</para></listitem>
+                <listitem><para><code>toJson()</code>: Cast the service to a
+                    JSON representation.</para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

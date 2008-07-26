@@ -1,0 +1,65 @@
+<!-- EN-Revision: 9884 -->
+<sect1 id="zend.soap.autodiscovery.class">
+    <title>Automatische Erkennung von Klassen.</title>
+
+    <para>
+        Wenn eine Klasse verwendet wird um SOAP Server Funktionalitäten anzubieten, dann sollte die selbe
+        Klasse an <code>Zend_Soap_AutoDiscovery</code> für die WSDL Erzeugung übergeben werden:
+        <programlisting role="php"><![CDATA[<?php
+$autodiscover = new Zend_Soap_AutoDiscover();
+$autodiscover->setClass('My_SoapServer_Class');
+$autodiscover->handle();]]></programlisting>
+    </para>
+
+    <para>
+        Die folgenden Regeln werden wärend der WSDL Erzeugung verwendet:
+        <itemizedlist>
+            <listitem>
+                <para>Erzeugtes WSDL beschreibt einen RPC srtigen Web Service.</para>
+            </listitem>
+            <listitem>
+                <para>Klassen Namen werden als Name des Web Services verwendet der beschrieben wird.</para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> wird als URI
+                    verwendet so das WSDL vorhanden ist.
+                </para>
+                <para>
+                     Es wird auch als Ziel Namespace für alle Service bezogenen Namen verwendet (inklusive
+                     der beschriebenen komplexen Typen).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Klassen Methoden werden in einen
+                    <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Typ</ulink> übernommen.
+                </para>
+                <para>
+                    <code>$className . 'Port'</code> wird als Port Typ Name verwendet.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Jede Klassen Methode wird als korrespondierende Port Operation registriert.</para>
+            </listitem>
+            <listitem>
+                <para>Jeder Methoden Prototyp erzeugt korrespondierende Anfrage/Antwort Nachrichten.</para>
+                <para>Eine Methode kann verschiedene Prototypen haben wenn einige Parameter der Methode
+                optional sind.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    
+    <note>
+        <title>Wichtig!</title>
+        <para>
+            WSDL Autodiscovery verwendet PHP Docblocks die vom Entwickler angeboten werden um die Parameter
+            und Return Typen zu erkennen. Faktisch ist das, für skalare Typen, der einzige Weg um die
+            Parameter Typen zu erkennen und für Return Typen ist das der einzige Weg um Sie zu erkennen.
+        </para>
+        <para>
+            Das bedeutet, das Anbieten von richtigen und komplett detailierten Docblocks ist nicht nur
+            beste Praxis, sondern wird für das erkunden der Klasse benötigt.
+        </para>
+    </note>
+</sect1>
