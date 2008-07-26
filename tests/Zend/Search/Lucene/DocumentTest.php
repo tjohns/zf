@@ -62,6 +62,17 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($document->getFieldUtf8Value('description'), 'Words with umlauts: åãü...');
     }
 
+    public function testAddFieldMethodChaining()
+    {
+        $document =  new Zend_Search_Lucene_Document();
+        $this->assertTrue($document->addField(Zend_Search_Lucene_Field::Text('title', 'Title')) instanceof Zend_Search_Lucene_Document);
+
+        $document =  new Zend_Search_Lucene_Document();
+        $document->addField(Zend_Search_Lucene_Field::Text('title',      'Title'))
+                 ->addField(Zend_Search_Lucene_Field::Text('annotation', 'Annotation'))
+                 ->addField(Zend_Search_Lucene_Field::Text('body',       'Document body, document body, document body...'));
+    }
+
     public function testHtml()
     {
         $doc =  Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
