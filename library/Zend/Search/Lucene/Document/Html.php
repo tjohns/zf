@@ -57,6 +57,16 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     private $_doc;
 
     /**
+     * Exclud nofollow links flag
+     *
+     * If true then links with rel='nofollow' attribute are not included into
+     * document links.
+     *
+     * @var boolean
+     */
+    private static $_excludeNoFollowLinks = false;
+
+    /**
      * Object constructor
      *
      * @param string  $data
@@ -105,8 +115,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
 
         $linkNodes = $this->_doc->getElementsByTagName('a');
         foreach ($linkNodes as $linkNode) {
-            if (($href = $linkNode->getAttribute('href')) != '') {
-                $this->_links[] = $href;
+            if (($href = $linkNode->getAttribute('href')) != '' &&
+                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
+               ) {
+            	$this->_links[] = $href;
             }
         }
         $this->_links = array_unique($this->_links);
@@ -118,6 +130,26 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             }
         }
         $this->_headerLinks = array_unique($this->_headerLinks);
+    }
+
+    /**
+     * Set exclude nofollow links flag
+     *
+     * @param boolean $newValue
+     */
+    public static function setExcludeNoFollowLinks($newValue)
+    {
+    	self::$_excludeNoFollowLinks = $newValue;
+    }
+
+    /**
+     * Get exclude nofollow links flag
+     *
+     * @return boolean
+     */
+    public static function getExcludeNoFollowLinks()
+    {
+        return self::$_excludeNoFollowLinks;
     }
 
     /**
