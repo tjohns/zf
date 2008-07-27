@@ -95,6 +95,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
             $this->fail('Call should fail if missing args');
         } catch (Exception $e) {
             // success
+            ob_end_clean();
         }
     }
 
