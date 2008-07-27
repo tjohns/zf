@@ -75,6 +75,13 @@ abstract class Zend_Measure_Abstract
             $type = null;
         }
 
+        if (empty($locale)) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
+                $locale = Zend_Registry::get('Zend_Locale');
+            }
+        }
+
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
