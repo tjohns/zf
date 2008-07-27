@@ -210,4 +210,14 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('de_AT', $lang->getList()));
         $this->assertTrue(in_array('de_DE', $lang->getList()));
     }
+
+    public function testZF3679()
+    {
+        $locale = new Zend_Locale('de_AT');
+        require_once 'Zend/Registry.php';
+        Zend_Registry::set('Zend_Locale', $locale);
+
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'));
+        $this->assertEquals('de_AT', $lang->getLocale());
+    }
 }
