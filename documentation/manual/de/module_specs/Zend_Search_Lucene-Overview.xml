@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10464 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -15,14 +16,8 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Viele mächtige Abfragearten: Phrasensuche, Platzhaltersuche, Näherungssuche,
-                        Bereichssuche und mehr
-                        <footnote>
-                           <para>
-                               Derzeit werden Abfragen für einzelne und mehrere Begriffe, für Phrasen,
-                               für boolesche Ausdrücke und Unterabfragen unterstützt.
-                           </para>
-                        </footnote>
+                        Viele mächtige Abfragearten: Phrasensuche, Platzhaltersuche, Boolsche Suche,
+                        Näherungssuche, Bereichssuche und viele andere.
                     </para>
                 </listitem>
                 <listitem>
@@ -33,28 +28,14 @@
             </itemizedlist>
 
             Zend_Search_Lucene wurde abgeleitet vom Apache Lucene Projekt. Die aktuell unterstützte Lucene
-            Version ist 2.2.
-            
-            <footnote>
-               <para>
-                   Die Unterstützung des Lucene 2.1 Index Formats (welches auch in Lucene 2.2 verwendet wird) ist
-                   im aktuellen "trunk" Zweig enthalten. Es ist verfügbar über SVN im aktuellen nächtlichen
-                   Schnappschuß.
-               </para>
-               <para>
-                   Wir hoffen die Unterstützung des Lucene 2.1 Index Formats im ZF 1.5.0 zu inkludieren.
-                   Das aktuelle Release (ZF V1.0.4) arbeitet mit den Indexformaten Lucene 1.9-2.0.
-               </para>
-            </footnote>.
-
-            Für weitere Informationen über Lucene, besuche
-            <ulink url="http://lucene.apache.org/java/docs/"/> (<ulink url="http://lucene.apache.org/java/2_2_0/"/>).
+            Version (beginnend mit ZF 1.6) ist 2.3. Für weitere Informationen über Lucene, besuchen Sie
+            <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
 
         <note>
             <title/>
             <para>
-                Frühere Zend_Search_Lucene Implementationen unterstützen das Lucene 1.9 Index Format. 
+                Frühere Zend_Search_Lucene Implementationen unterstützen das Lucene 1.9 und 2.1 Index Formate. 
             </para>
             <para>
                 Aktuell werden alle Indezes die mit diesen Versionen erstellt wurden nach der Aktualisierung
@@ -352,6 +333,17 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();]]>
             </programlisting>
+        </para>
+
+        <para>
+            Beginnend mit ZF 1.6 ist es auch möglich Links mit dem <code>rel</code> Attribut auszunehmen wenn
+            es auf <code>'nofollow'</code> gesetzt wird. Man kann
+            <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code> verwenden um diese
+            Option einzuschalten.
+        </para>
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code> Methode gibt den
+            aktuellen Status des "Exclude nofollow links" Flags zurück.
         </para>
     </sect2>
 

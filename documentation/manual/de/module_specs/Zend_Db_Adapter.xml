@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9966 -->
+<!-- EN-Revision: 10414 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1840,7 +1840,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 </listitem>
                 <listitem>
                     <para>
-                        Um mit einer SQLite2 Datenbank zu Verbinden muss <code>'dsnprefix'=&gt;'sqlite2'</code>
+                        Um mit einer SQLite2 Datenbank zu Verbinden muss <code>'sqlite2'=>true</code>
                         in dem Array von Parametern beim Erzeugen einer Instanz des Pdo_Sqlite Adapters angegeben
                         werden.
                     </para>

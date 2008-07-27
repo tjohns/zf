@@ -1,5 +1,86 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>Erweitert</title>
+
+    <sect2 id="zend.search.lucene.advanced.format_migration">
+        <title>Starting from 1.6, handling index format transformations.</title>
+
+        <para>
+            Die Zend_Search_Lucene Komponente arbeitet mit dem Index Format der Java Lucene Version 1.4-1.9, 2.1
+            und 2.3.
+        </para>
+
+        <para>
+            Das aktuelle Indexformat kann durch den Aufruf von <code>$index->getFormatVersion()</code>
+            abgefragt werden. Er gibt eine der folgenden Werte zurück:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> für das Java Lucene Index Format 1.4-1.9.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_1</code> für das Java Lucene Index Format 2.1
+                        (es wird auch in Lucene 2.2 verwendet).
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_3</code> für das Java Lucene Index Format 2.3.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Indexveränderungen werden <emphasis role="strong">nur</emphasis> durchgeführt wenn irgendein
+            Update des Index durchgeführt wird. Das passiert wenn ein neues Dokument zu einem Index
+            hinzugefügt wird, oder wenn manuell eine Indexoptimierung durch den Aufruf von
+            <code>$index->optimize()</code> gestartet wird.
+        </para>
+
+        <para>
+            In solch einem Fall kann Zend_Search_Lucene den Index in eine höhere Formatversion konvertieren.
+            Das geschieht <emphasis role="strong">immer</emphasis> für Indezes welche im
+            <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> sind. Diese werden automatisch ins Format 2.1
+            konvertiert.
+        </para>
+
+        <para>
+            Man kann den Konvertierungsprozess managen und Ziel-Indexformate durch
+            <code>$index->setFormatVersion()</code> zuweisen welches entweder die
+            <code>Zend_Search_Lucene::FORMAT_2_1</code> oder <code>Zend_Search_Lucene::FORMAT_2_3</code>
+            Konstante entgegennimmt:
+            <itemizedlist>
+                <listitem> 
+                    <para>
+                        <code>Zend_Search_Lucene::FORMAT_2_1</code> macht eigentlich gar nichts da 
+                        pre-2.1 Indezes automatisch in das 2.1 Format konvertiert werden.
+                    </para> 
+                </listitem> 
+                <listitem> 
+                    <para>
+                         <code>Zend_Search_Lucene::FORMAT_2_3</code> erzwingt die Konvertierung ins 2.3 Format.
+                    </para> 
+                </listitem> 
+            </itemizedlist> 
+        </para> 
+
+        <para>
+            Rückwärts Konvertierungen werden nicht unterstützt. 
+        </para> 
+
+        <note> 
+            <title>Wichtig!</title> 
+            <para> 
+                Sobald Indezes in eine höhere Version konvertiert wurden können Sie nicht zurück konvertiert
+                werden. Deswegen sollte man ein Backup der Indezes machen wenn man plant zu einer höheren
+                Version zu migrieren, man aber die Möglichkeit haben will wieder zurückzugehen.
+            </para> 
+        </note> 
+
+    </sect2> 
 
     <sect2 id="zend.search.lucene.advanced.static">
         <title>Den Index als statische Eigenschaft verwenden</title>
@@ -94,5 +175,4 @@ Searcher::commit();
         </para>
 
     </sect2>
-
 </sect1>

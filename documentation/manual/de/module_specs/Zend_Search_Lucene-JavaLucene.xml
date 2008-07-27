@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Zusammenarbeit Mit Java Lucene</title>
 
@@ -13,7 +14,7 @@
             <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
             <footnote>
                 <para>
-                    Die aktuell unterstützte Version des Lucene Index Dateiformats ist v2.1
+                    Die aktuell unterstützte Version des Lucene Index Dateiformats ist 2.3 (beginnend mit ZF 1.6).
                 </para>
             </footnote>.
         </para>

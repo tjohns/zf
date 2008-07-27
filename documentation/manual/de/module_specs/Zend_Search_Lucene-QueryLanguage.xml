@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10376 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>Abfragesprache</title>
 
@@ -12,7 +13,7 @@
 
     <para>
         Die komplette Java Lucene Syntax Dokumentation der Abfragesprache kann
-        <ulink url="http://lucene.apache.org/java/2_0_0/queryparsersyntax.html">hier</ulink> gefunden werden.
+        <ulink url="http://lucene.apache.org/java/docs/queryparsersyntax.html">hier</ulink> gefunden werden.
     </para>
 
     <sect2 id="zend.search.lucene.query-language.terms">
@@ -95,15 +96,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>
-            Beginnend mit 1.5., Wildcards
-            <footnote>
-                <para>
-                    Die Unterstützung für Wildcard Abfragen ist im SVN und den spätesten Snapshot Versionen
-                    vorhanden und nicht im aktuellen Release.
-                </para>
-            </footnote>
-        </title>
+        <title>Wildcards</title>
         <para>
             Lucene unterstützt Einzelzeichen und Mehrfachzeichen Suchen mit Wildcards in einzelnen Ausdrücken
             (aber nicht innerhalb von Phrasenabfragen).
@@ -151,23 +144,11 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <para>
             Der "~" Modifikator kann für verwendet werden um eine annähernde Suche auf Phrasen oder Fuzzy Suchen
             für individuelle Ausdrücke durchzuführen.
-            <footnote>
-                <para>
-                    Die Fuzzy Suche ist beginnend mit ZF 1.5 vorhanden.
-                </para>
-            </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>Beginnend mit 1.5, Bereichs Suchen
-            <footnote>
-                <para>
-                    Die Unterstützung für Bereichsabfragen ist im SVN und den letzten Snapshot Versionen
-                    vorhanden aber nicht im aktuellen Release.
-                </para>
-            </footnote>
-        </title>
+        <title>Bereichs Suchen</title>
 
         <para>
             Bereichsabfragen erlauben es Entwicklern passende Dokumente zu finden deren Werte der Felder zwischen
@@ -197,14 +178,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.fuzzy">
-        <title>Beginnend mit 1.5, Fuzzy Suchen
-            <footnote>
-                <para>
-                    Die Unterstützung für Fuzzy Suchen ist im SVN und den aktuellsten Snapshot Versionen anhalten
-                    aber nicht im aktuellen Release.
-                </para>
-            </footnote>
-        </title>
+        <title>Fuzzy Suchen</title>
         <para>
             Zend_Search_Lucene unterstützt, genauso wie Java Lucene, die Fuzzy Suche basierend auf der
             Levenshtein Distanz oder dem Edit Algorithmus. Um eine Fuzzy Suche durchzuführen muß das Tilde

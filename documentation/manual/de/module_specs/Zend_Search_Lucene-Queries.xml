@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10235 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>Abfrage Erzeugungs API</title>
 
@@ -355,7 +356,7 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>Beginnend mit 1.5, Wildcard Abfragen</title>
+        <title>Wildcard Abfragen</title>
         <para>
             Wildcard Abfragen können dazu verwendet werden um nach Dokumenten zu suchen die Strings enthalten
             welche den spezifizierten Patterns entsprechen. 
@@ -397,7 +398,7 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.fuzzy">
-        <title>Beginnend mit 1.5, Fuzzy Abfragen</title>
+        <title>Fuzzy Abfragen</title>
         <para>
             Fuzzy Abfragen können verwendet werden um nach Dokumenten zu Suchen die Strings enthalten welche
             Ausdrücken entsprechen die den spezifizierten Ausdrücken ähnlich sind.

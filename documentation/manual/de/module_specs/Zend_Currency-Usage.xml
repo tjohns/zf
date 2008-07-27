@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10092 -->
+<!-- EN-Revision: 10428 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -33,6 +33,24 @@ $currency = new Zend_Currency();]]>
         </programlisting>
 
     </example>
+
+
+    <para>
+        Seit dem Zend Framework 1.6 unterstützt <code>Zend_Currency</code> auch die Verwendung eines
+        Anwendungsweiten Gebietsschemas. Man kann einfach eine <code>Zend_Locale</code> Instanz in der
+        Registry setzen wie unten gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
+        Gebietsschemas mit jeder Instanz komplett vergessen wenn man das gleiche Gebietsschema mehrere
+        Male verwenden will.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// Irgendwo in der Anwendung
+$currency = new Zend_Currency();]]>
+    </programlisting>
 
     <note>
         <para>

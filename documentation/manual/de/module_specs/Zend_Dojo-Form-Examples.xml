@@ -1,24 +1,23 @@
 <!-- EN-Revision: 10130 -->
 <sect2 id="zend.dojo.form.examples">
-    <title>Dojo Form Examples</title>
+    <title>Dojo Formular Beispiele</title>
 
     <example id="zend.dojo.form.examples.dojoform">
-        <title>Using Zend_Dojo_Form</title>
+        <title>Zend_Dojo_Form verwenden</title>
 
         <para>
-            The easiest way to utilize Dojo with <code>Zend_Form</code> is to
-            utilize <code>Zend_Dojo_Form</code>, either through direct usage or
-            by extending it. This example shows extending Zend_Dojo_Form, and
-            shows usage of all dijit elements. It creates four sub forms, and
-            decorates the form to utilize a TabContainer, showing each sub form
-            in its own tab.
+            Der einfachste Weg um Dojo mit <code>Zend_Form</code> zu verwenden besteht darin
+            <code>Zend_Dojo_Form</code> zu verwenden, entweder durch direkte Verwendung oder indem Sie erweitert
+            wird. Dieses Beispiel zeigt die Erweiterung von Zend_Dojo_Form und die Verwendung aller Dijit
+            Elemente. Es erstellt vier Unterformulare, und dekoriert das Formular damit ein TabContainer
+            verwendet wird, welcher jedes Unterformular in seinem eigenen Tab zeigt.
         </para>
 
         <programlisting role="php"><![CDATA[
 class My_Form_Test extends Zend_Dojo_Form
 {
     /**
-     * Options to use with select elements
+     * Optionen die mit Select Elementen verwendet werden
      */
     protected $_selectOptions = array(
         'red'    => 'Rouge',
@@ -30,7 +29,7 @@ class My_Form_Test extends Zend_Dojo_Form
     );
 
     /**
-     * Form initialization
+     * Form Initialisierung
      * 
      * @return void
      */
@@ -93,7 +92,7 @@ class My_Form_Test extends Zend_Dojo_Form
                     'label' => 'CurrencyTextBox',
                     'required'  => true,
                     // 'currency' => 'USD',
-                    'invalidMessage' => 'Invalid amount. Include dollar sign, commas, and cents.',
+                    'invalidMessage' => 'Ungültiger Wert. Dollarzeichen, Komma und Cents müssen vorhanden sein..',
                     // 'fractional' => true,
                     // 'symbol' => 'USD',
                     // 'type' => 'currency',
@@ -105,7 +104,7 @@ class My_Form_Test extends Zend_Dojo_Form
                 array(
                     'label' => 'NumberTextBox',
                     'required'  => true,
-                    'invalidMessage' => 'Invalid elevation.',
+                    'invalidMessage' => 'Ungültiger Wert.',
                     'constraints' => array(
                         'min' => -20000,
                         'max' => 20000,
@@ -120,7 +119,7 @@ class My_Form_Test extends Zend_Dojo_Form
                     'label' => 'ValidationTextBox',
                     'required'  => true,
                     'regExp' => '[\w]+',
-                    'invalidMessage' => 'Invalid non-space text.',
+                    'invalidMessage' => 'Ungültiger nicht-leerzeichen Text.',
                 )
             )
             ->addElement(
@@ -328,15 +327,15 @@ class My_Form_Test extends Zend_Dojo_Form
     </example>
 
     <example id="zend.dojo.form.examples.decorating">
-        <title>Modifying an existing form to utilize Dojo</title>
+        <title>Ein existierendes Formular verändern um Dojo zu verwenden</title>
 
         <para>
-            Existing forms can be modified to utilize Dojo as well, by use of
-            the <code>Zend_Dojo::enableForm()</code> static method.
+            Ein bestehendes Formular kann verändert werden damit es auch Dojo verwendet, indem die
+            statische Methode <code>Zend_Dojo::enableForm()</code> verwendet wird.
         </para>
 
         <para>
-            This first example shows decorating an existing form instance:
+            Dieses erste Beispiel zeigt die eine bestehende Instanz eines Formulars dekoriert werden kann:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -362,8 +361,7 @@ array(
 ]]></programlisting>
 
         <para>
-            Alternately, you can make a slight tweak to your form
-            initialization:
+            Alternativ kann die Formular Initialisierung auch leicht verschnellert werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -379,9 +377,9 @@ class My_Custom_Form extends Zend_Form
 ]]></programlisting>
 
         <para>
-            Of course, if you can do that... you could and should simply alter
-            the class to inherit from Zend_Dojo_Form, which is a drop-in
-            replacement of Zend_Form that's already Dojo-enabled...
+            Natürlich kann auch das getan werden... man könnte und sollte einfach die Klasse so verändern das
+            Sie Zend_Dojo_Form ableitet, was eine eins-zu-eins Ersetzung von Zend_Form ist, die bereits
+            Dojo versteht...
         </para>
     </example>
 </sect2>
