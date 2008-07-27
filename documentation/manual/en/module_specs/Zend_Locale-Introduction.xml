@@ -434,6 +434,34 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
 
     </sect2>
 
+    <sect2 id="zend.locale.frameworkwidelocale">
+
+        <title>Application wide locale</title>
+
+        <para>
+            Zend Framework allows the usage of an application wide locale. You simply set an instance of
+            <code>Zend_Locale</code> to the registry with the key 'Zend_Locale'. Then this instance will
+            be used within all locale aware classes of Zend Framework. This way you set one locale within
+            your registry and then you can forget about setting it again. It will automatically be used
+            in all other classes. See the below example for the right usage:
+        </para>
+
+        <example id="zend.locale.frameworkwidelocale.example">
+            <title>Usage of an application wide locale</title>
+            <programlisting role="php"><![CDATA[<?php
+// within your bootstrap
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// within your model or controller
+$date = new Zend_Date();
+// print $date->getLocale();
+echo $date->getDate();]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.locale.formatoptions">
 
         <title>Zend_Locale_Format::setOptions(array $options)</title>
