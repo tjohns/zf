@@ -19,7 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * @category   Zend
  * @package    Zend_Date
@@ -35,7 +34,6 @@ abstract class Zend_Date_DateObject {
     private   $_unixTimestamp;
     protected static $_cache         = null;
     protected static $_defaultOffset = 0;
-    
 
     /**
      * active timezone
@@ -51,7 +49,6 @@ abstract class Zend_Date_DateObject {
      * Table of Monthdays
      */
     private static $_monthTable = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-
 
     /**
      * Table of Years
@@ -70,7 +67,6 @@ abstract class Zend_Date_DateObject {
         1670 => -9467020800,  1660 => -9782640000,  1650 => -10098172800,
         1640 => -10413792000, 1630 => -10729324800, 1620 => -11044944000,
         1610 => -11360476800, 1600 => -11676096000);
-
 
     /**
      * Set this object to have a new UNIX timestamp.
@@ -94,7 +90,6 @@ abstract class Zend_Date_DateObject {
 
         return $old;
     }
-
 
     /**
      * Returns this object's UNIX timestamp
@@ -127,7 +122,6 @@ abstract class Zend_Date_DateObject {
         }
         return (time() + $this->_syncronised);
     }
-
 
     /**
      * Internal mktime function used by Zend_Date.
@@ -267,7 +261,6 @@ abstract class Zend_Date_DateObject {
         return $date;
     }
 
-
     /**
      * Returns true, if given $year is a leap year.
      *
@@ -290,7 +283,6 @@ abstract class Zend_Date_DateObject {
 
         return true;
     }
-
 
     /**
      * Internal mktime function used by Zend_Date for handling 64bit timestamps.
@@ -615,7 +607,6 @@ abstract class Zend_Date_DateObject {
         return (string) $output;
     }
 
-
     /**
      * Returns the day of week for a Gregorian calendar date.
      * 0 = sunday, 6 = saturday
@@ -649,7 +640,6 @@ abstract class Zend_Date_DateObject {
 
         return (int) ($day - 7 * floor($day / 7));
     }
-
 
     /**
      * Internal getDateParts function for handling 64bit timestamps, similar to:
@@ -843,7 +833,6 @@ abstract class Zend_Date_DateObject {
         return $array;
     }
 
-
     /**
      * Internal getWeekNumber function for handling 64bit timestamps
      *
@@ -876,7 +865,6 @@ abstract class Zend_Date_DateObject {
                4 * ($month - 1) + (2 * ($month - 1) + ($day - 1) + $firstday - $dayofweek + 6) * 36 / 256);
     }
 
-
     /**
      * Internal _range function
      * Sets the value $a to be in the range of [0, $b]
@@ -893,7 +881,6 @@ abstract class Zend_Date_DateObject {
         }
         return $a;
     }
-
 
     /**
      * Calculates the sunrise or sunset based on a location
@@ -994,7 +981,6 @@ abstract class Zend_Date_DateObject {
                              -1, true);
     }
 
-
     /**
      * Sets a new timezone for calculation of $this object's gmt offset.
      * For a list of supported timezones look here: http://php.net/timezones
@@ -1033,7 +1019,6 @@ abstract class Zend_Date_DateObject {
         return $this;
     }
 
-
     /**
      * Return the timezone of $this object.
      * The timezone is initially set when the object is instantiated.
@@ -1044,7 +1029,6 @@ abstract class Zend_Date_DateObject {
     {
         return $this->_timezone;
     }
-
 
     /**
      * Return the offset to GMT of $this object's timezone.

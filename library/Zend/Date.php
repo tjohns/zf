@@ -167,6 +167,13 @@ class Zend_Date extends Zend_Date_DateObject
             $part   = null;
         }
 
+        if (empty($locale)) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
+                $locale = Zend_Registry::get('Zend_Locale');
+            }
+        }
+
         $this->setLocale($locale);
 
         if (is_string($date) && defined('self::' . $date)) {
@@ -4613,6 +4620,13 @@ class Zend_Date extends Zend_Date_DateObject
         if (Zend_Locale::isLocale($format)) {
             $locale = $format;
             $format = null;
+        }
+
+        if (empty($locale)) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
+                $locale = Zend_Registry::get('Zend_Locale');
+            }
         }
 
         if ($locale === null) {

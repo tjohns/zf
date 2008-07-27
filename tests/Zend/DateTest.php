@@ -3800,7 +3800,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Indian/Maldives', $result);
 
         $result = $date->setTimezone('America/Chicago');
-        $this->assertTrue($result);
+        $this->assertTrue($result instanceof Zend_Date);
         $result = $date->getTimezone();
         $this->assertSame('America/Chicago', $result);
     }
@@ -5149,6 +5149,19 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2020-05-25 12:00:00', $date->get('YYYY-MM-dd HH:mm:ss'));
         $date->setTimezone('Europe/Warsaw');
         $this->assertSame('2020-05-25 14:00:00', $date->get('YYYY-MM-dd HH:mm:ss'));
+    }
+
+    /**
+     * Test for ZF-3677
+     */
+    public function testZF3677()
+    {
+        $locale = new Zend_Locale('de_AT');
+        require_once 'Zend/Registry.php';
+        Zend_Registry::set('Zend_Locale', $locale);
+
+        $date   = new Zend_Date('13',null,$locale);
+        $this->assertSame($date->getLocale(), $locale->toString());
     }
 }
 

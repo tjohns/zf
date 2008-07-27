@@ -180,6 +180,22 @@ echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"]]>
             format for output.
         </para>
 
+        <para>
+            Since Zend Framework 1.6 <code>Zend_Date</code> does also support the usage of an application
+            wide locale. You can simply set a <code>Zend_Locale</code> instance to the registry like shown
+            below. With this notation you can forget about setting the locale manually with each instance when
+            you want to use the same locale multiple times.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// in your bootstrap file
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// somewhere in your application
+$date = new Zend_Date('31.Feb.2007');]]>
+        </programlisting>
+
     </sect2>
 
     <sect2 id="id.date.basic">
