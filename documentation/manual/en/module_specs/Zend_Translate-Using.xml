@@ -399,6 +399,22 @@ $translate->addTranslation('path/to/german.mo', 'de');]]>
                  the problem of incompatible encodings.
             </para>
         </note>
+
+        <para>
+            Many gettext editors add adapter informations as empty translation string.
+            This is the reason why empty string are not translated when using the
+            gettext adapter. Instead they are erased from the translation table and
+            provided by the <code>getAdapterInfo()</code> method. It will return
+            the adapter informations for all added gettext files as array where the
+            filename is used as key.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// How to get the adapter informations
+$translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
+print_r $translate->getAdapterInfo();]]>
+        </programlisting>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">

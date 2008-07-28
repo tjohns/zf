@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage UnitTests
  */
-
 
 /**
  * Zend_Translate_Adapter_Gettext
@@ -16,7 +14,6 @@ require_once 'Zend/Translate/Adapter/Gettext.php';
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
-
 
 /**
  * @category   Zend
@@ -138,5 +135,13 @@ class Zend_Translate_GettextTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/translate_bigendian.mo', 'sr');
         $this->assertEquals('Informacje', $adapter->translate('Informacje'));
+    }
+
+    public function testAdapterInfo()
+    {
+        $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/testmsg_en.mo');
+        $this->assertEquals('', $adapter->translate(''));
+        $info = $adapter->getAdapterInfo();
+        $this->assertContains('Last-Translator: Thomas Weidner <thomas.weidner@voxtronic.com>', $info[dirname(__FILE__) . '/_files/testmsg_en.mo']);
     }
 }
