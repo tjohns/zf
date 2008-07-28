@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8467 -->
+<!-- EN-Revision: 10501 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API の概要</title>
@@ -209,6 +209,24 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
             現在のオブジェクトのロケールを使用して
             <code>$date</code> を解釈します。あるいは出力用書式を選択します。
         </para>
+
+        <para>
+            Zend Framework 1.6 以降では、<code>Zend_Date</code>
+            はアプリケーション単位でのロケールの使用に対応します。
+            そのためには、<code>Zend_Locale</code>
+            のインスタンスを以下のようにレジストリに登録します。
+            このようにすれば、同じロケールを何度も使用したいときに
+            各インスタンスで毎回ロケールを設定する手間を省けます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 起動ファイルで
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// アプリケーションのどこかで
+$date = new Zend_Date('31.Feb.2007');]]>
+        </programlisting>
 
     </sect2>
 
