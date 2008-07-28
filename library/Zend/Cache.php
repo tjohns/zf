@@ -77,7 +77,7 @@ abstract class Zend_Cache
      * @param boolean $customBackendNaming if true, the backend argument is used as a complete class name ; if false, the backend argument is used as the end of "Zend_Cache_Backend_[...]" class name
      * @param boolean $autoload if true, there will no require_once for backend and frontend (usefull only for custom backends/frontends)
      * @throws Zend_Cache_Exception
-     * @return Zend_Cache_Frontend
+     * @return Zend_Cache_Core|Zend_Cache_Frontend
      */
     public static function factory($frontend, $backend, $frontendOptions = array(), $backendOptions = array(), $customFrontendNaming = false, $customBackendNaming = false, $autoload = false)
     {
