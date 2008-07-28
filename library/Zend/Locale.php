@@ -166,7 +166,7 @@ class Zend_Locale
      *  3. Server Environment
      *  4. Framework Standard
      *
-     * @param  string $locale (Optional) Locale for parsing input
+     * @param  string|Zend_Locale $locale (Optional) Locale for parsing input
      * @throws Zend_Locale_Exception When autodetection has been failed
      */
     public function __construct($locale = null)
@@ -280,11 +280,11 @@ class Zend_Locale
             throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
         }
 
-        if (isset(self::$_localeData[$locale]) === true) {
-            self::$_default = $locale;
+        if (isset(self::$_localeData[(string) $locale]) === true) {
+            self::$_default = (string) $locale;
             return true;
         } else {
-            $locale = explode('_', $locale);
+            $locale = explode('_', (string) $locale);
             if (isset(self::$_localeData[$locale[0]]) === true) {
                 self::$_default = $locale[0];
                 return true;
@@ -292,7 +292,7 @@ class Zend_Locale
         }
 
         require_once 'Zend/Locale/Exception.php';
-        throw new Zend_Locale_Exception("Unknown locale '$locale' can not be set as default!");
+        throw new Zend_Locale_Exception("Unknown locale '" . (string) $locale . "' can not be set as default!");
     }
 
     /**
@@ -451,7 +451,7 @@ class Zend_Locale
         }
 
         if (isset(self::$_localeData[(string) $locale]) === false) {
-            $region = substr($locale, 0, 3);
+            $region = substr((string) $locale, 0, 3);
             if (isset($region[2]) === true) {
                 if (($region[2] === '_') or ($region[2] === '-')) {
                     $region = substr($region, 0, 2);
