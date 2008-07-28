@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10108 -->
+<!-- EN-Revision: 10517 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -395,6 +395,24 @@ $translate->addTranslation('path/to/german.mo', 'de');]]>
                  エンコーディングの非互換性による問題をなくすことができます。
             </para>
         </note>
+
+        <para>
+            gettext エディタの多くは、
+            空の翻訳文字列という形式で追加情報を記録します。
+            そのため、gettext アダプタは空の文字列の翻訳を行いません。
+            これらの情報は翻訳テーブルからは削除され、かわりに
+            <code>getAdapterInfo()</code> メソッドで取得できるようになります。
+            このメソッドは、追加された gettext
+            ファイルすべてから取得した情報を配列で返します。
+            ファイル名を配列のキーとして使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// アダプタの情報を取得する方法
+$translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
+print_r $translate->getAdapterInfo();]]>
+        </programlisting>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
@@ -813,6 +831,25 @@ $translate->addTranslation("\my_de.mo","de");
                 の自動検出機能が再度有効になります。
             </para>
 
+            <para>
+                Zend Framework 1.6 以降では、<code>Zend_Translate</code>
+                はアプリケーション単位でのロケールの使用にも対応します。
+                そのためには、<code>Zend_Locale</code>
+                のインスタンスを以下のようにレジストリに登録します。
+                このようにすれば、同じロケールを何度も使用したいときに
+                各インスタンスで毎回ロケールを設定する手間を省けます。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// 起動ファイルで
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// アプリケーションのどこかで
+$translate = new Zend_Translate("gettext", "\my_de.mo");
+$translate->getLocale();]]>
+            </programlisting>
+
         </sect3>
 
     </sect2>
@@ -846,10 +883,10 @@ $translate->addTranslation("\my_de.mo","de");
             <programlisting role="php"><![CDATA[
 // 以下のようなディレクトリ構造があることを想定しています
 //  /language
-//  /language/login/login.tmx
-//  /language/logout/logout.tmx
-//  /language/error/loginerror.tmx
-//  /language/error/logouterror.tmx
+//  /language/de/login/login.mo
+//  /language/de/error/loginerror.mo
+//  /language/en/login/login.mo
+//  /language/en/error/loginerror.mo
 
 $translate = new Zend_Translate('tmx', '/language');]]>
             </programlisting>
@@ -903,10 +940,10 @@ $translate = new Zend_Translate('tmx', '/language');]]>
                 <programlisting role="php"><![CDATA[
 // 以下のようなディレクトリ構造があることを想定しています
 //  /language
-//  /language/de/login/login.tmx
-//  /language/de/error/loginerror.tmx
-//  /language/en/login/login.tmx
-//  /language/en/error/loginerror.tmx
+//  /language/login/login_en.mo
+//  /language/login/login_de.mo
+//  /language/error/loginerror_en.mo
+//  /language/error/loginerror_de.mo
 
 $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
                 </programlisting>
