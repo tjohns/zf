@@ -218,8 +218,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         if ($this->_options['hashed_directory_level'] > 0) {
             if (!is_writable($path)) {
                 // maybe, we just have to build the directory structure
-                @mkdir($this->_path($id), $this->_options['hashed_directory_umask'], true);
-                @chmod($this->_path($id), $this->_options['hashed_directory_umask']); // see #ZF-320 (this line is required in some configurations)
+                $this->_recursiveMkdirAndChmod($id);
             }
             if (!is_writable($path)) {
                 return false;
@@ -613,21 +612,47 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * Return the complete directory path of a filename (including hashedDirectoryStructure)
      *
      * @param  string $id Cache id
+     * @param  boolean $parts if true, returns array of directory parts instead of single string
      * @return string Complete directory path
      */
-    private function _path($id)
+    private function _path($id, $parts = false)
     {
+        $partsArray = array();
         $root = $this->_options['cache_dir'];
         $prefix = $this->_options['file_name_prefix'];
         if ($this->_options['hashed_directory_level']>0) {
             $hash = hash('adler32', $id);
             for ($i=0 ; $i < $this->_options['hashed_directory_level'] ; $i++) {
                 $root = $root . $prefix . '--' . substr($hash, 0, $i + 1) . DIRECTORY_SEPARATOR;
+                $partsArray[] = $root;
             }
         }
-        return $root;
+        if ($parts) {
+            return $partsArray;
+        } else {
+            return $root;
+        }
     }
-
+    
+    /**
+     * Make the directory strucuture for the given id
+     * 
+     * @param string $id cache id
+     * @return boolean true
+     */
+    private function _recursiveMkdirAndChmod($id)
+    {
+        if ($this->_options['hashed_directory_level'] <=0) {
+            return true;
+        }
+        $partsArray = $this->_path($id, true);
+        foreach ($partsArray as $part) {
+            @mkdir($part, $this->_options['hashed_directory_umask']);
+            @chmod($part, $this->_options['hashed_directory_umask']); // see #ZF-320 (this line is required in some configurations)         
+        }
+        return true;
+    }
+   
     /**
      * Test if the given cache id is available (and still valid as a cache record)
      *
