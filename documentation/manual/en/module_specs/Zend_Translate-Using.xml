@@ -854,7 +854,6 @@ $translate = new Zend_Translate('tmx', '/language');]]>
             source. But many of the other source formats are not able to include the language within the
             file. Even this sources can be used with automatic scanning if you do some pre-requisits as
             described below:
-            scanned. 
         </para>
 
         <sect3 id="zend.translate.using.detection.directory">
@@ -877,10 +876,10 @@ $translate = new Zend_Translate('tmx', '/language');]]>
                 <programlisting role="php"><![CDATA[
 // expect we have the following structure
 //  /language
-//  /language/de/login/login.tmx
-//  /language/de/error/loginerror.tmx
-//  /language/en/login/login.tmx
-//  /language/en/error/loginerror.tmx
+//  /language/de/login/login.mo
+//  /language/de/error/loginerror.mo
+//  /language/en/login/login.mo
+//  /language/en/error/loginerror.mo
 
 $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
                 </programlisting>
@@ -923,10 +922,10 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 <programlisting role="php"><![CDATA[
 // expect we have the following structure
 //  /language
-//  /language/login/login_en.tmx
-//  /language/login/login_de.tmx
-//  /language/error/loginerror_en.tmx
-//  /language/error/loginerror_de.tmx
+//  /language/login/login_en.mo
+//  /language/login/login_de.mo
+//  /language/error/loginerror_en.mo
+//  /language/error/loginerror_de.mo
 
 $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
                 </programlisting>
