@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10504 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -476,6 +476,37 @@ require_once 'Zend/Measure/Temperature.php';
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
 $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.frameworkwidelocale">
+
+        <title>アプリケーション単位のロケール</title>
+
+        <para>
+            Zend Framework ではアプリケーション単位でのロケールの使用も可能です。
+            そのためには、<code>Zend_Locale</code> のインスタンスをレジストリに
+            'Zend_Locale' というキーで登録します。すると、Zend Framework
+            のロケール対応のクラスすべてがこのインスタンスを使うようになります。
+            このようにして一度レジストリにロケールを設定してしまえば、
+            あとでまた設定しなおす手間が省けます。
+            他のすべてのクラスでも自動的にこれが用いられるようになります。
+            具体的な使用法は、以下の例を参照ください。
+        </para>
+
+        <example id="zend.locale.frameworkwidelocale.example">
+            <title>アプリケーション単位のロケールの使用例</title>
+            <programlisting role="php"><![CDATA[<?php
+// 起動ファイルで
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// モデルあるいはコントローラ内で
+$date = new Zend_Date();
+// print $date->getLocale();
+echo $date->getDate();]]>
             </programlisting>
         </example>
 
