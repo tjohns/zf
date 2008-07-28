@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10502 -->
 <sect1 id="zend.measure.creation">
 
     <title>計測値の作成</title>
@@ -138,6 +139,24 @@ $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US
 echo $unit; // 出力は "1234.50 m" となります]]>
             </programlisting>
         </example>
+
+        <para>
+            Zend Framework 1.6 以降では、<code>Zend_Measure</code>
+            はアプリケーション単位でのロケールの使用にも対応します。
+            そのためには、<code>Zend_Locale</code>
+            のインスタンスを以下のようにレジストリに登録します。
+            このようにすれば、同じロケールを何度も使用したいときに
+            各インスタンスで毎回ロケールを設定する手間を省けます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 起動ファイルで
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// アプリケーションのどこかで
+$length = new Zend_Measure_Length(Zend_Measure_Length::METER();]]>
+        </programlisting>
 
     </sect2>
 
