@@ -290,6 +290,17 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testHelperPathMayBeRegisteredUnderMultiplePrefixes()
+    {
+        $view = new Zend_View();
+
+        $view->addHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1', 'Foo_View_Helper');
+        $view->addHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir1', 'Zend_View_Helper');
+
+        $helper = $view->getHelper('Stub1');
+        $this->assertTrue($helper instanceof Foo_View_Helper_Stub1);
+    }
+
     /**
      * Tests that render() can render a template.
      */

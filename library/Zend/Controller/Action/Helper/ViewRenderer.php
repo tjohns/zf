@@ -370,12 +370,23 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      */
     protected function _generateDefaultPrefix()
     {
-        if ((null === $this->_actionController) || !strstr(get_class($this->_actionController), '_')) {
-            $prefix = 'Zend_View';
-        } else {
-            $class = get_class($this->_actionController);
-            $prefix = substr($class, 0, strpos($class, '_')) . '_View';
+        $default = 'Zend_View';
+        if (null === $this->_actionController) {
+            return $default;
         }
+
+        $class = get_class($this->_actionController);
+
+        if (!strstr($class, '_')) {
+            return $default;
+        }
+
+        $module = $this->getModule();
+        if ('default' == $module) {
+            return $default;
+        }
+
+        $prefix = substr($class, 0, strpos($class, '_')) . '_View';
 
         return $prefix;
     }
