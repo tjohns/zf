@@ -262,4 +262,16 @@ abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_
 
         return $url;
     }
+
+    public function chain(Zend_Controller_Router_Route_Interface $route, $separator = '/') {
+
+        require_once 'Zend/Controller/Router/Route/Chain.php';
+        
+        $chain = new Zend_Controller_Router_Route_Chain();
+        $chain->chain($this)->chain($route, $separator);
+        
+        return $chain;
+        
+    }
+    
 }

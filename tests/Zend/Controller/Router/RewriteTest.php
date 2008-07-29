@@ -42,6 +42,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
         $front->setDispatcher(new Zend_Controller_Router_RewriteTest_Dispatcher());
+        $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
         $this->_router->setFrontController($front);
     }
     
@@ -446,7 +447,6 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testRoutingChainedRoutes()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
-
         
         $foo = new Zend_Controller_Router_Route('foo', array('foo' => true));
         $bar = new Zend_Controller_Router_Route('bar', array('bar' => true, 'controller' => 'foo', 'action' => 'bar'));
