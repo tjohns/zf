@@ -741,7 +741,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
     }
 
     /**
-     * @issue ZF-2443
+     * @see ZF-2443
      */
     public function testStockInflectorWorksWithViewBaseSpec()
     {
@@ -763,7 +763,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
     }
     
     /**
-     * @issue ZF-2738
+     * @see ZF-2738
      */
     public function testStockInflectorWorksWithDottedRequestParts()
     {
@@ -779,6 +779,30 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertEquals($this->helper->getViewScript(), 'car-bar/baz.phtml');
     }
     
+    public function testCorrectViewHelperPathShouldBePropagatedWhenSubControllerInvoked()
+    {
+        require_once $this->basePath . '/_files/modules/foo/controllers/Admin/IndexController.php';
+        $this->request->setModuleName('foo')
+                      ->setControllerName('admin_index')
+                      ->setActionName('use-helper');
+        $controller = new Foo_Admin_IndexController($this->request, $this->response, array());
+
+        $this->helper->render();
+        $body = $this->response->getBody();
+        $this->assertContains('fooUseHelper invoked', $body, 'Received ' . $body);
+    }
+    
+    public function testCorrectViewHelperPathShouldBePropagatedWhenSubControllerInvokedInDefaultModule()
+    {
+        require_once $this->basePath . '/_files/modules/default/controllers/Admin/HelperController.php';
+        $this->request->setControllerName('admin_helper')
+                      ->setActionName('render');
+        $controller = new Admin_HelperController($this->request, $this->response, array());
+
+        $this->helper->render();
+        $body = $this->response->getBody();
+        $this->assertContains('SampleZfHelper invoked', $body, 'Received ' . $body);
+    }
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.

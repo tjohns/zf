@@ -47,4 +47,7 @@ class Foo_Admin_IndexController extends Zend_Controller_Action
         $this->_response->appendBody("Foo_Admin_IndexController::indexAction() called\n");
     }
 
+    public function useHelperAction()
+    {
+    }
 }
