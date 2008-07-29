@@ -77,7 +77,7 @@ class FooController extends Zend_Controller_Action
         // Globalnie:
         $this->_helper->removeHelper('viewRenderer');
 
-        // Also globally, but would need to be in conjunction with the local
+        // Także globalnie, but would need to be in conjunction with the local
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
@@ -110,13 +110,14 @@ class FooController extends Zend_Controller_Action
             </programlisting>
 
             <para>
-                The primary reasons to disable the <code>ViewRenderer</code> are
-                if you simply do not need a view object or if you are not
-                rendering via view scripts (for instance, when using an action
-                controller to serve web service protocols such as SOAP, XML-RPC,
-                or REST). In most cases, you will never need to globally disable
-                the <code>ViewRenderer</code>, only selectively within
-                individual controllers or actions.
+                Możesz chcieć wyłączyć klasę <code>ViewRenderer</code> 
+                jeśli nie potrzebujesz obiektu widoku lub jeśli nie chcesz 
+                renderować skryptów widoku. (na przykład jeśli używasz 
+                kontrolera akcji aby obsługiwać żądania do webserwisu takie jak 
+                SOAP, XML-RPC czy REST). W większości przypadków nie będziesz 
+                potrzebować wyłączać globalnie renderowania klasy 
+                <code>ViewRenderer</code>, wystarczy selektywne wyłączenie 
+                wewnątrz pojedynczego kontrolera lub akcji.
             </para>
         </note>
     </sect2>
