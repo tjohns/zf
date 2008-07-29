@@ -194,6 +194,50 @@ if (!($data = $cache->load($id2))) {
 
 }
 echo($data);]]>
+
+            </programlisting>
+            <para>
+                Jeśli chcesz buforować specjalne wartości (np. wartości logiczne
+                przy włączonej opcji "automatic_serialization") lub puste 
+                łańcuchy znaków, nie możesz używać uproszczonej konstrukcji 
+                przedstawionej powyżej. Musisz jawnie sprawdzić rekord bufora.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+// konstrukcja uproszczona (nie działa poprawnie dla pustych 
+// łańcuchów znaków i wartości logicznych)
+if (!($data = $cache->load($id))) {
+
+    // brak bufora
+
+    // [...] tworzymy dane $data
+
+    $cache->save($data);
+
+}
+
+// pracujemy na danych $data
+
+// [...]
+
+// konstrukcja kompletna (działa zawsze)
+if (!($cache->test($id))) {
+
+    // brak bufora
+
+    // [...] tworzymy dane $data
+
+    $cache->save($data);
+
+} else {
+
+    // bufor został znaleziony
+
+    $data = $cache->load($id);
+
+}
+
+// pracujemy na danych $data]]>
             </programlisting>
         </sect3>
     </sect2>

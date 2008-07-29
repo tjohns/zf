@@ -135,7 +135,7 @@ echo 'To nie jest nigdy buforowane ('.time().').';]]>
     <note><para>
         Kiedy używasz Zend_Cache, zwracaj uwagę na ważny identyfikator bufora
         (przekazany do metod <code>save()</code> oraz <code>start()</code>).
-        Musi być unikalny dla każdego zasobum, który buforujesz, inaczej nie
+        Musi być unikalny dla każdego zasobu, który buforujesz, inaczej nie
         powiązane buforowane rekordy mogą się nawzajem ścierać, lub gorzej,
         jeden może wyświetlić się w miejscu drugiego.
     </para></note>

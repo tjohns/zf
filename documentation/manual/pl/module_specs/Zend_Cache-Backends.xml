@@ -36,7 +36,7 @@
                           <entry>
                             Włącza / wyłącza file_locking: Może zapobiec uszkodzeniu
                             bufora, ale nie ma to znaczenia w serwerach
-                            wielowątkowych lub systemach NFS...
+                            wielowątkowych lub systemach NFS.
                           </entry>
                       </row>
                       <row>
