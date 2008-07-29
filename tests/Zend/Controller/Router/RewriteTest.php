@@ -17,6 +17,12 @@ require_once 'Zend/Controller/Front.php';
 /** Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
 
+/** Zend_Controller_Router_Route */
+require_once 'Zend/Controller/Router/Route.php';
+
+/** Zend_Controller_Router_Route_Chain */
+require_once 'Zend/Controller/Router/Route/Chain.php';
+
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -437,6 +443,26 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertSame($request, $routeRequest);
     }
 
+    public function testRoutingChainedRoutes()
+    {
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
+
+        
+        $foo = new Zend_Controller_Router_Route('foo', array('foo' => true));
+        $bar = new Zend_Controller_Router_Route('bar', array('bar' => true, 'controller' => 'foo', 'action' => 'bar'));
+
+        $chain = new Zend_Controller_Router_Route_Chain();
+        $chain->chain($foo)->chain($bar);
+
+        $this->_router->addRoute('foo-bar', $chain);
+
+        $token = $this->_router->route($request);
+
+        $this->assertEquals('foo', $token->getControllerName());
+        $this->assertEquals('bar', $token->getActionName());
+        $this->assertEquals(true, $token->getParam('foo'));
+        $this->assertEquals(true, $token->getParam('bar'));
+    }
 }
 
 

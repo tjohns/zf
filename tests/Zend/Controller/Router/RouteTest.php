@@ -91,7 +91,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $route = new Zend_Controller_Router_Route('users/a');
         $values = $route->match('users/a/martel');
 
-        $this->assertSame(false, $values);
+        $this->assertEquals(false, $values);
     }
 
     public function testStaticMatchWithDefaults()
