@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Abstract */
-require_once 'Zend/Controller/Router/Route/Abstract.php';
+/** Zend_Controller_Router_Route_Interface */
+require_once 'Zend/Controller/Router/Route/Interface.php';
 
 /**
  * StaticRoute is used for managing static URIs.
@@ -32,7 +32,7 @@ require_once 'Zend/Controller/Router/Route/Abstract.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_Abstract
+class Zend_Controller_Router_Route_Static implements Zend_Controller_Router_Route_Interface
 {
 
     protected $_route = null;
@@ -45,9 +45,8 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public static function getInstance(Zend_Config $config)
     {
-        $route = ($config->route instanceof Zend_Config)    ? $config->route->toArray()    : $config->route;
-        $defs  = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
-        return new self($route, $defs);
+        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
+        return new self($config->route, $defs);
     }
 
     /**
@@ -58,27 +57,8 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public function __construct($route, $defaults = array())
     {
-        $host = null;
-        if (is_array($route)) {
-            if (!isset($route['path'])) {
-                /** @see Zend_Controller_Router_Exception */
-                require_once 'Zend/Controller/Router/Exception.php';
-                throw new Zend_Controller_Router_Exception('$route array must contain a "path" element');
-            }
-            
-            if (isset($route['host'])) {
-                $host = $route['host'];
-            }
-            
-            $route = $route['path'];
-        }
-        
-        $this->_route    = trim($route, '/');
+        $this->_route = trim($route, '/');
         $this->_defaults = (array) $defaults;
-        
-        if ($host !== null) {
-            $this->_initHostMatch($host);
-        }
     }
 
     /**
@@ -90,13 +70,8 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public function match($path)
     {
-        $hostResult = $this->_evalHostMatch();
-        if ($hostResult === false) {
-            return false;
-        }
-        
         if (trim($path, '/') == $this->_route) {
-            return array_merge($this->_defaults, $hostResult);
+            return $this->_defaults;
         }
         return false;
     }
@@ -109,8 +84,7 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public function assemble($data = array())
     {
-        $route = $this->_prependHost($this->_route, array_merge($this->_defaults, $data));
-        return $route;
+        return $this->_route;
     }
 
     /**
