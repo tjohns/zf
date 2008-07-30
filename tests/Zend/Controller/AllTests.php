@@ -46,7 +46,8 @@ require_once 'Router/RouteTest.php';
 require_once 'Router/Route/ModuleTest.php';
 require_once 'Router/Route/RegexTest.php';
 require_once 'Router/Route/StaticTest.php';
-// require_once 'Router/Route/ChainTest.php';
+require_once 'Router/Route/HostnameTest.php';
+require_once 'Router/Route/ChainTest.php';
 require_once 'Router/RewriteTest.php';
 
 /**
@@ -85,7 +86,8 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_Router_Route_ModuleTest');
         $suite->addTestSuite('Zend_Controller_Router_Route_RegexTest');
         $suite->addTestSuite('Zend_Controller_Router_Route_StaticTest');
-        // $suite->addTestSuite('Zend_Controller_Router_Route_ChainTest');
+        $suite->addTestSuite('Zend_Controller_Router_Route_HostnameTest');
+        $suite->addTestSuite('Zend_Controller_Router_Route_ChainTest');
         $suite->addTestSuite('Zend_Controller_Router_RewriteTest');
 
         return $suite;

@@ -49,15 +49,15 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
 
         $this->_routes[] = $route;
         $this->_separators[] = $separator;
-        
+
         if ($this->_request && method_exists($route, 'setRequest')) {
             $route->setRequest($request);
         }
-        
+
         return $this;
-        
+
     }
-    
+
     /**
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.
@@ -65,29 +65,29 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = null)
     {
         $values = array();
         $offset = 0;
-        
+
         foreach ($this->_routes as $key => $route) {
-            
+
             if ($offset && $this->_separators[$key] != $path[0]) {
                 return false;
             }
-            
+
             $path = substr($path, $offset);
-            
+
             $res = $route->match($path, true);
             if ($res === false) return false;
-            
+
             // Hack for interface BC
             $offset = $res[null];
-            
+
             $values += $res;
 
         }
-        
+
         return $values;
     }
 
@@ -100,19 +100,19 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
     public function assemble($data = array(), $reset = false, $encode = false)
     {
         $value = '';
-        
+
         foreach ($this->_routes as $key => $route) {
             if ($key > 0) $value .= $this->_separators[$key];
             $value .= $route->assemble($data, $reset, $encode);
         }
-        
+
         return $value;
     }
 
-    public function setRequest(Zend_Controller_Request_Abstract $request) 
+    public function setRequest(Zend_Controller_Request_Abstract $request)
     {
         $this->_request = $request;
-        
+
         foreach ($this->_routes as $route) {
             if (method_exists($route, 'setRequest')) {
                 $route->setRequest($request);

@@ -36,7 +36,7 @@ require_once 'PHPUnit/Runner/Version.php';
 class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
 {
     protected $_router;
-    
+
     public function setUp() {
         $this->_router = new Zend_Controller_Router_Rewrite();
         $front = Zend_Controller_Front::getInstance();
@@ -45,7 +45,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
         $this->_router->setFrontController($front);
     }
-    
+
     public function tearDown() {
         unset($this->_router);
     }
@@ -79,11 +79,11 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Router_Route', $values['archive']);
         $this->assertType('Zend_Controller_Router_Route', $values['register']);
     }
-    
+
     public function testHasRoute()
     {
         $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
-    
+
         $this->assertEquals(true, $this->_router->hasRoute('archive'));
         $this->assertEquals(false, $this->_router->hasRoute('bogus'));
     }
@@ -94,7 +94,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->_router->addRoute('archive', $archive);
 
         $route = $this->_router->getRoute('archive');
-    
+
         $this->assertType('Zend_Controller_Router_Route', $route);
         $this->assertSame($route, $archive);
     }
@@ -104,9 +104,9 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
 
         $route = $this->_router->getRoute('archive');
-        
+
         $this->_router->removeRoute('archive');
-    
+
         $routes = $this->_router->getRoutes();
         $this->assertEquals(0, count($routes));
 
@@ -135,7 +135,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testRoute()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request();
-        
+
         $token = $this->_router->route($request);
 
         $this->assertType('Zend_Controller_Request_Http', $token);
@@ -144,7 +144,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testRouteWithIncorrectRequest()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request_Incorrect();
-        
+
         try {
             $token = $this->_router->route($request);
             $this->fail('Should throw an Exception');
@@ -152,13 +152,13 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
             $this->assertType('Zend_Controller_Router_Exception', $e);
         }
     }
-    
+
     public function testDefaultRoute()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request();
 
         $token = $this->_router->route($request);
-        
+
         $routes = $this->_router->getRoutes();
         $this->assertType('Zend_Controller_Router_Route_Module', $routes['default']);
     }
@@ -166,7 +166,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testDefaultRouteWithEmptyAction()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/ctrl');
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('ctrl', $token->getControllerName());
@@ -176,10 +176,10 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testEmptyRoute()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/');
-        
+
         $this->_router->removeDefaultRoutes();
         $this->_router->addRoute('empty', new Zend_Controller_Router_Route('', array('controller' => 'ctrl', 'action' => 'act')));
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('ctrl', $token->getControllerName());
@@ -189,10 +189,10 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testEmptyPath()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/');
-        
+
         $this->_router->removeDefaultRoutes();
         $this->_router->addRoute('catch-all', new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'ctrl', 'action' => 'act')));
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('ctrl', $token->getControllerName());
@@ -202,10 +202,10 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testEmptyPathWithWildcardRoute()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/');
-        
+
         $this->_router->removeDefaultRoutes();
         $this->_router->addRoute('catch-all', new Zend_Controller_Router_Route('*', array('controller' => 'ctrl', 'action' => 'act')));
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('ctrl', $token->getControllerName());
@@ -217,7 +217,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/archive/action/bogus');
 
         $this->_router->addRoute('default', new Zend_Controller_Router_Route(':controller/:action'));
-        
+
         $token = $this->_router->route($request);
 
         $this->assertNull($token->getControllerName());
@@ -239,7 +239,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/ctrl');
 
         $token = $this->_router->route($request);
-        
+
         $this->assertEquals('ctrl', $token->getControllerName());
         $this->assertEquals('defact', $token->getActionName());
     }
@@ -267,14 +267,14 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertType('Zend_Controller_Router_Exception', $e);
         }
-        
+
         try {
             $route = $this->_router->getCurrentRouteName();
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Controller_Router_Exception', $e);
         }
-        
+
         $token = $this->_router->route($request);
 
         try {
@@ -283,22 +283,22 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail('Current route is not set');
         }
-        
+
         $this->assertEquals('default', $name);
         $this->assertType('Zend_Controller_Router_Route_Module', $route);
     }
-    
+
     public function testAddConfig()
     {
         require_once 'Zend/Config/Ini.php';
         $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'routes.ini';
         $config = new Zend_Config_Ini($file, 'testing');
-        
+
         $this->_router->addConfig($config, 'routes');
-        
+
         $this->assertType('Zend_Controller_Router_Route_Static', $this->_router->getRoute('news'));
         $this->assertType('Zend_Controller_Router_Route', $this->_router->getRoute('archive'));
-        
+
         try {
             $this->_router->addConfig($config, 'database');
         } catch (Exception $e) {
@@ -312,25 +312,25 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         require_once 'Zend/Config/Ini.php';
         $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'routes.ini';
         $config = new Zend_Config_Ini($file, 'testing');
-        
+
         $this->_router->addConfig($config->routes);
-        
+
         $this->assertType('Zend_Controller_Router_Route_Static', $this->_router->getRoute('news'));
         $this->assertType('Zend_Controller_Router_Route', $this->_router->getRoute('archive'));
     }
-    
+
     public function testAddConfigWithRootNode()
     {
         require_once 'Zend/Config/Ini.php';
         $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'routes-root.ini';
         $config = new Zend_Config_Ini($file, 'routes');
-        
+
         $this->_router->addConfig($config);
-        
+
         $this->assertType('Zend_Controller_Router_Route_Static', $this->_router->getRoute('news'));
         $this->assertType('Zend_Controller_Router_Route', $this->_router->getRoute('archive'));
     }
-    
+
     public function testRemoveDefaultRoutes()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/ctrl/act');
@@ -341,7 +341,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $routes = $this->_router->getRoutes();
         $this->assertEquals(0, count($routes));
     }
-    
+
     public function testDefaultRouteMatchedWithModules()
     {
         Zend_Controller_Front::getInstance()->setControllerDirectory(array(
@@ -350,7 +350,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         ));
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/mod/ctrl/act');
         $token = $this->_router->route($request);
-        
+
         $this->assertEquals('mod',  $token->getModuleName());
         $this->assertEquals('ctrl', $token->getControllerName());
         $this->assertEquals('act',  $token->getActionName());
@@ -359,14 +359,14 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testRouteCompatDefaults()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/');
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('default', $token->getModuleName());
         $this->assertEquals('defctrl', $token->getControllerName());
         $this->assertEquals('defact', $token->getActionName());
     }
-    
+
     public function testDefaultRouteWithEmptyControllerAndAction()
     {
         Zend_Controller_Front::getInstance()->setControllerDirectory(array(
@@ -374,14 +374,14 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
             'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Admin',
         ));
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/mod');
-        
+
         $token = $this->_router->route($request);
 
         $this->assertEquals('mod', $token->getModuleName());
         $this->assertEquals('defctrl', $token->getControllerName());
         $this->assertEquals('defact', $token->getActionName());
     }
-    
+
     public function testNumericallyIndexedReturnParams()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/archive/2006');
@@ -398,47 +398,47 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testUrlValuesHandling1() // See ZF-3212 and ZF-3219
     {
         $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
-        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
 
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/nl/bar');
         $token = $this->_router->route($request);
-        
+
         $this->assertEquals('nl/foo', $this->_router->getRoute('foo')->assemble());
         $this->assertEquals('nl/bar', $this->_router->getRoute('bar')->assemble());
     }
-        
-    public function testUrlValuesHandling2() // See ZF-3212 and ZF-3219 
+
+    public function testUrlValuesHandling2() // See ZF-3212 and ZF-3219
     {
         $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
-        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
-        
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
+
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/foo');
         $token = $this->_router->route($request);
-        
+
         $this->assertEquals('en/foo', $this->_router->getRoute('foo')->assemble());
         $this->assertEquals('nl/bar', $this->_router->getRoute('bar')->assemble());
     }
-        
-    public function testUrlValuesHandling3() // See ZF-3212 and ZF-3219 
+
+    public function testUrlValuesHandling3() // See ZF-3212 and ZF-3219
     {
         $this->_router->addRoute('foo', new Zend_Controller_Router_Route(':lang/foo', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
-        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index'))); 
-        
+        $this->_router->addRoute('bar', new Zend_Controller_Router_Route(':lang/bar', array('lang' => 'nl', 'controller' => 'index', 'action' => 'index')));
+
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/bar');
         $token = $this->_router->route($request);
-        
+
         $this->assertEquals('nl/foo', $this->_router->getRoute('foo')->assemble());
         $this->assertEquals('en/bar', $this->_router->getRoute('bar')->assemble());
     }
 
-    public function testRouteRequestInterface() 
+    public function testRouteRequestInterface()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/foo');
         $front = $this->_router->getFrontController()->setRequest($request);
-        
+
         $this->_router->addRoute('req', new Zend_Controller_Router_Route_Interface_Mockup());
         $routeRequest = $this->_router->getRoute('req')->getRequest();
-        
+
         $this->assertType('Zend_Controller_Request_Abstract', $request);
         $this->assertType('Zend_Controller_Request_Abstract', $routeRequest);
         $this->assertSame($request, $routeRequest);
@@ -447,7 +447,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testRoutingChainedRoutes()
     {
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
-        
+
         $foo = new Zend_Controller_Router_Route('foo', array('foo' => true));
         $bar = new Zend_Controller_Router_Route('bar', array('bar' => true, 'controller' => 'foo', 'action' => 'bar'));
 
@@ -468,7 +468,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
 
 /**
  * Zend_Controller_Router_RewriteTest_Request - request object for router testing
- * 
+ *
  * @uses Zend_Controller_Request_Interface
  */
 class Zend_Controller_Router_RewriteTest_Request extends Zend_Controller_Request_Http
@@ -488,12 +488,12 @@ class Zend_Controller_Router_RewriteTest_Request extends Zend_Controller_Request
  */
 class Zend_Controller_Router_RewriteTest_Dispatcher extends Zend_Controller_Dispatcher_Standard
 {
-    public function getDefaultControllerName() 
+    public function getDefaultControllerName()
     {
         return 'defctrl';
     }
 
-    public function getDefaultAction() 
+    public function getDefaultAction()
     {
         return 'defact';
     }
@@ -501,35 +501,35 @@ class Zend_Controller_Router_RewriteTest_Dispatcher extends Zend_Controller_Disp
 
 /**
  * Zend_Controller_RouterTest_Request_Incorrect - request object for router testing
- * 
+ *
  * @uses Zend_Controller_Request_Abstract
  */
 class Zend_Controller_Router_RewriteTest_Request_Incorrect extends Zend_Controller_Request_Abstract
 {
 }
 
-class Zend_Controller_Router_Route_Mockup implements Zend_Controller_Router_Route_Interface 
+class Zend_Controller_Router_Route_Mockup implements Zend_Controller_Router_Route_Interface
 {
-    public function match($path) 
+    public function match($path, $partial = null)
     {
         return array(
             "controller" => "index",
             "action" => "index",
             0 => "first_parameter_value"
-        );     
+        );
     }
     public static function getInstance(Zend_Config $config) {}
-    public function assemble($data = array()) {}
+    public function assemble($data = array(), $reset = false, $encode = false) {}
 }
 
-class Zend_Controller_Router_Route_Interface_Mockup implements Zend_Controller_Router_Route_Interface 
+class Zend_Controller_Router_Route_Interface_Mockup implements Zend_Controller_Router_Route_Interface
 {
     protected $_request;
-    
-    public function match($path) {}
+
+    public function match($path, $partial = null) {}
     public static function getInstance(Zend_Config $config) {}
-    public function assemble($data = array()) {}
-    
+    public function assemble($data = array(), $reset = false, $encode = false) {}
+
     public function setRequest($request) {
         $this->_request = $request;
     }

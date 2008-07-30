@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Interface */
-require_once 'Zend/Controller/Router/Route/Interface.php';
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * StaticRoute is used for managing static URIs.
@@ -32,7 +32,7 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_Router_Route_Static implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_Abstract
 {
 
     protected $_route = null;
@@ -68,7 +68,7 @@ class Zend_Controller_Router_Route_Static implements Zend_Controller_Router_Rout
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = null)
     {
         if (trim($path, '/') == $this->_route) {
             return $this->_defaults;
@@ -82,7 +82,7 @@ class Zend_Controller_Router_Route_Static implements Zend_Controller_Router_Rout
      * @param array $data An array of variable and value pairs used as parameters
      * @return string Route path with user submitted parameters
      */
-    public function assemble($data = array())
+    public function assemble($data = array(), $reset = false, $encode = false)
     {
         return $this->_route;
     }

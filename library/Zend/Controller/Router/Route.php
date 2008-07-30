@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Interface */
-require_once 'Zend/Controller/Router/Route/Interface.php';
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Route
@@ -31,7 +31,7 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
 {
 
     protected $_urlVariable = ':';
@@ -40,53 +40,53 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     protected $_defaultRegex = null;
 
     /**
-     * Holds names of all route's pattern variable names. Array index holds a position in URL.  
+     * Holds names of all route's pattern variable names. Array index holds a position in URL.
      * @var array
      */
     protected $_variables = array();
-    
+
     /**
-     * Holds Route patterns for all URL parts. In case of a variable it stores it's regex 
-     * requirement or null. In case of a static part, it holds only it's direct value. 
-     * In case of a wildcard, it stores an asterisk (*) 
+     * Holds Route patterns for all URL parts. In case of a variable it stores it's regex
+     * requirement or null. In case of a static part, it holds only it's direct value.
+     * In case of a wildcard, it stores an asterisk (*)
      * @var array
      */
     protected $_parts = array();
-    
+
     /**
-     * Holds user submitted default values for route's variables. Name and value pairs. 
+     * Holds user submitted default values for route's variables. Name and value pairs.
      * @var array
      */
     protected $_defaults = array();
 
     /**
-     * Holds user submitted regular expression patterns for route's variables' values. 
-     * Name and value pairs. 
+     * Holds user submitted regular expression patterns for route's variables' values.
+     * Name and value pairs.
      * @var array
      */
     protected $_requirements = array();
 
     /**
-     * Associative array filled on match() that holds matched path values 
-     * for given variable names. 
+     * Associative array filled on match() that holds matched path values
+     * for given variable names.
      * @var array
      */
     protected $_values = array();
 
     /**
-     * Associative array filled on match() that holds wildcard variable 
-     * names and values. 
+     * Associative array filled on match() that holds wildcard variable
+     * names and values.
      * @var array
      */
     protected $_wildcardData = array();
-    
+
     /**
-     * Helper var that holds a count of route pattern's static parts 
+     * Helper var that holds a count of route pattern's static parts
      * for validation
      * @var int
      */
     private $_staticCount = 0;
-    
+
     /**
      * Instantiates route based on passed Zend_Config structure
      *
@@ -141,7 +141,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = null)
     {
 
         $pathStaticCount = 0;
@@ -152,7 +152,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         if ($path != '') {
 
             $path = explode($this->_urlDelimiter, $path);
-            
+
             foreach ($path as $pos => $pathPart) {
 
                 // Path is longer than a route, it's not a match
@@ -175,12 +175,12 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 $name = isset($this->_variables[$pos]) ? $this->_variables[$pos] : null;
                 $pathPart = urldecode($pathPart);
 
-                // If it's a static part, match directly 
+                // If it's a static part, match directly
                 if ($name === null && $this->_parts[$pos] != $pathPart) {
-                    return false; 
-                } 
-                
-                // If it's a variable with requirement, match a regex. If not - everything matches 
+                    return false;
+                }
+
+                // If it's a variable with requirement, match a regex. If not - everything matches
                 if ($this->_parts[$pos] !== null && !preg_match($this->_regexDelimiter . '^' . $this->_parts[$pos] . '$' . $this->_regexDelimiter . 'iu', $pathPart)) {
                     return false;
                 }
@@ -202,7 +202,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         }
 
         $return = $values + $this->_wildcardData + $this->_defaults;
-        
+
         // Check if all map variables have been initialized
         foreach ($this->_variables as $var) {
             if (!array_key_exists($var, $return)) {
@@ -211,7 +211,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         }
 
         $this->_values = $values;
-        
+
         return $return;
 
     }
@@ -232,14 +232,14 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         foreach ($this->_parts as $key => $part) {
 
             $name = isset($this->_variables[$key]) ? $this->_variables[$key] : null;
-            
+
             $useDefault = false;
             if (isset($name) && array_key_exists($name, $data) && $data[$name] === null) {
                 $useDefault = true;
             }
 
             if (isset($name)) {
-                
+
                 if (isset($data[$name]) && !$useDefault) {
                     $url[$key] = $data[$name];
                     unset($data[$name]);
@@ -254,10 +254,10 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                     throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
 
-                
+
             } elseif ($part != '*') {
                 $url[$key] = $part;
-            } else { 
+            } else {
                 if (!$reset) $data += $this->_wildcardData;
                 foreach ($data as $var => $value) {
                     if ($value !== null) {

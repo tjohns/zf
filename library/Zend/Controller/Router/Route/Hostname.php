@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Interface */
-require_once 'Zend/Controller/Router/Route/Interface.php';
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Hostname Route
@@ -31,7 +31,7 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route_Abstract
 {
 
     protected $_hostVariable   = ':';
@@ -39,45 +39,45 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
     protected $_defaultRegex   = null;
 
     /**
-     * Holds names of all route's pattern variable names. Array index holds a position in host.  
+     * Holds names of all route's pattern variable names. Array index holds a position in host.
      * @var array
      */
     protected $_variables = array();
-    
+
     /**
-     * Holds Route patterns for all host parts. In case of a variable it stores it's regex 
-     * requirement or null. In case of a static part, it holds only it's direct value. 
+     * Holds Route patterns for all host parts. In case of a variable it stores it's regex
+     * requirement or null. In case of a static part, it holds only it's direct value.
      * @var array
      */
     protected $_parts = array();
-    
+
     /**
-     * Holds user submitted default values for route's variables. Name and value pairs. 
+     * Holds user submitted default values for route's variables. Name and value pairs.
      * @var array
      */
     protected $_defaults = array();
 
     /**
-     * Holds user submitted regular expression patterns for route's variables' values. 
-     * Name and value pairs. 
+     * Holds user submitted regular expression patterns for route's variables' values.
+     * Name and value pairs.
      * @var array
      */
     protected $_requirements = array();
 
     /**
-     * Associative array filled on match() that holds matched path values 
-     * for given variable names. 
+     * Associative array filled on match() that holds matched path values
+     * for given variable names.
      * @var array
      */
     protected $_values = array();
-   
+
     /**
-     * Helper var that holds a count of route pattern's static parts 
+     * Helper var that holds a count of route pattern's static parts
      * for validation
      * @var int
      */
     private $_staticCount = 0;
-    
+
     /**
      * Instantiates route based on passed Zend_Config structure
      *
@@ -126,7 +126,7 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
      * @param string $host Host used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($host)
+    public function match($host, $partial = null)
     {
         $pathStaticCount = 0;
         $values = array();
@@ -135,7 +135,7 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
 
         if ($host != '') {
             $host = explode('.', $host);
-            
+
             foreach ($host as $pos => $hostPart) {
                 // Path is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
@@ -145,12 +145,12 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
                 $name = isset($this->_variables[$pos]) ? $this->_variables[$pos] : null;
                 $hostPart = urldecode($hostPart);
 
-                // If it's a static part, match directly 
+                // If it's a static part, match directly
                 if ($name === null && $this->_parts[$pos] != $hostPart) {
-                    return false; 
-                } 
-                
-                // If it's a variable with requirement, match a regex. If not - everything matches 
+                    return false;
+                }
+
+                // If it's a variable with requirement, match a regex. If not - everything matches
                 if ($this->_parts[$pos] !== null && !preg_match($this->_regexDelimiter . '^' . $this->_parts[$pos] . '$' . $this->_regexDelimiter . 'iu', $hostPart)) {
                     return false;
                 }
@@ -170,7 +170,7 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
         }
 
         $return = $values + $this->_wildcardData + $this->_defaults;
-        
+
         // Check if all map variables have been initialized
         foreach ($this->_variables as $var) {
             if (!array_key_exists($var, $return)) {
@@ -179,7 +179,7 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
         }
 
         $this->_values = $values;
-        
+
         return $return;
 
     }
@@ -198,7 +198,7 @@ class Zend_Controller_Router_Route_Hostname implements Zend_Controller_Router_Ro
 
         foreach ($this->_parts as $key => $part) {
             $name = isset($this->_variables[$key]) ? $this->_variables[$key] : null;
-            
+
             $useDefault = false;
             if (isset($name) && array_key_exists($name, $data) && $data[$name] === null) {
                 $useDefault = true;

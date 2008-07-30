@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Route_Interface */
-require_once 'Zend/Controller/Router/Route/Interface.php';
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
@@ -39,7 +39,7 @@ require_once 'Zend/Controller/Request/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_Abstract
 {
     /**
      * URI delimiter
@@ -141,7 +141,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      * @param string $path Path used to match against this routing map
      * @return array An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = null)
     {
         $this->_setRequestKeys();
 
