@@ -31,8 +31,7 @@
  */
 require_once 'Zend/Locale.php';
 
-$locale = new Zend_Locale();
-$list = $locale->getTranslationList('language');
+$list = Zend_Locale::getTranslationList('language');
 
 foreach($list as $language => $content) {
     try {

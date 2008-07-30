@@ -271,15 +271,12 @@ class Zend_Locale_Data
             $locale = new Zend_Locale();
         }
 
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
+        if (!(Zend_Locale::isLocale((string) $locale))) {
+            require_once 'Zend/Locale/Exception.php';
+            throw new Zend_Locale_Exception("Locale (" . (string) $locale . ") is a unknown locale");
         }
 
-        if (!($locale = Zend_Locale::isLocale($locale))) {
-            require_once 'Zend/Locale/Exception.php';
-            throw new Zend_Locale_Exception("Locale ($locale) is a unknown locale");
-        }
-        return $locale;
+        return (string) $locale;
     }
 
     /**
@@ -294,12 +291,12 @@ class Zend_Locale_Data
     public static function getList($locale, $path, $value = false)
     {
         $locale = self::_checkLocale($locale);
-
         if (isset(self::$_cache)) {
             $val = $value;
             if (is_array($value)) {
                 $val = implode('_' , $value);
             }
+
             $val = urlencode($val);
             $id = strtr('Zend_LocaleL_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
             if ($result = self::$_cache->load($id)) {

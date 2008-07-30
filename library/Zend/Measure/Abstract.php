@@ -86,16 +86,12 @@ abstract class Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-
-        if (!$this->_locale = Zend_Locale::isLocale($locale, true)) {
+        if (!Zend_Locale::isLocale($locale)) {
             require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language ($locale) is unknown");
+            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
         }
 
-        $this->_locale = $locale;
+        $this->_locale = (string) $locale;
 
         if ($type === null) {
             $type = $this->_units['STANDARD'];
@@ -143,13 +139,9 @@ abstract class Zend_Measure_Abstract
             $locale = $this->_locale;
         }
 
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-
-        if (!Zend_Locale::isLocale($locale)) {
+        if (!Zend_Locale::isLocale((string) $locale)) {
             require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language ($locale) is unknown");
+            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
         }
 
         if ($type === null) {
@@ -261,7 +253,7 @@ abstract class Zend_Measure_Abstract
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString()) {
+        if ((string) $object == $this->toString()) {
             return true;
         }
 

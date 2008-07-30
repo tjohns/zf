@@ -1419,9 +1419,7 @@ class Zend_Date extends Zend_Date_DateObject
             $locale = $this->getLocale();
         }
 
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
+        $locale = (string) $locale;
 
         // Create date parts
         $year   = $this->get(self::YEAR);
@@ -4577,20 +4575,17 @@ class Zend_Date extends Zend_Date_DateObject
      *
      * @param  string|Zend_Locale $locale (Optional) Locale for parsing input
      * @throws Zend_Date_Exception When the given locale does not exist
-     * @return string
+     * @return Zend_Date Provides a fluid interface
      */
     public function setLocale($locale = null)
     {
-        if ($locale instanceof Zend_Locale) {
-            $this->_Locale = $locale;
-        } else if (!$locale = Zend_Locale::isLocale($locale, true)) {
+        if (!Zend_Locale::isLocale($locale)) {
             require_once 'Zend/Date/Exception.php';
-            throw new Zend_Date_Exception("Given locale ($locale) does not exist", $locale);
-        } else {
-            $this->_Locale = new Zend_Locale($locale);
+            throw new Zend_Date_Exception("Given locale ({$locale}) does not exist", (string) $locale);
         }
 
-        return $this->getLocale();
+        $this->_Locale = new Zend_Locale($locale);
+        return $this;
     }
 
     /**
@@ -4600,7 +4595,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function getLocale()
     {
-        return $this->_Locale->toString();
+        return (string) $this->_Locale;
     }
 
     /**

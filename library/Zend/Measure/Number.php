@@ -153,16 +153,12 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-
-        if (Zend_Locale::isLocale($locale, true) === false) {
+        if (!Zend_Locale::isLocale($locale)) {
             require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language ($locale) is unknown");
+            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
         }
 
-        $this->_locale = $locale;
+        $this->_locale = (string) $locale;
 
         if ($type === null) {
             $type = $this->_units['STANDARD'];

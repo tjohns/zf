@@ -134,10 +134,8 @@ abstract class Zend_Translate_Adapter {
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        }
-        $originate = $locale;
+
+        $originate = (string) $locale;
 
         $this->setOptions($options);
         if (is_string($data) and is_dir($data)) {
@@ -151,7 +149,7 @@ abstract class Zend_Translate_Adapter {
                     if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale($file))) {
                         if (strlen($prev) <= strlen($file)) {
                             $locale = $file;
-                            $prev   = $locale;
+                            $prev   = (string) $locale;
                         }
                     }
                 } else if ($info->isFile()) {
@@ -188,8 +186,8 @@ abstract class Zend_Translate_Adapter {
                         }
                     }
                     try {
-                        $this->_addTranslationData($info->getPathname(), $locale, $this->_options);
-                        if ((isset($this->_translate[$locale]) === true) and (count($this->_translate[$locale]) > 0)) {
+                        $this->_addTranslationData($info->getPathname(), (string) $locale, $this->_options);
+                        if ((isset($this->_translate[(string) $locale]) === true) and (count($this->_translate[(string) $locale]) > 0)) {
                             $this->setLocale($locale);
                         }
                     } catch (Zend_Translate_Exception $e) {
@@ -198,14 +196,15 @@ abstract class Zend_Translate_Adapter {
                 }
             }
         } else {
-            $this->_addTranslationData($data, $locale, $this->_options);
-            if ((isset($this->_translate[$locale]) === true) and (count($this->_translate[$locale]) > 0)) {
+            $this->_addTranslationData($data, (string) $locale, $this->_options);
+            if ((isset($this->_translate[(string) $locale]) === true) and (count($this->_translate[(string) $locale]) > 0)) {
                 $this->setLocale($locale);
             }
         }
         if ((isset($translate[$originate]) === true) and (count($this->_translate[$originate]) > 0)) {
             $this->setLocale($originate);
         }
+
         return $this;
     }
 
@@ -266,18 +265,20 @@ abstract class Zend_Translate_Adapter {
      */
     public function setLocale($locale)
     {
-        if ($locale instanceof Zend_Locale) {
-            $locale = $locale->toString();
-        } else if (!$locale = Zend_Locale::isLocale($locale)) {
-            /**
-             * @see Zend_Translate_Exception
-             */
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                /**
+                 * @see Zend_Translate_Exception
+                 */
+                require_once 'Zend/Translate/Exception.php';
+                throw new Zend_Translate_Exception("The given Language ({$locale }) does not exist");
+            }
+
+            $locale = (string) new Zend_Locale($locale);
         }
 
-        if (empty($this->_translate[$locale]) === true) {
-            $temp = explode('_', $locale);
+        if (empty($this->_translate[(string) $locale]) === true) {
+            $temp = explode('_', (string) $locale);
             if (isset($this->_translate[$temp[0]]) === false) {
                 /**
                  * @see Zend_Translate_Exception
@@ -288,8 +289,8 @@ abstract class Zend_Translate_Adapter {
             $locale = $temp[0];
         }
 
-        $this->_options['locale'] = $locale;
-        if ($locale === "auto") {
+        $this->_options['locale'] = (string) $locale;
+        if ((string) $locale === "auto") {
             $this->_automatic = true;
         } else {
             $this->_automatic = false;
@@ -393,14 +394,18 @@ abstract class Zend_Translate_Adapter {
      */
     private function _addTranslationData($data, $locale, array $options = array())
     {
-        if (!$locale = Zend_Locale::isLocale($locale)) {
-            /**
-             * @see Zend_Translate_Exception
-             */
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                /**
+                 * @see Zend_Translate_Exception
+                 */
+                require_once 'Zend/Translate/Exception.php';
+                throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
+            }
+            $locale = new Zend_Locale($locale);
         }
 
+        $locale = (string) $locale;
         if (isset($this->_translate[$locale]) === false) {
             $this->_translate[$locale] = array();
         }
@@ -442,11 +447,15 @@ abstract class Zend_Translate_Adapter {
         if ($locale === null) {
             $locale = $this->_options['locale'];
         }
-        if (!$locale = Zend_Locale::isLocale($locale)) {
-            // language does not exist, return original string
-            return $messageId;
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                // language does not exist, return original string
+                return $messageId;
+            }
+            $locale = new Zend_Locale($locale);
         }
 
+        $locale = (string) $locale;
         if (isset($this->_translate[$locale][$messageId]) === true) {
             // return original translation
             return $this->_translate[$locale][$messageId];
@@ -496,15 +505,21 @@ abstract class Zend_Translate_Adapter {
             $locale = $original;
             $original = false;
         }
+
         if ($locale === null) {
             $locale = $this->_options['locale'];
-        } else {
-            if (!$locale = Zend_Locale::isLocale($locale)) {
+        }
+
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
                 // language does not exist, return original string
                 return false;
             }
+
+            $locale = new Zend_Locale();
         }
 
+        $locale = (string) $locale;
         if (isset($this->_translate[$locale][$messageId]) === true) {
             // return original translation
             return true;

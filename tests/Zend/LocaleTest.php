@@ -66,7 +66,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testObjectCreation()
     {
-        $this->assertTrue(is_string(Zend_Locale::isLocale('de')), 'true expected');
+        $this->assertTrue(Zend_Locale::isLocale('de'));
 
         $this->assertTrue(new Zend_Locale() instanceof Zend_Locale);
         $this->assertTrue(new Zend_Locale('root') instanceof Zend_Locale);
@@ -106,26 +106,23 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * test getDefault
+     * test getOrder
      * expected true
      */
-    public function testgetDefault()
+    public function testgetOrder()
     {
         Zend_Locale::setDefault('de');
         $value = new Zend_Locale();
         $default = $value->getDefault();
         $this->assertTrue(array_key_exists('de', $default));
 
-        $default = $value->getDefault();
+        $default = $value->getOrder(Zend_Locale::BROWSER);
         $this->assertTrue(is_array($default));
 
-        $default = $value->getDefault(Zend_Locale::BROWSER);
+        $default = $value->getOrder(Zend_Locale::ENVIRONMENT);
         $this->assertTrue(is_array($default));
 
-        $default = $value->getDefault(Zend_Locale::ENVIRONMENT);
-        $this->assertTrue(is_array($default));
-
-        $default = $value->getDefault(Zend_Locale::FRAMEWORK);
+        $default = $value->getOrder(Zend_Locale::ZFDEFAULT);
         $this->assertTrue(is_array($default));
     }
 
@@ -554,17 +551,17 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testIsLocale()
     {
         $locale = new Zend_Locale('ar');
-        $this->assertEquals('ar',    Zend_Locale::isLocale($locale));
-        $this->assertEquals('de',    Zend_Locale::isLocale('de'));
-        $this->assertEquals('de_AT', Zend_Locale::isLocale('de_AT'));
-        $this->assertEquals('de',    Zend_Locale::isLocale('de_xx'));
+        $this->assertTrue(Zend_Locale::isLocale($locale));
+        $this->assertTrue(Zend_Locale::isLocale('de'));
+        $this->assertTrue(Zend_Locale::isLocale('de_AT'));
+        $this->assertTrue(Zend_Locale::isLocale('de_xx'));
         $this->assertFalse(Zend_Locale::isLocale('yy'));
         $this->assertFalse(Zend_Locale::isLocale(1234));
-        $locale = Zend_Locale::isLocale('', true);
-        $this->assertTrue(is_string($locale));
-        $this->assertTrue(is_string(Zend_Locale::isLocale('auto')));
-        $this->assertTrue(is_string(Zend_Locale::isLocale('browser')));
-        $this->assertTrue(is_string(Zend_Locale::isLocale('environment')));
+        $this->assertFalse(Zend_Locale::isLocale('', true));
+        $this->assertTrue(Zend_Locale::isLocale('', false));
+        $this->assertTrue(Zend_Locale::isLocale('auto'));
+        $this->assertTrue(Zend_Locale::isLocale('browser'));
+        $this->assertTrue(Zend_Locale::isLocale('environment'));
     }
 
     /**

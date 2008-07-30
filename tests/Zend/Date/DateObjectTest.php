@@ -492,10 +492,10 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date_DateObjectTestHelper(0);
 
         date_default_timezone_set('Europe/Vienna');
-        $this->assertTrue($date->setTimezone('Indian/Maldives'));
+        $date->setTimezone('Indian/Maldives');
         $this->assertSame('Indian/Maldives', $date->getTimezone());
         try {
-            $this->assertFalse($date->setTimezone('Unknown'));
+            $date->setTimezone('Unknown');
             // without new phpdate false timezones do not throw an exception !
             // known and expected behaviour
             if (function_exists('timezone_open')) {
@@ -506,7 +506,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
             $this->assertSame('Unknown', $e->getOperand());
         }
         $this->assertSame('Indian/Maldives', $date->getTimezone());
-        $this->assertTrue($date->setTimezone());
+        $date->setTimezone();
         $this->assertSame('Europe/Vienna', $date->getTimezone());
     }
 

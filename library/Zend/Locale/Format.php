@@ -331,11 +331,9 @@ class Zend_Locale_Format
         // load class within method for speed
         require_once 'Zend/Locale/Math.php';
 
-        $value = Zend_Locale_Math::normalize($value);
-        $options = self::checkOptions($options) + self::$_Options;
-        if ($options['locale'] instanceof Zend_Locale) {
-            $options['locale'] = $options['locale']->toString();
-        }
+        $value             = Zend_Locale_Math::normalize($value);
+        $options           = self::checkOptions($options) + self::$_Options;
+        $options['locale'] = (string) $options['locale'];
 
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getList($options['locale'], 'symbols');
@@ -692,7 +690,7 @@ class Zend_Locale_Format
         if ($day !== false) {
             $parse[$day]   = 'd';
             if (!empty($options['locale']) && ($options['locale'] !== 'root') &&
-                (!is_object($options['locale']) || ($options['locale']->toString() !== 'root'))) {
+                (!is_object($options['locale']) || ((string) $options['locale'] !== 'root'))) {
                 // erase day string
                     $daylist = Zend_Locale_Data::getList($options['locale'], 'day');
                 foreach($daylist as $key => $name) {
@@ -708,7 +706,7 @@ class Zend_Locale_Format
         if ($month !== false) {
             $parse[$month] = 'M';
             if (!empty($options['locale']) && ($options['locale'] !== 'root') &&
-                (!is_object($options['locale']) || ($options['locale']->toString() !== 'root'))) {
+                (!is_object($options['locale']) || ((string) $options['locale'] !== 'root'))) {
                     // prepare to convert month name to their numeric equivalents, if requested,
                     // and we have a $options['locale']
                     $position = self::_replaceMonth($number, Zend_Locale_Data::getList($options['locale'],
