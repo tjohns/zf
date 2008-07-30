@@ -72,8 +72,6 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
 
         foreach ($this->_routes as $key => $route) {
             
-            var_dump('Path: ' . $path);
-
             if ($offset && $this->_separators[$key] != $path[0]) {
                 return false;
             } elseif ($offset) {
