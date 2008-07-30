@@ -54,6 +54,13 @@
             返回整数 <code>$value</code>。
         </para>
     </sect2>
+    
+    <sect2 id="zend.filter.set.stripnewlines">
+        <title>StripNewlines</title>
+        <para>
+            返回不带任何新行控制符的字符串 <code>$value</code> 。
+        </para>
+    </sect2>
 
     <sect2 id="zend.filter.set.realpath">
         <title>RealPath</title>
