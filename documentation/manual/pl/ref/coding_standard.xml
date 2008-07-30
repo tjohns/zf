@@ -15,9 +15,9 @@
                 Warto też zaznaczyć, że określenie standardów kodowaia wymaga
                 znacznego wysiłku.
 
-                <!--Uwaga: Sometimes developers consider the establishment of a standard more important than what that standard actually suggests at the most detailed level of design.-->
-
-                Przewodnik po standardach kodowania Zend Framework pokazuje 
+                Uwaga: Czasem programiści uważają, że trzymanie się standardu
+                jest ważniejsze od samej treści i idei standardu. Przewodnik 
+                po standardach kodowania Zend Framework pokazuje 
                 najlepsze praktyki jakie mogą być stosowane w projekcie ZF.
                 Możesz modyfikowaćte standardy lub użyć ich w takiej postaci w
                 jakiej są, ale musisz to zrobić zgodnie z 

@@ -478,15 +478,6 @@ $ctrl->dispatch();]]>
         </programlisting>
 
         <para>
-            Jakkolwiek, po dodaniu obiektu <xref linkend="zend.controller.overview.response" />,
-            będziesz potrzebował zmienić ostatnią linię z tego przykładu na:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-echo $ctrl->dispatch();]]>
-        </programlisting>
-
-        <para>
             Zalecamy użycie obiektu odpowiedzi (Response) do łączenia zawartości
             i nagłówków. To pozwala na bardziej elastyczne zmiany formatu danych
             wyjściowych (na przykład JSON lub XML zamiast XHTML) w twoich
