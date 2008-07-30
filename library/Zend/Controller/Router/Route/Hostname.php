@@ -101,7 +101,7 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      */
     public function __construct($route, $defaults = array(), $reqs = array())
     {
-        $route = trim($route, $this->_hostDelimiter);
+        $route = trim($route, '.');
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
 
@@ -128,7 +128,7 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      */
     public function match($host, $partial = null)
     {
-        $pathStaticCount = 0;
+        $hostStaticCount = 0;
         $values = array();
 
         $host = trim($host, '.');
@@ -137,7 +137,7 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
             $host = explode('.', $host);
 
             foreach ($host as $pos => $hostPart) {
-                // Path is longer than a route, it's not a match
+                // Host is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
                     return false;
                 }
@@ -169,7 +169,7 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
             return false;
         }
 
-        $return = $values + $this->_wildcardData + $this->_defaults;
+        $return = $values + $this->_defaults;
 
         // Check if all map variables have been initialized
         foreach ($this->_variables as $var) {
@@ -226,12 +226,12 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
         foreach (array_reverse($host, true) as $key => $value) {
             if ($flag || !isset($this->_variables[$key]) || $value !== $this->getDefault($this->_variables[$key])) {
                 if ($encode) $value = urlencode($value);
-                $return = $value . $return;
+                $return = '.' . $value . $return;
                 $flag = true;
             }
         }
 
-        return trim($return, $this->_hostDelimiter);
+        return trim($return, '.');
     }
 
     /**

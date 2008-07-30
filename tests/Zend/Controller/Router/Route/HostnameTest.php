@@ -5,11 +5,18 @@
  * @subpackage UnitTests
  */
 
+/** Test helper */
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
 /** Zend_Controller_Router_Route_Hostname */
 require_once 'Zend/Controller/Router/Route/Hostname.php';
 
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_Route_HostnameTest::main');
+}
 
 /**
  * @category   Zend
@@ -18,19 +25,41 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
 
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Router_Route_HostnameTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
+    public function testCorrectStaticHostMatch()
+    {
+        $route = $this->_getStaticHostRoute();
+
+        $values = $route->match('www.zend.com');
+        $this->assertEquals('ctrl', $values['controller']);
+    }
+
+    public function testWrongStaticHostMatch()
+    {
+        $route = $this->_getStaticHostRoute();
+
+        $values = $route->match('foo.zend.com');
+        $this->assertFalse($values);
+    }
+    
     public function testCorrectHostMatch()
     {
         $route = $this->_getHostRoute();
 
-        $_SERVER['HTTP_HOST'] = 'www.google.com';
-        $values = $route->match('foo/bar');
-        $this->assertEquals('ctrl', $values['controller']);
-
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $values = $route->match('foo/bar');
+        $values = $route->match('foo.zend.com');
         $this->assertEquals('ctrl', $values['controller']);
     }
 
@@ -38,135 +67,96 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getHostRoute();
 
-        $_SERVER['HTTP_HOST'] = 'foo.google.com';
-        $values = $route->match('foo/bar');
-        $this->assertFalse($values);
-
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'foo.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $values = $route->match('foo/bar');
+        $values = $route->match('www.zend.com');
         $this->assertFalse($values);
     }
-
-    public function testRegexHostMatch()
+    
+    public function testAssembleStaticHost()
     {
-        $route = $this->_getHostRegexRoute();
-        $_SERVER['HTTP_HOST'] = 'foo.google.com';
-        $values = $route->match('foo/bar');
-        $this->assertEquals('foo', $values['subdomain']);
-    }
-
-    public function testWrongRegexHostMatch()
-    {
-        $route = $this->_getHostRoute();
-
-        $_SERVER['HTTP_HOST'] = 'foo.microsoft.com';
-        $values = $route->match('foo/bar');
-        $this->assertFalse($values);
+        $route = $this->_getStaticHostRoute();
+        
+        $this->assertEquals('www.zend.com', $route->assemble());
     }
 
     public function testAssembleHost()
     {
         $route = $this->_getHostRoute();
-
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = '80';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
-
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
+        
+        $this->assertEquals('foo.zend.com', $route->assemble(array('subdomain' => 'foo')));
     }
-
-    public function testAssembleHttpsRoute()
+    
+    public function testAssembleHostWithMissingParam()
     {
         $route = $this->_getHostRoute();
+        
+        try {
+            $route->assemble();
+            $this->fail('An expected Zend_Controller_Router_Exception has not been raised');
+        } catch (Zend_Controller_Router_Exception $expected) {
+            $this->assertContains('subdomain is not specified', $expected->getMessage());
+        }
+    }
+    
+    public function testAssembleHostWithDefaultParam()
+    {
+        $route = $this->_getHostRouteWithDefault();
 
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['SERVER_PORT'] =  443;
-        $_SERVER['HTTPS']       = 'on';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('https://www.google.com/foo/bar', $url);
+        $this->assertEquals('bar.zend.com', $route->assemble());
+    }
+    
+    public function testHostGetDefault()
+    {
+        $route = $this->_getHostRouteWithDefault();
+
+        $this->assertEquals('bar', $route->getDefault('subdomain'));
+    }
+    
+    public function testHostGetNonExistentDefault()
+    {
+        $route = $this->_getHostRouteWithDefault();
+
+        $this->assertEquals(null, $route->getDefault('blah'));
+    }
+    
+    public function testHostGetDefaults()
+    {
+        $route    = $this->_getHostRouteWithDefault();
+        $defaults = $route->getDefaults();
+        
+        $this->assertEquals('bar', $defaults['subdomain']);
     }
 
-    public function testAssembleHttpsAndPortHostRoute()
+    protected function _getStaticHostRoute()
     {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'],
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-
-        $route = array(
-            'host' => 'www.google.com:200',
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-
-        $_SERVER['HTTP_HOST']   = 'www.google.com:200';
-        $_SERVER['SERVER_PORT'] = 200;
-        $_SERVER['HTTPS']       = 'on';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('https://www.google.com:200/foo/bar', $url);
-    }
-
-    public function testAssembleHttpsOffHostRoute()
-    {
-        $route = $this->_getHostRoute();
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['HTTPS']       = 'off';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
-    }
-
-    public function testAssembleRegexHostRoute()
-    {
-        $route = $this->_getHostRegexRoute();
-
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $url = $route->assemble(array('bar' => 'bar', 'subdomain' => 'foo'));
-        $this->assertEquals('http://foo.google.com/foo/bar', $url);
+        $route = new Zend_Controller_Router_Route_Hostname('www.zend.com',
+                                                            array('controller' => 'ctrl',
+                                                                  'action' => 'act'));
+                                                            
+        return $route;
     }
 
     protected function _getHostRoute()
     {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'],
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-
-        $route = array(
-            'host' => 'www.google.com',
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-
+        $route = new Zend_Controller_Router_Route_Hostname(':subdomain.zend.com',
+                                                            array('controller' => 'ctrl',
+                                                                  'action' => 'act'),
+                                                            array('subdomain' => '(foo|bar)'));
+                                                            
         return $route;
     }
-
-    protected function _getHostRegexRoute()
+    
+    protected function _getHostRouteWithDefault()
     {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'],
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-
-        $route = array(
-            'host' => array(
-                'regex'   => '(.*?)\.google\.com',
-                'reverse' => '%s.google.com',
-                'params'  => array(
-                    1 => 'subdomain'
-                )
-            ),
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-
+        $route = new Zend_Controller_Router_Route_Hostname(':subdomain.zend.com',
+                                                            array('controller' => 'ctrl',
+                                                                  'action' => 'act',
+                                                                  'subdomain' => 'bar'),
+                                                            array('subdomain' => '(foo|bar)'));
+                                                            
         return $route;
     }
+}
 
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Router_Route_HostnameTest::main") {
+    Zend_Controller_Router_Route_HostnameTest::main();
 }
