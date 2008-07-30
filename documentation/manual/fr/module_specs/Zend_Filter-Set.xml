@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8090 -->
+<!-- EN-Revision: 10539 -->
 <sect1 id="zend.filter.set">
     <title>Classes de filtre standards</title>
 
@@ -48,6 +48,12 @@
         <title>Int</title>
 
         <para>Retourne la valeur <code>(int) $value</code>.</para>
+    </sect2>
+
+    <sect2 id="zend.filter.set.stripnewlines">
+        <title>Int</title>
+
+        <para>Retourne la valeur <code>$value</code> en enlevant les caractères représentant une nouvelle ligne.</para>
     </sect2>
 
     <sect2 id="zend.filter.set.realpath">
