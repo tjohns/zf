@@ -7,16 +7,21 @@
             <title>Zakres</title>
 
             <para>
-                Ten dokument określa wytyczne dla programistów i zespołów tworzących Zend Framework lub 
-                tworzących aplikacje w oparciu o Zend Framework. Many developers using Zend Framework have also
-                found these coding standards useful because their code's style remains consistent with all
-                Zend Framework code. It is also worth noting that it requires significant effort to fully
-                specify coding standards.
-                
-                Note: Sometimes developers consider the establishment of a standard more important than what that
-                standard actually suggests at the most detailed level of design. The guidelines in the Zend Framework
-                coding standards capture practices that have worked well on the ZF project. You may modify these standards
-                or use them as is in accordance with the terms of our <ulink url="http://framework.zend.com/license">license</ulink>
+                Ten dokument określa wytyczne dla programistów i zespołów 
+                tworzących Zend Framework lub tworzących aplikacje w oparciu o 
+                Zend Framework. Wielu programistów używających Zend Framework
+                uważa też za przydatne te standardy kodowania ponieważ dzięki nim
+                ich styl kodowania pozostaje zgodny z całym kodem Zend Framework.
+                Warto też zaznaczyć, że określenie standardów kodowaia wymaga
+                znacznego wysiłku.
+
+                <!--Uwaga: Sometimes developers consider the establishment of a standard more important than what that standard actually suggests at the most detailed level of design.-->
+
+                Przewodnik po standardach kodowania Zend Framework pokazuje 
+                najlepsze praktyki jakie mogą być stosowane w projekcie ZF.
+                Możesz modyfikowaćte standardy lub użyć ich w takiej postaci w
+                jakiej są, ale musisz to zrobić zgodnie z 
+                <ulink url="http://framework.zend.com/license">licencją</ulink>
             </para>
             <para>
                 Do poruszonych tematów należą:
@@ -45,10 +50,10 @@
             <title>Cele</title>
 
             <para>
-                Dobre standardy kodowania są ważne w każdym projekcie 
-                programistycznym, szczególnie gdy przy tym samym projekcie 
-                pracuje większa ilość programistów. Posiadanie standardów 
-                kodowania pomaga zapewnić wysokoą jakość kodu, mniejszą ilość
+                Standardy kodowania są ważne w każdym projekcie 
+                programistycznym, a szczególnie gdy przy tym samym projekcie 
+                pracuje większa ilość programistów. Standardy
+                kodowania pomagają zapewnić wysokoą jakość kodu, mniejszą ilość
                 błędów i łatwe zarządzanie.
             </para>
         </sect2>
@@ -63,14 +68,14 @@
             <para>
                 Dla plików zawierających tylko kod PHP użycie znacznika 
                 zamykającego ("?>") jest niedozwolone. Znacznik ten nie jest
-                wymagany przez PHP. Pominięcie go zapobiega przypadkowemu
+                wymagany przez PHP, a pominięcie go zapobiega przypadkowemu
                 dołączeniu białych znaków do strumienia wyjściowego.
             </para>
 
             <para>
                 <emphasis>WAŻNE:</emphasis> Dołączanie binarnych danych, na 
                 które pozwala funkcja <code>__HALT_COMPILER()</code> jest
-                zabronione w plikach PHP Zend Framework oraz w plikach od nich
+                zabronione w plikach projektów Zend Framework oraz w plikach od nich
                 pochodzących. Użycie tej funkcjonalności jest dozwolone tylko w
                 specjalnych skryptach instalacyjnych.
             </para>
@@ -79,7 +84,7 @@
         <sect2 id="coding-standard.php-file-formatting.indentation">
             <title>Wcięcie</title>
 
-            <para>Używaj wcięcia w postaci 4 spacji, bez znaków tabulatora.</para>
+            <para>Wcięcia powiny składać się z 4 spacji. Znaki tabulatora są niedozwolone.</para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
@@ -122,17 +127,18 @@
             <para>
                 Zend Framework używa takiej konwencji nazewnictwa, w której
                 nazwy klas bezpośrednio odpowiadają katalogom, w których się
-                znajdują. Głównym katalogiem biblioteki Zend Framework jest
-                katalog "Zend/", w którym wszystkie klasy są przechowywane 
-                hierarchicznie.
+                znajdują. Głównym katalogiem standardowej biblioteki ZF jest 
+                katalog "Zend/", a głownym katalogiem dodatkowej
+                biblioteki ZF jest katalog "ZendX". Wszystkie klasy Zend 
+                Framework są przechowywanie hierarchicznie w tych katalogach.
             </para>
 
             <para>
                 Nazwy klas mogą zawierać tylko znaki alfanumeryczne. Liczby są
-                dozwolone w nazwach klas, jednak ich użycie jest odradzane. Użycie 
-                znaków podkreślenia jest dozwolone tylko w przypadku gdy są 
-                separatorami ścieżek -- plik "Zend/Db/Table.php" musi odpowiadać
-                nazwie klasy "Zend_Db_Table".
+                dozwolone w nazwach klas, jednak ich użycie jest odradzane w
+                większości przypadków. Użycie znaków podkreślenia jest dozwolone 
+                tylko w przypadku gdy są separatorami ścieżek; plik 
+                "Zend/Db/Table.php" musi odpowiadać nazwie klasy "Zend_Db_Table".
             </para>
 
             <para>
@@ -144,16 +150,21 @@
             </para>
 
             <para>
-                These conventions define a pseudo-namespace mechanism for Zend Framework. Zend Framework
-                will adopt the PHP namespace feature when it becomes available and is feasible for our developers to use in their applications.
+                Te konwencje określają mechanizm pseudo-przestrzeni nazw dla
+                Zend Framework. Zend Framework będzie używać funkcjonalności
+                przestrzeni nazw PHP gdy będą już dostęne dla programistów do 
+                użycia w swoich aplikacjach.
             </para>
 
             <para>
-                See the class names in the standard and extras libraries for examples of this classname convention. 
+                Zobacz nazwy klas znajdujące się w standardowej lub dodatkowej
+                bibliotece aby zobaczyć przykłady konwencji nazewnictwa klas.
 
-                <emphasis>IMPORTANT:</emphasis> Code that must be deployed alongside ZF libraries but is not
-                part of the standard or extras libraries (e.g. application code or libraries that are not distributed by Zend)
-                must never start with "Zend_" or "ZendX_".
+                <emphasis>WAŻNE:</emphasis> Kod który musi być rozwijany wraz
+                biliotekami ZF, a nie jest cześcią standardowych lub dodatkowych
+                bibliotek (np. kod aplikacji lub biblioteki nie rozpowszechniane
+                przez firmę Zend) nigdy nie może zaczynać się przedrostkiem 
+                "Zend_" oraz "ZendX_".
             </para>
 
         </sect2>
@@ -169,9 +180,9 @@
 
             <para>
                 Nazwa każdego pliku zawierającego jakikolwiek kod PHP powinna 
-                być zakończona rozszerzeniem ".php". Poniższe przykłady pokazują
-                akceptowalne nazwy plików zawierających klasy, których przykłady
-                nazw podano wyżej:
+                być zakończona rozszerzeniem ".php", nie dotyczy to skryptów
+                widoków. Poniższe przykłady pokazują akceptowalne nazwy plików 
+                zawierających klasy Zend Framework:
 
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
@@ -192,20 +203,20 @@ Zend/View/Helper/FormRadio.php]]>
             <para>
                 Nazwy funkcji mogą zawierać tylko znaki alfanumeryczne. Znaki
                 podkreślenia są niedozwolone. Użycie liczb w nazwach funkcji
-                jest dozwolone, ale odradzane.
+                jest dozwolone, ale odradzane w większości przypadków.
             </para>
 
             <para>
                 Nazwy funkcji zawsze muszą zaczynać się małą literą. Jeśli nazwa
                 funkcji składa się z więcej niż jednego wyrazu, pierwsza litera
                 każdego następnego wyrazu powinna być wielka. Jest to powszechnie
-                zwane metodą "camelCaps".
+                zwane formatowaniem "camelCase".
             </para>
 
             <para>
                 Zalecane jest dobieranie szczegółowych nazw funkcji. Powinny one
-                być tak szczegółowe, jak to możliwe, w celu podniesienia łatwości
-                rozumienia kodu.
+                być tak szczegółowe, jak to możliwe, aby w pełni opisać ich
+                zachowanie i zastosowanie.
             </para>
 
             <para>
@@ -222,23 +233,25 @@ widgetFactory()]]>
 
             <para>
                 W programowaniu zorientowanym obiektowo metody dostępowe dla 
-                obiektów powinny zawsze zaczynać się od słów "get" lub "set". 
-                Jeśli używasz wzorca projektowego, na przykład wzorca "singleton" 
+                instancji lub statycznych zmiennych 
+                powinny zawsze zaczynać się od słów "get" lub "set". 
+                Jeśli implementujesz wzorzec projektowy, na przykład wzorzec "singleton" 
                 lub "factory", nazwa metody powinna zawierać nazwę wzorca, dzięki
                 czemu wzorzec będzie można łatwo rozpoznać.
             </para>
             
             <para>
-                For methods on objects that are declared with the "private" or "protected" modified,
-                the first character of the variable name must be an underscore. This is the only
-                acceptable application of an underscore in a method name. Methods declared "public"
-                should never contain an underscore.
+                Pierwszy znak w nazwach metod zadeklarowanych jako "private" lub 
+                "protected" musi być znakiem podkreślenia. Jest to jedyne
+                akceptowalne użycie podkreślenia w nazwach metod. Metody
+                zadeklarowane jako "public" nigdy nie powinny zawierać znaku
+                podkreślenia.
             </para>
 
             <para>
-                Definiowanie funkcji w przestrzeni globalnej ("latające funkcje") 
-                jest dozwolone, ale odradzane. Zalecane jest, aby takie funkcje
-                były ujęte w statycznej klasie.
+                Definiowanie funkcji w przestrzeni globalnej (tzw. "latające funkcje") 
+                jest dozwolone, ale odradzane w większości przypadków. Zalecane 
+                jest, aby takie funkcje były ujęte w statycznej klasie.
             </para>
         </sect2>
 
@@ -248,11 +261,11 @@ widgetFactory()]]>
             <para>
                 Nazwy zmiennych mogą zawierać tylko znaki alfanumeryczne. Znaki
                 podkreślenia są niedozwolone. Użycie liczb w nazwach zmiennych
-                jest dozwolone, ale odradzane.
+                jest dozwolone, ale odradzane w większości przypadków.
             </para>
 
             <para>
-                Nazwy zmiennych klas, które są zadeklarowane używając konstrukcji 
+                Nazwy zmiennych instancji, które są zadeklarowane używając modyfikatora
                 "private" lub "protected", powinny zaczynac się od znaku 
                 podkreślenia. Jets to jedyny dozwolony przypadek użycia znaków
                 podkreślenia w nazwach funkcji. Zmienne klas zadeklarowane jako
@@ -266,12 +279,13 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Verbosity is encouraged. 
-                Variables should always be as verbose as practical. 
-                Terse variable names such as "$i" and "$n" are 
-                discouraged for anything other than the smallest loop contexts. 
-                If a loop contains more than 20 lines of code, the variables for 
-                the indices need to have more descriptive names.
+                Zalecane jest dobieranie szczegółowych nazw zmiennych. Powinny one
+                być tak szczegółowe, jak to możliwe, aby w pełni opisać dane
+                które programista wewnątrz nich przechowuje.
+                Lakoniczne nazwy zmiennych takie jak "$i" czy "$n" są odradzane,
+                ich użycie jest dopuszczalne tylko w kontekście najkrótszych 
+                pętli. Jeśli pętla zawiera więcej niż 20 linii kodu, nazwy
+                indeksów powinny być bardziej opisowe.
             </para>
         </sect2>
 
@@ -307,10 +321,10 @@ widgetFactory()]]>
         <title>Styl kodowania</title>
 
         <sect2 id="coding-standard.coding-style.php-code-demarcation">
-            <title>PHP Code Demarcation</title>
+            <title>Odgraniczanie kodu PHP</title>
 
             <para>
-                Kod PHP musi być zawsze ograniczony za pomocą pełnych, 
+                Kod PHP musi być zawsze odgraniczony za pomocą pełnych, 
                 standardowych znaczników PHP:
 
                 <programlisting role="php"><![CDATA[<?php
@@ -330,12 +344,12 @@ widgetFactory()]]>
             <title>Łańcuchy znaków</title>
 
             <sect3 id="coding-standard.coding-style.strings.literals">
-                <title>String Literals</title>
+                <title>Proste łańcuchy znaków</title>
 
                 <para>
-                    When a string is literal (contains no variable substitutions), 
-                    the apostrophe or "single quote" must always used to demarcate 
-                    the string:
+                    Kiedy łańcuch znaków jest prosty (nie zawiera podstawienia 
+                    zmienych), do jego odgraniczenia powinien zostać użyty 
+                    pojedynczy cudzysłów (apostrof):
 
                     <programlisting role="php"><![CDATA[
 $a = 'Example String';]]>
@@ -344,26 +358,27 @@ $a = 'Example String';]]>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.literals-containing-apostrophes">
-                <title>String Literals Containing Apostrophes</title>
+                <title>Proste łańcuchy znaków zawierające apostrofy</title>
 
                 <para>
-                    When a literal string itself contains apostrophes, it is
-                    permitted to demarcate the string with quotation marks or 
-                    "double quotes". This is especially encouraged for SQL statements:
+                    Kiedy prosty łańcuch znaków zawiera wewnątrz apostrofy, 
+                    dozwolone jest odgraniczenie łańcucha za pomocą cudzysłowów
+                    (podwójnych). Jest to szczegółnie przydatne w wyrażeniach SQL:
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
                     </programlisting>
 
-                    The above syntax is preferred over escaping apostrophes.
+                    Ta składnia jest zalecana w przeciwieństwie do zabezpieczenia
+                    apostrofów znakami ukośnika.
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.variable-substitution">
-                <title>Variable Substitution</title>
+                <title>Podstawienia zmiennych</title>
 
                 <para>
-                    Variable substitution is permitted using either of these two forms:
+                    Podstawienia zmiennych są dozwolone na dwa sposoby:
 
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello $name, welcome back!";
@@ -382,12 +397,11 @@ $greeting = "Hello ${name}, welcome back!";]]>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.string-concatenation">
-                <title>String Concatenation</title>
+                <title>Łączenie łańcuchów znaków</title>
 
                 <para>
-                    Strings may be concatenated using the "." operator. A space 
-                    must always be added before and after the "." operator to 
-                    improve readability:
+                    Łańcuchy znaków mogą być łączone za pomocą operatora ".". 
+                    Przed i za znakiem "." zawsze powinniśmy dodać znak odstępu:
 
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . 'Technologies';]]>
@@ -395,11 +409,11 @@ $company = 'Zend' . 'Technologies';]]>
                 </para>
 
                 <para>
-                    When concatenating strings with the "." operator, it is 
-                    permitted to break the statement into multiple lines to 
-                    improve readability. In these cases, each successive line 
-                    should be padded with whitespace such that the "."; operator 
-                    is aligned under the "=" operator:
+                    Kiedy łączymy łańcuchy znaków za pomocą operatora ".", 
+                    zalecane jest podzielenie wyrażenia na wiele linii w celu
+                    zwiększenia czytelności. W takich przypadkach, każda 
+                    linia powinna być wcięta za pomocą znaków odstępu aby 
+                    wszystkie operatory "." leżały w jednej linii pod znakiem "=":
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
@@ -420,13 +434,13 @@ $sql = "SELECT `id`, `name` FROM `people` "
 
                 <para>
                     Indeksowana tablica powinna zaczynać się od nieujemnej 
-                    liczby, jednak zalecane jest aby wszystkie tablice posiadały
-                    pierwszy indeks o wartości 0.
+                    liczby, jednak liczby inne niż 0 jako pierwszy indeks są 
+                    odradzane.
                 </para>
 
                 <para>
                     Kiedy deklarujesz indeksowaną numerycznie tablicę za pomocą 
-                    konsturkcji <code>array</code>, powinieneś dodać znak 
+                    funkcji <code>array</code>, powinieneś dodać znak 
                     odstępu po każdym przecinku w celu zwiększenia czytelności:
 
                     <programlisting role="php"><![CDATA[
@@ -435,11 +449,10 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                 </para>
 
                 <para>
-                    Dozwolone jest także deklarowanie tablic indeksowanych 
+                    Dozwolone jest deklarowanie tablic indeksowanych 
                     numerycznie w wielu wierszach używając konstrukcji "array". 
                     W takim przypadku, każdy następny wiersz musi być dopełniony,
-                    znakami odstępu aby początki wierszy były wyrównane tak jak
-                    poniżej:
+                    znakami odstępu aby początki wierszy były wyrównane:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
@@ -474,10 +487,10 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <title>Deklaracja klas</title>
 
                 <para>
-                    Klasy powinny być nazywane zgodnie z poniższymi konwencjami.
+                    Klasy powinny być nazywane zgodnie z konwencjami Zend Framework.
                 </para><para>
-                    The brace is always written on the line underneath the class 
-                    name ("one true brace" form).
+                    Klamra otwierająca klasę powinna zawsze znajdować się w linii
+                    pod nazwą klasy (styl "one true brace").
                 </para><para>
                     Każda klasa musi posiadać blok dokumentacji zgodny ze 
                     standardem PHPDocumentor.
@@ -517,9 +530,9 @@ class SampleClass
                 </para>
                 <para>
                     Użycie konstrukcji <code>var</code> jest niedozwolone. 
-                    Member variables always declare their visibility by using one of 
-                    the <code>private</code>, <code>protected</code>, or 
-                    <code>public</code> constructs. 
+                    Zawsze deklarujemy widoczność zmiennych klas za pomocą jednej
+                    z konstrukcji: <code>private</code>, <code>protected</code>, lub
+                    <code>public</code>. 
                     Uzyskianie dostępu do zmiennych klas bezpośrednio poprzez 
                     ustawienie ich jako publicznych jest dozwolone, ale odradzane
                     na rzecz metod dostępowych (set/get).
@@ -542,8 +555,8 @@ class SampleClass
                     <code>protected</code>, lub <code>public</code>.
                 </para>
                 <para>
-                    Tak jak w klasach, the brace is always written on the line 
-                    underneath the function name ("one true brace" form).
+                    Tak jak w klasach, klamra otwierająca powinna zawsze znajdować 
+                    się w linii pod nazwą funkcji (styl "one true brace").
 
                     Nie powinno być odstępu między nazwą fuinkcji a otwierającym 
                     nawiasem argumentów.
@@ -643,14 +656,16 @@ threeArguments(1, 2, 3);]]>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited. See the function 
-                    declarations section for the proper way to pass function 
-                    arguments by-reference.
-                </para><para>
-                    For functions whose arguments permitted arrays, the function 
-                    call may include the "array" construct and can be split into 
-                    multiple lines to improve readability.  In these cases, the 
-                    standards for writing arrays still apply:
+                    Przekazywanie przez referencję w czasie wywołania jest 
+                    zabronione. Zobacz sekcję opisującą sposób deklaracji 
+                    funkcji, aby poznać prawidłowy sposób przekazywania 
+                    argumentów przez referencję.
+                </para>
+                <para>
+                    Funkcje które przyjmują tablice jako argumenty, mogą zawierać
+                    konstrukcję "array" i mogą być rozdzielone na wiele linii
+                    w celu zwiększenia czytelności. W tych przypadkach wciąż 
+                    obowiązuje standard dla tablic:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -667,7 +682,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
             <title>Instrukcje kontrolne</title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
-                <title>If / Else / Elseif</title>
+                <title>If/Else/Elseif</title>
 
                 <para>
                     Wyrażenia kontrolne oparte o konstrukcje <code>if</code> 
@@ -677,11 +692,9 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                 </para>
 
                 <para>
-                    Within the conditional statements between the parentheses, 
-                    operators must be separated by spaces for readability. 
-                    
-                    Inner parentheses are encouraged to improve logical grouping of 
-                    larger conditionals.
+                    Instrukcje warunkowe znajdujące się pomiędzy nawiasami muszą
+                    być odgraniczone znakami odstępu. Do grupowania większych
+                    warunków zalecane jest użycie dodatkowych nawiasów.
                 </para>
 
                 <para>
@@ -736,10 +749,9 @@ if ($a != 2) {
                 <title>Instrukcja Switch</title>
 
                 <para>
-                    Control statements written with the "switch" construct must 
-                    have a single space before the opening parenthesis of the 
-                    conditional statement, and also a single space after the 
-                    closing parenthesis.
+                    Instrukcje kontrolne umieszczone wewnątrz instrukcji "switch"
+                    muszą posiadać pojedynczy znak odstępu zarówno przed nawiasem
+                    jak i za nim.
                 </para>
 
                 <para>
