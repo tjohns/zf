@@ -141,31 +141,32 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                     </tbody>
                 </tgroup>
             </table>
-
+			
             <note>
-                <title>What type do empty arrays get cast to?</title>
+                <title>一个空的数组会如何转换？</title>
 
                 <para>
-                    传递一个空的数组给 XML-RPC 方法是有问题的，因为它可以表示一个数组或一个结构。
-                     <code>Zend_XmlRpc_Client</code>  检测这样的条件并请求服务器的 <code>system.methodSignature</code> 
-                     方法来确定合适的 XML-RPC 类型来 cast to。
+                    传递空数组到 XML-RPC 方法，由于它既可表示为一个数组也可表示为一个结构，
+                    所以会产生问题。<code>Zend_XmlRpc_Client</code> 会监测这种情况并向服务器进行一个
+                    <code>system.methodSignature</code> 请求来决定实际将要转换到的 XML-RPC 类型。                    
                 </para>
 
                 <para>
-                    然而，它自己会产生问题。首先，不支持 <code>system.methodSignature</code> 的服务器将记录失败的请求，
-                    并且 <code>Zend_XmlRpc_Client</code>  将 casting 值给 XML-RPC 数组类型。另外，这意味着任何带数组参数
-                    的调用将导致另外一个调用到远程服务器。
+                    不过，这样做本身就可能导致问题出现。首先，服务器不支持 <code>system.methodSignature</code>
+                    将会产生一个失败请求，同时 <code>Zend_XmlRpc_Client</code> 
+                    会强制转换这个值为 XML-RPC 数组类型。此外，这意味着任何数组参数都可能导致对远端服务器的一次额外请求。                    
                 </para>
 
                 <para>
-                    为了整个地禁止查找，在调用 XML-RPC 之前调用 <code>setSkipSystemLookup()</code> 方法：
+                    可以在 XML-RPC 调用前调用 <code>setSkipSystemLookup()</code> 
+                    方法，以便完全屏蔽这个查询：
                 </para>
 
                 <programlisting role="php"><![CDATA[
 $client->setSkipSystemLookup(true);
 $result = $client->call('foo.bar', array(array()));
 ]]></programlisting>
-            </note>            
+            </note>
         </sect3>
 
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
