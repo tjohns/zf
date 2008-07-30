@@ -565,5 +565,25 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $url = $route->assemble(array('id' => 1), false, true);
         $this->assertEquals('My+Controller/id/1', $url);
     }
+    
+    public function testPartialMatch()
+    {
+        $route = new Zend_Controller_Router_Route(':lang/:temp', array('lang' => 'pl'), array('temp' => '\d+'));
+
+        $values = $route->match('en/tmp/ctrl/action/id/1', true);
+
+        $this->assertFalse($values);
+        
+        $route = new Zend_Controller_Router_Route(':lang/:temp', array('lang' => 'pl'));
+
+        $values = $route->match('en/tmp/ctrl/action/id/1', true);
+
+        $this->assertType('array', $values);
+        $this->assertEquals('en', $values['lang']);
+        $this->assertEquals('tmp', $values['temp']);
+        $this->assertEquals(6, $values[null]);
+        
+    }
+    
 
 }

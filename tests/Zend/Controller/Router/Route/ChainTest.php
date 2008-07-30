@@ -14,6 +14,9 @@ require_once 'Zend/Controller/Router/Route.php';
 /** Zend_Controller_Router_Route_Static */
 require_once 'Zend/Controller/Router/Route/Static.php';
 
+/** Zend_Controller_Router_Route_Static */
+require_once 'Zend/Controller/Router/Route/Regex.php';
+
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -134,15 +137,8 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
         $chain->chain($foo)->chain($bar);
 
-        $chain->match('foo/bar');
+        $res = $chain->match('foo/bar');
         $this->assertEquals('foo/bar', $chain->assemble());
-
-        $chain = new Zend_Controller_Router_Route_Chain();
-
-        $chain->chain($foo)->chain($bar, '.');
-
-        $chain->match('foo.bar');
-        $this->assertEquals('foo.bar', $chain->assemble());
     }
 
     public function testChainingMatchAndAssembleStatic()
@@ -160,6 +156,21 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo/bar', $chain->assemble());
     }
 
+    public function testChainingMatchAndAssembleRegex()
+    {
+        $chain = new Zend_Controller_Router_Route_Chain();
+
+        $foo = new Zend_Controller_Router_Route_Regex('foo', array('foo' => 1));
+        $bar = new Zend_Controller_Router_Route_Regex('bar', array('bar' => 2));
+
+        $chain->chain($foo)->chain($bar);
+
+        $res = $chain->match('foo/bar');
+
+        $this->assertType('array', $res);
+        $this->assertEquals('foo/bar', $chain->assemble());
+    }
+    
     public function testChainingReuse()
     {
         $this->markTestIncomplete();

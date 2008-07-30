@@ -71,20 +71,26 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
         $offset = 0;
 
         foreach ($this->_routes as $key => $route) {
+            
+            var_dump('Path: ' . $path);
 
             if ($offset && $this->_separators[$key] != $path[0]) {
                 return false;
+            } elseif ($offset) {
+                $offset += strlen($this->_separators[$key]);
             }
-
-            $path = substr($path, $offset);
 
             $res = $route->match($path, true);
             if ($res === false) return false;
 
             // Hack for interface BC
-            $offset = $res[null];
+            if (array_key_exists(null, $res)) {
+                $offset = $res[null];
+            }
 
-            $values += $res;
+            $path = substr($path, $offset);
+
+            $values = $res + $values;
 
         }
 

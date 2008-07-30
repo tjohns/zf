@@ -144,11 +144,14 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     public function match($path, $partial = null)
     {
 
+        $offset = 0;
+        $length = strlen($path);
         $pathStaticCount = 0;
         $values = array();
 
-        $path = trim($path, $this->_urlDelimiter);
-
+        $path = ltrim($path, $this->_urlDelimiter);
+        $offset += $length - strlen($path);
+        
         if ($path != '') {
 
             $path = explode($this->_urlDelimiter, $path);
@@ -157,7 +160,12 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
 
                 // Path is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
+                    if ($partial) break;
                     return false;
+                }
+                
+                if ($pos > 0) {
+                    $offset += strlen($this->_urlDelimiter);
                 }
 
                 // If it's a wildcard, get the rest of URL as wildcard data and stop matching
@@ -169,6 +177,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                             $this->_wildcardData[$var] = (isset($path[$i+1])) ? urldecode($path[$i+1]) : null;
                         }
                     }
+                    $offset = $length;
                     break;
                 }
 
@@ -191,6 +200,8 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                 } else {
                     $pathStaticCount++;
                 }
+                
+                $offset += strlen($pathPart);
 
             }
 
@@ -211,6 +222,10 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
         }
 
         $this->_values = $values;
+        
+        if ($partial) {
+            $return[null] = $offset;
+        }
 
         return $return;
 
