@@ -55,7 +55,7 @@
             Jedną z najważniejszych rzeczy do zrobienia w skrypcie widoku
             jest uzyskanie pewności, że dane wyjściowe zostały prawidłowo
             przefiltrowane. Pomaga to w przeciwdziałaniu atakom XSS. Jeśli
-            nie używasz funkcji, metody lub pomocnika (helper) w celu
+            nie używasz funkcji, metody lub helpera w celu
             filtrowania danych wyjściowych, powinieneś zawsze je filtrować
             wtedy gdy chcesz je wyświetlić.
         </para>

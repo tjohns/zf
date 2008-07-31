@@ -1,60 +1,74 @@
-<sect1 id="zend.view.helpers">
+<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
-    <title>Klasy pomocników</title>
+    <title>Klasy helperów</title>
 
     <para>
         W skryptach widoków często potrzebne jest przeprowadzanie złożonych
         funkcji: na przykład formatowanie daty, generowanie elementów 
         formularzy, czy wyświetlanie odnośnikow akcji. Możesz użyć klas 
-        pomocników w tym celu.
+        helperów w tym celu.
     </para>
 
     <para>
-        Klasa pomocnika jets prostą klasą. Powiedzmy, że potrzebujemy klasę
-        pomocnika o nazwie 'fooBar'. Domyślnie nazwa klasy jest poprzedzona
+        Klasa helpera jest prostą klasą. Powiedzmy, że potrzebujemy klasę
+        helpera o nazwie 'fooBar'. Domyślnie nazwa klasy jest poprzedzona
         przedrostkiem <code>'Zend_View_Helper_'</code> (możesz określić własny
-        przedrostek podczas ustawiania ścieżki do klas pomocników), a ostatni
-        segment nazwy klasy jest nazwą klasy pomocnika; ten segment powinien
+        przedrostek podczas ustawiania ścieżki do klas helperów), a ostatni
+        segment nazwy klasy jest nazwą klasy helpera; ten segment powinien
         być w postaci TitleCapped; pełna nazwa klasy wygląda więc tak:
         <code>Zend_View_Helper_FooBar</code>. Ta klasa powinna zawierać
-        przynajmniej jedną metodę, nazwaną tak jak klasa pomocnika, ale już w
+        przynajmniej jedną metodę, nazwaną tak jak klasa helpera, ale już w
         postaci camelCased: <code>fooBar()</code>.
     </para>
 
     <note>
+        <title>Zwróć uwagę na wielkość liter</title>
         <para>
-            Nazwy klas pomocników są zawsze w postaci camelCased, czyli nigdy
-            nie zaczynają się wielką literą.
+            Nazwy klas helperów są zawsze w postaci camelCased, czyli nigdy
+            nie zaczynają się wielką literą. Nazwa klasy jest w postaci
+            MixedCased, ale wywoływana metoda zawsze ma postać camelCased.
+        </para>
+    </note>
+    
+    <note>
+        <title>Domyślne ścieżki helperów</title>
+
+        <para>
+            Domyślna ścieżka helperów zawsze wskazuje na ścieżkę helperów
+            widoków Zend Framework np., 'Zend/View/Helper/'. Nawet jeśli
+            wywołasz metodę <code>setHelperPath()</code> aby nadpisać istniejące 
+            ścieżki, domyślna ścieżka zawsze będzie ustawiona aby być pewnym, że 
+            domyślne helpery będą zawsze działać.
         </para>
     </note>
 
     <para>
-        Aby użyć pomocnika w swoim skrypcie widoku, wywołaj go za pomocą
-        <code>$this->nazwaPomocnika()</code>. Obiekt <code>Zend_View</code>
-        załaduje klasę <code>Zend_View_Helper_NazwaPomocnika</code>, utworzy
-        obiekt tej klasy i wywoła metodę <code>nazwaPomocnika()</code>.
+        Aby użyć helpera w swoim skrypcie widoku, wywołaj go za pomocą
+        <code>$this->nazwaHelpera()</code>. Obiekt <code>Zend_View</code>
+        załaduje klasę <code>Zend_View_Helper_NazwaHelpera</code>, utworzy
+        obiekt tej klasy i wywoła metodę <code>nazwaHelpera()</code>.
         Instancja obiektu istnieje teraz w instancji <code>Zend_View</code> i
         będzie ona ponownie używana przy następnych wywołaniach
-        <code>$this->nazwaPomocnika()</code>.
+        <code>$this->nazwaHelpera()</code>.
     </para>
 
     <sect2 id="zend.view.helpers.initial">
-        <title>Wbudowane klasy pomocników</title>
+        <title>Wbudowane klasy helperów</title>
 
         <para>
-            <code>Zend_View</code> posiada wbudowany zbiór klas pomocników, z
+            <code>Zend_View</code> posiada wbudowany zbiór klas helperów, z
             których większość odnosi się do generowania formularzy, a każda z
             nich autmatycznie filtruje dane wyjściowe. Dodatkowo dostępne są
-            klasy pomocników służące do tworzenia adresów URL na podstawie tras,
+            klasy helperów służące do tworzenia adresów URL na podstawie tras,
             do tworzenia list HTML oraz do deklarowania zmiennych. Obecnie
-            dostępne klasy pomocników to:
+            dostępne klasy helperów to:
         </para>
 
         <itemizedlist>
 
             <listitem><para>
                 <code>declareVars():</code> Głównie używana gdy używamy metody
-                <code>strictVars()</code>, ta klasa pomocnika może być użyta
+                <code>strictVars()</code>, ta klasa helpera może być użyta
                 do zadeklarowania zmiennych szablonu, które zostały ustawione
                 lub nie, w obiekcie widoku. Możemy też użyć jej do ustawienia
                 domyślnych wartości. Tablice przekazane do metody jako argumenty
@@ -64,20 +78,138 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formButton($name, $value, $attribs):</code> Tworzy element
-                &lt;input type="button" /&gt;.
+                <code>fieldset($name, $content, $attribs):</code> Tworzy element
+                fieldset. Jeśli tablica <code>$attribs</code> zawiera 
+                klucz 'legend', ta wartość zostanie użyta jako legenda pola 
+                fieldset. Pole fieldset będzie zawierać zawartość przekazaną do 
+                tego helpera przez zmienną <code>$content</code>.
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options):</code>
-                Tworzy element
-                &lt;input type="checkbox" /&gt;. Parametr $options jest tablicą
-                w której pierwszy element jest wartością dla pola zaznaczonego
-                ("checked"), a drugi wartością dla niezaznaczonego ("unchecked")
-                (domyślnie są to wartości '1' i '0'). Jeśli wartość $value
-                odpowiada wartości pola zaznaczonego ("checked"), to pole
-                zostanie zaznaczone.
+                <code>form($name, $attribs, $content):</code> Generuje formularz. 
+                Wszystkie atrybuty z tablicy <code>$attribs</code> będą 
+                zabezpieczone i zrenderowane jako atrybuty XHTML znacznika form.
+                Jeśli przekazana jest zmienna <code>$content</code> i ma inną
+                wartość niż false, to zawartość tej zmiennej zostanie 
+                zrenderowana wraz ze znacznikiem otwierającym i zamykającym
+                formularz; jeśli zmienna <code>$content</code> ma wartość false
+                (domyślnie), zostanie zrenderowany tylko znacznik otwierający.
             </para></listitem>
+
+            <listitem><para>
+                <code>formButton($name, $value, $attribs):</code> Tworzy element
+                &lt;button /&gt;.
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    <code>formCheckbox($name, $value, $attribs,
+                        $options):</code> Tworzy element &lt;input type="checkbox"
+                    /&gt;.  
+                </para>
+
+                <para>
+                    Domyślnie, jeśli zmienne $value oraz $options nie są 
+                    przekazane, dla pola niezaznaczonego zostanie przyjęta 
+                    wartość '0', a dla zaznaczonego wartość '1'. 
+                    Jeśli zostanie przekazana zmienna $value, ale nie zostanie
+                    przekazana zmienna $options, dla pola zaznaczonego zostanie
+                    przyjęta wartość zmiennej $value.
+                </para>
+
+                <para>
+                    Zmienna $options powinna być tablicą. Jeśli tablica jest
+                    indeksowana, dla pola zaznaczonego zostanie przyjęta pierwsza 
+                    wartość, a druga wartość dla pola niezaznaczonego; wszystkie
+                    inne wartości zostaną zignorowane. Możesz także przekazać
+                    tablicę asocjacyjną z kluczami 'checked' oraz 'unChecked'.
+                </para>
+
+                <para>
+                    Jeśli zmienna $options zostanie przekazana, a wartość 
+                    $value jest równa wartości określonej dla pola zaznaczonego, 
+                    to element zostanie zaznaczony. Możesz także określić czy 
+                    element ma być zaznaczony przekazująć logiczną wartość dla
+                    atrybutu 'checked'.
+                </para>
+
+                <para>
+                    Powyższe najlepiej podsumować za pomocą przykładów:
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone
+echo $this->formCheckbox('foo');
+
+// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone
+echo $this->formCheckbox('foo', null, array('checked' => true));
+
+// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+echo $this->formCheckbox('foo', 'bar');
+
+// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone 
+echo $this->formCheckbox('foo', 'bar', array('checked' => true));
+
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
+
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+echo $this->formCheckbox('foo', null, null, array(
+    'checked' => 'bar', 
+    'unChecked' => 'baz'
+));
+
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone 
+echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
+echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+]]></programlisting>
+
+                <para>
+                    We wszystkich przypadkach zostanie dołączony ukryty element
+                    z wartością dla pola niezaznaczonego; w ten sposób uzyskamy
+                    pewność, że nawet jeśli pole nie będzie zaznaczone, to do
+                    formularza zostanie przekazana poprawna wartość.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>formErrors($errors, $options):</code> Generuje listę
+                    nieuporządkowaną zawierająca informacje o błędach. Zmienna
+                    <code>$errors</code> powinna być łańcuchem znaków lub 
+                    tablicą łańcuchów znaków; Zmienna <code>$options</code> 
+                    powinna zawiierać atrybuty jakie chcesz umieścić w znaczniku
+                    otwierającym listę.
+                </para>
+
+                <para>
+                    Możesz określić alternatywny sposób otwarcia, zamknięcia i
+                    oddzielania informacji o błędach wywołując metody helpera:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para>
+                            <code>setElementStart($string)</code>; domyślną
+                            wartością jest '&lt;ul class="errors"%s"&gt;&lt;li&gt;', gdzie %s
+                            jest zastąpione atrybutami zdefiniowanymi w zmiennej
+                            <code>$options</code>.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementSeparator($string)</code>; domyślną
+                            wartością jest '&lt;/li&gt;&lt;li&gt;'.
+                    </para></listitem>
+
+                    <listitem><para>
+                            <code>setElementEnd($string)</code>; domyślną 
+                            wartością jest '&lt;/li&gt;&lt;/ul&gt;'.
+                    </para></listitem>
+                </itemizedlist>
+            </listitem>
 
             <listitem><para>
                 <code>formFile($name, $value, $attribs):</code> Tworzy element
@@ -90,13 +222,27 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formLabel($name, $value, $attribs):</code> Creates a
-                &lt;label&gt; element, setting the <code>for</code> attribute to
-                <code>$name</code>, and the actual label text to
-                <code>$value</code>. If <code>disable</code> is passed in
-                <code>attribs</code>, nothing will be returned.
+                <code>formLabel($name, $value, $attribs):</code> Tworzy element
+                &lt;label&gt;, nadając atrybutowi <code>for</code> wartość
+                zmiennej <code>$name</code> i ustawiając jako etykietę wartość 
+                zmiennej <code>$value</code>. 
+                Jeśli opcja <code>disable</code> zostanie przekazana w zmiennej
+                <code>$attribs</code>, żaden kod nie zostanie zwrócony.
             </para></listitem>
 
+            <listitem><para>
+                <code>formMultiCheckbox($name, $value, $attribs, $options,
+                $listsep):</code> Tworzy listę elementów checkbox. Zmienna 
+                <code>$options</code> powinna być asocjacyjną tablicą, i może 
+                mieć dowolne rozmiary. Zmienna <code>$value</code> może być 
+                pojedynczą wartością lub tablicą wartości, które odpowiadają 
+                kluczom tablicy <code>$options</code>. Zmienna 
+                <code>$listsep</code> jest separatorem elementów, domyślnie ma 
+                wartość &lt;br /&gt;. Domyślnie ten element jest traktowany jako 
+                tablica; wszystkie pola mają te samą nazwę i będą wysłane jako 
+                tablica.
+            </para></listitem>
+            
             <listitem><para>
                 <code>formPassword($name, $value, $attribs):</code> Tworzy
                 element &lt;input type="password" /&gt;.
@@ -148,11 +294,15 @@
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code> generuje
+                <code>htmlList($items, $ordered, $attribs, $escape):</code> generuje
                 uporządkowane oraz nieuporządkowane listy na podstawie
                 przekazanego do niej parametru <code>$items</code>.
                 Jeśli parametr <code>$items</code> jest wielowymiarową tablicą,
-                zostanie zbudowana lista zagnieżdżona.
+                zostanie zbudowana lista zagnieżdżona. Jeśli flaga <code>$escape</code>
+                ma wartość true (domyślnie), każdy z elementów zostanie 
+                zabezpieczony za pomocą mechanizmu zarejestrowanego w obiekcie
+                widoku; przekaż wartość false aby zezwolić na wyświetlanie kodu
+                html wewnątrz elementów list.
             </para></listitem>
 
         </itemizedlist>
@@ -206,21 +356,34 @@
 </form>]]>
         </programlisting>
 
+        <xi:include href="Zend_View-Helpers-Action.xml" />
+        <xi:include href="Zend_View-Helpers-Partial.xml" />
+        <xi:include href="Zend_View-Helpers-Placeholder.xml" />
+        <xi:include href="Zend_View-Helpers-Doctype.xml" />
+        <xi:include href="Zend_View-Helpers-HeadLink.xml" />
+        <xi:include href="Zend_View-Helpers-HeadMeta.xml" />
+        <xi:include href="Zend_View-Helpers-HeadScript.xml" />
+        <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
+        <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
+        <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
+        <xi:include href="Zend_View-Helpers-InlineScript.xml" />
+        <xi:include href="Zend_View-Helpers-Json.xml" />
+        <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">
 
-        <title>Ścieżki klas pomocników</title>
+        <title>Ścieżki klas helperów</title>
 
         <para>
             Tak jak ze skryptami widoków, kontroler może określić stos ścieżek,
-            w których <code>Zend_View</code> ma szukać klas pomocników.
-            Domyślnie <code>Zend_View</code> szuka klas pomocników w katalogu
+            w których <code>Zend_View</code> ma szukać klas helperów.
+            Domyślnie <code>Zend_View</code> szuka klas helperów w katalogu
             "Zend/View/Helper/*". Możesz wybrać inny katalog używając metod
             <code>setHelperPath()</code> oraz <code>addHelperPath()</code>.
-            Dodatkowo możesz określić przedrostek klas pomocników znajdujących
+            Dodatkowo możesz określić przedrostek klas helperów znajdujących
             się w podanej ścieżce aby utworzyć przestrzenie nazw dla klas
-            pomocników. Domyślnie, gdy żaden przedrostek nie zostanie określony,
+            helperów. Domyślnie, gdy żaden przedrostek nie zostanie określony,
             przyjęty zostanie przedrostek 'Zend_View_Helper_'.
         </para>
 
@@ -233,9 +396,9 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
         <para>
             Oczywiście możesz dodawać ścieżki na stos używająć metody
             <code>addHelperPath()</code>. Gdy dodajesz ścieżki na stos,
-            <code>Zend_View</code> będzie szukać klasy pomocnika począwszy od
+            <code>Zend_View</code> będzie szukać klasy helpera począwszy od
             ostatnio dodanej ścieżki. To pozwala na dodanie (lub nawet
-            nadpisanie) podstawowego pakietu klas pomocników swoimi własnymi
+            nadpisanie) podstawowego pakietu klas helperów swoimi własnymi
             klasami.
         </para>
 
@@ -247,8 +410,8 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
-// "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName",
-// następnie w "/path/to/some/helpers/HelperName" używając nazwy klasy "Your_View_Helper_HelperName",
+// "/path/to/some/helpers/HelperName" używająca nazwy klasy "Your_View_Helper_HelperName",
+// następnie w "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName"
 // i ostatecznie w "Zend/View/Helper/HelperName.php" używając nazwy klasy "Zend_View_Helper_HelperName".]]>
         </programlisting>
 
@@ -256,18 +419,18 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
     <sect2 id="zend.view.helpers.custom">
 
-        <title>Pisanie własnych klas pomocników</title>
+        <title>Pisanie własnych klas helperów</title>
 
         <para>
-            Pisanie własnych klas pomocników jest łatwe; po prostu pisz według
+            Pisanie własnych klas helperów jest łatwe; po prostu pisz według
             poniższych zasad:
         </para>
 
         <itemizedlist>
 
             <listitem><para>
-                Minimalna nazwa klasy musi kończyć się nazwą pomocnika przy
-                użyciu CamelCaps. Przykładowo, jeśli piszesz klasę pomocnika
+                Minimalna nazwa klasy musi kończyć się nazwą helpera przy
+                użyciu MixedCaps. Przykładowo, jeśli piszesz klasę helpera
                 zwaną "specialPurpose", minimalną nazwą klasy musi być
                 "SpecialPurpose". Możesz, a nawet powinieneś nadać nazwie klasy
                 przedrostek i jest zalecane, abyś użył 'View_Helper' jako
@@ -279,10 +442,10 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 Klasa musi posiadać publiczną metodę która jest taka jak nazwa
-                pomocnika; jest to metoda która zostanie wywołana gdy skrypt
-                widoku wywoła "$this->twojPomocnik()". W przykładzie pomocnika
-                "twojPomocnik", wymaganą deklaracją metody powinno być
-                "public function twojPomocnik()".
+                helpera; jest to metoda która zostanie wywołana gdy skrypt
+                widoku wywoła "$this->twojHelper()". W przykładzie helpera
+                "twojHelper", wymaganą deklaracją metody powinno być
+                "public function twojHelper()".
             </para></listitem>
 
             <listitem><para>
@@ -293,27 +456,27 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 Klasa musi znajdować się w pliku odpowiednio do nazwy metody
-                pomocnika. Przykładowo dla pomocnika o nazwie "twojPomocnik",
-                plik powinien nazywać się "TwojPomocnik.php".
+                helpera. Przykładowo dla helpera o nazwie "twojHelper",
+                plik powinien nazywać się "TwojHelper.php".
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Umieść plik klasy pomocnika w katalogu który był dodany do stosu
+            Umieść plik klasy helpera w katalogu który był dodany do stosu
             ścieżek, a <code>Zend_View</code> automatycznie załaduje klasę,
             utworzy instancję, i uruchomi metodę.
         </para>
 
         <para>
-            Poniżej przykład kodu naszego przykładowego pomocnika
-            <code>twojPomocnik</code>:
+            Poniżej przykład kodu naszego przykładowego helpera
+            <code>twojHelper</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_TwojPomocnik
+class My_View_Helper_TwojHelper
 {
     protected $_count = 0;
-    public function twojPomocnik()
+    public function twojHelper()
     {
         $this->_count++;
         $output = "I have seen 'The Jerk' {$this->_count} time(s).";
@@ -323,17 +486,17 @@ class My_View_Helper_TwojPomocnik
         </programlisting>
 
         <para>
-            Teraz w skrypcie widoku możesz wywołać pomocnika
-            <code>TwojPomocnik</code> tyle razy ile zechcesz; instancja zostanie
+            Teraz w skrypcie widoku możesz wywołać helpera
+            <code>TwojHelper</code> tyle razy ile zechcesz; instancja zostanie
             utworzona raz i będzie ona istniała przez cały okres istnienia
             instancji <code>Zend_View</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 // pamiętaj, że w skrypcie widoku $this odnosi się do instancji Zend_View.
-echo $this->twojPomocnik();
-echo $this->twojPomocnik();
-echo $this->twojPomocnik();]]>
+echo $this->twojHelper();
+echo $this->twojHelper();
+echo $this->twojHelper();]]>
         </programlisting>
 
         <para>
@@ -348,8 +511,8 @@ I have seen 'The Jerk' 3 time(s).]]>
             Czasem możesz potrzebować uzyskać dostęp do obiektu
             <code>Zend_View</code> -- na przykład, jeśli potrzebujesz użyć
             zarejestrowanego kodowania, lub chcesz zrenderować inny skrypt
-            widoku jako część klasy pomocnika. Aby uzyskać dostęp do obiektu
-            widoku, klasa pomocnika powinna posiadać metodę
+            widoku jako część klasy helpera. Aby uzyskać dostęp do obiektu
+            widoku, klasa helpera powinna posiadać metodę
             <code>setView($view)</code>, tak jak poniżej:
         </para>
 
@@ -371,10 +534,10 @@ class My_View_Helper_ScriptPath
         </programlisting>
 
         <para>
-            Jeśli twoja klasa pomocnika posiada metodę <code>setView()</code>,
+            Jeśli twoja klasa helpera posiada metodę <code>setView()</code>,
             będzie ona wywołana wtedy, gdy po raz pierwszy zostanie utworzona
-            instancja klasy pomocnika i przekazany zostanie obecny obiekt
-            widoku. Jest to po to, aby przechować obiekt widoku w klasie pomocnika,
+            instancja klasy helpera i przekazany zostanie obecny obiekt
+            widoku. Jest to po to, aby przechować obiekt widoku w klasie helpera,
             a także po to, aby określić w jaki sposób powinno się uzyskiwać do
             tego obiektu dostęp.
         </para>

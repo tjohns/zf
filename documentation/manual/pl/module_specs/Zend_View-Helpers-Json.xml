@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect3 id="zend.view.helpers.initial.json">
-  <title>JSON Helper</title>
+  <title>Helper JSON</title>
 
-  <para>Przy tworzeniu widoków które zwracają JSON trzeba ustawić odpowiedni
-  nagłówek. Tym właśnie się zajmuje JSON helper ,dodatkowo domyślnie wyłącza
-  layouty (jeżeli aktywne).</para>
+  <para>Przy tworzeniu widoków które zwracają obiekt JSON trzeba ustawić odpowiedni
+  nagłówek. Tym właśnie się zajmuje helper JSON, a dodatkowo domyślnie wyłącza
+  layouty (jeżeli są aktywne).</para>
 
-  <para>JSON helper ustawia następujący nagłówek</para>
+  <para>Helper JSON ustawia następujący nagłówek</para>
 
     <programlisting role="text"><![CDATA[
 Content-Type: application/json
@@ -15,7 +15,7 @@ Content-Type: application/json
   <para>Większość bibliotek Ajaxowych szuka tego nagłowka podczas parsowania
   odpowiedzi aby ustalić jak obsłużyć zawartość.</para>
 
-  <para>Użycie helpera jest następujące :</para>
+  <para>Użycie helpera jest następujące:</para>
 
    <programlisting role="php"><![CDATA[<?php
 <?= $this->json($this->data) ?>

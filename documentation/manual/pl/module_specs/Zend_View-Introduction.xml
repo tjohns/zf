@@ -6,7 +6,7 @@
         Zend_View jest klasą zapewniającą obsługę części widoku ("view")
         we wzorcu projektowym MVC (model-view-controller). Istnieje ona
         w celu oddzielenia wyglądu aplikacji od kontrolerów i danych.
-        Zapewnia system skryptów pomocników i filtrów.
+        Zapewnia system skryptów helperów i filtrów.
     </para>
 
     <para>
@@ -99,7 +99,7 @@ echo $view->render('booklist.php');]]>
 
     <p>Nie ma żadnych książek do wyświetlenia.</p>
 
-<?php endif;]]>
+<?php endif;?>]]>
         </programlisting>
 
         <para>
@@ -121,7 +121,7 @@ echo $view->render('booklist.php');]]>
             <listitem>
                 <para>
                     <code>basePath:</code> określa bazową ścieżkę, wewnątrz
-                    której znajdują się skrypty widoków, klasy pomocników oraz
+                    której znajdują się skrypty widoków, klasy helperów oraz
                     klasy filtrów. Zakładane jest, że struktura katalogów
                     wygląda tak:
                 </para>
@@ -181,7 +181,7 @@ base/path/
         <para>
             W większości przypadków będziesz używał tylko metod
             <code>assign()</code>, <code>render()</code>, lub jednej z metod
-            do ustawiania/dodawania filtrów, klas pomocników oraz ścieżek
+            do ustawiania/dodawania filtrów, klas helperów oraz ścieżek
             skryptów widoków. Jednak jeśli chcesz samodzielnie rozszerzyć klasę
             <code>Zend_View</code>, lub potrzebujesz dostępu do jej pewnych
             wewnętrznych funkcjonalności, to możesz użyć kilku istniejących
@@ -221,14 +221,14 @@ base/path/
             <listitem>
                 <para>
                     <code>getHelperPath($helper)</code> zwraca ścieżkę dla
-                    podanej klasy pomocnika.
+                    podanej klasy helpera.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>getHelperPaths()</code> zwraca wszystkie
-                    zarejestrowane ścieżki klas pomocników.
+                    zarejestrowane ścieżki klas helperów.
                 </para>
             </listitem>
 
