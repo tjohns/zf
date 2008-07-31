@@ -890,9 +890,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,$locale);
         $d2   = new Zend_Date(1010101010,null,$locale);
+
         $date->setTimezone(date_default_timezone_get());
         $d2->setTimezone(date_default_timezone_get());
-
         $date->set(1234567890);
         try {
             $date->set('noday', Zend_Date::WEEKDAY_SHORT);
@@ -4256,9 +4256,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testLocale()
     {
         $date = new Zend_Date(Zend_Date::now());
-        $locale = new Zend_Locale('en_Us');
-        $set = $date->setLocale($locale);
-        $this->assertSame($set, $date->getLocale());
+        $locale = new Zend_Locale('en_US');
+        $date->setLocale($locale);
+        $this->assertSame('en_US', $date->getLocale());
     }
 
     /**

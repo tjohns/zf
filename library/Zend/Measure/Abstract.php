@@ -70,7 +70,7 @@ abstract class Zend_Measure_Abstract
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (Zend_Locale::isLocale($type)) {
+        if (($type !== null) and (Zend_Locale::isLocale($type))) {
             $locale = $type;
             $type = null;
         }
@@ -86,9 +86,13 @@ abstract class Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if (!Zend_Locale::isLocale($locale)) {
-            require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                require_once 'Zend/Measure/Exception.php';
+                throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+            }
+
+            $locale = new Zend_Locale($locale);
         }
 
         $this->_locale = (string) $locale;
@@ -130,7 +134,7 @@ abstract class Zend_Measure_Abstract
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (Zend_Locale::isLocale($type)) {
+        if (($type !== null) and (Zend_Locale::isLocale($type))) {
             $locale = $type;
             $type = null;
         }
@@ -139,11 +143,16 @@ abstract class Zend_Measure_Abstract
             $locale = $this->_locale;
         }
 
-        if (!Zend_Locale::isLocale((string) $locale)) {
-            require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                require_once 'Zend/Measure/Exception.php';
+                throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+            }
+
+            $locale = new Zend_Locale($locale);
         }
 
+        $locale = (string) $locale;
         if ($type === null) {
             $type = $this->_units['STANDARD'];
         }

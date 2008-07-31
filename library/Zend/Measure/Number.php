@@ -144,7 +144,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = null)
     {
-        if (Zend_Locale::isLocale($type) !== false) {
+        if (($type !== null) and (Zend_Locale::isLocale($type))) {
             $locale = $type;
             $type = null;
         }
@@ -153,9 +153,13 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if (!Zend_Locale::isLocale($locale)) {
-            require_once 'Zend/Measure/Exception.php';
-            throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, true)) {
+                require_once 'Zend/Measure/Exception.php';
+                throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
+            }
+
+            $locale = new Zend_Locale($locale);
         }
 
         $this->_locale = (string) $locale;
