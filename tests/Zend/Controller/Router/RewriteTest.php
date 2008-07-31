@@ -463,6 +463,105 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $token->getParam('foo'));
         $this->assertEquals(true, $token->getParam('bar'));
     }
+    
+    public function testRouteWithHostname()
+    {
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://www.zend.com');
+        
+        $route = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('controller' => 'foo', 'action' => 'bar'));
+
+        $this->_router->addRoute('hostname-route', $route);
+        
+        $token = $this->_router->route($request);
+
+        $this->assertEquals('foo', $token->getControllerName());
+        $this->assertEquals('bar', $token->getActionName());
+    }
+    
+    public function testRouteWithHostnameChain()
+    {
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://www.zend.com/bar');
+        
+        $foo = new Zend_Controller_Router_Route_Hostname('nope.zend.com', array('module' => 'bla'));
+        $bar = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('module' => 'bla'));
+        
+        $bla = new Zend_Controller_Router_Route_Static('bar', array('controller' => 'foo', 'action' => 'bar'));
+        
+        $chainMatch = new Zend_Controller_Router_Route_Chain();
+        $chainMatch->chain($bar)->chain($bla);
+        
+        $chainNoMatch = new Zend_Controller_Router_Route_Chain();
+        $chainNoMatch->chain($foo)->chain($bla);
+               
+        $this->_router->addRoute('match',    $chainMatch);
+        $this->_router->addRoute('no-match', $chainNoMatch);
+        
+        $token = $this->_router->route($request);
+
+        $this->assertEquals('bla', $token->getModuleName());
+        $this->assertEquals('foo', $token->getControllerName());
+        $this->assertEquals('bar', $token->getActionName());
+    } 
+    
+    public function testAssemblingWithHostnameHttp()
+    {
+        $route = new Zend_Controller_Router_Route_Hostname('www.zend.com');
+
+        $this->_router->addRoute('hostname-route', $route);
+
+        $this->assertEquals('http://www.zend.com', $this->_router->assemble(array(), 'hostname-route'));
+    }
+    
+    public function testAssemblingWithHostnameHttps()
+    {
+        $backupServer = $_SERVER;
+        $_SERVER['HTTPS'] = 'on';
+        
+        $route = new Zend_Controller_Router_Route_Hostname('www.zend.com');
+
+        $this->_router->addRoute('hostname-route', $route);
+
+        $this->assertEquals('https://www.zend.com', $this->_router->assemble(array(), 'hostname-route'));
+        
+        $_SERVER = $backupServer;
+    }
+    
+    public function testAssemblingWithHostnameThroughChainHttp()
+    {
+        $foo = new Zend_Controller_Router_Route_Hostname('www.zend.com');
+        $bar = new Zend_Controller_Router_Route_Static('bar');
+
+        $chain = new Zend_Controller_Router_Route_Chain();
+        $chain->chain($foo)->chain($bar);
+        
+        $this->_router->addRoute('foo-bar', $chain);
+
+        $this->assertEquals('http://www.zend.com/bar', $this->_router->assemble(array(), 'foo-bar'));
+    }
+    
+    public function testAssemblingWithHostnameWithChainHttp()
+    {
+        $foo = new Zend_Controller_Router_Route_Hostname('www.zend.com');
+        $bar = new Zend_Controller_Router_Route_Static('bar');
+
+        $foo->chain($bar);
+        
+        $this->_router->addRoute('foo-bar', $foo);
+
+        $this->assertEquals('http://www.zend.com/bar', $this->_router->assemble(array(), 'foo-bar'));
+    }
+    
+    public function testAssemblingWithNonFirstHostname()
+    {
+        $foo = new Zend_Controller_Router_Route_Static('bar');
+        $bar = new Zend_Controller_Router_Route_Hostname('www.zend.com');
+
+        $foo->chain($bar);
+        
+        $this->_router->addRoute('foo-bar', $foo);
+
+        $this->assertEquals('bar/www.zend.com', $this->_router->assemble(array(), 'foo-bar'));
+    }
 }
 
 
