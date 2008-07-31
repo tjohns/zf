@@ -1907,7 +1907,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
         if (array_key_exists($name, $this->_filters)) {
             require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception(sprintf('Filter instance already exists for filter "%s"', $filter));
+            throw new Zend_Form_Exception(sprintf('Filter instance already exists for filter "%s"', $origName));
         }
 
         if (empty($filter['options'])) {
@@ -1956,7 +1956,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
         if (array_key_exists($name, $this->_validators)) {
             require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception(sprintf('Validator instance already exists for validator "%s"', $validator));
+            throw new Zend_Form_Exception(sprintf('Validator instance already exists for validator "%s"', $origName));
         }
 
         if (empty($validator['options'])) {
