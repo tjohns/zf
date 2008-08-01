@@ -298,8 +298,6 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     registered module paths.</para></listitem>
             <listitem><para><code>addLayer($path)</code>: add a layer (custom
                     build) path to use.</para></listitem>
-            <listitem><para><code>addLayer($path)</code>: add a layer (custom
-                    build) path to use.</para></listitem>
             <listitem><para><code>getLayers()</code>: get a list of all
                     registered layer paths (custom builds).</para></listitem>
             <listitem><para><code>removeLayer($path)</code>: remove the layer
@@ -325,8 +323,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
             <listitem><para><code>getCdnDojoPath()</code>: retrieve the last
                     path segment of the CDN url pointing to the dojo.js
                     file.</para></listitem>
-            <listitem><para><code>useCdn()</code></para>: tell the container to
-                    utilize the CDN; implicitly enables integration.</listitem>
+            <listitem><para><code>useCdn()</code>: tell the container to
+                    utilize the CDN; implicitly enables integration.</para></listitem>
             <listitem><para><code>setLocalPath($path)</code>: tell the container
                     the path to a local Dojo install (should be a path relative
                     to the server, and contain the dojo.js file itself);
