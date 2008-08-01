@@ -2194,7 +2194,7 @@ class Zend_Date extends Zend_Date_DateObject
                 break;
 
             case self::RFC_2822:
-                $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{4})\s(\d{2}):(\d{2}):(\d{2})\s\+\d{4}$/', $date, $match);
+                $result = preg_match('/^\w{3},\s(\d{2})\s(\w{3})\s(\d{4})\s(\d{2}):(\d{2}):(\d{2})\s([+-]{1}\d{4}|\w{1,20}$/', $date, $match);
                 if (!$result) {
                     require_once 'Zend/Date/Exception.php';
                     throw new Zend_Date_Exception("no RFC 2822 format ($date)", $date);
@@ -4628,11 +4628,16 @@ class Zend_Date extends Zend_Date_DateObject
             }
         }
 
-        if ($locale === null) {
-            $locale = new Zend_Locale();
-            $locale = $locale->toString();
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
+                require_once 'Zend/Date/Exception.php';
+                throw new Zend_Date_Exception("Given locale ({$locale}) does not exist", (string) $locale);
+            }
+
+            $locale = new Zend_Locale($locale);
         }
 
+        $locale = (string) $locale;
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale);
         } else if (self::$_Options['format_type'] == 'php') {
@@ -4640,10 +4645,10 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         try {
-print "\nDATE:$date:LOCALE:$locale:FORMAT:$format";
             $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale,
                                                   'date_format' => $format, 'format_type' => 'iso',
                                                   'fix_date' => false));
+
             if (isset($parsed['year']) and ((strpos(strtoupper($format), 'YY') !== false) and
                 (strpos(strtoupper($format), 'YYYY') === false))) {
                 $parsed['year'] = self::_century($parsed['year']);
@@ -4710,7 +4715,7 @@ print "\nDATE:$date:LOCALE:$locale:FORMAT:$format";
             $parsed['year'] = 1970;
         }
 
-        $date      = new self($locale);
+        $date      = new self($parsed, null, $locale);
         $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                    $parsed['month'], $parsed['day'], $parsed['year']);
         if ($parsed['year'] != $date->date('Y', $timestamp)) {
