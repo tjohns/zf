@@ -2480,7 +2480,9 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $return = $this->render();
             return $return;
         } catch (Exception $e) {
-            trigger_error($e->getMessage(), E_USER_WARNING);
+            $message = "Exception caught by form: " . $e->getMessage()
+                     . "\nStack Trace:\n" . $e->getTraceAsString();
+            trigger_error($message, E_USER_WARNING);
             return '';
         }
     }
