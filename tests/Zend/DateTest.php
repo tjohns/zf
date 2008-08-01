@@ -2653,7 +2653,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->add('Sat, 02 Jan 00 20:05:12 +0500', Zend_Date::RFC_1036);
-        $this->assertSame('4002-02-07T00:42:02+05:00', $date->get(Zend_Date::W3C));
+        $this->assertSame('4002-02-06T19:42:02+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);
         $date->add('Sat, 02 Jan 1000 20:05:12 +0500', Zend_Date::RFC_1123);
@@ -3031,7 +3031,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->sub('Sat, 02 Jan 00 20:05:12 +0500', Zend_Date::RFC_1036);
-        $this->assertSame('1-12-03T08:31:38+05:00', $date->get(Zend_Date::W3C));
+        $this->assertSame('1-12-03T13:31:38+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);
         $date->sub('Sat, 02 Jan 1000 20:05:12 +0500', Zend_Date::RFC_1123);
