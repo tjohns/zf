@@ -1,0 +1,54 @@
+<sect1 id="zend.soap.autodiscovery.datatypes">
+    <title>Types de donnée auto découverts.</title>
+
+    <para>
+        Les types de données d'entrée/sortie sont convertis en types spéciaux pour le réseau, suivant ces
+        règles:
+
+        <itemizedlist>
+            <listitem>
+                <para>Chaines strings &lt;-&gt; <code>xsd:string</code>.</para>
+            </listitem>
+            <listitem>
+                <para>Entiers PHP &lt;-&gt; <code>xsd:int</code>.</para>
+            </listitem>
+            <listitem>
+                <para>Flottants PHP (décimaux) &lt;-&gt; <code>xsd:float</code>.</para>
+            </listitem>
+            <listitem>
+                <para>Booléens PHP &lt;-&gt; <code>xsd:boolean</code>.</para>
+            </listitem>
+            <listitem>
+                <para>Tableaux PHP &lt;-&gt; <code>soap-enc:Array</code>.</para>
+            </listitem>
+            <listitem>
+                <para>Objets PHP &lt;-&gt; <code>xsd:struct</code>.</para>
+            </listitem>
+            <listitem>
+                <para>
+                    Classes PHP &lt;-&gt; <code>tns:$className</code>
+                    <footnote>
+                        <para>
+                            Si l'objet <code>Zend_Soap_AutoDiscover</code> est crée avec le paramètre <code>$extractComplexTypes</code>
+                            désactivé, alors les classes sont traduites vers <code>xsd:anyType</code>.
+                        </para>
+                        <para>
+                            Autrement, <code>tns:$className</code> est utilisé et le type est décrit en détails dans la section WSDL
+                            &lt;types&gt;
+                        </para>
+                    </footnote>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Void PHP &lt;-&gt; type vide.</para>
+            </listitem>
+            <listitem>
+                <para>Si le type n'est pas reconnu en tant que l'un de ceux-ci, alors <code>xsd:anyType</code> est utilisé.</para>
+            </listitem>
+        </itemizedlist>
+        
+        Où <code>xsd:</code> est l'espace "http://www.w3.org/2001/XMLSchema", 
+        <code>soap-enc:</code> est l'espace "http://schemas.xmlsoap.org/soap/encoding/",
+        <code>tns:</code> est "l'espace de nom cible" du service.
+    </para>
+</sect1>

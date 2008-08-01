@@ -2,7 +2,7 @@
     <title>Autodiscovering. Datatypes.</title>
 
     <para>
-        Input/utput datatypes are converted into network service types using the following mapping:
+        Input/output datatypes are converted into network service types using the following mapping:
 
         <itemizedlist>
             <listitem>

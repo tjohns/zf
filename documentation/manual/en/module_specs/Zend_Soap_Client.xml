@@ -31,7 +31,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>$options</code> - options to create SOAP server object.
+                        <code>$options</code> - options to create SOAP client object.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -79,7 +79,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        'uri' - target namespace for the SOAP servevice (required for non-WSDL-mode, doesn't work for WSDL mode). 
+                        'uri' - target namespace for the SOAP service (required for non-WSDL-mode, doesn't work for WSDL mode). 
                     </para>
                 </listitem>
                 <listitem>
