@@ -106,14 +106,22 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
      */
     public function setLocale($locale = null)
     {
-        if ($locale !== null) {
-            require_once 'Zend/Locale.php';
-            if (!Zend_Locale::isLocale($locale)) {
+        if ($locale === null) {
+            $this->_locale = null;
+            return $this;
+        }
+
+        require_once 'Zend/Locale.php';
+        if (!Zend_Locale::isLocale($locale, true)) {
+            if (!Zend_Locale::isLocale($locale, false)) {
                 require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception("The locale '$locale' is no known locale");
             }
+
+            $locale = new Zend_Locale($locale);
         }
-        $this->_locale = $locale;
+
+        $this->_locale = (string) $locale;
         return $this;
     }
 
@@ -207,7 +215,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
         if (((strpos($this->_format, 'Y') !== false) or (strpos($this->_format, 'y') !== false)) and
             (!isset($parsed['year']))) {
             // Year expected but not found
-            return false;
+                return false;
         }
 
         if ((strpos($this->_format, 'M') !== false) and (!isset($parsed['month']))) {
@@ -223,7 +231,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
         if (((strpos($this->_format, 'H') !== false) or (strpos($this->_format, 'h') !== false)) and
             (!isset($parsed['hour']))) {
             // Hour expected but not found
-            return false;
+                return false;
         }
 
         if ((strpos($this->_format, 'm') !== false) and (!isset($parsed['minute']))) {
