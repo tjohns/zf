@@ -126,7 +126,7 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      * @param string $host Host used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($host, $partial = null)
+    public function match($host)
     {
         $hostStaticCount = 0;
         $values = array();

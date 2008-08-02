@@ -23,9 +23,9 @@
 require_once 'Zend/Controller/Router/Route/Interface.php';
 
 /**
- * AstractRoute.
+ * Abstract Route
  *
- * Implements intreface and provides convenience methods
+ * Implements interface and provides convenience methods
  *
  * @package    Zend_Controller
  * @subpackage Router

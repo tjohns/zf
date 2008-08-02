@@ -141,16 +141,13 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path, $partial = null)
+    public function match($path)
     {
 
-        $offset = 0;
-        $length = strlen($path);
         $pathStaticCount = 0;
         $values = array();
 
         $path = ltrim($path, $this->_urlDelimiter);
-        $offset += $length - strlen($path);
         
         if ($path != '') {
 
@@ -160,14 +157,9 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
 
                 // Path is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
-                    if ($partial) break;
                     return false;
                 }
                 
-                if ($pos > 0) {
-                    $offset += strlen($this->_urlDelimiter);
-                }
-
                 // If it's a wildcard, get the rest of URL as wildcard data and stop matching
                 if ($this->_parts[$pos] == '*') {
                     $count = count($path);
@@ -177,7 +169,6 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                             $this->_wildcardData[$var] = (isset($path[$i+1])) ? urldecode($path[$i+1]) : null;
                         }
                     }
-                    $offset = $length;
                     break;
                 }
 
@@ -201,8 +192,6 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                     $pathStaticCount++;
                 }
                 
-                $offset += strlen($pathPart);
-
             }
 
         }
@@ -223,10 +212,6 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
 
         $this->_values = $values;
         
-        if ($partial) {
-            $return[null] = $offset;
-        }
-
         return $return;
 
     }

@@ -66,7 +66,7 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path, $partial = null)
+    public function match($path)
     {
         $path = trim(urldecode($path), '/');
         $res = preg_match($this->_regex, $path, $values);
