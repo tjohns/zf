@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10504 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -446,6 +446,35 @@ require_once 'Zend/Measure/Temperature.php';
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
 $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.frameworkwidelocale">
+
+        <title>Anwendungsweites Gebietsschema</title>
+
+        <para>
+            Zend Framework erlaubt die Verwendung eines Anwendungsweiten Gebietsschemas. Man kann einfach eine
+            Instanz von <code>Zend_Locale</code> in der Registry mit dem Schüssel 'Zend_Locale' setzen.
+            Dann wird diese Instanz in allen Klassen vom Zend Framework die Gebietsschemata verwenden selbst
+            verwendet. Auf diesem Weg wird eine Instanz in der Registry gesetzt und dann kann man das weitere
+            Setzen vergessen. Sie wird automatisch in allen anderen Klassen verwendet. Siehe das folgende
+            Beispiel für die richtige Verwendung:
+        </para>
+
+        <example id="zend.locale.frameworkwidelocale.example">
+            <title>Verwendung eines anwendungsweiten Gebietsschemas</title>
+            <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// Im Modell oder dem Controller
+$date = new Zend_Date();
+// print $date->getLocale();
+echo $date->getDate();]]>
             </programlisting>
         </example>
 

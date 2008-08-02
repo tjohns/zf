@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10108 -->
+<!-- EN-Revision: 10517 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -397,6 +397,22 @@ $translate->addTranslation('path/to/german.mo', 'de');]]>
                  Probleme mit inkompatiblen Encodings.
             </para>
         </note>
+
+        <para>
+            Viele Gettext Editoren fügen Informationen über den Adapter als Übersetzung eines leeren
+            Strings hinzu. Das ist der Grund warum ein leerer String nicht übersetzt werden wenn der
+            Gettext Adapter verwendet wird. Stattdessen wird er von der Übersetzungstabelle gelöscht und
+            von der <code>getAdapterInfo()</code> Methode angeboten. Sie gibt die Adapterinformationen für
+            alle hinzugefügten Gettextdateien als Array zurück wobei der Dateiname als Schlüssel verwendet
+            wird.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Wie man Informationen des Adapters erhält
+$translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
+print_r $translate->getAdapterInfo();]]>
+        </programlisting>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
@@ -783,6 +799,24 @@ $translate->addTranslation("\my_de.mo","de");
                 automatische Erkennung für <code>Zend_Translate</code> wieder reaktiviert.
             </para>
 
+            <para>
+                Seit dem Zend Framework 1.6 unterstützt <code>Zend_Translate</code> auch die Verwendung eines
+                Anwendungsweiten Gebietsschemas. Man kann einfach eine <code>Zend_Locale</code> Instanz in der
+                Registry setzen wie unten gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
+                Gebietsschemas mit jeder Instanz komplett vergessen wenn man das gleiche Gebietsschema mehrere
+                Male verwenden will.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// Irgendwo in der Anwendung
+$translate = new Zend_Translate("gettext", "\my_de.mo");
+$translate->getLocale();]]>
+            </programlisting>
+
         </sect3>
 
     </sect2>
@@ -866,10 +900,10 @@ $translate = new Zend_Translate('tmx', '/language');]]>
                 <programlisting role="php"><![CDATA[
 // Angenommen wir haben die folgende Struktur
 //  /language
-//  /language/de/login/login.tmx
-//  /language/de/error/loginerror.tmx
-//  /language/en/login/login.tmx
-//  /language/en/error/loginerror.tmx
+//  /language/de/login/login.mo
+//  /language/de/error/loginerror.mo
+//  /language/en/login/login.mo
+//  /language/en/error/loginerror.mo
 
 $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
                 </programlisting>
@@ -914,10 +948,10 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 <programlisting role="php"><![CDATA[
 // Angenommen wir haben die folgende Struktur
 //  /language
-//  /language/login/login_en.tmx
-//  /language/login/login_de.tmx
-//  /language/error/loginerror_en.tmx
-//  /language/error/loginerror_de.tmx
+//  /language/login/login_en.mo
+//  /language/login/login_de.mo
+//  /language/error/loginerror_en.mo
+//  /language/error/loginerror_de.mo
 
 $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
                 </programlisting>

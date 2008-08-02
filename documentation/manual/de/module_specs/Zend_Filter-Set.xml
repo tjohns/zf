@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10539 -->
 <sect1 id="zend.filter.set">
 
     <title>Standard Filter Klassen</title>
@@ -58,6 +59,13 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.filter.set.stripnewlines">
+        <title>StripNewlines</title>
+        <para>
+            Gibt den String <code>$value</code> ohne Zeilenumbruch Zeichen zurück.
+        </para>
+    </sect2>
+ 
     <sect2 id="zend.filter.set.realpath">
         <title>RealPath</title>
         <para>
