@@ -30,10 +30,9 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Abstract
 {
 
-    protected $_request;
     protected $_routes = array();
     protected $_separators = array();
 
@@ -50,10 +49,6 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
         $this->_routes[] = $route;
         $this->_separators[] = $separator;
 
-        if ($this->_request && method_exists($route, 'setRequest')) {
-            $route->setRequest($request);
-        }
-
         return $this;
 
     }
@@ -62,11 +57,14 @@ class Zend_Controller_Router_Route_Chain implements Zend_Controller_Router_Route
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.
      *
-     * @param string $path Path used to match against this routing map
+     * @param Zend_Controller_Request_Http $request Request to get the path info from
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path, $partial = null)
+    public function match($request, $partial = null)
     {
+
+        $path = $request->getPathInfo();
+        
         $values = array();
         $offset = 0;
 

@@ -59,6 +59,10 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
         $this->_reverse = $reverse;
     }
 
+    public function getVersion() {
+        return 1;
+    }
+    
     /**
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.

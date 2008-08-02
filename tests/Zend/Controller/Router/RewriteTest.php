@@ -444,6 +444,19 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertSame($request, $routeRequest);
     }
 
+    public function testRoutingVersion2Routes()
+    {
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/en/bar');
+        $request->setParam('path', 'v2test');
+        
+        $route = new Zend_Controller_RouterTest_RouteV2_Stub('not-important');
+        $this->_router->addRoute('foo', $route);
+
+        $token = $this->_router->route($request);
+
+        $this->assertEquals('v2test', $token->getParam('path'));
+    }
+        
     public function testRoutingChainedRoutes()
     {
         $this->markTestSkipped('Route features not ready');
@@ -621,6 +634,22 @@ class Zend_Controller_Router_RewriteTest_Dispatcher extends Zend_Controller_Disp
  */
 class Zend_Controller_Router_RewriteTest_Request_Incorrect extends Zend_Controller_Request_Abstract
 {
+}
+
+/**
+ * Zend_Controller_RouterTest_RouteV2_Stub - request object for router testing
+ *
+ * @uses Zend_Controller_Request_Abstract
+ */
+class Zend_Controller_RouterTest_RouteV2_Stub implements Zend_Controller_Router_Route_Interface
+{
+    public function getVersion() { return 2; }
+    public function match($request) {
+        return array('path', $request->getParam('path'));
+    }
+
+    public static function getInstance(Zend_Config $config) {}
+    public function assemble($data = array(), $reset = false, $encode = false) {}
 }
 
 class Zend_Controller_Router_Route_Mockup implements Zend_Controller_Router_Route_Interface

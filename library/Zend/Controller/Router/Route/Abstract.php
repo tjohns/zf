@@ -35,6 +35,10 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
 abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_Router_Route_Interface
 {
 
+    public function getVersion() {
+        return 2;
+    }
+    
     public function chain(Zend_Controller_Router_Route_Interface $route, $separator = '/')
     {
         require_once 'Zend/Controller/Router/Route/Chain.php';

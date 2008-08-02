@@ -42,8 +42,8 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     public function testCorrectStaticHostMatch()
     {
         $route = $this->_getStaticHostRoute();
-
-        $values = $route->match('www.zend.com');
+        
+        $values = $route->match($this->_getRequest('www.zend.com'));
         $this->assertEquals('ctrl', $values['controller']);
     }
 
@@ -51,7 +51,7 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getStaticHostRoute();
 
-        $values = $route->match('foo.zend.com');
+        $values = $route->match($this->_getRequest('foo.zend.com'));
         $this->assertFalse($values);
     }
     
@@ -59,7 +59,7 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getHostRoute();
 
-        $values = $route->match('foo.zend.com');
+        $values = $route->match($this->_getRequest('foo.zend.com'));
         $this->assertEquals('ctrl', $values['controller']);
     }
 
@@ -67,7 +67,7 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getHostRoute();
 
-        $values = $route->match('www.zend.com');
+        $values = $route->match($this->_getRequest('www.zend.com'));
         $this->assertFalse($values);
     }
     
@@ -154,6 +154,27 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
                                                             array('subdomain' => '(foo|bar)'));
                                                             
         return $route;
+    }
+    
+    protected function _getRequest($host) {
+        return new Zend_Controller_Router_RewriteTest_Request_Stub($host);
+    }
+
+}
+
+/**
+ * Zend_Controller_RouterTest_Request_Stub - request object for route testing
+ */
+class Zend_Controller_Router_RewriteTest_Request_Stub extends Zend_Controller_Request_Abstract
+{
+    protected $_host;
+    
+    public function __construct($host) {
+        $this->_host = $host;
+    }
+    
+    public function getServer() {
+        return $this->_host; 
     }
 }
 

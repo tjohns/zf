@@ -75,6 +75,10 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
      */
     protected $_request;
 
+    public function getVersion() {
+        return 1;
+    }
+    
     /**
      * Instantiates route based on passed Zend_Config structure
      */

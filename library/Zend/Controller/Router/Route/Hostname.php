@@ -123,11 +123,13 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      * Matches a user submitted path with parts defined by a map. Assigns and
      * returns an array of variables on a successful match.
      *
-     * @param string $host Host used to match against this routing map
+     * @param Zend_Controller_Request_Http $request Request to get the host from
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($host)
+    public function match($request)
     {
+        $host = $request->getServer('SERVER_NAME');
+        
         $hostStaticCount = 0;
         $values = array();
 
