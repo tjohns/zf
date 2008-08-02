@@ -128,7 +128,11 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      */
     public function match($request)
     {
-        $host = $request->getServer('SERVER_NAME');
+        // Get the host and remove unnecessary port information
+        $host = $request->getHttpHost();
+        if (preg_match('#:\d+$#', $host, $result) === 1) {
+            $host = substr($host, 0, (-strlen($result[0])));
+        }
         
         $hostStaticCount = 0;
         $values = array();

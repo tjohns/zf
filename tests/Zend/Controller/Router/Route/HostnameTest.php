@@ -11,6 +11,9 @@ require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 /** Zend_Controller_Router_Route_Hostname */
 require_once 'Zend/Controller/Router/Route/Hostname.php';
 
+/** Zend_Controller_Request_Http */
+require_once 'Zend/Controller/Request/Http.php';
+
 /** PHPUnit test case */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -44,6 +47,14 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
         $route = $this->_getStaticHostRoute();
         
         $values = $route->match($this->_getRequest('www.zend.com'));
+        $this->assertEquals('ctrl', $values['controller']);
+    }
+    
+    public function testHostMatchWithPort()
+    {
+        $route = $this->_getStaticHostRoute();
+        
+        $values = $route->match($this->_getRequest('www.zend.com:666'));
         $this->assertEquals('ctrl', $values['controller']);
     }
 
@@ -129,7 +140,7 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     public function testRouteWithHostname()
     {
         $_SERVER['SERVER_NAME'] = 'www.zend.com';
-        $request = new Zend_Controller_Router_HostnameTest_Request('http://www.zend.com');
+        $request = new Zend_Controller_Router_RewriteTest_Request_Stub('www.zend.com');
         
         $route = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('controller' => 'host-foo', 'action' => 'host-bar'));
         
@@ -186,31 +197,10 @@ class Zend_Controller_Router_RewriteTest_Request_Stub extends Zend_Controller_Re
         $this->_host = $host;
     }
     
-    public function getServer() {
+    public function getHttpHost() {
         return $this->_host; 
     }
 }
-
-/**
- * Zend_Controller_Router_HostnameTest_Request - request object for router testing
- *
- * @uses Zend_Controller_Request_Interface
- */
-class Zend_Controller_Router_HostnameTest_Request extends Zend_Controller_Request_Http
-{
-    public function __construct($uri = null)
-    {
-        if (null === $uri) {
-            $uri = 'http://localhost/foo/bar/baz/2';
-        }
-
-        $uri = Zend_Uri_Http::fromString($uri);
-        $_SERVER['SERVER_NAME'] = $uri->getHost();
-        
-        parent::__construct($uri);
-    }
-}
-
 
 if (PHPUnit_MAIN_METHOD == "Zend_Controller_Router_Route_HostnameTest::main") {
     Zend_Controller_Router_Route_HostnameTest::main();
