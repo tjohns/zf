@@ -66,25 +66,18 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
         $path = $request->getPathInfo();
         
         $values = array();
-        $offset = 0;
 
         foreach ($this->_routes as $key => $route) {
             
-            if ($offset && $this->_separators[$key] != $path[0]) {
-                return false;
-            } elseif ($offset) {
-                $offset += strlen($this->_separators[$key]);
+            // TODO: Should be an interface method. Hack for 1.0 BC  
+            if (!method_exists($route, 'getVersion') || $route->getVersion() == 1) {
+                $match = $request->getPathInfo();
+            } else {
+                $match = $request;
             }
-
-            $res = $route->match($path, true);
+            
+            $res = $route->match($match);
             if ($res === false) return false;
-
-            // Hack for interface BC
-            if (array_key_exists(null, $res)) {
-                $offset = $res[null];
-            }
-
-            $path = substr($path, $offset);
 
             $values = $res + $values;
 

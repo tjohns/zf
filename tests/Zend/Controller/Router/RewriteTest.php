@@ -479,30 +479,12 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $token->getParam('bar'));
     }
     
-    public function testRouteWithHostname()
-    {
-        $this->markTestSkipped('Router features not ready');
-        
-        $request = new Zend_Controller_Router_RewriteTest_Request('http://www.zend.com');
-        
-        $route = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('controller' => 'foo', 'action' => 'bar'));
-
-        $this->_router->addRoute('hostname-route', $route);
-        
-        $token = $this->_router->route($request);
-
-        $this->assertEquals('foo', $token->getControllerName());
-        $this->assertEquals('bar', $token->getActionName());
-    }
-    
     public function testRouteWithHostnameChain()
     {
-        $this->markTestSkipped('Router features not ready');
-        
         $request = new Zend_Controller_Router_RewriteTest_Request('http://www.zend.com/bar');
         
-        $foo = new Zend_Controller_Router_Route_Hostname('nope.zend.com', array('module' => 'bla'));
-        $bar = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('module' => 'bla'));
+        $foo = new Zend_Controller_Router_Route_Hostname('nope.zend.com', array('module' => 'nope-bla', 'bogus' => 'bogus'));
+        $bar = new Zend_Controller_Router_Route_Hostname('www.zend.com', array('module' => 'www-bla'));
         
         $bla = new Zend_Controller_Router_Route_Static('bar', array('controller' => 'foo', 'action' => 'bar'));
         
@@ -517,9 +499,10 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         
         $token = $this->_router->route($request);
 
-        $this->assertEquals('bla', $token->getModuleName());
+        $this->assertEquals('www-bla', $token->getModuleName());
         $this->assertEquals('foo', $token->getControllerName());
         $this->assertEquals('bar', $token->getActionName());
+        $this->assertNull($token->getParam('bogus'));
     } 
     
     public function testAssemblingWithHostnameHttp()
@@ -607,6 +590,9 @@ class Zend_Controller_Router_RewriteTest_Request extends Zend_Controller_Request
             $uri = 'http://localhost/foo/bar/baz/2';
         }
 
+        $uri = Zend_Uri_Http::fromString($uri);
+        $_SERVER['SERVER_NAME'] = $uri->getHost();
+        
         parent::__construct($uri);
     }
 }
