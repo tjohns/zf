@@ -1,61 +1,57 @@
 <!-- EN-Revision: 10130 -->
 <sect2 id="zend.dojo.form.elements">
-    <title>Dijit-Specific Form Elements</title>
+    <title>Dijit-Specifische Fomularelemente</title>
 
     <para>
-        Each form dijit for which a view helper is provided has a corresponding
-        <code>Zend_Form</code> element. All of them have the following methods
-        available for manipulating dijit parameters:
+        Jedes Formular-Dijit für welches ein Viewhelfer vorhanden ist hat ein korrespondierendes
+        <code>Zend_Form</code> Element. Alle von Ihnen bieten die folgenden Methoden für die Manipulation
+        von Dijit Parametern an:
     </para>
 
     <itemizedlist>
         <listitem><para>
-                <code>setDijitParam($key, $value)</code>: set a single dijit
-                parameter. If the dijit parameter already exists, it will be
-                overwritten.
+                <code>setDijitParam($key, $value)</code>: Setzt einen einzelnen Dijit Parameter. Wenn der
+                Dijit Parmeter bereits existiert wird er überschrieben.
         </para></listitem>
 
         <listitem><para>
-                <code>setDijitParams(array $params)</code>: set several dijit
-                parameters at once. Any passed parameters matching those
-                already present will overwrite.
+                <code>setDijitParams(array $params)</code>: Setzt mehrere Dijit Parameter auf einmal. Jeder
+                übergebene Parameter der bereits existierenden entspricht wird überschrieben.
         </para></listitem>
 
         <listitem><para>
-                <code>hasDijitParam($key)</code>: whether or not a given dijit
-                parameter is defined and present.
+                <code>hasDijitParam($key)</code>: Ob ein angegebener Dijit Parameter definiert und vorhanden
+                ist oder nicht.
         </para></listitem>
 
         <listitem><para>
-                <code>getDijitParam($key)</code>: retrieve the given dijit
-                parameter. If not available, a null value is returned.
+                <code>getDijitParam($key)</code>: Gibt den angegebenen Dijit Parameter. Wenn er nicht
+                vorhanden ist, wird ein null Wert zurückgegeben.
         </para></listitem>
 
         <listitem><para>
-                <code>getDijitParams()</code>: retrieve all dijit parameters.
+                <code>getDijitParams()</code>: Gibt alle Dijit Parameter zurück.
         </para></listitem>
 
         <listitem><para>
-                <code>removeDijitParam($key)</code>: remove the given dijit
-                parameter. 
+                <code>removeDijitParam($key)</code>: Entfernt den angegebenen Dijit Parameter. 
         </para></listitem>
 
         <listitem><para>
-                <code>clearDijitParams()</code>: clear all currently defined
-                dijit parameters. 
+                <code>clearDijitParams()</code>: Löscht alle aktuell definierten Dijit Parameter. 
         </para></listitem>
     </itemizedlist>
 
     <para>
-        Dijit parameters are stored in the <code>dijitParams</code> public
-        property. Thus, you can dijit-enable an existing form element simply by
-        setting this property on the element; you simply will not have the
-        above accessors to facilitate manipulating the parameters.
+        Dijit Parameter werden in der öffentlichen <code>dijitParams</code> Eigenschaft gespeichert.
+        Deshalb kann ein existierendes Formularelement einfach dijit-aktiviert werden indem diese
+        Eigenschaft auf dem Element gesetzt wird; man hat in diesem Fall nur nicht die Zugriffsmethoden um
+        die Parameter zu manipulieren.
     </para>
 
     <para>
-        Additionally, dijit-specific elements implement a different list of
-        decorators, corresponding to the following:
+        Zusätzlich implementieren Dijit-spezifische Element eine andere Liste von Dekoratoren, die dem
+        folgenden entsprechen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -66,60 +62,54 @@ $element->addDecorator('DijitElement')
 ]]></programlisting>
 
     <para>
-        In effect, the DijitElement decorator is used in place of the standard
-        ViewHelper decorator.
+        Effektiv wird der DijitElement Dekorator statt dem standardmäßigen ViewHelper Dekorator verwendet.
     </para>
 
     <para>
-        Finally, the base Dijit element ensures that the Dojo view helper path
-        is set on the view.
+        Letztendlich stellt das Basis-Dijitelement sicher das der Dojo Viewhelfer Pfad in der View gesetzt ist.
     </para>
 
     <para>
-        A variant on DijitElement, DijitMulti, provides the functionality of
-        the <code>Multi</code> abstract form element, allowing the developer to
-        specify 'multiOptions' -- typically select options or radio options.
+        Eine Variante von DijitElement, DijitMulti, bietet die Funktionalität des abstrakten <code>Multi</code>
+        Formularelements, das es Entwicklern erlaubt 'multiOptions' zu spezifizieren -- typischerweise
+        Select-Optionen oder Radio-Optionen.
     </para>
 
     <para>
-        The following dijit elements are shipped in the standard Zend
-        Framework distribution.
+        Die folgenden Dijitelemente werden in der standardmäßigen Zend Framework Distribution ausgeliefert.
     </para>
 
     <sect3 id="zend.dojo.form.elements.button">
         <title>Button</title>
 
         <para>
-            While not deriving from <link
-                linkend="zend.form.standardElements.submit">the standard Submit
-                element</link>, it does implement the same functionality, and
-            can be used as a drop-in replacement for the standard <link
-                linkend="zend.form.standardElements.button">Button
-                element</link>. The following functionality is exposed:
+            Wärend es nicht vom <link linkend="zend.form.standardElements.submit">standardmäßigen Submit
+            Element</link> abgeleitet ist, implementiert es die gleiche Funktionalität, und kann als
+            Drop-In Ersatz für das standardmäßige <link linkend="zend.form.standardElements.button">Button
+            Element</link>  verwendet werden. Die folgende Funktionalität wird zur Verfügung gestellt:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>getLabel()</code> will utilize the element name as the
-                button label if no name is provided. Additionally, it will
-                translate the name if a translation adapter with a matching
-                translation message is available.
+                <code>getLabel()</code> verwendet den Elementnamen als Label für den Button wenn kein
+                Name angegeben wurde. Zusätzlich übersetzt es den Namen wenn ein Übersetzungsadapter mit
+                einer passenden übersetzten Meldung vorhanden ist.
             </para></listitem>
 
             <listitem><para>
-                <code>isChecked()</code> determines if the value submitted
-                matches the label; if so, it returns true. This is useful for
-                determining which button was used when a form was submitted.
+                <code>isChecked()</code> ermittelt ob der übermittelte Wert zum Label passt; wenn das der
+                Fall ist wird true zurückgegeben. Das ist für die Erkennung, welcher Button verwendet wurde
+                als das Formular übermittelt wurde, nützlich.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Additionally, only the decorators <code>DijitElement</code> and
-            <code>DtDdWrapper</code> are utilized for Button elements.
+            Zusätzlich werden nur die Dekoratore <code>DijitElement</code> und <code>DtDdWrapper</code>
+            für Buttonelemente benutzt.
         </para>
 
         <example id="zend.dojo.form.elements.button.example">
-            <title>Example Button dijit element usage</title>
+            <title>Beispiel für die Verwendung des Button Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -137,53 +127,50 @@ $form->addElement(
         <title>CheckBox</title>
 
         <para>
-            While not deriving from <link
-                linkend="zend.form.standardElements.checkbox">the standard
-                Checkbox element</link>, it does implement the same
-            functionality. This means that the following methods are exposed:
+            Wärend es nicht vom <link linkend="zend.form.standardElements.checkbox">standardmäßigen Checkbox
+            Element</link> abgeleitet ist, implementiert es die gleiche Funktionalität. Das bedeutet das die
+            folgenden Methoden zur Verfügung gestellt werden:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setCheckedValue($value)</code>: set the value to use when
-                the element is checked.
+                <code>setCheckedValue($value)</code>: Setzt den Wert der verwendet werden soll wenn das
+                Element angehakt ist.
             </para></listitem>
 
             <listitem><para>
-                <code>getCheckedValue()</code>: get the value of the item to
-                use when checked.
+                <code>getCheckedValue()</code>: Gibt den Wert des Elements zurück der verwendet wird wenn
+                das Element angehakt ist.
             </para></listitem>
 
             <listitem><para>
-                <code>setUncheckedValue($value)</code>: set the value of the
-                item to use when it is unchecked.
+                <code>setUncheckedValue($value)</code>: Setzt den Wert des Elements der verwendet wird wenn
+                das Element nicht angehakt ist.
             </para></listitem>
 
             <listitem><para>
-                <code>getUncheckedValue()</code>: get the value of the item to
-                use when it is unchecked.
+                <code>getUncheckedValue()</code>: Gibt den Wert des Elements zurück der verwendet wird wenn
+                das Element nicht angehakt ist.
             </para></listitem>
 
             <listitem><para>
-                <code>setChecked($flag)</code>: mark the element as checked or
-                unchecked.
+                <code>setChecked($flag)</code>: Markiert das Element als angehakt oder nicht angehakt.
             </para></listitem>
 
             <listitem><para>
-                <code>isChecked()</code>: determine if the element is currently
-                checked.
+                <code>isChecked()</code>: Ermittelt ob das Element aktuell angehakt ist.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.checkBox.example">
-            <title>Example CheckBox dijit element usage</title>
+            <title>Beispiel für die Verwendung des CheckBox Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
     'CheckBox',
     'foo',
     array(
-        'label'          => 'A check box',
+        'label'          => 'Eine Checkbox',
         'checkedValue'   => 'foo',
         'uncheckedValue' => 'bar',
         'checked'        => true,
@@ -197,77 +184,68 @@ $form->addElement(
         <title>ComboBox</title>
 
         <para>
-            As noted in the ComboBox <link
-                linkend="zend.dojo.view.dijit.form">dijit view helper
-                documentation</link>, ComboBoxes are a hybrid between select
-            and text input, allowing for autocompletion and the ability to
-            specify an alternate to the options provided.
+            Wie in der ComboBox <link linkend="zend.dojo.view.dijit.form">Dijit Viewhelfer Dokumentation</link>
+            beschrieben, sind Comboboxen ein Hybrid zwischen Select und Texteingaben, erlauben automatische
+            Vervollständigung und die Fähigkeit eine Alternative zu den angebotenen Optionen zu spezifizieren.
         </para>
 
         <para>
-            The ComboBox form element provides accessors and mutators for
-            examining and setting the select options as well as the ComboBox
-            dojo.data datastore (if used). It extends from DijitMulti, which
-            allows you to specify select options via the
-            <code>setMultiOptions()</code> and <code>setMultiOption()</code>
-            methods. In addition, the following methods are available:
+            Das ComboBox Formularelement bietet Zugriffsmethoden und Mutatoren für das Ermitteln und Setzen
+            von Selectoptionen sowie des ComboBox dojo.data Datenspeichers (wenn er verwendet wird). Es
+            erweitert DijitMulti, welches es erlaubt Selectoptionen über die Methoden
+            <code>setMultiOptions()</code> und <code>setMultiOption()</code> zu spezifizieren. Zusätzlich
+            stehen die folgenden Methoden zur Verfügung:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>getStoreInfo()</code>: get all datastore information
-                currently set. Returns an empty array if no data is currently
-                set.
+                <code>getStoreInfo()</code>: Gibt alle aktuell gesetzten Informationen des Datenspeichers
+                zurück. Gibt ein leeres Array zurück wenn aktuell keine Daten gesetzt sind.
             </para></listitem>
 
             <listitem><para>
-                <code>setStoreId($identifier)</code>: set the store identifier
-                variable (usually referred to by the attribute 'jsId' in Dojo).
-                This should be a valid javascript variable name.
+                <code>setStoreId($identifier)</code>: Setzt die Identifikatorvariable des Speichers
+                (normalerweise wird darauf durch das Attribut 'jsId' in Dojo referiert). Das sollte
+                ein gültiger Name für eine Javascriptvariable sein. 
             </para></listitem>
 
             <listitem><para>
-                <code>getStoreId()</code>: retrieve the store identifier
-                variable name.
+                <code>getStoreId()</code>: Gibt den Namen der Identifikatorvariable des Speichers zurück.
             </para></listitem>
 
             <listitem><para>
-                <code>setStoreType($dojoType)</code>: set the datastore class
-                to use; e.g., "dojo.data.ItemFileReadStore".
+                <code>setStoreType($dojoType)</code>: Setzt die Datenspeicherklasse die verwendet werden
+                soll; z.B., "dojo.data.ItemFileReadStore".
             </para></listitem>
 
             <listitem><para>
-                <code>getStoreType()</code>: get the dojo datastore class to
-                use.
+                <code>getStoreType()</code>: Gibt die Dojo Datenspeicherklasse zurück die verwendet werden soll.
             </para></listitem>
 
             <listitem><para>
-                <code>setStoreParams(array $params)</code>: set any parameters
-                used to configure the datastore object. As an example,
-                dojo.data.ItemFileReadStore datastore would expect a 'url'
-                parameter pointing to a location that would return the
-                dojo.data object.
+                <code>setStoreParams(array $params)</code>: Setzt jeden verwendeten Parameter um das
+                Datenspeicherobjekt zu konfigurieren. Als Beispiel würde der
+                dojo.data.ItemFileReadStore Datenspeicher einen 'url' Parameter erwarten der auf einen Ort
+                zeigt der das dojo.data Objekt zurückgibt.
             </para></listitem>
 
             <listitem><para>
-                <code>getStoreParams()</code>: get any datastore parameters
-                currently set; if none, an empty array is returned.
+                <code>getStoreParams()</code>: Gibt alle aktuell gesetzten Datenspeicher Parameter zurück;
+                wenn keiner gesetzt ist, wird ein leeres Array zurückgegeben.
             </para></listitem>
 
             <listitem><para>
-                <code>setAutocomplete($flag)</code>: indicate whether or not
-                the selected item will be used when the user leaves the
-                element.
+                <code>setAutocomplete($flag)</code>: Zeigt ob das selektierte Element verwendet wird oder nicht
+                wenn der Benutzer das Element verlässt.
             </para></listitem>
 
             <listitem><para>
-                <code>getAutocomplete()</code>: get the value of the
-                autocomplete flag.
+                <code>getAutocomplete()</code>: Gibt den Wert des autocomplete Flags zurück.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.comboBox.selectExample">
-            <title>ComboBox dijit element usage as select input</title>
+            <title>Das ComboBox Dijit Element als Select Eingabe verwenden</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -291,7 +269,7 @@ $form->addElement(
         </example>
 
         <example id="zend.dojo.form.elements.comboBox.datastoreExample">
-            <title>ComboBox dijit element usage with datastore</title>
+            <title>Das ComboBox Dijit Element mit einem Datenspeicher verwenden</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -317,66 +295,62 @@ $form->addElement(
         <title>CurrencyTextBox</title>
 
         <para>
-            The CurrencyTextBox is primarily for supporting currency input. The
-            currency may be localized, and can support both fractional and
-            non-fractional values.
+            Die CurrencyTextBox ist primär für die Unterstützung von Währungseingaben. Die Währung kann
+            lokalisiert werden, und unterstützt sowohl Kommazahlen als auch ganze Zahlen.
         </para>
 
         <para>
-            Internally, CurrencyTextBox derives from <link
-                linkend="zend.dojo.form.elements.numberTextBox">NumberTextBox</link>,
-            <link
-                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>,
-            and <link linkend="zend.dojo.form.elements.textBox">TextBox</link>;
-            all methods available to those classes are available. In addition,
-            the following constraint methods can be used:
+            Intern ist die CurrencyTextBox abgeleitet von 
+            <link linkend="zend.dojo.form.elements.numberTextBox">NumberTextBox</link>,
+            <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>,
+            und <link linkend="zend.dojo.form.elements.textBox">TextBox</link>; alle vorhandenen
+            Methoden dieser Klassen sind vorhanden. Zusätzlich können die folgenden bedingten Methoden
+            verwendet werden:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setCurrency($currency)</code>: set the currency type to
-                use; should follow the <ulink
-                    url="http://en.wikipedia.org/wiki/ISO_4217">ISO-4217</ulink>
-                specification.
+                <code>setCurrency($currency)</code>: Setzt den Typ der Währung die verwendet werden sol;
+                sollte der <ulink url="http://en.wikipedia.org/wiki/ISO_4217">ISO-4217</ulink> Spezifikation
+                folgen.
             </para></listitem>
 
             <listitem><para>
-                <code>getCurrency()</code>: retrieve the current currency type.
+                <code>getCurrency()</code>: Gibt den aktuellen Währungstyp zurück.
             </para></listitem>
 
             <listitem><para>
-                <code>setSymbol($symbol)</code>: set the 3-letter <ulink
-                    url="http://en.wikipedia.org/wiki/ISO_4217">ISO-4217</ulink>
-                currency symbol to use.
+                <code>setSymbol($symbol)</code>: Setzt das 3-buchstabige
+                <ulink url="http://en.wikipedia.org/wiki/ISO_4217">ISO-4217</ulink> Symbol der Währung
+                das verwendet werden soll.
             </para></listitem>
 
             <listitem><para>
-                <code>getSymbol()</code>: get the current currency symbol.
+                <code>getSymbol()</code>: Gibt das aktuelle Währungssymbol zurück.
             </para></listitem>
 
             <listitem><para>
-                <code>setFractional($flag)</code>: set whether or not the
-                currency should allow for fractional values.
+                <code>setFractional($flag)</code>: Setzt ob für die Währung Kommazahlen oder ganze Zahlen
+                verwendet werden dürfen.
             </para></listitem>
 
             <listitem><para>
-                <code>getFractional()</code>: retrieve the status of the
-                fractional flag.
+                <code>getFractional()</code>: Gibt den Status des Kommazahlen Flags zurück.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.currencyTextBox.example">
-            <title>Example CurrencyTextBox dijit element usage</title>
+            <title>Beispiel für die Verwendung des CurrencyTextBox Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
     'CurrencyTextBox', 
     'foo', 
     array(
-        'label'          => 'Currency:',
+        'label'          => 'Währung:',
         'required'       => true,
         'currency'       => 'USD',
-        'invalidMessage' => 'Invalid amount. Include dollar sign, commas, and cents.',
+        'invalidMessage' => 'Ungültiger Wert. Es müssen das Dollarzeichen, ein Komma und Cents enthalten sein.',
         'fractional'     => false,
     )
 );
@@ -388,68 +362,64 @@ $form->addElement(
         <title>DateTextBox</title>
 
         <para>
-            DateTextBox provides a calendar drop-down for selecting a date, as
-            well as client-side date validation and formatting.
+            DateTextBox bietet einen Kalender Drop-Down für die Auswahl eines Datums, sowie einer Clientseitigen
+            Überprüfung und Formatierung.
         </para>
 
         <para>
-            Internally, DateTextBox derives from <link
-                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>
-            and <link linkend="zend.dojo.form.elements.textBox">TextBox</link>;
-            all methods available to those classes are available. In addition,
-            the following methods can be used to set individual constraints:
+            Intern ist DateTextBox abgeleitet von
+            <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link> und
+            <link linkend="zend.dojo.form.elements.textBox">TextBox</link>; alle vorhandenen Methoden dieser
+            Klassen sind vorhanden. Zusätzlich können die folgenden Methoden verwendet werden um individuelle
+            Abhängigkeiten zu setzen:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setAmPm($flag)</code> and <code>getAmPm()</code>: Whether
-                or not to use AM/PM strings in times.
+                <code>setAmPm($flag)</code> and <code>getAmPm()</code>: Ob in der Zeit AM/PM Strings
+                verwendet werden sollen oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setStrict($flag)</code> and <code>getStrict()</code>:
-                whether or not to use strict regular expression matching when
-                validating input. If false, which is the default, it will be
-                lenient about whitespace and some abbreviations.
+                <code>setStrict($flag)</code> und <code>getStrict()</code>: Ob Reguläre Ausdrücke strikt
+                passen müssen oder nicht. Wenn es false ist, was der Standardwert ist, wird es nicht über
+                Leerzeichen und einige Abkürzungen lamentieren.
             </para></listitem>
 
             <listitem><para>
-                <code>setLocale($locale)</code> and <code>getLocale()</code>:
-                Set and retrieve the locale to use with this specific element.
+                <code>setLocale($locale)</code> und <code>getLocale()</code>: Setzt und gibt die Locale zurück
+                die mit diesem speziellen Element verwendet werden soll.
             </para></listitem>
 
             <listitem><para>
-                <code>setDatePattern($pattern)</code> and
-                <code>getDatePattern()</code>: provide and retrieve the <ulink
-                    url="http://www.unicode.org/reports/tr35/#Date_Format_Patterns">unicode
-                    date format pattern</ulink> for formatting the date.
+                <code>setDatePattern($pattern)</code> und <code>getDatePattern()</code>: Bietet und gibt den
+                <ulink url="http://www.unicode.org/reports/tr35/#Date_Format_Patterns">Unicode Pattern des
+                Datumsformats</ulink> für die Formatierung des Datums zurück.
             </para></listitem>
 
             <listitem><para>
-                <code>setFormatLength($formatLength)</code> and
-                <code>getFormatLength()</code>: provide and retrieve the format
-                length type to use; should be one of "long", "short", "medium"
-                or "full".
+                <code>setFormatLength($formatLength)</code> und <code>getFormatLength()</code>: Bietet und
+                gibt den Formatlänge Typ der verwendet werden soll zurück; sollte "long", "short", "medium"
+                oder "full" sein.
             </para></listitem>
 
             <listitem><para>
-                <code>setSelector($selector)</code> and
-                <code>getSelector()</code>: provide and retrieve the style of
-                selector; should be either "date" or "time".
+                <code>setSelector($selector)</code> und <code>getSelector()</code>: Bietet und gibt den Stil
+                des Selektors zurück; sollte entweder "date" oder "time" sein.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.dateTextBox.example">
-            <title>Example DateTextBox dijit element usage</title>
+            <title>Beispiel der Verwendung des DateTextBox Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
     'DateTextBox', 
     'foo', 
     array(
-        'label'          => 'Date:',
+        'label'          => 'Datum:',
         'required'       => true,
-        'invalidMessage' => 'Invalid date specified.',
+        'invalidMessage' => 'Ungültiges Datum spezifiziert.',
         'formatLength'   => 'long',
     )
 );
@@ -461,87 +431,77 @@ $form->addElement(
         <title>HorizontalSlider</title>
 
         <para>
-            HorizontalSlider provides a slider UI widget for selecting a
-            numeric value in a range. Internally, it sets the value of a hidden
-            element which is submitted by the form.
+            HorizontalSlider bietet ein Schieber UI Widget für die Auswahl eines nummerischen Wertes in einem
+            Bereich. Intern, setzt es den Wert eines versteckten Elements welches vom Formular übermittelt wird.
         </para>
 
         <para>
-            HorizontalSlider derives from the <link
-                linkend="zend.dojo.form.elements.slider">abstract Slider dijit
-                element</link>. Additionally, it has a variety of methods for
-            setting and configuring slider rules and rule labels.
+            HorizontalSlider ist vom <link linkend="zend.dojo.form.elements.slider">abstrakten Slider Dijit
+            Element</link> abgeleitet. Zusätzlich hat es eine Vielzahl von Methoden für das Setzen und
+            Konfigurieren der Schieberregeln und Regel Labels.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setTopDecorationDijit($dijit)</code> and
-                    <code>setBottomDecorationDijit($dijit)</code>: set the name
-                    of the dijit to use for either the top or bottom of the
-                    slider. This should not include the "dijit.form." prefix,
-                    but rather only the final name -- one of "HorizontalRule"
-                    or "HorizontalRuleLabels".
+                    <code>setTopDecorationDijit($dijit)</code> und <code>setBottomDecorationDijit($dijit)</code>:
+                    Setzt den Namen des Dijits das entweder oberhalb oder unterhalb des Schiebers verwendet
+                    werden soll. Es darf nicht den "dijit.form." Präfix enthalten, sondern nur den endgültigen
+                    Namen -- entweder "HorizontalRule" oder "HorizontalRuleLabels".
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setTopDecorationContainer($container)</code> and
-                    <code>setBottomDecorationContainer($container)</code>:
-                    specify the name to use for the container element of the
-                    rules; e.g. 'topRule', 'topContainer', etc.
+                    <code>setTopDecorationContainer($container)</code> und
+                    <code>setBottomDecorationContainer($container)</code>: Spezifiziert den Namen der für das
+                    Containerelement der Regeln verwendet werden soll; z.B. 'topRule', 'topContainer', usw.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setTopDecorationLabels(array $labels)</code> and 
-                    <code>setBottomDecorationLabels(array $labels)</code>: set
-                    the labels to use for one of the RuleLabels dijit types.
-                    These should be an indexed array; specify a single empty
-                    space to skip a given label position (such as the beginning
-                    or end).
+                    <code>setTopDecorationLabels(array $labels)</code> und 
+                    <code>setBottomDecorationLabels(array $labels)</code>: Setzt die Labels die für eine der
+                    RuleLabel Dijit Typen verwendet werden sollen. Diese sollten ein indiziertes Array sein;
+                    spezifiziere eine einzelnes Leerzeichen um eine gegebene Labelposition zu überspringen
+                    (wie beim Beginn oder dem Ende).
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setTopDecorationParams(array $params)</code> and 
-                    <code>setBottomDecorationParams(array $params)</code>:
-                    dijit parameters to use when configuring the given Rule or
-                    RuleLabels dijit.
+                    <code>setTopDecorationParams(array $params)</code> und 
+                    <code>setBottomDecorationParams(array $params)</code>: Dijit Parameter die verwendet
+                    werden sollen wenn die gegebene Rule oder RuleLabels Dijits konfiguriert werden
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setTopDecorationAttribs(array $attribs)</code> and
-                    <code>setBottomDecorationAttribs(array $attribs)</code>:
-                    HTML attributes to specify for the given Rule or RuleLabels
-                    HTML element container.
+                    <code>setTopDecorationAttribs(array $attribs)</code> und
+                    <code>setBottomDecorationAttribs(array $attribs)</code>: HTML Attribute die für die
+                    gegebene Rule oder RuleLabels HTML Elementcontainer spezifiziert werden.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getTopDecoration()</code> and
-                    <code>getBottomDecoration()</code>: retrieve all metadata
-                    for a given Rule or RuleLabels definition, as provided by
-                    the above mutators.
+                    <code>getTopDecoration()</code> und <code>getBottomDecoration()</code>: Geben alle
+                    Metadaten für eine gegebene Rule oder RuleLabels Definition zurück, wie von den obigen
+                    Mutatoren geliefert.
                 </para>
             </listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.horizontalSlider.example">
-            <title>Example HorizontalSlider dijit element usage</title>
+            <title>Beispiel der Verwendung des HorizontalSlider Dijit Elements</title>
 
             <para>
-                The following will create a horizontal slider selection with
-                integer values ranging from -10 to 10. The top will have labels
-                at the 20%, 40%, 60%, and 80% marks. The botton will have rules
-                at 0, 50%, and 100%. Each time the value is changed, the hidden
-                element storing the value will be updated.
+                Das folgende erzeugt eine horizontale Schieberauswahl mit Integerwerten die von -10 bis 10
+                reichen. Oben sind Labels bei den 20%, 40%, 60% und 80% Marken. Unten sind Regeln bei 0, 50%
+                und 100%. Jedesmal wenn der Wert geändert wird, wird das versteckte Element das den Wert
+                speichert aktualisiert. 
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -596,28 +556,26 @@ $form->addElement(
         <title>NumberSpinner</title>
 
         <para>
-            A number spinner is a text element for entering numeric values; it
-            also includes elements for incrementing and decrementing the value
-            by a set amount.
+            Ein Nummernkreisel (Number Spinner) ist ein Textelement für die Eingabe von nummerischen Werten;
+            es enthält auch Elemente für das inkrementieren und dekrementieren des Wertes mit einer
+            gesetzten Anzahl.
         </para>
 
         <para>
-            The following methods are available:
+            Die folgenden Methoden sind vorhanden:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setDefaultTimeout($timeout)</code> and
-                <code>getDefaultTimeout()</code>: set and retrieve the default
-                timeout, in milliseconds, between when the button is held
-                pressed and the value is changed.
+                <code>setDefaultTimeout($timeout)</code> und <code>getDefaultTimeout()</code>: Setzt und gibt
+                den Standardtimeout, in Millisekunden, zurück der zwischen dem gedrückt halten des Buttons
+                und der Änderung des Wertes ist.
             </para></listitem>
             
             <listitem><para>
-                <code>setTimeoutChangeRate($rate)</code> and
-                <code>getTimeoutChangeRate()</code>: set and retrieve the
-                rate, in milliseconds, at which changes will be made when a
-                button is held pressed.
+                <code>setTimeoutChangeRate($rate)</code> und <code>getTimeoutChangeRate()</code>: Setzt und
+                gibe die Rate, in Millisekunden, zurück mit der Änderungen durchgeführt werden wenn ein
+                Button gedrückt gehalten wird.
             </para></listitem>
             
             <listitem><para>

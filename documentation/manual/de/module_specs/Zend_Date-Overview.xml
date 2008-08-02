@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10501 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API Übersicht</title>
@@ -192,6 +193,23 @@ echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
             <code>$locale</code> angegeben wurde, wird das Gebietsschema des aktuellen Objektes genommen um
             <code>$date</code> zu interpretieren oder das lokalisierte Format für die Ausgabe auszuwählen.
         </para>
+
+        <para>
+            Seit Zend Framework 1.6 unterstützt <code>Zend_Date</code> auch die Verwendung eines
+            Anwendungsweiten Gebietsschemas. Man kann ganz einfach eine <code>Zend_Locale</code> Instanz
+            in der Registry setzen wie anbei gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
+            Gebietsschemas für jede Instanz vergessen wenn man das selbe Gebietsschema mehrere Male verwenden
+            will.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+$locale = new Zend_Locale('de_AT');
+Zend_Registry::set('Zend_Locale', $locale);
+
+// Irgendwo in der eigenen Anwendung
+$date = new Zend_Date('31.Feb.2007');]]>
+        </programlisting>
 
     </sect2>
 
