@@ -1,85 +1,62 @@
+<!-- EN-Revision: 10589 -->
 <sect1 id="zend.soap.autodiscovery.introduction">
     <title>Introduction à l'auto découverte</title>
-    <para>
-        Les fonctionnalités SOAP de Zend Framework sont proposées afin de simplifier l'accès aux services
-        web de type SOAP.
-    </para>
 
-    <para>
-        SOAP est un protocole d'échange de données indépendant d'un langage. Il peut donc être utilisé
-        avec une autre technologie que PHP.
-    </para>
-    
-    <para>
-        Il y a trois configurations d'utilisation de SOAP avec Zend Framework:
-        <orderedlist>
+    <para>Les fonctionnalités SOAP de Zend Framework sont proposées afin de simplifier l'accès aux services Web de type
+    SOAP.</para>
+
+    <para>SOAP est un protocole d'échange de données indépendant d'un langage. Il peut donc être utilisé avec une autre
+    technologie que PHP.</para>
+
+    <para>Il y a trois configurations d'utilisation de SOAP avec Zend Framework: <orderedlist>
             <listitem>
                 <simpara>SOAP serveur application PHP &lt;---&gt; SOAP client application PHP</simpara>
             </listitem>
+
             <listitem>
                 <simpara>SOAP serveur application non PHP &lt;---&gt; SOAP client application PHP</simpara>
             </listitem>
+
             <listitem>
-                <simpara>SOAP server application PHP &lt;---&gt; SOAP client application non PHP</simpara>
+                <simpara>SOAP serveur application PHP &lt;---&gt; SOAP client application non PHP</simpara>
             </listitem>
-        </orderedlist>
-    </para>
-    
-    <para>
-        Il est indispensable de connaitre les fonctionnalités qu'offre un serveur SOAP, afin de pouvoir
-        communiquer avec lui. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> est alors utilisé pour décrire
-        en détail l'API des services disponibles sur un serveur SOAP.
-    </para>
+        </orderedlist></para>
 
-    <para>
-        Le langage WSDL est assez complexe (voyez 
-        <ulink url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> pour les détails ). Il est donc
-        difficile d'écrire une définition WSDL correcte, à la main.
-    </para>
-    
-    <para>
-        Un autre problème concerne la synchronisation des changements dans l'API avec des fichiers WSDL déja
-        existants.
-    </para>
+    <para>Il est indispensable de connaître les fonctionnalités qu'offre un serveur SOAP, afin de pouvoir communiquer
+    avec lui. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> est alors utilisé pour décrire en détail l'API des
+    services disponibles sur un serveur SOAP.</para>
 
-    <para>
-        Ces 2 problèmes peuvent être résolus avec la génération autommatique de WSDL, qui permet d'analyser
-        une classe ou des fonctions, d'en extraire les paramètres d'entrée/sortie, et de générer un fichier
-        WSDL correct et compréhensible par le serveur et les clients SOAP.         
-    </para>
+    <para>Le langage WSDL est assez complexe (voyez <ulink
+    url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> pour les détails ). Il est donc difficile d'écrire
+    une définition WSDL correcte, à la main.</para>
 
-    <para>
-        Il y a deux façons d'utiliser Zend Framework pour une application serveur SOAP:     
-        <itemizedlist>
+    <para>Un autre problème concerne la synchronisation des changements dans l'API avec des fichiers WSDL déjà
+    existants.</para>
+
+    <para>Ces 2 problèmes peuvent être résolus avec la génération automatique de WSDL, qui permet d'analyser une classe
+    ou des fonctions, d'en extraire les paramètres d'entrée/sortie, et de générer un fichier WSDL correct et
+    compréhensible par le serveur et les clients SOAP.</para>
+
+    <para>Il y a deux façons d'utiliser Zend Framework pour une application serveur SOAP: <itemizedlist>
             <listitem>
                 <para>Utiliser des classes.</para>
             </listitem>
+
             <listitem>
-                <para>Utiliser des fonctions</para>
+                <para>Utiliser des fonctions.</para>
             </listitem>
-        </itemizedlist>
-    </para>
+        </itemizedlist></para>
 
-    <para>
-        Ces deux façons sont supportées par la fonctionnalité d'auto génération de Zend Framework. 
-    </para>
+    <para>Ces deux façons sont supportées par la fonctionnalité d'auto génération de Zend Framework.</para>
 
-    <para>
-        Zend_Soap_AutoDiscovery supporte aussi la correspondance des types PHP vers
-        <ulink url="http://www.w3.org/TR/xmlschema-2/">les types XSD</ulink>. 
-    </para>
+    <para>Zend_Soap_AutoDiscovery supporte aussi la correspondance des types PHP vers <ulink
+    url="http://www.w3.org/TR/xmlschema-2/">les types XSD</ulink>.</para>
 
-    <para>
-        Voici un exemple d'utilisation de l'auto découverte:
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Soap/AutoDiscover.php';
-
-class My_SoapServer_Class {
+    <para>Voici un exemple d'utilisation de l'auto découverte : <programlisting role="php"><![CDATA[class My_SoapServer_Class {
 ...
 }
 
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
-$autodiscover->handle();]]></programlisting>
-    </para>
+$autodiscover->handle();]]></programlisting></para>
 </sect1>
