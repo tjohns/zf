@@ -206,10 +206,25 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
  */
 class Zend_Controller_Router_ChainTest_Request extends Zend_Controller_Request_Http
 {
-    public function __construct($uri)
+    protected $_host;
+    protected $_port;
+    
+    public function __construct($uri = null)
     {
+        if (null === $uri) {
+            $uri = 'http://localhost/foo/bar/baz/2';
+        }
+
         $uri = Zend_Uri_Http::fromString($uri);
-        $_SERVER['SERVER_NAME'] = $uri->getHost();
+        $this->_host = $uri->getHost();
+        $this->_port = $uri->getPort();
+        
         parent::__construct($uri);
+    }
+
+    public function getHttpHost() {
+        $return = $this->_host;
+        if ($this->_port)  $return .= ':' . $this->_port;
+        return $return;
     }
 }
