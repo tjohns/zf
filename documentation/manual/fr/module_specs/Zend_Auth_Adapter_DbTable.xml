@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8273 -->
+<!-- EN-Revision: 10616 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>Authentification avec une table de base de données</title>
 
@@ -51,9 +51,7 @@
 
             <para>Le code suivant crée un adaptateur pour une base de données en mémoire, crée un schéma avec une table
             unique, et insère une ligne sur laquelle nous pouvons réaliser une requête d'authentification plus tard. Cet
-            exemple requiert que l'extension PDO SQLite soit disponible : <programlisting role="php"><![CDATA[<?php
-// Crée une connexion de base de données SQLite en mémoire
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
+            exemple requiert que l'extension PDO SQLite soit disponible : <programlisting role="php"><![CDATA[// Crée une connexion de base de données SQLite en mémoire
 $dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
 
 // Construit une requête de création de table
@@ -68,8 +66,8 @@ $dbAdapter->query($sqlCreate);
 
 // Construit la requête pour insérer une ligne pour laquelle
 // l'authentification pourra réussir
-$sqlInsert = 'INSERT INTO users (username, password, real_name) '
-           . 'VALUES ("my_username", "my_password", "My Real Name")';
+$sqlInsert = "INSERT INTO users (username, password, real_name) "
+           . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Insertion des données
 $dbAdapter->query($sqlInsert);]]></programlisting></para>
@@ -77,10 +75,7 @@ $dbAdapter->query($sqlInsert);]]></programlisting></para>
             <para>Avec une connexion de base de données et des données disponibles dans la table, une instance de
             <code>Zend_Auth_Adapter_DbTable</code> peut être créée. Les valeurs d'options de configuration peuvent être
             fournies au constructeur ou en tant que paramètres aux méthodes de réglage après l'instanciation :
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
-// Configure une instance avec des paramètres de constructeur ...
+            <programlisting role="php"><![CDATA[// Configure une instance avec des paramètres de constructeur ...
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'password');
 
 // ... ou configure l'instance avec des méthodes de réglage
@@ -92,8 +87,7 @@ $authAdapter->setTableName('users')
             <para>A cet instant, l'instance de l'adaptateur d'authentification est prête à recevoir des requêtes
             d'authentification. Dans le but de réaliser une requête d'authentification, les valeurs des crédits requêtés
             sont fournies à l'adaptateur avant d'appeler la méthode <code>authenticate()</code> : <programlisting
-            role="php"><![CDATA[<?php
-// Règle les valeurs d'entrées des crédits
+            role="php"><![CDATA[// Règle les valeurs d'entrées des crédits
 // (en général, à partir d'un formulaire d'enregistrement)
 $authAdapter->setIdentity('my_username')
             ->setCredential('my_password');
@@ -103,8 +97,7 @@ $result = $authAdapter->authenticate();]]></programlisting></para>
 
             <para>En plus de la disponibilité de la méthode <code>getIdentity()</code> pour récupérer l'objet du
             résultat d'authentification, <code>Zend_Auth_Adapter_DbTable</code> supporte aussi la récupération de la
-            ligne de la table qui a réussi l'authentification : <programlisting role="php"><![CDATA[<?php
-// Affiche l'identité
+            ligne de la table qui a réussi l'authentification : <programlisting role="php"><![CDATA[// Affiche l'identité
 echo $result->getIdentity() . "\n\n";
 
 // Affiche la ligne de résultat
@@ -133,8 +126,7 @@ Array
         dans le mécanisme de stockage persistant du <code>Zend_Auth</code> un objet d'identité contenant d'autres
         informations utiles, est résolu en utilisant la méthode <code>getResultRowObject()</code> retournant un objet
         <code>stdClass</code>. Le petit bout de code suivant illustre cette utilisation : <programlisting
-        role="php"><![CDATA[<?php
-// authentifie avec Zend_Auth_Adapter_DbTable
+        role="php"><![CDATA[// authentifie avec Zend_Auth_Adapter_DbTable
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
@@ -166,8 +158,7 @@ if ($result->isValid()) {
 
         <para>Ceci étant dit, <code>Zend_Auth_Adapter_DbTable</code> possède des mécanismes qui sont construits de telle
         sorte qu'ils peuvent être démultipliés pour ajouter des contrôles supplémentaires au moment de
-        l'authentification pour résoudre quelques problèmes communs d'utilisateur. <programlisting role="php"><![CDATA[<?php
-// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
+        l'authentification pour résoudre quelques problèmes communs d'utilisateur. <programlisting role="php"><![CDATA[// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
 $adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND etat != "compromis"');
 
 // La valeur du champs "actif" d'un compte doit être égal à "TRUE"
