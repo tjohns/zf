@@ -334,7 +334,12 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 <?= $this->firstItemNumber; ?> - <?= $this->lastItemNumber; ?> 
 of <?= $this->totalItemCount; ?>
 
-<a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> | 
+<!-- First page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> | 
+<?php else: ?>
+  <span class="disabled">First</span> |
+<?php endif; ?> 
 
 <!-- Previous page link --> 
 <?php if (isset($this->previous)): ?> 
@@ -350,7 +355,12 @@ of <?= $this->totalItemCount; ?>
   <span class="disabled">Next &gt;</span> |
 <?php endif; ?>
 
-<a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
+<!-- Last page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
+<?php else: ?>
+  <span class="disabled">Last</span>
+<?php endif; ?> 
 
 </div> 
 <?php endif; ?>]]>
