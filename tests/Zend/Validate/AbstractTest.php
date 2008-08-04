@@ -151,6 +151,21 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
     }
 
+    public function testCanTranslateMessagesInsteadOfKeys()
+    {
+        $translator = new Zend_Translate(
+            'array', 
+            array('%value% was passed' => 'This is the translated message for %value%'), 
+            'en'
+        );
+        $this->validator->setTranslator($translator);
+        $this->assertFalse($this->validator->isValid('bar'));
+        $messages = $this->validator->getMessages();
+        $this->assertTrue(array_key_exists('fooMessage', $messages));
+        $this->assertContains('bar', $messages['fooMessage']);
+        $this->assertContains('This is the translated message for ', $messages['fooMessage']);
+    }
+
     public function testObscureValueFlagFalseByDefault()
     {
         $this->assertFalse($this->validator->getObscureValue());

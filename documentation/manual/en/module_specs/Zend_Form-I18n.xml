@@ -129,6 +129,14 @@ $element->setTranslator($translate);
                         linkend="zend.validate">Zend_Validate</link>
                     documentation.
                 </para>
+
+                <para>
+                    Alternately, as of 1.6.0, you may provide translation
+                    strings using the actual error messages as message
+                    identifiers. This is the preferred use case for 1.6.0 and
+                    up, as we will be deprecating translation of message keys in
+                    future releases.
+                </para>
             </listitem>
 
             <listitem>

@@ -191,7 +191,9 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         $message = $this->_messageTemplates[$messageKey];
 
         if (null !== ($translator = $this->getTranslator())) {
-            if ($translator->isTranslated($messageKey)) {
+            if ($translator->isTranslated($message)) {
+                $message = $translator->translate($message);
+            } elseif ($translator->isTranslated($messageKey)) {
                 $message = $translator->translate($messageKey);
             }
         }
