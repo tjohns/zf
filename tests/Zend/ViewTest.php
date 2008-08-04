@@ -941,20 +941,20 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->assertContains('not found', $e->getMessage());
         }
     }
-    
-    public function testUseStreamWrappersByDefaultIfShortTagsOff()
+
+    public function testUseStreamWrapperFlagShouldDefaultToFalse()
     {
         $this->view = new Zend_View();
-        $this->assertTrue($this->view->useStreamWrapper());
+        $this->assertFalse($this->view->useStreamWrapper());
     }
-
+    
     public function testUseStreamWrapperStateShouldBeConfigurable()
     {
-        $this->testUseStreamWrappersByDefaultIfShortTagsOff();
-        $this->view->setUseStreamWrapper(false);
-        $this->assertFalse($this->view->useStreamWrapper());
+        $this->testUseStreamWrapperFlagShouldDefaultToFalse();
         $this->view->setUseStreamWrapper(true);
         $this->assertTrue($this->view->useStreamWrapper());
+        $this->view->setUseStreamWrapper(false);
+        $this->assertFalse($this->view->useStreamWrapper());
     }
 }
 
