@@ -365,8 +365,13 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     capture data to be used as a lambda for dojo.onLoad(). If
                     $obj is provided, the captured JS code will be considered a
                     closure to use with that Javascript object.</para></listitem>
-            <listitem><para><code>onLoadCaptureStop($obj = null)</code>: finish
+            <listitem><para><code>onLoadCaptureEnd($obj = null)</code>: finish
                     capturing data for use with dojo.onLoad().</para></listitem>
+            <listitem><para><code>javascriptCaptureStart()</code>:
+                    capture arbitrary javascript to be included with Dojo JS
+                    (onLoad, require, etc. statements).</para></listitem>
+            <listitem><para><code>javascriptCaptureEnd()</code>: finish
+                    capturing javascript.</para></listitem>
             <listitem><para><code>__toString()</code>: cast the container to a
                     string; renders all HTML style and script elements.</para></listitem>
         </itemizedlist>
