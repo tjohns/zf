@@ -25,8 +25,9 @@
     </para>
 
     <para>
-        <!--It is this latter point that is salient to the design decisions.-->
-        Wewnętrznie metoda <code>Zend_View::_run()</code> wygląda tak:
+        Dlatego ten drugi punkt jest tak ważny dla decyzji podejmowanych 
+        podczas projektowania. Wewnętrznie metoda <code>Zend_View::_run()</code> 
+        wygląda tak:
     </para>
 
     <programlisting role="php"><![CDATA[<?php
