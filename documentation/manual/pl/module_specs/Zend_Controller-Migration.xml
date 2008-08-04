@@ -7,6 +7,41 @@
         aby przeprowadzić migrację swoich skryptów aby używały nowej architektury.
     </para>
     
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>Migracja z wersji 1.5.x do 1.6.0 lub nowszej</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>Zmiany w interfejsie obiektu uruchamiającego</title>
+
+            <para>
+                Użytkownicy zwrócili naszą uwagę na fakt, że klasy 
+                <code>Zend_Controller_Front</code> oraz
+                <code>Zend_Controller_Router_Route_Module</code> używały metod
+                obiektu uruchamiającego, które nie były zdefiniowane w 
+                interfejsie tego obiektu.
+                Dodaliśmy teraz do interfejsu poniższe trzy metody aby upewnić 
+                się, że własne obiekty uruchamiające będą poprawnie działać:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>getDefaultModule()</code>: metoda powinna zwracać
+                    nazwę domyślnego modułu.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultControllerName()</code>: metoda powinna 
+                    zwracać nazwę domyślnego kontrolera.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultAction()</code>: metoda powinna zwracać
+                    nazwę domyślnej akcji.
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+    
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>Migracja z wersji 1.0.x do 1.5.0 lub nowszej</title>
 
