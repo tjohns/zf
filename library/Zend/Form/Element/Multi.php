@@ -41,6 +41,12 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     public $options = array();
 
     /**
+     * Flag: autoregister inArray validator?
+     * @var bool
+     */
+    protected $_registerInArrayValidator = true;
+
+    /**
      * Separator to use between options; defaults to '<br />'.
      * @var string
      */
@@ -205,6 +211,52 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Set flag indicating whether or not to auto-register inArray validator
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element_Multi
+     */
+    public function setRegisterInArrayValidator($flag)
+    {
+        $this->_registerInArrayValidator = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get status of auto-register inArray validator flag
+     * 
+     * @return bool
+     */
+    public function registerInArrayValidator()
+    {
+        return $this->_registerInArrayValidator;
+    }
+
+    /**
+     * Is the value provided valid?
+     *
+     * Autoregisters InArray validator if necessary.
+     * 
+     * @param  string $value 
+     * @param  mixed $context 
+     * @return bool
+     */
+    public function isValid($value, $context = null)
+    {
+        if ($this->registerInArrayValidator()) {
+            if (!$this->getValidator('InArray')) {
+                $options = $this->getMultiOptions();
+                $this->addValidator(
+                    'InArray',
+                    true,
+                    array(array_keys($options))
+                );
+            }
+        }
+        return parent::isValid($value, $context);
+    }
+
+    /**
      * Translate an option
      * 
      * @param  string $option 
@@ -225,6 +277,12 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
         return false;
     }
 
+    /**
+     * Translate a multi option value
+     * 
+     * @param  string $value 
+     * @return string
+     */
     protected function _translateValue($value)
     {
         if (is_array($value)) {

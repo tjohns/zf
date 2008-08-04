@@ -193,20 +193,21 @@ $form->addElement(
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.comboBox">
-        <title>ComboBox</title>
+        <title>ComboBox and FilteringSelect</title>
 
         <para>
             As noted in the ComboBox <link
                 linkend="zend.dojo.view.dijit.form">dijit view helper
                 documentation</link>, ComboBoxes are a hybrid between select
             and text input, allowing for autocompletion and the ability to
-            specify an alternate to the options provided.
+            specify an alternate to the options provided. FilteringSelects are
+            the same, but do not allow arbitrary input.
         </para>
 
         <para>
-            The ComboBox form element provides accessors and mutators for
-            examining and setting the select options as well as the ComboBox
-            dojo.data datastore (if used). It extends from DijitMulti, which
+            The ComboBox and FilteringSelect form elements provide accessors and mutators for
+            examining and setting the select options as well as specifying a
+            dojo.data datastore (if used). They extend from DijitMulti, which
             allows you to specify select options via the
             <code>setMultiOptions()</code> and <code>setMultiOption()</code>
             methods. In addition, the following methods are available:
@@ -265,6 +266,16 @@ $form->addElement(
             </para></listitem>
         </itemizedlist>
 
+        <para>
+            By default, if no dojo.data store is registered with the element,
+            this element registers an <code>InArray</code> validator which
+            validates against the array keys of registered options. You can
+            disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
+        </para>
+
         <example id="zend.dojo.form.elements.comboBox.selectExample">
             <title>ComboBox dijit element usage as select input</title>
 
@@ -310,6 +321,11 @@ $form->addElement(
 );
 ]]></programlisting>
         </example>
+
+        <para>
+            The above examples could also utilize <code>FilteringSelect</code>
+            instead of <code>ComboBox</code>.
+        </para>
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.currencyTextBox">
@@ -766,6 +782,15 @@ $form->addElement(
             allows you to specify select options via the
             <code>setMultiOptions()</code> and <code>setMultiOption()</code>
             methods.
+        </para>
+
+        <para>
+            By default, this element registers an <code>InArray</code> validator
+            which validates against the array keys of registered options. You
+            can disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
         </para>
 
         <example id="zend.dojo.form.elements.radioButton.example">
