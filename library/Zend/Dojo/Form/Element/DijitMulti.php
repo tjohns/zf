@@ -32,7 +32,7 @@ require_once 'Zend/Dojo/Form/Element/Dijit.php';
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 abstract class Zend_Dojo_Form_Element_DijitMulti extends Zend_Dojo_Form_Element_Dijit
 {
@@ -41,6 +41,12 @@ abstract class Zend_Dojo_Form_Element_DijitMulti extends Zend_Dojo_Form_Element_
      * @var array
      */
     public $options = array();
+
+    /**
+     * Flag: autoregister inArray validator?
+     * @var bool
+     */
+    protected $_registerInArrayValidator = true;
 
     /**
      * Separator to use between options; defaults to '<br />'.
@@ -204,6 +210,52 @@ abstract class Zend_Dojo_Form_Element_DijitMulti extends Zend_Dojo_Form_Element_
         $this->options = array();
         $this->_translated = array();
         return $this;
+    }
+
+    /**
+     * Set flag indicating whether or not to auto-register inArray validator
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element_Multi
+     */
+    public function setRegisterInArrayValidator($flag)
+    {
+        $this->_registerInArrayValidator = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get status of auto-register inArray validator flag
+     * 
+     * @return bool
+     */
+    public function registerInArrayValidator()
+    {
+        return $this->_registerInArrayValidator;
+    }
+
+    /**
+     * Is the value provided valid?
+     *
+     * Autoregisters InArray validator if necessary.
+     * 
+     * @param  string $value 
+     * @param  mixed $context 
+     * @return bool
+     */
+    public function isValid($value, $context = null)
+    {
+        if ($this->registerInArrayValidator()) {
+            if (!$this->getValidator('InArray')) {
+                $options = $this->getMultiOptions();
+                $this->addValidator(
+                    'InArray',
+                    true,
+                    array(array_keys($options))
+                );
+            }
+        }
+        return parent::isValid($value, $context);
     }
 
     /**

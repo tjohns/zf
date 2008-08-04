@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 // Call Zend_Dojo_Form_Element_RadioButtonTest::main() if this source file is executed directly.
@@ -172,6 +172,50 @@ class Zend_Dojo_Form_Element_RadioButtonTest extends PHPUnit_Framework_TestCase
         }
         $this->assertContains('checked="checked"', $matches[1]);
     }
+
+    /**#+
+     * @see ZF-3286
+     */
+    public function testShouldRegisterInArrayValidatorByDefault()
+    {
+        $this->assertTrue($this->element->registerInArrayValidator());
+    }
+
+    public function testShouldAllowSpecifyingWhetherOrNotToUseInArrayValidator()
+    {
+        $this->testShouldRegisterInArrayValidatorByDefault();
+        $this->element->setRegisterInArrayValidator(false);
+        $this->assertFalse($this->element->registerInArrayValidator());
+        $this->element->setRegisterInArrayValidator(true);
+        $this->assertTrue($this->element->registerInArrayValidator());
+    }
+
+    public function testInArrayValidatorShouldBeRegisteredAfterValidation()
+    {
+        $options = array(
+            'foo' => 'Foo Value',
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+        );
+        $this->element->setMultiOptions($options);
+        $this->assertFalse($this->element->getValidator('InArray'));
+        $this->element->isValid('test');
+        $validator = $this->element->getValidator('InArray');
+        $this->assertTrue($validator instanceof Zend_Validate_InArray);
+    }
+
+    public function testShouldNotValidateIfValueIsNotInArray()
+    {
+        $options = array(
+            'foo' => 'Foo Value',
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+        );
+        $this->element->setMultiOptions($options);
+        $this->assertFalse($this->element->getValidator('InArray'));
+        $this->assertFalse($this->element->isValid('test'));
+    }
+    /**#@-*/
 }
 
 // Call Zend_Dojo_Form_Element_RadioButtonTest::main() if this source file is executed directly.

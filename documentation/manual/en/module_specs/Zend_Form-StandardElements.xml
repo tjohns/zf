@@ -176,6 +176,15 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
+            By default, this element registers an <code>InArray</code> validator
+            which validates against the array keys of registered options. You
+            can disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
+        </para>
+
+        <para>
             You may manipulate the various checkbox options using the following
             methods:
         </para>
@@ -257,6 +266,15 @@ $element->setValue(array('bar', 'bat'));
             If a translation adapter is registered with the form and/or element,
             option values will be translated for display purposes.
         </para>
+
+        <para>
+            By default, this element registers an <code>InArray</code> validator
+            which validates against the array keys of registered options. You
+            can disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.password">
@@ -286,6 +304,15 @@ $element->setValue(array('bar', 'bat'));
             extends the base <code>Zend_Form_Element_Multi</code> class,
             allowing you to specify a number of options, and then uses the
             <code>formRadio</code> view helper to display these.
+        </para>
+
+        <para>
+            By default, this element registers an <code>InArray</code> validator
+            which validates against the array keys of registered options. You
+            can disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
         </para>
 
         <para>
@@ -338,6 +365,15 @@ $element->setValue(array('bar', 'bat'));
             Select boxes are a common way of limiting to specific choices for a
             given form datum. <code>Zend_Form_Element_Select</code> allows you
             to generate these quickly and easily.
+        </para>
+
+        <para>
+            By default, this element registers an <code>InArray</code> validator
+            which validates against the array keys of registered options. You
+            can disable this behavior by either calling
+            <code>setRegisterInArrayValidator(false)</code>, or by passing a
+            false value to the <code>registerInArrayValidator</code>
+            configuration key.
         </para>
 
         <para>

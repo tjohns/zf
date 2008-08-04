@@ -30,7 +30,7 @@ require_once 'Zend/Dojo/Form/Element/DijitMulti.php';
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 class Zend_Dojo_Form_Element_ComboBox extends Zend_Dojo_Form_Element_DijitMulti
 {
@@ -160,5 +160,21 @@ class Zend_Dojo_Form_Element_ComboBox extends Zend_Dojo_Form_Element_DijitMulti
             return false;
         }
         return $this->getDijitParam('autocomplete');
+    }
+
+    /**
+     * Is the value valid?
+     * 
+     * @param  string $value 
+     * @param  mixed $context 
+     * @return bool
+     */
+    public function isValid($value, $context = null)
+    {
+        $storeInfo = $this->getStoreInfo();
+        if (!empty($storeInfo)) {
+            $this->setRegisterInArrayValidator(false);
+        }
+        return parent::isValid($value, $context);
     }
 }
