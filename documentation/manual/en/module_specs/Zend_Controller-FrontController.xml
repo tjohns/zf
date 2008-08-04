@@ -144,6 +144,38 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
             </para>
         </sect3>
 
+        <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
+            <title>addModuleDirectory() and getModuleDirectory()</title>
+
+            <para>
+                One aspect of the front controller is that you may <link
+                    linkend="zend.controller.modular">define a modular directory
+                structure</link> for creating standalone components; these are
+                called "modules".
+            </para>
+
+            <para>
+                Each module should be in its own directory and mirror the
+                directory structure of the default module -- i.e., it should
+                have a "controllers" subdirectory at the minimum, and typically
+                a "views" subdirectory and other application subdirectories.
+            </para>
+
+            <para>
+                <code>addModuleDirectory()</code> allows you to pass the name of
+                a directory containing one or more module directories. It then
+                scans it and adds them as controller directories to the front
+                controller.
+            </para>
+
+            <para>
+                Later, if you want to determine the path to a particular module
+                or the current module, you can call
+                <code>getModuleDirectory()</code>, optionally passing a module
+                name to get that specific module directory.
+            </para>
+        </sect3>
+
         <sect3 id="zend.controller.front.methods.primary.dispatch">
             <title>dispatch()</title>
 
