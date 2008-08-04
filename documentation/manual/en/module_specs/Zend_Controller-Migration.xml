@@ -7,6 +7,41 @@
         migrate your scripts to use the new architecture.
     </para>
 
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>Migrating from 1.5.x to 1.6.0 or newer</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>Dispatcher Interface changes</title>
+
+            <para>
+                Users brought to our attention the fact that
+                <code>Zend_Controller_Front</code> and
+                <code>Zend_Controller_Router_Route_Module</code> were each
+                using methods of the dispatcher that were not in the dispatcher
+                interface. We have now added the following three methods to
+                ensure that custom dispatchers will continue to work with the
+                shipped implementations:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>getDefaultModule()</code>: should return the name of
+                    the default module.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultControllerName()</code>: should return the
+                    name of the default controller.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultAction()</code>: should return the
+                    name of the default action.
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>Migrating from 1.0.x to 1.5.0 or newer</title>
 
