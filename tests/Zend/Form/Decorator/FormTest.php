@@ -96,6 +96,16 @@ class Zend_Form_Decorator_FormTest extends PHPUnit_Framework_TestCase
         $html = $form->render();
         $this->assertContains('id="bazbat"', $html, $html);
     }
+
+    public function testEmptyFormNameShouldNotRenderEmptyFormId()
+    {
+        $form = new Zend_Form();
+        $form->setMethod('post')
+             ->setAction('/foo/bar')
+             ->setView($this->getView());
+        $html = $form->render();
+        $this->assertNotContains('id=""', $html, $html);
+    }
 }
 
 // Call Zend_Form_Decorator_FormTest::main() if this source file is executed directly.

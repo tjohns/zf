@@ -71,6 +71,17 @@ class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('/<form[^>]*(id="bar")/', $form);
         $this->assertNotRegexp('/<form[^>]*(name="foo")/', $form);
     }
+
+    /**
+     * @see ZF-3832
+     */
+    public function testEmptyIdShouldNotRenderIdAttribute()
+    {
+        $form = $this->helper->form('', array('action' => '/foo', 'method' => 'get'));
+        $this->assertNotRegexp('/<form[^>]*(id="")/', $form);
+        $form = $this->helper->form('', array('action' => '/foo', 'method' => 'get', 'id' => null));
+        $this->assertNotRegexp('/<form[^>]*(id="")/', $form);
+    }
 }
 
 // Call Zend_View_Helper_FormTest::main() if this source file is executed directly.
