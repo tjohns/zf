@@ -601,10 +601,10 @@ class Zend_Form_Element implements Zend_Validate_Interface
     /**
      * Set required flag
      * 
-     * @param  bool $flag 
+     * @param  bool $flag Default value is true
      * @return Zend_Form_Element
      */
-    public function setRequired($flag)
+    public function setRequired($flag = true)
     {
         $this->_required = (bool) $flag;
         return $this;
