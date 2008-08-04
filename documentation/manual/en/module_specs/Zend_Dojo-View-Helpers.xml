@@ -892,6 +892,15 @@ echo $view->radioButton(
 
             <listitem>
                 <para>
+                    <emphasis>SubmitButton</emphasis>: a dijit.form.Button tied
+                    to a submit input element. See the Button view helper for
+                    more details; the key difference is that this button can
+                    submit a form.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis>Textarea</emphasis>: dijit.form.Textarea. These
                     act like normal textareas, except that instead of having a
                     set number of rows, they expand as the user types. The
