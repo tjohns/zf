@@ -59,6 +59,13 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.filter.set.stripnewlines">
+        <title>StripNewlines</title>
+        <para>
+            Returns the string <code>$value</code> without any newline control characters.
+        </para>
+    </sect2>
+
     <sect2 id="zend.filter.set.realpath">
         <title>RealPath</title>
         <para>
