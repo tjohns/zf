@@ -134,6 +134,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
             $rowCount   = clone $this->_select;
             $rowCount->reset(Zend_Db_Select::COLUMNS)
                      ->reset(Zend_Db_Select::ORDER)
+                     ->reset(Zend_Db_Select::LIMIT_OFFSET)
                      ->columns($expression);
                      
             $this->setRowCount($rowCount);

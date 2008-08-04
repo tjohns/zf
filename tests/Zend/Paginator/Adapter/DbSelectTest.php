@@ -79,7 +79,9 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         
         $this->_table = new TestTable($this->_db);
         
-        $this->_query = $this->_db->select()->from('test');
+        $this->_query = $this->_db->select()->from('test')
+                                            ->order('number ASC') // ZF-3740
+                                            ->limit(1000, 0); // ZF-3727
         
         $this->_adapter = new Zend_Paginator_Adapter_DbSelect($this->_query);
     }
@@ -136,7 +138,8 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         
         $rowCount   = clone $this->_query;
         $rowCount->reset(Zend_Db_Select::COLUMNS)
-                 ->reset(Zend_Db_Select::ORDER)
+                 ->reset(Zend_Db_Select::ORDER) // ZF-3740
+                 ->reset(Zend_Db_Select::LIMIT_OFFSET) // ZF-3727
                  ->columns($expression);
         
         $this->_adapter->setRowCount($rowCount);
