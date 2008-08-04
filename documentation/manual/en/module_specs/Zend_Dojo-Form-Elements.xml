@@ -852,6 +852,34 @@ $form->addElement(
         </para>
     </sect3>
 
+    <sect3 id="zend.dojo.form.elements.submitButton">
+        <title>SubmitButton</title>
+
+        <para>
+            While there is no Dijit named SubmitButton, we include one here to
+            provide a button dijit capable of submitting a form without
+            requiring any additional javascript bindings. It works exactly like
+            the <link linkend="zend.dojo.form.elements.button">Button
+                dijit</link>.
+        </para>
+
+        <example id="zend.dojo.form.elements.submitButton.example">
+            <title>Example SubmitButton dijit element usage</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'SubmitButton', 
+    'foo', 
+    array(
+        'required'   => false,
+        'ignore'     => true,
+        'label'      => 'Submit Button!',
+    )
+);
+]]></programlisting>
+        </example>
+    </sect3>
+
     <sect3 id="zend.dojo.form.elements.textBox">
         <title>TextBox</title>
 
