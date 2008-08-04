@@ -324,6 +324,33 @@ class Zend_Controller_Front
     }
 
     /**
+     * Return the path to a module directory (but not the controllers directory within)
+     * 
+     * @param  string $module 
+     * @return string|null
+     */
+    public function getModuleDirectory($module = null)
+    {
+        if (null === $module) {
+            $request = $this->getRequest();
+            if (null !== $request) {
+                $module = $this->getRequest()->getModuleName();
+            }
+            if (empty($module)) {
+                $module = $this->getDispatcher()->getDefaultModule();
+            }
+        }
+
+        $controllerDir = $this->getControllerDirectory($module);
+
+        if ((null === $controllerDir) || !is_string($controllerDir)) {
+            return null;
+        }
+
+        return dirname($controllerDir);
+    }
+
+    /**
      * Set the directory name within a module containing controllers
      *
      * @param  string $name

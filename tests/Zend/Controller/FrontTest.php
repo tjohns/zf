@@ -534,6 +534,35 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'default', $controllerDirs['default']);
     }
 
+    /**#@+
+     * @see ZF-2910
+     */
+    public function testShouldAllowRetrievingCurrentModuleDirectory()
+    {
+        $this->testAddModuleDirectory();
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('bar');
+        $this->_controller->setRequest($request);
+        $dir = $this->_controller->getModuleDirectory();
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $dir);
+        $this->assertNotContains('controllers', $dir);
+    }
+
+    public function testShouldAllowRetrievingSpecifiedModuleDirectory()
+    {
+        $this->testAddModuleDirectory();
+        $dir = $this->_controller->getModuleDirectory('foo');
+        $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'foo', $dir);
+        $this->assertNotContains('controllers', $dir);
+    }
+
+    public function testShouldReturnNullWhenRetrievingNonexistentModuleDirectory()
+    {
+        $this->testAddModuleDirectory();
+        $this->assertNull($this->_controller->getModuleDirectory('bogus-foo-bar'));
+    }
+    /**#@-*/
+
     /**
      * ZF-2435
      */
