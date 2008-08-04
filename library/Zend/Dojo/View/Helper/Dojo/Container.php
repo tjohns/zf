@@ -573,7 +573,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * 
      * @return bool
      */
-    public function onLoadCaptureStop()
+    public function onLoadCaptureEnd()
     {
         $data               = ob_get_clean();
         $this->_captureLock = false;

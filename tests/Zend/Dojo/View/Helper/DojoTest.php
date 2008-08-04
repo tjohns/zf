@@ -338,7 +338,7 @@ function() {
     bar();
     baz();
 }
-<?php   $this->helper->onLoadCaptureStop();
+<?php   $this->helper->onLoadCaptureEnd();
         $onLoad = $this->helper->getOnLoadActions();
         $this->assertTrue(is_array($onLoad));
         $this->assertEquals(1, count($onLoad));
