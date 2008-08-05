@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10631 -->
 <sect1 id="zend.controller.dispatcher">
     <title>Le dispatcheur</title>
 
@@ -23,8 +23,7 @@
             <code>prefixDefaultModule</code> à <code>true</code> soit dans le contrôleur frontal soit dans le
             dispatcheur :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Dans le contrôleur frontal :
+            <programlisting role="php"><![CDATA[// Dans le contrôleur frontal :
 $front->setParam('prefixDefaultModule', true);
 
 // Dans le dispatcheur :
@@ -50,8 +49,7 @@ $dispatcher->setParam('prefixDefaultModule', true);]]></programlisting>
         contrôleur, un module, et optionnellement des paramètres additionnels que vous souhaitez passer à la nouvelle
         action :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function fooAction()
+        <programlisting role="php"><![CDATA[public function fooAction()
 {
     // Transférer la nouvelle action dans le contrôleur et le module courant :
     $this->_forward('bar', null, null, array('baz' => 'bogus'));
@@ -87,8 +85,7 @@ public function bazAction()
         <para><code>Zend_Controller_Dispatcher_Interface</code> définit les méthodes suivantes nécessaires pour toute
         implémentation d'un dispatcheur :</para>
 
-        <programlisting role="php"><![CDATA[
-interface Zend_Controller_Dispatcher_Interface
+        <programlisting role="php"><![CDATA[interface Zend_Controller_Dispatcher_Interface
 {
     /**
      * Formate une chaîne en un nom de classe de contrôleur
@@ -209,6 +206,27 @@ interface Zend_Controller_Dispatcher_Interface
      * @return boolean
      */
     public function isValidModule($module);
+
+    /**
+     * Retourne le nom du module par défaut
+     * 
+     * @return string
+     */
+    public function getDefaultModule();
+
+    /**
+     * Retourne le nom du contrôleur par défaut
+     * 
+     * @return string
+     */
+    public function getDefaultControllerName();
+
+    /**
+     * Retourne le nom de l'action par défaut
+     * 
+     * @return string
+     */
+    public function getDefaultAction();
 }]]></programlisting>
 
         <para>Cependant, dans la plupart des cas, vous devriez simplement étendre la classe abstraite
