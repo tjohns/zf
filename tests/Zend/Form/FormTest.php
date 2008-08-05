@@ -3131,6 +3131,32 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @see ZF-3597
+     */
+    public function testSettingElementDecoratorsWithConcreteDecoratorShouldHonorOrder()
+    {
+        $this->form->setDecorators(array(
+            'FormElements',
+            array('HtmlTag', array('tag' => 'table')),
+            'Form',
+        ));
+        $this->form->addElementPrefixPath('My_Decorator', dirname(__FILE__) . '/_files/decorators/', 'decorator');
+        $this->form->addElement('text', 'test', array(
+            'label'       => 'Foo',
+            'description' => 'sample description',
+        ));
+
+        require_once dirname(__FILE__) . '/_files/decorators/TableRow.php';
+        $decorator = new My_Decorator_TableRow();
+        $this->form->setElementDecorators(array(
+            'ViewHelper',
+            $decorator,
+        ));
+        $html = $this->form->render($this->getView());
+        $this->assertRegexp('#<tr><td>Foo</td><td>.*?<input[^>]+>.*?</td><td>sample description</td></tr>#s', $html, $html);
+    }
+
     public function testCanSetAllElementFiltersAtOnce()
     {
         $this->_checkZf2794();

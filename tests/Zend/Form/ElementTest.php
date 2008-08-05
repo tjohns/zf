@@ -13,6 +13,7 @@ require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
+require_once 'Zend/Form/Decorator/HtmlTag.php';
 require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Translate.php';
 require_once 'Zend/Validate/NotEmpty.php';
@@ -1266,6 +1267,24 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->element->addDecorator($decorator);
         $test = $this->element->getDecorator('Zend_Form_Decorator_ViewHelper');
         $this->assertSame($decorator, $test);
+    }
+
+    /**
+     * @see ZF-3597
+     */
+    public function testAddingConcreteDecoratorShouldHonorOrder()
+    {
+        require_once dirname(__FILE__) . '/_files/decorators/TableRow.php';
+        $decorator = new My_Decorator_TableRow();
+        $this->element->setLabel('Foo')
+                      ->setDescription('sample description')
+                      ->clearDecorators()
+                      ->addDecorators(array(
+            'ViewHelper',
+            $decorator,
+        ));
+        $html = $this->element->render($this->getView());
+        $this->assertRegexp('#<tr><td>Foo</td><td>.*?<input[^>]+>.*?</td><td>sample description</td></tr>#s', $html, $html);
     }
 
     public function testCanRetrieveSingleDecoratorRegisteredAsDecoratorObjectUsingShortName()
