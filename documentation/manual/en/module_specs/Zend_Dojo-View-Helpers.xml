@@ -862,6 +862,29 @@ echo $view->numberTextBox(
 
             <listitem>
                 <para>
+                    <emphasis>PasswordTextBox</emphasis>:
+                    dijit.form.ValidationTextBox tied to a password input.
+                    PasswordTextBox provides the
+                    ability to create password input that adheres to the current
+                    dijit theme, as well as allow for client-side validation.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->passwordTextBox(
+    'foo',
+    '',
+    array(
+        'required' => true,
+    ),
+    array(
+        'maxlength' => 20,
+    )
+);
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis>RadioButton</emphasis>: dijit.form.RadioButton. A
                     set of options from which only one may be selected. This
                     behaves in every way like a regular radio, but has a
