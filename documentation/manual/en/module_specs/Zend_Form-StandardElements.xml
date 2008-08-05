@@ -77,6 +77,78 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardElements.file">
+        <title>Zend_Form_Element_File</title>
+
+        <para>
+            The File form element provides a mechanism for supplying file upload
+            fields to your form. It utilizes <link
+                linkend="zend.file.transfer.introduction">Zend_File_Transfer</link>
+            internally to provide this functionality, and the
+            <code>FormFile</code> view helper to display the form element.
+        </para>
+
+        <para>
+            By default, it uses the <code>Http</code> transfer adapter, which
+            introspects the <code>$_FILES</code> array and allows you to attach
+            validators and filters. Validators and filters attached to the form
+            element will be attached to the transfer adapter.
+        </para>
+
+        <example id="zend.form.standardElements.file.usage">
+            <title>File form element usage</title>
+
+            <para>
+                The above explanation of using the File form element may seem
+                arcane, but actual usage is relatively trivial:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Count', false, 1)     // ensure only 1 file
+        ->addValidator('Size', false, 102400) // limit to 100K
+        ->addValidator('Extension' false, 'jpg,png,gif'); // only JPEG, PNG, and GIFs
+$form->addElement($element, 'foo');
+]]></programlisting>
+
+            <para>
+                You also need to ensure the correct encoding type is provided to
+                the form; you should use 'multipart/form-data'. You can do this
+                by setting the 'enctype' attribute on the form:
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+$form->setAttrib('enctype', 'multipart/form-data');
+]]></programlisting>
+
+            <para>
+                When the element has successfully validated, you can determine
+                the final location using getValue():
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$location = $form->foo->getValue();
+]]></programlisting>
+
+            <note>
+                <title>Default upload locations</title>
+
+                <para>
+                    By default, files are uploaded to the system temp directory.
+                </para>
+            </note>
+        </example>
+
+        <para>
+            There is one current limitation to the file upload element shipped in
+            1.6.0. At this time, you cannot specify filters to change the name
+            of the final uploaded file; this functionality will be added in an
+            upcoming release.
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardElements.hidden">
         <title>Zend_Form_Element_Hidden</title>
 
