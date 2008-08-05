@@ -127,7 +127,11 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
         $legend        = $this->getLegend();
         $attribs       = $this->getOptions();
         $name          = $element->getFullyQualifiedName();
-        $attribs['id'] = $element->getId() . '-fieldset';
+
+        $id = $element->getId();
+        if (!empty($id)) {
+            $attribs['id'] = 'fieldset-' . $id;
+        }
 
         if (null !== $legend) {
             if (null !== ($translator = $element->getTranslator())) {

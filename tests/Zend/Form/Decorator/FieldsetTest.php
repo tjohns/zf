@@ -106,7 +106,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     /**
      * @see ZF-2981
      */
-    public function testActionAndMethodAttributsShouldNotBePresentInFieldsetTag()
+    public function testActionAndMethodAttributesShouldNotBePresentInFieldsetTag()
     {
         $form = new Zend_Form();
         $form->setAction('/foo/bar')
@@ -114,10 +114,37 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
              ->setView($this->getView());
         $this->decorator->setElement($form);
         $test = $this->decorator->render('content');
-        $this->assertContains('<fieldset ', $test, $test);
+        $this->assertContains('<fieldset', $test, $test);
         $this->assertNotContains('action="', $test);
         $this->assertNotContains('method="', $test);
     }
+
+    /**#@+
+     * @see ZF-3731
+     */
+    public function testIdShouldBePrefixedWithFieldset()
+    {
+        $form = new Zend_Form();
+        $form->setAction('/foo/bar')
+             ->setMethod('post')
+             ->setName('foobar')
+             ->setView($this->getView());
+        $this->decorator->setElement($form);
+        $test = $this->decorator->render('content');
+        $this->assertContains('id="fieldset-foobar"', $test);
+    }
+
+    public function testElementWithNoIdShouldNotCreateFieldsetId()
+    {
+        $form = new Zend_Form();
+        $form->setAction('/foo/bar')
+             ->setMethod('post')
+             ->setView($this->getView());
+        $this->decorator->setElement($form);
+        $test = $this->decorator->render('content');
+        $this->assertNotContains('id="', $test);
+    }
+    /**#@-*/
 }
 
 // Call Zend_Form_Decorator_FieldsetTest::main() if this source file is executed directly.
