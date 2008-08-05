@@ -5,7 +5,7 @@
         <title>Starting from 1.6, handling index format transformations.</title>
 
         <para>
-            Zend_Search_Lucene component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index format.
+            Zend_Search_Lucene component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index formats.
         </para>
 
         <para>
@@ -43,8 +43,8 @@
         </para>
 
         <para>
-            You may manage conversion process and assign target index format by <code>$index->setFormatVersion()</code> which may take
-            <code>Zend_Search_Lucene::FORMAT_2_1</code> or <code>Zend_Search_Lucene::FORMAT_2_3</code> constant:
+            You may manage conversion process and assign target index format by <code>$index->setFormatVersion()</code> which takes
+            <code>Zend_Search_Lucene::FORMAT_2_1</code> or <code>Zend_Search_Lucene::FORMAT_2_3</code> constant as a parameter:
             <itemizedlist>
                 <listitem>
                     <para>
