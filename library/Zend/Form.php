@@ -219,6 +219,38 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     }
 
     /**
+     * Clone form object and all children
+     * 
+     * @return void
+     */
+    public function __clone()
+    {
+        $elements = array();
+        foreach ($this->getElements() as $name => $element) {
+            $elements[] = clone $element;
+        }
+        $this->setElements($elements);
+
+        $subForms = array();
+        foreach ($this->getSubForms() as $name => $subForm) {
+            $subForms[$name] = clone $subForm;
+        }
+        $this->setSubForms($subForms);
+
+        $displayGroups = array();
+        foreach ($this->_displayGroups as $group)  {
+            $clone    = clone $group;
+            $elements = array();
+            foreach ($clone->getElements() as $name => $e) {
+                $elements[] = $this->getElement($name);
+            }
+            $clone->setElements($elements);
+            $displayGroups[] = $clone;
+        }
+        $this->setDisplayGroups($displayGroups);
+    }
+
+    /**
      * Initialize form (used by extending classes)
      * 
      * @return void
@@ -1604,6 +1636,34 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     }
 
     /**
+     * Add a display group object (used with cloning)
+     * 
+     * @param  Zend_Form_DisplayGroup $group 
+     * @param  string|null $name 
+     * @return Zend_Form
+     */
+    protected function _addDisplayGroupObject(Zend_Form_DisplayGroup $group, $name = null)
+    {
+        if (null === $name) {
+            $name = $group->getName();
+            if (empty($name)) {
+                require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception('Invalid display group added; requires name');
+            }
+        }
+
+        $this->_displayGroups[$name] = $group;
+
+        if (!empty($this->_displayGroupPrefixPaths)) {
+            $this->_displayGroups[$name]->addPrefixPaths($this->_displayGroupPrefixPaths);
+        }
+
+        $this->_order[$name] = $this->_displayGroups[$name]->getOrder();
+        $this->_orderUpdated = true;
+        return $this;
+    }
+
+    /**
      * Add multiple display groups at once
      * 
      * @param  array $groups 
@@ -1615,6 +1675,10 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $name = null;
             if (!is_numeric($key)) {
                 $name = $key;
+            }
+
+            if ($spec instanceof Zend_Form_DisplayGroup) {
+                $this->_addDisplayGroupObject($spec);
             }
 
             if (!is_array($spec) || empty($spec)) {

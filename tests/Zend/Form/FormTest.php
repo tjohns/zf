@@ -3331,6 +3331,41 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($decorators));
     }
 
+    // Clone
+
+    /**
+     * @see ZF-3819
+     */
+    public function testCloningShouldCloneAllChildren()
+    {
+        $form = new Zend_Form();
+        $foo = new Zend_Form_SubForm(array(
+            'name' => 'foo',
+            'elements' => array(
+                'one' => 'text',
+                'two' => 'text',
+            ),
+        ));
+        $form->addElement('text', 'bar')
+             ->addElement('text', 'baz')
+             ->addElement('text', 'bat')
+             ->addDisplayGroup(array('bar', 'bat'), 'barbat')
+             ->addSubForm($foo, 'foo');
+        $bar = $form->bar;
+        $baz = $form->baz;
+        $bat = $form->bat;
+        $barbat = $form->barbat;
+
+        $cloned = clone $form;
+        $this->assertNotSame($foo, $cloned->foo);
+        $this->assertNotSame($bar, $cloned->bar);
+        $this->assertNotSame($baz, $cloned->baz);
+        $this->assertNotSame($bat, $cloned->bat);
+        $this->assertNotSame($barbat, $cloned->getDisplayGroup('barbat'));
+        $this->assertNotSame($foo->one, $cloned->foo->one);
+        $this->assertNotSame($foo->two, $cloned->foo->two);
+    }
+
     /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
