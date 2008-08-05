@@ -912,6 +912,20 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     /**#@-*/
 
+    public function testAddingErrorToArrayElementShouldLoopOverAllValues()
+    {
+        $this->element->setIsArray(true)
+                      ->setValue(array('foo', 'bar', 'baz'))
+                      ->addError('error with value %value%');
+        $errors = $this->element->getMessages();
+        require_once 'Zend/Json.php';
+        $errors = Zend_Json::encode($errors);
+        foreach (array('foo', 'bar', 'baz') as $value) {
+            $message = 'error with value ' . $value;
+            $this->assertContains($message, $errors);
+        }
+    }
+
     /** ZF-2568 */
     public function testTranslatedMessagesCanContainVariableSubstitution()
     {
