@@ -263,21 +263,4 @@ abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
         );
         return '<input' . $this->_htmlAttribs($hiddenAttribs) . $this->getClosingBracket();
     }
-
-    protected function _createGetParentFormFunction()
-    {
-        $function =<<<EOJ
-if (zend == undefined) {
-    var zend = {};
-}
-zend.findParentForm = function(elementNode) {
-    while (elementNode.nodeName.toLowerCase() != 'form') {
-        elementNode = elementNode.parentNode;
-    }
-    return elementNode;
-};
-EOJ;
-
-        $this->dojo->addJavascript($function);
-    }
 }
