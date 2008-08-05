@@ -145,6 +145,23 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains('id="', $test);
     }
     /**#@-*/
+
+    /**
+     * @see ZF-3728
+     */
+    public function testEnctypeAttributeShouldNotBePresentInFieldsetTag()
+    {
+        $form = new Zend_Form();
+        $form->setAction('/foo/bar')
+             ->setMethod('post')
+             ->setAttrib('enctype', 'dojo/method')
+             ->setView($this->getView());
+        $this->decorator->setElement($form);
+        $test = $this->decorator->render('content');
+        $this->assertContains('<fieldset', $test, $test);
+        $this->assertNotContains('enctype="', $test);
+    }
+
 }
 
 // Call Zend_Form_Decorator_FieldsetTest::main() if this source file is executed directly.

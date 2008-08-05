@@ -44,6 +44,7 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
         'name',
         'action',
         'method',
+        'enctype',
     );
 
     /**
@@ -141,8 +142,9 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
             $attribs['legend'] = $legend;
         }
 
-        foreach ($this->stripAttribs as $attrib) {
-            if (array_key_exists($attrib, $attribs)) {
+        foreach (array_keys($attribs) as $attrib) {
+            $testAttrib = strtolower($attrib);
+            if (in_array($testAttrib, $this->stripAttribs)) {
                 unset($attribs[$attrib]);
             }
         }
