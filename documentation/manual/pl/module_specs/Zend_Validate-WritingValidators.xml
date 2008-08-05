@@ -1,10 +1,10 @@
 <sect1 id="zend.validate.writing_validators">
 
-    <title>Pisanie walidatorów</title>
+    <title>Pisanie weryfikatorów</title>
 
     <para>
-        Zend_Validate zapewnia zestaw najczęściej potrzebnych walidatorów, ale
-        programiści często potrzebują napisać własne walidatory dla ich
+        Zend_Validate zapewnia zestaw najczęściej potrzebnych weryfikatorów, ale
+        programiści często potrzebują napisać własne weryfikatory dla ich
         szczególnych zastosowań. Zadanie pisania własnego filtru jest opisane w
         tej sekcji.
     </para>
@@ -13,9 +13,9 @@
         Interfejs <code>Zend_Validate_Interface</code> definiuje trzy metody,
         <code>isValid()</code>, <code>getMessages()</code> oraz
         <code>getErrors()</code>, które mogą być zaimplementowane przez klasę
-        użytkownika w celu utworzenia własnych obiektów walidujących. Obiekt,
+        użytkownika w celu utworzenia własnych obiektów weryfikujących. Obiekt,
         który implementuje interfejs <code>Zend_Validate_Interface</code>
-        może być dodany do łańcucha walidatorów za pomocą metody
+        może być dodany do łańcucha weryfikatorów za pomocą metody
         <code>Zend_Validate::addValidator()</code>.
         Taki obiekt może być także użyty przez klasę
           <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.

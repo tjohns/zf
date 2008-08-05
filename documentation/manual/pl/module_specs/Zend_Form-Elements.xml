@@ -468,8 +468,8 @@ $element->addValidators(array(
 ?>]]></programlisting>
 
         <para>
-            This usage is good for illustrating how you could then configure
-            validators in a config file:
+            Ten przykład pokazuje w jaki sposób możesz skonfigurować 
+            weryfikatory w pliku konfiguracyjnym:
         </para>
 
         <programlisting role="ini"><![CDATA[
@@ -1055,11 +1055,6 @@ $fooBar  = $element->getDecorator('FooBar');
             </para></listitem>
 
             <listitem><para>
-                <emphasis>addAttribs(array $attribs)</emphasis>: dodaje wiele
-                atrybutów na raz
-            </para></listitem>
-
-            <listitem><para>
                 <emphasis>setAttribs(array $attribs)</emphasis>: tak jak metoda
                 addAttribs(), ale nadpisuje atrybuty
             </para></listitem>
@@ -1073,14 +1068,6 @@ $fooBar  = $element->getDecorator('FooBar');
                 postaci par klucz/wartość
             </para></listitem>
 
-            <listitem><para>
-                <emphasis>removeAttrib($name)</emphasis>: usuwa pojedynczy
-                atrybut
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>clearAttribs()</emphasis>: usuwa wszystkie atrybuty
-            </para></listitem>
         </itemizedlist>
 
         <para>
@@ -1105,9 +1092,10 @@ $element->class = 'text;
         <title>Standardowe elementy</title>
 
         <para>
-            <code>Zend_Form</code> ships with a number of standard elements; please read the
-            <link linkend="zend.form.standardElements">Standard Elements</link>
-            chapter for full details.
+            Komponent <code>Zend_Form</code> posiada duży zestaw standardowych
+            elementów; przeczytaj rozdział 
+            <link linkend="zend.form.standardElements">Standardowe Elementy</link>
+            aby poznać więcej szczegółów.
         </para>
     </sect2>
 
@@ -1222,11 +1210,11 @@ $element->class = 'text;
         <title>Konfiguracja</title>
 
         <para>
-            <code>Zend_Form_Element</code>'s constructor accepts either an
-            array of options or a <code>Zend_Config</code> object containing
-            options, and it can also be configured using either
-            <code>setOptions()</code> or <code>setConfig()</code>. Generally
-            speaking, keys are named as follows:
+            Konstruktor klasy <code>Zend_Form_Element</code>przyjmuje w 
+            parametrze tablicę opcji lub obiekt <code>Zend_Config</code> 
+            zawierający pcje. Klasa może być także skonfigurowana za pomocą
+            metod <code>setOptions()</code> oraz <code>setConfig()</code>.
+            Generalnie klucze nazwane są w taki sposób:
         </para>
 
         <itemizedlist>
@@ -1241,7 +1229,7 @@ $element->class = 'text;
         </itemizedlist>
 
         <para>
-            Exceptions to the rule include the following:
+            Oto wyjątki od tej zasady:
         </para>
 
         <itemizedlist>
@@ -1313,9 +1301,8 @@ decorators.label.decorator = "Label"
         <title>Własne elementy</title>
 
         <para>
-            You can create your own custom elements by simply extending the
-            <code>Zend_Form_Element</code> class. Common reasons to do so
-            include:
+            Możesz tworzyć własne elementy po prostu rozszerzając klasę 
+            <code>Zend_Form_Element</code>. Powodami aby to zrobić mogą być:
         </para>
 
         <itemizedlist>

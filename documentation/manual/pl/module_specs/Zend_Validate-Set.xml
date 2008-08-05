@@ -1,17 +1,17 @@
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
-    <title>Standardowe klasy walidatorów</title>
+    <title>Standardowe klasy weryfikatorów</title>
 
     <para>
         Zend Framework posiada standardowy zestaw gotowych do użycia klas 
-        walidatorów.
+        weryfikatorów.
     </para>
 
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
             Zwraca wartość <code>true</code> tylko wtedy, gdy wartość <code>$value</code> 
-            zawiera tylko znaki alfabetu oraz cyfry. Ten walidator posiada także opcję, 
+            zawiera tylko znaki alfabetu oraz cyfry. Ten weryfikator posiada także opcję, 
             służącą do określenia, czy białe znaki mąją być uznane za prawidłowe.
         </para>
     </sect2>
@@ -20,7 +20,7 @@
         <title>Alpha</title>
         <para>
             Zwraca wartość <code>true</code> tylko wtedy, gdy wartość <code>$value</code> 
-            zawiera tylko znaki alfabetu. Ten walidator posiada także opcję, 
+            zawiera tylko znaki alfabetu. Ten weryfikator posiada także opcję, 
             służącą do określenia, czy białe znaki mąją być uznane za prawidłowe.
         </para>
     </sect2>
@@ -28,11 +28,11 @@
     <sect2 id="zend.validate.set.barcode">
         <title>Barcode</title>
         <para>
-            Ten walidator jest pomocny przy sprawdzaniu poprawności wartości kodu kreskowego. Obecnie obsługuje standardy
+            Ten weryfikator jest pomocny przy sprawdzaniu poprawności wartości kodu kreskowego. Obecnie obsługuje standardy
             "<code>UPC-A</code>" (Universal Product Code) oraz "<code>EAN-13</code>" (European Article Number). Metoda 
-            <code>isValid()</code> zwraca wartość <code>true</code> tylko w przypadku poprawnej walidacji poprzez algorytm
+            <code>isValid()</code> zwraca wartość <code>true</code> tylko w przypadku poprawnej weryfikacji poprzez algorytm
             kodów kreskowych. Powinieneś usunąć wszystkie znaki nie będące cyframi od zera do dziewiątki (0-9) przed
-            podaniem wartości do walidatora.
+            podaniem wartości do weryfikatora.
         </para>
     </sect2>
 

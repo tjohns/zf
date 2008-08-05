@@ -108,7 +108,7 @@ function myFunc($val1, $val2, $val3)
         </programlisting>
 
         <para>
-            PhpDocumentor nie przeprowadza walidacji typów określonych dla
+            PhpDocumentor nie przeprowadza weryfikacji typów określonych dla
             parametrów lub zwracanych wartości, więc nie będzie to miało wpływu
             na twoją dokumentację API
             Providing the hinting is necessary, however, when the

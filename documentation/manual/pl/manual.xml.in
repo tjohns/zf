@@ -282,6 +282,15 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Feed-CustomFeed.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.file">
+        <title>Zend_File</title>
+        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
         <xi:include href="module_specs/Zend_Filter.xml">

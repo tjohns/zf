@@ -120,7 +120,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
 
         <para>
             Dodatkowo klasa Zend_Filter_Input pozwala na utworzenie instancji
-            i wywołanie większej ilości klas filtrów i walidatorów w celu
+            i wywołanie większej ilości klas filtrów i weryfikatorów w celu
             przetworzenia zestawu danych wejściowych. Zobacz
             <xref linkend="zend.filter.input" />.
         </para>

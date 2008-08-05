@@ -212,7 +212,7 @@ array(
                 <code>getEntries()</code>. Jako przykład implementacji możesz
                 użyć klasy <code>Zend_Feed_Builder</code>, która przyjmuje
                 tablicę jako argument konstruktora, przeprowadza pewną
-                walidację, a następnie może być użyta za pomocą metody
+                weryfikację, a następnie może być użyta za pomocą metody
                 <code>importBuilder()</code>. Metoda <code>getHeader()</code>
                 musi zwracać instancję klasy
                 <code>Zend_Feed_Builder_Header</code>, a metoda

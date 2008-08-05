@@ -4,7 +4,7 @@
 
     <para>
         Klasa <code>Zend_Validate_EmailAddress</code> pozwala ci na 
-        przeprowadzenie walidacji adresu email. Walidator wpierw dzieli adres 
+        przeprowadzenie weryfikacji adresu email. Weryfikator wpierw dzieli adres 
         email na część lokalną oraz na nazwę serwera, a następnie próbuje 
         sprawdzić je w oparciu o znane specyfikacje dla adresów email oraz 
         adresów serwerów.
@@ -49,16 +49,16 @@ if ($validator->isValid($email)) {
     </para>
 
     <para>
-        Niektóre przestarzałe formaty adresów email nie są obecnie walidowane
+        Niektóre przestarzałe formaty adresów email nie są obecnie weryfikowane
         (np. zawierające znak powrotu karetki, albo znak "\" w adresie email).
     </para>
 
     <para>
-        <emphasis role="strong">Walidacja dla różnych typów adresów serwerów</emphasis>
+        <emphasis role="strong">Weryfikacja dla różnych typów adresów serwerów</emphasis>
     </para>
 
     <para>
-        Część adresu email zawierająca adres serwera jest walidowana za pomocą
+        Część adresu email zawierająca adres serwera jest weryfikowana za pomocą
         <link linkend="zend.validate.set.hostname"><code>Zend_Validate_Hostname</code></link>. 
         Domyślnie akceptowane są jedynie adresy DNS w stylu <code>domain.com</code>, 
         ale jeśli chcesz, to możesz włączyć akceptowanie także adresów IP oraz 

@@ -3,7 +3,7 @@
     <title>Hostname</title>
 
     <para>
-        Zend_Validate_Hostname pozwala ci na przeprowadzenie walidacji adresów
+        Zend_Validate_Hostname pozwala ci na przeprowadzenie weryfikacji adresów
         serwerów w oparciu o zestaw znanych specyfikacji. Możliwe jest
         sprawdzenie trzech różnych typów adresów serwerów: adresu DNS (np.
         domain.com), adresu IP (np. 1.2.3.4), oraz adresu lokalnego (np.
@@ -38,7 +38,7 @@ if ($validator->isValid($hostname)) {
     </para>
 
     <para>
-        <emphasis role="strong">Walidacja różnych typów adresów serwerów</emphasis>
+        <emphasis role="strong">Weryfikacja różnych typów adresów serwerów</emphasis>
     </para>
 
     <para>
