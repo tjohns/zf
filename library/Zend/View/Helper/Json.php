@@ -26,6 +26,9 @@ require_once 'Zend/Json.php';
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Helper for simplifying JSON responses
  *
@@ -34,7 +37,7 @@ require_once 'Zend/Controller/Front.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Json
+class Zend_View_Helper_Json extends Zend_View_Helper_Abstract
 {
     /**
      * Encode data as JSON, disable layouts, and set response header

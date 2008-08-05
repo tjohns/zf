@@ -22,6 +22,9 @@
 /** Zend_View_Helper_Placeholder_Registry */
 require_once 'Zend/View/Helper/Placeholder/Registry.php';
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Helper for passing data between otherwise segregated Views. It's called
  * Placeholder to make its typical usage obvious, but can be used just as easily
@@ -33,13 +36,8 @@ require_once 'Zend/View/Helper/Placeholder/Registry.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-class Zend_View_Helper_Placeholder  
+class Zend_View_Helper_Placeholder extends Zend_View_Helper_Abstract
 {  
-    /**
-     * @var Zend_View_Interface
-     */  
-    public $view;  
-  
     /**
      * Placeholder items
      * @var array
@@ -63,17 +61,7 @@ class Zend_View_Helper_Placeholder
         $this->_registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
     }
   
-    /**
-     * Set view
-     * 
-     * @param  Zend_View_Interface $view 
-     * @return void
-     */  
-    public function setView(Zend_View_Interface $view)  
-    {  
-        $this->view = $view;  
-    }  
-  
+ 
     /**
      * Placeholder helper
      * 

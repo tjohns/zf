@@ -23,6 +23,9 @@
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Translation view helper
  *
@@ -31,7 +34,7 @@ require_once 'Zend/Locale.php';
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Translate
+class Zend_View_Helper_Translate extends Zend_View_Helper_Abstract
 {
     /**
      * Translation object

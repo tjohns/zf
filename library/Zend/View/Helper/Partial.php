@@ -20,6 +20,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Helper for rendering a template fragment in its own variable scope.
  *
@@ -28,20 +31,13 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Partial
+class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
 {
     /**
      * Variable to which object will be assigned
      * @var string
      */
     protected $_objectKey;
-
-    /**
-     * Instance of parent Zend_View object
-     *
-     * @var Zend_View_Abstract
-     */
-    public $view = null;
 
     /**
      * Renders a template fragment within a variable scope distinct from the
@@ -101,18 +97,6 @@ class Zend_View_Helper_Partial
         }
 
         return $view->render($name);
-    }
-
-    /**
-     * Set view object
-     *
-     * @param  Zend_View_Interface $view
-     * @return Zend_View_Helper_Partial
-     */
-    public function setView(Zend_View_Interface $view)
-    {
-        $this->view = $view;
-        return $this;
     }
 
     /**
