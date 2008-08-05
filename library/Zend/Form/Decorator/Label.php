@@ -135,14 +135,8 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      */
     public function getClass()
     {
-        $class = null;
-        if (null !== ($element = $this->getElement())) {
-            $class = $element->getAttrib('class');
-        }
-
-        if (null === $class) {
-            $class = '';
-        }
+        $class   = '';
+        $element = $this->getElement();
 
         $decoratorClass = $this->getOption('class');
         if (!empty($decoratorClass)) {
