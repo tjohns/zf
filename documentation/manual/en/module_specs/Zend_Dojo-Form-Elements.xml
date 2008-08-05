@@ -700,7 +700,7 @@ $form->addElement(
         <title>NumberTextBox</title>
 
         <para>
-            A number spinner is a text element for entering numeric values;
+            A number text box is a text element for entering numeric values;
             unlike NumberSpinner, numbers are entered manually. Validations and
             constraints can be provided to ensure the number stays in a
             particular range or format.
@@ -763,6 +763,42 @@ $form->addElement(
             'min'    => -20000,
             'max'    => 20000,
         ),
+    )
+);
+]]></programlisting>
+        </example>
+    </sect3>
+
+    <sect3 id="zend.dojo.form.elements.passwordTextBox">
+        <title>PasswordTextBox</title>
+
+        <para>
+            PasswordTextBox is simply a ValidationTextBox that is tied to a
+            password input; its sole purpose is to allow for a dijit-themed text
+            entry for passwords that also provides client-side validation.
+        </para>
+
+        <para>
+            Internally, NumberTextBox derives from <link
+                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>
+            and <link linkend="zend.dojo.form.elements.textBox">TextBox</link>;
+            all methods available to those classes are available.
+        </para>
+
+        <example id="zend.dojo.form.elements.passwordTextBox.example">
+            <title>Example PasswordTextBox dijit element usage</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'PasswordTextBox', 
+    'password', 
+    array(
+        'label'          => 'Password',
+        'required'       => true,
+        'trim'           => true,
+        'lowercase'      => true,
+        'regExp'         => '^[a-z0-9]{6,}$',
+        'invalidMessage' => 'Invalid password; must be at least 6 alphanumeric characters',
     )
 );
 ]]></programlisting>
