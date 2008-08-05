@@ -1617,17 +1617,12 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         }
         $this->_displayGroups[$name] = new $class(
             $name, 
-            $this->getPluginLoader(self::DECORATOR)
+            $this->getPluginLoader(self::DECORATOR),
+            $options
         );
 
         if (!empty($this->_displayGroupPrefixPaths)) {
             $this->_displayGroups[$name]->addPrefixPaths($this->_displayGroupPrefixPaths);
-        }
-
-        if (is_array($options)) {
-            $this->_displayGroups[$name]->setOptions($options);
-        } elseif ($options instanceof Zend_Config) {
-            $this->_displayGroups[$name]->setConfig($options);
         }
 
         $this->_order[$name] = $this->_displayGroups[$name]->getOrder();
