@@ -415,6 +415,17 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         <itemizedlist>
 
             <listitem><para>
+                While not strictly necessary, we recommend either implementing
+                <code>Zend_View_Helper_Interface</code> or extending
+                <code>Zend_View_Helper_Abstract</code> when creating your
+                helpers. Introduced in 1.6.0, these simply define a
+                <code>setView()</code> method; however, in upcoming releases, we
+                plan to implement a strategy pattern that will simplify much of
+                the naming schema detailed below. Building off these now will
+                help you future-proof your code.
+            </para></listitem>
+
+            <listitem><para>
                 The class name must, at the very minimum, end with the helper
                 name itself, using MixedCaps.  E.g., if you were writing a
                 helper called "specialPurpose", the class name would minimally
@@ -458,8 +469,8 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             Here is an example of our <code>SpecialPurpose</code> helper code:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_SpecialPurpose
+        <programlisting role="php"><![CDATA[
+class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 {
     protected $_count = 0;
     public function specialPurpose()
@@ -468,8 +479,8 @@ class My_View_Helper_SpecialPurpose
         $output = "I have seen 'The Jerk' {$this->_count} time(s).";
         return htmlspecialchars($output);
     }
-}]]>
-        </programlisting>
+}
+]]></programlisting>
 
         <para>
             Then in a view script, you can call the <code>SpecialPurpose</code>
@@ -523,6 +534,11 @@ class My_View_Helper_ScriptPath
             called when the helper class is first instantiated, and passed the
             current view object. It is up to you to persist the object in your
             class, as well as determine how it should be accessed.
+        </para>
+
+        <para>
+            If you are extending <code>Zend_View_Helper_Abstract</code>, you do
+            not need to define this method, as it is defined for you.
         </para>
     </sect2>
 </sect1>

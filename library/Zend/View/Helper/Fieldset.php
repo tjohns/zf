@@ -34,23 +34,6 @@ require_once 'Zend/View/Helper/FormElement.php';
 class Zend_View_Helper_Fieldset extends Zend_View_Helper_FormElement
 {
     /**
-     * @var Zend_View_Instance
-     */
-    public $view;
-
-    /**
-     * Set view object
-     * 
-     * @param  Zend_View_Interface $view 
-     * @return Zend_View_Helper_Form
-     */
-    public function setView(Zend_View_Interface $view)
-    {
-        $this->view = $view;
-        return $this;
-    }
-
-    /**
      * Render HTML form
      *
      * @param  string $name Form name

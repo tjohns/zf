@@ -36,4 +36,11 @@ interface Zend_View_Helper_Interface
      * @return Zend_View_Helper_Interface
      */
     public function setView(Zend_View_Interface $view);
+
+    /**
+     * Strategy pattern: helper method to invoke
+     * 
+     * @return mixed
+     */
+    public function direct();
 }

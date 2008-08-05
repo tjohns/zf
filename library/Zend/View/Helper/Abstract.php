@@ -52,4 +52,13 @@ abstract class Zend_View_Helper_Abstract implements Zend_View_Helper_Interface
         $this->view = $view;
         return $this;
     }
+
+    /**
+     * Strategy pattern: currently unutilized
+     *
+     * @return void
+     */
+    public function direct()
+    {
+    }
 }

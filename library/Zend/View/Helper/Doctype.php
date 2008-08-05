@@ -22,6 +22,9 @@
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Helper for setting and retrieving the doctype
  *
@@ -30,7 +33,7 @@ require_once 'Zend/Registry.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-class Zend_View_Helper_Doctype
+class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
 {
     /**#@+
      * DocType constants

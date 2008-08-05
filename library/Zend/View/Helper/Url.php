@@ -20,6 +20,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
+
 /**
  * Helper for making easy links and getting urls that depend on the routes and router
  *
@@ -28,8 +31,8 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Url {
-
+class Zend_View_Helper_Url extends Zend_View_Helper_Abstract
+{
     /**
      * Generates an url given the name of a route.
      *
@@ -45,5 +48,4 @@ class Zend_View_Helper_Url {
         $router = Zend_Controller_Front::getInstance()->getRouter();
         return $router->assemble($urlOptions, $name, $reset, $encode);
     }
-
 }
