@@ -339,6 +339,65 @@ $form->setElementDecorators(array(
 ?>]]></programlisting>
             </example>
 
+            <example id="zend.form.forms.elements.global.decoratorsFilter">
+                <title>Setting Decorators for Some Elements</title>
+
+                <para>
+                    You can also set decorators for a subset of elements,
+                    either by inclusion or exclusion. The second argument to
+                    <code>setElementDecorators()</code> may be an array of
+                    element names; by default, specifying such an array will
+                    set the specified decorators on those elements only. You
+                    may also pass a third argument, a flag indicating whether
+                    this list of elements is for inclusion or exclusion
+                    purposes; if false, it will decorate all elements
+                    <emphasis>except</emphasis> those in the passed list.
+                    As with standard usage of the method, any decorators passed
+                    will overwrite any previously set decorators in each
+                    element.
+                </para>
+
+                <para>
+                    In the following snippet, we indicate that we want only the
+                    ViewHelper and Label decorators for the 'foo' and 'bar'
+                    elements:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    )
+);
+]]></programlisting>
+
+                <para>
+                    On the flip side, with this snippet, we'll now indicate
+                    that we want to use only the ViewHelper and Label
+                    decorators for every element <emphasis>except</emphasis>
+                    the 'foo' and 'bar' elements:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    ),
+    false
+);
+]]></programlisting>
+            </example>
+
                 <note>
                     <title>Some Decorators are Inappropriate for Some Elements</title>
 
@@ -355,8 +414,13 @@ $form->setElementDecorators(array(
                     </para>
 
                     <para>
+                        You can use the inclusion/exclusion array to overcome
+                        this issue as noted in the previous example.
+                    </para>
+
+                    <para>
                         So, use this method wisely, and realize that you may
-                        need to manually change some elements' decorators to
+                        need to exclude some elements or manually change some elements' decorators to
                         prevent unwanted output.
                     </para>
                 </note>
