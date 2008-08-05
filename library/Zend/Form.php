@@ -2465,11 +2465,33 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Set all element decorators as specified
      * 
      * @param  array $decorators 
+     * @param  array|null $elements Specific elements to decorate or exclude from decoration
+     * @param  bool $include Whether $elements is an inclusion or exclusion list
      * @return Zend_Form
      */
-    public function setElementDecorators(array $decorators)
+    public function setElementDecorators(array $decorators, array $elements = null, $include = true)
     {
-        foreach ($this->getElements() as $element) {
+        if (is_array($elements)) {
+            if ($include) {
+                $elementObjs = array();
+                foreach ($elements as $name) {
+                    if (null !== ($element = $this->getElement($name))) {
+                        $elementObjs[] = $element;
+                    }
+                }
+            } else {
+                $elementObjs = $this->getElements();
+                foreach ($elements as $name) {
+                    if (array_key_exists($name, $elementObjs)) {
+                        unset($elementObjs[$name]);
+                    }
+                }
+            }
+        } else {
+            $elementObjs = $this->getElements();
+        }
+
+        foreach ($elementObjs as $element) {
             $element->setDecorators($decorators);
         }
 

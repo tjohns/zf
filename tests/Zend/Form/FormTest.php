@@ -3171,6 +3171,84 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('#<tr><td>Foo</td><td>.*?<input[^>]+>.*?</td><td>sample description</td></tr>#s', $html, $html);
     }
 
+    /**#@+
+     * @see ZF-3228
+     */
+    public function testShouldAllowSpecifyingSpecificElementsToDecorate()
+    {
+        $this->_checkZf2794();
+
+        $this->setupElements();
+        $this->form->setElementDecorators(
+            array(
+                'Description',
+                'Form',
+                'Fieldset',
+            ),
+            array(
+                'bar',
+            )
+        );
+
+        $element = $this->form->bar;
+        $this->assertFalse($element->getDecorator('ViewHelper'));
+        $this->assertFalse($element->getDecorator('Errors'));
+        $this->assertFalse($element->getDecorator('Label'));
+        $this->assertFalse($element->getDecorator('HtmlTag'));
+        $decorator = $element->getDecorator('Description');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Description);
+        $decorator = $element->getDecorator('Form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
+        $decorator = $element->getDecorator('Fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+
+        foreach (array('foo', 'baz') as $name) {
+            $element = $this->form->$name;
+            $this->assertFalse($element->getDecorator('Description'));
+            $this->assertFalse($element->getDecorator('Form'));
+            $this->assertFalse($element->getDecorator('Fieldset'));
+        }
+    }
+
+    public function testShouldAllowSpecifyingListOfElementsNotToDecorate()
+    {
+        $this->_checkZf2794();
+
+        $this->setupElements();
+        $this->form->setElementDecorators(
+            array(
+                'Description',
+                'Form',
+                'Fieldset',
+            ),
+            array(
+                'foo',
+                'baz',
+            ),
+            false
+        );
+
+        $element = $this->form->bar;
+        $this->assertFalse($element->getDecorator('ViewHelper'));
+        $this->assertFalse($element->getDecorator('Errors'));
+        $this->assertFalse($element->getDecorator('Label'));
+        $this->assertFalse($element->getDecorator('HtmlTag'));
+        $decorator = $element->getDecorator('Description');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Description);
+        $decorator = $element->getDecorator('Form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
+        $decorator = $element->getDecorator('Fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+
+        foreach (array('foo', 'baz') as $name) {
+            $element = $this->form->$name;
+            $this->assertFalse($element->getDecorator('Description'));
+            $this->assertFalse($element->getDecorator('Form'));
+            $this->assertFalse($element->getDecorator('Fieldset'));
+        }
+    }
+    /**#@-*/
+
     public function testCanSetAllElementFiltersAtOnce()
     {
         $this->_checkZf2794();
