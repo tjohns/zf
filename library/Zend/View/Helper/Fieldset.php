@@ -58,9 +58,16 @@ class Zend_View_Helper_Fieldset extends Zend_View_Helper_FormElement
             unset($attribs['legend']);
         }
 
+        // get id
+        if (!empty($id)) {
+            $id = ' id="' . $this->view->escape($id) . '"';
+        } else {
+            $id = '';
+        }
+
         // render fieldset
         $xhtml = '<fieldset'
-               . ' id="'   . $this->view->escape($id)   . '"'
+               . $id
                . $this->_htmlAttribs($attribs)
                . '>'
                . $legend
