@@ -78,6 +78,11 @@ require_once 'Zend/Validate/DigitsTest.php';
 require_once 'Zend/Validate/EmailAddressTest.php';
 
 /**
+ * @see Zend_Validate_File_AllTests
+ */
+require_once 'Zend/Validate/File/AllTests.php';
+
+/**
  * @see Zend_Validate_FloatTest
  */
 require_once 'Zend/Validate/FloatTest.php';
@@ -180,6 +185,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_DateTest');
         $suite->addTestSuite('Zend_Validate_DigitsTest');
         $suite->addTestSuite('Zend_Validate_EmailAddressTest');
+        $suite->addTest(Zend_Validate_File_AllTests::suite());
         $suite->addTestSuite('Zend_Validate_FloatTest');
         $suite->addTestSuite('Zend_Validate_GreaterThanTest');
         $suite->addTestSuite('Zend_Validate_HexTest');
