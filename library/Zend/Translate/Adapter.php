@@ -284,16 +284,25 @@ abstract class Zend_Translate_Adapter {
         }
 
         $locale = (string) $locale;
-        if (empty($this->_translate[$locale]) === true) {
+        if (!isset($this->_translate[$locale])) {
             $temp = explode('_', $locale);
-            if (isset($this->_translate[$temp[0]]) === false) {
+            if (!isset($this->_translate[$temp[0]])) {
                 /**
                  * @see Zend_Translate_Exception
                  */
                 require_once 'Zend/Translate/Exception.php';
-                throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
+                throw new Zend_Translate_Exception("The language '{$locale}' has to be added before it can be used.");
             }
+
             $locale = $temp[0];
+        }
+
+        if (empty($this->_translate[$locale]) and empty($this->_translate[$temp[0]])) {
+            /**
+             * @see Zend_Translate_Exception
+             */
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception("No translation for the language '{$locale}' available.");
         }
 
         $this->_options['locale'] = $locale;

@@ -579,44 +579,40 @@ $form->addElement(
             </para></listitem>
             
             <listitem><para>
-                <code>setLargeDelta($delta)</code> and
-                <code>getLargeDelta()</code>: set and retrieve the amount by
-                which the numeric value should change when a button is held
-                pressed.
+                <code>setLargeDelta($delta)</code> und <code>getLargeDelta()</code>: Setzt und gibt die
+                Menge zurück mit welcher der nummerische Wert geändert werden soll wenn ein Button
+                gedrückt gehalten wird.
             </para></listitem>
             
             <listitem><para>
-                <code>setSmallDelta($delta)</code> and
-                <code>getSmallDelta()</code>: set and retrieve the delta by
-                which the number should change when a button is pressed once.
+                <code>setSmallDelta($delta)</code> und <code>getSmallDelta()</code>: Setzt und gibt das
+                Delta zurück mit dem die Nummer geändert werden soll wenn ein Button einmal gedrückt wird.
             </para></listitem>
             
             <listitem><para>
-                <code>setIntermediateChanges($flag)</code> and
-                <code>getIntermediateChanges()</code>: set and retrieve the
-                flag indicating whether or not each value change should be
-                shown when a button is held pressed.
+                <code>setIntermediateChanges($flag)</code> und <code>getIntermediateChanges()</code>:
+                Setzt un gibt das Flag zurück das anzeigt ob jede Änderung des Werte angezeigt werden soll
+                wenn der Button gedrückt gehalten wird, oder nicht.
             </para></listitem>
             
             <listitem><para>
-                <code>setRangeMessage($message)</code> and
-                <code>getRangeMessage()</code>: set and retrieve the message
-                indicating the range of values available.
+                <code>setRangeMessage($message)</code> und <code>getRangeMessage()</code>: Setzt und gibt
+                die Nachricht zurück die den Bereich der möglichen Werte anzeigt.
             </para></listitem>
             
             <listitem><para>
-                <code>setMin($value)</code> and <code>getMin()</code>: set and
-                retrieve the minimum value possible.
+                <code>setMin($value)</code> und <code>getMin()</code>: Setzt und gibt den mindesten möglichen
+                Wert zurück.
             </para></listitem>
             
             <listitem><para>
-                <code>setMax($value)</code> and <code>getMax()</code>: set and
-                retrieve the maximum value possible.
+                <code>setMax($value)</code> und <code>getMax()</code>: Setzt und gibt den maximalen möglichen
+                Wert zurück.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.numberSpinner.example">
-            <title>Example NumberSpinner dijit element usage</title>
+            <title>Beispiel der Verwendung des NumberSpinner Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -643,55 +639,50 @@ $form->addElement(
         <title>NumberTextBox</title>
 
         <para>
-            A number spinner is a text element for entering numeric values;
-            unlike NumberSpinner, numbers are entered manually. Validations and
-            constraints can be provided to ensure the number stays in a
-            particular range or format.
+            Ein Nummernkreisel ist ein Textelement für die Eingabe von nummerischen Werten; anders als beim
+            NummerSpinner, werden Nummern manuell eingegeben. Prüfungen und Abhängigkeiten können angegeben
+            werden um sicherzustellen das die Nummer immer in einem bestimmten Bereich oder Format ist.
         </para>
 
         <para>
-            Internally, NumberTextBox derives from <link
-                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>
-            and <link linkend="zend.dojo.form.elements.textBox">TextBox</link>;
-            all methods available to those classes are available. In addition,
-            the following methods can be used to set individual constraints:
+            Intern wird NumberTextBox abgeleitet von
+            <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link> und
+            <link linkend="zend.dojo.form.elements.textBox">TextBox</link>; alle in diesen Klassen vorhandenen
+            Methoden sind vorhanden. Zusätzlich können die folgenden Methoden verwendet werden um individuelle
+            Abhängigkeiten zu setzen:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setLocale($locale)</code> and <code>getLocale()</code>:
-                specify and retrieve a specific or alternate locale to use with
-                this dijit.
+                <code>setLocale($locale)</code> und <code>getLocale()</code>: Spezifiziert und gibt ein
+                spezifisches oder alternatives Gebietsschema zurück das mit diesem Dijit verwendet werden soll. 
             </para></listitem>
 
             <listitem><para>
-                <code>setPattern($pattern)</code> and
-                <code>getPattern()</code>: set and retrieve a <ulink
-                    url="http://www.unicode.org/reports/tr35/#Number_Format_Patterns">number
-                    pattern format</ulink> to use to format the number.
+                <code>setPattern($pattern)</code> und <code>getPattern()</code>: Setzt und gibt ein
+                <ulink url="http://www.unicode.org/reports/tr35/#Number_Format_Patterns">Nummern Patternformat</ulink>
+                zurück das verwendet wird um eine Nummer zu formatieren.
             </para></listitem>
 
             <listitem><para>
-                <code>setType($type)</code> and <code>getType()</code>: set and
-                retrieve the numeric format type to use (should be one of
-                'decimal', 'percent', or 'currency').
+                <code>setType($type)</code> und <code>getType()</code>: Setzt und gibt eine nummerischen
+                Formattyp zurück der verwendet wird (sollte 'decimal', 'percent' oder 'currency' sein).
             </para></listitem>
 
             <listitem><para>
-                <code>setPlaces($places)</code> and <code>getPlaces()</code>:
-                set and retrieve the number of decimal places to support.
+                <code>setPlaces($places)</code> und <code>getPlaces()</code>: Setzt und gibt die Anzahl der
+                Dezimalstellen die unterstützt werden sollen zurück.
             </para></listitem>
 
             <listitem><para>
-                <code>setStrict($flag)</code> and <code>getStrict()</code>: set
-                and retrieve the value of the strict flag, which indicates how
-                much leniency is allowed in relation to whitespace and
-                non-numeric characters.
+                <code>setStrict($flag)</code> und <code>getStrict()</code>: Setzt und gibt den Wert des
+                Strictflags zurück, welches anzeigt wieviel Ungenauigkeit in Bezug auf Leerzeichen und
+                nicht-nummerische Zeichen erlaubt ist.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.numberTextBox.example">
-            <title>Example NumberTextBox dijit element usage</title>
+            <title>Beispiel der Verwendung des NumberTextBox Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -700,7 +691,7 @@ $form->addElement(
     array(
         'label'          => 'NumberTextBox',
         'required'       => true,
-        'invalidMessage' => 'Invalid elevation.',
+        'invalidMessage' => 'Ungültige Eingabe.',
         'places'         => 0,
         'constraints'    => array(
             'min'    => -20000,
@@ -716,19 +707,17 @@ $form->addElement(
         <title>RadioButton</title>
 
         <para>
-            RadioButton wraps standard radio input elements to provide a
-            consistent look and feel with other dojo dijits.
+            RadioButton umschließt ein standard Radio-Input Element um ein konsistentes Look and Feel mit
+            den anderen Dojo Dijits zu bieten.
         </para>
 
         <para>
-            RadioButton extends from DijitMulti, which
-            allows you to specify select options via the
-            <code>setMultiOptions()</code> and <code>setMultiOption()</code>
-            methods.
+            RadioButton erweitert DijitMulti, welches es erlaubt Selectoptionen über die
+            <code>setMultiOptions()</code> und <code>setMultiOption()</code> Methoden zu spezifizieren.
         </para>
 
         <example id="zend.dojo.form.elements.radioButton.example">
-            <title>Example RadioButton dijit element usage</title>
+            <title>Beispiel der Verwendung des RadioButton Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -749,65 +738,56 @@ $form->addElement(
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.slider">
-        <title>Slider abstract element</title>
+        <title>Abstraktes Slider Element</title>
 
         <para>
-            Slider is an abstract element from which 
-            <link linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link>
-            and 
-            <link linkend="zend.dojo.form.elements.verticalSlider">VerticalSlider</link>
-            both derive. It exposes a number of common methods for configuring
-            your sliders, including:
+            Slider ist ein abstraktes Element welches abgeleitet ist von 
+            <link linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link> und
+            <link linkend="zend.dojo.form.elements.verticalSlider">VerticalSlider</link>. Es bietet
+            eine Anzahl von üblichen Methoden für die Konfiguration von Slidern an, inklusive:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setClickSelect($flag)</code> and
-                <code>getClickSelect()</code>: set and retrieve the flag
-                indicating whether or not clicking the slider changes the
-                value.
+                <code>setClickSelect($flag)</code> und <code>getClickSelect()</code>: Setzt und gibt das
+                Flag zurück das anzeigt ob das Klicken auf den Slider den Wert ändert oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setIntermediateChanges($flag)</code> and
-                <code>getIntermediateChanges()</code>: set and retrieve the
-                flag indicating whether or not the dijit will send a
-                notification on each slider change event.
+                <code>setIntermediateChanges($flag)</code> und <code>getIntermediateChanges()</code>:
+                Setzt und gibt das Flag zurück das anzeigt ob das Dijit eine Benachrichtigung bei jedem
+                Slider-Event schickt oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setShowButtons($flag)</code> and
-                <code>getShowButtons()</code>: set and retrieve the flag
-                indicating whether or not buttons on either end will be
-                displayed; if so, the user can click on these to change the
-                value of the slider.
+                <code>setShowButtons($flag)</code> und <code>getShowButtons()</code>: Setzt und gibt das
+                Flag zurück das anzeigt ob Buttons an den Enden angezeigt werden oder nicht; wenn ja, dann
+                kann der Benutzer diese anklicken und damit den Wert des Sliders ändern.
             </para></listitem>
 
             <listitem><para>
-                <code>setDiscreteValues($value)</code> and
-                <code>getDiscreteValues()</code>: set and retrieve the number
-                of discrete values represented by the slider.
+                <code>setDiscreteValues($value)</code> und <code>getDiscreteValues()</code>: Setzt und gibt
+                die Anzahl an diskreten Werte zurück die vom Slider repräsentiert werden.
             </para></listitem>
 
             <listitem><para>
-                <code>setMaximum($value)</code> and <code>getMaximum()</code>:
-                set the maximum value of the slider.
+                <code>setMaximum($value)</code> und <code>getMaximum()</code>: Setzt den maximalen Wert des
+                Sliders.
             </para></listitem>
 
             <listitem><para>
-                <code>setMinimum($value)</code> and <code>getMinimum()</code>:
-                set the minimum value of the slider.
+                <code>setMinimum($value)</code> und <code>getMinimum()</code>: Setzt den minimalen Wert des
+                Sliders.
             </para></listitem>
 
             <listitem><para>
-                <code>setPageIncrement($value)</code> and
-                <code>getPageIncrement()</code>: set the amount by which the
-                slider will change on keyboard events.
+                <code>setPageIncrement($value)</code> und <code>getPageIncrement()</code>: Setzt den Wert um den
+                sich der Slider auf Tastaturereignisse ändert. 
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Example usage is provided with each concrete extending class.
+            Ein Beispiel der Verwendung wird mit jeder konkreten Klasse angegeben die diese Klasse erweitert.
         </para>
     </sect3>
 

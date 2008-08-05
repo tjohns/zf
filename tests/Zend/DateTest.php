@@ -427,7 +427,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(              'S', $date->toString("EEEEE"));
         $this->assertSame(        'Samstag', $date->toString( "EEEE"));
         $this->assertSame(            'Sam', $date->toString(  "EEE"));
-        $this->assertSame(             'Sa', $date->toString(   "EE"));
+        $this->assertSame(            'Sa.', $date->toString(   "EE"));
         $this->assertSame(              'S', $date->toString(    "E"));
         $this->assertSame(             '06', $date->toString(   "ee"));
         $this->assertSame(              '6', $date->toString(    "e"));
@@ -619,7 +619,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(                              '5', $date->get(Zend_Date::WEEKDAY_DIGIT    ));
         $this->assertSame(                             '43', $date->get(Zend_Date::DAY_OF_YEAR      ));
         $this->assertSame(                              'F', $date->get(Zend_Date::WEEKDAY_NARROW   ));
-        $this->assertSame(                             'Fr', $date->get(Zend_Date::WEEKDAY_NAME     ));
+        $this->assertSame(                            'Fr.', $date->get(Zend_Date::WEEKDAY_NAME     ));
         $this->assertSame(                             '07', $date->get(Zend_Date::WEEK             ));
         $this->assertSame(                        'Februar', $date->get(Zend_Date::MONTH_NAME       ));
         $this->assertSame(                             '02', $date->get(Zend_Date::MONTH            ));
@@ -749,7 +749,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(                                           '6', $date->get(Zend_Date::WEEKDAY_DIGIT    ));
         $this->assertSame(                                          '44', $date->get(Zend_Date::DAY_OF_YEAR      ));
         $this->assertSame(                                           'S', $date->get(Zend_Date::WEEKDAY_NARROW   ));
-        $this->assertSame(                                          'Sa', $date->get(Zend_Date::WEEKDAY_NAME     ));
+        $this->assertSame(                                         'Sa.', $date->get(Zend_Date::WEEKDAY_NAME     ));
         $this->assertSame(                                          '07', $date->get(Zend_Date::WEEK             ));
         $this->assertSame(                                     'Februar', $date->get(Zend_Date::MONTH_NAME       ));
         $this->assertSame(                                          '02', $date->get(Zend_Date::MONTH            ));
@@ -1136,12 +1136,12 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         }
         $date->set($d2, Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2009-02-13T04:31:30+05:00', $date->get(Zend_Date::W3C));
-        $date->set('So', Zend_Date::WEEKDAY_NAME);
+        $date->set('So.', Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2009-02-08T04:31:30+05:00', $date->get(Zend_Date::W3C));
-        $date->set('Mo', Zend_Date::WEEKDAY_NAME);
+        $date->set('Mo.', Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2009-02-09T04:31:30+05:00', $date->get(Zend_Date::W3C));
         $date->setTimeZone('UTC');
-        $date->set('Fr', Zend_Date::WEEKDAY_NAME);
+        $date->set('Fr.', Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2009-02-13T23:31:30+00:00', $date->get(Zend_Date::W3C));
         $date->set($d2, Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2009-02-13T04:31:30+05:00', $date->get(Zend_Date::W3C));
@@ -2378,7 +2378,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2002-01-05T04:36:50+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);
-        $date->add('Mo', Zend_Date::WEEKDAY_NAME);
+        $date->add('Mo.', Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2002-01-05T04:36:50+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);
@@ -2753,7 +2753,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2002-01-03T04:36:50+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);
-        $date->sub('Mo', Zend_Date::WEEKDAY_NAME);
+        $date->sub('Mo.', Zend_Date::WEEKDAY_NAME);
         $this->assertSame('2002-01-03T04:36:50+05:00', $date->get(Zend_Date::W3C));
 
         $date->set($d2);

@@ -355,7 +355,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Sunday',  $value->getTranslation('sun', 'day', 'en'));
         $this->assertFalse($value->getTranslation('xxx', 'day'));
 
-        $this->assertEquals('So',  $value->getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day'));
+        $this->assertEquals('So.',  $value->getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day'));
         $this->assertEquals('Sun', $value->getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day', 'en'));
         $this->assertFalse($value->getTranslation(array('gregorian', 'format', 'abbreviated', 'xxx'), 'day'));
 
@@ -372,7 +372,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($value->getTranslation('xxxx', 'time'));
 
         $this->assertEquals('Wien',       $value->getTranslation('Europe/Vienna', 'citytotimezone'));
-        $this->assertEquals('St. John’s', $value->getTranslation('America/St_Johns', 'citytotimezone', 'en'));
+        $this->assertEquals("St. John's", $value->getTranslation('America/St_Johns', 'citytotimezone', 'en'));
         $this->assertFalse($value->getTranslation('xxxx', 'citytotimezone'));
 
         $this->assertEquals('Euro', $value->getTranslation('EUR', 'nametocurrency'));
@@ -384,7 +384,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($value->getTranslation('xxx', 'currencytoname'));
 
         $this->assertEquals('SFr.', $value->getTranslation('CHF', 'currencysymbol'));
-        $this->assertEquals('SwF',  $value->getTranslation('CHF', 'currencysymbol', 'en'));
+        $this->assertEquals('Fr.',  $value->getTranslation('CHF', 'currencysymbol', 'en'));
         $this->assertFalse($value->getTranslation('xxx', 'currencysymbol'));
 
         $this->assertEquals('EUR', $value->getTranslation('AT', 'currencytoregion'));
@@ -438,7 +438,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('Sonntag', $value->getTranslationList('day')));
         $this->assertTrue(in_array('Sunday', $value->getTranslationList('day', 'en')));
 
-        $this->assertTrue(in_array('So', $value->getTranslationList('day', null, array('gregorian', 'format', 'abbreviated'))));
+        $this->assertTrue(in_array('So.', $value->getTranslationList('day', null, array('gregorian', 'format', 'abbreviated'))));
         $this->assertTrue(in_array('Sun', $value->getTranslationList('day', 'en', array('gregorian', 'format', 'abbreviated'))));
 
         $this->assertTrue(in_array('S', $value->getTranslationList('day', null, array('gregorian', 'stand-alone', 'narrow'))));
@@ -451,7 +451,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array("h:mm:ss a z", $value->getTranslationList('time', 'en')));
 
         $this->assertTrue(in_array('Wien', $value->getTranslationList('citytotimezone')));
-        $this->assertTrue(in_array("St. John’s", $value->getTranslationList('citytotimezone', 'en')));
+        $this->assertTrue(in_array("St. John's", $value->getTranslationList('citytotimezone', 'en')));
 
         $this->assertTrue(in_array('Euro', $value->getTranslationList('nametocurrency')));
         $this->assertTrue(in_array('Euro', $value->getTranslationList('nametocurrency', 'en')));
@@ -460,7 +460,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoname', 'en')));
 
         $this->assertTrue(in_array('SFr.', $value->getTranslationList('currencysymbol')));
-        $this->assertTrue(in_array('SwF', $value->getTranslationList('currencysymbol', 'en')));
+        $this->assertTrue(in_array('Fr.', $value->getTranslationList('currencysymbol', 'en')));
 
         $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoregion')));
         $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoregion', 'en')));
@@ -474,11 +474,11 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $char = $value->getTranslationList('characters');
         $this->assertEquals("[a ä b-o ö p-s ß t u ü v-z]", $char['characters']);
         $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
-        $this->assertEquals("[\\$ £ ¥ ₤ ₧ € a-z]", $char['currencySymbol']);
+        $this->assertEquals("[a-z]", $char['currencySymbol']);
         $char = $value->getTranslationList('characters', 'en');
         $this->assertEquals("[a-z]", $char['characters']);
         $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
-        $this->assertEquals("[a-z]", $char['currencySymbol']);
+        $this->assertEquals("[a-c č d-l ł m-z]", $char['currencySymbol']);
     }
 
     /**
