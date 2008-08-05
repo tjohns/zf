@@ -2060,7 +2060,15 @@ class Zend_Form_Element implements Zend_Validate_Interface
             if (null !== $translator) {
                 $message = $translator->translate($message);
             }
-            $messages[$key] = str_replace('%value%', $value, $message);
+            if ($this->isArray() || is_array($value)) {
+                $aggregateMessages = array();
+                foreach ($value as $val) {
+                    $aggregateMessages[] = str_replace('%value%', $val, $message);
+                }
+                $messages[$key] = $aggregateMessages;
+            } else {
+                $messages[$key] = str_replace('%value%', $value, $message);
+            }
         }
         return $messages;
     }
