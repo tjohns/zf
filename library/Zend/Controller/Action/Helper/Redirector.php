@@ -246,44 +246,34 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     {
         $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
         $request    = $this->getRequest();
+        $curModule  = $request->getModuleName();
+        $useDefaultController = false;
 
-        if (null === $module) {
-            $module = $request->getModuleName();
-            if ($module == $dispatcher->getDefaultModule()) {
-                $module = '';
-            }
+        if (null === $controller && null !== $module) {
+            $useDefaultController = true;
         }
 
-        if (null === $controller) {
+        if (null === $module) {
+            $module = $curModule;
+        } 
+        
+        if ($module == $dispatcher->getDefaultModule()) {
+            $module = '';
+        }
+
+        if (null === $controller && !$useDefaultController) {
             $controller = $request->getControllerName();
             if (empty($controller)) {
                 $controller = $dispatcher->getDefaultControllerName();
             }
         }
 
-        $paramsNormalized = array();
-        foreach ($params as $key => $value) {
-            $paramsNormalized[] = $key . '/' . $value;
-        }
-        $paramsString = implode('/', $paramsNormalized);
+        $params['module']     = $module;
+        $params['controller'] = $controller;
+        $params['action']     = $action;
 
-        if (!empty($paramsString)) {
-            $url = $module . '/' . $controller . '/' . $action . '/' . $paramsString;
-        } else {
-            if ($action != $dispatcher->getDefaultAction()) {
-                $url = $module . '/' . $controller . '/' . $action;
-            } else {
-                if ($controller != $dispatcher->getDefaultControllerName()) {
-                    $url = $module . '/' . $controller;
-                } else {
-                    $url = $module;
-                }
-            }
-        }
-
-        $url = '/' . trim($url, '/');
-
-        $url = $this->_prependBase($url);
+        $router = $this->getFrontController()->getRouter();
+        $url    = $router->assemble($params, 'default', true);
 
         $this->_redirect($url);
     }
