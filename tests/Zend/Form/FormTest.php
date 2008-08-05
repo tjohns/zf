@@ -1522,6 +1522,20 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->form->foobar instanceof Zend_Form_FormTest_DisplayGroup);
     }
 
+    /**
+     * @see ZF-3254
+     */
+    public function testAddingDisplayGroupShouldPassOptions()
+    {
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->addDisplayGroup(array('bar', 'bat'), 'barbat', array('disableLoadDefaultDecorators' => true));
+        $group = $this->form->getDisplayGroup('barbat');
+        $this->assertTrue($group instanceof Zend_Form_DisplayGroup);
+        $decorators = $group->getDecorators();
+        $this->assertTrue(is_array($decorators));
+        $this->assertTrue(empty($decorators));
+    }
+
     // Processing
 
     public function testPopulateProxiesToSetDefaults()
