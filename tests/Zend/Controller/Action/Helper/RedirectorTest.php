@@ -64,6 +64,7 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
 
         $this->redirector = new Zend_Controller_Action_Helper_Redirector();
+        $this->router     = $front->getRouter();
         $this->request    = new Zend_Controller_Request_Http();
         $this->response   = new Zend_Controller_Response_Http();
         $this->controller = new Zend_Controller_Action_Helper_Redirector_TestController(
@@ -71,6 +72,9 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
             $this->response,
             array()
         );
+
+        // Add default routes
+        $this->router->addDefaultRoutes();
 
         // do this so setting headers does not throw exceptions
         $this->response->headersSentThrowsException = false;
@@ -365,6 +369,40 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->redirector->gotoUrl('');
         $this->assertEquals('/', $this->redirector->getRedirectUrl());
     }
+
+    /**#@+
+     * @see ZF-1734
+     */
+    public function testPassingNullActionAndNullControllerWithModuleShouldGoToDefaultControllerAndActions()
+    {
+        $this->request->setModuleName('admin')
+                      ->setControllerName('class')
+                      ->setActionName('view');
+        $this->redirector->gotoSimple(null, null, 'admin');
+        $test = $this->redirector->getRedirectUrl();
+        $this->assertEquals('/admin', $test, $test);
+    }
+
+    public function testPassingNullActionShouldGoToDefaultActionOfCurrentController()
+    {
+        $this->request->setModuleName('admin')
+                      ->setControllerName('class')
+                      ->setActionName('view');
+        $this->redirector->gotoSimple(null);
+        $test = $this->redirector->getRedirectUrl();
+        $this->assertEquals('/admin/class', $test, $test);
+    }
+
+    public function testPassingDefaultModuleShouldNotRenderModuleNameInRedirectUrl()
+    {
+        $this->request->setModuleName('admin')
+                      ->setControllerName('class')
+                      ->setActionName('view');
+        $this->redirector->gotoSimple('login', 'account', 'default');
+        $test = $this->redirector->getRedirectUrl();
+        $this->assertEquals('/account/login', $test, $test);
+    }
+    /**#@-*/
 }
 
 /**
