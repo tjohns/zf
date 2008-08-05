@@ -12,7 +12,7 @@
         <listitem><para>JSON-RPC support</para></listitem>
         <listitem><para>dojo.data compatibility</para></listitem>
         <listitem><para>View helper to help setup the Dojo environment</para></listitem>
-        <listitem><para>Dijit-specific Zend_View helpres</para></listitem>
+        <listitem><para>Dijit-specific Zend_View helpers</para></listitem>
         <listitem><para>Dijit-specific Zend_Form elements and decorators</para></listitem>
     </itemizedlist>
 
