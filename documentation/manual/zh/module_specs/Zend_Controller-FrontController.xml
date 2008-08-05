@@ -17,17 +17,17 @@
         </para>
 
         <para>
-			      前端控制器最至少需要一个或多个包含<link linkend="zend.controller.action">动作控制器</link>的目录的路径来完成工作。还有大量的方法可供调用，进一步裁剪前端控制器以及它的助手类环境。
+            前端控制器最至少需要一个或多个包含<link linkend="zend.controller.action">动作控制器</link>的目录的路径来完成工作。还有大量的方法可供调用，进一步裁剪前端控制器以及它的助手类环境。
         </para>
 
         <note>
             <title>默认的行为</title>
             <para>
-				        默认地，前端控制器加载<link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>插件，以及<link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>动作助手，分别为了简化控制器中的错误处理和视图渲染。
+                默认地，前端控制器加载<link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>插件，以及<link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>动作助手，分别为了简化控制器中的错误处理和视图渲染。
             </para>
 
             <para>
-				        如需禁用<code>ErrorHandler</code>，调用<code>dispatch()</code>前执行下面代码：
+                如需禁用<code>ErrorHandler</code>，调用<code>dispatch()</code>前执行下面代码：
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -50,14 +50,14 @@ $front->setParam('noViewRenderer', true);]]>
         <title>主要方法</title>
 
         <para>
-			      前端控制器有很多建立其环境的访问器。但是，有三个是开启前端控制器功能的主要方法：
+            前端控制器有很多建立其环境的访问器。但是，有三个是开启前端控制器功能的主要方法：
         </para>
 
         <sect3 id="zend.controller.front.methods.primary.getinstance">
             <title>getInstance()</title>
 
             <para>
-				        <code>getInstance()</code>方法用来获取前端控制器实例。因为前端控制器实现了单件模式，这可能是唯一创建前端控制器对象的方法。
+                <code>getInstance()</code>方法用来获取前端控制器实例。因为前端控制器实现了单件模式，这可能是唯一创建前端控制器对象的方法。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -93,12 +93,39 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
 
             <note>
                 <para>
-					          如果使用<code>addControllerDirectory()</code>时不带模块名，将会为<code>default</code>模块设定目录——如果目录已设定，就覆盖掉。
+                    如果使用<code>addControllerDirectory()</code>时不带模块名，将会为<code>default</code>模块设定目录——如果目录已设定，就覆盖掉。
                 </para>
             </note>
 
             <para>
-				        可以通过<code>getControllerDirectory()</code>获取控制器目录的当前设置；它将返回一个模块/目录对关联数组。
+                可以通过<code>getControllerDirectory()</code>获取控制器目录的当前设置；它将返回一个模块/目录对关联数组。
+            </para>
+        </sect3>
+        
+        <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
+            <title>addModuleDirectory() and getModuleDirectory()</title>
+
+            <para>
+                前端控制器的一个功能是你可以
+                <link
+                    linkend="zend.controller.modular">定义一个模块目录结构
+                </link> 
+                来创建独立的组件，被叫做“模块”。
+            </para>
+
+            <para>
+                每个模块位于自己的目录并和缺省模块的目录结构一样 － 例如，它至少
+                有个 "controllers" 字目录和 "views" 子目录以及其它应用子目录。
+            </para>
+
+            <para>
+                <code>addModuleDirectory()</code> 让你传递一个包含一个或多个模块目录的目录名。
+                然后进行扫描并把它们作为控制器目录添加到前端控制器。
+            </para>
+
+            <para>
+                然后，如果你想确定特定模块或当前模块路径，调用 <code>getModuleDirectory()</code>，
+                可选地传递模块名来获得模块目录。
             </para>
         </sect3>
 
