@@ -269,6 +269,13 @@ class Zend_Text_FigletTest extends PHPUnit_Framework_TestCase
         $this->_equalAgainstFile($figlet->render("Dum\nDum\n\nDum\n"), 'ParagraphOn.figlet');
     }
 
+    public function testEmptyString()
+    {
+        $figlet = new Zend_Text_Figlet();
+        
+        $this->assertEquals('', $figlet->render(''));
+    }
+    
     protected function _equalAgainstFile($output, $file)
     {
         $compareString = file_get_contents(dirname(__FILE__) . '/Figlet/' . $file);

@@ -8,7 +8,7 @@
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license && are unable to
+ * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
@@ -145,7 +145,7 @@ class Zend_Text_Figlet
     protected $_userSmush = 0;
 
     /**
-     * Wether to handle paragraphs or not
+     * Wether to handle paragraphs || not
      *
      * @var boolean
      */
@@ -345,7 +345,7 @@ class Zend_Text_Figlet
     }
 
     /**
-     * Set the justification. 0 stands for left aligned, 1 for centered && 2
+     * Set the justification. 0 stands for left aligned, 1 for centered and 2
      * for right aligned.
      *
      * @param  integer $justification Justification of the output text
@@ -361,7 +361,7 @@ class Zend_Text_Figlet
      * Set the output width
      *
      * @param  integer $outputWidth Output with which should be used for word
-     *                              wrapping && justification
+     *                              wrapping and justification
      * @return Zend_Text_Figlet
      */
     public function setOutputWidth($outputWidth)
@@ -446,7 +446,7 @@ class Zend_Text_Figlet
         $lastCharWasEol = false;
         $textLength     = @iconv_strlen($text, 'UTF-8');
 
-        if (!$textLength) {
+        if ($textLength === false) {
             require_once 'Zend/Text/Figlet/Exception.php';
             throw new Zend_Text_Figlet_Exception('$text is not encoded with ' . $encoding);
         }
@@ -467,17 +467,17 @@ class Zend_Text_Figlet
             $lastCharWasEol = (ctype_space($char) && $char !== "\t" && $char !== ' ');
 
             if (ctype_space($char)) {
-                $char = ($char === "\t" or $char === ' ') ? ' ': "\n";
+                $char = ($char === "\t" || $char === ' ') ? ' ': "\n";
             }
 
             // Skip unprintable characters
             $ordChar = $this->_uniOrd($char);
-            if (($ordChar > 0 && $ordChar < 32 && $char !== "\n") or $ordChar === 127) {
+            if (($ordChar > 0 && $ordChar < 32 && $char !== "\n") || $ordChar === 127) {
                 continue;
             }
 
             // Build the character
-            // Note: The following code is complex && thoroughly tested.
+            // Note: The following code is complex and thoroughly tested.
             // Be careful when modifying!
             do {
                 $charNotAdded = false;
@@ -588,8 +588,8 @@ class Zend_Text_Figlet
 
     /**
      * Splits inCharLine at the last word break (bunch of consecutive blanks).
-     * Makes a new line out of the first part && appends it using appendLine().
-     * Makes a new line out of the second part && returns.
+     * Makes a new line out of the first part and appends it using appendLine().
+     * Makes a new line out of the second part and returns.
      *
      * @return void
      */
@@ -666,7 +666,7 @@ class Zend_Text_Figlet
         $smushAmount = $this->_smushAmount();
 
         if (($this->_outlineLength + $this->_currentCharWidth - $smushAmount) > $this->_outlineLengthLimit
-            or ($this->_inCharLineLength + 1) > $this->_inCharLineLengthLimit) {
+            || ($this->_inCharLineLength + 1) > $this->_inCharLineLengthLimit) {
             return false;
         }
 
@@ -708,7 +708,7 @@ class Zend_Text_Figlet
     }
 
     /**
-     * Gets the requested character && sets current && previous char width.
+     * Gets the requested character and sets current and previous char width.
      *
      * @param  string $char The character from which to get the letter of
      * @return void
@@ -806,7 +806,7 @@ class Zend_Text_Figlet
                 $amount = ($charbd + $this->_outlineLength - 1 - $linebd);
             }
 
-            if (empty($leftChar) or $leftChar === ' ') {
+            if (empty($leftChar) || $leftChar === ' ') {
                 $amount++;
             } else if (!empty($rightChar)) {
                 if ($this->_smushem($leftChar, $rightChar) !== null) {
@@ -849,7 +849,7 @@ class Zend_Text_Figlet
             return $leftChar;
         }
 
-        if ($this->_previousCharWidth < 2 or $this->_currentCharWidth < 2) {
+        if ($this->_previousCharWidth < 2 || $this->_currentCharWidth < 2) {
             // Disallows overlapping if the previous character or the current
             // character has a width of one or zero.
             return null;
@@ -988,7 +988,7 @@ class Zend_Text_Figlet
 
         // Try to open the file
         $fp = fopen($fontFile, 'rb');
-        if (!$fp) {
+        if ($fp === false) {
             require_once 'Zend/Text/Figlet/Exception.php';
             throw new Zend_Text_Figlet_Exception($fontFile . ': Could not open file');
         }
@@ -1012,7 +1012,7 @@ class Zend_Text_Figlet
                            $rightToLeft,
                            $this->_fontSmush);
 
-        if ($magic !== self::FONTFILE_MAGIC_NUMBER or $numsRead < 5) {
+        if ($magic !== self::FONTFILE_MAGIC_NUMBER || $numsRead < 5) {
             require_once 'Zend/Text/Figlet/Exception.php';
             throw new Zend_Text_Figlet_Exception($fontFile . ': Not a FIGlet 2 font file');
         }
@@ -1067,7 +1067,7 @@ class Zend_Text_Figlet
         foreach ($this->_germanChars as $uniCode) {
             $char = $this->_loadChar($fp);
 
-            if (!$char) {
+            if ($char === false) {
                 fclose($fp);
                 return;
             }
@@ -1100,7 +1100,7 @@ class Zend_Text_Figlet
             // Now fetch the character
             $char = $this->_loadChar($fp);
 
-            if (!$char) {
+            if ($char === false) {
                 fclose($fp);
                 return;
             }
