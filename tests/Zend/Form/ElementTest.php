@@ -202,10 +202,33 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
                     ),
                     'bat'
                 ))
+             ->setIsArray(true)
              ->addFilter('StringToUpper');
         $test = $this->element->getValue();
         $this->assertTrue(is_array($test));
         array_walk_recursive($test, array($this, 'checkFilterValues'));
+    }
+
+    public function testRetrievingArrayValueDoesNotFilterAllValuesWhenNotIsArray()
+    {
+        $values = array(
+            'foo',
+            array(
+                'bar',
+                'baz'
+            ),
+            'bat'
+        );
+        $this->element->setValue($values)
+                      ->addFilter(new Zend_Form_ElementTest_ArrayFilter());
+        $test = $this->element->getValue();
+        $this->assertTrue(is_array($test));
+        require_once 'Zend/Json.php';
+        $test = Zend_Json::encode($test);
+        $this->assertNotContains('foo', $test);
+        foreach (array('bar', 'baz', 'bat') as $value) {
+            $this->assertContains($value, $test);
+        }
     }
 
     public function testGetUnfilteredValueRetrievesOriginalValue()
@@ -1870,6 +1893,23 @@ class Zend_Form_ElementTest_Element extends Zend_Form_Element
     public function init()
     {
         $this->setDisableLoadDefaultDecorators(true);
+    }
+}
+
+class Zend_Form_ElementTest_ArrayFilter implements Zend_Filter_Interface
+{
+    public function filter($value)
+    {
+        $value = array_filter($value, array($this, '_filter'));
+        return $value;
+    }
+
+    protected function _filter($value)
+    {
+        if (is_array($value)) {
+            return array_filter($value, array($this, '_filter'));
+        }
+        return (strstr($value, 'ba'));
     }
 }
 
