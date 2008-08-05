@@ -255,7 +255,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             precomputed hash values from a dictionary.
         </para>
         <para>
-            Therefor we need to modify our table to store our salt string:
+            Therefore we need to modify our table to store our salt string:
         </para>
         <programlisting role="php"><![CDATA[
 $sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
