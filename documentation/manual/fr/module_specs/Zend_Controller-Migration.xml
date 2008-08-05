@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 8299 -->
 <sect1 id="zend.controller.migration">
     <title>Migrer depuis des versions précédentes</title>
@@ -5,6 +6,33 @@
     <para>L'API des composants MVC a changé plusieurs fois. Si vous avez débuté avec des versions antérieures du Zend
     Framework, suivez les recommandations suivantes pour migrer vos scripts afin d'utiliser la nouvelle
     architecture.</para>
+
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>Migrer de la version 1.5.x vers 1.6.0 ou plus récent</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>Changement dans l'interface Dispatcher</title>
+
+            <para>Les utilisateurs ont porté à notre connaissance le fait que <code>Zend_Controller_Front</code> et
+            <code>Zend_Controller_Router_Route_Module</code> utilisent tous les deux des méthodes du dispatcheur qui ne
+            sont pas dans l'interface associée. Nous avons donc ajouté les trois méthodes suivantes pour s'assurer que
+            les dispatcheurs personnalisés continueront à fonctionner avec les implémentations embarquées :</para>
+
+            <itemizedlist>
+                <listitem>
+                    <para><code>getDefaultModule()</code> : retourne le nom du module par défaut.</para>
+                </listitem>
+
+                <listitem>
+                    <para><code>getDefaultControllerName()</code> : retourne le nom du contrôleur par défaut.</para>
+                </listitem>
+
+                <listitem>
+                    <para><code>getDefaultAction()</code> : retourne le nom de l'action par défaut.</para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>Migrer de la version 1.0.x vers 1.5.0 ou plus récent</title>
@@ -52,8 +80,7 @@
                 scripts de vue à <code>Zend_Filter_Inflector</code> ; vous pouvez modifier les règles de l'inflecteur
                 pour ne plus séparer les mots d'une action avec un tiret :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -76,8 +103,7 @@ $inflector->setFilterRule(':action', array(
                 écrits en notationCamel avec un nouveau drapeau du contrôleur frontal,
                 <code>useCaseSensitiveActions</code> :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
+                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
 
                 <para>Ceci vous permettra d'utiliser la notationCamel dans l'URL et de toujours faire résoudre la même
                 action que si vous utilisez les séparateurs de mots. Cependant, ceci signifiera que les problèmes
@@ -103,8 +129,7 @@ $front->setParam('useCaseSensitiveActions', true);]]></programlisting>
         d'exceptions, et redirigeant vers le contrôleur de gestion d'erreur spécifié. Vous pouvez le désactiver en
         réglant le paramètre <code>noErrorHandler</code> du contrôleur frontal :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]></programlisting>
+        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]></programlisting>
 
         <para>L'aide d'action <code>ViewRenderer</code> automatise l'injection de vues dans les contrôleurs d'action en
         tant qu'autogénération des scripts de vues suivant l'action courante. Le principal problème que vous pourriez
@@ -116,8 +141,7 @@ $front->setParam('noErrorHandler', true);]]></programlisting>
         globalement désactiver <code>ViewRenderer</code> dans votre fichier d'amorçage du contrôleur frontal avant tout
         dispatching :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// En considérant que $front est une instance de Zend_Controller_Front
+        <programlisting role="php"><![CDATA[// En considérant que $front est une instance de Zend_Controller_Front
 $front->setParam('noViewRenderer', true);]]></programlisting>
 
         <para>Cependant, ceci n'est pas une bonne stratégie à long terme, car il apparaît aisément que vous devrez
@@ -197,8 +221,7 @@ $front->setParam('noViewRenderer', true);]]></programlisting>
             <listitem>
                 <para>Avant le dispatching d'une instance de contrôleur frontal :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-// En considérant que $view a déjà été définie
+                <programlisting role="php"><![CDATA[// En considérant que $view a déjà été définie
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]></programlisting>
             </listitem>
@@ -206,8 +229,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]></programlistin
             <listitem>
                 <para>A tout moment durant le processus d'amorçage :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]></programlisting>
             </listitem>
         </itemizedlist>
@@ -258,8 +280,7 @@ $viewRenderer->setView($view);]]></programlisting>
 
         <para>Pour les versions précédentes, l'utilisation basique des composants MVC reste la même :</para>
 
-        <programlisting role="php"><![CDATA[require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
 
         <para>Cependant, la structure des dossiers a subi une réorganisation, certains composants ont été effacés, et
         d'autres ont été soit renommés soit ajoutés. Les changements incluent :</para>
@@ -313,8 +334,7 @@ Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
 
         <para>L'utilisation de base des composants MVC n'a pas changé ; vous pouvez toujours faire comme suit :</para>
 
-        <programlisting role="php"><![CDATA[require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
 
         <programlisting role="php"><![CDATA[/* -- créer un routeur -- */
 $router = new Zend_Controller_RewriteRouter();
@@ -362,7 +382,6 @@ $ctrl->dispatch();]]></programlisting>
                         <programlisting role="php"><![CDATA[$response->renderExceptions(true);
 $front->setResponse($response);
 $front->dispatch();
-
 // ou :
 $front->returnResponse(true);
 $response = $front->dispatch();
