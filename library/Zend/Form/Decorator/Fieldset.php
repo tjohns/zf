@@ -41,10 +41,11 @@ class Zend_Form_Decorator_Fieldset extends Zend_Form_Decorator_Abstract
      * @var array
      */
     public $stripAttribs = array(
-        'name',
         'action',
-        'method',
         'enctype',
+        'helper',
+        'method',
+        'name',
     );
 
     /**
