@@ -203,6 +203,17 @@ $form->addElement(
             the same, but do not allow arbitrary input.
         </para>
 
+        <note>
+            <title>ComboBoxes return the label values</title>
+
+            <para>
+                ComboBoxes return the label values, and not the option values,
+                which can lead to a disconnect in expectations. For this reason,
+                ComboBoxes do not auto-register an <code>InArray</code>
+                validator (though FilteringSelects do).
+            </para>
+        </note>
+
         <para>
             The ComboBox and FilteringSelect form elements provide accessors and mutators for
             examining and setting the select options as well as specifying a

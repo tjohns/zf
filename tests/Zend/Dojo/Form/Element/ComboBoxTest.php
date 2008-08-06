@@ -147,7 +147,7 @@ class Zend_Dojo_Form_Element_ComboBoxTest extends PHPUnit_Framework_TestCase
     /**#@+
      * @see ZF-3286
      */
-    public function testShouldRegisterInArrayValidatorWhenNoStoreProvided()
+    public function testShouldNeverRegisterInArrayValidatorAutomatically()
     {
         $options = array(
             'foo' => 'Foo Value',
@@ -155,23 +155,6 @@ class Zend_Dojo_Form_Element_ComboBoxTest extends PHPUnit_Framework_TestCase
             'baz' => 'Baz Value',
         );
         $this->element->setMultiOptions($options);
-        $this->assertFalse($this->element->getValidator('InArray'));
-        $this->element->isValid('test');
-        $validator = $this->element->getValidator('InArray');
-        $this->assertTrue($validator instanceof Zend_Validate_InArray);
-    }
-
-    public function testShouldNotRegisterInArrayValidatorWhenStoreProvided()
-    {
-        $options = array(
-            'foo' => 'Foo Value',
-            'bar' => 'Bar Value',
-            'baz' => 'Baz Value',
-        );
-        $this->element->setMultiOptions($options);
-        $this->element->setStoreId('fooStore')
-                      ->setStoreType('dojo.data.ItemFileReadStore')
-                      ->setStoreParams(array('url' => '/foo'));
         $this->assertFalse($this->element->getValidator('InArray'));
         $this->element->isValid('test');
         $this->assertFalse($this->element->getValidator('InArray'));

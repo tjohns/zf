@@ -474,7 +474,10 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                     the list of available options, and it will still consider
                     it valid input. It accepts an optional fifth argument, an
                     associative array <code>$options</code>; if provided,
-                    ComboBox will be rendered as a <code>select</code>. 
+                    ComboBox will be rendered as a <code>select</code>. Note
+                    also that the <emphasis>label values</emphasis> of the
+                    <code>$options</code> array will be returned in the form --
+                    not the values themselves.
                 </para>
 
                 <para>
@@ -644,7 +647,9 @@ echo $view->dateTextBox(
                     select/text hybrid that can either render a provided list
                     of options or those fetched via a dojo.data datastore.
                     Unlike ComboBox, however, FilteringSelect does not allow
-                    typing in an option not in its list.
+                    typing in an option not in its list. Additionally, it
+                    operates like a standard select in that the option values,
+                    not the labels, are returned when the form is submitted.
                 </para>
 
                 <para>

@@ -41,6 +41,12 @@ class Zend_Dojo_Form_Element_ComboBox extends Zend_Dojo_Form_Element_DijitMulti
     public $helper = 'ComboBox';
 
     /**
+     * Flag: autoregister inArray validator?
+     * @var bool
+     */
+    protected $_registerInArrayValidator = false;
+
+    /**
      * Get datastore information 
      * 
      * @return array
