@@ -203,18 +203,18 @@ class Zend_Test_PHPUnit_Constraint_DomQuery extends PHPUnit_Framework_Constraint
                 $failure = sprintf($failure, $other, $this->_content);
                 break;
             case self::ASSERT_CONTENT_COUNT:
-                $failure = 'Failed asserting node DENOTED BY %s OCCURS EXACTLY %i times';
+                $failure = 'Failed asserting node DENOTED BY %s OCCURS EXACTLY %d times';
                 if ($this->_negate) {
-                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT OCCUR EXACTLY %i times';
+                    $failure = 'Failed asserting node DENOTED BY %s DOES NOT OCCUR EXACTLY %d times';
                 }
                 $failure = sprintf($failure, $other, $this->_content);
                 break;
             case self::ASSERT_CONTENT_COUNT_MIN:
-                $failure = 'Failed asserting node DENOTED BY %s OCCURS AT LEAST %i times';
+                $failure = 'Failed asserting node DENOTED BY %s OCCURS AT LEAST %d times';
                 $failure = sprintf($failure, $other, $this->_content);
                 break;
             case self::ASSERT_CONTENT_COUNT_MAX:
-                $failure = 'Failed asserting node DENOTED BY %s OCCURS AT MOST %i times';
+                $failure = 'Failed asserting node DENOTED BY %s OCCURS AT MOST %d times';
                 $failure = sprintf($failure, $other, $this->_content);
                 break;
             case self::ASSERT_QUERY:
