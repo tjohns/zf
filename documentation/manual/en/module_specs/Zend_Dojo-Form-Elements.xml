@@ -90,11 +90,10 @@ $element->addDecorator('DijitElement')
 
         <para>
             While not deriving from <link
-                linkend="zend.form.standardElements.submit">the standard Submit
+                linkend="zend.form.standardElements.button">the standard Button
                 element</link>, it does implement the same functionality, and
-            can be used as a drop-in replacement for the standard <link
-                linkend="zend.form.standardElements.button">Button
-                element</link>. The following functionality is exposed:
+            can be used as a drop-in replacement for it. The following
+            functionality is exposed:
         </para>
 
         <itemizedlist>
