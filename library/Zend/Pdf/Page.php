@@ -318,7 +318,7 @@ class Zend_Pdf_Page
                    ($param3 === null || $param3 instanceof Zend_Pdf_ElementFactory_Interface)) {
             $this->_objFactory = ($param3 !== null)? $param3 : Zend_Pdf_ElementFactory::createFactory(1);
             $this->_attached = false;
-            $this->_safeGS     = true; /** New page created. That's users App responsibility to track GS changes */
+            $this->_safeGS   = true; /** New page created. That's users App responsibility to track GS changes */
             $pageWidth  = $param1;
             $pageHeight = $param2;
 
@@ -611,6 +611,61 @@ class Zend_Pdf_Page
             $this->setFont($style->getFont(), $style->getFontSize());
         }
         $this->_contents .= $style->instructions($this->_pageDictionary->Resources);
+    }
+
+    /**
+     * Set the transparancy
+     *
+     * $alpha == 0  - transparent
+     * $alpha == 1  - opaque
+     *
+     * Transparency modes, supported by PDF:
+     * Normal (default), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
+     * SoftLight, Difference, Exclusion
+     *
+     * @param float $alpha
+     * @param string $mode
+     * @throws Zend_Pdf_Exception
+     */
+    public function setAlpha($alpha, $mode = 'Normal')
+    {
+    	if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
+    	                           'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
+    	   throw new Zend_Pdf_Exception('Unsupported transparency mode.');
+    	}
+    	if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
+    		throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
+    	}
+
+        $this->_addProcSet('Text');
+        $this->_addProcSet('PDF');
+
+        $resources = $this->_pageDictionary->Resources;
+
+        // Check if Resources dictionary contains ExtGState entry
+        if ($resources->ExtGState === null) {
+            $resources->touch();
+            $resources->ExtGState = new Zend_Pdf_Element_Dictionary();
+        } else {
+            $resources->ExtGState->touch();
+        }
+
+        $idCounter = 1;
+        do {
+            $gStateName = 'GS' . $idCounter++;
+        } while ($resources->ExtGState->$gStateName !== null);
+
+
+        $gStateDictionary = new Zend_Pdf_Element_Dictionary();
+        $gStateDictionary->Type = new Zend_Pdf_Element_Name('ExtGState');
+        $gStateDictionary->BM   = new Zend_Pdf_Element_Name($mode);
+        $gStateDictionary->CA   = new Zend_Pdf_Element_Numeric($alpha);
+        $gStateDictionary->ca   = new Zend_Pdf_Element_Numeric($alpha);
+
+        $resources->ExtGState->$gStateName = $this->_objFactory->newObject($gStateDictionary);
+
+        $gStateNameObj = new Zend_Pdf_Element_Name($gStateName);
+        $this->_contents .= $gStateNameObj->toString() . " gs\n";
     }
 
 
