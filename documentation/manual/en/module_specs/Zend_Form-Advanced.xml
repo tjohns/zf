@@ -623,7 +623,7 @@ class My_Form_Registration extends Zend_Form
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-class My_Form_Registration extends Zend_Form
+class RegistrationController extends Zend_Controller_Action
 {
     // ...
 
