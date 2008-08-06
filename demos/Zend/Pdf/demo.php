@@ -66,7 +66,7 @@ try {
     // Create new image object
     $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
 } catch (Zend_Pdf_Exception $e) {
-    // Example of operating with image loading exceptions. 
+    // Example of operating with image loading exceptions.
     if ($e->getMessage() != 'Image extension is not installed.' &&
         $e->getMessage() != 'JPG support is not configured properly.') {
         throw $e;
@@ -77,6 +77,7 @@ try {
 // Mark page as modified
 foreach ($pdf->pages as $page){
     $page->saveGS();
+    $page->setAlpha(0.25);
     $page->setStyle($style);
     $page->rotate(0, 0, M_PI_2/3);
 
