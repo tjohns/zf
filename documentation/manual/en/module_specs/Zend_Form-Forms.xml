@@ -1035,9 +1035,26 @@ $form->setAction('/user/login')
      ->setMethod('post');
 ?>]]></programlisting>
 
+        <para>
+            You may also specify the form encoding type specifically using the
+            enctype accessors. Zend_Form defines two constants,
+            <code>Zend_Form::ENCTYPE_URLENCODED</code> and
+            <code>Zend_Form::ENCTYPE_MULTIPART</code>, corresponding to the
+            values 'application/x-www-form-urlencoded' and
+            'multipart/form-data', respectively; however, you can set this to
+            any arbitrary encoding type.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Set the action, method, and enctype:
+$form->setAction('/user/login')
+     ->setMethod('post')
+     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+?>]]></programlisting>
+
         <note>
             <para>
-                The method and action are only used internally for rendering,
+                The method, action, and enctype are only used internally for rendering,
                 and not for any sort of validation.
             </para>
         </note>

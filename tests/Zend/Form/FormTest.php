@@ -571,6 +571,18 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testEnctypeDefaultsToUrlEncoded()
+    {
+        $this->assertEquals(Zend_Form::ENCTYPE_URLENCODED, $this->form->getEnctype());
+    }
+
+    public function testCanSetEnctype()
+    {
+        $this->testEnctypeDefaultsToUrlEncoded();
+        $this->form->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+        $this->assertEquals(Zend_Form::ENCTYPE_MULTIPART, $this->form->getEnctype());
+    }
+
     public function testLegendInitiallyNull()
     {
         $this->assertNull($this->form->getLegend());

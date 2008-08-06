@@ -48,6 +48,13 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     const METHOD_PUT    = 'put';
     /**#@-*/
 
+    /**#@+
+     * Encoding type constants
+     */
+    const ENCTYPE_URLENCODED = 'application/x-www-form-urlencoded';
+    const ENCTYPE_MULTIPART  = 'multipart/form-data';
+    /**#@-*/
+
     /**
      * Form metadata and attributes
      * @var array
@@ -772,6 +779,32 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $this->setAttrib('method', $method);
         }
         return strtolower($method);
+    }
+
+    /**
+     * Set encoding type
+     * 
+     * @param  string $value 
+     * @return Zend_Form
+     */
+    public function setEnctype($value)
+    {
+        $this->setAttrib('enctype', $value);
+        return $this;
+    }
+
+    /**
+     * Get encoding type
+     * 
+     * @return string
+     */
+    public function getEnctype()
+    {
+        if (null === ($enctype = $this->getAttrib('enctype'))) {
+            $enctype = self::ENCTYPE_URLENCODED;
+            $this->setAttrib('enctype', $enctype);
+        }
+        return $this->getAttrib('enctype');
     }
 
     /**
