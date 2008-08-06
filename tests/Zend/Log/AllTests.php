@@ -24,8 +24,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Log_AllTests::main');
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Log/LogTest.php';
 require_once 'Zend/Log/Filter/ChainingTest.php';
@@ -35,6 +34,7 @@ require_once 'Zend/Log/Filter/SuppressTest.php';
 require_once 'Zend/Log/Formatter/SimpleTest.php';
 require_once 'Zend/Log/Formatter/XmlTest.php';
 require_once 'Zend/Log/Writer/DbTest.php';
+require_once 'Zend/Log/Writer/FirebugTest.php';
 require_once 'Zend/Log/Writer/MockTest.php';
 require_once 'Zend/Log/Writer/NullTest.php';
 require_once 'Zend/Log/Writer/StreamTest.php';
@@ -69,6 +69,7 @@ class Zend_Log_AllTests
         $suite->addTestSuite('Zend_Log_Formatter_SimpleTest');
         $suite->addTestSuite('Zend_Log_Formatter_XmlTest');
         $suite->addTestSuite('Zend_Log_Writer_DbTest');
+        $suite->addTestSuite('Zend_Log_Writer_FirebugTest');
         $suite->addTestSuite('Zend_Log_Writer_MockTest');
         $suite->addTestSuite('Zend_Log_Writer_NullTest');
         $suite->addTestSuite('Zend_Log_Writer_StreamTest');

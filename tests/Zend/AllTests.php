@@ -88,6 +88,7 @@ require_once 'Zend/ValidateTest.php';
 require_once 'Zend/Validate/AllTests.php';
 require_once 'Zend/VersionTest.php';
 require_once 'Zend/ViewTest.php';
+require_once 'Zend/Wildfire/AllTests.php';
 require_once 'Zend/XmlRpc/AllTests.php';
 
 /**
@@ -166,6 +167,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Validate_AllTests::suite());
         $suite->addTestSuite('Zend_ViewTest');
         $suite->addTestSuite('Zend_VersionTest');
+        $suite->addTest(Zend_Wildfire_AllTests::suite());
         $suite->addTest(Zend_XmlRpc_AllTests::suite());
 
         return $suite;

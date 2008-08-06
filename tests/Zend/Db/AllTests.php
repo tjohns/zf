@@ -52,6 +52,10 @@ require_once 'Zend/Loader.php';
  */
 require_once 'Zend/Db/SkipTests.php';
 
+/**
+ * @see Zend_Db_Profiler_AllTests
+ */
+require_once 'Zend/Db/Profiler/AllTests.php';
 
 /**
  * @category   Zend
@@ -102,6 +106,8 @@ class Zend_Db_AllTests
         if (self::$_skipTestSuite !== null) {
             $suite->addTest(self::$_skipTestSuite);
         }
+
+        $this->addTest(Zend_Db_Profiler_AllTests::suite());
 
         return $suite;
     }
