@@ -75,9 +75,8 @@ $element->addDecorator('DijitElement')
         <title>按钮</title>
 
         <para>
-            虽然不是从 <link linkend="zend.form.standardElements.submit">标准 Submit 元素</link>中派生，
-            它确实实现了相同的功能，并可以随时替换标准的 <link linkend="zend.form.standardElements.button">按钮元素</link>。
-            展示一下下列函数：      
+            虽然不是从 <link linkend="zend.form.standardElements.button">标准 Button 元素</link>中派生，
+            它确实实现了相同的功能，并可以随时替换它。展示一下下列函数：
         </para>
 
         <itemizedlist>
@@ -164,17 +163,26 @@ $form->addElement(
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.comboBox">
-        <title> 组合框（ComboBox）</title>
+        <title> 组合框（ComboBox）和 FilteringSelect</title>
 
         <para>
             正如在组合框 <link linkend="zend.dojo.view.dijit.form">dijit 视图助手文档 </link> 里的注释，
             组合框是介于选择和文本输入之间的混合体，可以从列表中选择也可以输入内容到列表里。
-            
+            FilteringSelect 也一样，但不允许任意输入。
         </para>
 
+        <note>
+            <title>组合框（ComboBoxes） 返回标签值</title>
+
+            <para>
+                组合框返回标签值而不是选项值，它可期望导致分离（disconnect）。
+                由于这个原因，组合框不自动注册一个 <code>InArray</code> 校验器（而 FilteringSelects 会）。
+            </para>
+        </note>
+
         <para>
-            组合框表单元素提供访问器和增变器来检查和设置选择选项和组合框的dojo.data 数据存储（如果使用的话）。
-            它从 DijitMulti 继承，允许你通过 <code>setMultiOptions()</code> 和 <code>setMultiOption()</code> 方法指定选择选项。
+            组合框和 FilteringSelect 表单元素提供访问器和增变器来检查和设置选择选项和指定 dojo.data 数据存储（如果使用的话）。
+            它们从 DijitMulti 继承，允许你通过 <code>setMultiOptions()</code> 和 <code>setMultiOption()</code> 方法指定选择选项。
             另外，下列方法可用：
         </para>
 
@@ -217,6 +225,14 @@ $form->addElement(
                 <code>getAutocomplete()</code>: 获取自动完成标志的值。
             </para></listitem>
         </itemizedlist>
+
+        <para>
+            缺省地，如果没有 dojo.data 存储和元素一起注册，该元素就注册
+            一个 <code>InArray</code> 校验器，它依靠注册的选项的数组键来校验。
+            你可以通过调用 <code>setRegisterInArrayValidator(false)</code> 或
+            传递一个 false 值给 <code>registerInArrayValidator</code> 配置键
+            来禁止该行为。
+        </para>
 
         <example id="zend.dojo.form.elements.comboBox.selectExample">
             <title> 使用组合框 dijit 元素做选择输入的范例 </title>
@@ -263,6 +279,10 @@ $form->addElement(
 );
 ]]></programlisting>
         </example>
+
+        <para>
+            上述例子也可以使用 <code>FilteringSelect</code> 来代替 <code>ComboBox</code>。
+        </para>        
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.currencyTextBox">
@@ -660,6 +680,41 @@ $form->addElement(
         </example>
     </sect3>
 
+    <sect3 id="zend.dojo.form.elements.passwordTextBox">
+        <title>密码框</title>
+
+        <para>
+            密码框是个 ValidationTextBox，它和密码输入有联系；它唯一的意图是允许
+            dijit-themed 文本输入密码并提供客户端校验。
+        </para>
+
+        <para>
+            在内部，密码框从 <link
+                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>
+            和 <link linkend="zend.dojo.form.elements.textBox">TextBox</link> 派生；
+            所有对这些类可用的方法都可用。
+        </para>
+
+        <example id="zend.dojo.form.elements.passwordTextBox.example">
+            <title>密码框 dijit 元素用法范例</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'PasswordTextBox', 
+    'password', 
+    array(
+        'label'          => 'Password',
+        'required'       => true,
+        'trim'           => true,
+        'lowercase'      => true,
+        'regExp'         => '^[a-z0-9]{6,}$',
+        'invalidMessage' => 'Invalid password; must be at least 6 alphanumeric characters',
+    )
+);
+]]></programlisting>
+        </example>
+    </sect3>
+
     <sect3 id="zend.dojo.form.elements.radioButton">
         <title>单选按钮</title>
 
@@ -671,6 +726,12 @@ $form->addElement(
         <para>
             单选按钮从 DijitMulti 继承，它让你通过 <code>setMultiOptions()</code> 和 <code>setMultiOption()</code> 方法来指定选择选项。
         </para>
+        
+        <para>
+            缺省地，该元素注册一个 <code>InArray</code> 校验器，它依靠注册的选项的数组键来校验。
+            你可以通过调用 <code>setRegisterInArrayValidator(false)</code> 或传递一个 false 值给
+            <code>registerInArrayValidator</code>配置键来禁止该行为。
+        </para>        
 
         <example id="zend.dojo.form.elements.radioButton.example">
             <title> 单选按钮 dijit 元素用法范例 </title>
@@ -745,6 +806,32 @@ $form->addElement(
             范例在每个具体的继承类里提供。
         </para>
     </sect3>
+    
+    <sect3 id="zend.dojo.form.elements.submitButton">
+        <title>提交按钮</title>
+
+        <para>
+            虽然没有叫提交按钮的 Dijit，但我们还是在此提供一个按钮 dijit 用来提交
+            表单而不需请求任何另外的 javascript 绑定。它的工作方式和
+            <link linkend="zend.dojo.form.elements.button">按钮 dijit</link> 一模一样。
+        </para>
+
+        <example id="zend.dojo.form.elements.submitButton.example">
+            <title>Example SubmitButton dijit element usage</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'SubmitButton', 
+    'foo', 
+    array(
+        'required'   => false,
+        'ignore'     => true,
+        'label'      => 'Submit Button!',
+    )
+);
+]]></programlisting>
+        </example>
+    </sect3>    
 
     <sect3 id="zend.dojo.form.elements.textBox">
         <title>文字框</title>
