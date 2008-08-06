@@ -459,7 +459,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         
     public function testRoutingChainedRoutes()
     {
-        $this->markTestSkipped('Route features not ready');
+        $this->markTestSkipped('Router features not ready');
         
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
 
@@ -467,7 +467,8 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $bar = new Zend_Controller_Router_Route('bar', array('bar' => true, 'controller' => 'foo', 'action' => 'bar'));
 
         $chain = new Zend_Controller_Router_Route_Chain();
-        $chain->chain($foo)->chain($bar);
+        $chain->chain($foo);
+        $foo->chain($bar);
 
         $this->_router->addRoute('foo-bar', $chain);
 
@@ -506,9 +507,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     } 
     
     public function testAssemblingWithHostnameHttp()
-    {
-        $this->markTestSkipped('Router features not ready');
-        
+    {       
         $route = new Zend_Controller_Router_Route_Hostname('www.zend.com');
 
         $this->_router->addRoute('hostname-route', $route);
@@ -517,9 +516,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     }
     
     public function testAssemblingWithHostnameHttps()
-    {
-        $this->markTestSkipped('Router features not ready');
-        
+    {        
         $backupServer = $_SERVER;
         $_SERVER['HTTPS'] = 'on';
         
@@ -533,9 +530,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     }
     
     public function testAssemblingWithHostnameThroughChainHttp()
-    {
-        $this->markTestSkipped('Router features not ready');
-        
+    {        
         $foo = new Zend_Controller_Router_Route_Hostname('www.zend.com');
         $bar = new Zend_Controller_Router_Route_Static('bar');
 
@@ -548,9 +543,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     }
     
     public function testAssemblingWithHostnameWithChainHttp()
-    {
-        $this->markTestSkipped('Router features not ready');
-        
+    {        
         $foo = new Zend_Controller_Router_Route_Hostname('www.zend.com');
         $bar = new Zend_Controller_Router_Route_Static('bar');
 

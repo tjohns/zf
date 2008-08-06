@@ -70,6 +70,13 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      * @var array
      */
     protected $_values = array();
+    
+    /**
+     * Current request object
+     *
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
 
     /**
      * Helper var that holds a count of route pattern's static parts
@@ -78,6 +85,32 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
      */
     private $_staticCount = 0;
 
+    /**
+     * Set the request object
+     * 
+     * @param  Zend_Controller_Request_Abstract|null $request
+     * @return void
+     */
+    public function setRequest($request)
+    {
+        $this->_request = $request;
+    }
+    
+    /**
+     * Get the request object
+     * 
+     * @return Zend_Controller_Request_Abstract $request
+     */
+    public function getRequest()
+    {
+        if ($this->_request === null) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_request = Zend_Controller_Front::getInstance()->getRequest();
+        }
+        
+        return $this->_request;
+    }
+    
     /**
      * Instantiates route based on passed Zend_Config structure
      *
@@ -237,7 +270,18 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
             }
         }
 
-        return trim($return, '.');
+        $url = trim($return, '.');
+        
+        $request = $this->getRequest();
+        if ($request instanceof Zend_Controller_Request_Http) {
+            $scheme = $request->getScheme();
+        } else {
+            $scheme = 'http';
+        } 
+        
+        $url = $scheme . '://' . $hostname;
+        
+        return $url;
     }
 
     /**
