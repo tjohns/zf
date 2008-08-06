@@ -104,7 +104,7 @@
         <title>Zend_Db</title>
         <xi:include href="module_specs/Zend_Db_Adapter.xml" />
         <xi:include href="module_specs/Zend_Db_Statement.xml" />
-        <xi:include href="module_specs/Zend_Db_Profiler.xml" />
+        <xi:include href="module_specs/Zend_Db_Profiler.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Db_Select.xml" />
         <xi:include href="module_specs/Zend_Db_Table.xml" />
         <xi:include href="module_specs/Zend_Db_Table_Row.xml" />
@@ -230,7 +230,7 @@
     <chapter id="zend.log">
         <title>Zend_Log</title>
         <xi:include href="module_specs/Zend_Log-Overview.xml" />
-        <xi:include href="module_specs/Zend_Log-Writers.xml" />
+        <xi:include href="module_specs/Zend_Log-Writers.xml" parse="xml" />
         <xi:include href="module_specs/Zend_Log-Formatters.xml" />
         <xi:include href="module_specs/Zend_Log-Filters.xml" />
     </chapter>
@@ -405,6 +405,10 @@
         <xi:include href="module_specs/Zend_View-Scripts.xml" />
         <xi:include href="module_specs/Zend_View-Helpers.xml" parse="xml" />
         <xi:include href="module_specs/Zend_View-Abstract.xml" />
+    </chapter>
+    <chapter id="zend.wildfire">
+        <title>Zend_Wildfire</title>
+        <xi:include href="module_specs/Zend_Wildfire.xml" />
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
