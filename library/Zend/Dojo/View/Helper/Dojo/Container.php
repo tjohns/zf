@@ -733,7 +733,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
 function() {
     dojo.forEach(zendDijits, function(info) {
         var n = dojo.byId(info.id);
-        if (null !== n) {
+        if (null != n) {
             dojo.attr(n, dojo.mixin({ id: info.id }, info.params));
         }
     })
