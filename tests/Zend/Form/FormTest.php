@@ -3495,6 +3495,44 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($foo->two, $cloned->foo->two);
     }
 
+    // Reset
+
+    /**
+     * @see ZF-3227
+     */
+    public function testFormsShouldAllowResetting()
+    {
+        $form = new Zend_Form();
+        $foo = new Zend_Form_SubForm(array(
+            'name' => 'foo',
+            'elements' => array(
+                'one' => 'text',
+                'two' => 'text',
+            ),
+        ));
+        $form->addElement('text', 'bar')
+             ->addElement('text', 'baz')
+             ->addElement('text', 'bat')
+             ->addDisplayGroup(array('bar', 'bat'), 'barbat')
+             ->addSubForm($foo, 'foo');
+        $values = array(
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+            'bat' => 'Bat Value',
+            'foo' => array(
+                'one' => 'One Value',
+                'two' => 'Two Value',
+            ),
+        );
+        $form->populate($values);
+        $test = $form->getValues();
+        $this->assertEquals($values, $test);
+        $form->reset();
+        $test = $form->getValues();
+        $this->assertNotEquals($values, $test);
+        $this->assertEquals(0, array_sum($test));
+    }
+
     /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *

@@ -251,6 +251,23 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     }
 
     /**
+     * Reset values of form
+     * 
+     * @return Zend_Form
+     */
+    public function reset()
+    {
+        foreach ($this->getElements() as $element) {
+            $element->setValue(null);
+        }
+        foreach ($this->getSubForms() as $subForm) {
+            $subForm->reset();
+        }
+
+        return $this;
+    }
+
+    /**
      * Initialize form (used by extending classes)
      * 
      * @return void
