@@ -20,10 +20,10 @@
     <para>
         Pakiet Dojo został umieszczony w katalogu <code>externals/dojo/</code> 
         znajdującym się w dystrybucji Zend Framework. Jest to dystrybucja 
-        źródłowa, która zawiera pełen kod javascrpt Dojo, testy jednostkowe, a 
+        źródłowa, która zawiera pełen kod javascript Dojo, testy jednostkowe, a 
         także narzędzia do kompilacji. Możesz utworzyć symboliczny link do Dojo
         w swoim katalogu z plikami javascript, skopiować pliki, lub użyć narzędzia
-        do kompilacji w celu stworzenia własnej wersji którą dołączysz do swojego
+        do kompilacji w celu stworzenia własnej wersji, którą dołączysz do swojego
         projektu. Możesz też użyć jednego z systemów CDN (Content Delivery 
         Network), które oferują Dojo (ZF obsługuje zarówno oficjalny AOL CDN jak 
         i Google CDN). 

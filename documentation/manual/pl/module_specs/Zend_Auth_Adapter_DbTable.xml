@@ -46,7 +46,7 @@
                     <para>
                         <code>credentialTreatment</code>: W wielu przypadkach,
                         hasło i inne wrażliwe dane są zszyfrowane, haszowane,
-                        zakodowane, zakryte lub w inny sposób przetworzone przez
+                        zakodowane lub w inny sposób przetworzone przez
                         jakąś funkcję lub algorytm. Określając metodę
                         przerobienia danych, taką jak na przykład
                         <code>'MD5(?)'</code> czy <code>'PASSWORD(?)'</code>,
