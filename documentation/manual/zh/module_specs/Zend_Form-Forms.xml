@@ -196,6 +196,14 @@ $value = $form->getValue('foo');
 $form->setDefaults($data);
 $form->populate($data);
 ?>]]></programlisting>
+
+            <para>
+                在另一面，你可能想在组装和校验之前清除一个表单，可使用 <code>reset()</code> 方法来完成：
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->reset();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
@@ -243,6 +251,54 @@ $form->setElementDecorators(array(
 ));
 ?>]]></programlisting>
             </example>
+            
+            <example id="zend.form.forms.elements.global.decoratorsFilter">
+                <title> 为某些元素设置装饰器 </title>
+
+                <para>
+                    你也可以对一个元素的子集设置装饰器，包含和排除都可以。 
+                    <code>setElementDecorators()</code> 的第二个参数可以是元素名数组；
+                    缺省地，指定这样一个数组将只对这些元素设置指定的装饰器。
+                    你也可以传递第三个参数，用来指示是包含还是排除这个元素列表的标志。                                        
+                    如果是 false，它将装饰 <emphasis>除了</emphasis> 这些在列表中的元素 <emphasis>之外</emphasis> 
+                    的所有元素。使用方法的标准用法，在每个元素中，任何传递的装饰器将覆盖任何先前设置的装饰器。
+                </para>
+
+                <para>
+                    在下面的片段中，我们只对 'foo' 和 'bar' 元素使用视图助手和标签装饰器：
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    )
+);
+]]></programlisting>
+
+                <para>
+                    另一方面，在这个片段中，我们对<emphasis>除了</emphasis>'foo' 元素 'bar'<emphasis>之外</emphasis>的所以元素使用视图助手和标签装饰器：
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    ),
+    false
+);
+]]></programlisting>
+            </example>
 
                 <note>
                     <title> 有些装饰器不适合某些元素 </title>
@@ -252,7 +308,11 @@ $form->setElementDecorators(array(
                     </para>
 
                     <para>
-                        所以，要灵活使用这个方法，你需要手工修改一些元素的装饰器来防止不希望的输出。
+                        你可以使用 包含/排除 数组来克服在前面例子中所述的问题。
+                    </para>
+
+                    <para>                    
+                        所以，要灵活使用这个方法，你需要排除或手工修改一些元素的装饰器来防止不希望的输出。
                     </para>
                 </note>
 
@@ -783,9 +843,26 @@ $form->setAction('/user/login')
      ->setMethod('post');
 ?>]]></programlisting>
 
+        <para>
+            你也可以指定特别使用 enctype 访问器的表单编码类型。
+            Zend_Form 定义了两个常量，
+            <code>Zend_Form::ENCTYPE_URLENCODED</code> 和
+            <code>Zend_Form::ENCTYPE_MULTIPART</code>，分别对应值为
+            'application/x-www-form-urlencoded' 和
+            'multipart/form-data'；
+             然而，你可以把它设置为任意的编码类型。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Set the action, method, and enctype:
+$form->setAction('/user/login')
+     ->setMethod('post')
+     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+?>]]></programlisting>
+
         <note>
             <para>
-                方法和动作只用来内部解析，不用于任何校验。
+                方法、动作和 enctype 只用来内部解析，不用于任何校验。
             </para>
         </note>
 
@@ -1346,12 +1423,12 @@ attribs.onclick = "validate(this)"
 
 disableTranslator = 0 
 
-prefixPaths.element.prefix = "My_Element"
-prefixPaths.element.path = "My/Element/"
-elementPrefixPaths.validate.prefix = "My_Validate"
-elementPrefixPaths.validate.path = "My/Validate/"
-displayGroupPrefixPaths.prefix = "My_Group"
-displayGroupPrefixPaths.path = "My/Group/"
+prefixPath.element.prefix = "My_Element"
+prefixPath.element.path = "My/Element/"
+elementPrefixPath.validate.prefix = "My_Validate"
+elementPrefixPath.validate.path = "My/Validate/"
+displayGroupPrefixPath.prefix = "My_Group"
+displayGroupPrefixPath.path = "My/Group/"
 
 elements.username.type = "text"
 elements.username.options.label = "Username"

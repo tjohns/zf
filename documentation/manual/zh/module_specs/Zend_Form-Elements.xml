@@ -806,10 +806,6 @@ $fooBar  = $element->getDecorator('FooBar');
             </para></listitem>
 
             <listitem><para>
-                <emphasis>addAttribs(array $attribs)</emphasis>: 一次性添加多个属性
-            </para></listitem>
-
-            <listitem><para>
                 <emphasis>setAttribs(array $attribs)</emphasis>: 像 addAttribs() 一样，但重写
             </para></listitem>
 
@@ -819,14 +815,6 @@ $fooBar  = $element->getDecorator('FooBar');
 
             <listitem><para>
                 <emphasis>getAttribs()</emphasis>: 以键/值对读取所有属性
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>removeAttrib($name)</emphasis>: 删除一个单个的属性
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>clearAttribs()</emphasis>: 清楚所有的属性
             </para></listitem>
         </itemizedlist>
 
