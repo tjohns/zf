@@ -2,10 +2,6 @@
     <title>简介</title>
 
     <para>
-        As of version 1.6.0, Zend Framework ships <ulink
-            url="http://dojotoolkit.org">Dojo Toolkit</ulink> to support
-        out-of-the-box rich internet application development. Integration
-        points with Dojo include:
         从1.6.0版开始，Zend Framework包含<ulink url="http://dojotoolkit.org">Dojo Toolkit</ulink>
         来支持  out-of-the-box 的富 internet 程序开发。和 Dojo 集成的包括：
     </para>

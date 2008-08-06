@@ -338,9 +338,15 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     为 dojo.onLoad() 抓取用做 lambda 的数据。如果提供了 $obj，
                     那么 JS 抓取代码被认为是一个和 Javascript 对象一起使用的 closure 。
                     </para></listitem>
-            <listitem><para><code>onLoadCaptureStop($obj = null)</code>: 
+            <listitem><para><code>onLoadCaptureEnd($obj = null)</code>: 
                     停止为使用 dojo.onLoad() 抓取数据。
                     </para></listitem>
+            <listitem><para><code>javascriptCaptureStart()</code>:
+ 	            抓取任意的 javascript 包含到 Dojo JS （onLoad、 require 等语句）。
+ 	            </para></listitem>
+ 	    <listitem><para><code>javascriptCaptureEnd()</code>: 
+ 	             停止抓取 javascript。
+ 	             </para></listitem>
             <listitem><para><code>__toString()</code>: 
                     转换容器为字符串；解析所有的 HTMl 风格和脚本元素。
                     </para></listitem>
