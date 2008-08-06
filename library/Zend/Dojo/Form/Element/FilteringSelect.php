@@ -30,7 +30,7 @@ require_once 'Zend/Dojo/Form/Element/ComboBox.php';
  * @subpackage Form_Element
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 class Zend_Dojo_Form_Element_FilteringSelect extends Zend_Dojo_Form_Element_ComboBox
 {
@@ -39,4 +39,10 @@ class Zend_Dojo_Form_Element_FilteringSelect extends Zend_Dojo_Form_Element_Comb
      * @var string
      */
     public $helper = 'FilteringSelect';
+
+    /**
+     * Flag: autoregister inArray validator?
+     * @var bool
+     */
+    protected $_registerInArrayValidator = true;
 }

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 // Call Zend_Dojo_Form_Element_FilteringSelectTest::main() if this source file is executed directly.
@@ -113,6 +113,40 @@ class Zend_Dojo_Form_Element_FilteringSelectTest extends PHPUnit_Framework_TestC
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.FilteringSelect"', $html);
     }
+
+    /**#@+
+     * @see ZF-3286
+     */
+    public function testShouldRegisterInArrayValidatorWhenNoStoreProvided()
+    {
+        $options = array(
+            'foo' => 'Foo Value',
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+        );
+        $this->element->setMultiOptions($options);
+        $this->assertFalse($this->element->getValidator('InArray'));
+        $this->element->isValid('test');
+        $validator = $this->element->getValidator('InArray');
+        $this->assertTrue($validator instanceof Zend_Validate_InArray);
+    }
+
+    public function testShouldNotRegisterInArrayValidatorWhenStoreProvided()
+    {
+        $options = array(
+            'foo' => 'Foo Value',
+            'bar' => 'Bar Value',
+            'baz' => 'Baz Value',
+        );
+        $this->element->setMultiOptions($options);
+        $this->element->setStoreId('fooStore')
+                      ->setStoreType('dojo.data.ItemFileReadStore')
+                      ->setStoreParams(array('url' => '/foo'));
+        $this->assertFalse($this->element->getValidator('InArray'));
+        $this->element->isValid('test');
+        $this->assertFalse($this->element->getValidator('InArray'));
+    }
+    /**#@-*/
 }
 
 // Call Zend_Dojo_Form_Element_FilteringSelectTest::main() if this source file is executed directly.
