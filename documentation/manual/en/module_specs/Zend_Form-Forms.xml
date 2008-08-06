@@ -282,6 +282,16 @@ $value = $form->getValue('foo');
 $form->setDefaults($data);
 $form->populate($data);
 ?>]]></programlisting>
+
+            <para>
+                On the flip side, you may want to clear a form after populating
+                or validating it; this can be done using the
+                <code>reset()</code> method:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->reset();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
