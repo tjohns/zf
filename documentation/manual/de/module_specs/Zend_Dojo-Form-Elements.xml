@@ -795,52 +795,47 @@ $form->addElement(
         <title>TextBox</title>
 
         <para>
-            TextBox is included primarily to provide a text input with
-            consistent look-and-feel to the other dijits. However, it also
-            includes some minor filtering and validation capabilities,
-            represented in the following methods:
+            TextBox wurde primär inkludiert um eine Text Eingabe anzubieten die das gleiche Look-and-Feel wie
+            die anderen Dijits hat. Trotzdem enthält es einige Filter- und Prüfmöglichkeiten, die in den
+            folgenden Methoden repräsentiert sind:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setLowercase($flag)</code> and
-                <code>getLowercase()</code>: set and retrieve the flag
-                indicating whether or not input should be cast to lowercase.
+                <code>setLowercase($flag)</code> und <code>getLowercase()</code>: Setzt und gibt das
+                Tag zurück das anzeigt ob die Eingabe auf Kleinschreibung (lowercase) geändert wird oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setPropercase($flag)</code> and
-                <code>getPropercase()</code>: set and retrieve the flag
-                indicating whether or not the input should be cast to Proper
-                Case.
+                <code>setPropercase($flag)</code> und <code>getPropercase()</code>: Setzt und gibt das
+                Tag zurück das anzeigt ob die Eingabe auf Proper Case geändert wird oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setUppercase($flag)</code> and <code>getUppercase()</code>: set and retrieve the flag indicating whether or not the input should be cast to UPPERCASE.
+                <code>setUppercase($flag)</code> und <code>getUppercase()</code>: Setzt und retourniert
+                das Flag das anzeigt ob die Eingabe auf Großschreibung (UPPERCASE) geändert wird oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setTrim($flag)</code> and <code>getTrim()</code>: set and
-                retrieve the flag indicating whether or not leading or trailing
-                whitespace should be stripped.
+                <code>setTrim($flag)</code> und <code>getTrim()</code>: Setzt und retourniert das Flag das
+                anzeigt ob führende Leerzeichen entfernt werden oder nicht.
             </para></listitem>
 
             <listitem><para>
-                <code>setMaxLength($length)</code> and
-                <code>getMaxLength()</code>: set and retrieve the maximum
-                length of input.
+                <code>setMaxLength($length)</code> und <code>getMaxLength()</code>: Setzt und retourniert die
+                maximale Länge der Eingabe.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.textBox.example">
-            <title>Example TextBox dijit element usage</title>
+            <title>Beispiel der Verwendung des TextBox Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
     'TextBox', 
     'foo', 
     array(
-        'value'      => 'some text',
+        'value'      => 'irgendein Text',
         'label'      => 'TextBox',
         'trim'       => true,
         'propercase' => true,
@@ -854,15 +849,14 @@ $form->addElement(
         <title>Textarea</title>
 
         <para>
-            Textarea acts primarily like a standard HTML textarea. However, it
-            does not support either the rows or cols settings. Instead, the
-            textarea width should be specified using standard CSS measurements;
-            rows should be omitted entirely. The textarea will then grow
-            vertically as text is added to it.
+            Textarea funktioniert primär wie eine standard HTML Textarea. Trotzdem unterstützt es weder die
+            Zeilen- noch die Spalteneinstellungen. Stattdessen sollte die Breite von Textarea durch Verwendung
+            von CSS Maßeinheiten spezifiziert werden; Zeilen sollten komplett vermieden werden. Die
+            Textarea wird dann vertikal wachsen wenn Text hinzugefügt wird.
         </para>
 
         <example id="zend.dojo.form.elements.textarea.example">
-            <title>Example Textarea dijit element usage</title>
+            <title>Beispiel der Verwendung des Textarea Dijit Elements</title>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
@@ -882,57 +876,51 @@ $form->addElement(
         <title>TimeTextBox</title>
 
         <para>
-            TimeTextBox is a text input that provides a drop-down for selecting
-            a time. The drop-down may be configured to show a certain window of
-            time, with specified increments.
+            TimeTextBox ist eine Texteingabe die einen Drop-Down für die Auswahl einer Zeit bietet. Der
+            Drop-Down kann so konfiguriert werden das ein bestimmtes Zeitfenster, mit speziellen
+            Inkrementierungen, angezeigt wird.
         </para>
 
         <para>
-            Internally, TimeTextBox derives from <link
-                linkend="zend.dojo.form.elements.dateTextBox">DateTextBox</link>,
-            <link
-                linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>
-            and <link linkend="zend.dojo.form.elements.textBox">TextBox</link>;
-            all methods available to those classes are available. In addition,
-            the following methods can be used to set individual constraints:
+            Intern wird die TimeTextBox von
+            <link linkend="zend.dojo.form.elements.dateTextBox">DateTextBox</link>,
+            <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link> und
+            <link linkend="zend.dojo.form.elements.textBox">TextBox</link> abgeleitet; alle vorhandenen
+            Methoden dieser Klassen sind vorhanden. Zusätzlich können die folgenden Methoden verwendet
+            werden um individuelle Abhängigkeiten einzustellen:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setTimePattern($pattern)</code> and
-                <code>getTimePattern()</code>: set and retrieve the <ulink
-                    url="http://www.unicode.org/reports/tr35/#Date_Format_Patterns">unicode
-                    time format pattern</ulink> for formatting the time.
+                <code>setTimePattern($pattern)</code> und <code>getTimePattern()</code>: Setzt und
+                retourniert den <ulink url="http://www.unicode.org/reports/tr35/#Date_Format_Patterns">Unicode
+                Zeitformat Pattern</ulink> für die Formatierung der Zeit.
             </para></listitem>
 
             <listitem><para>
-                <code>setClickableIncrement($format)</code> and
-                <code>getClickableIncrement()</code>: set the <ulink
-                    url="http://en.wikipedia.org/wiki/ISO_8601">ISO-8601</ulink>
-                string representing the amount by which every clickable element
-                in the time picker increases.
+                <code>setClickableIncrement($format)</code> und <code>getClickableIncrement()</code>:
+                Setzt den <ulink url="http://en.wikipedia.org/wiki/ISO_8601">ISO-8601</ulink> String der
+                die Anzahl repräsentiert mit dem jedes anklickbare Element der Zeitauswahl inkrementiert wird.
             </para></listitem>
 
             <listitem><para>
-                <code>setVisibleIncrement($format)</code> and
-                <code>getVisibleIncrement()</code>: set the increment visible
-                in the time chooser; must follow ISO-8601 formats.
+                <code>setVisibleIncrement($format)</code> und <code>getVisibleIncrement()</code>: Definiert das
+                der Inkrement in der Zeitauswahl sichtbar ist; muß dem ISO-8601 Format entsprechen.
             </para></listitem>
 
             <listitem><para>
-                <code>setVisibleRange($format)</code> and
-                <code>getVisibleRange()</code>: set and retrieve the range of
-                time visible in the time chooser at any given moment; must
-                follow ISO-8601 formats.
+                <code>setVisibleRange($format)</code> und <code>getVisibleRange()</code>: Setzt und retorniert
+                den Zeitbereich der in der Zeitauswahl zu jedem Zeitpunkt sichtbar ist; muß dem ISO-8601
+                Format entsprechen.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.timeTextBox.example">
-            <title>Example TimeTextBox dijit element usage</title>
+            <title>Beispiel der Verwendung des TimeTextBox Dijit Elements</title>
 
             <para>
-                The following will create a TimeTextBox that displays 2 hours
-                at a time, with increments of 10 minutes.
+                Das folgende erstellt eine TimeTextBox die 2 Stunden zugleich anzeigt und um 10 Minuten
+                inkrementiert.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -955,63 +943,58 @@ $form->addElement(
         <title>ValidationTextBox</title>
 
         <para>
-            ValidationTextBox provides the ability to add validations and constraints to a text input. Internally, it derives from <link linkend="zend.dojo.form.elements.textBox">TextBox</link>, and adds the following accessors and mutators for manipulating dijit parameters:
+            ValidationTextBox bietet die Möglichkeit Prüfungen und Abhängigkeiten zu einer Texteingabe
+            hinzuzufügen. Intern ist Sie von <link linkend="zend.dojo.form.elements.textBox">TextBox</link>
+            abgeleitet, und fügt die folgenden Zugriffsmethoden und Mutatoren für die Manipulation der
+            Dijit Parameter hinzu:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                <code>setInvalidMessage($message)</code> and
-                <code>getInvalidMessage()</code>: set and retrieve the tooltip
-                message to display when the value does not validate.
+                <code>setInvalidMessage($message)</code> und <code>getInvalidMessage()</code>: Setzt und
+                retourniert die Tooltipnachricht die angezeigt werden soll wenn der Wert nicht gültig ist.
             </para></listitem>
 
             <listitem><para>
-                <code>setPromptMessage($message)</code> and
-                <code>getPromptMessage()</code>: set and retrieve the tooltip
-                message to display for element usage.
+                <code>setPromptMessage($message)</code> und <code>getPromptMessage()</code>: Setzt und
+                retourniert die Tooltipnachricht die angezeigt werden soll wenn das Element verwendet wird.
             </para></listitem>
 
             <listitem><para>
-                <code>setRegExp($regexp)</code> and <code>getRegExp()</code>:
-                set and retrieve the regular expression to use for validating
-                the element. The regular expression does not need boundaries
-                (unlike PHP's preg* family of functions).
+                <code>setRegExp($regexp)</code> und <code>getRegExp()</code>: Setzt und retourniert den
+                regulären Ausdruck der für die Prüfung des Elements verwendet wird. Der reguläre Ausdruck
+                benötigt keine Begrenzungen (anders als PHP's Funktionsfamilie preg*).
             </para></listitem>
 
             <listitem><para>
-                <code>setConstraint($key, $value)</code> and
-                <code>getConstraint($key)</code>: set and retrieve additional
-                constraints to use when validating the element; used primarily
-                with subclasses. Constraints are stored in the 'constraints'
-                key of the dijit parameters.
+                <code>setConstraint($key, $value)</code> und <code>getConstraint($key)</code>: Setzt und
+                retourniert zusätzliche Abhängigkeiten die für die Prüfung des Elements verwendet werden;
+                wird primär mit Unterklassen verwendet. Abhängigkeiten werden im 'constraints' Schlüssel der
+                Dijit Parameter abgespeichert.
             </para></listitem>
 
             <listitem><para>
-                <code>setConstraints(array $constraints)</code> and
-                <code>getConstraints()</code>: set and retrieve individual
-                constraints to use when validating the element; used primarily
-                with subclasses.
+                <code>setConstraints(array $constraints)</code> und <code>getConstraints()</code>: Setzt und
+                retourniert individuelle Abhängigkeiten die bei der Prüfung eines Elements verwendet werden;
+                wird primär mit Unterklassen verwendet.
             </para></listitem>
 
             <listitem><para>
-                <code>hasConstraint($key)</code>: test whether a given
-                constraint exists.
+                <code>hasConstraint($key)</code>: Testet ob eine angegebene Abhängigkeit existiert.
             </para></listitem>
 
             <listitem><para>
-                <code>removeConstraint($key)</code> and
-                <code>clearConstraints()</code>: remove an individual or all
-                constraints for the element.
+                <code>removeConstraint($key)</code> und <code>clearConstraints()</code>: Entfernt eine
+                einzelne oder alle Abhängigkeiten des Elements.
             </para></listitem>
         </itemizedlist>
 
         <example id="zend.dojo.form.elements.validationTextBox.example">
-            <title>Example ValidationTextBox dijit element usage</title>
+            <title>Beispiel für die Verwendung des ValidationTextBox Dijit Elements</title>
 
             <para>
-                The following will create a ValidationTextBox that requires a
-                single string consisting solely of word characters (i.e., no
-                spaces, most punctuation is invalid).
+                Das folgende erstellt eine ValidationTextBox die einen einzelnen String benötigt der nur aus
+                Buchstaben besteht (z.B, keine Leerzeichen, die meisten Trennungen sind ungültig).
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -1022,7 +1005,7 @@ $form->addElement(
         'label'          => 'ValidationTextBox',
         'required'       => true,
         'regExp'         => '[\w]+',
-        'invalidMessage' => 'Invalid non-space text.',
+        'invalidMessage' => 'Ungültige Buchstaben.',
     )
 );
 ]]></programlisting>
@@ -1033,24 +1016,22 @@ $form->addElement(
         <title>VerticalSlider</title>
 
         <para>
-            VerticalSlider is the sibling of <link
-                linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link>,
-            and operates in every way like that element. The only real
-            difference is that the 'top*' and 'bottom*' methods are replaced by
-            'left*' and 'right*', and instead of using HorizontalRule and
-            HorizontalRuleLabels, VerticalRule and VerticalRuleLabels should be
-            used.
+            VerticalSlider ist der Schwager von
+            <link linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link>, und funktioniert
+            auf dem gleichen Weg wie dieses Element. Der einzige wirkliche Unterschied besteht darin, das die
+            'top*' und 'bottom*' Methoden mit 'left*' und 'right*' ersetzt wurden, und statt
+            HorizontalRule und HorizontalRuleLabels jetzt VerticalRule und VerticalRuleLabels verwendet
+            werden sollten.
         </para>
 
         <example id="zend.dojo.form.elements.verticalSlider.example">
-            <title>Example VerticalSlider dijit element usage</title>
+            <title>Beispiel der Verwendung des VerticalSlider Dijit Elements</title>
 
             <para>
-                The following will create a vertical slider selection with
-                integer values ranging from -10 to 10. The left will have labels
-                at the 20%, 40%, 60%, and 80% marks. The right will have rules
-                at 0, 50%, and 100%. Each time the value is changed, the hidden
-                element storing the value will be updated.
+                Das folgende erstellt eine Vertikale Schieberauswahl mit Ganzzahlen die von -10 bis 10
+                reichen. Die linke Seite hat Label bei den 20%, 40%, 60% und 80% Marken. Die rechte Seite
+                hat Regeln bei 0, 50% und 100%. Jedesmal wenn der Wert verändert wird, wird auch das
+                versteckte Element, das den Wert speichert, aktualisiert.
             </para>
 
             <programlisting role="php"><![CDATA[
