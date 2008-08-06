@@ -10,7 +10,7 @@ http://framework.zend.com/issues
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6 Release Candidate 1 (revision TBD).
+Zend Framework 1.6 Release Candidate 1 (revision [INSERT REV NUMBER HERE]).
 Released on 2008-07-21.
 
 
