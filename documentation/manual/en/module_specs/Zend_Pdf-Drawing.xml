@@ -882,7 +882,31 @@ public function getFontSize();]]>
         </programlisting>
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.alpha">
+        <title>Transparency.</title>
+        <para>
+        <code>Zend_Pdf</code> module supports transparency handling.
+        </para>
+        <para>
+        Transparency may be set using <code>Zend_Pdf_Page::setAlpha()</code> method:
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * Set the transparancy
+ *
+ * $alpha == 0  - transparent
+ * $alpha == 1  - opaque
+ *
+ * Transparency modes, supported by PDF:
+ * Normal (default), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
+ * SoftLight, Difference, Exclusion
+ *
+ * @param float $alpha
+ * @param string $mode
+ * @throws Zend_Pdf_Exception
+ */
+public function setAlpha($alpha, $mode = 'Normal');]]>
+        </programlisting>
+        </para>
+    </sect2>
+
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
