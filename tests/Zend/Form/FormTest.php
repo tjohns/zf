@@ -351,6 +351,17 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @see ZF-3250
+     */
+    public function testDisplayGroupOrderInConfigShouldNotMatter()
+    {
+        require_once 'Zend/Config/Xml.php';
+        $config = new Zend_Config_Xml(dirname(__FILE__) . '/_files/config/zf3250.xml', 'sitearea', true);
+        $form = new Zend_Form($config->test);
+        // no assertions needed; throws error if order matters
+    }
+
+    /**
      * @see ZF-3112
      */
     public function testSetOptionsShouldCreateDisplayGroupsLast()
