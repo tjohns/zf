@@ -192,8 +192,8 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
     public function testGetExistingHelpers()
     {
         Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_Redirector());
-        // already included in setup
-        // Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+        // already included in setup, techinically we shouldnt be able to do this, but until 2.0 - its allowed
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer()); // @todo in future this should throw an exception
 
         $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
         $this->assertTrue(is_array($helpers));
