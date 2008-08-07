@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10192 -->
+<!-- EN-Revision: 10664 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Aides de vue</title>
 
@@ -317,6 +317,15 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
         <para>Écrire des aides personnalisées est facile, vous devez juste suivre ces règles :</para>
 
         <itemizedlist>
+            <listitem>
+                <para>Bien qu'il ne soit pas strictement nécessaire, il est recommandé soit d'implémenter
+                <code>Zend_View_Helper_Interface</code> ou d'étendre <code>Zend_View_Helper_Abstract</code> quand vous
+                créez vos aides. Introduit en 1.6.0, ceux-ci définissent la méthode <code>setView()</code> ; cependant,
+                dans les prochaines releases, nous prévoyons d'implémenter un motif de conception Stratégie qui
+                permettra de simplifier en grande partie le schéma de nomination détaillé ci-dessous. Contruire sur ces
+                bases à partir de maintenant vous aidera pour vos codes futurs.</para>
+            </listitem>
+
             <listitem>
                 <para>Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant une notation
                 en casseMélangée. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe
