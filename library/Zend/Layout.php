@@ -284,9 +284,7 @@ class Zend_Layout
         if (!Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
             require_once 'Zend/Loader.php';
             Zend_Loader::loadClass($helperClass);
-            Zend_Controller_Action_HelperBroker::addHelper(
-                new $helperClass($this)
-            );
+            Zend_Controller_Action_HelperBroker::getStack()->offsetSet(-90, new $helperClass($this));
         }
     }
 
