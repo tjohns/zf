@@ -111,6 +111,12 @@ class Zend_Soap_Server implements Zend_Server_Interface
     protected $_soapVersion = SOAP_1_2;
 
     /**
+     * URI or path to WSDL
+     * @var string
+     */
+    protected $_wsdl;
+
+    /**
      * URI namespace for SOAP server
      * @var string URI
      */
