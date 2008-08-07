@@ -84,19 +84,13 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<Zend_Rest_Server_TestFunc2 generator="zend" version="1.0"><response>Hello World</response><status>success</status></Zend_Rest_Server_TestFunc2>', $result, "Bad Result");
     }
 
-    public function testHandleFunctionNoArgsThrowsExceptionWithFewerArgs()
+    public function testHandleFunctionNoArgsRaisesFaultResponse()
     {
         $server = new Zend_Rest_Server();
+        $server->returnResponse(true);
         $server->addFunction('Zend_Rest_Server_TestFunc');
-        try {
-            ob_start();
-        	$server->handle(array('method' => 'Zend_Rest_Server_TestFunc'));
-        	ob_end_clean();
-            $this->fail('Call should fail if missing args');
-        } catch (Zend_Rest_Server_Exception $e) {
-            // success
-            ob_end_clean();
-        }
+        $result = $server->handle(array('method' => 'Zend_Rest_Server_TestFunc'));
+        $this->assertContains('failed', $result);
     }
 
   	public function testHandleFunctionNoArgsUsingRequest()
