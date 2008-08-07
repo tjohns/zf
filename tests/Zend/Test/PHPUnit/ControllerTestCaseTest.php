@@ -12,6 +12,9 @@ require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
 
+/** Zend_Session */
+require_once 'Zend/Session.php';
+
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
 
@@ -67,6 +70,8 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         if (isset($registry['viewRenderer'])) {
             unset($registry['viewRenderer']);
         }
+        Zend_Session::$_unitTestEnabled = false;
+        session_id(uniqid());
     }
 
     public function bootstrap()

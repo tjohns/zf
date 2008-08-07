@@ -2848,7 +2848,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(empty($text));
         $this->assertTrue(isset($this->error));
-        $this->assertEquals('Raising exception in decorator callback', $this->error);
+        $this->assertContains('Raising exception in decorator callback', $this->error);
     }
 
     /**
