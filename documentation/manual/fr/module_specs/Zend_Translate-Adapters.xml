@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 10108 -->
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
@@ -148,6 +149,13 @@
 
             <para>Vous devriez utiliser cet adaptateur seulement si votre client veut faire les traductions
             lui-même.</para>
+
+            <note>
+                <para>Prenez garde que l'adaptateur Csv a des problèmes quand vos fichiers Csv ont un encodage différent
+                que celui de votre environnement. Ceci est du à un bug de PHP lui-même qui ne sera pas corrigé avant la
+                PHP 6.0 (http://bugs.php.net/bug.php?id=38471). Vous devez donc faire attention que l'adaptateur Csv ne
+                gère pas la locale à cause d'une restrictions PHP.</para>
+            </note>
         </sect3>
 
         <sect3 id="zend.translate.adapter.gettext">
@@ -257,10 +265,7 @@
         "MonEntreprise_Translate_Adapter_MonFormat". Le code suivant montre un exemple de la manière dont une classe
         d'adaptateur personnalisée peut être implémentée :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
-try {
+        <programlisting role="php"><![CDATA[try {
     $translate = new Zend_Translate('MonEntreprise_Translate_Adapter_MonFormat', '/chemin/vers/translate.xx', 'fr', array('monoption' => 'mavaleur'));
 } catch (Exception $e) {
     // Fichier non trouvé, pas de classe d'adaptateur...
@@ -281,10 +286,7 @@ try {
         <code>setCache()</code>. Par commodité, il existe la méthode statique
         <code>Zend_Translate::getCache()</code>.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 Zend_Translate::setCache($cache);
 $translate = new Zend_Translate('gettext', '/chemin/vers/traduction.mo', 'en');]]></programlisting>
 
