@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10200 -->
+<!-- EN-Revision: 10619 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -310,34 +310,44 @@ Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
             <para>
                 Element Seitendarstellung
 
-                <programlisting role="php"><![CDATA[<!-- 
+                <programlisting role="php"><![CDATA[<!--
 Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 -->
 
-<?php if ($this->pageCount): ?> 
+<?php if ($this->pageCount): ?>
 <div id="paginationControl">
-<?= $this->firstItemNumber; ?> - <?= $this->lastItemNumber; ?> 
+<?= $this->firstItemNumber; ?> - <?= $this->lastItemNumber; ?>
 of <?= $this->totalItemCount; ?>
 
-<a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> | 
+<!-- First page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> |
+<?php else: ?>
+  <span class="disabled">First</span> |
+<?php endif; ?>
 
-<!-- Vorheriger Seitenlink --> 
-<?php if (isset($this->previous)): ?> 
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorheriger</a> | 
-<?php else: ?> 
-  <span class="disabled">&lt; Vorheriger</span> | 
-<?php endif; ?> 
+<!-- Vorheriger Seitenlink -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorheriger</a> |
+<?php else: ?>
+  <span class="disabled">&lt; Vorheriger</span> |
+<?php endif; ?>
 
-<!-- Next page link --> 
-<?php if (isset($this->next)): ?> 
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
   <a href="<?= $this->url(array('page' => $this->next)); ?>">Nächster &gt;</a> |
-<?php else: ?> 
+<?php else: ?>
   <span class="disabled">Nächster &gt;</span> |
 <?php endif; ?>
 
-<a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
+<!-- Last page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
+<?php else: ?>
+  <span class="disabled">Last</span>
+<?php endif; ?>
 
-</div> 
+</div>
 <?php endif; ?>]]>
                 </programlisting>
             </para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10468 -->
+<!-- EN-Revision: 10667 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -803,6 +803,27 @@ echo $view->numberTextBox(
 
             <listitem>
                 <para>
+                    <emphasis>PasswordTextBox</emphasis>: dijit.form.ValidationTextBox bindet eine
+                    Passworteingabe. PasswordTextBox bietet die Möglichkeit Passworteingaben zu erstellen
+                    die das aktuelle Dijitthema verwenden, sowie Clientseitige Prüfungen erlauben.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->passwordTextBox(
+    'foo',
+    '',
+    array(
+        'required' => true,
+    ),
+    array(
+        'maxlength' => 20,
+    )
+);
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis>RadioButton</emphasis>: dijit.form.RadioButton. Ein Set von Optionen von denen
                     nur eine ausgewählt werden kann.  Dieses Verhalten entspricht auf jedem Tall dem normaler
                     Radio Buttons, hat aber das Look-and-Feel das mit dem anderer Dijit konsistent ist.
@@ -827,6 +848,14 @@ echo $view->radioButton(
     )
 );
 ]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>SubmitButton</emphasis>: Ein dijit.form.Button bindet ein Submit Eingabeelement.
+                    Siehe den Button Viewhelfer für weitere Details; der grundsätzliche Unterschied ist der,
+                    das dieser Button ein Formular übertragen kann.
+                </para>
             </listitem>
 
             <listitem>

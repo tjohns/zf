@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10710 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -913,7 +914,35 @@ public function getFontSize();]]>
         </programlisting>
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.alpha">
+
+        <title>Transparenz.</title>
+
+        <para>
+            Das <code>Zend_Pdf</code> Modul unterstützt die Handhabung von Transparenz.
+        </para>
+
+        <para>
+            Transparenz kann durch Verwendung der <code>Zend_Pdf_Page::setAlpha()</code> Methode gesetzt werden:
+
+            <programlisting role="php"><![CDATA[<?php
+/**
+ * Setzt die Transparenz
+ *
+ * $alpha == 0  - Transparent
+ * $alpha == 1  - Opaque
+ *
+ * Von PDF unterstützte Transparent-Modi:
+ * Normal (standard), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
+ * SoftLight, Difference, Exclusion
+ *
+ * @param float $alpha
+ * @param string $mode
+ * @throws Zend_Pdf_Exception
+ */
+public function setAlpha($alpha, $mode = 'Normal');]]>
+        </programlisting>
+        </para>
+    </sect2>
+
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

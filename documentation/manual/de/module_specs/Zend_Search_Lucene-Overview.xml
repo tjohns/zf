@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10464 -->
+<!-- EN-Revision: 10666 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -27,20 +27,21 @@
                 </listitem>
             </itemizedlist>
 
-            Zend_Search_Lucene wurde abgeleitet vom Apache Lucene Projekt. Die aktuell unterstützte Lucene
-            Version (beginnend mit ZF 1.6) ist 2.3. Für weitere Informationen über Lucene, besuchen Sie
-            <ulink url="http://lucene.apache.org/java/docs/"/>.
+            Zend_Search_Lucene wurde abgeleitet vom Apache Lucene Projekt. Die aktuell unterstützten Versionen
+            des Lucene Indexformats (beginnend mit ZF 1.6) sind 1.4 - 2.3. Für weitere Informationen über
+            Lucene, besuchen Sie <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
 
         <note>
             <title/>
             <para>
-                Frühere Zend_Search_Lucene Implementationen unterstützen das Lucene 1.9 und 2.1 Index Formate. 
+                Frühere Zend_Search_Lucene Implementationen unterstützen das Lucene Indexformat 1.4 (1.9) - 2.1.
             </para>
             <para>
-                Aktuell werden alle Indezes die mit diesen Versionen erstellt wurden nach der Aktualisierung
-                von Zend_Search_Lucene, automatisch in das Lucene 2.1 Format upgegraded und daher mit
-                vorherigen Zend_Search_Lucene Versionen nicht mehr kompatibel.
+                Beginnend mit Zend Framework 1.5 werden alle Indezes die mit einem pre-2.1 Indexformat
+                erstellt wurden automatisch in das Lucene 2.1 Format upgegraded und ist daher mit
+                vorherigen Zend_Search_Lucene Versionen nicht mehr kompatibel die in Zend Framework 1.0.x
+                enthalten sind.
             </para>
         </note>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10192 -->
+<!-- EN-Revision: 10664 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -420,6 +420,16 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         <itemizedlist>
 
             <listitem><para>
+                Wärend das nicht strikt notwendig ist, ist es empfohlen entweder
+                <code>Zend_View_Helper_Interface</code> zu implementieren oder
+                <code>Zend_View_Helper_Abstract</code> zu erweitern wenn eigene Helfer erstellt werden.
+                Eingeführt mit 1.6.0, definieren diese einfach die <code>setView()</code> Methode;
+                trotzdem, in kommenden Releases, ist es geplant ein Strategy Pattern zu implementieren das
+                vieles der Namensschemas einfacher mach wie anbei beschrieben. Wenn darauf aufgebaut wird
+                hilft das, das der eigene Code Zukunftssicher ist.
+            </para></listitem>
+
+            <listitem><para>
                 Der Klassenname muss mindestens auf den Helfernamen unter Verwendung der MixedCaps
                 selber enden. Wenn du z.B. einen Helfer mit Namen "specialPurpose" schreibst, muss
                 der Klassenname mindestens "SpecialPurpose" lauten. Man kann, und sollte, dem
@@ -460,7 +470,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_SpecialPurpose
+class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 {
     protected $_count = 0;
     public function specialPurpose()
@@ -469,8 +479,8 @@ class My_View_Helper_SpecialPurpose
         $output = "Ich habe 'The Jerk' {$this->_count} Mal(e) gesehen.";
         return htmlspecialchars($output);
     }
-}]]>
-        </programlisting>
+}
+]]></programlisting>
 
         <para>
             Dann rufst du in einem View Skript den <code>SpecialPurpose</code> Helfer so oft auf,
@@ -525,8 +535,12 @@ class My_View_Helper_ScriptPath
             Es liegt an einem selbst das Objekt in der Klasse zu fixieren, genau so wie herauszufinden
             wie auf dieses zugegriffen werden sollte.
         </para>
-    </sect2>
 
+        <para>
+            Wenn <code>Zend_View_Helper_Abstract</code> erweitert wird, muß diese Methode nicht selbst
+            definiert werden da Sie schon vordefiniert ist.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

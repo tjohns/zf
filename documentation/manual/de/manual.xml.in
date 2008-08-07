@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<!-- EN-Revision: 10653 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -280,6 +281,15 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Feed-CustomFeed.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Feed-CustomFeed.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+    <chapter id="zend.file">
+        <title>Zend_File</title>
+        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.filter">

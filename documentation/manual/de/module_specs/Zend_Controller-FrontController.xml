@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9877 -->
+<!-- EN-Revision: 10650 -->
 <sect1 id="zend.controller.front">
     <title>Der Front Controller</title>
 
@@ -137,6 +137,34 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
                 Die aktuellen Einstellungen für den/die Controller-Ordner können mit
                 <code>getControllerDirectory()</code> abgerufen werden; das gibt ein Array mit
                 Modul/Verzeichnis-Paaren zurück.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
+            <title>addModuleDirectory() und getModuleDirectory()</title>
+
+            <para>
+                Ein Aspekt des Frontcontrollers ist das man <link linkend="zend.controller.modular">eine
+                modulare Verzeichnisstruktur definieren kann</link> für die Erstellung von alleinstehenden
+                Komponenten; diese werden "Module" (modules) genannt.
+            </para>
+
+            <para>
+                Jedes Modul sollte in seinem eigenen Verzeichnis sein und die Verzeichnisstruktur des
+                Standardmoduls spiegeln -- z.B., sollte es mindestens ein "controllers" Unterzeichnis haben
+                und typischerweise ein "views" Unterverzeichnis und andere Anwendungsverzeichnisse.
+            </para>
+
+            <para>
+                <code>addModuleDirectory()</code> erlaubt es den Namen des Verzeichnisses zu übergeben der
+                ein oder mehrere Modulverzeichnisse enthält. Er scannt dieses dann und fügt es den
+                Controllerverzeichnissen des Frontcontrollers hinzu.
+            </para>
+
+            <para>
+                Später, wenn man den Pfad zu einem speziellen Modul oder dem aktuellen Modul eruieren will,
+                kann <code>getModuleDirectory()</code> aufgerufen werden und optional ein Modulname übergeben
+                werden für das das spezielle Modulverzeichnis geholt werden soll.
             </para>
         </sect3>
 

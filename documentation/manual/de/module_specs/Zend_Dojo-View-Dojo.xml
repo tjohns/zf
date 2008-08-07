@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 10635 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -280,8 +280,6 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     erhalten.</para></listitem>
             <listitem><para><code>addLayer($path)</code>: Einen Layerpfad (eigenen Build) für die
                     Verwendung hinzufügen.</para></listitem>
-            <listitem><para><code>addLayer($path)</code>: Einen Layerpfad (eigenen Build) für die
-                    Verwendung hinzufügen.</para></listitem>
             <listitem><para><code>getLayers()</code>: Eine Liste von allen registrierten Layerpfaden (eigene
                     Builds) erhalten.</para></listitem>
             <listitem><para><code>removeLayer($path)</code>: Den Layer der <code>$path</code> entspricht
@@ -301,8 +299,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     aber es wird der Pfadstring nach der Versionsnummer benötigt.</para></listitem>
             <listitem><para><code>getCdnDojoPath()</code>: Das letzte Pfadsegment der CDN URL erhalten das auf
                     die dojo.js Datei zeigt.</para></listitem>
-            <listitem><para><code>useCdn()</code></para>: Dem Container mitteilen das CDN verwendet werden soll;
-                    aktiviert die Integration implizit.</listitem>
+            <listitem><para><code>useCdn()</code>: Dem Container mitteilen das CDN verwendet werden soll;
+                    aktiviert die Integration implizit.</para></listitem>
             <listitem><para><code>setLocalPath($path)</code>: Dem Container den Pfad zu einer lokalen Dojo
                     Installation mitteilen (sollte ein Pfad relativ zum Server sein, und die dojo.js Datei
                     selbst enthalten); aktiviert die Integration implizit.</para></listitem>
@@ -332,8 +330,11 @@ $view->dojo()->addLayer('/js/foo/foo.js');
             <listitem><para><code>onLoadCaptureStart($obj = null)</code>: Empfange Daten die als Lambda für
                     dojo.onLoad() verwendet werden sollen. Wenn $obj angegeben wird, wird der bekommene JS Code
                     als Abschluß angenommen der mit diesem Javascript Objekt verwendet werden soll.</para></listitem>
-            <listitem><para><code>onLoadCaptureStop($obj = null)</code>: Beendet das empfangen von Daten für
+            <listitem><para><code>onLoadCaptureEnd($obj = null)</code>: Beendet das Empfangen von Daten für
                     die Verwendung mit dojo.onLoad().</para></listitem>
+            <listitem><para><code>javascriptCaptureStart()</code>: Empfange Javascript das im Dojo JS inkludiert
+                    werden soll (onLoad, require, und andere Anweisungen).</para></listitem>
+            <listitem><para><code>javascriptCaptureEnd()</code>: Beende das Empfangen von Javascript.</para></listitem>
             <listitem><para><code>__toString()</code>: Castet den Container zu einem String; stellt alle HTML
                     Stile und Skriptelemente dar.</para></listitem>
         </itemizedlist>

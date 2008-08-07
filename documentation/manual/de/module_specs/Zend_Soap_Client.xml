@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9888 -->
+<!-- EN-Revision: 10589 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
     
@@ -34,7 +34,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>$options</code> - Optionen um ein SOAP Server Objekt zu erstellen.
+                        <code>$options</code> - Optionen um ein SOAP Client Objekt zu erstellen.
                     </para>
                 </listitem>
             </itemizedlist>

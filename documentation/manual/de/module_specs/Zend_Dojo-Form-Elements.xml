@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 10667 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -181,20 +181,21 @@ $form->addElement(
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.comboBox">
-        <title>ComboBox</title>
+        <title>ComboBox und FilteringSelect</title>
 
         <para>
             Wie in der ComboBox <link linkend="zend.dojo.view.dijit.form">Dijit Viewhelfer Dokumentation</link>
             beschrieben, sind Comboboxen ein Hybrid zwischen Select und Texteingaben, erlauben automatische
             Vervollständigung und die Fähigkeit eine Alternative zu den angebotenen Optionen zu spezifizieren.
+            FilteringSelects sind genauso, nut erlauben Sie keine eigenen Eingaben.
         </para>
 
         <para>
-            Das ComboBox Formularelement bietet Zugriffsmethoden und Mutatoren für das Ermitteln und Setzen
-            von Selectoptionen sowie des ComboBox dojo.data Datenspeichers (wenn er verwendet wird). Es
-            erweitert DijitMulti, welches es erlaubt Selectoptionen über die Methoden
-            <code>setMultiOptions()</code> und <code>setMultiOption()</code> zu spezifizieren. Zusätzlich
-            stehen die folgenden Methoden zur Verfügung:
+            Das ComboBox und FilteringSelect Formularelemente bietet Zugriffsmethoden und Mutatoren für das
+            Ermitteln und Setzen von Selectoptionen sowie das Spezifizieren des dojo.data Datenspeichers
+            (wenn er verwendet wird). Sie erweitern DijitMulti, welches es erlaubt Selectoptionen über die
+            Methoden <code>setMultiOptions()</code> und <code>setMultiOption()</code> zu spezifizieren.
+            Zusätzlich stehen die folgenden Methoden zur Verfügung:
         </para>
 
         <itemizedlist>
@@ -244,6 +245,14 @@ $form->addElement(
             </para></listitem>
         </itemizedlist>
 
+        <para> 
+            Standardmäßig, wenn kein dojo.data Speicher im Element registriert wurde, registriert dieses
+            Element eine <code>InArray</code> Prüfung welche die Arrayschlüssel gegen registrierte Optionen
+            prüft. Dieses Verhalten kann deaktiviert werden indem entweder
+            <code>setRegisterInArrayValidator(false)</code> ausgerufen, oder ein false Wert an den
+            Registrierungsschlüssel <code>registerInArrayValidator</code> übergeben wird.
+        </para>
+
         <example id="zend.dojo.form.elements.comboBox.selectExample">
             <title>Das ComboBox Dijit Element als Select Eingabe verwenden</title>
 
@@ -289,6 +298,11 @@ $form->addElement(
 );
 ]]></programlisting>
         </example>
+
+        <para>
+            Das obige Beispiel könnte auch <code>FilteringSelect</code> statt <code>ComboBox</code> verwenden.
+        </para>
+
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.currencyTextBox">
@@ -639,7 +653,7 @@ $form->addElement(
         <title>NumberTextBox</title>
 
         <para>
-            Ein Nummernkreisel ist ein Textelement für die Eingabe von nummerischen Werten; anders als beim
+            Eine NumberTextBox ist ein Textelement für die Eingabe von nummerischen Werten; anders als beim
             NummerSpinner, werden Nummern manuell eingegeben. Prüfungen und Abhängigkeiten können angegeben
             werden um sicherzustellen das die Nummer immer in einem bestimmten Bereich oder Format ist.
         </para>
@@ -703,6 +717,42 @@ $form->addElement(
         </example>
     </sect3>
 
+    <sect3 id="zend.dojo.form.elements.passwordTextBox">
+        <title>PasswordTextBox</title>
+
+        <para>
+            PasswordTextBox ist einfach eine ValidationTextBox die an eine Passworteingabe gebunden ist;
+            Ihre primäre Aufgabe ist es eine Dijit-bezogene Texteingabe für Passwörter zu erlauben
+            die Client-seitige Prüfungen erlaubt.
+        </para>
+
+        <para>
+            Intern wird NumberTextBox abgeleitet von
+            <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link> und
+            <link linkend="zend.dojo.form.elements.textBox">TextBox</link>; alle in diesen Klassen
+            vorhandenen Methoden sind vorhanden.
+        </para>
+
+        <example id="zend.dojo.form.elements.passwordTextBox.example">
+            <title>Beispiel für die Verwendung des PasswordTextBox Dijit Elements</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'PasswordTextBox',
+    'password',
+    array(
+        'label'          => 'Passwort',
+        'required'       => true,
+        'trim'           => true,
+        'lowercase'      => true,
+        'regExp'         => '^[a-z0-9]{6,}$',
+        'invalidMessage' => 'Ungültiges Passwort; muß mindestens 6 alphanummerische Zeichen sein',
+    )
+);
+]]></programlisting>
+        </example>
+    </sect3>
+
     <sect3 id="zend.dojo.form.elements.radioButton">
         <title>RadioButton</title>
 
@@ -714,6 +764,13 @@ $form->addElement(
         <para>
             RadioButton erweitert DijitMulti, welches es erlaubt Selectoptionen über die
             <code>setMultiOptions()</code> und <code>setMultiOption()</code> Methoden zu spezifizieren.
+        </para>
+
+        <para> 
+            Standardmäßig registriert dieses Element eine <code>InArray</code> Prüfung welche die
+            Arrayschlüssel gegen registrierte Optionen prüft. Dieses Verhalten kann deaktiviert werden
+            indem entweder <code>setRegisterInArrayValidator(false)</code> ausgerufen, oder ein false
+            Wert an den Registrierungsschlüssel <code>registerInArrayValidator</code> übergeben wird.
         </para>
 
         <example id="zend.dojo.form.elements.radioButton.example">
@@ -789,6 +846,33 @@ $form->addElement(
         <para>
             Ein Beispiel der Verwendung wird mit jeder konkreten Klasse angegeben die diese Klasse erweitert.
         </para>
+    </sect3>
+
+    <sect3 id="zend.dojo.form.elements.submitButton">
+        <title>SubmitButton</title>
+
+        <para>
+            Wärend es kein Dijit gibt das SubmitButton heißt, wurde dieses inkludiert um ein Button Dijit
+            anzubieten das fähig ist ein Formular zu übertragen ohne das irgendeine zusätzliche
+            Javascript Verknüpfung benötigt wird. Es funktioniert exakt wie das
+            <link linkend="zend.dojo.form.elements.button">Button Dijit</link>.
+        </para>
+
+        <example id="zend.dojo.form.elements.submitButton.example">
+            <title>Beispiel der Verwendung des SubmitButton Dijit Elements</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'SubmitButton',
+    'foo',
+    array(
+        'required'   => false,
+        'ignore'     => true,
+        'label'      => 'Submit Button!',
+    )
+);
+]]></programlisting>
+        </example>
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.textBox">

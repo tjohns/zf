@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10162 -->
+<!-- EN-Revision: 10703 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -265,6 +265,16 @@ $value = $form->getValue('foo');
 $form->setDefaults($data);
 $form->populate($data);
 ?>]]></programlisting>
+
+            <para>
+                Auf der anderen Seiten kann es gewünscht sein ein Formular, nach der Übertragung oder
+                der Prüfung, zu löschen; das kann durch Verwendung der <code>reset()</code> Methode
+                durchgeführt werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->reset();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
@@ -319,6 +329,60 @@ $form->setElementDecorators(array(
     'Label'
 ));
 ?>]]></programlisting>
+            </example>
+
+            <example id="zend.form.forms.elements.global.decoratorsFilter">
+                <title>Setzen von Dekoratoren für einige Elemente</title>
+
+                <para>
+                    Man kann Dekoratore auch für ein Subset von Elementen setzen, entweder durch
+                    Ausbeziehung oder durch Ausgrenzung. Das zweite Argument von
+                    <code>setElementDecorators()</code> kann ein Array von Elementnamen sein; standardmäßig
+                    setzt so ein Array den spezifizierten Dekrator nur auf diese Elemente. Man kann auch
+                    einen dritten Parameter angeben, ein Flag das anzeigt ob diese Liste von Elementen
+                    einbezogen oder ausgegrenzt werden sollen; wenn es false ist, werden alle Elemente
+                    dekoriert <emphasis>ausser</emphasis> denen die in der Liste übergeben wurden.
+                    Die normale Verwendung der Methode besteht darin, das alle übergebenen Dekoratore
+                    alle vorher gesetzten Dekoratore in jedem element überschreiben.
+                </para>
+
+                <para>
+                    Im folgenden Schnipsel, sagen wir das wir nur die ViewHelper und Label Dekoratore
+                    für die 'foo' und 'bar' Elemente haben wollen:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    )
+);
+]]></programlisting>
+
+                <para>
+                    Auf der anderen Seite zeigt dieses Schnipsel jetzt an das nur nur die ViewHelper und Label
+                    Dekoratore für jedes Element verwenden wollen <emphasis>ausgenommen</emphasis> die
+                    'foo' und 'bar' Elemente:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    ),
+    false
+);
+]]></programlisting>
             </example>
 
             <note>
@@ -931,10 +995,25 @@ $form->setAction('/user/login')
      ->setMethod('post');
 ?>]]></programlisting>
 
+        <para>
+            Man kann auch den Encoding Typ des Formulars spezifizieren indem die Enctype Zugriffsmethode
+            verwendet wird. Zend_Form definiert zwei Konstanten, <code>Zend_Form::ENCTYPE_URLENCODED</code>
+            und <code>Zend_Form::ENCTYPE_MULTIPART</code>, die den Werten 'application/x-www-form-urlencoded'
+            und 'multipart/form-data' entsprechen; trotzdem kann das auf jeden gewünschten Encodingtyp
+            gesetzt werden.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Setzt die Aktion, Methoden, und Enctype:
+$form->setAction('/user/login')
+     ->setMethod('post')
+     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+?>]]></programlisting>
+
         <note>
             <para>
-                Methode und Aktion werden nur intern für die Darstellung verwendet, und nicht für
-                irgendeine Art von Prüfung.
+                Methode, Aktion und Encodingtyp werden nur intern für die Darstellung verwendet,
+                und nicht für irgendeine Art von Prüfung.
             </para>
         </note>
 
@@ -1566,12 +1645,12 @@ attribs.onclick = "validate(this)"
 
 disableTranslator = 0
 
-prefixPaths.element.prefix = "My_Element"
-prefixPaths.element.path = "My/Element/"
-elementPrefixPaths.validate.prefix = "My_Validate"
-elementPrefixPaths.validate.path = "My/Validate/"
-displayGroupPrefixPaths.prefix = "My_Group"
-displayGroupPrefixPaths.path = "My/Group/"
+prefixPath.element.prefix = "My_Element"
+prefixPath.element.path = "My/Element/"
+elementPrefixPath.validate.prefix = "My_Validate"
+elementPrefixPath.validate.path = "My/Validate/"
+displayGroupPrefixPath.prefix = "My_Group"
+displayGroupPrefixPath.path = "My/Group/"
 
 elements.username.type = "text"
 elements.username.options.label = "Benutzername"

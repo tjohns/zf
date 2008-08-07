@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9715 -->
+<!-- EN-Revision: 10710 -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
@@ -73,6 +73,7 @@ try {
 // Kennzeichne Seiten als verändert
 foreach ($pdf->pages as $page){
     $page->saveGS();
+    $page->setAlpha(0,25);
     $page->setStyle($style);
     $page->rotate(0, 0, M_PI_2/3);
 

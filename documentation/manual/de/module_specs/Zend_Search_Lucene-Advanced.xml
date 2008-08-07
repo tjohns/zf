@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10235 -->
+<!-- EN-Revision: 10666 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>Erweitert</title>
 
@@ -6,7 +6,7 @@
         <title>Starting from 1.6, handling index format transformations.</title>
 
         <para>
-            Die Zend_Search_Lucene Komponente arbeitet mit dem Index Format der Java Lucene Version 1.4-1.9, 2.1
+            Die Zend_Search_Lucene Komponente arbeitet mit den Index Formaten der Java Lucene Version 1.4-1.9, 2.1
             und 2.3.
         </para>
 

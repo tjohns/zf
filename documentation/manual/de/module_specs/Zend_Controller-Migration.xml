@@ -1,11 +1,42 @@
+<!-- EN-Revision: 10631 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
     <para>
         Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer das Zend Framework bereits
-        in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit die Skripte die
+        in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit dieSkripte die
         neue Archtitekur verwenden.
     </para>
+
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>Migration von 1.5.x zu 1.6.0 oder neuer</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>Änderungen im Dispatcher Interface</title>
+
+            <para>
+                Benutzer haben uns darauf aufmerksam gemacht das sowohl <code>Zend_Controller_Front</code>
+                als auch <code>Zend_Controller_Router_Route_Module</code> Methoden des Dispatchers verwenden
+                die nicht im Dispatcher Interface waren. Wir haben jetzt die folgenden drei Methoden
+                hinzugefügt um sicherzustellen das eigene Dispatcher weiterhin mit der ausgelieferten
+                Implementation arbeiten: 
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>getDefaultModule()</code>: Sollte den Namen des Standardmoduls zurückgeben.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultControllerName()</code>: Sollte den Namen des Standardcontrollers zurückgeben.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultAction()</code>: Sollte den Namen der Standardaktion zurückgeben.
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>Migration von 1.0.x zu 1.5.0 oder neuer</title>

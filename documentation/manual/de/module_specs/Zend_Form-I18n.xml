@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10648 -->
 <sect1 id="zend.form.i18n">
     <title>Internationalisierung von Zend_Form</title>
 
@@ -122,6 +123,13 @@ $element->setTranslator($translate);
                     Message IDs verwendet werden. Für weitere Details über diese Codes kann in die
                     Dokumentation zu <link linkend="zend.validate">Zend_Validate</link> gesehen
                     werden.
+                </para>
+
+                <para>
+                    Zusätzlich können ab 1.6.0 Übersetzungen angegeben werden indem die aktuelle
+                    Fehlermeldung als Identifikator der Meldung verwendet wird. Das ist die bevorzugte
+                    Verwendung  für 1.6.0 und höher, da die Übersetzung der Nachrichtenschlüssel in
+                    zukünftigen Releases als depreciated sein wird.
                 </para>
             </listitem>
 
