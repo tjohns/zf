@@ -1,4 +1,4 @@
-<sect1 id="zend.db.profiler">
+<sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
 
@@ -385,6 +385,21 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
             </programlisting>
 
         </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.profiler.profilers">
+        <title>Wyspecjalizowane profilery</title>
+
+        <para>
+            Wyspecjalizowany profiler jest obiektem klasy dziedziczącej po
+            klasie <code>Zend_Db_Profiler</code>. Wyspecjalizowane profilery
+            traktują profilowane informacje w szczególny sposób.
+        </para>
+
+        <xi:include href="Zend_Db_Profiler-Firebug.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Db_Profiler-Firebug.xml" /></xi:fallback>
+        </xi:include>
 
     </sect2>
 
