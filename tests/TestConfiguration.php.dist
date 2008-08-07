@@ -469,6 +469,16 @@ define('TESTS_ZEND_SERVICE_YAHOO_ONLINE_ENABLED', false);
 define('TESTS_ZEND_SERVICE_YAHOO_ONLINE_APPID', 'Enter APPID here');
 
 /**
+ * Zend_Service_ReCaptcha tests
+ */
+define('TESTS_ZEND_SERVICE_RECAPTCHA_ENABLED', false);
+define('TESTS_ZEND_SERVICE_RECAPTCHA_ONLINE_ENABLED', false);
+define('TESTS_ZEND_SERVICE_RECAPTCHA_PUBLIC_KEY', 'public key');
+define('TESTS_ZEND_SERVICE_RECAPTCHA_PRIVATE_KEY', 'private key');
+define('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY', 'public mailhide key');
+define('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY', 'private mailhide key');
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
