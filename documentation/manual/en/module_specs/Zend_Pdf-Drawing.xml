@@ -344,7 +344,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         or you can simply suppress the exception:
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-4">
-            <title>Do not throw an exception for fonts that cannot be embeded.</title>
+            <title>Do not throw an exception for fonts that cannot be embedded.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
@@ -891,7 +891,7 @@ public function getFontSize();]]>
         Transparency may be set using <code>Zend_Pdf_Page::setAlpha()</code> method:
         <programlisting role="php"><![CDATA[<?php
 /**
- * Set the transparancy
+ * Set the transparency
  *
  * $alpha == 0  - transparent
  * $alpha == 1  - opaque
