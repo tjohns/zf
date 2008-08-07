@@ -50,6 +50,8 @@ class Zend_Session extends Zend_Session_Abstract
 {
     /**
      * Whether or not Zend_Session is being used with unit tests
+     *
+     * @internal
      * @var bool
      */
     public static $_unitTestEnabled = false;
@@ -252,7 +254,7 @@ class Zend_Session extends Zend_Session_Abstract
     {
         return self::$_saveHandler;
     }
-    
+
 
     /**
      * regenerateId() - Regenerate the session id.  Best practice is to call this after
@@ -382,7 +384,7 @@ class Zend_Session extends Zend_Session_Abstract
             require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('The session was explicitly destroyed during this request, attempting to re-start is not allowed.');
         }
-        
+
         if (self::$_sessionStarted) {
             return; // already started
         }
