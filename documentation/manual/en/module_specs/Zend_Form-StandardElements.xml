@@ -42,6 +42,92 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardElements.captcha">
+        <title>Zend_Form_Element_Captcha</title>
+
+        <para>
+            CAPTCHAs are used to prevent automated submission of forms by bots
+            and other automated processes.
+        </para>
+
+        <para>
+            The Captcha form element allows you to specify which <link
+                linkend="zend.captcha.adapters">Zend_Captcha adapter</link> you
+            wish to utilize as a form captcha. It then sets this adapter as a
+            validator to the object, and uses a Captcha decorator for rendering
+            (which proxies to the captcha adapter).
+        </para>
+
+        <para>
+            Adapters may be any adapters in <code>Zend_Captcha</code>, as well
+            as any custom adapters you may have defined elsewhere. To allow
+            this, you may pass an additional plugin loader type key, 'CAPTCHA'
+            or 'captcha', when specifying a plugin loader prefix path:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
+]]></programlisting>
+
+        <para>
+            Captcha's may then be registered using the <code>setCaptcha()</code>
+            method, which can take either a concrete captcha instance, or the
+            short name of a captcha adapter:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Concrete instance:
+$element->setCaptcha(new Zend_Captcha_Figlet());
+
+// Using shortnames:
+$element->setCaptcha('Dumb');
+]]></programlisting>
+
+        <para>
+            If you wish to load your element via configuration, specify either
+            the key 'captcha' with an array containing the key 'captcha', or
+            both the keys 'captcha' and 'captchaOptions':
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Using single captcha key:
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "Please verify you're a human"
+    'captcha' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+
+// Using both captcha and captchaOptions:
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "Please verify you're a human"
+    'captcha' => 'Figlet',
+    'captchaOptions' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+]]></programlisting>
+
+        <para>
+            The decorator used is determined by querying the captcha adapter. By
+            default, the <link
+                linkend="zend.form.standardDecorators.captcha">Captcha
+                decorator</link> is used, but an adapter may specify a different
+            one via its <code>getDecorator()</code> method.
+        </para>
+
+        <para>
+            As noted, the captcha adapter itself acts as a validator for the
+            element. Additionally, the NotEmpty validator is not used, and the
+            element is marked as required. In most cases, you should need to do
+            nothing else to have a captcha present in your form.
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardElements.checkbox">
         <title>Zend_Form_Element_Checkbox</title>
 
