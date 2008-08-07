@@ -557,9 +557,9 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         $foo = new Zend_Controller_Router_Route_Hostname('www.zend.com');
         $bar = new Zend_Controller_Router_Route_Static('bar');
 
-        $foo->chain($bar);
+        $chain = $foo->chain($bar);
         
-        $this->_router->addRoute('foo-bar', $foo);
+        $this->_router->addRoute('foo-bar', $chain);
 
         $this->assertEquals('http://www.zend.com/bar', $this->_router->assemble(array(), 'foo-bar'));
     }

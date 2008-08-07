@@ -237,7 +237,19 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
             }
         }
 
-        return trim($return, '.');
+        $url = trim($return, '.');
+        
+        $request = $this->getRequest();
+        if ($request instanceof Zend_Controller_Request_Http) {
+            $scheme = $request->getScheme();
+        } else {
+            $scheme = 'http';
+        } 
+        
+        $hostname = implode('.', $host);
+        $url = $scheme . '://' . $hostname;
+        
+        return $url;
     }
 
     /**

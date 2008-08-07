@@ -5,6 +5,12 @@
  * @subpackage UnitTests
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_Route_ChainTest::main');
+}
+
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
 /** Zend_Controller_Router_Route_Chain */
 require_once 'Zend/Controller/Router/Route/Chain.php';
 
@@ -20,8 +26,11 @@ require_once 'Zend/Controller/Router/Route/Regex.php';
 /** Zend_Controller_Router_Route_Hostname */
 require_once 'Zend/Controller/Router/Route/Hostname.php';
 
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
+/** Zend_Controller_Request_Http */
+require_once 'Zend/Controller/Request/Http.php';
+
+/** Zend_Uri_Http */
+require_once 'Zend/Uri/Http.php';
 
 /**
  * @category   Zend
@@ -30,10 +39,23 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
 
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Router_Route_ChainTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+ 
     public function testChaining()
     {
-        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
+        $request = new Zend_Controller_Router_ChainTest_Request('http://localhost/foo/bar');
 
         $foo = new Zend_Controller_Router_Route('foo');
         $bar = new Zend_Controller_Router_Route('bar');
@@ -155,7 +177,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $res = $chain->match($request);
         
         $this->assertType('array', $res);
-        $this->assertEquals('www.zend.com/bar', $chain->assemble());
+        $this->assertRegexp('#[^a-z0-9]?www\.zend\.com/bar$#i', $chain->assemble());
     }
 
     public function testChainingAssembleWithRegex()
@@ -171,7 +193,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $res = $chain->match($request);
         
         $this->assertType('array', $res);
-        $this->assertEquals('www.zend.com/bar', $chain->assemble());
+        $this->assertRegexp('#[^a-z0-9]?www\.zend\.com/bar$#i', $chain->assemble());
     }
     
     public function testChainingReuse()
@@ -227,4 +249,8 @@ class Zend_Controller_Router_ChainTest_Request extends Zend_Controller_Request_H
         if ($this->_port)  $return .= ':' . $this->_port;
         return $return;
     }
+}
+
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Router_Route_ChainTest::main") {
+    Zend_Controller_Router_Route_ChainTest::main();
 }
