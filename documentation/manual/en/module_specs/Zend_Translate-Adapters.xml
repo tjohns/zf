@@ -142,6 +142,15 @@
                 You should only use this Adapter if your customer wants to do
                 translations himself.
             </para>
+
+            <note>
+                <para>
+                    Beware that the Csv Adapter has problems when your Csv files are encoded differently than
+                    the locale setting of your environment. This is due to a Bug of PHP itself which will not
+                    be fixed before PHP 6.0 (http://bugs.php.net/bug.php?id=38471). So you should be aware
+                    that the Csv Adapter due to PHP restrictions is not locale aware.
+                </para>
+            </note>
         </sect3>
 
         <sect3 id="zend.translate.adapter.gettext">
