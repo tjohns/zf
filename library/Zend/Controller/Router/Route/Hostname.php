@@ -15,7 +15,7 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: Route.php 9581 2008-06-01 14:08:03Z martel $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -23,7 +23,7 @@
 require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
- * Route
+ * Hostname Route
  *
  * @package    Zend_Controller
  * @subpackage Router
@@ -31,24 +31,22 @@ require_once 'Zend/Controller/Router/Route/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
+class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route_Abstract
 {
 
-    protected $_urlVariable = ':';
-    protected $_urlDelimiter = '/';
+    protected $_hostVariable   = ':';
     protected $_regexDelimiter = '#';
-    protected $_defaultRegex = null;
+    protected $_defaultRegex   = null;
 
     /**
-     * Holds names of all route's pattern variable names. Array index holds a position in URL.
+     * Holds names of all route's pattern variable names. Array index holds a position in host.
      * @var array
      */
     protected $_variables = array();
 
     /**
-     * Holds Route patterns for all URL parts. In case of a variable it stores it's regex
+     * Holds Route patterns for all host parts. In case of a variable it stores it's regex
      * requirement or null. In case of a static part, it holds only it's direct value.
-     * In case of a wildcard, it stores an asterisk (*)
      * @var array
      */
     protected $_parts = array();
@@ -74,23 +72,12 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     protected $_values = array();
 
     /**
-     * Associative array filled on match() that holds wildcard variable
-     * names and values.
-     * @var array
-     */
-    protected $_wildcardData = array();
-
-    /**
      * Helper var that holds a count of route pattern's static parts
      * for validation
      * @var int
      */
     private $_staticCount = 0;
 
-    public function getVersion() {
-        return 1;
-    }
-    
     /**
      * Instantiates route based on passed Zend_Config structure
      *
@@ -108,104 +95,87 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      * to a corresponding atomic parts. These parts are assigned
      * a position which is later used for matching and preparing values.
      *
-     * @param string $route Map used to match with later submitted URL path
+     * @param string $route Map used to match with later submitted hostname
      * @param array $defaults Defaults for map variables with keys as variable names
      * @param array $reqs Regular expression requirements for variables (keys as variable names)
      */
     public function __construct($route, $defaults = array(), $reqs = array())
     {
-
-        $route = trim($route, $this->_urlDelimiter);
+        $route = trim($route, '.');
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
 
         if ($route != '') {
-
-            foreach (explode($this->_urlDelimiter, $route) as $pos => $part) {
-
-                if (substr($part, 0, 1) == $this->_urlVariable) {
+            foreach (explode('.', $route) as $pos => $part) {
+                if (substr($part, 0, 1) == $this->_hostVariable) {
                     $name = substr($part, 1);
                     $this->_parts[$pos] = (isset($reqs[$name]) ? $reqs[$name] : $this->_defaultRegex);
                     $this->_variables[$pos] = $name;
                 } else {
                     $this->_parts[$pos] = $part;
-                    if ($part != '*') $this->_staticCount++;
+                    $this->_staticCount++;
                 }
-
             }
-
         }
-
     }
 
     /**
      * Matches a user submitted path with parts defined by a map. Assigns and
      * returns an array of variables on a successful match.
      *
-     * @param string $path Path used to match against this routing map
+     * @param Zend_Controller_Request_Http $request Request to get the host from
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($request)
     {
-
-        $pathStaticCount = 0;
+        // Get the host and remove unnecessary port information
+        $host = $request->getHttpHost();
+        if (preg_match('#:\d+$#', $host, $result) === 1) {
+            $host = substr($host, 0, -strlen($result[0]));
+        }
+        
+        $hostStaticCount = 0;
         $values = array();
 
-        $path = ltrim($path, $this->_urlDelimiter);
-        
-        if ($path != '') {
+        $host = trim($host, '.');
 
-            $path = explode($this->_urlDelimiter, $path);
+        if ($host != '') {
+            $host = explode('.', $host);
 
-            foreach ($path as $pos => $pathPart) {
-
-                // Path is longer than a route, it's not a match
+            foreach ($host as $pos => $hostPart) {
+                // Host is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
                     return false;
                 }
-                
-                // If it's a wildcard, get the rest of URL as wildcard data and stop matching
-                if ($this->_parts[$pos] == '*') {
-                    $count = count($path);
-                    for($i = $pos; $i < $count; $i+=2) {
-                        $var = urldecode($path[$i]);
-                        if (!isset($this->_wildcardData[$var]) && !isset($this->_defaults[$var]) && !isset($values[$var])) {
-                            $this->_wildcardData[$var] = (isset($path[$i+1])) ? urldecode($path[$i+1]) : null;
-                        }
-                    }
-                    break;
-                }
 
                 $name = isset($this->_variables[$pos]) ? $this->_variables[$pos] : null;
-                $pathPart = urldecode($pathPart);
+                $hostPart = urldecode($hostPart);
 
                 // If it's a static part, match directly
-                if ($name === null && $this->_parts[$pos] != $pathPart) {
+                if ($name === null && $this->_parts[$pos] != $hostPart) {
                     return false;
                 }
 
                 // If it's a variable with requirement, match a regex. If not - everything matches
-                if ($this->_parts[$pos] !== null && !preg_match($this->_regexDelimiter . '^' . $this->_parts[$pos] . '$' . $this->_regexDelimiter . 'iu', $pathPart)) {
+                if ($this->_parts[$pos] !== null && !preg_match($this->_regexDelimiter . '^' . $this->_parts[$pos] . '$' . $this->_regexDelimiter . 'iu', $hostPart)) {
                     return false;
                 }
 
                 // If it's a variable store it's value for later
                 if ($name !== null) {
-                    $values[$name] = $pathPart;
+                    $values[$name] = $hostPart;
                 } else {
-                    $pathStaticCount++;
+                    $hostStaticCount++;
                 }
-                
             }
-
         }
 
         // Check if all static mappings have been matched
-        if ($this->_staticCount != $pathStaticCount) {
+        if ($this->_staticCount != $hostStaticCount) {
             return false;
         }
 
-        $return = $values + $this->_wildcardData + $this->_defaults;
+        $return = $values + $this->_defaults;
 
         // Check if all map variables have been initialized
         foreach ($this->_variables as $var) {
@@ -215,13 +185,13 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
         }
 
         $this->_values = $values;
-        
+
         return $return;
 
     }
 
     /**
-     * Assembles user submitted parameters forming a URL path defined by this route
+     * Assembles user submitted parameters forming a hostname defined by this route
      *
      * @param  array $data An array of variable and value pairs used as parameters
      * @param  boolean $reset Whether or not to set route defaults with those provided in $data
@@ -229,12 +199,10 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      */
     public function assemble($data = array(), $reset = false, $encode = false)
     {
-
-        $url = array();
+        $host = array();
         $flag = false;
 
         foreach ($this->_parts as $key => $part) {
-
             $name = isset($this->_variables[$key]) ? $this->_variables[$key] : null;
 
             $useDefault = false;
@@ -243,49 +211,33 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
             }
 
             if (isset($name)) {
-
                 if (isset($data[$name]) && !$useDefault) {
-                    $url[$key] = $data[$name];
+                    $host[$key] = $data[$name];
                     unset($data[$name]);
                 } elseif (!$reset && !$useDefault && isset($this->_values[$name])) {
-                    $url[$key] = $this->_values[$name];
-                } elseif (!$reset && !$useDefault && isset($this->_wildcardData[$name])) {
-                    $url[$key] = $this->_wildcardData[$name];
+                    $host[$key] = $this->_values[$name];
                 } elseif (isset($this->_defaults[$name])) {
-                    $url[$key] = $this->_defaults[$name];
+                    $host[$key] = $this->_defaults[$name];
                 } else {
                     require_once 'Zend/Controller/Router/Exception.php';
                     throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
-
-
-            } elseif ($part != '*') {
-                $url[$key] = $part;
             } else {
-                if (!$reset) $data += $this->_wildcardData;
-                foreach ($data as $var => $value) {
-                    if ($value !== null) {
-                        $url[$key++] = $var;
-                        $url[$key++] = $value;
-                        $flag = true;
-                    }
-                }
+                $host[$key] = $part;
             }
-
         }
 
         $return = '';
 
-        foreach (array_reverse($url, true) as $key => $value) {
+        foreach (array_reverse($host, true) as $key => $value) {
             if ($flag || !isset($this->_variables[$key]) || $value !== $this->getDefault($this->_variables[$key])) {
                 if ($encode) $value = urlencode($value);
-                $return = $this->_urlDelimiter . $value . $return;
+                $return = '.' . $value . $return;
                 $flag = true;
             }
         }
 
-        return trim($return, $this->_urlDelimiter);
-
+        return trim($return, '.');
     }
 
     /**
@@ -309,5 +261,4 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     public function getDefaults() {
         return $this->_defaults;
     }
-
 }

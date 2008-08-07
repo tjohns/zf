@@ -20,64 +20,70 @@
  */
 
 /** Zend_Controller_Router_Route_Abstract */
-require_once 'Zend/Controller/Router/Route/Abstract.php';
+require_once 'Zend/Controller/Router/Route/Interface.php';
 
 /**
- * StaticRoute is used for managing static URIs.
- *
- * It's a lot faster compared to the standard Route implementation.
+ * Chain route is used for managing route chaining.
  *
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_Abstract
+class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Abstract
 {
 
-    protected $_route = null;
-    protected $_defaults = array();
+    protected $_routes = array();
+    protected $_separators = array();
 
-    public function getVersion() {
-        return 1;
-    }
-    
     /**
      * Instantiates route based on passed Zend_Config structure
      *
      * @param Zend_Config $config Configuration object
      */
     public static function getInstance(Zend_Config $config)
-    {
-        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
-        return new self($config->route, $defs);
-    }
+    { }
 
-    /**
-     * Prepares the route for mapping.
-     *
-     * @param string $route Map used to match with later submitted URL path
-     * @param array $defaults Defaults for map variables with keys as variable names
-     */
-    public function __construct($route, $defaults = array())
-    {
-        $this->_route = trim($route, '/');
-        $this->_defaults = (array) $defaults;
+    public function chain(Zend_Controller_Router_Route_Interface $route, $separator = '/') {
+
+        $this->_routes[] = $route;
+        $this->_separators[] = $separator;
+
+        return $this;
+
     }
 
     /**
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.
      *
-     * @param string $path Path used to match against this routing map
+     * @param Zend_Controller_Request_Http $request Request to get the path info from
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($request, $partial = null)
     {
-        if (trim($path, '/') == $this->_route) {
-            return $this->_defaults;
+
+        $path = $request->getPathInfo();
+        
+        $values = array();
+
+        foreach ($this->_routes as $key => $route) {
+            
+            // TODO: Should be an interface method. Hack for 1.0 BC  
+            if (!method_exists($route, 'getVersion') || $route->getVersion() == 1) {
+                $match = $request->getPathInfo();
+            } else {
+                $match = $request;
+            }
+            
+            $res = $route->match($match);
+            if ($res === false) return false;
+
+            $values = $res + $values;
+
         }
-        return false;
+
+        return $values;
     }
 
     /**
@@ -88,29 +94,25 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public function assemble($data = array(), $reset = false, $encode = false)
     {
-        return $this->_route;
-    }
+        $value = '';
 
-    /**
-     * Return a single parameter of route's defaults
-     *
-     * @param string $name Array key of the parameter
-     * @return string Previously set default
-     */
-    public function getDefault($name) {
-        if (isset($this->_defaults[$name])) {
-            return $this->_defaults[$name];
+        foreach ($this->_routes as $key => $route) {
+            if ($key > 0) $value .= $this->_separators[$key];
+            $value .= $route->assemble($data, $reset, $encode);
         }
-        return null;
+
+        return $value;
     }
 
-    /**
-     * Return an array of defaults
-     *
-     * @return array Route defaults
-     */
-    public function getDefaults() {
-        return $this->_defaults;
+    public function setRequest(Zend_Controller_Request_Abstract $request)
+    {
+        $this->_request = $request;
+
+        foreach ($this->_routes as $route) {
+            if (method_exists($route, 'setRequest')) {
+                $route->setRequest($request);
+            }
+        }
     }
 
 }

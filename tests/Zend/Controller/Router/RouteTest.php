@@ -27,7 +27,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
      * @var array
      */
     protected $_server = array();
-    
+
     /**
      * Setup test
      *
@@ -37,9 +37,9 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     {
         // Backup server array
         $this->_server = $_SERVER;
-        
+
         // Clean host env
-        unset($_SERVER['HTTP_HOST'], 
+        unset($_SERVER['HTTP_HOST'],
             $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
     }
 
@@ -53,7 +53,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         // Restore server array
         $_SERVER = $this->_server;
     }
-    
+
     public function testStaticMatch()
     {
         $route = new Zend_Controller_Router_Route('users/all');
@@ -91,7 +91,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $route = new Zend_Controller_Router_Route('users/a');
         $values = $route->match('users/a/martel');
 
-        $this->assertSame(false, $values);
+        $this->assertEquals(false, $values);
     }
 
     public function testStaticMatchWithDefaults()
@@ -106,20 +106,20 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     {
         $route = new Zend_Controller_Router_Route('users/all');
         $values = $route->match('users/martel');
-        
+
         $this->assertEquals(false, $values);
     }
-    
+
     public function testNotMatchedWithVariablesAndDefaults()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action', array('controller' => 'index', 'action' => 'index'));
         $values = $route->match('archive/action/bogus');
-        
+
         $this->assertEquals(false, $values);
     }
-    
-    
-    public function testNotMatchedWithVariablesAndStatic() 
+
+
+    public function testNotMatchedWithVariablesAndStatic()
     {
         $route = new Zend_Controller_Router_Route('archive/:year/:month');
         $values = $route->match('ctrl/act/2000');
@@ -143,7 +143,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     {
         $route = new Zend_Controller_Router_Route('news/*', array('controller' => 'news', 'action' => 'view'));
         $values = $route->match('news/klucz/wartość/wskaźnik/wartość');
-        
+
         $this->assertEquals('news', $values['controller']);
         $this->assertEquals('view', $values['action']);
         $this->assertEquals('wartość', $values['klucz']);
@@ -154,7 +154,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     {
         $route = new Zend_Controller_Router_Route('news/*', array('controller' => 'news', 'action' => 'view'));
         $values = $route->match('news/wska%C5%BAnik/warto%C5%9B%C4%87');
-        
+
         $this->assertEquals('news', $values['controller']);
         $this->assertEquals('view', $values['action']);
         $this->assertEquals('wartość', $values['wskaźnik']);
@@ -206,7 +206,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('act', $values['action']);
         $this->assertNull($values['year']);
     }
-    
+
     public function testVariablesWithDefaultAndValue()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action/:year', array('year' => '2006'));
@@ -294,7 +294,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     {
         $route = new Zend_Controller_Router_Route('authors/:name');
         try {
-            $url = $route->assemble();   
+            $url = $route->assemble();
         } catch (Exception $e) {
             return true;
         }
@@ -335,7 +335,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('archive/2005', $url);
     }
-    
+
     public function testAssembleWithReset2()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'archive', 'action' => 'show'));
@@ -345,7 +345,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('', $url);
     }
-    
+
     public function testAssembleWithReset3()
     {
         $route = new Zend_Controller_Router_Route('archive/:year/*', array('controller' => 'archive', 'action' => 'show', 'year' => 2005));
@@ -355,7 +355,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('archive', $url);
     }
-    
+
     public function testAssembleWithReset4()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'archive', 'action' => 'show'));
@@ -372,10 +372,10 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $values = $route->match('key1/value1/key2/value2');
 
         $url = $route->assemble(array('key1' => 'newvalue'), true);
-        
+
         $this->assertEquals('key1/newvalue', $url);
     }
-    
+
     public function testAssembleWithWildcardAndAdditionalParameters()
     {
         $route = new Zend_Controller_Router_Route('authors/:name/*');
@@ -389,7 +389,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $route = new Zend_Controller_Router_Route('archives/:year/:month');
         $values = $route->match('archives/2006/07');
         $this->assertType('array', $values);
-        
+
         $url = $route->assemble(array('month' => '03'));
         $this->assertEquals('archives/2006/03', $url);
     }
@@ -399,16 +399,16 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
         $values = $route->match('archives/2006/07/controller/test/year/10000/sort/author');
         $this->assertType('array', $values);
-        
+
         $this->assertEquals('archive', $values['controller']);
         $this->assertEquals('2006', $values['year']);
         $this->assertEquals('07', $values['month']);
         $this->assertEquals('author', $values['sort']);
     }
-    
+
     public function testGetDefaults()
     {
-        $route = new Zend_Controller_Router_Route('users/all', 
+        $route = new Zend_Controller_Router_Route('users/all',
                     array('controller' => 'ctrl', 'action' => 'act'));
 
         $values = $route->getDefaults();
@@ -420,7 +420,7 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
     public function testGetDefault()
     {
-        $route = new Zend_Controller_Router_Route('users/all', 
+        $route = new Zend_Controller_Router_Route('users/all',
                     array('controller' => 'ctrl', 'action' => 'act'));
 
         $this->assertEquals('ctrl', $route->getDefault('controller'));
@@ -437,10 +437,10 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
                 'controller' => 'ctrl'
             )
         );
-        
+
         $config = new Zend_Config($routeConf);
         $route = Zend_Controller_Router_Route::getInstance($config);
-        
+
         $this->assertType('Zend_Controller_Router_Route', $route);
 
         $values = $route->match('users/all');
@@ -450,14 +450,14 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     }
 
     public function testAssembleResetDefaults()
-    {    
+    {
         $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        
+
         $values = $route->match('news/view/id/3');
 
         $url = $route->assemble(array('controller' => null));
         $this->assertEquals('index/view/id/3', $url);
-        
+
         $url = $route->assemble(array('action' => null));
         $this->assertEquals('news/index/id/3', $url);
 
@@ -466,9 +466,9 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     }
 
     public function testAssembleWithRemovedDefaults() // Test for ZF-1197
-    {    
+    {
         $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        
+
         $url = $route->assemble(array('id' => 3));
         $this->assertEquals('index/index/id/3', $url);
 
@@ -500,53 +500,53 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
 
         $url = $route->assemble();
         $this->assertEquals('ctrl', $url);
-        
+
         $route->match('index');
-        
+
         $url = $route->assemble();
         $this->assertEquals('', $url);
     }
 
     /**
      * Test guarding performance. Test may be failing on slow systems and shouldn't be failing on production.
-     * This test is not critical in nature - it allows keeping changes performant.  
+     * This test is not critical in nature - it allows keeping changes performant.
      */
     public function testRoutePerformance()
     {
         $count = 10000;
         $expectedTime = 1;
-         
+
         $info = "This test may be failing on slow systems and shouldn't be failing on production. Tests if " . ($count / 10) . " complicated routes can be matched in a tenth of a second. Actual test matches " . $count . " times to make the test more reliable.";
-        
+
         $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
-        
+
         $time_start = microtime(true);
-        
+
         for ($i = 1; $i <= $count; $i++) {
             $values = $route->match('archives/2006/' . $i . '/controller/test/year/' . $i . '/sort/author');
         }
-        
+
         $time_end = microtime(true);
         $time = $time_end - $time_start;
-        
+
         $this->assertLessThan($expectedTime, $time, $info);
     }
-    
-    public function testForZF2543() 
+
+    public function testForZF2543()
     {
         $route = new Zend_Controller_Router_Route('families/:action/*', array('module' => 'default', 'controller' => 'categories', 'action' => 'index'));
         $this->assertEquals('families', $route->assemble());
-        
+
         $values = $route->match('families/edit/id/4');
         $this->assertType('array', $values);
-        
+
         $this->assertEquals('families/edit/id/4', $route->assemble());
-    }    
+    }
 
     public function testEncode()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        
+
         $url = $route->assemble(array('controller' => 'My Controller'), false, true);
         $this->assertEquals('My+Controller', $url);
 
@@ -554,165 +554,38 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('My Controller', $url);
 
         $token = $route->match('en/foo/id/My Value');
-    
+
         $url = $route->assemble(array(), false, true);
         $this->assertEquals('en/foo/id/My+Value', $url);
-        
+
         $url = $route->assemble(array('id' => 'My Other Value'), false, true);
         $this->assertEquals('en/foo/id/My+Other+Value', $url);
-        
+
         $route = new Zend_Controller_Router_Route(':controller/*', array('controller' => 'My Controller'));
         $url = $route->assemble(array('id' => 1), false, true);
         $this->assertEquals('My+Controller/id/1', $url);
     }
     
-    public function testCorrectHostMatch()
+    public function testPartialMatch()
     {
-        $route = $this->_getHostRoute();
+        $this->markTestSkipped('Route features not ready');
         
-        $_SERVER['HTTP_HOST'] = 'www.google.com';
-        $values = $route->match('foo/bar');
-        $this->assertEquals('ctrl', $values['controller']);
+        $route = new Zend_Controller_Router_Route(':lang/:temp', array('lang' => 'pl'), array('temp' => '\d+'));
 
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $values = $route->match('foo/bar');
-        $this->assertEquals('ctrl', $values['controller']);
-    }
-    
-    public function testWrongHostMatch()
-    {
-        $route = $this->_getHostRoute();
-        
-        $_SERVER['HTTP_HOST'] = 'foo.google.com';
-        $values = $route->match('foo/bar');
+        $values = $route->match('en/tmp/ctrl/action/id/1', true);
+
         $this->assertFalse($values);
         
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'foo.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $values = $route->match('foo/bar');
-        $this->assertFalse($values);
-    }
-    
-    public function testRegexHostMatch()
-    {
-        $route = $this->_getHostRegexRoute();
-        $_SERVER['HTTP_HOST'] = 'foo.google.com';
-        $values = $route->match('foo/bar');
-        $this->assertEquals('foo', $values['subdomain']);
-    }
-    
-    public function testWrongRegexHostMatch()
-    {
-        $route = $this->_getHostRoute();
+        $route = new Zend_Controller_Router_Route(':lang/:temp', array('lang' => 'pl'));
 
-        $_SERVER['HTTP_HOST'] = 'foo.microsoft.com';
-        $values = $route->match('foo/bar');
-        $this->assertFalse($values);
-    }
-    
-    public function testAssembleHost()
-    {
-        $route = $this->_getHostRoute();
-        
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = '80';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
-        
-        $route = $this->_getHostRoute();
-        $_SERVER['SERVER_NAME'] = 'www.google.com';
-        $_SERVER['SERVER_PORT'] = 80;
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
-    }
-    
-    public function testAssembleHttpsRoute()
-    {
-        $route = $this->_getHostRoute();
+        $values = $route->match('en/tmp/ctrl/action/id/1', true);
 
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['SERVER_PORT'] =  443;
-        $_SERVER['HTTPS']       = 'on';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('https://www.google.com/foo/bar', $url);        
+        $this->assertType('array', $values);
+        $this->assertEquals('en', $values['lang']);
+        $this->assertEquals('tmp', $values['temp']);
+        $this->assertEquals(6, $values[null]);
+        
     }
     
-    public function testAssembleHttpsAndPortHostRoute()
-    {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'], 
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-            
-        $route = array(
-            'host' => 'www.google.com:200',
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-        
-        $_SERVER['HTTP_HOST']   = 'www.google.com:200';
-        $_SERVER['SERVER_PORT'] = 200;
-        $_SERVER['HTTPS']       = 'on';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('https://www.google.com:200/foo/bar', $url);
-    }
-    
-    public function testAssembleHttpsOffHostRoute()
-    {
-        $route = $this->_getHostRoute();
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $_SERVER['HTTPS']       = 'off';
-        $url = $route->assemble(array('bar' => 'bar'));
-        $this->assertEquals('http://www.google.com/foo/bar', $url);
-    }
-    
-    public function testAssembleRegexHostRoute()
-    {
-        $route = $this->_getHostRegexRoute();
-        
-        $_SERVER['HTTP_HOST']   = 'www.google.com';
-        $url = $route->assemble(array('bar' => 'bar', 'subdomain' => 'foo'));
-        $this->assertEquals('http://foo.google.com/foo/bar', $url);
-    }
-        
-    protected function _getHostRoute()
-    {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'], 
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-            
-        $route = array(
-            'host' => 'www.google.com',
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-        
-        return $route;
-    }
-    
-    protected function _getHostRegexRoute()
-    {
-        // Clean host env
-        unset($_SERVER['HTTP_HOST'], 
-            $_SERVER['HTTPS'], $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT']);
-            
-        $route = array(
-            'host' => array(
-                'regex'   => '(.*?)\.google\.com',
-                'reverse' => '%s.google.com',
-                'params'  => array(
-                    1 => 'subdomain'
-                )
-            ),
-            'path' => 'foo/:bar'
-        );
-        $route = new Zend_Controller_Router_Route($route, array('controller' => 'ctrl', 'action' => 'act'));
-        $route->setRequest(new Zend_Controller_Request_Http());
-        
-        return $route;
-    }
+
 }

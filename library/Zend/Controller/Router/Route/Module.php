@@ -19,14 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Controller_Router_Route_Abstract */
+require_once 'Zend/Controller/Router/Route/Abstract.php';
+
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Router_Route_Abstract */
-require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * Module Route
@@ -75,21 +75,17 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
      */
     protected $_request;
 
+    public function getVersion() {
+        return 1;
+    }
+    
     /**
      * Instantiates route based on passed Zend_Config structure
      */
     public static function getInstance(Zend_Config $config)
     {
-        if ($config->host instanceof Zend_Config) {
-            $host = $config->host->toArray();
-        } else if (is_string($config->host) === true) {
-            $host = $config->host;
-        } else {
-            $host = null;
-        }
-        
         $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
-        return new self($defs, null, null, $host);
+        return new self($defs);
     }
 
     /**
@@ -98,14 +94,11 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
      * @param array $defaults Defaults for map variables with keys as variable names
      * @param Zend_Controller_Dispatcher_Interface $dispatcher Dispatcher object
      * @param Zend_Controller_Request_Abstract $request Request object
-     * @param mixed $host Host matching data
      */
     public function __construct(array $defaults = array(),
                 Zend_Controller_Dispatcher_Interface $dispatcher = null,
-                Zend_Controller_Request_Abstract $request = null,
-                $host = null)
+                Zend_Controller_Request_Abstract $request = null)
     {
-
         $this->_defaults = $defaults;
 
         if (isset($request)) {
@@ -114,10 +107,6 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
 
         if (isset($dispatcher)) {
             $this->_dispatcher = $dispatcher;
-        }
-        
-        if ($host !== null) {
-            $this->_initHostMatch($host);
         }
     }
 
@@ -158,11 +147,6 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
      */
     public function match($path)
     {
-        $hostResult = $this->_evalHostMatch();
-        if ($hostResult === false) {
-            return false;
-        }
-        
         $this->_setRequestKeys();
 
         $values = array();
@@ -195,9 +179,9 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
             }
         }
 
-        $this->_values = $values + $params + $hostResult;
+        $this->_values = $values + $params;
 
-        return $this->_values + $this->_defaults + $hostResult;
+        return $this->_values + $this->_defaults;
     }
 
     /**
@@ -261,9 +245,7 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
             $url = '/' . $module . $url;
         }
 
-        $route = ltrim($url, self::URI_DELIMITER); 
-        $route = $this->_prependHost($route, array_merge($this->_defaults, $this->_values, $data));
-        return $route;
+        return ltrim($url, self::URI_DELIMITER);
     }
 
     /**
