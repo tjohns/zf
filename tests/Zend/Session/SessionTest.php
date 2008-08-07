@@ -141,7 +141,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Session::isRegenerated());
 
         try {
-            Zend_Session::setId('someo_therid_123');
+            Zend_Session::setId('someo-therid-123');
             $this->fail('No exception was returned when trying to set the session id, after session_start()');
         } catch (Zend_Session_Exception $e) {
             $this->assertRegexp('/already.*started/i', $e->getMessage());
