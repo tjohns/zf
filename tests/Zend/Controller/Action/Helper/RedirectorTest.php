@@ -115,6 +115,24 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         }
     }
 
+    public function testCodeAsAStringIsAllowed()
+    {
+        $this->redirector->setCode('303');
+        $this->assertEquals(303, $this->redirector->getCode());
+        
+        try {
+            $this->redirector->setCode('251');
+            $this->fail('Invalid redirect code should throw exception');
+        } catch (Exception $e) {
+        }
+
+        try {
+            $this->redirector->setCode('351');
+            $this->fail('Invalid redirect code should throw exception');
+        } catch (Exception $e) {
+        }        
+    }
+
     public function testExit()
     {
         $this->assertFalse($this->redirector->getExit());
