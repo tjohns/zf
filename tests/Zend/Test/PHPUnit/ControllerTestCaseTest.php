@@ -39,6 +39,7 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
      */
     public function setUp()
     {
+        $_SESSION = array();
         $this->setExpectedException(null);
         $this->testCase = new Zend_Test_PHPUnit_ControllerTestCase();
     }
@@ -554,9 +555,9 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
 
     public function testResetShouldResetSessionArray()
     {
-        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
-        $this->testCase->dispatch('/foo/session');
-        $this->assertEquals(array('foo' => 'bar', 'bar' => 'baz'), $_SESSION);
+        $this->assertTrue(empty($_SESSION));
+        $_SESSION = array('foo' => 'bar', 'bar' => 'baz');
+        $this->assertEquals(array('foo' => 'bar', 'bar' => 'baz'), $_SESSION, var_export($_SESSION, 1));
         $this->testCase->reset();
         $this->assertTrue(empty($_SESSION));
     }
