@@ -52,7 +52,7 @@ require_once 'Zend/Controller/Response/Http.php';
  */
 class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 {
-  
+
     protected $_controller = null;
     protected $_request = null;
     protected $_response = null;
@@ -72,7 +72,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Db_Profiler_FirebugTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
-    
+
     public function setUp()
     {
         if (!extension_loaded('pdo_sqlite')) {
@@ -81,7 +81,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
         date_default_timezone_set('America/Los_Angeles');
 
-        $this->_request = new Zend_Log_Writer_FirebugTest_Request();
+        $this->_request = new Zend_Db_Profiler_FirebugTest_Request();
         $this->_response = new Zend_Controller_Response_Http();
 
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
@@ -94,52 +94,52 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
                                      'profiler' => $this->_profiler));
         $this->_db->getConnection()->exec('CREATE TABLE foo (
                                               id      INTEGNER NOT NULL,
-                                              col1    VARCHAR(10) NOT NULL  
+                                              col1    VARCHAR(10) NOT NULL
                                             )');
     }
-    
+
     public function tearDown()
     {
-        $this->_db->getConnection()->exec('DROP TABLE foo');        
+        $this->_db->getConnection()->exec('DROP TABLE foo');
 
         Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
         Zend_Wildfire_Plugin_FirePhp::destroyInstance();
     }
-        
+
     public function testEnable()
     {
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
 
         $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
-        
+
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
-        
+
         $this->assertFalse($protocol->getMessages());
-        
+
         $this->_profiler->setEnabled(true);
-        
+
         $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
 
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
 
         $messages = $protocol->getMessages();
-        
+
         $this->assertEquals(substr($messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
                                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],0,44),
                             '[{"Type":"TABLE"},["Zend_Db_Profiler_Firebug');
     }
-    
+
     public function testCustomLabel()
     {
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
-      
+
         $this->_profiler = new Zend_Db_Profiler_Firebug('Label 1');
         $this->_profiler->setEnabled(true);
         $this->_db->setProfiler($this->_profiler);
         $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
-        
+
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
 
         $messages = $protocol->getMessages();
@@ -148,11 +148,11 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
                                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],0,27),
                             '[{"Type":"TABLE"},["Label 1');
     }
-    
+
 }
 
 
-class Zend_Log_Writer_FirebugTest_Request extends Zend_Controller_Request_Http
+class Zend_Db_Profiler_FirebugTest_Request extends Zend_Controller_Request_Http
 {
     public function getHeader($header)
     {
