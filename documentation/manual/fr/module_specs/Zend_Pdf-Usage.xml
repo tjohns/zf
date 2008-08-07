@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.pdf.usage">
     <title>Exemple d'utilisation du module Zend_Pdf</title>
 
@@ -11,14 +12,10 @@
     <example id="zend.pdf.usage.example-1">
         <title>Exemple d'utilisation du module Zend_Pdf</title>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * @package Zend_Pdf
  * @subpackage demo
  */
-
-/** Zend_Pdf */
-require_once 'Zend/Pdf.php';
 
 if (!isset($argv[1])) {
     echo "USAGE: php demo.php <pdf_file> [<output_pdf_file>]\n";
@@ -72,6 +69,7 @@ foreach ($pdf->pages as $page){
     $page->rotate(0, 0, M_PI_2/3);
 
     $page->saveGS();
+    $page->setAlpha(0.25);
     $page->clipCircle(550, -10, 50);
     if ($stampImage != null) {
         $page->drawImage($stampImage, 500, -60, 600, 40);
