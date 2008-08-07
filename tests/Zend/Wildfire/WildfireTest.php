@@ -20,8 +20,7 @@
  * @version    $Id: VersionTest.php 8064 2008-02-16 10:58:39Z thomas $
  */
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /** Zend_Wildfire_Channel_HttpHeaders */
 require_once 'Zend/Wildfire/Channel/HttpHeaders.php';
@@ -86,6 +85,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->_request = new Zend_Wildfire_WildfireTest_Request();
         $this->_response = new Zend_Wildfire_WildfireTest_Reponse();
         $this->_controller = Zend_Controller_Front::getInstance();
+        $this->_controller->resetInstance();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')
                           ->setRequest($this->_request)
                           ->setResponse($this->_response)
