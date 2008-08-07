@@ -347,14 +347,10 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
 
                 if (Zend_Loader::isReadable($path . $classFile)) {
                     include_once $path . $classFile;
-
-                    if (!class_exists($className, false)) {
-                        require_once 'Zend/Loader/PluginLoader/Exception.php';
-                        throw new Zend_Loader_PluginLoader_Exception('File ' . $classFile . ' was loaded but class named ' . $className . ' was not found within it.');
+                    if (class_exists($className, false)) {
+                        $found = true;
+                        break 2;
                     }
-
-                    $found = true;
-                    break 2;
                 }
             }
         }
