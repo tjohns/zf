@@ -1,5 +1,5 @@
 <?php
-class FooController extends Zend_Controller_Action
+class ZendTestPhpUnitFooController extends Zend_Controller_Action
 {
     public function barAction()
     {
