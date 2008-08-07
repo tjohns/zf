@@ -86,14 +86,14 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getStaticHostRoute();
         
-        $this->assertEquals('www.zend.com', $route->assemble());
+        $this->assertRegexp('/[^a-z0-9]?www\.zend\.com$/i', $route->assemble());
     }
 
     public function testAssembleHost()
     {
         $route = $this->_getHostRoute();
         
-        $this->assertEquals('foo.zend.com', $route->assemble(array('subdomain' => 'foo')));
+        $this->assertRegexp('/[^a-z0-9]?foo\.zend\.com$/i', $route->assemble(array('subdomain' => 'foo')));
     }
     
     public function testAssembleHostWithMissingParam()
@@ -112,7 +112,7 @@ class Zend_Controller_Router_Route_HostnameTest extends PHPUnit_Framework_TestCa
     {
         $route = $this->_getHostRouteWithDefault();
 
-        $this->assertEquals('bar.zend.com', $route->assemble());
+        $this->assertRegexp('/[^a-z0-9]?bar\.zend\.com$/i', $route->assemble());
     }
     
     public function testHostGetDefault()
