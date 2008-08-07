@@ -23,7 +23,7 @@ class Zend_Layout_FunctionalTest extends Zend_Test_PHPUnit_ControllerTestCase
 
         // create an instance of the ErrorHandler so we can make sure it will point to our specially named ErrorController
         $plugin = new Zend_Controller_Plugin_ErrorHandler();
-        $plugin->setErrorHandlerController('ZendLayoutFunctionalTestError')
+        $plugin->setErrorHandlerController('zend-layout-functional-test-error')
                ->setErrorHandlerAction('error');
         $this->frontController->registerPlugin($plugin, 100);
 
