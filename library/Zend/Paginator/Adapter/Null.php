@@ -58,7 +58,7 @@ class Zend_Paginator_Adapter_Null implements Zend_Paginator_Adapter_Interface
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        return array();
+        return array_fill(0, $itemCountPerPage, null);
     }
 
     /**
