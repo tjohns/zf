@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10108 -->
+<!-- EN-Revision: 10765 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
@@ -142,6 +142,17 @@
                 このアダプタを使うのは、
                 顧客が自分で翻訳を行いたいという場合だけにしましょう。
             </para>
+
+            <note>
+                <para>
+                    Csv ファイルのエンコードがあなたの環境のロケール設定と異なる場合、
+                    Csv アダプタで問題が発生することに注意しましょう。
+                    これは PHP 自体のバグによるもので、このバグは PHP 6.0
+                    で修正される予定です (http://bugs.php.net/bug.php?id=38471)。
+                    したがって、Csv アダプタを使用する場合は
+                    (PHP の制約のせいで) それがロケール対応でないということに注意しなければなりません。
+                </para>
+            </note>
         </sect3>
 
         <sect3 id="zend.translate.adapter.gettext">
