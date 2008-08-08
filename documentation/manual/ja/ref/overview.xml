@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9658 -->
+<!-- EN-Revision: 10557 -->
 <sect1 id="introduction.overview">
 
     <title>概要</title>
@@ -34,7 +34,7 @@
         Zend Framework プロジェクトの主なスポンサーは <ulink url="http://www.zend.com">
         Zend Technologies</ulink> ですが、
         それ以外にも多くの企業がコンポーネントを提供したり機能を追加したりしています。
-        Google や Microsoft そして StikeIron といった企業は、
+        Google や Microsoft そして StrikeIron といった企業は、
         Zend と提携してウェブサービスへのインターフェイスやその他の技術を提供しています。
         それにより、Zend Framework の開発者がより多くの機能を使用できるようになっています。
     </para>
