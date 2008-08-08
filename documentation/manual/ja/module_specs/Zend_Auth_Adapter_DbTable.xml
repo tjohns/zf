@@ -1,12 +1,8 @@
-<!-- EN-Revision: 8273 -->
+<!-- EN-Revision: 10662 -->
 <sect1 id="zend.auth.adapter.dbtable">
-
     <title>データベースのテーブルでの認証</title>
-
     <sect2 id="zend.auth.adapter.dbtable.introduction">
-
         <title>導入</title>
-
         <para>
             <code>Zend_Auth_Adapter_DbTable</code> は、
             データベースのテーブルに保存された証明情報に基づいた認証の機能を提供します。
@@ -16,7 +12,6 @@
             コンストラクタではその他の設定オプションも指定することができます。
             これらは個別にインスタンスメソッドで指定することもできます。
         </para>
-
         <para>
             次のような設定オプションが使用可能です。
             <itemizedlist>
@@ -57,11 +52,8 @@
                 </listitem>
             </itemizedlist>
         </para>
-
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
-
             <title>基本的な使用法</title>
-
             <para>
                 導入部で説明したとおり、<code>Zend_Auth_Adapter_DbTable</code>
                 のコンストラクタには <code>Zend_Db_Adapter_Abstract</code>
@@ -69,19 +61,18 @@
                 関連付けるデータベース接続を表します。
                 まず、データベース接続を作成する必要があります。
             </para>
-
             <para>
                 次のコードは、メモリ内データベースのアダプタを作成し、
                 簡単なテーブルスキーマを作成し、そして後で認証クエリを実行するための行を追加します。
                 この例を実行するには、PDO SQLite 拡張モジュールが有効になっている必要があります。
-
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[
 // メモリ内で SQLite データベース接続を作成します
 require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
 $dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
 
 // 単純なテーブルを作成するクエリ
-$sqlCreate = 'CREATE TABLE [users] ( '
+$sqlCreate = 'CREATE TABLE [users] ('
            . '[id] INTEGER  NOT NULL PRIMARY KEY, '
            . '[username] VARCHAR(50) UNIQUE NOT NULL, '
            . '[password] VARCHAR(32) NULL, '
@@ -91,58 +82,59 @@ $sqlCreate = 'CREATE TABLE [users] ( '
 $dbAdapter->query($sqlCreate);
 
 // 認証を成功させるために行を追加します
-$sqlInsert = 'INSERT INTO users (username, password, real_name) '
-           . 'VALUES ("my_username", "my_password", "My Real Name")';
+$sqlInsert = "INSERT INTO users (username, password, real_name) "
+           . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // データを挿入します
 $dbAdapter->query($sqlInsert);]]>
-                </programlisting>
-
-            </para>
-
+            </programlisting>
             <para>
                 データベース接続およびテーブルが使用可能となったので
                 <code>Zend_Auth_Adapter_DbTable</code> のインスタンスが作成できます。
                 設定オプションの値は、コンストラクタで渡すか、
                 あるいはインスタンスを作成した後に設定用メソッドで指定します。
-
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[
 require_once 'Zend/Auth/Adapter/DbTable.php';
 
 // コンストラクタにパラメータを渡し、インスタンスを設定します
-$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'password');
+$authAdapter = new Zend_Auth_Adapter_DbTable(
+    $dbAdapter,
+    'users',
+    'username',
+    'password'
+);
 
 // あるいは、設定用メソッドでインスタンスの設定を行います
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-$authAdapter->setTableName('users')
-            ->setIdentityColumn('username')
-            ->setCredentialColumn('password');]]>
-                </programlisting>
 
-            </para>
-
+$authAdapter
+    ->setTableName('users')
+    ->setIdentityColumn('username')
+    ->setCredentialColumn('password')
+;]]>
+            </programlisting>
             <para>
                 この時点で、認証アダプタのインスタンスは認証クエリを受け付ける準備ができました。
                 認証クエリを処理するには、入力された証明情報をアダプタに渡してから
                 <code>authenticate()</code> メソッドをコールします。
-
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[
 // 入力情報 (ログインフォームからの値など) を設定します
-$authAdapter->setIdentity('my_username')
-            ->setCredential('my_password');
+$authAdapter
+    ->setIdentity('my_username')
+    ->setCredential('my_password')
+;
 
 // 認証クエリを実行し、結果を保存します
 $result = $authAdapter->authenticate();]]>
-                </programlisting>
-
-            </para>
-
+            </programlisting>
             <para>
                 認証結果オブジェクトでの <code>getIdentity()</code>
                 メソッドに加え、<code>Zend_Auth_Adapter_DbTable</code>
                 は認証の成功時にテーブルの行を取得する機能もサポートしています。
-
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[
 // ID を表示します
 echo $result->getIdentity() . "\n\n";
 
@@ -160,20 +152,15 @@ Array
     [real_name] => My Real Name
 )
 */]]>
-                </programlisting>
-
+            </programlisting>
+            <para>
                 テーブルの行には証明情報が含まれているので、
                 予期せぬアクセスからその内容を守ることが重要となります。
             </para>
-
         </example>
-
     </sect2>
-
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
-
         <title>応用例: 持続的な DbTable 結果オブジェクト</title>
-
         <para>
             デフォルトでは <code>Zend_Auth_Adapter_DbTable</code> は、
             認証に成功した際に認証情報を返します。場合によっては、
@@ -182,35 +169,35 @@ Array
             <code>getResultRowObject()</code> メソッドを使用して
             <code>stdClass</code> オブジェクトを返します。
             次のコードで、使用法をご確認ください。
-
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[
 // Zend_Auth_Adapter_DbTable による認証を行います
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
-
     // 認証情報をオブジェクトとして保存し、username と real_name のみを返します
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+        'username',
+        'real_name',
+    )));
 
     // 認証情報をオブジェクトとして保存し、password のみを省略します
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+    $this->_auth->getStorage()->write($adapter->getResultRowObject(
+        null,
+        'password'
+    ));
 
     /* ... */
-
+    
 } else {
 
     /* ... */
 
 }]]>
-            </programlisting>
-
-        </para>
-
+        </programlisting>
     </sect2>
-
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>高度な使用例</title>
-
         <para>
             Zend_Auth (そして Zend_Auth_Adapter_DbTable) の主な目的は
             <emphasis role="strong">認証 (authentication)</emphasis> であって
@@ -218,31 +205,72 @@ if ($result->isValid()) {
             ではありませんが、認可にもかかわる問題も多少あります。
             問題によっては、認証アダプタの中で認可にかかわる問題を解決することもあるでしょう。
         </para>
-
         <para>
             ちょっとしたおまけとして Zend_Auth_Adapter_DbTable
             に組み込まれている仕組みを使用すると、
             認証時にありがちな問題を解決するチェックを加えることができます。
-
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[
 // アカウントの status フィールドが "compromised" ではない
-$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND status != "compromised"');
+$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    'MD5(?) AND status != "compromised"'
+);
 
 // アカウントの active フィールドが "TRUE" に等しい
-$adapter = new Zend_Auth_Adapter_DbTable($db, 'users', 'username', 'password', 'MD5(?) AND active = "TRUE"');
-
-]]>
-            </programlisting>
-
+$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    'MD5(?) AND active = "TRUE"'
+);]]>
+        </programlisting>
+        <para>
+            もうひとつの例として、salt メカニズムの実装を見てみましょう。
+            salt とは、アプリケーションのセキュリティを格段に向上させるテクニックを指す用語です。
+            パスワードにランダムな文字列を連結することで、
+            辞書を用いた総当たり攻撃からパスワードを保護するという仕組みになっています。
         </para>
+        <para>
+            salt 文字列を格納するために、テーブルの構造を変更する必要があります。
+        </para>
+        <programlisting role="php"><![CDATA[
+$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
 
-
-
-
-
+$dbAdapter->query($sqlAlter);]]>
+        </programlisting>
+        <para>
+            すべてのユーザに対して登録時に salt 文字列を生成するシンプルな方法を示します。
+        </para>
+        <programlisting role="php"><![CDATA[
+for ($i = 0; $i < 50; $i++)
+{
+    $dynamicSalt .= chr(rand(33, 126));
+}]]>
+        </programlisting>
+        <para>
+            それではアダプタを作成してみましょう。
+        </para>
+        <programlisting role="php"><![CDATA[
+$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
+);]]>
+        </programlisting>
+        <note>
+            <para>
+                salt がたとえハードコーディングされた固定文字列であったとしても、
+                セキュリティを向上させることができます。
+                仮に (SQL インジェクション攻撃などで) データベースに侵入されたとしても、
+                ウェブサーバは無傷なのでデータを攻撃者に悪用されることはありません。
+            </para>
+        </note>
     </sect2>
-
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
