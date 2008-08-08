@@ -74,6 +74,16 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Set up tests environment
+     */
+    function setUp()
+    {
+        // _unitTestEnabled is utilised by other tests to handle session data processing
+        // Zend_Session tests should pass with _unitTestEnabled turned off
+        Zend_Session::$_unitTestEnabled = false;
+    }
+
+    /**
      * Cleanup operations after each test method is run
      *
      * @return void
@@ -134,6 +144,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
             Zend_Session::start();
         } else {
+            // Start session if it's not actually started
+            // That may happen if Zend_Session::$_unitTestEnabled is turned on while some other
+            // Unit tests utilize Zend_Session functionality
+            if (!defined('SID')) {
+                session_start();
+            }
+
             // only regenerate session id if session has already been started
             Zend_Session::regenerateId();
         }
