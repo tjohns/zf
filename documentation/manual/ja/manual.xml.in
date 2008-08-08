@@ -472,7 +472,7 @@
     </chapter>
     <chapter id="zend.wildfire">
         <title>Zend_Wildfire</title>
-        <xi:include href="module_specs/Zend_Wildfire.xml" />
+        <xi:include href="module_specs/Zend_Wildfire.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Wildfire.xml" /></xi:fallback>
         </xi:include>
     </chapter>
