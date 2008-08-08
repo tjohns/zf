@@ -272,10 +272,6 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]></programli
         <para>Un profileur spécialisé est un objet qui hérite de <code>Zend_Db_Profiler</code>. Les profileurs
         spécialisés traitent les informations de profiling de manière spécifique.</para>
 
-        <xi:include href="Zend_Db_Profiler-Firebug.xml">
-            <xi:fallback>
-                <xi:include href="../en/module_specs/Zend_Db_Profiler-Firebug.xml" />
-            </xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_Db_Profiler-Firebug.xml" />
     </sect2>
 </sect1>
