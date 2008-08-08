@@ -348,6 +348,7 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
      * Generate image captcha
      * 
      * Override this function if you want different image generator
+     * Wave transform from http://www.captcha.ru/captchas/multiwave/
      *
      * @param string $id Captcha ID
      * @param string $word Captcha word
