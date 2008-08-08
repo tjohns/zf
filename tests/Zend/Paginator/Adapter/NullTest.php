@@ -64,7 +64,7 @@ class Zend_Paginator_Adapter_NullTest extends PHPUnit_Framework_TestCase
     public function testGetItems()
     {
         $actual = $this->_adapter->getItems(0, 10);
-        $this->assertEquals(array(), $actual);
+        $this->assertEquals(array_fill(0, 10, null), $actual);
     }
     
     public function testCount()
