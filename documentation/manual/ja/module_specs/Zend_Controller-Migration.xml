@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8299 -->
+<!-- EN-Revision: 10631 -->
 <sect1 id="zend.controller.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -8,6 +8,39 @@
         以下のガイドラインにしたがってスクリプトを変更し、
         新しい仕組みに対応させてください。
     </para>
+
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>1.5.x から 1.6.0 以降への移行</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>ディスパッチャインターフェイスの変更</title>
+
+            <para>
+                <code>Zend_Controller_Front</code> と
+                <code>Zend_Controller_Router_Route_Module</code>
+                は、ディスパッチャインターフェイスにないメソッドを使用していました。
+                次の 3 つのメソッドを追加し、
+                自作のディスパッチャが同梱の実装と共存できるようにしています。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>getDefaultModule()</code>:
+                    デフォルトモジュールの名前を返します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultControllerName()</code>:
+                    デフォルトコントローラの名前を返します。
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultAction()</code>:
+                    デフォルトアクションの名前を返します。
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>1.0.x から 1.5.0 以降への移行</title>
