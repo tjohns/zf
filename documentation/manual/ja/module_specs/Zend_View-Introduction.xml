@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10117 -->
+<!-- EN-Revision: 10638 -->
 <sect1 id="zend.view.introduction">
 
     <title>導入</title>
@@ -173,6 +173,89 @@ base/path/
                 <code>strictVars</code> で設定します。
             </para></listitem>
         </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.view.introduction.shortTags">
+        <title>ビュースクリプトでの短いタグ</title>
+
+        <para>
+            我々が用意する例やドキュメントでは、PHP の短いタグ
+            <code>&lt;?</code> と <code>&lt;?=</code> を用いています。
+            さらに、<ulink
+                url="http://www.php.net/manual/ja/control-structures.alternative-syntax.php">
+                制御構造に関する別の構文</ulink>
+            も使用しています。
+            これらはビュースクリプトを書く際に便利なものです。
+            より簡潔に書くことができ、文を 1 行にまとめられるからです。
+        </para>
+
+        <para>
+            多くの開発者は、可搬性などを考慮して完全なタグの使用を好むと言われています。
+            実際、php.ini.recommended ファイルでは
+            <code>short_open_tag</code> が無効になっていますし、
+            ビュースクリプト内で XML のテンプレートを使用する場合など、
+            短い形式の開始タグは検証エラーの元となります。
+        </para>
+
+        <para>
+            さらに、もし短いタグが使用できない設定のときに短いタグを使用してしまうと、
+            ビュースクリプトでエラーが発生したり
+            コードの内容がユーザに丸見えになってしまったりします。
+        </para>
+
+        <para>
+            後者の場合のように「短いタグを使いたいけれど設定でそれが無効になっている」
+            場合は、次のいずれかの方法を使用します。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    短いタグを、<code>.htaccess</code> ファイルで有効にします。
+                </para>
+
+                <programlisting role="apache"><![CDATA[
+php_value "short_open_tag" "on"
+]]></programlisting>
+
+                <para>
+                    これは、<code>.htaccess</code>
+                    ファイルの作成と使用を許可されている場合にのみ可能です。
+                    この項目は、<code>httpd.conf</code> ファイルに記述することもできます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    オプションのストリームラッパーを有効にして、
+                    短いタグを逐次長いタグに変換します。
+                </para>
+
+        <programlisting role="php"><![CDATA[
+$view->setUseStreamWrapper(true);
+]]></programlisting>
+
+                <para>
+                    これは、<code>Zend_View_Stream</code>
+                    をビュースクリプトのストリームラッパーとして登録します。
+                    そして、まるで短いタグが有効になっているかのようにコードを動作させることができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <note>
+            <title>ビューストリームラッパーによるパフォーマンスの低下</title>
+
+            <para>
+                ストリームラッパーを使用すると、アプリケーションのパフォーマンスは
+                <emphasis>おそらく</emphasis> 低下するでしょう。
+                しかし、実際のところどれくらい低下するのかについては
+                はっきりと数値化することはできません。
+                短いタグを有効にしてしまうか、
+                スクリプトを書き換えてすべて完全なタグにしてしまう、
+                あるいはコンテンツのキャッシュをうまく行うなどの対策を推奨します。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.view.introduction.accessors">
