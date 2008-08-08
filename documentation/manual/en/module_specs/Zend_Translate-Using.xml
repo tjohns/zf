@@ -462,7 +462,7 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
         </para>
 
         <para>
-            If you want to have only spezified languages from the source translated
+            If you want to have only specified languages from the source translated
             you can set the option <code>defined_language</code> to <code>true</code>.
             With this option you can add the wished languages explicit with
             <code>addLanguage()</code>. The default value for this option is to add all
@@ -583,7 +583,7 @@ $translate->addTranslation('path/to/other.ini', 'it');]]>
         <para>
             Options can be used with all adapters. Of course the options are different for all adapters.
             You can set options when you create the adapter. Actually there is one option which is available
-            to all adapters. '<code>clear</code>' decides if translation data shold be added to existing
+            to all adapters. '<code>clear</code>' decides if translation data should be added to existing
             one or not. Standard behaviour is to add new translation data to existing one. But the
             translation data is only cleared for the selected language. So all other languages will not be
             touched.
