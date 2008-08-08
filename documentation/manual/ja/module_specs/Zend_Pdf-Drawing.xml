@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7860 -->
+<!-- EN-Revision: 10781 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -908,7 +908,31 @@ public function getFontSize();]]>
         </programlisting>
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.alpha">
+        <title>透明度</title>
+        <para>
+        <code>Zend_Pdf</code> モジュールは、透明度の処理に対応しています。
+        </para>
+        <para>
+        透明度を設定するには <code>Zend_Pdf_Page::setAlpha()</code> メソッドを使用します。
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * 透明度を設定します
+ *
+ * $alpha == 0  - 透明
+ * $alpha == 1  - 不透明
+ *
+ * PDF でサポートするモードは次のとおりです
+ * Normal (デフォルト), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
+ * SoftLight, Difference, Exclusion
+ *
+ * @param float $alpha
+ * @param string $mode
+ * @throws Zend_Pdf_Exception
+ */
+public function setAlpha($alpha, $mode = 'Normal');]]>
+        </programlisting>
+        </para>
+    </sect2>
+
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
