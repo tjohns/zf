@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10162 -->
+<!-- EN-Revision: 10642 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -1070,11 +1070,6 @@ $fooBar  = $element->getDecorator('FooBar');
             </para></listitem>
 
             <listitem><para>
-                <emphasis>addAttribs(array $attribs)</emphasis>:
-                複数の属性を一度に追加します。
-            </para></listitem>
-
-            <listitem><para>
                 <emphasis>setAttribs(array $attribs)</emphasis>:
                 addAttribs() と似ていますが、すべて上書きします。
             </para></listitem>
@@ -1087,16 +1082,6 @@ $fooBar  = $element->getDecorator('FooBar');
             <listitem><para>
                 <emphasis>getAttribs()</emphasis>:
                 すべての属性を キー/値 のペアで取得します。
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>removeAttrib($name)</emphasis>:
-                特定の属性を削除します。
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>clearAttribs()</emphasis>:
-                すべての属性を消去します。
             </para></listitem>
         </itemizedlist>
 
