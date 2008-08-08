@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9877 -->
+<!-- EN-Revision: 10650 -->
 <sect1 id="zend.controller.front">
     <title>フロントコントローラ</title>
 
@@ -138,6 +138,36 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
                 コントローラディレクトリの現在の設定を取得するには
                 <code>getControllerDirectory()</code> を使用します。
                 これは、モジュールとディレクトリの組を配列で返します。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
+            <title>addModuleDirectory() および getModuleDirectory()</title>
+
+            <para>
+                フロントコントローラのひとつの側面として、<link
+                    linkend="zend.controller.modular">モジュラーディレクトリ構造を定義
+                </link> して単体のコンポーネントを作成するということがあります。
+                これは "モジュール" と呼ばれます。
+            </para>
+
+            <para>
+                書くモジュールは個別のディレクトリになければならず、
+                またデフォルトモジュールと同じディレクトリ構成でなければなりません。
+                すなわち、すくなくともサブディレクトリ "controllers" がなければならず、
+                またたいていは "views" などの他のサブディレクトリもあるということです。
+            </para>
+
+            <para>
+                <code>addModuleDirectory()</code>
+                には、ひとつあるいは複数のモジュールディレクトリの名前を渡します。
+                渡された内容を調べ、それをフロントコントローラのコントローラディレクトリに追加します。
+            </para>
+
+            <para>
+                その後、特定のモジュールや現在のモジュールへのパスを知りたい場合に
+                <code>getModuleDirectory()</code> をコールします。
+                モジュール名を渡すと、指定したモジュールのディレクトリを取得することができます。
             </para>
         </sect3>
 
