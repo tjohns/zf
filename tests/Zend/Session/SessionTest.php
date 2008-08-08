@@ -972,10 +972,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        Zend_Session::destroy();
+        // Do not destroy session since it still may be used by other tests
+        // Zend_Session::destroy();
     }
-
-    /**
-     * @todo DO NOT put tests below testSetExpireSessionVarsByHopsOnUse(), since the session is destroy()'d.
-     */
 }
