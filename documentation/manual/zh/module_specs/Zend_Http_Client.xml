@@ -1,0 +1,160 @@
+<sect1 id="zend.http.client">
+    <title>Zend_Http_Client</title>
+
+    <sect2 id="zend.http.client.introduction">
+        <title>简介</title>
+        <para>
+            <code>Zend_Http_Client</code> 为那些需要执行HTTP请求的程序提供了一个简单的接口.
+            <code>Zend_Http_Client</code> 可以执行 GET, POST, PUT 和 DELETE 请求.
+        </para>
+        <note><para>
+            默认情况下<code>Zend_Http_Client</code> 将追踪 5 次 HTTP 重定向. 要改变这个行为,
+            可以传入允许重定向的最大数量到<code>get()</code>的方法
+
+        </para></note>
+        <para>
+            <example>
+                <title>执行一个基本的 GET 请求</title>
+                <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http_Client.php';
+    try {
+        $http = new Zend_Http_Client('http://example.org');
+        $response = $http->get();
+        if ($response->isSuccessful()) {
+            echo $response->getBody();
+        } else {
+            echo '<p>An error occurred</p>';
+        }
+    } catch (Zend_Http_Client_Exception $e) {
+        echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    }
+    ?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.basic-get-requests">
+        <title>带有指定的HTTP头的基本 GET 请求</title>
+        <para>
+            <code>Zend_Http_Client</code> 的构造函数创建一个<code>Zend_Http_Client</code>
+            的实例来发送HTTP请求.
+        </para>
+        <para>
+            当在单个URL上使用 <code>Zend_Http_Client</code>时, 大多数情况下你可以提供URL
+            和相应的头部信息到<emphasis>构造函数</emphasis>, 比如下面的例子:
+        </para>
+        <example>
+            <title>创建一个基本的Zend_Http_Client</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http_Client.php';
+
+    // 指定URL和一个简单的header信息
+    $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
+    ?>]]>       </programlisting>
+        </example>
+        <para />
+        <example>
+            <title>发送多条header信息</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http_Client.php';
+
+    // 指定URL和多个header信息
+    $http = new Zend_Http_Client('http://example.org',
+                            array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
+    ?>]]>       </programlisting>
+        </example>
+        <para>
+            如果你希望使用 <code>Zend_Http_Client</code> 来发送请求到 <emphasis>多个</emphasis> URL,
+            参考 <xref linkend="zend.http.client.requesting-multiple-domains" />
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.requesting-multiple-domains">
+        <title>发送请求到多个域名</title>
+        <para>
+            <code>Zend_Http_Client</code> 支持发送请求到多个域名，
+            用 <code>Zend_Http_Client::setUri()</code> 函数来设定要查询的URL.
+        </para>
+        <note>
+            <para>当查询多个RSS feed时，这是一个非常好的用法.</para>
+        </note>
+        <example>
+            <title>发送请求到多个域名</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http_Client.php';
+
+    // 实例化我们的客户端对象
+    $http = new Zend_Http_Client();
+
+    // 设置 URI 为 Slashdot的主feed地址
+    $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
+
+    // 获得feed
+    $slashdot = $http->get();
+
+    // 现在获取 BBC 的新闻 feed
+    $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
+
+    // 获得feed
+    $bbc = $http->get();
+    ?>]]>   </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.http.client.settimeout">
+        <title>改变HTTP timeout时间</title>
+        <para>
+            <code>Zend_Http_Client::setTimeout()</code> 允许你为HTTP连接设置 timeout 时间
+            （以秒为单位）.
+        </para>
+        <note>
+            <para>默认的 timeout 为10秒.</para>
+        </note>
+    </sect2>
+    <sect2 id="zend.http.client.setheaders">
+        <title>动态指定HTTP Header</title>
+        <para>
+            使用 <code>Zend_Http_Client::setHeaders()</code> 函数, 传递一个header的 <emphasis>数组</emphasis>
+            .
+        </para>
+        <important>
+            <para>
+                Header一定要遵循如下格式:
+                <option><code>Header: value</code></option>
+            </para>
+        </important>
+    </sect2>
+    <sect2 id="zend.http.client.making-other-requests">
+        <title>构造 HTTP POST, PUT, 和 DELETE 请求</title>
+        <para>
+            执行 HTTP POST, PUT, 和 DELETE 请求是非常容易的， 在 <code>Zend_Http_Client</code>里我们可以通过如下三个函数分别实现
+            : <code>post()</code>, <code>put()</code>, 和 <code>delete()</code>.
+            <code>post()</code> 和 <code>put()</code> 方法分别使用一个简单的字符串作为参数,
+            参数的字符串应该是一段经过适当编码的信息, 就像下面这条:
+            <emphasis><code>name=value&amp;foo=bar</code></emphasis>.  <code>delete()</code> 方法没有参数
+            .
+        </para>
+        <example>
+            <title>用Zend_Http_Client发送POST 数据</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http_Client.php';
+
+    // 实例化客户端对象
+    $http = new Zend_Http_Client();
+
+    // 设置 URI 到一个POST数据Processor地址
+    $http->setUri('http://example.org/post/processor');
+
+    // 保存指定的 GET 变量作为HTTP POST 数据
+    $postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
+
+    // 创建 HTTP POST 请求并保存 HTTP response
+    $httpResponse = $http->post($postData);
+    ?>]]>   </programlisting>
+            <para>
+                创建一个 PUT 请求和在上面例子里创建一个POST请求一样; 就是用
+                <code>put()</code> 方法来替换 <code>post()</code>.
+            </para>
+        </example>
+    </sect2>
+</sect1>
+<!--
+    vim:se ts=4 sw=4 et:
+-->

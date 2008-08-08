@@ -1,0 +1,42 @@
+<sect1 id="zend.pdf.save">
+    <title>Änderungen von PDF Dokumenten speichern</title>
+    <para>
+        Es gibt zwei Methoden für das Speichern von Änderungen am PDF Dokument.
+        Dies sind die Methoden <code>Zend_Pdf::save()</code> und <code>Zend_Pdf::render()</code>.
+    </para>
+
+    <para>
+        Die <code>Zend_Pdf::save($filename, $updateOnly = false)</code> Methode speichert das
+        PDF Dokument in einer Datei. Wenn $updateOnly auf true gesetzt wird, wird das neue PDF
+        Segment nur an die Datei angehängt, ansonsten wird die Datei überschrieben.
+    </para>
+
+    <para>
+        Die <code>Zend_Pdf::render($newSegmentOnly = false)</code> Methode gibt das PDF
+        Dokument als Zeichenkette zurück. Wenn $newSegmentOnly auf true gesetzt wird, wird nur das
+        neue PDF Dateisegment zurückgegeben.
+    </para>
+
+    <example id="zend.pdf.save.example-1">
+        <title>Speichern eines PDF Dokuments</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// Lade das PDF Dokument.
+$pdf = Zend_Pdf::load($fileName);
+...
+// Aktualisiere das Dokument
+$pdf->save($fileName);
+// Speichere das Dokument in eine neue Datei
+$pdf->save($newFileName, true);
+
+// Geb das PDF Dokument in einer Zeichenkette zurück.
+$pdfString = $pdf->render();
+
+...]]>
+        </programlisting>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

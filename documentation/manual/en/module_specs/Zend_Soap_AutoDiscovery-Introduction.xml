@@ -1,0 +1,82 @@
+<sect1 id="zend.soap.autodiscovery.introduction">
+    <title>AutoDiscovery. Introduction</title>
+    <para>
+        SOAP functionality implemented within Zend Framework is intended to make all steps
+        required for SOAP communications more simple.
+    </para>
+
+    <para>
+        SOAP is language independent protocol. So it may be used not only for PHP-to-PHP communications.
+    </para>
+    
+    <para>
+        There are three configurations for SOAP applications where Zend Framework may be utilized:
+        <orderedlist>
+            <listitem>
+                <simpara>SOAP server PHP application &lt;---&gt; SOAP client PHP application</simpara>
+            </listitem>
+            <listitem>
+                <simpara>SOAP server non-PHP application &lt;---&gt; SOAP client PHP application</simpara>
+            </listitem>
+            <listitem>
+                <simpara>SOAP server PHP application &lt;---&gt; SOAP client non-PHP application</simpara>
+            </listitem>
+        </orderedlist>
+    </para>
+    
+    <para>
+        We always have to know, which functionality is provided by SOAP server to operate with it.
+        <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> is used to describe network service API
+        in details.  
+    </para>
+
+    <para>
+        WSDL language is complex enough (see <ulink url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> 
+        for the details). So it's difficult to prepare correct WSDL description.      
+    </para>
+    
+    <para>
+        Another problem is synchronizing changes in network service API with already existing WSDL.      
+    </para>
+
+    <para>
+        Both these problem may be solved by WSDL autogeneration. A prerequisite for this is a SOAP server autodiscovery.
+        It constructs object similar to object used in SOAP server application, extracts necessary information and generates 
+        correct WSDL using this information. 
+    </para>
+
+    <para>
+        There are two ways for using Zend Framework for SOAP server application:     
+        <itemizedlist>
+            <listitem>
+                <para>Use separated class.</para>
+            </listitem>
+            <listitem>
+                <para>Use set of functions</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Both methods are supported by Zend Framework Autodiscovery functionality. 
+    </para>
+
+    <para>
+        Zend_Soap_AutoDiscovery class also supports datatypes mapping from PHP to <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD types</ulink>. 
+    </para>
+
+
+    <para>
+        Here is an example of common usage of the autodiscovery functionality:
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Soap/AutoDiscover.php';
+
+class My_SoapServer_Class {
+...
+}
+
+$autodiscover = new Zend_Soap_AutoDiscover();
+$autodiscover->setClass('My_SoapServer_Class');
+$autodiscover->handle();]]></programlisting>
+    </para>
+</sect1>
