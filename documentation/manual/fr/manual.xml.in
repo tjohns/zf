@@ -58,12 +58,8 @@
     </chapter>
     <chapter id="zend.captcha">
         <title>Zend_Captcha</title>
-        <xi:include href="module_specs/Zend_Captcha.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Captcha-Operation.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha-Operation.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Captcha.xml" />
+        <xi:include href="module_specs/Zend_Captcha-Operation.xml" />
         <xi:include href="module_specs/Zend_Captcha-Adapters.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha-Adapters.xml" /></xi:fallback>
         </xi:include>
