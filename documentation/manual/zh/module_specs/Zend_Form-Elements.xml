@@ -310,7 +310,7 @@ $element->addPrefixPath('My_Validator', 'My/Validator/', 'validate');
         </note>
 
         <para>
-            如果特定的校验失败，为防止后来的校验停止工作，传递第二个参数 <code>true</code> （布尔型）：
+            如果特定的校验失败，为阻止后面的校验工作，传递第二个参数 <code>true</code> （布尔型）：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
