@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10235 -->
+<!-- EN-Revision: 10666 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>応用</title>
 
@@ -42,7 +42,7 @@
             新しいドキュメントがインデックスに追加された場合や
             <code>$index->optimize()</code> による最適化を手動で開始した場合です。
         </para>
-        
+
         <para>
             Zend_Search_Lucene が、インデックスを上位バージョンのフォーマットに変換することがあります。
             <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> フォーマットの場合はこれが
@@ -54,7 +54,7 @@
             変換作業を管理するために、対象となるインデックスフォーマットを
             <code>$index->setFormatVersion()</code> で指定することができます。ここでは定数
             <code>Zend_Search_Lucene::FORMAT_2_1</code> あるいは <code>Zend_Search_Lucene::FORMAT_2_3</code>
-            を使用します。
+            をパラメータとして使用します。
             <itemizedlist>
                 <listitem>
                     <para>
