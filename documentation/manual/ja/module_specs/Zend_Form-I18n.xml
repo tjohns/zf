@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10648 -->
 <sect1 id="zend.form.i18n">
     <title>Zend_Form の国際化</title>
 
@@ -131,6 +131,13 @@ $element->setTranslator($translate);
                     エラーコードについての詳細は <link
                         linkend="zend.validate">Zend_Validate</link>
                     のドキュメントを参照ください。
+                </para>
+
+                <para>
+                    1.6.0 以降では、実際のエラーメッセージをメッセージ ID
+                    とする翻訳文字列を提供することができます。
+                    1.6.0 以降ではこの方法が推奨となります。
+                    メッセージキーによる翻訳は将来のバージョンで廃止予定です。
                 </para>
             </listitem>
 
