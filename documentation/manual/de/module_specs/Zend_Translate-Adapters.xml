@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10108 -->
+<!-- EN-Revision: 10765 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
@@ -138,6 +138,16 @@
                 Man sollte diesen Adapter nur benutzen wenn der Kunde die Übersetzungen
                 selbst durchführen will.
             </para>
+
+            <note>
+                <para>
+                    Es ist zu beachten das der Csv Adapter Probleme hat wenn die Csv Dateien anders
+                    kodiert sind als die Gebietsschema-Einstellung der Umgebung. Die Ursache ist ein
+                    Bug von PHP selbst der nicht vor PHP 6.0 behoben sein wird
+                    (http://bugs.php.net/bug.php?id=38471). Deshalb sollte man achtgeben das der Csv
+                    Adapter wegen Einschränkungen durch PHP nicht unabhängig vom Gebietsschema ist.
+                </para>
+            </note>
         </sect3>
 
         <sect3 id="zend.translate.adapter.gettext">

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10667 -->
+<!-- EN-Revision: 10723 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -442,7 +442,9 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                     Unterschied ist das man eine Option eingeben kann die nicht in der Liste der
                     vorhandenen Optionen ist, und trotzdem eine gültige Eingabe angenommen wird. Sie akzeptiert
                     ein optionales fünftes Argument, ein assoziatives Array <code>$options</code>; wenn es
-                    angegeben wird, wird ComboBox als <code>select</code> dargestellt.
+                    angegeben wird, wird ComboBox als <code>select</code> dargestellt. Es ist auch zu
+                    beachten das die verschiedenen <emphasis>Labelwerte</emphasis> des <code>$options</code>
+                    Arrays im Formular zurückgegeben werden -- nicht die Werte selbst.
                 </para>
 
                 <para>
@@ -600,7 +602,9 @@ echo $view->dateTextBox(
                     <emphasis>FilteringSelect</emphasis>: dijit.form.FilteringSelect. Wie die ComboBox ist das
                     ein Select/Text Hybrid der entweder eine angegebenen Liste von Optionen darstellen kann,
                     oder jene vom dojo.data Datenspeicher. Anders als ComboBox, erlaubt FilteringSelect keine
-                    Eingabe einer Option die nicht in seiner Liste vorhanden ist.
+                    Eingabe einer Option die nicht in seiner Liste vorhanden ist. Zusätzlich funktioniert es
+                    Sie ein Standatrd Select in dem die Optionswerte, nicht die Label, zurückgegeben werden
+                    wenn das Formular übertragen wird.
                 </para>
 
                 <para>

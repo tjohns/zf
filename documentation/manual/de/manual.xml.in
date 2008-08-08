@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 10653 -->
+<!-- EN-Revision: 10741 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -85,6 +85,18 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Cache-Backends.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.captcha"> 
+        <title>Zend_Captcha</title> 
+        <xi:include href="module_specs/Zend_Captcha.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Captcha-Operation.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha-Operation.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Captcha-Adapters.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Captcha-Adapters.xml" /></xi:fallback>
+        </xi:include>
+    </chapter> 
     <chapter id="zend.config">
         <title>Zend_Config</title>
         <xi:include href="module_specs/Zend_Config-Introduction.xml">
@@ -201,7 +213,7 @@
         <xi:include href="module_specs/Zend_Db_Statement.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Statement.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Db_Profiler.xml">
+        <xi:include href="module_specs/Zend_Db_Profiler.xml" parse="xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Db_Profiler.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Db_Select.xml">
@@ -477,7 +489,7 @@
         <xi:include href="module_specs/Zend_Log-Overview.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Overview.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Log-Writers.xml">
+        <xi:include href="module_specs/Zend_Log-Writers.xml" parse="xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Writers.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Log-Formatters.xml">
@@ -708,6 +720,9 @@
         <xi:include href="module_specs/Zend_Service_Nirvanix.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Nirvanix.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Service-ReCaptcha.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Service-ReCaptcha.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Service_Simpy.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Simpy.xml" /></xi:fallback>
         </xi:include>
@@ -858,6 +873,12 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_View-Abstract.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.wildfire"> 
+        <title>Zend_Wildfire</title> 
+        <xi:include href="module_specs/Zend_Wildfire.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Wildfire.xml" /></xi:fallback>
+        </xi:include>
+    </chapter> 
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         <xi:include href="module_specs/Zend_XmlRpc.xml">

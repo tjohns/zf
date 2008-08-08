@@ -1,4 +1,5 @@
-<sect1 id="zend.log.writers">
+<!-- EN-Revision: 10718 -->
+<sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writer</title>
   <para>
     Ein Writer ist ein Objekt das von <code>Zend_Log_Writer_Abstract</code> abstammt. Die Aufgabe eines Writer's
@@ -90,6 +91,8 @@ $logger->info('Informative Nachricht');>]]>
     </para>
 
   </sect2>
+
+  <xi:include href="Zend_Log-Writers-Firebug.xml" />
 
   <sect2 id="zend.log.writers.null">
     <title>Einen Writer abstumpfen</title>

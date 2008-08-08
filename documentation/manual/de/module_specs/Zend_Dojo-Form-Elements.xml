@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10667 -->
+<!-- EN-Revision: 10723 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -83,10 +83,9 @@ $element->addDecorator('DijitElement')
         <title>Button</title>
 
         <para>
-            Wärend es nicht vom <link linkend="zend.form.standardElements.submit">standardmäßigen Submit
+            Wärend es nicht vom <link linkend="zend.form.standardElements.button">standardmäßigen Button
             Element</link> abgeleitet ist, implementiert es die gleiche Funktionalität, und kann als
-            Drop-In Ersatz für das standardmäßige <link linkend="zend.form.standardElements.button">Button
-            Element</link>  verwendet werden. Die folgende Funktionalität wird zur Verfügung gestellt:
+            Drop-In Ersatz hierfür verwendet werden. Die folgende Funktionalität wird zur Verfügung gestellt:
         </para>
 
         <itemizedlist>
@@ -187,8 +186,18 @@ $form->addElement(
             Wie in der ComboBox <link linkend="zend.dojo.view.dijit.form">Dijit Viewhelfer Dokumentation</link>
             beschrieben, sind Comboboxen ein Hybrid zwischen Select und Texteingaben, erlauben automatische
             Vervollständigung und die Fähigkeit eine Alternative zu den angebotenen Optionen zu spezifizieren.
-            FilteringSelects sind genauso, nut erlauben Sie keine eigenen Eingaben.
+            FilteringSelects sind genauso, nur erlauben Sie keine eigenen Eingaben.
         </para>
+
+        <note>
+            <title>ComboBoxen geben die Labelwerte zurück</title>
+
+            <para>
+                ComboBoxen geben die Labelwerte, und nicht die Werte der Option zurück, was zu einem
+                Problem bei den Annahmen führen kann. Aus diesem Grund registieren Sie die
+                <code>InArray</code> Prüfung nicht automatisch (obwohl FilteringSelects das macht).
+            </para>
+        </note>
 
         <para>
             Das ComboBox und FilteringSelect Formularelemente bietet Zugriffsmethoden und Mutatoren für das

@@ -1,4 +1,5 @@
-<sect1 id="zend.db.profiler">
+<!-- EN-Revision: 10718 -->
+<sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
 
@@ -375,6 +376,17 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
 
     </sect2>
 
+    <sect2 id="zend.db.profiler.profilers">
+        <title>Specialized Profilers</title>
+
+        <para>
+            Ein spezialisierter Profiler ist ein Objekt das von <code>Zend_Db_Profiler</code> abgeleitet ist.
+            Spezialisierte Profiler behandeln die Profilinginformationen auf speziellen Wegen.
+        </para>
+
+        <xi:include href="Zend_Db_Profiler-Firebug.xml" />
+
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10653 -->
+<!-- EN-Revision: 10741 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -37,6 +37,88 @@
         <para>
             Nach der Veröffentlichung oder Prüfung einer Form, kann geprüft werden ob der gegebene
             Button geklickt wurd indem die <code>isChecked()</code> Methode verwendet wird.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardElements.captcha">
+        <title>Zend_Form_Element_Captcha</title>
+
+        <para>
+            CAPTCHAs werden verwendet um automatische Übermittlung von Formularen durch Bots und andere
+            automatische Prozesse zu verhindern.
+        </para>
+
+        <para>
+            Das Captcha Formularelement erlaubt es den
+            <link linkend="zend.captcha.adapters">Zend_Captcha Adapter</link> der als Formular Captcha
+            verwendet werden soll anzupassen. Er setzt dann diesen Adapter als Prüfung für das Objekt,
+            und verwendet den Captcha Dekorator für die Darstellung (welche den Captcha Adapter aufruft).
+        </para>
+
+        <para>
+            Adapter können alle Adapter in <code>Zend_Captcha</code> sein, sowie jeder eigene Adapter
+            der irgendwo anders definiert wurde. Um das z uerlauben, kann ein zusätzlicher Schlüssel für
+            den Plugin Ladetyp, 'CAPTCHA' oder 'captcha' übergeben werden, wenn der Plugin Loader Präfixpfad
+            spezifiziert wird:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
+]]></programlisting>
+
+        <para>
+            Captcha's können dann durch Verwendung der <code>setCaptcha()</code> Methode registriert werden,
+            welche entweder eine konkrete Captcha Instanz, oder den Kurznamen des Captcha Adapters nimmt:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Konkrete Instanz:
+$element->setCaptcha(new Zend_Captcha_Figlet());
+
+// Verwendung von Kurznamen:
+$element->setCaptcha('Dumb');
+]]></programlisting>
+
+        <para>
+            Wenn das Element über die Konfiguration geladen werden soll, kann entweder der Schlüssel
+            'captcha' mit einem Array das den Schlüssel 'captcha' enthält spezifiziert werden, oder beide
+            Schlüssel 'captcha' und 'captchaOptions':
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Verwendung eines einzelnen captcha Schlüssels:
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "Bitte verifizieren Sie das Sie menschlich sind"
+    'captcha' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+
+// Verwendung von beiden, captcha und captchaOptions:
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "Bitte verifizieren Sie das Sie menschlich sind"
+    'captcha' => 'Figlet',
+    'captchaOptions' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+]]></programlisting>
+
+        <para>
+            Der verwendete Dekorator wird durch die Abfrage des Captcha Adapters erkannt. Standardmäßig wird
+            der <link linkend="zend.form.standardDecorators.captcha">Captcha Dekorator</link> verwendet,
+            aber ein Adapter kann einen anderen über die <code>getDecorator()</code> Methode spezifizieren.
+        </para>
+
+        <para>
+            Wie beschrieben, fungiert der Captcha Adapter selbst als Prüfnug für das Element. Zusätzlich
+            wird die NotEmpty Prüfung nicht verwendet, und das Element wird als benötigt markiert. In
+            den meisten Fällen sollte sonst nichts anderes mehr notwendig sein um das Captcha im
+            eigenen Formular zu haben.
         </para>
     </sect2>
 

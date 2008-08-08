@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9420 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router: Zend_Controller_Router_Rewrite</title>
     <sect2 id="zend.controller.router.introduction">

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10741 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -41,6 +42,23 @@ class Util
             Der Callback Dekorator erlaubt es einen Null Wert für die placement Option zu
             spezifizieren, welche den Originalen Inhalt mit dem vom Callback zurückgegebenen Wert
             ersetzt; 'prepend' und 'append' sind trotzdem genauso gültig.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardDecorators.captcha">
+        <title>Zend_Form_Decorator_Captcha</title>
+
+        <para>
+            Der Captcha Dekorator ist für die Verwendung mit dem
+            <link linkend="zend.form.standardElements.captcha">Captcha Formularelement</link>. Es verwendet
+            die <code>render()</code> Methode des Captcha Adapters um die Ausgabe er erzeugen.
+        </para>
+
+        <para>
+            Eine variante des Captcha Dekorators, 'Captcha_Word', wird auch üblicherweise verwendet, und
+            erstellt zwei Elemente, eine Id und eine Eingabe. Die Id zeigt den Identifikator der Session
+            gegen den Verglichen wird, und die Eingabe ist für die Benutzerverifikation des Captchas.
+            Beide werden als einzelnes Element geprüft. 
         </para>
     </sect2>
 
