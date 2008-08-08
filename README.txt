@@ -1,4 +1,4 @@
-Welcome to Zend Framework 1.6 Release Candidate 1! This release may meet quality
+Welcome to Zend Framework 1.6 Release Candidate 2! This release may meet quality
 guidelines for production use but has not been fully tested by the Zend Framework
 community for production use.
 To help us deliver a stable Zend Framework 1.6 GA release soon, please post your
@@ -10,16 +10,16 @@ http://framework.zend.com/issues
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6 Release Candidate 1 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-07-21.
+Zend Framework 1.6 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
+Released on 2008-08-08.
 
 
 NEW FEATURES
 ------------
 
 * Dojo Integration
-    - JSON-RPC
-    - Dojo Data packing
+    - JSON-RPC Server
+    - dojo.data Envelopes
     - Dojo View Helper
     - Dijit integration with Zend_Form & Zend_View
     - Dojo Library Distribution
@@ -29,7 +29,7 @@ NEW FEATURES
     - Autodiscovery
     - WSDL access
     - WSDL Generation
-* Preview of Tooling Project in Laborator (see /laboratory folder)
+* Preview of Tooling Project in Laboratory (see /laboratory folder)
     - Command Line Interface
     - Project Asset Management
 * Unit Testing Harness for Controllers
@@ -38,15 +38,17 @@ NEW FEATURES
 * Paginator Component
 * Text/Figlet Support
 * ReCaptcha Service
-* Zend_Config_Xml Attribute Support
-* Character Set Option for DB Adapters 
-* Zend File Transfer Component
-* New Media View Helpers (Flash, Quicktime, Object, and Page)
+* Captcha Form Element
+* Zend_Config_Xml Attribute Support 
+* Zend_File_Transfer Component
+* File Upload Form Element
+* Zend_Wildfire Component with FireBug Log Writer
+* Media View Helpers (Flash, Quicktime, Object, and Page)
 * Support in Zend_Translate for INI File Format
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10794
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10820
 
 INTENDED USE
 ------------
@@ -88,7 +90,7 @@ tracker at:
 http://framework.zend.com/issues
 
 If you would like to be notified of new releases- including the general
-availability release of Zend Framework 1.5- you can subscribe to the fw-announce
+availability release of Zend Framework 1.6- you can subscribe to the fw-announce
 mailing list by sending a blank message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
