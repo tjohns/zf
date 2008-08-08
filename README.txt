@@ -10,7 +10,7 @@ http://framework.zend.com/issues
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6 Release Candidate 2 (revision <revision # here>).
+Zend Framework 1.6 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
 Released on 2008-08-08.
 
 
@@ -48,7 +48,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-<Insert filter URL here>
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10820
 
 INTENDED USE
 ------------
