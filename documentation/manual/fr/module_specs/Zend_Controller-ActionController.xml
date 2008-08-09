@@ -18,8 +18,7 @@
 
         <para>Par exemple, considérons une classe définie comme ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -48,8 +47,7 @@ class FooController extends Zend_Controller_Action
             l'injection automatique de l'objet de vue dans vos contrôleurs, ainsi que du rendu de cette vue. Vous pouvez
             la désactiver au sein de vos contrôleurs par l'une ou l'autre des actions suivantes :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -73,8 +71,7 @@ class FooController extends Zend_Controller_Action
             <para>Vous pouvez simplement désactiver le rendu pour une vue individuelle grâce à la méthode
             <code>noRender()</code> du <code>ViewRenderer</code> :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -104,8 +101,7 @@ class FooController extends Zend_Controller_Action
         <code>init()</code>, qui est appelée en dernière tâche de <code>__construct()</code>. Par exemple, si vous
         voulez vous connecter à une base de données à l'instanciation :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -172,8 +168,7 @@ $this->getResponse()->appendBody($content);]]></programlisting>
                     défaut à utiliser si le paramètre n'est pas réglé ou qu'il est vide. Utiliser ceci élimine la
                     nécessité d'appeler <code>_hasParam()</code> avant de récupérer une valeur :</para>
 
-                    <programlisting role="php"><![CDATA[<?php
-// Utilise une valeur par défaut de 1 si id n'est pas réglé
+                    <programlisting role="php"><![CDATA[// Utilise une valeur par défaut de 1 si id n'est pas réglé
 $id = $this->_getParam('id', 1);
 
 // Au lieu de :
@@ -229,8 +224,7 @@ if ($this->_hasParam('id') {
 
             <para><code>render()</code> a la signature suivante :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);]]></programlisting>
+            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]></programlisting>
 
             <para><code>render()</code> effectue le rendu d'un script de vue. Si aucun argument n'est fourni, la méthode
             suppose que le script requêté est <code>[controller]/[action].phtml</code> (où <code>.phtml</code> est la
@@ -253,8 +247,7 @@ string render(string $action = null, string $name = null, bool $noController = f
 
             <para>Quelques exemples :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MonController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MonController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -355,8 +348,8 @@ class MonController extends Zend_Controller_Action
 
             <para>Par défaut, cette méthode lève une <code>Zend_Controller_Action_Exception</code> indiquant que la
             méthode requêtée n'a pas été trouvée dans le contrôleur. Si la méthode requêtée se termine par "Action", on
-            considère qu'une action était requêtée et qu'elle n'existe pas ; un telle erreur entraîne une exception
-            ayant un code 404. Tout autre appel de méthode entraîne une exception ayant un code 500. Ceci vous permet de
+            considère qu'une action était requêté et qu'elle n'existe pas ; un telle erreur entraîne une exception ayant
+            un code 404. Tout autre appel de méthode entraîne une exception ayant un code 500. Ceci vous permet de
             facilement différencier une page inconnue et une erreur de l'application dans votre gestionnaire
             d'erreur.</para>
 
@@ -364,8 +357,7 @@ class MonController extends Zend_Controller_Action
             exemple, si vous souhaitez afficher un message d'erreur, vous pouvez écrire quelque chose comme ceci
             :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MonController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MonController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -381,8 +373,7 @@ class MonController extends Zend_Controller_Action
 
             <para>Une autre possibilité est de rediriger vers une page de contrôleur par défaut :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -407,8 +398,7 @@ class MyController extends Zend_Controller_Action
         but de personnaliser vos contrôleurs. Par exemple, si vous stockez votre objet de vue dans le registre, vous
         pouvez vouloir modifier votre méthode <code>initView()</code> avec une code comme celui-ci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-abstract class Ma_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[abstract class Ma_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {

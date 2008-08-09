@@ -22,8 +22,7 @@
             terminé. Vous pouvez changer ce comportement avec <code>Zend_Controller_Front::returnResponse(true)</code>
             :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 
 // opérations, comme une journalisation...
@@ -160,8 +159,7 @@ $front->dispatch();]]></programlisting>
         header au corps de la réponse, et l'évènement <code>postDispatch()</code> pour en ajouter un bandeau de footer
         :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Considérons ce plugin comme étant enregistré auprès du contrôleur frontal
+        <programlisting role="php"><![CDATA[// Considérons ce plugin comme étant enregistré auprès du contrôleur frontal
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -194,8 +192,7 @@ class MyController extends Zend_Controller_Action
 
         <para>Un appel à <code>/my/foo</code> dans ce cas là, générera un objet de réponse ressemblant à ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-array(
+        <programlisting role="php"><![CDATA[array(
     'header'  => ..., // contenu du segment header
     'default' => ..., // corps, contenu de MyController::fooAction()
     'footer'  => ...  // contenu du segment footer
@@ -317,6 +314,3 @@ array(
         templates, etc.</para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -80,9 +80,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
             <code>html/index.php</code> dans ce cas-ci. Ouvrez <code>html/index.php</code> dans l'éditeur de votre choix
             et ajouter ce qui suit :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/chemin/vers/application/controllers');]]></programlisting>
+            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/application/controllers');]]></programlisting>
 
             <para>Ceci va instancier et dispatcher le contrôleur frontal, qui conduira les demandes vers les contrôleurs
             d'action.</para>
@@ -114,9 +112,7 @@ Zend_Controller_Front::run('/chemin/vers/application/controllers');]]></programl
             contrôleur et l'action par défaut sont tous les deux nommées <code>index</code>. Ouvrez le fichier
             <code>application/controllers/IndexController.php</code>, et entrez ce qui suit :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
+            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
 
 class IndexController extends Zend_Controller_Action
 {
@@ -170,9 +166,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             défaut, il s'agit d'un <code>ErrorController</code> dans le module par défaut avec une méthode
             <code>errorAction</code> :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
+            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
 
 class ErrorController extends Zend_Controller_Action
 {

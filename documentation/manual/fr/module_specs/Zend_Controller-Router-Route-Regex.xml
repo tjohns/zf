@@ -170,6 +170,3 @@ $router->addRoute('blogArchive', $route);]]></programlisting>
     <para>Comme vous le voyez, ce type de route ajoute une solution flexible concernant la gestion des URLs et leur
     routage.</para>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -13,8 +13,7 @@
 
     <para>L'utilisation basique ressemble à ceci :</para>
 
-    <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -96,8 +95,7 @@ class FooController extends Zend_Controller_Action
         <code>AutoCompleteDojo</code>, elle retournera une réponse JSON compatible avec la structure de données Dojo
         :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// à l'intérieur d'une action de contrôleur :
+        <programlisting role="php"><![CDATA[// à l'intérieur d'une action de contrôleur :
 $this->_helper->autoCompleteDojo($data);]]></programlisting>
 
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
@@ -127,8 +125,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
 
             <para>Ensuite, créons le formulaire sur lequel nous souhaitons une auto-complétion :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
@@ -166,8 +163,7 @@ class TestController extends Zend_Controller_Action
             <para>Ajoutons une méthode pour afficher le formulaire, et une entrée pour traiter l'auto-complétion
             :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     // ...
 

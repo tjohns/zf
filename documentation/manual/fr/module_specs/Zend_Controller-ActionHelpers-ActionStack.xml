@@ -22,8 +22,7 @@
         paramètres de requêtes), comme vous le feriez en appelant <code>Zend_Controller_Action::_forward()</code>
         :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -46,8 +45,7 @@ class FooController extends Zend_Controller_Action
         <para>Parfois la nature OO d'un objet de requête a plus de sens ; vous pouvez alors fournir l'objet à l'aide
         <code>ActionStack</code>.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {

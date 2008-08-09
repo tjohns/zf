@@ -34,8 +34,7 @@
                 <para>L'utilisation explicite de <code>getHelper()</code>. Passez lui simplement un nom, et l'objet
                 d'aide est retourné :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->getHelper('FlashMessenger');
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière requête');]]></programlisting>
             </listitem>
 
@@ -43,8 +42,7 @@ $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière r
                 <para>L'utilisation de la fonctionnalité <code>__get()</code> du gestionnaire d'aide et récupérez l'aide
                 comme si elle était une propriété membre du gestionnaire :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->FlashMessenger;
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière requête');]]></programlisting>
             </listitem>
 
@@ -53,8 +51,7 @@ $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière r
                 une méthode spécifique par défaut dans l'aide. Dans l'exemple de <code>FlashMessenger</code>, ceci
                 appelle <code>addMessage()</code> :</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->FlashMessenger('Nous avons fait quelquechose lors de la dernière requête');]]></programlisting>
+                <programlisting role="php"><![CDATA[$this->_helper->FlashMessenger('Nous avons fait quelquechose lors de la dernière requête');]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -75,8 +72,7 @@ $this->_helper->FlashMessenger('Nous avons fait quelquechose lors de la dernièr
 
         <para>Pour enregistrer une aide dans le gestionnaire, utilisez <code>addHelper</code> :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper($helper);]]></programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::addHelper($helper);]]></programlisting>
 
         <para>Bien sûr, instancier et fournir des aides au gestionnaire est coûteux en temps et en ressource donc deux
         méthodes existent pour automatiser les choses légèrement : <code>addPrefix()</code> et
@@ -88,8 +84,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]></programlisting>
                 dossiers dans lesquels les classes d'aides ont été définies. Ceci suppose que le préfixe de la classe
                 respecte la convention de nommage du Zend Framework.</para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Ajoute les aides préfixées Mes_Action_Helpers dans Mes/Action/Helpers/
+                <programlisting role="php"><![CDATA[// Ajoute les aides préfixées Mes_Action_Helpers dans Mes/Action/Helpers/
 Zend_Controller_Action_HelperBroker::addPrefix('Mes_Action_Helpers');]]></programlisting>
             </listitem>
 
@@ -98,8 +93,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('Mes_Action_Helpers');]]></progra
                 (par défaut réglé à "<code>Zend_Controller_Action_Helper</code>"). Ceci vous permet de faire
                 correspondre vos propres préfixes de classe à vos dossiers spécifiques.</para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Ajoute les aides préfixées avec Aide dans Plugins/Aides/
+                <programlisting role="php"><![CDATA[// Ajoute les aides préfixées avec Aide dans Plugins/Aides/
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Aides', 'Aide');]]></programlisting>
             </listitem>
         </itemizedlist>
@@ -110,8 +104,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Aides', 'Aide');]]></pro
         <para>Pour déterminer si une aide existe dans le gestionnaire d'aide, utilisez <code>hasHelper($name)</code>, où
         <code>$name</code> est le nom raccourci de l'aide (sans le préfixe) :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire :
+        <programlisting role="php"><![CDATA[// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire :
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'L\'aide Redirector est enregistrée';
 }]]></programlisting>
@@ -127,8 +120,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <para>Les deux méthodes prennent un unique paramètre, <code>$name</code>, qui est le nom court de l'aide
         (c'est-à-dire sans le préfixe).</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire, et l'extrait :
+        <programlisting role="php"><![CDATA[// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire, et l'extrait :
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
@@ -141,8 +133,7 @@ $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector')
         <para>Enfin, pour effacer une aide enregistrée du gestionnaire, utilisez <code>removeHelper($name)</code>, où
         <code>$name</code> est le nom raccourci de l'aide (sans le préfixe) :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Effacement conditionnel de l'aide 'redirector' du gestionnaire :
+        <programlisting role="php"><![CDATA[// Effacement conditionnel de l'aide 'redirector' du gestionnaire :
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
 }]]></programlisting>
@@ -157,7 +148,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         messages entre les sessions ; <code>Redirector</code>, qui fournit différentes implémentations pour rediriger
         vers des pages internes ou externes à votre application ; et <code>ViewRenderer</code> pour automatiser le
         processus de paramétrage de vos objets de vues dans votre contrôleur et du rendu de ces vues.</para>
-        
+
         <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-AutoComplete.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ContextSwitch.xml" />
@@ -217,8 +208,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         linkend="zend.controller.actionhelpers.redirector">Redirector</link> définit <code>direct()</code> comme un
         alias de <code>goto()</code>, vous permettant d'utiliser l'aide comme ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Redirige vers /blog/view/item/id/42
+        <programlisting role="php"><![CDATA[// Redirige vers /blog/view/item/id/42
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]></programlisting>
 
         <para>En interne, la méthode <code>__call()</code> du gestionnaire d'aides cherche une aide nommée

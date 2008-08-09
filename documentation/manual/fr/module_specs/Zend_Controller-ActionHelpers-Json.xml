@@ -29,8 +29,7 @@
     <para>Son utilisation est toute simple, appelez le depuis le gestionnaire d'aides (Broker), ou appelez une de ses
     méthodes <code>encodeJson()</code> ou <code>sendJson()</code>:</para>
 
-    <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -53,8 +52,7 @@ class FooController extends Zend_Controller_Action
         chaque méthode de l'aide JSON accepte un second paramètre booléen. A <code>true</code>, les layouts resteront
         activées (par défaut à <code>false</code>) :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {

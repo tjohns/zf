@@ -30,8 +30,7 @@
 
     <para>Comme exemple, prenons le contrôleur suivant :</para>
 
-    <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     /**
      * page d'arrivée; forward vers listAction()
@@ -59,8 +58,7 @@ class NewsController extends Zend_Controller_Action
     <para>Imaginons que nous voulions que <code>listAction()</code> soit aussi accessible au format XML. Plutôt que de
     créer une autre action, nous pouvons lui indiquer qu'elle doit retourner du XML :</para>
 
-    <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -123,9 +121,7 @@ class NewsController extends Zend_Controller_Action
                 <para>Ce comportement peut être désactivé en passant le paramètre de sérialisation à
                 <code>false</code>:</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->contextSwitch()->setAutoJsonSerialization(false);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$this->_helper->contextSwitch()->setAutoJsonSerialization(false);]]></programlisting>
             </listitem>
 
             <listitem>
@@ -233,8 +229,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
         attend 2 arguments, l'action et le contexte (ou un tableau de contextes). Par exemple, considérons la classe
         suivante :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function listAction()
     {
@@ -256,8 +251,7 @@ class FooController extends Zend_Controller_Action
         <para>Imaginons que nous voulions ajouter un contexte XML à l'action "list", et deux contextes XML et JSON à
         l'action "comments". Nous pourrions faire ceci dans la méthode <code>init()</code> :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -271,8 +265,7 @@ class FooController extends Zend_Controller_Action
         <para>De la même manière, il est aussi possible de simplement définir la propriété
         <code>$contexts</code>:</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
         'list'     => array('xml'),
@@ -346,8 +339,7 @@ class FooController extends Zend_Controller_Action
         <para>Pour initialiser la permutation de contextes (contexte switching), vous devez appeler
         <code>initContext()</code> dans vos contrôleurs d'action :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -358,9 +350,7 @@ class NewsController extends Zend_Controller_Action
         <para>Dans certains cas, vous voudriez forcer un contexte pour une action et n'autoriser que celui-ci. Passez le
         alors à <code>initContext()</code> :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$contextSwitch->initContext('xml');
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[$contextSwitch->initContext('xml');]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -376,10 +366,8 @@ $contextSwitch->initContext('xml');
                 réponse, vous voudriez désactiver cet effet. Ceci doit être fait avant l'appel à
                 <code>initContext()</code>.</para>
 
-                <programlisting role="php"><![CDATA[<?php
-$contextSwitch->setAutoJsonSerialization(false);
-$contextSwitch->initContext();
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$contextSwitch->setAutoJsonSerialization(false);
+$contextSwitch->initContext();]]></programlisting>
 
                 <para>Pour récupérer la valeur actuelle, utilisez <code>getAutoJsonSerialization()</code>.</para>
             </listitem>
@@ -517,8 +505,7 @@ $contextSwitch->initContext();
             requêtes AJAX. Dans les actions, "view" et "form", nous retournerons des portions de HTML; dans "process",
             nous retournerons du JSON.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-class CommentController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class CommentController extends Zend_Controller_Action
 {
     public function init()
     {

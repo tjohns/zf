@@ -55,9 +55,7 @@ RewriteRule ^(.*)$ index.php/$1]]></programlisting>
 
         <para>Pour utiliser un routeur et le configurer, vous devez le récupérer et ajouter des routes :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-/* Create a router */
-
+        <programlisting role="php"><![CDATA[/* Créer un routeur */
 $router = $frontctrl->getRouter(); // retourne un routeur de réécriture par défaut
 $router->addRoute(
     'user',
@@ -72,8 +70,7 @@ $router->addRoute(
         appelant la méthode <code>addRoute()</code> et en lui passant une instance implémentant
         <code>Zend_Controller_Router_Route_Interface</code>. Exemple :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
+        <programlisting role="php"><![CDATA[$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
         <para>Le routeur de réécriture est fourni avec quatre types de route, dont une spéciale :</para>
 
@@ -197,15 +194,13 @@ http://example/blog/archive/list/sort/alpha/date/desc
         <para>La route par défaut est simplement un objet <code>Zend_Controller_Router_Route_Module</code>, stocké sous
         le nom "default" dans le routeur de réécriture(RewriteRouter). Il est conçu comme ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+        <programlisting role="php"><![CDATA[$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
 $this->addRoute('default', $compat);]]></programlisting>
 
         <para>Si vous ne souhaitez pas cette route par défaut, créez en une et stocker la avec le nom "default"
         (écrasement), ou supprimez la route avec <code>removeDefaultRoutes()</code>:</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Supprime les routes par défaut
+        <programlisting role="php"><![CDATA[// Supprime les routes par défaut
 $router->removeDefaultRoutes();]]></programlisting>
     </sect2>
 
@@ -221,8 +216,7 @@ $router->removeDefaultRoutes();]]></programlisting>
         <code>Zend_Controller_Request_Http</code> en appelant <code>setBaseUrl()</code> (voyez <xref
         linkend="zend.controller.request.http.baseurl" />):</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$request->setBaseUrl('/~user/application-root/');]]></programlisting>
+        <programlisting role="php"><![CDATA[$request->setBaseUrl('/~user/application-root/');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">
@@ -286,8 +280,7 @@ $router->addConfig($config, 'routes');]]></programlisting>
         <para>Cependant, si vous voulez utiliser votre propre logique de routage, une interface est disponible.
         <code>Zend_Controller_Router_Interface</code> ne définit qu'une seule méthode :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-interface Zend_Controller_Router_Interface
+        <programlisting role="php"><![CDATA[interface Zend_Controller_Router_Interface
 {
   /**
    * @param  Zend_Controller_Request_Abstract $request
@@ -303,6 +296,3 @@ interface Zend_Controller_Router_Interface
         requête devrait être laissé tel-quel.</para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

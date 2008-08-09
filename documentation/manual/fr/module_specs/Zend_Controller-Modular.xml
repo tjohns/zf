@@ -72,8 +72,7 @@ application/
         contrôleurs globaux (dont le nom ne comporte pas le module). Chaque option doit comporter une indication vers un
         chemin, et la clé <code>default</code> doit être présente :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));]]></programlisting>
@@ -82,14 +81,12 @@ $front->setControllerDirectory(array(
         des contrôleurs. Si vous voulez indiquer un module, passez le en second paramètre. Sinon, le chemin sera ajouté
         au module <code>default.</code></para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]></programlisting>
+        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]></programlisting>
 
         <para>Enfin, si vous avez un dossier spécial regroupant tous vos modules, indiquez le grâce à
         <code>addModuleDirectory()</code>:</para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Sur cet exemple :
  * application/
  *     modules/
@@ -109,9 +106,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
         <para>Si le dossier "controllers" ne vous convient pas, changez son nom à l'aide de
         <code>setModuleControllerDirectoryName()</code> :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
- * Le dossier des contrôleurs s'appelle desormais 'con'
+        <programlisting role="php"><![CDATA[/**
+ * Le dossier des contrôleurs s'appelle désormais 'con'
  * application/
  *     modules/
  *         default/
@@ -151,7 +147,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.modular.defaultcontroller">
-        <title>Module ou Global Default Controller</title>
+        <title>Module ou contrôleur Default global</title>
 
         <para>Dans le routeur par défaut, si aucun contrôleur n'est indiqué dans l'URL, un contrôleur par défaut sera
         utilisé (<code>IndexController</code>, sauf si l'on décide de changer ce paramètre). Avec des modules indiqués
@@ -161,10 +157,6 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
         <para>Si vous voulez renvoyer directement vers le contrôleur par défaut du module "default", passez le paramètre
         <code>useDefaultControllerAlways</code> à <code>true</code> dans le contrôleur frontal:</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);]]></programlisting>
+        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]></programlisting>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
