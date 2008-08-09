@@ -8,7 +8,7 @@
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
 
-            <para><code>Zend_Cache_Core</code> est un frontend spécial parce qu'il est le cœur du module. C'est le
+            <para><code>Zend_Cache_Core</code> est un frontend spécial parce qu'il est le coeur du module. C'est le
             frontend de cache générique qui est étendu par les autres classes.</para>
 
             <note>
@@ -147,8 +147,7 @@
 
             <para>Si vous stocker uniquement des chaînes de caractères dans le cache (parce qu'avec l'option
             "<code>automatic_serialization</code>", il est possible de stocker des booléens), vous pouvez utiliser une
-            construction plus compact comme :<programlisting role="php"><![CDATA[<?php
-// nous avons déjà $cache
+            construction plus compact comme :<programlisting role="php"><![CDATA[// nous avons déjà $cache
 
 $id = 'myBigLoop'; // id de cache de "ce que l'on veut cacher"
 
@@ -167,8 +166,7 @@ if (!($data = $cache->load($id))) {
 // [...] fait quelque chose avec $data (affichage, passage ailleurs, etc, etc)]]></programlisting></para>
 
             <para>Si vous voulez cacher des blocs multiples ou des instances de données, l'idée reste la même :
-            <programlisting role="php"><![CDATA[<?php
-// on s'assure que l'on utilise des identifiant uniques
+            <programlisting role="php"><![CDATA[// on s'assure que l'on utilise des identifiant uniques
 $id1 = 'foo';
 $id2 = 'bar';
 
@@ -207,9 +205,7 @@ echo($data);]]></programlisting></para>
             "<code>automatic_serialization</code>") ou des chaînes vides, vous ne pouvez pas utiliser la construction
             compacte montrée ci-dessus. Vous devez tester de manière formelle l'état du cache.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-
-// La construction compacte (ne pas utiliser si vous cachez des chaînes et/ou des booléens)
+            <programlisting role="php"><![CDATA[// La construction compacte (ne pas utiliser si vous cachez des chaînes et/ou des booléens)
 if (!($data = $cache->load($id))) {
 
     // cache absent
@@ -241,8 +237,7 @@ if (!($cache->test($id))) {
 
 }
 
-// on fait qqch avec $data
-            ]]></programlisting>
+// on fait qqch avec $data]]></programlisting>
         </sect3>
     </sect2>
 
@@ -267,8 +262,7 @@ if (!($cache->test($id))) {
             <title>Exemples</title>
 
             <para>Un exemple est donnée dans le manuel, tout au début. Le voici avec des changements mineurs :
-            <programlisting role="php"><![CDATA[<?php
-// s'il y a un cache manquant, la bufferisation de sortie est lancée
+            <programlisting role="php"><![CDATA[// s'il y a un cache manquant, la bufferisation de sortie est lancée
 if (!$cache->start('mypage')) {
 
     // affiche tout comme d'habitude
@@ -354,8 +348,7 @@ echo 'This is never cached ('.time().').';]]></programlisting></para>
             <title>Exemples</title>
 
             <para>Utiliser la fonction <code>call()</code> est la même chose qu'utiliser
-            <code>call_user_func_array()</code> en PHP : <programlisting role="php"><![CDATA[<?php
-$cache->call('veryExpensiveFunc', $params);
+            <code>call_user_func_array()</code> en PHP : <programlisting role="php"><![CDATA[$cache->call('veryExpensiveFunc', $params);
 
 // $params est dans un tableau
 // par exemple, pour appeler (avec mise en cache) veryExpensiveFunc(1, 'foo', 'bar')
@@ -452,8 +445,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));]]></programlisting></
         <sect3 id="zend.cache.frontends.class.examples">
             <title>Exemples</title>
 
-            <para>Par exemple, pour mettre en cache des appels statiques : <programlisting role="php"><![CDATA[<?php
-class test {
+            <para>Par exemple, pour mettre en cache des appels statiques : <programlisting role="php"><![CDATA[class test {
 
     // Méthode statique
     public static function foobar($param1, $param2) {
@@ -471,8 +463,7 @@ $frontendOptions = array(
 
 // l'appel caché
 $res = $cache->foobar('1', '2');]]></programlisting> Pour mettre en cache des appels classiques aux méthodes :
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[class test {
 
     private $_string = 'hello !';
 
@@ -614,7 +605,7 @@ $res = $cache->foobar2('1', '2');]]></programlisting></para>
 
                             <entry><code>false</code></entry>
 
-                            <entry>si <code>true</code>, un text de débogage est ajouté avant chaque page de
+                            <entry>si <code>true</code>, un texte de débogage est ajouté avant chaque page de
                             cache</entry>
                         </row>
 
@@ -701,7 +692,7 @@ $res = $cache->foobar2('1', '2');]]></programlisting></para>
                             <entry><code>array()</code></entry>
 
                             <entry>un tableau associatif pour définir les options, uniquement pour certaines
-                            <code>REQUEST_URI</code>, les clés sont des regex PCRE, les valeurs sont des tableaus
+                            <code>REQUEST_URI</code>, les clés sont des regex PCRE, les valeurs sont des tableaux
                             associatifs avec des options spécifiques pour définir si les regexs correspondent dans
                             <code>$_SERVER['REQUEST_URI']</code> (voir les options par défaut pour la liste des options
                             disponibles) ; si plusieurs regex correspondent à un <code>$_SERVER['REQUEST_URI']</code>,
@@ -728,8 +719,7 @@ $res = $cache->foobar2('1', '2');]]></programlisting></para>
             <title>Exemples</title>
 
             <para>L'utilisation de <code>Zend_Cache_Frontend_Page</code> est vraiment trivial : <programlisting
-            role="php"><![CDATA[<?php
-// [...] // require, configuration et factory
+            role="php"><![CDATA[// [...] // require, configuration et factory
 
 $cache->start();
 // si le cache est trouvé, le résultat est envoyé au navigateur et le script s'arrête là
@@ -738,12 +728,9 @@ $cache->start();
 
             <para>Un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un
             fichier d'amorçage (pour utiliser avec <code>Zend_Controller</code> par exemple) <programlisting
-            role="php"><![CDATA[<?php
-// vous devriez éviter de mettre trop de lignes avant la section de cache
+            role="php"><![CDATA[// vous devriez éviter de mettre trop de lignes avant la section de cache
 // [...] par exemple, pour des performances optimales, "require_once" ou "Zend_Loader::loadClass" devrait être
 // [...] après la section de cache
-
-require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200,
@@ -779,8 +766,7 @@ $cache->start();
             HTTP autres que HTTP/200), vous pouvez avoir besoin de stopper le processus de mise en cache courant. Il a
             donc été introduit pour ce frontend en particulier, la méthode <code>cancel()</code>.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-// [...] // require, configuration et fabrique
+            <programlisting role="php"><![CDATA[// [...] require, configuration et fabrique
 
 $cache->start();
 
