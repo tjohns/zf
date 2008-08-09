@@ -42,13 +42,13 @@
       <programlisting role="php"><![CDATA[
   /**
    * Place this in your bootstrap file
-   */		
+   */
   $writer = new Zend_Log_Writer_Firebug();
   $logger = new Zend_Log($writer);
   
   /**
    * Use this in your model, view and controller files
-   */		
+   */
   $logger->log('This is a log message!', Zend_Log::INFO);]]>
       </programlisting>	
     </example>
