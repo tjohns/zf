@@ -38,13 +38,18 @@
         <title>DB Profiling with <code>Zend_Controller_Front</code></title>
     
         <programlisting role="php"><![CDATA[
-// Instantiate the profiler in your bootstrap file
+// In your bootstrap file
+
+// Instantiate the profiler
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
 
 // Attach the profiler to your db adapter
 $db->setProfiler($profiler)
 
-// All DB queries will now be profiled and sent to Firebug
+// Dispatch your front controller
+
+// All DB queries in your model, view and controller
+// files will now be profiled and sent to Firebug
 ]]>
         </programlisting>	
     </example>
