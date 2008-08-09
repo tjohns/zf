@@ -34,10 +34,7 @@
         <example id="zend.date.additional.checking.example-1">
             <title>Vérifier des dates</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-// Vérification de dates
+            <programlisting role="php"><![CDATA[// Vérification de dates
 $date = '01.03.2000';
 if (Zend_Date::isDate($date)) {
     print "la chaine $date est une date";
@@ -81,10 +78,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
         <example id="zend.date.additional.sunrise-sunset.example-1">
             <title>Récupérer toutes les villes disponibles</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date/Cities.php';
-
-// Affiche la liste complète de toutes les villes disponibles dans la classe d'aide
+            <programlisting role="php"><![CDATA[// Affiche la liste complète de toutes les villes disponibles dans la classe d'aide
 print_r (Zend_Date_Cities::getCityList());]]></programlisting>
         </example>
 
@@ -154,10 +148,7 @@ print_r (Zend_Date_Cities::getCityList());]]></programlisting>
         <example id="zend.date.additional.sunrise-sunset.example-2">
             <title>Trouver la localisation d'une ville</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date/Cities.php';
-
-// Trouve la localisation d'une ville avec l'horizon effectif
+            <programlisting role="php"><![CDATA[// Trouve la localisation d'une ville avec l'horizon effectif
 print_r (Zend_Date_Cities::City('Vienna'));
 
 // utilise l'horizon nautique
@@ -175,11 +166,7 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]></programlist
         <example id="zend.date.additional.sunrise-sunset.example-3">
             <title>Calculer les informations relatives au soleil</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-require_once 'Zend/Date/Cities.php';
-
-// Retrouve la localisation d'une ville
+            <programlisting role="php"><![CDATA[// Retrouve la localisation d'une ville
 $city = Zend_Date_Cities::City('Vienna');
 
 // Créer une date à partir de laquelle extraire les informations relatives au soleil
@@ -222,10 +209,7 @@ foreach ($info as $sun) {
         <example id="zend.date.additional.timezones.example-1">
             <title>Travailler avec les fuseaux horaires (timezones)</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
+            <programlisting role="php"><![CDATA[// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
 // Ici nous le faisons pour l'exemple
 date_default_timezone_set('Europe/Vienna');
 
@@ -260,10 +244,7 @@ print $date->getIso();]]></programlisting>
         <example id="zend.date.additional.timezones.example-2">
             <title>Plusieurs fuseaux horaires</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
+            <programlisting role="php"><![CDATA[// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
 // Ici nous le faisons pour l'exemple
 date_default_timezone_set('Europe/Vienna');
 
@@ -292,6 +273,3 @@ print $lastdate->getIso();]]></programlisting>
         </example>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

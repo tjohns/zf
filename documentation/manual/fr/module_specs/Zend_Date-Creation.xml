@@ -19,10 +19,7 @@
             <para>Il n'y a pas de paramètres à passer au constructeur pour récupérer un objet <code>Zend_Date</code>.
             Certains paramètres sont cependant disponibles et nous y reviendrons.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();]]></programlisting>
+            <programlisting role="php"><![CDATA[$date = new Zend_Date();]]></programlisting>
         </example>
 
         <example id="zend.date.creation.actual.example-2">
@@ -31,10 +28,7 @@ $date = new Zend_Date();]]></programlisting>
             <para>La méthode statique <code>now()</code> a exactement le même effet qu'un passage par le constructeur.
             Cependant la méthode statique, elle, ne peut pas prendre de paramètres additionnels.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = Zend_Date::now();]]></programlisting>
+            <programlisting role="php"><![CDATA[$date = Zend_Date::now();]]></programlisting>
         </example>
     </sect2>
 
@@ -60,10 +54,7 @@ $date = Zend_Date::now();]]></programlisting>
             représentent les dates sous forme de timestamp (non Unix). Ainsi, leur demander un timestamp sera toujours
             plus performant que de leur demander une date dans un format précis.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
-require_once 'Zend/Date.php';
-
+            <programlisting role="php"><![CDATA[// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
 $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]></programlisting>
         </example>
 
@@ -79,10 +70,7 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]></programlisting>
             qu'un simple timestamp UNIX. En revanche ceux-ci ne supportent pas les dates inférieures au 1er Janvier
             1970.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-// SELECT datecolumn FROM my_table
-require_once 'Zend/Date.php';
-
+            <programlisting role="php"><![CDATA[// SELECT datecolumn FROM my_table
 $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]></programlisting>
         </example>
     </sect2>
@@ -126,14 +114,10 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]></programlisting>
             "<code>hour</code>", donnera naissance à une date ayant une partie heures à la valeur
             "<code>0</code><emphasis role="strong">"</emphasis>.</para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
+            <programlisting role="php"><![CDATA[$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
 $date = new Zend_Date($datearray);]]></programlisting>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
+            <programlisting role="php"><![CDATA[$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
 $date = new Zend_Date($datearray);]]></programlisting>
         </example>
     </sect2>
