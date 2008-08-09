@@ -1,3 +1,4 @@
+<!-- EN-Revision: 8741 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
 
@@ -24,9 +25,7 @@
 
         <para>Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant
         la clé de <code>$options</code> en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-$options['nestSeparator'] = ':';
+        <programlisting role="php"><![CDATA[$options['nestSeparator'] = ':';
 $options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);]]></programlisting></para>
     </note>
 
@@ -61,10 +60,7 @@ database.params.password = devsecret]]></programlisting>
         <para>Ensuite, supposons que le développeur ait besoin des données de configuration de test issues du fichier
         INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-
-$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 
 echo $config->database->params->host;   // affiche "dev.example.com"
 echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
@@ -93,9 +89,9 @@ echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
                     <row>
                         <entry><code>$section</code></entry>
 
-                        <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de null à ce
-                        paramètre chargera toutes les sections. Alternativement, un tableau de noms de section peut être
-                        fourni pour charger des sections multiples.</entry>
+                        <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de <code>null</code>
+                        à ce paramètre chargera toutes les sections. Alternativement, un tableau de noms de section peut
+                        être fourni pour charger des sections multiples.</entry>
                     </row>
 
                     <row>

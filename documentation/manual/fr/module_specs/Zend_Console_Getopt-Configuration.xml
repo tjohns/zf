@@ -15,8 +15,7 @@
         <example>
             <title>Utilisation d'addRules()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
@@ -41,8 +40,7 @@ $opts->addRules(
         <example>
             <title>Utiliser setHelp()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'Cette option choisit abricot, sans parametres',
@@ -73,8 +71,7 @@ $opts->setHelp(
         <example>
             <title>Utiliser setAliases()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
         'a' => 'apple',
@@ -106,8 +103,7 @@ $opts->setAliases(
         <example>
             <title>Utilisation de addArguments() et setArguments()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Par défaut, le constructeur utilise $_SERVER['argv']
+            <programlisting role="php"><![CDATA[// Par défaut, le constructeur utilise $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
 
 // Ajoute un tableau aux arguments existants
@@ -175,8 +171,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]></pro
         <example>
             <title>Utilisation de setOption()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);]]></programlisting>
         </example>
 
@@ -188,8 +183,7 @@ $opts->setOption('ignoreCase', true);]]></programlisting>
         <example>
             <title>Utilisation de setOptions()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
     array(
         'ignoreCase' => true,

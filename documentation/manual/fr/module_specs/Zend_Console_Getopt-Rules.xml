@@ -28,9 +28,7 @@
         <example id="zend.console.getopt.rules.short.example">
             <title>Utiliser la syntaxe courte</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
         </example>
 
         <para>L'exemple ci-dessus montre l'utilisation de <code>Zend_Console_Getopt</code> pour déclarer que des options
@@ -78,9 +76,7 @@ $opts = new Zend_Console_Getopt('abp:');]]></programlisting>
         <example id="zend.console.getopt.rules.long.example">
             <title>Utiliser la syntaxe longue</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt(
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt(
   array(
     'abricot|a'  => 'Cette option choisit abricot, sans parametres',
     'banane|b=i' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 6358 -->
 <sect1 id="zend.config.introduction">
     <title>Introduction</title>
 
@@ -17,8 +18,7 @@
         sont disponibles dans un tableau PHP, on peut simplement passer les données au constructeur de
         <code>Zend_Config</code> afin d'utiliser une interface orientée objet simple :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Fourni un tableau de configuration
+        <programlisting role="php"><![CDATA[// Fourni un tableau de configuration
 $configArray = array(
     'webhost' => 'www.example.com',
     'database' => array(
@@ -33,7 +33,6 @@ $configArray = array(
 );
 
 // Crée un objet à partir des données de configuration
-require_once 'Zend/Config.php';
 $config = new Zend_Config($configArray);
 
 // Affiche une donnée de configuration en particulier (résultat : 'www.example.com')
@@ -54,8 +53,7 @@ $db = Zend_Db::factory($config->database);]]></programlisting>
     <para>Avec l'accès de type orienté-objet aux données, <code>Zend_Config</code> a aussi la méthode <code>get()</code>
     qui retournera la valeur par défaut si l'élément n'existe pas. Par exemple :</para>
 
-    <programlisting role="php"><![CDATA[<?php
-$host = $config->database->get('host', 'localhost');]]></programlisting>
+    <programlisting role="php"><![CDATA[$host = $config->database->get('host', 'localhost');]]></programlisting>
 
     <example id="zend.config.introduction.example.file.php">
         <title>Utilisez Zend_Config avec un fichier de configuration en PHP</title>
@@ -63,8 +61,7 @@ $host = $config->database->get('host', 'localhost');]]></programlisting>
         <para>Il est souvent souhaitable d'utiliser une fichier de configuration en pur PHP. Le code suivant illustre
         comment ceci peut être facilement réalisé :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// config.php
+        <programlisting role="php"><![CDATA[// config.php
 return array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -78,9 +75,7 @@ return array(
     )
 );]]></programlisting>
 
-        <programlisting role="php"><![CDATA[<?php
-// Lecture de la configuration
-require_once 'Zend/Config.php';
+        <programlisting role="php"><![CDATA[// Lecture de la configuration
 $config = new Zend_Config(require 'config.php');
 
 // Affiche une donnée de configuration ('www.example.com')
