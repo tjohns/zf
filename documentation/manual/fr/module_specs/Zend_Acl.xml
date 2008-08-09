@@ -1,3 +1,4 @@
+<!-- EN-Revision: 9112 -->
 <sect1 id="zend.acl.introduction">
     <title>Introduction</title>
 
@@ -78,11 +79,8 @@
             aussi pour les autres Rôles desquels le Rôle recherché hérite (ici "<code>invite</code>",
             "<code>membre</code>", et "<code>admin</code>") :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-$acl = new Zend_Acl();
+            <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
 
-require_once 'Zend/Acl/Role.php';
 $acl->addRole(new Zend_Acl_Role('invite'))
     ->addRole(new Zend_Acl_Role('membre'))
     ->addRole(new Zend_Acl_Role('admin'));
@@ -90,7 +88,6 @@ $acl->addRole(new Zend_Acl_Role('invite'))
 $parents = array('invite', 'membre', 'admin');
 $acl->addRole(new Zend_Acl_Role('unUtilisateur'), $parents);
 
-require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('uneResource'));
 
 $acl->deny('invite', 'uneResource');
@@ -129,10 +126,7 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';]
         qui comporte plusieurs niveaux de groupes au sein d'une grande variété de zones. Pour créer un nouvel objet ACL,
         nous créons une nouvelle instance d'ACL sans paramètres :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
-$acl = new Zend_Acl();]]></programlisting>
+        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>Jusqu'à ce que le développeur spécifie une règle "allow", <code>Zend_Acl</code> refuse l'accès pour
@@ -207,13 +201,9 @@ $acl = new Zend_Acl();]]></programlisting>
         <code>Zend_Acl_Role_Interface</code> est acceptable. Ces groupes peuvent être ajoutés au registre des Rôles
         comme suit :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
-$acl = new Zend_Acl();
+        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
 
 // Ajoute des groupes au registre des Rôles en utilisant Zend_Acl_Role
-require_once 'Zend/Acl/Role.php';
 
 // Invité n'hérite d'aucun accès
 $roleinvite = new Zend_Acl_Role('invite');
@@ -250,12 +240,7 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));]]></programlisting>
         <para>En conséquence, on peut définir un nombre assez complexe de règles avec un nombre minimal de code. Pour
         définir les permissions comme définies ci-dessus :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
-$acl = new Zend_Acl();
-
-require_once 'Zend/Acl/Role.php';
+        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
 
 $roleinvite = new Zend_Acl_Role('invité');
 $acl->addRole($roleinvite);
@@ -291,8 +276,7 @@ $acl->allow('administrateur');]]></programlisting>
         permissions pour réaliser les fonctions au sein de l'application web. Interroger l'ACL est assez simple en
         utilisant la méthode <code>isAllowed()</code> :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-echo $acl->isAllowed('invité', null, 'voir') ?
+        <programlisting role="php"><![CDATA[echo $acl->isAllowed('invité', null, 'voir') ?
      "autorisé" : "refusé"; // autorisé
 
 echo $acl->isAllowed('staff', null, 'publier') ?
@@ -314,7 +298,6 @@ echo $acl->isAllowed('administrateur') ?
      "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
 
 echo $acl->isAllowed('administrateur', null, 'modifier') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
-        ]]></programlisting>
+     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout]]></programlisting>
     </sect2>
 </sect1>
