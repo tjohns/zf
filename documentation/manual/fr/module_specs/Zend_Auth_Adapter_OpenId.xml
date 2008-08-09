@@ -49,9 +49,6 @@
         <code>$_POST['openid_mode']</code> existe.</para>
 
         <programlisting role="php"><![CDATA[<?php
-require_once "Zend/Auth.php";
-require_once "Zend/Auth/Adapter/OpenId.php";
-
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&

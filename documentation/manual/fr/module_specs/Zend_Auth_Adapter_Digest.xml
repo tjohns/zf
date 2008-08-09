@@ -63,10 +63,7 @@
         <code>username</code> (identifiant). Les valeurs respectives associées à ces clés correspondent aux valeurs
         définies avant l'appel à <code>authenticate()</code>.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Digest.php';
-
-$adaptateur = new Zend_Auth_Adapter_Digest($nomFichier, $domaine, $identifiant, $motdepasse);
+        <programlisting role="php"><![CDATA[$adaptateur = new Zend_Auth_Adapter_Digest($nomFichier, $domaine, $identifiant, $motdepasse);
 
 $resultat = $adaptateur->authenticate();
 

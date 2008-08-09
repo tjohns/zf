@@ -39,10 +39,7 @@
 
         <para>L'exemple suivant est un adaptateur d'authentification qui requiert un identifiant et un mot de passe.
         D'autres détails, tel que la manière d'interroger le service d'authentification, ont été omis par souci de
-        clarté : <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Interface.php';
-
-class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
+        clarté : <programlisting role="php"><![CDATA[class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
 {
     /**
      * Définition de l'identifiant et du mot de passe pour authentification
@@ -112,8 +109,7 @@ Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
 Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting></para>
 
-        <para>L'exemple suivant illustre comment utiliser le retour : <programlisting role="php"><![CDATA[<?php
-// A l'intérieur de la méthode AuthController / loginAction
+        <para>L'exemple suivant illustre comment utiliser le retour : <programlisting role="php"><![CDATA[// A l'intérieur de la méthode AuthController / loginAction
 $resultat = $this->_auth->authenticate($adapter);
 
 switch ($resultat->getCode()) {
@@ -173,13 +169,10 @@ switch ($resultat->getCode()) {
                 <code>Zend_Auth_Storage_Session</code>, et ces valeurs sont passées en interne au constructeur de
                 <code>Zend_Session_Namespace</code>. Cela doit être fait avant l'authentification, et avant que
                 <code>Zend_Auth::authenticate()</code> ait accompli le stockage automatique de l'identité.
-                <programlisting role="php"><![CDATA[<?php
-// Sauver une référence du singleton, instance de Zend_Auth
-require_once 'Zend/Auth.php';
+                <programlisting role="php"><![CDATA[// Sauver une référence du singleton, instance de Zend_Auth
 $auth = Zend_Auth::getInstance();
 
 // Utiliser 'unEspaceDeNommage' instance de 'Zend_Auth'
-require_once 'Zend/Auth/Storage/Session.php';
 $auth->setStorage(new Zend_Auth_Storage_Session('unEspaceDeNommage'));
 
 /**
@@ -204,10 +197,7 @@ $resultat = $auth->authenticate($authAdaptateur);]]></programlisting></para>
 
                 <para>Pour utiliser une classe de stockage d'identité persistante autre que
                 <code>Zend_Auth_Storage_Session</code>, le développeur commence par implémenter
-                <code>Zend_Auth_Storage_Interface</code>: <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Storage/Interface.php';
-
-class MonStockage implements Zend_Auth_Storage_Interface
+                <code>Zend_Auth_Storage_Interface</code>: <programlisting role="php"><![CDATA[class MonStockage implements Zend_Auth_Storage_Interface
 {
     /**
      * Retourne true si et seulement si le stockage est vide
@@ -267,8 +257,7 @@ class MonStockage implements Zend_Auth_Storage_Interface
 }]]></programlisting></para>
 
                 <para>Ensuite la classe personnalisée est invoquée, avant la requête d'authentification, avec
-                <code>Zend_Auth::setStorage()</code> : <programlisting role="php"><![CDATA[<?php
-// Definit la classe personnalisée à utiliser
+                <code>Zend_Auth::setStorage()</code> : <programlisting role="php"><![CDATA[// Définit la classe personnalisée à utiliser
 Zend_Auth::getInstance()->setStorage(new MonStockage());
 
 /**
@@ -295,9 +284,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);]]></programli
             </orderedlist></para>
 
         <para>L'exemple suivant illustre la manière d'utiliser un adaptateur <code>Zend_Auth</code> de manière indirecte
-        via l'utilisation de la classe <code>Zend_Auth</code> : <programlisting role="php"><![CDATA[<?php
-// Obtention d'une référence de l'instance du singleton de Zend_Auth
-require_once 'Zend/Auth.php';
+        via l'utilisation de la classe <code>Zend_Auth</code> : <programlisting role="php"><![CDATA[// Obtention d'une référence de l'instance du singleton de Zend_Auth
 $auth = Zend_Auth::getInstance();
 
 // Définition de l'adaptateur d'authentification
@@ -318,8 +305,7 @@ if (!$resultat->isValid()) {
 }]]></programlisting></para>
 
         <para>Une fois la tentative d'authentification réalisée, tel que montré ci-dessus, il est très simple de
-        vérifier si une identité correctement authentifiée existe : <programlisting role="php"><![CDATA[<?php
-$auth = Zend_Auth::getInstance();
+        vérifier si une identité correctement authentifiée existe : <programlisting role="php"><![CDATA[$auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // l'identité existe ; on la récupère
     $identite = $auth->getIdentity();
@@ -327,16 +313,14 @@ if ($auth->hasIdentity()) {
 
         <para>Pour retirer une identité du stockage persistant, utilisez simplement la méthode
         <code>clearIdentity()</code>. A utiliser typiquement pour implémenter une opération de déconnexion d'une
-        application : <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]></programlisting></para>
+        application : <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting></para>
 
         <para>Quand l'utilisation automatique du stockage persistant n'est pas appropriée, le développeur peut
         simplement contourner l'utilisation de la classe <code>Zend_Auth</code> en utilisant directement une classe
         adaptateur. L'usage direct d'une classe adaptateur implique de configurer et préparer l'objet adaptateur et
         d'appeler ensuite sa méthode <code>authenticate()</code>. Les détails spécifiques à un adaptateur sont décrits
         dans la documentation de chacun d'entre-eux. L'exemple suivant utilise directement
-        <code>MonAdaptateurAuth</code> : <programlisting role="php"><![CDATA[<?php
-// Définition de l'adaptateur d'authentification
+        <code>MonAdaptateurAuth</code> : <programlisting role="php"><![CDATA[// Définition de l'adaptateur d'authentification
 $authAdaptateur = new MonAdaptateurAuth($identifiant, $motdepasse);
 
 // Tentative d'authentification, stockage du résultat

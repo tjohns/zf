@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10616 -->
+<!-- EN-Revision: 10662 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>Authentification avec une table de base de données</title>
 
@@ -158,10 +158,47 @@ if ($result->isValid()) {
 
         <para>Ceci étant dit, <code>Zend_Auth_Adapter_DbTable</code> possède des mécanismes qui sont construits de telle
         sorte qu'ils peuvent être démultipliés pour ajouter des contrôles supplémentaires au moment de
-        l'authentification pour résoudre quelques problèmes communs d'utilisateur. <programlisting role="php"><![CDATA[// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
+        l'authentification pour résoudre quelques problèmes communs d'utilisateur.</para>
+
+        <programlisting role="php"><![CDATA[// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
 $adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND etat != "compromis"');
 
 // La valeur du champs "actif" d'un compte doit être égal à "TRUE"
-$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND actif = "TRUE"');]]></programlisting></para>
+$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND actif = "TRUE"');]]></programlisting>
+
+        <para>Un autre scénario possible est l'implantation d'un mécanisme de "salting". "Salting" est un terme se
+        référant une technique qui peut fortement améliorer la sécurité de votre application. C'est basé sur l'idée que
+        concaténer une chaîne aléatoire à tout mot de passe rend impossible la réussite d'une attaque de type "brute
+        force" sur la base de données en utilisant des valeurs préalablement hashées issues d'un dictionnaire.</para>
+
+        <para>Par conséquent nous devons modifier notre table pour stocker notre chaîne de "salt" aléatoire :</para>
+
+        <programlisting role="php"><![CDATA[$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+
+$dbAdapter->query($sqlAlter);]]></programlisting>
+
+        <para>Voici une méthode simple pour générer une chaîne aléatoire pour chaque utilisateur à leur enregistrement
+        :</para>
+
+        <programlisting role="php"><![CDATA[for ($i = 0; $i < 50; $i++)
+{
+    $dynamicSalt .= chr(rand(33, 126));
+}]]></programlisting>
+
+        <para>Et maintenant, construisons l'adaptateur :</para>
+
+        <programlisting role="php"><![CDATA[$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
+);]]></programlisting>
+
+        <note>
+            <para>Vous pouvez encore améliorer la sécurité en utilisant une chaîne de "salt" statique codée en dur dans
+            votre application. Dans le cas ou la base de données est compromise (par exemple par une attaque de type
+            injection SQL) mais que votre serveur Web est intact, les données sont inutilisables par l'attaquant.</para>
+        </note>
     </sect2>
 </sect1>
