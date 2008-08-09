@@ -248,7 +248,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
         </programlisting>
         <para>
             Another scenario can be the implementation of a salting mechanism. 
-            Salting is a term referring to a techniqe which can highly improve 
+            Salting is a term referring to a technique which can highly improve 
             your application’s security. It’s based on the idea that 
             concatenating a random string to every password makes it impossible 
             to accomplish a successful brute force attack on the database using 
