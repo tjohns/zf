@@ -1,4 +1,5 @@
-<!-- EN-Revision: 10274 -->
+<!-- EN-Revision: 10741 -->
+<!-- TODO: Apply 10646, 10653 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -40,6 +41,93 @@
             フォームの表示や検証の後で、
             そのボタンが押されたかどうかを調べたい場合は
             <code>isChecked()</code> メソッドを使用します。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardElements.captcha">
+        <title>Zend_Form_Element_Captcha</title>
+
+        <para>
+            CAPTCHAs は、ボットやその他の自動処理プロセスからの自動送信を防ぐための仕組みです。
+        </para>
+
+        <para>
+            Captcha フォーム要素は、フォームの captcha でどの <link
+                linkend="zend.captcha.adapters">Zend_Captcha アダプタ</link>
+            を使用するかを選択することができます。
+            それからこのアダプタをオブジェクトのバリデータとして設定し、
+            Captcha デコレータを使用してレンダリングを行います
+            (captcha アダプタへのプロキシとなります)。
+        </para>
+
+        <para>
+            アダプタとしては <code>Zend_Captcha</code>
+            の任意のアダプタを使用でき、また別途定義したその他のアダプタも使用できます。
+            そのためには、プラグインローダのプレフィックスパスを指定する際に
+            追加のキー 'CAPTCHA' あるいは 'captcha' を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
+]]></programlisting>
+
+        <para>
+            Captcha を登録するには <code>setCaptcha()</code>
+            メソッドを使用します。ここには、具象インスタンスあるいは
+            captcha アダプタの短い名前を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// 具象インスタンス
+$element->setCaptcha(new Zend_Captcha_Figlet());
+
+// 短い名前
+$element->setCaptcha('Dumb');
+]]></programlisting>
+
+        <para>
+            設定経由で要素を読み込みたい場合は、キー 'captcha'
+            の値に配列 (キー 'captcha' を含むもの) を指定するか、
+            キー 'captcha' と 'captchaOptions' の両方を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// 単一の captcha キーの使用
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "あなたが人間かどうかを確認します"
+    'captcha' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+
+// captcha と captchaOptions の使用
+$element = new Zend_Form_Element_Captcha('foo', array(
+    'label' => "あなたが人間かどうかを確認します"
+    'captcha' => 'Figlet',
+    'captchaOptions' => array(
+        'captcha' => 'Figlet',
+        'wordLen' => 6,
+        'timeout' => 300,
+    ),
+));
+]]></programlisting>
+
+        <para>
+            使用するデコレータは、captcha アダプタの設定によって決まります。
+            デフォルトでは <link
+                linkend="zend.form.standardDecorators.captcha">Captcha
+                デコレータ</link> を使用しますが、
+            <code>getDecorator()</code> メソッドで別のアダプタを指定することもできます。
+        </para>
+
+        <para>
+            captcha アダプタそれ自体は、要素のバリデータとして動作することに注意しましょう。
+            さらに、NotEmpty バリデータは用いず、
+            その要素は必須指定となります。
+            ほとんどの場合は、フォームに captcha
+            を表示させるために特に何もする必要はないでしょう。
         </para>
     </sect2>
 

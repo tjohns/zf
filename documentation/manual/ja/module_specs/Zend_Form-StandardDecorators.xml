@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8683 -->
+<!-- EN-Revision: 10741 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -46,6 +46,26 @@ class Util
             Callback デコレータの placement オプションに null 値を指定すると、
             元のコンテンツをコールバックの返り値で上書きします。
             'prepend' や 'append' を指定した場合も正しく動作します。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardDecorators.captcha">
+        <title>Zend_Form_Decorator_Captcha</title>
+
+        <para>
+            Captcha デコレータは <link
+                linkend="zend.form.standardElements.captcha">Captcha
+                フォーム要素</link> と組み合わせて使用します。
+            これは、captcha アダプタの
+            <code>render()</code> メソッドを使用して出力を生成します。
+        </para>
+
+        <para>
+            Captcha デコレータの別版である 'Captcha_Word' もよく用いられます。
+            これは id と input のふたつの要素を作成します。
+            id は比較対象のセッション識別子、そして input
+            captcha のユーザ入力を表します。
+            これらは単一の要素として検証されます。
         </para>
     </sect2>
 
