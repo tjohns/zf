@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8930 -->
+<!-- EN-Revision: 10857 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -194,8 +194,7 @@ $row9->getRow(8);
 
 // そして使用します
 $row9->assigned_to = 'mmouse';
-$row9->save();
-}]]></programlisting>
+$row9->save();]]></programlisting>
 
 
 
