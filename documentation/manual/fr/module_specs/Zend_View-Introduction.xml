@@ -21,8 +21,7 @@
         <para>Comme exemple simple, imaginons que votre contrôleur aie une liste de données sur des livres qu'il veut
         afficher en passant par une vue. Le contrôleur pourrait alors ressembler à ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
+        <programlisting role="php"><![CDATA[// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
 $data = array(
     array(
         'auteur' => 'Hernando de Soto',
@@ -50,11 +49,12 @@ echo $view->render('booklist.php');]]></programlisting>
     <sect2 id="zend.view.introduction.view">
         <title>Script de vue</title>
 
-        <para>Maintenant, nous avons besoin d'associer le script de vue "booklist.php". C'est un script PHP comme les
-        autres, à une exception près : il s'exécute dans la portée de l'instance <code>Zend_View</code>, ce qui veut
-        dire que les référence à <code>$this</code> pointent vers les attributs et les méthodes de
-        <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôleur sont des propriétés publiques de
-        l'instance <code>Zend_View</code>). Ainsi un script de vue de base pourrait ressembler à ceci :</para>
+        <para>Maintenant, nous avons besoin d'associer le script de vue "<filename>booklist.php</filename>". C'est un
+        script PHP comme les autres, à une exception près : il s'exécute dans la portée de l'instance
+        <code>Zend_View</code>, ce qui veut dire que les référence à <code>$this</code> pointent vers les attributs et
+        les méthodes de <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôleur sont des
+        propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base pourrait ressembler à
+        ceci :</para>
 
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
 

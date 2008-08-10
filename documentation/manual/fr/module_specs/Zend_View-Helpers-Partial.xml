@@ -94,9 +94,7 @@ $view->partialLoop()->setObjectKey('model');]]></programlisting>
 
         <programlisting role="php"><![CDATA[<!--partialLoop.phtml-->
     <dt><?= $this->key ?></dt>
-    <dd><?= $this->value ?></dd>
-
-]]></programlisting>
+    <dd><?= $this->value ?></dd>]]></programlisting>
 
         <para>Et le "modèle" suivant :</para>
 
