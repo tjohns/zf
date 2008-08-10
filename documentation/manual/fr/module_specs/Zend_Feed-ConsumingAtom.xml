@@ -15,8 +15,7 @@
         <para>Pour lire un flux Atom et afficher le titre (propriété <code>title</code>) et le résumé (propriété
         <code>summary</code>) de chaque entrée :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/');
+        <programlisting role="php"><![CDATA[$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/');
 echo 'Le flux contient ' . $flux->count() . ' entrée(s).' . "\n\n";
 foreach ($flux as $entree) {
     echo 'Titre : ' . $entree->title() . "\n";

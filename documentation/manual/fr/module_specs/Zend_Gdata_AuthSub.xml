@@ -47,8 +47,7 @@
         Google Calendar. Elle crée un objet client <code>Zend_Gdata</code> utilisant le client HTTP fraîchement
         authentifié.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
+        <programlisting role="php"><![CDATA[$my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
@@ -79,8 +78,7 @@ $cal = new Zend_Gdata_Calendar($client);]]></programlisting>
         <para>Pour détruire la validité d'un jeton d'authentification, utilisez la méthode statique
         <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code>. Autrement, le jeton reste valide un certain temps.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// construction sécurisée de la valeur.
+        <programlisting role="php"><![CDATA[// construction sécurisée de la valeur.
 $php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
 
 if (isset($_GET['logout'])) {

@@ -12,8 +12,7 @@
     <example id="zend.feed.consuming-atom-single-entry.example.atom">
         <title>Lire un flux Atom constitué d'une seule entrée</title>
 
-        <programlisting role="php"><![CDATA[<?php
-$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
+        <programlisting role="php"><![CDATA[$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
 echo 'Le flux possède : ' . $flux->count() . ' entrée(s).';
 
 $entree = $flux->current();]]></programlisting>
@@ -25,8 +24,7 @@ $entree = $flux->current();]]></programlisting>
     <example id="zend.feed.consuming-atom-single-entry.example.entryatom">
         <title>Utiliser directement l'objet Zend_Feed_Entry_Atom</title>
 
-        <programlisting role="php"><![CDATA[<?php
-$entree = new Zend_Feed_Entry_Atom('http://atom.exemple.com/flux/1');
+        <programlisting role="php"><![CDATA[$entree = new Zend_Feed_Entry_Atom('http://atom.exemple.com/flux/1');
 echo $entree->title();]]></programlisting>
     </example>
 </sect1>

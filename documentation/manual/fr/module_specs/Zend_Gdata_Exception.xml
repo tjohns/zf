@@ -5,8 +5,7 @@
     <para>La classe <code>Zend_Gdata_App_Exception</code> est la classe de base de toutes les exceptions envoyées par
     les composants Gdata.</para>
 
-    <programlisting role="php"><![CDATA[<?php
-try {
+    <programlisting role="php"><![CDATA[try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
     // Affiche l'exception à l'utilisateur
@@ -52,8 +51,7 @@ try {
     <para>Vous pouvez ainsi utiliser ces sous-classes d'exceptions pour les gérer chacune différemment. Référez vous à
     l'API pour savoir quel composant Zend_Gdata envoie quel type d'exception.</para>
 
-    <programlisting role="php"><![CDATA[<?php
-try {
+    <programlisting role="php"><![CDATA[try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
     // identifiants fournis incorrects

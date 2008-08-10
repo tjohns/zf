@@ -9,9 +9,7 @@
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modifier l'entrée existante d'un flux</title>
 
-        <programlisting role="php"><![CDATA[<?php
-
-$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
+        <programlisting role="php"><![CDATA[$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
 $entree = $flux->current();
 
 $entree->title = 'Ceci est un nouveau titre';
@@ -37,9 +35,7 @@ echo $entree->saveXML();]]></programlisting>
     <example id="zend.feed.modifying-feed.example.creating">
         <title>Créer une entrée Atom dont les éléments appartiennent à un espace de noms personnalisé</title>
 
-        <programlisting role="php"><![CDATA[<?php
-
-$entree = new Zend_Feed_Entry_Atom();
+        <programlisting role="php"><![CDATA[$entree = new Zend_Feed_Entry_Atom();
 // en Atom, id est toujours affecté par le serveur
 $entree->title = 'mon entrée perso';
 $entree->author->name = 'Auteur';

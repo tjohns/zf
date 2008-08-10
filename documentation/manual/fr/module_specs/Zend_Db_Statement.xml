@@ -20,8 +20,7 @@
         <example id="zend.db.statement.creating.example1">
             <title>Création d'un objet statement avec query()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
+            <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
                 array('goofy', 'FIXED'));]]></programlisting>
         </example>
 
@@ -36,10 +35,7 @@ $stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?'
         <example id="zend.db.statement.creating.example2">
             <title>Utilisation du constructeur de statement</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db/Statement/Mysqli.php';
-
-$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);]]></programlisting>
         </example>
@@ -58,8 +54,7 @@ $stmt = new Zend_Db_Statement_Mysqli($db, $sql);]]></programlisting>
         <example id="zend.db.statement.executing.example1">
             <title>Exécuter un statement avec des paramètres positionnés</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
@@ -72,8 +67,7 @@ $stmt->execute(array('goofy', 'FIXED'));]]></programlisting>
         <example id="zend.db.statement.executing.example2">
             <title>Exécution d'un statement avec paramètres nommés</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
+            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
@@ -127,8 +121,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));]]></program
             <example id="zend.db.statement.fetching.fetch.example">
                 <title>Utiliser fetch() dans une boucle</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
 
 while ($row = $stmt->fetch()) {
     echo $row['bug_description'];
@@ -149,8 +142,7 @@ while ($row = $stmt->fetch()) {
             <example id="zend.db.statement.fetching.fetchall.example">
                 <title>Utilisation de fetchAll()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
 
 $rows = $stmt->fetchAll();
 
@@ -175,8 +167,7 @@ echo $rows[0]['bug_description'];]]></programlisting>
             <example id="zend.db.statement.fetching.fetch-mode.example">
                 <title>Paramétrer le mode de capture (fetch mode)</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
 
 $stmt->setFetchMode(Zend_Db::FETCH_NUM);
 
@@ -205,8 +196,7 @@ echo $rows[0][0];]]></programlisting>
             <example id="zend.db.statement.fetching.fetchcolumn.example">
                 <title>Utiliser fetchColumn()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
 $bug_status = $stmt->fetchColumn(2);]]></programlisting>
             </example>
@@ -227,8 +217,7 @@ $bug_status = $stmt->fetchColumn(2);]]></programlisting>
             <example id="zend.db.statement.fetching.fetchobject.example">
                 <title>Utiliser fetchObject()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
 $obj = $stmt->fetchObject();
 

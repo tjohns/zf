@@ -49,8 +49,7 @@
         <example id="zend.db.select.creating.example-db">
             <title>Exemple d'utilisation de la méthode select()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$db = Zend_Db::factory( ...options... );
+            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
 $select = $db->select();]]></programlisting>
         </example>
 
@@ -60,8 +59,7 @@ $select = $db->select();]]></programlisting>
         <example id="zend.db.select.creating.example-new">
             <title>Exemple de création d'un nouvel objet Select</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$db = Zend_Db::factory( ...options... );
+            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
 $select = new Zend_Db_Select($db);]]></programlisting>
         </example>
     </sect2>
@@ -75,8 +73,7 @@ $select = new Zend_Db_Select($db);]]></programlisting>
         <example id="zend.db.select.building.example">
             <title>Exemple d'utilisation des méthodes d'ajout de clauses</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Créer un objet Zend_Db_Select
+            <programlisting role="php"><![CDATA[// Créer un objet Zend_Db_Select
 $select = $db->select();
 
 // Ajouter une clause FROM
@@ -97,8 +94,7 @@ $select->order( ...spécifiez des critères de tri... );]]></programlisting>
         <example id="zend.db.select.building.example-fluent">
             <title>Exemple d'utilisation de l'interface fluide</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+            <programlisting role="php"><![CDATA[$select = $db->select()
              ->from( ...spécifiez une table et des colonnes... )
              ->where( ...spécifiez des critères de recherche... )
              ->order( ...spécifiez des critères de tri... );]]></programlisting>
@@ -118,8 +114,7 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example">
                 <title>Exemple d'utilisation de la méthode from()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT *
 //   FROM "produits"
 
@@ -137,8 +132,7 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example-cname">
                 <title>Exemple d'utilisation d'un alias de nom de table</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p.*
 //   FROM "produits" AS p
 
@@ -155,8 +149,7 @@ $select = $db->select()
             <example id="zend.db.select.building.from.example-schema">
                 <title>Exemple d'utilisation d'un nom de schéma</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT *
 //   FROM "monschema"."produits"
 
@@ -195,8 +188,7 @@ $select = $db->select()
             <example id="zend.db.select.building.columns.example">
                 <title>Exemples de spécification de colonnes</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p
 
@@ -245,8 +237,7 @@ $select = $db->select()
             <example id="zend.db.select.building.columns-expr.example">
                 <title>Exemples d'utilisation de colonnes contenant des expressions</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", LOWER(produit_nom)
 //   FROM "produits" AS p
 // Une expression avec parenthèses devient implicitement
@@ -293,8 +284,7 @@ $select = $db->select()
             <example id="zend.db.select.building.columns-quoteid.example">
                 <title>Exemples d'échappement de colonnes dans une expression</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête, en échappant une colonne spéciale nommée "from" dans une expression :
+                <programlisting role="php"><![CDATA[// Construire cette requête, en échappant une colonne spéciale nommée "from" dans une expression :
 //   SELECT p."from" + 10 AS origine
 //   FROM "produits" AS p
 
@@ -317,8 +307,7 @@ $select = $db->select()
             <example id="zend.db.select.building.columns-atomic.example">
                 <title>Exemples d'ajout de colonnes avec la méthode <code>columns()</code></title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p
 
@@ -347,8 +336,7 @@ $select = $db->select()
             <example id="zend.db.select.building.join.example">
                 <title>Exemple d'utilisation de la méthode join()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom", l.*
 //   FROM "produits" AS p JOIN "ligne_items" AS l
 //     ON p.produit_id = l.produit_id
@@ -383,8 +371,7 @@ $select = $db->select()
             <example id="zend.db.select.building.join.example-no-columns">
                 <title>Exemple avec aucune colonne spécifiée</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p JOIN "ligne_items" AS l
 //     ON p.produit_id = l.produit_id
@@ -489,8 +476,7 @@ $select = $db->select()
             <example id="zend.db.select.building.joinusing.example">
                 <title>Exemple avec la méthode joinUsing()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT *
 //   FROM "table1"
 //   JOIN "table2"
@@ -536,8 +522,7 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example">
                 <title>Exemple d'utilisation de la méthode where()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT produit_id, produit_nom, prix
 //   FROM "produits"
 //   WHERE prix > 100.00
@@ -565,8 +550,7 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-param">
                 <title>Exemple d'un paramètre dans la méthode where()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT produit_id, produit_nom, prix
 //   FROM "produits"
 //   WHERE (prix > 100.00)
@@ -586,8 +570,7 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-and">
                 <title>Exemple avec plusieurs appels de where()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT produit_id, produit_nom, prix
 //   FROM "produits"
 //   WHERE (prix > 100.00)
@@ -610,8 +593,7 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-or">
                 <title>Exemple d'utilisation de la méthode orWhere()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT produit_id, produit_nom, prix
 //   FROM "produits"
 //   WHERE (prix < 100.00)
@@ -634,8 +616,7 @@ $select = $db->select()
             <example id="zend.db.select.building.where.example-parens">
                 <title>Exemple de mise en parenthèse d'expressions booléennes</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT produit_id, produit_nom, prix
 //   FROM "produits"
 //   WHERE (prix < 100.00 OR prix > 500.00)
@@ -672,8 +653,7 @@ $select = $db->select()
             <example id="zend.db.select.building.group.example">
                 <title>Exemple d'utilisation de la méthode group()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", COUNT(*) AS ligne_items_par_produit
 //   FROM "produits" AS p JOIN "ligne_items" AS l
 //     ON p.produit_id = l.produit_id
@@ -713,8 +693,7 @@ $select = $db->select()
             <example id="zend.db.select.building.having.example">
                 <title>Exemple d'utilisation de la méthode having()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", COUNT(*) AS ligne_items_par_produit
 //   FROM "produits" AS p JOIN "ligne_items" AS l
 //     ON p.produit_id = l.produit_id
@@ -760,8 +739,7 @@ $select = $db->select()
             <example id="zend.db.select.building.order.example">
                 <title>Exemple d'utilisation de la méthode order()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", COUNT(*) AS ligne_items_par_produit
 //   FROM "produits" AS p JOIN "ligne_items" AS l
 //     ON p.produit_id = l.produit_id
@@ -795,8 +773,7 @@ $select = $db->select()
             <example id="zend.db.select.building.limit.example">
                 <title>Exemple d'utilisation de la méthode limit()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p
 //   LIMIT 10, 20
@@ -824,8 +801,7 @@ $select = $db->select()
             <example id="zend.db.select.building.limit.example2">
                 <title>Exemple d'utilisation de la méthode limitPage()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
 //   LIMIT 10, 20
@@ -845,8 +821,7 @@ $select = $db->select()
             <example id="zend.db.select.building.distinct.example">
                 <title>Exemple d'utilisation de la méthode distinct()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT DISTINCT p."produit_nom"
 //   FROM "produits" AS p
 
@@ -865,8 +840,7 @@ $select = $db->select()
             <example id="zend.db.select.building.for-update.example">
                 <title>Exemple d'utilisation de la méthode forUpdate()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT FOR UPDATE p.*
 //   FROM "produits" AS p
 
@@ -896,8 +870,7 @@ $select = $db->select()
             <example id="zend.db.select.execute.query-adapter.example">
                 <title>Exemple d'utilisation de la méthode query() de l'adaptateur Db</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+                <programlisting role="php"><![CDATA[$select = $db->select()
              ->from('produits');
 
 $stmt = $db->query($select);
@@ -916,8 +889,7 @@ $result = $stmt->fetchAll();]]></programlisting>
             <example id="zend.db.select.execute.query-select.example">
                 <title>Exemple d'utilisation de la méthode query de l'objet Select</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+                <programlisting role="php"><![CDATA[$select = $db->select()
     ->from('produits');
 
 $stmt = $select->query();
@@ -934,8 +906,7 @@ $result = $stmt->fetchAll();]]></programlisting>
             <example id="zend.db.select.execute.tostring.example">
                 <title>Exemple d'utilisation de la méthode __toString()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+                <programlisting role="php"><![CDATA[$select = $db->select()
              ->from('produits');
 
 $sql = $select->__toString();
@@ -1052,8 +1023,7 @@ echo "$sql\n";
             <example id="zend.db.select.other.get-part.example">
                 <title>Exemple d'utilisation de la méthode getPart()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+                <programlisting role="php"><![CDATA[$select = $db->select()
              ->from('produits')
              ->order('produit_id');
 
@@ -1086,8 +1056,7 @@ print_r( $orderData );]]></programlisting>
             <example id="zend.db.select.other.reset.example">
                 <title>Exemple d'utilisation de la méthode reset()</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Construire cette requête :
+                <programlisting role="php"><![CDATA[// Construire cette requête :
 //   SELECT p.*
 //   FROM "produits" AS p
 //   ORDER BY "produit_nom"

@@ -2,7 +2,7 @@
 <sect1 id="zend.form.introduction">
     <title>Zend_Form</title>
 
-    <para><code>Zend_Form</code> simplifie la création et la gestion des formulaires dans vos applications web. Il
+    <para><code>Zend_Form</code> simplifie la création et la gestion des formulaires dans vos applications Web. Il
     accomplit les buts suivants :</para>
 
     <itemizedlist>

@@ -5,15 +5,7 @@
     <para>Souvent, de multiples filtres doivent être appliqués à une valeur dans un ordre particulier. Par exemple, un
     formulaire d'authentification accepte un identifiant qui doit être en minuscule et composé uniquement de caractères
     alphabétiques. <code>Zend_Filter</code> fournit un moyen simple permettant de chaîner des filtres. Le code suivant
-    illustre comment chaîner deux filtres pour l'identifiant soumis : <programlisting role="php"><![CDATA[<?php
-// Ajout des fonctionnalités de chainage de filtres
-require_once 'Zend/Filter.php';
-
-// Filtres nécessaires à l'exemple
-require_once 'Zend/Filter/Alpha.php';
-require_once 'Zend/Filter/StringToLower.php';
-
-// Création d'une chaine de filtrage et ajout de filtres à celle-ci
+    illustre comment chaîner deux filtres pour l'identifiant soumis : <programlisting role="php"><![CDATA[// Création d'une chaine de filtrage et ajout de filtres à celle-ci
 $filtreChaine = new Zend_Filter();
 $filtreChaine->addFilter(new Zend_Filter_Alpha())
              ->addFilter(new Zend_Filter_StringToLower());
