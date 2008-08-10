@@ -157,9 +157,7 @@
     </chapter>
     <chapter id="zend.file">
         <title>Zend_File</title>
-        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Introduction.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
         <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
         </xi:include>
