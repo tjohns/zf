@@ -119,6 +119,7 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
             if (empty($content) || !is_string($content)) {
                 continue;
             }
+
             $extensions[] = trim($content);
         }
         $extensions = array_unique($extensions);
@@ -141,7 +142,8 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
      * Returns true if and only if the fileextension of $value is included in the
      * set extension list
      *
-     * @param  string $value
+     * @param  string $value Real file to check for extension
+     * @param  array  $file  File data from Zend_File_Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
@@ -152,7 +154,7 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            $info['extension'] = substr($file, strpos($file, '.') + 1);
+            $info['extension'] = substr($file['name'], strpos($file['name'], '.') + 1);
         } else {
             $info = @pathinfo($value);
         }
@@ -163,7 +165,7 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            $this->_value = $file;
+            $this->_value = $file['name'];
         }
 
         $this->_error(self::FALSE_EXTENSION);
@@ -182,7 +184,7 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
     {
         if (!@is_readable($value)) {
             if ($file !== null) {
-                $this->_value = $file;
+                $this->_value = $file['name'];
             }
 
             $this->_error($errorType);

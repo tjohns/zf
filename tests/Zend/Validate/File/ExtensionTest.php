@@ -20,6 +20,11 @@
  * @version    $Id: $
  */
 
+// Call Zend_Validate_File_ExtensionTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_ExtensionTest::main");
+}
+
 /**
  * Test helper
  */
@@ -61,6 +66,43 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
             $validator = new Zend_Validate_File_Extension($element[0]);
             $this->assertEquals($element[1], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
         }
+
+        $validator = new Zend_Validate_File_Extension('mo');
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.mo'));
+        $this->assertTrue(array_key_exists('fileExtensionNotFound', $validator->getMessages()));
+
+        $files = array(
+            'name'     => 'test1',
+            'type'     => 'text',
+            'size'     => 200,
+            'tmp_name' => 'tmp_test1',
+            'error'    => 0
+        );
+        $validator = new Zend_Validate_File_Extension('mo');
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.mo', $files));
+        $this->assertTrue(array_key_exists('fileExtensionNotFound', $validator->getMessages()));
+
+        $files = array(
+            'name'     => 'testsize.mo',
+            'type'     => 'text',
+            'size'     => 200,
+            'tmp_name' => dirname(__FILE__) . '/_files/testsize.mo',
+            'error'    => 0
+        );
+        $validator = new Zend_Validate_File_Extension('mo');
+        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
+
+
+        $files = array(
+            'name'     => 'testsize.mo',
+            'type'     => 'text',
+            'size'     => 200,
+            'tmp_name' => dirname(__FILE__) . '/_files/testsize.mo',
+            'error'    => 0
+        );
+        $validator = new Zend_Validate_File_Extension('gif');
+        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
+        $this->assertTrue(array_key_exists('fileExtensionFalseExtension', $validator->getMessages()));
     }
 
     /**
@@ -112,12 +154,16 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
         $validator->addExtension('gif');
         $this->assertEquals('mo,gif', $validator->getExtension());
         $this->assertEquals(array('mo', 'gif'), $validator->getExtension(true));
-        
+
         $validator->addExtension('jpg, to');
         $this->assertEquals('mo,gif,jpg,to', $validator->getExtension());
         $this->assertEquals(array('mo', 'gif', 'jpg', 'to'), $validator->getExtension(true));
-        
+
         $validator->addExtension(array('zip', 'ti'));
+        $this->assertEquals('mo,gif,jpg,to,zip,ti', $validator->getExtension());
+        $this->assertEquals(array('mo', 'gif', 'jpg', 'to', 'zip', 'ti'), $validator->getExtension(true));
+
+        $validator->addExtension('');
         $this->assertEquals('mo,gif,jpg,to,zip,ti', $validator->getExtension());
         $this->assertEquals(array('mo', 'gif', 'jpg', 'to', 'zip', 'ti'), $validator->getExtension(true));
     }

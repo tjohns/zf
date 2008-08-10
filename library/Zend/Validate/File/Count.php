@@ -197,7 +197,7 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      * must give all files with the first call, otherwise you will get an false.
      *
      * @param  string|array $value Filenames to check for count
-     * @param  string       $file  Original filename for error message
+     * @param  array        $file  File data from Zend_File_Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
