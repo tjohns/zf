@@ -39,16 +39,14 @@ library/
 
         <para>Maintenant créons un chargeur de plugins pour utiliser les différentes classes d'aides de vue :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-$loader = new Zend_Loader_PluginLoader();
+        <programlisting role="php"><![CDATA[$loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');]]></programlisting>
 
         <para>Il devient alors possible de charger une aide de vue en spécifiant juste le nom de sa classe :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// charge l'aide 'FormText' :
+        <programlisting role="php"><![CDATA[// charge l'aide 'FormText' :
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // charge l'aide 'FormLabel' :
@@ -73,8 +71,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit']
             <para>En constructeur, passez un tableau de paires prefix / path ou prefix / paths -- plusieurs dossiers par
             préfixe :</para>
 
-            <programlisting role="php"><![CDATA[<?php
-$loader = new Zend_Loader_PluginLoader(array(
+            <programlisting role="php"><![CDATA[$loader = new Zend_Loader_PluginLoader(array(
     'Zend_View_Helper' => 'Zend/View/Helper/',
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
@@ -84,8 +81,7 @@ $loader = new Zend_Loader_PluginLoader(array(
         <para><code>Zend_Loader_PluginLoader</code> peut aussi permettre de partager des plugins grâce au registre.
         Indiquez le nom du registre de cette manière :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Stocke les plugins dans le registre à l'index 'foobar':
+        <programlisting role="php"><![CDATA[// Stocke les plugins dans le registre à l'index 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');]]></programlisting>
 
         <para>Si un autre composant instancie le <code>PluginLoader</code> en utilisant le même nom de registre, alors
@@ -127,8 +123,7 @@ $loader = new Zend_Loader_PluginLoader(array(), 'foobar');]]></programlisting>
         chargés.<code>getClassName()</code> vous le permet. Utilisée en conjonction avec <code>isLoaded()</code>, vous
         pouvez écrire par exemple ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php
-if ($loader->isLoaded('Adapter')) {
+        <programlisting role="php"><![CDATA[if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }]]></programlisting>
