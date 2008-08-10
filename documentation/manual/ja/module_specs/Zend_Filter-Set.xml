@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8090 -->
+<!-- EN-Revision: 10539 -->
 <sect1 id="zend.filter.set">
 
     <title>標準のフィルタクラス群</title>
@@ -60,6 +60,13 @@
         <title>Int</title>
         <para>
             (int) <code>$value</code> を返します。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.filter.set.stripnewlines">
+        <title>StripNewlines</title>
+        <para>
+            文字列 <code>$value</code> から一切の改行制御文字を取り除いたものを返します。
         </para>
     </sect2>
 
