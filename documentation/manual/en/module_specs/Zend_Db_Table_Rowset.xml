@@ -174,13 +174,12 @@ $bugs = new Bugs();
 // fetch all records from the table
 $rowset = $bugs->fetchAll();
 
-// retrieve the 9th element immediatly :
+// retrieve the 9th element immediately:
 $row9->getRow(8);
 
-// and use it :
+// and use it:
 $row9->assigned_to = 'mmouse';
-$row9->save();
-}]]></programlisting>
+$row9->save();]]></programlisting>
 
 
 
