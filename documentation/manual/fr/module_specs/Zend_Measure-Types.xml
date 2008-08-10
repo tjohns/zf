@@ -359,10 +359,7 @@
         une barre au dessus</ulink>. Comme cette barre ne peut pas être représentée sur l'ordinateur, il faut utiliser
         un tiret bas en début de chaîne.</para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Number.php';
-
-$valeur_grande = '_X';
+        <programlisting role="php"><![CDATA[$valeur_grande = '_X';
 $locale = new Zend_Locale('en');
 $unite = new Zend_Measure_Number($valeur_grande,Zend_Measure_Number::ROMAN, $locale);
 

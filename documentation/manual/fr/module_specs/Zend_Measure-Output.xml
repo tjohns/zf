@@ -19,10 +19,7 @@
         <example id="zend.measure.output.auto.example-1">
                 <title>Récupération automatique</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Length.php';
-
-$locale = new Zend_Locale('de');
+                <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
 $unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
@@ -45,10 +42,7 @@ echo $unite; // affiche "1234567.89 m"]]></programlisting>
                 id="zend.measure.output.value.example-1">
                 <title>Récupération d'une valeur</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Length.php';
-
-$locale = new Zend_Locale('de');
+                <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
 $unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
@@ -66,10 +60,7 @@ echo $unite->getValue(); // affiche "1234567.89"]]></programlisting>
                 id="zend.measure.output.unit.example-1">
                 <title>Récupérer l'unité de mesure</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Weight.php';
-
-$locale = new Zend_Locale('de');
+                <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de');
 $machaine = "1.234.567,89";
 $unit = new Zend_Measure_Weight($machaine,Zend_Measure_Weight::POUND, $locale);
 
@@ -82,6 +73,6 @@ echo $unit->getType(); // affiche "POUND"]]></programlisting>
 
         <para>Récupérer une chaîne dans un format habituel du pays de l'utilisateur est habituellement souhaitable. Par
         exemple, la mesure "1234567.8" deviendrait "1.234.567,8" pour l'Allemagne. Cette fonctionnalité sera supportée
-        dans une future release.</para>
+        dans une future version.</para>
     </sect2>
 </sect1>
