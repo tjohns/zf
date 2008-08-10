@@ -1,5 +1,4 @@
 <!-- EN-Revision: 10741 -->
-<!-- TODO: Apply 10646, 10653 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -173,6 +172,80 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardElements.file">
+        <title>Zend_Form_Element_File</title>
+
+        <para>
+            File フォーム要素は、ファイルアップロード用のフィールドをフォームに用意します。
+            <link
+                linkend="zend.file.transfer.introduction">Zend_File_Transfer</link>
+            を内部で使用してこの機能を実現しており、
+            <code>FormFile</code> ビューヘルパーでフォーム要素を表示しています。
+        </para>
+
+        <para>
+            デフォルトでは、<code>Http</code> 転送アダプタを使用します。
+            これは <code>$_FILES</code> 配列の中身を読み取り、
+            バリデータやフィルタを使用できるようにします。
+            フォーム要素にアタッチされたバリデータおよびアダプタが、
+            この転送アダプタにアタッチされます。
+        </para>
+
+        <example id="zend.form.standardElements.file.usage">
+            <title>File フォーム要素の使用法</title>
+
+            <para>
+                上の説明だけでは File フォーム要素を使うのが難しく感じられるかもしれません。
+                でも、実際に使ってみると比較的簡単なものです。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Count', false, 1)     // ファイルはひとつだけ
+        ->addValidator('Size', false, 102400) // 最大で 100K
+        ->addValidator('Extension' false, 'jpg,png,gif'); // JPEG、PNG および GIF のみ
+$form->addElement($element, 'foo');
+]]></programlisting>
+
+            <para>
+                また、正しいエンコード形式をフォームに指定する必要があります。
+                'multipart/form-data' を使用しなければなりません。
+                これは、フォームの 'enctype' 属性で指定します。
+            </para>
+            
+            <programlisting role="php"><![CDATA[
+$form->setAttrib('enctype', 'multipart/form-data');
+]]></programlisting>
+
+            <para>
+                要素の検証が成功したら、
+                getValue() で最終的な場所を取得します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$location = $form->foo->getValue();
+]]></programlisting>
+
+            <note>
+                <title>デフォルトのアップロード先</title>
+
+                <para>
+                    デフォルトでは、システムの
+                    temp ディレクトリにファイルがアップロードされます。
+                </para>
+            </note>
+        </example>
+
+        <para>
+            1.6.0 に同梱されているファイルアップロード要素には、
+            ひとつ制限があります。現時点では、
+            フィルタを指定してアップロードされたファイルの名前を変更することができません。
+            この機能は今後のリリースで追加される予定です。
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardElements.hidden">
         <title>Zend_Form_Element_Hidden</title>
 
@@ -276,6 +349,17 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
+            デフォルトでは、この要素は <code>InArray</code>
+            バリデータを登録します。このバリデータは、
+            登録されたオプションの配列のキーに対して検証を行います。
+            この振る舞いを無効にするには
+            <code>setRegisterInArrayValidator(false)</code>
+            をコールするか、あるいは設定キー
+            <code>registerInArrayValidator</code>
+            に false 値を渡します。
+        </para>
+
+        <para>
             チェックボックスのオプションを操作するには、
             次のメソッドを使用します。
         </para>
@@ -357,6 +441,17 @@ $element->setValue(array('bar', 'bat'));
             フォームや要素に翻訳アダプタが登録されている場合は、
             表示時にオプションの値が翻訳されます。
         </para>
+
+        <para>
+            デフォルトでは、この要素は <code>InArray</code>
+            バリデータを登録します。このバリデータは、
+            登録されたオプションの配列のキーに対して検証を行います。
+            この振る舞いを無効にするには
+            <code>setRegisterInArrayValidator(false)</code>
+            をコールするか、あるいは設定キー
+            <code>registerInArrayValidator</code>
+            に false 値を渡します。
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.password">
@@ -387,6 +482,17 @@ $element->setValue(array('bar', 'bat'));
             <code>Zend_Form_Element_Multi</code> を継承したもので、
             複数のオプションを指定することができます。そして、それを表示するために
             <code>formRadio</code> ビューヘルパーを使用します。
+        </para>
+
+        <para>
+            デフォルトでは、この要素は <code>InArray</code>
+            バリデータを登録します。このバリデータは、
+            登録されたオプションの配列のキーに対して検証を行います。
+            この振る舞いを無効にするには
+            <code>setRegisterInArrayValidator(false)</code>
+            をコールするか、あるいは設定キー
+            <code>registerInArrayValidator</code>
+            に false 値を渡します。
         </para>
 
         <para>
@@ -442,7 +548,18 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            Multi 要素継承したその他のクラスと同様、
+            デフォルトでは、この要素は <code>InArray</code>
+            バリデータを登録します。このバリデータは、
+            登録されたオプションの配列のキーに対して検証を行います。
+            この振る舞いを無効にするには
+            <code>setRegisterInArrayValidator(false)</code>
+            をコールするか、あるいは設定キー
+            <code>registerInArrayValidator</code>
+            に false 値を渡します。
+        </para>
+
+        <para>
+            Multi 要素を継承したその他のクラスと同様、
             以下のメソッドでオプションを操作することができます。
         </para>
 
