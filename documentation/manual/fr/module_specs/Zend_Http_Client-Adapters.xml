@@ -132,8 +132,7 @@
         <example id="zend.http.client.adapters.socket.example-1">
             <title>Changer la couche de transport HTTPS</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Définit des paramètres de configuration
+            <programlisting role="php"><![CDATA[// Définit des paramètres de configuration
 $config = array(
     'adapter'      => 'Zend_Http_Client_Adapter_Socket',
     'ssltransport' => 'tls'
@@ -244,8 +243,7 @@ $response = $client->request();]]></programlisting>
         <example id="zend.http.client.adapters.proxy.example-1">
             <title>Utiliser Zend_Http_Client derrière un serveur Proxy</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Paramètres de configuration
+            <programlisting role="php"><![CDATA[// Paramètres de configuration
 $config = array(
     'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
     'proxy_host' => 'proxy.int.zend.com',
@@ -284,8 +282,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         <example id="zend.http.client.adapters.test.example-1">
             <title>Tester avec un objet de réponse HTTP unique</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Création de l'adatateur et de l'objet client :
+            <programlisting role="php"><![CDATA[// Création de l'adatateur et de l'objet client :
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
@@ -320,8 +317,7 @@ $response = $client->request('GET');
         <example id="zend.http.client.adapters.test.example-2">
             <title>Tester avec plusieurs réponses HTTP</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Création des objets adaptateur, et client
+            <programlisting role="php"><![CDATA[// Création des objets adaptateur, et client
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
@@ -380,8 +376,7 @@ $adapter->addResponse(
         <example id="zend.http.client.adapters.extending.example-1">
             <title>Création de votre propre adaptateur de connexion</title>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+            <programlisting role="php"><![CDATA[class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**
      * Définit le tableau de configuration pour cet adaptateur
