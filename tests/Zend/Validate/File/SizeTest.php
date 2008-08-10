@@ -85,6 +85,11 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
             $validator = new Zend_Validate_File_Size(array($element[0], $element[1]));
             $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
         }
+
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_File_Size(array('min' => $element[0], 'max' => $element[1]));
+            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
+        }
     }
 
     /**
@@ -178,6 +183,33 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
 
         $validator->setMin(100);
         $this->assertEquals('976.56kB', $validator->getMax());
+
+        $validator->setMax('100 AB');
+        $this->assertEquals('100B', $validator->getMax());
+
+        $validator->setMax('100 kB');
+        $this->assertEquals('100kB', $validator->getMax());
+
+        $validator->setMax('100 MB');
+        $this->assertEquals('100MB', $validator->getMax());
+
+        $validator->setMax('1 GB');
+        $this->assertEquals('1024MB', $validator->getMax());
+
+        $validator->setMax('0.001 TB');
+        $this->assertEquals('1.02GB', $validator->getMax());
+
+        $validator->setMax('0.000001 PB');
+        $this->assertEquals('1.05GB', $validator->getMax());
+
+        $validator->setMax('0.000000001 EB');
+        $this->assertEquals('1.07GB', $validator->getMax());
+
+        $validator->setMax('0.000000000001 ZB');
+        $this->assertEquals('1.1GB', $validator->getMax());
+
+        $validator->setMax('0.000000000000001 YB');
+        $this->assertEquals('1.13GB', $validator->getMax());
     }
 }
 
