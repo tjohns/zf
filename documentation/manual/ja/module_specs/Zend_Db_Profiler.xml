@@ -1,4 +1,5 @@
-<sect1 id="zend.db.profiler">
+<!-- EN-Revision: 10718 -->
+<sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
 
@@ -391,6 +392,18 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
 
     </sect2>
 
+    <sect2 id="zend.db.profiler.profilers">
+        <title>特化型のプロファイラ</title>
+
+        <para>
+            特化型のプロファイラは <code>Zend_Db_Profiler</code>
+            を継承したオブジェクトです。
+            プロファイリング情報を特別な方法で処理します。
+        </para>
+
+        <xi:include href="Zend_Db_Profiler-Firebug.xml" />
+
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

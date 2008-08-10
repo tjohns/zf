@@ -139,12 +139,8 @@
     </chapter>
     <chapter id="zend.dom">
         <title>Zend_Dom</title>
-        <xi:include href="module_specs/Zend_Dom.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Dom.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Dom-Query.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Dom-Query.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Dom.xml" />
+        <xi:include href="module_specs/Zend_Dom-Query.xml" />
     </chapter>
     <chapter id="zend.exception">
         <title>Zend_Exception</title>
@@ -404,19 +400,13 @@
 
     <chapter id="zend.test">
         <title>Zend_Test</title>
-        <xi:include href="module_specs/Zend_Test.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Test.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Test-PHPUnit.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Test.xml" />
+        <xi:include href="module_specs/Zend_Test-PHPUnit.xml" parse="xml" />
     </chapter>
 
     <chapter id="zend.text">
         <title>Zend_Text</title>
-        <xi:include href="module_specs/Zend_Text_Figlet.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Text_Figlet.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Text_Figlet.xml" />
     </chapter>
 
     <chapter id="zend.timesync">
@@ -456,9 +446,7 @@
     </chapter>
     <chapter id="zend.wildfire">
         <title>Zend_Wildfire</title>
-        <xi:include href="module_specs/Zend_Wildfire.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Wildfire.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Wildfire.xml" />
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
