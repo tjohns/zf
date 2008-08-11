@@ -103,8 +103,8 @@ print $number; // will return 13524.67]]>
         <title>Number localization</title>
 
         <para>
-            <code>toNumber($value, array $options = array())</code> can localize numbers to the
-            <link linkend="zend.locale.regions">supported locales</link>
+            <code>toNumber($value, array $options = array())</code> can localize numbers to the following
+            <link linkend="zend.locale.appendix">supported locales</link>
             . This function will return a localized string of the given number in a conventional format for a specific
             locale. The 'number_format' option explicitly specifies a non-default number format for use with
             <code>toNumber()</code>.
