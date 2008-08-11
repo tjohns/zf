@@ -125,9 +125,7 @@
     <chapter id="zend.dojo">
         <title>Zend_Dojo</title>
         <xi:include href="module_specs/Zend_Dojo.xml" />
-        <xi:include href="module_specs/Zend_Dojo-Data.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-Data.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Dojo-Data.xml" />
         <xi:include href="module_specs/Zend_Dojo-View.xml" parse="xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Dojo-View.xml" /></xi:fallback>
         </xi:include>
@@ -158,9 +156,7 @@
     <chapter id="zend.file">
         <title>Zend_File</title>
         <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
-        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml" />
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
