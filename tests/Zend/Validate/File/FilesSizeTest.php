@@ -74,6 +74,17 @@ class Zend_Validate_File_FilesSizeTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
             $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
         }
+
+        $validator = new Zend_Validate_File_FilesSize(array(0, 200));
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.mo'));
+        $this->assertTrue(array_key_exists('fileFilesSizeNotReadable', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_FilesSize(array(0, 500000));
+        $this->assertEquals(true, $validator->isValid(array(
+            dirname(__FILE__) . '/_files/testsize.mo',
+            dirname(__FILE__) . '/_files/testsize.mo',
+            dirname(__FILE__) . '/_files/testsize2.mo')));
+        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
     }
 
     /**

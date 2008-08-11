@@ -206,8 +206,8 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
             return false;
         }
 
-        // limited to 2GB files
-        $size = @filesize($value);
+        // limited to 4GB files
+        $size = sprintf("%u",@filesize($value));
         $this->_setValue($size);
 
         // Check to see if it's smaller than min size
