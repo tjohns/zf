@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10162 -->
+<!-- EN-Revision: 10703 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -279,6 +279,15 @@ $value = $form->getValue('foo');
 $form->setDefaults($data);
 $form->populate($data);
 ?>]]></programlisting>
+
+            <para>
+                逆に、値を設定したり検証したりした後でフォームをクリアしたいこともあるでしょう。
+                これを行うには <code>reset()</code> メソッドを使用します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$form->reset();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
@@ -337,6 +346,63 @@ $form->setElementDecorators(array(
 ?>]]></programlisting>
             </example>
 
+            <example id="zend.form.forms.elements.global.decoratorsFilter">
+                <title>いくつかの要素に対するデコレータの設定</title>
+
+                <para>
+                    設定したい要素、あるいは設定したくない要素を指定することで、
+                    一部の要素にだけデコレータを設定することもできます。
+                    <code>setElementDecorators()</code> の 2 番目の引数に要素名の配列を指定します。
+                    デフォルトでは、ここで指定した要素にのみデコレータが設定されます。
+                    3 番目の引数を渡すこともできます。
+                    これは、設定「したい」要素なのか設定「したくない」
+                    要素なのかを表すフラグとなります。
+                    false を渡すと、指定した
+                    <emphasis>以外の</emphasis> すべての要素にデコレータを設定します。
+                    このメソッドの標準的な使用法と同様、
+                    各要素にそれまで設定されていたすべてのデコレータを上書きします。
+                </para>
+
+                <para>
+                    次の例は、
+                    ViewHelper デコレータと Label デコレータを
+                    要素 'foo' および 'bar' に対してのみ使用するものです。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    )
+);
+]]></programlisting>
+
+                <para>
+                    一方、この例では、ViewHelper デコレータと Label
+                    デコレータを 'foo' と 'bar' <emphasis>以外の</emphasis>
+                    すべての要素に対して使用します。
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$form->setElementDecorators(
+    array(
+        'ViewHelper',
+        'Label'
+    ),
+    array(
+        'foo',
+        'bar'
+    ),
+    false
+);
+]]></programlisting>
+            </example>
+
                 <note>
                     <title>要素によっては不適切なデコレータもある</title>
 
@@ -351,9 +417,14 @@ $form->setElementDecorators(array(
                     </para>
 
                     <para>
+                        先ほどの例に示したように、設定したい要素/したくない要素
+                        を配列で指定するようにすれば、この問題を回避できます。
+                    </para>
+
+                    <para>
                         したがって、このメソッドは注意して使うようにしましょう。
-                        場合によっては、いくつかの要素のデコレータを変更して
-                        予期せぬ結果を防ぐ必要があります。
+                        場合によっては、いくつかの要素を除外するか、
+                        そののデコレータを変更して予期せぬ結果を防ぐ必要があります。
                     </para>
                 </note>
 
@@ -964,9 +1035,27 @@ $form->setAction('/user/login')
      ->setMethod('post');
 ?>]]></programlisting>
 
+        <para>
+            フォームのエンコード形式を設定するには
+            enctype アクセサを使用します。
+            Zend_Form では 2 つの定数
+            <code>Zend_Form::ENCTYPE_URLENCODED</code> と
+            <code>Zend_Form::ENCTYPE_MULTIPART</code> を定義しており、
+            これらはそれぞれ 'application/x-www-form-urlencoded' と
+            'multipart/form-data' に対応します。
+            しかし、これ以外にも任意のエンコード形式を指定することができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// アクションとメソッド、そして enctype を設定します
+$form->setAction('/user/login')
+     ->setMethod('post')
+     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+?>]]></programlisting>
+
         <note>
             <para>
-                メソッドやアクションはレンダリングの際に内部的に使われるものであり、
+                メソッドやアクション、enctype はレンダリングの際に内部的に使われるものであり、
                 バリデーション用のものではありません。
             </para>
         </note>
@@ -1613,12 +1702,12 @@ attribs.onclick = "validate(this)"
 
 disableTranslator = 0
 
-prefixPaths.element.prefix = "My_Element"
-prefixPaths.element.path = "My/Element/"
-elementPrefixPaths.validate.prefix = "My_Validate"
-elementPrefixPaths.validate.path = "My/Validate/"
-displayGroupPrefixPaths.prefix = "My_Group"
-displayGroupPrefixPaths.path = "My/Group/"
+prefixPath.element.prefix = "My_Element"
+prefixPath.element.path = "My/Element/"
+elementPrefixPath.validate.prefix = "My_Validate"
+elementPrefixPath.validate.path = "My/Validate/"
+displayGroupPrefixPath.prefix = "My_Group"
+displayGroupPrefixPath.path = "My/Group/"
 
 elements.username.type = "text"
 elements.username.options.label = "Username"
