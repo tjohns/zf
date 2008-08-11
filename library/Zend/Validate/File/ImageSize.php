@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Validate_File_Abstract
+ * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/File/Abstract.php';
+require_once 'Zend/Validate/Abstract.php';
 
 /**
  * Validator for the image size of a image file
@@ -32,7 +32,7 @@ require_once 'Zend/Validate/File/Abstract.php';
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Validate_File_ImageSize extends Zend_Validate_File_Abstract
+class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
 {
     /**@+
      * @const string Error constants
@@ -227,7 +227,7 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_File_Abstract
      * not bigger than max
      *
      * @param  string $value Real file to check for image size
-     * @param  string $file  Filename to return when temporary files are checked
+     * @param  array  $file  File data from Zend_File_Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
@@ -235,7 +235,7 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_File_Abstract
         // Is file readable ?
         if (@is_readable($value) === false) {
             if ($file !== null) {
-                $this->_value = $file;
+                $this->_value = $file['name'];
             }
 
             $this->_error(self::NOT_READABLE);

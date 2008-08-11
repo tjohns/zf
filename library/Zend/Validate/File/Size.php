@@ -196,7 +196,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * not bigger than max (when max is not null).
      *
      * @param  string $value Real file to check for size
-     * @param  string $file  Filename to return when temporary files are checked
+     * @param  array  $file  File data from Zend_File_Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
@@ -241,7 +241,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
     {
         if (!@is_readable($value)) {
             if ($file !== null) {
-                $this->_value = $file;
+                $this->_value = $file['name'];
             }
 
             $this->_error($errorType);
@@ -262,7 +262,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
     {
         if (($this->_max !== null) && ($this->_max < $size)) {
             if ($file !== null) {
-                $this->_value = $file;
+                $this->_value = $file['name'];
             }
 
             $this->_error(self::TOO_BIG);

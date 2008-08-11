@@ -477,7 +477,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
-                    if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content['name'])) {
+                    if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
                         $this->_messages += $validator->getMessages();
                     }
 
