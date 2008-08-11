@@ -29,7 +29,11 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Validate_File_AllTests::main');
 }
 
+require_once 'Zend/Validate/File/CountTest.php';
+require_once 'Zend/Validate/File/FilesSizeTest.php';
+require_once 'Zend/Validate/File/ExtensionTest.php';
 require_once 'Zend/Validate/File/SizeTest.php';
+require_once 'Zend/Validate/File/UploadTest.php';
 
 /**
  * @category   Zend
@@ -49,7 +53,11 @@ class Zend_Validate_File_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Validate_File');
 
+        $suite->addTestSuite('Zend_Validate_File_CountTest');
+        $suite->addTestSuite('Zend_Validate_File_FilesSizeTest');
+        $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_SizeTest');
+        $suite->addTestSuite('Zend_Validate_File_UploadTest');
 
         return $suite;
     }

@@ -20,6 +20,11 @@
  * @version    $Id: $
  */
 
+// Call Zend_Validate_File_UploadTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_UploadTest::main");
+}
+
 /**
  * Test helper
  */
@@ -117,7 +122,7 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
 
         $validator = new Zend_Validate_File_Upload();
         $this->assertFalse($validator->isValid('test4'));
-        $this->assertTrue(array_key_exists('fileUploadErrorPartitial', $validator->getMessages()));
+        $this->assertTrue(array_key_exists('fileUploadErrorPartial', $validator->getMessages()));
 
         $validator = new Zend_Validate_File_Upload();
         $this->assertFalse($validator->isValid('test5'));
