@@ -285,9 +285,6 @@
         <xi:include href="module_specs/Zend_Locale-AppendixLanguages.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-AppendixLanguages.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Locale-AppendixRegions.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-AppendixRegions.xml" /></xi:fallback>
-        </xi:include>
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
