@@ -11,7 +11,7 @@ RELEASE INFORMATION
 ---------------
 
 Zend Framework 1.6 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-08-08.
+Released on 2008-08-11.
 
 
 NEW FEATURES
