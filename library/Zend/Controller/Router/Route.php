@@ -151,7 +151,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
         $pathStaticCount = 0;
         $values = array();
 
-        $path = ltrim($path, $this->_urlDelimiter);
+        $path = trim($path, $this->_urlDelimiter);
         
         if ($path != '') {
 

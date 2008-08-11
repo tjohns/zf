@@ -567,6 +567,32 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('bar/www.zend.com', $this->_router->assemble(array(), 'foo-bar'));
     }
+
+    /**
+     * @see ZF-3922
+     */
+    public function testRouteShouldMatchEvenWithTrailingSlash()
+    {
+        $route = new Zend_Controller_Router_Route(
+            'blog/articles/:id', 
+            array(
+                'controller' => 'blog',
+                'action'     => 'articles',
+                'id'         => 0,
+            ), 
+            array(
+                'id' => '[0-9]+',
+            )
+        );
+        $this->_router->addRoute('article-id', $route);
+
+        $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/blog/articles/2006/');
+        $token   = $this->_router->route($request);
+
+        $this->assertSame('article-id', $this->_router->getCurrentRouteName());
+
+        $this->assertEquals('2006', $token->getParam('id', false));
+    }
 }
 
 
