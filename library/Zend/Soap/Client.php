@@ -787,16 +787,11 @@ class Zend_Soap_Client
         unset($options['wsdl']);
 
         if ($this->_localServer === null) {
-//        	$this->_soapClient = new SoapClient($wsdl, $options);
-
-        	require_once 'Zend/Soap/Client/DotNet.php';
-
-        	$this->_soapClient = new Zend_Soap_Client_DotNet($wsdl, $options);
+        	$this->_soapClient = new SoapClient($wsdl, $options);
         } else {
         	$this->_soapClient = new Zend_Soap_Client_Local($this->_localServer, $wsdl, $options);
         }
     }
-
 
     /**
      * Perform a SOAP call
@@ -811,15 +806,7 @@ class Zend_Soap_Client
     		$this->_initSoapClientObject();
         }
 
-        try {
-        	$result = call_user_func_array(array($this->_soapClient, $name), $arguments);
-//            $this->_soapClient->__soapCall($name, $arguments, array('soapaction' => 'http://www.serviceobjects.com/GetAllCurrencies'));
-
-        } catch (SoapFault $e) {
-        	var_dump($e);
-        }
-
-        return $result;
+        return call_user_func_array(array($this->_soapClient, $name), $arguments);
     }
 
     /**
