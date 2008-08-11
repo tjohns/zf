@@ -30,6 +30,19 @@ class Util
             回调装饰器允许为替换选项指定一个 null 值，它将用回调返回值来替换原始内容，'prepend' 和 'append' 仍然有效。
         </para>
     </sect2>
+    <sect2 id="zend.form.standardDecorators.captcha">
+        <title>Zend_Form_Decorator_Captcha</title>
+
+        <para>
+            Captcha 装饰器用于 <link linkend="zend.form.standardElements.captcha">Captcha 表单元素 </link>。
+            它利用 captcha 适配器的 <code>render()</code> 方法来生成输出。
+        </para>
+
+        <para>
+            Captcha 装饰器的一个变量，'Captcha_Word'，也常用，并生成两个元素，id 和 input。
+            id 表示比较依靠的会话识别符，input 用于 captcha 的校验。这些作为单个的元素被校验。
+        </para>
+    </sect2>
 
     <sect2 id="zend.form.standardDecorators.description">
         <title>Zend_Form_Decorator_Description</title>
