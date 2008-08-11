@@ -143,6 +143,18 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_File_Upload();
         $this->assertFalse($validator->isValid('test9'));
         $this->assertTrue(array_key_exists('fileUploadErrorExtension', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('test1'));
+        $this->assertTrue(array_key_exists('fileUploadErrorAttack', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('tmp_test1'));
+        $this->assertTrue(array_key_exists('fileUploadErrorAttack', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('test000'));
+        $this->assertTrue(array_key_exists('fileUploadErrorFileNotFound', $validator->getMessages()));
     }
 
     /**
