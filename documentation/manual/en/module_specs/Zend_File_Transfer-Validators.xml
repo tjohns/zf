@@ -35,6 +35,14 @@
 
         <listitem>
             <para>
+                <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
+                validate types of mimetypes and will throw error when the mimetype of a given file does not
+                match.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>Size</code>: This validator is able to check files for it's filesize. It
                 provides a minimum and a maximum size and will throw an error when any of these are crossed.
             </para>
@@ -379,6 +387,67 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
                 </para>
             </note>
         </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.mimetype">
+        <title><emphasis role="strong">MimeType</emphasis> validator</title>
+
+        <para>
+            The <code>MimeType</code> validator checks for the mimetype of transferred files.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: Set the mimetype type to validate against.
+                </para>
+
+                <para>
+                    With this option you can define the mimetype of files which will be accepted.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            This validator accepts multiple extensions either as a comma-delimited string, or as an
+            array. You may also use the methods <code>setMimeType()</code>, <code>addMimeType()</code>,
+            and <code>getMimeType()</code> to set and retrieve extensions.
+        </para>
+
+        <example id="zend.file.transfer.validators.mimetype.example">
+            <title>Using the MimeType validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limit the mimetype of all given files to gif images
+$upload->addValidator('MimeType', 'image/gif');
+
+// Limit the size of all given files to gif and jpeg images
+$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+
+// Limit the size of all given files to the group images
+$upload->setValidator('MimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            The above example showsthat it is also possible to limit the accepted mimetype to a group of
+            mimetypes. To allow all images just use 'image' as mimetype. This can be used for all groups
+            of mimetypes like 'image', 'audio', 'video', 'text, and so on.
+        </para>
+
+        <note>
+            <para>
+                Note that allowing groups of mimetypes will accept all members of this group even if your
+                application does not support them. When you allow 'image' you will also get
+                'image/xpixmap' or 'image/vasa' which could be problematic. When you are not sure if your
+                application supports all types you should better allow only defined mimetypes instead
+                of the complete group.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">

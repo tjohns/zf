@@ -32,6 +32,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'Zend/Validate/File/CountTest.php';
 require_once 'Zend/Validate/File/FilesSizeTest.php';
 require_once 'Zend/Validate/File/ExtensionTest.php';
+require_once 'Zend/Validate/File/MimeTypeTest.php';
 require_once 'Zend/Validate/File/SizeTest.php';
 require_once 'Zend/Validate/File/UploadTest.php';
 
@@ -56,6 +57,7 @@ class Zend_Validate_File_AllTests
         $suite->addTestSuite('Zend_Validate_File_CountTest');
         $suite->addTestSuite('Zend_Validate_File_FilesSizeTest');
         $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
+        $suite->addTestSuite('Zend_Validate_File_MimeTypeTest');
         $suite->addTestSuite('Zend_Validate_File_SizeTest');
         $suite->addTestSuite('Zend_Validate_File_UploadTest');
 
