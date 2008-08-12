@@ -102,7 +102,7 @@ abstract class Zend_Cache
             if (!preg_match('~^[\w]+$~D', $frontend)) {
                 Zend_Cache::throwException("Invalid frontend name [$frontend]");
             }
-            if ($customFrontendNaming) {
+            if (!$customFrontendNaming) {
                 // we use this boolean to avoid an API break
                 $frontendClass = 'Zend_Cache_Frontend_' . $frontend;
             } else {
@@ -128,7 +128,7 @@ abstract class Zend_Cache
             if (!preg_match('~^[\w]+$~D', $backend)) {
                 Zend_Cache::throwException("Invalid backend name [$backend]");
             }
-            if ($customBackendNaming) {
+            if (!$customBackendNaming) {
                 // we use this boolean to avoid an API break
                 $backendClass = 'Zend_Cache_Backend_' . $backend;
             } else {
