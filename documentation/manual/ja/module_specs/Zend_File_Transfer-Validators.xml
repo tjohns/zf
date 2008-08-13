@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10888 -->
+<!-- EN-Revision: 10897 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -34,6 +34,14 @@
                 すべてのファイルのサイズを内部的に記憶し、
                 その合計が制限値を超えた場合にエラーをスローします。
                 サイズの最小値と最大値を指定することができます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>MimeType</code>: このバリデータはファイルの mimetype をチェックします。
+                mimetype の種類を検証し、指定したファイルの mimetype
+                がそれと一致しないときにエラーをスローします。
             </para>
         </listitem>
 
@@ -401,6 +409,70 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
                 </para>
             </note>
         </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.mimetype">
+        <title><emphasis role="strong">MimeType</emphasis> バリデータ</title>
+
+        <para>
+            <code>MimeType</code> バリデータは、
+            転送されるファイルの mimetype をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: 検証したい mimetype 形式を設定します。
+                </para>
+
+                <para>
+                    このオプションで、許可したいファイルの mimetype を定義することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数の拡張子を指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setMimeType()</code>、<code>addMimeType()</code> および
+            <code>getMimeType()</code> といったメソッドで拡張子の設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.mimetype.example">
+            <title>MimeType バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// mimetype を制限し、gif 画像のみを許可するようにします
+$upload->addValidator('MimeType', 'image/gif');
+
+// すべてのファイルが gif および jpeg 画像でなければならないように制限します
+$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+
+// すべてのファイルが画像であるように制限します
+$upload->setValidator('MimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            上の例で示したように、複数の mimetype をひとつのグループとして扱うこともできます。
+            画像ファイルならすべて許可したいという場合は、mimetype に 'image' と指定します。
+            'image' 以外にも 'audio'、'video'、'text などが使用可能です。
+        </para>
+
+        <note>
+            <para>
+                mimetype のグループを許可してしまうと、アプリケーション側で対応しているか否かにかかわらず
+                そのグループのすべての形式のファイルを許可してしまうことに注意しましょう。
+                たとえば 'image' を許可したら 'image/xpixmap' や 'image/vasa'
+                も受け付けることになりますが、おそらくこれは問題となるでしょう。
+                アプリケーション側ですべての形式を処理できるかどうか不安なら、
+                グループ指定ではなく個別の mimetype を指定するようにしましょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
