@@ -101,7 +101,7 @@ $dbAdapter->query($sqlInsert);]]>
             </programlisting>
             <para>
                 Gdy połączenie do bazy danych oraz dane w tabeli są już
-                dostępne, może być utworzona instancja
+                dostępne, możesz utworzyć instancję klasy
                 <code>Zend_Auth_Adapter_DbTable</code>. Opcje konfiguracyjne
                 mogą być przekazane do konstruktora lub przekazane jako
                 parametry do metod dostępowych już po utworzeniu instancji:

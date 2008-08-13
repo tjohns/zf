@@ -371,10 +371,11 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
         będą osadzone w dokumencie PDF; te które nie mogą, nie będą.
         </para>
         <para>
-        Pliki czcionek mogą być duże, czasem osiągająć dziesiątki megabajtów. Domyślnie
-        wszystkie osadzane czcionki są kompresowane przy użyciu schematu kompresji Flate,
-        co powoduje zaoszczędzenie średnio 50% miejsca. Jeśli z jakiegoś powodu
-        nie chcesz kompresować plików czcionek, możesz to zablokować opcją:
+        Pliki czcionek mogą być duże, czasem osiągająć dziesiątki megabajtów. 
+        Domyślnie wszystkie osadzane czcionki są kompresowane przy użyciu 
+        schematu kompresji Flate, co powoduje zaoszczędzenie średnio 50% miejsca. 
+        Jeśli z jakiegoś powodu nie chcesz kompresować plików czcionek, możesz 
+        to zablokować opcją:
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Nie kompresowanie osadzonych czcionek.</title>
