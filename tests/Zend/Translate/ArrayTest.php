@@ -1,11 +1,9 @@
 <?php
-
 /**
  * @category   Zend
  * @package    Zend_Translate
  * @subpackage UnitTests
  */
-
 
 /**
  * Zend_Translate_Adapter_Array
@@ -16,7 +14,6 @@ require_once 'Zend/Translate/Adapter/Array.php';
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
-
 
 /**
  * @category   Zend
@@ -172,7 +169,25 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('en' => 'en', 'de' => 'de'), $adapter->getList());
         $this->assertTrue($adapter->isAvailable('de'));
         $locale = new Zend_Locale('en');
-        $this->assertTrue( $adapter->isAvailable($locale));
-        $this->assertFalse($adapter->isAvailable('sr'   ));
+        $this->assertTrue($adapter->isAvailable($locale));
+        $this->assertFalse($adapter->isAvailable('sr'));
+    }
+
+
+    public function testZF3937()
+    {
+        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)',
+                                                          'msg2' => 'Message 2 (en)',
+                                                          'msg3' => 'Message 3 (en)'
+                                                         ), 'en');
+        $adapter->addTranslation(array(), 'de');
+
+        $this->assertEquals('en', $adapter->getLocale());
+        try {
+            $adapter->setLocale('de');
+            $this->fail('Empty translations should not be settable');
+        } catch (Zend_Translate_Exception $e) {
+            $this->assertContains('No translation for the language', $e->getMessage());
+        }
     }
 }

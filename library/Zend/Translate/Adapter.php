@@ -297,7 +297,7 @@ abstract class Zend_Translate_Adapter {
             $locale = $temp[0];
         }
 
-        if (empty($this->_translate[$locale]) and empty($this->_translate[$temp[0]])) {
+        if (empty($this->_translate[$locale])) {
             /**
              * @see Zend_Translate_Exception
              */
