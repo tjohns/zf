@@ -296,19 +296,17 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         }
         $contentType = null;
         $storedHeaders = array();
-        if (headers_sent()) {
-            $headersList = headers_list();
-            foreach($this->_specificOptions['memorize_headers'] as $key=>$headerName) {
-                foreach ($headersList as $headerSent) {
-                    $tmp = split(':', $headerSent);
-                    $headerSentName = trim(array_shift($tmp));
-                    if (strolower($headerName) == strtolower($headerSentName)) {
-                        $headerSentValue = trim(implode(':', $tmp));
-                        $storedHeaders[] = array($headerSentName, $headerSentValue);
-                    }
+        $headersList = headers_list();
+        foreach($this->_specificOptions['memorize_headers'] as $key=>$headerName) {
+            foreach ($headersList as $headerSent) {
+                $tmp = split(':', $headerSent);
+                $headerSentName = trim(array_shift($tmp));
+                if (strolower($headerName) == strtolower($headerSentName)) {
+                    $headerSentValue = trim(implode(':', $tmp));
+                    $storedHeaders[] = array($headerSentName, $headerSentValue);
                 }
             }
-        }
+        }       
         $array = array(
             'data' => $data,
             'headers' => $storedHeaders
