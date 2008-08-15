@@ -32,6 +32,9 @@ require_once 'Zend/Controller/Request/Http.php';
 /** Zend_Uri_Http */
 require_once 'Zend/Uri/Http.php';
 
+/** Zend_Config */
+require_once 'Zend/Config.php';
+
 /**
  * @category   Zend
  * @package    Zend_Controller
@@ -219,6 +222,77 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('art', $res['action']);
     }
 
+    public function testConfigChaining()
+    {
+        $this->markTestSkipped('Route features not ready');
+
+        $routes = array(
+            'www-subdomain' => array(
+                'type'  => 'Zend_Controller_Router_Route_Hostname',
+                'route' => 'www.example.com',
+                'chain' => array(
+                    'index' => array(
+                        'type'  => 'Zend_Controller_Router_Route_Static',
+                        'route' => '',
+                        'defaults' => array(
+                            'module'     => 'default',
+                            'controller' => 'index',
+                            'action'     => 'index'
+                        )
+                    ),
+                    'imprint' => array(
+                        'type'  => 'Zend_Controller_Router_Route_Static',
+                        'route' => 'imprint',
+                        'defaults' => array(
+                            'module'     => 'default',
+                            'controller' => 'index',
+                            'action'     => 'imprint'
+                        )
+                    ),
+                )
+            ),
+            'user-subdomain' => array(
+                'type'  => 'Zend_Controller_Router_Route_Hostname',
+                'route' => 'user.example.com',
+                'chain' => array(
+                    'profile' => array(
+                        'type'  => 'Zend_Controller_Router_Route_Static',
+                        'route' => 'profile',
+                        'defaults' => array(
+                            'module'     => 'user',
+                            'controller' => 'profile',
+                            'action'     => 'index'
+                        )
+                    ),
+                    'profile-edit' => array(
+                        'type'  => 'Zend_Controller_Router_Route_Static',
+                        'route' => 'profile/edit',
+                        'defaults' => array(
+                            'module'     => 'user',
+                            'controller' => 'profile',
+                            'action'     => 'edit'
+                        )
+                    ),
+                )
+            ),
+        );
+        
+        $router = new Zend_Controller_Router_Rewrite();
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        $front->setDispatcher(new Zend_Controller_Router_RewriteTest_Dispatcher());
+        $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
+        $router->setFrontController($front);
+        
+        $router->addRoutes($routes);
+        
+        $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com/profile');
+        $token   = $router->route($request);
+        
+        $this->assertEquals('user',    $token->getModuleName());
+        $this->assertEquals('profile', $token->getControllerName());
+        $this->assertEquals('index',   $token->getActionName());
+    }
 }
 
 /**
