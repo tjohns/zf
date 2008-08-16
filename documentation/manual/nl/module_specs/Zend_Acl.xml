@@ -266,6 +266,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             dit verkleint het aantal regels wat nodig is, want Bronnen en Rollen erven regels die zijn gedefineerd voor
             hun ouders.
         </para>
+        <note>
+        	<para>In het algemeen, staat Zend_Acl een regel toe als een meer specifiekere regel niet bestaat.</para></note>
 
         <para>
             We kunnen dus een redelijke complexe groep van regels defineren met een kleine hoeveelheid code.
