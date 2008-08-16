@@ -162,9 +162,7 @@
     </chapter>
     <chapter id="zend.file">
         <title>Zend_File</title>
-        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Introduction.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
         <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
         </xi:include>
@@ -175,9 +173,7 @@
         <xi:include href="module_specs/Zend_Filter-Set.xml" />
         <xi:include href="module_specs/Zend_Filter-FilterChains.xml" />
         <xi:include href="module_specs/Zend_Filter-WritingFilters.xml" />
-        <xi:include href="module_specs/Zend_Filter_Input.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Filter_Input.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Filter_Input.xml" />
         <xi:include href="module_specs/Zend_Filter-Inflector.xml" />
     </chapter>
     <chapter id="zend.form">
@@ -343,13 +339,9 @@
     <chapter id="zend.paginator">
         <title>Zend_Paginator</title>
         <xi:include href="module_specs/Zend_Paginator-Introduction.xml" />
-/        <xi:include href="module_specs/Zend_Paginator-Usage.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Usage.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Paginator-Usage.xml" />
         <xi:include href="module_specs/Zend_Paginator-Configuration.xml" />
-        <xi:include href="module_specs/Zend_Paginator-Advanced.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Paginator-Advanced.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Paginator-Advanced.xml" />
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
@@ -424,9 +416,7 @@
         <xi:include href="module_specs/Zend_Service_Nirvanix.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Nirvanix.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Service-ReCaptcha.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Service-ReCaptcha.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Service-ReCaptcha.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
         <xi:include href="module_specs/Zend_Service_SlideShare.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml">
@@ -455,27 +445,13 @@
     </chapter>
     <chapter id="zend.soap">
         <title>Zend_Soap</title>
-        <xi:include href="module_specs/Zend_Soap_Server.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Server.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_Client.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Client.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_Wsdl.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Wsdl.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-Introduction.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-Introduction.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Soap_Server.xml" />
+        <xi:include href="module_specs/Zend_Soap_Client.xml" />
+        <xi:include href="module_specs/Zend_Soap_Wsdl.xml" />
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml" />
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml" />
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" />
     </chapter>
     <chapter id="zend.test">
         <title>Zend_Test</title>
@@ -484,9 +460,7 @@
     </chapter>
     <chapter id="zend.text">
         <title>Zend_Text</title>
-        <xi:include href="module_specs/Zend_Text_Figlet.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Text_Figlet.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Text_Figlet.xml" />
     </chapter>
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
