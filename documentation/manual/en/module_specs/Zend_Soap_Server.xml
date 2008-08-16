@@ -331,7 +331,7 @@ $response = $server->handle();
             </para>
             
             <para>
-                Last response may be also retrieved by <code>getLastResyponse()</code> method for some post-processing:
+                Last response may be also retrieved by <code>getLastResponse()</code> method for some post-processing:
                 <programlisting role="php"><![CDATA[<?php
 ...
 $server = new Zend_Soap_Server(...);
