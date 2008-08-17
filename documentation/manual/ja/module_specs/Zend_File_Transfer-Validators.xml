@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10897 -->
+<!-- EN-Revision: 10910 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -433,10 +433,10 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
         </itemizedlist>
 
         <para>
-            このバリデータで複数の拡張子を指定するには、
+            このバリデータで複数の mimetype を指定するには、
             カンマ区切りの文字列あるいは配列を使用します。
             <code>setMimeType()</code>、<code>addMimeType()</code> および
-            <code>getMimeType()</code> といったメソッドで拡張子の設定や取得が可能です。
+            <code>getMimeType()</code> といったメソッドで mimetype の設定や取得が可能です。
         </para>
 
         <example id="zend.file.transfer.validators.mimetype.example">
@@ -448,10 +448,10 @@ $upload = new Zend_File_Transfer();
 // mimetype を制限し、gif 画像のみを許可するようにします
 $upload->addValidator('MimeType', 'image/gif');
 
-// すべてのファイルが gif および jpeg 画像でなければならないように制限します
+// すべてのファイルが gif および jpeg 画像でなければならないように mimetype を制限します
 $upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
 
-// すべてのファイルが画像であるように制限します
+// すべてのファイルが画像であるように mimetype を制限します
 $upload->setValidator('MimeType', 'image');
 ]]>
             </programlisting>
