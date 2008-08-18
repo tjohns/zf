@@ -47,12 +47,14 @@ class Zend_Soap_Client_Local extends SoapClient
      * @param string $wsdl
      * @param array $options
      */
-    function __construct(Zend_Soap_Server $server, $wsdl, $options) {
+    function __construct(Zend_Soap_Server $server, $wsdl, $options)
+    {
     	$this->_server = $server;
         parent::__construct($wsdl, $options);
     }
 
-    function __doRequest($request, $location, $action, $version) {
+    function __doRequest($request, $location, $action, $version)
+    {
     	ob_start();
         $this->_server->handle($request);
         $response = ob_get_contents();

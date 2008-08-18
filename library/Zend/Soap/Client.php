@@ -27,6 +27,9 @@ require_once 'Zend/Soap/Server.php';
 /** Zend_Soap_Client_Local */
 require_once 'Zend/Soap/Client/Local.php';
 
+/** Zend_Soap_Client_Common */
+require_once 'Zend/Soap/Client/Common.php';
+
 
 /**
  * Zend_Soap_Client
@@ -748,6 +751,34 @@ class Zend_Soap_Client
     }
 
     /**
+     * Retrieve request headers
+     *
+     * @return string
+     */
+    public function getLastRequestHeaders()
+    {
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastRequestHeaders();
+        }
+
+        return '';
+    }
+
+    /**
+     * Retrieve response headers
+     *
+     * @return string
+     */
+    public function getLastResponseHeaders()
+    {
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastResponseHeaders();
+        }
+
+        return '';
+    }
+
+    /**
      * Set Zend_Soap_Server object to process requests locally
      *
      * @param Zend_Soap_Server $server
@@ -756,6 +787,30 @@ class Zend_Soap_Client
     public function setLocalServer(Zend_Soap_Server $server)
     {
     	$this->_localServer = $server;
+    }
+
+    /**
+     * Do request proxy method.
+     *
+     * May be overridden in subclasses
+     *
+     * @internal
+     * @param Zend_Soap_Client_Common $client
+     * @param string $request
+     * @param string $location
+     * @param string $action
+     * @param int    $version
+     * @param int    $one_way
+     * @return mixed
+     */
+    public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
+    {
+    	// Perform request as is
+        if ($one_way == null) {
+        	return $client->__doRequest($request, $location, $action, $version);
+        } else {
+            return $client->__doRequest($request, $location, $action, $version, $one_way);
+        }
     }
 
     /**
@@ -787,10 +842,37 @@ class Zend_Soap_Client
         unset($options['wsdl']);
 
         if ($this->_localServer === null) {
-        	$this->_soapClient = new SoapClient($wsdl, $options);
+        	$this->_soapClient = new Zend_Soap_Client_Common($wsdl, $options);
         } else {
         	$this->_soapClient = new Zend_Soap_Client_Local($this->_localServer, $wsdl, $options);
         }
+    }
+
+
+    /**
+     * Perform arguments pre-processing
+     *
+     * My be overridden in descendant classes
+     *
+     * @param array $arguments
+     */
+    protected function _preProcessArguments($arguments)
+    {
+    	// Do nothing
+    	return $arguments;
+    }
+
+    /**
+     * Perform result pre-processing
+     *
+     * My be overridden in descendant classes
+     *
+     * @param array $arguments
+     */
+    protected function _preProcessResult($result)
+    {
+        // Do nothing
+        return $result;
     }
 
     /**
@@ -806,8 +888,11 @@ class Zend_Soap_Client
     		$this->_initSoapClientObject();
         }
 
-        return call_user_func_array(array($this->_soapClient, $name), $arguments);
+        $result = call_user_func_array(array($this->_soapClient, $name), $this->_preProcessArguments($arguments));
+
+        return $this->_preProcessResult($result);
     }
+
 
     /**
      * Return a list of available functions
@@ -828,6 +913,13 @@ class Zend_Soap_Client
         return $this->_soapClient->__getFunctions();
     }
 
+
+    /**
+     * Get used types.
+     *
+     * @return array
+     */
+
     /**
      * Return a list of SOAP types
      *
@@ -844,6 +936,6 @@ class Zend_Soap_Client
             $this->_initSoapClientObject();
         }
 
-        return $this->_soapClient->getTypes();
+        return $this->_soapClient->__getTypes();
     }
 }
