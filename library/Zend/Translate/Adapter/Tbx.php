@@ -40,7 +40,6 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
     private $_langset     = null;
     private $_termentry   = null;
     private $_content     = null;
-    private $_defined     = false;
     private $_term        = null;
 
     /**
@@ -73,10 +72,6 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
 
         if ($options['clear']) {
             $this->_translate = array();
-        }
-
-        if ((in_array('defined_language', $options)) and !empty($options['defined_language'])) {
-            $this->_defined = true;
         }
 
         if (!is_readable($filename)) {

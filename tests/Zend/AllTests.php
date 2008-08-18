@@ -82,7 +82,7 @@ require_once 'Zend/Test/AllTests.php';
 require_once 'Zend/Text/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/TranslateTest.php';
-require_once 'Zend/Translate/AllTests.php';
+require_once 'Zend/Translate/Adapter/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ValidateTest.php';
@@ -162,7 +162,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Text_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
         $suite->addTestSuite('Zend_TranslateTest');
-        $suite->addTest(Zend_Translate_AllTests::suite());
+        $suite->addTest(Zend_Translate_Adapter_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ValidateTest');

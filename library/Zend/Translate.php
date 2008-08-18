@@ -45,8 +45,8 @@ class Zend_Translate {
     const AN_XLIFF   = 'xliff';
     const AN_XMLTM   = 'xmltm';
 
-    const LOCALE_DIRECTORY = 1;
-    const LOCALE_FILENAME  = 2;
+    const LOCALE_DIRECTORY = 'directory';
+    const LOCALE_FILENAME  = 'filename';
 
     /**
      * Adapter
@@ -84,34 +84,8 @@ class Zend_Translate {
      */
     public function setAdapter($adapter, $data, $locale = null, array $options = array())
     {
-        switch (strtolower($adapter)) {
-            case 'array':
-                $adapter = 'Zend_Translate_Adapter_Array';
-                break;
-            case 'csv':
-                $adapter = 'Zend_Translate_Adapter_Csv';
-                break;
-            case 'gettext':
-                $adapter = 'Zend_Translate_Adapter_Gettext';
-                break;
-            case 'ini':
-                $adapter = 'Zend_Translate_Adapter_Ini';
-                break;
-            case 'qt':
-                $adapter = 'Zend_Translate_Adapter_Qt';
-                break;
-            case 'tbx':
-                $adapter = 'Zend_Translate_Adapter_Tbx';
-                break;
-            case 'tmx':
-                $adapter = 'Zend_Translate_Adapter_Tmx';
-                break;
-            case 'xliff':
-                $adapter = 'Zend_Translate_Adapter_Xliff';
-                break;
-            case 'xmltm':
-                $adapter = 'Zend_Translate_Adapter_XmlTm';
-                break;
+        if (Zend_Loader::isReadable('Zend/Translate/Adapter/' . ucfirst($adapter). '.php')) {
+            $adapter = 'Zend_Translate_Adapter_' . ucfirst($adapter);
         }
 
         Zend_Loader::loadClass($adapter);

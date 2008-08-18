@@ -40,7 +40,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array());
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('1' => '1'));
         $this->assertTrue($lang instanceof Zend_Translate);
     }
 
@@ -59,35 +59,35 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testGetAdapter()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY , array(), 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY , array('1' => '1'), 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
 
-        $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/_files/testmsg_en.mo', 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.mo', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Gettext);
 
-        $lang = new Zend_Translate(Zend_Translate::AN_TMX , dirname(__FILE__) . '/Translate/_files/translation_en.tmx', 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_TMX , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.tmx', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tmx);
 
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/_files/translation_en.csv', 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.csv', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Csv);
 
-        $lang = new Zend_Translate(Zend_Translate::AN_XLIFF , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_XLIFF , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.xliff', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
 
-        $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/_files/translation_de.ts', 'en');
+        $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en2.ts', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Qt);
 
-        $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/_files/XmlTm_test_en.xml', 'en');
+        $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.xmltm', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_XmlTm);
 
-        $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/_files/translation_en.tbx', 'en');
+        $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.tbx', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tbx);
     }
 
     public function testSetAdapter()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/_files/testmsg_en.mo', 'en');
-        $lang->setAdapter(Zend_Translate::AN_ARRAY, array());
+        $lang = new Zend_Translate(Zend_Translate::AN_GETTEXT , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.mo', 'en');
+        $lang->setAdapter(Zend_Translate::AN_ARRAY, array('de' => 'de'));
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
 
         try {
@@ -189,35 +189,56 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testWithOption()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/_files/translation_en2.csv', 'en', array('delimiter' => ','));
-        $this->assertEquals('Message 1 (en)',  $lang->translate('Message 1' ));
-        $this->assertEquals('Message 4 (en)',  $lang->translate('Message 4,'));
-        $this->assertEquals('Message 5, (en)', $lang->translate('Message 5' ));
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/_files/translation_otherdelimiter.csv', 'en', array('delimiter' => ','));
+        $this->assertEquals('Message 1 (en)', $lang->translate('Message 1'));
+        $this->assertEquals('Message 4 (en)', $lang->translate('Message 4,'));
+        $this->assertEquals('Message 5, (en)', $lang->translate('Message 5'));
     }
 
     public function testDirectorySearch()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/_files/test', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));
-        $this->assertEquals(2, count($lang->getList()));
-        $this->assertTrue(in_array('de_AT', $lang->getList()));
-        $this->assertTrue(in_array('en_GB', $lang->getList()));
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files/testcsv', 'de_AT', array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+        $this->assertEquals(array('de_AT' => 'de_AT', 'en_GB' => 'en_GB'), $lang->getList());
+        $this->assertEquals('Nachricht 8', $lang->translate('Message 8'));
     }
 
     public function testFileSearch()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/_files/test2', null, array('scan' => Zend_Translate::LOCALE_FILENAME));
-        $this->assertEquals(2, count($lang->getList()));
-        $this->assertTrue(in_array('de_AT', $lang->getList()));
-        $this->assertTrue(in_array('de_DE', $lang->getList()));
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files/testcsv', 'de_DE', array('scan' => Zend_Translate::LOCALE_FILENAME));
+        $this->assertEquals(array('de_DE' => 'de_DE', 'en_US' => 'en_US'), $lang->getList());
+        $this->assertEquals('Nachricht 8', $lang->translate('Message 8'));
+    }
+
+    public function testSetAndGetCache()
+    {
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+            array('lifetime' => 120, 'automatic_serialization' => true),
+            array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Translate::setCache($cache);
+
+        $cache = Zend_Translate::getCache();
+        $this->assertTrue($cache instanceof Zend_Cache_Core);
+    }
+
+    public function testExceptionWhenNoAdapterClassWasSet()
+    {
+        try {
+            $lang = new Zend_Translate('Zend_Locale', dirname(__FILE__) . '/Translate/_files/test2', null, array('scan' => Zend_Translate::LOCALE_FILENAME));
+            $this->fail('Exception due to false adapter class expected');
+        } catch (Zend_Translate_Exception $e) {
+            $this->assertContains('does not extend Zend_Translate_Adapter', $e->getMessage());
+        }
     }
 
     public function testZF3679()
     {
+        require_once 'Zend/locale.php';
         $locale = new Zend_Locale('de_AT');
         require_once 'Zend/Registry.php';
         Zend_Registry::set('Zend_Locale', $locale);
 
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'));
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'), 'de_AT');
         $this->assertEquals('de_AT', $lang->getLocale());
     }
 }

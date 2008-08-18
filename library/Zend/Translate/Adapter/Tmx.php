@@ -41,7 +41,6 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
     private $_tuv         = null;
     private $_seg         = null;
     private $_content     = null;
-    private $_defined     = false;
 
     /**
      * Generates the tmx adapter
@@ -73,10 +72,6 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
 
         if ($options['clear']) {
             $this->_translate = array();
-        }
-
-        if ((in_array('defined_language', $options)) and !empty($options['defined_language'])) {
-            $this->_defined = true;
         }
 
         if (!is_readable($filename)) {

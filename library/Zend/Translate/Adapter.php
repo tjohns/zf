@@ -51,13 +51,13 @@ abstract class Zend_Translate_Adapter {
      * Scans for the locale within the name of the directory
      * @constant integer
      */
-    const LOCALE_DIRECTORY = 1;
+    const LOCALE_DIRECTORY = 'directory';
 
     /**
      * Scans for the locale within the name of the file
      * @constant integer
      */
-    const LOCALE_FILENAME  = 2;
+    const LOCALE_FILENAME  = 'filename';
 
     /**
      * Array with all options, each adapter can have own additional options
@@ -91,12 +91,9 @@ abstract class Zend_Translate_Adapter {
     public function __construct($data, $locale = null, array $options = array())
     {
         if (isset(self::$_cache)) {
-            $id = 'Zend_Translate_' . $this->toString();
+            $id = 'Zend_Translate_' . $this->toString() . '_Options';
             if ($result = self::$_cache->load($id)) {
-                $this->_translate = unserialize($result);
-                $this->_options   = $this->_translate['_options_'];
-                unset($this->_translate['_options_']);
-                return;
+                $this->_options   = unserialize($result);
             }
         }
 
@@ -105,7 +102,9 @@ abstract class Zend_Translate_Adapter {
         } else {
             $this->_automatic = false;
         }
+
         $this->addTranslation($data, $locale, $options);
+        $this->setLocale($locale);
     }
 
     /**
@@ -201,6 +200,7 @@ abstract class Zend_Translate_Adapter {
                 $this->setLocale($locale);
             }
         }
+
         if ((isset($translate[$originate]) === true) and (count($this->_translate[$originate]) > 0)) {
             $this->setLocale($originate);
         }
@@ -224,6 +224,12 @@ abstract class Zend_Translate_Adapter {
                 $this->_options[strtolower($key)] = $option;
             }
         }
+
+        if (isset(self::$_cache)) {
+            $id = 'Zend_Translate_' . $this->toString() . '_Options';
+            self::$_cache->save( serialize($this->_options), $id);
+        }            
+
         return $this;
     }
 
@@ -306,6 +312,12 @@ abstract class Zend_Translate_Adapter {
         }
 
         $this->_options['locale'] = $locale;
+
+        if (isset(self::$_cache)) {
+            $id = 'Zend_Translate_' . $this->toString() . '_Options';
+            self::$_cache->save( serialize($this->_options), $id);
+        }            
+
         return $this;
     }
 
@@ -420,7 +432,19 @@ abstract class Zend_Translate_Adapter {
             $this->_translate[$locale] = array();
         }
 
-        $this->_loadTranslationData($data, $locale, $options);
+        $read = true;
+        if (isset(self::$_cache)) {
+            $id = 'Zend_Translate_' . $data . '_' . $locale . '_' . $this->toString();
+            if ($result = self::$_cache->load($id)) {
+                $this->_translate[$locale] = unserialize($result);
+                $read = false;
+            }
+        }
+
+        if ($read) {
+            $this->_loadTranslationData($data, $locale, $options);
+        }
+
         if ($this->_automatic === true) {
             $find = new Zend_Locale($locale);
             $browser = $find->getEnvironment() + $find->getBrowser();
@@ -433,12 +457,11 @@ abstract class Zend_Translate_Adapter {
             }
         }
 
-        if (isset(self::$_cache)) {
-            $id = 'Zend_Translate_' . $this->toString();
-            $temp = $this->_translate;
-            $temp['_options_'] = $this->_options;
-            self::$_cache->save( serialize($temp), $id);
+        if (($read) and (isset(self::$_cache))) {
+            $id = 'Zend_Translate_' . $data . '_' . $locale . '_' . $this->toString();
+            self::$_cache->save( serialize($this->_translate[$locale]), $id);
         }
+
         return $this;
     }
 
