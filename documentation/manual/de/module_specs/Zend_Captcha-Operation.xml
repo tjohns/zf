@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 10825 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha Anwendung</title>
 
@@ -10,15 +10,15 @@
     <programlisting role="php"><![CDATA[
 interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
 {
-	public function generate();
+    public function generate();
 
-	public function render(Zend_View $view, $element = null);
+    public function render(Zend_View $view, $element = null);
 
-	public function setName($name);
+    public function setName($name);
 
-	public function getName();
+    public function getName();
 
-	public function getDecorator();
+    public function getDecorator();
 
     // Zusätzlich um das Zend_Validate_Interface zu befriedigen:
     public function isValid($value);

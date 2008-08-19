@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10718 -->
+<!-- EN-Revision: 10846 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profilen mit Firebug</title>
 
@@ -40,13 +40,18 @@
         <title>DB Profiling mit <code>Zend_Controller_Front</code></title>
     
         <programlisting role="php"><![CDATA[
-// Instanzieren des Profilers in der Bootstrap Datei
+// In der Bootstrap Datei
+
+// Instanzieren des Profilers
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
 
 // Den Profiler an den DB Adapter anfügen
 $db->setProfiler($profiler)
 
-// Alle DB Abfragen werden nun profiled und an Firebug gesendet.
+// Den Frontcontroller ausführen
+
+// Alle DB Abfragen im Modell, View und Controller Dateien
+// werden nun profiled und an Firebug gesendet
 ]]>
         </programlisting>	
     </example>
