@@ -246,3 +246,8 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($files, $validator->getFiles());
     }
 }
+
+// Call Zend_Validate_File_UploadTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Validate_File_UploadTest::main") {
+    Zend_Validate_File_UploadTest::main();
+}

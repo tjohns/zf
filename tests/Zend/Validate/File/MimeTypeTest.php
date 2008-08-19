@@ -140,3 +140,8 @@ class Zend_Validate_File_MimeTypeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('image/gif', 'text', 'jpg', 'to', 'zip', 'ti'), $validator->getMimeType(true));
     }
 }
+
+// Call Zend_Validate_File_MimeTypeTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Validate_File_MimeTypeTest::main") {
+    Zend_Validate_File_MimeTypeTest::main();
+}

@@ -180,3 +180,8 @@ class Zend_Validate_File_FilesSizeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('976.56kB', $validator->getMax());
     }
 }
+
+// Call Zend_Validate_File_FilesSizeTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Validate_File_FilesSizeTest::main") {
+    Zend_Validate_File_FilesSizeTest::main();
+}

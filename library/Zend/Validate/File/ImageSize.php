@@ -126,8 +126,8 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
 
             if (isset($minwidth[0]) === true) {
                 $maxheight = $minwidth[3];
-                $minheight = $minwidth[2];
-                $maxwidth  = $minwidth[1];
+                $maxwidth  = $minwidth[2];
+                $minheight = $minwidth[1];
                 $minwidth  = $minwidth[0];
             }
         }
@@ -154,6 +154,26 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
     public function getImageMax()
     {
         return array($this->_maxwidth, $this->_maxheight);
+    }
+
+    /**
+     * Returns the set image width sizes
+     *
+     * @return array
+     */
+    public function getImageWidth()
+    {
+        return array($this->_minwidth, $this->_maxwidth);
+    }
+
+    /**
+     * Returns the set image height sizes
+     *
+     * @return array
+     */
+    public function getImageHeight()
+    {
+        return array($this->_minheight, $this->_maxheight);
     }
 
     /**
@@ -221,6 +241,34 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
     }
 
     /**
+     * Sets the mimimum and maximum image width
+     *
+     * @param  integer $minwidth            The minimum image width
+     * @param  integer $maxwidth            The maximum image width
+     * @return Zend_Validate_File_ImageSize Provides a fluent interface
+     */
+    public function setImageWidth($minwidth, $maxwidth)
+    {
+        $this->setImageMin($minwidth, $this->_minheight);
+        $this->setImageMax($maxwidth, $this->_maxheight);
+        return $this;
+    }
+
+    /**
+     * Sets the mimimum and maximum image height
+     *
+     * @param  integer $minheight           The minimum image height
+     * @param  integer $maxheight           The maximum image height
+     * @return Zend_Validate_File_ImageSize Provides a fluent interface
+     */
+    public function setImageHeight($minheight, $maxheight)
+    {
+        $this->setImageMin($this->_minwidth, $minheight);
+        $this->setImageMax($this->_maxwidth, $maxheight);
+        return $this;
+    }
+
+    /**
      * Defined by Zend_Validate_Interface
      *
      * Returns true if and only if the imagesize of $value is at least min and
@@ -243,8 +291,6 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
         }
 
         $size = @getimagesize($value);
-        // limited to 2GB files
-        $size = @filesize($value);
         $this->_setValue($file);
 
         if (($size[0] === 0) or ($size[1] === 0)) {
