@@ -434,7 +434,7 @@ abstract class Zend_Translate_Adapter {
 
         $read = true;
         if (isset(self::$_cache)) {
-            $id = 'Zend_Translate_' . $data . '_' . $locale . '_' . $this->toString();
+            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $locale . '_' . $this->toString();
             if ($result = self::$_cache->load($id)) {
                 $this->_translate[$locale] = unserialize($result);
                 $read = false;
@@ -458,7 +458,7 @@ abstract class Zend_Translate_Adapter {
         }
 
         if (($read) and (isset(self::$_cache))) {
-            $id = 'Zend_Translate_' . $data . '_' . $locale . '_' . $this->toString();
+            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $locale . '_' . $this->toString();
             self::$_cache->save( serialize($this->_translate[$locale]), $id);
         }
 
