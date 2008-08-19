@@ -177,8 +177,10 @@
                     of the default Http class for your request object:
                 </para>
 
-                <programlisting role="php"><![CDATA[$request = new Zend_Controller_Request_Apache404();
-$front->setRequest($request);]]>
+                <programlisting role="php"><![CDATA[
+$request = new Zend_Controller_Request_Apache404();
+$front->setRequest($request);
+]]>
                 </programlisting>
 
                 <para>

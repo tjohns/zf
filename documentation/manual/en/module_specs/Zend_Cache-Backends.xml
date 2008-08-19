@@ -282,7 +282,7 @@
         <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
         </programlisting>
         <para>
-            There is no options for this backend.
+            There are no options for this backend.
         </para>
     </sect2>
 </sect1>

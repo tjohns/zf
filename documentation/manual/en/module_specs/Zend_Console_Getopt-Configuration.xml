@@ -48,11 +48,12 @@ $opts->addRules(
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'This option chooses apple, with no parameter',
-        'b' => 'This option chooses banana, with required integer parameter',
-        'p' => 'This option chooses pear, with optional string parameter'
+        'a' => 'apple option, with no parameter',
+        'b' => 'banana option, with required integer parameter',
+        'p' => 'pear option, with optional string parameter'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -81,14 +82,16 @@ $opts->setHelp(
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title>Using setAliases()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
         'a' => 'apple',
         'a' => 'apfel',
         'p' => 'pear'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -121,14 +124,16 @@ $opts->setAliases(
         </para>
         <example id="zend.console.getopt.configuration.addargs.example">
             <title>Using addArguments() and setArguments()</title>
-            <programlisting role="php"><![CDATA[// By default, the constructor uses $_SERVER['argv']
+            <programlisting role="php"><![CDATA[
+// By default, the constructor uses $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
 
 // Append an array to the existing arguments
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Substitute a new array for the existing arguments
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -205,7 +210,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoption">
             <title>Using setOption()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);]]>
             </programlisting>
         </example>
@@ -219,7 +225,8 @@ $opts->setOption('ignoreCase', true);]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoptions">
             <title>Using setOptions()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
     array(
         'ignoreCase' => true,

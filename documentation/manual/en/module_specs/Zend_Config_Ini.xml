@@ -25,8 +25,12 @@
             By default, the key separator character is the period character (<code>.</code>). This can be changed,
             however, by changing the <code>$options</code> key <code>'nestSeparator'</code> when constructing the
             <code>Zend_Config_Ini</code> object. For example:
-            <programlisting role="php"><![CDATA[$options['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
+            <programlisting role="php"><![CDATA[
+$options['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini',
+                              'staging',
+                              $options);
+]]>
             </programlisting>
         </para>
     </note>
@@ -41,7 +45,8 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             the case for more complex situations. Suppose, then, that the following configuration data are contained in
             <code>/path/to/config.ini</code>:
         </para>
-        <programlisting role="ini"><![CDATA[; Production site configuration data
+        <programlisting role="ini"><![CDATA[
+; Production site configuration data
 [production]
 webhost                  = www.example.com
 database.adapter         = pdo_mysql
@@ -55,13 +60,15 @@ database.params.dbname   = dbname
 [staging : production]
 database.params.host     = dev.example.com
 database.params.username = devuser
-database.params.password = devsecret]]>
+database.params.password = devsecret
+]]>
         </programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the INI file. It is a
             simple matter to load these data by specifying the INI file and the staging section:
         </para>
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
 echo $config->database->params->dbname; // prints "dbname"]]>

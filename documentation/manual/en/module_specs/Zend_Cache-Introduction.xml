@@ -22,7 +22,8 @@
             backend.
         </para>
 
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
    'lifetime' => 7200, // cache lifetime of 2 hours
    'automatic_serialization' => true
 );
@@ -32,7 +33,11 @@ $backendOptions = array(
 );
 
 // getting a Zend_Cache_Core object
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
+]]>
         </programlisting>
     </example>
 
@@ -90,14 +95,18 @@ print_r($result);]]>
             method. On the next run, the whole section will be skipped in favor of fetching data from cache
             (as long as the cache record is valid).
         </para>
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
-   'lifetime' => 30,                  // cache lifetime of half a minute
-   'automatic_serialization' => false  // this is default anyway
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
+   'lifetime' => 30,                   // cache lifetime of 30 seconds
+   'automatic_serialization' => false  // this is the default anyways
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // we pass a unique identifier to the start() method
 if(!$cache->start('mypage')) {
@@ -109,7 +118,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // the output is saved and sent to the browser
 }
 
-echo 'This is never cached ('.time().').';]]>
+echo 'This is never cached ('.time().').';
+]]>
        </programlisting>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic

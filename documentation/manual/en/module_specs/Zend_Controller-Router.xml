@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>The Standard Router: Zend_Controller_Router_Rewrite</title>
+    <title>The Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
         <title>Introduction</title>
         <para>
@@ -47,7 +47,8 @@ RewriteRule ^(.*)$ index.php/$1 ]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]>
+RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]
+]]>
         </programlisting>
 
         <note>
@@ -81,13 +82,17 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
             following code illustrates the procedure:
         </para>
 
-        <programlisting role="php"><![CDATA[/* Create a router */
+        <programlisting role="php"><![CDATA[
+// Create a router
 
 $router = $ctrl->getRouter(); // returns a rewrite router by default
 $router->addRoute(
     'user',
-    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
-);]]>
+    new Zend_Controller_Router_Route('user/:username',
+                                     array('controller' => 'user',
+                                           'action' => 'info'))
+);
+]]>
         </programlisting>
     </sect2>
 
@@ -101,7 +106,10 @@ $router->addRoute(
             <code>Zend_Controller_Router_Route_Interface</code>. Eg.:
         </para>
 
-        <programlisting role="php"><![CDATA[$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]>
+        <programlisting role="php"><![CDATA[
+$router->addRoute('user',
+                  new Zend_Controller_Router_Route('user/:username'));
+]]>
         </programlisting>
 
         <para>
@@ -137,7 +145,9 @@ $router->addRoute(
             </para>
 
             <programlisting role="php"><![CDATA[
-<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]>
+<a href=
+"<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>
+]]>
             </programlisting>
 
             <para>
@@ -256,7 +266,10 @@ http://example/blog/archive/list/sort/alpha/date/desc
             more-or-less like below:
         </para>
 
-        <programlisting role="php"><![CDATA[$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+        <programlisting role="php"><![CDATA[
+$compat = new Zend_Controller_Router_Route_Module(array(),
+                                                  $dispatcher,
+                                                  $request);
 $this->addRoute('default', $compat);]]>
         </programlisting>
 
@@ -267,8 +280,10 @@ $this->addRoute('default', $compat);]]>
             altogether by using <code>removeDefaultRoutes()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[// Remove any default routes
-$router->removeDefaultRoutes();]]>
+        <programlisting role="php"><![CDATA[
+// Remove any default routes
+$router->removeDefaultRoutes();
+]]>
         </programlisting>
 
     </sect2>
@@ -293,7 +308,9 @@ $router->removeDefaultRoutes();]]>
                 linkend="zend.controller.request.http.baseurl" />):
         </para>
 
-        <programlisting role="php"><![CDATA[$request->setBaseUrl('/~user/application-root/');]]>
+        <programlisting role="php"><![CDATA[
+$request->setBaseUrl('/~user/application-root/');
+]]>
         </programlisting>
 
     </sect2>
@@ -338,7 +355,8 @@ routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
 routes.archive.map.1 = "year"
-; OR: routes.archive.map.year = 1]]>
+; OR: routes.archive.map.year = 1
+]]>
         </programlisting>
 
         <para>
@@ -349,7 +367,8 @@ routes.archive.map.1 = "year"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
-$router->addConfig($config, 'routes');]]>
+$router->addConfig($config, 'routes');
+]]>
         </programlisting>
 
         <para>
@@ -387,7 +406,8 @@ $router->addConfig($config, 'routes');]]>
             method.
         </para>
 
-        <programlisting role="php"><![CDATA[interface Zend_Controller_Router_Interface
+        <programlisting role="php"><![CDATA[
+interface Zend_Controller_Router_Interface
 {
   /**
    * @param  Zend_Controller_Request_Abstract $request

@@ -88,7 +88,7 @@
             There are several configuration options available, and some are required:
             <table id="zend.auth.adapter.configuration_options.table">
                 <title>Configuration Options</title>
-                <tgroup cols="2">
+                <tgroup cols="3">
                     <thead>
                         <row>
                             <entry>Option Name</entry>

@@ -37,12 +37,14 @@ $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-$config = new Zend_Config_Ini('../application/config/config.ini', 'production');
+$config = new Zend_Config_Ini('../application/config/config.ini',
+                              'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
 unset($options['log_path']);
 
-$adapter = new Zend_Auth_Adapter_Ldap($options, $username, $password);
+$adapter = new Zend_Auth_Adapter_Ldap($options, $username,
+                                      $password);
 
 $result = $auth->authenticate($adapter);
 
@@ -76,7 +78,8 @@ if ($log_path) {
             arbitrary. For details regarding the options array, see the <emphasis>Server Options</emphasis> section
             below. Note that <code>Zend_Config_Ini</code> requires that any values with equals characters
             (<code>=</code>) will need to be quoted (like the DNs shown below).
-            <programlisting role="ini"><![CDATA[[production]
+            <programlisting role="ini"><![CDATA[
+[production]
 
 ldap.log_path = /tmp/ldap.log
 
@@ -96,7 +99,8 @@ ldap.server2.useSsl = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
-ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
+ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
+]]></programlisting>
             The above configuration will instruct <code>Zend_Auth_Adapter_Ldap</code> to attempt to authenticate users
             with the OpenLDAP server <code>s0.foo.net</code> first. If the authentication fails for any reason, the AD
             server <code>dc1.w.net</code> will be tried.
@@ -134,7 +138,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
             Below is <ulink url="http://php.net/print_r"><code>print_r()</code></ulink> output of an example options
             parameter containing two sets of server options for LDAP servers <code>s0.foo.net</code> and
             <code>dc1.w.net</code> (same options as the above INI representation):
-            <programlisting role="output"><![CDATA[Array
+            <programlisting role="output"><![CDATA[
+Array
 (
     [server2] => Array
         (

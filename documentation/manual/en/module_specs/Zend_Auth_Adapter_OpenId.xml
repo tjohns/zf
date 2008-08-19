@@ -79,7 +79,9 @@ if ((isset($_POST['openid_action']) &&
     $result = $auth->authenticate(
         new Zend_Auth_Adapter_OpenId(@$_POST['openid_identifier']));
     if ($result->isValid()) {
-        $status = "You are logged-in as " . $auth->getIdentity() . "<br>\n";
+        $status = "You are logged in as "
+                . $auth->getIdentity()
+                . "<br>\n";
     } else {
         $auth->clearIdentity();
         foreach ($result->getMessages() as $message) {
@@ -91,7 +93,9 @@ if ((isset($_POST['openid_action']) &&
         $_POST['openid_action'] == "logout") {
         $auth->clearIdentity();
     } else {
-        $status = "You are logged-in as " . $auth->getIdentity() . "<br>\n";
+        $status = "You are logged in as "
+                . $auth->getIdentity()
+                . "<br>\n";
     }
 }
 ?>
