@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10888 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -81,17 +81,17 @@ if (!$adapter->receive()) {
             返された例外の中でその情報を取得することができます。
         </para>
 
-        <note>
-            <title>注意</title>
-            <para>
-                これは最もシンプルな例であることを忘れないようにしましょう。
-                これをそのまま実際の環境で使用しては
-                <emphasis role="strong">いけません</emphasis>。
-                深刻なセキュリティ問題を引き起こしてしまいます。
-                常にバリデータを使用してセキュリティを向上させるようにしなければなりません。
-            </para>
-        </note>
     </example>
+    <note>
+        <title>注意</title>
+        <para>
+            これは最もシンプルな例であることを忘れないようにしましょう。
+            これをそのまま実際の環境で使用しては
+            <emphasis role="strong">いけません</emphasis>。
+            深刻なセキュリティ問題を引き起こしてしまいます。
+            常にバリデータを使用してセキュリティを向上させるようにしなければなりません。
+        </para>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

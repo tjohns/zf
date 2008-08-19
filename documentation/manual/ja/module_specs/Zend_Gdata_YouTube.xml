@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9832 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.gdata.youtube">
     <title>YouTube Data API の使用法</title>
     
@@ -40,11 +40,9 @@
             <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink>
             サービスオブジェクトに渡すものです。
         </para>
- <example id="zend.gdata.youtube.videos.developer_key.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerKey);
 ]]></programlisting>
-    </example>
     </sect2>
     
     
@@ -72,7 +70,7 @@ $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerK
                 その結果の 10 番目から 1 ページあたり 20 件ずつ表示します。
                 また、閲覧回数順に表示します。
             </para>
-        <example id="zend.gdata.youtube.videos.searching.example">
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata_YouTube');
@@ -95,7 +93,7 @@ foreach ($videoFeed as $videoEntry) {
     echo "\n\n\n";
 }
 ?>]]></programlisting>
-            </example>
+
             <para>
                 その他のクエリパラメータの詳細は
                 <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">
@@ -117,7 +115,6 @@ foreach ($videoFeed as $videoEntry) {
                 専用の URL を作成します</ulink>。たとえば、dog
                 というキーワードを含むコメディーの動画を検索するには次のようにします。
             </para>
-            <example id="zend.gdata.youtube.videos.searchingcategories.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -126,7 +123,6 @@ $query->category = 'Comedy/dog';
 echo $query->queryUrl . "\n";
 $videoFeed = $yt->getVideoFeed($query); 
 ]]></programlisting>
-          </example>
         </sect3>
  
         <sect3 id="zend.gdata.youtube.videos.standard">
@@ -149,12 +145,10 @@ $videoFeed = $yt->getVideoFeed($query);
             <para>
                 評価の高い動画を取得するヘルパーメソッドは次のようになります。
             </para>
-              <example id="zend.gdata.youtube.videos.standard.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getTopRatedVideoFeed(); 
 ]]></programlisting>
-          </example>
             <para>
                 取得する標準フィードの期間を指定するクエリパラメータもあります。
             </para>
@@ -187,12 +181,10 @@ $videoFeed = $yt->getVideoFeed($url);
                 指定したユーザがアップロードした動画の一覧を取得するヘルパーメソッドもあります。
                 次の例は、ユーザ 'liz' がアップロードした動画の一覧を取得します。
             </para>
-            <example id="zend.gdata.youtube.videos.user.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserUploads('liz'); 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.favorites">
@@ -202,12 +194,10 @@ $videoFeed = $yt->getUserUploads('liz');
                 指定したユーザのお気に入り動画の一覧を取得するヘルパーメソッドもあります。
                 次の例は、ユーザ 'liz' のお気に入り動画の一覧を取得します。
             </para>
-            <example id="zend.gdata.youtube.videos.favorites.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserFavorites('liz'); 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.responses">
@@ -217,12 +207,10 @@ $videoFeed = $yt->getUserFavorites('liz');
                 指定した動画に対する動画の返信の一覧を取得するヘルパーメソッドもあります。
                 次の例は、ID 'abc123813abc' の動画に対する返信動画を取得します。
             </para>
-            <example id="zend.gdata.youtube.videos.responses.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getVideoResponseFeed('abc123813abc'); 
 ]]></programlisting>
-          </example>
         </sect3>
     </sect2>
 
@@ -233,7 +221,6 @@ $videoFeed = $yt->getVideoResponseFeed('abc123813abc');
             YouTube の動画に対するコメントを取得するにはいくつかの方法があります。
             ID 'abc123813abc' の動画に対するコメントを取得するコードは、次のようになります。
         </para>
-        <example id="zend.gdata.youtube.videos.comments.example">
         <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $commentFeed = $yt->getVideoCommentFeed('abc123813abc'); 
@@ -243,7 +230,6 @@ foreach ($commentFeed as $commentEntry) {
     echo $commentEntry->content->text . "\n\n\n";
 } 
 ]]></programlisting>
-      </example>
 
         <para>
             もし既にその動画を表す
@@ -275,7 +261,6 @@ $commentFeed = $yt->getVideoCommentFeed(null, $videoEntry->comments->href);
                 このライブラリには、指定したユーザのプレイリストを取得するためのヘルパーメソッドがあります。
                 ユーザ 'liz' のプレイリストを取得するには、次のようにします。
             </para>
-            <example id="zend.gdata.youtube.videos.playlists.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $playlistListFeed = $yt->getPlaylistListFeed('liz'); 
@@ -286,7 +271,6 @@ foreach ($playlistListFeed as $playlistEntry) {
     echo $playlistEntry->getPlaylistVideoFeedUrl() . "\n\n\n";
 } 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.playlists.special">
@@ -297,11 +281,9 @@ foreach ($playlistListFeed as $playlistEntry) {
                 指定したプレイリストの動画一覧を取得するヘルパーメソッドがあります。
                 指定したプレイリストエントリの動画一覧を取得するには、次のようにします。
             </para>
-            <example id="zend.gdata.youtube.videos.playlists.special.example">
             <programlisting role="php"><![CDATA[<?php
 $playlistVideoFeed = $yt->getPlaylistVideoFeed($playlistEntry->getPlaylistVideoFeedUrl()); 
 ]]></programlisting>
-          </example>
         </sect3>
     </sect2> 
 
@@ -334,7 +316,6 @@ foreach ($subscriptionFeed as $subscriptionEntry) {
             任意の YouTube ユーザの公開プロファイル情報を取得することができます。
             ユーザ 'liz' のプロファイルを取得するには、次のようにします。
         </para>
-        <example id="zend.gdata.youtube.videos.searchingcategories.example">
         <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $userProfile = $yt->getUserProfile('liz'); 
@@ -342,7 +323,6 @@ echo "ユーザ名: " . $userProfile->username->text . "\n";
 echo "年齢: " . $userProfile->age->text . "\n";
 echo "出身地: " . $userProfile->hometown->text . "\n"; 
 ]]></programlisting>
-      </example>
     </sect2>
  
     <sect2 id="zend.gdata.youtube.uploads">
@@ -427,8 +407,8 @@ echo "出身地: " . $userProfile->hometown->text . "\n";
         これは、認証済みユーザの名前 $userName で指定することもできますし、
         シンプルに 'default' と指定して現在の認証済みユーザを自動的に利用することもできます。
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.example">
-  <programlisting role="php"><![CDATA[<?php
+
+    <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
 $myVideoEntry = new Zend_Gdata_YouTube_VideoEntry();
 
@@ -472,7 +452,6 @@ try {
     echo $e->getMessage();
 }          
 ]]></programlisting>
-</example>
     <para>
       非公開で動画をアップロードするには、アップロードの前に
       $myVideoEntry->setVideoPrivate(); を実行します。
@@ -494,7 +473,6 @@ try {
         そのかわりに、動画のすべてのメタデータを送信してトークン要素を受け取り、
         それを用いて HTML アップロードフォームを作成します。
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.browser.example">
       <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
       
@@ -509,7 +487,6 @@ $tokenArray = $yt->getFormUploadToken($myVideoEntry, $tokenHandlerUrl);
 $tokenValue = $tokenArray['token'];
 $postUrl = $tokenArray['url'];
 ]]></programlisting>
-    </example>
     <para>
       上のコードは、リンクとトークンを表示します。
       これらを元に、ユーザのブラウザに表示させる HTML フォームを構築します。
@@ -523,7 +500,6 @@ $postUrl = $tokenArray['url'];
       status と id を URL の中に含めて返すということです。
     </para>
     
-    <example id="zend.gdata.youtube.videos.uploads.browser.example">
       <programlisting role="php"><![CDATA[<?php
 // アップロード後のリダイレクト先
 $nextUrl = 'http://mysite.com/youtube_uploads';
@@ -535,7 +511,6 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         '<input value="動画のアップロード" type="submit" />'. 
         '</form>';
 ]]></programlisting>
-    </example>
   </sect2>    
     <sect2 id="zend.gdata.youtube.uploads.status">
       <title>アップロード状況のチェック</title>
@@ -549,7 +524,6 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink>
         の状態をチェックして、公開されているかいないか、また却下されたのかどうかを調べます。
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.status.example">
       <programlisting role="php"><![CDATA[<?php
 try {
     $control = $videoEntry->getControl();
@@ -570,7 +544,6 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
     }
 }
 ]]></programlisting>
-</example>
   </sect2>    
     <sect2 id="zend.gdata.youtube.other">
       <title>その他の関数</title>

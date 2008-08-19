@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data エンベロープ</title>
 
@@ -149,7 +149,7 @@ $data->setLabel('name');
             メソッドを使用します。
         </para>
 
-        <example id="zend.dojo.data.usage.label">
+        <example id="zend.dojo.data.usage.populate">
             <title>JSON からの Zend_Dojo_Data の作成</title>
 
             <programlisting role="php"><![CDATA[

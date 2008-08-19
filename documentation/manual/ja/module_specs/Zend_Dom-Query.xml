@@ -91,50 +91,50 @@
                         を含む div 要素にマッチします。
                     </para></listitem>
                 </itemizedlist>
+            </listitem>
 
-                <itemizedlist><para>
-                    <emphasis>直接の子孫</emphasis>:
-                    セレクタの間で '&gt;' を使用すると、
-                    直接の子要素であることを表します。'div > span'
-                    は、'span' 要素のうち 'div' の直接の子であるものだけを選択します。
-                    上のセレクタのどれとでも共用できます。
-                </para></itemizedlist>
+            <listitem><para>
+                <emphasis>直接の子孫</emphasis>:
+                セレクタの間で '&gt;' を使用すると、
+                直接の子要素であることを表します。'div > span'
+                は、'span' 要素のうち 'div' の直接の子であるものだけを選択します。
+                上のセレクタのどれとでも共用できます。
+            </para></listitem>
 
-                <itemizedlist>
-                    <para>
-                        <emphasis>子孫</emphasis>:
-                        複数のセレクタをひとつの文字列にまとめると、
-                        探す階層を指定することができます。
-                        'div .foo span #one' が探すのは id が 'one'
-                        である要素です。その要素は、'span'
-                        要素の子孫 (その間の階層の数は問わない) であり、
-                        さらにその 'span' 要素はクラス 'foo' の要素の子孫
-                        (その間の階層の数は問わない) です。
-                        同様に、そのクラス 'foo' の要素は 'div' 要素の子孫
-                        (その間の階層の数は問わない) となります。
-                        これは、たとえば以下のリストにおける単語 'One'
-                        へのリンクにマッチします。
-                    </para>
+            <listitem>
+                <para>
+                    <emphasis>子孫</emphasis>:
+                    複数のセレクタをひとつの文字列にまとめると、
+                    探す階層を指定することができます。
+                    'div .foo span #one' が探すのは id が 'one'
+                    である要素です。その要素は、'span'
+                    要素の子孫 (その間の階層の数は問わない) であり、
+                    さらにその 'span' 要素はクラス 'foo' の要素の子孫
+                    (その間の階層の数は問わない) です。
+                    同様に、そのクラス 'foo' の要素は 'div' 要素の子孫
+                    (その間の階層の数は問わない) となります。
+                    これは、たとえば以下のリストにおける単語 'One'
+                    へのリンクにマッチします。
+                </para>
 
-                    <programlisting role="html"><![CDATA[
+                <programlisting role="html"><![CDATA[
 <div>
-    <table>
-        <tr>
-            <td class="foo">
-                <div>
-                    Lorem ipsum <span class="bar">
-                        <a href="/foo/bar" id="one">One</a> 
-                        <a href="/foo/baz" id="two">Two</a> 
-                        <a href="/foo/bat" id="three">Three</a> 
-                        <a href="/foo/bla" id="four">Four</a> 
-                    </span>
-                </div>
-            </td>
-        </tr>
-    </table>
+<table>
+    <tr>
+        <td class="foo">
+            <div>
+                Lorem ipsum <span class="bar">
+                    <a href="/foo/bar" id="one">One</a> 
+                    <a href="/foo/baz" id="two">Two</a> 
+                    <a href="/foo/bat" id="three">Three</a> 
+                    <a href="/foo/bla" id="four">Four</a> 
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>
 ]]></programlisting>
-                </itemizedlist>
             </listitem>
         </itemizedlist>
 

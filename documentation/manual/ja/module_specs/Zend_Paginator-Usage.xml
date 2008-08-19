@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10619 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.paginator.usage">
     <title>使用法</title>
 
@@ -30,7 +30,7 @@
                     <row>
                         <entry>DbSelect</entry>
                         <entry>
-                            <link linkend="zend.db.select.html"><code>Zend_Db_Select</code></link> 
+                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link> 
                             のインスタンスを使用します。
                         </entry>
                     </row>
@@ -73,8 +73,8 @@
         </para>
 
         <note>
-            Null アダプタの場合は、
-            データコレクションのかわりに要素数をコンストラクタで指定します。
+            <para>Null アダプタの場合は、
+            データコレクションのかわりに要素数をコンストラクタで指定します。</para>
         </note>
         
         <para>

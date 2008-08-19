@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10846 -->
+<!-- EN-Revision: 10926 -->
 <sect2 id="zend.log.writers.firebug">
     <title>Firebug への書き込み</title>
     <para>
@@ -8,7 +8,7 @@
       に送信します。
     </para>
     <para>
-      <inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100" width="310" height="151" />
+      <inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100" width="310" />
     </para>
     <para>
       すべてのデータの送信には <code>Zend_Wildfire_Channel_HttpHeaders</code>
