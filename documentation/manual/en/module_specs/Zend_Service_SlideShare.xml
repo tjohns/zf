@@ -27,12 +27,8 @@
             <code>Zend_Service_SlideShare</code> object and providing these values as shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
-// Create a new instance of the component
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
-?>]]>
+        <programlisting role="php"><![CDATA[// Create a new instance of the component
+$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); ]]>
         </programlisting>
 
     </sect2>
@@ -48,7 +44,7 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
             is provided below.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Zend_Service_SlideShare_SlideShow {
 
     /**
@@ -214,9 +210,7 @@ class Zend_Service_SlideShare_SlideShow {
             <code>Zend_Service_SlideShare_SlideShow</code> object as shown.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
+        <programlisting role="php"><![CDATA[
 // Create a new instance of the component
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
@@ -281,10 +275,7 @@ print "Number of views: {$slideshow->getNumViews()}<br/>\n";
             used. An example of using each method is shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
-// Create a new instance of the component
+        <programlisting role="php"><![CDATA[// Create a new instance of the component
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
 $starting_offset = 0;
@@ -316,11 +307,7 @@ foreach($ss_user as $slideshow) {
             shown:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-require_once 'Zend/Service/SlideShare.php';
-
-$frontendOptions = array(
+        <programlisting role="php"><![CDATA[$frontendOptions = array(
                         'lifetime' => 7200,
                         'automatic_serialization' => true);
 $backendOptions  = array(
@@ -349,10 +336,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
             other then default as shown:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
-$client = new Zend_Http_Client();
+        <programlisting role="php"><![CDATA[$client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');

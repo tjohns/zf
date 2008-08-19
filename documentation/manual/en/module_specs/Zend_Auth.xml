@@ -51,9 +51,7 @@
             for authentication. Other details, such as how the authentication service is queried, have been
             omitted for brevity:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Interface.php';
-
+            <programlisting role="php"><![CDATA[
 class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
     /**
@@ -69,7 +67,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     /**
      * Performs an authentication attempt
      *
-     * @throws Zend_Auth_Adapter_Exception If authentication cannot be performed
+     * @throws Zend_Auth_Adapter_Exception If authentication cannot
+     *                                     be performed
      * @return Zend_Auth_Result
      */
     public function authenticate()
@@ -136,12 +135,14 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
             attempted, and providing specific, customized authentication result messages to the user. The following
             result codes are available:
 
-            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+            <programlisting role="php"><![CDATA[
+Zend_Auth_Result::SUCCESS
 Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED
+]]>
             </programlisting>
 
         </para>
@@ -149,7 +150,7 @@ Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
         <para>
             The following example illustrates how a developer may branch on the result code:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // inside of AuthController / loginAction
 $result = $this->_auth->authenticate($adapter);
 
@@ -170,7 +171,8 @@ switch ($result->getCode()) {
     default:
         /** do stuff for other failure **/
         break;
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -227,21 +229,21 @@ switch ($result->getCode()) {
                     of <code>Zend_Session_Namespace</code>. This should occur before authentication is attempted, since
                     <code>Zend_Auth::authenticate()</code> performs the automatic storage of the identity.
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Save a reference to the Singleton instance of Zend_Auth
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // Use 'someNamespace' instead of 'Zend_Auth'
-require_once 'Zend/Auth/Storage/Session.php';
 $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
 
 /**
  * @todo Set up the auth adapter, $authAdapter
  */
 
-// Authenticate, saving the result, and persisting the identity upon success
-$result = $auth->authenticate($authAdapter);]]>
+// Authenticate, saving the result, and persisting the identity on
+// success
+$result = $auth->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -270,15 +272,15 @@ $result = $auth->authenticate($authAdapter);]]>
                     <code>Zend_Auth_Storage_Session</code>, a developer implements
                     <code>Zend_Auth_Storage_Interface</code>:
 
-                    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Storage/Interface.php';
-
+                    <programlisting role="php"><![CDATA[
 class MyStorage implements Zend_Auth_Storage_Interface
 {
     /**
      * Returns true if and only if storage is empty
      *
-     * @throws Zend_Auth_Storage_Exception If it is impossible to determine whether storage is empty
+     * @throws Zend_Auth_Storage_Exception If it is impossible to
+     *                                     determine whether storage
+     *                                     is empty
      * @return boolean
      */
     public function isEmpty()
@@ -293,7 +295,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      *
      * Behavior is undefined when storage is empty.
      *
-     * @throws Zend_Auth_Storage_Exception If reading contents from storage is impossible
+     * @throws Zend_Auth_Storage_Exception If reading contents from
+     *                                     storage is impossible
      * @return mixed
      */
     public function read()
@@ -307,7 +310,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      * Writes $contents to storage
      *
      * @param  mixed $contents
-     * @throws Zend_Auth_Storage_Exception If writing $contents to storage is impossible
+     * @throws Zend_Auth_Storage_Exception If writing $contents to
+     *                                     storage is impossible
      * @return void
      */
     public function write($contents)
@@ -320,7 +324,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
     /**
      * Clears contents from storage
      *
-     * @throws Zend_Auth_Storage_Exception If clearing contents from storage is impossible
+     * @throws Zend_Auth_Storage_Exception If clearing contents from
+     *                                     storage is impossible
      * @return void
      */
     public function clear()
@@ -329,8 +334,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          * @todo implementation
          */
     }
-
-}]]>
+}
+]]>
                     </programlisting>
 
                 </para>
@@ -339,7 +344,7 @@ class MyStorage implements Zend_Auth_Storage_Interface
                     In order to use this custom storage class, <code>Zend_Auth::setStorage()</code> is invoked before an
                     authentication query is attempted:
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Instruct Zend_Auth to use the custom storage class
 Zend_Auth::getInstance()->setStorage(new MyStorage());
 
@@ -347,7 +352,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  * @todo Set up the auth adapter, $authAdapter
  */
 
-// Authenticate, saving the result, and persisting the identity upon success
+// Authenticate, saving the result, and persisting the identity on
+// success
 $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
                     </programlisting>
 
@@ -383,9 +389,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
             The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
             the <code>Zend_Auth</code> class:
 
-            <programlisting role="php"><![CDATA[<?php
-// Get a reference to the Singleton instance of Zend_Auth
-require_once 'Zend/Auth.php';
+            <programlisting role="php"><![CDATA[
+// Get a reference to the singleton instance of Zend_Auth
 $auth = Zend_Auth::getInstance();
 
 // Set up the authentication adapter
@@ -400,31 +405,32 @@ if (!$result->isValid()) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded; the identity ($username) is stored in the session
+    // Authentication succeeded; the identity ($username) is stored
+    // in the session
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
         <para>
             Once authentication has been attempted in a request, as in the above example, it is a simple
             matter to check whether a successfully authenticated identity exists:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // Identity exists; get it
     $identity = $auth->getIdentity();
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
         <para>
             To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
             This typically would be used for implementing an application "logout" operation:
-            <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
@@ -435,7 +441,7 @@ Zend_Auth::getInstance()->clearIdentity();]]>
             documentation for each adapter. The following example directly utilizes
             <code>MyAuthAdapter</code>:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Set up the authentication adapter
 $authAdapter = new MyAuthAdapter($username, $password);
 
@@ -450,7 +456,8 @@ if (!$result->isValid()) {
 } else {
     // Authentication succeeded
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 

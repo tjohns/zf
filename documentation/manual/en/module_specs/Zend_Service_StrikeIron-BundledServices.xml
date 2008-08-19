@@ -29,9 +29,7 @@
         The service contains a <code>getZipCode()</code> method that will retrieve information
         about a United States ZIP code or Canadian postal code:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -66,7 +64,8 @@ if ($zips->count == 0) {
 
 // Detailed status information
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
-$status = $response->serviceStatus;]]>
+$status = $response->serviceStatus;
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -97,9 +96,7 @@ $status = $response->serviceStatus;]]>
         The service contains a <code>verifyAddressUSA()</code> method that will verify
         an address in the United States:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -129,7 +126,8 @@ if ($result->addressErrorNumber != 0) {
 
     // valid address?
     $valid = ($result->valid == 'VALID');
-}]]>
+}
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -160,9 +158,7 @@ if ($result->addressErrorNumber != 0) {
         The service contains two methods, <code>getTaxRateUSA()</code> and <code>getTaxRateCanada()</code>,
         that will retrieve sales and use tax data for the United States and Canada, respectively.
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -177,7 +173,8 @@ echo $rateInfo->GST;              // or just the GST (Goods & Services Tax)
 // Query tax rate for Cupertino, CA USA
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // show all properties
-echo $rateInfo->state_sales_tax;  // or just the state sales tax]]>
+echo $rateInfo->state_sales_tax;  // or just the state sales tax
+]]>
         </programlisting>
       </para>
     </sect2>

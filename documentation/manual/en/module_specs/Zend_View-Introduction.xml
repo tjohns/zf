@@ -36,7 +36,7 @@
             controller script might look something like this:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // use a model to get the data for book authors and titles.
 $data = array(
     array(
@@ -79,7 +79,7 @@ echo $view->render('booklist.php');]]>
             look like this:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+        <programlisting role="php"><![CDATA[ if ($this->books): ?>
 
     <!-- A table of some books. -->
     <table>

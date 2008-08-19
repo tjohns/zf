@@ -20,9 +20,7 @@
 
         <example id="zend.locale.copying.example-1">
             <title>clone</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('ar');
 
 // Save the $locale object as a serialization
@@ -54,9 +52,7 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
 
         <example id="zend.locale.equals.example-1">
             <title>Check for equal locales</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
@@ -86,9 +82,7 @@ if ($locale->equals($mylocale)) {
 
         <example id="zend.locale.getdefault.example-1">
             <title>Get default locales</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // Return all default locales
@@ -141,9 +135,7 @@ print_r($found2);]]>
 
         <example id="zend.locale.setlocale.example-1">
             <title>setLocale</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // Actual locale
@@ -169,9 +161,7 @@ print $locale->toString();]]>
 
         <example id="zend.locale.getlocale.example-1">
             <title>getLanguage and getRegion</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // if locale is 'de_AT' then 'de' will be returned as language
@@ -202,9 +192,7 @@ print $locale->getRegion();]]>
 
         <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $list = $locale->getTranslationList('language');
 
@@ -977,9 +965,7 @@ print $locale->getTranslation('de', 'language', 'zh');
 
         <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('en_US');
 // prints the names of all countries in German language
 print_r($locale->getTranslationList('country', 'de'));]]>
@@ -993,7 +979,7 @@ print_r($locale->getTranslationList('country', 'de'));]]>
 
         <example id="zend.locale.getdata.example-4">
             <title>Converting country name in one language to another</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 require 'Zend/Locale.php';
 $locale = new Zend_Locale('en_US');
 $code2name = $locale->getLanguageTranslationList();
@@ -1010,7 +996,7 @@ echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
 
         <example id="zend.locale.getdata.example-5">
             <title>All available translations</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // obtain a list of all the translation lists
 $lists = $locale->getTranslationList();
 
@@ -1033,9 +1019,7 @@ foreach ($lists as $list) {
 
         <example id="zend.locale.getdata.example-6">
             <title>All Languages written in their native language</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $sourceLanguage = null; // set to your native language code
 $locale = new Zend_Locale($sourceLanguage);
 $list = $locale->getLanguageTranslationList();
@@ -1094,9 +1078,7 @@ foreach($list as $language => $content) {
 
         <example id="zend.locale.getquestion.example-1">
             <title>getQuestion()</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 // Question strings
 print_r($locale->getQuestion('de'));
@@ -1146,9 +1128,7 @@ Array
 
         <example id="zend.locale.getlocalelist.example-1">
             <title>getLocaleList()</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $localelist = Zend_Locale::getLocaleList();
 ]]>
             </programlisting>

@@ -15,22 +15,18 @@
         <example id="zend.rest.server.usage.example-1">
             <title>Basic Zend_Rest_Server Usage - Classes</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-require_once 'My/Service/Class.php';
-
+            <programlisting role="php"><![CDATA[
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
             <title>Basic Zend_Rest_Server Usage - Functions</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting role="php"><![CDATA[
 /**
  * Say Hello
  *
@@ -45,7 +41,8 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -96,9 +93,7 @@ $server->handle();]]>
 
         <example id="zend.rest.server.customstatus.example-1">
             <title>Returning Custom Status</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting><![CDATA[
 /**
  * Say Hello
  *
@@ -130,9 +125,7 @@ $server->handle();]]>
         <example id="zend.rest.server.customxml.example-1">
             <title>Return Custom XML</title>
 
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting><![CDATA[
 /**
  * Say Hello
  *
@@ -155,7 +148,8 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
 

@@ -117,10 +117,7 @@
             methods for these three operations.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -193,10 +190,7 @@ $imfs->unlink('/foo.txt');]]>
             which does not have a convenience method in <code>Zend_Service_Nirvanix</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -243,10 +237,7 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             built-in PHP functions like <code>print_r()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -316,10 +307,7 @@ Zend_Service_Nirvanix_Response Object
             error, a <code>Zend_Service_Nirvanix_Exception</code> will be thrown.
         </para>
 
-        <programlisting role="xml"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-        
-$auth = array('username' => 'your-username',
+        <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);

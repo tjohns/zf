@@ -80,10 +80,7 @@
             of its usage is shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/InfoCard/Auth/Adapter.php';
-require_once 'Zend/Auth.php';
-
+        <programlisting role="php"><![CDATA[
 if (isset($_POST['xmlToken'])) {
 
     $adapter = new Zend_Auth_Adapter_InfoCard($_POST['xmlToken']);
@@ -171,9 +168,7 @@ if (isset($_POST['xmlToken'])) {
             component. An example of its use is shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/InfoCard.php';
-
+        <programlisting role="php"><![CDATA[
 if (isset($_POST['xmlToken'])) {
     $infocard = new Zend_InfoCard();
     $infocard->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
@@ -282,7 +277,7 @@ if (isset($_POST['xmlToken'])) {
             traditional-authentication account is shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ... 
 public function submitinfocardAction() 
 {
@@ -359,7 +354,7 @@ public function submitinfocardAction()
             application:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class myAdapter implements Zend_InfoCard_Adapter_Interface 
 {
     public function storeAssertion($assertionURI, $assertionID, $conditions) 

@@ -53,7 +53,7 @@
             <code>setView()</code> accessor:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new My_Custom_View();
 $layout->setView($view);
 ?>]]></programlisting>
@@ -89,7 +89,7 @@ $layout->setView($view);
                     helper</link>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
 $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 ?>]]></programlisting>
@@ -183,7 +183,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
                 has accessors for setting these values.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Set the inflector target:
 $layout->setInflectorTarget('layouts/:script.:suffix');
 
@@ -210,7 +210,7 @@ $layout->setViewSuffix('php');
                 for the script.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
                        ->setFilterRule(array('CamelCaseToUnderscore'));
@@ -227,7 +227,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
                 <code>Zend_Layout</code> supports this.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
     ':script' => array('CamelCaseToUnderscore'),

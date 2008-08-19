@@ -38,8 +38,7 @@ $response->sendResponse();]]>
                 <code>Zend_Controller_Front::returnResponse(true)</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 
 // do some more processing, such as logging...
@@ -254,8 +253,7 @@ $front->dispatch();]]>
             footer:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Assume that this plugin class is registered with the front controller
+        <programlisting role="php"><![CDATA[// Assume that this plugin class is registered with the front controller
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -293,8 +291,7 @@ class MyController extends Zend_Controller_Action
             structure:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-array(
+        <programlisting role="php"><![CDATA[array(
     'header'  => ..., // header content
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content

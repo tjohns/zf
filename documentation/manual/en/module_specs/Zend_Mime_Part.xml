@@ -22,7 +22,7 @@
     <code>Zend_Mime_Part</code>, meta information can be set by accessing its
     attributes directly:</para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;

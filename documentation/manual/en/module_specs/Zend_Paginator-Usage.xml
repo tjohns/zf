@@ -370,7 +370,8 @@ of <?= $this->totalItemCount; ?>
             <para>
                 Dropdown pagination
 
-                <programlisting role="php"><![CDATA[<?php if ($this->pageCount): ?> 
+                <programlisting role="php"><![CDATA[
+<?php if ($this->pageCount): ?> 
 <select id="paginationControl" size="1"> 
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>

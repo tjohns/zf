@@ -5,7 +5,7 @@
         methods available: <code>Zend_Json::encode()</code> and
         <code>Zend_Json::decode()</code>.
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // Retrieve a value:
 $phpNative = Zend_Json::decode($encodedValue);
 

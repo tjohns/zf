@@ -66,7 +66,7 @@
                 different characteristics:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 
 // Field is not tokenized, but is indexed and stored within the index.
@@ -100,7 +100,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
             <para>
                 Encoding may differ for different documents as well as for different fields within one document:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
@@ -109,7 +109,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
 
             <para>
                 If encoding parameter is omitted, then the current locale is used at processing time. For example:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
@@ -238,7 +238,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
         <title>HTML documents</title>
         <para>
             Zend_Search_Lucene offers a HTML parsing feature. Documents can be created directly from a HTML file or string:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
 ...
@@ -279,7 +279,7 @@ $index->addDocument($doc);]]>
 
         <para>
             Parsed documents may be augmented by the programmer with any other field:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
                                                    time()));
@@ -295,7 +295,7 @@ $index->addDocument($doc);]]>
             Document links are not included in the generated document, but may be retrieved with
             the <code>Zend_Search_Lucene_Document_Html::getLinks()</code> and <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code>
             methods:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();]]>

@@ -84,7 +84,7 @@
             Zend_Http_Client.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Enter your Google account credentials
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';

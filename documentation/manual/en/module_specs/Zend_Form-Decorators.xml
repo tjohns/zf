@@ -143,7 +143,7 @@
             following:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 interface Zend_Decorator_Interface
 {
     public function __construct($options = null);
@@ -174,7 +174,7 @@ interface Zend_Decorator_Interface
             decorator as follows:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 {
     public function buildLabel()
@@ -262,7 +262,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
             You can then place this in the decorator path:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // for an element:
 $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
@@ -275,7 +275,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             an element:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Overwrite existing decorators with this single one:
 $element->setDecorators(array('Composite'));
 ?>]]></programlisting>
@@ -297,7 +297,7 @@ $element->setDecorators(array('Composite'));
             decorator:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Decorator_Errors
 {
     public function render($content = '')

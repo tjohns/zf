@@ -105,8 +105,7 @@
             <code>Zend_Controller_Action::_getParam('error_handler')</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -148,8 +147,7 @@ class ErrorController extends Zend_Controller_Action
             indicate a 404 page:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -178,8 +176,7 @@ class ErrorController extends Zend_Controller_Action
             <code>error_handler</code> object:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function errorAction()
+        <programlisting role="php"><![CDATA[public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
 
@@ -224,9 +221,7 @@ public function errorAction()
             clear the response body prior to rendering any views:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$this->getResponse()->clearBody();]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[$this->getResponse()->clearBody();]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
@@ -234,22 +229,14 @@ $this->getResponse()->clearBody();]]>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>Standard usage</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>Setting a different error handler</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'module'     => 'mystuff',
     'controller' => 'static',
@@ -260,11 +247,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>Using accessors</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$plugin = new Zend_Controller_Plugin_ErrorHandler();
+            <programlisting role="php"><![CDATA[$plugin = new Zend_Controller_Plugin_ErrorHandler();
 $plugin->setErrorHandlerModule('mystuff')
        ->setErrorHandlerController('static')
        ->setErrorHandlerAction('error');
@@ -283,8 +266,7 @@ $front->registerPlugin($plugin);]]>
             controller. Below is a simple example.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {

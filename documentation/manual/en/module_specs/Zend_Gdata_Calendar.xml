@@ -95,13 +95,7 @@
                 <code>Zend_Http_Client</code> will be automatically created.
             </para>
             <para>The example below shows how to create a Calendar service class using ClientAuth authentication:</para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-Zend_Loader::loadClass('Zend_Gdata');
-Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
-Zend_Loader::loadClass('Zend_Gdata_Calendar');
-Zend_Loader::loadClass('Zend_Http_Client');
-
+            <programlisting role="php"><![CDATA[
 // Parameters for ClientAuth authentication
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $user = "sample.user@gmail.com";
@@ -114,14 +108,10 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $service = new Zend_Gdata_Calendar($client);]]>
             </programlisting>
             <para>A Calendar service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-Zend_Loader::loadClass('Zend_Gdata');
-Zend_Loader::loadClass('Zend_Gdata_AuthSub');
-Zend_Loader::loadClass('Zend_Gdata_Calendar');
-Zend_Loader::loadClass('Zend_Http_Client');
+            <programlisting role="php"><![CDATA[
 
-/** Retrieve the current URL so that the AuthSub server knows where to
+/*
+ * Retrieve the current URL so that the AuthSub server knows where to
  * redirect the user after authentication is complete.
  */
 function getCurrentUrl()
@@ -198,13 +188,7 @@ session_start();
 $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());]]>
             </programlisting>
             <para>Finally, an unauthenticated server can be created for use with either public feeds or MagicCookie authentication:</para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-Zend_Loader::loadClass('Zend_Gdata');
-Zend_Loader::loadClass('Zend_Gdata_Calendar');
-
-
-// Create an instance of the Calendar service using an unauthenticated HTTP client
+            <programlisting role="php"><![CDATA[// Create an instance of the Calendar service using an unauthenticated HTTP client
 
 $service = new Zend_Gdata_Calendar();]]>
             </programlisting>
@@ -228,7 +212,7 @@ $service = new Zend_Gdata_Calendar();]]>
             authentication. Attempting to access a calendar list without holding appropriate credentials will
             fail and result in a 401 (Authentication Required) status code.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $service = new Zend_Gdata_Calendar($client);
@@ -245,7 +229,7 @@ try {
             <code>Zend_Gdata_Calendar_ListEntry</code>. After retrieving the feed, you can use the iterator
             and accessors contained within the feed to inspect the enclosed calendars.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo "<h1>Calendar List Feed</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
@@ -318,7 +302,7 @@ echo "</ul>";]]>
                 string obtained when viewing the private XML address in the Google Calendar UI. Events are
                 requested chronologically by start time and only events occurring in the future are returned.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $service->newEventQuery();
 $query->setUser('default');
 // Set to $query->setVisibility('private-magicCookieValue') if using MagicCookie auth
@@ -359,7 +343,7 @@ echo "</ul>";]]>
                 "<code>$query->setFutureevents('true')</code>", since´<code>futureevents</code> will override
                 <code>startMin</code> and <code>startMax</code>.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query->setStartMin('2006-12-01');
 $query->setStartMax('2006-12-16');]]>
             </programlisting>
@@ -375,7 +359,7 @@ $query->setStartMax('2006-12-16');]]>
                 <code>setQuery()</code>
                 method when creating the query.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query->setQuery("dogfood");]]>
             </programlisting>
         </sect3>
@@ -386,7 +370,7 @@ $query->setQuery("dogfood");]]>
                 of calling <code>getCalendarEventFeed()</code>, <code>getCalendarEventEntry()</code>
                 should be called instead.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $service->newEventQuery();
 $query->setUser('default');
 $query->setVisibility('private');
@@ -405,7 +389,7 @@ try {
                 to retrieve a specific event. In this case, no query object is required since the event
                 URL contains all the necessary information to retrieve the event.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
 
 try {
@@ -517,7 +501,7 @@ try {
                 Once the event has been populated, it can be uploaded to the calendar server by passing it as an
                 argument to the calendar service's <code>insertEvent()</code> function.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Create a new entry using the calendar service's magic factory method
 $event= $service->newEventEntry();
 
@@ -565,7 +549,7 @@ $newEvent = $service->insertEvent($event);]]>
                 <ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink>
                 format.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Schedule the event to occur on December 05, 2007 at 2 PM PST (UTC-8) with a duration of one hour.
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
@@ -590,7 +574,7 @@ $event->when = $when;]]>
                 desired, convert to the most precise unit available. For example, 1 hour and 30 minutes
                 should be entered as 90 minutes.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Create a new reminder object. It should be set send an email message to the user 10 minutes beforehand.
 $reminder = $service->newReminder();
 $reminder->method = "email";
@@ -621,7 +605,7 @@ $when->reminders = array($reminder);]]>
                 <ulink url="http://code.google.com/apis/gdata/elements.html#gdRecurrence">Common Elements section of the Google Data APIs Developer Guide</ulink>
                 , as well as in RFC 2445.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
  // Create a new entry using the calendar service's magic factory method
 $event= $service->newEventEntry();
 
@@ -653,7 +637,7 @@ $newEvent = $service->insertEvent($event);]]>
                 QuickAdd, create a new <code>QuickAdd</code> property set to "true" and store the
                 freeform text as a <code>content</code> property.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Create a new entry using the calendar service's magic factory method
 $event= $service->newEventEntry();
 
@@ -681,7 +665,7 @@ $newEvent = $service->insertEvent($event);]]>
             To resolve this a fresh copy of the event must be retrieved from the server before attempting
             to resubmit any modifications.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Get the first event in the user's event list
 $event = $eventFeed[0];
 
@@ -711,11 +695,11 @@ try {
             from regular events because they will have their <code>eventStatus</code>
             property set to "http://schemas.google.com/g/2005#event.canceled".
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Option 1: Events can be deleted directly
 $event->delete();]]>
         </programlisting>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Option 2: Events can be deleted supplying the edit URL of the event to the calendar service, if known
 $service->delete($event->getEditLink()->href);]]>
         </programlisting>
@@ -733,7 +717,7 @@ $service->delete($event->getEditLink()->href);]]>
             Specifically, the comment's author is stored in the <code>author</code>
             property, and the comment text is stored in the <code>content</code> property.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Extract the comment URL from the first event in a user's feed list
 $event = $eventFeed[0];
 $commentUrl = $event->comments->feedLink->url;

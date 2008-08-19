@@ -19,11 +19,7 @@
             formatting rules from 'en_US'.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-$currency = new Zend_Currency();]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[$currency = new Zend_Currency();]]></programlisting>
 
 
     </example>
@@ -35,8 +31,7 @@ $currency = new Zend_Currency();]]>
         you want to use the same locale multiple times.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-// in your bootstrap file
+    <programlisting role="php"><![CDATA[// in your bootstrap file
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
@@ -97,9 +92,7 @@ $currency = new Zend_Currency();]]>
 
         <title>Other examples for creating an instance of Zend_Currency</title>
 
-        <programlisting role="php"><![CDATA[<?php
-// expect standard locale 'de_AT'
-require_once 'Zend/Currency.php';
+        <programlisting role="php"><![CDATA[// expect standard locale 'de_AT'
 
 // creates an instance from 'en_US' using 'USD' which is default currency for 'en_US'
 $currency = new Zend_Currency('en_US');
@@ -155,10 +148,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
             <title>Creating output for an currency</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD' which is the default values for 'en_US'
+            <programlisting role="php"><![CDATA[// creates an instance with 'en_US' using 'USD' which is the default values for 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$ 1,000.00'
@@ -362,10 +352,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title>Changing the displayed format of a currency</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+            <programlisting role="php"><![CDATA[// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints 'US$ 1,000.00'
@@ -456,10 +443,7 @@ echo $currency->toCurrency(1000);]]>
 
             <title>Getting informations from currencies</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+            <programlisting role="php"><![CDATA[// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$'
@@ -497,10 +481,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
             <title>Setting a new locale</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// get the currency for US
+            <programlisting role="php"><![CDATA[// get the currency for US
 $currency = new Zend_Currency('en_US');
 print $currency->toCurrency(1000);
 
@@ -529,11 +510,7 @@ print $currency->toCurrency(1000);
 
             <title>Caching currencies</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-require_once 'Zend/Cache.php';
-
-// creating a cache object
+            <programlisting role="php"><![CDATA[// creating a cache object
 $cache = Zend_Cache::factory('Core', 'File',
              array('lifetime' => 120, 'automatic_serialization' => true),
              array('cache_dir' => dirname(__FILE__) . '/_files/'));

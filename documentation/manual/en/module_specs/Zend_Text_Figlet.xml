@@ -100,8 +100,7 @@
             This example illustrates the basic use of <code>Zend_Text_Figlet</code>
             to create a simple FIGlet text:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Text/Figlet.php';
+        <programlisting role="php"><![CDATA[
 $figlet = new Zend_Text_Figlet();
 echo $figlet->render('Zend');
 ?>]]>

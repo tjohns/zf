@@ -8,15 +8,7 @@
         <code>Zend_Filter</code> provides a simple method by which filters may be chained together. The
         following code illustrates how to chain together two filters for the submitted username:
 
-        <programlisting role="php"><![CDATA[<?php
-// Provides filter chaining capability
-require_once 'Zend/Filter.php';
-
-// Filters needed for the example
-require_once 'Zend/Filter/Alpha.php';
-require_once 'Zend/Filter/StringToLower.php';
-
-// Create a filter chain and add filters to the chain
+        <programlisting role="php"><![CDATA[<// Create a filter chain and add filters to the chain
 $filterChain = new Zend_Filter();
 $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());

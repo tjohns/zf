@@ -31,19 +31,17 @@
             To incorporate <code>Zend_Auth_Adapter_Ldap</code> authentication into your application quickly, even if
             you're not using <code>Zend_Controller</code>, the meat of your code should look something like the
             following:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $username = $this->_request->getParam('username');
 $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('../application/config/config.ini', 'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
 unset($options['log_path']);
 
-require_once 'Zend/Auth/Adapter/Ldap.php';
 $adapter = new Zend_Auth_Adapter_Ldap($options, $username, $password);
 
 $result = $auth->authenticate($adapter);
@@ -51,9 +49,6 @@ $result = $auth->authenticate($adapter);
 if ($log_path) {
     $messages = $result->getMessages();
 
-    require_once 'Zend/Log.php';
-    require_once 'Zend/Log/Writer/Stream.php';
-    require_once 'Zend/Log/Filter/Priority.php';
     $logger = new Zend_Log();
     $logger->addWriter(new Zend_Log_Writer_Stream($log_path));
     $filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);

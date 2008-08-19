@@ -68,8 +68,7 @@
 
             <title>Example of the database adapter's select() method</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$db = Zend_Db::factory( ...options... );
+            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
 $select = $db->select();]]>
             </programlisting>
 
@@ -84,8 +83,7 @@ $select = $db->select();]]>
 
             <title>Example of creating a new Select object</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$db = Zend_Db::factory( ...options... );
+            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
 $select = new Zend_Db_Select($db);]]>
             </programlisting>
 
@@ -106,8 +104,7 @@ $select = new Zend_Db_Select($db);]]>
 
             <title>Example of the using methods to add clauses</title>
 
-            <programlisting role="php"><![CDATA[<?php
-// Create the Zend_Db_Select object
+            <programlisting role="php"><![CDATA[// Create the Zend_Db_Select object
 $select = $db->select();
 
 // Add a FROM clause
@@ -132,8 +129,7 @@ $select->order( ...specify sorting criteria... );]]>
 
             <title>Example of the using the fluent interface</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$select = $db->select()
+            <programlisting role="php"><![CDATA[$select = $db->select()
     ->from( ...specify table and columns... )
     ->where( ...specify search criteria... )
     ->order( ...specify sorting criteria... );]]>
@@ -162,8 +158,7 @@ $select = $db->select()
 
                 <title>Example of the from() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
-// Build this query:
+                <programlisting role="php"><![CDATA[// Build this query:
 //   SELECT *
 //   FROM "products"
 
@@ -186,7 +181,7 @@ $select = $db->select()
 
                 <title>Example of specifying a table correlation name</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p.*
 //   FROM "products" AS p
@@ -209,7 +204,7 @@ $select = $db->select()
 
                 <title>Example of specifying a schema name</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT *
 //   FROM "myschema"."products"
@@ -262,7 +257,7 @@ $select = $db->select()
 
                 <title>Examples of specifying columns</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -324,7 +319,7 @@ $select = $db->select()
 
                 <title>Examples of specifying columns containing expressions</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", LOWER(product_name)
 //   FROM "products" AS p
@@ -382,7 +377,7 @@ $select = $db->select()
 
                 <title>Examples of quoting columns in an expression</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query, quoting a special column name "from" in the expression:
 //   SELECT p."from" + 10 AS origin
 //   FROM "products" AS p
@@ -414,7 +409,7 @@ $select = $db->select()
 
                 <title>Examples of adding columns with the <code>columns()</code> method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -451,7 +446,7 @@ $select = $db->select()
 
                 <title>Example of the join() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name", l.*
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -500,7 +495,7 @@ $select = $db->select()
 
                 <title>Example of specifying no columns</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -653,7 +648,7 @@ $select = $db->select()
 
                 <title>Example of the joinUsing() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT *
 //   FROM "table1"
@@ -717,7 +712,7 @@ $select = $db->select()
 
                 <title>Example of the where() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -759,7 +754,7 @@ $select = $db->select()
 
                 <title>Example of a parameter in the where() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -786,7 +781,7 @@ $select = $db->select()
 
                 <title>Example of multiple where() methods</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -816,7 +811,7 @@ $select = $db->select()
 
                 <title>Example of the orWhere() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -845,7 +840,7 @@ $select = $db->select()
 
                 <title>Example of parenthesizing Boolean expressions</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT product_id, product_name, price
 //   FROM "products"
@@ -895,7 +890,7 @@ $select = $db->select()
 
                 <title>Example of the group() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -948,7 +943,7 @@ $select = $db->select()
 
                 <title>Example of the having() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -1012,7 +1007,7 @@ $select = $db->select()
 
                 <title>Example of the order() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", COUNT(*) AS line_items_per_product
 //   FROM "products" AS p JOIN "line_items" AS l
@@ -1056,7 +1051,7 @@ $select = $db->select()
 
                 <title>Example of the limit() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -1094,7 +1089,7 @@ $select = $db->select()
 
                 <title>Example of the limitPage() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
@@ -1122,7 +1117,7 @@ $select = $db->select()
 
                 <title>Example of the distinct() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT DISTINCT p."product_name"
 //   FROM "products" AS p
@@ -1149,7 +1144,7 @@ $select = $db->select()
 
                 <title>Example of forUpdate() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT FOR UPDATE p.*
 //   FROM "products" AS p
@@ -1192,12 +1187,13 @@ $select = $db->select()
 
                 <title>Example using the Db adapter's query() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $select = $db->select()
   ->from('products');
 
 $stmt = $db->query($select);
-$result = $stmt->fetchAll();]]>
+$result = $stmt->fetchAll();
+]]>
                 </programlisting>
 
             </example>
@@ -1219,12 +1215,13 @@ $result = $stmt->fetchAll();]]>
 
                 <title>Example using the Select object's query method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $select = $db->select()
     ->from('products');
 
 $stmt = $select->query();
-$result = $stmt->fetchAll();]]>
+$result = $stmt->fetchAll();
+]]>
                 </programlisting>
 
             </example>
@@ -1244,7 +1241,7 @@ $result = $stmt->fetchAll();]]>
 
                 <title>Example of the __toString() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $select = $db->select()
     ->from('products');
 
@@ -1252,7 +1249,8 @@ $sql = $select->__toString();
 echo "$sql\n";
 
 // The output is the string:
-//   SELECT * FROM "products"]]>
+//   SELECT * FROM "products"
+]]>
                 </programlisting>
 
             </example>
@@ -1372,7 +1370,7 @@ echo "$sql\n";
 
                 <title>Example of the getPart() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $select = $db->select()
     ->from('products')
     ->order('product_id');
@@ -1385,7 +1383,8 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 
 // The return value may be an array structure, not a string.
 // Each part has a different structure.
-print_r( $orderData );]]>
+print_r( $orderData );
+]]>
                 </programlisting>
 
             </example>
@@ -1417,7 +1416,7 @@ print_r( $orderData );]]>
 
                 <title>Example of the reset() method</title>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p.*
 //   FROM "products" AS p

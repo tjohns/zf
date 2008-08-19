@@ -68,8 +68,7 @@
                     you'd rather handle them yourself.  As an example:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->throwExceptions(true);
+                <programlisting role="php"><![CDATA[$front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
@@ -112,8 +111,7 @@ try {
                     the <code>getException()</code> method. As an example:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+                <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
@@ -166,10 +164,10 @@ if ($response->isException()) {
                             the following directive:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);
+                        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
 
 // or
+
 $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                         </programlisting>
 
@@ -215,8 +213,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_Action extends Zend_Controller_Action
+                        <programlisting role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -244,8 +241,7 @@ class My_Controller_Action extends Zend_Controller_Action
                             verify the action exists.  As an example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+                        <programlisting role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
     {
@@ -317,8 +313,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             As an example:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+                        <programlisting role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {

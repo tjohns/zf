@@ -36,8 +36,7 @@
         <code>sendJson()</code>:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -52,7 +51,7 @@ class FooController extends Zend_Controller_Action
         $json = $this->_helper->json->encodeJson($data);
     }
 }
-?>]]></programlisting>
+]]></programlisting>
 
     <note>
         <title>Keeping Layouts</title>
@@ -65,16 +64,14 @@ class FooController extends Zend_Controller_Action
             layouts enabled:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // Retrieve the json, keeping layouts:
         $json = $this->_helper->json->encodeJson($data, true);
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
     </note>
 </sect3>
 <!--

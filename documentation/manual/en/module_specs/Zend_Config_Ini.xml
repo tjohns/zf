@@ -25,9 +25,7 @@
             By default, the key separator character is the period character (<code>.</code>). This can be changed,
             however, by changing the <code>$options</code> key <code>'nestSeparator'</code> when constructing the
             <code>Zend_Config_Ini</code> object. For example:
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-$options['nestSeparator'] = ':';
+            <programlisting role="php"><![CDATA[$options['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             </programlisting>
         </para>
@@ -63,10 +61,7 @@ database.params.password = devsecret]]>
             Next, assume that the application developer needs the staging configuration data from the INI file. It is a
             simple matter to load these data by specifying the INI file and the staging section:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
 echo $config->database->params->dbname; // prints "dbname"]]>

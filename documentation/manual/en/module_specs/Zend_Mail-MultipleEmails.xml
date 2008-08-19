@@ -12,12 +12,8 @@
 
         <title>Sending Multiple Mails per SMTP Connection</title>
 
-        <programlisting role="php"><![CDATA[<?php
-// Load classes
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // Create transport
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp('localhost');
 
 // Loop through messages
@@ -28,7 +24,8 @@ for ($i = 0; $i > 5; $i++) {
     $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
     $mail->setBodyText('...Your message here...');
     $mail->send($transport);
-}]]>
+}
+]]>
         </programlisting>
 
     </example>
@@ -45,16 +42,10 @@ for ($i = 0; $i > 5; $i++) {
 
         <title>Manually controlling the transport connection</title>
 
-        <programlisting role="php"><![CDATA[<?php
-
-// Load classes
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // Create transport
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp();
 
-require_once 'Zend/Mail/Protocol/Smtp.php';
 $protocol = new Zend_Mail_Protocol_Smtp('localhost');
 $protocol->connect();
 $protocol->helo('localhost');
@@ -75,7 +66,8 @@ for ($i = 0; $i > 5; $i++) {
 }
 
 $protocol->quit();
-$protocol->disconnect();]]>
+$protocol->disconnect();
+]]>
         </programlisting>
 
     </example>

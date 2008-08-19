@@ -20,7 +20,7 @@ CREATE TABLE `session` (
   PRIMARY KEY (`id`)
 );
 ?>]]></programlisting>
-		<programlisting role="php"><![CDATA[<?php
+		<programlisting role="php"><![CDATA[
 //get your database connection ready
 $db = Zend_Db::factory('Pdo_Mysql', array(
 	'host'		=>'example.com',
@@ -67,7 +67,7 @@ CREATE TABLE `session` (
 	PRIMARY KEY (`Session_ID`, `save_path`, `name`)
 );
 ?>]]></programlisting>
-		<programlisting role="php"><![CDATA[<?php
+		<programlisting role="php"><![CDATA[
 //setup your DB connection like before
 //NOTE: this config is also passed to Zend_Db_Table so anything specific
 //to the table can be put in the config as well

@@ -20,7 +20,7 @@
             parameter to boolean TRUE:
             <example id="zend.http.client.redirections.example-1">
                 <title>Forcing RFC 2616 Strict Redirections on 301 and 302 Responses</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Strict Redirections
 $client->setConfig(array('strictredirects' => true));
 
@@ -44,7 +44,7 @@ $client->setConfig(array('strictredirects' => false));]]>
             can be used in several ways:
             <example id="zend.http.client.cookies.example-1">
                 <title>Setting Cookies Using setCookie()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Easy and simple: by providing a cookie name and cookie value
 $client->setCookie('flavor', 'chocolate chips');
 
@@ -69,7 +69,7 @@ $client->setCookie($cookie);]]>
             sending further requests.
             <example id="zend.http.client.cookies.example-2">
                 <title>Enabling Cookie Stickiness</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // To turn cookie stickiness on, set a Cookie Jar
 $client->setCookieJar();
 
@@ -101,7 +101,7 @@ $client->request('GET');]]>
             the following example shows:
             <example id="zend.http.client.custom_headers.example-1">
                 <title>Setting A Single Custom Request Header</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setting a single header, overwriting any previous value
 $client->setHeaders('Host', 'www.example.com');
 
@@ -121,7 +121,7 @@ $client->setHeaders('Cookie', array(
             call, by providing an array of headers as a single parameter:
             <example id="zend.http.client.custom_headers.example-2">
                 <title>Setting Multiple Custom Request Headers</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setting multiple headers, overwriting any previous value
 $client->setHeaders(array(
     'Host' => 'www.example.com',
@@ -159,7 +159,7 @@ $client->setHeaders(array(
             type will be application/octet-stream.
             <example id="zend.http.client.file_uploads.example-1">
                 <title>Using setFileUpload to Upload Files</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Uploading arbitrary data as a file
 $text = 'this is some plain text';
 $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
@@ -200,7 +200,7 @@ $client->submit('POST');]]>
             either using setRawData(), or with another method: setEncType().
             <example id="zend.http.client.raw_post_data.example-1">
                 <title>Sending Raw POST Data</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $xml = '<book>' .
        '  <title>Islands in the Stream</title>' .
        '  <author>Ernest Hemingway</author>' .
@@ -238,7 +238,7 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
             planned).
             <example id="zend.http.client.http_authentication.example-1">
                 <title>Setting HTTP Authentication User and Password</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Using basic authentication
 $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
 
@@ -300,7 +300,7 @@ $client->setAuth('shahar', 'myPassword!');]]>
         </para>
         <example id="zend.http.client.multiple_requests.example-1">
             <title>Performing consecutive requests with one client</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // First, instantiate the client
 $client = new Zend_Http_Client('http://www.example.com/fetchdata.php', array(
     'keepalive' => true

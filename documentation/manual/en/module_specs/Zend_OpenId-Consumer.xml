@@ -68,13 +68,12 @@
 
         <example id="zend.openid.consumer.example-1_2">
             <title>The Authentication Request Handler</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-
+            <programlisting role="php"><![CDATA[
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
     die("OpenID login failed.");
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -114,15 +113,14 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
 
         <example id="zend.openid.consumer.example-1_3">
             <title>The Authentication Response Verifier</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-
+            <programlisting role="php"><![CDATA[
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id)) {
     echo "VALID " . htmlspecialchars($id);
 } else {
     echo "INVALID " . htmlspecialchars($id);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -149,9 +147,8 @@ if ($consumer->verify($_GET, $id)) {
 
         <example id="zend.openid.consumer.example-2">
             <title>The Complete OpenID Login Script</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-
+            <programlisting role="php"><![CDATA[
+<?php
 $status = "";
 if (isset($_POST['openid_action']) &&
     $_POST['openid_action'] == "login" &&
@@ -218,13 +215,12 @@ if (isset($_POST['openid_action']) &&
 
         <example id="zend.openid.consumer.example-3_2">
             <title>Authentication Request for Specified Realm</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-
+            <programlisting role="php"><![CDATA[
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-3_3.php', 'http://*.php.net/')) {
     die("OpenID login failed.");
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -250,13 +246,12 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-3_3.php', 'http://*.
 
         <example id="zend.openid.consumer.example-4">
             <title>Immediate Check without Interaction</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-
+            <programlisting role="php"><![CDATA[
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
     die("OpenID login failed.");
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -298,7 +293,7 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
 
         <example id="zend.openid.consumer.example-5">
             <title>Databse Storage</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class DbStorage extends Zend_OpenId_Consumer_Storage
 {
     private $_db;
@@ -539,10 +534,7 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
 
         <example id="zend.openid.consumer.example-6_2">
             <title>Sending Requests with a Simple Registration Extension</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-require_once "Zend/OpenId/Extension/Sreg.php";
-
+            <programlisting role="php"><![CDATA[
 $sreg = new Zend_OpenId_Extension_Sreg(array(
     'nickname'=>true,
     'email'=>false,
@@ -550,7 +542,8 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-6_3.php', null, $sreg)) {
     die("OpenID login failed.");
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -574,10 +567,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-6_3.php', null, $sre
 
         <example id="zend.openid.consumer.example-6_3">
             <title>Verifying Responses with a Simple Registration Extension</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-require_once "Zend/OpenId/Extension/Sreg.php";
-
+            <programlisting role="php"><![CDATA[
 $sreg = new Zend_OpenId_Extension_Sreg(array(
     'nickname'=>true,
     'email'=>false,
@@ -597,7 +587,8 @@ if ($consumer->verify($_GET, $id, $sreg)) {
     }
 } else {
     echo "INVALID " . htmlspecialchars($id);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -647,11 +638,8 @@ if ($consumer->verify($_GET, $id, $sreg)) {
 
         <example id="zend.openid.consumer.example-7">
             <title>Zend_Auth Adapter for OpenID</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once "Zend/OpenId/Consumer.php";
-require_once "Zend/Auth.php";
-require_once "Zend/Auth/Adapter/Interface.php";
-
+            <programlisting role="php"><![CDATA[
+<?php
 class OpenIdAdapter implements Zend_Auth_Adapter_Interface {
     private $_id = null;
 
@@ -713,7 +701,8 @@ if ((isset($_POST['openid_action']) &&
 <input type="text" name="openid_identifier" value="">
 <input type="submit" name="openid_action" value="login">
 <input type="submit" name="openid_action" value="logout">
-</fieldset></form></body></html>]]>
+</fieldset></form></body></html>
+]]>
             </programlisting>
         </example>
 

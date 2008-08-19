@@ -50,7 +50,7 @@
         <para>
             There are two static methods in the Zend_Search_Lucene class which allow the developer to configure these settings:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
 Zend_Search_Lucene::setDefaultSearchField('contents');]]>

@@ -147,13 +147,12 @@
         its constructor. It also has a factory method that will return clients
         for StrikeIron services:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
-$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
+$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
+]]>
         </programlisting>
       </para>
 
@@ -182,9 +181,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
         for a particular StrikeIron service, you can utilize that client
         by calling methods on it just like any other PHP object.
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -195,7 +192,8 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 $rateInfo = $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 echo $rateInfo->province;
 echo $rateInfo->abbreviation;
-echo $rateInfo->GST;]]>
+echo $rateInfo->GST;
+]]>
         </programlisting>
 
         In the example above, the <code>getService()</code> method is used
@@ -237,9 +235,8 @@ echo $rateInfo->GST;]]>
         The simplest way to examine a result from the service is to use the built-in
         PHP functions like <ulink url="http://www.php.net/print_r">print_r()</ulink>:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
+<?php
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -262,7 +259,8 @@ Zend_Service_StrikeIron_Decorator Object
             [total] => 0.14
             [HST] => Y
         )
-)]]>
+)
+]]>
         </programlisting>
       </para>
 
@@ -306,9 +304,7 @@ Zend_Service_StrikeIron_Decorator Object
         anticipate and catch these exceptions when making method calls to the
         service:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -323,7 +319,8 @@ try {
   // error handling for events like connection
   // problems or subscription errors
 
-}]]>
+}
+]]>
         </programlisting>
         The exceptions thrown will always be <code>Zend_Service_StrikeIron_Exception</code>.
       </para>
@@ -363,9 +360,7 @@ try {
         has the ability to check the subscription status for that service using
         the <code>getSubscriptionInfo()</code> method of the client:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 // Get a client for the Sales & Use Tax Basic service
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
@@ -374,7 +369,8 @@ $taxBasic = $strikeIron->getService(array('class => 'SalesUseTaxBasic'));
 
 // Check remaining hits for the Sales & Use Tax Basic service
 $subscription = $taxBasic->getSubscriptionInfo();
-echo $subscription->remainingHits;]]>
+echo $subscription->remainingHits;
+]]>
         </programlisting>
       </para>
 

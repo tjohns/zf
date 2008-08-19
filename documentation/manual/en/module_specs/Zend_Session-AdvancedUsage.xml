@@ -21,10 +21,9 @@
 
             <title>Starting the Global Session</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session.php';
-
-Zend_Session::start();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Session::start();
+]]>
             </programlisting>
 
         </example>
@@ -136,9 +135,7 @@ Zend_Session::start();]]>
 
             <title>Locking Session Namespaces</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
 // marking session as read only locked
@@ -147,7 +144,8 @@ $userProfileNamespace->lock();
 // unlocking read-only lock
 if ($userProfileNamespace->isLocked()) {
     $userProfileNamespace->unLock();
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -170,9 +168,7 @@ if ($userProfileNamespace->isLocked()) {
 
             <title>Expiration Examples</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $s = new Zend_Session_Namespace('expireAll');
 $s->a = 'apple';
 $s->p = 'pear';
@@ -186,7 +182,8 @@ $s->setExpirationHops(5);
 $s->setExpirationSeconds(60);
 // The "expireAll" namespace will be marked "expired" on
 // the first request received after 60 seconds have elapsed,
-// or in 5 hops, whichever happens first.]]>
+// or in 5 hops, whichever happens first.
+]]>
             </programlisting>
 
         </example>
@@ -220,10 +217,9 @@ $s->setExpirationSeconds(60);
                 the application user is given 300 seconds to answer the displayed question.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // in the question view controller
-require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // expire only this variable
 $testSpace->accept_answer = true;
@@ -235,10 +231,9 @@ $testSpace->accept_answer = true;
                 an answer based on whether the user submitted the answer within the allotted time:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // in the answer processing controller
-require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 if ($testSpace->accept_answer === true) {
     // within time
@@ -246,7 +241,8 @@ if ($testSpace->accept_answer === true) {
 else {
     // not within time
 }
-// ...]]>
+// ...
+]]>
             </programlisting>
         </example>
 
@@ -272,9 +268,7 @@ else {
 
             <title>Limiting Session Namespace Access to a Single Instance</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 // create an instance of a namespace
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
@@ -292,7 +286,8 @@ try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
     echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -330,12 +325,12 @@ try {
                 The following illustrates how the problem may be reproduced:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 $sessionNamespace->array['testKey'] = 1; // may not work as expected before PHP 5.2.1
-echo $sessionNamespace->array['testKey'];]]>
+echo $sessionNamespace->array['testKey'];
+]]>
             </programlisting>
 
         </example>
@@ -349,10 +344,10 @@ echo $sessionNamespace->array['testKey'];]]>
                 desired array values have been set.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace('Foo');
-$sessionNamespace->array = array('a', 'b', 'c');]]>
+$sessionNamespace->array = array('a', 'b', 'c');
+]]>
             </programlisting>
 
         </example>
@@ -371,8 +366,7 @@ $sessionNamespace->array = array('a', 'b', 'c');]]>
                 location from which the copy was created, overwriting the original array.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 
 // assign the initial array
@@ -387,7 +381,8 @@ $tmp['fruit'] = 'peach';
 // assign a copy of the array back to the session namespace
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // prints "peach"]]>
+echo $sessionNamespace->array['fruit']; // prints "peach"
+]]>
             </programlisting>
 
         </example>
@@ -401,13 +396,13 @@ echo $sessionNamespace->array['fruit']; // prints "peach"]]>
                 indirectly.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
-echo $myNamespace->someArray['foo']; // prints "bar"]]>
+echo $myNamespace->someArray['foo']; // prints "bar"
+]]>
             </programlisting>
 
         </example>
@@ -460,9 +455,8 @@ echo $myNamespace->someArray['foo']; // prints "bar"]]>
 
             <title>PHPUnit Testing Code Dependent on Zend_Session</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // testing setExpirationSeconds()
-require_once 'tests/Zend/Session/SessionTestHelper.php'; // also see SessionTest.php
 $script = 'SessionTestHelper.php';
 $s = new Zend_Session_Namespace('space');
 $s->a = 'apple';

@@ -22,10 +22,7 @@
             backend.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-
-$frontendOptions = array(
+        <programlisting role="php"><![CDATA[$frontendOptions = array(
    'lifetime' => 7200, // cache lifetime of 2 hours
    'automatic_serialization' => true
 );
@@ -58,8 +55,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             is no need to even connect to the database; records are fetched from cache and unserialized.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// $cache initialized in previous example
+        <programlisting role="php"><![CDATA[// $cache initialized in previous example
 
 // see if a cache already exists:
 if(!$result = $cache->load('myresult')) {
@@ -94,8 +90,7 @@ print_r($result);]]>
             method. On the next run, the whole section will be skipped in favor of fetching data from cache
             (as long as the cache record is valid).
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$frontendOptions = array(
+        <programlisting role="php"><![CDATA[$frontendOptions = array(
    'lifetime' => 30,                  // cache lifetime of half a minute
    'automatic_serialization' => false  // this is default anyway
 );

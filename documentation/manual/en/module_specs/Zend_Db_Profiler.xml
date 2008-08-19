@@ -20,15 +20,12 @@
             constructor, or by asking the adapter to enable it later.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
-
-$params = array(
+        <programlisting role="php"><![CDATA[<$params = array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-    'profiler' => true  // turn on profiler; set to false to disable (default)
+    'profiler' => true  // turn on profiler; set to false to disable (disabled by default)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -124,8 +121,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             <code>getProfiler()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();]]>
+        <programlisting role="php"><![CDATA[$profiler = $db->getProfiler();]]>
         </programlisting>
 
         <para>
@@ -210,8 +206,7 @@ $profiler = $db->getProfiler();]]>
             last run:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$query = $profiler->getLastQueryProfile();
+        <programlisting role="php"><![CDATA[$query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();]]>
         </programlisting>
@@ -222,8 +217,7 @@ echo $query->getQuery();]]>
             through the queries to find the one that ran longest:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->getTotalElapsedSecs();
+        <programlisting role="php"><![CDATA[$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -263,8 +257,7 @@ echo "Longest query: \n" . $longestQuery . "\n";]]>
                 filter, pass the method a null value.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Only profile queries that take at least 5 seconds:
+            <programlisting role="php"><![CDATA[// Only profile queries that take at least 5 seconds:
 $profiler->setFilterElapsedSecs(5);
 
 // Profile all queries regardless of length:
@@ -334,8 +327,7 @@ $profiler->setFilterElapsedSecs(null);]]>
                 argument.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// profile only SELECT queries
+            <programlisting role="php"><![CDATA[// profile only SELECT queries
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // profile SELECT, INSERT, and UPDATE queries
@@ -364,8 +356,7 @@ $profiler->setFilterQueryType(null);]]>
                 for a list of the query type constants.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Retrieve only SELECT query profiles
+            <programlisting role="php"><![CDATA[// Retrieve only SELECT query profiles
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // Retrieve only SELECT, INSERT, and UPDATE query profiles

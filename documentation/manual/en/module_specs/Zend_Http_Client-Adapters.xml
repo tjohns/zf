@@ -140,7 +140,7 @@
         </para>
         <example id="zend.http.client.adapters.socket.example-1">
             <title>Changing the HTTPS transport layer</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Set the configuration parameters
 $config = array(
     'adapter'      => 'Zend_Http_Client_Adapter_Socket',
@@ -242,7 +242,7 @@ $response = $client->request();]]>
         </para>
         <example id="zend.http.client.adapters.proxy.example-1">
             <title>Using Zend_Http_Client behind a proxy server</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Set the configuration parameters
 $config = array(
     'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
@@ -290,7 +290,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         </para>
         <example id="zend.http.client.adapters.test.example-1">
             <title>Testing Against a Single HTTP Response Stub</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Instantiate a new adapter and client
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -332,7 +332,7 @@ $response = $client->request('GET');
         </para>
         <example id="zend.http.client.adapters.test.example-2">
             <title>Testing Against Multiple HTTP Response Stubs</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Instantiate a new adapter and client
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -406,7 +406,7 @@ $adapter->addResponse(
         </para>
         <example id="zend.http.client.adapters.extending.example-1">
             <title>Creating your own connection adapter</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**

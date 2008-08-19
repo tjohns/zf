@@ -323,15 +323,14 @@
             example of how a self written adapter class could be implemented:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
+        <programlisting role="php"><![CDATA[
 try {
     $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat', '/path/to/translate.xx', 'en', array('myoption' => 'myvalue'));
 } catch (Exception $e) {
     // File not found, no adapter class...
     // General failure
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -354,12 +353,11 @@ try {
             <code>Zend_Translate::getCache()</code>.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
+        <programlisting role="php"><![CDATA[
 $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 Zend_Translate::setCache($cache);
-$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');]]>
+$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');
+]]>
         </programlisting>
 
         <note>

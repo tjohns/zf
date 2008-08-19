@@ -145,7 +145,7 @@ $view->partialLoop()->setObjectKey('model');
             And the following "model":
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $model = array(
     array('key' => 'Mammal', 'value' => 'Camel'),
     array('key' => 'Bird', 'value' => 'Penguin'),

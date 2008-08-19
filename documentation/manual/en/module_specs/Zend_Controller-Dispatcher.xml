@@ -32,8 +32,7 @@
                 in either the front controller or your dispatcher:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php 
-// In your front controller:
+            <programlisting role="php"><![CDATA[// In your front controller:
 $front->setParam('prefixDefaultModule', true);
 
 // In your dispatcher:
@@ -70,8 +69,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
             send to the new action:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function fooAction()
+        <programlisting role="php"><![CDATA[public function fooAction()
 {
     // forward to another action in the current controller and module:
     $this->_forward('bar', null, null, array('baz' => 'bogus'));

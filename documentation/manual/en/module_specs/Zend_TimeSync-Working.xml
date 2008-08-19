@@ -27,12 +27,11 @@
             from which you want to have the time.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync('0.pool.ntp.org');
 
-print $server->getDate()->getIso();]]>
+print $server->getDate()->getIso();
+]]>
         </programlisting>
 
         <para>
@@ -69,15 +68,14 @@ print $server->getDate()->getIso();]]>
             with the <code>addServer()</code> method.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('0.pool.ntp.org',
                                   '1.pool.ntp.org',
                                   '2.pool.ntp.org'));
 $server->addServer('3.pool.ntp.org');
 
-print $server->getDate()->getIso();]]>
+print $server->getDate()->getIso();
+]]>
         </programlisting>
 
         <para>
@@ -91,15 +89,14 @@ print $server->getDate()->getIso();]]>
             parameter at initiation or addition of an other timeserver.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('generic'  => '0.pool.ntp.org',
                                   'fallback' => '1.pool.ntp.org',
                                   'reserve'  => '2.pool.ntp.org'));
 $server->addServer('3.pool.ntp.org', 'additional');
 
-print $server->getDate()->getIso();]]>
+print $server->getDate()->getIso();
+]]>
         </programlisting>
 
         <para>
@@ -126,15 +123,14 @@ print $server->getDate()->getIso();]]>
             within the address as show in the previous examples.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org',
                                   'reserve'  => 'ntp:\\2.pool.ntp.org'));
 $server->addServer('sntp:\\internal.myserver.com', 'additional');
 
-print $server->getDate()->getIso();]]>
+print $server->getDate()->getIso();
+]]>
         </programlisting>
 
         <para>
@@ -160,14 +156,13 @@ print $server->getDate()->getIso();]]>
             address. If no port is defined, then <code>Zend_TimeSync</code> will use the standard port.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org:200',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));
 $server->addServer('sntp:\\internal.myserver.com:399', 'additional');
 
-print $server->getDate()->getIso();]]>
+print $server->getDate()->getIso();
+]]>
         </programlisting>
 
     </sect2>
@@ -196,9 +191,7 @@ print $server->getDate()->getIso();]]>
             or, if no key is set, it will return all set options.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 Zend_TimeSync::setOptions(array('timeout' => 3, 'myoption' => 'timesync'));
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));
@@ -206,7 +199,8 @@ $server->addServer('sntp:\\internal.myserver.com', 'additional');
 
 print $server->getDate()->getIso();
 print_r(Zend_TimeSync::getOptions();
-print "Timeout = " . Zend_TimeSync::getOptions('timeout');]]>
+print "Timeout = " . Zend_TimeSync::getOptions('timeout');
+]]>
         </programlisting>
 
         <para>
@@ -230,15 +224,14 @@ print "Timeout = " . Zend_TimeSync::getOptions('timeout');]]>
             be returned.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));
 $server->addServer('sntp:\\internal.myserver.com', 'additional');
 
 $actual = $server->getServer();
-$server = $server->setServer('additional');]]>
+$server = $server->setServer('additional');
+]]>
         </programlisting>
 
     </sect2>
@@ -252,13 +245,12 @@ $server = $server->setServer('additional');]]>
             get these informations with the <code>getInfo()</code> method.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/TimeSync.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));
 
-print_r ($server->getInfo());]]>
+print_r ($server->getInfo());
+]]>
         </programlisting>
 
         <para>
@@ -277,7 +269,7 @@ print_r ($server->getInfo());]]>
             to iterate through all throwed exceptions like shown in the following example:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $serverlist = array(
         // invalid servers
         'invalid_a'  => 'ntp://a.foo.bar.org',

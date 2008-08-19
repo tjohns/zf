@@ -21,10 +21,7 @@
         give the <code>wsdl</code> option to <code>getService()</code>
         instead of the <code>class</code> option:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Get a generic client to the Reverse Phone Lookup service
@@ -86,9 +83,7 @@ echo $result->listingName;
         and
         <ulink url="http://www.php.net/manual/en/function.soap-soapclient-getlastresponse.php"><code>__getLastRequest()</code></ulink>:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password',
                                                 'options'  => array('trace' => true)));
@@ -102,7 +97,8 @@ $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 // Get SOAPClient instance and view XML
 $soapClient = $taxBasic->getSoapClient();
 echo $soapClient->__getLastRequest();
-echo $soapClient->__getLastResponse();]]>
+echo $soapClient->__getLastResponse();
+]]>
         </programlisting>
       </para>
 

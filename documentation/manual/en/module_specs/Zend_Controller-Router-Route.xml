@@ -17,8 +17,7 @@
         functionality could look like:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'author/:username',
     array(
         'controller' => 'profile',
@@ -58,8 +57,7 @@ $router->addRoute('user', $route);]]>
         the following key and value pairs:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$values = array(
+    <programlisting role="php"><![CDATA[$values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
@@ -75,8 +73,7 @@ $values = array(
         <code>Zend_Controller_Request::getParam()</code> methods:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-public function userinfoAction()
+    <programlisting role="php"><![CDATA[public function userinfoAction()
 {
     $request = $this->getRequest();
     $username = $request->getParam('username');
@@ -92,8 +89,7 @@ public function userinfoAction()
         following route more-or-less mimics the Module route behavior:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     ':module/:controller/:action/*',
     array('module' => 'default')
 );
@@ -110,8 +106,7 @@ $router->addRoute('default', $route);]]>
             representing variable names and with values as desired defaults:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array('year' => 2006)
 );
@@ -135,8 +130,7 @@ $router->addRoute('archive', $route);]]>
             action as the route's defaults:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -165,8 +159,7 @@ $router->addRoute('archive', $route);]]>
             expression:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -195,8 +188,7 @@ $router->addRoute('archive', $route);]]>
             matching there is a static hostname option:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     array(
         'host' => 'blog.mysite.com',
         'path' => 'archive'
@@ -218,8 +210,7 @@ $router->addRoute('archive', $route);]]>
             path parameters:
         </para>
         
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     array(
         'host' => array(
             'regex'   => '([a-z]+).mysite.com',

@@ -33,9 +33,7 @@
                 <code>Zend_Memory::factory()</code> instantiates the memory
                 manager object with specified backend options.
             </para>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Memory.php';
-
+                <programlisting role="php"><![CDATA[
 $backendOptions = array(
     'cache_dir' => './tmp/' // Directory where to put the swapped memory blocks
 );
@@ -56,7 +54,8 @@ echo $loadedFiles[$index1]->value;
 
 $loadedFiles[$index2]->value = $newValue;
 
-$loadedFiles[$index3]->value[$charIndex] = '_';]]>
+$loadedFiles[$index3]->value[$charIndex] = '_';
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -109,7 +108,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]>
                 You can operate with this <code>value</code> attribute as
                 an object property:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;

@@ -96,8 +96,7 @@ application/
             and the <code>default</code> key must be present. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));]]>
@@ -110,8 +109,7 @@ $front->setControllerDirectory(array(
             <code>default</code> namespace. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
         </programlisting>
 
         <para>
@@ -121,8 +119,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
             <code>addModuleDirectory()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Assuming the following directory structure:
  * application/
  *     modules/
@@ -147,8 +144,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             modules by using <code>setModuleControllerDirectoryName()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Change the controllers subdirectory to be 'con'
  * application/
  *     modules/
@@ -210,8 +206,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             <code>useDefaultControllerAlways</code> parameter in the front controller:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]>
         </programlisting>
     </sect2>
 </sect1>

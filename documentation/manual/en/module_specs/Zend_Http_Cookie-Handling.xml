@@ -83,7 +83,7 @@
             </itemizedlist>
             <example id="zend.http.cookies.cookie.instantiating.example-1">
                <title>Instantiating a Zend_Http_Cookie object</title>
-               <programlisting role="php"><![CDATA[<?php
+               <programlisting role="php"><![CDATA[
 // First, using the constructor. This cookie will expire in 2 hours
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
 
@@ -111,7 +111,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
             The value will be URL encoded, as expected in a Cookie header:
             <example id="zend.http.cookies.cookie.instantiating.example-2">
                <title>Stringifying a Zend_Http_Cookie object</title>
-               <programlisting role="php"><![CDATA[<?php
+               <programlisting role="php"><![CDATA[
 // Create a new cookie
 $cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
 
@@ -189,7 +189,7 @@ echo $cookie;]]>
         <para>
             <example id="zend.http.cookies.cookie.accessors.example-1">
                 <title>Using getter methods with Zend_Http_Cookie</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // First, create the cookie
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
@@ -245,7 +245,7 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
             </itemizedlist>
             <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>Matching cookies</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Create the cookie object - first, a secure session cookie
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
 

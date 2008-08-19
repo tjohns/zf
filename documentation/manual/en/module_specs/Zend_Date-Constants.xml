@@ -681,10 +681,7 @@
 
         <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>Example usage for self-defined ISO formats</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
 print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
             </programlisting>
@@ -1128,10 +1125,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
 
         <example id="zend.date.constants.phpformats.example-1">
             <title>Example usage for self-defined formats with PHP specifier</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
 Zend_Date::setOptions(array('format_type' => 'php'));
 $date = new Zend_Date(1234567890, false, $locale);
 

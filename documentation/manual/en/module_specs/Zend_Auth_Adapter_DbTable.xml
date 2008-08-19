@@ -74,8 +74,8 @@
             </para>
             <programlisting role="php"><![CDATA[
 // Create an in-memory SQLite database connection
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' =>
+                                                  ':memory:'));
 
 // Build a simple table creation query
 $sqlCreate = 'CREATE TABLE [users] ('
@@ -92,7 +92,8 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Insert the data
-$dbAdapter->query($sqlInsert);]]>
+$dbAdapter->query($sqlInsert);
+]]>
             </programlisting>
             <para>
                 With the database connection and table data available, an 
@@ -102,8 +103,6 @@ $dbAdapter->query($sqlInsert);]]>
                 instantiation:
             </para>
             <programlisting role="php"><![CDATA[
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
 // Configure the instance with constructor parameters...
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter,
@@ -119,7 +118,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
+;
+]]>
             </programlisting>
             <para>
                 At this point, the authentication adapter instance is ready to 
@@ -136,7 +136,8 @@ $authAdapter
 ;
 
 // Perform the authentication query, saving the result
-$result = $authAdapter->authenticate();]]>
+$result = $authAdapter->authenticate();
+]]>
             </programlisting>
             <para>
                 In addition to the availability of the 
@@ -161,7 +162,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
+*/
+]]>
             </programlisting>
             <para>
                 Since the table row contains the credential value, it is 
@@ -186,16 +188,17 @@ Array
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
-    // store the identity as an object where only the username and real_name 
-    // have been returned
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+    // store the identity as an object where only the username and
+    // real_name have been returned
+    $storage = _auth->getStorage();
+    $this->$storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name',
     )));
 
-    // store the identity as an object where the password column has been 
-    // omitted
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(
+    // store the identity as an object where the password column has
+    // been omitted
+    $this->$storage->write($adapter->getResultRowObject(
         null,
         'password'
     ));
@@ -206,7 +209,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -258,9 +262,12 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             Therefore we need to modify our table to store our salt string:
         </para>
         <programlisting role="php"><![CDATA[
-$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+$sqlAlter = "ALTER TABLE [users] "
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
 
-$dbAdapter->query($sqlAlter);]]>
+$dbAdapter->query($sqlAlter);
+]]>
         </programlisting>
         <para>
             Here’s a simple way to generate a salt string for every user at 
@@ -270,7 +277,8 @@ $dbAdapter->query($sqlAlter);]]>
 for ($i = 0; $i < 50; $i++)
 {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
+}
+]]>
         </programlisting>
         <para>
             And now let’s build the adapter:
@@ -281,8 +289,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
-);]]>
+    "MD5(CONCAT('"
+    . Zend_Registry::get('staticSalt')
+    . "', ?, password_salt))"
+);
+]]>
         </programlisting>
         <note>
             <para>

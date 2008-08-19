@@ -10,8 +10,7 @@
         </para>
         <example id="zend.service.delicious.introduction.getAllPosts">
             <title>Get all posts</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
 foreach ($posts as $post) {
@@ -30,8 +29,7 @@ foreach ($posts as $post) {
             methods return an instance of <code>Zend_Service_Delicious_PostList</code>, which
             holds all retrieved posts.
         </para>
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Get posts matching the arguments. If no date or url is given, most recent date will be used.
  *
  * @param string $tag Optional filtering by tag
@@ -71,8 +69,7 @@ public function getAllPosts($tag = null);]]>
         </para>
         <example id="zend.service.delicious.postlist.accessing_post_lists">
             <title>Accessing post lists</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
 // count posts
@@ -105,8 +102,7 @@ echo $posts[0]->getTitle();]]>
                 Posts may be filtered by specific tags using <code>withTags()</code>. As a convenience,
                 <code>withTag()</code> is also provided for when only a single tag needs to be specified.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
 // Print posts having "php" and "zend" tags
@@ -122,8 +118,7 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
                 Posts may be filtered by URL matching a specified regular expression using the <code>withUrl()</code>
                 method:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getAllPosts();
 
 // Print posts having "help" in the URL
@@ -138,8 +133,7 @@ foreach ($posts->withUrl('/help/') as $post) {
         <title>Editing posts</title>
         <example id="zend.service.delicious.editing_posts.post_editing">
             <title>Post editing</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
 // set title
@@ -153,8 +147,7 @@ $posts[0]->save();]]>
             <para>
                Every setter method returns the post object so that you can chain method calls using a fluent interface.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('New title')
@@ -171,8 +164,7 @@ $posts[0]->setTitle('New title')
         </para>
         <example id="zend.service.delicious.deleting_posts.deleting_posts">
             <title>Deleting posts</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 
 // by specifying URL
 $delicious->deletePost('http://framework.zend.com');
@@ -195,8 +187,7 @@ $delicious->deletePost($posts[0]->getUrl());]]>
         </para>
         <example id="zend.service.delicious.adding_posts.adding_a_post">
             <title>Adding a post</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 
 // create a new post and save it (with method call chaining)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
@@ -214,8 +205,7 @@ $newPost->save();]]>
         <title>Tags</title>
         <example id="zend.service.delicious.tags.tags">
             <title>Tags</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all tags
 print_r($delicious->getTags());
@@ -229,8 +219,7 @@ $delicious->renameTag('ZF', 'zendFramework');]]>
         <title>Bundles</title>
         <example id="zend.service.delicious.bundles.example">
             <title>Bundles</title>
-            <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('username', 'password');
+            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('username', 'password');
 
 // get all bundles
 print_r($delicious->getBundles());
@@ -290,8 +279,7 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));]]>
         </note>
         <example id="zend.service.delicious.public_data.retrieving_public_data">
             <title>Retrieving public data</title>
-            <programlisting role="php"><![CDATA[<?php
-// username and password are not required
+            <programlisting role="php"><![CDATA[// username and password are not required
 $delicious = new Zend_Service_Delicious();
 
 // get fans of user someUser
@@ -357,8 +345,7 @@ print_r($delicious->getUserTags('someUser'));]]>
         </para>
         <example id="zend.service.delicious.httpclient.changing">
             <title>Changing the HTTP client of <code>Zend_Rest_Client</code></title>
-            <programlisting role="php"><![CDATA[<?php
-$myHttpClient = new My_Http_Client();
+            <programlisting role="php"><![CDATA[$myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);]]>
             </programlisting>
         </example>
@@ -368,8 +355,7 @@ Zend_Rest_Client::setHttpClient($myHttpClient);]]>
         </para>
         <example id="zend.service.delicious.httpclient.keepalive">
             <title>Configuring your HTTP client to keep connections alive</title>
-            <programlisting role="php"><![CDATA[<?php
-Zend_Rest_Client::getHttpClient()->setConfig(array(
+            <programlisting role="php"><![CDATA[Zend_Rest_Client::getHttpClient()->setConfig(array(
         'keepalive' => true
 ));]]>
             </programlisting>

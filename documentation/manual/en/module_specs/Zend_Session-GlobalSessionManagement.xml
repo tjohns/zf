@@ -87,11 +87,9 @@ remember_me_seconds = 864000]]>
                 <code>Zend_Session::setOptions()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
-require_once 'Zend/Session.php';
 Zend_Session::setOptions($config->toArray());]]>
             </programlisting>
 
@@ -352,14 +350,14 @@ Zend_Session::setOptions($config->toArray());]]>
 
                 <title>Session Fixation</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+                <programlisting role="php"><![CDATA[
 $defaultNamespace = new Zend_Session_Namespace();
 
 if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>

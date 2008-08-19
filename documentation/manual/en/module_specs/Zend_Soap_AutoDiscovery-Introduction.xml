@@ -68,9 +68,7 @@
 
     <para>
         Here is an example of common usage of the autodiscovery functionality:
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Soap/AutoDiscover.php';
-
+        <programlisting role="php"><![CDATA[
 class My_SoapServer_Class {
 ...
 }

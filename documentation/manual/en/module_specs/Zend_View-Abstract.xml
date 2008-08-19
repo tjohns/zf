@@ -27,7 +27,7 @@
         Internally, <code>Zend_View::_run()</code> does the following:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 protected function _run()
 {
     include func_get_arg(0);

@@ -43,10 +43,7 @@
             so with this method.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Akismet.php';
-
-// Instantiate with the API key and a URL to the application or resource being
+        <programlisting role="php"><![CDATA[// Instantiate with the API key and a URL to the application or resource being
 // used
 $akismet = new Zend_Service_Akismet($apiKey, 'http://framework.zend.com/wiki/');
 if ($akismet->verifyKey($apiKey) {
@@ -176,8 +173,7 @@ echo "Key is not valid\n";
         <example id="zend.service.akismet.isspam.example-1">
             <title>isSpam() Usage</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -218,8 +214,7 @@ if ($akismet->isSpam($data)) {
         <example id="zend.service.akismet.submitspam.example-1">
             <title>submitSpam() Usage</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -259,8 +254,7 @@ $akismet->submitSpam($data));]]>
         <example id="zend.service.akismet.submitham.example-1">
             <title>submitHam() Usage</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',

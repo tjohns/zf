@@ -21,7 +21,7 @@
             callback:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Util
 {
     public static function label($content, $element, array $options)
@@ -352,7 +352,7 @@ class Util
             As an example, you might have the following element:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Setting the decorator for the element to a single, ViewScript, decorator,
 // specifying the viewScript as an option, and some extra options:
 $element->setDecorators(array(array('ViewScript', array(
@@ -392,7 +392,7 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
                 for the decorator's 'placement' option:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // At decorator creation:
 $element->addDecorator('ViewScript', array('placement' => false));
 

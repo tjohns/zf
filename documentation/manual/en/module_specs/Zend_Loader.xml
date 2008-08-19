@@ -33,7 +33,7 @@
 
         <example id="zend.loader.load.file.example">
             <title>Example of loadFile() method</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
             </programlisting>
     </example>
@@ -76,7 +76,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
 
         <example id="zend.loader.load.class.example">
             <title>Example of loadClass() method</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
@@ -125,7 +125,7 @@ Zend_Loader::loadClass('Container_Tree',
 
         <example id="zend.loader.load.isreadable.example">
             <title>Example of isReadable() method</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // do something with $filename
 }]]>
@@ -159,7 +159,7 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example">
             <title>Example of registering the autoloader callback method</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::registerAutoload();]]>
             </programlisting>
         </example>
@@ -190,7 +190,7 @@ Zend_Loader::registerAutoload();]]>
                 call <code>self::loadClass()</code>, then it calls the
                 method of that name in the parent class, not the subclass.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)

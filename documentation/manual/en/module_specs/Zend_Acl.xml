@@ -2,8 +2,8 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Acl provides lightweight and flexible access control list (ACL) functionality
-        and privileges management. In general, an application may utilize such functionality
+        Zend_Acl provides a lightweight and flexible access control list (ACL) implementation
+        for privileges management. In general, an application may utilize such ACL's
         to control access to certain protected objects by other requesting objects.
     </para>
 
@@ -13,92 +13,92 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    a <emphasis role="strong">Resource</emphasis> is an object
+                    a <emphasis role="strong">resource</emphasis> is an object
                     to which access is controlled.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    a <emphasis role="strong">Role</emphasis> is an object
+                    a <emphasis role="strong">role</emphasis> is an object
                     that may request access to a Resource.
                 </para>
             </listitem>
         </itemizedlist>
 
-        Put simply, <emphasis role="strong">Roles request access to Resources</emphasis>.
-        For example, if a person requests access to a car, then the person is the requesting Role,
-        and the car is the Resource, since access to the car is under control.
+        Put simply, <emphasis role="strong">roles request access to resources</emphasis>.
+        For example, if a parking attendant requests access to a car, then the parking attendant is the requesting role,
+        and the car is the resource, since access to the car may not be granted to everyone.
     </para>
 
     <para>
-        Through the specification and use of an access control list (ACL), an application may control
-        how requesting objects (Roles) are granted access to protected objects (Resources).
+        Through the specification and use of an ACL, an application may control
+        how roles are granted access to resources.
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
         <title>About Resources</title>
         <para>
-            In Zend_Acl, creating a Resource is very simple. Zend_Acl provides
-            <code>Zend_Acl_Resource_Interface</code> to facilitate developers' creating Resources. A class need only
-            implement this interface, which consists of a single method, <code>getResourceId()</code>, in order
-            for Zend_Acl to consider the object to be a Resource. Additionally, <code>Zend_Acl_Resource</code> is
-            included with Zend_Acl as a basic Resource implementation for developers to extend where desirable.
+            Creating a resource in Zend_Acl is very simple. Zend_Acl provides the resource,
+            <code>Zend_Acl_Resource_Interface</code>, to facilitate creating resources in an application. A class need only
+            implement this interface, which consists of a single method, <code>getResourceId()</code>, so
+            Zend_Acl to recognize the object as a resource. Additionally, <code>Zend_Acl_Resource</code> is
+            provided by Zend_Acl as a basic resource implementation for developers to extend as needed.
         </para>
         <para>
-            Zend_Acl provides a tree structure to which multiple Resources (or "areas under access control")
-            can be added. Since Resources are stored in such a tree structure, they can be organized from the
-            general (toward the tree root) to the specific (toward the tree leaves). Queries upon
-            a specific Resource will automatically search the Resource's hierarchy for rules assigned to ancestor
-            Resources, allowing for simple inheritance of rules. For example, if a default rule is to be
+            Zend_Acl provides a tree structure to which multiple resources
+            can be added. Since resources are stored in such a tree structure, they can be organized from thse
+            general (toward the tree root) to the specific (toward the tree leaves). Queries on
+            a specific resource will automatically search the resource's hierarchy for rules assigned to ancestor
+            resources, allowing for simple inheritance of rules. For example, if a default rule is to be
             applied to each building in a city, one would simply assign the rule to the city, instead of
             assigning the same rule to each building. Some buildings may require exceptions to such a
-            rule, however, and this is achieved easily in Zend_Acl by assigning such exception rules to
-            each such building that requires an exception to the rule. A Resource may inherit from only one
-            parent Resource, though this parent Resource can have its own parent Resource, and so on.
+            rule, however, and this can be achieved in Zend_Acl by assigning such exception rules to
+            each building that requires such an exception. A resource may inherit from only one
+            parent resource, though this parent resource can have its own parent resource, etc.
         </para>
         <para>
-            Zend_Acl also supports privileges upon Resources (e.g., "create", "read", "update", "delete"), and
-            the developer can assign rules that affect all privileges or specific privileges upon a Resource.
+            Zend_Acl also supports privileges on resources (e.g., "create", "read", "update", "delete"), so
+            the developer can assign rules that affect all privileges or specific privileges on one or more resources.
         </para>
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
         <title>About Roles</title>
         <para>
-            Like with Resources, creating a Role is also very simple. Zend_Acl provides
-            <code>Zend_Acl_Role_Interface</code> to facilitate developers' creating Roles. A class need only
-            implement this interface, which consists of a single method, <code>getRoleId()</code>, in order
-            for Zend_Acl to consider the object to be a Role. Additionally, <code>Zend_Acl_Role</code> is
-            included with Zend_Acl as a basic Role implementation for developers to extend where desirable.
+            As with resources, creating a role is also very simple. All roles must implement
+            <code>Zend_Acl_Role_Interface</code>. This interface consists of a single method, <code>getRoleId()</code>,
+            Additionally, <code>Zend_Acl_Role</code> is
+            provided by Zend_Acl as a basic role implementation for developers to extend as needed.
         </para>
         <para>
-            In Zend_Acl, a Role may inherit from one or more Roles. This is to support inheritance of rules
-            among Roles. For example, a user Role, such as "sally", may belong to one or more parent Roles,
+            In Zend_Acl, a role may inherit from one or more roles. This is to support inheritance of rules
+            among roles. For example, a user role, such as "sally", may belong to one or more parent roles,
             such as "editor" and "administrator". The developer can assign rules to "editor" and
             "administrator" separately, and "sally" would inherit such rules from both, without having to
             assign rules directly to "sally".
         </para>
         <para>
-            Though the ability to inherit from multiple Roles is very useful, multiple inheritance also
+            Though the ability to inherit from multiple roles is very useful, multiple inheritance also
             introduces some degree of complexity. The following example illustrates the ambiguity condition and how
             Zend_Acl solves it.
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-            <title>Multiple inheritance between Roles</title>
+            <title>Multiple Inheritance amoung Roles</title>
             <para>
-                The following code defines three base Roles - "<code>guest</code>", "<code>member</code>", and
-                "<code>admin</code>" - from which other Roles may inherit. Then, a Role identified by
-                "<code>someUser</code>" is established and inherits from the three other Roles. The order in
-                which these Roles appear in the <code>$parents</code> array is important. When necessary,
-                Zend_Acl searches for access rules defined not only for the queried Role (herein,
-                "<code>someUser</code>"), but also upon the Roles from which the queried Role inherits
+                The following code defines three base roles - "<code>guest</code>", "<code>member</code>", and
+                "<code>admin</code>" - from which other roles may inherit. Then, a role identified by
+                "<code>someUser</code>" is established and inherits from the three other roles. The order in
+                which these roles appear in the <code>$parents</code> array is important. When necessary,
+                Zend_Acl searches for access rules defined not only for the queried role (herein,
+                "<code>someUser</code>"), but also upon the roles from which the queried role inherits
                 (herein, "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"):
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
+            <programlisting role="php"><![CDATA[
+            
+            
+            
 $acl = new Zend_Acl();
 
-require_once 'Zend/Acl/Role.php';
 $acl->addRole(new Zend_Acl_Role('guest'))
     ->addRole(new Zend_Acl_Role('member'))
     ->addRole(new Zend_Acl_Role('admin'));
@@ -106,7 +106,6 @@ $acl->addRole(new Zend_Acl_Role('guest'))
 $parents = array('guest', 'member', 'admin');
 $acl->addRole(new Zend_Acl_Role('someUser'), $parents);
 
-require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
@@ -115,30 +114,30 @@ $acl->allow('member', 'someResource');
 echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
             </programlisting>
             <para>
-                Since there is no rule specifically defined for the "<code>someUser</code>" Role and
-                "<code>someResource</code>", Zend_Acl must search for rules that may be defined for Roles that
+                Since there is no rule specifically defined for the "<code>someUser</code>" role and
+                "<code>someResource</code>", Zend_Acl must search for rules that may be defined for roles that
                 "<code>someUser</code>" inherits. First, the "<code>admin</code>" role is visited, and there
                 is no access rule defined for it. Next, the "<code>member</code>" role is visited, and
                 Zend_Acl finds that there is a rule specifying that "<code>member</code>" is allowed access to
                 "<code>someResource</code>".
             </para>
             <para>
-                If Zend_Acl were to continue examining the rules defined for other parent Roles, however, it
+                If Zend_Acl were to continue examining the rules defined for other parent roles, however, it
                 would find that "<code>guest</code>" is denied access to "<code>someResource</code>". This
                 fact introduces an ambiguity because now "<code>someUser</code>" is both denied and allowed
                 access to "<code>someResource</code>", by reason of having inherited conflicting rules from
-                different parent Roles.
+                different parent roles.
             </para>
             <para>
                 Zend_Acl resolves this ambiguity by completing a query when it finds the first rule that is
-                directly applicable to the query. In this case, since the "<code>member</code>" Role is
-                examined before the "<code>guest</code>" Role, the example code would print
+                directly applicable to the query. In this case, since the "<code>member</code>" role is
+                examined before the "<code>guest</code>" role, the example code would print
                 "<code>allowed</code>".
             </para>
         </example>
         <note>
             <para>
-                When specifying multiple parents for a Role, keep in mind that the last parent listed is the
+                When specifying multiple parents for a role, keep in mind that the last parent listed is the
                 first one searched for rules applicable to an authorization query.
             </para>
         </note>
@@ -149,21 +148,19 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
 
         <para>
             An ACL can represent any set of physical or virtual objects that you wish.
-            For the purposes of demonstration, however, we will create a basic Content Management System ACL
+            For the purposes of demonstration, however, we will create a basic Content Management System (CMS) ACL
             that maintains several tiers of groups over a wide variety of areas. To create a new ACL object,
             we instantiate the ACL with no parameters:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();]]>
         </programlisting>
 
         <note>
             <para>
                 Until a developer specifies an "allow" rule, Zend_Acl denies access to every privilege upon every
-                Resource by every Role.
+                resource by every role.
             </para>
         </note>
     </sect2>
@@ -172,14 +169,14 @@ $acl = new Zend_Acl();]]>
         <title>Registering Roles</title>
 
         <para>
-            Content Management Systems will nearly always require a hierarchy of permissions
+            CMS's will nearly always require a hierarchy of permissions
             to determine the authoring capabilities of its users. There may be a 'Guest' group to
             allow limited access for demonstrations, a 'Staff' group for the majority of CMS users
             who perform most of the day-to-day operations, an 'Editor' group for those responsible for publishing,
             reviewing, archiving and deleting content, and finally an 'Administrator' group whose tasks may
             include all of those of the other groups as well as maintenance of sensitive information,
             user management, back-end configuration data and backup/export. This set of permissions can be
-            represented in a Role registry, allowing each group to inherit privileges from 'parent' groups,
+            represented in a role registry, allowing each group to inherit privileges from 'parent' groups,
             as well as providing distinct privileges for their unique group only.
             The permissions may be expressed as follows:
         </para>
@@ -190,8 +187,8 @@ $acl = new Zend_Acl();]]>
             <thead>
               <row>
                 <entry>Name</entry>
-                <entry>Unique permissions</entry>
-                <entry>Inherit permissions from</entry>
+                <entry>Unique Permissions</entry>
+                <entry>Inherit Permissions From</entry>
               </row>
             </thead>
             <tbody>
@@ -222,17 +219,13 @@ $acl = new Zend_Acl();]]>
         <para>
             For this example, <code>Zend_Acl_Role</code> is used, but any object that implements
             <code>Zend_Acl_Role_Interface</code> is acceptable. These groups can be added to the
-            Role registry as follows:
+            role registry as follows:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
 
 // Add groups to the Role registry using Zend_Acl_Role
-require_once 'Zend/Acl/Role.php';
-
 // Guest does not inherit access controls
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -240,9 +233,10 @@ $acl->addRole($roleGuest);
 // Staff inherits from guest
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
-/* alternatively, the above could be written:
+/*
+Alternatively, the above could be written:
 $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
-//*/
+*/
 
 // Editor inherits from staff
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
@@ -257,11 +251,11 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
         <title>Defining Access Controls</title>
 
         <para>
-            Now that the ACL contains the relevant Roles, rules can be established that define how
-            Resources may be accessed by Roles. You may have noticed that we have not defined any particular
-            Resources for this example, which is simplified to illustrate that the rules apply to all Resources.
+            Now that the ACL contains the relevant roles, rules can be established that define how
+            resources may be accessed by roles. You may have noticed that we have not defined any particular
+            resources for this example, which is simplified to illustrate that the rules apply to all resources.
             Zend_Acl provides an implementation whereby rules need only be assigned from general to specific,
-            minimizing the number of rules needed, because Resources and Roles inherit rules that are defined upon
+            minimizing the number of rules needed, because resources and roles inherit rules that are defined upon
             their ancestors.
         </para>
 
@@ -276,12 +270,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             To apply the base permissions as defined above:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-
-require_once 'Zend/Acl/Role.php';
 
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -292,15 +282,17 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
 // Guest may only view content
 $acl->allow($roleGuest, null, 'view');
 
-/* alternatively, the above could be written:
+/*
+Alternatively, the above could be written:
 $acl->allow('guest', null, 'view');
 //*/
 
-// Staff inherits view privilege from guest, but also needs additional privileges
+// Staff inherits view privilege from guest, but also needs additional
+// privileges
 $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 
-// Editor inherits view, edit, submit, and revise privileges from staff,
-// but also needs additional privileges
+// Editor inherits view, edit, submit, and revise privileges from
+// staff, but also needs additional privileges
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
@@ -309,7 +301,7 @@ $acl->allow('administrator');]]>
 
         <para>
             The <code>null</code> values in the above <code>allow()</code> calls are used to indicate
-            that the allow rules apply to all Resources.
+            that the allow rules apply to all resources.
         </para>
 
     </sect2>
@@ -323,30 +315,39 @@ $acl->allow('administrator');]]>
             the <code>isAllowed()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('guest', null, 'view') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied";
+// allowed
 
 echo $acl->isAllowed('staff', null, 'publish') ?
-     "allowed" : "denied"; // denied
+     "allowed" : "denied";
+// denied
 
 echo $acl->isAllowed('staff', null, 'revise') ?
-     "allowed" : "denied"; // allowed
+     "allowed" : "denied";
+// allowed
 
 echo $acl->isAllowed('editor', null, 'view') ?
-     "allowed" : "denied"; // allowed because of inheritance from guest
+     "allowed" : "denied";
+// allowed because of inheritance from guest
 
 echo $acl->isAllowed('editor', null, 'update') ?
-     "allowed" : "denied"; // denied because no allow rule for 'update'
+     "allowed" : "denied";
+// denied because no allow rule for 'update'
 
 echo $acl->isAllowed('administrator', null, 'view') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied";
+// allowed because administrator is allowed all privileges
 
 echo $acl->isAllowed('administrator') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+     "allowed" : "denied";
+// allowed because administrator is allowed all privileges
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]>
+     "allowed" : "denied";
+// allowed because administrator is allowed all privileges
+]]>
         </programlisting>
 
     </sect2>

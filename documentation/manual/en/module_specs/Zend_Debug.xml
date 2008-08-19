@@ -11,7 +11,7 @@
 
     <example id="zend.debug.dumping.example">
         <title>Example of dump() method</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 Zend_Debug::dump($var, $label=null, $echo=true);]]></programlisting>
     </example>

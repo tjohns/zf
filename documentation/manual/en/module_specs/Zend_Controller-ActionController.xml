@@ -68,8 +68,7 @@ class FooController extends Zend_Controller_Action
                 of the following methods:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -100,8 +99,7 @@ class FooController extends Zend_Controller_Action
                 flag:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -240,8 +238,7 @@ $this->getResponse()->appendBody($content);
                         retrieving a value:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-// Use default value of 1 if id is not set
+                    <programlisting role="php"><![CDATA[// Use default value of 1 if id is not set
 $id = $this->_getParam('id', 1);
 
 // Instead of:
@@ -318,8 +315,7 @@ applicationOrModule/
                 <code>render()</code> has the following signature:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
             </programlisting>
 
             <para>
@@ -355,8 +351,7 @@ string render(string $action = null, string $name = null, bool $noController = f
                 Some examples:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -513,8 +508,7 @@ class MyController extends Zend_Controller_Action
                 message, you might write something like this:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -534,8 +528,7 @@ class MyController extends Zend_Controller_Action
                 default controller page:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -565,8 +558,7 @@ class MyController extends Zend_Controller_Action
             <code>initView()</code> method with code resembling the following:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {

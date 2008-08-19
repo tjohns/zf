@@ -16,8 +16,7 @@
     <para>
         A basic example of usage is below:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Hostname.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname();
 if ($validator->isValid($hostname)) {
     // hostname appears to be valid
@@ -26,7 +25,8 @@ if ($validator->isValid($hostname)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         This will match the hostname <code>$hostname</code> and on failure populate
@@ -50,8 +50,7 @@ if ($validator->isValid($hostname)) {
         <code>ALLOW_IP</code> to allow IP addresses, <code>ALLOW_LOCAL</code> to allow local network
         names, and <code>ALLOW_ALL</code> to allow all three types. To just check for IP addresses
         you can use the example below:
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Hostname.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
 if ($validator->isValid($hostname)) {
     // hostname appears to be valid
@@ -60,7 +59,8 @@ if ($validator->isValid($hostname)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
     </para>
 
@@ -68,7 +68,7 @@ if ($validator->isValid($hostname)) {
         As well as using <code>ALLOW_ALL</code> to accept all hostnames types you can combine
         these types to allow for combinations. For example, to accept DNS and Local hostnames
         instantiate your Zend_Validate_Hostname object as so:
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);]]>
         </programlisting>
 
@@ -128,7 +128,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
         You can disable IDN validation by passing a second parameter to the Zend_Validate_Hostname
         constructor in the following way.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);]]>
         </programlisting>
 
@@ -155,7 +155,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         You can disable TLD validation by passing a third parameter to the Zend_Validate_Hostname constructor.
         In the example below we are supporting IDN validation via the second parameter.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);]]>
         </programlisting>
 

@@ -302,15 +302,14 @@
             used instead of it.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Number.php';
-
+        <programlisting role="php"><![CDATA[
 $great = '_X';
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 // convert to the decimal system
-echo $unit->convertTo(Zend_Measure_Number::DECIMAL);]]>
+echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
+]]>
         </programlisting>
 
     </sect2>

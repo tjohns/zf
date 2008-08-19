@@ -35,13 +35,12 @@
     <example id="zend.uri.creation.example-1">
       <title>Creating a New URI with <code>Zend_Uri::factory()</code></title>
 
-      <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+      <programlisting role="php"><![CDATA[
 // To create a new URI from scratch, pass only the scheme.
 $uri = Zend_Uri::factory('http');
 
-// $uri instanceof Zend_Uri_Http]]>
+// $uri instanceof Zend_Uri_Http
+]]>
       </programlisting>
     </example>
 
@@ -71,13 +70,12 @@ $uri = Zend_Uri::factory('http');
     <example id="zend.uri.manipulation.example-1">
       <title>Manipulating an Existing URI with <code>Zend_Uri::factory()</code></title>
 
-      <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+      <programlisting role="php"><![CDATA[
 // To manipulate an existing URI, pass it in.
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-// $uri instanceof Zend_Uri_Http]]>
+// $uri instanceof Zend_Uri_Http
+]]>
       </programlisting>
     </example>
 
@@ -100,13 +98,12 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     <example id="zend.uri.validation.example-1">
       <title>URI Validation with <code>Zend_Uri::check()</code></title>
 
-      <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+      <programlisting role="php"><![CDATA[
 // Validate whether a given URI is well formed
 $valid = Zend_Uri::check('http://uri.in.question');
 
-// $valid is TRUE for a valid URI, or FALSE otherwise.]]>
+// $valid is TRUE for a valid URI, or FALSE otherwise.
+]]>
       </programlisting>
     </example>
 
@@ -137,12 +134,11 @@ $valid = Zend_Uri::check('http://uri.in.question');
       <example id="zend.uri.instance-methods.getscheme.example-1">
         <title>Getting the Scheme from a <code>Zend_Uri_*</code> Object</title>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+        <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$scheme = $uri->getScheme();  // "http"]]>
+$scheme = $uri->getScheme();  // "http"
+]]>
         </programlisting>
       </example>
 
@@ -159,12 +155,11 @@ $scheme = $uri->getScheme();  // "http"]]>
       <example id="zend.uri.instance-methods.geturi.example-1">
         <title>Getting the Entire URI from a <code>Zend_Uri_*</code> Object</title>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+        <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-echo $uri->getUri();  // "http://www.zend.com"]]>
+echo $uri->getUri();  // "http://www.zend.com"
+]]>
         </programlisting>
       </example>
 
@@ -189,12 +184,11 @@ echo $uri->getUri();  // "http://www.zend.com"]]>
       <example id="zend.uri.instance-methods.valid.example-1">
         <title>Validating a <code>Zend_Uri_*</code> Object</title>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Uri.php';
-
+        <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$isValid = $uri->valid();  // TRUE]]>
+$isValid = $uri->valid();  // TRUE
+]]>
         </programlisting>
       </example>
 

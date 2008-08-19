@@ -52,7 +52,9 @@
             The only required argument is the resource URI.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
+]]></programlisting>
 
         <para>
             This outputs the following HTML:

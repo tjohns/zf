@@ -33,10 +33,7 @@
 
         <example id="zend.date.basic.creation.example-1">
             <title>Creating the current date</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+            <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // Output of the current timestamp
 print $date;]]>
@@ -65,10 +62,7 @@ print $date;]]>
 
             <example id="zend.date.simple.functions.get.example-1">
                 <title>get() - output a date</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // Output of the desired date
 print $date->get();]]>
@@ -88,10 +82,7 @@ print $date->get();]]>
 
             <example id="zend.date.simple.functions.set.example-1">
                 <title>set() - set a date</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // Setting of a new time
 $date->set('13:00:00',Zend_Date::TIMES);
@@ -114,10 +105,7 @@ print $date->get(Zend_Date::W3C);]]>
 
             <example id="zend.date.simple.functions.add.example-1">
                 <title>add() - adding dates</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // changes $date by adding 12 hours
 $date->add('12:00:00', Zend_Date::TIMES);
@@ -144,10 +132,7 @@ echo "Date via toString() = ", $date, "\n";]]>
 
             <example id="zend.date.simple.functions.compare.example-1">
                 <title>compare() - compare dates</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // Comparation of both times
 if ($date->compare(10, Zend_Date::MINUTE) == -1) {
@@ -164,10 +149,7 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
 
             <example id="zend.date.simple.functions.compare.example-2">
                 <title>equals() - identify a date or date part</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[$date = new Zend_Date();
 
 // Comparation of the two dates
 if ($date->equals(10, Zend_Date::HOUR)) {

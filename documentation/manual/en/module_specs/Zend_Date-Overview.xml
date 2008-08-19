@@ -151,8 +151,7 @@
 
         <example id="zend.date.values.example-1">
             <title>User-specified input date format</title>
-            <programlisting role="php"><![CDATA[<?php
-$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+            <programlisting role="php"><![CDATA[$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
@@ -187,8 +186,7 @@ echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"]]>
             you want to use the same locale multiple times.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// in your bootstrap file
+        <programlisting role="php"><![CDATA[// in your bootstrap file
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
@@ -215,10 +213,7 @@ $date = new Zend_Date('31.Feb.2007');]]>
 
         <example id="zend.date.basic.example-1">
             <title>Operating on Parts of Dates</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date(); // $date's timestamp === time()
+            <programlisting role="php"><![CDATA[$date = new Zend_Date(); // $date's timestamp === time()
 
 // changes $date by adding 12 hours
 $date->add('12', Zend_Date::HOUR);

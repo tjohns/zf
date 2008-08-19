@@ -8,12 +8,12 @@
     </para>
     <example id="zend.mail.attachments.example-1">
         <title>E-Mail Messages with Attachments</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 // build message...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]>
+$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+]]>
         </programlisting>
     </example>
     <para>
@@ -21,8 +21,7 @@ $mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Ze
         of <code>createAttachment()</code> to modify its attributes. The <code>createAttachment()</code> method
         returns a <code>Zend_Mime_Part</code> object:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = $mail->createAttachment($myImage);
@@ -36,8 +35,7 @@ $mail->send();]]>
     <para>
         An alternative is to create an instance of <code>Zend_Mime_Part</code> and add it with <code>addAttachment()</code>:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = new Zend_Mime_Part($myImage);
@@ -48,7 +46,8 @@ $at->filename    = 'test.gif';
 
 $mail->addAttachment($at);
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
 </sect1>
 <!--

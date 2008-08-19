@@ -9,7 +9,7 @@
         Historicaly this information is stored using special Info structure. This structure
         is available for read and writing as an associative array using <code>properties</code> public property
         of Zend_Pdf objects:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 
 echo $pdf->properties['Title'] . "\n";
@@ -166,7 +166,7 @@ $pdf->save($pdfPath);
     <para>
         This XML document can be retrieved and attached to the PDF with <code>Zend_Pdf::getMetadata()</code> and
         <code>Zend_Pdf::setMetadata($metadata)</code> methods:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 $metadata = $pdf->getMetadata();
 $metadataDOM = new DOMDocument();

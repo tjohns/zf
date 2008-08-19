@@ -100,7 +100,7 @@
             <code>setAllowArbitraryAttributes()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
 ?>]]></programlisting>
     </note>

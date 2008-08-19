@@ -30,7 +30,7 @@
             application: site, controller, action, and potentially resource.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php 
+        <programlisting role="php"><![CDATA[ 
 // setting the controller and action name as title segments:
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())

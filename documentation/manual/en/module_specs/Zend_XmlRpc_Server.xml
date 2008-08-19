@@ -18,13 +18,11 @@
             An example of the most basic use case:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'My/Service/Class.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
         </programlisting>
     </sect2>
 
@@ -90,7 +88,7 @@ echo $server->handle();]]>
             An example of how to hint follows:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
 * This is a sample function
 *
@@ -120,7 +118,7 @@ function myFunc($val1, $val2, $val3)
             PhpDocumentor, using the '|' operator:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
 * This is a sample function
 *
@@ -169,7 +167,7 @@ function myFunc($val1, $val2, $val3)
             function or class:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // All public methods in My_Service_Class will be accessible as
 // myservice.METHODNAME
 $server->setClass('My_Service_Class', 'myservice');
@@ -233,7 +231,7 @@ $server->addFunction('somefunc', 'funcs');]]>
             exception class to whitelist:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
         </programlisting>
 
@@ -266,11 +264,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
         <para>
             An sample usage follows:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 function __autoload($class)
 {
     Zend_Loader::loadClass($class);
@@ -291,7 +285,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]>
+echo $server->handle();
+]]>
         </programlisting>
         <para>
             The above example attempts to retrieve a server definition from
@@ -317,9 +312,7 @@ echo $server->handle();]]>
                 method and handles incoming calls.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-
+            <programlisting role="php"><![CDATA[
 /**
  * Return the MD5 sum of a value
  *
@@ -333,7 +326,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -345,13 +339,13 @@ echo $server->handle();]]>
                 as dispatchable XML-RPC methods.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -363,8 +357,7 @@ echo $server->handle();]]>
                 with their own namespace.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
@@ -385,9 +378,7 @@ echo $server->handle();]]>
                 report its code and message in the fault response.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
@@ -400,7 +391,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -412,9 +404,7 @@ echo $server->handle();]]>
                 passes it to the server to handle.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Request.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
@@ -432,7 +422,8 @@ $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 // Create a request object
 $request = new Services_Request();
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
 
@@ -444,9 +435,7 @@ echo $server->handle($request);]]>
                 for the returned response.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Request.php';
 require_once 'Services/Response.php';
 require_once 'Services/Exception.php';
@@ -468,7 +457,8 @@ $request = new Services_Request();
 // Utilize a custom response
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
 
@@ -480,18 +470,7 @@ echo $server->handle($request);]]>
                 between requests.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
-require_once 'Zend/XmlRpc/Server/Cache.php';
-require_once 'Services/Request.php';
-require_once 'Services/Response.php';
-require_once 'Services/Exception.php';
-require_once 'Services/Comb.php';
-require_once 'Services/Brush.php';
-require_once 'Services/Pick.php';
-
-// Specify a cache file
+            <programlisting role="php"><![CDATA[// Specify a cache file
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Allow Services_Exceptions to report as fault responses

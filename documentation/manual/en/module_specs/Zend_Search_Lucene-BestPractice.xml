@@ -18,7 +18,7 @@
             to internal Lucene document id and hit <link linkend="zend.search.lucene.searching.results-scoring">score</link>.
             If the indexed document has the same stored fields, you have to use the <code>getDocument()</code> method to access them:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
@@ -73,7 +73,7 @@ foreach ($hits as $hit) {
 
         <para>
             Full index optimization may be performed with the <code>optimize()</code> method:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->optimize();]]>
@@ -240,7 +240,7 @@ $index->optimize();]]>
 
         <para>
             The first is to force going out of scope:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 ...
@@ -251,7 +251,7 @@ unset($index);]]>
 
         <para>
             And the second is to perform a commit operation before the end of script execution:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();]]>
@@ -274,7 +274,7 @@ $index->commit();]]>
 
         <para>
             This is more efficient than using the <code>find()</code> method:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Retrieving documents with find() method using a query string
 $query = $idFieldName . ':' . $docId;
 $hits  = $index->find($query);
@@ -374,7 +374,7 @@ foreach ($docIds as $id) {
 
         <para>
             Encoding may be explicitly specified as an optional parameter of field creation methods:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
@@ -385,7 +385,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
         <para>
             If optional encoding parameter is omitted, then the current locale is used. The current locale may contain character encoding data
             in addition to the language specification:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'fr_FR');
 ...
 
@@ -407,7 +407,7 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
 
         <para>
             Encoding may be passed as an optional parameter, if the query is parsed explicitly before search:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...]]>
@@ -416,7 +416,7 @@ $hits = $index->find($query);
 
         <para>
             The default encoding may also be specified with <code>setDefaultEncoding()</code> method:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...]]>

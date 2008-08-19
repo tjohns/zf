@@ -37,9 +37,7 @@
             If you are using OpenLDAP, a simple example looks like the following (note that the
             <code>bindRequiresDn</code> option is important if you are <emphasis>not</emphasis> using AD):
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 's0.foo.net',
     'username' => 'CN=user1,DC=foo,DC=net',
@@ -57,9 +55,7 @@ echo "$acctname\n";]]></programlisting>
         <para>
             If you are using Microsoft AD a simple example is:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 'dc1.w.net',
     'useStartTls' => true,
@@ -98,9 +94,7 @@ echo "$acctname\n";]]></programlisting>
                 The following example illustrates how the non-DN username '<code>abaker</code>' can be used with
                 <code>bind()</code>:
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+                <programlisting role="php"><![CDATA[
 $options = array(
         'host' => 's0.foo.net',
         'username' => 'CN=user1,DC=foo,DC=net',
@@ -334,7 +328,7 @@ echo "$acctname\n";]]></programlisting>
                 Consider the following example that illustrates the technique required to implement multi-domain
                 authentication and failover:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $acctname = 'W\\user2';
 $password = 'pass2';
 

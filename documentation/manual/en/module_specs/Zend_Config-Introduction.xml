@@ -17,8 +17,7 @@
             available in a PHP array, one may simply pass the data to the <code>Zend_Config</code> constructor in order
             to utilize a simple object-oriented interface:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-// Given an array of configuration data
+        <programlisting role="php"><![CDATA[// Given an array of configuration data
 $configArray = array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -33,7 +32,6 @@ $configArray = array(
 );
 
 // Create the object-oriented wrapper upon the configuration data
-require_once 'Zend/Config.php';
 $config = new Zend_Config($configArray);
 
 // Print a configuration datum (results in 'www.example.com')
@@ -56,8 +54,7 @@ $db = Zend_Db::factory($config->database);]]>
         Along with the object oriented access to the data values, <code>Zend_Config</code> also has <code>get()</code>
         which will return the supplied default value if the data element doesn't exist. For example:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-$host = $config->database->get('host', 'localhost');]]>
+    <programlisting role="php"><![CDATA[$host = $config->database->get('host', 'localhost');]]>
     </programlisting>
     <example id="zend.config.introduction.example.file.php">
         <title>Using Zend_Config with a PHP Configuration File</title>
@@ -65,8 +62,7 @@ $host = $config->database->get('host', 'localhost');]]>
             It is often desirable to use a pure PHP-based configuration file. The following code illustrates how easily
             this can be accomplished:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-// config.php
+        <programlisting role="php"><![CDATA[// config.php
 return array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -79,9 +75,7 @@ return array(
         )
     )
 );]]></programlisting>
-        <programlisting role="php"><![CDATA[<?php
-// Configuration consumption
-require_once 'Zend/Config.php';
+        <programlisting role="php"><![CDATA[// Configuration consumption
 $config = new Zend_Config(require 'config.php');
 
 // Print a configuration datum (results in 'www.example.com')

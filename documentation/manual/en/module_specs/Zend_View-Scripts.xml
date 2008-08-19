@@ -24,7 +24,8 @@
         Zend_View introduction.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    <programlisting role="php"><![CDATA[
+<?php if ($this->books): ?>
 
     <!-- A table of some books. -->
     <table>
@@ -67,7 +68,7 @@
             escaping for you.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // bad view-script practice:
 echo $this->variable;
 
@@ -83,7 +84,7 @@ echo $this->escape($this->variable);]]>
             what escaping callback to use.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // create a Zend_View instance
 $view = new Zend_View();
 
@@ -130,7 +131,7 @@ echo $view->render(...);]]>
                 this:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -246,9 +247,6 @@ public function render($name);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-require_once 'Zend/View/Interface.php';
-require_once 'Smarty.class.php';
-
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**

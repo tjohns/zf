@@ -25,7 +25,7 @@ Content-Type: application/json
         Usage of the JSON helper is very straightforward:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 <?= $this->json($this->data) ?>
 ?>]]></programlisting>
 </sect3>

@@ -124,8 +124,7 @@
                 If you store only strings into cache (because with "automatic_serialization" option, it's possible
                 to store some booleans), you can use a more compact construction like:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-// we assume you already have $cache
+            <programlisting role="php"><![CDATA[// we assume you already have $cache
 
 $id = 'myBigLoop'; // cache id of "what we want to cache"
 
@@ -146,8 +145,7 @@ if (!($data = $cache->load($id))) {
             <para>
                 If you want to cache multiple blocks or data instances, the idea is the same:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-// make sure you use unique identifiers:
+            <programlisting role="php"><![CDATA[// make sure you use unique identifiers:
 $id1 = 'foo';
 $id2 = 'bar';
 
@@ -187,9 +185,7 @@ echo($data);]]>
                 strings you can't use the compact construction given above. You have to test formally the
                 cache record.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// the compact construction (not good if you cache empty strings and/or booleans)
+            <programlisting role="php"><![CDATA[// the compact construction (not good if you cache empty strings and/or booleans)
 if (!($data = $cache->load($id))) {
 
     // cache missed
@@ -249,8 +245,7 @@ if (!($cache->test($id))) {
             <para>
                 An example is given in the manual at the very beginning. Here it is with minor changes:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-// if it is a cache miss, output buffering is triggered
+            <programlisting role="php"><![CDATA[// if it is a cache miss, output buffering is triggered
 if (!($cache->start('mypage'))) {
 
     // output everything as usual
@@ -329,12 +324,11 @@ echo 'This is never cached ('.time().').';]]>
                 Using the <code>call()</code> function is the same as using
                 <code>call_user_func_array()</code> in PHP:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$cache->call('veryExpensiveFunc', $params);
+            <programlisting role="php"><![CDATA[$cache->call('veryExpensiveFunc', $params);
 
-# $params is an array
-# for example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+// $params is an array
+// For example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
@@ -415,10 +409,9 @@ $cache->call('veryExpensiveFunc', $params);
             <para>
                 For example, to cache static calls :
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[class test {
 
-    # Static method
+    // Static method
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
@@ -432,14 +425,13 @@ $frontendOptions = array(
 );
 // [...]
 
-# The cached call
+// The cached call
 $res = $cache->foobar('1', '2');]]>
             </programlisting>
             <para>
                 To cache classic method calls :
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[class test {
 
     private $_string = 'hello !';
 
@@ -457,7 +449,7 @@ $frontendOptions = array(
 );
 // [...]
 
-# The cached call
+// The cached call
 $res = $cache->foobar2('1', '2');]]>
             </programlisting>
         </sect3>
@@ -684,8 +676,7 @@ $res = $cache->foobar2('1', '2');]]>
             <para>
                 Use of Zend_Cache_Frontend_Page is really trivial :
             </para>
-            <programlisting role="php"><![CDATA[<?php
-// [...] // require, configuration and factory
+            <programlisting role="php"><![CDATA[// [...] // require, configuration and factory
 
 $cache->start();
 // if the cache is hit, the result is sent to the browser and the script stop here
@@ -696,13 +687,10 @@ $cache->start();
                 a more complex example which shows a way to get a centralized cache management in a bootstrap file
                 (for using with Zend_Controller for example)
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// [...] you should avoid to put too much lines before the cache section
+            <programlisting role="php"><![CDATA[
+// [...] you should avoid to putting too many lines before the cache section
 // [...] for example, for optimal performances, "require_once" or "Zend_Loader::loadClass" should be
 // [...] after the cache section
-
-require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifetime' => 7200,
@@ -738,7 +726,7 @@ $cache->start();
                 you could need to cancel the current cache process. So we introduce for this
                 particular frontend, the cancel() method.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // require, configuration and factory
 
 $cache->start();

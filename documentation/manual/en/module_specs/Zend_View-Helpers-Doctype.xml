@@ -69,7 +69,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
             invoking the helper.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
 ?>]]></programlisting>
 
@@ -78,7 +78,7 @@ $doctype = $view->doctype()->getDoctype();
             not; for this, the <code>isXhtml()</code> method will suffice:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($view->doctype()->isXhtml()) {
     // do something differently
 }

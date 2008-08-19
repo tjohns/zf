@@ -24,8 +24,7 @@
             Basic usage is simple:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Server/Reflection.php';
+        <programlisting role="php"><![CDATA[
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
 
@@ -51,7 +50,8 @@ foreach ($prototypes as $prototype) {
 // Get namespace for a class, function, or method.
 // Namespaces may be set at instantiation time (second argument), or using
 // setNamespace()
-$reflection->getNamespace();]]>
+$reflection->getNamespace();
+]]>
         </programlisting>
 
         <para>

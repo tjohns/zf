@@ -7,7 +7,7 @@
         use the <code>Zend_Feed::import()</code> method:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
     </programlisting>
 
@@ -16,7 +16,7 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
         string variable:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // importing a feed from a text file
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
@@ -47,7 +47,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
 
             <title>Importing a custom array</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // importing a feed from an array
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
@@ -62,7 +62,7 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
                 The format of the array must conform to this structure:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 array(
       'title'       => 'title of the feed', //required
       'link'        => 'canonical url to the feed', //required
@@ -218,7 +218,7 @@ array(
                 Here is an example of <code>Zend_Feed::importBuilder()</code> usage:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // importing a feed from a custom builder source
 $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
@@ -240,7 +240,7 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 <code>saveXml()</code> methods.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // dump the feed to standard output

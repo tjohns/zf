@@ -15,7 +15,7 @@
         <para>
             Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
 echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";

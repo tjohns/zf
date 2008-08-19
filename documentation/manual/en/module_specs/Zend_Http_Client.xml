@@ -19,9 +19,7 @@
             and set later using the setUri() and setConfig() methods.
             <example id="zend.http.client.introduction.example-1">
                 <title>Instantiating a Zend_Http_Client object</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org', array(
     'maxredirects' => 0,
     'timeout'      => 30));
@@ -123,9 +121,7 @@ $client->setConfig(array(
             request() method, and rarely needs more than three lines of code:
             <example id="zend.http.client.basic-requests.example-1">
                 <title>Performing a Simple GET Request</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org');
 $response = $client->request();]]>
                 </programlisting>
@@ -147,7 +143,7 @@ $response = $client->request();]]>
             method is GET (see the above example).
             <example id="zend.http.client.basic-requests.example-2">
                 <title>Using Request Methods Other Than GET</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Preforming a POST request
 $response = $client->request('POST');
 
@@ -172,7 +168,7 @@ $response = $client->request();]]>
             be more comfortable when several GET parameters need to be set.
             <example id="zend.http.client.parameters.example-1">
                 <title>Setting GET Parameters</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setting a get parameter using the setParameterGet method
 $client->setParameterGet('knight', 'lancelot');
 
@@ -196,7 +192,7 @@ $client->setParameterGet(array(
             similar to the setParameterGet() method in structure.
             <example id="zend.http.client.parameters.example-2">
                 <title>Setting POST Parameters</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setting a POST parameter
 $client->setParameterPost('language', 'fr');
 
