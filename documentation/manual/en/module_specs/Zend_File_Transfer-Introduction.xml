@@ -66,15 +66,15 @@ if (!$adapter->receive()) {
             will get them within an exception returned.
         </para>
 
-        <note>
-            <title>Attention</title>
-            <para>
-                Keep in mind that this is just the simplest usage. You should
-                <emphasis role="strong">never</emphasis> just this example is an living environment as it
-                causes severe security issues. You should always use validators to increase security.
-            </para>
-        </note>
     </example>
+    <note>
+        <title>Attention</title>
+        <para>
+            Keep in mind that this is just the simplest usage. You should
+            <emphasis role="strong">never</emphasis> just this example is an living environment as it
+            causes severe security issues. You should always use validators to increase security.
+        </para>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

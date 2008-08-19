@@ -142,7 +142,7 @@ $data->setLabel('name');
             dojo.data JSON array, using the <code>fromJson()</code> method.
         </para>
 
-        <example id="zend.dojo.data.usage.label">
+        <example id="zend.dojo.data.usage.populate">
             <title>Populating Zend_Dojo_Data from JSON</title>
 
             <programlisting role="php"><![CDATA[

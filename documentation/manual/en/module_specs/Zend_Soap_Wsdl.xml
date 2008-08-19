@@ -366,11 +366,11 @@ $soapMyClassType = $wsdl->getType('MyClass');]]></programlisting>
                 It prevent duplications if this method is called two or more times and recursion in the types defenition
                 section.
             </para>
-        </sect3>
         
-        <para>
-            See <ulink url="http://www.w3.org/TR/wsdl#_types"/> for the details.
-        </para>
+            <para>
+                See <ulink url="http://www.w3.org/TR/wsdl#_types"/> for the details.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.soap.wsdl.add_documentation">

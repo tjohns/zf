@@ -29,7 +29,7 @@
                     <row>
                         <entry>DbSelect</entry>
                         <entry>
-                            Use a <link linkend="zend.db.select.html"><code>Zend_Db_Select</code></link> 
+                            Use a <link linkend="zend.db.select"><code>Zend_Db_Select</code></link> 
                             instance
                         </entry>
                     </row>
@@ -74,8 +74,8 @@
         </para>
 
         <note>
-            In the case of the Null adapter, in lieu of a data collection you 
-            must supply an item count to its constructor.
+            <para>In the case of the Null adapter, in lieu of a data collection you 
+            must supply an item count to its constructor.</para>
         </note>
         
         <para>

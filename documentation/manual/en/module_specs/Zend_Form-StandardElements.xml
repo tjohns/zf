@@ -218,14 +218,15 @@ $form->setAttrib('enctype', 'multipart/form-data');
 $location = $form->foo->getValue();
 ]]></programlisting>
 
-            <note>
-                <title>Default upload locations</title>
-
-                <para>
-                    By default, files are uploaded to the system temp directory.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <title>Default upload locations</title>
+
+            <para>
+                By default, files are uploaded to the system temp directory.
+            </para>
+        </note>
 
         <para>
             There is one current limitation to the file upload element shipped in

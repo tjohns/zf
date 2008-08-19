@@ -86,46 +86,46 @@
                         string "baz" anywhere within it.
                     </para></listitem>
                 </itemizedlist>
+            </listitem>
 
-                <itemizedlist><para>
-                    <emphasis>direct descendents</emphasis>: utilize '&gt;' between
-                    selectors to denote direct descendents. 'div > span' would
-                    select only 'span' elements that are direct descendents of a
-                    'div'. Can also be used with any of the selectors above.
-                </para></itemizedlist>
+            <listitem><para>
+                <emphasis>direct descendents</emphasis>: utilize '&gt;' between
+                selectors to denote direct descendents. 'div > span' would
+                select only 'span' elements that are direct descendents of a
+                'div'. Can also be used with any of the selectors above.
+            </para></listitem>
 
-                <itemizedlist>
-                    <para>
-                        <emphasis>descendents</emphasis>: string together
-                        multiple selectors to indicate a hierarchy along which
-                        to search.  'div .foo span #one' would select an element
-                        of id 'one' that is a descendent of arbitrary depth
-                        beneath a 'span' element, which is in turn a descendent
-                        of arbitrary depth beneath an element with a class of
-                        'foo', that is an descendent of arbitrary depth beneath
-                        a 'div' element. For example, it would match the link to
-                        the word 'One' in the listing below:
-                    </para>
+            <listitem>
+                <para>
+                    <emphasis>descendents</emphasis>: string together
+                    multiple selectors to indicate a hierarchy along which
+                    to search.  'div .foo span #one' would select an element
+                    of id 'one' that is a descendent of arbitrary depth
+                    beneath a 'span' element, which is in turn a descendent
+                    of arbitrary depth beneath an element with a class of
+                    'foo', that is an descendent of arbitrary depth beneath
+                    a 'div' element. For example, it would match the link to
+                    the word 'One' in the listing below:
+                </para>
 
-                    <programlisting role="html"><![CDATA[
+                <programlisting role="html"><![CDATA[
 <div>
-    <table>
-        <tr>
-            <td class="foo">
-                <div>
-                    Lorem ipsum <span class="bar">
-                        <a href="/foo/bar" id="one">One</a> 
-                        <a href="/foo/baz" id="two">Two</a> 
-                        <a href="/foo/bat" id="three">Three</a> 
-                        <a href="/foo/bla" id="four">Four</a> 
-                    </span>
-                </div>
-            </td>
-        </tr>
-    </table>
+<table>
+    <tr>
+        <td class="foo">
+            <div>
+                Lorem ipsum <span class="bar">
+                    <a href="/foo/bar" id="one">One</a> 
+                    <a href="/foo/baz" id="two">Two</a> 
+                    <a href="/foo/bat" id="three">Three</a> 
+                    <a href="/foo/bla" id="four">Four</a> 
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>
 ]]></programlisting>
-                </itemizedlist>
             </listitem>
         </itemizedlist>
 

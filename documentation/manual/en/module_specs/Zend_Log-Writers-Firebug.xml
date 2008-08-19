@@ -6,7 +6,7 @@
       <ulink url="http://getfirebug.com/logging.html">Console</ulink>.
     </para>
     <para>
-      <inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100" width="310" height="151" />
+      <inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100" width="310" />
     </para>
     <para>
       All data is sent via the <code>Zend_Wildfire_Channel_HttpHeaders</code> component

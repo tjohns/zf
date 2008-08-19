@@ -30,11 +30,9 @@
             an API request. A client ID identifies your application for logging 
             and debugging purposes. Please visit <ulink url="http://code.google.com/apis/youtube/dashboard/">http://code.google.com/apis/youtube/dashboard/</ulink> to obtain a developer key and client ID. The example below demonstrates how to pass the developer key and client ID to the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink> service object.
         </para>
- <example id="zend.gdata.youtube.videos.developer_key.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerKey);
 ]]></programlisting>
-    </example>
     </sect2>
     
     
@@ -60,7 +58,7 @@ $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerK
                 metadata, starting with the 10th video and displaying 20 
                 videos per page, ordered by the view count.
             </para>
-        <example id="zend.gdata.youtube.videos.searching.example">
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata_YouTube');
@@ -83,7 +81,7 @@ foreach ($videoFeed as $videoEntry) {
     echo "\n\n\n";
 }
 ?>]]></programlisting>
-            </example>
+
             <para>
                 For more details on the different query parameters, please 
                 refer to the <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">
@@ -103,7 +101,6 @@ foreach ($videoFeed as $videoEntry) {
                 specially formatted URL</ulink>.  For example, to search for 
                 comedy videos which contain the keyword dog:
             </para>
-            <example id="zend.gdata.youtube.videos.searchingcategories.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -112,7 +109,6 @@ $query->category = 'Comedy/dog';
 echo $query->queryUrl . "\n";
 $videoFeed = $yt->getVideoFeed($query); 
 ]]></programlisting>
-          </example>
         </sect3>
  
         <sect3 id="zend.gdata.youtube.videos.standard">
@@ -131,12 +127,10 @@ $videoFeed = $yt->getVideoFeed($query);
             <para>
                 To retrieve the top rated videos using the helper method:
             </para>
-              <example id="zend.gdata.youtube.videos.standard.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getTopRatedVideoFeed(); 
 ]]></programlisting>
-          </example>
             <para>
                 There are also query parameters to specify the time period
                 over which the standard feed is computed.
@@ -172,12 +166,10 @@ $videoFeed = $yt->getVideoFeed($url);
                 using a simple helper method. This example retrieves videos 
                 uploaded by the user 'liz'.
             </para>
-            <example id="zend.gdata.youtube.videos.user.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserUploads('liz'); 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.favorites">
@@ -188,12 +180,10 @@ $videoFeed = $yt->getUserUploads('liz');
                 using a simple helper method. This example retrieves videos 
                 favorited by the user 'liz'.
             </para>
-            <example id="zend.gdata.youtube.videos.favorites.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserFavorites('liz'); 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.responses">
@@ -204,12 +194,10 @@ $videoFeed = $yt->getUserFavorites('liz');
                 using a simple helper method. This example retrieves video
                 response for a video with the ID 'abc123813abc'.
             </para>
-            <example id="zend.gdata.youtube.videos.responses.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getVideoResponseFeed('abc123813abc'); 
 ]]></programlisting>
-          </example>
         </sect3>
     </sect2>
 
@@ -221,7 +209,6 @@ $videoFeed = $yt->getVideoResponseFeed('abc123813abc');
             several ways.  To retrieve the comments for the video with 
             the ID 'abc123813abc', use the following code: 
         </para>
-        <example id="zend.gdata.youtube.videos.comments.example">
         <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $commentFeed = $yt->getVideoCommentFeed('abc123813abc'); 
@@ -231,7 +218,6 @@ foreach ($commentFeed as $commentEntry) {
     echo $commentEntry->content->text . "\n\n\n";
 } 
 ]]></programlisting>
-      </example>
 
         <para>
             Comments can also be retrieved for a video if you have
@@ -263,7 +249,6 @@ $commentFeed = $yt->getVideoCommentFeed(null, $videoEntry->comments->href);
                 the playlists associated with a given user.  To retrieve the
                 playlists for the user 'liz':
             </para>
-            <example id="zend.gdata.youtube.videos.playlists.example">
             <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $playlistListFeed = $yt->getPlaylistListFeed('liz'); 
@@ -274,7 +259,6 @@ foreach ($playlistListFeed as $playlistEntry) {
     echo $playlistEntry->getPlaylistVideoFeedUrl() . "\n\n\n";
 } 
 ]]></programlisting>
-          </example>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.playlists.special">
@@ -285,11 +269,9 @@ foreach ($playlistListFeed as $playlistEntry) {
                 the videos associated with a given playlist.  To retrieve the
                 playlists for a specific playlist entry:
             </para>
-            <example id="zend.gdata.youtube.videos.playlists.special.example">
             <programlisting role="php"><![CDATA[<?php
 $playlistVideoFeed = $yt->getPlaylistVideoFeed($playlistEntry->getPlaylistVideoFeedUrl()); 
 ]]></programlisting>
-          </example>
         </sect3>
     </sect2> 
 
@@ -324,7 +306,6 @@ foreach ($subscriptionFeed as $subscriptionEntry) {
             for any YouTube user.  To retrieve the profile
             for the user 'liz':
         </para>
-        <example id="zend.gdata.youtube.videos.searchingcategories.example">
         <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube();
 $userProfile = $yt->getUserProfile('liz'); 
@@ -332,7 +313,6 @@ echo "username: " . $userProfile->username->text . "\n";
 echo "age: " . $userProfile->age->text . "\n";
 echo "hometown: " . $userProfile->hometown->text . "\n"; 
 ]]></programlisting>
-      </example>
     </sect2>
  
     <sect2 id="zend.gdata.youtube.uploads">
@@ -411,8 +391,8 @@ echo "hometown: " . $userProfile->hometown->text . "\n";
         currently authenticated user, or, alternatively, you can simply use the 
         string 'default' to refer to the currently authenticated user.
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.example">
-  <programlisting role="php"><![CDATA[<?php
+
+    <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
 $myVideoEntry = new Zend_Gdata_YouTube_VideoEntry();
 
@@ -456,7 +436,6 @@ try {
     echo $e->getMessage();
 }          
 ]]></programlisting>
-</example>
     <para>
       To upload a video as private, simply use: $myVideoEntry->setVideoPrivate(); prior to 
       performing the upload. $videoEntry->isVideoPrivate() can be used to check whether a video 
@@ -474,7 +453,6 @@ try {
         submit all of your video's meta-data to receive back a token element 
         which can be used to construct an HTML upload form.
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.browser.example">
       <programlisting role="php"><![CDATA[<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
       
@@ -489,7 +467,6 @@ $tokenArray = $yt->getFormUploadToken($myVideoEntry, $tokenHandlerUrl);
 $tokenValue = $tokenArray['token'];
 $postUrl = $tokenArray['url'];
 ]]></programlisting>
-    </example>
     <para>
       The above code prints out a link and a token that is used to construct an 
       HTML form to display in the user's browser. A simple example form is shown 
@@ -502,7 +479,6 @@ $postUrl = $tokenArray['url'];
       returned in the URL.
     </para>
     
-    <example id="zend.gdata.youtube.videos.uploads.browser.example">
       <programlisting role="php"><![CDATA[<?php
 // place to redirect user after upload
 $nextUrl = 'http://mysite.com/youtube_uploads';
@@ -514,7 +490,6 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         '<input value="Upload Video File" type="submit" />'. 
         '</form>';
 ]]></programlisting>
-    </example>
   </sect2>    
     <sect2 id="zend.gdata.youtube.uploads.status">
       <title>Checking upload status</title>
@@ -527,7 +502,6 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         user's uploads feed. The following code checks the status of a 
         <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> to see if it is not live yet or if it has been rejected.
       </para>
-      <example id="zend.gdata.youtube.videos.uploads.status.example">
       <programlisting role="php"><![CDATA[<?php
 try {
     $control = $videoEntry->getControl();
@@ -548,7 +522,6 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
     }
 }
 ]]></programlisting>
-</example>
   </sect2>    
     <sect2 id="zend.gdata.youtube.other">
       <title>Other Functions</title>

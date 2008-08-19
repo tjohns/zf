@@ -16,7 +16,7 @@
     
     <para>
         WSDL document may be auto-generated with functionality provided by 
-        <link linkend="zend.soap.autodiscovery">Zend_Soap_AutoDiscovery component</link> or should be constructed manually using 
+        <link linkend="zend.soap.autodiscovery.introduction">Zend_Soap_AutoDiscovery component</link> or should be constructed manually using 
         <link linkend="zend.soap.wsdl"><code>Zend_Soap_Wsdl</code> class</link> or any other XML generating tool.
     </para>
 
@@ -36,24 +36,24 @@
                 <code>Zend_Soap_Server</code> constructor takes two optional parameters when it works in WSDL mode:
                 <orderedlist>
                     <listitem>
-                        <simpara>
+                        <para>
                             <code>$wsdl</code>, which is an URI of a WSDL file<footnote>
                                                                                   <para>
                                                                                       May be set later using <code>setWsdl($wsdl)</code> method.
                                                                                   </para>
                                                                               </footnote>.
-                        </simpara>
+                        </para>
                     </listitem>
                     <listitem>
-                        <simpara>
+                        <para>
                             <code>$options</code> - options to create SOAP server object<footnote>
                                                                                             <para>
                                                                                                 Options may be set later using 
                                                                                                 <code>setOptions($options)</code> method.
                                                                                             </para>
                                                                                         </footnote>.
-                        </simpara>
-                        <simpara>
+                        </para>
+                        <para>
                             The following options are recognized in the WSDL mode:
                             <itemizedlist>
                                 <listitem>
@@ -85,7 +85,7 @@
                                     </para>
                                 </listitem>
                             </itemizedlist>
-                        </simpara>
+                        </para>
                     </listitem>
                 </orderedlist>
             </para>

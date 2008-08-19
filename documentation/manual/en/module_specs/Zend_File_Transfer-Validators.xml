@@ -204,14 +204,14 @@ $upload->addValidator('Size', 20000)
        ->addValidator('Filessize', 25000);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    Note that even though setting the same validator
-                    multiple times is allowed, doing so can lead to issues when using
-                    different options for the same validator.  
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                Note that even though setting the same validator
+                multiple times is allowed, doing so can lead to issues when using
+                different options for the same validator.  
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -273,13 +273,13 @@ $upload->addValidator('Count', 2);
 $upload->addValidator('Count', array(1, 5);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    Note that this validator stores the number of checked files internally. The file which
-                    exceeds the maximum will be returned as error.
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                Note that this validator stores the number of checked files internally. The file which
+                exceeds the maximum will be returned as error.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
@@ -318,12 +318,12 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 ]]>
             </programlisting>
 
-            <note>
-                <para>
-                    Note that this validator just checks the file extension. It does not check the actual file MIME type.
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                Note that this validator just checks the file extension. It does not check the actual file MIME type.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
@@ -387,13 +387,13 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
 ]]>
             </programlisting>
 
-            <note>
-                <para>
-                    Note that this validator stores the filesize of checked files internally. The file which
-                    exceeds the size will be returned as error.
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                Note that this validator stores the filesize of checked files internally. The file which
+                exceeds the size will be returned as error.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.imagesize">

@@ -30,8 +30,7 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Json_Server</code> utilizes <xref
-            linkend="zend.server.reflection">Zend_Server_Reflection</xref> to
+        <code>Zend_Json_Server</code> utilizes <xref linkend="zend.server.reflection" /> to
         perform reflection on any attached classes or functions, and uses that
         information to build both the SMD and enforce method call signatures. As
         such, it is imperative that any attached functions and/or class methods
