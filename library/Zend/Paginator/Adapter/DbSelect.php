@@ -142,13 +142,11 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
             $expression = new Zend_Db_Expr('COUNT(*) AS ' . self::ROW_COUNT_COLUMN); 
             $rowCount   = clone $this->_select;
 
+            $rowCount->__toString(); // Workaround for ZF-3719 and related
             $rowCount->reset(Zend_Db_Select::COLUMNS)
                      ->reset(Zend_Db_Select::ORDER)
-                     ->reset(Zend_Db_Select::LIMIT_OFFSET);
-
-            $rowCount->__toString(); // Workaround for ZF-3719 and related
-
-            $rowCount->columns($expression);
+                     ->reset(Zend_Db_Select::LIMIT_OFFSET)
+                     ->columns($expression);
                      
             $this->setRowCount($rowCount);
         }
