@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10910 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -34,6 +34,13 @@
                 すべてのファイルのサイズを内部的に記憶し、
                 その合計が制限値を超えた場合にエラーをスローします。
                 サイズの最小値と最大値を指定することができます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ImageSize</code>: このバリデータは画像のサイズをチェックします。
+                幅と高さについて、最小値と最大値を検証することができます。
             </para>
         </listitem>
 
@@ -205,14 +212,14 @@ $upload->addValidator('Size', 20000)
        ->addValidator('Filessize', 25000);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    同じバリデータを複数回設定することもできます。
-                    しかしそんなことをすると、
-                    同じバリデータに異なるオプションを設定したときにおかしなことになるので注意しましょう。
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                同じバリデータを複数回設定することもできます。
+                しかしそんなことをすると、
+                同じバリデータに異なるオプションを設定したときにおかしなことになるので注意しましょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -227,7 +234,7 @@ $upload->addValidator('Size', 20000)
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: 転送するファイル数の最小値。
+                    <code>min</code>: 転送するファイル数の最小値。
                 </para>
 
                 <note>
@@ -245,7 +252,7 @@ $upload->addValidator('Size', 20000)
 
             <listitem>
                 <para>
-                    <code>Max</code>: 転送するファイル数の最大値。
+                    <code>max</code>: 転送するファイル数の最大値。
                 </para>
 
                 <para>
@@ -279,13 +286,13 @@ $upload->addValidator('Count', 2);
 $upload->addValidator('Count', array(1, 5);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    このバリデータは、チェックしたファイルの数を内部に保存することに注意しましょう。
-                    最大値を超えたファイルはエラーを返します。
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                このバリデータは、チェックしたファイルの数を内部に保存することに注意しましょう。
+                最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
@@ -300,7 +307,7 @@ $upload->addValidator('Count', array(1, 5);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Extension</code>: 指定したファイルがこの拡張子かどうかをチェックします。
+                    <code>extension</code>: 指定したファイルがこの拡張子かどうかをチェックします。
                 </para>
             </listitem>
         </itemizedlist>
@@ -326,13 +333,13 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 ]]>
             </programlisting>
 
-            <note>
-                <para>
-                    このバリデータがチェックするのはファイルの拡張子のみであることに注意しましょう。
-                    実際の MIME タイプなどはチェックしません。
-                </para>
-            </note>
         </example>
+        <note>
+            <para>
+                このバリデータがチェックするのはファイルの拡張子のみであることに注意しましょう。
+                実際の MIME タイプなどはチェックしません。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
@@ -347,7 +354,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: ファイルサイズの総合計の最小値を設定します。
+                    <code>min</code>: ファイルサイズの総合計の最小値を設定します。
                 </para>
 
                 <para>
@@ -357,7 +364,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 
             <listitem>
                 <para>
-                    <code>Max</code>: ファイルサイズの総合計の最大値を設定します。
+                    <code>max</code>: ファイルサイズの総合計の最大値を設定します。
                 </para>
 
                 <para>
@@ -402,12 +409,107 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
 ]]>
             </programlisting>
 
-            <note>
+        </example>
+        <note>
+            <para>
+                このバリデータは、チェックしたファイルのサイズを内部に保存することに注意しましょう。
+                最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title><emphasis role="strong">ImageSize</emphasis> バリデータ</title>
+
+        <para>
+            <code>ImageSize</code> バリデータは、
+            画像ファイルのサイズをチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
                 <para>
-                    このバリデータは、チェックしたファイルのサイズを内部に保存することに注意しましょう。
-                    最大値を超えたファイルはエラーを返します。
+                    <code>minheight</code>: 画像の高さの最小値を設定します。
                 </para>
-            </note>
+
+                <para>
+                    このオプションで、検証したい画像の高さの最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxheight</code>: 画像の高さの最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の高さの最大値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>minwidth</code>: 画像の幅の最小値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の幅の最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxwidth</code>: 画像の幅の最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の幅の最大値を指定することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータは、これら 4 つのオプションを指定してインスタンス化することができます。
+            <code>minheight</code> あるいは <code>minwidth</code> を省略した場合は、
+            0 に設定されます。<code>maxwidth</code> あるいは <code>maxheight</code>
+            を省略した場合は、null に設定されます。しかし、後から
+            <code>setImageMin()</code> や <code>setImageMax()</code>
+            で最小値・最大値を設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <para>
+            利便性を考慮して、<code>setImageWidth</code> や <code>setImageHeight</code>
+            といったメソッドも用意されています。これは、幅や高さの最小値と最大値を設定します。
+            もちろん、それに対応する <code>getImageWidth</code> や <code>getImageHeight</code>
+            も使用可能です。
+        </para>
+
+        <para>
+            サイズの検証をしたくない場合は、その部分に値 <code>null</code> を設定します。
+        </para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>ImageSize バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// 画像の高さを 100-200 ピクセル、幅を 40-80 ピクセルに制限します
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// 配列表記を使用します
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// 連想配列表記を使用します
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// 別の画像サイズを設定します
+$upload->setImageWidth(20, 200);
+]]>
+            </programlisting>
         </example>
     </sect2>
 
