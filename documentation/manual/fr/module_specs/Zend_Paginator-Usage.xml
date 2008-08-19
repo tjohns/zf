@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10619 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.paginator.usage">
     <title>Utilisation</title>
 
@@ -32,7 +32,7 @@
                         <entry>DbSelect</entry>
 
                         <entry>Utilise une instance de <link
-                        linkend="zend.db.select.html"><code>Zend_Db_Select</code></link></entry>
+                        linkend="zend.db.select"><code>Zend_Db_Select</code></link></entry>
                     </row>
 
                     <row>
@@ -61,9 +61,9 @@
 
         <para><programlisting role="php"><![CDATA[$paginator = Zend_Paginator::factory($array);]]></programlisting></para>
 
-        <note>
+        <note><para>
              Pour l'adaptateur Null, il faut spécifier un chiffre à son constructeur en lieu et place de la collection de données. 
-        </note>
+        </para></note>
 
         <para>Il faut ensuite dire au paginateur quelle page utiliser pour calculer les résultats:</para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10907 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
 
@@ -11,7 +11,7 @@
     <para>Lorsque le composant <code>Zend_Soap_Server</code> fonctionne en mode WSDL, il utilise le document WSDL pour
     décrire le comportement des objets du serveur ainsi que les options de transport vers les clients.</para>
 
-    <para>Un document WSDL peut être auto-généré en utilisant <link linkend="zend.soap.autodiscovery">le composant
+    <para>Un document WSDL peut être auto-généré en utilisant <link linkend="zend.soap.autodiscovery.introduction">le composant
     Zend_Soap_AutoDiscovery</link>, ou alors construit manuellement avec <link linkend="zend.soap.wsdl">la classe
     <code>Zend_Soap_Wsdl</code></link> ou tout autre outil de génération de XML</para>
 
@@ -29,18 +29,18 @@
             <para>Le constructeur de <code>Zend_Soap_Server</code> prend 2 paramètres optionnel en mode WSDL:
             <orderedlist>
                     <listitem>
-                        <simpara><code>$wsdl</code>, l'URI permettant l'accès au fichier WSDL <footnote>
+                        <para><code>$wsdl</code>, l'URI permettant l'accès au fichier WSDL <footnote>
                                 <para>Peut être spécifié plus tard avec la méthode <code>setWsdl($wsdl)</code></para>
-                            </footnote>.</simpara>
+                            </footnote>.</para>
                     </listitem>
 
                     <listitem>
-                        <simpara><code>$options</code> - options de création des objets serveurs <footnote>
+                        <para><code>$options</code> - options de création des objets serveurs <footnote>
                                 <para>Peut être spécifié plus tard avec la méthode
                                 <code>setOptions($options)</code></para>
-                            </footnote>.</simpara>
+                            </footnote>.</para>
 
-                        <simpara>Les options suivantes sont reconnues en mode WSDL : <itemizedlist>
+                        <para>Les options suivantes sont reconnues en mode WSDL : <itemizedlist>
                                 <listitem>
                                     <para>"soap_version" ("soapVersion") : version du protocole SOAP à utiliser
                                     (SOAP_1_1 ou SOAP_1_2).</para>
@@ -66,7 +66,7 @@
                                 <listitem>
                                     <para>"wsdl" : équivalent à un appel à <code>setWsdl($wsdlValue)</code></para>
                                 </listitem>
-                            </itemizedlist></simpara>
+                            </itemizedlist></para>
                     </listitem>
                 </orderedlist></para>
         </sect3>

@@ -1,11 +1,11 @@
-<!-- EN-Revision: 10846 -->
+<!-- EN-Revision: 10926 -->
 <sect2 id="zend.log.writers.firebug">
     <title>Écrire vers Firebug</title>
 
     <para><code>Zend_Log_Writer_Firebug</code> envoie des données de journalisation vers la <ulink
     url="http://www.getfirebug.com/">console Firebug</ulink>.</para>
 
-    <para><inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" height="151" scale="100"
+    <para><inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100"
     width="310"></inlinegraphic></para>
 
     <para>Toutes les données sont envoyées via le composant <code>Zend_Wildfire_Channel_HttpHeaders</code> qui utilise

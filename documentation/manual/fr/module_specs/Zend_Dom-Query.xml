@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10377 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
@@ -67,39 +67,39 @@
                         contient la chaîne "baz".</para>
                     </listitem>
                 </itemizedlist>
+            </listitem>
 
-                <itemizedlist>
-                    <para><emphasis>Descendants directs </emphasis>: utilise "&gt;" entre les sélecteurs pour
-                    représenter une descendance direct. "div &gt; span" trouvera seulement les éléments "span" qui sont
-                    des descendants directs d'un élément "div". Peut aussi être utilisé avec chacun des sélecteurs
-                    ci-dessus.</para>
-                </itemizedlist>
+            <listitem>
+                <para><emphasis>Descendants directs </emphasis>: utilise "&gt;" entre les sélecteurs pour
+                représenter une descendance direct. "div &gt; span" trouvera seulement les éléments "span" qui sont
+                des descendants directs d'un élément "div". Peut aussi être utilisé avec chacun des sélecteurs
+                ci-dessus.</para>
+            </listitem>
 
-                <itemizedlist>
-                    <para><emphasis>Descendants </emphasis>: une chaîne avec des sélecteurs multiples ensemble pour
-                    indiquer hiérarchie à rechercher. "div .foo span #one" trouvera un élément avec un id "one" qui est
-                    un descendant avec un profondeur arbitraire d'un élément "span", qui est lui-même un descendant avec
-                    un profondeur arbitraire d'un élément ayant une classe "foo", qui est un descendant avec un
-                    profondeur arbitraire d'un élément "div". Par exemple, il trouvera le lien vers le mot "One" dans le
-                    code ci-dessous :</para>
+            <listitem>
+                <para><emphasis>Descendants </emphasis>: une chaîne avec des sélecteurs multiples ensemble pour
+                indiquer hiérarchie à rechercher. "div .foo span #one" trouvera un élément avec un id "one" qui est
+                un descendant avec un profondeur arbitraire d'un élément "span", qui est lui-même un descendant avec
+                un profondeur arbitraire d'un élément ayant une classe "foo", qui est un descendant avec un
+                profondeur arbitraire d'un élément "div". Par exemple, il trouvera le lien vers le mot "One" dans le
+                code ci-dessous :</para>
 
-                    <programlisting role="html"><![CDATA[<div>
-    <table>
-        <tr>
-            <td class="foo">
-                <div>
-                    Lorem ipsum <span class="bar">
-                        <a href="/foo/bar" id="one">One</a> 
-                        <a href="/foo/baz" id="two">Two</a> 
-                        <a href="/foo/bat" id="three">Three</a> 
-                        <a href="/foo/bla" id="four">Four</a> 
-                    </span>
-                </div>
-            </td>
-        </tr>
-    </table>
+                <programlisting role="html"><![CDATA[<div>
+<table>
+    <tr>
+        <td class="foo">
+            <div>
+                Lorem ipsum <span class="bar">
+                    <a href="/foo/bar" id="one">One</a> 
+                    <a href="/foo/baz" id="two">Two</a> 
+                    <a href="/foo/bat" id="three">Three</a> 
+                    <a href="/foo/bla" id="four">Four</a> 
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>]]></programlisting>
-                </itemizedlist>
             </listitem>
         </itemizedlist>
 

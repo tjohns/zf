@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10910 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
 
@@ -23,6 +23,11 @@
             <para><code>FilesSize</code> : ce validateur vérifie la taille complète de tous les fichiers à valider. Il
             conserve en mémoire la taille de tous les fichiers chargés et lance une erreur quand la somme de tous les
             fichiers dépasse la taille définie. Il est aussi possible de définir une taille minimum et maximum.</para>
+        </listitem>
+
+        <listitem>
+            <para><code>ImageSize</code> : ce validateur vérifie la taille des images. Il valide la largeur et la
+            hauteur et permet de paramétrer à la fois une valeur minimum et maximum.</para>
         </listitem>
 
         <listitem>
@@ -140,12 +145,12 @@ $upload->addValidator('Size', 20000, 'file2');]]></programlisting>
 $upload->addValidator('Size', 20000)
        ->addValidator('Count', 2)
        ->addValidator('Filessize', 25000);]]></programlisting>
-
-            <note>
-                <para>Notez que même si l'ajout du même validateur plusieurs fois est autorisé, faire ceci peut
-                entraîner des problèmes si vous utilisez différentes options pour le même validateur.</para>
-            </note>
         </example>
+
+        <note>
+            <para>Notez que même si l'ajout du même validateur plusieurs fois est autorisé, faire ceci peut entraîner
+            des problèmes si vous utilisez différentes options pour le même validateur.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -156,7 +161,7 @@ $upload->addValidator('Size', 20000)
 
         <itemizedlist>
             <listitem>
-                <para><code>Min</code> : paramètre le nombre minimum de fichiers à transférer.</para>
+                <para><code>min</code> : paramètre le nombre minimum de fichiers à transférer.</para>
 
                 <note>
                     <para>Attention : quand vous utilisez cette option vous devez donner le nombre minimum au moment où
@@ -167,7 +172,7 @@ $upload->addValidator('Size', 20000)
             </listitem>
 
             <listitem>
-                <para><code>Max</code> : paramètre le nombre maximum de fichiers à transférer.</para>
+                <para><code>max</code> : paramètre le nombre maximum de fichiers à transférer.</para>
 
                 <para>Avec cette option vous pouvez limiter le nombre de fichiers que vous acceptez mais vous permet
                 aussi de détecter une possible attaque quand plus de fichiers, que votre formulaire n'en définit, sont
@@ -191,12 +196,12 @@ $upload->addValidator('Count', 2);
 
 // Limite le nombre de fichiers à 5 maximum, tout en obligeant au moins 1 fichier
 $upload->addValidator('Count', array(1, 5);]]></programlisting>
-
-            <note>
-                <para>Notez que ce validateur stocke le nombre de fichiers vérifiés en interne. Le fichier qui excédera
-                le maximum sera retourné en tant qu'erreur.</para>
-            </note>
         </example>
+
+        <note>
+            <para>Notez que ce validateur stocke le nombre de fichiers vérifiés en interne. Le fichier qui excédera le
+            maximum sera retourné en tant qu'erreur.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
@@ -207,7 +212,7 @@ $upload->addValidator('Count', array(1, 5);]]></programlisting>
 
         <itemizedlist>
             <listitem>
-                <para><code>Extension</code> : paramètre l'extension à vérifier.</para>
+                <para><code>extension</code> : paramètre l'extension à vérifier.</para>
             </listitem>
         </itemizedlist>
 
@@ -226,12 +231,12 @@ $upload->addValidator('Extension', 'jpg,png');
 
 // Limite les extensions à jpg et png en utilisant la notation de type tableau
 $upload->addValidator('Extension', array('jpg', 'png'));]]></programlisting>
-
-            <note>
-                <para>Notez que ce validateur ne vérifie que l'extension de fichier. Il ne vérifie pas le type MIME réel
-                du fichier.</para>
-            </note>
         </example>
+
+        <note>
+            <para>Notez que ce validateur ne vérifie que l'extension de fichier. Il ne vérifie pas le type MIME réel du
+            fichier.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
@@ -242,14 +247,14 @@ $upload->addValidator('Extension', array('jpg', 'png'));]]></programlisting>
 
         <itemizedlist>
             <listitem>
-                <para><code>Min</code> : paramètre le poids minimum de tous les fichiers.</para>
+                <para><code>min</code> : paramètre le poids minimum de tous les fichiers.</para>
 
                 <para>Avec cette option vous pouvez définir le poids minimum de tous les fichiers que vous souhaitez
                 transférer.</para>
             </listitem>
 
             <listitem>
-                <para><code>Max</code> : paramètre le poids maximum de tous les fichiers.</para>
+                <para><code>max</code> : paramètre le poids maximum de tous les fichiers.</para>
 
                 <para>Avec cette option vous pouvez limiter le poids total des fichiers qui doivent être transférés,
                 mais pas la taille individuelle de chaque fichier.</para>
@@ -278,11 +283,75 @@ $upload->addValidator('FilesSize', 40000);
 
 // Limite la taille de tous les fichiers dans une plage de 10kB à 4MB
 $upload->setValidator('FilesSize', array('10kB', '4MB');]]></programlisting>
+        </example>
 
-            <note>
-                <para>Notez que ce validateur stocke le poids des fichiers vérifiés en interne. Le fichier qui excédera
-                le poids maximum sera retourné en tant qu'erreur.</para>
-            </note>
+        <note>
+            <para>Notez que ce validateur stocke le poids des fichiers vérifiés en interne. Le fichier qui excédera le
+            poids maximum sera retourné en tant qu'erreur.</para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title>Validateur <emphasis role="strong">ImageSize</emphasis></title>
+
+        <para>Le validateur <code>ImageSize</code> vérifie la taille des images. Il supporte les options suivantes
+        :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>minheight</code> : paramètre la hauteur minimum d'une image.</para>
+
+                <para>Avec cette option vous pouvez définir la hauteur minimum pour qu'une image soit validée.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>maxheight</code> : paramètre la hauteur maximum d'une image.</para>
+
+                <para>Avec cette option vous pouvez limiter la hauteur maximum pour qu'une image soit validée.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>minwidth</code> : paramètre la largeur minimum d'une image.</para>
+
+                <para>Avec cette option vous pouvez définir la largeur minimum pour qu'une image soit validée.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>maxwidth</code> : paramètre la largeur maximum d'une image.</para>
+
+                <para>Avec cette option vous pouvez limiter la largeur maximum pour qu'une image soit validée.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Vous pouvez initialiser ce validateur avec ces quatre options. Quand <code>minheight</code> ou
+        <code>minwidth</code> sont omises, elles sont réglées à 0. Et quand <code>maxwidth</code> ou
+        <code>maxheight</code> ne sont pas fournies, elles sont réglées à <code>null</code>. Mais vous pouvez aussi
+        utiliser les méthodes <code>setImageMin()</code> et <code>setImageMax()</code> pour régler les valeurs minimum
+        et maximum plus tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
+
+        <para>Par commodité, il existe aussi les méthodes <code>setImageWidth</code> et <code>setImageHeight</code> qui
+        paramètrent la largeur et la hauteur minimum et maximum. Bien sûr les méthodes associées
+        <code>getImageWidth</code> et <code>getImageHeight</code> sont aussi disponibles.</para>
+
+        <para>Pour désactiver la validation d'une dimension, paramétrez la valeur correspondante à
+        <code>null</code>.</para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>Utiliser le validateur ImageSize</title>
+
+            <programlisting role="php"><![CDATA[$upload = new Zend_File_Transfer();
+
+// Limite la taille de l'image à une hauteur de 100 à 200 et une largeur de 40 à 80 pixels
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// Utilise la notation de type tableau
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// Utilise la notation de type tableau indexé
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// Autre possibilité de réglage
+$upload->setImageWidth(20, 200);]]></programlisting>
         </example>
     </sect2>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9890 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.soap.wsdl">
     <title>WSDL</title>
 
@@ -300,9 +300,10 @@ $soapMyClassType = $wsdl->getType('MyClass');]]></programlisting></para>
             document WSDL.</para>
 
             <para>Ceci évite les duplications et récursions si cette méthode est appelée plus d'une fois.</para>
+
+            <para>Voyez <ulink url="http://www.w3.org/TR/wsdl#_types" /> pour plus de détails.</para>
         </sect3>
 
-        <para>Voyez <ulink url="http://www.w3.org/TR/wsdl#_types" /> pour plus de détails.</para>
     </sect2>
 
     <sect2 id="zend.soap.wsdl.add_documentation">

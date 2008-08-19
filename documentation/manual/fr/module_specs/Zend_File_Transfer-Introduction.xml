@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10888 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
@@ -56,15 +56,12 @@ if (!$adapter->receive()) {
         <code>setDestination</code> et d'appeler la méthode <code>receive()</code>. S'il apparaît des erreurs au cours
         de l'upload, alors vous les récupérerez grâce à une exception qui sera retournée.</para>
 
-        <note>
-            <title>Attention</title>
-
-            <para>Maintenez à l'esprit qu'il s'agit de l'utilisation la plus simple. Vous <emphasis>ne devez
-            jamais</emphasis> utiliser cet exemple en environnement de production car il causerait de graves problèmes
-            de sécurité. Vous devez toujours utiliser des validateurs pour accroître la sécurité.</para>
-        </note>
     </example>
+    <note>
+        <title>Attention</title>
+
+        <para>Maintenez à l'esprit qu'il s'agit de l'utilisation la plus simple. Vous <emphasis>ne devez
+        jamais</emphasis> utiliser cet exemple en environnement de production car il causerait de graves problèmes
+        de sécurité. Vous devez toujours utiliser des validateurs pour accroître la sécurité.</para>
+    </note>
 </sect1>
-<!--
-vim:se ts=4 sw=4 tw=80 et:
--->
