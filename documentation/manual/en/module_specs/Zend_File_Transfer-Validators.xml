@@ -35,6 +35,13 @@
 
         <listitem>
             <para>
+                <code>ImageSize</code>: This validator checks the size of image. It validates the width
+                and height and provides for both a minimum and a maximum size.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
                 validate types of mimetypes and will throw error when the mimetype of a given file does not
                 match.
@@ -218,7 +225,7 @@ $upload->addValidator('Size', 20000)
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: Sets the minimum number of files to transfer.
+                    <code>min</code>: Sets the minimum number of files to transfer.
                 </para>
 
                 <note>
@@ -235,7 +242,7 @@ $upload->addValidator('Size', 20000)
 
             <listitem>
                 <para>
-                    <code>Max</code>: Set the maximum number of files to transfer.
+                    <code>max</code>: Set the maximum number of files to transfer.
                 </para>
 
                 <para>
@@ -286,7 +293,7 @@ $upload->addValidator('Count', array(1, 5);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Extension</code>: Checks if the given file uses this file extension.
+                    <code>extension</code>: Checks if the given file uses this file extension.
                 </para>
             </listitem>
         </itemizedlist>
@@ -330,7 +337,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: Sets the minimum aggregate filesize.
+                    <code>min</code>: Sets the minimum aggregate filesize.
                 </para>
 
                 <para>
@@ -340,7 +347,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 
             <listitem>
                 <para>
-                    <code>Max</code>: Sets the maximum aggregate filesize.
+                    <code>max</code>: Sets the maximum aggregate filesize.
                 </para>
 
                 <para>
@@ -386,6 +393,97 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
                     exceeds the size will be returned as error.
                 </para>
             </note>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title><emphasis role="strong">ImageSize</emphasis> validator</title>
+
+        <para>
+            The <code>ImageSize</code> validator checks for the size of image files.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>minheight</code>: Sets the minimum image height.
+                </para>
+
+                <para>
+                    With this option you can define the minimum height of the image you want to validate.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxheight</code>: Sets the maximum image height.
+                </para>
+
+                <para>
+                    With this option you can limit the maximum height of the image you want to validate.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>minwidth</code>: Sets the minimum image width.
+                </para>
+
+                <para>
+                    With this option you can define the minimum width of the image you want to validate.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxwidth</code>: Sets the maximum image width.
+                </para>
+
+                <para>
+                    With this option you can limit the maximum width of the image you want to validate.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            You can initiate this validator with all four options set. When <code>minheight</code> or
+            <code>minwidth</code> are not given, they will be set to 0. And when <code>maxwidth</code> or
+            <code>maxheight</code> are not given, they will be set to null. But you can also use the
+            methods <code>setImageMin()</code> and <code>setImageMax()</code> to set both minimum and
+            maximum values to set the options afterwards and <code>getMin()</code> and <code>getMax()</code>
+            to receive the actual set values.
+        </para>
+
+        <para>
+            For your convinience there is also a <code>setImageWidth</code> and <code>setImageHeight</code>
+            method which will set the minimum and maximum height and width. Of course also the related
+            <code>getImageWidth</code> and <code>getImageHeight</code> methods are available. 
+        </para>
+
+        <para>
+            To suppress the validation of a dimension just set the related value to <code>null</code>.
+        </para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>Using the ImageSize validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limit the size of a image to a height of 100-200 and a width of 40-80 pixel
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// Use the array notation
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// Use the named array notation
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// Set other image dimensions
+$upload->setImageWidth(20, 200);
+]]>
+            </programlisting>
         </example>
     </sect2>
 

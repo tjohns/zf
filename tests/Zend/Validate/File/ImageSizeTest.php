@@ -76,6 +76,22 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
             $validator = new Zend_Validate_File_ImageSize(array('minwidth' => $element[0], 'minheight' => $element[1], 'maxwidth' => $element[2], 'maxheight' => $element[3]));
             $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'));
         }
+
+        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.jpg'));
+        $failures = $validator->getMessages();
+        $this->assertContains('can not be read', $failures['fileImageSizeNotReadable']);
+
+        $file['name'] = 'TestName';
+        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.jpg', $file));
+        $failures = $validator->getMessages();
+        $this->assertContains('TestName', $failures['fileImageSizeNotReadable']);
+
+        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/badpicture.jpg'));
+        $failures = $validator->getMessages();
+        $this->assertContains('could not be detected', $failures['fileImageSizeNotDetected']);
     }
 
     /**
@@ -149,6 +165,19 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
 
         $validator->setImageMax(110, 1000);
         $this->assertEquals(array(110, 1000), $validator->getImageMax());
+
+        $validator->setImageMax(null, 1100);
+        $this->assertEquals(array(null, 1100), $validator->getImageMax());
+
+        $validator->setImageMax(120, null);
+        $this->assertEquals(array(120, null), $validator->getImageMax());
+
+        try {
+            $validator->setImageMax(10000, 1);
+            $this->fail("Missing exception");
+        } catch (Zend_Validate_Exception $e) {
+            $this->assertContains("greater than or equal", $e->getMessage());
+        }
     }
 
     /**
