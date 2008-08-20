@@ -91,9 +91,9 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
     public function setRowCount($rowCount)
     {
         if ($rowCount instanceof Zend_Db_Select) {
-            $result = $rowCount->query(Zend_Db::FETCH_ASSOC)->fetch();
+            $columns = $rowCount->getPart(Zend_Db_Select::COLUMNS);
             
-            if (!isset($result[self::ROW_COUNT_COLUMN])) {
+            if (false === strpos((string) $columns[0][1], self::ROW_COUNT_COLUMN)) {
                 /**
                  * @see Zend_Paginator_Exception
                  */
@@ -102,7 +102,9 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 throw new Zend_Paginator_Exception('Row count column not found');
             }
             
-            $this->_rowCount = $result[self::ROW_COUNT_COLUMN];
+            $result = $rowCount->query(Zend_Db::FETCH_ASSOC)->fetch();
+            
+            $this->_rowCount = count($result) > 0 ? $result[self::ROW_COUNT_COLUMN] : 0;
         } else if (is_integer($rowCount)) {
             $this->_rowCount = $rowCount;
         } else {
@@ -139,15 +141,19 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
     public function count()
     {
         if ($this->_rowCount === null) {
-            $expression = new Zend_Db_Expr('COUNT(*) AS ' . self::ROW_COUNT_COLUMN); 
             $rowCount   = clone $this->_select;
 
+            $groupPart  = implode(',', $rowCount->getPart(Zend_Db_Select::GROUP));    
+            $countPart  = empty($groupPart) ? 'COUNT(*)' : 'COUNT(DISTINCT ' . $groupPart . ')';
+            $expression = new Zend_Db_Expr($countPart . ' AS ' . self::ROW_COUNT_COLUMN);  
+            
             $rowCount->__toString(); // Workaround for ZF-3719 and related
             $rowCount->reset(Zend_Db_Select::COLUMNS)
                      ->reset(Zend_Db_Select::ORDER)
                      ->reset(Zend_Db_Select::LIMIT_OFFSET)
+                     ->reset(Zend_Db_Select::GROUP)
                      ->columns($expression);
-                     
+            
             $this->setRowCount($rowCount);
         }
 

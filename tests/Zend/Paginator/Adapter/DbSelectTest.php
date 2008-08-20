@@ -69,7 +69,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp ()
+    protected function setUp()
     {
         parent::setUp();
         
@@ -88,7 +88,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown ()
+    protected function tearDown()
     {
         $this->_adapter = null;
         parent::tearDown();
@@ -140,6 +140,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         $rowCount->reset(Zend_Db_Select::COLUMNS)
                  ->reset(Zend_Db_Select::ORDER) // ZF-3740
                  ->reset(Zend_Db_Select::LIMIT_OFFSET) // ZF-3727
+                 ->reset(Zend_Db_Select::GROUP) // ZF-4001
                  ->columns($expression);
         
         $this->_adapter->setRowCount($rowCount);
@@ -180,13 +181,50 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     
     public function testDbTableSelectDoesntThrowException()
     {
-        try {
-            $adapter = new Zend_Paginator_Adapter_DbSelect($this->_table->select());
-            $count = $adapter->count();
-            $this->assertEquals(500, $count);
-        } catch (Exception $e) {
-            $this->markTestIncomplete('Known Zend_Db_Table_Select bug - not implemented yet.');
-            //$this->fail('Known Zend_Db_Table_Select bug: ' . $e->getMessage());
-        }
+        $adapter = new Zend_Paginator_Adapter_DbSelect($this->_table->select());
+        $count = $adapter->count();
+        $this->assertEquals(500, $count);
+    }
+    
+    // ZF-4001
+    public function testGroupByReturnsOneRow()
+    {
+        $query = $this->_db->select()->from('test')
+                           ->order('number ASC')
+                           ->limit(1000, 0)
+                           ->group('number');
+        
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(500, $adapter->count());
+    }
+    
+    // ZF-4001
+    public function testGroupByOnEmptyTableReturnsRowCountZero()
+    {
+        $db = new Zend_Db_Adapter_Pdo_Sqlite(array(
+            'dbname' => dirname(__FILE__) . '/../_files/testempty.sqlite'
+        ));
+        
+        $query = $db->select()->from('test')
+                              ->order('number ASC')
+                              ->limit(1000, 0);
+        
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(0, $adapter->count());
+    }
+    
+    // ZF-4001
+    public function testGroupByQueryReturnsCorrectResult()
+    {
+        $query = $this->_db->select()->from('test')
+                           ->order('number ASC')
+                           ->limit(1000, 0)
+                           ->group('testgroup');
+        
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(2, $adapter->count());
     }
 }
