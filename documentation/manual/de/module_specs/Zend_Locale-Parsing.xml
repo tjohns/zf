@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7357 -->
+<!-- EN-Revision: 10887 -->
 <sect1 id="zend.locale.parsing">
 
     <title>Normalisierung und Lokalisierung</title>
@@ -114,11 +114,11 @@ print $number; // will 13524.67 zurückgeben]]>
         <title>Lokalisieren von Nummern</title>
 
         <para>
-            <code>toNumber($value, array $options = array())</code> kann Nummern lokalisieren, mit Hilfe
-            der <link linkend="zend.locale.regions">unterstützten Gebietsschemata</link>. Diese Funktion
-            gibt eine lokalisierte Zeichenkette der angegebenen Nummer in dem konventionellen Format für ein
-            definiertes Gebietsschema aus. Die Option 'number_format' definiert ein explizit angegebenes
-            nicht standardmäßiges Nummernformat für die Verwendung mit <code>toNumber()</code>.
+            <code>toNumber($value, array $options = array())</code> kann, mit Hilfe der folgenden
+            <link linkend="zend.locale.appendix">unterstützten Gebietsschemata</link>, Nummern lokalisieren.
+            Diese Funktion gibt eine lokalisierte Zeichenkette der angegebenen Nummer in dem konventionellen
+            Format für ein definiertes Gebietsschema aus. Die Option 'number_format' definiert ein explizit
+            angegebenes nicht standardmäßiges Nummernformat für die Verwendung mit <code>toNumber()</code>.
         </para>
 
         <example id="zend.locale.number.localize.example-1">

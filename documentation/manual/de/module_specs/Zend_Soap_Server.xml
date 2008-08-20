@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9889 -->
+<!-- EN-Revision: 10907 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
     
@@ -357,7 +357,7 @@ $response = $server->handle();
             </para>
             
             <para>
-                Die letzte Antwort kann auch mit der <code>getLastResyponse()</code> Methode empfangen werden
+                Die letzte Antwort kann auch mit der <code>getLastResponse()</code> Methode empfangen werden
                 um Vor-Bearbeitungen durchzuführen:
                 <programlisting role="php"><![CDATA[<?php
 ...

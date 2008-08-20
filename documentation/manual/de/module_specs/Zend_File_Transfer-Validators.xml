@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10653 -->
+<!-- EN-Revision: 10925 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -33,6 +33,21 @@
                 Sie merkt sich intern die Größe aller geprüften Dateien und wirft einen Fehler wenn die
                 Summe aller Dateien die definierte Größe überschreitet. Sie bietet auch eine Mindest- und
                 Maximalgröße an.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ImageSize</code>: Diese Prüfung checkt die Größe von Bildern. Sie prüft die Breite
+                und Höhe und bietet sowohl eine Mindest- als auch eine Maximalgröße.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>MimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
+                fähig Typen von Mimetypen zu prüfen und wirft einen Fehler wenn eine angegebene Datei nicht
+                passt.
             </para>
         </listitem>
 
@@ -205,7 +220,7 @@ $upload->addValidator('Size', 20000)
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: Setzt die minimale Anzahl der Dateien die übertragen wird.
+                    <code>min</code>: Setzt die minimale Anzahl der Dateien die übertragen wird.
                 </para>
 
                 <note>
@@ -223,7 +238,7 @@ $upload->addValidator('Size', 20000)
 
             <listitem>
                 <para>
-                    <code>Max</code>: Setzt die maximale Anzahl an Dateien die übertragen wird.
+                    <code>max</code>: Setzt die maximale Anzahl an Dateien die übertragen wird.
                 </para>
 
                 <para>
@@ -275,7 +290,7 @@ $upload->addValidator('Count', array(1, 5);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Extension</code>: Prüft ob die angegebene Datei diese Dateierweiterung verwendet.
+                    <code>extension</code>: Prüft ob die angegebene Datei diese Dateierweiterung verwendet.
                 </para>
             </listitem>
         </itemizedlist>
@@ -303,7 +318,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
             <note>
                 <para>
                     Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
-                    den MIME Tpy der aktuellen Datei.
+                    den MIME Typ der aktuellen Datei.
                 </para>
             </note>
         </example>
@@ -320,7 +335,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: Setzt die minimale gemeinsame Dateigröße.
+                    <code>min</code>: Setzt die minimale gemeinsame Dateigröße.
                 </para>
 
                 <para>
@@ -331,7 +346,7 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 
             <listitem>
                 <para>
-                    <code>Max</code>: Setzt die maximale gemeinsame Dateigröße.
+                    <code>max</code>: Setzt die maximale gemeinsame Dateigröße.
                 </para>
 
                 <para>
@@ -379,6 +394,160 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
                 </para>
             </note>
         </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title><emphasis role="strong">ImageSize</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>ImageSize</code> Prüfung checkt die Größe von Bildern. Sie unterstützt die folgenden
+            Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>minheight</code>: Setzt die mindeste Höhe des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die Mindesthöhe des Bildes definiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxheight</code>: Settzt die maximale Höhe des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann di Maximalhöhe des Bildes limitiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>minwidth</code>: Setzt die mindeste Breite des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die mindeste Breite des Bildes definiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxwidth</code>: Setzt die maximale Breite des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die maximale Breite des Bildes limitiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung kann mit allen vier gesetzten Optionen initiiert werden. Wenn <code>minheight</code>
+            oder <code>minwidth</code> nicht angegeben werden, werden Sie auf 0 gesetzt. Und wenn
+            <code>maxwidth</code> oder <code>maxheight</code> nicht angegeben werden, werden Sie auf null
+            gesetzt. Aber man kann auch die <code>setImageMin()</code> und <code>setImageMax()</code>
+            Methoden verwenden um beide Minimal- und Maximalwerte im Nachhinein zu setzen und
+            <code>getMin()</code> und <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <para>
+            Der Bequemlichkeit halber gibt es auch die <code>setImageWidth</code> und <code>setImageHeight</code>
+            Methoden welche die Mindest- und Maximalhöhe und -Breite setzen können. Natürlich sind auch
+            passende <code>getImageWidth</code> und <code>getImageHeight</code> Methoden vorhanden.
+        </para>
+
+        <para>
+            Um die Prüfung einer Dimension zu unterdrücken muß der betreffende Wert einfach auf
+            <code>null</code> gesetzt werden.
+        </para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>Verwendung der ImageSize Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Begrenzt die Größe eines Bildes auf eine Höhe von 100-200 und eine Breite von 40-80 Pixel
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// Verwendet die Array Schreibweise
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// Verwendet die benannte Array Schreibweise
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// Setzt andere Dimensionen für das Bild
+$upload->setImageWidth(20, 200);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.mimetype">
+        <title><emphasis role="strong">MimeType</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>MimeType</code> Prüfung checkt den Mimetyp von übertragenen Dateien. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: Setzt die Art des Mimetyps der geprüft werden soll.
+                </para>
+
+                <para>
+                    Mit dieser Option kann der Mimetyp von Dateien definiert werden der akzeptiert werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert viele Mimetypen entweder als Komma-getrennter String, oder als
+            Array. Man kan auch die Methoden <code>setMimeType()</code>, <code>addMimeType()</code>,
+            und  <code>getMimeType()</code> verwenden um Mimetypen zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.mimetype.example">
+            <title>Verwendung der MimeType Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Begrenzt den Mimetyp aller gegebenen Dateien auf Gif Bilder
+$upload->addValidator('MimeType', 'image/gif');
+
+// Begrenzt den Mimetyp alle gegebenen Dateien auf Gif und Jpeg Dateien
+$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+
+// Begrenzt den Mimetyp aller Dateien auf die Gruppe image
+$upload->setValidator('MimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Das obige Beispiel zeigt das es auch möglich ist den akzeptierten Mimetyp auf eine Gruppe von
+            Mimetypen zu begrenzen. Um alle Bilder zu erlauben kann einfach 'image' als Mimetyp verwendet
+            werden. Das kann für alle Gruppen wie 'image', 'audio', 'video', 'test', und so weiter
+            gemacht werden.
+        </para>
+
+        <note>
+            <para>
+                Es ist zu beachten das die Verwendung von Mimetyp-Gruppen alle Mitglieder dieser Gruppe
+                akzeptiert, selbst wenn die Anwendung diese nicht unterstützt. Wenn man 'image' erlaubt,
+                erhält man auch 'image/xpixmap' oder 'image/vasa' was problematisch sein könnte. Wenn man
+                nicht sicher ist ob die eigene Anwendung alle Typen unterstützt ist es besser nur
+                definierte Mimetypen zu erlauben statt der kompletten Gruppe.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
