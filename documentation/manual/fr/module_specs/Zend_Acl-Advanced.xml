@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6301 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.advanced">
     <title>Utilisation avancée</title>
 
@@ -21,7 +21,7 @@
     <sect2 id="zend.acl.advanced.assertions">
         <title>Écrire des règles ACL conditionnelles avec des assertions</title>
 
-        <para>Parfois, une règle pour autoriser ou interdire l'accès d'un Rôle à une Ressource n'est pas absolu, mais
+        <para>Parfois, une règle pour autoriser ou interdire l'accès d'un rôle à une ressource n'est pas absolu, mais
         dépend de plusieurs critères. Par exemple, supposons qu'un certain accès peut être autorisé, mais uniquement
         entre 8h du matin et 5h du soir. Un autre exemple consisterait à interdire l'accès parce que la requête provient
         d'une adresse IP qui est notée comme source d'abus. <code>Zend_Acl</code> dispose d'un support intégré pour
@@ -55,14 +55,14 @@ $acl->allow(null, null, null, new CleanIPAssertion());        ]]></programlistin
         <para>Le code ci-dessus crée une règle conditionnelle qui autorise l'accès à tous les privilèges, sur tout et
         pour tout le monde, sauf lorsque l'adresse IP de la requête fait partie de la liste noire. Si une requête
         provient d'une adresse IP qui n'est pas considérée comme "propre", alors la règle d'autorisation ne s'applique
-        pas. Puisque la règle s'applique à tous les Rôles, toutes les Ressources, et tous les privilèges, une IP "sale"
+        pas. Puisque la règle s'applique à tous les rôles, toutes les Ressources, et tous les privilèges, une IP "sale"
         aboutira à un refus d'accès. Ceci constitue un cas spécial, et il faut bien noter que tous les autres cas (donc,
-        si un Rôle, une Ressource ou un Privilège est défini pour la règle), une assertion qui échoue aboutit à une
+        si un rôle, une ressource ou un privilège est défini pour la règle), une assertion qui échoue aboutit à une
         règle qui ne s'applique pas et ce sont alors les autres règles qui servent à déterminer si l'accès est autorisé
         ou non.</para>
 
-        <para>La méthode <code>assert()</code> d'un objet d'assertion reçoit l'ACL, le Rôle, la Ressource et le
-        Privilège auquel une requête d'autorisation (c.a.d., <code>isAllowed()</code>) s'applique, afin de fournir un
+        <para>La méthode <code>assert()</code> d'un objet d'assertion reçoit l'ACL, le rôle, la ressource et le
+        privilège auquel une requête d'autorisation (c.a.d., <code>isAllowed()</code>) s'applique, afin de fournir un
         contexte à la classe d'assertion pour déterminer ses conditions lorsque cela est nécessaire.</para>
     </sect2>
 </sect1>

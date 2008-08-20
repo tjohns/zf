@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.refining">
     <title>Affiner les Contrôles d'Accès</title>
 
@@ -19,14 +19,14 @@
         news. Enfin, il devrait être impossible pour tout le monde (y compris les administrateurs) d'archiver un contenu
         qui n'aurait une durée de vie que de 1 ou 2 jours.</para>
 
-        <para>En premier lieu, nous modifions le registre des Rôles pour refléter ces changements. Nous avons dit que le
+        <para>En premier lieu, nous modifions le registre des rôles pour refléter ces changements. Nous avons dit que le
         groupe "Marketing" a les même permissions de base que "Staff". Donc nous créons "marketing" pour qu'il hérite
         des permissions de "staff".</para>
 
         <programlisting role="php"><![CDATA[// Le nouveau groupe Marketing hérite des permissions de Staff
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
-        <para>Ensuite, notez que les contrôles d'accès plus haut font référence à des Ressources (ex. "newsletters",
+        <para>Ensuite, notez que les contrôles d'accès plus haut font référence à des ressources (ex. "newsletters",
         "dernières news", "annonces"). Maintenant, nous ajoutons ces Ressources :</para>
 
         <programlisting role="php"><![CDATA[// Créer les Ressources pour les règles
@@ -79,8 +79,8 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
 
         <para>Pour retirer une ou plusieurs règles des ACL, utilisez simplement la méthode <code>removeAllow()</code> ou
         <code>removeDeny()</code>. Comme pour <code>allow()</code> et <code>deny()</code>, vous pouvez utiliser une
-        valeur <code>null</code> pour indiquer que la méthode s'applique à tous les Rôles, Ressources et/ou
-        Privilèges.</para>
+        valeur <code>null</code> pour indiquer que la méthode s'applique à tous les rôles, ressources et/ou
+        privilèges.</para>
 
         <programlisting role="php"><![CDATA[// Retire l'interdiction de relire les dernières news au Staff (et au marketing, par héritage)
 $acl->removeDeny('staff', 'latest', 'relire');

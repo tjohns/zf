@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10662 -->
+<!-- EN-Revision: 10943 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>Authentification avec une table de base de données</title>
 
@@ -132,10 +132,11 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // stocke l'identité comme objet dans lequel seulement username et real_name sont retournés
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array('username', 'real_name')));
+    $storage = $this->_auth->getStorage();
+    $storage->write($adapter->getResultRowObject(array('username', 'real_name')));
 
     // stocke l'identité comme objet dans lequel la colonne password a été omis
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(null, 'password'));
+    $storage->write($adapter->getResultRowObject(null, 'password'));
 
     /* ... */
 
@@ -173,7 +174,10 @@ $adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password
 
         <para>Par conséquent nous devons modifier notre table pour stocker notre chaîne de "salt" aléatoire :</para>
 
-        <programlisting role="php"><![CDATA[$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+        <programlisting role="php"><![CDATA[$sqlAlter = "ALTER TABLE [users] "
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
+
 
 $dbAdapter->query($sqlAlter);]]></programlisting>
 
@@ -192,7 +196,9 @@ $dbAdapter->query($sqlAlter);]]></programlisting>
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
+    "MD5(CONCAT('"
+    . Zend_Registry::get('staticSalt')
+    . "', ?, password_salt))"
 );]]></programlisting>
 
         <note>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7944 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.auth.introduction">
     <title>Introduction</title>
 
@@ -284,7 +284,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);]]></programli
             </orderedlist></para>
 
         <para>L'exemple suivant illustre la manière d'utiliser un adaptateur <code>Zend_Auth</code> de manière indirecte
-        via l'utilisation de la classe <code>Zend_Auth</code> : <programlisting role="php"><![CDATA[// Obtention d'une référence de l'instance du singleton de Zend_Auth
+        via l'utilisation de la classe <code>Zend_Auth</code> : <programlisting role="php"><![CDATA[// Obtention d'une référence de l'instance du Singleton de Zend_Auth
 $auth = Zend_Auth::getInstance();
 
 // Définition de l'adaptateur d'authentification

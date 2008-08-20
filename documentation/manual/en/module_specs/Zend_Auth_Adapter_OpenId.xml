@@ -69,7 +69,8 @@
             is set.
         </para>
 
-        <programlisting role="php"><![CDATA[$status = "";
+        <programlisting role="php"><![CDATA[<?php
+$status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
      $_POST['openid_action'] == "login" &&
