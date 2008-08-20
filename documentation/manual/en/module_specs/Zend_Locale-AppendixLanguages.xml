@@ -9,7 +9,7 @@
 
     <table id="zend.locale.appendix.table">
         <title>List of all supported languages</title>
-        <tgroup cols="2">
+        <tgroup cols="3">
             <thead>
                 <row>
                     <entry>Language</entry>
