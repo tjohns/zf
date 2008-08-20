@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9966 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
@@ -110,7 +110,12 @@
             <example id="zend.db.adapter.connecting.factory.example">
                 <title>Utilisation de la méthode statique de fabrique de Zend_Db</title>
 
-                <programlisting role="php"><![CDATA[// Charge automatiquement la classe Zend_Db_Adapter_Pdo_Mysql et en créer une instance.
+                <programlisting role="php"><![CDATA[// Nous n'avons pas besoin de la ligne suivante car Zend_Db_Adapter_Pdo_Mysql
+// sera automatiquement chargé par la fabrique Zend_Db.
+
+// require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
+
+// Charge automatiquement la classe Zend_Db_Adapter_Pdo_Mysql et en créer une instance.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',

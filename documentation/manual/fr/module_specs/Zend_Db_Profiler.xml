@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10718 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Db_Profiler</title>
 
@@ -18,7 +18,7 @@
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test',
-    'profiler' => true  // active le profileur ; mettre à false pour désactiver (valeur par défaut)
+    'profiler' => true  // active le profileur ; mettre à false pour désactiver (désactivé par défaut)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
