@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10619 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -30,7 +30,7 @@
                         <entry>DbSelect</entry>
                         <entry>
                             Verwendet eine Instanz von
-                            <link linkend="zend.db.select.html"><code>Zend_Db_Select</code></link>
+                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
                         </entry>
                     </row>
                     <row>
@@ -72,8 +72,10 @@
         </para>
 
         <note>
-            Im Falle des Null Adapters, muß dem Konstruktor eine Elementanzahl mitgegeben werden da keine
-            Datensammlung vorliegt.
+            <para>
+                Im Falle des Null Adapters, muß dem Konstruktor eine Elementanzahl mitgegeben werden da keine
+                Datensammlung vorliegt.
+            </para>
         </note>
         
         <para>

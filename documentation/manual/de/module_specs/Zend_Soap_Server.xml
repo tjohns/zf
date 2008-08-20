@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10907 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
     
@@ -19,7 +19,7 @@
     
     <para>
         Ein WSDL Dokument kann automatisch erzeugt werden mit der Funktionalität die von der 
-        <link linkend="zend.soap.autodiscovery">Zend_Soap_AutoDiscovery Komponente</link> angeboten wird
+        <link linkend="zend.soap.autodiscovery.introduction">Zend_Soap_AutoDiscovery Komponente</link> angeboten wird
         oder sollte händisch erzeugt werden durch Verwendung der
         <link linkend="zend.soap.wsdl"><code>Zend_Soap_Wsdl</code> Klasse</link> oder irgendeinem anderen
         XML Erstellungstool.
@@ -43,7 +43,7 @@
                 WSDL Modus arbeitet:
                 <orderedlist>
                     <listitem>
-                        <simpara>
+                        <para>
                             <code>$wsdl</code>, welcher eine URI einer WSDL Datei ist
                             <footnote>
                                 <para>
@@ -51,10 +51,10 @@
                                     Methode.
                                 </para>
                             </footnote>.
-                        </simpara>
+                        </para>
                     </listitem>
                     <listitem>
-                        <simpara>
+                        <para>
                             <code>$options</code> - Optionen für die Erstellung eines SOAP Server Objektes
                             <footnote>
                                 <para>
@@ -62,8 +62,8 @@
                                     Methode später gesetzt werden.
                                 </para>
                             </footnote>.
-                        </simpara>
-                        <simpara>
+                        </para>
+                        <para>
                             Die folgenden Optionen werden im WSDL Modus erkannt:
                             <itemizedlist>
                                 <listitem>
@@ -99,7 +99,7 @@
                                     </para>
                                 </listitem>
                             </itemizedlist>
-                        </simpara>
+                        </para>
                     </listitem>
                 </orderedlist>
             </para>

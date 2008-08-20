@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data Envelopes</title>
 
@@ -139,7 +139,7 @@ $data->setLabel('name');
             geladen werden, indem die <code>fromJson()</code> Methode verwendet wird.
         </para>
 
-        <example id="zend.dojo.data.usage.label">
+        <example id="zend.dojo.data.usage.populate">
             <title>Zend_Dojo_Data von JSON aus bekanntgeben</title>
 
             <programlisting role="php"><![CDATA[

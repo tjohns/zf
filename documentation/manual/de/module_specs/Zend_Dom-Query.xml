@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10377 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
@@ -80,43 +80,43 @@
                         String "baz" irgendwo in Ihm enthält.
                     </para></listitem>
                 </itemizedlist>
+            </listitem>
 
-                <itemizedlist><para>
-                    <emphasis>Direkt abhängig</emphasis>: Verwende '&gt;' zwischen Selektoren um direkte
-                    Abhängigkeit auszudrücken. 'div > span' würde nur 'span' Elemente auswählen die direkt
-                    Abhängig von 'div' sind. Kann auch mit jedem Selektor darüber verwendet werden.
-                </para></itemizedlist>
+            <listitem><para>
+                <emphasis>Direkt abhängig</emphasis>: Verwende '&gt;' zwischen Selektoren um direkte
+                Abhängigkeit auszudrücken. 'div > span' würde nur 'span' Elemente auswählen die direkt
+                Abhängig von 'div' sind. Kann auch mit jedem Selektor darüber verwendet werden.
+            </para></listitem>
 
-                <itemizedlist>
-                    <para>
-                        <emphasis>Abhängigkeit</emphasis>: Mehrere Selektoren zusammenschreiben um eine
-                        Hirarchie zwischen Ihnen auszudrücken nach welcher gesucht werden soll.
-                        'div .foo span #one' würde ein Element mit der Id 'one' auswählen das Abhängig ist
-                        in einer beliebigen Tiefe unter einem 'span' Element, welches seinerseits in einer
-                        beliebigen Tiefe darunter abhängig ist von einer Klase von 'foo', welche in einer
-                        beliebigen Tiefe abhängig ist von einem 'div' Element. Der Link zum Wort 'One' im
-                        Beispiel anbei würde passen:
-                    </para>
+            <listitem>
+                <para>
+                    <emphasis>Abhängigkeit</emphasis>: Mehrere Selektoren zusammenschreiben um eine
+                    Hirarchie zwischen Ihnen auszudrücken nach welcher gesucht werden soll.
+                    'div .foo span #one' würde ein Element mit der Id 'one' auswählen das Abhängig ist
+                    in einer beliebigen Tiefe unter einem 'span' Element, welches seinerseits in einer
+                    beliebigen Tiefe darunter abhängig ist von einer Klase von 'foo', welche in einer
+                    beliebigen Tiefe abhängig ist von einem 'div' Element. Der Link zum Wort 'One' im
+                    Beispiel anbei würde passen:
+                </para>
 
-                    <programlisting role="html"><![CDATA[
+                <programlisting role="html"><![CDATA[
 <div>
-    <table>
-        <tr>
-            <td class="foo">
-                <div>
-                    Lorem ipsum <span class="bar">
-                        <a href="/foo/bar" id="one">One</a> 
-                        <a href="/foo/baz" id="two">Two</a> 
-                        <a href="/foo/bat" id="three">Three</a> 
-                        <a href="/foo/bla" id="four">Four</a> 
-                    </span>
-                </div>
-            </td>
-        </tr>
-    </table>
+<table>
+    <tr>
+        <td class="foo">
+            <div>
+                Lorem ipsum <span class="bar">
+                    <a href="/foo/bar" id="one">One</a> 
+                    <a href="/foo/baz" id="two">Two</a> 
+                    <a href="/foo/bat" id="three">Three</a> 
+                    <a href="/foo/bla" id="four">Four</a> 
+                </span>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>
 ]]></programlisting>
-                </itemizedlist>
             </listitem>
         </itemizedlist>
 

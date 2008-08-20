@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10925 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -199,14 +199,15 @@ $upload->addValidator('Size', 20000)
        ->addValidator('Filessize', 25000);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    Es ist zu beachten das, auch wenn das mehrfache Setzen der gleichen Prüfung erlaubt
-                    ist, das zu Problemen führen kann wenn verschiedene Optionen für die gleiche
-                    Prüfung verwendet werden.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das, auch wenn das mehrfache Setzen der gleichen Prüfung erlaubt
+                ist, das zu Problemen führen kann wenn verschiedene Optionen für die gleiche
+                Prüfung verwendet werden.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -270,13 +271,14 @@ $upload->addValidator('Count', 2);
 $upload->addValidator('Count', array(1, 5);
 ]]></programlisting>
 
-            <note>
-                <para>
-                    Beachte das diese Prüfung die Anzahl der geprüften Dateien intern speichert. Die Datei
-                    welche das Maximum überschrietet wird als Fehler zurückgegeben.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <para>
+                Beachte das diese Prüfung die Anzahl der geprüften Dateien intern speichert. Die Datei
+                welche das Maximum überschrietet wird als Fehler zurückgegeben.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
@@ -315,13 +317,14 @@ $upload->addValidator('Extension', array('jpg', 'png'));
 ]]>
             </programlisting>
 
-            <note>
-                <para>
-                    Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
-                    den MIME Typ der aktuellen Datei.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
+                den MIME Typ der aktuellen Datei.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
@@ -387,13 +390,14 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
 ]]>
             </programlisting>
 
-            <note>
-                <para>
-                    Es ist zu beachten das diese Prüfung die Dateigrößen der geprüften Dateien intern
-                    speichert. Die Datei welche die Größe überschreitet wird als Fehler zurückgegeben.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das diese Prüfung die Dateigrößen der geprüften Dateien intern
+                speichert. Die Datei welche die Größe überschreitet wird als Fehler zurückgegeben.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.imagesize">

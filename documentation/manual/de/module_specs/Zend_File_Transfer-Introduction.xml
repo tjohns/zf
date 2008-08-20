@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10888 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -75,16 +75,17 @@ if (!$adapter->receive()) {
             Uploadfehler vorhanden sind werden diese als Ausnahme zurückgegeben.
         </para>
 
-        <note>
-            <title>Achtung</title>
-            <para>
-                Beachten Sie das das nur die einfachste Verwendung ist. Man sollte dieses Beispiel
-                <emphasis role="strong">niemals</emphasis> in einer lebenden Umgebung einsetzen da es
-                massive Sicherheitslücken aufweisst. Man sollte immer Prüfungen verwenden um die
-                Sicherheit zu erhöhen.
-            </para>
-        </note>
     </example>
+
+    <note>
+        <title>Achtung</title>
+        <para>
+            Beachten Sie das das nur die einfachste Verwendung ist. Man sollte dieses Beispiel
+            <emphasis role="strong">niemals</emphasis> in einer lebenden Umgebung einsetzen da es
+            massive Sicherheitslücken aufweisst. Man sollte immer Prüfungen verwenden um die
+            Sicherheit zu erhöhen.
+        </para>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

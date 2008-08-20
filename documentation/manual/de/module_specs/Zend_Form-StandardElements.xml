@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -209,14 +209,15 @@ $form->setAttrib('enctype', 'multipart/form-data');
 $location = $form->foo->getValue();
 ]]></programlisting>
 
-            <note>
-                <title>Standardmäßige Ablage von Uploads</title>
-
-                <para>
-                    Standardmäßig werden Dateien in das Temp Verzeichnis des Systems hochgeladen.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <title>Standardmäßige Ablage von Uploads</title>
+
+            <para>
+                Standardmäßig werden Dateien in das Temp Verzeichnis des Systems hochgeladen.
+            </para>
+        </note>
 
         <para>
             Es gibt aktell eine Limitation für das File Uploadelement das in 1.6.0 ausgeliefert wird.

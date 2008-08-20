@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 10926 -->
 <sect1 id="zend.json.server">
     <title>Zend_Json_Server - JSON-RPC server</title>
 
@@ -26,10 +26,9 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Json_Server</code> verwendet
-        <xref linkend="zend.server.reflection">Zend_Server_Reflection</xref> um Reflektion durchzuführen um
-        den SMD zu erstellen und die Signaturen der Methodenaufrufe zu erzwingen. Als solche, ist es
-        zwingend notwendig das alle hinzugefügten Funktionen und/oder Klassenmethoden komplette PHP
+        <code>Zend_Json_Server</code> verwendet <xref linkend="zend.server.reflection" /> um Reflektion
+        durchzuführen um den SMD zu erstellen und die Signaturen der Methodenaufrufe zu erzwingen. Als solche,
+        ist es zwingend notwendig das alle hinzugefügten Funktionen und/oder Klassenmethoden komplette PHP
         Docblocks dokumentiert haben mindestens aber:
     </para>
 
