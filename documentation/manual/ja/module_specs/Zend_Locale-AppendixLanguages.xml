@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10887 -->
+<!-- EN-Revision: 10947 -->
 <sect1 id="zend.locale.appendix">
 
     <title>サポートするロケール</title>
@@ -10,7 +10,7 @@
 
     <table id="zend.locale.appendix.table">
         <title>サポートする言語の全一覧</title>
-        <tgroup cols="2">
+        <tgroup cols="3">
             <thead>
                 <row>
                     <entry>言語</entry>
