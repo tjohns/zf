@@ -44,7 +44,7 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
     {
         $_SESSION = array();
         $this->setExpectedException(null);
-        $this->testCase = new Zend_Test_PHPUnit_ControllerTestCase();
+        $this->testCase = new Zend_Test_PHPUnit_ControllerTestCaseTest_Concrete();
         $this->testCase->reset();
         $this->testCase->bootstrap = array($this, 'bootstrap');
     }
@@ -610,6 +610,11 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         $this->assertFalse($view->dojo()->isEnabled(), 'Dojo is enabled? ', $view->dojo());
         $this->assertNotContains('Foo', $view->headTitle()->__toString(), 'Head title persisted?');
     }
+}
+
+// Concrete test case class for testing purposes
+class Zend_Test_PHPUnit_ControllerTestCaseTest_Concrete extends Zend_Test_PHPUnit_ControllerTestCase
+{
 }
 
 // Call Zend_Test_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.

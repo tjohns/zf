@@ -30,7 +30,7 @@ require_once 'Zend/Registry.php';
  * @copyright  Copyright (C) 2008 - Present, Zend Technologies, Inc.
  * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
  */
-class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
+abstract class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @var mixed Bootstrap file path or callback
