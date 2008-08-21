@@ -317,7 +317,7 @@ class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase
         $this->helper->setIndent(4);
         $this->helper->appendScript('
 var foo = "bar";
-document.write(foo.strlen());');
+    document.write(foo.strlen());');
         $this->helper->appendScript('
 var bar = "baz";
 document.write(bar.strlen());');
@@ -326,7 +326,8 @@ document.write(bar.strlen());');
         $scripts = substr_count($string, '    <script');
         $this->assertEquals(2, $scripts);
         $this->assertContains('    //', $string);
-        $this->assertContains('    var', $string);
+        $this->assertContains('var', $string);
+        $this->assertContains('document', $string);
         $this->assertContains('    document', $string);
     }
 

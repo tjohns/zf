@@ -410,7 +410,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
 
         $html  = $indent . '<script type="' . htmlspecialchars($item->type) . '"' . $attrString . '>';
         if (!empty($item->source)) {
-              $html .= PHP_EOL . $indent . $escapeStart . PHP_EOL . $indent . $indent . $item->source . PHP_EOL . $indent . $escapeEnd . PHP_EOL . $indent;
+              $html .= PHP_EOL . $indent . '    ' . $escapeStart . PHP_EOL . $item->source . $indent . '    ' . $escapeEnd . PHP_EOL . $indent;
         }
         $html .= '</script>';
 
@@ -446,8 +446,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             $items[] = $this->itemToString($item, $indent, $escapeStart, $escapeEnd);
         }
 
-        $return = $indent . implode($this->getSeparator() . $indent, $items);
-        $return = preg_replace("/(\r\n?|\n)/", '$1' . $indent, $return);
+        $return = implode($this->getSeparator(), $items);
         return $return;
     }
 
