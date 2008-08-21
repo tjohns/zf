@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10840 -->
+<!-- EN-Revision: 10943 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
     <sect2 id="zend.auth.adapter.dbtable.introduction">
@@ -68,8 +68,8 @@
             </para>
             <programlisting role="php"><![CDATA[
 // メモリ内で SQLite データベース接続を作成します
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' =>
+                                                  ':memory:'));
 
 // 単純なテーブルを作成するクエリ
 $sqlCreate = 'CREATE TABLE [users] ('
@@ -86,7 +86,8 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // データを挿入します
-$dbAdapter->query($sqlInsert);]]>
+$dbAdapter->query($sqlInsert);
+]]>
             </programlisting>
             <para>
                 データベース接続およびテーブルが使用可能となったので
@@ -95,8 +96,6 @@ $dbAdapter->query($sqlInsert);]]>
                 あるいはインスタンスを作成した後に設定用メソッドで指定します。
             </para>
             <programlisting role="php"><![CDATA[
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
 // コンストラクタにパラメータを渡し、インスタンスを設定します
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter,
@@ -112,7 +111,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
+;
+]]>
             </programlisting>
             <para>
                 この時点で、認証アダプタのインスタンスは認証クエリを受け付ける準備ができました。
@@ -127,7 +127,8 @@ $authAdapter
 ;
 
 // 認証クエリを実行し、結果を保存します
-$result = $authAdapter->authenticate();]]>
+$result = $authAdapter->authenticate();
+]]>
             </programlisting>
             <para>
                 認証結果オブジェクトでの <code>getIdentity()</code>
@@ -151,7 +152,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
+*/
+]]>
             </programlisting>
             <para>
                 テーブルの行には証明情報が含まれているので、
@@ -176,13 +178,14 @@ $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
     // 認証情報をオブジェクトとして保存し、username と real_name のみを返します
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+    $storage = $this->_auth->getStorage();
+    $storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name',
     )));
 
     // 認証情報をオブジェクトとして保存し、password のみを省略します
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(
+    $storage->write($adapter->getResultRowObject(
         null,
         'password'
     ));
@@ -193,7 +196,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -239,9 +243,12 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             salt 文字列を格納するために、テーブルの構造を変更する必要があります。
         </para>
         <programlisting role="php"><![CDATA[
-$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+$sqlAlter = "ALTER TABLE [users] "
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
 
-$dbAdapter->query($sqlAlter);]]>
+$dbAdapter->query($sqlAlter);
+]]>
         </programlisting>
         <para>
             すべてのユーザに対して登録時に salt 文字列を生成するシンプルな方法を示します。
@@ -250,7 +257,8 @@ $dbAdapter->query($sqlAlter);]]>
 for ($i = 0; $i < 50; $i++)
 {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
+}
+]]>
         </programlisting>
         <para>
             それではアダプタを作成してみましょう。
@@ -261,8 +269,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
-);]]>
+    "MD5(CONCAT('"
+    . Zend_Registry::get('staticSalt')
+    . "', ?, password_salt))"
+);
+]]>
         </programlisting>
         <note>
             <para>
