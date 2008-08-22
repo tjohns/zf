@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10589 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
 
@@ -9,9 +9,10 @@
     <para>Lorsque Zend_Soap_Client fonctionne en mode WSDL, il utilise le document WSDL pour définir les options de la
     couche de transport des données.</para>
 
-    <para>Le fichier WSDL est en général fournit par le service auquel vous souhaitez accéder. Dans le cas contraire,
-    l'utilisation de <code>Zend_Soap_Client</code> en mode non WSDL s'avère nécessaire. Dans ce cas, toutes les options
-    du protocole devront être définies.</para>
+    <para>Le fichier WSDL est en général fournit par le service auquel vous souhaitez accéder. Si la description WSDL
+    n'est pas disponible, vous pouvez vouloir utiliser <code>Zend_Soap_Client</code> en mode non WSDL . Dans ce cas,
+    toutes les options du protocole devront être définies explicitement dans la classe
+    <code>Zend_Soap_Client</code>.</para>
 
     <sect2 id="zend.soap.client.constructor">
         <title>Constructeur de <code>Zend_Soap_Client</code>.</title>

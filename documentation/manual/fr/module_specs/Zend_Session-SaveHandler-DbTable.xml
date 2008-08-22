@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10116 -->
+<!-- EN-Revision: 10972 -->
 <sect1 id="zend.session.savehandler.dbtable">
     <title>Zend_Session_SaveHandler_DbTable</title>
 
@@ -20,8 +20,7 @@
   PRIMARY KEY (`id`)
 );]]></programlisting>
 
-        <programlisting role="php"><![CDATA[<?php
-// Préparation de l'adaptateur de connexion à la base de données
+        <programlisting role="php"><![CDATA[// Préparation de l'adaptateur de connexion à la base de données
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'        =>'example.com',
     'username'    => 'dbuser',
@@ -66,8 +65,7 @@ Zend_Session::start();
     PRIMARY KEY (`Session_ID`, `save_path`, `name`)
 );]]></programlisting>
 
-        <programlisting role="php"><![CDATA[<?php
-// Préparation de l'adaptateur de connexion à la base de données comme ci-dessus
+        <programlisting role="php"><![CDATA[// Préparation de l'adaptateur de connexion à la base de données comme ci-dessus
 // NOTE : cette configuration est fournie à Zend_Db_Table donc tout élément spécifique à la table peut y être ajouté
 $config = array(
     'name'              => 'session', // Nom de la table comme pour Zend_Db_Table 
