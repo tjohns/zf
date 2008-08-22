@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.console.getopt.configuration">
     <title>Configurer Zend_Console_Getopt</title>
 
@@ -43,9 +43,9 @@ $opts->addRules(
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'Cette option choisit abricot, sans parametres',
-        'b' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',
-        'p' => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
+        'a' => 'option abricot, sans parametres',
+        'b' => 'option banane, avec un parametre obligatoire de type entier',
+        'p' => 'option pear, avec un parametre optionel de type chaine de caracteres'
     )
 );]]></programlisting>
         </example>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Déclarer les règles Getopt</title>
 
@@ -78,9 +78,9 @@
 
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt(
   array(
-    'abricot|a'  => 'Cette option choisit abricot, sans parametres',
-    'banane|b=i' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',
-    'pear|p-s'   => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
+    'abricot|a'  => 'option abricot, sans parametres',
+    'banane|b=i' => 'option banane, avec un parametre obligatoire de type entier',
+    'pear|p-s'   => 'option pear, avec un parametre optionel de type chaine de caracteres'
   )
 );]]></programlisting>
         </example>
