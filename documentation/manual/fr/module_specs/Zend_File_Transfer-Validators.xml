@@ -205,7 +205,7 @@ $upload->addValidator('Count', array(1, 5);]]></programlisting>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
-        <title>Validateur <emphasis>Extension</emphasis></title>
+        <title>Validateur <emphasis role="strong">Extension</emphasis></title>
 
         <para>Le validateur <code>Extension</code> vérifie l'=es extensions des fichiers qui ont été fournis. Il
         supporte les options suivantes :</para>
