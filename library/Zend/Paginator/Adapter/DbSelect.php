@@ -142,8 +142,25 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
     {
         if ($this->_rowCount === null) {
             $rowCount   = clone $this->_select;
-
-            $groupPart  = implode(',', $rowCount->getPart(Zend_Db_Select::GROUP));    
+            
+            /**
+             * The DISTINCT and GROUP BY queries only work when selecting one column.
+             * The question is whether any RDBMS supports DISTINCT for multiple columns, without workarounds.
+             */
+            if (true === $rowCount->getPart(Zend_Db_Select::DISTINCT)) {
+                $columnParts = $rowCount->getPart(Zend_Db_Select::COLUMNS);
+                
+                $columns = array();
+                
+                foreach ($columnParts as $part) {
+                	$columns[] = $part[1];
+                }
+                
+                $groupPart = implode(',', $columns);
+            } else {
+                $groupPart = implode(',', $rowCount->getPart(Zend_Db_Select::GROUP));
+            }
+            
             $countPart  = empty($groupPart) ? 'COUNT(*)' : 'COUNT(DISTINCT ' . $groupPart . ')';
             $expression = new Zend_Db_Expr($countPart . ' AS ' . self::ROW_COUNT_COLUMN);  
             
@@ -152,6 +169,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                      ->reset(Zend_Db_Select::ORDER)
                      ->reset(Zend_Db_Select::LIMIT_OFFSET)
                      ->reset(Zend_Db_Select::GROUP)
+                     ->reset(Zend_Db_Select::DISTINCT)
                      ->columns($expression);
             
             $this->setRowCount($rowCount);

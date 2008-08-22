@@ -219,10 +219,23 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     public function testGroupByQueryReturnsCorrectResult()
     {
         $query = $this->_db->select()->from('test')
-                           ->order('number ASC')
-                           ->limit(1000, 0)
-                           ->group('testgroup');
+                                     ->order('number ASC')
+                                     ->limit(1000, 0)
+                                     ->group('testgroup');
         
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(2, $adapter->count());
+    }
+    
+    // ZF-4032
+    public function testSelectingDistinctColumn()
+    {
+        $query = $this->_db->select()->from('test', 'testgroup')
+                                     ->order('number ASC')
+                                     ->limit(1000, 0)
+                                     ->distinct();
+                           
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(2, $adapter->count());
