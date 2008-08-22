@@ -25,9 +25,7 @@
             frontendu <code>Core</code> wraz z backendem <code>File</code>.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
    'lifetime' => 7200, // okres ważności bufora 2 godziny
    'automatic_serialization' => true
@@ -38,7 +36,11 @@ $backendOptions = array(
 );
 
 // pobieranie obiektu Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory('Core', 
+                             'File', 
+                             $frontendOptions, 
+                             $backendOptions);
+]]>
        </programlisting>
    </example>
 
@@ -61,7 +63,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             nie ma nawet potrzeby aby łączyć się z bazą; rekordy są pobierane z
             bufora, a następnie odserializowane.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // obiekt $cache zainicjalizowany jak w poprzednim przykładzie
 
 // sprawdzamy czy bufor istnieje:
@@ -98,15 +100,18 @@ print_r($result);]]>
             następnego wywołania, cała sekcja będzie ominięta, a użyte zostaną
             dane z bufora. (tak długo jak rekord bufora jest prawidłowy).
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
-   'lifetime' => 30,                  // okres ważności bufora pół minuty
+   'lifetime' => 30,                   // okres ważności bufora 30 sekund
    'automatic_serialization' => false  // to i tak jest domyślna wartość
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output', 
+                             'File', 
+                             $frontendOptions, 
+                             $backendOptions);
 
 // przekazujemy unikalny identyfikator do metody start()
 if(!$cache->start('mypage')) {
@@ -118,7 +123,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // dane wyjściowe są zapisywane i wysyłane do przeglądarki
 }
 
-echo 'To nie jest nigdy buforowane ('.time().').';]]>
+echo 'To nie jest nigdy buforowane ('.time().').';
+]]>
        </programlisting>
        <para>
            Zauważ, że wyświetlamy rezultat funkcji <code>time()</code> dwa razy;
@@ -140,6 +146,3 @@ echo 'To nie jest nigdy buforowane ('.time().').';]]>
         jeden może wyświetlić się w miejscu drugiego.
     </para></note>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

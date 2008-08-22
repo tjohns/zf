@@ -68,10 +68,7 @@
             sprawą jest załadowanie tych danych określając plik XML oraz
             sekcję dla aplikacji rozbudowywanej:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Xml.php';
-
-$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host; // wyświetla "dev.example.com"
 echo $config->database->params->dbname; // wyświetla "dbname"]]>
@@ -136,6 +133,3 @@ echo $config->database->params->dbname; // wyświetla "dbname"]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

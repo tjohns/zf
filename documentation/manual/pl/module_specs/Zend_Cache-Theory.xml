@@ -35,24 +35,21 @@
             Dobrym sposobem utworzenia użytecznej instancji frontendu
             <code>Zend_Cache</code> jest ten pokazany w poniższym przykładzie:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-# Ładujemy fabrykę Zend_Cache
-require 'Zend/Cache.php';
-
-# Wybieramy backend (na przykład 'File' lub 'Sqlite'...)
+        <programlisting role="php"><![CDATA[
+// Wybieramy backend (na przykład 'File' lub 'Sqlite'...)
 $backendName = '[...]';
 
-# Wybieramy frontend (na przykład 'Core', 'Output', 'Page'...)
+// Wybieramy frontend (na przykład 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# Ustawiamy tablicę opcji dla wybranego frontendu
+// Ustawiamy tablicę opcji dla wybranego frontendu
 $frontendOptions = array([...]);
 
-# Ustawiamy tablicę opcji dla wybranego backendu
+// Ustawiamy tablicę opcji dla wybranego backendu
 $backendOptions = array([...]);
 
-# We make the good instance
-# (oczywiście dwa ostatnie argumenty są opcjonalne)
+// Tworzymy instancję klasy Zend_Cache
+// (oczywiście dwa ostatnie argumenty są opcjonalne)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
         </programlisting>
         <para>
@@ -75,8 +72,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             mają być przypisane danemu rekordowi. Wtedy będziesz miał możliwość
             usuwania wszystkich rekordów bufora oznaczonych daną etykietą (lub etykietami):
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
         </programlisting>
         <note><para>
             Zauważ, że metoda <code>save()</code> akceptuje opcjonalny czwarty
@@ -91,16 +87,14 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
             Aby usunąć/unieważnić rekord bufora o określonym id, możesz użyć
             metody <code>remove()</code>:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->remove('idToRemove');]]>
+        <programlisting role="php"><![CDATA[$cache->remove('idToRemove');]]>
         </programlisting>
         <para>
             Aby usunąć/unieważnić wiele rekordów bufora za jednym razem, możesz
             użyć metody <code>clean()</code>. Na przykład aby usunąć wszystkie
             rekordy bufora:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-// czyszczenie wszystkich rekordów
+        <programlisting role="php"><![CDATA[// czyszczenie wszystkich rekordów
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // czyszczenie jedynie nieaktualnych rekordów
@@ -109,8 +103,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
         <para>
             Jeśli chcesz usunąć rekordy bufora oznaczone etykietami 'tagA' oraz 'tagC':
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
         </programlisting>
         <para>
             Dostępne tryby czyszczenia bufora to: <code>CLEANING_MODE_ALL</code>, 
@@ -121,6 +114,3 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

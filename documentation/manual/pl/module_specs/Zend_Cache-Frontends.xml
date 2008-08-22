@@ -135,7 +135,7 @@
                 Jeśli w buforze przechowujesz tylko łańcuchy znakow (ponieważ z opcją "automatic_serialization" możliwe
                 jest przechowywanie wartości logicznych), możesz użyć bardziej kompaktowej konstrukcji:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // zakładamy, że mamy już obiekt $cache
 
 $id = 'myBigLoop'; // id bufora czyli "tego co chcemy buforować"
@@ -152,14 +152,14 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] przetwarzaj dane $data (wyświetl je, przekaż itp.)]]>
+// [...] przetwarzaj dane $data (wyświetl je, przekaż itp.)
+]]>
             </programlisting>
             <para>
                 Jeśli chcesz buforować wiele bloków lub instancji danych, idea
                 jest ta sama:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 // upewnij się, że używasz unikalnych identyfiikatorów:
 $id1 = 'foo';
 $id2 = 'bar';
@@ -193,7 +193,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);]]>
+echo($data);
+]]>
 
             </programlisting>
             <para>
@@ -202,8 +203,7 @@ echo($data);]]>
                 łańcuchy znaków, nie możesz używać uproszczonej konstrukcji 
                 przedstawionej powyżej. Musisz jawnie sprawdzić rekord bufora.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 // konstrukcja uproszczona (nie działa poprawnie dla pustych 
 // łańcuchów znaków i wartości logicznych)
 if (!($data = $cache->load($id))) {
@@ -237,7 +237,8 @@ if (!($cache->test($id))) {
 
 }
 
-// pracujemy na danych $data]]>
+// pracujemy na danych $data
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -266,7 +267,7 @@ if (!($cache->test($id))) {
             <para>
                 Przykład jest podany w dokumentacji na samym początku. To są główne różnice:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // jeśli bufor nie istnieje, przechwytywane są dane wyjściowe
 if (!($cache->start('mypage'))) {
 
@@ -275,10 +276,10 @@ if (!($cache->start('mypage'))) {
     echo 'To jest buforowane ('.time().') ';
 
     $cache->end(); // kończy się wyświetlanie danych
-
 }
 
-echo 'To nie jest nigdy buforowane ('.time().').';]]>
+echo 'To nie jest nigdy buforowane ('.time().').';
+]]>
             </programlisting>
             <para>
                 Używając tej formy bardzo łatwe jest ustawienie buforowania
@@ -349,13 +350,13 @@ echo 'To nie jest nigdy buforowane ('.time().').';]]>
                 Użycie funkcji <code>call()</code> jest takie samo jak użycie
                 funkcji <code>call_user_func_array()</code> w PHP:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-# $params jest tablicą
-# przykładowo aby wywołać (z buforowaniem) funkcję veryExpensiveFunc(1, 'foo', 'bar'), użyj
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+// $params jest tablicą
+// przykładowo aby wywołać (z buforowaniem) funkcję veryExpensiveFunc(1, 'foo', 'bar'), użyj
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+]]>
             </programlisting>
             <para>
                 Frontend <code>Zend_Cache_Frontend_Function</code> jest na tyle sprytny,
@@ -440,11 +441,10 @@ $cache->call('veryExpensiveFunc', $params);
             <para>
                 Na przykład, aby buforować statyczne wywołania:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
+class Test {
 
-class test {
-
-    # metoda statyczna
+    // metoda statyczna
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
@@ -454,18 +454,19 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => 'test' // Nazwa klasy
+    'cached_entity' => 'Test' // Nazwa klasy
 );
 // [...]
 
 # buforowane wywołanie
-$res = $cache->foobar('1', '2');]]>
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 Aby buforować klasyczne wywołania metod:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[
+class Test {
 
     private $_string = 'hello !';
 
@@ -479,12 +480,13 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => new test() // instancja klasy
+    'cached_entity' => new Test() // instancja klasy
 );
 // [...]
 
 # buforowane wywołanie
-$res = $cache->foobar2('1', '2');]]>
+$result = $cache->foobar2('1', '2');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -717,51 +719,70 @@ $res = $cache->foobar2('1', '2');]]>
             <para>
                 Użycie Zend_Cache_Frontend_Page jest naprawdę łatwe:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // wymagane, konfiguracja i fabryka
 
 $cache->start();
 // jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 
-// reszta strony]]>
+// reszta strony
+]]>
             </programlisting>
             <para>
                 bardziej kompleksowy przykład, który pokazuje sposób centralnego
                 zarządzania buforowaniem w pliku ładującym (przykładowo do użycia z klasą Zend_Controller)
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// [...] powinieneś unikać tworzenia dużej ilości kodu przed sekcją buforowania
-// [...] na przykład, w celu optymalizacji, instrukcje "require_once" lub "Zend_Loader::loadClass"
-// [...] powinny znajdować się za sekcją buforowania
-
-require_once 'Zend/Cache.php';
+            <programlisting role="php"><![CDATA[
+/**
+ * Powinieneś unikać tworzenia dużej ilości kodu przed sekcją buforowania na 
+ * przykład, w celu optymalizacji, instrukcje "require_once" lub 
+ * "Zend_Loader::loadClass" powinny znajdować się za sekcją buforowania
+ */
 
 $frontendOptions = array(
    'lifetime' => 7200,
    'debug_header' => true, // dla testów
    'regexps' => array(
-       '^/$' => array('cache' => true),         // buforuj cały kontroler IndexController
-       '^/index/' => array('cache' => true),    // buforuj cały kontroler IndexController
-       '^/article/' => array('cache' => false), // nie buforuj kontrolera ArticleController...
-       '^/article/view/' => array(              // ...ale buforuj akcję "view"
-           'cache' => true,                     // kontrolera ArticleController
-           'cache_with_post_variables' => true,    // i buforuj gdy są dostępne zmienne $_POST
-           'make_id_with_post_variables' => true,   // (ale bufor będzie zależał od tablicy $_POST)
+       // buforuj cały kontroler IndexController
+       '^/$' => array('cache' => true),
+
+       // buforuj cały kontroler IndexController
+       '^/index/' => array('cache' => true),
+
+       // nie buforuj kontrolera ArticleController...
+       '^/article/' => array('cache' => false),
+
+       // ...ale buforuj akcję "view"
+       '^/article/view/' => array(
+           // kontrolera ArticleController
+           'cache' => true,
+
+           // i buforuj gdy są dostępne zmienne $_POST
+           'cache_with_post_variables' => true,
+
+           // (ale bufor będzie zależał od tablicy $_POST)
+           'make_id_with_post_variables' => true,
        )
    )
 );
+
 $backendOptions = array(
     'cache_dir' => '/tmp/'
 );
 
 // pobieranie obiektu Zend_Cache_Frontend_Page
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page', 
+                             'File', 
+                             $frontendOptions, 
+                             $backendOptions);
 
 $cache->start();
-// jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
+// jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki 
+// a skrypt tutaj kończy działanie
 
-// [...] koniec pliku uruchamiającego (te linie nie będą wykonane jeśli bufor jest trafiony)]]>
+// [...] koniec pliku uruchamiającego
+// te linie nie będą wykonane jeśli bufor jest trafiony
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
@@ -771,7 +792,7 @@ $cache->start();
                 gdy używamy kodów innych niż HTTP/200), możesz potrzebować zaniechać 
                 proces buforowania. Dlatego dla tego frontendu udostępniamy metodę cancel().
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // konfiguracja itp.
 
 $cache->start();
@@ -783,11 +804,9 @@ if ($someTest) {
     // [...]
 }
 
-// [...]]]>
+// [...]
+]]>
             </programlisting>
         </sect3>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

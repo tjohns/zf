@@ -284,14 +284,10 @@
             oraz 'Platform' jeden z dozwolonych separatorów wyrazów -- '-', 
             '.', ' ', lub '_':
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
         </programlisting>
         <para>
             Ten backend nie ma żadnych opcji.
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
