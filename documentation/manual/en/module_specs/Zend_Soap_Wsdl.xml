@@ -54,7 +54,7 @@
            It's an associative array: 'part name' (SOAP call parameter name) =&gt; 'part type'.
         </para>
         <para>
-            Type mapping management is performrd using <code>addTypes()</code>, <code>addTypes()</code> and
+            Type mapping management is performed using <code>addTypes()</code>, <code>addTypes()</code> and
             <code>addComplexType()</code> methods (see below). 
         </para>
         <note>
@@ -340,7 +340,7 @@ $soapMyClassType = $wsdl->getType('MyClass');]]></programlisting>
             
             <para>
                 It's automatically used by <code>getType()</code> method to add corresponding complex type 
-                if <code>$extractComplexTypes</code> parameter of the constructor is set tu <code>true</code>
+                if <code>$extractComplexTypes</code> parameter of the constructor is set to <code>true</code>
                 (otherwise classes are mapped to 'xsd:anyType' SOAP type). 
             </para>
 
@@ -363,7 +363,7 @@ $soapMyClassType = $wsdl->getType('MyClass');]]></programlisting>
             </para>
             
             <para>
-                It prevent duplications if this method is called two or more times and recursion in the types defenition
+                It prevents duplications if this method is called two or more times and recursion in the types definition
                 section.
             </para>
         
