@@ -78,8 +78,8 @@
             </para>
             <programlisting role="php"><![CDATA[
 // Tworzymy połączenie do bazy danych SQLite przechowywanej w pamięci
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => 
+                                                  ':memory:'));
 
 // Budujemy zapytanie tworzące prostą tabelę
 $sqlCreate = 'CREATE TABLE [users] ('
@@ -97,7 +97,8 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Wstawiamy dane
-$dbAdapter->query($sqlInsert);]]>
+$dbAdapter->query($sqlInsert);
+]]>
             </programlisting>
             <para>
                 Gdy połączenie do bazy danych oraz dane w tabeli są już
@@ -106,9 +107,7 @@ $dbAdapter->query($sqlInsert);]]>
                 mogą być przekazane do konstruktora lub przekazane jako
                 parametry do metod dostępowych już po utworzeniu instancji:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
+            <programlisting role="php"><![CDATA[
 // Konfigurujemy instancję za pomocą parametrów konstruktora...
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter, 
@@ -123,7 +122,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
+;
+]]>
             </programlisting>
             <para>
                 W tym momencie intancja adaptera uwierzytelniania jest gotowa
@@ -132,14 +132,15 @@ $authAdapter
                 są przekazywane do adaptera przed wywołaniem metody
                 <code>authenticate()</code>:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Ustawiamy wartości danych uwierzytelniania (np., z formularza logowania)
 $authAdapter
     ->setIdentity('my_username')
     ->setCredential('my_password');
 
 // Przeprowadzamy zapytanie uwierzytelniające, zapisując rezultat
-$result = $authAdapter->authenticate();]]>
+$result = $authAdapter->authenticate();
+]]>
             </programlisting>
             <para>
                 Oprócz możliwości użycia metody <code>getIdentity()</code>
@@ -147,7 +148,7 @@ $result = $authAdapter->authenticate();]]>
                 <code>Zend_Auth_Adapter_DbTable</code> pozwala także na
                 odebranie wiersza tabeli po udanym uwierzytelnieniu.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Wyświetlamy tożsamość
 echo $result->getIdentity() . "\n\n";
 
@@ -164,7 +165,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
+*/
+]]>
             </programlisting>
             <para>
                 Z tego względu, że wiersz tabeli zawiera dane potrzebne do
@@ -185,17 +187,26 @@ Array
             <code>getResultRowObject()</code> aby zwrócić obiekt klasy
             <code>stdClass</code>. Poniższy kod ilustruje sposób jego użycia:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // uwierzytelniamy za pomocą Zend_Auth_Adapter_DbTable
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
 
-    // przechowujemy tożsamość jako obiekt, w którym zwracane są jedynie pola username oraz real_name
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+    // przechowujemy tożsamość jako obiekt, w którym zwracane są jedynie 
+    // pola username oraz real_name
+    $storage = $this->_auth->getStorage();
+    $storage->write($adapter->getResultRowObject(array(
         'username', 
         'real_name'
     )));
+    
+    // przechowujemy tożsamość jako obiekt, w którym kolumna zawierająca
+    // hasło została pominięta
+    $storage->write($adapter->getResultRowObject(
+        null,
+        'password'
+    ));
 
     /* ... */
 
@@ -203,7 +214,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -224,7 +236,7 @@ if ($result->isValid()) {
             podczas uwierzytelniania, dzięki czemu można rozwiązać niektóre 
             problemy.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Wartość pola "status" dla tego konta nie jest równa wartości "compromised"
 $adapter = new Zend_Auth_Adapter_DbTable(
     $db, 
@@ -241,7 +253,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username', 
     'password', 
     'MD5(?) AND active = "TRUE"'
-);]]>
+);
+]]>
         </programlisting>
         <para>
             Innym przykładem może być implementacja mechanizmu saltingu. Jest to
@@ -255,9 +268,12 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             przechowywać nasz łańcuch znaków salt:
         </para>
         <programlisting role="php"><![CDATA[
-$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+$sqlAlter = "ALTER TABLE [users] " 
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
 
-$dbAdapter->query($sqlAlter);]]>
+$dbAdapter->query($sqlAlter);
+]]>
         </programlisting>
         <para>
             W prosty sposób wygenerujmy salt dla każdego rejestrującego się
@@ -267,7 +283,8 @@ $dbAdapter->query($sqlAlter);]]>
 for ($i = 0; $i < 50; $i++)
 {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
+}
+]]>
         </programlisting>
         <para>
             I skonfigurujmy sterownik bazy danych:
@@ -278,8 +295,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
-);]]>
+    "MD5(CONCAT('" 
+    . Zend_Registry::get('staticSalt') 
+    . "', ?, password_salt))"
+);
+]]>
         </programlisting>
         <note>
             <para>

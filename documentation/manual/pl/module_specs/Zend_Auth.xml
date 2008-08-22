@@ -65,9 +65,7 @@
             uwierzytelniającego, zostały pominięte w celu zwiększenia 
             czytelności:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Interface.php';
-
+            <programlisting role="php"><![CDATA[
 class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
     /**
@@ -83,7 +81,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     /**
      * Przeprowadza próbę uwierzytelniania
      *
-     * @throws Zend_Auth_Adapter_Exception Jeśli uwierzytelnianie nie może być przeprowadzone
+     * @throws Zend_Auth_Adapter_Exception Jeśli uwierzytelnianie 
+     *                                     nie może być przeprowadzone
      * @return Zend_Auth_Result
      */
     public function authenticate()
@@ -165,12 +164,14 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
             tożsamości czy zapewnienie własnych zdefiniowanych komunikatów po
             próbie uwierzytelniania. Dostępne są takie kody wyników:
 
-            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+            <programlisting role="php"><![CDATA[
+Zend_Auth_Result::SUCCESS
 Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED
+]]>
             </programlisting>
 
         </para>
@@ -179,7 +180,7 @@ Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
             Poniższy przykład pokazuje w jaki sposób programista może obsłużyć
             to kodzie:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // wewnątrz akcji loginAction kontrolera AuthController
 $result = $this->_auth->authenticate($adapter);
 
@@ -200,7 +201,8 @@ switch ($result->getCode()) {
     default:
         /** obsługujemy inne błędy **/
         break;
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -270,21 +272,21 @@ switch ($result->getCode()) {
                     ponieważ metoda <code>Zend_Auth::authenticate()</code>
                     automatycznie zapisuje dane tożsamości.
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Zapisujemy referencję do pojedynczej instancji Zend_Auth
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // Używamy przestrzeni nazw 'someNamespace' zamiast 'Zend_Auth'
-require_once 'Zend/Auth/Storage/Session.php';
 $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
 
 /**
  * @todo Ustawić adapter uwierzytelniania, $authAdapter
  */
 
-// Uwierzytelniamy, zapisując wynik i przechowując tożsamość po udanym uwierzytelnieniu
-$result = $auth->authenticate($authAdapter);]]>
+// Uwierzytelniamy, zapisując wynik i przechowując tożsamość 
+// po udanym uwierzytelnieniu
+$result = $auth->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -316,15 +318,14 @@ $result = $auth->authenticate($authAdapter);]]>
                     implementuje interfejs
                     <code>Zend_Auth_Storage_Interface</code>:
 
-                    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Storage/Interface.php';
-
+                    <programlisting role="php"><![CDATA[
 class MyStorage implements Zend_Auth_Storage_Interface
 {
     /**
      * Zwraca wartość logiczną true tylko wtedy gdy pojemnik jest pusty
      *
-     * @throws Zend_Auth_Storage_Exception Jeśli okreslenie czy pojemnik jest pusty jest niemożliwe
+     * @throws Zend_Auth_Storage_Exception Jeśli okreslenie czy pojemnik 
+     *                                     jest pusty jest niemożliwe
      * @return boolean
      */
     public function isEmpty()
@@ -339,7 +340,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      *
      * Zachowanie jest nieokreślone w przypadku gdy pojemnik jest pusty.
      *
-     * @throws Zend_Auth_Storage_Exception Jeśli odczyt zawartości pojemnika jest niemożliwy
+     * @throws Zend_Auth_Storage_Exception Jeśli odczyt zawartości 
+     *                                     pojemnika jest niemożliwy
      * @return mixed
      */
     public function read()
@@ -353,7 +355,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      * Zapisuje zawartość $contents w pojemniku
      *
      * @param  mixed $contents
-     * @throws Zend_Auth_Storage_Exception Jeśli zapisanie zawartości $contents do pojemnika jest niemożliwe
+     * @throws Zend_Auth_Storage_Exception Jeśli zapisanie zawartości $contents 
+     *                                     do pojemnika jest niemożliwe
      * @return void
      */
     public function write($contents)
@@ -366,7 +369,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
     /**
      * Czyści zawartość pojemnika
      *
-     * @throws Zend_Auth_Storage_Exception Jeśli wyczyszczenie zawartości pojemnika jest niemożliwe
+     * @throws Zend_Auth_Storage_Exception Jeśli wyczyszczenie zawartości 
+     *                                     pojemnika jest niemożliwe
      * @return void
      */
     public function clear()
@@ -395,7 +399,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // Uwierzytelniamy, zapisując wynik i przechowując tożsamość po udanym uwierzytelnieniu
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -432,9 +437,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
             Poniższy przykład pokazuje jak użyć adaptera Zend_Auth pośrednio,
             poprzez użycie klasy <code>Zend_Auth</code>:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Pobieramy instancję Zend_Auth
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // Ustawiamy adapter uwierzytelniania
@@ -460,12 +464,13 @@ if (!$result->isValid()) {
             Jeśli uwierzytelnianie zostało przeprowadzone w żądaniu tak jak w
             powyższym przykładzie, prostą sprawą  jest sprawdzenie czy istnieje
             pomyślnie uwierzytelniona tożsamość:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // Tożsamość istnieje; pobieramy ją
     $identity = $auth->getIdentity();
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -473,8 +478,9 @@ if ($auth->hasIdentity()) {
             Aby usunąć tożsamość z trwałego pojemnika, użyj po prostu metody
             <code>clearIdentity()</code>. Typowo może być to użyte do
             implementacji w aplikacji operacji wylogowania:
-            <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Auth::getInstance()->clearIdentity();
+]]>
             </programlisting>
         </para>
 
@@ -488,7 +494,7 @@ Zend_Auth::getInstance()->clearIdentity();]]>
             opisane w dokumentacji dla każdego z adapterów. Poniższy przykład
             bezpośrednio używa <code>MyAuthAdapter</code>:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Ustawiamy adapter uwierzytelniania
 $authAdapter = new MyAuthAdapter($username, $password);
 
@@ -503,13 +509,11 @@ if (!$result->isValid()) {
 } else {
     // Uwierzytelnianie udane
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
