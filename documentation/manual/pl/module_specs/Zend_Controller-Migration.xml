@@ -114,8 +114,7 @@
                     separatorów wyrazów w nazwach akcji.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -147,9 +146,7 @@ $inflector->setFilterRule(':action', array(
                     kontrolera frontowego, 'useCaseSensitiveActions':
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->setParam('useCaseSensitiveActions', true);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
 
                 <para>
                     Pozwoli ci to wciąż używać formy camelCasing w adresach URL
@@ -189,8 +186,7 @@ $front->setParam('useCaseSensitiveActions', true);
             frontowym parametr <code>noErrorHandler</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
         </programlisting>
 
         <para>
@@ -210,8 +206,7 @@ $front->setParam('noErrorHandler', true);]]>
             przed uruchomieniem żądania:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Zakładając, że $front jest instancją klasy Zend_Controller_Front
+        <programlisting role="php"><![CDATA[// Zakładając, że $front jest instancją klasy Zend_Controller_Front
 $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
@@ -315,8 +310,7 @@ public function preDispatch()
                     Przed uruchomieniem kontrolera frontowego:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Zakładając, że obiekt $view został już zdefiniowany
+                <programlisting role="php"><![CDATA[// Zakładając, że obiekt $view został już zdefiniowany
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -327,8 +321,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     W dowolnej chwili podczas procesu ładowania:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
@@ -403,9 +396,7 @@ $viewRenderer->setView($view);]]>
             komponentów MVC pozostaje takie same:
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]>
         </programlisting>
 
         <para>
@@ -492,9 +483,7 @@ final protected function _forward($action, $controller = null, $module = null, a
             nadal możesz użyć poniższego kodu:
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]>
         </programlisting>
 
         <programlisting role="php"><![CDATA[
@@ -710,6 +699,3 @@ public function __call($method, $args)
         </itemizedlist>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

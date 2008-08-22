@@ -66,8 +66,7 @@ class FooController extends Zend_Controller_Action
                 w swoim kontrolerze akcji używając jednej z poniższych metod:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -98,8 +97,7 @@ class FooController extends Zend_Controller_Action
                 klasie <code>ViewRenderer</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -242,8 +240,7 @@ $this->getResponse()->appendBody($content);]]>
                         odebraniem parametru nie jest konieczne:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-// Użyj domyślnej wartości 1 jeśli parametr id jest pusty
+                    <programlisting role="php"><![CDATA[// Użyj domyślnej wartości 1 jeśli parametr id jest pusty
 $id = $this->_getParam('id', 1);
 
 // Zamiast:
@@ -322,8 +319,7 @@ applicationOrModule/
                 Metoda <code>render()</code> ma taką sygnaturę:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
             </programlisting>
 
             <para>
@@ -361,8 +357,7 @@ string render(string $action = null, string $name = null, bool $noController = f
                 Kilka przykładów:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -523,8 +518,7 @@ class MyController extends Zend_Controller_Action
                 możesz zrobić to w taki sposób:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -543,8 +537,7 @@ class MyController extends Zend_Controller_Action
                 Inną możliwością jest przeniesienie do domyślnego kontrolera:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -574,8 +567,7 @@ class MyController extends Zend_Controller_Action
             <code>initView()</code> method with code resembling the following:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -600,6 +592,3 @@ abstract class My_Base_Controller extends Zend_Controller_Action
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -11,8 +11,7 @@
 
     <example id="zend.debug.dumping.example">
         <title>Przykład użycia metody dump()</title>
-        <programlisting role="php"><![CDATA[<?php
-Zend_Debug::dump($var, $label=null, $echo=true)]]>
+        <programlisting role="php"><![CDATA[Zend_Debug::dump($var, $label=null, $echo=true)]]>
         </programlisting>
     </example>
 
@@ -66,6 +65,3 @@ Zend_Debug::dump($var, $label=null, $echo=true)]]>
     </tip>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

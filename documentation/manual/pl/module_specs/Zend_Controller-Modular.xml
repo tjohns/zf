@@ -98,8 +98,7 @@ application/
             przykład:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));]]>
@@ -112,8 +111,7 @@ $front->setControllerDirectory(array(
             dodana dla domyślnej przestrzeni nazw. Na przykład:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
         </programlisting>
 
         <para>
@@ -124,8 +122,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
             <code>addModuleDirectory()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Zakładając, że tak wygląda struktura katalogów:
  * application/
  *     modules/
@@ -150,8 +147,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             za pomocą metody <code>setModuleControllerDirectoryName()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Zmieniamy nazwę podkatalogu kontrolerów na 'con'
  * application/
  *     modules/
@@ -216,12 +212,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             parametr <code>useDefaultControllerAlways</code> w kontrolerze frontowym:
         </para>
 
-        <programlisting role="php"><![CDATA[
-$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]>
         </programlisting>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

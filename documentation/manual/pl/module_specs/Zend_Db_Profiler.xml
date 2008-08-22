@@ -19,15 +19,12 @@
             adaptera, lub wywołując później metodę adaptera.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
-
-$params = array (
+        <programlisting role="php"><![CDATA[$params = array (
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test',
-    'profiler' => true  // włącz profiler; ustaw false aby wyłączyć (domyślne)
+    'profiler' => true  // włącz profiler; ustaw false aby wyłączyć (domyślne wyłączony)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -133,8 +130,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             adaptera <code>getProfiler()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();]]>
+        <programlisting role="php"><![CDATA[$profiler = $db->getProfiler();]]>
         </programlisting>
 
         <para>
@@ -217,8 +213,7 @@ $profiler = $db->getProfiler();]]>
             zobaczyć ostatnie zapytanie jakie było wykonane:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$query = $profiler->getLastQueryProfile();
+        <programlisting role="php"><![CDATA[$query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();]]>
         </programlisting>
@@ -229,8 +224,7 @@ echo $query->getQuery();]]>
             zapytania aby znaleść te, które trwało najdłużej:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->getTotalElapsedSecs();
+        <programlisting role="php"><![CDATA[$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -271,8 +265,7 @@ echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";]]>
                 wartością null w parametrze.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Profiluj tylko zapytania które trwają przynajmniej 5 sekund:
+            <programlisting role="php"><![CDATA[// Profiluj tylko zapytania które trwają przynajmniej 5 sekund:
 $profiler->setFilterElapsedSecs(5);
 
 // Profiluj wszystkie zapytania, niezależnie od czasu ich trwania:
@@ -342,8 +335,7 @@ $profiler->setFilterElapsedSecs(null);]]>
                 pusty parametr <code>null</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// profiluj tylko zapytania SELECT
+            <programlisting role="php"><![CDATA[// profiluj tylko zapytania SELECT
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // profiluj zapytania SELECT, INSERT, oraz UPDATE
@@ -373,8 +365,7 @@ $profiler->setFilterQueryType(null);]]>
                 aby zobaczyć listę stałych określających typy zapytań.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Pobierz jedynie profile zapytań SELECT
+            <programlisting role="php"><![CDATA[// Pobierz jedynie profile zapytań SELECT
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // Pobierz jedynie profile zapytań SELECT, INSERT, oraz UPDATE
@@ -404,6 +395,3 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

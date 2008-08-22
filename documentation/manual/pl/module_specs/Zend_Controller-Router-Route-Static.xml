@@ -8,8 +8,7 @@
         takiej sytuacji można użyć tras statycznych:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route_Static(
+    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route_Static(
     'login',
     array('controller' => 'auth', 'action' => 'login')
 );
@@ -22,6 +21,3 @@ $router->addRoute('login', $route);]]>
     </para>
 
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->
