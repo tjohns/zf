@@ -296,12 +296,25 @@ $upload->addValidator('Count', array(1, 5);
                     <code>extension</code>: Checks if the given file uses this file extension.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: Sets if validation should be done case sensitive. Default is not
+                    case sensitive. Note the this option is used for all used extensions.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
             This validator accepts multiple extensions either as a comma-delimited string, or as an
             array. You may also use the methods <code>setExtension()</code>, <code>addExtension()</code>,
             and <code>getExtension()</code> to set and retrieve extensions.
+        </para>
+
+        <para>
+            In some cases it is usefull to test case sensitive. Therefor the isValid() method allows a
+            second parameter <code>$case</code> which, if set to true, will validate the extension case
+            sensitive.
         </para>
 
         <example id="zend.file.transfer.validators.extension.example">
@@ -315,6 +328,12 @@ $upload->addValidator('Extension', 'jpg,png');
 
 // Limit the extensions to jpg and png files but use array notation
 $upload->addValidator('Extension', array('jpg', 'png'));
+
+// Check case sensitive
+$upload = new Zend_File_Transfer('mo,png', true);
+if (!$upload->isValid('C:\temp\myfile.MO')) {
+    print 'Not valid due to MO instead of mo';
+}
 ]]>
             </programlisting>
 
