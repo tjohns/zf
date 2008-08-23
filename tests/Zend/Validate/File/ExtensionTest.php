@@ -102,7 +102,10 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_File_Extension('gif');
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
         $this->assertTrue(array_key_exists('fileExtensionFalse', $validator->getMessages()));
+    }
 
+    public function testZF3891()
+    {
         $files = array(
             'name'     => 'testsize.mo',
             'type'     => 'text',
@@ -112,6 +115,9 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
         );
         $validator = new Zend_Validate_File_Extension('MO', true);
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
+
+        $validator = new Zend_Validate_File_Extension('MO', false);
+        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
     }
 
     /**
