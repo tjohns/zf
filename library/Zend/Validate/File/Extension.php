@@ -55,6 +55,13 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
     protected $_extension = '';
 
     /**
+     * Validate case sensitive
+     *
+     * @var boolean
+     */
+    protected $_case = false;
+
+    /**
      * @var array Error message template variables
      */
     protected $_messageVariables = array(
@@ -65,10 +72,12 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
      * Sets validator options
      *
      * @param  string|array $extension
+     * @param  boolean      $case      If true validation is done case sensitive
      * @return void
      */
-    public function __construct($extension)
+    public function __construct($extension, $case = false)
     {
+        $this->_case = (boolean) $case;
         $this->setExtension($extension);
     }
 
@@ -142,8 +151,8 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
      * Returns true if and only if the fileextension of $value is included in the
      * set extension list
      *
-     * @param  string $value Real file to check for extension
-     * @param  array  $file  File data from Zend_File_Transfer
+     * @param  string  $value Real file to check for extension
+     * @param  array   $file  File data from Zend_File_Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
@@ -160,8 +169,15 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
         }
 
         $extensions = $this->getExtension(true);
-        if (in_array($info['extension'], $extensions)) {
+
+        if ($this->_case and (in_array($info['extension'], $extensions))) {
             return true;
+        } else if (!$this->_case) {
+            foreach ($extensions as $extension) {
+                if (strtolower($extension) == strtolower($info['extension'])) {
+                    return true;
+                }
+            }
         }
 
         if ($file !== null) {
