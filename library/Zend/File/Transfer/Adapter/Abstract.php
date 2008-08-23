@@ -820,7 +820,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
      */
     public function getDestination($files = null)
     {
-        $tmpdir       = $this->_getTmpDir();
         if ((null === $files) || is_array($files)) {
             $destinations = array();
             if (!is_array($files)) {
@@ -833,6 +832,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
                 if (array_key_exists('destination', $content)) {
                     $destinations[$file] = $content['destination'];
                 } else {
+                    $tmpdir = $this->_getTmpDir();
                     $this->setDestination($tmpdir, $file);
                     $destinations[$file] = $tmpdir;
                 }
@@ -851,7 +851,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
         }
 
         if (!array_key_exists('destination', $this->_files[$files])) {
-            return $tmpdir;
+            return $this->_getTmpDir();
         }
 
         return $this->_files[$files]['destination'];
