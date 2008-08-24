@@ -199,6 +199,10 @@ class Zend_Dojo_View_Helper_ComboBoxTest extends PHPUnit_Framework_TestCase
             $this->fail('Did not create text input as remoter: ' . $html);
         }
         $this->assertContains('type="text"', $m[1]);
+        if (!preg_match('/(<div[^>]*(?:dojoType="dojo.data.ItemFileReadStore")[^>]*>)/', $html, $m)) {
+            $this->fail('Did not create data store: ' . $html);
+        }
+        $this->assertContains('url="states.txt"', $m[1]);
     }
 }
 
