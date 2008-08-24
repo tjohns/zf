@@ -201,8 +201,8 @@ Zend_Registry::setInstance($registry);
 
         <para>
             Метод <code>setInstance()</code> бросает исключение Zend_Exception,
-            если статический реестр уже был проинициализирован при
-            первого обращении к нему.
+            если статический реестр уже был проинициализирован до
+            первого обращения к нему.
 <!--
             The <code>setInstance()</code> method throws a Zend_Exception
             if the static registry has already been initialized by its

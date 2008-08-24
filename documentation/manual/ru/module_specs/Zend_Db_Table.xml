@@ -1161,7 +1161,7 @@ $bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
         <para>
             Несмотря на то, что в примерах выше используется
             <code>Zend_Cache_Backend_File</code>, разработчики могут
-            использовать другие бэкэнды, наиболее походящие в данной ситуации.
+            использовать другие бэкэнды, наиболее подходящие в данной ситуации.
             За более подробной информацией см.
             <link linkend="zend.cache">Zend_Cache</link>.
         </para>

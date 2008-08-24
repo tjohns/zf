@@ -195,7 +195,7 @@ $username->setRequired(true);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$username->addFilter('StringtoLower');
+$username->addFilter('StringToLower');
 ?>]]></programlisting>
 
         <para>
