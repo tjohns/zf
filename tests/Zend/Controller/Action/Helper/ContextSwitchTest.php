@@ -138,7 +138,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->helper->addHeader('xml', 'X-Foo', 'Bar');
         $headers = $this->helper->getHeaders('xml');
         $this->assertTrue(isset($headers['Content-Type']));
-        $this->assertEquals('text/xml', $headers['Content-Type']);
+        $this->assertEquals('application/xml', $headers['Content-Type']);
         $this->assertTrue(isset($headers['X-Foo']));
         $this->assertEquals('Bar', $headers['X-Foo']);
     }
@@ -151,7 +151,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         ));
         $headers = $this->helper->getHeaders('xml');
         $this->assertTrue(isset($headers['Content-Type']));
-        $this->assertEquals('text/xml', $headers['Content-Type']);
+        $this->assertEquals('application/xml', $headers['Content-Type']);
         $this->assertTrue(isset($headers['X-Foo']));
         $this->assertEquals('Bar', $headers['X-Foo']);
         $this->assertTrue(isset($headers['X-Bar']));
@@ -195,7 +195,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
     public function testCanClearAllHeaders()
     {
         $this->helper->addHeader('xml', 'X-Foo', 'Bar');
-        $expected = array('Content-Type' => 'text/xml', 'X-Foo' => 'Bar');
+        $expected = array('Content-Type' => 'application/xml', 'X-Foo' => 'Bar');
         $this->assertEquals($expected, $this->helper->getHeaders('xml'));
         $this->helper->clearHeaders('xml');
         $this->assertEquals(array(), $this->helper->getHeaders('xml'));
@@ -533,7 +533,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
             }
         }
         $this->assertTrue($found);
-        $this->assertEquals('text/xml', $value);
+        $this->assertEquals('application/xml', $value);
     }
 
     public function testInitContextUsesPassedFormatWhenContextParamPresent()
@@ -574,7 +574,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
             }
         }
         $this->assertTrue($found);
-        $this->assertEquals('text/xml', $value);
+        $this->assertEquals('application/xml', $value);
     }
 
     public function testInitContextDisablesLayoutByDefault()

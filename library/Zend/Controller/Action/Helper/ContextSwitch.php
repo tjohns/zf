@@ -140,7 +140,7 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
                 ),
                 'xml'  => array(
                     'suffix'    => 'xml',
-                    'headers'   => array('Content-Type' => 'text/xml'),
+                    'headers'   => array('Content-Type' => 'application/xml'),
                 )
             ));
         }
