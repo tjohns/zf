@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 10985 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -310,6 +310,14 @@ $upload->addValidator('Count', array(1, 5);
                     <code>extension</code>: 指定したファイルがこの拡張子かどうかをチェックします。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: チェックの際に大文字小文字を区別するかどうかを設定します。
+                    デフォルトでは大文字小文字を区別しません。
+                    このオプションは、すべての拡張子に対して適用されることに注意しましょう。
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -317,6 +325,13 @@ $upload->addValidator('Count', array(1, 5);
             カンマ区切りの文字列あるいは配列を使用します。
             <code>setExtension()</code>、<code>addExtension()</code> および
             <code>getExtension()</code> といったメソッドで拡張子の設定や取得が可能です。
+        </para>
+
+        <para>
+            場合によっては大文字小文字を区別してチェックしたくなることもあるでしょう。
+            そんなときのために、isValid() メソッドには 2 番目のパラメータ
+            <code>$case</code> を指定することができます。これを true
+            にすると、大文字小文字を区別して拡張子のチェックを行います。
         </para>
 
         <example id="zend.file.transfer.validators.extension.example">
@@ -330,6 +345,12 @@ $upload->addValidator('Extension', 'jpg,png');
 
 // 配列形式で、拡張子を jpg と png のみに制限します
 $upload->addValidator('Extension', array('jpg', 'png'));
+
+// 大文字小文字を区別したチェックを行います
+$upload = new Zend_File_Transfer('mo,png', true);
+if (!$upload->isValid('C:\temp\myfile.MO')) {
+    print 'Not valid due to MO instead of mo';
+}
 ]]>
             </programlisting>
 
