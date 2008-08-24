@@ -86,7 +86,7 @@ class Zend_Dojo_View_Helper_CheckBox extends Zend_Dojo_View_Helper_Dijit
         }
 
         // and final element
-        $html .= $this->_createFormElement($id, $value, $params, $attribs);
+        $html .= $this->_createFormElement($id, $checkboxInfo['checkedValue'], $params, $attribs);
 
         return $html;
     }
