@@ -766,6 +766,23 @@ function() {
         $this->assertTrue(Zend_Dojo_View_Helper_Dojo::useProgrammatic());
     }
 
+    /**
+     * @see   ZF-3962
+     * @group ZF-3962
+     */
+    public function testHelperShouldAllowDisablingParseOnLoadWithDeclarativeStyle()
+    {
+        Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
+        $this->helper->requireModule('dijit.layout.ContentPane')
+                     ->setDjConfigOption('parseOnLoad', 'false')
+                     ->enable();
+        $html = $this->helper->__toString();
+        if (!preg_match('/(var djConfig = .*?(?:};))/s', $html, $matches)) {
+            $this->fail('Failed to find djConfig settings: ' . $html);
+        }
+        $this->assertNotContains('"parseOnLoad":true', $matches[1]);
+    }
+
     public function setupDojo()
     {
         $this->helper->requireModule('dijit.layout.ContentPane')

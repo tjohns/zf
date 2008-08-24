@@ -833,7 +833,9 @@ EOJ;
         $this->_isXhtml = $this->view->doctype()->isXhtml();
 
         if (Zend_Dojo_View_Helper_Dojo::useDeclarative()) {
-            $this->setDjConfigOption('parseOnLoad', true);
+            if (null === $this->getDjConfigOption('parseOnLoad')) {
+                $this->setDjConfigOption('parseOnLoad', true);
+            }
         }
 
         if (!empty($this->_dijits)) {
