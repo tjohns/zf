@@ -168,7 +168,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
     /**
      * Enable dojo
      * 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function enable()
     {
@@ -179,7 +179,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
     /**
      * Disable dojo
      * 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function disable()
     {
@@ -201,7 +201,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Specify a module to require
      * 
      * @param  string $module 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function requireModule($module)
     {
@@ -231,7 +231,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Register a module path
      * 
      * @param  string $path 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function registerModulePath($module, $path)
     {
@@ -332,7 +332,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Use CDN, using version specified
      * 
      * @param  string $version 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setCdnVersion($version = null)
     {
@@ -374,7 +374,8 @@ class Zend_Dojo_View_Helper_Dojo_Container
     {
         return $this->_cdnDojoPath;
     }
-     /**
+
+    /**
      * Are we using the CDN?
      * 
      * @return void
@@ -388,7 +389,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Set path to local dojo
      * 
      * @param  string $path 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setLocalPath($path)
     {
@@ -422,7 +423,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * 
      * @param  string $option 
      * @param  mixed $value 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDjConfig(array $config)
     {
@@ -435,7 +436,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * 
      * @param  string $option 
      * @param  mixed $value 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function setDjConfigOption($option, $value)
     {
@@ -474,7 +475,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Add a stylesheet by module name
      * 
      * @param  string $module 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addStylesheetModule($module)
     {
@@ -503,7 +504,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Add a stylesheet
      * 
      * @param  string $path 
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addStylesheet($path)
     {
@@ -532,7 +533,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * - lambda
      * 
      * @param  string $callback Lambda
-     * @return Zend_Dojo_View_Helper_Dojo
+     * @return Zend_Dojo_View_Helper_Dojo_Container
      */
     public function addOnLoad($callback)
     {
