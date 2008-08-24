@@ -56,7 +56,7 @@ echo $captcha->render();
 
 // On subsequent request:
 // Assume captcha setup as before, and $value is the submitted value:
-if ($captcha->isValid($value)) {
+if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }
 ]]></programlisting>
