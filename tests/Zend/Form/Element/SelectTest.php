@@ -134,6 +134,26 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @see   ZF-3953
+     * @group ZF-3953
+     */
+    public function testUsingZeroAsValueShouldSelectAppropriateOption()
+    {
+        $this->element->setMultiOptions(array(
+            array('key' => '1', 'value' => 'Yes'),
+            array('key' => '0', 'value' => 'No'),
+            array('key' => 'somewhat', 'value' => 'Somewhat'),
+        ));
+        $this->element->setValue(0);
+        $html = $this->element->render($this->getView());
+
+        if (!preg_match('#(<option[^>]*(?:value="somewhat")[^>]*>)#s', $html, $matches)) {
+            $this->fail('Could not find option: ' . $html);
+        }
+        $this->assertNotContains('selected', $matches[1]);
+    }
+
+    /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
      * @link   http://framework.zend.com/issues/browse/ZF-2794
