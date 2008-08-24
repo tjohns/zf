@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10944 -->
+<!-- EN-Revision: 10995 -->
 <sect1 id="zend.auth.adapter.openid">
 
     <title>Open ID 認証</title>
@@ -75,7 +75,7 @@
             が設定されています。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
