@@ -87,7 +87,7 @@ class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
                 );
                 unset($params['storeType']);
                 if (array_key_exists('storeParams', $params)) {
-                    $storeParams['storeParams'] = $params['storeParams'];
+                    $storeParams['params'] = $params['storeParams'];
                     unset($params['storeParams']);
                 }
                 if (false !== ($store = $this->_renderStore($storeParams))) {
