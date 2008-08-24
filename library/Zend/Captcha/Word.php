@@ -274,15 +274,22 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
      */
     protected function _generateWord()
     {
-        $word = '';
-        $v    = $this->_useNumbers ? self::$VN : self::$V;
-        $c    = $this->_useNumbers ? self::$CN : self::$C;
-        $vk   = array_rand($v, $this->_wordlen / 2);
-        $ck   = array_rand($c, $this->_wordlen / 2);
-        for ($i=0; $i < $this->_wordlen / 2; ++$i) {
+        $word       = '';
+        $wordLen    = $this->getWordLen();
+        $vowels     = $this->_useNumbers ? self::$VN : self::$V;
+        $consonants = $this->_useNumbers ? self::$CN : self::$C;
+
+        for ($i=0; $i < $wordLen; $i = $i + 2) {
             // generate word with mix of vowels and consonants
-            $word .= $c[$ck[$i]] . $v[$vk[$i]];
+            $consonant = $consonants[array_rand($consonants)];
+            $vowel     = $vowels[array_rand($vowels)];
+            $word     .= $consonant . $vowel;
         }
+
+        if (strlen($word) > $wordLen) {
+            $word = substr($word, 0, $wordLen);
+        }
+
         return $word;
     }
     
