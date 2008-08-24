@@ -148,7 +148,7 @@ class Zend_Controller_Action_Helper_AjaxContextTest extends PHPUnit_Framework_Te
             }
         }
         $this->assertTrue($found);
-        $this->assertEquals('text/xml', $value);
+        $this->assertEquals('application/xml', $value);
 
         $this->assertFalse($this->layout->isEnabled());
     }
