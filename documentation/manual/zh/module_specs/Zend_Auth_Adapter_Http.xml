@@ -77,7 +77,7 @@
             <code>Zend_Auth_Adapter_Http</code> 类需要一个配置数组传递给它的构造器。有若干个配置选项有效，其中一些是必需的：
             <table id="zend.auth.adapter.configuration_options.table">
                 <title>配置选项</title>
-                <tgroup cols="2">
+                <tgroup cols="3">
                     <thead>
                         <row>
                             <entry>选项名称</entry>
@@ -156,12 +156,12 @@
 
             <para>
                 有两个同等简单的方法创建文件 Resolver:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
                 </programlisting>
                 或者
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $resolver->setFile($path);]]>
@@ -179,7 +179,7 @@ $resolver->setFile($path);]]>
 
         <para>
             首先，建立一个带有必需的配置值得数组：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $config = array(
     'accept_schemes' => 'basic digest',
     'realm'          => 'My Web Site',
@@ -192,17 +192,14 @@ $config = array(
 
         <para>
             下一步, 创建 Zend_Auth_Adapter_Http 对象：
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Http.php';
+            <programlisting role="php"><![CDATA[
 $adapter = new Zend_Auth_Adapter_Http($config);]]>
             </programlisting>
         </para>
 
         <para>
             因为我们对基本和摘要认证都支持，所以我们需要两个不同的resolver对象。注意这仅仅简单地是两个不同的类：
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
-
+            <programlisting role="php"><![CDATA[
 $basicResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $basicResolver->setFile('files/basicPasswd.txt');
 
@@ -216,7 +213,7 @@ $adapter->setDigestResolver($digestResolver);]]>
 
         <para>
             最后，我们执行认证。为了完成认证，适配器对请求（Request）和响应（Response）都需要一个reference：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 assert($request instanceof Zend_Controller_Request_Http);
 assert($response instanceof Zend_Controller_Response_Http);
 

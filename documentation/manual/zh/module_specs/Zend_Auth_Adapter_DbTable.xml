@@ -40,8 +40,8 @@
             </para>
             <programlisting role="php"><![CDATA[
 // 创建一个 in-memory SQLite 数据库连接
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => 
+                                                  ':memory:'));
 
 // 构造一个简单表的创建语句
 $sqlCreate = 'CREATE TABLE [users] ('
@@ -58,14 +58,13 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // 插入数据
-$dbAdapter->query($sqlInsert);]]>
+$dbAdapter->query($sqlInsert);
+]]>
             </programlisting>
             <para>
                 随着数据库连接和表数据已经可用，<code>Zend_Auth_Adapter_DbTable</code>可以被创建。配置选项的值可以传递给构造器或者延后在实例化以后用做setter方法的参数:
             </para>
             <programlisting role="php"><![CDATA[
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
 // 用构造器参数来配置实例...
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter,
@@ -81,7 +80,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
+;
+]]>
             </programlisting>
             <para>
                 在这点上，认证适配器实例已经可以接受认证查询。为了合成一个认证查询，在调用<code>authenticate()</code>方法之前，输入的证书的值要传递给适配器：
@@ -94,7 +94,8 @@ $authAdapter
 ;
 
 // 执行认证查询，并保存结果
-$result = $authAdapter->authenticate();]]>
+$result = $authAdapter->authenticate();
+]]>
             </programlisting>
             <para>
                 除了基于认证结果对象的 <code>getIdentity()</code> 方法的可用性之外，<code>Zend_Auth_Adapter_DbTable</code>也支持从认证成功的表中读取一行数据：
@@ -116,7 +117,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
+*/
+]]>
             </programlisting>
             <para>
                 因为表行里包含证书值，通过防止无意识地访问来安全化这个值很重要。
@@ -133,16 +135,17 @@ Array
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
-    // store the identity as an object where only the username and real_name 
-    // have been returned
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+    // store the identity as an object where only the username and 
+    //real_name have been returned
+    $storage = $this->_auth->getStorage();
+    $storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name',
     )));
 
-    // store the identity as an object where the password column has been 
-    // omitted
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(
+    // store the identity as an object where the password column has 
+    // been omitted
+    $storage->write($adapter->getResultRowObject(
         null,
         'password'
     ));
@@ -153,7 +156,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -191,9 +195,12 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             因此我们需要修改表来存储免疫的字符串：
         </para>
         <programlisting role="php"><![CDATA[
-$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
-
-$dbAdapter->query($sqlAlter);]]>
+$sqlAlter = "ALTER TABLE [users] "
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
+          
+$dbAdapter->query($sqlAlter);
+]]>
         </programlisting>
         <para>
             这里是在注册时给每个用户生成免疫字符串的简单的方法：
@@ -202,7 +209,8 @@ $dbAdapter->query($sqlAlter);]]>
 for ($i = 0; $i < 50; $i++)
 {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
+}
+]]>
         </programlisting>
         <para>
             构造适配器：
@@ -213,8 +221,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
-);]]>
+    "MD5(CONCAT('" 
+    . Zend_Registry::get('staticSalt') 
+    . "', ?, password_salt))"
+);
+]]>
         </programlisting>
         <note>
             <para>

@@ -77,10 +77,11 @@
             摘要式认证返回一个<code>Zend_Auth_Result</code> 对象，它由包含<code>realm</code>和<code>username</code>健值的数组的身份形成。在<code>authenticate()</code>被调用之前，分别设置和这些健值关联的数组值为相符的值。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Digest.php';
-
-$adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+        <programlisting role="php"><![CDATA[<
+$adapter = new Zend_Auth_Adapter_Digest($filename, 
+                                        $realm, 
+                                        $username, 
+                                        $password);
 
 $result = $adapter->authenticate();
 
@@ -94,7 +95,8 @@ Array
     [realm] => Some Realm
     [username] => someUser
 )
-*/]]>
+*/
+]]>
         </programlisting>
 
     </sect2>

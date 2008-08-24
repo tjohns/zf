@@ -36,10 +36,7 @@
             下面的例子展示 <code>Zend_Auth_Adapter_OpenId</code> 的用法。正如前面所说，<code>Zend_Auth_Adapter_OpenId::authenticate()</code> 被调用两次。第一次 － 在提交 HTML 表单之后，当 <code>$_POST['openid_action']</code> 设置给 <code>"login"</code>时；第二次 － 在从 OpenID 服务器重定向 HTTP 之后，当 <code>$_GET['openid_mode']</code> 或 <code>$_POST['openid_mode']</code> 被设置。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once "Zend/Auth.php";
-require_once "Zend/Auth/Adapter/OpenId.php";
-
+        <programlisting role="php"><![CDATA[
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
@@ -50,7 +47,9 @@ if ((isset($_POST['openid_action']) &&
     $result = $auth->authenticate(
         new Zend_Auth_Adapter_OpenId(@$_POST['openid_identifier']));
     if ($result->isValid()) {
-        $status = "You are logged-in as " . $auth->getIdentity() . "<br>\n";
+        $status = "You are logged in as " 
+                . $auth->getIdentity() 
+                . "<br>\n";
     } else {
         $auth->clearIdentity();
         foreach ($result->getMessages() as $message) {
@@ -62,7 +61,9 @@ if ((isset($_POST['openid_action']) &&
         $_POST['openid_action'] == "logout") {
         $auth->clearIdentity();
     } else {
-        $status = "You are logged-in as " . $auth->getIdentity() . "<br>\n";
+        $status = "You are logged in as " 
+                . $auth->getIdentity() 
+                . "<br>\n";
     }
 }
 ?>

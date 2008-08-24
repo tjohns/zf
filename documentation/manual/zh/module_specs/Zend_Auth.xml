@@ -30,9 +30,7 @@
 
         <para>
             下面是一个认证适配器的例子，它要求为认证设置用户名和密码。为简明扼要，其它的细节（如查询认证服务）被省略了。
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Interface.php';
-
+            <programlisting role="php"><![CDATA[
 class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
     /**
@@ -48,7 +46,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     /**
      * Performs an authentication attempt
      *
-     * @throws Zend_Auth_Adapter_Exception If authentication cannot be performed
+     * @throws Zend_Auth_Adapter_Exception If authentication cannot 
+     *                                     be performed
      * @return Zend_Auth_Result
      */
     public function authenticate()
@@ -95,19 +94,21 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
        <para>
            为了执行更多的操作，开发者可能希望基于认证结果的类型来分支化。一些开发者可能发信有用的操作是：在太多的不成功的密码尝试之后锁住帐号，在太多不存在的身份尝试后标记IP地址，并提供专用的，定制的认证结果信息给用户。下面的结果代码是可用的：
 
-            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+            <programlisting role="php"><![CDATA[
+Zend_Auth_Result::SUCCESS
 Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED
+]]>
             </programlisting>
 
         </para>
 
         <para>
             下面的例子举例说明开发者如何分支化结果代码：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // inside of AuthController / loginAction
 $result = $this->_auth->authenticate($adapter);
 
@@ -128,7 +129,8 @@ switch ($result->getCode()) {
     default:
         /** do stuff for other failure **/
         break;
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -168,21 +170,21 @@ switch ($result->getCode()) {
                 <para>
                     <code>Zend_Auth_Storage_Session</code>使用<code>'Zend_Auth'</code>的seesion名字空间。通过给<code>Zend_Auth_Storage_Session</code>的构造器传递不同的值，这个名字空间可以被替换，并且这个值被从内部传递给<code>Zend_Session_Namespace</code>的构造器。这应该发生在认证尝试之前，因为<code>Zend_Auth::authenticate()</code>执行身份的自动存储。
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Save a reference to the Singleton instance of Zend_Auth
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // Use 'someNamespace' instead of 'Zend_Auth'
-require_once 'Zend/Auth/Storage/Session.php';
 $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
 
 /**
  * @todo Set up the auth adapter, $authAdapter
  */
 
-// Authenticate, saving the result, and persisting the identity upon success
-$result = $auth->authenticate($authAdapter);]]>
+// Authenticate, saving the result, and persisting the identity on
+// success
+$result = $auth->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -206,15 +208,15 @@ $result = $auth->authenticate($authAdapter);]]>
                 <para>
                    为了使用不同于<code>Zend_Auth_Storage_Session</code>的身份之久存储类，开发者可实现<code>Zend_Auth_Storage_Interface</code>：
 
-                    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Storage/Interface.php';
-
+                    <programlisting role="php"><![CDATA[
 class MyStorage implements Zend_Auth_Storage_Interface
 {
     /**
      * Returns true if and only if storage is empty
      *
-     * @throws Zend_Auth_Storage_Exception If it is impossible to determine whether storage is empty
+     * @throws Zend_Auth_Storage_Exception If it is impossible to 
+     *                                     determine whether storage 
+     *                                     is empty
      * @return boolean
      */
     public function isEmpty()
@@ -229,7 +231,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      *
      * Behavior is undefined when storage is empty.
      *
-     * @throws Zend_Auth_Storage_Exception If reading contents from storage is impossible
+     * @throws Zend_Auth_Storage_Exception If reading contents from 
+     *                                     storage is impossible
      * @return mixed
      */
     public function read()
@@ -243,7 +246,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
      * Writes $contents to storage
      *
      * @param  mixed $contents
-     * @throws Zend_Auth_Storage_Exception If writing $contents to storage is impossible
+     * @throws Zend_Auth_Storage_Exception If writing $contents to 
+     *                                     storage is impossible
      * @return void
      */
     public function write($contents)
@@ -256,7 +260,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
     /**
      * Clears contents from storage
      *
-     * @throws Zend_Auth_Storage_Exception If clearing contents from storage is impossible
+     * @throws Zend_Auth_Storage_Exception If clearing contents from 
+     *                                     storage is impossible
      * @return void
      */
     public function clear()
@@ -265,15 +270,15 @@ class MyStorage implements Zend_Auth_Storage_Interface
          * @todo implementation
          */
     }
-
-}]]>
+}
+]]>
                     </programlisting>
 
                 </para>
 
                 <para>
                     为了使用这个定制的存储类，在认证查询被尝试前，<code>Zend_Auth::setStorage()</code>被调用：
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Instruct Zend_Auth to use the custom storage class
 Zend_Auth::getInstance()->setStorage(new MyStorage());
 
@@ -281,7 +286,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  * @todo Set up the auth adapter, $authAdapter
  */
 
-// Authenticate, saving the result, and persisting the identity upon success
+// Authenticate, saving the result, and persisting the identity on 
+// success
 $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
                     </programlisting>
 
@@ -315,8 +321,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
 
         <para>
             下面的例子通过<code>Zend_Auth</code>类来示例如何非直接地使用Zend_Auth适配器：
-            <programlisting role="php"><![CDATA[<?php
-// Get a reference to the Singleton instance of Zend_Auth
+            <programlisting role="php"><![CDATA[
+// Get a reference to the singleton instance of Zend_Auth
 require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
@@ -332,34 +338,35 @@ if (!$result->isValid()) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded; the identity ($username) is stored in the session
+    // Authentication succeeded; the identity ($username) is stored 
+    // in the session
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
         <para>
             一旦在一个请求里的认证被尝试，如上面的例子，检查一个成功的被认证的身份是否存在就是一个简单的匹配：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // Identity exists; get it
     $identity = $auth->getIdentity();
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
         <para>
             从持久存储空间出去一个身份，可简单地使用<code>clearIdentity()</code>方法。这将被典型地用作“logout”操作。
-            <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
             当自动使用持久存储空间对特定的用例不合适，开发者可简单地忽略<code>Zend_Auth</code>类，直接使用适配器类。直接使用适配器类需要配置和准备适配器对象和调用它的<code>authenticate()</code>方法。适配器规范细节将在每个适配器的文档中讨论。下面的例子直接使用 <code>MyAuthAdapter</code>：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Set up the authentication adapter
 $authAdapter = new MyAuthAdapter($username, $password);
 
@@ -374,7 +381,8 @@ if (!$result->isValid()) {
 } else {
     // Authentication succeeded
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 

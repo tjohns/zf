@@ -22,29 +22,26 @@
 
         <para>
             为了快速把 <code>Zend_Auth_Adapter_Ldap</code> 认证集成到你的程序中，即使你不使用 <code>Zend_Controller</code>，代码的基本部分看起来是这样的：
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $username = $this->_request->getParam('username');
 $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-require_once 'Zend/Config/Ini.php';
-$config = new Zend_Config_Ini('../application/config/config.ini', 'production');
+$config = new Zend_Config_Ini('../application/config/config.ini', 
+                              'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
 unset($options['log_path']);
 
-require_once 'Zend/Auth/Adapter/Ldap.php';
-$adapter = new Zend_Auth_Adapter_Ldap($options, $username, $password);
+$adapter = new Zend_Auth_Adapter_Ldap($options, $username, 
+                                      $password);
 
 $result = $auth->authenticate($adapter);
 
 if ($log_path) {
     $messages = $result->getMessages();
 
-    require_once 'Zend/Log.php';
-    require_once 'Zend/Log/Writer/Stream.php';
-    require_once 'Zend/Log/Filter/Priority.php';
     $logger = new Zend_Log();
     $logger->addWriter(new Zend_Log_Writer_Stream($log_path));
     $filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
@@ -62,7 +59,8 @@ if ($log_path) {
 
         <para>
             上面用到 <code>Zend_Config_Ini</code> 的代码是来加载适配器选项，它也是可选的，使用一个规则的数组来完成工作。下面是带有两个单独的服务器选项的 <code>application/config/config.ini</code> 文件的例子。带有多组服务器选项的适配器将按顺序来尝试每个服务器直到资格被成功认证。服务器的名字 （例如 <code>server1</code> and <code>server2</code>）是任意的，关于选项数组的细节，参见下面 <emphasis>Server Options</emphasis> 一节。 注意 <code>Zend_Config_Ini</code> 要求任何带有等号（<code>=</code>）的值需要括起来（如下面的 DNs）。
-            <programlisting role="ini"><![CDATA[[production]
+            <programlisting role="ini"><![CDATA[
+[production]
 
 ldap.log_path = /tmp/ldap.log
 
@@ -82,7 +80,8 @@ ldap.server2.useSsl = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
-ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
+ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
+]]></programlisting>
             上述的配置将指示 <code>Zend_Auth_Adapter_Ldap</code> 首先来尝试用 OpenLDAP 服务器 <code>s0.foo.net</code> 来认证用户，如果不论什么原因认证失败，将尝试 AD 服务器 <code>dc1.w.net</code>。
         </para>
 
@@ -110,7 +109,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
 
         <para>
             下面是一个选项参数包含两组服务器选项（ <code>s0.foo.net</code> 和 <code>dc1.w.net</code> （和上面 INI 表示法一样的选项））的例子的 <ulink url="http://php.net/print_r"><code>print_r()</code></ulink> 输出：
-            <programlisting role="output"><![CDATA[Array
+            <programlisting role="output"><![CDATA[
+Array
 (
     [server2] => Array
         (
