@@ -139,6 +139,23 @@ class Zend_Dojo_View_Helper_CheckBoxTest extends PHPUnit_Framework_TestCase
         }
         $this->assertContains('checked="checked"', $m[1]);
     }
+
+    /**
+     * @see ZF-4006
+     * @group ZF-4006
+     */
+    public function testElementShouldUseCheckedValueForCheckboxInput()
+    {
+        $html = $this->helper->checkBox('foo', '0', array(), array(), array(
+            'checkedValue'   => '1',
+            'unCheckedValue' => '0',
+        ));
+        if (!preg_match('#(<input[^>]*(?:type="checkbox")[^>]*>)#s', $html, $matches)) {
+            $this->fail('Did not find checkbox in html: ' . $html);
+        }
+        $this->assertContains('value="1"', $matches[1]);
+        $this->assertNotContains('checked', $matches[1]);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_CheckBoxTest::main() if this source file is executed directly.
