@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8134 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.scripts">
 
     <title>ビュースクリプト</title>
@@ -24,7 +24,8 @@
         Zend_View の導入の部分で示したビュースクリプトの例を思い出してみましょう。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    <programlisting role="php"><![CDATA[
+<?php if ($this->books): ?>
 
     <!-- 本の一覧 -->
     <table>
@@ -66,7 +67,7 @@
             Zend_View の escape() というメソッドが、このエスケープを行います。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビュースクリプトの悪い例
 echo $this->variable;
 
@@ -82,7 +83,7 @@ echo $this->escape($this->variable);]]>
             エスケープに使用するコールバックを Zend_View に通知することができます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Zend_View のインスタンスを作成します
 $view = new Zend_View();
 
@@ -130,7 +131,7 @@ echo $view->render(...);]]>
                 以下のようになります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -247,9 +248,6 @@ public function render($name);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-require_once 'Zend/View/Interface.php';
-require_once 'Smarty.class.php';
-
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**

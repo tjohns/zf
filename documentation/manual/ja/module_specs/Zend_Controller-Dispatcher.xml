@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10631 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.dispatcher">
     <title>ディスパッチャ</title>
 
@@ -32,8 +32,7 @@
                 を設定すればこれが実現できるようになりました。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php 
-// フロントコントローラで
+            <programlisting role="php"><![CDATA[// フロントコントローラで
 $front->setParam('prefixDefaultModule', true);
 
 // ディスパッチャで
@@ -69,8 +68,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
             そして新しいアクションに送りたい追加のパラメータを指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function fooAction()
+        <programlisting role="php"><![CDATA[public function fooAction()
 {
     // 現在のモジュールおよびコントローラの、別のアクションに転送します
     $this->_forward('bar', null, null, array('baz' => 'bogus'));

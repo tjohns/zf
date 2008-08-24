@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.server.reflection">
     <title>Zend_Server_Reflection</title>
 
@@ -23,8 +24,7 @@
             基本的な使用法は簡単です。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Server/Reflection.php';
+        <programlisting role="php"><![CDATA[
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
 
@@ -50,7 +50,8 @@ foreach ($prototypes as $prototype) {
 // クラス、関数あるいはメソッドの名前空間を取得します。
 // 名前空間は、インスタンス作成時 (二番目の引数) あるいは
 // setNamespace() で設定します。
-$reflection->getNamespace();]]>
+$reflection->getNamespace();
+]]>
         </programlisting>
 
         <para>

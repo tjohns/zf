@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7990 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
 
@@ -23,7 +23,7 @@
     <code>Zend_Mime_Part</code> のインスタンスを作成した後で、
     その属性に直接アクセスすることでメタ情報を設定することができます。</para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;

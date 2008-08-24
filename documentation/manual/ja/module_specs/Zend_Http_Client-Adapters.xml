@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9868 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
 
@@ -138,7 +138,7 @@
         </para>
         <example id="zend.http.client.adapters.socket.example-1">
             <title>HTTPS トランスポート層の変更</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 設定パラメータを指定します
 $config = array(
     'adapter'      => 'Zend_Http_Client_Adapter_Socket',
@@ -242,7 +242,7 @@ $response = $client->request();]]>
         </para>
         <example id="zend.http.client.adapters.proxy.example-1">
             <title>プロキシサーバを使用した Zend_Http_Client の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 接続パラメータを設定します
 $config = array(
     'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
@@ -287,7 +287,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         </para>
         <example id="zend.http.client.adapters.test.example-1">
             <title>HTTP レスポンススタブを使用したテスト</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 新しいアダプタとクライアントのインスタンスを作成します
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -327,7 +327,7 @@ $response = $client->request('GET');
         </para>
         <example id="zend.http.client.adapters.test.example-2">
             <title>複数の HTTP レスポンススタブを使用したテスト</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 新しいアダプタおよびクライアントのインスタンスを作成します
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -400,7 +400,7 @@ $adapter->addResponse(
         </para>
         <example id="zend.http.client.adapters.extending.example-1">
             <title>独自の接続アダプタの作成</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**

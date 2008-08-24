@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10631 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -111,8 +111,7 @@
                     アクションの単語間をダッシュで区切らないようにします。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -143,9 +142,7 @@ $inflector->setFilterRule(':action', array(
                     'useCaseSensitiveActions' を設定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->setParam('useCaseSensitiveActions', true);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
 
                 <para>
                     これで camelCasing 形式の URL を使えるようになり、
@@ -184,8 +181,7 @@ $front->setParam('useCaseSensitiveActions', true);
             <code>noErrorHandler</code> を設定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
         </programlisting>
 
         <para>
@@ -204,8 +200,7 @@ $front->setParam('noErrorHandler', true);]]>
             <code>ViewRenderer</code> を無効にしてからディスパッチを行うことです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// $front は Zend_Controller_Front のインスタンスであるとします
+        <programlisting role="php"><![CDATA[// $front は Zend_Controller_Front のインスタンスであるとします
 $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
@@ -304,8 +299,7 @@ public function preDispatch()
                     フロントコントローラのインスタンスをディスパッチする前なら
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// $view はすでに定義されているものとします
+                <programlisting role="php"><![CDATA[// $view はすでに定義されているものとします
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -316,8 +310,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     起動処理の中ならどこでも
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
@@ -390,10 +383,7 @@ $viewRenderer->setView($view);]]>
             前回変更された、もっとも基本的な MVC コンポーネントの使用法は、そのまま同じです。
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
 
         <para>
             しかし、ディレクトリ構造を見直し、いくつかのコンポーネントが削除されました。
@@ -475,10 +465,7 @@ final protected function _forward($action, $controller = null, $module = null, a
             次のいずれの方法も使用可能です。
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- ルータを作成します -- */

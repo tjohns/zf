@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10189 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -16,8 +16,7 @@
         この機能を実現するためのルートは、次のようになります。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'author/:username',
     array(
         'controller' => 'profile',
@@ -57,8 +56,7 @@ $router->addRoute('user', $route);]]>
         この例が返す変数は、以下のようなキーと値のペアを持つ配列となります。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$values = array(
+    <programlisting role="php"><![CDATA[$values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
@@ -73,8 +71,7 @@ $values = array(
         <code>Zend_Controller_Request::getParam()</code> メソッドを使用します。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-public function userinfoAction()
+    <programlisting role="php"><![CDATA[public function userinfoAction()
 {
     $request = $this->getRequest();
     $username = $request->getParam('username');
@@ -91,8 +88,7 @@ public function userinfoAction()
         次のルートは、Module ルートの挙動をまねたものです。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     ':module/:controller/:action/*',
     array('module' => 'default')
 );
@@ -110,8 +106,7 @@ $router->addRoute('default', $route);]]>
             対応する値にそのデフォルト値を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array('year' => 2006)
 );
@@ -135,8 +130,7 @@ $router->addRoute('archive', $route);]]>
             ルートのデフォルトとしてコントローラとアクションを定義しておく必要があります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -163,8 +157,7 @@ $router->addRoute('archive', $route);]]>
             これは、正規表現で指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -193,8 +186,7 @@ $router->addRoute('archive', $route);]]>
             シンプルなマッチングには、静的なホスト名を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     array(
         'host' => 'blog.mysite.com',
         'path' => 'archive'
@@ -217,8 +209,7 @@ $router->addRoute('archive', $route);]]>
             username パラメータをその他のパス変数と同様に渡します。
         </para>
         
-        <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     array(
         'host' => array(
             'regex'   => '([a-z]+).mysite.com',

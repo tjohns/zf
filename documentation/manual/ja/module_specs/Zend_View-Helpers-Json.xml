@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8337 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.json">
     <title>JSON ヘルパー</title>
 
@@ -27,7 +27,7 @@ Content-Type: application/json
         JSON ヘルパーの使用法は、このように非常に単純です。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 <?= $this->json($this->data) ?>
 ?>]]></programlisting>
 </sect3>

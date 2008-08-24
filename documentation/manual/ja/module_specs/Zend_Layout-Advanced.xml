@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 --> 
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout の高度な使用法</title>
 
@@ -54,7 +54,7 @@
             あるいはアクセサ <code>setView()</code> で設定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new My_Custom_View();
 $layout->setView($view);
 ?>]]></programlisting>
@@ -93,7 +93,7 @@ $layout->setView($view);
                 を使用して変数にアクセスすることができます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
 $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 ?>]]></programlisting>
@@ -195,7 +195,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
                 それらの値を設定するためのアクセサを提供しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // インフレクタのターゲットを設定します
 $layout->setInflectorTarget('layouts/:script.:suffix');
 
@@ -224,7 +224,7 @@ $layout->setViewSuffix('php');
                 サブディレクトリに変更します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
                        ->setFilterRule(array('CamelCaseToUnderscore'));
@@ -240,7 +240,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
                 <code>Zend_Layout</code> はそんな場合にも対応しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
     ':script' => array('CamelCaseToUnderscore'),

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>基本的な使用法</title>
@@ -21,9 +22,7 @@
         スーパーグローバル配列 <code>$_SESSION</code> のエントリに対応します。
         名前空間をキーとして使用します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+        <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
 // $myNamespace は $_SESSION['myNamespace' に対応します]]]>
@@ -53,9 +52,7 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 
             <title>ページビューの数え方</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
@@ -90,16 +87,15 @@ echo "このセッションでページがリクエストされた回数: ", $de
 
             <title>新しい方法: 名前空間の衝突を避ける</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 // Zend_Auth コンポーネント用
 $authNamespace = new Zend_Session_Namespace('Zend_Auth');
 $authNamespace->user = "myusername";
 
 // ウェブサービスコンポーネント用
 $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
-$webServiceNamespace->user = "mywebusername";]]>
+$webServiceNamespace->user = "mywebusername";
+]]>
             </programlisting>
 
         </example>
@@ -113,7 +109,7 @@ $webServiceNamespace->user = "mywebusername";]]>
 
             <title>古い方法: PHP のセッションへのアクセス</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "myusername";
 $_SESSION['Some_Web_Service']['user'] = "mywebusername";]]>
             </programlisting>
@@ -136,14 +132,13 @@ $_SESSION['Some_Web_Service']['user'] = "mywebusername";]]>
 
             <title>セッションの順次処理</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -166,9 +161,7 @@ foreach ($aNamespace as $index => $value) {
 
             <title>セッションデータへのアクセス</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $namespace = new Zend_Session_Namespace(); // デフォルトの名前空間
 
 $namespace->foo = 100;
@@ -179,7 +172,8 @@ if (!isset($namespace->bar)) {
     echo "\$namespace->bar not set\n";
 }
 
-unset($namespace->foo);]]>
+unset($namespace->foo);
+]]>
             </programlisting>
 
         </example>

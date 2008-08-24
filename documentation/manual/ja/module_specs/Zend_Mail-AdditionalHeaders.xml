@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.additional-headers">
     <title>追加のヘッダ</title>
     <para>
@@ -8,12 +9,12 @@
     </para>
     <example id="zend.mail.additional-headers.example-1">
         <title>メールヘッダの追加</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MyCoolApplication');
 $mail->addHeader('X-greetingsTo', 'Mom', true); // 複数の値
-$mail->addHeader('X-greetingsTo', 'Dad', true);]]>
+$mail->addHeader('X-greetingsTo', 'Dad', true);
+]]>
         </programlisting>
     </example>
 </sect1>

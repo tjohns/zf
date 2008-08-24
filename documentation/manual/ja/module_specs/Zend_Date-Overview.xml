@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10501 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API の概要</title>
@@ -174,8 +174,7 @@
 
         <example id="zend.date.values.example-1">
             <title>ユーザ定義の入力日付書式</title>
-            <programlisting role="php"><![CDATA[<?php
-$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+            <programlisting role="php"><![CDATA[$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
@@ -219,8 +218,7 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
             各インスタンスで毎回ロケールを設定する手間を省けます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// 起動ファイルで
+        <programlisting role="php"><![CDATA[// 起動ファイルで
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
@@ -255,10 +253,7 @@ $date = new Zend_Date('31.Feb.2007');]]>
 
         <example id="zend.date.basic.example-1">
             <title>日付要素の操作</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date(); // $date のタイムスタンプは time() の返す値と等しくなります
+            <programlisting role="php"><![CDATA[$date = new Zend_Date(); // $date のタイムスタンプは time() の返す値と等しくなります
 
 // $date に 12 時間足します
 $date->add('12', Zend_Date::HOUR);

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller クイックスタート</title>
 
@@ -108,10 +109,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 <code>html/index.php</code> をお好みのエディタで開き、次の内容を追加します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/app/controllers');]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]></programlisting>
 
             <para>
                 これは、フロントコントローラのインスタンスとディスパッチを行います。
@@ -165,10 +163,7 @@ Zend_Controller_Front::run('/path/to/app/controllers');]]>
                 を開き、次の内容を入力しましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
+            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
 class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
@@ -242,11 +237,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 というメソッドがあることを想定しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
-class ErrorController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {

@@ -1,10 +1,11 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.consuming-rss">
     <title>RSS フィードの使用</title>
     <para>
         RSS フィードの読み込みは、フィードの URL を指定して
         <code>Zend_Feed_Rss</code> のインスタンスを作成するのと同じくらい簡単です。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
     </programlisting>
     <para>
@@ -16,7 +17,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
         フィードオブジェクトを取得すると、標準的な RSS の "channel"
         プロパティに対して直接アクセスできるようになります。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 echo $channel->title();]]>
     </programlisting>
     <para>
@@ -31,7 +32,7 @@ echo $channel->title();]]>
         チャネルのプロパティが属性を保持している場合、PHP
         の配列構文を使用してそれらにアクセスすることができます。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 echo $channel->category['domain'];]]>
     </programlisting>
     <para>
@@ -133,7 +134,7 @@ foreach ($channel as $item) {
     <para>
         要素が空要素であるかどうかは、以下のようにして調べられます。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 if ($item->propname()) {
     // ... 続行できます
 }]]>

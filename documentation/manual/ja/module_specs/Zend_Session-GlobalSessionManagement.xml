@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.session.global_session_management">
 
     <title>グローバルセッションの管理</title>
@@ -96,11 +97,9 @@ remember_me_seconds = 864000]]>
                 <code>Zend_Session::setOptions()</code> に渡します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
+            <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
-require_once 'Zend/Session.php';
 Zend_Session::setOptions($config->toArray());]]>
             </programlisting>
 
@@ -444,14 +443,14 @@ Zend_Session::setOptions($config->toArray());]]>
 
                 <title>セッション固定化</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+                <programlisting role="php"><![CDATA[
 $defaultNamespace = new Zend_Session_Namespace();
 
 if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>

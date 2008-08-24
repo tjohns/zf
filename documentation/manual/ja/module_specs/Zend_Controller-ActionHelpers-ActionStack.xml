@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -33,8 +33,7 @@
             をコールするのが一番シンプルな方法です。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -61,8 +60,7 @@ class FooController extends Zend_Controller_Action
             ヘルパーに渡すこともできます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {

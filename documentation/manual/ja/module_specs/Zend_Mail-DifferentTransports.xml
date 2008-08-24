@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.different-transports">
     <title>異なる転送手段の使用</title>
     <para>
@@ -9,16 +10,15 @@
     </para>
     <example id="zend.mail.different-transports.example-1">
         <title>異なる転送手段の使用</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 // メッセージを作成します...
-require_once 'Zend/Mail/Transport/Smtp.php';
 $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // もう一度デフォルトを使用します]]>
+$mail->send();  // もう一度デフォルトを使用します
+]]>
         </programlisting>
     </example>
     <note>

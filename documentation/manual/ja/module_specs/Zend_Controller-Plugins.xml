@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>プラグイン</title>
 
@@ -81,15 +81,14 @@
             プラグインクラスを書くには、単に抽象クラス
             <code>Zend_Controller_Plugin_Abstract</code>
             をインクルードしてそれを継承するだけです。
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Plugin/Abstract.php';
+        </para>
 
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }]]>
         </programlisting>
-        </para>
+
         <para>
             <code>Zend_Controller_Plugin_Abstract</code> には抽象メソッドはありません。
             つまり、上に示したイベントメソッドを、
@@ -114,12 +113,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
             次の例は、コントローラチェインでプラグインを使用する方法を示すものです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Router.php';
-require_once 'Zend/Controller/Plugin/Abstract.php';
-
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {

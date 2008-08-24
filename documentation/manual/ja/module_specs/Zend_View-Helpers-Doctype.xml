@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9626 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype ヘルパー</title>
 
@@ -72,7 +72,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
             invoking the helper.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
 ?>]]></programlisting>
 
@@ -82,7 +82,7 @@ $doctype = $view->doctype()->getDoctype();
             <code>isXhtml()</code> があります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($view->doctype()->isXhtml()) {
     // 何かをします
 }

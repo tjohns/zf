@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.refining">
 
     <title>アクセス制御の洗練</title>
@@ -34,7 +35,7 @@
         'marketing' を作成し、'staff' の権限を継承させます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 新しいグループ marketing は staff の権限を引き継ぎます
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
         </programlisting>
@@ -45,58 +46,78 @@ $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
         に限定されることに注目しましょう。ここで、これらのリソースを追加します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 規則を適用するリソースを作成します
-require_once 'Zend/Acl/Resource.php';
-$acl->add(new Zend_Acl_Resource('newsletter'));           // ニュースレター
-$acl->add(new Zend_Acl_Resource('news'));                 // ニュース
-$acl->add(new Zend_Acl_Resource('latest'), 'news');       // 最新ニュース
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // お知らせ]]>
+
+// ニュースレター
+$acl->add(new Zend_Acl_Resource('newsletter'));
+
+// ニュース
+$acl->add(new Zend_Acl_Resource('news'));
+
+// 最新ニュース
+$acl->add(new Zend_Acl_Resource('latest'), 'news');
+
+// お知らせ
+$acl->add(new Zend_Acl_Resource('announcement'), 'news');
+]]>
         </programlisting>
 
         <para>
         そして、次のような特別な規則を、ACL の該当範囲に適用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Marketing は、ニュースレターおよび最新ニュースを公開、保存できなければなりません
-$acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
+$acl->allow('marketing',
+            array('newsletter', 'latest'),
+            array('publish', 'archive'));
 
 // Staff (そして継承による marketing) は最新ニュースの改変ができません
 $acl->deny('staff', 'latest', 'revise');
 
 // 全員 (administrators を含む) はお知らせを保存することができません
-$acl->deny(null, 'announcement', 'archive');]]>
+$acl->deny(null, 'announcement', 'archive');
+]]>
         </programlisting>
 
         <para>
         これで、最新の変更内容を反映した ACL への問い合わせが行えるようになります。
         </para>
 
-         <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('staff', 'latest', 'publish') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('editor', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied となります]]>
+     "allowed" : "denied";
+// denied となります
+]]>
         </programlisting>
 
     </sect2>
@@ -113,21 +134,27 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
         すべてのロールやリソース、権限を表すことになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 最新ニュースの改変拒否を staff (そして継承による marketing) から削除します
 $acl->removeDeny('staff', 'latest', 'revise');
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 // ニュースレターの公開や保存の権限を、marketing から取り除きます
-$acl->removeAllow('marketing', 'newsletter', array('publish', 'archive'));
+$acl->removeAllow('marketing',
+                  'newsletter',
+                  array('publish', 'archive'));
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied となります]]>
+     "allowed" : "denied";
+// denied となります
+]]>
         </programlisting>
 
         <para>
@@ -136,18 +163,22 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
         このような変更を一括で行うことができます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // marketing に対して、最新のニュースへのアクセスを許可します
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed となります]]>
+     "allowed" : "denied";
+// allowed となります
+]]>
         </programlisting>
 
     </sect2>

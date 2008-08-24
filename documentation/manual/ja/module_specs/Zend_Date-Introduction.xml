@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.date.introduction">
 
     <title>導入</title>
@@ -52,8 +52,7 @@
             を参照ください。
             <example id="zend.date.setdefaulttimezone.example-1">
                 <title>デフォルトタイムゾーンの設定</title>
-                <programlisting role="php"><![CDATA[<?php
-date_default_timezone_set('America/Los_Angeles'); // カリフォルニアのアメリカ人用のタイムゾーン
+                <programlisting role="php"><![CDATA[date_default_timezone_set('America/Los_Angeles'); // カリフォルニアのアメリカ人用のタイムゾーン
 date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用のタイムゾーン]]>
                 </programlisting>
             </example>

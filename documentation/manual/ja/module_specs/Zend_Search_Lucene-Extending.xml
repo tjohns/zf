@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.extending">
     <title>拡張性</title>
 
@@ -30,7 +31,7 @@
             解析器を変更するには、以下のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
@@ -58,12 +59,8 @@ $index->addDocument($doc);]]>
 
             <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>独自のテキスト解析器</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 /** これは独自のテキスト解析器で、数字つきの単語をひとつの言葉として扱います */
-
-
-/** Zend_Search_Lucene_Analysis_Analyzer の階層 */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
@@ -128,7 +125,8 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 }
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new My_Analyzer());]]>
+    new My_Analyzer());
+]]>
                 </programlisting>
             </example>
         </para>
@@ -185,7 +183,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         <para>
             <code>ShortWords</code> および <code>StopWords</code>
             は、定義済み解析器あるいは独自の解析器でこのように使用します。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
 
@@ -194,7 +192,7 @@ $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
             </programlisting>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
@@ -208,7 +206,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
             <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
             のコンストラクタには、禁止単語の配列を入力として渡します。
             この禁止単語はファイルから読み込ませることもできます。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
 $stopWordsFilter->loadFromFile($my_stopwords_file);
 
@@ -299,7 +297,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
             メソッドでそれをデフォルトとして設定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
     public function lengthNorm($fieldName, $numTerms) {
         return 1.0/sqrt($numTerms);
@@ -366,7 +364,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
         <para>
         Zend_Search_Lucene_Storage_Directory のメソッドは以下のとおりです。
         </para>
-        <programlisting><![CDATA[<?php
+        <programlisting><![CDATA[
 abstract class Zend_Search_Lucene_Storage_Directory {
 /**
  * 保存先を閉じます
@@ -469,7 +467,7 @@ abstract function getFileObject($filename);
         Zend_Search_Lucene_Storage_File クラスを実装する際に
         オーバーロードしなければならないメソッドは 2 つだけです。
         </para>
-        <programlisting><![CDATA[<?php
+        <programlisting><![CDATA[
 class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
      * ファイル上の位置を指定し、そこにファイルポインタを進めます。

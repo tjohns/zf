@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -139,8 +139,7 @@
                 URL を指定しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -183,8 +182,7 @@ class SomeController extends Zend_Controller_Action
                 <code>exit()</code> が実行されるということです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// 別の例
+            <programlisting role="php"><![CDATA[// 別の例
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -222,8 +220,7 @@ class AlternativeController extends Zend_Controller_Action
                 また、アクションチェインではなくリダイレクトを行います。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -261,8 +258,7 @@ class ForwardController extends Zend_Controller_Action
                 次のようなルートが登録されているものと仮定します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
@@ -275,8 +271,7 @@ $router->addRoute('blogArchive', $route);
                 <code>/blog/2006/4/24/42</code> となります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion

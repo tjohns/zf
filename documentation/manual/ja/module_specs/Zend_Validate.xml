@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7450 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.validate.introduction">
 
     <title>導入</title>
@@ -71,9 +71,7 @@
         <para>
             以下の例では、電子メールアドレスの検証方法を説明します。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress();
 
 if ($validator->isValid($email)) {
@@ -83,7 +81,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $messageId => $message) {
         echo "バリデーションエラー '$messageId': $message\n";
     }
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -120,9 +119,7 @@ if ($validator->isValid($email)) {
         </para>
 
         <para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/StringLength.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
@@ -134,7 +131,8 @@ if (!$validator->isValid('word')) {
     echo current($messages);
 
     // 出力は "文字列 'word' は短すぎます。最低 8 文字以上必要です" となります
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -142,15 +140,14 @@ if (!$validator->isValid('word')) {
             複数のメッセージを <code>setMessages()</code> メソッドで設定することもできます。
             その場合の引数は、キー/メッセージ のペアの配列です。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/StringLength.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => '文字列 \'%value%\' は短すぎます',
     Zend_Validate_StringLength::TOO_LONG  => '文字列 \'%value%\' は長すぎます'
-));]]>
+));
+]]>
             </programlisting>
 
         </para>
@@ -162,7 +159,7 @@ $validator->setMessages( array(
             これは、<code>isValid()</code> の引数として渡した値を返します。
             その他のプロパティについては、バリデーションクラスによって異なります。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 require_once 'Zend/Validate/StringLength.php';
 
 $validator = new Zend_Validate_StringLength(8, 12);
@@ -175,7 +172,8 @@ if (!validator->isValid('word')) {
         . ' から '
         . $validator->max
         . " までの間ではありません\n";
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -195,12 +193,11 @@ if (!validator->isValid('word')) {
             <code>is()</code> メソッドは自動的にクラスを読み込んでそのインスタンスを作成し、
             指定した入力に対して <code>isValid()</code> メソッドを適用します。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate.php';
-
+            <programlisting role="php"><![CDATA[
 if (Zend_Validate::is($email, 'EmailAddress')) {
     // email は妥当な形式です
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -209,12 +206,13 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
             バリデータクラスのコンストラクタにオプションを指定する必要がある場合は、
             それを配列で渡すことができます。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 require_once 'Zend/Validate.php';
 
 if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     // $value は 1 から 12 までの間です
-}]]>
+}
+]]>
             </programlisting>
 
         </para>

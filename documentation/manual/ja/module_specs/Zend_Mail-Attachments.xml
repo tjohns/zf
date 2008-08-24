@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.attachments">
     <title>ファイルの添付</title>
     <para>
@@ -9,12 +10,12 @@
     </para>
     <example id="zend.mail.attachments.example-1">
         <title>ファイルを添付したメール</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 // メッセージを作成します...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]>
+$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+]]>
         </programlisting>
     </example>
     <para>
@@ -23,8 +24,7 @@ $mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Ze
         <code>createAttachment()</code> メソッドの返す値は
         <code>Zend_Mime_Part</code> オブジェクトです。
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = $mail->createAttachment($myImage);
@@ -39,8 +39,7 @@ $mail->send();]]>
         もうひとつの方法は、<code>Zend_Mime_Part</code> のインスタンスを作成して
         それを <code>addAttachment()</code> で追加するものです。
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = new Zend_Mime_Part($myImage);
@@ -51,7 +50,8 @@ $at->filename    = 'test.gif';
 
 $mail->addAttachment($at);
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
 </sect1>
 <!--

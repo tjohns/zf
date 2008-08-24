@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -20,13 +21,11 @@
             もっとも基本的な使用例は次のとおりです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'My/Service/Class.php';
-
+        <programlisting role="php"><![CDATA[
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
         </programlisting>
     </sect2>
 
@@ -94,7 +93,7 @@ echo $server->handle();]]>
             ヒントを指定するには、次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
 * これはサンプル関数です
 *
@@ -124,7 +123,7 @@ function myFunc($val1, $val2, $val3)
             '|' 演算子を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
 * This is a sample function
 *
@@ -172,7 +171,7 @@ function myFunc($val1, $val2, $val3)
             関数やクラスをアタッチする際のメソッドで名前空間を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // My_Service_Class のパブリックメソッドは、すべて
 // myservice.メソッド名 でアクセスできるようになります
 $server->setClass('My_Service_Class', 'myservice');
@@ -239,7 +238,7 @@ $server->addFunction('somefunc', 'funcs');]]>
             を使用して例外クラスをホワイトリストに渡します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
         </programlisting>
 
@@ -273,11 +272,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
         <para>
             使用例は次のようになります。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 function __autoload($class)
 {
     Zend_Loader::loadClass($class);
@@ -298,7 +293,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]>
+echo $server->handle();
+]]>
         </programlisting>
         <para>
             この例では、スクリプトと同じディレクトリにある xmlrpc.cache
@@ -323,9 +319,7 @@ echo $server->handle();]]>
                 受け取ったコールを処理します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-
+            <programlisting role="php"><![CDATA[
 /**
  * 値の MD5 sum を返します
  *
@@ -339,7 +333,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -351,13 +346,13 @@ echo $server->handle();]]>
                 XML-RPC メソッドとしてアタッチします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -368,8 +363,7 @@ echo $server->handle();]]>
                 次の例は、複数のクラスをそれぞれの名前空間でアタッチします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
@@ -390,9 +384,7 @@ echo $server->handle();]]>
                 そのコードとメッセージを falut レスポンスで報告させるようにします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
@@ -405,7 +397,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
 $server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
 $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -417,9 +410,7 @@ echo $server->handle();]]>
                 それをサーバに渡して処理します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Request.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
@@ -437,7 +428,8 @@ $server->setClass('Services_Pick', 'pick');   // メソッドをコールする�
 // リクエストオブジェクトを作成します
 $request = new Services_Request();
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
 
@@ -449,9 +441,7 @@ echo $server->handle($request);]]>
                 それをレスポンスとして返します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
+            <programlisting role="php"><![CDATA[
 require_once 'Services/Request.php';
 require_once 'Services/Response.php';
 require_once 'Services/Exception.php';
@@ -473,7 +463,8 @@ $request = new Services_Request();
 // 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
 
@@ -484,18 +475,7 @@ echo $server->handle($request);]]>
                 次の例は、リクエスト間でサーバ定義をキャッシュします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Server.php';
-require_once 'Zend/XmlRpc/Server/Fault.php';
-require_once 'Zend/XmlRpc/Server/Cache.php';
-require_once 'Services/Request.php';
-require_once 'Services/Response.php';
-require_once 'Services/Exception.php';
-require_once 'Services/Comb.php';
-require_once 'Services/Brush.php';
-require_once 'Services/Pick.php';
-
-// キャッシュファイルを指定します
+            <programlisting role="php"><![CDATA[// キャッシュファイルを指定します
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Services_Exceptions を fault レスポンスで報告させるようにします

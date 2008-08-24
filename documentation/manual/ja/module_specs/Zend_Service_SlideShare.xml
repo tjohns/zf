@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8432 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.slideshare">
 
     <title>導入</title>
@@ -31,12 +31,8 @@
             オブジェクトのインスタンスを作成し、それぞれの値を次のように指定しましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
-// このコンポーネントの新しいインスタンスを作成します
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
-?>]]>
+        <programlisting role="php"><![CDATA[// このコンポーネントの新しいインスタンスを作成します
+$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); ]]>
         </programlisting>
 
     </sect2>
@@ -52,7 +48,7 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
             このクラスの構造を擬似コードで表すと次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Zend_Service_SlideShare_SlideShow {
 
     /**
@@ -219,9 +215,7 @@ class Zend_Service_SlideShare_SlideShow {
             オブジェクトをこのように使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
+        <programlisting role="php"><![CDATA[
 // このコンポーネントの新しいインスタンスを作成します
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
@@ -286,10 +280,7 @@ print "閲覧回数: {$slideshow->getNumViews()}<br/>\n";
             各メソッドの使用例を以下に示します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/SlideShare.php';
-
-// このコンポーネントの新しいインスタンスを作成します
+        <programlisting role="php"><![CDATA[// このコンポーネントの新しいインスタンスを作成します
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
 $starting_offset = 0;
@@ -322,11 +313,7 @@ foreach($ss_user as $slideshow) {
             <code>setCacheObject</code> メソッドでこのように指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-require_once 'Zend/Service/SlideShare.php';
-
-$frontendOptions = array(
+        <programlisting role="php"><![CDATA[$frontendOptions = array(
                         'lifetime' => 7200,
                         'automatic_serialization' => true);
 $backendOptions  = array(
@@ -355,10 +342,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
             たとえば接続のタイムアウト秒数をデフォルトから変更したい場合などに便利です。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
-$client = new Zend_Http_Client();
+        <programlisting role="php"><![CDATA[$client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');

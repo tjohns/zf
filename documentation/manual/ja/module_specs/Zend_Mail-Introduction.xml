@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.introduction">
 
     <title>導入</title>
@@ -25,14 +26,14 @@
                 を用いて送信するには、次のようにします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+            <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send();]]>
+$mail->send();
+]]>
             </programlisting>
 
         </example>
@@ -67,14 +68,14 @@ $mail->send();]]>
             その返り値からすぐに別のメソッドをコールできる形式のことを表します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setBodyText('This is the text of the mail.')
     ->setFrom('somebody@example.com', 'Some Sender')
     ->addTo('somebody_else@example.com', 'Some Recipient')
     ->setSubject('TestSubject')
-    ->send();]]>
+    ->send();
+]]>
         </programlisting>
 
     </sect2>
@@ -105,10 +106,7 @@ $mail->setBodyText('This is the text of the mail.')
                 関数の Return-Path を変更する方法を示すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Sendmail.php';
-
+            <programlisting role="php"><![CDATA[
 $tr = new Zend_Mail_Transport_Sendmail('-freturn_to_me@example.com');
 Zend_Mail::setDefaultTransport($tr);
 
@@ -117,7 +115,8 @@ $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send();]]>
+$mail->send();
+]]>
             </programlisting>
 
         </example>

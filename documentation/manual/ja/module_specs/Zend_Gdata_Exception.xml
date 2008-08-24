@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata の例外処理</title>
 
@@ -7,7 +8,7 @@
         Zedn_Gdata がスローする例外は、すべて Zend_Gdata_App_Exception でキャッチできます。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
@@ -78,7 +79,7 @@ try {
         API ドキュメントを参照ください。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {

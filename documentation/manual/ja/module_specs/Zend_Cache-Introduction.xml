@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.cache.introduction">
     <title>導入</title>
     <para>
@@ -27,9 +27,7 @@
             を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
    'lifetime' => 7200, // キャッシュの有効期限を 2 時間とします
    'automatic_serialization' => true
@@ -40,7 +38,11 @@ $backendOptions = array(
 );
 
 // Zend_Cache_Core オブジェクトを取得します
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
+]]>
         </programlisting>
     </example>
 
@@ -65,8 +67,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             アンシリアライズしてデータを取得すればよいのです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// $cache は先ほどの例で作成したものです
+        <programlisting role="php"><![CDATA[// $cache は先ほどの例で作成したものです
 
 // キャッシュがすでに存在するかどうかを調べます
 if(!$result = $cache->load('myresult')) {
@@ -102,15 +103,18 @@ print_r($result);]]>
             このセクションが読み飛ばされ、その代わりにキャッシュから取得したデータが使用されます
             (キャッシュレコードが有効なものである限ります)。
        </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
-   'lifetime' => 30,                  // キャッシュの有効期間は 30 秒です
+   'lifetime' => 30,                   // キャッシュの有効期間は 30 秒です
    'automatic_serialization' => false  // これはデフォルト値です
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // start() メソッドに一意な ID を渡します
 if(!$cache->start('mypage')) {
@@ -122,7 +126,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // 出力が保存され、ブラウザに送信されます
 }
 
-echo 'これはキャッシュされません ('.time().').';]]>
+echo 'これはキャッシュされません ('.time().').';
+]]>
        </programlisting>
        <para>
            <code>time()</code> の結果を二度出力していることに注目しましょう。

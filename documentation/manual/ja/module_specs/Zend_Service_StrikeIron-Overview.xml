@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.strikeiron">
     <title>Zend_Service_StrikeIron</title>
 
@@ -156,13 +157,12 @@
         そのコンストラクタで StrikeIron アカウント情報やその他のオプションを設定することができます。
         また、StrikeIron の各種サービス用のクライアントを帰すファクトリメソッドも用意しています。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
-$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
+$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
+]]>
         </programlisting>
       </para>
 
@@ -193,9 +193,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
         <code>getService()</code> で StrikeIron サービス用のクライアントを取得したら、
         あとは普通の PHP オブジェクトと同様にそのメソッドをコールすることができます。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -206,7 +204,8 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 $rateInfo = $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 echo $rateInfo->province;
 echo $rateInfo->abbreviation;
-echo $rateInfo->GST;]]>
+echo $rateInfo->GST;
+]]>
         </programlisting>
 
         上の例では、<code>getService()</code> メソッドを使用して
@@ -253,9 +252,8 @@ echo $rateInfo->GST;]]>
         <ulink url="http://www.php.net/print_r">print_r()</ulink>
         のような PHP の組み込み関数を使うことです。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
+<?php
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -278,7 +276,8 @@ Zend_Service_StrikeIron_Decorator Object
             [total] => 0.14
             [HST] => Y
         )
-)]]>
+)
+]]>
         </programlisting>
       </para>
 
@@ -328,9 +327,7 @@ Zend_Service_StrikeIron_Decorator Object
         例外が発生することを想定して、
         サービスのメソッドをコールする際には例外処理を書く必要があります。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -345,7 +342,8 @@ try {
   // 接続時のエラーなどの場合の
   // エラー処理をここで行います
 
-}]]>
+}
+]]>
         </programlisting>
         スローされる例外は、常に <code>Zend_Service_StrikeIron_Exception</code>
         となります。
@@ -387,9 +385,7 @@ try {
         そのサービスの購入状況を調べる
         <code>getSubscriptionInfo()</code> メソッドが存在します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 // Sales & Use Tax Basic サービス用のクライアントを取得します
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
@@ -398,7 +394,8 @@ $taxBasic = $strikeIron->getService(array('class => 'SalesUseTaxBasic'));
 
 // Sales & Use Tax Basic サービスをあと何回使用できるかを調べます
 $subscription = $taxBasic->getSubscriptionInfo();
-echo $subscription->remainingHits;]]>
+echo $subscription->remainingHits;
+]]>
         </programlisting>
       </para>
 

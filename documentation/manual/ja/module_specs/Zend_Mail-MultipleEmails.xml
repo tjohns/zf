@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7532 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>SMTP 接続による複数のメールの送信</title>
 
@@ -14,12 +14,8 @@
 
         <title>SMTP 接続による複数のメールの送信</title>
 
-        <programlisting role="php"><![CDATA[<?php
-// クラスを読み込みます
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // トランスポートを作成します
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp('localhost');
 
 // メッセージをループ処理します
@@ -30,7 +26,8 @@ for ($i = 0; $i > 5; $i++) {
     $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
     $mail->setBodyText('...Your message here...');
     $mail->send($transport);
-}]]>
+}
+]]>
         </programlisting>
 
     </example>
@@ -47,16 +44,10 @@ for ($i = 0; $i > 5; $i++) {
 
         <title>トランスポートの接続の手動制御</title>
 
-        <programlisting role="php"><![CDATA[<?php
-
-// クラスを読み込みます
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // トランスポートを作成します
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp();
 
-require_once 'Zend/Mail/Protocol/Smtp.php';
 $protocol = new Zend_Mail_Protocol_Smtp('localhost');
 $protocol->connect();
 $protocol->helo('localhost');
@@ -77,7 +68,8 @@ for ($i = 0; $i > 5; $i++) {
 }
 
 $protocol->quit();
-$protocol->disconnect();]]>
+$protocol->disconnect();
+]]>
         </programlisting>
 
     </example>

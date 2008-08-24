@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10132 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.text.figlet">
     <title>Zend_Text_Figlet</title>
     <para>
@@ -109,7 +109,7 @@
             の基本的な使用法を説明するためにシンプルな
             FIGlet テキストを作成するものです。
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 require_once 'Zend/Text/Figlet.php';
 $figlet = new Zend_Text_Figlet();
 echo $figlet->render('Zend');

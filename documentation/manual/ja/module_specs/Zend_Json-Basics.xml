@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.json.basics">
     <title>基本的な使用法</title>
     <para>
@@ -6,7 +7,7 @@
         名前は <code>Zend_Json::encode()</code> および
         <code>Zend_Json::decode()</code> となります。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // 値を取得します
 $phpNative = Zend_Json::decode($encodedValue);
 

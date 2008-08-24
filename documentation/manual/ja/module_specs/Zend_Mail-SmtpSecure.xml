@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.smtp-secure">
   <title>セキュアな SMTP トランスポート</title>
 
@@ -11,10 +12,7 @@
   <example id="zend.mail.smtp-secure.example-1">
     <title>Zend_Mail_Transport_Smtp によるセキュアな接続の有効化</title>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
-
+    <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',
                 'port' => 25); // オプションでポート番号を指定します
 
@@ -25,7 +23,8 @@ $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('sender@test.com', 'Some Sender');
 $mail->addTo('recipient@test.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send($transport);]]>
+$mail->send($transport);
+]]>
     </programlisting>
   </example>
 </sect1>

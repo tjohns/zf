@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Getopt の規則の宣言</title>
     <para>
@@ -36,10 +37,7 @@
         </para>
         <example id="zend.console.getopt.rules.short.example">
             <title>短い形式の構文の使用</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
         </example>
         <para>
             上の例は、<code>Zend_Console_Getopt</code> を用いて、
@@ -98,15 +96,15 @@ $opts = new Zend_Console_Getopt('abp:');]]>
         </para>
         <example id="zend.console.getopt.rules.long.example">
             <title>長い形式の構文の使用</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt(
   array(
-    'apple|a'    => 'このオプションはリンゴを選択します。パラメータは不要です。',
-    'banana|b=i' => 'このオプションはバナナを選択します。整数パラメータが必須です。',
-    'pear|p-s'   => 'このオプションは洋ナシを選択します。オプションで文字列パラメータを指定します。'
+    'apple|a'    => 'リンゴです。パラメータは不要です。',
+    'banana|b=i' => 'バナナです。整数パラメータが必須です。',
+    'pear|p-s'   => '洋ナシです。オプションで文字列パラメータを指定します。'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>

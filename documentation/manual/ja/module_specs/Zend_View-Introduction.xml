@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10638 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.introduction">
 
     <title>導入</title>
@@ -39,7 +39,7 @@
             コントローラスクリプトは、おそらくこのようになるでしょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 本の著者およびタイトルを取得するためにモデルを使用します
 $data = array(
     array(
@@ -82,7 +82,7 @@ echo $view->render('booklist.php');]]>
             したがって、基本的なビュースクリプトはこのようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+        <programlisting role="php"><![CDATA[ if ($this->books): ?>
 
     <!-- 本の一覧 -->
     <table>

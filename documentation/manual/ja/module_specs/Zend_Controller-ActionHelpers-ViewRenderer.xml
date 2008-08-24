@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -89,8 +89,7 @@
                         ヘルパーブローカにそれを渡して登録する。
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+                    <programlisting role="php"><![CDATA[$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
@@ -103,8 +102,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                         ヘルパーブローカから必要に応じて作成、取得する。
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                    <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');]]>
                     </programlisting>
@@ -123,8 +121,7 @@ $viewRenderer->setView($view)
             <code>getStaticHelper()</code> メソッドを使用するのがいちばん簡単です。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
         </programlisting>
 
         <para>
@@ -148,8 +145,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
             例として、次のようなクラスを考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// foo モジュールのコントローラクラス
+        <programlisting role="php"><![CDATA[// foo モジュールのコントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
     // デフォルトで bar/index.phtml をレンダリングするので、特に何もする必要はありません
@@ -168,7 +164,7 @@ class Foo_BarController extends Zend_Controller_Action
 ...
 
 // ビュースクリプトの中では、たとえば次のように書きます
-<?php $this->foo(); // Foo_View_Helper_Foo::foo() をコールします]]>
+$this->foo(); // Foo_View_Helper_Foo::foo() をコールします]]>
         </programlisting>
 
         <para>
@@ -619,8 +615,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 アクションメソッドで変数の値を設定するというものです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// 起動ファイル内で
+            <programlisting role="php"><![CDATA[// 起動ファイル内で
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
@@ -699,8 +694,7 @@ class Foo_BarController extends Zend_Controller_Action
                 自動レンダリングを無効にする (<code>setNoRender()</code>) かです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Bar モジュールの Baz コントローラクラス
+            <programlisting role="php"><![CDATA[// Bar モジュールの Baz コントローラクラス
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
@@ -746,8 +740,7 @@ class Bar_BatController extends Zend_Controller_Action
                 これは <code>setRender()</code> を起動します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Foo モジュールの Bar コントローラクラス
+            <programlisting role="php"><![CDATA[// Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
@@ -789,8 +782,7 @@ class Foo_BarController extends Zend_Controller_Action
                 どちらも同じオブジェクトへの参照を取得することになります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Foo モジュールの Bar コントローラクラス
+            <programlisting role="php"><![CDATA[// Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -837,8 +829,7 @@ class Foo_BarController extends Zend_Controller_Action
                 'tpl' を設定します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/**
+            <programlisting role="php"><![CDATA[/**
  * 起動ファイル
  */
 
@@ -863,8 +854,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 <code>render()</code> を必要なだけコールすればいいのです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SearchController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {

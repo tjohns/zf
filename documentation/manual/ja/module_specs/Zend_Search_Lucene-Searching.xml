@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.searching">
     <title>インデックスの検索</title>
 
@@ -59,12 +60,11 @@
             どちらの方法を使用したとしても、インデックスを検索する API メソッドは同じです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Search/Lucene.php';
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
-$index->find($query);]]>
+$index->find($query);
+]]>
         </programlisting>
         <para>
             <code>Zend_Search_Lucene::find()</code> メソッドは、
@@ -102,7 +102,7 @@ $index->find($query);]]>
                 実際のところ、これが
                 トークン化されたいないフィールドを検索する唯一の方法となることもあります。
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
 $pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
@@ -120,7 +120,7 @@ $hits = $index->find($query);]]>
                 <code>Zend_Search_Lucene_Search_QueryParser::parse()</code>
                 メソッドはオプションのパラメータでエンコーディングを受け取ることができます。
                 ここで、クエリ文字列のエンコーディングを指定します。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
             </programlisting>
             </para>
@@ -133,7 +133,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
                 デフォルトのクエリ文字列エンコーディングを
                 <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code>
                 メソッドで指定することもできます。
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
@@ -165,9 +165,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
             この例で、ヒットしたドキュメントには
             title と author の 2 つのフィールドが含まれています。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Search/Lucene.php');
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
@@ -176,7 +174,8 @@ foreach ($hits as $hit) {
     echo $hit->score;
     echo $hit->title;
     echo $hit->author;
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -193,9 +192,7 @@ foreach ($hits as $hit) {
             メソッドを使用し、その <code>getFieldValue()</code>
             メソッドでフィールドの値を取得します。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Search/Lucene.php';
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
@@ -212,7 +209,8 @@ foreach ($hits as $hit) {
 
     // getFieldValue() と同じです
     echo $document->title;
-}]]>
+}
+]]>
         </programlisting>
         <para>
         Zend_Search_Lucene_Document オブジェクトで使用可能なフィールドは、
@@ -239,7 +237,7 @@ foreach ($hits as $hit) {
             Zend_Search_Lucene では、結果セットの件数を制限するためのメソッドとして
             <code>getResultSetLimit()</code> と
             <code>setResultSetLimit()</code> を用意しています。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
 Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
@@ -273,7 +271,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
         <para>
             検索結果のスコアを取得するには <code>score</code> プロパティを使用します。
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
@@ -302,7 +300,7 @@ foreach ($hits as $hit) {
 
         <para>
             <code>$index->find()</code> のコール時に、オプションのパラメータを指定することができます。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]>
             </programlisting>
         </para>
@@ -326,13 +324,13 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
 
         <para>
             例を以下に示します。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
             </programlisting>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]>
             </programlisting>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
             </programlisting>
         </para>
@@ -349,7 +347,7 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
         <para>
             <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code>
             メソッドを使用すると、HTML ドキュメントの中で検索用語を強調させることができます。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
 ...

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisioning の使用法</title>
     
@@ -55,7 +56,7 @@
                 たとえば次のようになります。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 ?>]]></programlisting>
@@ -73,7 +74,7 @@ $gdata = new Zend_Gdata_Gapps($client, $domain);
                 たとえば次のようになります。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 ?>]]></programlisting>
@@ -85,7 +86,7 @@ $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
                 コンストラクタの引数でドメインを指定する必要がなくなります。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
@@ -114,7 +115,7 @@ $query = $gdata->newUserQuery($arg);
                 <code>createUser()</code> メソッドを使用します。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->createUser('foo', 'Random', 'User', '••••••••');
 ?>]]></programlisting>
                         
@@ -125,7 +126,7 @@ $gdata->createUser('foo', 'Random', 'User', '••••••••');
                 をコールすることでそのエントリをサーバにアップロードします。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $user = $gdata->newUserEntry();
 $user->login = $gdata->newLogin();
 $user->login->username = 'foo';
@@ -154,7 +155,7 @@ $user = $gdata->insertUser($user);
                 <code>null</code> が返されます。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 
 echo 'ユーザ名: ' . $user->login->userName . "\n";
@@ -174,7 +175,7 @@ echo '規約に同意した？: ' . ($user->login->agreedToTerms ? 'Yes' : 'No')
                 <code>getUserEntry()</code> をコールするものです。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $gdata->newUserQuery('foo');
 $user = $gdata->getUserEntry($query);
 
@@ -206,7 +207,7 @@ echo '規約に同意した？: ' . ($user->login->agreedToTerms ? 'Yes' : 'No')
                 <code>retrieveAllUsers()</code> メソッドをコールします。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveAllUsers();
 
 foreach ($feed as $user) {
@@ -230,7 +231,7 @@ foreach ($feed as $user) {
                 を参照ください。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->getUserFeed();
 
 foreach ($feed as $user) {
@@ -253,7 +254,7 @@ foreach ($feed as $user) {
                 これにより、変更内容がサーバに反映されます。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
@@ -268,7 +269,7 @@ $user = $user->save();
                     <code>login->password</code> プロパティを変更します。
                 </para>
                 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->login->password = '••••••••';
 $user = $user->save();
@@ -291,7 +292,7 @@ $user = $user->save();
                     を <code>true</code> に設定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->login->changePasswordAtNextLogin = true;
 $user = $user->save();
@@ -316,7 +317,7 @@ $user = $user->save();
                     <code>restoreUser()</code> メソッドを使用します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $gdata->suspendUser('foo');
 $gdata->restoreUser('foo');
 ?>]]></programlisting>
@@ -327,7 +328,7 @@ $gdata->restoreUser('foo');
                     を <code>true</code> に設定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->login->suspended = true;
 $user = $user->save();
@@ -350,7 +351,7 @@ $user = $user->save();
                     <code>true</code> に設定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->login->admin = true;
 $user = $user->save();
@@ -374,7 +375,7 @@ $user = $user->save();
                 の <code>delete()</code> をコールするだけです。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
 ?>]]></programlisting>
@@ -384,7 +385,7 @@ $user->delete();
                 <code>deleteUser()</code> メソッドを使用します。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
 ?>]]></programlisting>
             
@@ -416,7 +417,7 @@ $gdata->deleteUser('foo');
                 <code>createNickname()</code> メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->createNickname('foo', 'bar');
 ?>]]></programlisting>
 
@@ -427,7 +428,7 @@ $gdata->createNickname('foo', 'bar');
                 をコールすることでそのエントリをサーバにアップロードします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $nickname = $gdata->newNicknameEntry();
 $nickname->login = $gdata->newLogin('foo');
 $nickname->nickname = $gdata->newNickname('bar');
@@ -446,7 +447,7 @@ $nickname = $gdata->insertNickname($nickname);
                 <code>null</code> が返されます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
@@ -461,7 +462,7 @@ echo '所有者: ' . $nickname->login->username . "\n";
                 <code>getNicknameEntry()</code> をコールするものです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $gdata->newNicknameQuery('bar');
 $nickname = $gdata->getNicknameEntry($query);
 
@@ -488,7 +489,7 @@ echo '所有者: ' . $nickname->login->username . "\n";
                 <code>retrieveNicknames()</code> メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveNicknames('foo');
 
 foreach ($feed as $nickname) {
@@ -508,7 +509,7 @@ foreach ($feed as $nickname) {
                 をコールすることもできます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $gdata->newNicknameQuery();
 $query->setUsername('foo');
 $feed = $gdata->getNicknameFeed($query);
@@ -527,7 +528,7 @@ foreach ($feed as $nickname) {
                 <code>retrieveAllNicknames()</code> メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveAllNicknames();
 
 foreach ($feed as $nickname) {
@@ -546,7 +547,7 @@ foreach ($feed as $nickname) {
                 を引数なしでコールする方法もあります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->getNicknameFeed();
 
 foreach ($feed as $nickname) {
@@ -565,7 +566,7 @@ foreach ($feed as $nickname) {
                 の <code>delete()</code> をコールするだけです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 $nickname->delete();
 ?>]]></programlisting>
@@ -575,7 +576,7 @@ $nickname->delete();
                 <code>deleteNickname()</code> メソッドを使用します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->deleteNickname('bar');
 ?>]]></programlisting>
 
@@ -606,7 +607,7 @@ $gdata->deleteNickname('bar');
                 <code>createEmailList()</code> メソッドを使用します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->createEmailList('friends');
 ?>]]></programlisting>
 
@@ -617,7 +618,7 @@ $gdata->createEmailList('friends');
                 をコールすることでそのエントリをサーバにアップロードします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $list = $gdata->newEmailListEntry();
 $list->emailList = $gdata->newEmailList('friends');
 $list = $gdata->insertEmailList($list);
@@ -633,7 +634,7 @@ $list = $gdata->insertEmailList($list);
                 <code>retrieveEmailLists()</code> メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveEmailLists('baz@somewhere.com');
 
 foreach ($feed as $list) {
@@ -653,7 +654,7 @@ foreach ($feed as $list) {
                 をコールすることもできます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $gdata->newEmailListQuery();
 $query->setRecipient('baz@somewhere.com');
 $feed = $gdata->getEmailListFeed($query);
@@ -673,7 +674,7 @@ foreach ($feed as $list) {
                 <code>retrieveAllEmailLists()</code> メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveAllEmailLists();
 
 foreach ($feed as $list) {
@@ -691,7 +692,7 @@ foreach ($feed as $list) {
                 を引数なしでコールする方法もあります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->getEmailListFeed();
 
 foreach ($feed as $list) {
@@ -709,7 +710,7 @@ foreach ($feed as $list) {
                 deleteEmailList() メソッドをコールします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->deleteEmailList('friends');
 ?>]]></programlisting>
 
@@ -735,7 +736,7 @@ $gdata->deleteEmailList('friends');
                 <code>addRecipientToEmailList()</code> メソッドをコールします。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
 ?>]]></programlisting>
             
@@ -749,7 +750,7 @@ $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
                 メソッドを使用すると、メーリングリストの参加者一覧を取得できます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveAllRecipients('friends');
 
 foreach ($feed as $recipient) {
@@ -764,7 +765,7 @@ foreach ($feed as $recipient) {
                 をコールすることもできます。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = $gdata->newEmailListRecipientQuery();
 $query->setEmailListName('friends');
 $feed = $gdata->getEmailListRecipientFeed($query);
@@ -789,7 +790,7 @@ foreach ($feed as $recipient) {
                 <code>removeRecipientFromEmailList()</code> メソッドをコールします。
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
 ?>]]></programlisting>
             
@@ -834,7 +835,7 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
             適切に処理するものです。
         </para>
         
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 function retrieveUser ($username) {
     $query = $gdata->newUserQuery($username);
     try {

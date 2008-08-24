@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.strikeiron.bundled-services">
     <title>Zend_Service_StrikeIron: バンドルされているサービス</title>
 
@@ -30,9 +31,7 @@
         このサービスの <code>getZipCode()</code> メソッドは、
         アメリカやカナダの郵便番号についての情報を取得します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -67,7 +66,8 @@ if ($zips->count == 0) {
 
 // 詳細なステータス情報
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
-$status = $response->serviceStatus;]]>
+$status = $response->serviceStatus;
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -98,9 +98,7 @@ $status = $response->serviceStatus;]]>
         このサービスの <code>verifyAddressUSA()</code> メソッドは、
         アメリカの住所を検証します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -130,7 +128,8 @@ if ($result->addressErrorNumber != 0) {
 
     // 正しい住所ですか?
     $valid = ($result->valid == 'VALID');
-}]]>
+}
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -162,9 +161,7 @@ if ($result->addressErrorNumber != 0) {
         <code>getTaxRateUSA()</code> および <code>getTaxRateCanada()</code> は、
         それぞれアメリカとカナダの販売・消費税の情報を取得します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
@@ -179,7 +176,8 @@ echo $rateInfo->GST;              // あるいは GST (Goods & Services Tax) の
 // アメリカ・カリフォルニア州クパチーノの税率を取得します
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // すべてのプロパティを表示します
-echo $rateInfo->state_sales_tax;  // あるいは州の消費税のみを表示します]]>
+echo $rateInfo->state_sales_tax;  // あるいは州の消費税のみを表示します
+]]>
         </programlisting>
       </para>
     </sect2>

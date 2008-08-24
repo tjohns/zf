@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.exception.using">
 
     <title>例外の使用法</title>
@@ -9,7 +10,7 @@
 
     <example id="zend.exception.using.example">
         <title>例外をキャッチする例</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 try {
     Zend_Loader::loadClass('nonexistantclass');

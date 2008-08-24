@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.introduction">
     <title>導入</title>
     <para>
@@ -33,9 +34,7 @@
 
     <example id="zend.feed.introduction.example.rss">
         <title>Zend_Feed による RSS フィードデータの使用</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Feed.php';
-
+        <programlisting role="php"><![CDATA[
 // 最新の Slashdot ヘッドラインを取得します
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');

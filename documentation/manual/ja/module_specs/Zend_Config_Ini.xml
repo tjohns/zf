@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8741 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -33,10 +33,12 @@
             <code>Zend_Config_Ini</code> オブジェクトの作成時に
             <code>$options</code> のキー
             <code>'nestSeparator'</code> を設定します。たとえばこのようになります。
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
+            <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
+$config = new Zend_Config_Ini('/path/to/config.ini',
+                              'staging',
+                              $options);
+]]>
             </programlisting>
         </para>
     </note>
@@ -53,7 +55,8 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             ここでは、次のような内容の設定データが
             <code>/path/to/config.ini</code> に存在するものとします。
         </para>
-        <programlisting role="ini"><![CDATA[; 運用環境の設定データ
+        <programlisting role="ini"><![CDATA[
+; 運用環境の設定データ
 [production]
 webhost                  = www.example.com
 database.adapter         = pdo_mysql
@@ -67,15 +70,14 @@ database.params.dbname   = dbname
 [staging : production]
 database.params.host     = dev.example.com
 database.params.username = devuser
-database.params.password = devsecret]]>
+database.params.password = devsecret
+]]>
         </programlisting>
         <para>
             次に、開発者が開発環境用の設定データを INI ファイルから読み込むことを考えます。
             これは簡単なことで、単に INI ファイルとセクションを指定するだけです。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-
+        <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // "dev.example.com" と出力します

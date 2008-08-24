@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.amazon">
     <title>Zend_Service_Amazon</title>
     <sect2 id="zend.service.amazon.introduction">
@@ -61,9 +62,7 @@
                 この例では、Amazon で PHP に関する書籍を検索し、
                 結果の一覧を表示します。
             </para>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
@@ -77,9 +76,7 @@ foreach ($results as $result) {
                 しかし、ここではクエリ API を使用します。この API
                 は、Fluent Interface パターンと似た形式です。
             </para>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Amazon/Query.php';
-$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
+            <programlisting><![CDATA[$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
@@ -97,9 +94,7 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.amazon.countrycodes.example.country_code">
             <title>Amazon Web Service の国の選択</title>
-            <programlisting><![CDATA[<?php
-// 日本の Amazon に接続します
-require_once 'Zend/Service/Amazon.php';
+            <programlisting><![CDATA[// 日本の Amazon に接続します
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
             </programlisting>
         </example>
@@ -119,9 +114,7 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
         </para>
         <example id="zend.service.amazon.itemlookup.example.asin">
             <title>ASIN を使用した Amazon の商品検索</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $item = $amazon->itemLookup('B0000A432X');]]>
             </programlisting>
         </example>
@@ -149,9 +142,7 @@ $item = $amazon->itemLookup('B0000A432X');]]>
         </para>
         <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Amazon の商品検索の実行</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
@@ -164,9 +155,7 @@ foreach ($results as $result) {
                 <code>ResponseGroup</code> オプションを使用すると、
                 レスポンスで返される情報を制御することができます。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array(
     'SearchIndex'   => 'Books',
     'Keywords'      => 'php',
@@ -213,9 +202,7 @@ foreach ($results as $result) {
                     この例では、もうひとつのクエリ API のインターフェイスを使用して、
                     オプションとその値を設定します。
                 </para>
-                <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Amazon/Query.php';
-$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+                <programlisting><![CDATA[$query = new Zend_Service_Amazon_Query('MY_API_KEY');
 $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {

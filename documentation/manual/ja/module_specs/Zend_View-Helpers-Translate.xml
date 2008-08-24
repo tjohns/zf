@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9817 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.translate">
 
     <title>翻訳ヘルパー</title>
@@ -63,7 +63,7 @@
             <code>Zend_Translate</code> を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // サンプルアダプタ
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 Zend_Registry::set('Zend_Translate', $adapter);
@@ -91,7 +91,7 @@ echo $this->translate('simple');
             <code>setTranslator()</code> メソッドをコールします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 $this->translate()->setTranslator($adapter)->translate('simple');
@@ -109,7 +109,7 @@ $this->translate()->setTranslator($adapter)->translate('simple');
 
         <title>直接使用する方法</title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // サンプルアダプタ
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 
@@ -142,7 +142,7 @@ print $translate->translate('simple'); // これは 'einfach' を返します
             単一のパラメータを使用するには、単にそれをメソッドに追加します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = "Monday";
 $this->translate("Today is %1\$s", $date);
@@ -166,7 +166,7 @@ $this->translate("Today is %1\$s", $date);
             パラメータのリストを使用して、それをメソッドに追加することもできます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = "Monday";
 $month = "April";
@@ -185,7 +185,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $
             パラメータの配列を使用して、それをメソッドに追加することもできます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
@@ -206,7 +206,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
         <title>ロケールの動的な変更</title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
@@ -226,7 +226,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 
         <title>ロケールの静的な変更</title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
@@ -249,7 +249,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
         <title>現在設定されているロケールの取得</title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビューの中で
 $date = array("Monday", "April", "11:20:55");
 

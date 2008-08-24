@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>高度な使用法</title>
@@ -21,10 +22,9 @@
 
             <title>グローバルセッションの開始</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session.php';
-
-Zend_Session::start();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Session::start();
+]]>
             </programlisting>
 
         </example>
@@ -159,9 +159,7 @@ Zend_Session::start();]]>
 
             <title>セッション名前空間のロック</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
 // このセッションに読み取り専用ロックをかけます
@@ -170,7 +168,8 @@ $userProfileNamespace->lock();
 // 読み取り専用ロックを解除します
 if ($userProfileNamespace->isLocked()) {
     $userProfileNamespace->unLock();
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -194,9 +193,7 @@ if ($userProfileNamespace->isLocked()) {
 
             <title>有効期限切れの例</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $s = new Zend_Session_Namespace('expireAll');
 $s->a = 'apple';
 $s->p = 'pear';
@@ -210,7 +207,8 @@ $s->setExpirationHops(5);
 $s->setExpirationSeconds(60);
 // "expireAll" 名前空間は、60 秒が経過するか
 // 5 ホップに達するかのどちらかが発生した時点で
-// "有効期限切れ" となります]]>
+// "有効期限切れ" となります
+]]>
             </programlisting>
 
         </example>
@@ -247,10 +245,9 @@ $s->setExpirationSeconds(60);
                 この場合は、表示されている質問に 300 秒以内に答えることになります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // 質問を表示するコントローラ
-require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // この変数にだけ有効期限を設定します
 $testSpace->accept_answer = true;
@@ -262,10 +259,9 @@ $testSpace->accept_answer = true;
                 時間内に回答したかどうかをもとにして、回答を受け付けるかどうかを判断しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // 回答を処理するコントローラ
-require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 if ($testSpace->accept_answer === true) {
     // 時間内
@@ -273,7 +269,8 @@ if ($testSpace->accept_answer === true) {
 else {
     // 時間切れ
 }
-// ...]]>
+// ...
+]]>
             </programlisting>
         </example>
 
@@ -300,9 +297,7 @@ else {
 
             <title>セッション名前空間へのアクセスを単一のインスタンスに制限する</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 // 名前空間のインスタンスを作成します
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
@@ -320,7 +315,8 @@ try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
     echo "この名前空間ではインスタンスを作成できません。すでに \$authSpaceAccessor2 があるからです\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -361,12 +357,12 @@ try {
                 問題の再現手順は、このようになります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 $sessionNamespace->array['testKey'] = 1; // PHP 5.2.1 より前のバージョンでは、期待通りに動作しません
-echo $sessionNamespace->array['testKey'];]]>
+echo $sessionNamespace->array['testKey'];
+]]>
             </programlisting>
 
         </example>
@@ -379,10 +375,10 @@ echo $sessionNamespace->array['testKey'];]]>
                 可能なら、先に配列のすべての値を設定してからセッションに格納するようにすればこの問題を回避できます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace('Foo');
-$sessionNamespace->array = array('a', 'b', 'c');]]>
+$sessionNamespace->array = array('a', 'b', 'c');
+]]>
             </programlisting>
 
         </example>
@@ -402,8 +398,7 @@ $sessionNamespace->array = array('a', 'b', 'c');]]>
                 修正したコピーを再度代入してもとの配列を上書きします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 
 // 配列を代入します
@@ -418,7 +413,8 @@ $tmp['fruit'] = 'peach';
 // 修正したコピーをセッション名前空間に書き戻します
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // prints "peach"]]>
+echo $sessionNamespace->array['fruit']; // prints "peach"
+]]>
             </programlisting>
 
         </example>
@@ -432,13 +428,13 @@ echo $sessionNamespace->array['fruit']; // prints "peach"]]>
                 間接的にアクセスするようにします。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
-echo $myNamespace->someArray['foo']; // "bar" と表示されます]]>
+echo $myNamespace->someArray['foo']; // "bar" と表示されます
+]]>
             </programlisting>
 
         </example>
@@ -499,9 +495,8 @@ echo $myNamespace->someArray['foo']; // "bar" と表示されます]]>
 
             <title>PHPUnit で Zend_Session を使用したコードをテストする例</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // testing setExpirationSeconds()
-require_once 'tests/Zend/Session/SessionTestHelper.php'; // also see SessionTest.php
 $script = 'SessionTestHelper.php';
 $s = new Zend_Session_Namespace('space');
 $s->a = 'apple';

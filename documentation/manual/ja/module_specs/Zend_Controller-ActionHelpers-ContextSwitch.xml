@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9860 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch および AjaxContext</title>
 
@@ -42,8 +42,7 @@
         たとえば、次のようなコントローラを考えてみましょう。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     /**
      * トップページは listAction() に転送します
@@ -67,7 +66,7 @@ class NewsController extends Zend_Controller_Action
     {
     }
 }
-?>]]></programlisting>
+]]></programlisting>
     
     <para>
         ここで、<code>listAction()</code>
@@ -76,8 +75,7 @@ class NewsController extends Zend_Controller_Action
         XML でレスポンスを返すように指示することができます。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -88,7 +86,7 @@ class NewsController extends Zend_Controller_Action
 
     // ...
 }
-?>]]></programlisting>
+]]></programlisting>
 
     <para>
         これが何を行っているかというと、
@@ -164,9 +162,7 @@ class NewsController extends Zend_Controller_Action
                     自動 JSON シリアライズ機能を使わないようにすることもできます。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->contextSwitch()->setAutoJsonSerialization(false);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$this->_helper->contextSwitch()->setAutoJsonSerialization(false);]]></programlisting>
             </listitem>
 
             <listitem>
@@ -308,8 +304,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
             たとえば、次のようなコントローラクラスを考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function listAction()
     {
@@ -326,8 +321,7 @@ class FooController extends Zend_Controller_Action
     public function updateAction()
     {
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
 
         <para>
             ここで、'list' アクションに XML コンテキストを、
@@ -336,8 +330,7 @@ class FooController extends Zend_Controller_Action
             <code>init()</code> メソッドで行います。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -346,16 +339,14 @@ class FooController extends Zend_Controller_Action
              ->addActionContext('comments', array('xml', 'json'))
              ->initContext();
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
 
         <para>
             あるいは、単純に配列プロパティ
             <code>$contexts</code> を設定することもできます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
         'list'     => array('xml'),
@@ -367,7 +358,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-?>]]></programlisting>
+]]></programlisting>
 
         <para>
             このほうがオーバーヘッドが少なくなりますが、
@@ -456,15 +447,13 @@ class FooController extends Zend_Controller_Action
             <code>initContext()</code> をコールする必要があります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class NewsController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
         $this->_helper->contextSwitch()->initContext();
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
 
         <para>
             時には、使用するコンテキストを決めてしまいたいこともあるでしょう。
@@ -474,9 +463,7 @@ class NewsController extends Zend_Controller_Action
             <code>initContext()</code> に渡します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$contextSwitch->initContext('xml');
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[$contextSwitch->initContext('xml');]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -498,10 +485,8 @@ $contextSwitch->initContext('xml');
                     これは、<code>initContext()</code> をコールする前に行う必要があります。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$contextSwitch->setAutoJsonSerialization(false);
-$contextSwitch->initContext();
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$contextSwitch->setAutoJsonSerialization(false);
+$contextSwitch->initContext();]]></programlisting>
 
                 <para>
                     このフラグの値を取得するには
@@ -738,8 +723,7 @@ $contextSwitch->initContext();
                 については JSON を返しています。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class CommentController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class CommentController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -770,8 +754,7 @@ class CommentController extends Zend_Controller_Action
         // 結果を JSON で返します。結果をビュー変数に格納するだけで、
         // JSON でそれを返してくれます
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
 
             <para>
                 クライアント側では、AJAX ライブラリからエンドポイント

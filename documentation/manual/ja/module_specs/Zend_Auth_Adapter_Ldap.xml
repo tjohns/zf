@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -36,29 +36,26 @@
         <para>
             <code>Zend_Auth_Adapter_Ldap</code> による認証をアプリケーションに手っ取り早く組み込むには、
             <code>Zend_Controller</code> を使うかどうかにかかわらず、次のようなコードを書くことになります。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $username = $this->_request->getParam('username');
 $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-require_once 'Zend/Config/Ini.php';
-$config = new Zend_Config_Ini('../application/config/config.ini', 'production');
+$config = new Zend_Config_Ini('../application/config/config.ini',
+                              'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
 unset($options['log_path']);
 
-require_once 'Zend/Auth/Adapter/Ldap.php';
-$adapter = new Zend_Auth_Adapter_Ldap($options, $username, $password);
+$adapter = new Zend_Auth_Adapter_Ldap($options, $username,
+                                      $password);
 
 $result = $auth->authenticate($adapter);
 
 if ($log_path) {
     $messages = $result->getMessages();
 
-    require_once 'Zend/Log.php';
-    require_once 'Zend/Log/Writer/Stream.php';
-    require_once 'Zend/Log/Filter/Priority.php';
     $logger = new Zend_Log();
     $logger->addWriter(new Zend_Log_Writer_Stream($log_path));
     $filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
@@ -91,7 +88,8 @@ if ($log_path) {
             <code>Zend_Config_Ini</code> では、等号
             (<code>=</code>) を含む値 (以下の例では DN など)
             はクォートしなければならないことに注意しましょう。
-            <programlisting role="ini"><![CDATA[[production]
+            <programlisting role="ini"><![CDATA[
+[production]
 
 ldap.log_path = /tmp/ldap.log
 
@@ -111,7 +109,8 @@ ldap.server2.useSsl = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
-ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
+ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
+]]></programlisting>
             この設定を使用すると、<code>Zend_Auth_Adapter_Ldap</code>
             はまず OpenLDAP サーバ <code>s0.foo.net</code> でのユーザ認証を試みます。
             何らかの理由で認証に失敗した場合は、AD サーバ
@@ -156,7 +155,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
             <code>s0.foo.net</code> と
             <code>dc1.w.net</code> の設定を含むものです
             (先ほどの INI ファイルと同じ設定です)。
-            <programlisting role="output"><![CDATA[Array
+            <programlisting role="output"><![CDATA[
+Array
 (
     [server2] => Array
         (

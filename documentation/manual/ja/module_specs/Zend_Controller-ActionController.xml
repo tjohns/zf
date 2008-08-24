@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -72,8 +72,7 @@ class FooController extends Zend_Controller_Action
                 以下のいずれかの方法を使用します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -104,8 +103,7 @@ class FooController extends Zend_Controller_Action
                 フラグを設定することもできます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -247,8 +245,7 @@ $this->getResponse()->appendBody($content);
                         <code>_hasParam()</code> をコールする必要がなくなります。
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-// id が設定されていない場合のデフォルト値を 1 とします
+                    <programlisting role="php"><![CDATA[// id が設定されていない場合のデフォルト値を 1 とします
 $id = $this->_getParam('id', 1);
 
 // わざわざこのようにする必要はありません
@@ -325,8 +322,7 @@ applicationOrModule/
                 <code>render()</code> のシグネチャは次のとおりです。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
             </programlisting>
 
             <para>
@@ -361,8 +357,7 @@ string render(string $action = null, string $name = null, bool $noController = f
                 例を見てみましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -517,8 +512,7 @@ class MyController extends Zend_Controller_Action
                 たとえば、エラーメッセージを表示させたい場合は次のようになります。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -538,8 +532,7 @@ class MyController extends Zend_Controller_Action
             </para>
 
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -567,8 +560,7 @@ class MyController extends Zend_Controller_Action
             <code>initView()</code> メソッドを次のように書き換えることになるでしょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {

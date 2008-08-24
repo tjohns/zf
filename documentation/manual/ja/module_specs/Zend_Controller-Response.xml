@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7935 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.response">
     <title>レスポンスオブジェクト</title>
 
@@ -40,8 +40,7 @@ $response->sendResponse();]]>
                 と設定することでこの振る舞いを変更できます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 
 // 何かの処理、たとえばログの記録などを行ってから
@@ -254,8 +253,7 @@ $front->dispatch();]]>
             最後に <code>postDispatch()</code> フックメソッドでフッタを追加することを考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// このプラグインクラスがフロントコントローラで登録済みであると仮定します
+        <programlisting role="php"><![CDATA[// このプラグインクラスがフロントコントローラで登録済みであると仮定します
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -292,8 +290,7 @@ class MyController extends Zend_Controller_Action
             レスポンスオブジェクトに最終的に格納されるコンテンツは次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-array(
+        <programlisting role="php"><![CDATA[array(
     'header'  => ..., // ヘッダの内容
     'default' => ..., // MyController::fooAction() が作成した本文
     'footer'  => ...  // フッタの内容

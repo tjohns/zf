@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -23,8 +23,7 @@
         どの実装についての基本的な使用法は同じです。
     </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -128,8 +127,7 @@ class FooController extends Zend_Controller_Action
             そうすると、適切な形式の JSON オブジェクトを返します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// コントローラのアクション内で
+        <programlisting role="php"><![CDATA[// コントローラのアクション内で
 $this->_helper->autoCompleteDojo($data);
 ]]></programlisting>
         
@@ -180,15 +178,13 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 次に、オートコンプリートを行うためのフォーム要素を作成します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
     public function getForm()
     {   
         if (null === $this->_form) {
-            require_once 'Zend/Form.php';
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
                 ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
@@ -228,8 +224,7 @@ class TestController extends Zend_Controller_Action
                 オートコンプリートの処理用のエンドポイントを作成してみましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     // ...
 

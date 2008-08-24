@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9112 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.introduction">
     <title>導入</title>
 
@@ -115,11 +115,12 @@
                 その継承元 (ここでは "<code>guest</code>"、"<code>member</code>" および "<code>admin</code>")
                 には定義されているという場合、Zend_Acl はそちらを検索します。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
+            <programlisting role="php"><![CDATA[
+            
+            
+            
 $acl = new Zend_Acl();
 
-require_once 'Zend/Acl/Role.php';
 $acl->addRole(new Zend_Acl_Role('guest'))
     ->addRole(new Zend_Acl_Role('member'))
     ->addRole(new Zend_Acl_Role('admin'));
@@ -127,7 +128,6 @@ $acl->addRole(new Zend_Acl_Role('guest'))
 $parents = array('guest', 'member', 'admin');
 $acl->addRole(new Zend_Acl_Role('someUser'), $parents);
 
-require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
@@ -179,9 +179,7 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
             ACL のインスタンスを作成します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();]]>
         </programlisting>
 
@@ -251,14 +249,10 @@ $acl = new Zend_Acl();]]>
             これらのグループを、次のようにしてロールレジストリに追加します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
 
 // Zend_Acl_Role を使用して、グループをロールレジストリに追加します
-require_once 'Zend/Acl/Role.php';
-
 // Guest はアクセス制御を受け継ぎません
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -266,9 +260,10 @@ $acl->addRole($roleGuest);
 // Staff は guest の権限を継承します
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
-/* あるいは、上の内容は次のように書くこともできます
+/*
+あるいは、上の内容は次のように書くこともできます
 $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
-//*/
+*/
 
 // Editor は staff の権限を継承します
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
@@ -304,12 +299,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             上で定義した基本的な権限を適用するには、次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-
-require_once 'Zend/Acl/Role.php';
 
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -320,7 +311,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
 // Guest は、コンテンツを閲覧することのみが可能です
 $acl->allow($roleGuest, null, 'view');
 
-/* 上と同じ内容を、このように書くこともできます
+/*
+上と同じ内容を、このように書くこともできます
 $acl->allow('guest', null, 'view');
 //*/
 
@@ -353,30 +345,39 @@ $acl->allow('administrator');]]>
             メソッドを使用するだけです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('guest', null, 'view') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('staff', null, 'publish') ?
-     "allowed" : "denied"; // denied となります
+     "allowed" : "denied";
+// denied となります
 
 echo $acl->isAllowed('staff', null, 'revise') ?
-     "allowed" : "denied"; // allowed となります
+     "allowed" : "denied";
+// allowed となります
 
 echo $acl->isAllowed('editor', null, 'view') ?
-     "allowed" : "denied"; // guest から引き継いでいるので allowed となります
+     "allowed" : "denied";
+// guest から引き継いでいるので allowed となります
 
 echo $acl->isAllowed('editor', null, 'update') ?
-     "allowed" : "denied"; // 'update' 用の規則がないので denied となります
+     "allowed" : "denied";
+// 'update' 用の規則がないので denied となります
 
 echo $acl->isAllowed('administrator', null, 'view') ?
-     "allowed" : "denied"; // administrator はすべての権限が許可されているので allowed となります
+     "allowed" : "denied";
+// administrator はすべての権限が許可されているので allowed となります
 
 echo $acl->isAllowed('administrator') ?
-     "allowed" : "denied"; // administrator はすべての権限が許可されているので allowed となります
+     "allowed" : "denied";
+// administrator はすべての権限が許可されているので allowed となります
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // administrator はすべての権限が許可されているので allowed となります]]>
+     "allowed" : "denied";
+// administrator はすべての権限が許可されているので allowed となります
+]]>
         </programlisting>
 
     </sect2>

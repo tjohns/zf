@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10823 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -9,7 +9,7 @@
 
     <example id="zend.translate.using.example1">
         <title>単一言語の PHP コードの例</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print "Example\n";
 print "=======\n";
 print "Here is line one\n";
@@ -34,9 +34,7 @@ print "Fix language here is line two\n";]]>
 
     <example id="zend.translate.using.example2">
         <title>多言語対応の PHP コードの例</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once("Zend/Translate.php");
-
+        <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
 $translate->addTranslation('//my/path/fr-source.mo', 'fr');
 
@@ -47,7 +45,8 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
 $translate->setLocale('fr');
-print $translate->_("Fix language here is line two") . "\n";]]>
+print $translate->_("Fix language here is line two") . "\n";
+]]>
         </programlisting>
     </example>
 
@@ -60,10 +59,9 @@ print $translate->_("Fix language here is line two") . "\n";]]>
     <para>
         新しい Translation オブジェクトを作成し、もととなるアダプタを定義します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once("Zend/Translate.php");
-
-$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');]]>
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
+]]>
         </programlisting>
 
         この例では、
@@ -79,7 +77,7 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');]]>
         次に行うのは、翻訳対象の文字列をすべてラップすることです。
         一番シンプルな手法は、このように文字列や文章を囲むことです。
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print $translate->_("Example")."\n";
 print "=======\n";
 print $translate->_("Here is line one")."\n";]]>
@@ -93,7 +91,7 @@ print $translate->_("Here is line one")."\n";]]>
         データの値を翻訳文字列に組み込むこともできます。
         この場合は埋め込みパラメータを使用します。
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
         </programlisting>
 
@@ -111,7 +109,7 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
         文字列の代わりに、コード内でメッセージ ID を指定することもできます。
         その場合は、このようになります。
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print $translate->_(1)."\n";
 print "=======\n";
 print $translate->_(2)."\n";]]>
@@ -840,7 +838,7 @@ $translate->addTranslation("\my_de.mo","de");
                 各インスタンスで毎回ロケールを設定する手間を省けます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 起動ファイルで
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -186,9 +187,7 @@
                 指定したユーザのプロファイル情報を取得します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // プロファイル情報を取得したいユーザを設定します
 $profileInfo = $as->userGetProfileInformation(); // BigDaddy71 のプロファイル情報を取得します
 print "$profileInfo->realname の情報は $profileInfo->url にあります"; // その一部を表示します]]>
@@ -200,9 +199,7 @@ print "$profileInfo->realname の情報は $profileInfo->url にあります"; /
 
             <title>あるユーザの週間アーティストチャートの取得</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setUser('lo_fye'); // 週間アーティストチャートを取得したいユーザを設定します
 $weeks = $as->userGetWeeklyChartList(); // チャートデータが存在する、過去の一覧を取得します
 if (count($weeks) < 1) {
@@ -277,9 +274,7 @@ foreach ($previousWeeklyArtists as $artist) {
 
             <title>関連するアーティストの取得</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setArtist('LCD Soundsystem'); // 関連アーティストを取得したいアーティストを設定します
 $relatedArtists = $as->artistGetRelatedArtists(); // 関連アーティストを取得します
 foreach ($relatedArtists as $artist) {

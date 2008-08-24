@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: 応用編</title>
 
@@ -23,10 +24,7 @@
         <code>getService()</code> のオプションに
         <code>class</code> ではなく <code>wsdl</code> を指定します。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+        <programlisting role="php"><![CDATA[$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
 // Reverse Phone Lookup サービス用の汎用クライアントを取得します
@@ -94,9 +92,7 @@ echo $result->listingName;
         <ulink url="http://www.php.net/manual/ja/function.soap-soapclient-getlastresponse.php"><code>__getLastRequest()</code></ulink>
         のような適切なメソッドをコールします。
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード',
                                                 'options'  => array('trace' => true)));
@@ -110,7 +106,8 @@ $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 // SOAPClient のインスタンスを取得し、XML を表示します
 $soapClient = $taxBasic->getSoapClient();
 echo $soapClient->__getLastRequest();
-echo $soapClient->__getLastResponse();]]>
+echo $soapClient->__getLastResponse();
+]]>
         </programlisting>
       </para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -138,7 +138,7 @@
                 ("automatic_serialization" オプションを使用すると boolean も保存できるので)、
                 このようにもう少しコンパクトに作成することが可能です。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // すでに $cache が存在するものとします
 
 $id = 'myBigLoop'; //「キャッシュしたい内容」のキャッシュ ID
@@ -155,12 +155,13 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] $data を用いて何かをします (echo したり、何かに渡したりなど)]]>
+// [...] $data を用いて何かをします (echo したり、何かに渡したりなど)
+]]>
             </programlisting>
             <para>
                 複数のブロックやデータのインスタンスをキャッシュしたい場合も、考え方は同じです。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 一意な ID を使用するようにしましょう
 $id1 = 'foo';
 $id2 = 'bar';
@@ -202,9 +203,9 @@ echo($data);]]>
                 上で示したコンパクトな例を使用することはできません。
                 キャッシュレコードを正式に調べる必要があります。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// コンパクトな構文 (空の文字列や boolean をキャッシュする場合はうまくいきません)
+            <programlisting role="php"><![CDATA[
+// コンパクトな構文
+// (空の文字列や boolean をキャッシュする場合はうまくいきません)
 if (!($data = $cache->load($id))) {
 
     // キャッシュが存在しませんでした
@@ -236,7 +237,8 @@ if (!($cache->test($id))) {
 
 }
 
-// $data に対して何らかの操作をします]]>
+// $data に対して何らかの操作をします
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -265,7 +267,7 @@ if (!($cache->test($id))) {
             <para>
                 このマニュアルの冒頭に示した例とほとんど同じですが、少しだけ変更を加えています。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // キャッシュが見つからなかった場合に、出力バッファリングが起動します
 if (!($cache->start('mypage'))) {
 
@@ -277,7 +279,8 @@ if (!($cache->start('mypage'))) {
 
 }
 
-echo 'これはキャッシュされません ('.time().').';]]>
+echo 'これはキャッシュされません ('.time().').';
+]]>
             </programlisting>
             <para>
                 この形式を使用すると、既存のプロジェクトに簡単に出力キャッシュ処理を追加することができます。
@@ -345,12 +348,12 @@ echo 'これはキャッシュされません ('.time().').';]]>
                 <code>call()</code> 関数の使用法は、PHP の
                 <code>call_user_func_array()</code> と同じです。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-# $params は配列です。
-# 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。]]>
+// $params は配列です。
+// 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> は、
@@ -431,10 +434,10 @@ $cache->call('veryExpensiveFunc', $params);
             <para>
                 例えば、スタティックメソッドのコールをキャッシュするには次のようにします。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[
+class Test {
 
-    # スタティックメソッド
+    // スタティックメソッド
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
@@ -444,18 +447,18 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => 'test' // クラス名を指定します
+    'cached_entity' => 'Test' // クラス名を指定します
 );
 // [...]
 
-# これはキャッシュされます
-$res = $cache->foobar('1', '2');]]>
+// これはキャッシュされます
+$result = $cache->foobar('1', '2');]]>
             </programlisting>
             <para>
                 通常のメソッドのコールをキャッシュするには次のようにします。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[
+class Test {
 
     private $_string = 'hello !';
 
@@ -469,12 +472,13 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => new test() // クラスのインスタンスを指定します
+    'cached_entity' => new Test() // クラスのインスタンスを指定します
 );
 // [...]
 
-# これはキャッシュされます
-$res = $cache->foobar2('1', '2');]]>
+// これはキャッシュされます
+$result = $cache->foobar2('1', '2');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -700,51 +704,67 @@ $res = $cache->foobar2('1', '2');]]>
             <para>
                 Zend_Cache_Frontend_Page の使用法は、きわめて簡単です。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // require、設定そしてファクトリ
 
 $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
 
-// ページの残りの部分 ...]]>
+// ページの残りの部分 ...
+]]>
             </programlisting>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
                 (例えば Zend_Controller など) 内でキャッシュを集中管理する方法を示したものです。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// [...] キャッシュセクションの前には、あまり多くの行を書かないようにしましょう。
-// [...] 例えば、処理速度を最適化するためには "require_once" や "Zend_Loader::loadClass"
-// [...] をキャッシュセクションの後におくべきです。
-
-require_once 'Zend/Cache.php';
+            <programlisting role="php"><![CDATA[
+/*
+ * キャッシュセクションの前には、あまり多くの行を書かないようにしましょう。
+ * 例えば、処理速度を最適化するためには "require_once" や "Zend_Loader::loadClass"
+ * をキャッシュセクションの後におくべきです。
+ */
 
 $frontendOptions = array(
    'lifetime' => 7200,
    'debug_header' => true, // デバッグします
    'regexps' => array(
-       '^/$' => array('cache' => true),         // IndexController 全体をキャッシュします
-       '^/index/' => array('cache' => true),    // IndexController 全体をキャッシュします
-       '^/article/' => array('cache' => false), // ArticleController はキャッシュしません
-       '^/article/view/' => array(              // ……が、ArticleController の "view" アクションは
-           'cache' => true,                     // キャッシュします。また、たとえ $_POST に何らかの
-           'cache_with_post_variables' => true,    // 変数が含まれていてもキャッシュを行います
-           'make_id_with_post_variables' => true,   // (しかし、そのキャッシュは $_POST 配列に依存します)。
+       // IndexController 全体をキャッシュします
+       '^/$' => array('cache' => true),
+       
+       // IndexController 全体をキャッシュします
+       '^/index/' => array('cache' => true),
+       
+       // ArticleController はキャッシュしません
+       '^/article/' => array('cache' => false),
+       
+       // ……が、ArticleController の "view" アクションはキャッシュします
+       '^/article/view/' => array(              
+           'cache' => true,
+           
+           // また、たとえ $_POST に何らかの変数がふくまれていてもキャッシュを行います
+           'cache_with_post_variables' => true,
+           
+           // しかし、そのキャッシュは $_POST 配列に依存します
+           'make_id_with_post_variables' => true 
        )
    )
 );
+
 $backendOptions = array(
     'cache_dir' => '/tmp/'
 );
 
 // Zend_Cache_Frontend_Page オブジェクトを取得します
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
 
-// [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)]]>
+// [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
@@ -754,7 +774,7 @@ $cache->start();
                 現在のキャッシュ処理をキャンセルする必要が生じることもあります。
                 そこで、このフロントエンド用に cancel() メソッドを用意しました。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // require, configuration そして factory
 
 $cache->start();
@@ -766,7 +786,8 @@ if ($someTest) {
     // [...]
 }
 
-// [...]]]>
+// [...]
+]]>
             </programlisting>
         </sect3>
     </sect2>

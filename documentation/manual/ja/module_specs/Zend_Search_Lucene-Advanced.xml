@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10666 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>応用</title>
 
@@ -116,7 +116,7 @@
             静的オブジェクトプロパティ (以下を参照ください) は、
             "スクリプトが最後まで実行された" <emphasis>後で</emphasis> 破棄されます。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class Searcher {
     private static $_index;
 
@@ -159,7 +159,7 @@ Searcher::initIndex();]]>
             <code>Zend_Search_Lucene</code> のデストラクタは何もせず、
             例外もスローしないことが保証されます。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class Searcher {
     private static $_index;
 

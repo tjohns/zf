@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache のバックエンド</title>
 
@@ -301,8 +301,7 @@
             'Zend' と 'Platform' の間に区切り文字を入れます。区切り文字としては
             '-'、'.'、' ' あるいは '_' が使用できます。
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
         </programlisting>
         <para>
             このバックエンドではオプションを使用しません。

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.modifying-feed">
     <title>フィードおよびエントリの構造の変更</title>
 
@@ -10,7 +11,7 @@
 
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>既存のフィードエントリの変更</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
@@ -44,7 +45,7 @@ echo $entry->saveXML();]]>
 
     <example id="zend.feed.modifying-feed.example.creating">
         <title>独自の名前空間の要素としての Atom エントリの作成</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom();
 // Atom では id は常にサーバから割り当てられます
 $entry->title = 'カスタムエントリ';

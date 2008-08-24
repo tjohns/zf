@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9848 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.measure.types">
 
     <title>計測値の型</title>
@@ -306,15 +306,14 @@
             その代わりに下線を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Number.php';
-
+        <programlisting role="php"><![CDATA[
 $great = '_X';
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 十進数に変換します
-echo $unit->convertTo(Zend_Measure_Number::DECIMAL);]]>
+echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
+]]>
         </programlisting>
 
     </sect2>

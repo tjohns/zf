@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10718 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>ライター</title>
   <para>
@@ -20,7 +20,7 @@
       を使用します。一方、ログのデータを直接 <code>STDERR</code>
       のようなストリームに送ることもできます (<code>php://stderr</code>)。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
@@ -33,7 +33,7 @@ $logger->info('Informational message');]]>
       <ulink url="http://www.php.net/manual/ja/wrappers.php#wrappers.file">ファイルシステム
       URL</ulink> のいずれかを使用します。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
@@ -49,7 +49,7 @@ $logger->info('Informational message');]]>
       <code>Zend_Log_Writer_Stream</code> のコンストラクタには、
       既存のストリームリソースを指定することもできます。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('ストリームのオープンに失敗しました');
@@ -76,7 +76,7 @@ $logger->info('通知メッセージ');]]>
       およびデータベースのカラムとイベントデータ項目との対応を指定します。
       columns to event data items:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $params = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
                  'password' => '******',
@@ -107,7 +107,7 @@ $logger->info('通知メッセージ');]]>
       <code>Zend_Log_Writer_Null</code> はスタブで、ログデータをどこにも書き出しません。
       これは、ログ出力を無効にしたりテスト時などに便利です。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
@@ -123,7 +123,7 @@ $logger->info('通知メッセージ');]]>
       <code>Zend_Log_Writer_Mock</code> は非常にシンプルなライターです。
       受け取った生のデータを配列に格納し、それを public プロパティとして公開します。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $mock = new Zend_Log_Writer_Mock;
 $logger = new Zend_Log($mock);
 
@@ -155,7 +155,7 @@ var_dump($mock->events[0]);
       しかし、ログのインスタンスは任意の数のライターに書き出すことができます。そのためには
       <code>addWriter()</code> メソッドを使用します。
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
 $writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
 

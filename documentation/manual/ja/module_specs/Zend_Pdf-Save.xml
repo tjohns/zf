@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.pdf.save">
     <title>PDF ドキュメントへの変更内容の保存</title>
     <para>
@@ -20,7 +21,7 @@
 
     <example id="zend.pdf.save.example-1">
         <title>PDF ドキュメントの保存</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 ...
 // PDF ドキュメントを読み込みます。
 $pdf = Zend_Pdf::load($fileName);

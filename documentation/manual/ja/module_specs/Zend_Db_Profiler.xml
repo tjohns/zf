@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10718 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
@@ -19,10 +19,7 @@
             あるいは後からアダプタに指示します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
-
-$params = array(
+        <programlisting role="php"><![CDATA[<$params = array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
@@ -135,8 +132,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             プロファイラを取得できます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();]]>
+        <programlisting role="php"><![CDATA[$profiler = $db->getProfiler();]]>
         </programlisting>
 
         <para>
@@ -221,8 +217,7 @@ $profiler = $db->getProfiler();]]>
             例えば、直近に実行されたクエリが実際のところどんなものだったのかを知るには次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$query = $profiler->getLastQueryProfile();
+        <programlisting role="php"><![CDATA[$query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();]]>
         </programlisting>
@@ -233,8 +228,7 @@ echo $query->getQuery();]]>
             それから、個々のクエリを調べ、一番時間がかかっているのはどれかを見つけます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->getTotalElapsedSecs();
+        <programlisting role="php"><![CDATA[$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -274,8 +268,7 @@ echo "一番時間のかかっているクエリ: \n" . $longestQuery . "\n";]]>
                 メソッドに null 値を渡します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// 所要時間が 5 秒以上のクエリのみ調べます
+            <programlisting role="php"><![CDATA[// 所要時間が 5 秒以上のクエリのみ調べます
 $profiler->setFilterElapsedSecs(5);
 
 // 所要時間にかかわらず、すべてのクエリを調べます
@@ -346,8 +339,7 @@ $profiler->setFilterElapsedSecs(null);]]>
                 <code>null</code> だけを渡します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// SELECT クエリのみを調べます
+            <programlisting role="php"><![CDATA[// SELECT クエリのみを調べます
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // SELECT、INSERT そして UPDATE クエリを調べます
@@ -376,8 +368,7 @@ $profiler->setFilterQueryType(null);]]>
                 を参照ください。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// SELECT クエリの情報のみを取得します
+            <programlisting role="php"><![CDATA[// SELECT クエリの情報のみを取得します
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // SELECT、INSERT そして UPDATE クエリの情報のみを取得します

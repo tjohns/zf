@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10289 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.memory.memory-manager">
     <title>メモリマネージャ</title>
 
@@ -23,7 +23,7 @@
             バックエンドに渡すオプションの配列を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $backendOptions = array(
     'cache_dir' => './tmp/' // スワップしたメモリブロックを配置するディレクトリ
 );
@@ -40,7 +40,7 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
             標準の Zend_Cache のバックエンドに加え、特別な名前
             '<code>None</code>' をバックエンド名として使用することもできます。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');]]>
             </programlisting>
         </para>
@@ -75,7 +75,7 @@ $memoryManager = Zend_Memory::factory('None');]]>
                 移動可能なオブジェクト (スワップされる可能性のあるオブジェクト)
                 を作成するには、<code>Zend_Memory_Manager::create([$data])</code>
                 メソッドを使用します。
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);]]>
                 </programlisting>
 
@@ -97,7 +97,7 @@ $memObject = $memoryManager->create($data);]]>
                 ロックされたオブジェクト (スワップされないオブジェクト)
                 を作成するには、<code>Zend_Memory_Manager::createLocked([$data])</code>
                 メソッドを使用します。
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);]]>
                 </programlisting>
             </para>
@@ -118,7 +118,7 @@ $memObject = $memoryManager->createLocked($data);]]>
                 メモリオブジェクトは、それがスコープの外に出た際に
                 自動的に破棄され、メモリから削除されます。
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 function foo()
 {
     global $memoryManager, $memList;
@@ -176,7 +176,7 @@ function foo()
                 メモリの制限を取得あるいは設定するには、
                 <code>getMemoryLimit()</code> メソッドおよび <code>setMemoryLimit($newLimit)</code>
                 メソッドを使用します。
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // メモリの制限バイト数を取得します
 $memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数を設定します]]>
                 </programlisting>
@@ -209,7 +209,7 @@ $memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数
                 最小サイズを取得あるいは設定するには、
                 <code>getMinSize()</code> メソッドおよび <code>setMinSize($newSize)</code>
                 メソッドを使用します。
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // MinSize をバイト数で取得します
 $memoryManager->setMinSize($newSize);        // MinSize をバイト数で設定します]]>
                 </programlisting>

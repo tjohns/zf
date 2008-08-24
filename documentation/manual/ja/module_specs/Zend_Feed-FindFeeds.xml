@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.findFeeds">
     <title>ウェブページからのフィードの取得</title>
     <para>
@@ -6,7 +7,7 @@
         <code>Zend_Feed</code> を使用すると、
         単純にひとつのメソッドをコールするだけでこのようなフィードを取得できます。
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
     </programlisting>
     <para>

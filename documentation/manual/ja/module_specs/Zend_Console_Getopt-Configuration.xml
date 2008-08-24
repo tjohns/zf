@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.console.getopt.configuration">
     <title>Zend_Console_Getopt の設定</title>
 
@@ -16,8 +17,7 @@
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>addRules() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => '詳細な出力を表示する'
@@ -44,15 +44,15 @@ $opts->addRules(
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
             <title>setHelp() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'このオプションはリンゴを選択します。パラメータは不要です。',
-        'b' => 'このオプションはバナナを選択します。整数パラメータが必須です。',
-        'p' => 'このオプションは洋ナシを選択します。オプションで文字列パラメータを指定します。'
+        'a' => 'リンゴです。パラメータは不要です。',
+        'b' => 'バナナです。整数パラメータが必須です。',
+        'p' => '洋ナシです。オプションで文字列パラメータを指定します。'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -80,7 +80,7 @@ $opts->setHelp(
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title>setAliases() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
@@ -88,7 +88,8 @@ $opts->setAliases(
         'a' => 'apfel',
         'p' => 'pear'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -121,7 +122,7 @@ $opts->setAliases(
         </para>
         <example id="zend.console.getopt.configuration.addargs.example">
             <title>addArguments() および setArguments() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // デフォルトでは、コンストラクタは $_SERVER['argv'] を使用します
 $opts = new Zend_Console_Getopt('abp:');
 
@@ -129,7 +130,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // 新しい配列で既存の引数を置き換えます
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -207,7 +209,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoption">
             <title>setOption() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);]]>
             </programlisting>
@@ -221,7 +223,7 @@ $opts->setOption('ignoreCase', true);]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoptions">
             <title>setOptions() の使用法</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
     array(

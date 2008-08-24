@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10192 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>HTML オブジェクトヘルパー</title>
 
@@ -54,7 +54,9 @@
             リソースの URI を引数として渡すだけの簡単な作業です。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
+]]></programlisting>
 
         <para>
             この結果は、次のような HTML となります。

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -24,7 +24,7 @@
             コールバックの例は、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Util
 {
     public static function label($content, $element, array $options)
@@ -359,7 +359,7 @@ class Util
             例として、次のような要素を考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 要素のデコレータとして、ViewScript デコレータを指定し、
 // ビュースクリプトとその他のオプションを設定します
 $element->setDecorators(array(array('ViewScript', array(
@@ -399,7 +399,7 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
                 に false を設定します。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // デコレータの作成時
 $element->addDecorator('ViewScript', array('placement' => false));
 

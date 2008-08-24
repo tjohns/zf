@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9756 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript ヘルパー</title>
 
@@ -105,7 +105,7 @@
             <code>setAllowArbitraryAttributes()</code> メソッドを使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
 ?>]]></programlisting>
     </note>

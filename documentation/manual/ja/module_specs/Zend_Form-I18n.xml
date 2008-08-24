@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10648 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.i18n">
     <title>Zend_Form の国際化</title>
 
@@ -54,7 +54,7 @@
                     キーに登録されている翻訳オブジェクトを自動取得して翻訳や地域化を行います。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // 'Zend_Translate' キーを使用します。$translate は Zend_Translate オブジェクトです
 Zend_Registry::set('Zend_Translate', $translate);
 ?>]]></programlisting>
@@ -72,7 +72,7 @@ Zend_Registry::set('Zend_Translate', $translate);
                     翻訳オブジェクトを <code>Zend_Validate_Abstract</code> に登録することもできます。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // すべてのバリデーションクラスに、指定した翻訳アダプタを使用させます
 Zend_Validate_Abstract::setDefaultTranslator($translate);
 ?>]]></programlisting>
@@ -85,7 +85,7 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
                     その副作用として、検証エラーメッセージも翻訳されます。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // すべてのフォームクラスで特定の翻訳アダプタを使用させます。
 // このアダプタは、検証エラーメッセージの翻訳にも用いられます。
 Zend_Form::setDefaultTranslator($translate);
@@ -100,7 +100,7 @@ Zend_Form::setDefaultTranslator($translate);
                     メソッドを使用します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // 「この」フォームのインスタンスで特定の翻訳アダプタを使用させます。
 // このアダプタは、すべての要素の検証エラーメッセージの翻訳にも用いられます。
 $form->setTranslator($translate);

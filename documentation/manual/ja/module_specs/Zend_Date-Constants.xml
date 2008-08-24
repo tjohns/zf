@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8467 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.date.constants">
 
     <title>日付関数全般用の定数</title>
@@ -688,10 +688,7 @@
 
         <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>ISO 書式を使用した独自書式の例</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
 print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
             </programlisting>
@@ -1143,10 +1140,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
 
         <example id="zend.date.constants.phpformats.example-1">
             <title>PHP の指定子を使用した独自書式の例</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
 Zend_Date::setOptions(array('format_type' => 'php'));
 $date = new Zend_Date(1234567890, false, $locale);
 

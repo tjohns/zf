@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.loader.pluginloader">
     <title>プラグインのロード</title>
 
@@ -55,7 +56,7 @@ library/
             では、プラグインローダーを作成してビューヘルパー群の場所を指定しましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
@@ -67,7 +68,7 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
             ビューヘルパーをロードできるようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 'FormText' ヘルパーをロードします
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
@@ -103,7 +104,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
                 オプションのパラメータとしてコンストラクタに渡すことができます。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader(array(
     'Zend_View_Helper' => 'Zend/View/Helper/',
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
@@ -121,7 +122,7 @@ $loader = new Zend_Loader_PluginLoader(array(
             コンストラクタの 2 番目のパラメータでレジストリを指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // プラグインを静的レジストリ 'foobar' に保存します
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
 ?>]]></programlisting>
@@ -183,7 +184,7 @@ $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
             一般に、これは <code>isLoaded()</code> と組み合わせて使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));

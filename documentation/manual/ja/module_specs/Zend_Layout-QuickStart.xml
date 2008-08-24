@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8842 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout クイックスタート</title>
 
@@ -118,7 +118,7 @@
             のインスタンスの作成方法を見てみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 起動ファイル内で
 Zend_Layout::startMvc();
 ?>]]></programlisting>
@@ -136,7 +136,7 @@ Zend_Layout::startMvc();
             アクションヘルパーでレイアウトのインスタンスにアクセスします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -171,7 +171,7 @@ class FooController extends Zend_Controller_Action
             <code>getMvcInstance()</code> を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // startMvc() がまだコールされていない場合は null を返します
 $layout = Zend_Layout::getMvcInstance(); 
 ?>]]></programlisting>
@@ -247,7 +247,7 @@ $layout = Zend_Layout::getMvcInstance();
             レイアウトをレンダリングします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $layout = new Zend_Layout();
 
 // レイアウトスクリプトのパスを設定します

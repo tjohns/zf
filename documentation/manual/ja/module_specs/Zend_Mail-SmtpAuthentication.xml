@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7908 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.smtp-authentication">
   <title>SMTP 認証</title>
 
@@ -12,10 +12,7 @@
   <example id="zend.mail.smtp-authentication.example-1">
     <title>Zend_Mail_Transport_Smtp での認証の有効化</title>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
-
+    <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',
                 'username' => 'myusername',
                 'password' => 'password');
@@ -27,7 +24,8 @@ $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('sender@test.com', 'Some Sender');
 $mail->addTo('recipient@test.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send($transport);]]>
+$mail->send($transport);
+]]>
     </programlisting>
   </example>
 

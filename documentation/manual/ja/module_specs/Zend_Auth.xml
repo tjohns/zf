@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7944 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.auth.introduction">
 
     <title>導入</title>
@@ -67,9 +67,7 @@
             その他の詳細、例えば認証サービスへの実際の問い合わせなどは、
             例を簡潔にするため省略しています。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Interface.php';
-
+            <programlisting role="php"><![CDATA[
 class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 {
     /**
@@ -156,12 +154,14 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
             ユーザに対してよりわかりやすいメッセージを返したりといったことがあります。
             次の結果コードが使用可能です。
 
-            <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
+            <programlisting role="php"><![CDATA[
+Zend_Auth_Result::SUCCESS
 Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED
+]]>
             </programlisting>
 
         </para>
@@ -169,7 +169,7 @@ Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
         <para>
             次の例は、結果コードを処理する方法を示すものです。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // AuthController / loginAction の中の処理
 $result = $this->_auth->authenticate($adapter);
 
@@ -190,7 +190,8 @@ switch ($result->getCode()) {
     default:
         /** その他の原因で失敗した場合の処理 **/
         break;
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -252,13 +253,11 @@ switch ($result->getCode()) {
                     なぜなら、<code>Zend_Auth::authenticate()</code>
                     は ID を自動的に保存するからです。
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Zend_Auth のシングルトンインスタンスへの参照を保存します
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // 'Zend_Auth' のかわりに 'someNamespace' を使用します
-require_once 'Zend/Auth/Storage/Session.php';
 $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
 
 /**
@@ -266,7 +265,8 @@ $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
  */
 
 // 認証と結果の保存、そして成功時に ID を持続させます
-$result = $auth->authenticate($authAdapter);]]>
+$result = $auth->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -295,9 +295,7 @@ $result = $auth->authenticate($authAdapter);]]>
                     <code>Zend_Auth_Storage_Session</code> の代わりに使用するには、
                     <code>Zend_Auth_Storage_Interface</code> を実装します。
 
-                    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Storage/Interface.php';
-
+                    <programlisting role="php"><![CDATA[
 class MyStorage implements Zend_Auth_Storage_Interface
 {
     /**
@@ -354,8 +352,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          * @todo 実装が必要
          */
     }
-
-}]]>
+}
+]]>
                     </programlisting>
 
                 </para>
@@ -364,7 +362,7 @@ class MyStorage implements Zend_Auth_Storage_Interface
                     このストレージクラスを使用するには、認証クエリの前に
                     <code>Zend_Auth::setStorage()</code> を実行します。
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 // Zend_Auth に、独自のストレージクラスを使うよう指示します
 Zend_Auth::getInstance()->setStorage(new MyStorage());
 
@@ -408,9 +406,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
             次の例は、Zend_Auth アダプタを間接的に
             <code>Zend_Auth</code> クラスから使用するものです。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Zend_Auth のシングルトンインスタンスへの参照を取得します
-require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
 // 認証アダプタを設定します
@@ -428,19 +425,21 @@ if (!$result->isValid()) {
     // 認証に成功しました。ID ($username) がセッションに保存されます
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
         <para>
             上の例においてリクエスト内で認証が行われると、
             認証に成功した際にその ID を取得するのは簡単なことです。
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // ID があるのでそれを取得します
     $identity = $auth->getIdentity();
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -448,9 +447,7 @@ if ($auth->hasIdentity()) {
             永続ストレージから認証 ID を削除するには、単純に
             <code>clearIdentity()</code> メソッドを使用します。
             これは、アプリケーションの "ログアウト" 処理を実装するためのものです。
-            <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
@@ -462,7 +459,7 @@ Zend_Auth::getInstance()->clearIdentity();]]>
             アダプタ固有の詳細情報については、各アダプタのドキュメントで説明します。
             以下の例は、<code>MyAuthAdapter</code> を直接使用するものです。
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 認証アダプタを設定します
 $authAdapter = new MyAuthAdapter($username, $password);
 
@@ -477,7 +474,8 @@ if (!$result->isValid()) {
 } else {
     // 認証に成功しました
     // $result->getIdentity() === $username
-}]]>
+}
+]]>
             </programlisting>
         </para>
 

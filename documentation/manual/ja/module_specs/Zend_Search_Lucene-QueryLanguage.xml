@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10376 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>クエリ言語</title>
 
@@ -58,7 +58,7 @@
             Zend_Search_Lucene クラスにはふたつの静的メソッドがあり、
             この設定を操作することができます。
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
 Zend_Search_Lucene::setDefaultSearchField('contents');]]>

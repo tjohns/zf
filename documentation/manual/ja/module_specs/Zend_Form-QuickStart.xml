@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9524 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -15,7 +15,7 @@
             単に <code>Zend_Form</code> のインスタンスを作成するだけです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
 ?>]]></programlisting>
 
@@ -32,7 +32,7 @@ $form = new Zend_Form;
             <code>setMethod()</code> メソッドを使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
 ?>]]></programlisting>
@@ -50,7 +50,7 @@ $form->setAction('/resource/process')
             たとえば id を指定したい場合は、"id" 属性を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
 ?>]]></programlisting>
     </sect2>
@@ -122,7 +122,7 @@ $form->setAttrib('id', 'login');
             いくつか例を示します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 要素のインスタンスを作成してフォームオブジェクトに渡します
 $form->addElement(new Zend_Form_Element_Text('username'));
 
@@ -147,7 +147,7 @@ $form->addElement('text', 'username');
             あるいは使用するバリデータの名前を渡すことになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username = new Zend_Form_Element_Text('username');
 
 // Zend_Validate_* オブジェクトを渡します
@@ -163,7 +163,7 @@ $username->addValidator('alnum');
             それを配列形式で 3 番目のパラメータとして指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 正規表現パターンを渡します
 $username->addValidator('regex', false, array('/^[a-z]/i'));
 ?>]]></programlisting>
@@ -181,7 +181,7 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
             ここでは前者の方法の例を示します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // この要素は必須です
 $username->setRequired(true);
 ?>]]></programlisting>
@@ -197,7 +197,7 @@ $username->setRequired(true);
             例として、最終的な値を小文字変換するフィルタを追加してみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
 ?>]]></programlisting>
 
@@ -205,7 +205,7 @@ $username->addFilter('StringtoLower');
             これまでの内容をまとめると、要素の設定はこのようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addValidator('alnum')
          ->addValidator('regex', false, array('/^[a-z]/'))
          ->setRequired(true)
@@ -232,7 +232,7 @@ $username->addValidators(array('alnum',
             先ほどと同じ設定を行うには、次のように書きます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array(
     'validators' => array(
         'alnum',
@@ -262,7 +262,7 @@ $form->addElement('text', 'username', array(
             メソッドを使う方法と単純に echo する方法があります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 明示的に render() をコールし、オプションでビューオブジェクトを渡します
 echo $form->render($view);
 
@@ -297,7 +297,7 @@ echo $form;
             その設定は、次のようになっています。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addDecorators(array(
     'ViewHelper',
     'Errors',
@@ -351,7 +351,7 @@ $element->addDecorators(array(
             order を指定するには次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->setOrder(10);
 ?>]]></programlisting>
 
@@ -359,7 +359,7 @@ $element->setOrder(10);
             あるいは、要素を作成する際にオプションとして指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
 ?>]]></programlisting>
     </sect2>
@@ -382,7 +382,7 @@ $form->addElement('text', 'username', array('order' => 10));
             (ウェブサービスへのリクエストなど) からです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValid($_POST)) {
     // 成功!
 } else {
@@ -397,7 +397,7 @@ if ($form->isValid($_POST)) {
             とは異なり、キーが存在しない場合はその要素のバリデーションを行いません。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValidPartial($_POST)) {
     // 存在する要素はすべてバリデーションに通過しました
 } else {
@@ -418,7 +418,7 @@ if ($form->isValidPartial($_POST)) {
             これで、フィルタリング済みの値を取得できるようになりました。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $values = $form->getValues();
 ?>]]></programlisting>
 
@@ -426,7 +426,7 @@ $values = $form->getValues();
             フィルタリング前の値を取得したい場合は次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
 ?>]]></programlisting>
     </sect2>
@@ -441,7 +441,7 @@ $unfiltered = $form->getUnfilteredValues();
             エラーメッセージも表示されるようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if (!$form->isValid($_POST)) {
     echo $form;
 
@@ -491,7 +491,7 @@ if (!$form->isValid($_POST)) {
             フォームを作成してみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 
 $form = new Zend_Form();
@@ -522,7 +522,7 @@ $form->addElement($username)
             次に、これを処理するためのコントローラを作成します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class UserController extends Zend_Controller_Action
 {
     public function getForm()
@@ -622,7 +622,7 @@ user.login.elements.submit.type = "submit"
             そしてこれをフォームのコンストラクタに渡します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
 ?>]]></programlisting>

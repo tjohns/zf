@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10171 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -41,9 +41,7 @@
             <emphasis>いない</emphasis> 場合は <code>bindRequiresDn</code>
             オプションが重要となることに注意しましょう)。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 's0.foo.net',
     'username' => 'CN=user1,DC=foo,DC=net',
@@ -61,9 +59,7 @@ echo "$acctname\n";]]></programlisting>
         <para>
             Microsoft AD を使う場合の例はこのようになります。
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 'dc1.w.net',
     'useStartTls' => true,
@@ -105,9 +101,7 @@ echo "$acctname\n";]]></programlisting>
                 次の例は、DN でないユーザ名 '<code>abaker</code>'
                 を <code>bind()</code> で使用する方法を示すものです。
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+                <programlisting role="php"><![CDATA[
 $options = array(
         'host' => 's0.foo.net',
         'username' => 'CN=user1,DC=foo,DC=net',
@@ -365,7 +359,7 @@ echo "$acctname\n";]]></programlisting>
                 次の例は、複数ドメインでの認証と
                 フェイルオーバー機能を実装するために必要な技術を説明するものです。
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $acctname = 'W\\user2';
 $password = 'pass2';
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9183 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.currency.migration">
 
     <title>以前のバージョンからの移行</title>
@@ -22,8 +22,7 @@
             <code>setFormat()</code> メソッドで指定できるようになりました。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency = new Zend_Currency($currency, $locale);]]>
+        <programlisting role="php"><![CDATA[$currency = new Zend_Currency($currency, $locale);]]>
         </programlisting>
 
         <para>
@@ -75,8 +74,7 @@ $currency = new Zend_Currency($currency, $locale);]]>
 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency->setFormat(array $options);]]>
+        <programlisting role="php"><![CDATA[$currency->setFormat(array $options);]]>
         </programlisting>
 
         <para>
@@ -87,8 +85,7 @@ $currency->setFormat(array $options);]]>
             メソッドと同じです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency->toCurrency($value, array $options);]]>
+        <programlisting role="php"><![CDATA[$currency->toCurrency($value, array $options);]]>
         </programlisting>
 
         <para>

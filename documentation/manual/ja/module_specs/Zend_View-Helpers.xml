@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10664 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -131,7 +131,7 @@
                     これらの内容を簡単にまとめた例を示します。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // '1' および '0' でチェック状態と未チェック状態を表します。これはチェックされていません
 echo $this->formCheckbox('foo');
 
@@ -303,7 +303,7 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
             読み込みやインスタンス作成は、必要に応じて自動的に行われます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビュースクリプト内では、$this は Zend_View のインスタンスを指します。
 //
 // select の選択肢を、変数 $countries に
@@ -375,7 +375,7 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
             'Zend_View_Helper_' であると見なされます。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 
 // パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' と設定します
@@ -391,7 +391,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
             新しいヘルパーを追加したりすることができるようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 // /path/to/some/helpers をクラスプレフィックス 'My_View_Helper' で追加します
 $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
@@ -488,7 +488,7 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
             <code>Zend_View</code> インスタンスの中でそれが持続します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ビュースクリプト内では、$this は Zend_View インスタンスを指すことを覚えておきましょう。
 echo $this->specialPurpose();
 echo $this->specialPurpose();
@@ -511,7 +511,7 @@ echo $this->specialPurpose();]]>
             <code>setView($view)</code> メソッドを定義しなければなりません。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_View_Helper_ScriptPath
 {
     public $view;

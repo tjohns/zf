@@ -1,3 +1,4 @@
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.debug.dumping">
 
     <title>変数の出力</title>
@@ -12,7 +13,7 @@
 
     <example id="zend.debug.dumping.example">
         <title>dump() メソッドの例</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 Zend_Debug::dump($var, $label=null, $echo=true);]]></programlisting>
     </example>

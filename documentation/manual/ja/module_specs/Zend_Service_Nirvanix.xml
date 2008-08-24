@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8889 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -126,10 +126,7 @@
             には、これら 3 つの操作のための便利なメソッドが用意されています。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -208,10 +205,7 @@ $imfs->unlink('/foo.txt');]]>
             <code>Zend_Service_Nirvanix</code> には用意されていません。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -264,10 +258,7 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             などを使用することです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -342,10 +333,7 @@ Zend_Service_Nirvanix_Response Object
             <code>Zend_Service_Nirvanix_Exception</code> がスローされます。
         </para>
 
-        <programlisting role="xml"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-        
-$auth = array('username' => 'your-username',
+        <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);
