@@ -58,7 +58,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCount($path, $count, $message =
+                <code>assertQueryCount($path, $count, $message =
                     '')</code>: assert that there are exactly
                 <code>$count</code> DOM elements matching the given CSS
                 selector present. If a <code>$message</code> is present, it
@@ -66,7 +66,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMin($path, $count, $message =
+                <code>assertQueryCountMin($path, $count, $message =
                     '')</code>: assert that there are at least
                 <code>$count</code> DOM elements matching the given CSS
                 selector present. If a <code>$message</code> is present, it
@@ -77,7 +77,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMax($path, $count, $message =
+                <code>assertQueryCountMax($path, $count, $message =
                     '')</code>: assert that there are no more than
                 <code>$count</code> DOM elements matching the given CSS
                 selector present. If a <code>$message</code> is present, it
@@ -93,7 +93,7 @@
             negative assertion: <code>assertNotQuery()</code>,
             <code>assertNotQueryContentContains()</code>,
             <code>assertNotQueryContentRegex()</code>, and
-            <code>assertNotQueryContentCount()</code>. (Note that the min and
+            <code>assertNotQueryCount()</code>. (Note that the min and
             max counts do not have these variants, for what should be obvious
             reasons.)
         </para>
