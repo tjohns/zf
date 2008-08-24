@@ -244,7 +244,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
      * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return mixed
      */
-    protected function & __get($name)
+    public function & __get($name)
     {
         if ($name === '') {
             /**
