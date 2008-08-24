@@ -88,9 +88,9 @@ class Zend_Db_Profiler_Firebug extends Zend_Db_Profiler
                 $this->_message = new Zend_Wildfire_Plugin_FirePhp_TableMessage($this->_label);
                 $this->_message->setBuffered(true);
                 $this->_message->setHeader(array('Time','Event','Parameters'));
+                $this->_message->setDestroy(true);
                 Zend_Wildfire_Plugin_FirePhp::getInstance()->send($this->_message);
             }
-            $this->_message->setDestroy(false);
 
         } else {
 
@@ -118,7 +118,9 @@ class Zend_Db_Profiler_Firebug extends Zend_Db_Profiler
         if (!$this->getEnabled()) {
             return;
         }
-        
+
+        $this->_message->setDestroy(false);
+
         $profile = $this->getQueryProfile($queryId);
         
         $this->_totalElapsedTime += $profile->getElapsedSecs();

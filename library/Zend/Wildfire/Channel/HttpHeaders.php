@@ -37,6 +37,9 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
 /** Zend_Wildfire_Protocol_JsonStream */
 require_once 'Zend/Wildfire/Protocol/JsonStream.php';
 
+/** Zend_Controller_Front **/
+require_once 'Zend/Controller/Front.php';
+
 /**
  * Implements communication via HTTP request and response headers for Wildfire Protocols.
  * 
@@ -134,6 +137,8 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
             $this->_protocols[$uri] = $this->_initProtocol($uri);
         }
  
+        $this->_registerControllerPlugin();
+
         return $this->_protocols[$uri];
     }
     
@@ -240,17 +245,31 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
     public function getResponse()
     {
         if (!$this->_response) {
-            $controller = Zend_Controller_Front::getInstance();
-            try {
-                $controller->registerPlugin($this);
-            } catch (Exception $e) {
+            $response = Zend_Controller_Front::getInstance()->getResponse();
+            if ($response) {
+                $this->setResponse($response);
             }
-            $this->setResponse($controller->getResponse());
         }
         if (!$this->_response) {
             throw new Zend_Wildfire_Exception('Response objects not initialized.');
         }
         return $this->_response;
-    }    
+    }
+    
+    /**
+     * Register this object as a controller plugin.
+     * 
+     * @return void
+     */
+    protected function _registerControllerPlugin()
+    {
+        $controller = Zend_Controller_Front::getInstance();
+        try {
+            $controller->registerPlugin($this);
+        } catch (Zend_Controller_Exception $e) {
+            // Exception indicates plugin is already registered
+            // which we simply ignore
+        }
+    }
     
 }
