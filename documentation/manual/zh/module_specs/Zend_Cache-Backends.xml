@@ -265,8 +265,7 @@
         <para>
             当使用<code>Zend_Cache::factory()</code>方法时,在字 'Zend' 和 'Platform'之间使用字分隔符-- '-', '.', ' ', or '_'指定此后端:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
         </programlisting>
         <para>
             此后端没有选项.

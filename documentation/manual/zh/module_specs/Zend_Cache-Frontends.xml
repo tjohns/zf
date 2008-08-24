@@ -107,7 +107,7 @@
             <para>
                 如果你只向缓存中存储字符串(由于"automatic_serialization"选项,可能会存储一些布尔值),你可以使用更加简介的构造:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 假定你已经有 $cache
 
 $id = 'myBigLoop'; // cache id of "what we want to cache"
@@ -124,12 +124,13 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] do something with $data (echo it, pass it on etc.)]]>
+// [...] do something with $data (echo it, pass it on etc.)
+]]>
             </programlisting>
             <para>
                 如果你缓存多个块或则数据实例,意思是一样的:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 确保使用独一无二的 identifiers:
 $id1 = 'foo';
 $id2 = 'bar';
@@ -168,9 +169,9 @@ echo($data);]]>
             <para>
                 如果你想缓存特殊值（带 "automatic_serialization" 选项的布尔值）或不能用上述紧缩结构的空字符串，你需要正式地测试缓存记录。
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// the compact construction (not good if you cache empty strings and/or booleans)
+            <programlisting role="php"><![CDATA[
+// the compact construction 
+// (not good if you cache empty strings and/or booleans)
 if (!($data = $cache->load($id))) {
 
     // cache missed
@@ -202,7 +203,8 @@ if (!($cache->test($id))) {
 
 }
 
-// we do something with $data]]>
+// we do something with $data
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -228,7 +230,7 @@ if (!($cache->test($id))) {
             <para>
                 An example is given in the manual at the very beginning. Here it is with minor changes:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // if it is a cache miss, output buffering is triggered
 if (!($cache->start('mypage'))) {
 
@@ -240,7 +242,8 @@ if (!($cache->start('mypage'))) {
 
 }
 
-echo 'This is never cached ('.time().').';]]>
+echo 'This is never cached ('.time().').';
+]]>
             </programlisting>
             <para>
                 Using this form it is fairly easy to set up output caching in your already working project
@@ -307,12 +310,13 @@ echo 'This is never cached ('.time().').';]]>
             <para>
                 在PHP中使用 <code>call()</code> 函数于使用 <code>call_user_func_array()</code>相同:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-# $params is an array
-# for example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+// $params is an array 
+// For example to call veryExpensiveFunc(1, 'foo', 'bar') with 
+// caching, you can use 
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]> 
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
@@ -393,10 +397,10 @@ $cache->call('veryExpensiveFunc', $params);
             <para>
                 For example, to cache static calls :
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class test {
 
-    # Static method
+    // Static method
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
@@ -406,18 +410,19 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => 'test' // The name of the class
+    'cached_entity' => 'Test' // The name of the class
 );
 // [...]
 
-# The cached call
-$res = $cache->foobar('1', '2');]]>
+// The cached call
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 To cache classic method calls :
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[
+class Test {
 
     private $_string = 'hello !';
 
@@ -431,12 +436,13 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => new test() // An instance of the class
+    'cached_entity' => new Test() // An instance of the class
 );
 // [...]
 
-# The cached call
-$res = $cache->foobar2('1', '2');]]>
+// The cached call
+$result = $cache->foobar2('1', '2');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -661,51 +667,69 @@ $res = $cache->foobar2('1', '2');]]>
             <para>
                 Use of Zend_Cache_Frontend_Page is really trivial :
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // require, configuration and factory
 
 $cache->start();
 // if the cache is hit, the result is sent to the browser and the script stop here
 
-// rest of the page ...]]>
+// rest of the page ...
+]]>
             </programlisting>
             <para>
                 a more complex example which shows a way to get a centralized cache management in a bootstrap file
                 (for using with Zend_Controller for example)
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// [...] you should avoid to put too much lines before the cache section
-// [...] for example, for optimal performances, "require_once" or "Zend_Loader::loadClass" should be
-// [...] after the cache section
-
-require_once 'Zend/Cache.php';
+            <programlisting role="php"><![CDATA[
+/*
+ * you should avoid putting too many lines before the cache section.
+ * For example, for optimal performances, "require_once" or 
+ * "Zend_Loader::loadClass" should be after the cache section.
+ */
 
 $frontendOptions = array(
    'lifetime' => 7200,
    'debug_header' => true, // for debugging
    'regexps' => array(
-       '^/$' => array('cache' => true),         // cache the whole IndexController
-       '^/index/' => array('cache' => true),    // cache the whole IndexController
-       '^/article/' => array('cache' => false), // we don't cache the ArticleController...
-       '^/article/view/' => array(              // ...but we cache the "view" action of
-           'cache' => true,                     // this ArticleController
-           'cache_with_post_variables' => true,    // and we cache even there are some variables in $_POST
-           'make_id_with_post_variables' => true,   // (but the cache will be dependent of the $_POST array)
+       // cache the whole IndexController
+       '^/$' => array('cache' => true),
+       
+       // cache the whole IndexController
+       '^/index/' => array('cache' => true),
+       
+       // we don't cache the ArticleController...
+       '^/article/' => array('cache' => false),
+       
+       // ... but we cache the "view" action of this ArticleController
+       '^/article/view/' => array(              
+           'cache' => true,
+           
+           // and we cache even there are some variables in $_POST
+           'cache_with_post_variables' => true,
+           
+           // but the cache will be dependent on the $_POST array 
+           'make_id_with_post_variables' => true 
        )
    )
 );
+
 $backendOptions = array(
     'cache_dir' => '/tmp/'
 );
 
 // getting a Zend_Cache_Frontend_Page object
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page', 
+                             'File', 
+                             $frontendOptions, 
+                             $backendOptions);
 
 $cache->start();
-// if the cache is hit, the result is sent to the browser and the script stop here
+// if the cache is hit, the result is sent to the browser and the 
+// script stop here
 
-// [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)]]>
+// [...] the end of the bootstrap file 
+// these lines won't be executed if the cache is hit
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
@@ -714,7 +738,7 @@ $cache->start();
                 因为设计问题，在有些情况下（例如使用非 HTTP/200 返回代码时），你可能需要取消当前缓存处理，所以
                 我们引入这个特别的前端，cancel()方法。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...] // require, configuration and factory
 
 $cache->start();
@@ -726,7 +750,8 @@ if ($someTest) {
     // [...]
 }
 
-// [...]]]>
+// [...]
+]]>
             </programlisting>
         </sect3>
     </sect2>

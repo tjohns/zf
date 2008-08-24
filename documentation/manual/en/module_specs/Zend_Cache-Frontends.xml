@@ -338,7 +338,8 @@ $cache->call('veryExpensiveFunc', $params);
 // $params is an array
 // For example to call veryExpensiveFunc(1, 'foo', 'bar') with
 // caching, you can use
-// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
@@ -437,7 +438,8 @@ $frontendOptions = array(
 // [...]
 
 // The cached call
-$result = $cache->foobar('1', '2');]]>
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 To cache classic method calls :
