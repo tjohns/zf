@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11005 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -475,7 +475,8 @@ $frontendOptions = array(
 // [...]
 
 // Der gecachte Aufruf
-$res = $cache->foobar2('1', '2');]]>
+$res = $cache->foobar2('1', '2');
+]]>
             </programlisting>
         </sect3>
     </sect2>

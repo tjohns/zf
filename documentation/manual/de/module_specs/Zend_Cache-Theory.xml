@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11005 -->
 <sect1 id="zend.cache.theory">
     <title>Die Theorie des Cachens</title>
     <para>
@@ -45,7 +45,8 @@ $backendOptions = array([...]);
 
 // Wir erstellen eine gute Instanz
 // (natürlich sind die letzten 2 Argumente optional)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+]]>
         </programlisting>
         <para>
             In den folgenden Beispielen wird angenommen, dass die <code>$cache</code> Variable ein

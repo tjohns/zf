@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 10943 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -196,14 +196,14 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // Die Identität als Objekt speichern wobei nur der Benutzername und der echte Name zurückgegeben werden
-    $storage = _auth->getStorage();
-    $this->$storage->write($adapter->getResultRowObject(array(
+    $storage = $this->_auth->getStorage();
+    $storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name'
     )));
 
     // Die Identität als Objekt speichern wobei die Passwort Spalte unterdrückt wird
-    $this->$storage->write($adapter->getResultRowObject(
+    $storage->write($adapter->getResultRowObject(
         null,
         'password'
     ));

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 10995 -->
 <sect1 id="zend.auth.adapter.openid">
 
     <title>Open ID Authentifikation</title>
@@ -65,7 +65,8 @@
             wenn <code>$_GET['openid_mode']</code> oder <code>$_POST['openid_mode']</code> gesetzt wurde.
         </para>
 
-        <programlisting role="php"><![CDATA[$status = "";
+        <programlisting role="php"><![CDATA[
+$status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
      $_POST['openid_action'] == "login" &&

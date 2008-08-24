@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 10967 -->
 <sect1 id="zend.http.response">
     <title>Zend_Http_Response</title>
 
@@ -21,7 +21,7 @@ $str = '';
 $sock = fsockopen('www.example.com', 80);
 $req =     "GET / HTTP/1.1\r\n" .
         "Host: www.example.com\r\n" .
-        "Connectoin: close\r\n" .
+        "Connection: close\r\n" .
         "\r\n";
 
 fwrite($sock, $req);

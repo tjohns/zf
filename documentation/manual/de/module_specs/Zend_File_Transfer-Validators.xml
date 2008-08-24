@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11008 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -295,12 +295,26 @@ $upload->addValidator('Count', array(1, 5);
                     <code>extension</code>: Prüft ob die angegebene Datei diese Dateierweiterung verwendet.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: Definiert of die Prüfung auf die Klein/Großschreibung achten soll.
+                    Standardmäßig ist die Klein/Großschreibung egal. Es ist zu beachten das diese Option
+                    für alle verwendeten Erweiterungen verwendet wird.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
             Dieser Prüfer akzeptiert mehrere Erweiterungen entweder als komma-getrennten String, oder als
             ein Array. Man kann auch die <code>setExtension()</code>, <code>addExtension()</code> und
             <code>getExtension()</code> Methoden verwenden um Erweiterungen zu setzen und zu erhalten.
+        </para>
+
+        <para>
+            In einigen Fällen ist es nützlich auch auf Klein/Großschreibung zu testen. Hierfür erlaubt
+            der Constructor einen zweiten Parameter <code>$case</code> der, wenn er auf true gesetzt
+            wird, die Erweiterungen abhängig von der Klein/Großschreibung prüft.
         </para>
 
         <example id="zend.file.transfer.validators.extension.example">
@@ -314,6 +328,12 @@ $upload->addValidator('Extension', 'jpg,png');
 
 // Limitiert die Erweiterungen auf jpg und png Dateien, verwendet aber die Array Schreibweise
 $upload->addValidator('Extension', array('jpg', 'png'));
+
+// Abhängig von der Klein/Großschreibung prüfen
+$upload = new Zend_File_Transfer('mo,png', true);
+if (!$upload->isValid('C:\temp\myfile.MO')) {
+    print 'Nicht gültig da MO statt mo verwendet wurde';
+}
 ]]>
             </programlisting>
 
