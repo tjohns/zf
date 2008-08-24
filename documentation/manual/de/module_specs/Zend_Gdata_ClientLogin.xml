@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6381 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>Authentifizieren mit ClientLogin</title>
 
@@ -72,7 +72,7 @@
             authentifizierten Zend_Http_Client verwendet.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Die Google Zugangdaten angeben
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';

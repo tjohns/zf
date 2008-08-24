@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10823 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -9,7 +9,7 @@
 
     <example id="zend.translate.using.example1">
         <title>Beispiel eines einsprachigen PHP Codes</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print "Beispiel\n";
 print "========\n";
 print "Hier steht Zeile eins\n";
@@ -35,9 +35,7 @@ print "Fixe Sprache hier ist Zeile zwei\n";]]>
 
     <example id="zend.translate.using.example2">
         <title>Beispiel für mehrsprachigen PHP Code</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once("Zend/Translate.php");
-
+        <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
 $translate->addTranslation('//my/path/fr-source.mo', 'fr');
 
@@ -48,7 +46,8 @@ printf($translate->_("Heute ist der %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
 $translate->setLocale('fr');
-print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";]]>
+print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";
+]]>
         </programlisting>
     </example>
 
@@ -60,10 +59,9 @@ print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";]]>
     <para>
         Erzeugen eines neuen Objekts und Definition des Basis Adapters:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once("Zend/Translate.php");
-
-$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');]]>
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
+]]>
         </programlisting>
 
         In diesem Beispiel wird der <emphasis role="strong">Gettext Adapter</emphasis> verwendet.
@@ -78,7 +76,7 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');]]>
         Die einfachste Möglichkeit besteht wenn nur einfache Strings oder Sätze vorhanden sind
         wie zum Beispiel:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print $translate->_("Beispiel")."\n";
 print "========\n";
 print $translate->_("Hier ist die Zeile Eins")."\n";]]>
@@ -92,7 +90,7 @@ print $translate->_("Hier ist die Zeile Eins")."\n";]]>
         Variable Werte in eine Übersetzung zu integrieren wird aber auch unterstützt durch die
         Verwendung von eingebetteten Parametern.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
         </programlisting>
 
@@ -108,7 +106,7 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
         Jeder String wird im Übersetzungsspeicher identifiziert durch seine Message ID.
         Man könnte diese Message ID statt des Strings im Code wie folgt verwenden:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 print $translate->_(1)."\n";
 print "=======\n";
 print $translate->_(2)."\n";]]>
@@ -518,7 +516,7 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         <example id="zend.translate.using.source.csv.example2">
             <title>Beispiel 2 für CSV Dateien</title>
             <programlisting><![CDATA[
-﻿#Example csv file
+﻿# Example csv file
 # original 'message,1'
 "message,1",Nachricht1
 # translation 'Nachricht,2'
@@ -807,7 +805,7 @@ $translate->addTranslation("\my_de.mo","de");
                 Male verwenden will.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7499 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Plugins</title>
 
@@ -85,10 +85,7 @@
             <code>Zend_Controller_Plugin_Abstract</code> ein und erweitert sie:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Plugin/Abstract.php';
-
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }]]>
@@ -118,12 +115,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
             wie ein Plugin in der Controllerkette verwendet werden kann:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Router.php';
-require_once 'Zend/Controller/Plugin/Abstract.php';
-
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {

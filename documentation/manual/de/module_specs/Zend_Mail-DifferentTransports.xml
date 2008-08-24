@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.different-transports">
     <title>Verwendung von unterschiedlichen Versandwegen</title>
     <para>
@@ -9,16 +9,15 @@
     </para>
     <example id="zend.mail.different-transports.example-1">
         <title>Verwendung von unterschiedlichen Transportwegen</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 // erstelle Nachricht...
-require_once 'Zend/Mail/Transport/Smtp.php';
 $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // wieder Standardmethode verwenden]]>
+$mail->send();  // wieder Standardmethode verwenden
+]]>
         </programlisting>
     </example>
     <note>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9756 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -92,7 +92,7 @@
             <code>setAllowArbitraryAttributes()</code> Methode eingeschaltet werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
 ?>]]></programlisting>
     </note>

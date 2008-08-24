@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.auth.adapter.http">
 
     <title>HTTP Authentication Adapter</title>
@@ -95,7 +95,7 @@
             davon werden benötigt:
             <table id="zend.auth.adapter.configuration_options.table">
                 <title>Konfigurations Optionen</title>
-                <tgroup cols="2">
+                <tgroup cols="3">
                     <thead>
                         <row>
                             <entry>Options Name</entry>
@@ -203,12 +203,12 @@
 
             <para>
                 Es gibt zwei gleiche einfache Wege um einen Datei Auflöser zu erstellen:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
                 </programlisting>
                 oder
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $resolver->setFile($path);]]>
@@ -226,7 +226,7 @@ $resolver->setFile($path);]]>
 
         <para>
             Zuerst muß ein Array mit den benötigen Konfigurationswerten gesetzt werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $config = array(
     'accept_schemes' => 'basic digest',
     'realm'          => 'My Web Site',
@@ -243,8 +243,7 @@ $config = array(
 
         <para>
             Dann wird ein Zend_Auth_Adapter_Http Objekt erstellt:
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Http.php';
+            <programlisting role="php"><![CDATA[
 $adapter = new Zend_Auth_Adapter_Http($config);]]>
             </programlisting>
         </para>
@@ -253,9 +252,7 @@ $adapter = new Zend_Auth_Adapter_Http($config);]]>
             Da beides, Basis und Digest Authentifizierung, unterstützt werden, werden zwei unterschiedliche
             Auflösungs-Objekte benötigt. Man könnte das auch einfach durch die Verwendung von zwei
             unterschiedlichen Klassen bewerkstelligen:
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
-
+            <programlisting role="php"><![CDATA[
 $basicResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $basicResolver->setFile('files/basicPasswd.txt');
 
@@ -270,7 +267,7 @@ $adapter->setDigestResolver($digestResolver);]]>
         <para>
             Letztendlich führen wir die Authentifizierung durch. Der Adapter benötigt eine Referenz zu beidem,
             dem Anfrage und Antwort Objekten um seinen Job durchführen zu können:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 assert($request instanceof Zend_Controller_Request_Http);
 assert($response instanceof Zend_Controller_Response_Http);
 

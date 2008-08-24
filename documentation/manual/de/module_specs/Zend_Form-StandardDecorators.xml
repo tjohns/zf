@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -21,7 +21,7 @@
             Beispiel Callback:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Util
 {
     public static function label($content, $element, array $options)
@@ -342,7 +342,7 @@ class Util
             Als Beispiel, kann das folgende Element hergenommen werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Setzt den Dekorator für das Element zu einem einzelnen, ViewScript, Dekorator
 // spezifiziert das viewScript als Option, und einige extra Optionen:
 $element->setDecorators(array(array('ViewScript', array(
@@ -382,7 +382,7 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
                 spezifiziert wird: 
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Bei Erstellung des Dekorators:
 $element->addDecorator('ViewScript', array('placement' => false));
 

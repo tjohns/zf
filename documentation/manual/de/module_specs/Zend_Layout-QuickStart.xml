@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8842 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout Schnellstart</title>
 
@@ -105,7 +105,7 @@
             Zuerst sehen wir uns an wie Zend_Layout initialisiert wird um es mit dem MVC zu verwenden: 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei:
 Zend_Layout::startMvc();
 ?>]]></programlisting>
@@ -121,7 +121,7 @@ Zend_Layout::startMvc();
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -154,7 +154,7 @@ class FooController extends Zend_Controller_Action
             <code>getMvcInstance()</code> Methode geholt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Gibt null zurück wenn startMvc() nicht zuerst aufgerufen wurde
 $layout = Zend_Layout::getMvcInstance(); 
 ?>]]></programlisting>
@@ -223,7 +223,7 @@ $layout = Zend_Layout::getMvcInstance();
             Objekt Eigenschaften gesetzt, und das Layout dargestellt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $layout = new Zend_Layout();
 
 // Einen Layout Skript Pfad setzen:

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10171 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.ldap.using">
 
     <title>Einleitung</title>
@@ -40,9 +40,7 @@
             Die Option <code>bindRequiresDn</code> ist wichtig, wenn Sie <emphasis>nicht</emphasis>
             Microsoft Active Directory benutzen):
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 's0.foo.net',
     'username' => 'CN=user1,DC=foo,DC=net',
@@ -60,9 +58,7 @@ echo "$acctname\n";]]></programlisting>
         <para>
             Wenn Sie Microsoft Active Directory nutzen, sollte das folgende Beispiel funktionieren:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+            <programlisting role="php"><![CDATA[
 $options = array(
     'host' => 'dc1.w.net',
     'useStartTls' => true,
@@ -104,9 +100,7 @@ echo "$acctname\n";]]></programlisting>
                 Das folgende Beispiel zeigt, wie der nicht DN-konforme Benutzername
                 '<code>abaker</code>' mit <code>bind()</code> benutzt werden kann:
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Ldap.php';
-
+                <programlisting role="php"><![CDATA[
 $options = array(
         'host' => 's0.foo.net',
         'username' => 'CN=user1,DC=foo,DC=net',
@@ -353,7 +347,7 @@ echo "$acctname\n";]]></programlisting>
                 Das folgende Beispiel zeigt Authentifizierung auf mehreren Domains und eine
                 Ausfallsicherung.
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $acctname = 'W\\user2';
 $password = 'pass2';
 

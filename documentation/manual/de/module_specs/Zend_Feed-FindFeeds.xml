@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.findFeeds">
     <title>Feeds von Websites abrufen</title>
     <para>
@@ -6,7 +6,7 @@
         relevanten Informationen verweisen. <code>Zend_Feed</code> ermöglicht Dir, mit einem
         einfachen Methodenaufruf alle von einer Webseite referenzierten Feeds abzurufen.
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
     </programlisting>
     <para>

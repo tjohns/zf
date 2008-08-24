@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.strikeiron">
     <title>Zend_Service_StrikeIron</title>
 
@@ -139,13 +139,12 @@
         Informationen von StrikeIron und andere Option im Konstruktor zu spezifizieren. Sie bietet auch eine
         Factory Methode die Clients für StrikeIron Services zurück gibt:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
-$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
+$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
+]]>
         </programlisting>
       </para>
 
@@ -173,9 +172,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
         StrikeIron Service zu erhalten, kann dieser Client verwendet werden durch Aufruf seiner Methoden ganz wie
         jedes andere PHP Objekt.
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -186,7 +183,8 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 $rateInfo = $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 echo $rateInfo->province;
 echo $rateInfo->abbreviation;
-echo $rateInfo->GST;]]>
+echo $rateInfo->GST;
+]]>
         </programlisting>
 
         Im obigen Beispiel wird die <code>getService()</code> Methode verwendet um einen Client zum
@@ -226,9 +224,7 @@ echo $rateInfo->GST;]]>
         Der einfachste Weg ein Ergebnis vom Service zu betrachten ist die Verwendung der eingebauten PHP Methode
         <ulink url="http://www.php.net/print_r">print_r()</ulink>:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -251,7 +247,8 @@ Zend_Service_StrikeIron_Decorator Object
             [total] => 0.14
             [HST] => Y
         )
-)]]>
+)
+]]>
         </programlisting>
       </para>
 
@@ -295,9 +292,7 @@ Zend_Service_StrikeIron_Decorator Object
         Eine Ausnahme wird geworfen wenn solch ein Fehler auftritt. Man sollte das berücksichtigen und solche
         Ausnahmen fangen wenn man Methodenaufrufe zu einem Service durchführt:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -311,7 +306,8 @@ try {
 
   // Fehler handhaben für Events wie Verbindungsprobleme oder Account Probleme
 
-}]]>
+}
+]]>
         </programlisting>
         Die geworfenen Ausnahmen werden immer <code>Zend_Service_StrikeIron_Exception</code> sein.
       </para>
@@ -348,9 +344,7 @@ try {
         den Account Status für diesen Service zu prüfen indem die <code>getSubscriptionInfo()</code> Methode
         dieses Clients verwendet wird:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 // Einen Client für das Verkaufs / Steuerbasis Service erhalten
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
@@ -359,7 +353,8 @@ $taxBasic = $strikeIron->getService(array('class => 'SalesUseTaxBasic'));
 
 // Prüfe die noch möglichen Zugriffe für das Verkaufs- & Steuerbasis Service
 $subscription = $taxBasic->getSubscriptionInfo();
-echo $subscription->remainingHits;]]>
+echo $subscription->remainingHits;
+]]>
         </programlisting>
       </para>
 

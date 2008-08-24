@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.consuming-atom">
     <title>Einen Atom Feed konsumieren</title>
 
@@ -19,7 +19,7 @@
             Lese einen Atom Feed und gebe <code>title</code> und <code>summary</code> jedes
             Eintrages aus:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
 echo 'Der Feed enthält ' . $feed->count() . ' Einträge.' . "\n\n";
 foreach ($feed as $entry) {

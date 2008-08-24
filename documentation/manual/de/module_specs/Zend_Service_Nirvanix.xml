@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8889 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -116,10 +116,7 @@
             <code>Zend_Service_Nirvanix</code> bietet bequeme Methoden für diese drei Operationen.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -194,10 +191,7 @@ $imfs->unlink('/foo.txt');]]>
             besitzen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -245,10 +239,7 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             in PHP eingebauten Funktionen wie <code>print_r()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-
-$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -318,10 +309,7 @@ Zend_Service_Nirvanix_Response Object
             <code>Zend_Service_Nirvanix_Exception</code> geworfen.
         </para>
 
-      <programlisting role="xml"><![CDATA[<?php
-require_once 'Zend/Service/Nirvanix.php';        
-        
-$auth = array('username' => 'your-username',
+      <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);

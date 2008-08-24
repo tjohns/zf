@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10714 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -233,7 +233,7 @@
                 Subformen:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Form_Registration extends Zend_Form
 {
     public function init()
@@ -425,15 +425,13 @@ class My_Form_Registration extends Zend_Form
                 Form Instanz hinzu:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class RegistrationController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class RegistrationController extends Zend_Controller_Action
 {
     protected $_form;
 
     public function getForm()
     {
         if (null === $this->_form) {
-            require_once 'My/Form/Registration.php';
             $this->_form = new My_Form_Registration();
         }
         return $this->_form;
@@ -466,7 +464,6 @@ class RegistrationController extends Zend_Controller_Action
     public function getSessionNamespace()
     {
         if (null === $this->_session) {
-            require_once 'Zend/Session/Namespace.php';
             $this->_session = new Zend_Session_Namespace($this->_namespace);
         }
 
@@ -568,7 +565,7 @@ class RegistrationController extends Zend_Controller_Action
                 Form geprüft wird, die Prüfung gegen alle Teile der Session durchgeführt wird:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Form_Registration extends Zend_Form
 {
     // ...
@@ -614,7 +611,7 @@ class My_Form_Registration extends Zend_Form
                 'process' (Bearbeiten) Aktion für die Bearbeitung der Form benötigt.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class RegistrationController extends Zend_Controller_Action
 {
     // ...

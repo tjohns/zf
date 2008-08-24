@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10638 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.introduction">
     <title>Einführung</title>
 
@@ -34,7 +34,7 @@
             so aussehen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // verwende ein Modell, um die Daten der Bücher und Autoren zu erhalten
 $data = array(
     array(
@@ -75,7 +75,7 @@ echo $view->render('booklist.php');]]>
             ein sehr einfaches View Skript wie folgt aussehen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+        <programlisting role="php"><![CDATA[ if ($this->books): ?>
     <!-- Eine Tabelle mit einigen Büchern. -->
     <table>
         <tr>

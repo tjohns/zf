@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9626 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype Helfer</title>
 
@@ -65,7 +65,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
             aufgerufen werden, welches vom aufgerufenen Helfer zurückgegeben wird.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
 ?>]]></programlisting>
 
@@ -74,7 +74,7 @@ $doctype = $view->doctype()->getDoctype();
             die <code>isXhtml()</code> Methode ausreichend:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($view->doctype()->isXhtml()) {
     // etwas anderes machen
 }

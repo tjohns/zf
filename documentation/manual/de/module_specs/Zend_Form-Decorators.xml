@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9988 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -137,7 +137,7 @@
             spezifiziert folgendes:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 interface Zend_Decorator_Interface
 {
     public function __construct($options = null);
@@ -166,7 +166,7 @@ interface Zend_Decorator_Interface
             übernimmt. So ein 'Gemeinsamer' Dekorator kann wie folgt erstellt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 {
     public function buildLabel()
@@ -254,7 +254,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
             Das kann das in den Dekorator Pfad platziert werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // für ein Element:
 $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
@@ -267,7 +267,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             anfügen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Überschreibe existierende Dekoratoren mit diesem einzelnen:
 $element->setDecorators(array('Composite'));
 ?>]]></programlisting>
@@ -289,7 +289,7 @@ $element->setDecorators(array('Composite'));
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Decorator_Errors
 {
     public function render($content = '')

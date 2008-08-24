@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7311 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.attachments">
     <title>Anhänge</title>
     <para>
@@ -10,12 +10,12 @@
     </para>
     <example id="zend.mail.attachments.example-1">
         <title>E-Mail Nachrichten mit Anhängen</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 // erstelle Nachricht...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]>
+$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+]]>
         </programlisting>
     </example>
     <para>
@@ -24,8 +24,7 @@ $mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Ze
         verändern. Die <code>createAttachment()</code> Methode gibt ein <code>Zend_Mime_Part</code>
         Objekt zurück:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = $mail->createAttachment($myImage);
@@ -40,8 +39,7 @@ $mail->send();]]>
         Eine Alternative ist die Erstellung einer Instanz von <code>Zend_Mime_Part</code> und das Hinzufügen von Ihr mit
         <code>addAttachment()</code>:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+    <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 
 $at = new Zend_Mime_Part($myImage);
@@ -52,7 +50,8 @@ $at->filename    = 'test.gif';
 
 $mail->addAttachment($at);
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
 </sect1>
 <!--

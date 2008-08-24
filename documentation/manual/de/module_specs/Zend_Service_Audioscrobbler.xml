@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -176,9 +176,7 @@
                 Methoden verwendet um Informationen über ein spezielles Benutzerprofil zu erhalten:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // Den Benutzer setzen dessen Profilinformationen man empfangen will
 $profileInfo = $as->userGetProfileInformation(); // Informationen von BigDaddy71's Profil erhalten
 print "Informationen für $profileInfo->realname können unter $profileInfo->url gefunden werden";
@@ -191,9 +189,7 @@ print "Informationen für $profileInfo->realname können unter $profileInfo->url
 
             <title>Die wöchentlichen Artistencharts eines Benutzers erhalten</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setUser('lo_fye'); // Den Benutzer setzen dessen wöchentliche Artistencharts man empfangen will
 $weeks = $as->userGetWeeklyChartList(); // Eine Liste von vorherigen Wochen erhalten in denen Chartdaten vorhanden sind
 if (count($weeks) < 1) {
@@ -263,9 +259,7 @@ foreach ($previousWeeklyArtists as $artist) {
 
             <title>Ähnliche Artisten erhalten</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Audioscrobbler.php';
-$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
 $as->setArtist('LCD Soundsystem'); // Den Artisten setzen für den man ähnliche Artisten bekommen will
 $relatedArtists = $as->artistGetRelatedArtists(); // Ähnliche Artisten erhalten
 foreach ($relatedArtists as $artist) {

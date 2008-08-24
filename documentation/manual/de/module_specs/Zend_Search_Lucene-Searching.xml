@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7874 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.searching">
     <title>Einen Index durchsuchen</title>
 
@@ -63,12 +63,11 @@
             zu durchsuchen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Search/Lucene.php';
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
-$index->find($query);]]>
+$index->find($query);
+]]>
         </programlisting>
 
         <para>
@@ -107,7 +106,7 @@ $index->find($query);]]>
                 Aktuell ist das in einigen Fällen der einzige Weg um nach einem Wert innerhalb eines Feldes ohne
                 Token zu suchen:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
 $pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
@@ -124,7 +123,7 @@ $hits = $index->find($query);]]>
             <para>
                 Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode nimmt auch einen optionalen
                 Encoding Parameter, welche die Codierung des Abfrage Strings definieren kann:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
                 </programlisting>
             </para>
@@ -136,7 +135,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
             <para>
                 Es ist auch möglich eine Standard Codierung für den Abfragestring mit der
                 <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> Methode zu definieren:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
@@ -167,9 +166,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
             zurückgegeben: Titel und Autor.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Search/Lucene.php');
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
@@ -178,7 +175,8 @@ foreach ($hits as $hit) {
     echo $hit->score;
     echo $hit->title;
     echo $hit->author;
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -194,9 +192,7 @@ foreach ($hits as $hit) {
             <code>getFieldValue()</code> Methode abfragen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Search/Lucene.php';
-
+        <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
@@ -212,7 +208,8 @@ foreach ($hits as $hit) {
 
     // Gleich wie getFieldValue()
     echo $document->title;
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -239,7 +236,7 @@ foreach ($hits as $hit) {
         <para>
             Zend_Search_Lucene bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
             <code>setResultSetLimit()</code> Methoden zu begrenzen:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
 Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
@@ -273,7 +270,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
         <para>
             Der Punktwert kann über die <code>score</code> Eigenschaft des Treffers ermittelt werden:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
@@ -300,7 +297,7 @@ foreach ($hits as $hit) {
 
         <para>
             <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]>
             </programlisting>
         </para>
@@ -325,13 +322,13 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
 
         <para>
             Beispiele:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
             </programlisting>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]>
             </programlisting>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
             </programlisting>
         </para>
@@ -348,7 +345,7 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
         <para>
             Die <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> Methode erlaubt es
             dem Entwickler Begriffe von HTML Dokumenten im Kontext der Suchabfrage hervorzuheben:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
 ...

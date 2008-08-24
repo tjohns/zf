@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -22,8 +22,7 @@
         Die grundsätzliche Verwendung ist für jede Implementierung die selbe:
     </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -126,8 +125,7 @@ class FooController extends Zend_Controller_Action
             Verwendung in so einem Speicher ist:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// In der Controller Aktion:
+        <programlisting role="php"><![CDATA[// In der Controller Aktion:
 +$this->_helper->autoCompleteDojo($data);
 ]]></programlisting>
 
@@ -173,15 +171,13 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 Als nächstes, erstellen wir das Form Element für das wir AutoCompletion wollen:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
     public function getForm()
     {   
         if (null === $this->_form) {
-            require_once 'Zend/Form.php';
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
                 ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
@@ -219,8 +215,7 @@ class TestController extends Zend_Controller_Action
                 Bearbeitung der AutoCompletion:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     // ...
 

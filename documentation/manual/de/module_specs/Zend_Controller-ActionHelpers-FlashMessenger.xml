@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5633 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.flashmessenger">
     <title>FlashMessenger</title>
 
@@ -26,8 +26,7 @@
             Sie auch).
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class SomeController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
 {
     /**
      * FlashMessenger

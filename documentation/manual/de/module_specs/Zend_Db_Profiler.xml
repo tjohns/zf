@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10718 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
@@ -21,15 +21,12 @@
             Adapters oder zu einem späteren Zeitpunkt direkt an den Adapter aktiviert.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
-
-$params = array(
+        <programlisting role="php"><![CDATA[$params = array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test',
-    'profiler' => true  // aktiviere den Profiler; false, um ihn zu deaktivieren (Standard)
+    'profiler' => true  // aktiviere den Profiler; false, um ihn zu deaktivieren (standardmäßig deaktiviert)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -129,8 +126,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();]]>
+        <programlisting role="php"><![CDATA[$profiler = $db->getProfiler();]]>
         </programlisting>
 
         <para>
@@ -209,8 +205,7 @@ $profiler = $db->getProfiler();]]>
             worden ist:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$query = $profiler->getLastQueryProfile();
+        <programlisting role="php"><![CDATA[$query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();]]>
         </programlisting>
@@ -221,8 +216,7 @@ echo $query->getQuery();]]>
             am längsten laufende zu finden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->getTotalElapsedSecs();
+        <programlisting role="php"><![CDATA[$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -262,8 +256,7 @@ echo "Longest query: \n" . $longestQuery . "\n";]]>
                 entfernen, muss nur der Wert null an die Methode übergeben werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Zeichne nur Abfragen auf, die mindestens 5 Sekunden laufen:
+            <programlisting role="php"><![CDATA[// Zeichne nur Abfragen auf, die mindestens 5 Sekunden laufen:
 $profiler->setFilterElapsedSecs(5);
 
 // Zeichne alle Abfragen unabhängig von deren Laufzeit auf:
@@ -331,8 +324,7 @@ $profiler->setFilterElapsedSecs(null);]]>
                 entfernen, indem du <code>null</code> als einziges Argument übergibst.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// zeichne nur SELECT Abfragen auf
+            <programlisting role="php"><![CDATA[// zeichne nur SELECT Abfragen auf
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // zeichne SELECT, INSERT und UPDATE Abfragen auf
@@ -361,8 +353,7 @@ $profiler->setFilterQueryType(null);]]>
                 Konstanten für Abfragetypen.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Hole nur SELECT Abfragen zurück
+            <programlisting role="php"><![CDATA[// Hole nur SELECT Abfragen zurück
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // Hole nur SELECT, INSERT un UPDATE Abfragen zurück

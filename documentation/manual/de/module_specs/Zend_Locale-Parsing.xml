@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10887 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.locale.parsing">
 
     <title>Normalisierung und Lokalisierung</title>
@@ -49,13 +49,12 @@
 
         <example id="zend.locale.number.normalize.example-1">
             <title>Normalisieren von Nummern</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', array('locale' => $locale, 'precision' => 3));
 
-print $number; // wird 13524.678 zurückgeben]]>
+print $number; // wird 13524.678 zurückgeben
+]]>
             </programlisting>
         </example>
 
@@ -93,15 +92,14 @@ print $number; // wird 13524.678 zurückgeben]]>
 
             <example id="zend.locale.number.normalize.precision.example-1">
                 <title>Normalisierung von Nummern mit Genauigkeit</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+                <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', array('precision' => 1, 'locale' => $locale));
 print $number; // will 13524.7 zurückgeben
 
 $number = Zend_Locale_Format::getNumber('13.524,678', array('number_format' => '#.00', 'locale' => $locale));
-print $number; // will 13524.67 zurückgeben]]>
+print $number; // will 13524.67 zurückgeben
+]]>
                 </programlisting>
             </example>
 
@@ -123,14 +121,13 @@ print $number; // will 13524.67 zurückgeben]]>
 
         <example id="zend.locale.number.localize.example-1">
             <title>Lokalisieren von Nummern</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.36, array('locale' => $locale));
 
 // gibt 13.547,36 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -151,14 +148,13 @@ print $number;]]>
 
         <example id="zend.locale.number.localize.example-2">
             <title>Nummern mit bestimmter Genauigkeit lokalisieren</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
 
 // gibt 13.547,37 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -219,9 +215,7 @@ print $number;]]>
 
         <example id="zend.locale.number.localize.example-3">
             <title>Ein selbst definiertes Zahlenformat verwenden</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, array('number_format' => '#,#0.00', 'locale' => 'de'));
 
@@ -231,7 +225,8 @@ print $number;
 $number = Zend_Locale_Format::toNumber(13547.3, array('number_format' => '#,##0.00', 'locale' => 'de'));
 
 // gibt 13.547,30 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -248,15 +243,14 @@ print $number;]]>
 
         <example id="zend.locale.number.test.example-1">
             <title>Testen von Zahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
     print "Zahl";
 } else {
     print "keine Zahl";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -273,14 +267,13 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
 
         <example id="zend.locale.float.normalize.example-1">
             <title>Gleitkommazahlen normalisieren</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', array('precision' => 2, 'locale' => $locale));
 
 // gibt 13524.68 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -297,14 +290,13 @@ print $number;]]>
 
         <example id="zend.locale.float.localize.example-1">
             <title>Lokalisieren von Gleitkommazahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, array('precision' => 1, 'locale' => $locale));
 
 // gibt 13.547,4 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -321,15 +313,14 @@ print $number;]]>
 
         <example id="zend.locale.float.test.example-1">
             <title>Testen von Gleitkommazahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
     print "Gleitkommazahl";
 } else {
     print "keine Gleitkommazahl";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -346,14 +337,13 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
 
         <example id="zend.locale.integer.normalize.example-1">
             <title>Normalisieren von Integer Zahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getInteger('13.524,678', array('locale' => $locale));
 
 // gibt 13524 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -370,14 +360,13 @@ print $number;]]>
 
         <example id="zend.locale.integer.localize.example-1">
             <title>Lokalisieren von Integer Zahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toInteger(13547.3655, array('locale' => $locale));
 
 // gibt 13.547 zurück
-print $number;]]>
+print $number;
+]]>
             </programlisting>
         </example>
 
@@ -394,15 +383,14 @@ print $number;]]>
 
         <example id="zend.locale.integer.test.example-1">
             <title>Testen von Integer Zahlen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "Integerzahl";
 } else {
     print "keine Integerzahl";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -446,14 +434,13 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
 
         <example id="zend.locale.numbersystems.example-1">
             <title>Konvertieren von Ost-Arabischen Ziffern in Europäisch Lateinische Ziffern</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $arabicScript = "١‎٠٠";   // Arabisch für "100" (ein Hundert)
 $latinScript = Zend_Locale_Format::convertNumerals($arabicScript, 'Arab', 'Latn');
 
 print "\nOriginal:   " . $arabicScript;
-print "\nNormalisiert: " . $latinScript;]]>
+print "\nNormalisiert: " . $latinScript;
+]]>
             </programlisting>
         </example>
 
@@ -463,20 +450,19 @@ print "\nNormalisiert: " . $latinScript;]]>
 
         <example id="zend.locale.numbersystems.example-2">
             <title>Konvertieren von Lateinischen Ziffern in Ost-Arabische Ziffern</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-
+            <programlisting role="php"><![CDATA[
 $latinScript = '123';
 $arabicScript = Zend_Locale_Format::convertNumerals($latinScript, 'Latn', 'Arab');
 
 print "\nOriginal:  " . $latinScript;
-print "\nLokalisiert: " . $arabicScript;]]>
+print "\nLokalisiert: " . $arabicScript;
+]]>
             </programlisting>
         </example>
 
         <example id="zend.locale.numbersystems.example-3">
             <title>Auslesen des 4 Zeichen CLDR Codes durch Benutzen des Namens in der Muttersprache</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 function getScriptCode($scriptName, $locale)
 {
     $scripts2names = Zend_Locale_Data::getList($locale, 'scriptlist');

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.http.response">
     <title>Zend_Http_Response</title>
 
@@ -16,7 +16,7 @@
             Zend_Http_Response Objekt zurückgibt.
             <example id="zend.http.response.introduction.example-1">
                 <title>Ein Zend_Http_Response Object über die factory Methode instanzieren</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $str = '';
 $sock = fsockopen('www.example.com', 80);
 $req =     "GET / HTTP/1.1\r\n" .
@@ -99,7 +99,7 @@ $response = Zend_Http_Response::factory($str);]]>
             </itemizedlist>
             <example id="zend.http.response.testers.example-1">
                 <title>Die isError() Method verwenden, um eine Antwort zu validieren</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 if ($response->isError()) {
   echo "Error transmitting data.\n"
   echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
@@ -171,7 +171,7 @@ if ($response->isError()) {
             </itemizedlist>
             <example id="zend.http.response.acessors.example-1">
                 <title>Zend_Http_Response Zugriffsmethoden verwenden</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 if ($response->getStatus() == 200) {
   echo "The request returned the following information:<br />";
   echo $response->getBody();
@@ -192,7 +192,7 @@ if ($response->getStatus() == 200) {
             </note>
             <example id="zend.http.response.acessors.example-2">
                 <title>Auf Antwort Header zugreifen</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $ctype = $response->getHeader('Content-type');
 if (is_array($ctype)) $ctype = $ctype[0];
 

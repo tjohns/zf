@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.validate.validator_chains">
 
     <title>Kettenprüfungen</title>
@@ -9,14 +9,7 @@
         <link linkend="zend.validate.introduction">Einführung</link> zu Lösen, wo ein Benutzername zwischen
         6 und 12 Alphanumerischen Zeichen lang sein muß:
 
-        <programlisting role="php"><![CDATA[<?php
-// Bietet Möglichkeit der Kettenprüfung
-require_once 'Zend/Validate.php';
-
-// Benötigte Prüfungen für das Beispiel
-require_once 'Zend/Validate/StringLength.php';
-require_once 'Zend/Validate/Alnum.php';
-
+        <programlisting role="php"><![CDATA[
 // Eine Prüfkette erstellen und die Prüfungen hinzufügen
 $validatorChain = new Zend_Validate();
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12))
@@ -30,7 +23,8 @@ if ($validatorChain->isValid($username)) {
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         Prüfungen werden in der Reihenfolge durchgeführt in der Sie <code>Zend_Validate</code> hinzugefügt
@@ -51,7 +45,7 @@ if ($validatorChain->isValid($username)) {
         unnötig oder nicht richtig erkannt werden. Wenn das obige Beispiel wie folgt geschrieben wird, wird
         die alphanumerische Prüfung nicht stattfinden wenn die Prüfung der Stringlänge fehlschlägt:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
         ->addValidator(new Zend_Validate_Alnum());]]>
         </programlisting>

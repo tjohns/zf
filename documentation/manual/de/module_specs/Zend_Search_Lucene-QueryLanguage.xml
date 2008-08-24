@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10376 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>Abfragesprache</title>
 
@@ -54,7 +54,7 @@
             Es gibt zwei statishce Methoden in der Zend_Search_Lucene Klasse welche dem Entwickler das
             Konfigurieren dieser Einstellungen erlauben:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
 Zend_Search_Lucene::setDefaultSearchField('contents');]]>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.strikeiron.bundled-services">
     <title>Zend_Service_StrikeIron: Mitgelieferte Services</title>
 
@@ -30,9 +30,7 @@
         Das Service enthält eine <code>getZipCode()</code> Methode die Informationen über die Amerikanischen
         ZIP Codes oder Kanadischen Post Codes enthält:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -67,7 +65,8 @@ if ($zips->count == 0) {
 
 // Detailierte Statusinformationen
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
-$status = $response->serviceStatus;]]>
+$status = $response->serviceStatus;
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -98,9 +97,7 @@ $status = $response->serviceStatus;]]>
         Das Service enthält eine <code>verifyAddressUSA()</code> Methode die eine Adresse in den Vereinigten Staaten
         prüft:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -130,7 +127,8 @@ if ($result->addressErrorNumber != 0) {
 
     // Gültige Adresse?
     $valid = ($result->valid == 'VALID');
-}]]>
+}
+]]>
         </programlisting>
       </para>
     </sect2>
@@ -161,9 +159,7 @@ if ($result->addressErrorNumber != 0) {
         Das Service enthält zwei Methoden, <code>getTaxRateUSA()</code> und <code>getTaxRateCanada()</code>,
         die Verkaufs und Steuer Daten für die Vereinigten Staaten und Kanada enthalten.
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/StrikeIron.php';
-
+        <programlisting role="php"><![CDATA[
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
@@ -178,7 +174,8 @@ echo $rateInfo->GST;              // oder nur die GST (Teile & Services Steuer)
 // Die Steuerrate für Cupertino, CA USA abfragen
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // alle Eigenschaften zeigen
-echo $rateInfo->state_sales_tax;  // oder nur die Staatenweise Verkaufssteuer]]>
+echo $rateInfo->state_sales_tax;  // oder nur die Staatenweise Verkaufssteuer
+]]>
         </programlisting>
       </para>
     </sect2>

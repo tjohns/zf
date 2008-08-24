@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9524 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
@@ -15,7 +15,7 @@
             instanziieren:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
 ?>]]></programlisting>
 
@@ -31,7 +31,7 @@ $form = new Zend_Form;
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
 ?>]]></programlisting>
@@ -47,7 +47,7 @@ $form->setAction('/resource/process')
             ID setzen will, setzt man das "id" Attribut:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
 ?>]]></programlisting>
     </sect2>
@@ -118,7 +118,7 @@ $form->setAttrib('id', 'login');
             Einige Beispiele:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Ein Element instanziieren und an das Form Objekt übergeben:
 $form->addElement(new Zend_Form_Element_Text('username'));
 
@@ -141,7 +141,7 @@ $form->addElement('text', 'username');
             oder der Name des Prüfers der verwendet werden soll:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username = new Zend_Form_Element_Text('username');
 
 // Ein Zend_Validate_* Objekt übergeben:
@@ -156,7 +156,7 @@ $username->addValidator('alnum');
             akzeptiert, diesem ein Array als dritter Parameter übergeben werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Ein Pattern übergeben
 $username->addValidator('regex', false, array('/^[a-z]/i'));
 ?>]]></programlisting>
@@ -172,7 +172,7 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
             Erstellung des Elemetns. Im ersteren Fall:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Dieses Element als benötigt definieren:
 $username->setRequired(true);
 ?>]]></programlisting>
@@ -188,7 +188,7 @@ $username->setRequired(true);
             klein schreibt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
 ?>]]></programlisting>
 
@@ -196,7 +196,7 @@ $username->addFilter('StringtoLower');
             Das endgültige Setup des Elements könnte also wie folgt aussehen: 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addValidator('alnum')
          ->addValidator('regex', false, array('/^[a-z]/'))
          ->setRequired(true)
@@ -220,7 +220,7 @@ $username->addValidators(array('alnum',
             wir folgendes:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array(
     'validators' => array(
         'alnum',
@@ -249,7 +249,7 @@ $form->addElement('text', 'username', array(
             render() Methode der Form verwenden, oder einfaches echo.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Explizit render() ausrufen und ein optionales View Objekt übergeben:
 echo $form->render($view);
 
@@ -277,7 +277,7 @@ echo $form;
             View Dekoratore um seine Ausgaben zu erstellen; das Setup sieht ähnlich diesem aus:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addDecorators(array(
     'ViewHelper',
     'Errors',
@@ -328,7 +328,7 @@ $element->addDecorators(array(
             Reihenfolge eines Elements kann wie folgt gesetzt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->setOrder(10);
 ?>]]></programlisting>
 
@@ -336,7 +336,7 @@ $element->setOrder(10);
             Oder bei der Erstellung des Elements durch Übergabe als Option: 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
 ?>]]></programlisting>
     </sect2>
@@ -357,7 +357,7 @@ $form->addElement('text', 'username', array('order' => 10));
             zum Beispiel):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValid($_POST)) {
     // erfolgreich!
 } else {
@@ -372,7 +372,7 @@ if ($form->isValid($_POST)) {
             Prüfungen für dieses spezielle Element nicht durchgeführt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValidPartial($_POST)) {
     // Elemente hat alle Prüfungen bestanden
 } else {
@@ -391,7 +391,7 @@ if ($form->isValidPartial($_POST)) {
             Werte geholt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $values = $form->getValues();
 ?>]]></programlisting>
 
@@ -400,7 +400,7 @@ $values = $form->getValues();
             verwenden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
 ?>]]></programlisting>
     </sect2>
@@ -414,7 +414,7 @@ $unfiltered = $form->getUnfilteredValues();
             verwendet werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if (!$form->isValid($_POST)) {
     echo $form;
 
@@ -461,7 +461,7 @@ if (!$form->isValid($_POST)) {
             Form zu erstellen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 
 $form = new Zend_Form();
@@ -492,7 +492,7 @@ $form->addElement($username)
             Als nächstes wird ein Controller erstellt der das behandelt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class UserController extends Zend_Controller_Action
 {
     public function getForm()
@@ -587,7 +587,7 @@ user.login.elements.submit.type = "submit"
             Das kann dann an den Contruktor der Form übergeben werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
 ?>]]></programlisting>

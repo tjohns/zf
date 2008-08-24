@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.cache.introduction">
     <title>Einführung</title>
     <para>
@@ -24,9 +24,7 @@
             <code>File</code> Backend verwendet.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
    'lifetime' => 7200, // Lebensdauer des Caches 2 Stunden
    'automatic_serialization' => true
@@ -37,7 +35,11 @@ $backendOptions = array(
 );
 
 // Ein Zend_Cache_Core Objekt erzeugen
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
+]]>
         </programlisting>
     </example>
 
@@ -60,8 +62,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             zur Datenbank zu machen; Datensätze werden vom Cache genommen und deserialisiert.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// $cache initialisiert im vorhergehenden Beispiel
+        <programlisting role="php"><![CDATA[// $cache initialisiert im vorhergehenden Beispiel
 
 // Nachsehen, ob der Cache bereits existiert:
 if(!$result = $cache->load('myresult')) {
@@ -98,15 +99,18 @@ print_r($result);]]>
             die <code>end()</code> Methode trifft. Bei der nächsten Ausführung wird der komplette Abschnitt
             übersprungen, dafür werden die Daten vom Cache geholt (solange der Cache Datensatz gültig ist).
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
-   'lifetime' => 30,                  // Lebenszeit des Caches wir auf eine halbe Minute gesetzt
-   'automatic_serialization' => false  // Dieser Wert ist auf alle Fälle Standard
+   'lifetime' => 30,                   // Lebenszeit des Caches 30 Sekunden
+   'automatic_serialization' => false  // Dieser Wert ist der Standardwert
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // Wir übergeben eine eindeutige Identifizierung an die start() Methode
 if(!$cache->start('mypage')) {
@@ -118,7 +122,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // Die Ausgabe wird gespeichert und zum Browser gesendet
 }
 
-echo 'Das wird nie gecached ('.time().').';]]>
+echo 'Das wird nie gecached ('.time().').';
+]]>
        </programlisting>
        <para>
            Zu beachten ist das das Ergebnis von <code>time()</code> zweimal ausgegeben wird; das ist

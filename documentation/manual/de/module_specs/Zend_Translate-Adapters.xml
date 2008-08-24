@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10765 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
@@ -312,15 +312,14 @@
             implmentiert werden sollte:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
+        <programlisting role="php"><![CDATA[
 try {
     $translate = new Zend_Translate('Firma_Translate_Adapter_MeinFormat', '/path/to/translate.xx', 'en', array('meineoption' => 'myvalue'));
 } catch (Exception $e) {
     // Datei nicht gefunden, keine Adapter Klasse...
     // Genereller Fehler
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -343,12 +342,11 @@ try {
             <code>Zend_Translate::getCache()</code>.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Translate.php';
-
+        <programlisting role="php"><![CDATA[
 $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 Zend_Translate::setCache($cache);
-$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');]]>
+$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');
+]]>
         </programlisting>
 
         <note>

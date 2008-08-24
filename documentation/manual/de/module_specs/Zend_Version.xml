@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.version.reading">
 
     <title>Auslesen der Version des Zend Frameworks</title>
@@ -21,7 +21,7 @@
 
     <example id="zend.version.reading.example">
         <title>Beispiel der compareVersion() Methode</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // gibt -1, 0 oder 1 zurück
 $cmp = Zend_Version::compareVersion('1.0.0');]]>
         </programlisting>

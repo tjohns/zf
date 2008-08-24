@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -78,8 +78,7 @@
                         an den Helfer Broker übergeben:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+                    <programlisting role="php"><![CDATA[$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
@@ -92,8 +91,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                         Helfer Broker:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                    <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');]]>
                     </programlisting>
@@ -111,8 +109,7 @@ $viewRenderer->setView($view)
             und Registrieren ist es, die Methode <code>getStaticHelper()</code> des Helfer Brokers zu verwenden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
         </programlisting>
 
         <para>
@@ -134,8 +131,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
             Als Beispiel kann die folgende Klasse angenommen werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Eine Kontroller Klasse, foo Modul:
+        <programlisting role="php"><![CDATA[// Eine Kontroller Klasse, foo Modul:
 class Foo_BarController extends Zend_Controller_Action
 {
     // Rendert standardmäßig bar/index.phtml; keine Aktion benötigt
@@ -154,7 +150,7 @@ class Foo_BarController extends Zend_Controller_Action
 ...
 
 // In einem der View Sktipte:
-<?php $this->foo(); // Foo_View_Helper_Foo::foo() aufrufen]]>
+$this->foo(); // Foo_View_Helper_Foo::foo() aufrufen]]>
         </programlisting>
 
         <para>
@@ -551,8 +547,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 Methoden gesetzt.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// In der Bootstrap Datei:
+            <programlisting role="php"><![CDATA[// In der Bootstrap Datei:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
@@ -623,8 +618,7 @@ class Foo_BarController extends Zend_Controller_Action
                 (<code>setNoRender()</code>).
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Baz Kontroller Klasse, bar Modul:
+            <programlisting role="php"><![CDATA[// Baz Kontroller Klasse, bar Modul:
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
@@ -666,8 +660,7 @@ class Bar_BatController extends Zend_Controller_Action
                 was wiederum <code>setRender()</code> ausruft.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Bar Kontroller Klasse, foo Modul:
+            <programlisting role="php"><![CDATA[// Bar Kontroller Klasse, foo Modul:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
@@ -708,8 +701,7 @@ class Foo_BarController extends Zend_Controller_Action
                 beide referenzieren auf das gleiche Objekt.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Bar Kontroller Klasse, foo Modul:
+            <programlisting role="php"><![CDATA[// Bar Kontroller Klasse, foo Modul:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -752,8 +744,7 @@ class Foo_BarController extends Zend_Controller_Action
                 für Dateinamen verwendet werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/**
+            <programlisting role="php"><![CDATA[/**
  * In der Bootstrap Datei:
  */
 
@@ -777,8 +768,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 Das ist sehr geradlinig -- einfach mehrere Aufrufe zu <code>render()</code> machen:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SearchController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {

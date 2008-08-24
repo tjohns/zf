@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect2 id="zend.validate.set.email_address">
 
     <title>Email Adresse</title>
@@ -16,8 +16,7 @@
     <para>
         Ein Beispiel einer normalen Benutzung ist anbei:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
     // Email Adresse scheint gültig zu sein
@@ -26,7 +25,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         Das prüft die Email Adresse <code>$email</code> und gibt bei einem Fehler über
@@ -66,8 +66,7 @@ if ($validator->isValid($email)) {
         sind in <code>Zend_Validate_Hostname</code> inkludiert, zusammen mit einem Beispiel, wie DNS
         und lokale Hostnamen, akzeptiert werden wie im Beispiel das anbei steht:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // Email Adresse scheint gültig zu sein
@@ -76,7 +75,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
     </para>
 
@@ -97,7 +97,7 @@ if ($validator->isValid($email)) {
         Um die MX Prüfung einzuschalten kann ein zweiter Parameter an den <code>Zend_Validate_EmailAddress</code>
         Konstruktor übergeben werden.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
         </programlisting>
 
@@ -122,7 +122,7 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         geändert wird über das interne <code>Zend_Validate_Hostname</code> Objekt das innerhalb von
         <code>Zend_Validate_EmailAddress</code> existiert.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator->hostnameValidator->setValidateIdn(false);]]>
         </programlisting>
 
@@ -144,7 +144,7 @@ $validator->hostnameValidator->setValidateIdn(false);]]>
         <code>Zend_Validate_Hostname</code> geändert wird, das innerhalb von
         <code>Zend_Validate_EmailAddress</code> existiert.
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator->hostnameValidator->setValidateTld(false);]]>
         </programlisting>
 

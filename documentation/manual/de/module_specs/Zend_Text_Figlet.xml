@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10132 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.text.figlet">
     <title>Zend_Text_Figlet</title>
     <para>
@@ -91,8 +91,7 @@
             Dieses Beispiel zeigt die einfache Verwendung von <code>Zend_Text_Figlet</code> um einen einfachen
             FIGlet Text zu erstellen:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Text/Figlet.php';
+        <programlisting role="php"><![CDATA[
 $figlet = new Zend_Text_Figlet();
 echo $figlet->render('Zend');
 ?>]]>

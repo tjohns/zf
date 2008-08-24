@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.log.filters">
     <title>Filter</title>
 
@@ -13,7 +13,7 @@
         Um vor allen Writern zu filtern, kann eine beliebige Anzahl von Filtern zu einem Log Objekt hinzugefügt
         werden indem die <code>addFilter()</code> Methode verwendet wird:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $logger = new Zend_Log();
 
 $writer = new Zend_Log_Writer_Stream('php://output');
@@ -41,7 +41,7 @@ $logger->emerg('Notfall Nachricht');]]>
         Um nur auf eine definierte Writer Instanz zu filtern, muß die <code>addFilter</code> Methode dieses Writer's
         verwendet werden:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $logger = new Zend_Log();
 
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');

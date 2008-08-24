@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7815 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie und Zend_Http_CookieJar</title>
 
@@ -87,7 +87,7 @@
             </itemizedlist>
             <example id="zend.http.cookies.cookie.instantiating.example-1">
                <title>Instanzieren eines Zend_Http_Cookie-Objekts</title>
-               <programlisting role="php"><![CDATA[<?php
+               <programlisting role="php"><![CDATA[
 // Zuerst nutzen wir den Konstruktor. Der Cookie wird in zwei Stunden ablaufen
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
 
@@ -116,7 +116,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
             Der Inhalt wird URL-kodiert, wie es für einen Cookie-Header vorgeschrieben ist:
             <example id="zend.http.cookies.cookie.instantiating.example-2">
                <title>Transformation eines Zend_Http_Cookie-Objekts zu einem String</title>
-               <programlisting role="php"><![CDATA[<?php
+               <programlisting role="php"><![CDATA[
 // Erstellt einen neuen Cookie
 $cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
 
@@ -197,7 +197,7 @@ echo $cookie;]]>
         <para>
             <example id="zend.http.cookies.cookie.accessors.example-1">
                 <title>Nutzen der getter-Methoden von Zend_Http_Cookie</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Zuerst wird der Cookie erstellt
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
@@ -255,7 +255,7 @@ echo ($cookie->isSessionCookie() ? 'Ja' : 'Nein');
             </itemizedlist>
             <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>Zutreffen von Cookies</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Erstellen eines Cookie Objekts - zuerst ein sicherer Cookie ohne Ablaufzeit
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
 

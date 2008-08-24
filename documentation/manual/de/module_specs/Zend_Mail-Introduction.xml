@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7311 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.introduction">
 
     <title>Einführung</title>
@@ -24,14 +24,14 @@
                 zu Verwenden muß folgendes getan werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+            <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setBodyText('Dies ist der Text dieser E-Mail.');
 $mail->setFrom('somebody@example.com', 'Ein Versender');
 $mail->addTo('somebody_else@example.com', 'Ein Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send();]]>
+$mail->send();
+]]>
             </programlisting>
 
         </example>
@@ -63,14 +63,14 @@ $mail->send();]]>
             aufgerufen wurde, so das sofort ein erneuter Aufruf einer anderen Methode stattfinden kann.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setBodyText('Das ist der Text der Nachricht.')
     ->setFrom('somebody@example.com', 'Einige Sender')
     ->addTo('somebody_else@example.com', 'Einige Empfänger')
     ->setSubject('TestBetreff')
-    ->send();]]>
+    ->send();
+]]>
         </programlisting>
 
     </sect2>
@@ -99,10 +99,7 @@ $mail->setBodyText('Das ist der Text der Nachricht.')
                 <ulink url="http://php.net/mail"><code>mail()</code></ulink> Funktion geändert werden kann.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Sendmail.php';
-
+            <programlisting role="php"><![CDATA[
 $tr = new Zend_Mail_Transport_Sendmail('-freturn_to_me@example.com');
 Zend_Mail::setDefaultTransport($tr);
 
@@ -111,7 +108,8 @@ $mail->setBodyText('Das ist ein Text der Mail.');
 $mail->setFrom('somebody@example.com', 'Einige Sender');
 $mail->addTo('somebody_else@example.com', 'Einige Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send();]]>
+$mail->send();
+]]>
             </programlisting>
 
         </example>

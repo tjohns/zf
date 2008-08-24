@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -124,8 +124,7 @@
                 die beim Umleiten verwendet wird.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes
@@ -167,8 +166,7 @@ class SomeController extends Zend_Controller_Action
                 einem sofortigen <code>exit()</code> resultiert.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// ALTERNATIVES BBISPIEL
+            <programlisting role="php"><![CDATA[// ALTERNATIVES BBISPIEL
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -204,8 +202,7 @@ class AlternativeController extends Zend_Controller_Action
                 es um statt die Aktion zu verketten.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes
@@ -241,8 +238,7 @@ class ForwardController extends Zend_Controller_Action
                 registriert wurde:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
@@ -254,8 +250,7 @@ $router->addRoute('blogArchive', $route);]]>
                 würde dieses eine URL wie die folgende erstellen: <code>/blog/2006/4/24/42</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes

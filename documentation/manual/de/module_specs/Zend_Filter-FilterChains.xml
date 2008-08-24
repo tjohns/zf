@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.filter.filter_chains">
 
     <title>Filter Ketten</title>
@@ -10,15 +10,7 @@
         können. Der folgende Code zeigt wie eine Verkettung von zwei Filtern für das übermitteln eines
         Benutzernamens funktioniert:
 
-        <programlisting role="php"><![CDATA[<?php
-// Bietet Filterverkettungs Möglichkeiten
-require_once 'Zend/Filter.php';
-
-// Filter die für das Beispiel benötigt werden
-require_once 'Zend/Filter/Alpha.php';
-require_once 'Zend/Filter/StringToLower.php';
-
-// Eine Filterkette erstellen und die Filter der Kette hinzufügen
+        <programlisting role="php"><![CDATA[// Eine Filterkette erstellen und die Filter der Kette hinzufügen
 $filterChain = new Zend_Filter();
 $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());

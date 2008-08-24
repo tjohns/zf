@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.modifying-feed">
     <title>Verändern der Feed- und Eintragsstruktur</title>
 
@@ -11,7 +11,7 @@
 
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>Verändern eines bestehenden Feed Eintrags</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
@@ -43,7 +43,7 @@ echo $entry->saveXML();]]>
 
     <example id="zend.feed.modifying-feed.example.creating">
         <title>Erstellen eines Atom Eintrags mit Elementen eines eigenen Namensraumes</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom();
 // Die ID wird immer vom Server in Atom zugewiesen
 $entry->title = 'mein eigener Eintrag';

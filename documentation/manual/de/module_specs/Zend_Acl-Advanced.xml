@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6301 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.advanced">
 
     <title>Fortgeschrittene Verwendung</title>
@@ -48,13 +48,13 @@
             Methode des Interfaces implementiert:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl/Assert/Interface.php';
-
+        <programlisting role="php"><![CDATA[
 class CleanIPAssertion implements Zend_Acl_Assert_Interface
 {
-    public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null,
-                           Zend_Acl_Resource_Interface $resource = null, $privilege = null)
+    public function assert(Zend_Acl $acl,
+                           Zend_Acl_Role_Interface $role = null,
+                           Zend_Acl_Resource_Interface $resource = null,
+                           $privilege = null)
     {
         return $this->_isCleanIP($_SERVER['REMOTE_ADDR']);
     }
@@ -63,7 +63,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -74,8 +75,6 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
         </para>
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Acl.php';
-
 $acl = new Zend_Acl();
 $acl->allow(null, null, null, new CleanIPAssertion());]]>
         </programlisting>

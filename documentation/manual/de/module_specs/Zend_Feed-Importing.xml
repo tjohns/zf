@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.importing">
 
     <title>Feeds importieren</title>
@@ -8,7 +8,7 @@
         URI eines Feeds kennst, verwende einfach die <code>Zend_Feed::import()</code> Methode:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
     </programlisting>
 
@@ -17,7 +17,7 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
         oder die Inhalte aus einem PHP String Variable zu abzurufen.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // Feeds von einer Textdatei importieren
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
@@ -51,7 +51,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
 
             <title>Importieren eines eigenen Arrays</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Importieren eines Feeds von einem Array
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
@@ -66,7 +66,7 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
                 Das Format des Arrays muß dieser Struktur entsprechen:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 array(
       'title'       => 'Titel des Feeds', // benötigt
       'link'        => 'Kanonische URL zu dem Feed', // benötigt
@@ -225,7 +225,7 @@ array(
                 Hier ist ein Beispiel der Verwendung von <code>Zend_Feed::importBuilder()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Einen Feed von einer eigenen Erstellungsquelle importieren
 $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
@@ -247,7 +247,7 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 <code>send()</code> oder <code>saveXml()</code> Methoden verwendet werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // Den Feed an der Standardausgabe ausgeben

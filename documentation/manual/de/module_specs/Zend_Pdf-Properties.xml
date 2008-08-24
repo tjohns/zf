@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6254 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.pdf.info">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Dokument Informationen und Metadaten</title>
@@ -10,7 +10,7 @@
         Historisch wird diese Information durch das Verwenden einer speziellen Info Struktur gespeichert.
         Diese struktur kann als assoziatives Array mithilfe der öffentlichen <code>properties</code> Eigenschaft
         des Zend_Pdf Objektes gelesen und geschrieben werden: 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 
 echo $pdf->properties['Title'] . "\n";
@@ -174,7 +174,7 @@ $pdf->save($pdfPath);
     <para>
         Dieses XML Dokument kann empfangen und dem PDF mit der <code>Zend_Pdf::getMetadata()</code> und der
         <code>Zend_Pdf::setMetadata($metadata)</code> Methode wieder hinzugefügt werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 $metadata = $pdf->getMetadata();
 $metadataDOM = new DOMDocument();

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9507 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - Einführung</title>
 
@@ -20,9 +20,7 @@
             setUri() and setConfig() Methoden gesetzt werden.
             <example id="zend.http.client.introduction.example-1">
                 <title>Ein Zend_Http_Client Objekt instanzieren</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org', array(
     'maxredirects' => 0,
     'timeout'      => 30));
@@ -130,9 +128,7 @@ $client->setConfig(array(
             request() Methode gemacht werden und benötigt selten mehr als drei Codezeilen:
             <example id="zend.http.client.basic-requests.example-1">
                 <title>Durchführen einer einfache GET Anfrage</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Http/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org');
 $response = $client->request();]]>
                 </programlisting>
@@ -154,7 +150,7 @@ $response = $client->request();]]>
             ist, wird als Standardmethode GET verwendet (siehe obiges Beispiel).
             <example id="zend.http.client.basic-requests.example-2">
                 <title>Andere Anfragemethoden als GET verwenden</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Durchführen einer POST Anfrage
 $response = $client->request('POST');
 
@@ -179,7 +175,7 @@ $response = $client->request();]]>
             kann.
             <example id="zend.http.client.parameters.example-1">
                 <title>Setzen von GET Parametern</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setzen eines GET Parameter mit der setParameterGet Methode
 $client->setParameterGet('knight', 'lancelot');
 
@@ -203,7 +199,7 @@ $client->setParameterGet(array(
             setParameterGet() Methode ähnlich ist..
             <example id="zend.http.client.parameters.example-2">
                 <title>Setzen von POST Parametern</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Setzen eines POST Parameters
 $client->setParameterPost('language', 'fr');
 

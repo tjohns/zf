@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7504 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.layout.options">
     <title>Zend_Layout Konfigurations Optionen</title>
 
@@ -102,7 +102,7 @@
             Objekt an:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $options = array(
     'layout'     => 'foo',
     'layoutPath' => '/path/to/layouts',
@@ -110,7 +110,7 @@ $options = array(
 );
 ?>]]></programlisting>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
 [layout]
 layout = "foo"
@@ -133,7 +133,7 @@ $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
                 Zuerst zeigen wir die Übergabe eines Arrays:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Konstruktor verwenden:
 $layout = new Zend_Layout($options);
 
@@ -145,7 +145,7 @@ $layout = Zend_Layout::startMvc($options);
                 Und jetzt die Verwendung eines Config Objekts:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php 
+            <programlisting role="php"><![CDATA[ 
 $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
 
 // Konstruktor verwenden:
@@ -169,7 +169,7 @@ $layout = Zend_Layout::startMvc($config);
                 schnellen und einfachen Weg das zu tun:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Ein Array von Optionen verwenden:
 $layout->setOptions($options);
 
@@ -193,7 +193,7 @@ $layout->setConfig($options);
                 Aufrufe gekettet werden können:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $layout->setLayout('foo')
        ->setLayoutPath('/path/to/layouts')
        ->setContentKey('CONTENT');

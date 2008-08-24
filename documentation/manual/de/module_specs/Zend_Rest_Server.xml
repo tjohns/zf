@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
 
@@ -16,22 +16,18 @@
         <example id="zend.rest.server.usage.example-1">
             <title>Grundsätzliche Verwendung vom Zend_Rest_Server - Klassen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-require_once 'My/Service/Class.php';
-
+            <programlisting role="php"><![CDATA[
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
             <title>Grundsätzliche Verwendung vom Zend_Rest_Server - Funktionen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting role="php"><![CDATA[
 /**
  * Sag Hallo
  *
@@ -46,7 +42,8 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -96,9 +93,7 @@ $server->handle();]]>
 
         <example id="zend.rest.server.customstatus.example-1">
             <title>Einen eigenen Status zurückgeben</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting><![CDATA[
 /**
  * Sag Hallo
  *
@@ -129,9 +124,7 @@ $server->handle();]]>
         <example id="zend.rest.server.customxml.example-1">
             <title>Eigenes XML zurückgeben</title>
 
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Rest/Server.php';
-
+            <programlisting><![CDATA[
 /**
  * Sag Hallo
  *
@@ -154,7 +147,8 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
 

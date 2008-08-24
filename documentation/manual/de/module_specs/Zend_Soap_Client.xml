@@ -1,10 +1,10 @@
-<!-- EN-Revision: 10589 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
     
     <para>
-        Die <code>Zend_Soap_Client</code> Klasse ist dazu gedacht den Client Teil der Web Service
-        Entwicklung für PHP Programmierer zu vereinfachen.
+        Die <code>Zend_Soap_Client</code> Klasse vereinfacht die Entwicklung von SOAP Clients für
+        PHP Programmierern.
     </para>
 
     <para>
@@ -12,14 +12,15 @@
     </para>
 
     <para>
-        Wenn die Zend_Soap_Client Komponente im WSDL Modus arbeitet, verwendet Sie ein bereits vorbereitetes
+        Im WSDL Modus verwendet die Zend_Soap_Client Komponente ein bereits vorbereitetes
         WSDL Dokument um die Optionen des Transport Layers zu definieren. 
     </para>
     
     <para>
-        Die WSDL Beschreibung wird normalerweise vom Web Service auf das man den Zugriff plant zur Verfügung
-        gestellt. Wenn das nicht der Fall ist, kann man Zend_Soap_Client im nicht-WSDL Modus verwenden. Alle
-        Protokoll-Optionen müssen in diesem Fall durch Verwendung des Options-Mechanismus gesetzt werden.
+        Die WSDL Beschreibung wird normalerweise vom Web Service bereitgestellt auf das der Client zugreift.
+        Wenn die WSDL Beschreibung nicht verfügbar gemacht wurde, kann man Zend_Soap_Client im nicht-WSDL
+        Modus verwenden. In diesem Modus müssel alle SOAP Protokolloptionen explizit an der
+        Zend_Soap_Client Klasse gesetzt werden.
     </para>
 
     <sect2 id="zend.soap.client.constructor">
@@ -40,7 +41,7 @@
             </itemizedlist>
             
             Beide Parameter können später gesetzt werden indem die <code>setWsdl($wsdl)</code> und
-            <code>setOptions($options)</code> Methoden entsprechend verwendet werden.
+            <code>setOptions($options)</code> Methoden verwendet werden.
         </para>
         
         <note>
@@ -130,15 +131,16 @@
                         <code>SOAP_COMPRESSION_ACCEPT</code>, <code>SOAP_COMPRESSION_GZIP</code> und
                         <code>SOAP_COMPRESSION_DEFLATE</code> Optionen welche wie folgt verwendet werden
                         können:
-                        <programlisting role="php"><![CDATA[<?php
-// Komprimierung der Antworten akzeptieren
+                        <programlisting role="php"><![CDATA[// Komprimierung der Antworten akzeptieren
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
+
 // Anfragen komprimieren durch Verwendung von gzip mit Komprimierungs-Level 5
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
+
 // Anfragen komprimieren durch Verwendung der Deflate Komprimierung
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));]]></programlisting>
@@ -153,7 +155,7 @@ $client = new SoapClient("some.wsdl",
         <title>SOAP Anfragen durchführen.</title>
         
         <para>
-            Wenn ein <code>Zend_Soap_Client</code> Objekt erstellt wurde sind wir vollständig bereit um
+            Nachdem ein <code>Zend_Soap_Client</code> Objekt erstellt wurde sind wir bereit um
             SOAP Anfragen durchzuführen.
         </para>
         <para>
@@ -163,9 +165,7 @@ $client = new SoapClient("some.wsdl",
         
         <para>
             Es ist wie im folgenden Beispiel zu verwenden:
-            <programlisting role="php"><![CDATA[<?php
-...
-//****************************************************************
+            <programlisting role="php"><![CDATA[//****************************************************************
 //                Server Code
 //****************************************************************
 // class MyClass {
@@ -204,9 +204,11 @@ $client = new SoapClient("some.wsdl",
 
 $client = new SoapClient("MyService.wsdl");
 ...
+
 // $result1 ist ein String
 $result1 = $client->method1(10); 
 ...
+
 // $result2 ist ein Float
 $result2 = $client->method2(22, 'irgendein String');]]></programlisting>
         </para>

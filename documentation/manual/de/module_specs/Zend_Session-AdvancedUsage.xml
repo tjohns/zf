@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>Fortgeschrittene Benutzung</title>
@@ -22,10 +22,9 @@
 
             <title>Starten einer globalen Session</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session.php';
-
-Zend_Session::start();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Session::start();
+]]>
             </programlisting>
 
         </example>
@@ -142,9 +141,7 @@ Zend_Session::start();]]>
         <example id="zend.session.advanced_usage.locking.example.basic">
 
             <title>Sperren von Session Namensräumen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
 // marking session as read only locked
@@ -153,7 +150,8 @@ $userProfileNamespace->lock();
 // unlocking read-only lock
 if ($userProfileNamespace->isLocked()) {
     $userProfileNamespace->unLock();
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -177,9 +175,7 @@ if ($userProfileNamespace->isLocked()) {
 
             <title>Beispiel für den Verfall</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $s = new Zend_Session_Namespace('expireAll');
 $s->a = 'Apfel';
 $s->p = 'Pfirsich';
@@ -193,7 +189,8 @@ $s->setExpirationHops(5);
 $s->setExpirationSeconds(60);
 // Der "expireAll" Namensraum wird als "abgelaufen" markiert
 // sobald der erste Aufruf empfangen wurde und 60 Sekunden
-// vergangen sind, oder in 5 Sprüngen, was auch immer zuerst stattfindet]]>
+// vergangen sind, oder in 5 Sprüngen, was auch immer zuerst stattfindet
+]]>
             </programlisting>
 
         </example>
@@ -229,10 +226,9 @@ $s->setExpirationSeconds(60);
                 Frage zu beantworten.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // Im Frage-View Kontroller
-require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // Nur diese Variable ablaufen lassen
 $testSpace->accept_answer = true;
@@ -245,10 +241,9 @@ $testSpace->accept_answer = true;
                 Zeit übermittelt hat:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // ...
 // Im Frage-Prozess Kontroller
-require_once 'Zend/Session/Namespace.php';
  $testSpace = new Zend_Session_Namespace('testSpace');
  if ($testSpace->accept_answer === true) {
      // innerhalb der Zeit
@@ -256,7 +251,8 @@ require_once 'Zend/Session/Namespace.php';
  else {
      // nicht innerhalb der Zeit
  }
-// ...]]>
+// ...
+]]>
             </programlisting>
         </example>
 
@@ -283,9 +279,7 @@ require_once 'Zend/Session/Namespace.php';
 
             <title>Zugriff auf Session Namensräume auf eine einzelne Instanz limitieren</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 // Eine Instanz eines Namensraumes erstellen
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
@@ -303,7 +297,8 @@ try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
     echo "Dieser Namensraum kann nicht instanziert werden da \$authSpaceAccessor2 erstellt wurde\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -342,12 +337,12 @@ try {
                 Das folgende illustriert wie das Problem reproduziert werden kann:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 $sessionNamespace->array['testKey'] = 1; // wird nicht wie gewünscht funktionieren vor PHP 5.2.1
-echo $sessionNamespace->array['testKey'];]]>
+echo $sessionNamespace->array['testKey'];
+]]>
             </programlisting>
 
         </example>
@@ -361,10 +356,10 @@ echo $sessionNamespace->array['testKey'];]]>
                 gespeichert werden nachdem alle gewünschten Arraywerte gesetzt wurden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace('Foo');
-$sessionNamespace->array = array('a', 'b', 'c');]]>
+$sessionNamespace->array = array('a', 'b', 'c');
+]]>
             </programlisting>
 
         </example>
@@ -384,8 +379,7 @@ $sessionNamespace->array = array('a', 'b', 'c');]]>
                 Platz von dem die Kopie erstellt wurde zugeordnet wobei das originale Array überschrieben wird.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 
 // Das ursprüngliche Array hinzufügen
@@ -400,7 +394,8 @@ $tmp['fruit'] = 'peach';
 // Die Kopie des Arrays wieder mit dem Namensraum der Session verknüpfen
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // gibt "peach" aus]]>
+echo $sessionNamespace->array['fruit']; // gibt "peach" aus
+]]>
             </programlisting>
 
         </example>
@@ -414,13 +409,13 @@ echo $sessionNamespace->array['fruit']; // gibt "peach" aus]]>
                 die auf dieses dann indirekt zugegriffen werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
+            <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
-echo $myNamespace->someArray['foo']; // gibt "bar" aus]]>
+echo $myNamespace->someArray['foo']; // gibt "bar" aus
+]]>
             </programlisting>
 
         </example>
@@ -476,9 +471,8 @@ echo $myNamespace->someArray['foo']; // gibt "bar" aus]]>
 
             <title>PHPUnit Test Code der auf Zend_Session beruht</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // testen von setExpirationSeconds()
-require_once 'tests/Zend/Session/SessionTestHelper.php'; // siehe auch SessionTest.php
 $script = 'SessionTestHelper.php';
 $s = new Zend_Session_Namespace('space');
 $s->a = 'apple';

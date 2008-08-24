@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.smtp-secure">
   <title>SMTP Übertragungen sichern</title>
 
@@ -10,10 +10,7 @@
   <example id="zend.mail.smtp-secure.example-1">
     <title>Aktivieren einer sicheren Verbindung innerhalb von Zend_Mail_Transport_Smtp</title>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
-
+    <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',
                 'port' => 25); // Optionale unterstützte Portnummer
 
@@ -24,7 +21,8 @@ $mail->setBodyText('Das ist der Text der Mail.');
 $mail->setFrom('sender@test.com', 'Einige Sender');
 $mail->addTo('recipient@test.com', 'Einige Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send($transport);]]>
+$mail->send($transport);
+]]>
     </programlisting>
   </example>
 </sect1>

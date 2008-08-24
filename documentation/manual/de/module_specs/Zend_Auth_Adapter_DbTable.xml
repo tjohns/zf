@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10840 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -75,8 +75,8 @@
 
             <programlisting role="php"><![CDATA[
 // Erstellt eine In-Memory SQLite Datenbankverbindung
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => 
+                                                  ':memory:'));
 
 // Erstellt eine einfache Datenbank-Erstellungs-Abfrage
 $sqlCreate = 'CREATE TABLE [users] ('
@@ -93,7 +93,8 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Daten einfügen
-$dbAdapter->query($sqlInsert);]]>
+$dbAdapter->query($sqlInsert);
+]]>
             </programlisting>
 
             <para>
@@ -104,8 +105,6 @@ $dbAdapter->query($sqlInsert);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-require_once 'Zend/Auth/Adapter/DbTable.php';
-
 // Die Instanz mit Konstruktor Parametern konfiurieren...
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter,
@@ -120,7 +119,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
+;
+]]>
             </programlisting>
 
             <para>
@@ -136,7 +136,8 @@ $authAdapter
     ->setCredential('my_password');
 
 // Die Authentifizierungsabfrage durchführen, das Ergebnis speichern
-$result = $authAdapter->authenticate();]]>
+$result = $authAdapter->authenticate();
+]]>
             </programlisting>
 
             <para>
@@ -162,7 +163,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
+*/
+]]>
             </programlisting>
 
             <para>
@@ -194,13 +196,14 @@ $result = $this->_auth->authenticate($adapter);
 if ($result->isValid()) {
 
     // Die Identität als Objekt speichern wobei nur der Benutzername und der echte Name zurückgegeben werden
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(array(
+    $storage = _auth->getStorage();
+    $this->$storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name'
     )));
 
     // Die Identität als Objekt speichern wobei die Passwort Spalte unterdrückt wird
-    $this->_auth->getStorage()->write($adapter->getResultRowObject(
+    $this->$storage->write($adapter->getResultRowObject(
         null,
         'password'
     ));
@@ -211,7 +214,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -268,7 +272,9 @@ $adapter = new Zend_Auth_Adapter_DbTable(
         </para>
 
         <programlisting role="php"><![CDATA[
-$sqlAlter = 'ALTER TABLE [users] ADD COLUMN [password_salt] AFTER [password]';
+$sqlAlter = "ALTER TABLE [users] "
+          . "ADD COLUMN [password_salt] "
+          . "AFTER [password]";
 
 $dbAdapter->query($sqlAlter);]]>
         </programlisting>
@@ -282,7 +288,8 @@ $dbAdapter->query($sqlAlter);]]>
 for ($i = 0; $i < 50; $i++)
 {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -295,8 +302,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'users',
     'username',
     'password',
-    "MD5(CONCAT('" . Zend_Registry::get('staticSalt') . "', ?, password_salt))"
-);]]>
+    "MD5(CONCAT('"
+    . Zend_Registry::get('staticSalt')
+    . "', ?, password_salt))"
+);
+]]>
         </programlisting>
 
         <note>

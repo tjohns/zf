@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10666 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>Erweitert</title>
 
@@ -107,7 +107,7 @@
             Statische Objekteigenschaften (siehe anbei) werden <emphasis>nach</emphasis> der letzten Zeile des
             ausgeführten Skripts vernichtet.
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class Searcher {
     private static $_index;
 
@@ -148,7 +148,7 @@ Searcher::initIndex();]]>
             keine Dokumente hinzugefügt oder gelöscht werden, der Destruktor von <code>Zend_Search_Lucene</code>
             nichts zu tun hat, und er deswegen keine Ausnahme wirft:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class Searcher {
     private static $_index;
 

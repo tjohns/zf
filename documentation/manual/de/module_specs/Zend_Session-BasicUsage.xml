@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>Grundsätzliche Verwendung</title>
@@ -18,9 +18,7 @@
         Jede Instanz von <code>Zend_Session_Namespace</code> korrespondiert mit einerm Eintrag des Superglobalen
         Arrays <code>$_SESSION</code>, wobei die Namensräume als Schlüssel verwendet werden.
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+        <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
 // $myNamespace corresponds to $_SESSION['myNamespace']]]>
@@ -50,9 +48,7 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 
             <title>Seitenzugriffe zählen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
@@ -85,9 +81,7 @@ echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageReques
         <example id="zend.session.basic_usage.basic_examples.example.namespaces.new">
 
             <title>Neuer Weg: Namensräume verhindern Kollisionen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 // In der Zend_Auth Komponente
 require_once 'Zend/Session.php';
 $authNamespace = new Zend_Session_Namespace('Zend_Auth');
@@ -95,7 +89,8 @@ $authNamespace->user = "meinbenutzername";
 
 // In einer Web Service Komponente
 $webServiceNamespace = new Zend_Session_Namespace('Mein_Web_Service');
-$webServiceNamespace->user = "meinwebbenutzername";]]>
+$webServiceNamespace->user = "meinwebbenutzername";
+]]>
             </programlisting>
         </example>
 
@@ -108,7 +103,7 @@ $webServiceNamespace->user = "meinwebbenutzername";]]>
 
             <title>Alter Weg: PHP Session Zugriff</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "meinbenutzername";
 $_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]>
             </programlisting>
@@ -131,14 +126,13 @@ $_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]>
 
             <title>Session wiederholen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session.php';
-
+            <programlisting role="php"><![CDATA[
 $aNamespace = new Zend_Session_Namespace('Einige_Namensräume_Mit_aktuellen_Daten');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -160,9 +154,7 @@ foreach ($aNamespace as $index => $value) {
 
             <title>Zugriff auf Session Daten</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session/Namespace.php';
-
+            <programlisting role="php"><![CDATA[
 $namespace = new Zend_Session_Namespace(); // Standard Namensraum
 
 $namespace->foo = 100;
@@ -173,7 +165,8 @@ if (!isset($namespace->bar)) {
     echo "\$namespace->bar nicht gesetzt\n";
 }
 
-unset($namespace->foo);]]>
+unset($namespace->foo);
+]]>
             </programlisting>
         </example>
 

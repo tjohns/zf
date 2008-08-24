@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7908 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.smtp-authentication">
   <title>SMTP Authentifizierung</title>
 
@@ -10,10 +10,7 @@
   <example id="zend.mail.smtp-authentication.example-1">
     <title>Authentifizierung innerhalb von Zend_Mail_Transport_Smtp einschalten</title>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
-
+    <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',
                 'username' => 'MeinBenutzername',
                 'password' => 'Passwort');
@@ -25,7 +22,8 @@ $mail->setBodyText('Das ist der Text des Mails.');
 $mail->setFrom('sender@test.com', 'Einige Sender');
 $mail->addTo('recipient@test.com', 'Einige Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send($transport);]]>
+$mail->send($transport);
+]]>
     </programlisting>
   </example>
 

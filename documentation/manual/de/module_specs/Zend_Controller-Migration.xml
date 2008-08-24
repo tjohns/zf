@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10631 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
@@ -101,8 +101,7 @@
                     Bindestrich trennt:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -133,9 +132,7 @@ $inflector->setFilterRule(':action', array(
                     'useCaseSensitiveActions' zu bearbeiten: 
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->setParam('useCaseSensitiveActions', true);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
 
                 <para>
                     Das erlaubt es camelCase in der URL zu verwenden uns es trotzdem auf die
@@ -171,8 +168,7 @@ $front->setParam('useCaseSensitiveActions', true);
             Frontkontroller Parameters <code>noErrorHandler</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
         </programlisting>
 
         <para>
@@ -189,8 +185,7 @@ $front->setParam('noErrorHandler', true);]]>
             Abarbeiten ausschalten:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Annahme das $front eine Instanz von Zend_Controller_Front ist
+        <programlisting role="php"><![CDATA[// Annahme das $front eine Instanz von Zend_Controller_Front ist
 $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
@@ -282,8 +277,7 @@ public function preDispatch()
                     Vor dem verarbeiten einer Frontkontroller Instanz:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Annahme das $view bereits definiert wurde
+                <programlisting role="php"><![CDATA[// Annahme das $view bereits definiert wurde
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -294,8 +288,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     Jederzeit wärend des Bootstrap Prozesses:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>

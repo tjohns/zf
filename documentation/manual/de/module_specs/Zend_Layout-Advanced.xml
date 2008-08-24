@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.layout.advanced">
     <title>Erweiterte Verwendung von Zend_Layout</title>
 
@@ -56,7 +56,7 @@
             übergeben werden, oder es mit der <code>setView()</code> Zugriffsmethode gesetzt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new My_Custom_View();
 $layout->setView($view);
 ?>]]></programlisting>
@@ -88,7 +88,7 @@ $layout->setView($view);
                 <link linkend="zend.view.helpers.initial.placeholder">Platzhalter Helfer</link> verwendet wird:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
 $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 ?>]]></programlisting>
@@ -177,7 +177,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
                 dieser Werte.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Setzen des Beugungsziel:
 $layout->setInflectorTarget('layouts/:script.:suffix');
 
@@ -202,7 +202,7 @@ $layout->setViewSuffix('php');
                 gewünscht in einem 'layouts' Unterverzeichnis nach den Skripten nachzuschauen.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
                        ->setFilterRule(array('CamelCaseToUnderscore'));
@@ -218,7 +218,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
                 unterschiedlichen Objekten von unterschiedlichen Typen. <code>Zend_Layout</code> unterstützt das.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
     ':script' => array('CamelCaseToUnderscore'),

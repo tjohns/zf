@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9848 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.measure.types">
 
     <title>Arten von Maßeinheiten</title>
@@ -274,15 +274,14 @@
             dargestellt werden kann, muß stattdessen ein Unterstrich benutzt werden.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Number.php';
-
+        <programlisting role="php"><![CDATA[
 $great = '_X';
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 // Konvertierung in das Dezimalsystem
-echo $unit->convertTo(Zend_Measure_Number::DECIMAL);]]>
+echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
+]]>
         </programlisting>
 
     </sect2>

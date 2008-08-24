@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.filter.writing_filters">
 
     <title>Filter schreiben</title>
@@ -18,10 +18,7 @@
     <para>
         Das folgende Beispiel demonstriert wie ein eigener Filter geschrieben wird:
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter/Interface.php';
-
-class MyFilter implements Zend_Filter_Interface
+        <programlisting role="php"><![CDATA[class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
     {
@@ -35,7 +32,7 @@ class MyFilter implements Zend_Filter_Interface
     </para>
 
     <para>
-        Um eine Instanz des obigen Filters in eine Filterkette hinzuzufügen muß folgendes getan werden:
+        Um eine Instanz des Filters der oben definiert wurde in eine Filterkette hinzuzufügen:
 
         <programlisting role="php"><![CDATA[<?php
 $filterChain = new Zend_Filter();

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10502 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.measure.creation">
 
     <title>Erstellung einer Maßeinheit</title>
@@ -32,9 +32,7 @@
 
         <example id="zend.measure.creation.number.example-1">
             <title>Erstellung einer Maßeinheit durch Integer oder Floatwerte</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Length.php';
-
+            <programlisting role="php"><![CDATA[
 $measurement = 1234.7;
 $unit = new Zend_Measure_Length((integer)$measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
@@ -42,7 +40,8 @@ echo $unit;
 
 $unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
-// Ausgabe '1234.7 m' (Meter)]]>
+// Ausgabe '1234.7 m' (Meter)
+]]>
             </programlisting>
         </example>
 
@@ -67,13 +66,12 @@ echo $unit;
 
         <example id="zend.measure.creation.string.example-1">
             <title>Erstellung einer Maßeinheit durch Strings</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Number.php';
-
+            <programlisting role="php"><![CDATA[
 $mystring = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
-echo $unit;]]>
+echo $unit;
+]]>
             </programlisting>
         </example>
 
@@ -86,16 +84,15 @@ echo $unit;]]>
 
         <example id="zend.measure.creation.string.example-2">
             <title>Gewöhliche Texteingaben welche Maßeinheiten beinhalten</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Area.php';
-
+            <programlisting role="php"><![CDATA[
 $mystring = "Mein Haus ist 125m² groß";
 $unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
 echo $unit; // Ausgabe "125 m²";
 
 $mystring = "Mein Haus ist 125m² groß, es hat 5 Räume mit jeweils 25m².";
 $unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
-echo $unit; // Ausgabe "125 m²";]]>
+echo $unit; // Ausgabe "125 m²";
+]]>
             </programlisting>
         </example>
 
@@ -117,9 +114,7 @@ echo $unit; // Ausgabe "125 m²";]]>
 
         <example id="zend.measure.creation.localized.example-1">
             <title>Lokalisierte Zeichenketten</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure/Length.php';
-
+            <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "Das Boot ist 1,234.50 lang.";
 $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, $locale);
@@ -128,7 +123,8 @@ echo $unit; // Ausgabe "1.234 m"
 
 $mystring = "Das Boot ist 1,234.50 lang.";
 $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
-echo $unit; // Ausgabe "1234.50 m"]]>
+echo $unit; // Ausgabe "1234.50 m"
+]]>
             </programlisting>
         </example>
 
@@ -140,7 +136,7 @@ echo $unit; // Ausgabe "1234.50 m"]]>
             will.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);

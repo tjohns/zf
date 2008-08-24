@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6775 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>Die besten Anwendungen</title>
 
@@ -22,7 +22,7 @@
             Dokument die gleichen Felder gespeichert hat, muß die <code>getDocument()</code> Methode verwendet
             werden um auf Sie zuzugreifen:
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
@@ -78,7 +78,7 @@ foreach ($hits as $hit) {
 
         <para>
             Komplette Indexoptimierung kann mit der <code>optimize()</code> Methode durchgeführt werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->optimize();]]>
@@ -308,7 +308,7 @@ $index->optimize();]]>
 
         <para>
             Der erste ist, das das Herausgehen aus dem Sichtbereich erzwungen wird:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 ...
@@ -319,7 +319,7 @@ unset($index);]]>
 
         <para>
             Und der zweite ist, das eine commit Operation vor dem Ausführungsende des Skripts durchgeführt wird:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();]]>
@@ -345,7 +345,7 @@ $index->commit();]]>
 
         <para>
             Das ist effizienter als die Verwendung der <code>find()</code> Methode:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Dokumente mit find() empfangen durch verwenden eines Abfragestrings
 $query = $idFieldName . ':' . $docId;
 $hits  = $index->find($query);
@@ -463,7 +463,7 @@ foreach ($docIds as $id) {
         <para>
             Verschlüsselung kann explizit als optionaler Parameter bei den Felderstellung Methoden
             spezifiziert werden: 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
@@ -475,7 +475,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
             Wenn der optionale Parameter der Verschlüsselung unterdrückt wird, wird das aktuelle
             Gebietsschema verwendet. Das aktuelle Gebietsschema kann Daten zur Zeichenverschlüsselung,
             zusätzlich zur Spezifikation der Sprache, enthalten.
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'fr_FR');
 ...
 
@@ -499,7 +499,7 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
         <para>
             Verschlüsselung kann als optionaler Parameter übergeben werden, wenn die Abfrage explizit vor der
             Suche geparsed wird:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...]]>
@@ -509,7 +509,7 @@ $hits = $index->find($query);
         <para>
             Die Standardverschlüsselung kann auch mit der <code>setDefaultEncoding()</code> Methode spezifiziert
             werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...]]>

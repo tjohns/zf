@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.authsub">
     <title>Authentifizierung mit AuthSub</title>
 
@@ -64,7 +64,7 @@
             das diesen authentifizierten Http Client verwendet.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 
 if (!isset($_SESSION['cal_token'])) {
@@ -101,7 +101,7 @@ $cal = new Zend_Gdata_Calendar($client);]]>
             noch für einige Zeit gültig.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Vorsichtig den Wert erstellen um Sicherheitsprobleme mit der Anwendung zu vermeiden
 $php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
 

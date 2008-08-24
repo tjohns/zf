@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10192 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>HTML Objekt Helfer</title>
 
@@ -53,7 +53,9 @@
             benötigte Argument ist die Ressource URI.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
+]]></programlisting>
 
         <para>
             Das gibt das folgende HTML aus:

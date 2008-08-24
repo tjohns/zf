@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7803 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.infocard.basics">
     <title>Einführung</title>
 
@@ -75,10 +75,7 @@
             Verwendung wird anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/InfoCard/Auth/Adapter.php';
-require_once 'Zend/Auth.php';
-
+        <programlisting role="php"><![CDATA[
 if (isset($_POST['xmlToken'])) {
 
     $adapter = new Zend_Auth_Adapter_InfoCard($_POST['xmlToken']);
@@ -163,9 +160,7 @@ if (isset($_POST['xmlToken'])) {
             dieser Verwendung wird anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/InfoCard.php';
-
+        <programlisting role="php"><![CDATA[
 if (isset($_POST['xmlToken'])) {
     $infocard = new Zend_InfoCard();
     $infocard->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
@@ -267,7 +262,7 @@ if (isset($_POST['xmlToken'])) {
             werden kann wird hier gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // ... 
 public function submitinfocardAction() 
 {
@@ -339,7 +334,7 @@ public function submitinfocardAction()
             anbei wird ein <code>Zend_InfoCard</code> Adapter gesetzt und innerhalb der Anwendung verwendet:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class myAdapter implements Zend_InfoCard_Adapter_Interface 
 {
     public function storeAssertion($assertionURI, $assertionID, $conditions) 

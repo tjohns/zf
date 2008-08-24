@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.gdata.youtube">
     <title>Verwenden der YouTube Daten API</title>
 
@@ -38,7 +38,7 @@
             <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink>
             Service Pbjekt übergeben werden.
         </para> 
-            <programlisting role="php"><![CDATA[<?php 
+            <programlisting role="php"><![CDATA[ 
 $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerKey); 
 ]]></programlisting> 
     </sect2> 
@@ -65,10 +65,7 @@ $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerK
                 pro Seite anzeigt, sortiert nach der Anzahl der Ansichten.
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Loader.php';
-Zend_Loader::loadClass('Zend_Gdata_YouTube');
-
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
 $query->videoQuery = 'cat';
@@ -86,7 +83,7 @@ foreach ($videoFeed as $videoEntry) {
     echo $videoEntry->mediaGroup->description->text;
     echo "\n\n\n";
 }
-?>]]></programlisting>
+]]></programlisting>
 
             <para>
                 Für weitere Details über die verschiedenen Abfrageparameter, kann der
@@ -109,7 +106,7 @@ foreach ($videoFeed as $videoEntry) {
                 suchen die das Schlüsselwort Hund enthalten:
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
 $query->category = 'Comedy/Hund';
@@ -137,7 +134,7 @@ $videoFeed = $yt->getVideoFeed($query);
                 Um die Top gereihten Videos zu erhalten kann die folgende Helfermethode verwendet werden:
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getTopRatedVideoFeed(); 
 ]]></programlisting>
@@ -151,7 +148,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
                 Um zum Beispiel die Top gereihten Videos von Heute zu erhalten:
             </para> 
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
 $query->setTime('today');
@@ -161,7 +158,7 @@ $videoFeed = $yt->getTopRatedVideoFeed($query);
                 Alternativ kann man den Feed erhalten indem die URL verwendet wird:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $url = 'http://gdata.youtube.com/feeds/standardfeeds/top_rated?time=today'
 $videoFeed = $yt->getVideoFeed($url);
@@ -177,7 +174,7 @@ $videoFeed = $yt->getVideoFeed($url);
                 Benutzer 'liz' hochgeladen wurden. 
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserUploads('liz'); 
 ]]></programlisting>
@@ -192,7 +189,7 @@ $videoFeed = $yt->getUserUploads('liz');
                 bevorzugt werden.
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserFavorites('liz'); 
 ]]></programlisting>
@@ -207,7 +204,7 @@ $videoFeed = $yt->getUserFavorites('liz');
                 mit der ID 'abc123813abc'.
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getVideoResponseFeed('abc123813abc'); 
 ]]></programlisting>
@@ -223,7 +220,7 @@ $videoFeed = $yt->getVideoResponseFeed('abc123813abc');
             verwendet werden:
         </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $commentFeed = $yt->getVideoCommentFeed('abc123813abc'); 
 
@@ -239,11 +236,12 @@ foreach ($commentFeed as $commentEntry) {
             Objektes hat:
         </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoEntry = $yt->getVideoEntry('abc123813abc'); 
 // Die ID des Videos in diesem Beispiel ist nicht bekannt, aber wir haben die URL
-$commentFeed = $yt->getVideoCommentFeed(null, $videoEntry->comments->href);
+$commentFeed = $yt->getVideoCommentFeed(null,
+                                        $videoEntry->comments->href);
 ]]></programlisting>
 
     </sect2>
@@ -265,7 +263,7 @@ $commentFeed = $yt->getVideoCommentFeed(null, $videoEntry->comments->href);
                 Code verwendet werden:
             </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $playlistListFeed = $yt->getPlaylistListFeed('liz'); 
 
@@ -285,8 +283,9 @@ foreach ($playlistListFeed as $playlistEntry) {
                 PlayListe assoziiert sind. Um die PlayListe für einen speziellen PlayList Eintrag zu erhalten
                 kann der folgende Code verwendet werden:
             </para>
-                <programlisting role="php"><![CDATA[<?php
-$playlistVideoFeed = $yt->getPlaylistVideoFeed($playlistEntry->getPlaylistVideoFeedUrl()); 
+                <programlisting role="php"><![CDATA[
+$feedUrl = $playlistEntry->getPlaylistVideoFeedUrl();
+$playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl); 
 ]]></programlisting>
         </sect3>
     </sect2> 
@@ -304,7 +303,7 @@ $playlistVideoFeed = $yt->getPlaylistVideoFeed($playlistEntry->getPlaylistVideoF
         <para>
             Um alle Einschreibungen für den Benutzer 'liz' zu erhalten kann der folgende Code verwendet werden:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $subscriptionFeed = $yt->getSubscriptionFeed('liz'); 
 
@@ -322,7 +321,7 @@ foreach ($subscriptionFeed as $subscriptionEntry) {
             für den Benutzer 'liz' zu erhalten kann der folgende Code verwendet werden: 
         </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $userProfile = $yt->getUserProfile('liz'); 
 echo "Benutzername: " . $userProfile->username->text . "\n";
@@ -413,7 +412,7 @@ echo "Heimatstadt: " . $userProfile->hometown->text . "\n";
             Benutzer zu verweisen.
         </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient);
 $myVideoEntry = new Zend_Gdata_YouTube_VideoEntry();
 
@@ -428,12 +427,13 @@ $myVideoEntry->setVideoDescription('My Test Movie');
 // Beachte das category eine gültige YouTube Kategorie sein muß !
 $myVideoEntry->setVideoCategory('Comedy');
 
-// Wenn Schlüsselwörter gesetzt werden muß darauf geachtet werden das es ein Komma getrennter String ist
-// und das jedes Schlüsselwort keine Leerzeichen enthalten darf
+// Setzt Keywords, beachte das es ein Komma getrennter String ist
+// und das keines der Schlüsselwörter ein Leerzeichen enthalten darf
 $myVideoEntry->SetVideoTags('cars, funny');
 
 // Optional Entwickler Tags setzen
-$myVideoEntry->setVideoDeveloperTags(array('mydevelopertag', 'anotherdevelopertag'));
+$myVideoEntry->setVideoDeveloperTags(array('mydevelopertag',
+                                           'anotherdevelopertag'));
 
 // Optional den Ort des Videos setzen
 $yt->registerPackage('Zend_Gdata_Geo');
@@ -444,13 +444,16 @@ $where->point = $yt->newGmlPoint($position);
 $myVideoEntry->setWhere($where);
 
 // URI hochladen für den aktuell authentifizierten Benutzer
-$uploadUrl = 'http://uploads.gdata.youtube.com/feeds/users/default/uploads';
+$uploadUrl =
+    'http://uploads.gdata.youtube.com/feeds/users/default/uploads';
 
 // Versuch das Video hochzuladen, eine Zend_Gdata_App_HttpException fangen wenn Sie vorhanden ist
 // oder nur eine reguläre Zend_Gdata_App_Exception
 
 try {
-    $newEntry = $yt->insertEntry($myVideoEntry, $uploadUrl, 'Zend_Gdata_YouTube_VideoEntry');
+    $newEntry = $yt->insertEntry($myVideoEntry,
+                                 $uploadUrl,
+                                 'Zend_Gdata_YouTube_VideoEntry');
 } catch (Zend_Gdata_App_HttpException $httpException) {
     echo $httpException->getRawResponseBody();
 } catch (Zend_Gdata_App_Exception $e) {
@@ -487,7 +490,9 @@ $yt = new Zend_Gdata_YouTube($httpClient);
 $myVideoEntry= new Zend_Gdata_YouTube_VideoEntry();
 $myVideoEntry->setVideoTitle('My Test Movie');
 $myVideoEntry->setVideoDescription('My Test Movie');
-$myVideoEntry->setVideoCategory('Comedy'); // Beachte das die Kategorie eine gültige YouTube Kategorie sein muß !
+
+// Beachte das die Kategorie eine gültige YouTube Kategorie sein muß !
+$myVideoEntry->setVideoCategory('Comedy');
 $myVideoEntry->SetVideoTags('cars, funny');
 
 $tokenHandlerUrl = 'http://gdata.youtube.com/action/GetUploadToken';
@@ -544,14 +549,17 @@ try {
 }
 
 if ($control instanceof Zend_Gdata_App_Extension_Control) {
-    if ($control->getDraft() != null && $control->getDraft()->getText() == 'yes') {
+    if ($control->getDraft() != null &&
+        $control->getDraft()->getText() == 'yes') {
         $state = $videoEntry->getVideoState();
 
         if ($state instanceof Zend_Gdata_YouTube_Extension_State) {
-            print 'Upload Status: '. $state->getName() .' '.  $state->getText();
+            print 'Upload Status: '
+                  . $state->getName()
+                  .' '.  $state->getText();
         } else {
-            print 'Die Status Informationen des Videos konnten bis jetzt nicht empfangen werden. ' .
-                  "Bitte versuchen Sie es etwas später nochmals.\n";
+            print 'Die Status Informationen des Videos konnten bis jetzt nicht empfangen'
+                  . " werden. Bitte versuchen Sie es etwas später nochmals.\n";
         }
     }
 }

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.auth.adapter.digest">
 
     <title>Digest Authentication</title>
@@ -89,10 +89,11 @@
             <code>authenticate()</code> gesetzt wurden.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Auth/Adapter/Digest.php';
-
-$adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+        <programlisting role="php"><![CDATA[
+$adapter = new Zend_Auth_Adapter_Digest($filename,
+                                        $realm,
+                                        $username,
+                                        $password);
 
 $result = $adapter->authenticate();
 
@@ -106,7 +107,8 @@ Array
     [realm] => Irgendein Bereich
     [username] => irgendeinBenutzer
 )
-*/]]>
+*/
+]]>
         </programlisting>
 
     </sect2>

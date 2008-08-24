@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9868 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -136,7 +136,7 @@
         </para>
         <example id="zend.http.client.adapters.socket.example-1">
             <title>Den Stream-Typen für eine HTTPS Verbindung einstellen</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Konfigurationsparameter setzen
 $config = array(
     'adapter'      => 'Zend_Http_Client_Adapter_Socket',
@@ -238,7 +238,7 @@ $response = $client->request();]]>
         </para>
         <example id="zend.http.client.adapters.proxy.example-1">
             <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Konfigurationsparameter setzen
 $config = array(
     'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
@@ -284,7 +284,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         </para>
         <example id="zend.http.client.adapters.test.example-1">
             <title>Testen gegen einen einfachen HTTP Response Stumpf</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Instanziere einen neuen Adapter und Client
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -323,7 +323,7 @@ $response = $client->request('GET');
         </para>
         <example id="zend.http.client.adapters.test.example-2">
             <title>Test mit mehreren HTTP-Antworten</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Instanzen vom Adapter und Client erzeugen
 $adapter = new Zend_Http_Client_Adapter_Test();
 $client = Zend_Http_Client('http://www.example.com', array(
@@ -384,7 +384,7 @@ $adapter->addResponse(
         </para>
         <example id="zend.http.client.adapters.extending.example-1">
             <title>Gerüst für einen eigenen Verbindungs-Adapter</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**

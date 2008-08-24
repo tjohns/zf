@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10648 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.form.i18n">
     <title>Internationalisierung von Zend_Form</title>
 
@@ -49,7 +49,7 @@
                     und verwenden es um eine Übersetzung und/oder Lokalisierung durchzuführen:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // verwende den 'Zend_Translate' Schlüssel; $translate ist ein Zend_Translate Objekt:
 Zend_Registry::set('Zend_Translate', $translate);
 ?>]]></programlisting>
@@ -66,7 +66,7 @@ Zend_Registry::set('Zend_Translate', $translate);
                     Übersetzungsobjekt in <code>Zend_Validate_Abstract</code> registriert werden:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Allen Prüfklassen mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll:
 Zend_Validate_Abstract::setDefaultTranslator($translate);
 ?>]]></programlisting>
@@ -79,7 +79,7 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
                     Fehlermeldungen:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Allen Form Klassen mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll,
 // sowie das der Adapter für die Übersetzung von Fehlermeldungen verwendet werden soll:
 Zend_Form::setDefaultTranslator($translate);
@@ -93,7 +93,7 @@ Zend_Form::setDefaultTranslator($translate);
                     <code>setTranslator()</code> Methode verwendet wird:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // *Dieser* Form Klassen mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll,
 // sie wird auch für die Übersetzung von allen Prüf-Fehlermeldungen für alle Elemente verwendet:
 $form->setTranslator($translate);

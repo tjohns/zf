@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8786 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.json.objects">
     <title>JSON Objects</title>
     <para>
@@ -24,7 +24,7 @@
         dekodieren. Wenn du allerdings wünscht, dass ein Objekt zurück gegeben wird, kannst du dies
         angeben:
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // Dekodiere JSON Objekte als PHP Objekte
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
     </programlisting>

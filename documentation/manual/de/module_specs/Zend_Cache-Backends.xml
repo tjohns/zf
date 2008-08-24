@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
 
@@ -287,8 +287,7 @@
             -- zwischen den Wörtern 'Zend' und 'Platform' definiert sein wenn die
             <code>Zend_Cache::factory()</code> Methode verwendet wird:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
         </programlisting>
         <para>
             Es gibt keine Optionen für dieses Backend.

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.log.overview">
     <title>Übersicht</title>
 
@@ -39,7 +39,7 @@
       <para>
         Um das protokollieren zu starten, muß ein Writer instanziert werden und einer Log Instanz übergeben werden:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $logger = new Zend_Log();
 $writer = new Zend_Log_Writer_Stream('php://output');
 
@@ -53,7 +53,7 @@ $logger->addWriter($writer);]]>
       <para>
         Alternativ kann ein Writer direkt dem Konstruktor von Log, als Abkürzung, übergeben werden:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);]]>
       </programlisting>
@@ -69,7 +69,7 @@ $logger = new Zend_Log($writer);]]>
         Um eine Nachricht zu protokollieren, muß die <code>log()</code> Methode einer Log Instanz aufgerufen werden
         und die Nachricht mit einer entsprechenden Priorität übergeben werden:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger->log('Informative Nachricht', Zend_Log::INFO);]]>
       </programlisting>
 
@@ -82,7 +82,7 @@ $logger->log('Informative Nachricht', Zend_Log::INFO);]]>
       Eine Abkürzung ist auch verfügbar. Statt dem Aufruf der <code>log()</code> Methode kann eine Methode des
       selben Namens wie die Priorität aufgerufen werden:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger->log('Informative Nachricht', Zend_Log::INFO);
 $logger->info('Informative Nachricht');
 
@@ -99,7 +99,7 @@ $logger->emerg('Notfall Nachricht');]]>
       gesetzt werden um es zu entfernen. Das wird automatisch die Instanzmethode <code>shutdown()</code> von jedem
       hinzugefügten Writer aufrufen bevor das Log Objekt entfernt wird:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger = null;]]>
       </programlisting>
 
@@ -152,14 +152,14 @@ DEBUG   = 7;  // Debug: Debug Nachrichten]]>
       Selbstdefinierte Prioritäten können wärend der Laufzeit hinzugefügt werden durch verwenden der
       <code>addPriority()</code> Methode des Log's:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger->addPriority('FOO', 8);]]>
       </programlisting>
 
       Das obige Codeschnipsel erstellt eine neue Priorität, <code>FOO</code>, dessen Wert <code>8</code> ist.
       Die neue Priorität steht für die Protokollierung zur Verfügung:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger->log('Foo Nachricht', 8);
 $logger->foo('Foo Nachricht');]]>
       </programlisting>
@@ -188,7 +188,7 @@ $logger->foo('Foo Nachricht');]]>
       Um ein neues Element für jedes zukünftige Event hinzuzufügen, muß die <code>setEventItem()</code>
       Methode aufgerufen werden wobei ein Schlüssel und ein Wert übergeben wird:
 
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
 $logger->setEventItem('pid', getmypid());]]>
       </programlisting>
 

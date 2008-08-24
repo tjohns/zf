@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8802 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.flickr">
     <title>Zend_Service_Flickr</title>
     <sect2 id="zend.service.flickr.introduction">
@@ -15,11 +15,7 @@
         </para>
         <example id="zend.service.flickr.introduction.example-1">
             <title>Simple Flickr Photo Suche</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
-$flickr = new Zend_Service_Flickr('MY_API_KEY');
-
+            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MY_API_KEY');
 $results = $flickr->tagSearch("php");
 
 foreach ($results as $result) {
@@ -67,11 +63,7 @@ foreach ($results as $result) {
                 In diesem Beispiel haben wir die E-Mail adresse eines Flickr Benutzers und wir holen uns die
                 öffentlichen Photos eines Benutzer durch Verwendung der <code>userSearch()</code> Methode:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
-$flickr = new Zend_Service_Flickr('MY_API_KEY');
-
+            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MY_API_KEY');
 $results = $flickr->userSearch($userEmail);
 
 foreach ($results as $result) {
@@ -89,11 +81,7 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
             <title>Empfangen von Photos aus einem Gruppenpool durch die Gruppen ID</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Service/Flickr.php';
-
-    $flickr = new Zend_Service_Flickr('MY_API_KEY');
-
+            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MY_API_KEY');
     $results = $flickr->groupPoolGetPhotos($groupId);
 
     foreach ($results as $result) {
@@ -122,11 +110,7 @@ foreach ($results as $result) {
                 Sobald man eine Flickr Bild ID hat, ist es eine einfache Angelegenheit, Informationen über
                 ein Bild zu bekommen:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
-$flickr = new Zend_Service_Flickr('MY_API_KEY');
-
+            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MY_API_KEY');
 $image = $flickr->getImageDetails($imageId);
 
 echo "Bild ID $imageId ist $image->width x $image->height Pixel groß.<br />\n";

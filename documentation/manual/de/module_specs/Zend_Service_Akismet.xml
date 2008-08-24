@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8503 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
 
@@ -39,10 +39,7 @@
             erhaltener Schlüssel aktiv ist, kann das mit dieser Methode gemacht werden.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Akismet.php';
-
-// Instanzieren mit dem API Schlüssel und einer URL zur Anwendung oder Ressource die verwendet wird
+        <programlisting role="php"><![CDATA[// Instanzieren mit dem API Schlüssel und einer URL zur Anwendung oder Ressource die verwendet wird
 $akismet = new Zend_Service_Akismet($apiKey, 'http://framework.zend.com/wiki/');
 if ($akismet->verifyKey($apiKey) {
 echo "Schlüssel ist gültig.\n";
@@ -159,8 +156,7 @@ echo "Schlüssel ist ungültig\n";
         <example id="zend.service.akismet.isspam.example-1">
             <title>Verwendung von isSpam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -199,8 +195,7 @@ if ($akismet->isSpam($data)) {
         <example id="zend.service.akismet.submitspam.example-1">
             <title>Verwendung von submitSpam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -236,8 +231,7 @@ $akismet->submitSpam($data));]]>
         <example id="zend.service.akismet.submitham.example-1">
             <title>Verwenden von submitHam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-$data = array(
+            <programlisting role="php"><![CDATA[$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',

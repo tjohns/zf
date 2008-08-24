@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7194 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.loader.load">
 
     <title>Dynamisches Laden von Dateien und Klassen</title>
@@ -35,7 +35,7 @@
 
         <example id="zend.loader.load.file.example">
             <title>Beispiel der loadFile() Methode</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
             </programlisting>
     </example>
@@ -80,7 +80,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
 
         <example id="zend.loader.load.class.example">
             <title>Beispiel der loadClass() Methode</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
@@ -130,7 +130,7 @@ Zend_Loader::loadClass('Container_Tree',
 
         <example id="zend.loader.load.isreadable.example">
             <title>Beispiel der isReadable() Methode</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // Mach was mit $filename
 }]]>
@@ -165,7 +165,7 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example">
             <title>Beispiel für das registrieren der Autoloader Callback Methode</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::registerAutoload();]]>
             </programlisting>
         </example>
@@ -198,7 +198,7 @@ Zend_Loader::registerAutoload();]]>
                 an die Elternklasse delegiert, ruft Sie die Methode des Namens in der Elternklasse und nicht
                 in der Subklasse auf.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)

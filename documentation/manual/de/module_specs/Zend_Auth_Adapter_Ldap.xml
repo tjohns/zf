@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9914 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP Authentifizierung</title>
@@ -35,29 +35,26 @@
             Um <code>Zend_Auth_Adapter_Ldap</code> Authentifizierung in eigene Anwendungen schnell
             einzubauen, selbst wenn <code>Zend_Controller</code> nicht verwendet wird, sollte das
             Fleisch des eigenen Codes in etwa wie folgt aussehen:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $username = $this->_request->getParam('username');
 $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-require_once 'Zend/Config/Ini.php';
-$config = new Zend_Config_Ini('../application/config/config.ini', 'production');
+$config = new Zend_Config_Ini('../application/config/config.ini', 
+                              'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
 unset($options['log_path']);
 
-require_once 'Zend/Auth/Adapter/Ldap.php';
-$adapter = new Zend_Auth_Adapter_Ldap($options, $username, $password);
+$adapter = new Zend_Auth_Adapter_Ldap($options, $username,
+                                      $password);
 
 $result = $auth->authenticate($adapter);
 
 if ($log_path) {
     $messages = $result->getMessages();
 
-    require_once 'Zend/Log.php';
-    require_once 'Zend/Log/Writer/Stream.php';
-    require_once 'Zend/Log/Filter/Priority.php';
     $logger = new Zend_Log();
     $logger->addWriter(new Zend_Log_Writer_Stream($log_path));
     $filter = new Zend_Log_Filter_Priority(Zend_Log::DEBUG);
@@ -88,7 +85,8 @@ if ($log_path) {
             über <emphasis>Server Optionen</emphasis> weiter unten. Es ist zu beachten das
             <code>Zend_Config_Ini</code> jeden Wert der mit Gleichheitszeichen (<code>=</code>)
             geschrieben wird auch unter Anführungszeichen gesetzt wird (wie unten bei DNs gezeigt).
-            <programlisting role="ini"><![CDATA[[production]
+            <programlisting role="ini"><![CDATA[
+[production]
 
 ldap.log_path = /tmp/ldap.log
 
@@ -108,7 +106,8 @@ ldap.server2.useSsl = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
-ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
+ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
+]]></programlisting>
             Die obige Konfiguration instruiert <code>Zend_Auth_Adapter_Ldap</code> das es versuchen
             soll Benutzer zuerst mit dem OpenLDAP Server <code>s0.foo.net</code> authentifizieren
             soll. Wenn die Authentifizierung auf irgendeinem Grund fehlschlägt, wird der AD Server
@@ -151,7 +150,8 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"]]></programlisting>
             Ausgabe von beispielhaften Optionsparameters die twei Sets von Serveroptionen für LDAP
             Server enthalten, <code>s0.foo.net</code> und <code>dc1.w.net</code> (die gleichen
             Optionen wie in der oberen INI Repräsentation): 
-            <programlisting role="output"><![CDATA[Array
+            <programlisting role="output"><![CDATA[
+Array
 (
     [server2] => Array
         (

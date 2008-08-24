@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8133 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.abstract">
     <title>Zend_View_Abstract</title>
 
@@ -27,7 +27,7 @@
         <code>Zend_View::_run()</code> folgendes:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 protected function _run()
 {
     include func_get_arg(0);

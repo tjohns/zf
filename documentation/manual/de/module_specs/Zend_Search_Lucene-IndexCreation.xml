@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10235 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
 
@@ -16,7 +16,7 @@
             Zend_Search_Lucene Programmierschnittstelle (API) indiziert werden kann:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Index erstellen
 $index = Zend_Search_Lucene::create('/data/my-index');
 
@@ -46,7 +46,7 @@ $index->addDocument($doc);]]>
             wird:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Öffnen einen vorhandenen Index
 $index = Zend_Search_Lucene::open('/data/my-index');
 
@@ -76,7 +76,7 @@ $index->addDocument($doc);]]>
             erhalten werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
@@ -102,7 +102,7 @@ foreach ($hits as $hit) {
              <code>Zend_Search_Lucene::numDocs()</code> gibt die Gesamtanzahl an nicht gelöschten Dokumenten zurück.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $indexSize = $index->count();
 $documents = $index->numDocs();]]>
         </programlisting>
@@ -112,7 +112,7 @@ $documents = $index->numDocs();]]>
             Dokument gelöscht ist.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "Dokument #$id ist gelöscht.\n";
@@ -156,7 +156,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             Eine komplette Indexoptimierung kann durch einen Aufruf von <code>Zend_Search_Lucene::optimize()</code>
             getriggert werden. Sie fügt alle Segmente in ein größeres zusammen.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Öffne bestehenden Index
 $index = new Zend_Search_Lucene('/data/my-index');
 
@@ -262,7 +262,7 @@ $index->optimize();]]>
         </para>
 
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Die aktuelle Datei Berechtigung erhalten
 $currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 

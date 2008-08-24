@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10857 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -31,8 +31,7 @@
 
             <title>Einen Zeilensatz lesen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
 
@@ -61,8 +60,7 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
 
             <title>Zeilen in einem Zeilensatz zählen</title>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $rowset   = $bugs->fetchAll("bug_status = 'FIXED'");
 
 $rowCount = count($rowset);
@@ -85,8 +83,7 @@ if ($rowCount > 0) {
                 enthält.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
 $row    = $rowset->current();]]></programlisting>
@@ -109,8 +106,7 @@ $row    = $rowset->current();]]></programlisting>
                 einem Eintrag in der Tabelle gehört.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $bugs = new Bugs();
 
 // Alle Zeilen aus der Tabelle lesen
@@ -148,7 +144,7 @@ foreach ($rowset as $row) {
                 verwenden um die Anzahl an Ergebnissen zu prüfen bevor eine Position gesucht wird.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $bugs = new Bugs();
 
 // Alle Einträge von der Tabelle holen
@@ -177,7 +173,7 @@ $row9->save();]]></programlisting>
                 eine Ausnahme geworfen. Hier ist ein Beispiel:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $bugs = new Bugs();
 
 // Alle Einträge von der Tabelle holen
@@ -212,8 +208,7 @@ $row9->save();]]></programlisting>
 
             <title>Benutzung von toArray()</title>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll();
 
@@ -256,8 +251,7 @@ foreach ($rowsetArray as $rowArray) {
                 Dieser repräsentiert das Zeilensatz-Objekt.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll();
 
@@ -286,8 +280,7 @@ $serializedRowset = serialize($rowset);
                 die eine Datenbankverbindung benötigen (beispielsweise Abfragen auf verwandte Tabellen).
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $rowsetDisconnected = unserialize($serializedRowset);
 
 // Jetzt können Objekt-Methoden und -Eigenschaften genutzt werden,
@@ -325,8 +318,7 @@ echo $row->bug_description;]]></programlisting>
 
             <title>Einen Zeilensatz als Live-Daten reaktivieren</title>
 
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 $rowset = unserialize($serializedRowset);
 
 $bugs = new Bugs();
@@ -363,8 +355,7 @@ $row->save();]]></programlisting>
 
         <example id="zend.db.table.rowset.extending.example">
             <title>Eine eigene Zeilensatz-Klasse angeben</title>
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 class MyRowset extends Zend_Db_Table_Rowset_Abstract
 {
     // ...Anpassungen
@@ -392,8 +383,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]></programlisting>
 
         <example id="zend.db.table.rowset.extending.example-aggregate">
             <title>Eine Zeilensatz-Klasse mit einer neuen Methode</title>
-            <programlisting role="php"><![CDATA[<?php
-
+            <programlisting role="php"><![CDATA[
 class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
 {
     /**

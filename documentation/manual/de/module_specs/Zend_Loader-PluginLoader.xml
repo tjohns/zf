@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7078 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -52,7 +52,7 @@ library/
             anzusprechen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
@@ -64,7 +64,7 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
             verwendet wird der dem Präfix folgt wie er definiert wurde als die Pfade hinzugefügt wurden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // lädt den 'FormText' Helfer:
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
@@ -98,7 +98,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
                 Plural, Pfade sind erlaubt) und als Parameter dem Kontruktor übergeben werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader(array(
     'Zend_View_Helper' => 'Zend/View/Helper/',
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
@@ -114,7 +114,7 @@ $loader = new Zend_Loader_PluginLoader(array(
             an den Konstruktor übergeben werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Speichere Plugins in der statischen Registry 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
 ?>]]></programlisting>
@@ -175,7 +175,7 @@ $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
             Typischerweise wird dieses in Verbindung mit <code>isLoaded()</code> verwendet:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));

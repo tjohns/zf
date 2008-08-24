@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8836 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Action Helfer</title>
 
@@ -43,8 +43,7 @@
                     Helfer Objekt wird zurückgegeben:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->getHelper('FlashMessenger');
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('Wir haben in der letzten Anfrage etwas getan');]]>
                 </programlisting>
             </listitem>
@@ -55,8 +54,7 @@ $flashMessenger->addMessage('Wir haben in der letzten Anfrage etwas getan');]]>
                     wie wenn er eine Teilnehmer Eigenschaft des Brokers wäre:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->FlashMessenger;
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('Wir haben in der letzten Anfrage etwas getan');]]>
                 </programlisting>
             </listitem>
@@ -68,8 +66,7 @@ $flashMessenger->addMessage('Wir haben in der letzten Anfrage etwas getan');]]>
                     wird <code>addMessage()</code> aufgerufen:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->FlashMessenger('Wir haben in der letzten Anfrage etwas getan');]]>
+                <programlisting role="php"><![CDATA[$this->_helper->FlashMessenger('Wir haben in der letzten Anfrage etwas getan');]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -97,8 +94,7 @@ $this->_helper->FlashMessenger('Wir haben in der letzten Anfrage etwas getan');]
             Um einen Helfer im Browser zu registrieren, kann <code>addHelper</code> verwendet werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
         </programlisting>
 
         <para>
@@ -115,8 +111,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
                     Benamung von Klassen im Zend Frameworks folgt.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Helfer mit vorangestelltem My_Action_Helpers in My/Action/Helpers/ hinzufügen
+                <programlisting role="php"><![CDATA[// Helfer mit vorangestelltem My_Action_Helpers in My/Action/Helpers/ hinzufügen
 Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
                 </programlisting>
             </listitem>
@@ -128,8 +123,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
                     die eigenen Klassenprefixes mit speziellen Verzeichnissen zu verbinden.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Helfer mit vorangestelltem Helper in Plugins/Helpers/ hinzufügen
+                <programlisting role="php"><![CDATA[// Helfer mit vorangestelltem Helper in Plugins/Helpers/ hinzufügen
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
                 </programlisting>
             </listitem>
@@ -145,8 +139,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
             werden, wobei <code>$name</code> der Kurzname des Helfers ist (ohne das Prefix):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Prüft ob der 'redirector' Helfer im Broker registriert ist:
+        <programlisting role="php"><![CDATA[// Prüft ob der 'redirector' Helfer im Broker registriert ist:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Der Redirector Helfer ist registriert';
 }]]>
@@ -168,8 +161,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             Helfers (ohne den Präfix) ist.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Prüfe ob der 'redirector' Helfer im Broker registriert ist und holt Ihn:
+        <programlisting role="php"><![CDATA[// Prüfe ob der 'redirector' Helfer im Broker registriert ist und holt Ihn:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
@@ -184,8 +176,7 @@ $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector')
             ist (ohne den Prefix):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Wenn vorhanden, entferne den 'redirector' Helfer vom Broker:
+        <programlisting role="php"><![CDATA[// Wenn vorhanden, entferne den 'redirector' Helfer vom Broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
 }]]>
@@ -299,8 +290,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             einen Alias von <code>goto()</code> und erlaubt damit die Verwendung des Helfers wie folgt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Umleiten zu /blog/view/item/id/42
+        <programlisting role="php"><![CDATA[// Umleiten zu /blog/view/item/id/42
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
         </programlisting>
 

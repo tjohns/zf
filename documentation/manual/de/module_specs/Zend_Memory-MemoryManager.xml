@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10289 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.memory.memory-manager">
     <title>Memory Manager</title>
 
@@ -24,7 +24,7 @@
             Array für die Optionen des Backends.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $backendOptions = array(
     'cache_dir' => './tmp/' // Verzeichnis in welchem die geswappten Memory Blöcke abgelegt werden
 );
@@ -41,7 +41,7 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
             Der spezielle Name '<code>None</code>' kann als Backend Name verwendet werden,
             zusätzlich zu den Standard Zend_Cache Backends.
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');]]>
             </programlisting>
         </para>
@@ -77,7 +77,7 @@ $memoryManager = Zend_Memory::factory('None');]]>
                 Verschiebbare Objekte (Objekte, welche verschoben werden können)
                 können erstellt werden mit Hilfe der
                 <code>Zend_Memory_Manager::create([$data])</code> Methode:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);]]>
                 </programlisting>
 
@@ -99,7 +99,7 @@ $memObject = $memoryManager->create($data);]]>
                 Verschlüsselte Objekte (Objekte, welche niemals getauscht werden) können
                 erstellt werden mit Hilfe der
                 <code>Zend_Memory_Manager::createLocked([$data])</code> Methode:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);]]>
                 </programlisting>
             </para>
@@ -120,7 +120,7 @@ $memObject = $memoryManager->createLocked($data);]]>
                 Memory Objekte werden automatische vernichtet und vom Speicher
                 entfernt wenn sie ausserhalb des Bereichs sind:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 function foo()
 {
     global $memoryManager, $memList;
@@ -177,7 +177,7 @@ function foo()
                 Das Memory Limit kann empfangen oder gesetzt werden durch Verwendung
                 der <code>getMemoryLimit()</code> und <code>setMemoryLimit($newLimit)</code>
                 Methoden:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // Memory Limit in Bytes empfangen
 $memoryManager->setMemoryLimit($newLimit);     // Das Memory Limit in Bytes setzen]]>
                 </programlisting>
@@ -210,7 +210,7 @@ $memoryManager->setMemoryLimit($newLimit);     // Das Memory Limit in Bytes setz
                 Man kann die minimale Größe empfangen oder setzen durch Verwendung der
                 <code>getMinSize()</code> und <code>setMinSize($newSize)</code>
                 Methoden:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // MinSize in Bytes empfangen
 $memoryManager->setMinSize($newSize);        // MinSize Limit in Bytes setzen]]>
                 </programlisting>

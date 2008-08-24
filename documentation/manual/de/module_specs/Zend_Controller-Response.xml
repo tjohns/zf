@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7935 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.response">
     <title>Das Response Objekt</title>
 
@@ -37,8 +37,7 @@ $response->sendResponse();]]>
                 <code>Zend_Controller_Front::returnResponse(true)</code> geändert werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 
 // ein bischen mehr verarbeiten, wie z.B. loggen...
@@ -234,8 +233,7 @@ $front->dispatch();]]>
             <code>postDispatch()</code> Hook einen Footer hinzufügen zu lassen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Angenommen diese Plugin Klasse ist im Front Controller registriert
+        <programlisting role="php"><![CDATA[// Angenommen diese Plugin Klasse ist im Front Controller registriert
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -272,8 +270,7 @@ class MyController extends Zend_Controller_Action
             Objekts mit der folgenden Struktur verursachen:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-array(
+        <programlisting role="php"><![CDATA[array(
     'header'  => ..., // Header Inhalt
     'default' => ..., // Body Inhalt von MyController::fooAction()
     'footer'  => ...  // Footer Inhalt

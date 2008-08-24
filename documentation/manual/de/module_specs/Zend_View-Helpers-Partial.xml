@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10330 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -143,7 +143,7 @@ $view->partialLoop()->setObjectKey('model');
             Und das folgende "Modell":
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $model = array(
     array('key' => 'Säugetier', 'value' => 'Kamel'),
     array('key' => 'Vogel', 'value' => 'Pinguin'),

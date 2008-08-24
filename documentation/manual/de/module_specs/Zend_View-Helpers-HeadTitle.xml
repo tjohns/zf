@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7187 -->
+<!-- EN-Revision: 10934 -->
 <sect3 id="zend.view.helpers.initial.headtitle">
     <title>HeadTitle Helfer</title>
 
@@ -28,7 +28,7 @@
             Ressourcen.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php 
+        <programlisting role="php"><![CDATA[
 // Setzen des Kontroller und Aktion Namens als Titel Segment:
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())

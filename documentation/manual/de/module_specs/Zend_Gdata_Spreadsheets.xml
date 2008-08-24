@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6396 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.spreadsheets">
     <title>Google Tabellenkalkulation verwenden</title>
 
@@ -33,7 +33,7 @@
             Tabellenkalkulationen enthält die mit dem authentifizierten Benutzer authentifiziert sind.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $service = Zend_Gdata_Spreadsheets::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $spreadsheetService = new Zend_Gdata_Spreadsheets($client);
@@ -55,7 +55,7 @@ $feed = $spreadsheetService->getSpreadsheetFeed();]]>
             Tabellenkalkulation assoziiert sind.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $feed = $spreadsheetService->getWorksheetFeed($query);]]>
@@ -116,7 +116,7 @@ $feed = $spreadsheetService->getWorksheetFeed($query);]]>
                 Methode des Tabellenkalkulations Services verwendet werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
@@ -135,7 +135,7 @@ $listFeed = $spreadsheetService->getListFeed($query);]]>
                 welches die Daten für die Zeile enthält. Dieses Array kann extrahiert und angezeigt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $rowData = $listFeed->entries[1]->getCustom();
 foreach($rowData as $customEntry) {
   echo $customEntry->getColumnName() . " = " . $customEntry->getText();
@@ -148,7 +148,7 @@ foreach($rowData as $customEntry) {
                 speziellen Header zuzugreifen:
             </para>
             
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
 echo $customEntry->getColumnName() . " = " . $customEntry->getText();]]>
             </programlisting>
@@ -164,7 +164,7 @@ echo $customEntry->getColumnName() . " = " . $customEntry->getText();]]>
                 <code>Zend_Gdata_Spreadsheets_ListQuery</code> Objektes auf true gesetzt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
@@ -192,7 +192,7 @@ $listFeed = $spreadsheetService->getListFeed($query);]]>
                 wie folgt gesetzt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
@@ -209,7 +209,7 @@ $listFeed = $spreadsheetService->getListFeed($query);]]>
                 <code>insertRow</code> Methode des Tabellenkalkulations Services.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $worksheetId);]]>
             </programlisting>
 
@@ -234,7 +234,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
                 aktualisiert werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $updatedListEntry = $spreadsheetService->updateRow($oldListEntry, $newRowData);]]>
             </programlisting>
 
@@ -256,7 +256,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry, $newRowData);]
                 gelöscht werden soll:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $spreadsheetService->deleteRow($listEntry);]]>
             </programlisting>
 
@@ -264,7 +264,7 @@ $spreadsheetService->deleteRow($listEntry);]]>
                 Alternativ kann die <code>delete</code> Methode des Eintrags selbst aufgerufen werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $listEntry->delete();]]>
             </programlisting>
         </sect3>
@@ -291,7 +291,7 @@ $listEntry->delete();]]>
                 Tabellenkalkulations Services verwendet werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
@@ -306,7 +306,7 @@ $cellFeed = $spreadsheetService->getCellFeed($query);]]>
                 repräsentiert. Diese Information kann angezeigt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 foreach($cellFeed as $cellEntry) {
   $row = $cellEntry->cell->getRow();
   $col = $cellEntry->cell->getColumn();
@@ -325,7 +325,7 @@ foreach($cellFeed as $cellEntry) {
                 Zellen Feed abfragen der nur diese Spalte enthält und geht hierbei wie folgt vor:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setMinCol(1);
 $query->setMaxCol(1);
@@ -346,7 +346,7 @@ $feed = $spreadsheetService->getCellsFeed($query);]]>
                 dem neuen Wert der Zelle, aufgerufen werden.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreadsheetKey, $worksheetId);]]>
             </programlisting>
 

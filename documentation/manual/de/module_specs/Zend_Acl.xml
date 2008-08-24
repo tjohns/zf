@@ -1,11 +1,11 @@
-<!-- EN-Revision: 9112 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.acl.introduction">
     <title>Einführung</title>
 
     <para>
-        Zend_Acl stellt Funktionalitäten für leichtgewichtige und flexible Zugriffskontrolllisten
-        (englisch "access control list", ACL) sowie die Rechteverwaltung bereit. Im Allgemeinen
-        kann eine Anwendung derartige Funktionalitäten verwenden, um den Zugriff auf bestimmte,
+        Zend_Acl stellt eine Implementation von leichtgewichtigen und flexiblen Zugriffskontrolllisten
+        (englisch "access control list", ACL) für die Rechteverwaltung bereit. Im Allgemeinen
+        kann eine Anwendung derartige ACL's verwenden, um den Zugriff auf bestimmte,
         geschützte Objekte durch andere anfordernde Objekte zu kontrollieren.
     </para>
 
@@ -28,59 +28,54 @@
         </itemizedlist>
 
         Einfach ausgedrückt, <emphasis role="strong">fordern Rollen den Zugriff auf Ressourcen an</emphasis>.
-        Wenn z.B. eine Person den Zugriff auf ein Auto anfordert, ist die Person die anfordernde
-        Rolle und das Auto die Ressource, weil der Zugriff auf das Auto kontrolliert wird.
+        Wenn z.B. ein Parkplatzhalter den Zugriff auf ein Auto anfordert, ist der Parkplatzhalter die anfordernde
+        Rolle und das Auto die Ressource, weil der Zugriff auf das Auto nicht jedem erlaubt ist.
     </para>
 
     <para>
-        Durch die Spezifikation und die Verwendung einer Zugriffskontrollliste (ACL) kann eine
-        Anwendung kontrollieren, wie anfordernde Objekte (Rollen) den Zugriff auf geschützte
-        Objekte eingeräumt bekommen.
+        Durch die Spezifikation und die Verwendung einer ACL kann eine Anwendung kontrollieren, wie
+        Rollen den Zugriff auf Ressourcen eingeräumt bekommen.
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
         <title>Über Ressourcen</title>
         <para>
-            In Zend_Acl ist das Erstellen einer Ressource sehr einfach. Zend_Acl stellt das
-            <code>Zend_Acl_Resource_Interface</code> bereit, um Entwicklern das Erstellen von
-            Ressourcen zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das
+            Das Erstellen einer Ressource ist in Zend_Acl sehr einfach. Zend_Acl stellt die Ressource
+            <code>Zend_Acl_Resource_Interface</code> bereit, um das Erstellen von Ressourcen in
+            Anwendungen zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das
             nur aus einer einzelnen Methode, <code>getResourceId()</code>, besteht, damit Zend_Acl
             das Objekt als Ressource erkennen kann. Zusätzlich ist <code>Zend_Acl_Resource</code>
-            in Zend_Acl als einfache Ressourcen Implementation enthalten, damit Entwickler sie bei
-            Bedarf erweitern können.
+            in Zend_Acl als einfache Ressourcen Implementation enthalten, damit Entwickler sie wenn nötig
+            erweitern können.
         </para>
         <para>
-            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressourcen (oder "Bereiche
-            unter Zugriffskontrolle") aufgenommen werden können. Weil Ressourcen in solch einer
-            Baumstruktur abgelegt werden, können sie vom Allgemeinen (von der Baumwurzel) bis zum
-            Speziellen (zu den Baumblättern) organisiert werden. Abfragen für eine bestimmte
-            Ressource durchsuchen automatisch die Ressourcenhierarchie nach Regeln, die einer
-            übergeordneten Ressource zugeordnet wurden, um die einfache Vererbung von Regeln zu
+            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressourcen aufgenommen werden können.
+            Weil Ressourcen in solch einer Baumstruktur abgelegt werden, können sie vom Allgemeinen
+            (von der Baumwurzel) bis zum Speziellen (zu den Baumblättern) organisiert werden. Abfragen
+            auf einer bestimmten Ressource durchsuchen automatisch die Ressourcenhierarchie nach Regeln,
+            die einer übergeordneten Ressource zugeordnet wurden, um die einfache Vererbung von Regeln zu
             ermöglichen. Wenn zum Beispiel eine Standardregel für jedes Gebäude einer Stadt gelten
             soll, würde man diese Regel einfach der Stadt zuordnen, anstatt die selbe Regel jedem
             Gebäude zuzuordnen. Einige Gebäude können dennoch Ausnahmen zu solch einer Regel
             erfordern, und dies kann in Zend_Acl einfach durch die Zuordnung solcher Ausnahmeregeln
-            to jedem der Gebäude erreicht werden, die eine Ausnahme zu der Regel erfordern. Eine
-            Ressource kann nur von einer einziger übergeordneten Ressource erben, obwohl diese
-            übergeordnete Ressource seine eigenen übergeordneten Ressourcen haben kann, und so
-            weiter.
+            zo jedem der Gebäude erreicht werden, die eine Ausnahme erfordern. Eine Ressource kann nur
+            von einer einziger übergeordneten Ressource erben, obwohl diese übergeordnete Ressource
+            seine eigenen übergeordneten Ressourcen haben kann, und so weiter.
         </para>
         <para>
-            Zend_Acl unterstützt außerdem Rechte für Ressourcen (z.B. "erstellen", "lesen",
-            "aktualisieren", "löschen") und der Entwickler kann Regeln zuordnen, die alle Rechte
-            oder bestimmte Rechte der Ressource beeinflussen.
+            Zend_Acl unterstützt außerdem Rechte auf Ressourcen (z.B. "erstellen", "lesen",
+            "aktualisieren", "löschen") damit der Entwickler Regeln zuordnen kann, die alle Rechte
+            oder bestimmte Rechte von einer oder mehreren Ressourcen beeinflussen.
         </para>
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
         <title>Über Rollen</title>
         <para>
-            Ähnlich wie bei den Ressourcen ist auch das Erstellen einer Rolle sehr einfach. Zend_Acl
-            stellt das <code>Zend_Acl_Role_Interface</code> bereit, um Entwicklern das Erstellen von
-            Rollen  zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das nur
-            aus einer einzelnen Methode, <code>getRoleId()</code>, besteht, damit Zend_Acl das
-            Objekt als Rolle erkennen kann. Zusätzlich ist <code>Zend_Acl_Role</code> in Zend_Acl
-            als einfache Rollen Implementation enthalten, damit Entwickler sie bei Bedarf erweitern
+            Wie bei den Ressourcen, ist auch das Erstellen einer Rolle sehr einfach. Alle Rollen müssen
+            <code>Zend_Acl_Role_Interface</code> implementieren. Dieses Interface besteht aus einer
+            einzelnen Methode, <code>getRoleId()</code>, zusätzlich wird <code>Zend_Acl_Role</code> von
+            Zend_Acl als einfache Rollen Implementation angeboten, damit Entwickler sie bei Bedarf erweitern
             können.
         </para>
         <para>
@@ -108,11 +103,12 @@
                 die Rollen, von denen die abgefragte Rolle erbt (hier "<code>guest</code>",
                 "<code>member</code>" und "<code>admin</code>"):
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
+            <programlisting role="php"><![CDATA[
+
+
+
 $acl = new Zend_Acl();
 
-require_once 'Zend/Acl/Role.php';
 $acl->addRole(new Zend_Acl_Role('guest'))
     ->addRole(new Zend_Acl_Role('member'))
     ->addRole(new Zend_Acl_Role('admin'));
@@ -120,7 +116,6 @@ $acl->addRole(new Zend_Acl_Role('guest'))
 $parents = array('guest', 'member', 'admin');
 $acl->addRole(new Zend_Acl_Role('someUser'), $parents);
 
-require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('someResource'));
 
 $acl->deny('guest', 'someResource');
@@ -168,14 +163,12 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]>
         <para>
             Eine Zugriffskontrollliste (im weiteren Verlauf nur ACL genannt) kann jeden gewünschten
             Satz von körperlichen oder virtuellen Objekten repräsentieren. Zu Demonstrationszwecken
-            werden wir eine grundlegende ACL für ein Redaktionssystem erstellen, die mehrere
+            werden wir eine grundlegende ACL für ein Redaktionssystem (CMS) erstellen, die mehrere
             Schichten von Gruppen über eine Vielzahl von Bereichen verwaltet soll. Um ein ACL
             Objekt zu erstellen, instanzieren wir die ACL ohne Parameter:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();]]>
         </programlisting>
 
@@ -192,7 +185,7 @@ $acl = new Zend_Acl();]]>
         <title>Rollen registrieren</title>
 
         <para>
-            Redaktionssysteme (CMS) brauchen fast immer eine Hierarchie von Genehmigungen, um die
+            CMS brauchen fast immer eine Hierarchie von Genehmigungen, um die
             Autorenfähigkeiten seiner Benutzer festzulegen. Es kann eine 'Guest' Gruppe geben, um
             beschränkten Zugriff zur Demonstration zu ermöglichen, eine 'Staff' Gruppe für die
             Mehrheit der CMS Nutzer, welche die meisten der alltäglichen Aufgaben erledigen, eine
@@ -247,14 +240,10 @@ $acl = new Zend_Acl();]]>
             können zur Rollenregistrierung wie folgt hinzugefügt werden:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
 
 // Fügt Gruppen zur Rollenregistrierung hinzu unter Verwendung von Zend_Acl_Role
-require_once 'Zend/Acl/Role.php';
-
 // Gast erbt keine Zugriffsrechte
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -262,9 +251,10 @@ $acl->addRole($roleGuest);
 // Mitarbeiter erbt von Gast
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
-/* alternativ kann das obige wie folgt geschrieben werden:
+/*
+Alternativ kann das obige wie folgt geschrieben werden:
 $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
-//*/
+*/
 
 // Redakteur erbt von Mitarbeiter
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
@@ -301,12 +291,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]>
             definieren. Um die grundlegenden Genehmigungen von oben anzugeben:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-
-require_once 'Zend/Acl/Role.php';
 
 $roleGuest = new Zend_Acl_Role('guest');
 $acl->addRole($roleGuest);
@@ -317,7 +303,8 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
 // Gäste dürfen Inhalte nur sehen
 $acl->allow($roleGuest, null, 'view');
 
-/* alternativ kann das obige wie folgt geschrieben werden:
+/*
+Alternativ kann das obige wie folgt geschrieben werden:
 $acl->allow('guest', null, 'view');
 */
 
@@ -348,30 +335,39 @@ $acl->allow('administrator');]]>
             durchzuführen ist recht einfach mit Hilfe der <code>isAllowed()</code> Methode:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('guest', null, 'view') ?
-     "allowed" : "denied"; // erlaubt
+     "allowed" : "denied";
+// erlaubt
 
 echo $acl->isAllowed('staff', null, 'publish') ?
-     "allowed" : "denied"; // verweigert
+     "allowed" : "denied";
+// verweigert
 
 echo $acl->isAllowed('staff', null, 'revise') ?
-     "allowed" : "denied"; // erlaubt
+     "allowed" : "denied";
+// erlaubt
 
 echo $acl->isAllowed('editor', null, 'view') ?
-     "allowed" : "denied"; // erlaubt wegen der Vererbung von Gast
+     "allowed" : "denied";
+// erlaubt wegen der Vererbung von Gast
 
 echo $acl->isAllowed('editor', null, 'update') ?
-     "allowed" : "denied"; // verweigert, weil es keine erlaubte Regel für 'update' gibt
+     "allowed" : "denied";
+// verweigert, weil es keine erlaubte Regel für 'update' gibt
 
 echo $acl->isAllowed('administrator', null, 'view') ?
-     "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben
+     "allowed" : "denied";
+// erlaubt, weil Administrator alle Rechte haben
 
 echo $acl->isAllowed('administrator') ?
-     "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben
+     "allowed" : "denied";
+// erlaubt, weil Administrator alle Rechte haben
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben]]>
+     "allowed" : "denied";
+// erlaubt, weil Administrator alle Rechte haben
+]]>
         </programlisting>
 
     </sect2>

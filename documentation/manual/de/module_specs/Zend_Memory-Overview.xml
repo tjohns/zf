@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8850 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.memory.overview">
     <title>Übersicht</title>
 
@@ -36,9 +36,7 @@
                 <code>Zend_Memory::factory()</code> instantiiert das Speichermanager
                 Objekt mit den definierten Backend Optionen.
             </para>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Memory.php';
-
+                <programlisting role="php"><![CDATA[
 $backendOptions = array(
     'cache_dir' => './tmp/' // Verzeichnis in welches die getauschten Speicherblöcke geschrieben werden
 );
@@ -59,7 +57,8 @@ echo $loadedFiles[$index1]->value;
 
 $loadedFiles[$index2]->value = $newValue;
 
-$loadedFiles[$index3]->value[$charIndex] = '_';]]>
+$loadedFiles[$index3]->value[$charIndex] = '_';
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -113,7 +112,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]>
                 Es kann mit <code>Wert</code> Attributen wie auch mit
                 Objekt Eigenschaften gearbeitet werden.
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;

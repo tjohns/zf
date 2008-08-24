@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5634 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.filter.introduction">
 
     <title>Einführung</title>
@@ -53,9 +53,7 @@
             Nachfolgend ist ein grundsätzliches Beispiel der Verwendung eines Filters über zwei Eingabedaten,
             einem Undzeichen (<code>&amp;</code>) und einem Hochkommazeichen (<code>&quot;</code>):
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter/HtmlEntities.php';
-
+            <programlisting role="php"><![CDATA[
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
@@ -78,11 +76,7 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             Zend_Filter Namensraum, entspricht. Die <code>get()</code> Methode läde die Klasse automatisch, erstellt
             eine Instanz, und führt die Eingabedaten der <code>filter()</code> Methode zu.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-
-echo Zend_Filter::get('&', 'HtmlEntities');]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[echo Zend_Filter::get('&', 'HtmlEntities');]]></programlisting>
 
         </para>
 
@@ -90,11 +84,7 @@ echo Zend_Filter::get('&', 'HtmlEntities');]]>
             Es kann auch ein Array von Konstruktor Argumenten übergeben werden, wen diese für die Filterklasse
             benötigt werden.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-
-echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]></programlisting>
 
         </para>
 

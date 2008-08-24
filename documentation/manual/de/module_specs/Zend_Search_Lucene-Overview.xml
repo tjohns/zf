@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10666 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -80,7 +80,7 @@
                 Methoden zum Erstellen mit unterschiedlichen Charakteristika bereit:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 
 // Feld wird nicht in Token aufgeteilt, aber indiziert und im Index
@@ -115,7 +115,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                 Die Codierung kann für unterschiedliche Dokumente verschieden sein genauso wie für unterschiedliche
                 Felder innerhalb eines Dokuments:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
@@ -125,7 +125,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
             <para>
                 Wenn der encoding Parameter nicht angegeben wurde, wird das aktuelle Gebietsschema wärend der
                 Verarbeitungzeit verwendet. Zum Beispiel:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
@@ -265,7 +265,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
         <para>
             Zend_Search_Lucene bietet ein HTML Parsing Feature. Dokumente können direkt von einer HTML Datei oder
             String erzeugt werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
 ...
@@ -313,7 +313,7 @@ $index->addDocument($doc);]]>
 
         <para>
             Analysierte Dokumente können durch den Programmierer mit jedem anderen Feld ausgegeben werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
                                                    time()));
@@ -329,7 +329,7 @@ $index->addDocument($doc);]]>
             Dokument-Links sind im erstellten Dokument nicht enthalten, können aber mit den
             <code>Zend_Search_Lucene_Document_Html::getLinks()</code> und
             <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code> Methoden empfangen werden:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();]]>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC Ausnahmen</title>
 
@@ -70,8 +70,7 @@
                     des Error Handler Plugin's, man diese Ausnahmen selbst behandeln will. Als Beispiel: 
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->throwExceptions(true);
+                <programlisting role="php"><![CDATA[$front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
@@ -113,8 +112,7 @@ try {
                     empfangen wird. Als Beispiel:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+                <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
@@ -164,10 +162,10 @@ if ($response->isException()) {
                             Anweisung hinzufügen:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);
+                        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
 
 // oder
+
 $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                         </programlisting>
 
@@ -208,8 +206,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             <code>__call()</code> Methode überschreiben. Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_Action extends Zend_Controller_Action
+                        <programlisting role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -236,8 +233,7 @@ class My_Controller_Action extends Zend_Controller_Action
                             existiert. Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+                        <programlisting role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
     {
@@ -302,8 +298,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
-class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+                        <programlisting role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {

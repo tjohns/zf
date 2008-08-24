@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6381 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata Ausnahmen auffangen</title>
 
@@ -8,7 +8,7 @@
         Zend_Gdata_App_Exception aufgefangen wird.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
@@ -73,7 +73,7 @@ try {
         Zend_Gdata geworfen werden.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 try {
     $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.server.reflection">
     <title>Zend_Server_Reflection</title>
 
@@ -25,8 +25,7 @@
             Die grundlegende Verwendung ist einfach:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Server/Reflection.php';
+        <programlisting role="php"><![CDATA[
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
 
@@ -52,7 +51,8 @@ foreach ($prototypes as $prototype) {
 // Erhalte Namensraum für eine Klasse, Funktion oder Methode.
 // Namensräume können zum Zeitpunkt der Instanzierung gesetzt werden (zweites Argument) oder durch
 // Verwendung von setNamespace()
-$reflection->getNamespace();]]>
+$reflection->getNamespace();
+]]>
         </programlisting>
 
         <para>

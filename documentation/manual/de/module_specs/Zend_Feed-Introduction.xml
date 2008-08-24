@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.feed.introduction">
     <title>Einführung</title>
     <para>
@@ -36,9 +36,7 @@
 
     <example id="zend.feed.introduction.example.rss">
         <title>Zend_Feed für die Verarbeitung von RSS Feed Daten verwenden</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Feed.php';
-
+        <programlisting role="php"><![CDATA[
 // hole die neuesten Slashdot Schlagzeilen
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');

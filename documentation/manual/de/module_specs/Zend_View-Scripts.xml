@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8134 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
@@ -22,7 +22,9 @@
         Zur Erinnerung hier noch einmal das Beispiel View Skript aus der Zend_View Einführung.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    <programlisting role="php"><![CDATA[
+<?php if ($this->books): ?>
+
     <!-- Eine Tabelle mit einigen Büchern. -->
     <table>
         <tr>
@@ -62,7 +64,7 @@
             Zend_View stellt eine Methode escape() bereit, die das Maskieren für dich übernimmt.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // schlechte View Skript Praxis:
 echo $this->variable;
 
@@ -77,7 +79,7 @@ echo $this->escape($this->variable);]]>
             Zend_View mitzuteilen, welche Maskierungsmöglichkeit als Callback verwendet werden soll.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // erstelle eine Zend_View Instanz
 $view = new Zend_View();
 
@@ -124,7 +126,7 @@ echo $view->render(...);]]>
                 und anzupassen, z.B. für eine PHPLIB-style Template. Das Viewskript für solch eine
                 Aufgabe könnte so aussehen:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -240,9 +242,6 @@ public function render($name);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-require_once 'Zend/View/Interface.php';
-require_once 'Smarty.class.php';
-
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**

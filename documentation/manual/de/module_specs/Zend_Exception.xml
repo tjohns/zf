@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.exception.using">
 
     <title>Verwenden von Ausnahmen</title>
@@ -11,7 +11,7 @@
 
     <example id="zend.exception.using.example">
         <title>Beispiel für das Fangen einer Ausnahme</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {

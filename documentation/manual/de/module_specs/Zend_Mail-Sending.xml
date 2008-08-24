@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.sending">
     <title>Versand über SMTP</title>
     <para>
@@ -9,10 +9,10 @@
     </para>
     <example id="zend.mail.sending.example-1">
         <title>E-Mail Versand über SMTP</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail/Transport/Smtp.php';
+        <programlisting role="php"><![CDATA[
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);]]>
+Zend_Mail::setDefaultTransport($tr);
+]]>
         </programlisting>
     </example>
     <para>

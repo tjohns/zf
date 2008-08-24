@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6450 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.validate.writing_validators">
 
     <title>Schreiben von Prüfern</title>
@@ -53,9 +53,7 @@
             Das folgende Beispiel demonstriert wie ein sehr einfacher eigener Prüfer geschrieben werden könnte.
             In diesem Fall sind die Prüfregeln sehr einfach und der Eingabewert muß ein Gleitkommawert sein.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_Float extends Zend_Validate_Abstract
 {
     const FLOAT = 'float';
@@ -75,7 +73,8 @@ class MyValid_Float extends Zend_Validate_Abstract
 
         return true;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Die Klasse definiert ein Template für Ihre einzige Nachricht bei Prüfungsfehlern, welche den eingebauten
@@ -113,9 +112,7 @@ class MyValid_Float extends Zend_Validate_Abstract
         <para>
             Diese Gründe für fehlgeschlagene Prüfungen werden in Definitionen der Klasse übersetzt:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_NumericBetween extends Zend_Validate_Abstract
 {
     const MSG_NUMERIC = 'msgNumeric';
@@ -157,7 +154,8 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
         return true;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Die öffentlichen Eigenschaften <code>$minimum</code> und <code>$maximum</code> wurden eingeführt um
@@ -207,9 +205,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
         <para>
             Die folgende Klasse impementiert diese Prüfkriterien:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_PasswordStrength extends Zend_Validate_Abstract
 {
     const LENGTH = 'length';

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7450 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.validate.introduction">
 
     <title>Einführung</title>
@@ -66,9 +66,7 @@
         <para>
             Das folgende Beispiel zeigt die Prüfung einer E-Mail Adresse:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress();
 
 if ($validator->isValid($email)) {
@@ -82,7 +80,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $messageId => $message) {
         echo "Validation failure '$messageId': $message\n";
     }
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -123,9 +122,7 @@ if ($validator->isValid($email)) {
         </para>
 
         <para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/StringLength.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
@@ -137,7 +134,8 @@ if (!$validator->isValid('word')) {
     echo $messages[0];
 
     // Ausgabe von "Der String 'word' ist zu kurz; er muss mindestens 8 Zeichen sein"
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -145,15 +143,14 @@ if (!$validator->isValid('word')) {
             Es können mehrere Nachrichten gesetzt werden durch Verwendung der <code>setMessages()</code>
             Methode. Dessen Argument ist ein Array welches Schlüssel/Nachrichten Paare enthält.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/StringLength.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => 'Der String \'%value%\' ist zu kurz',
     Zend_Validate_StringLength::TOO_LONG  => 'Der String \'%value%\' ist zu lang'
-));]]>
+));
+]]>
             </programlisting>
 
         </para>
@@ -166,9 +163,7 @@ $validator->setMessages( array(
             der Wert der als Argument von <code>isValid()</code> definiert wurde. Andere
             Eigenschaften können von Fall zu Fall in jeder Prüfklasse unterstützt werden.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/StringLength.php';
-
+            <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8, 12);
 
 if (!validator->isValid('word')) {
@@ -179,7 +174,8 @@ if (!validator->isValid('word')) {
         . ' und '
         . $validator->max
         . "\n";
-}]]>
+}
+]]>
             </programlisting>
         </para>
 
@@ -199,12 +195,11 @@ if (!validator->isValid('word')) {
             Methode lädt die Klasse automatisch, erstellt eine Instanz und wendet die
             <code>isValid()</code> Methode an den Eingabedaten an.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate.php';
-
+            <programlisting role="php"><![CDATA[
 if (Zend_Validate::is($email, 'EmailAddress')) {
     // Ja, die Email Adresse scheint gültig zu sein
-}]]>
+}
+]]>
             </programlisting>
 
         </para>
@@ -213,12 +208,11 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
             Es kann auch ein Array von Konstruktor Argumenten übergeben werden, wenn diese für die
             Prüfung benötigt werden.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate.php';
-
+            <programlisting role="php"><![CDATA[
 if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     // Ja, $value ist zwischen 1 und 12
-}]]>
+}
+]]>
             </programlisting>
 
         </para>

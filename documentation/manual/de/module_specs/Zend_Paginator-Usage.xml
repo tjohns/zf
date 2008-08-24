@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -357,7 +357,8 @@ of <?= $this->totalItemCount; ?>
             <para>
                 Dropdown Seitendarstellung
 
-                <programlisting role="php"><![CDATA[<?php if ($this->pageCount): ?> 
+                <programlisting role="php"><![CDATA[
+<?php if ($this->pageCount): ?> 
 <select id="paginationControl" size="1"> 
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>

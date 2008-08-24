@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9916 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
@@ -62,8 +62,7 @@ class FooController extends Zend_Controller_Action
                 ausgeschaltet werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -90,8 +89,7 @@ class FooController extends Zend_Controller_Action
                 <code>noRender</code> Flags des <code>ViewRenderer</code>'s:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -217,8 +215,7 @@ $this->getResponse()->appendBody($content);
                         Wertes aufzurufen:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-// Verwende des Standardwert 1 wenn id nicht gesetzt wurde
+                    <programlisting role="php"><![CDATA[// Verwende des Standardwert 1 wenn id nicht gesetzt wurde
 $id = $this->_getParam('id', 1);
 
 // Statt:
@@ -289,8 +286,7 @@ applicationOrModule/
                 <code>render()</code> hat die folgende Signatur:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
             </programlisting>
 
             <para>
@@ -319,8 +315,7 @@ string render(string $action = null, string $name = null, bool $noController = f
                 Einige Beispiele:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -462,8 +457,7 @@ class MyController extends Zend_Controller_Action
                 geschrieben werden:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -482,8 +476,7 @@ class MyController extends Zend_Controller_Action
                 Eine andere Möglichkeit ist das man zu einer standardmäßigen Kontroller Seiten weiterleiten will:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -512,8 +505,7 @@ class MyController extends Zend_Controller_Action
             zusammensetzt:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {

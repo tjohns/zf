@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5658 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.mail.additional-headers">
     <title>Zusätzliche Kopfzeilen</title>
     <para>
@@ -9,12 +9,12 @@
     </para>
     <example id="zend.mail.additional-headers.example-1">
         <title>Eine E-Mail Kopfzeile hinzufügen</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MeineCooleAnwendung');
 $mail->addHeader('X-greetingsTo', 'Mom', true); // mehrer Werte
-$mail->addHeader('X-greetingsTo', 'Dad', true);]]>
+$mail->addHeader('X-greetingsTo', 'Dad', true);
+]]>
         </programlisting>
     </example>
 </sect1>

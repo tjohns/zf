@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10214 -->
+<!-- EN-Revision: 10934 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
@@ -64,10 +64,7 @@
             diesem XML-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das
             XML-File und die Staging-Sektion spezifiziert werden:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Xml.php';
-
-$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // ausgabe "dev.example.com"
 echo $config->database->params->dbname; // ausgabe "dbname"]]>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 5617 -->
+<!-- EN-Revision: 10935 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Definieren von Getopt Regeln</title>
     <para>
@@ -34,10 +34,7 @@
         </para>
         <example id="zend.console.getopt.rules.short.example">
             <title>Verwendung der kurzen Syntax</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
         </example>
         <para>
             Das obige Beispiel zeigt die Verwendung von <code>Zend_Console_Getopt</code>
@@ -100,15 +97,15 @@ $opts = new Zend_Console_Getopt('abp:');]]>
         </para>
         <example id="zend.console.getopt.rules.long.example">
             <title>Verwendung der langen Syntax</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Console/Getopt.php';
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt(
   array(
-    'apfel|a'    => 'Diese Option wählt Apfel, ohne Parameter',
-    'banane|b=i' => 'Diese Option wählt Banane, mit benötigtem Integer Parameter',
-    'pfirsich|p-s'   => 'Diese Option wählt Pfirsich, mit optionalem Zeichenketten Parameter'
+    'apfel|a'    => 'Apfel Option, ohne Parameter',
+    'banane|b=i' => 'Bananen Option, mit benötigtem Integer Parameter',
+    'pfirsich|p-s'   => 'Pfirsich Option, mit optionalem Zeichenketten Parameter'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
