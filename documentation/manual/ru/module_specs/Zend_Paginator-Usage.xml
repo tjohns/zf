@@ -178,14 +178,14 @@ routes.example.reqs.pageNumber = \d+]]>
         <para>
             Обратите внимание, что в конце вызывается помощник вида.
             <code>PaginationControl</code> принимает экземпляр
-            <code>Zend_Paginator</code>, стиль скроллинга и скрипт вида.
+            <code>Zend_Paginator</code>, стиль прокрутки и скрипт вида.
             Последние два аргумента являются необязательными.
         </para>
         
         <para>
             Но несмотря на это, они очень важны. В то время как скрипт вида
             используется для определения <emphasis>внешнего вида</emphasis>
-            постраничной навигации, стиль скроллинга определяет ее
+            постраничной навигации, стиль прокрутки определяет ее
             <emphasis>поведение</emphasis>.
             Предположим, скрипт вида отображает постраничную навигацию
             для результатов поиска следующего вида:
@@ -209,16 +209,16 @@ routes.example.reqs.pageNumber = \d+]]>
         </para>
         
         <para>
-            Zend Framework предоставляет четыре стиля скроллинга:
+            Zend Framework предоставляет четыре стиля прокрутки:
         </para>
         
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title>Стили скроллинга для <code>Zend_Paginator</code></title>
+            <title>Стили прокрутки для <code>Zend_Paginator</code></title>
 
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Стиль скроллинга</entry>
+                        <entry>Стиль прокрутки</entry>
                         <entry>Описание</entry>
                     </row>
                 </thead>
@@ -264,7 +264,7 @@ routes.example.reqs.pageNumber = \d+]]>
         </table>
         
         <para>
-            Установив используемые по умолчанию скрипт вида, стиль скроллинга и
+            Установив используемые по умолчанию скрипт вида, стиль прокрутки и
             экземпляр вида, вы можете полностью исключить вызовы
             PaginationControl:
         </para>
@@ -291,8 +291,8 @@ $paginator->setView($view);]]>
             <title>Примеры постраничной навигации</title>
             
             <para>
-                Следующие примеры должны помочь понять принципы
-                создания постраничной навигации с <code>Zend_Paginator</code>:
+                Надеемся, следующие примеры помогут вам с созданием постраничной
+                навигации:
             </para>
             
             <para>
@@ -377,7 +377,7 @@ of <?= $this->totalItemCount; ?>
             </para>
 
             <para>
-                Навигация в виде выпадающего списка
+                Постраничная навигация в виде выпадающего списка
 
                 <programlisting role="php"><![CDATA[
 <?php if ($this->pageCount): ?> 
@@ -437,7 +437,7 @@ $('paginationControl').observe('change', function() {
                             <entry>integer</entry>
                             <entry>
                                 Первая страница в ряде, возвращенном текущим
-                                стилем скроллинга
+                                стилем прокрутки
                             </entry>
                         </row>
                         <row>
@@ -468,7 +468,7 @@ $('paginationControl').observe('change', function() {
                             <entry>integer</entry>
                             <entry>
                                 Последняя страница в ряде, возвращенном текущим
-                                стилем скроллинга
+                                стилем прокрутки
                             </entry>
                         </row>
                         <row>
@@ -486,7 +486,7 @@ $('paginationControl').observe('change', function() {
                             <entry>array</entry>
                             <entry>
                                 Массив страниц, возвращенный текущим стилем
-                                скроллинга
+                                прокрутки
                             </entry>
                         </row>
                         <row>
