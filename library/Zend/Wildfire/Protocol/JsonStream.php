@@ -147,7 +147,7 @@ class Zend_Wildfire_Protocol_JsonStream
      */
     protected function _encode($value)
     {
-        return Zend_Json_Encoder::encode($value);
+        return Zend_Json_Encoder::encode($value, true, array('silenceCyclicalExceptions'=>true));
     }
 
     /**

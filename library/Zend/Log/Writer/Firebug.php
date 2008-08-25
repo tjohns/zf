@@ -63,6 +63,45 @@ class Zend_Log_Writer_Firebug extends Zend_Log_Writer_Abstract
     protected $_defaultPriorityStyle = Zend_Wildfire_Plugin_FirePhp::LOG;
     
     /**
+     * Flag indicating whether the log writer is enabled
+     * @var boolean
+     */
+    protected $_enabled = true;
+    
+    /**
+     * Class constructor
+     */
+    public function __construct()
+    {
+        if (php_sapi_name()=='cli') {
+            $this->setEnabled(false);
+        }
+    }
+    
+    /**
+     * Enable or disable the log writer.
+     * 
+     * @param boolean $enabled Set to TRUE to enable the log writer 
+     * @return boolean The previous value.
+     */
+    public function setEnabled($enabled)
+    {
+        $previous = $this->_enabled;
+        $this->_enabled = $enabled;
+        return $previous;
+    }
+    
+    /**
+     * Determine if the log writer is enabled.
+     * 
+     * @return boolean Returns TRUE if the log writer is enabled.
+     */
+    public function getEnabled()
+    {
+        return $this->_enabled;
+    }
+    
+    /**
      * Set the default display style for user-defined priorities
      * 
      * @param string $style The default log display style
@@ -135,6 +174,10 @@ class Zend_Log_Writer_Firebug extends Zend_Log_Writer_Abstract
      */
     protected function _write($event)
     {
+        if (!$this->getEnabled()) {
+            return;
+        }
+      
         if (array_key_exists($event['priority'],$this->_priorityStyles)) {
             $type = $this->_priorityStyles[$event['priority']];
         } else {
