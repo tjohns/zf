@@ -248,7 +248,7 @@ print $date->getIso();]]>
 
         <para>
             如上面例子的第一行所示，<code>Zend_Date</code>  对创建对象总是使用实际的时区。在被创建的对象里修改时区
-            对日期自己有影响。日期总是和时区相关。对 code>Zend_Date</code>  对象修改时区不会修改 <code>Zend_Date</code>  的时间。
+            对日期自己有影响。日期总是和时区相关。对 <code>Zend_Date</code>  对象修改时区不会修改 <code>Zend_Date</code>  的时间。
             请记住在内部日期总是以时间戳和 GMT 时区存储。所以时区就意味者对用户所在时区和地区对实际的国际时间的加减。
         </para>
 

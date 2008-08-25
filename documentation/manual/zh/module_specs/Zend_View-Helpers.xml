@@ -53,7 +53,7 @@
             </para></listitem>
 
             <listitem><para>            
-                <code>formButton($name, $value, $attribs):</code> 生成 &lt;button /&gt 元素; 
+                <code>formButton($name, $value, $attribs):</code> 生成 &lt;button /&gt; 元素; 
             </para></listitem>
 
             <listitem><para>

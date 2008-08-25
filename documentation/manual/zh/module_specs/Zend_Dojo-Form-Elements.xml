@@ -1048,7 +1048,7 @@ $form->addElement(
         <title>垂直滑尺（VerticalSlider）</title>
 
         <para>
-            垂直滑尺是link linkend="zend.dojo.form.elements.horizontalSlider">水平滑尺</link>的兄弟，
+            垂直滑尺是<link linkend="zend.dojo.form.elements.horizontalSlider">水平滑尺</link>的兄弟，
             操作基本相同。唯一的区别是，对垂直滑尺来说使用了 'left*' 和 'right*' 替换了
             在水平滑尺中的 'top*' 和 'bottom*'，并且使用 VerticalRule 和 VerticalRuleLabels
             分别替代了 HorizontalRule 和 HorizontalRuleLabels。
