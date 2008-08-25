@@ -205,7 +205,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
                                                   'fix_date' => false));
             if (isset($parsed['year']) and ((strpos(strtoupper($this->_format), 'YY') !== false) and
                 (strpos(strtoupper($this->_format), 'YYYY') === false))) {
-                $parsed['year'] = self::_century($parsed['year']);
+                $parsed['year'] = Zend_Date::_century($parsed['year']);
             }
         } catch (Exception $e) {
             // Date can not be parsed
@@ -215,7 +215,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
         if (((strpos($this->_format, 'Y') !== false) or (strpos($this->_format, 'y') !== false)) and
             (!isset($parsed['year']))) {
             // Year expected but not found
-                return false;
+            return false;
         }
 
         if ((strpos($this->_format, 'M') !== false) and (!isset($parsed['month']))) {
@@ -231,7 +231,7 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
         if (((strpos($this->_format, 'H') !== false) or (strpos($this->_format, 'h') !== false)) and
             (!isset($parsed['hour']))) {
             // Hour expected but not found
-                return false;
+            return false;
         }
 
         if ((strpos($this->_format, 'm') !== false) and (!isset($parsed['minute']))) {
