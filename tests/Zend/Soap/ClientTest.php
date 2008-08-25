@@ -148,8 +148,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
         $server->setClass('Zend_Soap_Client_TestClass');
 
-        $client = new Zend_Soap_Client(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
-        $client->setLocalServer($server);
+        $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
         $this->assertTrue($client->getFunctions() == array('string testFunc1()',
                                                            'string testFunc2(string $who)',
@@ -181,8 +180,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
     	$server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
         $server->setClass('Zend_Soap_Client_TestClass');
 
-        $client = new Zend_Soap_Client(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
-        $client->setLocalServer($server);
+        $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
         // Perform request
         $client->testFunc2('World');
@@ -211,8 +209,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
     	$server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
         $server->setClass('Zend_Soap_Client_TestClass');
 
-        $client = new Zend_Soap_Client(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
-        $client->setLocalServer($server);
+        $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
         // Perform request
         $client->testFunc2('World');
@@ -242,10 +239,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
     	$server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
         $server->setClass('Zend_Soap_Client_TestClass');
 
-        $client = new Zend_Soap_Client(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
-        $client->setLocalServer($server);
+        $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
-        ;
         $this->assertEquals($client->testFunc2('World'), 'Hello World!');
     }
 }
