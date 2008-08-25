@@ -42,10 +42,7 @@
         <para>
             接着，假定开发者需要从XML文件取开发配置数据。这非常简单，只要指定XML文件和开发系统节就可以加载这些数据了：
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Xml.php';
-
-$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // 输出 "dev.example.com"
 echo $config->database->params->dbname; // 输出 "dbname"]]>
