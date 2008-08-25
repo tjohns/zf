@@ -34,7 +34,9 @@
         sont un point de départ et un nombre d'éléments à afficher par page. Vous devez retourner la portion appropriée
         de données. Pour un tableau, il s'agirait :</para>
 
-        <para><programlisting role="php"><![CDATA[return array_slice($this->_array, $offset, $itemCountPerPage);]]></programlisting></para>
+        <para><programlisting role="php"><![CDATA[
+return array_slice($this->_array, $offset, $itemCountPerPage);
+]]></programlisting></para>
 
         <para>Regardez les adaptateurs fournis par défaut (ils implémentent tous
         <code>Zend_Paginator_Adapter_Interface</code>) pour avoir une idée de la manière d'implémenter votre propre
@@ -48,7 +50,9 @@
         <code>Zend_Paginator_ScrollingStyle_Interface</code>, qui définit une seule méthode, <code>getPages()</code>. Et
         plus spécifiquement :</para>
 
-        <para><programlisting role="php"><![CDATA[public function getPages(Zend_Paginator $paginator, $pageRange = null);]]></programlisting></para>
+        <para><programlisting role="php"><![CDATA[
+public function getPages(Zend_Paginator $paginator, $pageRange = null);
+]]></programlisting></para>
 
         <para>Cette méthode doit calculer des bornes inférieures et supérieures des numéros de page dans la plage des
         pages dites "local" (c'est-à-dire qui sont proches de la page courante).</para>
@@ -57,7 +61,9 @@
         <code>Zend_Paginator_ScrollingStyle_Elastic</code> par exemple), votre style personnalisé devra inévitablement
         se terminer par quelque chose de similaire à ceci :</para>
 
-        <para><programlisting role="php"><![CDATA[return $paginator->getPagesInRange($lowerBound, $upperBound);]]></programlisting></para>
+        <para><programlisting role="php"><![CDATA[
+return $paginator->getPagesInRange($lowerBound, $upperBound);
+]]></programlisting></para>
 
         <para>Il n'y a rien de spécial au sujet de cet appel ; c'est simplement une méthode pratique pour vérifier la
         validité de la limite inférieure et supérieure et pour renvoyer un tableau de ces bornes au pagineur.</para>
@@ -65,8 +71,10 @@
         <para>Quand vous êtes prêt à utiliser votre style de défilement, vous devez informer <code>Zend_Paginator</code>
         dans quel dossier le chercher, en réalisant ceci :</para>
 
-        <para><programlisting role="php"><![CDATA[$prefix = 'Mon_Paginator_StyleDefilement';
+        <para><programlisting role="php"><![CDATA[
+$prefix = 'Mon_Paginator_StyleDefilement';
 $path   = 'Mon/Paginator/StyleDefilement/';
-Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);]]></programlisting></para>
+Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
+]]></programlisting></para>
     </sect2>
 </sect1>

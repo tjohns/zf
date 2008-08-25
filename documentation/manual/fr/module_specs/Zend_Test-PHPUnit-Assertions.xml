@@ -44,13 +44,13 @@
             </listitem>
 
             <listitem>
-                <para><code>assertQueryContentCount($path, $count, $message = '')</code> : vérifie qu'un nombre exact
+                <para><code>assertQueryCount($path, $count, $message = '')</code> : vérifie qu'un nombre exact
                 <code>$count</code> d'éléments DOM correspondant au sélecteur CSS fourni sont présents. Si un
                 <code>$message</code> est présent, il sera ajouté en cas d'échec de l'assertion.</para>
             </listitem>
 
             <listitem>
-                <para><code>assertQueryContentCountMin($path, $count, $message = '')</code> : vérifie qu'au moins un
+                <para><code>assertQueryCountMin($path, $count, $message = '')</code> : vérifie qu'au moins un
                 nombre <code>$count</code> d'éléments DOM correspondant au sélecteur CSS fourni sont présents. Si un
                 <code>$message</code> est présent, il sera ajouté en cas d'échec de l'assertion. <emphasis>Note
                 :</emphasis> spécifier une valeur de 1 pour <code>$count</code> est la même chose qu'un simple
@@ -58,7 +58,7 @@
             </listitem>
 
             <listitem>
-                <para><code>assertQueryContentCountMax($path, $count, $message = '')</code> : vérifie qu'il n'y a pas
+                <para><code>assertQueryCountMax($path, $count, $message = '')</code> : vérifie qu'il n'y a pas
                 plus d'un nombre <code>$count</code> d'éléments DOM correspondant au sélecteur CSS fourni sont présents.
                 Si un <code>$message</code> est présent, il sera ajouté en cas d'échec de l'assertion. <emphasis>Note
                 :</emphasis> spécifier une valeur de 1 pour <code>$count</code> est la même chose qu'un simple
@@ -68,7 +68,7 @@
 
         <para>De plus, toutes les méthodes ci-dessus possèdent une variante "<code>Not</code>" qui correspond à
         l'assertion négative : <code>assertNotQuery()</code>, <code>assertNotQueryContentContains()</code>,
-        <code>assertNotQueryContentRegex()</code>, et <code>assertNotQueryContentCount()</code>. (Notez que les versions
+        <code>assertNotQueryContentRegex()</code>, et <code>assertNotQueryCount()</code>. (Notez que les versions
         <code>CountMin</code> et <code>CountMax</code> n'ont pas de variantes pour des raisons évidentes).</para>
     </sect3>
 

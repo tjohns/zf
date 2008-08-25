@@ -14,8 +14,10 @@
     d'entrée n'est pas donné, alors le comportement par défaut est d'ignorer les attributs XML. Cet appel de fonction
     est réalisé comme ceci :</para>
 
-    <programlisting role="php"><![CDATA[// la fonction fromXml prend simplement une chaîne contenant le XML comme entrée
-$jsonContents = Zend_Json::fromXml($xmlStringContents, true);]]></programlisting>
+    <programlisting role="php"><![CDATA[
+// la fonction fromXml prend simplement une chaîne contenant le XML comme entrée
+$jsonContents = Zend_Json::fromXml($xmlStringContents, true);
+]]></programlisting>
 
     <para>La fonction <code>Zend_Json::fromXml()</code> fait la conversion du paramètre d'entrée (chaîne au format XML)
     et renvoie le rendu équivalent sous forme de chaîne au format JSON. En cas d'erreur, de format XML ou de logique de
@@ -32,7 +34,8 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);]]></programlisting
 
     <para>Chaîne XML fournie à la fonction <code>Zend_Json::fromXml()</code> :</para>
 
-    <programlisting role="php"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+    <programlisting role="php"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
 <books>
     <book id="1">
         <title>Code Generation in Action</title>
@@ -51,11 +54,13 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);]]></programlisting
         <author><first>Jack</first><last>Herrington</last></author>
         <publisher>O'Reilly</publisher>
     </book>
-</books>]]></programlisting>
+</books>
+]]></programlisting>
 
     <para>Chaîne JSON retournée par la fonction <code>Zend_Json::fromXml()</code> :</para>
 
-    <programlisting role="php"><![CDATA[{
+    <programlisting role="php"><![CDATA[
+{
    "books" : {
       "book" : [ {
          "@attributes" : {
@@ -84,7 +89,8 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);]]></programlisting
          "publisher" : "O'Reilly"
       }
    ]}
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Plus de détails au sujet de ce dispositif xml2json peuvent être trouvés dans la proposition originale
     elle-même. Jetez un oeil à la <ulink

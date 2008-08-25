@@ -20,14 +20,16 @@
         <example id="zend.measure.creation.number.example-1">
             <title>Création de mesure en utilisant des nombres entiers et décimaux</title>
 
-            <programlisting role="php"><![CDATA[$mesure = 1234.7;
+            <programlisting role="php"><![CDATA[
+$mesure = 1234.7;
 $unite = new Zend_Measure_Length((integer)$mesure, Zend_Measure_Length::STANDARD);
 echo $unite;
 // affiche '1234 m' (mètres)
 
 $unite = new Zend_Measure_Length($mesure, Zend_Measure_Length::STANDARD);
 echo $unite;
-// affiche '1234.7 m' (mètres)]]></programlisting>
+// affiche '1234.7 m' (mètres)
+]]></programlisting>
         </example>
     </sect2>
 
@@ -47,10 +49,12 @@ echo $unite;
         <example id="zend.measure.creation.string.example-1">
             <title>Création de mesure en utilisant des chaînes</title>
 
-            <programlisting role="php"><![CDATA[$machaine = "10010100111010111010100001011011101010001";
+            <programlisting role="php"><![CDATA[
+$machaine = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($machaine, Zend_Measure_Number::BINARY);
 
-echo $unit;]]></programlisting>
+echo $unit;
+]]></programlisting>
         </example>
 
         <para>Habituellement, <code>Zend_Measure_*</code> peut automatiquement extraire la mesure désirée incluse dans
@@ -61,13 +65,15 @@ echo $unit;]]></programlisting>
         <example id="zend.measure.creation.string.example-2">
             <title>Saisie de texte arbitraire contenant des mesures</title>
 
-            <programlisting role="php"><![CDATA[$machaine = "Ma maison a une superficie de 125m².";
+            <programlisting role="php"><![CDATA[
+$machaine = "Ma maison a une superficie de 125m².";
 $unite = new Zend_Measure_Area($machaine, Zend_Measure_Area::STANDARD);
 echo $unite; // affiche "125 m²";
 
 $machaine = "Ma maison a une superficie de 125m², elle comprend 5 pièces de 25m² chacune.";
 $unite = new Zend_Measure_Area($machaine, Zend_Measure_Area::STANDARD);
-echo $unite; // affiche "125 m² in size";]]></programlisting>
+echo $unite; // affiche "125 m² in size";
+]]></programlisting>
         </example>
     </sect2>
 
@@ -84,7 +90,8 @@ echo $unite; // affiche "125 m² in size";]]></programlisting>
         <example id="zend.measure.creation.localized.example-1">
             <title>Chaînes localisées</title>
 
-            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de');
+            <programlisting role="php"><![CDATA[
+$locale = new Zend_Locale('de');
 $machaine = "The boat is 1,234.50 long.";
 $unite = new Zend_Measure_Length($machaine, Zend_Measure_Length::STANDARD, $locale);
 echo $unite; // affiche "1.234 m"
@@ -92,7 +99,8 @@ echo $unite; // affiche "1.234 m"
 
 $machaine = "The boat is 1,234.50 long.";
 $unite = new Zend_Measure_Length($machaine, Zend_Measure_Length::STANDARD, 'en_US');
-echo $unite; // affiche "1234.50 m"]]></programlisting>
+echo $unite; // affiche "1234.50 m"
+]]></programlisting>
         </example>
 
         <para>Depuis la version 1.6 du Zend Framework, <code>Zend_Measure</code> supporte aussi l'utilisation d'une
@@ -100,11 +108,13 @@ echo $unite; // affiche "1234.50 m"]]></programlisting>
         le registre comme présenté ci-dessous. Avec cette notation vous pouvez ne pas paramétrer cette valeur
         manuellement à chaque fois quand vous utilisez la même localisation plusieurs fois.</para>
 
-        <programlisting role="php"><![CDATA[// in your bootstrap file
+        <programlisting role="php"><![CDATA[
+// in your bootstrap file
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // somewhere in your application
-$length = new Zend_Measure_Length(Zend_Measure_Length::METER();]]></programlisting>
+$length = new Zend_Measure_Length(Zend_Measure_Length::METER();
+]]></programlisting>
     </sect2>
 </sect1>

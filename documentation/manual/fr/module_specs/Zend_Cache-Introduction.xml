@@ -20,7 +20,8 @@
         <para><code>Zend_Cache::factory()</code> instancie les objets corrects et les lie ensemble. Dans le premier
         exemple, nous allons utiliser le frontend <code>Core</code> avec le backend <code>File</code>.</para>
 
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
    'lifetime' => 7200, // temps de vie du cache de 2 heures
    'automatic_serialization' => true
 );
@@ -30,7 +31,8 @@ $backendOptions = array(
 );
 
 // créer un objet Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+]]></programlisting>
     </example>
 
     <note>
@@ -49,7 +51,8 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
         qu'il soit mis en cache, il n'y a plus besoin de se connecter à la base de données. Les enregistrements
         récupérés depuis le cache sont désérialisés.</para>
 
-        <programlisting role="php"><![CDATA[// $cache initialisé dans l'exemple précédent
+        <programlisting role="php"><![CDATA[
+// $cache initialisé dans l'exemple précédent
 
 // on regarde si un cache existe déjà
 if(!$result = $cache->load('myresult')) {
@@ -68,7 +71,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]></programlisting>
+print_r($result);
+]]></programlisting>
     </example>
 
     <example id="zend.cache.introduction.example-3">
@@ -80,7 +84,8 @@ print_r($result);]]></programlisting>
 
         <para>A l'intérieur, affichez vos données comme d'habitude toutes les sorties seront misent en cache quand la
         méthode <code>end()</code> est appelée. A la prochaine exécution, la section complète sera évitée, au profit de
-        la récupération de son cache (si le cache est encore valide). <programlisting role="php"><![CDATA[$frontendOptions = array(
+        la récupération de son cache (si le cache est encore valide). <programlisting role="php"><![CDATA[
+$frontendOptions = array(
    'lifetime' => 30,                   // temps de vue du cache de 30 secondes
    'automatic_serialization' => false  // par défaut
 );
@@ -99,7 +104,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // la sortie est sauvegardée est envoyé au navigateur
 }
 
-echo "Ceci n' jamais mis en cache (" . time() . ").";]]></programlisting></para>
+echo "Ceci n' jamais mis en cache (" . time() . ").";
+]]></programlisting></para>
 
         <para>Notez que nous affichons le résultat de <code>time()</code> deux fois ; c'est dans un but de
         démonstration. Essayez de lancer la page et de la rafraîchir plusieurs fois ; vous allez constater que le

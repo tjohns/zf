@@ -11,32 +11,40 @@
         élégante de les gérer. Ce comportement peut être changé avec
         <code>Zend_Controller_Front::throwExceptions(true)</code>:</para>
 
-        <programlisting role="php"><![CDATA[$front->throwExceptions(true);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>Pour rendre toute la réponse : corps et en-têtes, utilisez <code>sendResponse()</code>.</para>
 
-        <programlisting role="php"><![CDATA[$response->sendResponse();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$response->sendResponse();
+]]></programlisting>
 
         <note>
             <para>Par défaut le contrôleur frontal appelle <code>sendResponse()</code> lorsque le dispatching est
             terminé. Vous pouvez changer ce comportement avec <code>Zend_Controller_Front::returnResponse(true)</code>
             :</para>
 
-            <programlisting role="php"><![CDATA[$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 
 // opérations, comme une journalisation...
 // et rendu de la réponse:
-$response->sendResponse();]]></programlisting>
+$response->sendResponse();
+]]></programlisting>
         </note>
 
         <para>Vous ne devriez pas afficher du contenu directement dans un contrôleur. Empiler plutôt les affichages dans
         l'objet de réponse :</para>
 
-        <programlisting role="php"><![CDATA[// Dans une action d'un contrôleur:
+        <programlisting role="php"><![CDATA[
+// Dans une action d'un contrôleur:
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);]]></programlisting>
+    ->appendBody($content);
+]]></programlisting>
 
         <para>Grâce à cela, tous les en-têtes sont envoyés d'un coup, juste avant l'affichage du contenu.</para>
 
@@ -53,7 +61,8 @@ $this->getResponse()
         <para>Pour prendre la main sur l'objet de réponse, demandez le au contrôleur frontal via un accesseur, ou
         commandez lui de vous retourner la celle-ci lors après le dispatching.</para>
 
-        <programlisting role="php"><![CDATA[// récupère la réponse après dispatching et affichage:
+        <programlisting role="php"><![CDATA[
+// récupère la réponse après dispatching et affichage:
 $front->dispatch();
 $response = $front->getResponse();
 if ($response->isException()) {
@@ -67,12 +76,14 @@ $response = $front->dispatch();
 // du code ici
 
 // enfin, affichage:
-$response->sendResponse();]]></programlisting>
+$response->sendResponse();
+]]></programlisting>
 
         <para>Par défaut, les messages d'exceptions ne sont pas affichés. Utilisez <code>renderExceptions()</code> si
         vous le voulez. Aussi, vous pouvez activer leur rendu grâce à Zend_Controller_Front::throwExceptions():</para>
 
-        <programlisting role="php"><![CDATA[$response->renderExceptions(true);
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
 $front->dispatch($request, $response);
 
 // ou:
@@ -83,7 +94,8 @@ $response->sendResponse();
 
 // ou:
 $front->throwExceptions(true);
-$front->dispatch();]]></programlisting>
+$front->dispatch();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -159,7 +171,8 @@ $front->dispatch();]]></programlisting>
         header au corps de la réponse, et l'évènement <code>postDispatch()</code> pour en ajouter un bandeau de footer
         :</para>
 
-        <programlisting role="php"><![CDATA[// Considérons ce plugin comme étant enregistré auprès du contrôleur frontal
+        <programlisting role="php"><![CDATA[
+// Considérons ce plugin comme étant enregistré auprès du contrôleur frontal
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -188,15 +201,18 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Un appel à <code>/my/foo</code> dans ce cas là, générera un objet de réponse ressemblant à ceci :</para>
 
-        <programlisting role="php"><![CDATA[array(
+        <programlisting role="php"><![CDATA[
+array(
     'header'  => ..., // contenu du segment header
     'default' => ..., // corps, contenu de MyController::fooAction()
     'footer'  => ...  // contenu du segment footer
-);]]></programlisting>
+);
+]]></programlisting>
 
         <para>Lorsque ceci est rendu, ça l'est dans l'ordre dans lequel les segments sont rangés dans la réponse.</para>
 

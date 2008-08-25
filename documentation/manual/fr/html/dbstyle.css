@@ -1,4 +1,5 @@
 body {
+	background: url("images/bkg_top.gif") repeat-x;
 	font-family: Tahoma, Arial, sans-serif;
 }
 
@@ -15,22 +16,26 @@ h3, h4, h5 {
 	margin: 0.2em;
 }
 
+a {
+	color:#009EEB;
+}
+
 div.note, div.warning, div.tip {
 	margin-left: 0.3in;
 	margin-right: 0.5in;
-	border: solid 1px blue;
-	background-color: #e0e0e0;
+	/*border: solid 1px green;*/
+	background-color: #EEEEEE;
 	padding: 0.1in;
 }
 
 div.note img, div.warning img, div.tip img {
 	margin-right: 0.1in;
-	border: solid 1px blue;
+	/*border: solid 1px green;*/
 }
 
 pre.programlisting {
-	border: solid 1px #444;
-	background-color: #e0e0e0;
+	border: 1px solid #D3E0EB;
+	background-color: #EDF7FF;
 	padding: 0.1in;
 	margin: 0.2in;
 	clear: right;
@@ -76,4 +81,9 @@ div.revinfo {
 
 code.code {
     font-family: "Lucida Console", monospace;
+}
+
+div.chapter > div.titlepage {
+	background: url("./images/logo_small.gif") no-repeat;
+	padding-left: 125px;
 }

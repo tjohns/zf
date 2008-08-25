@@ -34,14 +34,18 @@
         <para>Inclure du Flash dans votre page est assez simple. Le seul argument requis est l'URI de la
         ressource.</para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
+]]></programlisting>
 
         <para>Ceci affichera le code HTML suivant :</para>
 
-        <programlisting role="html"><![CDATA[<object data="/path/to/flash.swf" type="application/x-shockwave-flash" 
+        <programlisting role="html"><![CDATA[
+<object data="/path/to/flash.swf" type="application/x-shockwave-flash" 
     classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
     codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
-</object>]]></programlisting>
+</object>
+]]></programlisting>
     </example>
 
     <para>Cependant vous pouvez aussi spécifier des attributs, des paramètres et du contenu qui peuvent être affichés
@@ -59,7 +63,8 @@
         possibilité de fournir un contenu additionnel à l'objet en cinquième paramètre. Voici donc un exemple qui
         utilise tous le paramètres :</para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->htmlObject(
+        <programlisting role="php"><![CDATA[
+<?php echo $this->htmlObject(
     '/path/to/file.ext', 
     'mime/type', 
     array(
@@ -71,14 +76,17 @@
         'param2' => 'pval2'
     ), 
     'some content'
-); ?>]]></programlisting>
+); ?>
+]]></programlisting>
 
         <para>Ceci affichera le code HTML suivant :</para>
 
-        <para><programlisting><![CDATA[<object data="/path/to/file.ext" type="mime/type" attr1="aval1" attr2="aval2">
+        <para><programlisting><![CDATA[
+<object data="/path/to/file.ext" type="mime/type" attr1="aval1" attr2="aval2">
     <param name="param1" value="pval1" />
     <param name="param2" value="pval2" />
     some content
-</object>]]></programlisting></para>
+</object>
+]]></programlisting></para>
     </example>
 </sect3>

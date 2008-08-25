@@ -38,8 +38,10 @@
         étendant <code>Zend_View_Abstract</code> pour le rendu du script de layout. Passez le en paramètre au
         constructeur ou à <code>startMvc()</code>, ou utilisez l'accesseur <code>setView()</code> :</para>
 
-        <programlisting role="php"><![CDATA[$view = new My_Custom_View();
-$layout->setView($view);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$view = new My_Custom_View();
+$layout->setView($view);
+]]></programlisting>
 
         <note>
             <title>Attention à vos implémentations de Zend_View</title>
@@ -61,8 +63,10 @@ $layout->setView($view);]]></programlisting>
             linkend="zend.view.helpers.initial.placeholder">placeholder</link> en utilisant la clé "Zend_Layout"
             :</para>
 
-            <programlisting role="php"><![CDATA[$placeholders = new Zend_View_Helper_Placeholder();
-$layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$placeholders = new Zend_View_Helper_Placeholder();
+$layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
+]]></programlisting>
         </note>
     </sect2>
 
@@ -121,11 +125,13 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();]]></p
             <para>L'inflecteur par défaut de <code>Zend_Layout</code> utilise des marqueurs statiques pour la cible et
             le suffixe. 2 accesseurs vous sont donc proposés :</para>
 
-            <programlisting role="php"><![CDATA[// Affecte une cible à l'inflecteur:
+            <programlisting role="php"><![CDATA[
+// Affecte une cible à l'inflecteur:
 $layout->setInflectorTarget('layouts/:script.:suffix');
 
 // Affecte le suffixe:
-$layout->setViewSuffix('php');]]></programlisting>
+$layout->setViewSuffix('php');
+]]></programlisting>
         </example>
 
         <example id="zend.layout.advanced.inflector.directmodification">
@@ -139,9 +145,11 @@ $layout->setViewSuffix('php');]]></programlisting>
             les mots en CasseMélangée ou en notationCamel avec des tirets-bats au lieu des tirets. De plus, vous voulez
             chercher vos scripts dans un sous-dossier "layouts" :</para>
 
-            <programlisting role="php"><![CDATA[$layout->getInflector()->setTarget('layouts/:script.:suffix')
+            <programlisting role="php"><![CDATA[
+$layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
-                       ->setFilterRule(array('CamelCaseToUnderscore'));]]></programlisting>
+                       ->setFilterRule(array('CamelCaseToUnderscore'));
+]]></programlisting>
         </example>
 
         <example id="zend.layout.advanced.inflector.custom">
@@ -151,12 +159,14 @@ $layout->setViewSuffix('php');]]></programlisting>
             propre inflecteur, pour l'utiliser à différents endroits par exemple, et le passer à
             <code>Zend_Layout</code>:</para>
 
-            <programlisting role="php"><![CDATA[$inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
+            <programlisting role="php"><![CDATA[
+$inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
     ':script' => array('CamelCaseToUnderscore'),
     'suffix'  => 'html'
 ));
-$layout->setInflector($inflector);]]></programlisting>
+$layout->setInflector($inflector);
+]]></programlisting>
         </example>
 
         <note>

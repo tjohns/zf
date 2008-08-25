@@ -20,8 +20,10 @@
         <example id="zend.db.statement.creating.example1">
             <title>Création d'un objet statement avec query()</title>
 
-            <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
-                array('goofy', 'FIXED'));]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
+                array('goofy', 'FIXED'));
+]]></programlisting>
         </example>
 
         <para>L'objet statement représente un statement SQL qui a été préparé, et exécuté une fois avec les paramètres
@@ -35,9 +37,11 @@
         <example id="zend.db.statement.creating.example2">
             <title>Utilisation du constructeur de statement</title>
 
-            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+            <programlisting role="php"><![CDATA[
+$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
-$stmt = new Zend_Db_Statement_Mysqli($db, $sql);]]></programlisting>
+$stmt = new Zend_Db_Statement_Mysqli($db, $sql);
+]]></programlisting>
         </example>
     </sect2>
 
@@ -54,11 +58,13 @@ $stmt = new Zend_Db_Statement_Mysqli($db, $sql);]]></programlisting>
         <example id="zend.db.statement.executing.example1">
             <title>Exécuter un statement avec des paramètres positionnés</title>
 
-            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+            <programlisting role="php"><![CDATA[
+$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
-$stmt->execute(array('goofy', 'FIXED'));]]></programlisting>
+$stmt->execute(array('goofy', 'FIXED'));
+]]></programlisting>
         </example>
 
         <para>Si vous utilisez les <emphasis>paramètres nommés</emphasis>, ceux définis avec un identifiant chaîne de
@@ -67,11 +73,13 @@ $stmt->execute(array('goofy', 'FIXED'));]]></programlisting>
         <example id="zend.db.statement.executing.example2">
             <title>Exécution d'un statement avec paramètres nommés</title>
 
-            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
+            <programlisting role="php"><![CDATA[
+$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
-$stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));]]></programlisting>
+$stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
+]]></programlisting>
         </example>
 
         <para>Les statements PDO acceptent les paramètres positionnés, ou nommés, mais pas les deux types en même temps.
@@ -121,11 +129,13 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));]]></program
             <example id="zend.db.statement.fetching.fetch.example">
                 <title>Utiliser fetch() dans une boucle</title>
 
-                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT * FROM bugs');
 
 while ($row = $stmt->fetch()) {
     echo $row['bug_description'];
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
 
             <para>Voyez aussi <ulink url="http://www.php.net/PDOStatement-fetch">PDOStatement::fetch()</ulink>.</para>
@@ -142,11 +152,13 @@ while ($row = $stmt->fetch()) {
             <example id="zend.db.statement.fetching.fetchall.example">
                 <title>Utilisation de fetchAll()</title>
 
-                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT * FROM bugs');
 
 $rows = $stmt->fetchAll();
 
-echo $rows[0]['bug_description'];]]></programlisting>
+echo $rows[0]['bug_description'];
+]]></programlisting>
             </example>
 
             <para>Voyez aussi <ulink
@@ -167,13 +179,15 @@ echo $rows[0]['bug_description'];]]></programlisting>
             <example id="zend.db.statement.fetching.fetch-mode.example">
                 <title>Paramétrer le mode de capture (fetch mode)</title>
 
-                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT * FROM bugs');
+                <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT * FROM bugs');
 
 $stmt->setFetchMode(Zend_Db::FETCH_NUM);
 
 $rows = $stmt->fetchAll();
 
-echo $rows[0][0];]]></programlisting>
+echo $rows[0][0];
+]]></programlisting>
             </example>
 
             <para>Voyez aussi <ulink
@@ -196,9 +210,11 @@ echo $rows[0][0];]]></programlisting>
             <example id="zend.db.statement.fetching.fetchcolumn.example">
                 <title>Utiliser fetchColumn()</title>
 
-                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+                <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
-$bug_status = $stmt->fetchColumn(2);]]></programlisting>
+$bug_status = $stmt->fetchColumn(2);
+]]></programlisting>
             </example>
 
             <para>Voyez aussi <ulink
@@ -217,11 +233,13 @@ $bug_status = $stmt->fetchColumn(2);]]></programlisting>
             <example id="zend.db.statement.fetching.fetchobject.example">
                 <title>Utiliser fetchObject()</title>
 
-                <programlisting role="php"><![CDATA[$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+                <programlisting role="php"><![CDATA[
+$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
 $obj = $stmt->fetchObject();
 
-echo $obj->bug_description;]]></programlisting>
+echo $obj->bug_description;
+]]></programlisting>
             </example>
 
             <para>Voyez aussi <ulink
@@ -241,7 +259,8 @@ echo $obj->bug_description;]]></programlisting>
 
         <example id="zend.db.statement.binding-param.example">
             <title>Binding parameters from PHP variables</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
+<?php
 ]]>
             </programlisting>
         </example>
@@ -264,7 +283,8 @@ echo $obj->bug_description;]]></programlisting>
 
         <example id="zend.db.statement.binding-column.example">
             <title>Binding results to PHP variables</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
+<?php
 ]]>
             </programlisting>
         </example>

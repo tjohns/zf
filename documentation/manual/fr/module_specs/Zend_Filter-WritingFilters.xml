@@ -10,7 +10,8 @@
     implémentée dans les classes créées. Un objet qui implémente cette interface peut être ajouté à une chaîne de
     filtrage via <code>Zend_Filter::addFilter()</code>.</para>
 
-    <para>L'exemple suivant démontre comment écrire un filtre personnalisé : <programlisting role="php"><![CDATA[class MonFiltre implements Zend_Filter_Interface
+    <para>L'exemple suivant démontre comment écrire un filtre personnalisé : <programlisting role="php"><![CDATA[
+class MonFiltre implements Zend_Filter_Interface
 {
     public function filter($valeur)
     {
@@ -18,9 +19,12 @@
 
         return $valeurFiltree;
     }
-}]]></programlisting></para>
+}
+]]></programlisting></para>
 
     <para>Pour ajouter une instance du filtre défini ci-dessus à une chaîne de filtrage : <programlisting
-    role="php"><![CDATA[$filtreChaine = new Zend_Filter();
-$filtreChaine->addFilter(new MonFiltre());]]></programlisting></para>
+    role="php"><![CDATA[
+$filtreChaine = new Zend_Filter();
+$filtreChaine->addFilter(new MonFiltre());
+]]></programlisting></para>
 </sect1>

@@ -18,10 +18,12 @@
     <para>C'est ce dernier point qui est important dans le choix de la décision de ce design. En interne,
     <code>Zend_View::_run()</code> réalise simplement ceci :</para>
 
-    <programlisting role="php"><![CDATA[protected function _run()
+    <programlisting role="php"><![CDATA[
+protected function _run()
 {
     include func_get_arg(0);
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Ainsi, les scripts de vue ont accès à l'objet courant(<code>$this</code>), <emphasis>et toute méthode ou
     membres et cet objet</emphasis>. Puisque beaucoup d'opérations dépendent de membres ayant une portée limitée, ceci

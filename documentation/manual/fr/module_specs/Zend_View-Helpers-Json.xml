@@ -8,12 +8,16 @@
 
     <para>L'aide de vue JSON ajoute l'entête suivant :</para>
 
-    <programlisting role="text"><![CDATA[Content-Type: application/json]]></programlisting>
+    <programlisting role="text"><![CDATA[
+Content-Type: application/json
+]]></programlisting>
 
     <para>Beaucoup de librairies AJAX recherche cet entête quand elles analysent les réponses pour déterminer comment le
     contenu doit être géré.</para>
 
     <para>L'utilisation de l'aide de vue JSON est très simple :</para>
 
-    <programlisting role="php"><![CDATA[<?= $this->json($this->data) ?>]]></programlisting>
+    <programlisting role="php"><![CDATA[
+<?= $this->json($this->data) ?>
+]]></programlisting>
 </sect3>

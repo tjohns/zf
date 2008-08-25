@@ -8,13 +8,15 @@
     <example id="zend.exception.using.example">
         <title>Exemple de récupération d'une exception</title>
 
-        <programlisting role="php"><![CDATA[try {
+        <programlisting role="php"><![CDATA[
+try {
     Zend_Loader::loadClass('classnonexistante');
 } catch (Zend_Exception $e) {
     echo "Récupère exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
     // puis tout le code nécessaire pour récupérer la défaillance
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 
     <para>Regardez la documentation pour chaque composant respectif du Zend Framework pour avoir des informations plus

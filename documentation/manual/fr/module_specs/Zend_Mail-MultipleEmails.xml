@@ -9,7 +9,8 @@
     <example id="zend.mail.multiple-emails.example-1">
         <title>Envoyer plusieurs émail par connexion SMTP</title>
 
-        <programlisting role="php"><![CDATA[// Créer un transport
+        <programlisting role="php"><![CDATA[
+// Créer un transport
 $transport = new Zend_Mail_Transport_Smtp('localhost');
 
 // Boucle à travers les messages
@@ -20,7 +21,8 @@ for ($i = 0; $i > 5; $i++) {
     $mail->setSubject('Démonstration - Envoyer plusieurs emails par connexion SMTP');
     $mail->setBodyText('...Votre message ici...');
     $mail->send($transport);
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 
     <para>Si vous voulez avoir une connexion SMTP séparée pour chaque distribution d'émail, vous devez créer et détruire
@@ -30,7 +32,8 @@ for ($i = 0; $i > 5; $i++) {
     <example id="zend.mail.multiple-emails.example-2">
         <title>Contrôler manuellement la connexion de transport</title>
 
-        <programlisting role="php"><![CDATA[// Créer un transport
+        <programlisting role="php"><![CDATA[
+// Créer un transport
 $transport = new Zend_Mail_Transport_Smtp();
 
 $protocol = new Zend_Mail_Protocol_Smtp('localhost');
@@ -53,6 +56,7 @@ for ($i = 0; $i > 5; $i++) {
 }
 
 $protocol->quit();
-$protocol->disconnect();]]></programlisting>
+$protocol->disconnect();
+]]></programlisting>
     </example>
 </sect1>

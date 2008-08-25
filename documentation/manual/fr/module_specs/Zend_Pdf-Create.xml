@@ -14,7 +14,8 @@
     <example id="zend.pdf.create.example-1">
         <title>Créer un nouveau document PDF ou en charger un existant</title>
 
-        <programlisting role="php"><![CDATA[...
+        <programlisting role="php"><![CDATA[
+...
 /// Crée un nouveau document PDF.
 $pdf1 = new Zend_Pdf();
 
@@ -23,7 +24,8 @@ $pdf2 = Zend_Pdf::load($fileName);
 
 // Charge un document PDF depuis une string
 $pdf3 = Zend_Pdf::parse($pdfString);
-...]]></programlisting>
+...
+]]></programlisting>
     </example>
 
     <para>Le format de fichier PDF supporte la mise à jour incrémentale d'un document. Ainsi chaque fois que le document
@@ -39,7 +41,8 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <example id="zend.pdf.create.example-2">
         <title>Demander une version particulière d'un document PDF</title>
 
-        <programlisting role="php"><![CDATA[...
+        <programlisting role="php"><![CDATA[
+...
 // Charge la version précédente d'un document PDF.
 $pdf1 = Zend_Pdf::load($fileName, 1);
 
@@ -50,6 +53,7 @@ $pdf2 = Zend_Pdf::parse($pdfString, 1);
 $pdf3 = Zend_Pdf::load($fileName);
 $revisions = $pdf3->revisions();
 $pdf3->rollback($revisions - 1);
-...]]></programlisting>
+...
+]]></programlisting>
     </example>
 </sect1>

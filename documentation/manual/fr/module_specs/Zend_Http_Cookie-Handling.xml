@@ -71,7 +71,8 @@
             </itemizedlist> <example id="zend.http.cookies.cookie.instantiating.example-1">
                 <title>Créer un objet Zend_Http_Cookie</title>
 
-                <programlisting role="php"><![CDATA[// D'abord, en utilisant son constructeur. ce cookie expirera dans 2 heures
+                <programlisting role="php"><![CDATA[
+// D'abord, en utilisant son constructeur. ce cookie expirera dans 2 heures
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
 
 // En prenant l'en-tête de réponse HTTP 'Set-Cookie'
@@ -79,7 +80,8 @@ $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/pa
 $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
 
 // Si le domaine n'est pas présent, spécifiez le manuellement :
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');]]></programlisting>
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');
+]]></programlisting>
             </example> <note>
                 <para>Lorsque vous utilisez la méthode statique <code>Zend_Http_Cookie::fromString()</code>, veillez à
                 fournir un cookie URL encodé (tel que c'est le cas dans les en-têtes HTTP). Avec le constructeur en
@@ -92,7 +94,8 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
         point-virgule (;) : <example id="zend.http.cookies.cookie.instantiating.example-2">
                 <title>Passer de l'objet Zend_Http_Cookie à la chaîne</title>
 
-                <programlisting role="php"><![CDATA[// Création d'un nouveau cookie
+                <programlisting role="php"><![CDATA[
+// Création d'un nouveau cookie
 $cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
 
 // Va afficher 'foo=two+words;' :
@@ -102,7 +105,8 @@ echo $cookie->__toString();
 echo (string) $cookie;
 
 // En PHP 5.2 et plus, ceci fonctionne aussi :
-echo $cookie;]]></programlisting>
+echo $cookie;
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -157,7 +161,8 @@ echo $cookie;]]></programlisting>
         <para><example id="zend.http.cookies.cookie.accessors.example-1">
                 <title>Utilisation des méthodes getter de Zend_Http_Cookie</title>
 
-                <programlisting role="php"><![CDATA[// Création d'un cookie
+                <programlisting role="php"><![CDATA[
+// Création d'un cookie
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // Affiche 'foo'
@@ -175,7 +180,8 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 // Affiche 'No'
 
 echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
-// Affiche 'No']]></programlisting>
+// Affiche 'No'
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -205,7 +211,8 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
             </itemizedlist> <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>Correspondance de cookies</title>
 
-                <programlisting role="php"><![CDATA[// Création de l'objet cookie - d'abord un cookie sécurisé
+                <programlisting role="php"><![CDATA[
+// Création de l'objet cookie - d'abord un cookie sécurisé
 $cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
@@ -239,7 +246,8 @@ $cookie->match('http://subdomain.example.com/');
 // Retournera false, domaine incorrect
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// Retournera false, car nous avons rajouter 3 heures au temps actuel]]></programlisting>
+// Retournera false, car nous avons rajouter 3 heures au temps actuel
+]]></programlisting>
             </example></para>
     </sect2>
 

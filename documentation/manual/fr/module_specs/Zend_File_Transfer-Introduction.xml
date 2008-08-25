@@ -29,11 +29,13 @@
         <para>Cet exemple illustre un upload de fichier basique avec <code>Zend_File_Transfer</code>. La première partie
         est le formulaire. Dans notre exemple, il n'y a qu'un seul fichier que nous souhaitons uploadé.</para>
 
-        <programlisting><![CDATA[<form enctype="multipart/form-data" action="/file/upload" method="POST">
+        <programlisting><![CDATA[
+<form enctype="multipart/form-data" action="/file/upload" method="POST">
     <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
         Choose a file to upload: <input name="uploadedfile" type="file" /><br />
     <input type="submit" value="Upload File" />
-</form>]]></programlisting>
+</form>
+]]></programlisting>
 
         <para>Notez que vous devriez utiliser <link
         linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> par simplicité plutôt que de créer le
@@ -43,14 +45,16 @@
         "<code>/file/upload</code>". Donc nous créons le contrôleur <code>file</code> avec l'action
         <code>upload</code>.</para>
 
-        <programlisting role="php"><![CDATA[$adapter = new Zend_File_Transfer_Adapter_Http();
+        <programlisting role="php"><![CDATA[
+$adapter = new Zend_File_Transfer_Adapter_Http();
 
 $adapter->setDestination('C:\temp');
 
 if (!$adapter->receive()) {
     $messages = $adapter->getMessages();
     echo implode("\n", $messages);
-} ]]></programlisting>
+}
+]]></programlisting>
 
         <para>Comme vous le voyez, l'utilisation la plus simple est de définir une destination avec la méthode
         <code>setDestination</code> et d'appeler la méthode <code>receive()</code>. S'il apparaît des erreurs au cours

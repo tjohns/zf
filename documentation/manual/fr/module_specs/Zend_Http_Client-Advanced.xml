@@ -19,11 +19,13 @@
                 <title>Forcer des redirections conformes au RFC 2616 lors de la réception d'un code statut 301 and
                 302</title>
 
-                <programlisting role="php"><![CDATA[// Redirections strictes
+                <programlisting role="php"><![CDATA[
+// Redirections strictes
 $client->setConfig(array('strictredirects' => true)
 
 // Redirections non strictes
-$client->setConfig(array('strictredirects' => false)]]></programlisting>
+$client->setConfig(array('strictredirects' => false)
+]]></programlisting>
             </example></para>
 
         <para>Il est toujours possible d'obtenir le nombre de redirections effectuées après l'envoi d'une requête en
@@ -39,7 +41,8 @@ $client->setConfig(array('strictredirects' => false)]]></programlisting>
                 id="zend.http.client.cookies.example-1">
                 <title>Définition de cookies via setCookie()</title>
 
-                <programlisting role="php"><![CDATA[// Simple et facile : en fournissant un nom de cookie et une valeur
+                <programlisting role="php"><![CDATA[
+// Simple et facile : en fournissant un nom de cookie et une valeur
 $client->setCookie('parfum', 'pépites de chocolat');
 
 // en fournissant directement une chaîne de cookie encodée (nom=valeur)
@@ -48,7 +51,8 @@ $client->setCookie('parfum=p%C3%A9pites%20de%20chocolat');
 
 // En fournissant un objet Zend_Http_Cookie
 $cookie = Zend_Http_Cookie::fromString('parfum=p%C3%A9pites%20de%20chocolat');
-$client->setCookie($cookie);]]></programlisting>
+$client->setCookie($cookie);
+]]></programlisting>
             </example> Pour plus d'information sur les objets <code>Zend_Http_Cookie</code>, voir <xref
         linkend="zend.http.cookies" />.</para>
 
@@ -58,7 +62,8 @@ $client->setCookie($cookie);]]></programlisting>
         cookie de session) avant de pouvoir envoyer d'autres requêtes. <example id="zend.http.client.cookies.example-2">
                 <title>Activer la persistance des cookies</title>
 
-                <programlisting role="php"><![CDATA[// Pour activer la persistance des cookies, définissez un Magasin de cookie "Cookie Jar"
+                <programlisting role="php"><![CDATA[
+// Pour activer la persistance des cookies, définissez un Magasin de cookie "Cookie Jar"
 $client->setCookieJar();
 
 // Première requête : s'identifier et démarrer une session
@@ -73,7 +78,8 @@ $client->request('POST');
 // Maintenant nous pouvons envoyer notre requête suivante
 // les cookies stockés seront transmis automatiquement.
 $client->setUri('http://exemple.com/lire_actualite_membres.php');
-$client->request('GET');]]></programlisting>
+$client->request('GET');
+]]></programlisting>
             </example> Pour plus d'information sur la classe <code>Zend_Http_CookieJar</code>, voir <xref
         linkend="zend.http.cookies.cookiejar" />.</para>
     </sect2>
@@ -86,7 +92,8 @@ $client->request('GET');]]></programlisting>
         <example id="zend.http.client.custom_headers.example-1">
                 <title>Définir un entête personnalisé unique</title>
 
-                <programlisting role="php"><![CDATA[// Définition d'un entête unique, écrasant toute valeur précédemment définie
+                <programlisting role="php"><![CDATA[
+// Définition d'un entête unique, écrasant toute valeur précédemment définie
 $client->setHeaders('Host', 'www.exemple.com');
 
 // La même chose d'une autre manière
@@ -96,7 +103,8 @@ $client->setHeaders('Host: www.example.com');
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=fr'
-));]]></programlisting>
+));
+]]></programlisting>
             </example></para>
 
         <para><code>setHeader()</code> peut aussi être facilement utilisé pour définir des entêtes multiples en un seul
@@ -104,7 +112,8 @@ $client->setHeaders('Cookie', array(
                 id="zend.http.client.custom_headers.example-2">
                 <title>Définition de plusieurs entêtes personnalisés</title>
 
-                <programlisting role="php"><![CDATA[// Définition de plusieurs entêtes, écrasant toute valeur précédemment définie
+                <programlisting role="php"><![CDATA[
+// Définition de plusieurs entêtes, écrasant toute valeur précédemment définie
 $client->setHeaders(array(
     'Host' => 'www.exemple.com',
     'Accept-encoding' => 'gzip,deflate',
@@ -114,7 +123,8 @@ $client->setHeaders(array(
 $client->setHeaders(array(
     'Host: www.exemple.com',
     'Accept-encoding: gzip,deflate',
-    'X-Powered-By: Zend Framework'));]]></programlisting>
+    'X-Powered-By: Zend Framework'));
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -135,7 +145,8 @@ $client->setHeaders(array(
                 id="zend.http.client.file_uploads.example-1">
                 <title>Utilisation de setFileUpload pour envoyer des fichiers</title>
 
-                <programlisting role="php"><![CDATA[// Envoi de données arbitraires comme fichier
+                <programlisting role="php"><![CDATA[
+// Envoi de données arbitraires comme fichier
 $texte = 'ceci est un texte ordinaire';
 $client->setFileUpload('du_texte.txt', 'upload', $texte, 'text/plain');
 
@@ -143,7 +154,8 @@ $client->setFileUpload('du_texte.txt', 'upload', $texte, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // envoi des fichiers
-$client->submit('POST');]]></programlisting>
+$client->submit('POST');
+]]></programlisting>
             </example> Dans le premier exemple, la variable $texte est envoyée et sera disponible dans
         <code>$_FILES['upload']</code> côté serveur. Dans le second exemple, le fichier existant
         "<filename>/tmp/Backup.tar.gz</filename>" est envoyé au serveur et sera disponible dans
@@ -170,7 +182,8 @@ $client->submit('POST');]]></programlisting>
         setRawData() ou via la méthode <code>setEncType()</code>. <example id="zend.http.client.raw_post_data.example-1">
                 <title>Envoi de données brutes via POST</title>
 
-                <programlisting role="php"><![CDATA[$xml = '<book>' .
+                <programlisting role="php"><![CDATA[
+$xml = '<book>' .
        '  <title>Islands in the Stream</title>' .
        '  <author>Ernest Hemingway</author>' .
        '  <year>1970</year>' .
@@ -179,7 +192,8 @@ $client->submit('POST');]]></programlisting>
 $client->setRawData($xml, 'text/xml')->request('POST');
 
 // Une autre manière de faire la même chose :
-$client->setRawData($xml)->setEncType('text/xml')->request('POST');]]></programlisting>
+$client->setRawData($xml)->setEncType('text/xml')->request('POST');
+]]></programlisting>
             </example> Les données seront disponible côté serveur via la variable PHP <code>$HTTP_RAW_POST_DATA</code>
         ou via le flux php://input.</para>
 
@@ -202,11 +216,13 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]></programl
         <example id="zend.http.client.http_authentication.example-1">
                 <title>Définir nom d'utilisateur et mot de passe pour l'authentification HTTP</title>
 
-                <programlisting role="php"><![CDATA[// Utilisation de l'authentification 'basic'
+                <programlisting role="php"><![CDATA[
+// Utilisation de l'authentification 'basic'
 $client->setAuth('shahar', 'monMotdePasse!', Zend_Http_Client::AUTH_BASIC);
 
 // L'authentification 'basic' étant le comportement par défaut, on peut aussi écrire ceci :
-$client->setAuth('shahar', 'monMotdePasse!');]]></programlisting>
+$client->setAuth('shahar', 'monMotdePasse!');
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -251,7 +267,8 @@ $client->setAuth('shahar', 'monMotdePasse!');]]></programlisting>
         <example id="zend.http.client.multiple_requests.example-1">
             <title>Exécuter plusieurs requêtes avec un seul client</title>
 
-            <programlisting role="php"><![CDATA[// D'abord, instancier le client
+            <programlisting role="php"><![CDATA[
+// D'abord, instancier le client
 $client = new Zend_Http_Client('http://www.exemple.com/obtientdonnees.php', array(
     'keepalive' => true
 ));
@@ -281,7 +298,8 @@ if (isset($_SESSION['cookiejar']) &&
 $reponse = $client->request(Zend_Http_Client::GET);
 
 // Stockons les cookies dans la session pour la page suivante
-$_SESSION['cookiejar'] = $client->getCookieJar();]]></programlisting>
+$_SESSION['cookiejar'] = $client->getCookieJar();
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

@@ -13,14 +13,16 @@
         <example id="zend.rest.client.introduction.example-1">
             <title>Une requête REST basique</title>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Connexion au serveur framework.zend.com server
  */
 require_once 'Zend/Rest/Client.php';
 
 $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 
-echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"]]></programlisting>
+echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
+]]></programlisting>
         </example>
 
         <note>
@@ -31,8 +33,10 @@ echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"]]></pr
             <code>post()</code>, <code>put()</code> ou <code>delete()</code>. Cet appel peut être fait par
             l'intermédiaire de méthodes enchaînées ou dans des appels séparés de méthode :</para>
 
-            <programlisting role="php"><![CDATA[$client->sayHello('Davey', 'Day');
-echo $client->get();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$client->sayHello('Davey', 'Day');
+echo $client->get();
+]]></programlisting>
         </note>
     </sect2>
 
@@ -50,11 +54,13 @@ echo $client->get();]]></programlisting>
         <example id="zend.rest.client.return.example-1">
             <title>État de la réponse</title>
 
-            <programlisting role="php"><![CDATA[$result = $client->sayHello('Davey', 'Day')->get();
+            <programlisting role="php"><![CDATA[
+$result = $client->sayHello('Davey', 'Day')->get();
 
 if ($result->isSuccess()) {
     echo $result; // "Hello Davey, Good Day"
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <para>Dans l'exemple ci-dessus, vous pouvez voir que nous utilisons le résultat de la demande comme un objet,
@@ -72,17 +78,20 @@ if ($result->isSuccess()) {
         <example id="zend.rest.client.return.example-2">
             <title>Utiliser le service REST Technorati</title>
 
-            <programlisting role="php"><![CDATA[$technorati = new Zend_Rest_Client('http://api.technorati.com/bloginfo');
+            <programlisting role="php"><![CDATA[
+$technorati = new Zend_Rest_Client('http://api.technorati.com/bloginfo');
 $technorati->key($key);
 $technorati->url('http://pixelated-dreams.com');
 $result = $technorati->get();
-echo $result->firstname() .' '. $result->lastname();]]></programlisting>
+echo $result->firstname() .' '. $result->lastname();
+]]></programlisting>
         </example>
 
         <example id="zend.rest.client.return.example-3">
             <title>Exemple de réponse Technorati</title>
 
-            <programlisting role="xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+            <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
 <!DOCTYPE tapi PUBLIC "-//Technorati, Inc.//DTD TAPI 0.02//EN" "http://api.technorati.com/dtd/tapi-002.xml">
 <tapi version="1.0">
@@ -108,7 +117,8 @@ echo $result->firstname() .' '. $result->lastname();]]></programlisting>
             <inboundlinks>218</inboundlinks>
         </result>
     </document>
-</tapi>]]></programlisting>
+</tapi>
+]]></programlisting>
         </example>
 
         <para>Ici nous accédons aux propriétés <code>firstname</code> et <code>lastname</code>.Bien que ce ne soient pas
@@ -136,7 +146,8 @@ echo $result->firstname() .' '. $result->lastname();]]></programlisting>
         <example id="zend.rest.client.args.example-1">
             <title>Affecter des arguments de requêtes</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_Rest_Client('http://example.org/rest');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_Rest_Client('http://example.org/rest');
 
 $client->arg('value1');
 $client->arg2('value2');
@@ -144,7 +155,8 @@ $client->get();
 
 // or
 
-$client->arg('value1')->arg2('value2')->get();]]></programlisting>
+$client->arg('value1')->arg2('value2')->get();
+]]></programlisting>
         </example>
 
         <para>Les deux méthodes dans l'exemple ci-dessus, auront comme conséquence l'obtention des arguments suivants :

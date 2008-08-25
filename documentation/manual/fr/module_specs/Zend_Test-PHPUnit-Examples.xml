@@ -58,7 +58,8 @@
         qui nous permet aussi de fournir par une solution simple une fonction de rappel ("callback"). Regardons d'abord
         les bases de cette classe :</para>
 
-        <programlisting role="php"><![CDATA[class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 {
     /**
      * @var Zend_Config
@@ -118,11 +119,13 @@
     }
 
     // definition of methods would follow...
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Ceci nous permet de créer un callback d'amorçage comme ce qui suit :</para>
 
-        <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+        <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function appBootstrap()
     {
@@ -137,14 +140,16 @@
     }
 
     // ...
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Une fois ceci en place, nous pouvons écrire nos tests. Cependant, combien de ces tests nécessiteront qu'un
         utilisateur soit connecté ? La solution la plus simple est d'utiliser la logique de votre application pour faire
         ceci... et d'esquiver un peu par l'utilisation de la méthode <code>resetResponse()</code>, qui vous permettra de
         dispatcher une nouvelle requête.</para>
 
-        <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+        <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     // ...
 
@@ -163,11 +168,13 @@
     }
 
     // ...
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Écrivons maintenant les tests :</para>
 
-        <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+        <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     // ...
 
@@ -242,7 +249,8 @@
         $this->assertNotRedirect();
         $this->assertQuery('form .errors');
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Notez que ces tests sont laconiques, et, pour la plupart, ne recherchent pas le contenu réel. Au lieu de
         cela, ils recherchent des objets construits dans la réponse - codes et entêtes de réponse, et noeuds DOM. Ceci

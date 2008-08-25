@@ -128,8 +128,10 @@
                 invalide, vous devriez employer la classe <code>Zend_Controller_Request_Apache404</code> au lieu de la
                 classe HTTP par défaut pour votre objet de requête :</para>
 
-                <programlisting role="php"><![CDATA[$request = new Zend_Controller_Request_Apache404();
-$front->setRequest($request);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$request = new Zend_Controller_Request_Apache404();
+$front->setRequest($request);
+]]></programlisting>
 
                 <para>Cette classe étend la classe <code>Zend_Controller_Request_Http</code> et modifie simplement la
                 recherche automatique de l'URI de la requête. Elle peut être employée comme un remplacement
@@ -166,7 +168,8 @@ $front->setRequest($request);]]></programlisting>
             méthode la plus facile est de la régler dans <code>Zend_Controller_Front</code>, qui le transmets dans
             l'objet de requête. Exemple d'utilisation pour régler une base d'URL personnalisée :</para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Dispatche la requête avec une base d'URL réglé avec Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
@@ -174,7 +177,8 @@ $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // affecte la base d'url
-$response   = $controller->dispatch();]]></programlisting>
+$response   = $controller->dispatch();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.request.http.method">
@@ -253,7 +257,8 @@ $response   = $controller->dispatch();]]></programlisting>
         <para>La classe de requête de base utilisée pour tous les objets de requête est la classe abstraite
         <code>Zend_Controller_Request_Abstract</code>. Au minimum, elle définit les méthodes suivantes :</para>
 
-        <programlisting role="php"><![CDATA[abstract class Zend_Controller_Request_Abstract
+        <programlisting role="php"><![CDATA[
+abstract class Zend_Controller_Request_Abstract
 {
     /**
      * @return string
@@ -333,7 +338,8 @@ $response   = $controller->dispatch();]]></programlisting>
      * @return boolean
      */
     public function isDispatched();
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>L'objet de requête est un conteneur pour l'environnement de la requête. La chaîne de contrôleur doit
         seulement savoir régler et récupérer le contrôleur, l'action, les paramètres facultatifs, et le statut

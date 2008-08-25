@@ -15,7 +15,8 @@
     <para>Pour rappel, voici l'exemple de script issu de l'introduction de ce chapitre sur
     <code>Zend_View</code>.</para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->livres): ?>
+    <programlisting role="php"><![CDATA[
+<?php if ($this->livres): ?>
 
     <!-- La table des livres -->
     <table>
@@ -37,7 +38,8 @@
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; ?>]]></programlisting>
+<?php endif; ?>
+]]></programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
         <title>Échapper la sortie</title>
@@ -49,18 +51,21 @@
 
         <para><code>Zend_View</code> a une méthode appelée <code>escape()</code> qui se charge de l'échappement.</para>
 
-        <programlisting role="php"><![CDATA[// mauvaise pratique d'affichage
+        <programlisting role="php"><![CDATA[
+// mauvaise pratique d'affichage
 echo $this->variable;
 
 // bonne pratique d'affichage
-echo $this->escape($this->variable);]]></programlisting>
+echo $this->escape($this->variable);
+]]></programlisting>
 
         <para>Par défaut, la méthode <code>escape()</code> utilise la fonction PHP <code>htmlspecialchar()</code> pour
         l'échappement. Cependant, en fonction de votre environnement, vous souhaitez peut-être un échappement différent.
         Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour dire à <code>Zend_View</code> quelle
         méthode de rappel ("callback") elle doit utiliser.</para>
 
-        <programlisting role="php"><![CDATA[// crée une instance Zend_View
+        <programlisting role="php"><![CDATA[
+// crée une instance Zend_View
 $view = new Zend_View();
 
 // spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
@@ -74,7 +79,8 @@ $obj = new UneClasse();
 $view->setEscape(array($obj, 'nomDeMethode'));
 
 // et ensuite effectue le rendu de la vue
-echo $view->render(...);]]></programlisting>
+echo $view->render(...);
+]]></programlisting>
 
         <para>La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tous les
         autres paramètres devraient être optionnels.</para>
@@ -94,7 +100,8 @@ echo $view->render(...);]]></programlisting>
             <para>Un script de vue peut être utilisé pour instancier et manipuler un objet de gabarit séparé, comme un
             gabarit de type PHPLIB. Le script de vue pour ce type d'activité pourrait ressembler à ceci :</para>
 
-            <programlisting role="php"><![CDATA[include_once 'template.inc';
+            <programlisting role="php"><![CDATA[
+include_once 'template.inc';
 $tpl = new Template();
 
 if ($this->livres) {
@@ -113,11 +120,13 @@ if ($this->livres) {
 } else {
     $tpl->setFile("nobooks", "pasdelivres.tpl")
     $tpl->pparse("output", "pasdelivres");
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>Et ceci pourrait être les fichiers de gabarits correspondants :</para>
 
-            <programlisting role="html"><![CDATA[<!-- listelivre.tpl -->
+            <programlisting role="html"><![CDATA[
+<!-- listelivre.tpl -->
 <table>
     <tr>
         <th>Auteur</th>
@@ -133,7 +142,8 @@ if ($this->livres) {
     </tr>
 
 <!-- pasdelivres.tpl -->
-<p>Aucun livre à afficher</p>]]></programlisting>
+<p>Aucun livre à afficher</p>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.view.scripts.templates.interface">
@@ -143,7 +153,8 @@ if ($this->livres) {
             <code>Zend_View</code>. <code>Zend_View_Interface</code> définit l'interface de compatibilité minimale
             nécessaire :</para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Retourne l'objet moteur de gabarit actuel
  */
 public function getEngine();
@@ -190,13 +201,15 @@ public function clearVars();
 /**
  * Effectue le rendu du gabarit nommé $name
  */
-public function render($name);]]></programlisting>
+public function render($name);
+]]></programlisting>
 
             <para>En utilisant cette interface, il devient relativement facile d'encapsuler un moteur de gabarit tiers
             comme une classe compatible <code>Zend_View</code>. Comme par exemple, le code suivant est une encapsulation
             potentielle de Smarty :</para>
 
-            <programlisting role="php"><![CDATA[class Zend_View_Smarty implements Zend_View_Interface
+            <programlisting role="php"><![CDATA[
+class Zend_View_Smarty implements Zend_View_Interface
 {
     /**
      * Objet Smarty
@@ -374,16 +387,19 @@ public function render($name);]]></programlisting>
     {
         return $this->_smarty->fetch($name);
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>Dans cet exemple, vous instanciez la classe <code>Zend_View_Smarty</code> au lieu de
             <code>Zend_View</code>, et vous l'utilisez de la même façon :</para>
 
-            <programlisting role="php"><![CDATA[$view = new Zend_View_Smarty();
+            <programlisting role="php"><![CDATA[
+$view = new Zend_View_Smarty();
 $view->setScriptPath('/chemin/vers/gabarits');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');]]></programlisting>
+$rendered = $view->render('bookinfo.tpl');
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

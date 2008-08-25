@@ -79,7 +79,8 @@
                 scripts de vue à <code>Zend_Filter_Inflector</code> ; vous pouvez modifier les règles de l'inflecteur
                 pour ne plus séparer les mots d'une action avec un tiret :</para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -87,7 +88,8 @@ $inflector->setFilterRule(':action', array(
         ''
     ),
     'StringToLower'
-));]]></programlisting>
+));
+]]></programlisting>
 
                 <para>Le code ci-dessus modifiera l'inflecteur pour ne plus séparer les mots avec un tiret ; vous pouvez
                 aussi vouloir supprimer le filtre <code>StringToLower</code> si vous <emphasis>voulez</emphasis> que vos
@@ -102,7 +104,9 @@ $inflector->setFilterRule(':action', array(
                 écrits en notationCamel avec un nouveau drapeau du contrôleur frontal,
                 <code>useCaseSensitiveActions</code> :</para>
 
-                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$front->setParam('useCaseSensitiveActions', true);
+]]></programlisting>
 
                 <para>Ceci vous permettra d'utiliser la notationCamel dans l'URL et de toujours faire résoudre la même
                 action que si vous utilisez les séparateurs de mots. Cependant, ceci signifiera que les problèmes
@@ -128,7 +132,9 @@ $inflector->setFilterRule(':action', array(
         d'exceptions, et redirigeant vers le contrôleur de gestion d'erreur spécifié. Vous pouvez le désactiver en
         réglant le paramètre <code>noErrorHandler</code> du contrôleur frontal :</para>
 
-        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$front->setParam('noErrorHandler', true);
+]]></programlisting>
 
         <para>L'aide d'action <code>ViewRenderer</code> automatise l'injection de vues dans les contrôleurs d'action en
         tant qu'autogénération des scripts de vues suivant l'action courante. Le principal problème que vous pourriez
@@ -140,8 +146,10 @@ $inflector->setFilterRule(':action', array(
         globalement désactiver <code>ViewRenderer</code> dans votre fichier d'amorçage du contrôleur frontal avant tout
         dispatching :</para>
 
-        <programlisting role="php"><![CDATA[// En considérant que $front est une instance de Zend_Controller_Front
-$front->setParam('noViewRenderer', true);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// En considérant que $front est une instance de Zend_Controller_Front
+$front->setParam('noViewRenderer', true);
+]]></programlisting>
 
         <para>Cependant, ceci n'est pas une bonne stratégie à long terme, car il apparaît aisément que vous devrez
         écrire plus de code.</para>
@@ -171,18 +179,22 @@ $front->setParam('noViewRenderer', true);]]></programlisting>
 
         <para>Le changement le plus simple est la désactivation de l'auto-rendu pour cette méthode :</para>
 
-        <programlisting role="php"><![CDATA[$this->_helper->viewRenderer->setNoRender();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$this->_helper->viewRenderer->setNoRender();
+]]></programlisting>
 
         <para>Si vous trouvez qu'aucune de vos méthodes d'actions n'effectue de rendu, ne font suivre, ou redirige, vous
         pouvez préférer mettre la ligne suivante dans la méthode <code>preDispatch()</code> ou <code>init()</code>
         :</para>
 
-        <programlisting role="php"><![CDATA[public function preDispatch()
+        <programlisting role="php"><![CDATA[
+public function preDispatch()
 {
     // désactive l'auto-rendu des scripts de vues
     $this->_helper->viewRenderer->setNoRender()
     // ... faire autre chose ...
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Si vous appelez <code>render()</code>, et que vous utilisez la <link
         linkend="zend.controller.modular">structure de dossier modulaire conventionnelle</link>, vous voudrez modifier
@@ -220,16 +232,20 @@ $front->setParam('noViewRenderer', true);]]></programlisting>
             <listitem>
                 <para>Avant le dispatching d'une instance de contrôleur frontal :</para>
 
-                <programlisting role="php"><![CDATA[// En considérant que $view a déjà été définie
+                <programlisting role="php"><![CDATA[
+// En considérant que $view a déjà été définie
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]></programlisting>
             </listitem>
 
             <listitem>
                 <para>A tout moment durant le processus d'amorçage :</para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer->setView($view);
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -279,7 +295,9 @@ $viewRenderer->setView($view);]]></programlisting>
 
         <para>Pour les versions précédentes, l'utilisation basique des composants MVC reste la même :</para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/chemin/vers/controleurs');
+]]></programlisting>
 
         <para>Cependant, la structure des dossiers a subi une réorganisation, certains composants ont été effacés, et
         d'autres ont été soit renommés soit ajoutés. Les changements incluent :</para>
@@ -317,7 +335,9 @@ $viewRenderer->setView($view);]]></programlisting>
                 <para>Les arguments de <code>Zend_Controller_Action::_forward()</code> ont changés. La signature est
                 maintenant :</para>
 
-                <programlisting role="php"><![CDATA[final protected function _forward($action, $controller = null, $module = null, array $params = null);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]></programlisting>
 
                 <para><code>$action</code> est toujours obligatoire ; si aucun contrôleur n'est spécifié, une action
                 dans le contrôleur courant est considérée. <code>$module</code> est toujours ignoré à moins que
@@ -333,9 +353,12 @@ $viewRenderer->setView($view);]]></programlisting>
 
         <para>L'utilisation de base des composants MVC n'a pas changé ; vous pouvez toujours faire comme suit :</para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/controleurs');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/chemin/vers/controleurs');
+]]></programlisting>
 
-        <programlisting role="php"><![CDATA[/* -- créer un routeur -- */
+        <programlisting role="php"><![CDATA[
+/* -- créer un routeur -- */
 $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user', 'user/:username', array('controller' => 'user',
 'action' => 'info'));
@@ -346,7 +369,8 @@ $ctrl->setRouter($router);
 
 /* -- régler le répertoire des contrôleurs et dispatcher -- */
 $ctrl->setControllerDirectory('/chemin/vers/controleurs');
-$ctrl->dispatch();]]></programlisting>
+$ctrl->dispatch();
+]]></programlisting>
 
         <para>Nous encourageons l'utilisation de l'objet Réponse pour agréger le contenu et les entêtes. Ceci permet un
         basculement plus flexible entre les formats d'affichage (par exemple, JSON ou XML au lieu de XHTML) dans vos
@@ -372,20 +396,24 @@ $ctrl->dispatch();]]></programlisting>
                     <listitem>
                         <para>Régler <code>throwExceptions()</code> dans le contrôleur frontal :</para>
 
-                        <programlisting role="php"><![CDATA[$front->throwExceptions(true);]]></programlisting>
+                        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
                     </listitem>
 
                     <listitem>
                         <para>Régler <code>renderExceptions()</code> dans l'objet Réponse :</para>
 
-                        <programlisting role="php"><![CDATA[$response->renderExceptions(true);
+                        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
 $front->setResponse($response);
 $front->dispatch();
 // ou :
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
-echo $response;]]></programlisting>
+echo $response;
+]]></programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>
@@ -448,7 +476,8 @@ echo $response;]]></programlisting>
                         de la requête. Cette information est maintenant disponible dans l'objet requête, et peut être
                         interrogé comme ceci :</para>
 
-                        <programlisting role="php"><![CDATA[// Récupère le nom de controleur de la requête
+                        <programlisting role="php"><![CDATA[
+// Récupère le nom de controleur de la requête
 // L'accès se fait via : $this->_action->getControllerName().
 // L'exemple ci-dessous utilise getRequest(), bien que vous pourriez accéder directement
 // à la propriété $_request ; l'utilisation de getRequest() est recommandée puisue la classe
@@ -464,7 +493,8 @@ $action = $this->getRequest()->getActionName();
 // l'objet requete maintenant.
 $params = $this->_getParams();
 $foo = $this->_getParam('foo', 'default'); // parametre de la requete 'foo', en utilisant
-                                           // 'default' en tant que valeur par défaut si aucune valeur n'est trouvée]]></programlisting>
+                                           // 'default' en tant que valeur par défaut si aucune valeur n'est trouvée
+]]></programlisting>
                     </listitem>
 
                     <listitem>
@@ -472,7 +502,8 @@ $foo = $this->_getParam('foo', 'default'); // parametre de la requete 'foo', en 
                         d'actions non-existantes est de les router vers une action par défaut en utilisant
                         <code>__call()</code>:</para>
 
-                        <programlisting role="php"><![CDATA[public function __call($method, $args)
+                        <programlisting role="php"><![CDATA[
+public function __call($method, $args)
 {
     // Si la méthode requetee ne correspond a aucune methode 'Action', on renvoie vers la méthode d'action par défaut :
     if ('Action' == substr($method, -6)) {
@@ -480,7 +511,8 @@ $foo = $this->_getParam('foo', 'default'); // parametre de la requete 'foo', en 
     }
 
     throw new Zend_Controller_Exception('Appel de methode invalide');
-}]]></programlisting>
+}
+]]></programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>

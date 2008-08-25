@@ -21,13 +21,15 @@
         <code>Zend_Mime_Part</code>, les métas-informations peuvent être définies en accédant directement aux attributs
         :</para>
 
-        <programlisting role="php"><![CDATA[public $type = Zend_Mime::TYPE_OCTETSTREAM;
+        <programlisting role="php"><![CDATA[
+public $type = Zend_Mime::TYPE_OCTETSTREAM;
 public $encoding = Zend_Mime::ENCODING_8BIT;
 public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;]]></programlisting>
+public $charset;
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.mime.part.methods">

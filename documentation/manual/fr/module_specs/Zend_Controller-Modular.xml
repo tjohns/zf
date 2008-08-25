@@ -8,7 +8,8 @@
         <para>Les conventions de dossiers vous permettent de séparer les différentes applications MVC dans des unités
         isolées et les réutiliser dans le contrôleur frontal. Voici une illustration :</para>
 
-        <programlisting role="php"><![CDATA[docroot/
+        <programlisting role="php"><![CDATA[
+docroot/
     index.php
 application/
     default/
@@ -41,7 +42,8 @@ application/
                 index/
                 list/
             helpers/
-            filters/]]></programlisting>
+            filters/
+]]></programlisting>
 
         <para>Ci dessus, le nom du module est utilisé comme préfixe pour les contrôleurs qu'il possède. Il y a donc
         trois contrôleurs : "Blog_IndexController", "News_IndexController", et "News_ListController". Deux contrôleurs
@@ -72,21 +74,26 @@ application/
         contrôleurs globaux (dont le nom ne comporte pas le module). Chaque option doit comporter une indication vers un
         chemin, et la clé <code>default</code> doit être présente :</para>
 
-        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));]]></programlisting>
+));
+]]></programlisting>
 
         <para><code>addControllerDirectory()</code> prend en paramètre une <code>string</code> décrivant un chemin vers
         des contrôleurs. Si vous voulez indiquer un module, passez le en second paramètre. Sinon, le chemin sera ajouté
         au module <code>default.</code></para>
 
-        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+]]></programlisting>
 
         <para>Enfin, si vous avez un dossier spécial regroupant tous vos modules, indiquez le grâce à
         <code>addModuleDirectory()</code>:</para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Sur cet exemple :
  * application/
  *     modules/
@@ -97,7 +104,8 @@ application/
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');
+]]></programlisting>
 
         <para>Dans le code ci dessus, vous déclarez 3 modules en une méthodes. Celle-ci s'attend à la structure
         comprenant les modules <code>default</code>, <code>foo</code>, et <code>bar</code>, chacun devant posséder un
@@ -106,7 +114,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
         <para>Si le dossier "controllers" ne vous convient pas, changez son nom à l'aide de
         <code>setModuleControllerDirectoryName()</code> :</para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Le dossier des contrôleurs s'appelle désormais 'con'
  * application/
  *     modules/
@@ -118,7 +127,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');
+]]></programlisting>
 
         <note>
             <para>Si vos dossiers de modules ne doivent pas utiliser de sous dossier pour les contrôleurs, alors passez
@@ -157,6 +167,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]></programlisting>
         <para>Si vous voulez renvoyer directement vers le contrôleur par défaut du module "default", passez le paramètre
         <code>useDefaultControllerAlways</code> à <code>true</code> dans le contrôleur frontal:</para>
 
-        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
+]]></programlisting>
     </sect2>
 </sect1>

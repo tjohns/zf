@@ -3,12 +3,14 @@
     <title>Auto découverte des fonctions.</title>
 
     <para>Si des fonctions doivent être utilisées (partagées) via un serveur SOAP, alors elles doivent être passées à
-    <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[$autodiscover = new Zend_Soap_AutoDiscover();
+    <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->addFunction('function1');
 $autodiscover->addFunction('function2');
 $autodiscover->addFunction('function3');
 ...
-$autodiscover->handle();]]></programlisting></para>
+$autodiscover->handle();
+]]></programlisting></para>
 
     <para>Les règles suivantes sont utilisées lors de la génération du fichier WSDL : <itemizedlist>
             <listitem>

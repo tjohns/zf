@@ -29,7 +29,8 @@
         notre exemple suppose que le chargement automatique ("autoload") est activé donc nous n'avons pas à nous soucier
         de charger les classes appropriées (comme le bon contrôleur, le bon plugin, etc.)</para>
 
-        <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+        <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function setUp()
     {
@@ -78,7 +79,8 @@
         $this->assertQuery('dl');
         $this->assertQueryContentContains('h2', 'User: foobar');
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Cet exemple pourrait être écrit plus simplement : toutes les assertions ne sont pas nécessaires et sont
         fournies seulement à titre d'illustration. Cependant, il montre bien combien il est simple de tester vos

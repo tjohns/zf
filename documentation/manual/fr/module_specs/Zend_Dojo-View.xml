@@ -18,12 +18,16 @@
         <para>Pour utiliser les aides de vues Dojo, vous devrez informer votre objet de vue de leur localisation. Vous
         pouvez faire ceci en appelant <code>addHelperPath()</code> :</para>
 
-        <programlisting role="php"><![CDATA[$view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
+]]></programlisting>
 
         <para>De manière alternative, vous pouvez utiliser la méthode <code>enableView()</code> de
         <code>Zend_Dojo</code> qui le fait pour vous :</para>
 
-        <programlisting role="php"><![CDATA[Zend_Dojo::enableView($view);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Dojo::enableView($view);
+]]></programlisting>
     </example>
 
     <xi:include href="Zend_Dojo-View-Dojo.xml">

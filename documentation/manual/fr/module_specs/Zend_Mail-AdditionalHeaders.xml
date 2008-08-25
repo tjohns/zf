@@ -9,9 +9,11 @@
     <example id="zend.mail.additional-headers.example-1">
         <title>Ajouter des entêtes à l'émail</title>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MaSuperApplication');
 $mail->addHeader('X-greetingsTo', 'Maman', true); // plusieurs valeurs
-$mail->addHeader('X-greetingsTo', 'Papa', true);]]></programlisting>
+$mail->addHeader('X-greetingsTo', 'Papa', true);
+]]></programlisting>
     </example>
 </sect1>

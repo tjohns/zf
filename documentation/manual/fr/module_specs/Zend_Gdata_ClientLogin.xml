@@ -48,7 +48,8 @@
         un objet client <code>Zend_Gdata</code> utilisant l'objet <code>Zend_Http_Client</code> fraîchement authentifié
         :</para>
 
-        <programlisting role="php"><![CDATA[// identifiants de compte Google
+        <programlisting role="php"><![CDATA[
+// identifiants de compte Google
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
 try {
@@ -60,7 +61,8 @@ try {
    echo 'Problème d'authentification : ' . $ae->exception() . "\n";
 }
 
-$cal = new Zend_Gdata_Calendar($client);]]></programlisting>
+$cal = new Zend_Gdata_Calendar($client);
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.clientlogin.terminating">

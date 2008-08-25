@@ -73,33 +73,43 @@
         <para>Par exemple, si vous souhaitez spécifier des mots clés SEO, vous devez créer une métadonnée de type "name"
         ayant pour nom "keywords" et pour contenu les mots clés que vous souhaitez associer à votre page :</para>
 
-        <programlisting role="php"><![CDATA[// paramètrage des mots clés
-$this->headMeta()->appendName('keywords', 'framework php productivité');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// paramètrage des mots clés
+$this->headMeta()->appendName('keywords', 'framework php productivité');
+]]></programlisting>
 
         <para>Si vous souhaitez paramètrer des règles de mise en cache côté client, vous devez créer une métadonnée de
         type "http-equiv" avec les règles que vous souhaitez imposer :</para>
 
-        <programlisting role="php"><![CDATA[// désactiver la mise en cache côté client
+        <programlisting role="php"><![CDATA[
+// désactiver la mise en cache côté client
 $this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
                  ->appendHttpEquiv('pragma', 'no-cache')
-                 ->appendHttpEquiv('Cache-Control', 'no-cache');]]></programlisting>
+                 ->appendHttpEquiv('Cache-Control', 'no-cache');
+]]></programlisting>
 
         <para>Une autre utilisation habituelle des métadonnées est le réglage du type de contenu ("content type"), de
         l'encodage, et le langage :</para>
 
-        <programlisting role="php"><![CDATA[// régler le type de contenu et l'encodage
+        <programlisting role="php"><![CDATA[
+// régler le type de contenu et l'encodage
 $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
-                 ->appendHttpEquiv('Content-Language', 'fr-FR');]]></programlisting>
+                 ->appendHttpEquiv('Content-Language', 'fr-FR');
+]]></programlisting>
 
         <para>Et comme exemple final, une manière simple d'afficher un message de transition avant une redirection est
         d'utiliser une métadonnée "refresh" :</para>
 
-        <programlisting role="php"><![CDATA[// paramètrer une métadonnée refresh pour 3 secondes avant une nouvel URL :
-$this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.html');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// paramètrer une métadonnée refresh pour 3 secondes avant une nouvel URL :
+$this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.html');
+]]></programlisting>
 
         <para>Quand vous êtes prêts à placer vos métadonnées dans votre script de disposition, réalisez un
         "<code>echo</code>" de l'aide :</para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->headMeta() ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->headMeta() ?>
+]]></programlisting>
     </example>
 </sect3>

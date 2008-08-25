@@ -120,7 +120,8 @@
         <para>Il existe 2 manières de déclarer l'API de votre serveur SOAP.</para>
 
         <para>La première consiste à attacher des classes à l'objet <code>Zend_Soap_Server</code>, celles-ci devront
-        alors décrire l'API du service en totalité : <programlisting role="php"><![CDATA[...
+        alors décrire l'API du service en totalité : <programlisting role="php"><![CDATA[
+...
 class MyClass {
     /**
      * Cette méthode accepte ...
@@ -149,7 +150,8 @@ class MyClass {
 $server = new Zend_Soap_Server(null, $options);
 $server->setClass('MyClass');
 ...
-$server->handle();]]></programlisting> <note>
+$server->handle();
+]]></programlisting> <note>
                 <title>Important!</title>
 
                 <para>Vous devriez complètement décrire chaque méthode grâce aux blocs de commentaires PHPDoc dans le
@@ -158,7 +160,8 @@ $server->handle();]]></programlisting> <note>
 
         <para>La seconde manière de décrire l'API de votre service Web est d'utiliser des fonctions PHP conjointement
         avec les méthodes <code>addFunction()</code> ou <code>loadFunctions()</code> :<programlisting
-        role="php"><![CDATA[...
+        role="php"><![CDATA[
+...
 /**
  * Cette fonction ...
  *
@@ -184,7 +187,8 @@ $server = new Zend_Soap_Server(null, $options);
 $server->addFunction('function1');
 $server->addFunction('function2');
 ...
-$server->handle();]]></programlisting></para>
+$server->handle();
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.soap.server.request_response">
@@ -205,7 +209,8 @@ $server->handle();]]></programlisting></para>
             <para>La méthode <code>Zend_Soap_Server::handle()</code> utilise la requête depuis le flux d'entrée standard
             ('php://input'). Le comportement peut être changé en passant des paramètres à la méthode
             <code>handle()</code> ou en spécifiant sa propre requête grâce à la méthode <code>setRequest()</code>
-            :<programlisting role="php"><![CDATA[...
+            :<programlisting role="php"><![CDATA[
+...
 $server = new Zend_Soap_Server(...);
 ...
 // Affecte une requête personnalisée
@@ -213,7 +218,8 @@ $server->handle($request);
 ...
 // Affecte une requête personnalisée
 $server->setRequest();
-$server->handle();]]></programlisting></para>
+$server->handle();
+]]></programlisting></para>
 
             <para>Un objet de requête peut être représenté de plusieurs manières différentes :<itemizedlist>
                     <listitem>
@@ -238,11 +244,13 @@ $server->handle();]]></programlisting></para>
                 </itemizedlist></para>
 
             <para>La dernière requête utilisée et traitée peut être récupérée en utilisant la méthode
-            <code>getLastRequest()</code> :<programlisting role="php"><![CDATA[...
+            <code>getLastRequest()</code> :<programlisting role="php"><![CDATA[
+...
 $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
-$request = $server->getLastRequest();]]></programlisting></para>
+$request = $server->getLastRequest();
+]]></programlisting></para>
         </sect3>
 
         <sect3 id="zend.soap.server.request_response.response">
@@ -254,22 +262,26 @@ $request = $server->getLastRequest();]]></programlisting></para>
                     <para>L'état actuel du drapeau de retour de la réponse peut être vérifié via la méthode
                     <code>setReturnResponse()</code> sans paramètre.</para>
                 </footnote>. La réponse générée par <code>handle()</code> est alors retournée et non plus émise.
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $server = new Zend_Soap_Server(...);
 ...
 // Récupère la réponse plutôt que de l'emettre
 $server->setReturnResponse(true);
 ...
 $response = $server->handle();
-...]]></programlisting></para>
+...
+]]></programlisting></para>
 
             <para>Autrement, la dernière réponse peut être récupérer avec la méthode <code>getLastResponse()</code>
-            :<programlisting role="php"><![CDATA[...
+            :<programlisting role="php"><![CDATA[
+...
 $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
 $response = $server->getLastResyponse();
-...]]></programlisting></para>
+...
+]]></programlisting></para>
         </sect3>
     </sect2>
 </sect1>

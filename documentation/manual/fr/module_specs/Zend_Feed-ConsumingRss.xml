@@ -3,11 +3,15 @@
     <title>Consommer un flux RSS</title>
 
     <para>Lire un flux RSS se résume à instancier un objet <code>Zend_Feed_Rss</code> en passant l'URL du flux :
-    <programlisting role="php"><![CDATA[$canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');]]></programlisting>
+    <programlisting role="php"><![CDATA[
+$canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
+]]></programlisting>
     Si une erreur a lieu lors de l'obtention du flux, une <code>Zend_Feed_Exception</code> sera déclenchée.</para>
 
     <para>Une fois que vous disposez d'un objet "flux RSS", vous pouvez accéder aux propriétés RSS standard du canal, et
-    ce directement à partir de l'objet : <programlisting role="php"><![CDATA[echo $canal->title();]]></programlisting>
+    ce directement à partir de l'objet : <programlisting role="php"><![CDATA[
+echo $canal->title();
+]]></programlisting>
     Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> utilise une convention selon laquelle les
     propriétés sont traitées comme des objets XML si elles sont demandées au moyen de la syntaxe
     <code>$obj-&gt;propriété</code> et comme des chaînes si elles sont demandées au moyen de la syntaxe
@@ -15,15 +19,19 @@
     comme à l'ensemble des enfants de ce nœud.</para>
 
     <para>Si les propriétés du canal possèdent des attributs, ils sont accessibles à l'aide de l'indexage PHP :
-    <programlisting role="php"><![CDATA[echo $canal->category['domain'];]]></programlisting>Comme les attributs XML ne
+    <programlisting role="php"><![CDATA[
+echo $canal->category['domain'];
+]]></programlisting>Comme les attributs XML ne
     peuvent avoir des enfants, la syntaxe <code>$obj-&gt;propriété['attribut']()</code> n'est pas nécessaire pour
     accéder aux valeurs des attributs.</para>
 
     <para>La plupart du temps vous voudrez itérer sur le flux et réaliser quelque chose avec ses entrées.
     <code>Zend_Feed_Abstract</code> implémente l'interface <code>iterator</code> de PHP, ce qui résume au code suivant
-    l'affichage des titres de tous les articles du canal : <programlisting role="php"><![CDATA[foreach ($canal as $element) {
+    l'affichage des titres de tous les articles du canal : <programlisting role="php"><![CDATA[
+foreach ($canal as $element) {
     echo $element->title() . "\n";
-}]]></programlisting> Si vous n'êtes pas un familier de RSS, voici les éléments standard associés au canal RSS et à ses
+}
+]]></programlisting> Si vous n'êtes pas un familier de RSS, voici les éléments standard associés au canal RSS et à ses
     éléments pris séparément (les entrées).</para>
 
     <para>Les éléments requis pour les canaux sont :</para>
@@ -97,9 +105,11 @@
         </itemizedlist></para>
 
     <para>Dans votre code vous pouvez toujours tester si un élément est non-vide au moyen du test suivant :
-    <programlisting role="php"><![CDATA[if ($element->nomPropriete()) {
+    <programlisting role="php"><![CDATA[
+if ($element->nomPropriete()) {
     // ... traitement
-}]]></programlisting></para>
+}
+]]></programlisting></para>
 
     <para>Si vous utilisez à la place de la condition <code>$element-&gt;nomPropriete</code>, vous obtiendrez toujours
     un objet qui, même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.</para>

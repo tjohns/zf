@@ -26,7 +26,9 @@
         <example id="zend.loader.file.example">
             <title>Exemple d'utilisation de la méthode loadFile()</title>
 
-            <programlisting role="php"><![CDATA[Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::loadFile($filename, $dirs=null, $once=false);
+]]></programlisting>
         </example>
 
         <para>L'argument <code>$filename</code> définit le nom du fichier à charger, et il ne doit contenir aucune
@@ -55,12 +57,14 @@
         <example id="zend.loader.load.class.example">
             <title>Exemple d'utilisation de la méthode loadClass()</title>
 
-            <programlisting role="php"><![CDATA[Zend_Loader::loadClass('Container_Tree',
+            <programlisting role="php"><![CDATA[
+Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);]]></programlisting>
+);
+]]></programlisting>
         </example>
 
         <para>La chaîne spécifiant la classe est convertie en chemin relatif en remplaçant les tirets bas ("_") par le
@@ -89,9 +93,11 @@
         <example id="zend.loader.load.isreadable.example">
             <title>Exemple d'utilisation de la méthode isReadable()</title>
 
-            <programlisting role="php"><![CDATA[if (Zend_Loader::isReadable($filename)) {
+            <programlisting role="php"><![CDATA[
+if (Zend_Loader::isReadable($filename)) {
     // puis manipulation avec $filename
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <para>L'argument <code>$filename</code> spécifie le nom du fichier à vérifier. Il peut contenir des informations
@@ -113,7 +119,9 @@
         <example id="zend.loader.load.autoload.example">
             <title>Exemple d'inscription de la méthode de callback autoloader</title>
 
-            <programlisting role="php"><![CDATA[Zend_Loader::registerAutoload();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::registerAutoload();
+]]></programlisting>
         </example>
 
         <para>Après avoir inscrit le callback vers l'autoload du Zend Framework, vous pouvez appeler une classe de Zend
@@ -133,7 +141,8 @@
             <code>autoload()</code> délégue à son parent l'appel <code>self::loadClass()</code>, alors cela appellerait
             la méthode de même nom dans la classe parente et non dans la sous-classe.</para>
 
-            <programlisting role="php"><![CDATA[class Mon_Chargeur extends Zend_Loader
+            <programlisting role="php"><![CDATA[
+class Mon_Chargeur extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)
     {
@@ -150,7 +159,8 @@
         }
     }}
 
-Zend_Loader::registerAutoload('Mon_Chargeur');]]></programlisting>
+Zend_Loader::registerAutoload('Mon_Chargeur');
+]]></programlisting>
         </example>
 
         <para>Vous pouvez effacer un callback d'autoload. <code>registerAutoload()</code> a un paramètre optionnel, qui

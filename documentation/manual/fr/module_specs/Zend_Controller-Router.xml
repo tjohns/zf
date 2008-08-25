@@ -17,21 +17,27 @@
         requière pas de connaissances particulières en réécriture d'URL. Il est destiné à fonctionner avec une seule
         règle de réécriture Apache, dont voici des exemples :</para>
 
-        <programlisting role="php"><![CDATA[RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+        <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]></programlisting>
 
         <para>ou:</para>
 
-        <programlisting role="php"><![CDATA[RewriteEngine on
+        <programlisting role="php"><![CDATA[
+RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1]]></programlisting>
+RewriteRule ^(.*)$ index.php/$1
+]]></programlisting>
 
         <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS si <ulink
         url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> a été installée comme une extension Isap avec la règle
         suivante :</para>
 
-        <programlisting role="php"><![CDATA[RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
+        <programlisting role="php"><![CDATA[
+RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]
+]]></programlisting>
 
         <note>
             <title>IIS Isapi_Rewrite</title>
@@ -43,11 +49,13 @@ RewriteRule ^(.*)$ index.php/$1]]></programlisting>
 
         <para>Si vous utilisez Lighttpd, la règle de réécriture suivante est valide :</para>
 
-        <programlisting role="lighttpd"><![CDATA[url.rewrite-once = (
+        <programlisting role="lighttpd"><![CDATA[
+url.rewrite-once = (
     ".*\?(.*)$" => "/index.php?$1",
     ".*\.(js|ico|gif|jpg|png|css)$" => "$0",
     "" => "/index.php"
-)]]></programlisting>
+)
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
@@ -55,12 +63,14 @@ RewriteRule ^(.*)$ index.php/$1]]></programlisting>
 
         <para>Pour utiliser un routeur et le configurer, vous devez le récupérer et ajouter des routes :</para>
 
-        <programlisting role="php"><![CDATA[/* Créer un routeur */
+        <programlisting role="php"><![CDATA[
+/* Créer un routeur */
 $router = $frontctrl->getRouter(); // retourne un routeur de réécriture par défaut
 $router->addRoute(
     'user',
     new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
-);]]></programlisting>
+);
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.basic">
@@ -70,7 +80,9 @@ $router->addRoute(
         appelant la méthode <code>addRoute()</code> et en lui passant une instance implémentant
         <code>Zend_Controller_Router_Route_Interface</code>. Exemple :</para>
 
-        <programlisting role="php"><![CDATA[$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));
+]]></programlisting>
 
         <para>Le routeur de réécriture est fourni avec quatre types de route, dont une spéciale :</para>
 
@@ -108,7 +120,9 @@ $router->addRoute(
         <note>
             <para>L'utilisation la plus plausible du nom de la route est illustrée dans l'aide vue "url":</para>
 
-            <programlisting role="php"><![CDATA[<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]></programlisting>
+            <programlisting role="php"><![CDATA[
+<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>
+]]></programlisting>
 
             <para>Ce qui donnera un "href" : <code>user/martel</code>.</para>
         </note>
@@ -155,7 +169,8 @@ $router->addRoute(
 
         <para>Exemples avec ces routes :</para>
 
-        <programlisting role="php"><![CDATA[// Considérons :
+        <programlisting role="php"><![CDATA[
+// Considérons :
 $ctrl->setControllerDirectory(
     array(
         'default' => '/path/to/default/controllers',
@@ -189,19 +204,24 @@ http://example/blog/archive/list/sort/alpha/date/desc
     controller == archive
     action     == list
     sort       == alpha
-    date       == desc]]></programlisting>
+    date       == desc
+]]></programlisting>
 
         <para>La route par défaut est simplement un objet <code>Zend_Controller_Router_Route_Module</code>, stocké sous
         le nom "default" dans le routeur de réécriture(RewriteRouter). Il est conçu comme ceci :</para>
 
-        <programlisting role="php"><![CDATA[$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
-$this->addRoute('default', $compat);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+$this->addRoute('default', $compat);
+]]></programlisting>
 
         <para>Si vous ne souhaitez pas cette route par défaut, créez en une et stocker la avec le nom "default"
         (écrasement), ou supprimez la route avec <code>removeDefaultRoutes()</code>:</para>
 
-        <programlisting role="php"><![CDATA[// Supprime les routes par défaut
-$router->removeDefaultRoutes();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// Supprime les routes par défaut
+$router->removeDefaultRoutes();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.rewritebase">
@@ -216,7 +236,9 @@ $router->removeDefaultRoutes();]]></programlisting>
         <code>Zend_Controller_Request_Http</code> en appelant <code>setBaseUrl()</code> (voyez <xref
         linkend="zend.controller.request.http.baseurl" />):</para>
 
-        <programlisting role="php"><![CDATA[$request->setBaseUrl('/~user/application-root/');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$request->setBaseUrl('/~user/application-root/');
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">
@@ -236,7 +258,8 @@ $router->removeDefaultRoutes();]]></programlisting>
 
         <para>Par exemple, voyons un fichier INI :</para>
 
-        <programlisting role="php"><![CDATA[[production]
+        <programlisting role="php"><![CDATA[
+[production]
 routes.archive.route = "archive/:year/*"
 routes.archive.defaults.controller = archive
 routes.archive.defaults.action = show
@@ -253,13 +276,16 @@ routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
 routes.archive.map.1 = "year"
-; OU: routes.archive.map.year = 1]]></programlisting>
+; OU: routes.archive.map.year = 1
+]]></programlisting>
 
         <para>Ce fichier INI peut être lu dans grâce à un objet <code>Zend_Config</code> comme suit :</para>
 
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
-$router->addConfig($config, 'routes');]]></programlisting>
+$router->addConfig($config, 'routes');
+]]></programlisting>
 
         <para>Nous indiquons au routeur d'utiliser la section "routes" du fichier INI. Chaque clé de premier niveau
         représente le nom de la route, ainsi nous avons dans l'exemple ci dessus "archive" et "news". Chaque route
@@ -280,7 +306,8 @@ $router->addConfig($config, 'routes');]]></programlisting>
         <para>Cependant, si vous voulez utiliser votre propre logique de routage, une interface est disponible.
         <code>Zend_Controller_Router_Interface</code> ne définit qu'une seule méthode :</para>
 
-        <programlisting role="php"><![CDATA[interface Zend_Controller_Router_Interface
+        <programlisting role="php"><![CDATA[
+interface Zend_Controller_Router_Interface
 {
   /**
    * @param  Zend_Controller_Request_Abstract $request
@@ -288,7 +315,8 @@ $router->addConfig($config, 'routes');]]></programlisting>
    * @return Zend_Controller_Request_Abstract
    */
   public function route(Zend_Controller_Request_Abstract $request);
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Le processus de routage n'intervient qu'une fois : lorsque la requête est reçue par le système. Le routeur
         doit alors déterminer un contrôleur, une action et de paramètres optionnel et les spécifier dans un objet de

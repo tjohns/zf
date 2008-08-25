@@ -21,7 +21,8 @@
         <para>Comme exemple simple, imaginons que votre contrôleur aie une liste de données sur des livres qu'il veut
         afficher en passant par une vue. Le contrôleur pourrait alors ressembler à ceci :</para>
 
-        <programlisting role="php"><![CDATA[// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
+        <programlisting role="php"><![CDATA[
+// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
 $data = array(
     array(
         'auteur' => 'Hernando de Soto',
@@ -43,7 +44,8 @@ $view = new Zend_View();
 $view->books = $data;
 
 // et appel du script de rendu d'affichage appelé "booklist.php"
-echo $view->render('booklist.php');]]></programlisting>
+echo $view->render('booklist.php');
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.view.introduction.view">
@@ -56,7 +58,8 @@ echo $view->render('booklist.php');]]></programlisting>
         propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base pourrait ressembler à
         ceci :</para>
 
-        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+        <programlisting role="php"><![CDATA[
+<?php if ($this->books): ?>
 
     <!-- La table des livres -->
     <table>
@@ -78,7 +81,8 @@ echo $view->render('booklist.php');]]></programlisting>
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; ?>]]></programlisting>
+<?php endif; ?>
+]]></programlisting>
 
         <para>Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.</para>
     </sect2>
@@ -94,10 +98,12 @@ echo $view->render('booklist.php');]]></programlisting>
                 <para><code>basePath</code> : indique le chemin de base où peuvent être trouvés les dossiers de scripts,
                 d'aides et de filtres. Il considère une structure de dossiers de ce type :</para>
 
-                <programlisting role="php"><![CDATA[chemin/vers/
+                <programlisting role="php"><![CDATA[
+chemin/vers/
     helpers/
     filters/
-    scripts/]]></programlisting>
+    scripts/
+]]></programlisting>
 
                 <para>Ceci peut être paramétré via les méthodes <code>setBasePath()</code>, <code>addBasePath()</code>,
                 ou l'option <code>basePath</code> du constructeur.</para>
@@ -155,7 +161,9 @@ echo $view->render('booklist.php');]]></programlisting>
             <listitem>
                 <para>Activer les dans votre fichier <code>.htaccess</code> :</para>
 
-                <programlisting role="apache"><![CDATA[php_value "short_open_tag" "on"]]></programlisting>
+                <programlisting role="apache"><![CDATA[
+php_value "short_open_tag" "on"
+]]></programlisting>
 
                 <para>Ceci est seulement possible si vous êtes autorisé à créer et utiliser les fichiers
                 <code>.htaccess</code>. Cette directive peut aussi être ajoutée à votre fichier
@@ -166,7 +174,9 @@ echo $view->render('booklist.php');]]></programlisting>
                 <para>Activer une enveloppe de flux ("stream wrapper") optionnelle pour convertir les balises courtes en
                 balises longues à la volée :</para>
 
-                <programlisting role="php"><![CDATA[$view->setUseStreamWrapper(true);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$view->setUseStreamWrapper(true);
+]]></programlisting>
 
                 <para>Ceci enregistre <code>Zend_View_Stream</code> en tant que enveloppe de flux pour les scripts de
                 vue, et permet de s'assurer que votre code continue à fonctionner comme si les balises courtes étaient

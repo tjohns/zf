@@ -50,12 +50,14 @@
             <para>Dans cet exemple, nous recherchons les livres sur PHP disponibles chez Amazon et boucler sur les
             résultats pour les afficher.</para>
 
-            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.introduction.example.query_api">
@@ -64,12 +66,14 @@ foreach ($results as $result) {
             <para>Ici nous cherchons aussi les livres sur PHP disponibles chez Amazon, mais en utilisant l'API de
             requête, qui ressemble au modèle de conception Interface Fluide.</para>
 
-            <programlisting role="php"><![CDATA[$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[
+$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -83,8 +87,10 @@ foreach ($results as $result) {
         <example id="zend.service.amazon.countrycodes.example.country_code">
             <title>Choisir un service Web Amazon d'un pays</title>
 
-            <programlisting role="php"><![CDATA[// Connexion à Amazon France
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+// Connexion à Amazon France
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
+]]></programlisting>
         </example>
 
         <note>
@@ -104,8 +110,10 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');]]></programlisting>
         <example>
             <title>Rechercher une produit Amazon spécifique avec son ASIN</title>
 
-            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$item = $amazon->itemLookup('B0000A432X');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$item = $amazon->itemLookup('B0000A432X');
+]]></programlisting>
         </example>
 
         <para>La méthode <code>itemLookup()</code> accepte aussi un second paramètre optionnel pour gérer les options de
@@ -130,11 +138,13 @@ $item = $amazon->itemLookup('B0000A432X');]]></programlisting>
         <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Lancer des recherches de produits sur Amazon</title>
 
-            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
@@ -143,7 +153,8 @@ foreach ($results as $result) {
             <para>L'option <code>ResponseGroup</code> est utilisée pour contrôler les informations spécifiques qui sont
             retournées dans la réponse.</para>
 
-            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array(
     'SearchIndex'   => 'Books',
     'Keywords'      => 'php',
@@ -151,7 +162,8 @@ $results = $amazon->itemSearch(array(
     ));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <para>La méthode <code>itemSearch()</code> accepte un seul tableau en paramètre pour gérer les options de
@@ -187,12 +199,14 @@ foreach ($results as $result) {
                 <para>Dans cet exemple, l'API de requêtes alternative est utilisée comme une interface fluide pour
                 spécifier les options et leurs valeurs respectives :</para>
 
-                <programlisting role="php"><![CDATA[$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+                <programlisting role="php"><![CDATA[
+$query = new Zend_Service_Amazon_Query('MY_API_KEY');
 $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
 
                 <para>Cela définit l'option <code>Category</code> à "Livres" et <code>Keywords</code> à "PHP".</para>
 

@@ -10,12 +10,14 @@
     <example id="zend.mail.html-mails.example-1">
         <title>Envoyer des émail HTML</title>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 $mail->setBodyText('Mon texte de test');
 $mail->setBodyHtml('Mon texte de test');
 $mail->setFrom('somebody@exemple.com', 'Un expéditeur');
 $mail->addTo('somebody_else@exemple.com', 'Un destinataire');
 $mail->setSubject('Sujet de test');
-$mail->send();]]></programlisting>
+$mail->send();
+]]></programlisting>
     </example>
 </sect1>

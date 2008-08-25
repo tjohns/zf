@@ -4,7 +4,9 @@
 
     <para>Les pages Web contiennent souvent des balises <code>&lt;link&gt;</code> qui font référence à des flux dont le
     contenu est lié à la page. <code>Zend_Feed</code> vous permet d'obtenir tous les flux référencés par une page Web en
-    appelant simplement une méthode : <programlisting role="php"><![CDATA[$tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');]]></programlisting>La
+    appelant simplement une méthode : <programlisting role="php"><![CDATA[
+$tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');
+]]></programlisting>La
     méthode <code>findFeeds()</code> renvoie ici un tableau d'objets <code>Zend_Feed_Abstract</code> associés aux flux
     référencés par les balises <code>&lt;link&gt;</code> de la page Web <code>news.html</code>. Selon le type de chaque
     flux, chaque entrée respective du tableau <code>$tableauFlux</code> peut être une instance de

@@ -154,17 +154,23 @@
             <para>Cette classe est très simple. Son constructeur ne prend qu'un paramètre qui définit le nom du fichier
             cible. Un accesseur existe aussi. Sa méthode <code>resolve()</code> traverse le fichier texte à la recherche
             de la ligne qui correspond au <code>username</code> et au <code>realm</code>. La syntaxe est similaire aux
-            fichiers <code>htpasswd</code> d'Apache: <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>
+            fichiers <code>htpasswd</code> d'Apache: <programlisting><![CDATA[
+<username>:<realm>:<credentials>\n
+]]></programlisting>
             Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>, et
             <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que retourner la valeur de
             "<code>credentials</code>". Ainsi, avec Basic cette valeur devra représenter la valeur Base64 encodée du mot
             de passe de l'utilisateur identifié par <code>username</code>. En mode Digest, la valeur MD5 de toute la
             chaîne <code>username:realm:password</code> (avec les deux-points).</para>
 
-            <para>Pour créer des résolveurs de fichiers séparés, utilisez : <programlisting role="php"><![CDATA[$path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]></programlisting> ou <programlisting role="php"><![CDATA[$path     = 'files/passwd.txt';
+            <para>Pour créer des résolveurs de fichiers séparés, utilisez : <programlisting role="php"><![CDATA[
+$path     = 'files/passwd.txt';
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
+]]></programlisting> ou <programlisting role="php"><![CDATA[
+$path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]></programlisting> Si le chemin donné n'est pas lisible, une exception est envoyée.</para>
+$resolver->setFile($path);
+]]></programlisting> Si le chemin donné n'est pas lisible, une exception est envoyée.</para>
         </sect3>
     </sect2>
 
@@ -172,30 +178,37 @@ $resolver->setFile($path);]]></programlisting> Si le chemin donné n'est pas lis
         <title>Usage général :</title>
 
         <para>Tout d'abord, créez un tableau de configuration avec les options requises : <programlisting
-        role="php"><![CDATA[$config = array(
+        role="php"><![CDATA[
+$config = array(
     'accept_schemes' => 'basic digest',
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]></programlisting> Ce tableau va permettre d'accepter les modes Basic ou Digest et demandera une authentification
+);
+]]></programlisting> Ce tableau va permettre d'accepter les modes Basic ou Digest et demandera une authentification
         pour les zones du site situées sous <code>/members_only</code> et <code>/my_account</code>. La valeur du
         <code>realm</code> est en général affichée par le navigateur dans la boite de dialogue. Le paramètre
         <code>nonce_timeout</code>, fonctionne comme expliqué plus haut.</para>
 
-        <para>Ensuite, créez un objet de <code>Zend_Auth_Adapter_Http</code> : <programlisting role="php"><![CDATA[$adapter = new Zend_Auth_Adapter_Http($config);]]></programlisting></para>
+        <para>Ensuite, créez un objet de <code>Zend_Auth_Adapter_Http</code> : <programlisting role="php"><![CDATA[
+$adapter = new Zend_Auth_Adapter_Http($config);
+]]></programlisting></para>
 
         <para>Comme nous supportons les 2 modes Basic et Digest, nous avons besoin de deux résolveurs différents :
-        <programlisting role="php"><![CDATA[$basicResolver = new Zend_Auth_Adapter_Http_Resolver_File();
+        <programlisting role="php"><![CDATA[
+$basicResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $basicResolver->setFile('files/basicPasswd.txt');
 
 $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]></programlisting></para>
+$adapter->setDigestResolver($digestResolver);
+]]></programlisting></para>
 
         <para>Enfin, nous procédons à la demande d'authentification. L'adaptateur a besoin de deux objets
-        <code>Request</code> et <code>Response</code> : <programlisting role="php"><![CDATA[assert($request instanceof Zend_Controller_Request_Http);
+        <code>Request</code> et <code>Response</code> : <programlisting role="php"><![CDATA[
+assert($request instanceof Zend_Controller_Request_Http);
 assert($response instanceof Zend_Controller_Response_Http);
 
 $adapter->setRequest($request);
@@ -204,6 +217,7 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Mauvais username/password, ou action annulée
-}]]></programlisting></para>
+}
+]]></programlisting></para>
     </sect2>
 </sect1>

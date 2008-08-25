@@ -14,7 +14,8 @@
 
         <para>Par exemple :</para>
 
-        <programlisting role="php"><![CDATA[<!DOCTYPE html
+        <programlisting role="php"><![CDATA[
+<!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -36,14 +37,16 @@
     echo $layout->baz;
 ?>
 </body>
-</html>]]></programlisting>
+</html>
+]]></programlisting>
 
         <para>Toutes les aides de vue enregistrées sont accessibles dans <code>Zend_Layout</code> car il utilise
         <code>Zend_View</code> pour son propre rendu. Vous pouvez aussi accéder aux variables de la vue. Les aides <link
         linkend="zend.view.helpers.initial.placeholder">placeholder </link> sont très pratiques pour l'accès aux
         éléments tels que &lt;head&gt;, les scripts, les méta, etc. :</para>
 
-        <programlisting role="php"><![CDATA[<!DOCTYPE html
+        <programlisting role="php"><![CDATA[
+<!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -62,7 +65,8 @@
 
     <?= $this->render('footer.phtml') ?>
 </body>
-</html>]]></programlisting>
+</html>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.mvc">
@@ -82,8 +86,10 @@
 
         <para>Regardons d'abord comment initialiser Zend_Layout afin de l'utiliser dans un contexte MVC </para>
 
-        <programlisting role="php"><![CDATA[// Dans le fichier de démarrage (bootstrap)
-Zend_Layout::startMvc();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// Dans le fichier de démarrage (bootstrap)
+Zend_Layout::startMvc();
+]]></programlisting>
 
         <para><code>startMvc()</code> peut prendre en paramètre un tableau d'options ou un objet
         <code>Zend_Config</code> pour personnaliser l'instance. Ces options sont détaillées dans <xref
@@ -91,7 +97,8 @@ Zend_Layout::startMvc();]]></programlisting>
 
         <para>Dans le contrôleur d'action, vous pouvez donc accéder à l'instance de layout via l'aide d'action :</para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -105,19 +112,24 @@ Zend_Layout::startMvc();]]></programlisting>
         // cette action
         $this->_helper->layout->setLayout('foobaz');
     };
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Dans vos scripts de vue, utiliser l'aide <code>layout</code> pour accéder à l'instance de
         <code>Zend_Layout</code>. Notez que cette aide est différente des autres car elle ne retourne pas une chaîne,
         mais bien un objet. Vous pouvez donc enchaîner une méthode immédiatement :</para>
 
-        <programlisting role="php"><![CDATA[<?php $this->layout()->setLayout('foo'); // utilise un script de layout spécifique?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php $this->layout()->setLayout('foo'); // utilise un script de layout spécifique?>
+]]></programlisting>
 
         <para>Autrement, vous pouvez n'importe où accéder à votre instance de <code>Zend_Layout</code> via la méthode
         statique <code>getMvcInstance()</code> :</para>
 
-        <programlisting role="php"><![CDATA[// Retourne null si startMvc() n'a pas été appelée auparavant
-$layout = Zend_Layout::getMvcInstance();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// Retourne null si startMvc() n'a pas été appelée auparavant
+$layout = Zend_Layout::getMvcInstance();
+]]></programlisting>
 
         <para>Enfin, le plugin de contrôleur frontal <code>Zend_Layout</code> dispose d'une caractéristique annexe au
         rendu automatique du layout : il analyse les segments de l'objet de réponse et les assigne en tant que variables
@@ -131,13 +143,15 @@ $layout = Zend_Layout::getMvcInstance();]]></programlisting>
         rendez aussi dans le segment par défaut de la réponse (ce qui va rajouter du contenu). Votre script de layout
         peut alors rendre chaque segment de manière séparée :</para>
 
-        <programlisting role="php"><![CDATA[<body>
+        <programlisting role="php"><![CDATA[
+<body>
     <!-- rend /nav/menu -->
     <div id="nav"><?= $this->layout()->nav ?></div>
 
     <!-- rend /foo/index + /comment/fetch -->
     <div id="content"><?= $this->layout()->content ?></div>
-</body>]]></programlisting>
+</body>
+]]></programlisting>
 
         <para>Cette approche est particulièrement utile avec <link
         linkend="zend.controller.actionhelpers.actionstack">l'aide d'action</link> ActionStack et son <link
@@ -164,7 +178,8 @@ $layout = Zend_Layout::getMvcInstance();]]></programlisting>
         <para>En tant que composant indépendant, instanciez un objet <code>Zend_Layout</code>, configurez le au moyen
         d'accesseurs, passez vos variables comme des propriétés de l'objet, et rendez le layout :</para>
 
-        <programlisting role="php"><![CDATA[$layout = new Zend_Layout();
+        <programlisting role="php"><![CDATA[
+$layout = new Zend_Layout();
 
 // Spécification du chemin des scripts layout:
 $layout->setLayoutPath('/chemin/vers/layouts');
@@ -177,7 +192,8 @@ $layout->nav     = $nav;
 $layout->setLayout('foo');
 
 // rendu du layout :
-echo $layout->render();]]></programlisting>
+echo $layout->render();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.example">

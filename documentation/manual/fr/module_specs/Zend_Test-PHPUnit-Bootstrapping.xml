@@ -16,28 +16,33 @@
     le fichier ne doit pas dispatcher le contrôleur frontal, mais seulement paramétrer celui-ci et faire tout réglage
     spécifique à votre application.</para>
 
-    <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+    <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public $bootstrap = '/chemin/vers/amorcage/fichier.php'
 
     // ...
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Deuxièmement, vous pouvez fournir un callback PHP qui doit être exécuter pour amorcer votre application. Cet
     exemple est montré dans <link linkend="zend.test.phpunit.loginexample">l'exemple de login</link>. Si le callback est
     une fonction ou une méthode statique, ceci peut être paramétrer au niveau de la classe :</para>
 
-    <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+    <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public $bootstrap = array('App', 'bootstrap');
 
     // ...
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Dans le cas où une instance d'objet est nécessaire, nous recommandons de réaliser ceci dans votre méthode
     <code>setUp()</code> :</para>
 
-    <programlisting role="php"><![CDATA[class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+    <programlisting role="php"><![CDATA[
+class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function setUp()
     {
@@ -46,7 +51,8 @@
         $this->bootstrap = array($bootstrap, 'start');
         parent::setUp();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Notez l'appel de <code>parent::setUp()</code>; ceci est nécessaire puisque la méthode <code>setUp()</code> de
     <code>Zend_Test_PHPUnit_Controller_TestCase</code> exécutera le reste du processus d'amorçage (incluant l'appel du

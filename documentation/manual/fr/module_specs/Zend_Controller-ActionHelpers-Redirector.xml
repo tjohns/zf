@@ -93,7 +93,8 @@
             la redirection ("303"), le retrait du <code>exit</code> par défaut après la redirection, et la définition
             d'une URL par défaut à utiliser lors d'une redirection.</para>
 
-            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - défini pour l'auto-complétion
@@ -122,7 +123,8 @@
         $this->_redirector->redirectAndExit();
         return; // jamais atteint
     }
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
@@ -131,7 +133,8 @@
             <para>Cet exemple suppose que vous utilisez les paramètres par défaut, ce qui inclut que toute redirection
             sera suivie d'un <code>exit()</code> immédiat.</para>
 
-            <programlisting role="php"><![CDATA[// EXEMPLE ALTERNATIF
+            <programlisting role="php"><![CDATA[
+// EXEMPLE ALTERNATIF
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -153,7 +156,8 @@ class AlternativeController extends Zend_Controller_Action
         $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // jamais atteint puisque les paramètres par défaut sont à goto et exit
     }
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
@@ -164,7 +168,8 @@ class AlternativeController extends Zend_Controller_Action
             par défaut <code>:module/:controller/:action/*</code> du routeur. Il réalise alors une redirection au lieu
             d'enchaîner l'action.</para>
 
-            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - défini pour l'auto-complétion
@@ -186,7 +191,8 @@ class AlternativeController extends Zend_Controller_Action
         // en utilisant les paramètres param1 => test et param2 => test2
         $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
@@ -196,16 +202,19 @@ class AlternativeController extends Zend_Controller_Action
             linkend="zend.controller.router">routeur</link> pour créer une URL basée sur un tableau associatif de
             paramètres fournis. Il suppose que la route suivante a été enregistrée :</para>
 
-            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
-$router->addRoute('blogArchive', $route);]]></programlisting>
+$router->addRoute('blogArchive', $route);
+]]></programlisting>
 
             <para>En donnant un tableau avec l'année réglée à 2006, le mois à 4, le jour à 24 et l'ID à 42, il
             construira l'URL <code>/blog/2006/4/24/42</code>.</para>
 
-            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - défini pour l'auto-complétion
@@ -230,7 +239,8 @@ $router->addRoute('blogArchive', $route);]]></programlisting>
             'blogArchive'
         );
     }
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect4>
 </sect3>

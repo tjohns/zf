@@ -1,10 +1,11 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 11025 -->
 <sect1 id="zend.captcha.operation">
     <title>Opération Captcha</title>
 
     <para>Tous les objets concrets CAPTCHA implémentent <code>Zend_Captcha_Adapter</code>, qui ressemble à ceci :</para>
 
-    <programlisting role="php"><![CDATA[interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
+    <programlisting role="php"><![CDATA[
+interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
 {
     public function generate();
 
@@ -22,7 +23,8 @@
     public function getMessages();
 
     public function getErrors();
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Le mutateur et l'accesseur "name" sont utilisés pour spécifier et récupérer l'identifiant du captcha.
     <code>getDecorator()</code> peut être utilisé pour spécifier un décorateur <code>Zend_Form</code> soit par son nom
@@ -34,7 +36,8 @@
 
     <para>Un cas d'utilisation typique pourrait ressembler à ceci :</para>
 
-    <programlisting role="php"><![CDATA[// Requête original :
+    <programlisting role="php"><![CDATA[
+// Requête original :
 $captcha = new Zend_Captcha_Figlet(array(
     'name' => 'foo',
     'wordLen' => 6,
@@ -45,7 +48,8 @@ echo $captcha->render();
 
 // Lors de la requête suivante :
 // suppose que $captcha a été paramètré avant, et que $value est la valeur soumise :
-if ($captcha->isValid($value)) {
+if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
-}]]></programlisting>
+}
+]]></programlisting>
 </sect1>

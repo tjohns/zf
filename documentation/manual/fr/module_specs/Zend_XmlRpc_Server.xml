@@ -15,9 +15,11 @@
 
         <para>Voici un exemple d'utilisation basique :</para>
 
-        <programlisting role="php"><![CDATA[$server = new Zend_XmlRpc_Server();
+        <programlisting role="php"><![CDATA[
+$server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
@@ -66,7 +68,8 @@ echo $server->handle();]]></programlisting>
 
         <para>Voici un exemple d'utilisation de type particulier:</para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
 * This is a sample function
 *
 * @param base64 $val1 Base64-encoded data
@@ -75,7 +78,8 @@ echo $server->handle();]]></programlisting>
 * @return struct
 */
 function myFunc($val1, $val2, $val3)
-{}]]></programlisting>
+{}
+]]></programlisting>
 
         <para>PhpDocumentor ne vérifie (valide) pas les types des paramètres, mais les types sont obligatoires pour que
         le serveur puisse lui, valider les paramètres passés aux appels des méthodes.</para>
@@ -85,7 +89,8 @@ function myFunc($val1, $val2, $val3)
         paramètres d'entrée de la méthode, et de son type de sortie. Ceci ce fait grâce au caractère '|' de
         PhpDocumentor</para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
 * This is a sample function
 *
 * @param string|base64 $val1 String or base64-encoded data
@@ -94,7 +99,8 @@ function myFunc($val1, $val2, $val3)
 * @return boolean|struct
 */
 function myFunc($val1, $val2, $val3)
-{}]]></programlisting>
+{}
+]]></programlisting>
 
         <para>Attention toutefois, une signature multiple peut prêter à confusion au regard des personnes utilisant
         votre service. En général une fonction ne devrait posséder qu'une seule signature.</para>
@@ -126,12 +132,14 @@ function myFunc($val1, $val2, $val3)
 
         <para>Si vous voulez ajouter un espace de noms aux méthodes que vous servez, procédez alors comme suit :</para>
 
-        <programlisting role="php"><![CDATA[// Toutes les méthodes publiques de My_Service_Class seront accessibles via
+        <programlisting role="php"><![CDATA[
+// Toutes les méthodes publiques de My_Service_Class seront accessibles via
 // myservice.METHODNAME
 $server->setClass('My_Service_Class', 'myservice');
 
 // la fonction 'somefunc' sera accessible via funcs.somefunc
-$server->addFunction('somefunc', 'funcs');]]></programlisting>
+$server->addFunction('somefunc', 'funcs');
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -168,7 +176,9 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         d'erreur ("fault"). Utilisez simplement <code>Zend_XmlRpc_Server_Fault::attachFaultException()</code> en lui
         passant une classe d'exception :</para>
 
-        <programlisting role="php"><![CDATA[Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
+]]></programlisting>
 
         <para>Si vous héritez correctement vos exceptions, vous pouvez alors passer en liste blanche l'exception de plus
         bas niveau, et ainsi accepter plusieurs types d'exceptions qui en hériteront. Évidemment, les
@@ -191,7 +201,8 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
 
         <para>Un exemple d'utilisation :</para>
 
-        <programlisting role="php"><![CDATA[function __autoload($class)
+        <programlisting role="php"><![CDATA[
+function __autoload($class)
 {
     Zend_Loader::loadClass($class);
 }
@@ -211,7 +222,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+]]></programlisting>
 
         <para>L'exemple ci dessus essaye de récupérer la définition du serveur via le fichier
         <filename>xmlrpc.cache</filename>. Si ceci échoue, alors les classes nécessaires au service sont chargées,
@@ -228,7 +240,8 @@ echo $server->handle();]]></programlisting>
 
             <para>L'exemple ci dessous attache une fonction au service XML-RPC.</para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Retourne le hash MD5 d'une valeur
  *
  * @param string $value Valeur à hasher
@@ -241,7 +254,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -250,9 +264,11 @@ echo $server->handle();]]></programlisting>
             <para>L'exemple ci dessous montre comment attacher les méthodes publiques d'une classe en tant que méthodes
             XML-RPC.</para>
 
-            <programlisting role="php"><![CDATA[$server = new Zend_XmlRpc_Server();
+            <programlisting role="php"><![CDATA[
+$server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -260,7 +276,8 @@ echo $server->handle();]]></programlisting>
 
             <para>L'exemple ci dessous montre comment attacher plusieurs classes grâce aux espaces de noms.</para>
 
-            <programlisting role="php"><![CDATA[require_once 'Services/Comb.php';
+            <programlisting role="php"><![CDATA[
+require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
@@ -269,7 +286,7 @@ $server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la for
 $server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
 $server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
 echo $server->handle();
-            ]]></programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -278,7 +295,8 @@ echo $server->handle();
             <para>L'exemple ci dessous montre comment spécifier les exceptions à utiliser en cas d'erreurs dans les
             réponses XML-RPC.</para>
 
-            <programlisting role="php"><![CDATA[require_once 'Services/Exception.php';
+            <programlisting role="php"><![CDATA[
+require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
@@ -290,7 +308,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
 $server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
 $server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -298,7 +317,8 @@ echo $server->handle();]]></programlisting>
 
             <para>L'exemple suivant montre comment utiliser un objet de requête personnalisé.</para>
 
-            <programlisting role="php"><![CDATA[require_once 'Services/Request.php';
+            <programlisting role="php"><![CDATA[
+require_once 'Services/Request.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
@@ -315,7 +335,8 @@ $server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la for
 // Crée un objet de requête
 $request = new Services_Request();
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -323,7 +344,8 @@ echo $server->handle($request);]]></programlisting>
 
             <para>L'exemple suivant montre comment utiliser un objet de réponse personnalisé.</para>
 
-            <programlisting role="php"><![CDATA[require_once 'Services/Request.php';
+            <programlisting role="php"><![CDATA[
+require_once 'Services/Request.php';
 require_once 'Services/Response.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
@@ -344,7 +366,8 @@ $request = new Services_Request();
 // Utilise une réponse personnalisée
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -352,7 +375,8 @@ echo $server->handle($request);]]></programlisting>
 
             <para>Les exemples suivants montrent comment gérer une politique de cache inter-requêtes.</para>
 
-            <programlisting role="php"><![CDATA[require_once 'Services/Request.php';
+            <programlisting role="php"><![CDATA[
+require_once 'Services/Request.php';
 require_once 'Services/Response.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
@@ -383,7 +407,8 @@ $request = new Services_Request();
 // Utilise une réponse personnalisée
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

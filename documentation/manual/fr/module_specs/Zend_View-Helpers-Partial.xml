@@ -16,24 +16,30 @@
         <para>L'utilisation de base des <code>Partials</code> est d'effectuer le rendu d'un fragment de modèle dans sa
         propre portée de vue. Examinez le script partiel suivant :</para>
 
-        <programlisting role="php"><![CDATA[<!--partiel.phtml-->
+        <programlisting role="php"><![CDATA[
+<!--partiel.phtml-->
 <ul>
     <li>De : <?= $this->escape($this->de) ?></li>
     <li>Sujet : <?= $this->escape($this->sujet) ?></li>
-</ul>]]></programlisting>
+</ul>
+]]></programlisting>
 
         <para>Vous l'appelleriez alors dans votre script de vue en utilisant ce qui suit :</para>
 
-        <programlisting role="php"><![CDATA[<?= $this->partial('partiel.phtml', array(
+        <programlisting role="php"><![CDATA[
+<?= $this->partial('partiel.phtml', array(
     'de' => 'Equipe Framework',
-    'sujet' => 'vues partielles')); ?>]]></programlisting>
+    'sujet' => 'vues partielles')); ?>
+]]></programlisting>
 
         <para>Qui vous retournerait :</para>
 
-        <programlisting role="html"><![CDATA[<ul>
+        <programlisting role="html"><![CDATA[
+<ul>
     <li>De : Equipe Framework</li>
     <li>Sujet : vues partielles</li>
-</ul>]]></programlisting>
+</ul>
+]]></programlisting>
     </example>
 
     <note>
@@ -64,12 +70,14 @@
         que de le sérialiser en un tableau de variables. Vous pouvez faire ceci en paramétrant la propriété "objectKey"
         de l'aide de vue approprié :</para>
 
-        <programlisting role="php"><![CDATA[// Tell partial to pass objects as 'model' variable
+        <programlisting role="php"><![CDATA[
+// Tell partial to pass objects as 'model' variable
 $view->partial()->setObjectKey('model');
 
 // Tell partial to pass objects from partialLoop as 'model' variable in final
 // partial view script:
-$view->partialLoop()->setObjectKey('model');]]></programlisting>
+$view->partialLoop()->setObjectKey('model');
+]]></programlisting>
 
         <para>Cette technique est particulièrement utile quand vous fournissez un <code>Zend_Db_Table_Rowset</code>s à
         <code>partialLoop()</code>, ainsi vous avez un accès complet à vos objets <code>Row</code> à l'intérieur de vos
@@ -92,26 +100,33 @@ $view->partialLoop()->setObjectKey('model');]]></programlisting>
 
         <para>Considérons le script partiel suivant :</para>
 
-        <programlisting role="php"><![CDATA[<!--partialLoop.phtml-->
+        <programlisting role="php"><![CDATA[
+<!--partialLoop.phtml-->
     <dt><?= $this->key ?></dt>
-    <dd><?= $this->value ?></dd>]]></programlisting>
+    <dd><?= $this->value ?></dd>
+]]></programlisting>
 
         <para>Et le "modèle" suivant :</para>
 
-        <programlisting role="php"><![CDATA[$model = array(
+        <programlisting role="php"><![CDATA[
+$model = array(
     array('key' => 'Mammifère', 'value' => 'Chameau'),
     array('key' => 'Oiseau',    'value' => 'Pingouin'),
     array('key' => 'Reptile',   'value' => 'Asp'),
     array('key' => 'Poisson',   'value' => 'Flounder')
-);]]></programlisting>
+);
+]]></programlisting>
 
         <para>Dans votre script de vue, vous pouvez maintenant appeler l'aide <code>PartialLoop</code> :</para>
 
-        <programlisting role="php"><![CDATA[<dl>
+        <programlisting role="php"><![CDATA[
+<dl>
 <?= $this->partialLoop('partialLoop.phtml', $model) ?>
-</dl>]]></programlisting>
+</dl>
+]]></programlisting>
 
-        <programlisting role="html"><![CDATA[<dl>
+        <programlisting role="html"><![CDATA[
+<dl>
     <dt>Mammifère</dt>
     <dd>Chameau</dd>
 
@@ -124,7 +139,8 @@ $view->partialLoop()->setObjectKey('model');]]></programlisting>
     <dt>Poisson</dt>
     <dd>Flounder</dd>
 
-</dl>]]></programlisting>
+</dl>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.partial.modules">
@@ -137,7 +153,9 @@ $view->partialLoop()->setObjectKey('model');]]></programlisting>
         <para>Par exemple, s'il y a un gestionnaire de page partiel que vous souhaitez utiliser et qui est dans le
         module "liste", vous pourriez le saisir comme suit :</para>
 
-        <programlisting role="php"><![CDATA[<?= $this->partial('pager.phtml', 'liste', $pagerData) ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?= $this->partial('pager.phtml', 'liste', $pagerData) ?>
+]]></programlisting>
 
         <para>De cette façon, vous pouvez réutiliser des partiels créés spécifiquement pour d'autre modules. Ceci dit,
         il est probablement une meilleure pratique de mettre des partiels réutilisables dans des dossiers partagés de

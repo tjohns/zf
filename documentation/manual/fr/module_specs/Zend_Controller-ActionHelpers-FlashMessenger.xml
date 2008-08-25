@@ -22,7 +22,8 @@
         l'action <code>/some/my</code> est appelée, il ajoute le message "Sauvegarde réalisée !". Une requête suivante
         vers l'action <code>/some/my-next-request</code> le retrouvera (ainsi que le détruira).</para>
 
-        <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * FlashMessenger
@@ -51,6 +52,7 @@
         $this->view->messages = $this->_flashMessenger->getMessages();
         $this->render();
     }
-}]]></programlisting>
+}
+]]></programlisting>
     </sect4>
 </sect3>

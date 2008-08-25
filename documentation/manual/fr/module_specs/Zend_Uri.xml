@@ -27,10 +27,12 @@
         <example id="zend.uri.creation.example-1">
             <title>Créer un URI avec <code>Zend_Uri::factory()</code></title>
 
-            <programlisting role="php"><![CDATA[// Création d'un URI vierge
+            <programlisting role="php"><![CDATA[
+// Création d'un URI vierge
 $uri = Zend_Uri::factory('http');
 
-// $uri instanceof Zend_Uri_Http]]></programlisting>
+// $uri instanceof Zend_Uri_Http
+]]></programlisting>
         </example>
 
         <para>Pour créer un URI à partir de rien, passez simplement le schéma à <code>Zend_Uri::factory()</code>
@@ -50,10 +52,12 @@ $uri = Zend_Uri::factory('http');
         <example id="zend.uri.manipulation.example-1">
             <title>Manipuler un URI existant avec <code>Zend_Uri::factory()</code></title>
 
-            <programlisting role="php"><![CDATA[// Passez l'URI complet à la fabrique
+            <programlisting role="php"><![CDATA[
+// Passez l'URI complet à la fabrique
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-// $uri instanceof Zend_Uri_Http]]></programlisting>
+// $uri instanceof Zend_Uri_Http
+]]></programlisting>
         </example>
 
         <para>L'URI sera alors analysé et validé. S'il s'avère être invalide, une <code>Zend_Uri_Exception</code> sera
@@ -69,10 +73,12 @@ $uri = Zend_Uri::factory('http://www.zend.com');
         <example id="zend.uri.validation.example-1">
             <title>Validation d'URI avec <code>Zend_Uri::check()</code></title>
 
-            <programlisting role="php"><![CDATA[// Valide si l'URI passé est bien formé
+            <programlisting role="php"><![CDATA[
+// Valide si l'URI passé est bien formé
 $valid = Zend_Uri::check('http://uri.en.question');
 
-// $valid est TRUE ou FALSE]]></programlisting>
+// $valid est TRUE ou FALSE
+]]></programlisting>
         </example>
 
         <para><code>Zend_Uri::check()</code> retourne un simple booléen, ce qui est plus pratique que de passer par
@@ -94,9 +100,11 @@ $valid = Zend_Uri::check('http://uri.en.question');
             <example id="zend.uri.instance-methods.getscheme.example-1">
                 <title>Récupérer le schéma d'un objet <code>Zend_Uri_*</code></title>
 
-                <programlisting role="php"><![CDATA[$uri = Zend_Uri::factory('http://www.zend.com');
+                <programlisting role="php"><![CDATA[
+$uri = Zend_Uri::factory('http://www.zend.com');
 
-$scheme = $uri->getScheme();  // "http"]]></programlisting>
+$scheme = $uri->getScheme();  // "http"
+]]></programlisting>
             </example>
 
             <para>La méthode <code>getScheme()</code> retourne une chaîne de caractères.</para>
@@ -108,9 +116,11 @@ $scheme = $uri->getScheme();  // "http"]]></programlisting>
             <example id="zend.uri.instance-methods.geturi.example-1">
                 <title>Récupérer l'URI entier depuis un objet <code>Zend_Uri_*</code></title>
 
-                <programlisting role="php"><![CDATA[$uri = Zend_Uri::factory('http://www.zend.com');
+                <programlisting role="php"><![CDATA[
+$uri = Zend_Uri::factory('http://www.zend.com');
 
-echo $uri->getUri();  // "http://www.zend.com"]]></programlisting>
+echo $uri->getUri();  // "http://www.zend.com"
+]]></programlisting>
             </example>
 
             <para>La méthode <code>getUri()</code> retourne une chaîne de caractères représentant l'URI entier.</para>
@@ -125,9 +135,11 @@ echo $uri->getUri();  // "http://www.zend.com"]]></programlisting>
             <example id="zend.uri.instance-methods.valid.example-1">
                 <title>Valider un objet <code>Zend_Uri_*</code></title>
 
-                <programlisting role="php"><![CDATA[$uri = Zend_Uri::factory('http://www.zend.com');
+                <programlisting role="php"><![CDATA[
+$uri = Zend_Uri::factory('http://www.zend.com');
 
-$isValid = $uri->valid();  // TRUE]]></programlisting>
+$isValid = $uri->valid();  // TRUE
+]]></programlisting>
             </example>
 
             <para>La méthode <code>valid()</code> propose une façon de vérifier si l'URI est toujours valide.</para>

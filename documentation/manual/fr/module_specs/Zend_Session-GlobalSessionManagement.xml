@@ -33,7 +33,8 @@
             linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>, ajoutez ces paramètres au fichier
             INI en question:</para>
 
-            <programlisting role="ini"><![CDATA[; Paramètres de production
+            <programlisting role="ini"><![CDATA[
+; Paramètres de production
 [production]
 ; bug_compat_42
 ; bug_compat_warn
@@ -70,15 +71,18 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; Le cookie de session durera 10 jours
-remember_me_seconds = 864000]]></programlisting>
+remember_me_seconds = 864000
+]]></programlisting>
 
             <para>Ensuite, chargez ce fichier de configuration, et passez sa représentation tableau à
             <code>Zend_Session::setOptions()</code>:</para>
 
-            <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('myapp.ini', 'development');
+            <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('myapp.ini', 'development');
 
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray());]]></programlisting>
+Zend_Session::setOptions($config->toArray());
+]]></programlisting>
         </example>
 
         <para>La plupart des options ne nécessitent pas d'explications étant donné qu'elles font parti des options de
@@ -273,12 +277,14 @@ Zend_Session::setOptions($config->toArray());]]></programlisting>
             <example id="zend.session.global_session_management.session_identifiers.hijacking_and_fixation.example">
                 <title>Vol et fixation, protections</title>
 
-                <programlisting role="php"><![CDATA[$defaultNamespace = new Zend_Session_Namespace();
+                <programlisting role="php"><![CDATA[
+$defaultNamespace = new Zend_Session_Namespace();
 
 if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
         </sect3>
     </sect2>

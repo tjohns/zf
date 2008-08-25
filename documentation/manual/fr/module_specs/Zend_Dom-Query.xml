@@ -84,7 +84,8 @@
                 profondeur arbitraire d'un élément "div". Par exemple, il trouvera le lien vers le mot "One" dans le
                 code ci-dessous :</para>
 
-                <programlisting role="html"><![CDATA[<div>
+                <programlisting role="html"><![CDATA[
+<div>
 <table>
     <tr>
         <td class="foo">
@@ -99,7 +100,8 @@
         </td>
     </tr>
 </table>
-</div>]]></programlisting>
+</div>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -109,13 +111,15 @@
         <code>Countable</code> and <code>Iterator</code>, et stocke le résultat en interne sous la forme
         DOMNodes/DOMElements. En exemple, considérons l'appel suivant sur l'HTML ci-dessus :</para>
 
-        <programlisting role="php"><![CDATA[$dom = new Zend_Dom_Query($html);
+        <programlisting role="php"><![CDATA[
+$dom = new Zend_Dom_Query($html);
 $results = $dom->query('.foo .bar a');
 
 $count = count($results);    // trouvera 4 correspondances
 foreach ($results as $result) {
     // $result is a DOMElement
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para><code>Zend_Dom_Query</code> permet aussi de faire directement des recherches de type XPath en utilisant la
         méthode <code>queryXpath()</code> ; vous pouvez fournir toute requête XPath valide à cette méthode, et elle

@@ -10,7 +10,8 @@
     <example id="zend.mail.smtp-secure.example-1">
         <title>Activer une connexion sécurisée dans Zend_Mail_Transport_Smtp</title>
 
-        <programlisting role="php"><![CDATA[$config = array('ssl' => 'tls',
+        <programlisting role="php"><![CDATA[
+$config = array('ssl' => 'tls',
                 'port' => 25); // Port optionel fourni
 
 $transport = new Zend_Mail_Transport_Smtp('mail.server.com', $config);
@@ -20,6 +21,7 @@ $mail->setBodyText('Ceci est le texte de l\'email.');
 $mail->setFrom('emetteur@test.com', 'Un émetteur');
 $mail->addTo('destinataire@test.com', 'Un destinataire');
 $mail->setSubject('Sujet de test');
-$mail->send($transport);]]></programlisting>
+$mail->send($transport);
+]]></programlisting>
     </example>
 </sect1>

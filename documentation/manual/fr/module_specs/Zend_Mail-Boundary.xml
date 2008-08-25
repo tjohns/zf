@@ -9,8 +9,10 @@
     <example id="zend.mail.boundary.example-1">
         <title>Changer la limite MIME</title>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
-// construction du message...]]></programlisting>
+// construction du message...
+]]></programlisting>
     </example>
 </sect1>

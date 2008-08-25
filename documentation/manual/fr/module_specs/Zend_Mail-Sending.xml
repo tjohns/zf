@@ -9,8 +9,10 @@
     <example id="zend.mail.sending.example-1">
         <title>Envoyer un émail via SMTP</title>
 
-        <programlisting role="php"><![CDATA[$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+]]></programlisting>
     </example>
 
     <para>La méthode <code>setDefaultTransport()</code> et le constructeur de <code>Zend_Mail_Transport_Smtp</code> ne

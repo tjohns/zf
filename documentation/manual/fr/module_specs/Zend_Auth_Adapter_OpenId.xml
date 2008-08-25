@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10944 -->
+<!-- EN-Revision: 10995 -->
 <sect1 id="zend.auth.adapter.openid">
     <title>Authentification OpenID</title>
 
@@ -48,7 +48,8 @@
         fois après la redirection du serveur OpenID vers l'application, lorsque <code>$_GET['openid_mode']</code> ou
         <code>$_POST['openid_mode']</code> existe.</para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
+<?php
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
@@ -86,7 +87,8 @@ if ((isset($_POST['openid_action']) &&
 <input type="text" name="openid_identifier" value="">
 <input type="submit" name="openid_action" value="login">
 <input type="submit" name="openid_action" value="logout">
-</fieldset></form></body></html>]]></programlisting>
+</fieldset></form></body></html>
+]]></programlisting>
 
         <para>Il est possible de personnaliser le processus, pour par exemple demander une redirection du serveur OpenID
         vers l'application, sur une page différente de la première. Ceci peut être fait avec des objets personnalisés

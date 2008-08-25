@@ -14,7 +14,8 @@
         <title>Étendre la classe représentant les entrées Atom pour ajouter la gestion d'un espace de noms
         personnalisé</title>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * La classe personnalisée connaît automatiquement l'URI du flux (qui est
  * optionnelle) et elle peut ajouter automatiquement des espaces de noms
  * supplémentaires.
@@ -64,16 +65,19 @@ class MonEntree extends Zend_Feed_Entry_Atom
                 return parent::__call($var, $unused);
         }
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété
-        <code>maMiseAJour</code> : <programlisting role="php"><![CDATA[$entree = new MonEntree();
+        <code>maMiseAJour</code> : <programlisting role="php"><![CDATA[
+$entree = new MonEntree();
 $entree->maMiseAJour = '2005-04-19T15:30';
 
 // appel de type méthode géré par __call
 $entree->maMiseAJour();
 
 // appel de type propriété géré par __get
-$entree->maMiseAJour;]]></programlisting></para>
+$entree->maMiseAJour;
+]]></programlisting></para>
     </example>
 </sect1>

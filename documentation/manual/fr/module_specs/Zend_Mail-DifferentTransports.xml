@@ -10,13 +10,15 @@
     <example id="zend.mail.different-transports.example-1">
         <title>Utiliser différents transports</title>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 // construction du message
 $tr1 = new Zend_Mail_Transport_Smtp('serveur@exemple.com');
 $tr2 = new Zend_Mail_Transport_Smtp('autre_serveur@exemple.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // utilisation du transport par défaut]]></programlisting>
+$mail->send();  // utilisation du transport par défaut
+]]></programlisting>
     </example>
 
     <note>

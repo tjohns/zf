@@ -22,7 +22,8 @@
         paramètres de requêtes), comme vous le feriez en appelant <code>Zend_Controller_Action::_forward()</code>
         :</para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -36,7 +37,8 @@
         // (BarController::batAction())
         $this->_helper->actionStack('bat', 'bar');
     }
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 
     <example id="zend.controller.actionhelpers.actionstack.simple2">
@@ -45,7 +47,8 @@
         <para>Parfois la nature OO d'un objet de requête a plus de sens ; vous pouvez alors fournir l'objet à l'aide
         <code>ActionStack</code>.</para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -65,6 +68,7 @@
                 ->setControllerName('bar'); // utilise la valeur courante
         $this->_helper->actionStack($request);
     }
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 </sect3>

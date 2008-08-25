@@ -9,7 +9,8 @@
     <para>Premièrement, vous devez dispatcher l'URL à tester en utilisant la méthode <code>dispatch()</code> de TestCase
     :</para>
 
-    <programlisting role="php"><![CDATA[class IndexControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
+    <programlisting role="php"><![CDATA[
+class IndexControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
 {
     // ...
 
@@ -18,12 +19,14 @@
         $this->dispatch('/');
         // ...
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Il y a des moments, cependant, où vous devez fournir des informations supplémentaires - des variables GET et
     POST, des informations de COOKIE, etc. Vous pouvez peupler la requête avec ces informations :</para>
 
-    <programlisting role="php"><![CDATA[class FooControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
+    <programlisting role="php"><![CDATA[
+class FooControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
 {
     // ...
 
@@ -60,7 +63,8 @@
 
         // ...
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
     <para>Maintenant que la requête est construite, il est temps de créer des assertions.</para>
 </sect2>

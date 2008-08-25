@@ -29,8 +29,10 @@
         identifiants de fuseaux horaires</ulink>. <example id="zend.date.setdefaulttimezone.example-1">
                 <title>Spécifier un fuseau par défaut</title>
 
-                <programlisting role="php"><![CDATA[date_default_timezone_set('America/Los_Angeles'); // timezone pour un américain en Californie
-date_default_timezone_set('Europe/Berlin');       // timezone pour un allemand en Allemagne]]></programlisting>
+                <programlisting role="php"><![CDATA[
+date_default_timezone_set('America/Los_Angeles'); // timezone pour un américain en Californie
+date_default_timezone_set('Europe/Berlin');       // timezone pour un allemand en Allemagne
+]]></programlisting>
             </example> <emphasis role="strong">Lorsque vous créez des instances de Zend_Date, leur fuseau sera
         automatiquement mis à celui par défaut !</emphasis> Ainsi, le paramètre de fuseau horaire prendre en compte le
         DST si besoin, vous n'aurez donc pas besoin de le configurer.</para>

@@ -30,7 +30,8 @@
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
         <title>Profiling de base de données avec <code>Zend_Controller_Front</code></title>
 
-        <programlisting role="php"><![CDATA[// Dans votre fichier d'amorçage
+        <programlisting role="php"><![CDATA[
+// Dans votre fichier d'amorçage
 
 // Instancier le profileur
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
@@ -41,13 +42,15 @@ $db->setProfiler($profiler)
 // Dispatcher votre contrôleur frontal
 
 // Toutes les requêtes dans vos fichiers de modèles, vues et contrôleurs
-// seront maintenant profilées et envoyées à Firebug]]></programlisting>
+// seront maintenant profilées et envoyées à Firebug
+]]></programlisting>
     </example>
 
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
         <title>Profiling de base de données sans <code>Zend_Controller_Front</code></title>
 
-        <programlisting role="php"><![CDATA[$profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+        <programlisting role="php"><![CDATA[
+$profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
 $db->setProfiler($profiler)
 
 $request  = new Zend_Controller_Request_Http();
@@ -60,7 +63,8 @@ $channel->setResponse($response);
 
 // Envoi des données de profiling vers le navigateur
 $channel->flush();
-$response->sendHeaders();]]></programlisting>
+$response->sendHeaders();
+]]></programlisting>
     </example>
 </sect3>
 <!--

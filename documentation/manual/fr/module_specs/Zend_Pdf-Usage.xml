@@ -12,7 +12,8 @@
     <example id="zend.pdf.usage.example-1">
         <title>Exemple d'utilisation du module Zend_Pdf</title>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * @package Zend_Pdf
  * @subpackage demo
  */
@@ -148,6 +149,7 @@ if (isset($argv[2])) {
     $pdf->save($argv[2]);
 } else {
     $pdf->save($argv[1], true ); /* met à jour */
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 </sect1>

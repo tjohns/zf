@@ -25,7 +25,8 @@
             <para><code>Zend_Memory::factory()</code> instancie l'objet de management de la mémoire avec les options
             spécifiques du backend.</para>
 
-            <programlisting role="php"><![CDATA[$backendOptions = array(
+            <programlisting role="php"><![CDATA[
+$backendOptions = array(
     'cache_dir' => './tmp/'    // Dossier où les blocks de mémoire peuvent être stockés
 );
 
@@ -45,7 +46,8 @@ echo $loadedFiles[$index1]->value;
 
 $loadedFiles[$index2]->value = $newValue;
 
-$loadedFiles[$index3]->value[$charIndex] = '_';]]></programlisting>
+$loadedFiles[$index3]->value[$charIndex] = '_';
+]]></programlisting>
         </example>
     </sect2>
 
@@ -84,7 +86,8 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]></programlisting>
             Cet attribut contient la valeur de donnée indiquée au moment de la création de l'objet mémoire.</para>
 
             <para>Vous pouvez exploiter cet attribut <code>value</code> comme une propriété d'objet : <programlisting
-            role="php"><![CDATA[$memObject = $memoryManager->create($data);
+            role="php"><![CDATA[
+$memObject = $memoryManager->create($data);
 
 echo $memObject->value;
 
@@ -94,7 +97,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);]]></programlisting></para>
+$memObject->value = substr($memObject->value, $start, $length);
+]]></programlisting></para>
 
             <note>
                 <para>Si vous utilisez une version de PHP inférieure à 5.2, utilisez la méthode <link

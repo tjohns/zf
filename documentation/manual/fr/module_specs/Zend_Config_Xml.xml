@@ -31,7 +31,8 @@
         plus complexes. Supposons, que les données suivantes de configuration sont contenues dans
         <code>/chemin/vers/config.xml</code> :</para>
 
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -54,15 +55,18 @@
             </params>
         </database>
     </test>
-</configdata>]]></programlisting>
+</configdata>
+]]></programlisting>
 
         <para>Ensuite, supposons que le développeur a besoin des données de configuration de test issues du fichier XML.
         Il est facile de charger ces données en indiquant le fichier XML et la section de test :</para>
 
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 
 echo $config->database->params->host;   // affiche "dev.example.com"
-echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
+echo $config->database->params->dbname; // affiche "dbname"
+]]></programlisting>
     </example>
 
     <example id="zend.config.adapters.xml.example.attributes">
@@ -74,7 +78,8 @@ echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
         utilisés. La première manière d'utiliser les attributs est de les ajouter au noeud parent, ils seront ainsi
         interprétés en tant qu'enfant de ce noeud :</para>
 
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production webhost="www.example.com">
         <database adapter="pdo_mysql">
@@ -86,13 +91,15 @@ echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
             <params host="dev.example.com" username="devuser" password="devsecret"/>
         </database>
     </staging>
-</configdata>]]></programlisting>
+</configdata>
+]]></programlisting>
 
         <para>La seconde manière ne permet pas vraiment de raccourcir la configuration, mais la rend plus facile à
         maintenir puisque vous n'avez pas à écrire les noms de balises deux fois. Vous créez simplement une balise vide
         qui contient sa valeur à l'intérieur l'attribut <code>value</code> :</para>
 
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -115,6 +122,7 @@ echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
             </params>
         </database>
     </staging>
-</configdata>]]></programlisting>
+</configdata>
+]]></programlisting>
     </example>
 </sect1>

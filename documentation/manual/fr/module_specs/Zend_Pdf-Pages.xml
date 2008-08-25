@@ -46,7 +46,8 @@
         <example id="zend.pdf.pages.example-1">
             <title>Gestion des pages d'un document PDF</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Inverse l'ordre des pages
 $pdf->pages = array_reverse($pdf->pages);
 ...
@@ -57,7 +58,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
 // Retire la page spécifiée
 unset($pdf->pages[$id]);
-...   ]]></programlisting>
+...
+]]></programlisting>
         </example>
     </sect2>
 
@@ -70,7 +72,8 @@ unset($pdf->pages[$id]);
         <example id="zend.pdf.pages.example-2">
             <title>Cloner une page existante</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Stocke le modèle dans une variable séparée
 $template = $pdf->pages[$templatePageIndex];
 ...
@@ -86,7 +89,8 @@ $pdf->pages[] = $page2;
 
 // Enlève la page modèle du document
 unset($pdf->pages[$templatePageIndex]);
-... ]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>C'est pratique si plusieurs pages doivent être créées sur le même modèle.</para>

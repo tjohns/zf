@@ -78,17 +78,21 @@
         <para>Cet exemple illustre une utilisation basique de <code>Zend_Text_Figlet</code> pour créer une texte FIGlet
         simple :</para>
 
-        <programlisting role="php"><![CDATA[$figlet = new Zend_Text_Figlet();
-echo $figlet->render('Zend');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$figlet = new Zend_Text_Figlet();
+echo $figlet->render('Zend');
+]]></programlisting>
 
         <para>En considérant que vous utilisez une police à espacement fixe, vous obtiendrez quelque chose comme ceci
         :</para>
 
-        <programlisting role="text"><![CDATA[  ______    ______    _  __   ______   
+        <programlisting role="text"><![CDATA[
+  ______    ______    _  __   ______   
  |__  //   |  ___||  | \| || |  __ \\  
    / //    | ||__    |  ' || | |  \ || 
   / //__   | ||___   | .  || | |__/ || 
  /_____||  |_____||  |_|\_|| |_____//  
- `-----`'  `-----`   `-` -`'  -----`  ]]></programlisting>
+ `-----`'  `-----`   `-` -`'  -----`
+]]></programlisting>
     </example>
 </sect1>

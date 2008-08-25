@@ -10,16 +10,19 @@
     <example id="zend.mail.attachments.example-1">
         <title>Émail avec fichiers joints</title>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 // construction du message
 $mail->createAttachment($uneChaineBinaire);
-$mail->createAttachment($monImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]></programlisting>
+$mail->createAttachment($monImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+]]></programlisting>
     </example>
 
     <para>Si vous voulez contrôler la partie MIME générée pour un fichier joint, vous pouvez utiliser la valeur
     retournée de <code>createAttachment()</code> pour modifier ses attributs. La méthodes
     <code>createAttachment()</code> retourne un objet de type <code>Zend_Mime_Part</code> : <programlisting
-    role="php"><![CDATA[$mail = new Zend_Mail();
+    role="php"><![CDATA[
+$mail = new Zend_Mail();
 
 $at = $mail->createAttachment($monImage);
 $at->type        = 'image/gif';
@@ -27,12 +30,14 @@ $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();]]></programlisting></para>
+$mail->send();
+]]></programlisting></para>
 
     <para>Une façon alternative est de créer une instance de <code>Zend_Mime_Part</code> et de l'ajouter avec la méthode
     <code>addAttachment()</code> :</para>
 
-    <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+    <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 
 $at = new Zend_Mime_Part($monImage);
 $at->type        = 'image/gif';
@@ -42,5 +47,6 @@ $at->filename    = 'test.gif';
 
 $mail->addAttachment($at);
 
-$mail->send();]]></programlisting>
+$mail->send();
+]]></programlisting>
 </sect1>

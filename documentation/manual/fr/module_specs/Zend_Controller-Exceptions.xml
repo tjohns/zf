@@ -51,12 +51,14 @@
                 vous souhaitez qu'il vous retourne les exceptions qu'il rencontre. Ainsi, il ne les ajoutera pas à la
                 réponse, et il ne fera pas intervenir le plugin "<code>Error handler</code>". Exemple :</para>
 
-                <programlisting role="php"><![CDATA[$front->throwExceptions(true);
+                <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
     // A vous de gérer ici
-}]]></programlisting>
+}
+]]></programlisting>
 
                 <para>Cette méthode vous permet d'utiliser une gestion personnalisée des exceptions dans votre
                 application, de manière simple.</para>
@@ -81,7 +83,8 @@ try {
                 pour voir s'il contient des exceptions, ceci grâce à <code>isException()</code> et
                 <code>getException()</code>. Voyez :</para>
 
-                <programlisting role="php"><![CDATA[$front->returnResponse(true);
+                <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
@@ -89,7 +92,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}]]></programlisting>
+}
+]]></programlisting>
 
                 <para>Par rapport à <code>Zend_Controller_Front::throwExceptions()</code>, cette utilisation vous permet
                 de ne rendre la réponse que lorsque vous le décidez, selon la présence de telle ou telle exception, ou
@@ -118,9 +122,11 @@ if ($response->isException()) {
 
                         <para>Dans votre contrôleur frontal, ou dispatcheur, ajoutez la directive suivante :</para>
 
-                        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
+                        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
 // ou
-$dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
+$dispatcher->setParam('useDefaultControllerAlways', true);
+]]></programlisting>
 
                         <para>Lorsque ceci est injecté, le dispatcheur utilisera le contrôleur par défaut s'il
                         s'aperçoit qu'il ne peut dispatcher un contrôleur spécifique, plutôt que de renvoyer une
@@ -150,7 +156,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
                         <para>Dérivez la classe <code>Zend_Controller_Action</code> en redéfinissant sa méthode
                         <code>__call()</code>, voyez plutôt :</para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -162,7 +169,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
 
         throw new Exception('Invalid method');
     }
-}           ]]></programlisting>
+}
+]]></programlisting>
 
                         <para>Cet exemple intercepte les actions non existantes, et redirige vers l'action principale du
                         contrôleur actuel.</para>
@@ -172,7 +180,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
                         <para>Dérivez <code>Zend_Controller_Dispatcher</code> et redéfinissez <code>getAction()</code>
                         pour vérifier si l'action existe bien :</para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
     {
@@ -193,7 +202,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
 
         return $action;
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
                         <para>L'exemple précédant vérifie si l'action existe dans le contrôleur demandé. Si ce n'est pas
                         le cas, il redéfinit l'action en spécifiant celle par défaut.</para>
@@ -218,7 +228,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
 
                         <para>Par exemple :</para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+                        <programlisting role="php"><![CDATA[
+class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
@@ -238,7 +249,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]></programlisting>
             exit;
         }
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
                         <para>Dans cet exemple, nous vérifions si l'action demandée existe dans le contrôleur dispatché.
                         Si ce n'est pas le cas, nous exécutons une redirection immédiate.</para>

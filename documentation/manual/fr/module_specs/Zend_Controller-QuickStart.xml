@@ -31,7 +31,8 @@
             <para>La première étape est de créer votre disposition de système de fichiers. La disposition typique est la
             suivante :</para>
 
-            <programlisting role="php"><![CDATA[application/
+            <programlisting role="php"><![CDATA[
+application/
     controllers/
         IndexController.php
     models/
@@ -43,7 +44,8 @@
         filters/
 html/
     .htaccess
-    index.php]]></programlisting>
+    index.php
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.docroot">
@@ -58,8 +60,10 @@ html/
 
             <para>Éditez le fichier <code>html/.htaccess</code> afin de lire ceci :</para>
 
-            <programlisting role="php"><![CDATA[RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+            <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]></programlisting>
 
             <para>Les règles ci-dessus vont redirigées toute requête non-ressource (images, feuilles de style CSS) vers
             le contrôleur frontal. S'il y a d'autres extensions que vous souhaitez exclure du contrôleur frontal (PDF,
@@ -80,7 +84,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
             <code>html/index.php</code> dans ce cas-ci. Ouvrez <code>html/index.php</code> dans l'éditeur de votre choix
             et ajouter ce qui suit :</para>
 
-            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/chemin/vers/application/controllers');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/chemin/vers/application/controllers');
+]]></programlisting>
 
             <para>Ceci va instancier et dispatcher le contrôleur frontal, qui conduira les demandes vers les contrôleurs
             d'action.</para>
@@ -112,7 +118,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
             contrôleur et l'action par défaut sont tous les deux nommées <code>index</code>. Ouvrez le fichier
             <code>application/controllers/IndexController.php</code>, et entrez ce qui suit :</para>
 
-            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
+            <programlisting role="php"><![CDATA[
+/** Zend_Controller_Action */
 
 class IndexController extends Zend_Controller_Action
 {
@@ -120,7 +127,8 @@ class IndexController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>Par défaut, l'aide d'action <link
             linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link> est activé. Ceci signifie qu'en
@@ -144,7 +152,8 @@ class IndexController extends Zend_Controller_Action
             pour le contrôleur et l'action par défaut est donc <code>application/views/scripts/index/index.phtml</code>.
             Créer ce fichier, et saisissez ce HTML :</para>
 
-            <programlisting role="php"><![CDATA[<!DOCTYPE html
+            <programlisting role="php"><![CDATA[
+<!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -155,7 +164,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hello, World!</h1>
 </body>
-</html>]]></programlisting>
+</html>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
@@ -166,20 +176,23 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             défaut, il s'agit d'un <code>ErrorController</code> dans le module par défaut avec une méthode
             <code>errorAction</code> :</para>
 
-            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
+            <programlisting role="php"><![CDATA[
+/** Zend_Controller_Action */
 
 class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>En considérant l'architecture des dossiers vu ci-dessus, le fichier sera dans
             <code>application/controllers/ErrorController.php</code>. Vous devez aussi créer une script de vue dans
             <code>application/views/scripts/error/error.phtml</code> ; exemple de contenu possible :</para>
 
-            <programlisting role="php"><![CDATA[<!DOCTYPE html
+            <programlisting role="php"><![CDATA[
+<!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -191,7 +204,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Erreur apparue</h1>
     <p>Une erreur est apparue ; veuillez rééssayer plus tard.</p>
 </body>
-</html>]]></programlisting>
+</html>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

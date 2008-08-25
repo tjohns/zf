@@ -46,7 +46,8 @@
         <code>init()</code> de vos formulaires ; quand la définition du formulaire est complète, bouclez à travers tous
         les sous-formulaires pour y activer dojo pour chacun :</para>
 
-        <programlisting role="php"><![CDATA[class My_Form_Custom extends Zend_Form
+        <programlisting role="php"><![CDATA[
+class My_Form_Custom extends Zend_Form
 {
     public function init()
     {
@@ -60,7 +61,8 @@
             Zend_Dojo::enableForm($subForm);
         }
     }
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 
     <para>L'utilisation des éléments de formulaires et les décorateurs spécifiques à Dijit est identique à l'utilisation

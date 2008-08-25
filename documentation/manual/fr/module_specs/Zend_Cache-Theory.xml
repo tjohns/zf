@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11005 -->
 <sect1 id="zend.cache.theory">
     <title>Aspect théorique</title>
 
@@ -30,7 +30,8 @@
         <para>Une bonne manière de construire une instance utilisable d'un frontend <code>Zend_Cache</code> est donnée
         dans l'exemple suivant:</para>
 
-        <programlisting role="php"><![CDATA[// Nous choisissons un backend (par exemple 'File' ou 'Sqlite')
+        <programlisting role="php"><![CDATA[
+// Nous choisissons un backend (par exemple 'File' ou 'Sqlite')
 $backendName = '[...]';
 
 // Nous choisissons un frontend (par exemple: 'Core', 'Output', 'Page'...)
@@ -44,7 +45,8 @@ $backendOptions = array([...]);
 
 // Nous créons la bonne instance
 // Bien sur, les deux derniers arguments sont optionnels
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]></programlisting>
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+]]></programlisting>
 
         <para>Dans les exemples suivants, nous nous assurerons que la variable <code>$cache</code> utilise une instance
         de frontend valide, et que vous comprenez comment passer des paramètres à vos backends.</para>
@@ -63,7 +65,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         enregistrement. Ensuite vous serez en mesure de nettoyer tous les enregistrements de cache identifiés par une
         balise (ou plusieurs) donnée :</para>
 
-        <programlisting role="php"><![CDATA[$cache->save($grande_donnees, 'monIDUnique', array('tagA', 'tagB', 'tagC'));]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$cache->save($grande_donnees, 'monIDUnique', array('tagA', 'tagB', 'tagC'));
+]]></programlisting>
 
         <note>
             <para>Notez que la méthode <code>save()</code> accepte un quatrième paramètre optionnel :
@@ -78,20 +82,26 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         <para>Pour supprimer/invalider un identifiant de cache particulier, vous pouvez utiliser la méthode
         <code>remove()</code> :</para>
 
-        <programlisting role="php"><![CDATA[$cache->remove('idAEffacer');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$cache->remove('idAEffacer');
+]]></programlisting>
 
         <para>Pour effacer/invalider plusieurs identifiants de caches en une seule opération, vous pouvez utiliser la
         méthode <code>clean()</code>. Par exemple, pour supprimer tous les caches :</para>
 
-        <programlisting role="php"><![CDATA[// nettoie tous les enregistrements
+        <programlisting role="php"><![CDATA[
+// nettoie tous les enregistrements
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // nettoie uniquement les caches obsolètes
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]></programlisting>
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+]]></programlisting>
 
         <para>Si vous voulez effacer les caches correspondant aux balises "tagA" et "tagC" :</para>
 
-        <programlisting role="php"><![CDATA[$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]></programlisting>
 
         <para>Les modes disponibles de nettoyage sont <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
         <code>CLEANING_MODE_MATCHING_TAG</code> et <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. Les derniers, comme leur

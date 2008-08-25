@@ -16,13 +16,15 @@
         <example id="zend.service.flickr.introduction.example-1">
             <title>Simple recherche de photos sur Flickr</title>
 
-            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MA_CLE_API');
+            <programlisting role="php"><![CDATA[
+$flickr = new Zend_Service_Flickr('MA_CLE_API');
 
 $results = $flickr->tagSearch("php");
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <note>
@@ -62,13 +64,15 @@ foreach ($results as $result) {
             <para>Dans cet exemple, nous havons une adresse émail d'un utilisateur Flickr, et nous recherchons les
             photos publiques des utilisateurs en utilisant la méthode <code>userSearch()</code> :</para>
 
-            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MA_CLE_API');
+            <programlisting role="php"><![CDATA[
+$flickr = new Zend_Service_Flickr('MA_CLE_API');
 
 $results = $flickr->userSearch($userEmail);
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}    ]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -81,13 +85,15 @@ foreach ($results as $result) {
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
             <title>Récupération les photos du pool d'un groupe grâce à son ID</title>
 
-            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MA_CLE_API');
+            <programlisting role="php"><![CDATA[
+$flickr = new Zend_Service_Flickr('MA_CLE_API');
 
 $results = $flickr->groupPoolGetPhotos($groupId);
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <note>
@@ -111,12 +117,14 @@ foreach ($results as $result) {
             <para>Une fois que vous avez l'identifiant de l'image Flickr, il est simple de retrouver les informations
             qui lui sont associées :</para>
 
-            <programlisting role="php"><![CDATA[$flickr = new Zend_Service_Flickr('MA_CLE_API');
+            <programlisting role="php"><![CDATA[
+$flickr = new Zend_Service_Flickr('MA_CLE_API');
 
 $image = $flickr->getImageDetails($imageId);
 
 echo "ID de l'image : $imageId, taille : $image->width x $image->height pixels.<br />\n";
-echo "<a href=\"$image->clickUri\">Clicker pour l'image</a>\n";]]></programlisting>
+echo "<a href=\"$image->clickUri\">Clicker pour l'image</a>\n";
+]]></programlisting>
         </example>
     </sect2>
 

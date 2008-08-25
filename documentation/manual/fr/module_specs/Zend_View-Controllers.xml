@@ -12,10 +12,12 @@
         au script de vue. Normalement vous pouvez faire les assignations une par une en assignant les noms des
         propriétés de l'instance de la vue :</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
-$view->c = "Cé";]]></programlisting>
+$view->c = "Cé";
+]]></programlisting>
 
         <para>Cependant, ceci peut être pénible quand vous avez déjà collecté (dans un tableau ou dans un objet) les
         valeurs à assigner.</para>
@@ -23,7 +25,8 @@ $view->c = "Cé";]]></programlisting>
         <para>La méthode <code>assign()</code> vous laisse assigner "en vrac" depuis un tableau ou un objet. Les
         exemples suivants ont le même effet que celui ci-dessus.</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
 
 // assigne un tableau de paires clés/valeurs, où la clé
 // est le nom de la variable, et la valeur, sa valeur assignée
@@ -40,15 +43,18 @@ $obj = new StdClass;
 $obj->a = "Ha";
 $obj->b = "Bé";
 $obj->c = "Cé";
-$view->assign((array) $obj);]]></programlisting>
+$view->assign((array) $obj);
+]]></programlisting>
 
         <para>Alternativement, vous pouvez utiliser la méthode <code>assign()</code> pour assigner les variables une par
         une, en passant le nom de la variable, et sa valeur.</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
 $view->assign('a', "Ha");
 $view->assign('b', "Bé");
-$view->assign('c', "Cé");]]></programlisting>
+$view->assign('c', "Cé");
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
@@ -59,11 +65,13 @@ $view->assign('c', "Cé");]]></programlisting>
         <code>render()</code>. Notez que la méthode va retourner la vue rendue, mais ne va pas l'afficher, vous devez
         donc l'afficher vous même avec <code>print</code> ou <code>echo</code>, au moment voulu.</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
 $view->c = "Cé";
-echo $view->render('uneVue.php');]]></programlisting>
+echo $view->render('uneVue.php');
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.view.controllers.script-paths">
@@ -77,8 +85,10 @@ echo $view->render('uneVue.php');]]></programlisting>
         <para>Évidemment, vos scripts sont peut-être localisés ailleurs. Pour dire à <code>Zend_View</code> ou il doit
         chercher, utilisez la méthode <code>setScriptPath()</code>.</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
-$view->setScriptPath('/chemin/des/vues');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
+$view->setScriptPath('/chemin/des/vues');
+]]></programlisting>
 
         <para>Maintenant, vous appelez <code>$view-&gt;render('uneVue.php')</code>, il va rechercher dans
         "<filename>/chemin/des/vues/uneVue.php</filename>".</para>
@@ -89,13 +99,15 @@ $view->setScriptPath('/chemin/des/vues');]]></programlisting>
         vous pouvez créer des "thèmes" ou des "skins" pour certaines vues, pendant que vous laissez les autres
         intactes.</para>
 
-        <programlisting role="php"><![CDATA[$view = new Zend_View();
+        <programlisting role="php"><![CDATA[
+$view = new Zend_View();
 $view->addScriptPath('/chemin/des/vues');
 $view->addScriptPath('/chemin/des/vues-personnalisees');
 
 // maintenant, lorsque vous appelerez $view->render('listelivre.php'),
 // Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/listelivre.php", puis
 // dans "/chemin/des/vues/listelivre.php", et ensuite dans le répertoire courant
-// pour trouver le fichier "listelivre.php".]]></programlisting>
+// pour trouver le fichier "listelivre.php".
+]]></programlisting>
     </sect2>
 </sect1>

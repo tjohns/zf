@@ -94,7 +94,8 @@
                     <para>'compression' : options de compression ; c'est une combinaison entre
                     <code>SOAP_COMPRESSION_ACCEPT</code>, <code>SOAP_COMPRESSION_GZIP</code> et
                     <code>SOAP_COMPRESSION_DEFLATE</code>, qui peuvent être utilisées de cette manière : <programlisting
-                    role="php"><![CDATA[// Accepte une response compressée
+                    role="php"><![CDATA[
+// Accepte une response compressée
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
@@ -104,7 +105,8 @@ $client = new SoapClient("some.wsdl",
 ...
 // Compresse les requêtes en utilisant deflate
 $client = new SoapClient("some.wsdl", 
-  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));]]></programlisting></para>
+  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
+]]></programlisting></para>
                 </listitem>
             </itemizedlist></para>
     </sect2>
@@ -118,7 +120,8 @@ $client = new SoapClient("some.wsdl",
         <para>Chaque méthode du service Web est liée à une méthode virtuelle de l'objet <code>Zend_Soap_Client</code>,
         qui s'utilise de manière tout à fait classique comme PHP le définit.</para>
 
-        <para>Voici un exemple : <programlisting role="php"><![CDATA[...
+        <para>Voici un exemple : <programlisting role="php"><![CDATA[
+...
 //****************************************************************
 //                Code du serveur
 //****************************************************************
@@ -162,6 +165,7 @@ $client = new SoapClient("MyService.wsdl");
 $result1 = $client->method1(10); 
 ...
 // $result2 est un flottant
-$result2 = $client->method2(22, 'some string');]]></programlisting></para>
+$result2 = $client->method2(22, 'some string');
+]]></programlisting></para>
     </sect2>
 </sect1>

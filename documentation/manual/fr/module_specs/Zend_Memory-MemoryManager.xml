@@ -14,17 +14,21 @@
         <para>Le second argument <code>$backendOptions</code> est un tableau optionnel indiquant les options du
         backend.</para>
 
-        <programlisting role="php"><![CDATA[$backendOptions = array(
+        <programlisting role="php"><![CDATA[
+$backendOptions = array(
     'cache_dir' => './tmp/'    // Dossier où les blocks de mémoire peuvent être stockés
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisting>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);
+]]></programlisting>
 
         <para>Zend_Memory utilise les <link linkend="zend.cache.backends">backends Zend_Cache</link> comme fournisseurs
         de stockage.</para>
 
         <para>Vous pouvez de plus utiliser le nom spécial '<code>None</code>' en tant que nom de backend supplémentaire
-        de Zend_Cache. <programlisting role="php"><![CDATA[$memoryManager = Zend_Memory::factory('None');]]></programlisting></para>
+        de Zend_Cache. <programlisting role="php"><![CDATA[
+$memoryManager = Zend_Memory::factory('None');
+]]></programlisting></para>
 
         <para>Si vous utilisez "<code>None</code>", alors le manager de mémoire ne mettra pas en cache les blocks de
         mémoire. Ceci est intéressant si vous savez que la mémoire n'est pas limitée ou la taille complète des objets
@@ -43,7 +47,9 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisti
             <title>Créer des objets mobiles</title>
 
             <para>Créer des objets mobiles (objets qui peuvent être mis en cache) en utilisant la méthode
-            <code>Zend_Memory_Manager::create([$data])</code> : <programlisting role="php"><![CDATA[$memObject = $memoryManager->create($data);]]></programlisting></para>
+            <code>Zend_Memory_Manager::create([$data])</code> : <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->create($data);
+]]></programlisting></para>
 
             <para>L'argument <code>$data</code> est optionnel et utilisé pour initialiser la valeur de l'objet. Si
             l'argument <code>$data</code> est omis, la valeur est une chaîne vide.</para>
@@ -53,7 +59,9 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisti
             <title>Créer des objets verrouillés</title>
 
             <para>Créer des objets verrouillés (objets qui ne doivent pas être mis en cache) en utilisant la méthode
-            <code>Zend_Memory_Manager::createLocked([$data])</code> : <programlisting role="php"><![CDATA[$memObject = $memoryManager->createLocked($data);]]></programlisting></para>
+            <code>Zend_Memory_Manager::createLocked([$data])</code> : <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->createLocked($data);
+]]></programlisting></para>
 
             <para>L'argument <code>$data</code> est optionnel et utilisé pour initialiser la valeur de l'objet. Si
             l'argument <code>$data</code> est omis, la valeur est une chaîne vide.</para>
@@ -63,7 +71,8 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisti
             <title>Détruire des objets</title>
 
             <para>Les objets mémoire sont automatiquement détruits et effacés de la mémoire quand ils sont hors de
-            portée : <programlisting role="php"><![CDATA[function foo()
+            portée : <programlisting role="php"><![CDATA[
+function foo()
 {
     global $memoryManager, $memList;
 
@@ -84,7 +93,8 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisti
     ...
     // $memObject1 est détruit ici
     // mais $memObject3 est toujours référencé par $memList et n'est pas détruit
-}]]></programlisting></para>
+}
+]]></programlisting></para>
 
             <para>Ceci s'applique aux objets mobiles et verrouillés.</para>
         </sect3>
@@ -104,8 +114,10 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]></programlisti
 
             <para>Vous pouvez récupérer et régler la mémoire limite en utilisant les méthodes
             <code>getMemoryLimit()</code> et <code>setMemoryLimit($newLimit)</code> : <programlisting
-            role="php"><![CDATA[$oldLimit = $memoryManager->getMemoryLimit();  // Récupére la mémoire limite en octets
-$memoryManager->setMemoryLimit($newLimit);     // Règle la mémoire limite en octets]]></programlisting></para>
+            role="php"><![CDATA[
+$oldLimit = $memoryManager->getMemoryLimit();  // Récupére la mémoire limite en octets
+$memoryManager->setMemoryLimit($newLimit);     // Règle la mémoire limite en octets
+]]></programlisting></para>
 
             <para>Une valeur négative pour limite de mémoire équivaut à "pas de limite".</para>
 
@@ -121,8 +133,10 @@ $memoryManager->setMemoryLimit($newLimit);     // Règle la mémoire limite en o
             le nombre d'opérations de mise de cache/chargement</para>
 
             <para>Vous pouvez récupérer et régler la taille minimale en utilisant les méthodes <code>getMinSize()</code>
-            et <code>setMinSize($newSize)</code> : <programlisting role="php"><![CDATA[$oldMinSize = $memoryManager->getMinSize();  // Récupère la taille minimale en octets
-$memoryManager->setMinSize($newSize);        // Règle la taille minimale en octets]]></programlisting></para>
+            et <code>setMinSize($newSize)</code> : <programlisting role="php"><![CDATA[
+$oldMinSize = $memoryManager->getMinSize();  // Récupère la taille minimale en octets
+$memoryManager->setMinSize($newSize);        // Règle la taille minimale en octets
+]]></programlisting></para>
 
             <para>La taille minimum par défaut est 16KB (16384 octets).</para>
         </sect3>

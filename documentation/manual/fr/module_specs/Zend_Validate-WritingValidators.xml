@@ -38,7 +38,8 @@
 
         <para>L'exemple suivant démontre comment un validateur personnalisé très simple pourrait être écrit. Dans ce
         cas-ci les règles de validation sont simplement que la valeur d'entrée doit être une valeur en virgule
-        flottante. <programlisting role="php"><![CDATA[class MonValidateur_Float extends Zend_Validate_Abstract
+        flottante. <programlisting role="php"><![CDATA[
+class MonValidateur_Float extends Zend_Validate_Abstract
 {
     const FLOAT = 'float';
 
@@ -57,7 +58,8 @@
 
         return true;
     }
-}]]></programlisting> La classe définit un modèle pour son message unique d'échec de validation, qui inclut le paramètre
+}
+]]></programlisting> La classe définit un modèle pour son message unique d'échec de validation, qui inclut le paramètre
         magique intégré, <code>%value%</code>. L'appel à <code>_setValue()</code> prépare l'objet pour insérer
         automatiquement la valeur examinée dans le message d'échec, si la validation de la valeur échoue. L'appel à
         <code>_error()</code> trace la raison d'échec de validation. Puisque cette classe définit seulement un message
@@ -84,7 +86,8 @@
             </itemizedlist></para>
 
         <para>Ces raisons d'échec de validation sont alors traduites dans les définitions de la classe : <programlisting
-        role="php"><![CDATA[class MonValidateur_NumericBetween extends Zend_Validate_Abstract
+        role="php"><![CDATA[
+class MonValidateur_NumericBetween extends Zend_Validate_Abstract
 {
     const MSG_NUMERIC = 'msgNumeric';
     const MSG_MINIMUM = 'msgMinimum';
@@ -125,7 +128,8 @@
 
         return true;
     }
-}]]></programlisting> Les propriétés publiques <code>$minimum</code> et <code>$maximum</code> ont été établies pour
+}
+]]></programlisting> Les propriétés publiques <code>$minimum</code> et <code>$maximum</code> ont été établies pour
         fournir les frontières minimum et maximum d'une valeur pour qu'elle soit validée avec succès. La classe définit
         également deux variables de message qui correspondent aux propriétés publiques et permettent que
         <code>min</code> et <code>max</code> soient employés dans des modèles de message en tant que paramètres
@@ -163,7 +167,8 @@
                 </listitem>
             </itemizedlist></para>
 
-        <para>La classe suivante implémente ces critères de validation : <programlisting role="php"><![CDATA[class MonValidateur_PasswordStrength extends Zend_Validate_Abstract
+        <para>La classe suivante implémente ces critères de validation : <programlisting role="php"><![CDATA[
+class MonValidateur_PasswordStrength extends Zend_Validate_Abstract
 {
     const LENGTH = 'length';
     const UPPER  = 'upper';
@@ -205,7 +210,8 @@
 
         return $isValid;
     }
-}]]></programlisting>Noter que les quatre critères d'essais dans <code>isValid()</code> ne renvoient pas immédiatement
+}
+]]></programlisting>Noter que les quatre critères d'essais dans <code>isValid()</code> ne renvoient pas immédiatement
         <code>false</code>. Ceci permet à la classe de validation de fournir toutes les raisons pour lesquelles le mot
         de passe d'entrée n'a pas réussi à remplir les conditions de validation. Si, par exemple, un utilisateur entre
         la chaîne "<code>#$%</code>" comme mot de passe, <code>isValid()</code> entraînera que les quatre messages

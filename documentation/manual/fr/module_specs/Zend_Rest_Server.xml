@@ -15,15 +15,18 @@
         <example id="zend.rest.server.usage.example-1">
             <title>Utilisation basique Zend_Rest_Server - Avec des classes</title>
 
-            <programlisting role="php"><![CDATA[$server = new Zend_Rest_Server();
+            <programlisting role="php"><![CDATA[
+$server = new Zend_Rest_Server();
 $server->setClass('Mon_Service_Classe');
-$server->handle();]]></programlisting>
+$server->handle();
+]]></programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
             <title>Utilisation basique Zend_Rest_Server - Avec des fonctions</title>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Dit Bonjour
  *
  * @param string $qui
@@ -37,7 +40,8 @@ function ditBonjour($qui, $quand)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
-$server->handle();]]></programlisting>
+$server->handle();
+]]></programlisting>
         </example>
     </sect2>
 
@@ -73,7 +77,8 @@ $server->handle();]]></programlisting>
         <example id="zend.rest.server.customstatus.example-1">
             <title>Renvoyer un statut personnalisé</title>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Dit Bonjour
  *
  * @param string $qui
@@ -87,7 +92,8 @@ function ditBonjour($qui, $quand)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
-$server->handle();]]></programlisting>
+$server->handle();
+]]></programlisting>
         </example>
     </sect2>
 
@@ -100,7 +106,8 @@ $server->handle();]]></programlisting>
         <example id="zend.rest.server.customxml.example-1">
             <title>Renvoyer une réponse XML personnalisée</title>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Dit Bonjour
  *
  * @param string $who
@@ -122,7 +129,8 @@ function ditBonjour($qui, $quand)
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
 
-$server->handle();]]></programlisting>
+$server->handle();
+]]></programlisting>
         </example>
 
         <para>La réponse du service sera retournée sans modification au client.</para>

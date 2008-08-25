@@ -19,7 +19,9 @@
         <example id="zend.registry.using.storing.example">
             <title>Exemple avec la méthode set()</title>
 
-            <programlisting role="php"><![CDATA[Zend_Registry::set('index', $value);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Registry::set('index', $value);
+]]></programlisting>
         </example>
 
         <para>La valeur peut être un objet, un tableau, ou un scalaire. Vous pouvez changer la valeur stockée dans une
@@ -36,7 +38,9 @@
         <example id="zend.registry.using.retrieving.example">
             <title>Exemple avec la méthode get()</title>
 
-            <programlisting role="php"><![CDATA[$value = Zend_Registry::get('index');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$value = Zend_Registry::get('index');
+]]></programlisting>
         </example>
 
         <para>La méthode <code>getInstance()</code> retourne l'objet registre en entier.</para>
@@ -46,12 +50,14 @@
         <example id="zend.registry.using.retrieving.example-iterating">
             <title>Exemple d'itération du registre</title>
 
-            <programlisting role="php"><![CDATA[$registry = Zend_Registry::getInstance();
+            <programlisting role="php"><![CDATA[
+$registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "Le registre index $index contient :\n";
     var_dump($value);
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -71,7 +77,9 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example">
             <title>Exemple de construction d'un registre</title>
 
-            <programlisting role="php"><![CDATA[$registry = new Zend_Registry(array('index' => $value));]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$registry = new Zend_Registry(array('index' => $value));
+]]></programlisting>
         </example>
 
         <para>Après avoir construit cette instance, vous pouvez l'utiliser avec les fonctions habituelles de tableau, ou
@@ -80,9 +88,11 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example-setinstance">
             <title>Exemple d'initialisation d'un registre statique</title>
 
-            <programlisting role="php"><![CDATA[$registry = new Zend_Registry(array('index' => $value));
+            <programlisting role="php"><![CDATA[
+$registry = new Zend_Registry(array('index' => $value));
 
-Zend_Registry::setInstance($registry);]]></programlisting>
+Zend_Registry::setInstance($registry);
+]]></programlisting>
         </example>
 
         <para>La méthode <code>setInstance()</code> lèvera une <code>Zend_Exception</code> si un registre statique a
@@ -98,11 +108,13 @@ Zend_Registry::setInstance($registry);]]></programlisting>
         <example id="zend.registry.using.array-access.example">
             <title>Exemple d'accès de type tableau</title>
 
-            <programlisting role="php"><![CDATA[$registry = Zend_Registry::getInstance();
+            <programlisting role="php"><![CDATA[
+$registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
-var_dump( $registry['index'] );]]></programlisting>
+var_dump( $registry['index'] );
+]]></programlisting>
         </example>
     </sect2>
 
@@ -118,7 +130,8 @@ var_dump( $registry['index'] );]]></programlisting>
         <example id="zend.registry.using.array-object.example">
             <title>Exemple d'accès de type objet</title>
 
-            <programlisting role="php"><![CDATA[// Dans votre fichier de lancement de l'application
+            <programlisting role="php"><![CDATA[
+// Dans votre fichier de lancement de l'application
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
 $registry->tree='apple';
@@ -129,7 +142,8 @@ $registry = Zend_Registry::getInstance();
 echo $registry->tree; // affiche 'apple'
 $registry->index = $value;
 
-var_dump($registry->index);]]></programlisting>
+var_dump($registry->index);
+]]></programlisting>
         </example>
     </sect2>
 
@@ -142,9 +156,11 @@ var_dump($registry->index);]]></programlisting>
         <example id="zend.registry.using.isset.example-isregistered">
             <title>Exemple avec la méthode isRegistered()</title>
 
-            <programlisting role="php"><![CDATA[if (Zend_Registry::isRegistered($index)) {
+            <programlisting role="php"><![CDATA[
+if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
-}      ]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <para>Pour savoir si un index particulier du registre de type tableau a une valeur, il faut utiliser la fonction
@@ -153,7 +169,8 @@ var_dump($registry->index);]]></programlisting>
         <example id="zend.registry.using.isset.example-isset">
             <title>Exemple avec la méthode isset()</title>
 
-            <programlisting role="php"><![CDATA[$registry = Zend_Registry::getInstance();
+            <programlisting role="php"><![CDATA[
+$registry = Zend_Registry::getInstance();
 
 // En utilisant la syntaxe de type tableau
 if (isset($registry['index'])) {
@@ -163,7 +180,8 @@ if (isset($registry['index'])) {
 // En utilisant la syntaxe de type objet, si activé
 if (isset($registry->index)) {
     var_dump( $registry->index );
-}  ]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -178,9 +196,11 @@ if (isset($registry->index)) {
         <example id="zend.registry.using.subclassing.example">
             <title>Exemple d'affectation d'un nom de classe au registre</title>
 
-            <programlisting role="php"><![CDATA[Zend_Registry::setClassName('Mon_Registre');
+            <programlisting role="php"><![CDATA[
+Zend_Registry::setClassName('Mon_Registre');
 
-Zend_Registry::set('index', $value);]]></programlisting>
+Zend_Registry::set('index', $value);
+]]></programlisting>
         </example>
 
         <para>L'enregistrement lève une <code>Zend_Exception</code> si vous essayez d'affecter un nom de classe après
@@ -208,14 +228,16 @@ Zend_Registry::set('index', $value);]]></programlisting>
         <example id="zend.registry.using.unsetting.example">
             <title>Exemple avec la méthode _unsetInstance()</title>
 
-            <programlisting role="php"><![CDATA[Zend_Registry::set('index', $value);
+            <programlisting role="php"><![CDATA[
+Zend_Registry::set('index', $value);
 
 Zend_Registry::_unsetInstance();
 
 // Changer la classe
 Zend_Registry::setClassName('Mon_Registre');
 
-Zend_Registry::set('index', $value);]]></programlisting>
+Zend_Registry::set('index', $value);
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

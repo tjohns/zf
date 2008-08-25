@@ -16,11 +16,13 @@
         flottante ("float"), ou même une chaîne contenant un nombre. Les conversions sont seulement possibles aux unités
         du même type (la masse, secteur, température, vitesse, etc.), pas entre les types.</para>
 
-        <programlisting role="php"><![CDATA[$locale = new Zend_Locale('en');
+        <programlisting role="php"><![CDATA[
+$locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::METER, $locale);
 
 // Converti les mètres en yards
-echo $unit->convertTo(Zend_Measure_Length::YARD);]]></programlisting>
+echo $unit->convertTo(Zend_Measure_Length::YARD);
+]]></programlisting>
     </example>
 
     <para><code>Zend_Measure_*</code> inclut le support de beaucoup de différentes unités de mesure. Toutes les unités
@@ -36,11 +38,13 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);]]></programlisting>
         des longueurs. Pour se rapporter à cette unité de mesure, la notation <code>Length::METER</code> doit être
         utilisée. L'unité de visualisation est <code>m</code>.</para>
 
-        <programlisting role="php"><![CDATA[echo Zend_Measure_Length::STANDARD;  // affiche 'Length::METER'
+        <programlisting role="php"><![CDATA[
+echo Zend_Measure_Length::STANDARD;  // affiche 'Length::METER'
 echo Zend_Measure_Length::KILOMETER; // affiche 'Length::KILOMETER'
 
 $unit = new Zend_Measure_Length(100,'METER');
 echo $unit;
-// affiche '100 m']]></programlisting>
+// affiche '100 m'
+]]></programlisting>
     </example>
 </sect1>

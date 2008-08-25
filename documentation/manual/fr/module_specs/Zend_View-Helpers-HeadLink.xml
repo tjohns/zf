@@ -69,13 +69,15 @@
         vue. Dans votre script de disposition, dans la section <code>&lt;head&gt;</code>, vous pourrez ensuite afficher
         le résultat de l'aide.</para>
 
-        <programlisting role="php"><![CDATA[<?php // régler les liens dans votre script de vue :
+        <programlisting role="php"><![CDATA[
+<?php // régler les liens dans votre script de vue :
 $this->headLink()->appendStylesheet('/styles/basic.css')
                  ->headLink(array('rel' => 'favicon', 'href' => '/img/favicon.ico'), 'PREPEND')
                  ->prependStylesheet('/styles/moz.css', 'screen', true);
 ?>
 
 <!-- effectuer le rendu -->
-<?= $this->headLink() ?>]]></programlisting>
+<?= $this->headLink() ?>
+]]></programlisting>
     </example>
 </sect3>

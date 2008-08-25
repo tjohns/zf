@@ -264,12 +264,14 @@
         "MonEntreprise_Translate_Adapter_MonFormat". Le code suivant montre un exemple de la manière dont une classe
         d'adaptateur personnalisée peut être implémentée :</para>
 
-        <programlisting role="php"><![CDATA[try {
+        <programlisting role="php"><![CDATA[
+try {
     $translate = new Zend_Translate('MonEntreprise_Translate_Adapter_MonFormat', '/chemin/vers/translate.xx', 'fr', array('monoption' => 'mavaleur'));
 } catch (Exception $e) {
     // Fichier non trouvé, pas de classe d'adaptateur...
     // Echec de l'application
-}]]></programlisting>
+}
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.translate.adapter.caching">
@@ -285,9 +287,11 @@
         <code>setCache()</code>. Par commodité, il existe la méthode statique
         <code>Zend_Translate::getCache()</code>.</para>
 
-        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+        <programlisting role="php"><![CDATA[
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 Zend_Translate::setCache($cache);
-$translate = new Zend_Translate('gettext', '/chemin/vers/traduction.mo', 'en');]]></programlisting>
+$translate = new Zend_Translate('gettext', '/chemin/vers/traduction.mo', 'en');
+]]></programlisting>
 
         <note>
             <para>Vous devez paramétrer le cache <emphasis role="strong">avant</emphasis> d'utiliser ou d'initialiser

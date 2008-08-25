@@ -3,9 +3,11 @@
     <title>Auto découverte de classe.</title>
 
     <para>Si une classe est utilisée dans un serveur SOAP, alors celle-ci devrait aussi être fournie à
-    <code>Zend_Soap_AutoDiscovery</code> afin d'en générer le fichier WSDL : <programlisting role="php"><![CDATA[$autodiscover = new Zend_Soap_AutoDiscover();
+    <code>Zend_Soap_AutoDiscovery</code> afin d'en générer le fichier WSDL : <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
-$autodiscover->handle();]]></programlisting></para>
+$autodiscover->handle();
+]]></programlisting></para>
 
     <para>Les règles suivantes sont utilisées lors de la génération du fichier WSDL : <itemizedlist>
             <listitem>

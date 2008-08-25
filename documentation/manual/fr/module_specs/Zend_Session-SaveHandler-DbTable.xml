@@ -12,15 +12,18 @@
     <example id="zend.session.savehandler.dbtable.basic">
         <title>Paramétrage basique</title>
 
-        <programlisting role="SQL"><![CDATA[CREATE TABLE `session` (
+        <programlisting role="SQL"><![CDATA[
+CREATE TABLE `session` (
   `id` char(32),
   `modified` int,
   `lifetime` int,
   `data` text,
   PRIMARY KEY (`id`)
-);]]></programlisting>
+);
+]]></programlisting>
 
-        <programlisting role="php"><![CDATA[// Préparation de l'adaptateur de connexion à la base de données
+        <programlisting role="php"><![CDATA[
+// Préparation de l'adaptateur de connexion à la base de données
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'        =>'example.com',
     'username'    => 'dbuser',
@@ -46,7 +49,8 @@ Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 // Démarrage de la session
 Zend_Session::start();
 
-// Vous pouvez maintenant utiliser Zend_Session comme avant]]></programlisting>
+// Vous pouvez maintenant utiliser Zend_Session comme avant
+]]></programlisting>
     </example>
 
     <para>Vous pouvez aussi utiliser des colonnes multiples pour votre clé primaire de
@@ -55,7 +59,8 @@ Zend_Session::start();
     <example id="zend.session.savehandler.dbtable.multi-column-key">
         <title>Utilisation d'une clé primaire multi-colonnes</title>
 
-        <programlisting role="SQL"><![CDATA[CREATE TABLE `session` (
+        <programlisting role="SQL"><![CDATA[
+CREATE TABLE `session` (
     `session_id` char(32) NOT NULL,
     `save_path` varchar(32) NOT NULL,
     `name` varchar(32) NOT NULL DEFAULT '',
@@ -63,9 +68,11 @@ Zend_Session::start();
     `lifetime` int,
     `session_data` text,
     PRIMARY KEY (`Session_ID`, `save_path`, `name`)
-);]]></programlisting>
+);
+]]></programlisting>
 
-        <programlisting role="php"><![CDATA[// Préparation de l'adaptateur de connexion à la base de données comme ci-dessus
+        <programlisting role="php"><![CDATA[
+// Préparation de l'adaptateur de connexion à la base de données comme ci-dessus
 // NOTE : cette configuration est fournie à Zend_Db_Table donc tout élément spécifique à la table peut y être ajouté
 $config = array(
     'name'              => 'session', // Nom de la table comme pour Zend_Db_Table 
@@ -91,6 +98,7 @@ Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 // Démarrage de la session
 Zend_Session::start();
 
-// Utilisez Zend_Session normalement]]></programlisting>
+// Utilisez Zend_Session normalement
+]]></programlisting>
     </example>
 </sect1>

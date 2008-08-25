@@ -10,8 +10,10 @@
 
         <para>La taille d'une page peut-être récupéré depuis un objet page :</para>
 
-        <para><programlisting role="php"><![CDATA[$width  = $pdfPage->getWidth();
-$height = $pdfPage->getHeight();]]></programlisting></para>
+        <para><programlisting role="php"><![CDATA[
+$width  = $pdfPage->getWidth();
+$height = $pdfPage->getHeight();
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.color">
@@ -23,20 +25,24 @@ $height = $pdfPage->getHeight();]]></programlisting></para>
         <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> et <code>Zend_Pdf_Color_CMYK</code>
         fournissent cette fonctionnalité :</para>
 
-        <programlisting role="php"><![CDATA[// $grayLevel (float). 0.0 (noir) - 1.0 (blanc)
+        <programlisting role="php"><![CDATA[
+// $grayLevel (float). 0.0 (noir) - 1.0 (blanc)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
 // $r, $g, $b (float). 0.0 (intensité mimimum) - 1.0 (intensité maximum)
 $color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
 
 // $c, $m, $y, $k (float). 0.0 (intensité mimimum) - 1.0 (intensité maximum)
-$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]></programlisting>
+$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);
+]]></programlisting>
 
         <para>Les différentes couleurs HTML sont aussi fourni avec la classe <code>Zend_Pdf_Color_Html</code> :</para>
 
-        <programlisting role="php"><![CDATA[$color1 = new Zend_Pdf_Color_Html('#3366FF');
+        <programlisting role="php"><![CDATA[
+$color1 = new Zend_Pdf_Color_Html('#3366FF');
 $color2 = new Zend_Pdf_Color_Html('silver');
-$color3 = new Zend_Pdf_Color_Html('forestgreen');]]></programlisting>
+$color3 = new Zend_Pdf_Color_Html('forestgreen');
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.shape-drawing">
@@ -46,7 +52,8 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');]]></programlisting>
 
         <para>La classe <code>Zend_Pdf_Page</code> fournit les outils de dessins :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine une ligne de x1,y1 à x2,y2.
  *
  * @param float $x1
@@ -54,9 +61,11 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');]]></programlisting>
  * @param float $x2
  * @param float $y2
  */
-public function drawLine($x1, $y1, $x2, $y2);]]></programlisting></para>
+public function drawLine($x1, $y1, $x2, $y2);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine un rectangle.
  *
  * Type de remplissage:
@@ -70,9 +79,11 @@ public function drawLine($x1, $y1, $x2, $y2);]]></programlisting></para>
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]></programlisting></para>
+public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine un polygone.
  *
  * Si $fillType est Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE ou Zend_Pdf_Page::SHAPE_DRAW_FILL,
@@ -88,9 +99,11 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
  */
 public function drawPolygon($x, $y,
                             $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            $fillMethod = $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]></programlisting></para>
+                            $fillMethod = $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine un cercle avec comme centre  x, y et comme rayon radius.
  *
  * Les angles sont en radian
@@ -115,9 +128,11 @@ public function drawPolygon($x, $y,
  * @param mixed $param5
  * @param mixed $param6
  */
-public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);]]></programlisting></para>
+public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine une ellipse dans le rectangle spécifié.
  *
  * Signatures des méthodes:
@@ -136,7 +151,8 @@ public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $par
  * @param mixed $param6
  * @param mixed $param7
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);]]></programlisting></para>
+public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.text-drawing">
@@ -147,7 +163,8 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
         de base. La police courant ainsi que sa taille seront utilisées pour le dessin (voir la description
         ci-dessous).</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Dessine une ligne de texte à la position x,y.
  *
  * @param string $text
@@ -157,14 +174,17 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * Par défaut le réglage système est utilisé.
  * @throws Zend_Pdf_Exception
  */
-public function drawText($text, $x, $y, $charEncoding = '');]]></programlisting></para>
+public function drawText($text, $x, $y, $charEncoding = '');
+]]></programlisting></para>
 
         <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>Dessiner une ligne dans la page</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $pdfPage->drawText('Bonjour le monde!', 72, 720);
-... ]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Par défaut, les chaînes de texte sont interprétées en utilisant l'encodage du système. Si vous avez une
@@ -177,13 +197,15 @@ $pdfPage->drawText('Bonjour le monde!', 72, 720);
         <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Dessiner une chaîne UTF-8 sur une page</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Lit une chaîne UTF-8 à partir du disque
 $unicodeString = fread($fp, 1024);
 
 // Dessine une chaîne dans la page
 $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
     </sect2>
 
@@ -193,13 +215,15 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
         <para><code>Zend_Pdf_Page::drawText()</code> utilise la police courante ainsi que sa taille, qui sont définies
         avec la méthode <code>Zend_Pdf_Page::setFont()</code> :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit la police courante.
  *
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]></programlisting></para>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
+]]></programlisting></para>
 
         <para>Les documents PDF supportent PostScript Type 1 et les polices TrueType, mais également deux types
         spécifiques PDF, Type3 et les polices composites. Il y a aussi 14 polices Type 1 standard intégré dans tout
@@ -213,13 +237,15 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]></programlis
         <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>Créer une police standard</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Crée une nouvelle police
 $font = new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Applique la police
 $pdfPage->setFont($font, 36);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Les constantes pour les 14 polices standard sont définis dans la classe <code>Zend_Pdf_Font</code> :
@@ -292,13 +318,15 @@ $pdfPage->setFont($font, 36);
         <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>Créer une police TrueType</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Crée la nouvelle police
 $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/chemin/vers/GOODDC__.TTF');
 
 // Applique cette police
 $pdfPage->setFont($goodDogCoolFont, 36);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Par défaut, les polices personnalisées seront incorporées dans le document PDF résultant. Cela permet aux
@@ -309,14 +337,16 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>Créer une police TrueType sans l'incorporer dans le document PDF</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 // Crée la nouvelle police
 $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/chemin/vers/GOODDC__.TTF',
                                                Zend_Pdf_Font::EMBED_DONT_EMBED);
 
 // Applique cette police
 $pdfPage->setFont($goodDogCoolFont, 36);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Si les polices ne sont pas incorporées mais que le destinataire du fichier PDF a ces polices installées
@@ -333,10 +363,12 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>Ne pas lever d'exception pour les polices ne pouvant être incorporées</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
                                     Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Cette technique de suppression est préférée si vous permettez aux utilisateurs de choisir leurs propres
@@ -351,10 +383,12 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
         <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Ne pas compresser une police incorporée</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>En conclusion, si nécessaire, vous pouvez combiner les options d'incorporation en employant l'opérateur
@@ -363,11 +397,13 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
         <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Combiner les options de polices incorporées</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $font = Zend_Pdf_Font::fontWithPath($cheminVersPoliceQuelconque,
                                     (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
                                      Zend_Pdf_Font::EMBED_DONT_COMPRESS));
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
     </sect2>
 
@@ -387,7 +423,8 @@ $font = Zend_Pdf_Font::fontWithPath($cheminVersPoliceQuelconque,
         <example id="zend.pdf.drawing.extracting-fonts.example-1">
             <title>Extraction de polices à partir d'un document chargé.</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $pdf = Zend_Pdf::load($cheminVersDocument);
 ...
 // Récupère toutes les polices du document
@@ -404,13 +441,15 @@ foreach ($listePolice as $police) {
 // Récupère toutes les polices référencées dans la première page du document
 $firstPage = reset($pdf->pages);
 $firstPageFonts = $firstPage->extractFonts();
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <example id="zend.pdf.drawing.extracting-fonts.example-2">
             <title>Extraction d'une police à partir d'un document chargé en spécifiant le nom de police.</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $pdf = new Zend_Pdf();
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
@@ -423,9 +462,11 @@ $page->drawText($texte, $x, $y);
 $fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'fr', 'UTF-8');
 ...
 $pdf->save($cheminVersDocument);
-...]]></programlisting>
+...
+]]></programlisting>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 $pdf = Zend_Pdf::load($cheminVersDocument);
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
@@ -435,7 +476,8 @@ $page->setFont($police, $taillePolice);
 $page->drawText($texte, $x, $y);
 ...
 $pdf->save($cheminVersDocument, true /* mise à jour de type incrémental */);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para>Les polices extraites peuvent être utilisées à la place de n'importe quelle autre police avec les
@@ -448,7 +490,8 @@ $pdf->save($cheminVersDocument, true /* mise à jour de type incrémental */);
                 <listitem>
                     <para>Les possibles programmes de polices incorporées ne sont pas extraits réellement. La police
                     ainsi extraite ne peut pas fournir la métrique correcte de police et la police originale doit être
-                    utilisée pour les calculs de largeur des textes : <programlisting role="php"><![CDATA[...
+                    utilisée pour les calculs de largeur des textes : <programlisting role="php"><![CDATA[
+...
 $police = $pdf->extractFont($fontName);
 $policeOriginal = Zend_Pdf_Font::fontWithPath($cheminVersPolices);
 
@@ -460,7 +503,8 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
     // Use original font for text width calculation
     $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$taillePolice;
 }
-...]]></programlisting></para>
+...
+]]></programlisting></para>
                 </listitem>
             </itemizedlist></para>
     </sect2>
@@ -471,7 +515,8 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
         <para>La classe <code>Zend_Pdf_Page</code> fournis la méthode <code>drawImage()</code> pour dessiner une image
         :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Insère une image à la position spécifiée dans la page
  *
  * @param Zend_Pdf_Resource_Image $image
@@ -480,7 +525,8 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]></programlisting></para>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
+]]></programlisting></para>
 
         <para>Les objets Image peuvent être créés avec la méthode <code>Zend_Pdf_Image::imageWithPath($filePath)</code>
         (les images JPG, PNG et TIFF sont maintenant supportées) :</para>
@@ -488,12 +534,14 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>Insertion d'images</title>
 
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[
+...
 //Charger une image
 $image = new Zend_Pdf_Image::imageWithPath('mon_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
-...]]></programlisting>
+...
+]]></programlisting>
         </example>
 
         <para><emphasis>Important! Le support JPEG nécessite que l'extension PHP GD soit installé.</emphasis>
@@ -511,7 +559,8 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         <para>Le style de ligne est définit par l'épaisseur, la couleur et le style de tiret. Tout ces paramètres
         peuvent être assignés par les méthodes de la classe <code>Zend_Pdf_Page</code> :</para>
 
-        <para><programlisting role="php"><![CDATA[/** Choisit la couleur de ligne. */
+        <para><programlisting role="php"><![CDATA[
+/** Choisit la couleur de ligne. */
 public function setLineColor(Zend_Pdf_Color $color);
 
 /** Choisit l'épaisseur de ligne. */
@@ -526,7 +575,8 @@ public function setLineWidth(float $width);
  * @param array $modele
  * @param array $phase
  */
-public function setLineDashingPattern($pattern, $phase = 0);]]></programlisting></para>
+public function setLineDashingPattern($pattern, $phase = 0);
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.fill-style">
@@ -603,12 +653,14 @@ public function setLineDashingPattern($pattern, $phase = 0);]]></programlisting>
         <para>Les pages PDF peuvent être tourner avant appliquer les opérations de dessin. Cela peut-être fait en
         utilisant la méthode <code>Zend_Pdf_Page::rotate()</code> :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Effectue une rotation de la page autour du point ($x, $y), l'angle est en radians.
  *
  * @param float $angle
  */
-public function rotate($x, $y, $angle);]]></programlisting></para>
+public function rotate($x, $y, $angle);
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
@@ -621,7 +673,8 @@ public function rotate($x, $y, $angle);]]></programlisting></para>
 
         <para>Il y a deux méthodes dans la classe <code>Zend_Pdf_Page</code> pour réaliser ces opérations :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Sauvegarde l'état graphique de la page.
  * Cela prend un instantané des styles courants, des zones de dessins
  * et de toutes les rotations/translations/changements de taille appliqués.
@@ -631,7 +684,8 @@ public function saveGS();
 /**
  * Restaure le dernier état graphique sauvegarder avec saveGS().
  */
-public function restoreGS();]]></programlisting></para>
+public function restoreGS();
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
@@ -643,7 +697,8 @@ public function restoreGS();]]></programlisting></para>
 
         <para>La classe <code>Zend_Pdf_Page</code> fournit des méthodes pour les opérations de découpage.</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Découpe la zone courante avec un rectangle.
  *
  * @param float $x1
@@ -651,18 +706,22 @@ public function restoreGS();]]></programlisting></para>
  * @param float $x2
  * @param float $y2
  */
-public function clipRectangle($x1, $y1, $x2, $y2);]]></programlisting></para>
+public function clipRectangle($x1, $y1, $x2, $y2);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Découpe la zone courante avec un polygone.
  *
  * @param array $x  - tableau de float (les coordonnées X des sommets)
  * @param array $y  - tableau de float (les coordonnées Y des sommets)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]></programlisting></para>
+public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Découpe la zone courante avec un cercle.
  *
  * @param float $x
@@ -671,9 +730,11 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);]]></programlisting></para>
+public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Découpe la zone courante avec une ellipse.
  *
  * Signatures des méthodes:
@@ -689,7 +750,8 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);]]></programlisting></para>
+public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.styles">
@@ -700,7 +762,8 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
         <para>Les styles peuvent être utilisés pour stocker des paramètre d'état graphique et de les appliquer à une
         page PDF en une seule opération :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit le style à utiliser pour les futures opérations de dessin sur cette page
  *
  * @param Zend_Pdf_Style $style
@@ -712,104 +775,131 @@ public function setStyle(Zend_Pdf_Style $style);
  *
  * @return Zend_Pdf_Style|null
  */
-public function getStyle();]]></programlisting></para>
+public function getStyle();
+]]></programlisting></para>
 
         <para>La classe <code>Zend_Pdf_Style</code> fournit des méthodes pour choisir ou récupérer différents paramètres
         de l'état graphique :</para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit la couleur de ligne.
  *
  * @param Zend_Pdf_Color $color
  */
-public function setLineColor(Zend_Pdf_Color $color);]]></programlisting></para>
+public function setLineColor(Zend_Pdf_Color $color);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère la couleur de ligne.
  *
  * @return Zend_Pdf_Color|null
  */
-public function getLineColor();]]></programlisting></para>
+public function getLineColor();
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit l'épaisseur de ligne.
  *
  * @param float $width
  */
-public function setLineWidth($width);]]></programlisting></para>
+public function setLineWidth($width);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère l'épaisseur de ligne.
  *
  * @return float
  */
-public function getLineWidth($width);]]></programlisting></para>
+public function getLineWidth($width);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit le style de tiret
  *
  * @param array $pattern
  * @param float $phase
  */
-public function setLineDashingPattern($pattern, $phase = 0);]]></programlisting></para>
+public function setLineDashingPattern($pattern, $phase = 0);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère le style de tiret
  *
  * @return array
  */
-public function getLineDashingPattern();]]></programlisting></para>
+public function getLineDashingPattern();
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère le modèle de tiret
  *
  * @return float
  */
-public function getLineDashingPhase();]]></programlisting></para>
+public function getLineDashingPhase();
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit la couleur de remplissage.
  *
  * @param Zend_Pdf_Color $color
  */
-public function setFillColor(Zend_Pdf_Color $color);]]></programlisting></para>
+public function setFillColor(Zend_Pdf_Color $color);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère la couleur de remplissage.
  *
  * @return Zend_Pdf_Color|null
  */
-public function getFillColor();]]></programlisting></para>
+public function getFillColor();
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Choisit la police.
  *
  * @param Zend_Pdf_Font $font
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]></programlisting></para>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Modifie la taille de police.
  *
  * @param float $fontSize
  */
-public function setFontSize($fontSize);]]></programlisting></para>
+public function setFontSize($fontSize);
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère la police courante
  *
  * @return Zend_Pdf_Resource_Font $font
  */
-public function getFont();]]></programlisting></para>
+public function getFont();
+]]></programlisting></para>
 
-        <para><programlisting role="php"><![CDATA[/**
+        <para><programlisting role="php"><![CDATA[
+/**
  * Récupère la taille de la police
  *
  * @return float $fontSize
  */
-public function getFontSize();]]></programlisting></para>
+public function getFontSize();
+]]></programlisting></para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.alpha">
@@ -818,7 +908,8 @@ public function getFontSize();]]></programlisting></para>
         <para>Le module <code>Zend_Pdf</code> supporte la gestion de la transparence.</para>
 
         <para>La transparence peut être paramétré en utilisant la méthode <code>Zend_Pdf_Page::setAlpha()</code> :
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Règle la transparence
  *
  * $alpha == 0  - transparent
@@ -832,6 +923,7 @@ public function getFontSize();]]></programlisting></para>
  * @param string $mode
  * @throws Zend_Pdf_Exception
  */
-public function setAlpha($alpha, $mode = 'Normal');]]></programlisting></para>
+public function setAlpha($alpha, $mode = 'Normal');
+]]></programlisting></para>
     </sect2>
 </sect1>

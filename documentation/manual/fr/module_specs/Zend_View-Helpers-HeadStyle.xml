@@ -60,14 +60,17 @@
 
         <para>Vous pouvez spécifier une nouvelle balise de style à n'importe quel moment :</para>
 
-        <programlisting role="php"><![CDATA[// ajout de styles
-$this->headStyle()->appendStyle($styles);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+// ajout de styles
+$this->headStyle()->appendStyle($styles);
+]]></programlisting>
 
         <para>L'ordre est très important avec les CSS ; vous pouvez devoir assurer que les déclarations soient chargées
         dans un ordre spécifique dû à l'ordre de la cascade ; employez les diverses directives "append", "prepend", et
         "offsetSet" pour faciliter cette tâche :</para>
 
-        <programlisting role="php"><![CDATA[// Mettre les styles dans le bon ordre
+        <programlisting role="php"><![CDATA[
+// Mettre les styles dans le bon ordre
 
 // - placer à un offset particulier
 $this->headStyle()->offsetSetStyle(100, $stylesPerso);
@@ -76,12 +79,15 @@ $this->headStyle()->offsetSetStyle(100, $stylesPerso);
 $this->headStyle()->appendStyle($stylesFinaux);
 
 // - placer au début
-$this->headStyle()->prependStyle($stylesInitiaux);]]></programlisting>
+$this->headStyle()->prependStyle($stylesInitiaux);
+]]></programlisting>
 
         <para>Quand vous êtes finalement prêt à afficher toutes les déclarations de styles dans votre script de layout,
         faîtes un simple <code>echo</code> de l'aide :</para>
 
-        <programlisting role="php"><![CDATA[<?= $this->headStyle() ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?= $this->headStyle() ?>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
@@ -92,11 +98,13 @@ $this->headStyle()->prependStyle($stylesInitiaux);]]></programlisting>
         création des styles et de les entourer par des balises PHP. <code>HeadStyle</code> vous permet de le faire, et
         capture ainsi l'élément dans la pile :</para>
 
-        <programlisting role="php"><![CDATA[<?php $this->headStyle()->captureStart() ?>
+        <programlisting role="php"><![CDATA[
+<?php $this->headStyle()->captureStart() ?>
 body {
     background-color: <?= $this->bgColor ?>;
 }
-<?php $this->headStyle()->captureEnd() ?>]]></programlisting>
+<?php $this->headStyle()->captureEnd() ?>
+]]></programlisting>
 
         <para>Les suppositions suivantes sont considérées :</para>
 

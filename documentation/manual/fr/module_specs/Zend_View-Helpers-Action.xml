@@ -21,10 +21,12 @@
         <code>listAction()</code> que vous souhaitez appeler afin de récupérer une liste de commentaires pour la requête
         courante :</para>
 
-        <programlisting role="php"><![CDATA[<div id="sidebar right">
+        <programlisting role="php"><![CDATA[
+<div id="sidebar right">
     <div class="item">
         <?= $this->action('list', 'comment', null, array('count' => 10)); ?>
     </div>
-</div>]]></programlisting>
+</div>
+]]></programlisting>
     </example>
 </sect3>

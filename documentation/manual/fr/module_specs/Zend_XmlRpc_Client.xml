@@ -23,11 +23,13 @@
         <example id="zend.xmlrpc.client.method-calls.example-1">
             <title>XML-RPC appel de méthode</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 echo $client->call('test.sayHello');
 
-// hello]]></programlisting>
+// hello
+]]></programlisting>
         </example>
 
         <para>Le type de la valeur XML-RPC retournée sera automatiquement casté en un type compatible PHP. Dans
@@ -40,14 +42,16 @@ echo $client->call('test.sayHello');
         <example id="zend.xmlrpc.client.method-calls.example-2">
             <title>XML-RPC appel de méthode avec des paramètres</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $arg1 = 1.1;
 $arg2 = 'foo';
 
 $result = $client->call('test.sayHello', array($arg1, $arg2));
 
-// $result est un type PHP natif]]></programlisting>
+// $result est un type PHP natif
+]]></programlisting>
         </example>
 
         <para>Le tableau de paramètres peut contenir des types PHP natifs, des objets <code>Zend_XmlRpc_Value</code>, ou
@@ -148,8 +152,10 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <para>Pour désactiver entièrement la recherche, vous pouvez appeler la méthode
                 <code>setSkipSystemLookup()</code> avant de réaliser votre appel XML-RPC :</para>
 
-                <programlisting role="php"><![CDATA[$client->setSkipSystemLookup(true);
-$result = $client->call('foo.bar', array(array()));]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$client->setSkipSystemLookup(true);
+$result = $client->call('foo.bar', array(array()));
+]]></programlisting>
             </note>
         </sect3>
 
@@ -286,11 +292,13 @@ $result = $client->call('foo.bar', array(array()));]]></programlisting>
         <example id="zend.xmlrpc.client.requests-and-responses.example-1">
             <title>Proxy espace de nom par défaut</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $server = $client->getProxy();           // Proxy l'espace de nom par défaut
 
-$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) retourne "hello"]]></programlisting>
+$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) retourne "hello"
+]]></programlisting>
         </example>
 
         <para>La méthode <code>getProxy()</code> reçoit un argument optionnel désignant l'espace de nom à utiliser par
@@ -300,11 +308,13 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) retourne "hello"]]>
         <example id="zend.xmlrpc.client.requests-and-responses.example-2">
             <title>Proxy un espace de nom</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $test  = $client->getProxy('test');     // Proxy l'espace de nommage "test"
 
-$hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"]]></programlisting>
+$hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"
+]]></programlisting>
         </example>
 
         <para>Si le serveur distant supporte les espaces de noms imbriqués, alors le proxy les supportera. Par exemple,
@@ -328,7 +338,8 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"]]></
             <example id="zend.xmlrpc.client.error-handling.http.example-1">
                 <title>Gérer les erreurs HTTP</title>
 
-                <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://foo/404');
+                <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://foo/404');
 
 try {
 
@@ -339,7 +350,8 @@ try {
     // $e->getCode() retourne 404
     // $e->getMessage() retourne "Not Found"
 
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
 
             <para>Quelque soit l'utilisation du client XML-RPC, une <code>Zend_XmlRpc_Client_HttpException</code> sera
@@ -361,7 +373,8 @@ try {
             <example id="zend.xmlrpc.client.error-handling.faults.example-1">
                 <title>Gérer les erreurs XML-RPC</title>
 
-                <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+                <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 try {
 
@@ -372,7 +385,8 @@ try {
     // $e->getCode() retourne 1
     // $e->getMessage() retourne "Unknown method"
 
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
 
             <para>En utilisant <code>call()</code>, une exception <code>Zend_XmlRpc_Client_FaultException</code> sera
@@ -407,7 +421,8 @@ try {
         <example id="zend.xmlrpc.client.request-to-response.example-1">
             <title>Effectuer une requête et récupérer une réponse manuellement</title>
 
-            <programlisting role="php"><![CDATA[$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+            <programlisting role="php"><![CDATA[
+$client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $request = new Zend_XmlRpc_Request();
 $request->setMethod('test.sayHello');
@@ -416,7 +431,8 @@ $request->setParams(array('foo', 'bar'));
 $client->doRequest($request);
 
 // $server->getLastRequest() retoure instanceof Zend_XmlRpc_Request
-// $server->getLastResponse() retourne instanceof Zend_XmlRpc_Response]]></programlisting>
+// $server->getLastResponse() retourne instanceof Zend_XmlRpc_Response
+]]></programlisting>
         </example>
 
         <para>Lorsqu'une méthode XML-RPC est appelée, quel qu'en soit le moyen, (<code>call()</code>,

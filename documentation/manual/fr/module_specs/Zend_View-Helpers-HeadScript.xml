@@ -86,7 +86,9 @@
         comportement. Pour autoriser ce type d'attribut, vous pouvez les activer grâce à la méthode
         <code>setAllowArbitraryAttributes()</code> :</para>
 
-        <programlisting role="php"><![CDATA[$this->headScript()->setAllowArbitraryAttributes(true);]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$this->headScript()->setAllowArbitraryAttributes(true);
+]]></programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
@@ -95,15 +97,18 @@
         <para>Vous devriez ajouter une nouvelle balise de script à chaque fois. Comme noté ci-dessus, ceux-ci peuvent
         être des liens vers des ressources externes ou vers les scripts eux-mêmes.</para>
 
-        <programlisting role="php"><![CDATA[// ajout de scripts
+        <programlisting role="php"><![CDATA[
+// ajout de scripts
 $this->headScript()->appendFile('/js/prototype.js')
-                   ->appendScript($onloadScript);]]></programlisting>
+                   ->appendScript($onloadScript);
+]]></programlisting>
 
         <para>L'ordre est souvent important avec les scripts côté-client ; vous devez vous assurer de charger les
         librairies dans un ordre spécifique en fonction de leurs dépendances ; utilisez à la fois les directives
         <code>append</code>, <code>prepend</code>, et <code>offsetSet</code> pour vous aider dans cette tâche :</para>
 
-        <programlisting role="php"><![CDATA[// mettre les scripts dans l'ordre
+        <programlisting role="php"><![CDATA[
+// mettre les scripts dans l'ordre
 
 // placer celui-ci à un offset particulier pour s'assurer de le charger en dernier
 $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
@@ -112,12 +117,15 @@ $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
 $this->headScript()->appendScript('/js/scriptaculous.js');
 
 // mais dans tous les cas, le script de base prototype doit être chargé en premier :
-$this->headScript()->prependScript('/js/prototype.js');]]></programlisting>
+$this->headScript()->prependScript('/js/prototype.js');
+]]></programlisting>
 
         <para>Quand vous êtes finalement prêt à afficher tous les scripts dans votre layout, faîtes simplement un
         <code>echo</code> de l'aide :</para>
 
-        <programlisting role="php"><![CDATA[<?= $this->headScript() ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?= $this->headScript() ?>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">
@@ -128,10 +136,12 @@ $this->headScript()->prependScript('/js/prototype.js');]]></programlisting>
         création des scripts et de les entourer par des balises PHP. <code>HeadScript</code> vous permet de le faire, et
         capture ainsi l'élément dans la pile :</para>
 
-        <programlisting role="php"><![CDATA[<?php $this->headScript()->captureStart() ?>
+        <programlisting role="php"><![CDATA[
+<?php $this->headScript()->captureStart() ?>
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
-<?php $this->headScript()->captureEnd() ?>]]></programlisting>
+<?php $this->headScript()->captureEnd() ?>
+]]></programlisting>
 
         <para>Les suppositions suivantes sont considérées :</para>
 

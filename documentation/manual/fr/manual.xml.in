@@ -8,7 +8,7 @@
 <book id="manual" lang="fr">
     <bookinfo>
         <title>Guide de référence du programmeur</title>
-        <subtitle>Framework Zend</subtitle>
+        <subtitle>Zend Framework</subtitle>
         <edition>Guide de référence du Framework Zend destiné au programmeur</edition>
         <pubdate><?dbtimestamp format="d/m/Y"?></pubdate>
         <copyright>
@@ -163,9 +163,7 @@
     <chapter id="zend.file">
         <title>Zend_File</title>
         <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
-        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Validators.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Validators.xml" />
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
@@ -200,7 +198,9 @@
     </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
-        <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Gdata-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata-Introduction.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
         <xi:include href="module_specs/Zend_Gdata_Calendar.xml">
@@ -438,9 +438,7 @@
         <xi:include href="module_specs/Zend_Session-Introduction.xml" />
         <xi:include href="module_specs/Zend_Session-BasicUsage.xml" />
         <xi:include href="module_specs/Zend_Session-AdvancedUsage.xml" />
-        <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Session-GlobalSessionManagement.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Session-GlobalSessionManagement.xml" />
         <xi:include href="module_specs/Zend_Session-SaveHandler-DbTable.xml" />
     </chapter>
     <chapter id="zend.soap">

@@ -31,7 +31,8 @@
     <example id="zend.feed.introduction.example.rss">
         <title>Manipuler des données RSS avec Zend_Feed</title>
 
-        <programlisting role="php"><![CDATA[// on va chercher les dernières news de Slashdot
+        <programlisting role="php"><![CDATA[
+// on va chercher les dernières news de Slashdot
 try {
     $rssSlashdot =
 Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
@@ -57,6 +58,7 @@ foreach ($rssSlashdot as $elem) {
         'lien'        => $elem->link(),
         'description' => $elem->description()
         );
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 </sect1>

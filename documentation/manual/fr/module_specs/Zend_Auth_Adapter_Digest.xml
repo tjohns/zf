@@ -27,7 +27,9 @@
             </itemizedlist> Les éléments ci-dessus sont séparés par des caractères deux-points, comme dans l'exemple
         suivant (dans lequel le mot de passe est "<code>unMotdepasse</code>") :</para>
 
-        <programlisting><![CDATA[unUtilisateur:Un domaine:3b17d7f3a9374666e892cbce58aa724f    ]]></programlisting>
+        <programlisting><![CDATA[
+unUtilisateur:Un domaine:3b17d7f3a9374666e892cbce58aa724f
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.auth.adapter.digest.specifics">
@@ -63,7 +65,8 @@
         <code>username</code> (identifiant). Les valeurs respectives associées à ces clés correspondent aux valeurs
         définies avant l'appel à <code>authenticate()</code>.</para>
 
-        <programlisting role="php"><![CDATA[$adaptateur = new Zend_Auth_Adapter_Digest($nomFichier, $domaine, $identifiant, $motdepasse);
+        <programlisting role="php"><![CDATA[
+$adaptateur = new Zend_Auth_Adapter_Digest($nomFichier, $domaine, $identifiant, $motdepasse);
 
 $resultat = $adaptateur->authenticate();
 
@@ -77,6 +80,7 @@ Array
     [realm] => Un domaine
     [username] => unUtilisateur
 )
-*/]]></programlisting>
+*/
+]]></programlisting>
     </sect2>
 </sect1>

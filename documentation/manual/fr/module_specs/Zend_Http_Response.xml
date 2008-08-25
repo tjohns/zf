@@ -14,7 +14,8 @@
         <code>Zend_Http_Response</code> : <example id="zend.http.response.introduction.example-1">
                 <title>Instancier un objet Zend_Http_Response en utilisant la méthode factory</title>
 
-                <programlisting role="php"><![CDATA[$str = '';
+                <programlisting role="php"><![CDATA[
+$str = '';
 $sock = fsockopen('www.exemple.com', 80);
 $req =     "GET / HTTP/1.1\r\n" .
         "Host: www.exemple.com\r\n" .
@@ -25,7 +26,8 @@ fwrite($sock, $req);
 while ($buff = fread($sock, 1024))
     $str .= $sock;
 
-$response = Zend_Http_Response::factory($str);]]></programlisting>
+$response = Zend_Http_Response::factory($str);
+]]></programlisting>
             </example></para>
 
         <para>Vous pouvez aussi utiliser le constructeur pour créer un nouvel objet de réponse HTTP, en spécifiant tous
@@ -82,11 +84,13 @@ $response = Zend_Http_Response::factory($str);]]></programlisting>
             </itemizedlist> <example id="zend.http.response.testers.example-1">
                 <title>Utiliser la méthode isError() pour valider une réponse</title>
 
-                <programlisting role="php"><![CDATA[if ($response->isError()) {
+                <programlisting role="php"><![CDATA[
+if ($response->isError()) {
   echo "Erreur de transmission des données.\n"
   echo "Les infos Serveur sont : " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
-// ... traiter la réponse ici ...]]></programlisting>
+// ... traiter la réponse ici ...
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -138,13 +142,15 @@ $response = Zend_Http_Response::factory($str);]]></programlisting>
             </itemizedlist> <example id="zend.http.response.acessors.example-1">
                 <title>Utiliser les méthodes accesseurs de Zend_Http_Response</title>
 
-                <programlisting role="php"><![CDATA[if ($response->getStatus() == 200) {
+                <programlisting role="php"><![CDATA[
+if ($response->getStatus() == 200) {
   echo "La requête retourne les informations suivantes :<br />";
   echo $response->getBody();
 } else {
   echo "Une erreur est apparue lors de la recherche des données :<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
-}]]></programlisting>
+}
+]]></programlisting>
             </example> <note>
                 <title>Vérifier toujours la valeur retournée</title>
 
@@ -155,7 +161,8 @@ $response = Zend_Http_Response::factory($str);]]></programlisting>
             </note> <example id="zend.http.response.acessors.example-2">
                 <title>Accéder aux entêtes de réponse</title>
 
-                <programlisting role="php"><![CDATA[$ctype = $response->getHeader('Content-type');
+                <programlisting role="php"><![CDATA[
+$ctype = $response->getHeader('Content-type');
 if (is_array($ctype)) $ctype = $ctype[0];
 
 $body = $response->getBody();
@@ -163,7 +170,8 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
   $body = htmlentities($body);
 }
 
-echo $body;]]></programlisting>
+echo $body;
+]]></programlisting>
             </example></para>
     </sect2>
 

@@ -55,12 +55,16 @@
         leur affichage ne le reconnaissent qu'une fois qu'il a été paramètré, donc la manière la plus simple est de le
         spécifier dans votre fichier d'amorçage :</para>
 
-        <programlisting role="php"><![CDATA[$doctypeHelper = new Zend_View_Helper_Doctype();
-$doctypeHelper->doctype('XHTML1_STRICT');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$doctypeHelper = new Zend_View_Helper_Doctype();
+$doctypeHelper->doctype('XHTML1_STRICT');
+]]></programlisting>
 
         <para>Ensuite vous l'affichez en début de votre layout :</para>
 
-        <programlisting role="php"><![CDATA[<?php echo $this->doctype() ?>]]></programlisting>
+        <programlisting role="php"><![CDATA[
+<?php echo $this->doctype() ?>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.doctype.retrieving">
@@ -69,13 +73,17 @@ $doctypeHelper->doctype('XHTML1_STRICT');]]></programlisting>
         <para>Si vous avez besoin du doctype, vous pouvez le récupérer par l'appel de <code>getDoctype()</code> sur
         l'objet.</para>
 
-        <programlisting role="php"><![CDATA[$doctype = $view->doctype()->getDoctype();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$doctype = $view->doctype()->getDoctype();
+]]></programlisting>
 
         <para>Typiquement, vous pouvez simplement vouloir savoir si le doctype est XHTML ou non ; pour ceci, la méthode
         <code>isXhtml()</code> vous suffira :</para>
 
-        <programlisting role="php"><![CDATA[if ($view->doctype()->isXhtml()) {
+        <programlisting role="php"><![CDATA[
+if ($view->doctype()->isXhtml()) {
     // faire qqch de différent
-}]]></programlisting>
+}
+]]></programlisting>
     </example>
 </sect3>

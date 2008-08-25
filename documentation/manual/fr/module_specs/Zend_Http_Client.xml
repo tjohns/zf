@@ -16,7 +16,8 @@
         <code>setConfig()</code>. <example id="zend.http.client.introduction.example-1">
                 <title>Instanciation d'un objet Zend_Http_Client</title>
 
-                <programlisting role="php"><![CDATA[$client = new Zend_Http_Client('http://example.org', array(
+                <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client('http://example.org', array(
     'maxredirects' => 0,
     'timeout'      => 30));
 
@@ -25,7 +26,8 @@ $client = new Zend_Http_Client();
 $client->setUri('http://example.org');
 $client->setConfig(array(
     'maxredirects' => 0,
-    'timeout'      => 30));]]></programlisting>
+    'timeout'      => 30));
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -158,8 +160,10 @@ $client->setConfig(array(
         nécessite rarement plus d'une ligne de code : <example id="zend.http.client.basic-requests.example-1">
                 <title>Requête GET simple</title>
 
-                <programlisting role="php"><![CDATA[$client = new Zend_Http_Client('http://example.org');
-$response = $client->request();]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client('http://example.org');
+$response = $client->request();
+]]></programlisting>
             </example> La méthode <code>request()</code> accepte un paramètre optionnel définissant la méthode HTTP, -
         GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS ou CONNECT - comme définies dans la RFC 2616 concernant le
         protocole HTTP <footnote>
@@ -172,12 +176,14 @@ $response = $client->request();]]></programlisting>
                 id="zend.http.client.basic-requests.example-2">
                 <title>Requêtes d'autres types que GET</title>
 
-                <programlisting role="php"><![CDATA[// requête POST
+                <programlisting role="php"><![CDATA[
+// requête POST
 $response = $client->request('POST');
 
 // autre manière de faire :
 $client->setMethod(Zend_Http_Client::POST);
-$response = $client->request();]]></programlisting>
+$response = $client->request();
+]]></programlisting>
             </example></para>
     </sect2>
 
@@ -190,7 +196,8 @@ $response = $client->request();]]></programlisting>
                 id="zend.http.client.parameters.example-1">
                 <title>Ajouts de paramètres GET</title>
 
-                <programlisting role="php"><![CDATA[// Avec la méthode setParameterGet
+                <programlisting role="php"><![CDATA[
+// Avec la méthode setParameterGet
 $client->setParameterGet('knight', 'lancelot');
 
 // Ce qui est équivalent à :
@@ -201,7 +208,8 @@ $client->setParameterGet(array(
     'first_name'  => 'Bender',
     'middle_name' => 'Bending'
     'made_in'     => 'Mexico',
-));]]></programlisting>
+));
+]]></programlisting>
             </example></para>
 
         <para>Coté POST, c'est très similaire à GET, sauf que les paramètres POST doivent faire partie du corps de la
@@ -210,7 +218,8 @@ $client->setParameterGet(array(
                 id="zend.http.client.parameters.example-2">
                 <title>Ajout de paramètres POST</title>
 
-                <programlisting role="php"><![CDATA[// passage de paramètre POST simple
+                <programlisting role="php"><![CDATA[
+// passage de paramètre POST simple
 $client->setParameterPost('language', 'fr');
 
 // Plusieurs paramètres, dont un avec plusieurs valeurs
@@ -218,7 +227,8 @@ $client->setParameterPost(array(
     'language'  => 'es',
     'country'   => 'ar',
     'selection' => array(45, 32, 80)
-));]]></programlisting>
+));
+]]></programlisting>
             </example> Notez qu'en plus de paramètres POST, vous pouvez ajouter des paramètres GET à une requête POST.
         Le contraire n'est pas possible, ainsi les paramètres POST ajoutés à une requête GET seront acceptés certes,
         mais ignorés.</para>

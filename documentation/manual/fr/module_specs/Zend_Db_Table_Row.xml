@@ -24,8 +24,10 @@
         <example id="zend.db.table.row.read.example">
             <title>Exemple de récupération d'un Row</title>
 
-            <programlisting role="php"><![CDATA[$bugs = new Bugs();
-$row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
+$row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));
+]]></programlisting>
         </example>
 
         <para>Un objet <code>Zend_Db_Table_Rowset</code> contient une collection d'objets
@@ -34,9 +36,11 @@ $row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));]]></programlist
         <example id="zend.db.table.row.read.example-rowset">
             <title>Exemple de lecture d'un Row dans un Rowset</title>
 
-            <programlisting role="php"><![CDATA[$bugs = new Bugs();
+            <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $rowset = $bugs->fetchAll($bugs->select()->where('bug_status = ?', 1));
-$row = $rowset->current();]]></programlisting>
+$row = $rowset->current();
+]]></programlisting>
         </example>
 
         <sect3 id="zend.db.table.row.read.get">
@@ -48,11 +52,13 @@ $row = $rowset->current();]]></programlisting>
             <example id="zend.db.table.row.read.get.example">
                 <title>Lecture d'une colonne dans un Row</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));
 
 // Affiche la valeur de la colonne bug_description
-echo $row->bug_description;]]></programlisting>
+echo $row->bug_description;
+]]></programlisting>
             </example>
 
             <note>
@@ -75,7 +81,8 @@ echo $row->bug_description;]]></programlisting>
             <example id="zend.db.table.row.read.to-array.example">
                 <title>Exemple avec toArray()</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));
 
 // Récupère un tableau associatif column/value
@@ -85,7 +92,8 @@ $rowArray = $row->toArray();
 foreach ($rowArray as $column => $value) {
     echo "Column: $column\n";
     echo "Value:  $value\n";
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
 
             <para>Le tableau retourné par <code>toArray()</code> n'est pas une référence. Vous pouvez modifier ses
@@ -117,14 +125,16 @@ foreach ($rowArray as $column => $value) {
             <example id="zend.db.table.row.write.set.example">
                 <title>Exemple de changement de la valeur d'une colonne dans un Row</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $row = $bugs->fetchRow($bugs->select()->where('bug_id = ?', 1));
 
 // Change la valeur d'une ou plusieurs colonnes
 $row->bug_status = 'FIXED';
 
 // MET A JOUR l'enregistrement dans la base de données
-$row->save();]]></programlisting>
+$row->save();
+]]></programlisting>
             </example>
         </sect3>
 
@@ -139,7 +149,8 @@ $row->save();]]></programlisting>
             <example id="zend.db.table.row.write.insert.example">
                 <title>Exemple de création d'un Row vierge pour une table</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $newRow = $bugs->createRow();
 
 // affecte des valeurs aux colonnes
@@ -147,7 +158,8 @@ $newRow->bug_description = '...description...';
 $newRow->bug_status = 'NEW';
 
 // INSERT le nouvel enregistrement dans la base de données
-$newRow->save();]]></programlisting>
+$newRow->save();
+]]></programlisting>
             </example>
 
             <para>L'argument optionnel de <code>createRow()</code> est un tableau associatif qui sert à peupler tout de
@@ -156,7 +168,8 @@ $newRow->save();]]></programlisting>
             <example id="zend.db.table.row.write.insert.example2">
                 <title>Exemple de remplissage des valeurs d'un nouveau Row vierge</title>
 
-                <programlisting role="php"><![CDATA[$data = array(
+                <programlisting role="php"><![CDATA[
+$data = array(
     'bug_description' => '...description...',
     'bug_status'      => 'NEW'
 );
@@ -165,7 +178,8 @@ $bugs = new Bugs();
 $newRow = $bugs->createRow($data);
 
 // INSERT l'enregistrement en base de données
-$newRow->save();]]></programlisting>
+$newRow->save();
+]]></programlisting>
             </example>
 
             <note>
@@ -184,7 +198,8 @@ $newRow->save();]]></programlisting>
             <example id="zend.db.table.row.write.set-from-array.example">
                 <title>Exemple d'utilisation de setFromArray() avec un enregistrement (Row) vierge</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $newRow = $bugs->createRow();
 
 // Les données sont dans un tableau associatif
@@ -197,7 +212,8 @@ $data = array(
 $newRow->setFromArray($data);
 
 // INSERT l'enregistrement en base de données
-$newRow->save();]]></programlisting>
+$newRow->save();
+]]></programlisting>
             </example>
         </sect3>
 
@@ -210,11 +226,13 @@ $newRow->save();]]></programlisting>
             <example id="zend.db.table.row.write.delete.example">
                 <title>Effacer un Row</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $row = $bugs->fetchRow('bug_id = 1');
 
 // EFFACE cet enregistrement de la base de données
-$row->delete();]]></programlisting>
+$row->delete();
+]]></programlisting>
             </example>
 
             <para>Notez qu'il n'est pas nécessaire d'appeler <code>save()</code> pour un effacement. Celui-ci est à
@@ -239,13 +257,15 @@ $row->delete();]]></programlisting>
             <example id="zend.db.table.row.serialize.serializing.example">
                 <title>Exemple de sérialisation d'un Row</title>
 
-                <programlisting role="php"><![CDATA[$bugs = new Bugs();
+                <programlisting role="php"><![CDATA[
+$bugs = new Bugs();
 $row = $bugs->fetchRow('bug_id = 1');
 
 // Convertit l'objet en une forme sérialisée
 $serializedRow = serialize($row);
 
-// Maintenant vous pouvez utiliser $serializedRow pour l'écrire dans un fichier, etc.]]></programlisting>
+// Maintenant vous pouvez utiliser $serializedRow pour l'écrire dans un fichier, etc.
+]]></programlisting>
             </example>
         </sect3>
 
@@ -262,10 +282,12 @@ $serializedRow = serialize($row);
             <example id="zend.db.table.row.serialize.unserializing.example">
                 <title>Exemple de désérialisation d'un objet Row sérialisé.</title>
 
-                <programlisting role="php"><![CDATA[$rowClone = unserialize($serializedRow);
+                <programlisting role="php"><![CDATA[
+$rowClone = unserialize($serializedRow);
 
 // Vous ne pouvez faire qu'une utilisation en lecture seule
-echo $rowClone->bug_description;]]></programlisting>
+echo $rowClone->bug_description;
+]]></programlisting>
             </example>
 
             <note>
@@ -289,7 +311,8 @@ echo $rowClone->bug_description;]]></programlisting>
             <example id="zend.db.table.row.serialize.set-table.example">
                 <title>Exemple de rééactivation d'un Row</title>
 
-                <programlisting role="php"><![CDATA[$rowClone = unserialize($serializedRow);
+                <programlisting role="php"><![CDATA[
+$rowClone = unserialize($serializedRow);
 
 $bugs = new Bugs();
 
@@ -298,7 +321,8 @@ $rowClone->setTable($bugs);
 
 // Maintenant il est possible de l'utiliser en mode écriture
 $rowClone->bug_status = 'FIXED';
-$rowClone->save();]]></programlisting>
+$rowClone->save();
+]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -313,7 +337,8 @@ $rowClone->save();]]></programlisting>
         <example id="zend.db.table.row.extending.example">
             <title>Spécification d'une classe Row personnalisée</title>
 
-            <programlisting role="php"><![CDATA[class MyRow extends Zend_Db_Table_Row_Abstract
+            <programlisting role="php"><![CDATA[
+class MyRow extends Zend_Db_Table_Row_Abstract
 {
     // ...personnalisations
 }
@@ -327,7 +352,8 @@ class Products extends Zend_Db_Table_Abstract
 }
 
 // Ou pour une classe de table spécifique, via son constructeur
-$bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
+$bugs = new Bugs(array('rowClass' => 'MyRow'));
+]]></programlisting>
         </example>
 
         <sect3 id="zend.db.table.row.extending.overriding">
@@ -338,7 +364,8 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
             après que les méta données aient été calculées. <example id="zend.db.table.row.init.usage.example">
                     <title>Exemple d'utilisation de la méthode init()</title>
 
-                    <programlisting role="php"><![CDATA[class MyApplicationRow extends Zend_Db_Table_Row_Abstract
+                    <programlisting role="php"><![CDATA[
+class MyApplicationRow extends Zend_Db_Table_Row_Abstract
 {
     protected $_role;
 
@@ -346,7 +373,8 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
     {
         $this->_role = new MyRoleClass();
     }
-}]]></programlisting>
+}
+]]></programlisting>
                 </example></para>
         </sect3>
 
@@ -370,7 +398,8 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
                 <para>Par exemple, vous souhaitez journaliser toutes les insertions sur une Table spécifique, mais
                 uniquement si la configuration du site le permet :</para>
 
-                <programlisting role="php"><![CDATA[class MyLoggingRow extends Zend_Db_Table_Row_Abstract
+                <programlisting role="php"><![CDATA[
+class MyLoggingRow extends Zend_Db_Table_Row_Abstract
 {
     protected function _insert()
     {
@@ -385,7 +414,8 @@ if ($loggingEnabled) {
     $bugs = new Bugs(array('rowClass' => 'MyLoggingRow'));
 } else {
     $bugs = new Bugs();
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
 
             <example id="zend.db.table.row.extending.overriding-example2">
@@ -397,7 +427,8 @@ if ($loggingEnabled) {
                 <para>Dans cet exemple, le code qui effectue la journalisation est identique à celui de l'exemple
                 précédent.</para>
 
-                <programlisting role="php"><![CDATA[class MyLoggingRow extends Zend_Db_Table_Row_Abstract
+                <programlisting role="php"><![CDATA[
+class MyLoggingRow extends Zend_Db_Table_Row_Abstract
 {
     protected function _insert()
     {
@@ -416,7 +447,8 @@ class Products extends Zend_Db_Table_Abstract
 {
     protected $_name = 'products';
     protected $_rowClass = 'MyLoggingRow';
-}]]></programlisting>
+}
+]]></programlisting>
             </example>
         </sect3>
 
@@ -441,7 +473,8 @@ class Products extends Zend_Db_Table_Abstract
                 Row utilisera <code>_transformColumn()</code> pour changer le nom de la colonne appelée, avant de le
                 faire correspondre à un nom dans la table réelle de la base de données.</para>
 
-                <programlisting role="php"><![CDATA[class MyInflectedRow extends Zend_Db_Table_Row_Abstract
+                <programlisting role="php"><![CDATA[
+class MyInflectedRow extends Zend_Db_Table_Row_Abstract
 {
     protected function _transformColumn($columnName)
     {
@@ -462,7 +495,8 @@ $row = $bugs->fetchNew();
 // Utilisez des nom de colonnes CamelCase, l'inflecteur les
 // transformera alors pour vous afin d'établir la correspondance
 // avec les noms natifs des colonnes.
-$row->bugDescription = 'New description';]]></programlisting>
+$row->bugDescription = 'New description';
+]]></programlisting>
             </example>
 
             <para>En revanche, c'est à vous d'écrire votre mécanisme d'inflexion.</para>

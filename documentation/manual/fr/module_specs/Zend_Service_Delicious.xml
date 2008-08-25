@@ -13,14 +13,16 @@
         <example id="zend.service.delicious.introduction.getAllPosts">
             <title>Récupérer toutes vos entrées</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('identifiant', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('identifiant', 'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 foreach ($posts as $post) {
     echo "--\n";
     echo "Titre: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
-} ]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -32,7 +34,8 @@ foreach ($posts as $post) {
         une instance de la classe <code>Zend_Service_Delicious_PostList</code>, qui contient toutes les entrées
         récupérées.</para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Récupère les entrées correspondants aux arguments. Si la date ou l'url n'est pas précisée, la date la plus récente
  * sera prise en compte.
  *
@@ -58,7 +61,8 @@ public function getRecentPosts($tag = null, $count = 15);
  * @param string $tag Optionnel pour filtrer par tag
  * @return Zend_Service_Delicious_PostList
  */
-public function getAllPosts($tag = null);]]></programlisting>
+public function getAllPosts($tag = null);
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.service.delicious.postlist">
@@ -74,7 +78,8 @@ public function getAllPosts($tag = null);]]></programlisting>
         <example id="zend.service.delicious.postlist.accessing_post_lists">
             <title>Accéder à la liste des entrées</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche le nombre d'entrées
@@ -88,7 +93,8 @@ foreach ($posts as $post) {
 }
 
 // Affiche une entrée en utilisant un tableau
-echo $posts[0]->getTitle();]]></programlisting>
+echo $posts[0]->getTitle();
+]]></programlisting>
         </example>
 
         <note>
@@ -108,14 +114,16 @@ echo $posts[0]->getTitle();]]></programlisting>
             <code>withTags()</code>. Par confort, <code>withTag()</code> est aussi fourni quand il est nécessaire 'e ne
             spécifier qu'une seule étiquette</para>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche les entrées ayant les étiquettes "php" et "zend"
 foreach ($posts->withTags(array('php', 'zend')) as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <example id="zend.service.delicious.postlist.example.byUrl">
@@ -124,14 +132,16 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
             <para>Les entrées peuvent être filtrées par URL correspondant à une expression régulière spécifiée en
             utilisant la méthode <code>withUrl()</code> :</para>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche les entrées ayant "help" dans l'URL
 foreach ($posts->withUrl('/help/') as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
     </sect2>
 
@@ -141,13 +151,15 @@ foreach ($posts->withUrl('/help/') as $post) {
         <example id="zend.service.delicious.editing_posts.post_editing">
             <title>Édition d'une entrée</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 $posts = $delicious->getPosts();
 
 // change le titre
 $posts[0]->setTitle('Nouveau Titre');
 // sauvegarde le changement
-$posts[0]->save();]]></programlisting>
+$posts[0]->save();
+]]></programlisting>
         </example>
 
         <example id="zend.service.delicious.editing_posts.method_call_chaining">
@@ -156,12 +168,14 @@ $posts[0]->save();]]></programlisting>
             <para>Toutes les méthodes "setter" renvoient l'objet <code>Zend_Service_Delicious_PostList</code> vous
             pouvez donc chaîner les appels aux méthodes en utilisant une interface fluide.</para>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('Nouveau Titre')
          ->setNotes('Nouvelle note')
-         ->save();]]></programlisting>
+         ->save();
+]]></programlisting>
         </example>
     </sect2>
 
@@ -174,7 +188,8 @@ $posts[0]->setTitle('Nouveau Titre')
         <example id="zend.service.delicious.deleting_posts.deleting_posts">
             <title>Suppression d'une entrée</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 
 // en spécifiant l' URL
 $delicious->deletePost('http://framework.zend.com');
@@ -184,7 +199,8 @@ $posts = $delicious->getPosts();
 $posts[0]->delete();
 
 // une autre façon d'utiliser deletePost()
-$delicious->deletePost($posts[0]->getUrl());]]></programlisting>
+$delicious->deletePost($posts[0]->getUrl());
+]]></programlisting>
         </example>
     </sect2>
 
@@ -198,7 +214,8 @@ $delicious->deletePost($posts[0]->getUrl());]]></programlisting>
         <example id="zend.service.delicious.adding_posts.adding_a_post">
             <title>Ajouter une entrée</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 
 // créé et sauvegarde une nouvelle entrée (en chainant les méthodes)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
@@ -208,7 +225,8 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
 // créé et sauvegarde une nouvelle entrée (sans enchaîner les méthodes)
 $newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
 $newPost->setNotes('Page d\'accueil du Zend Framework');
-$newPost->save();]]></programlisting>
+$newPost->save();
+]]></programlisting>
         </example>
     </sect2>
 
@@ -218,13 +236,15 @@ $newPost->save();]]></programlisting>
         <example id="zend.service.delicious.tags.tags">
             <title>Récupérer les étiquettes</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 
 // récupère tous les étiquettes
 print_r($delicious->getTags());
 
 // renomme l'étiquette "ZF" en "zendFramework"
-$delicious->renameTag('ZF', 'zendFramework');]]></programlisting>
+$delicious->renameTag('ZF', 'zendFramework');
+]]></programlisting>
         </example>
     </sect2>
 
@@ -234,7 +254,8 @@ $delicious->renameTag('ZF', 'zendFramework');]]></programlisting>
         <example id="zend.service.delicious.bundles.example">
             <title>Gestion des groupes d'étiquette</title>
 
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
 
 // récupère tous les groupes
 print_r($delicious->getBundles());
@@ -243,7 +264,8 @@ print_r($delicious->getBundles());
 $delicious->deleteBundle('someBundle');
 
 // ajoute un groupe
-$delicious->addBundle('newBundle', array('tag1', 'tag2'));]]></programlisting>
+$delicious->addBundle('newBundle', array('tag1', 'tag2'));
+]]></programlisting>
         </example>
     </sect2>
 
@@ -310,7 +332,8 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));]]></programlisting>
         <example id="zend.service.delicious.public_data.retrieving_public_data">
             <title>Récupérer les données publiques</title>
 
-            <programlisting role="php"><![CDATA[// nom d'utilisateur et mot de passe optionnels
+            <programlisting role="php"><![CDATA[
+// nom d'utilisateur et mot de passe optionnels
 $delicious = new Zend_Service_Delicious();
 
 // récupère les fans de l'utilisateur someUser
@@ -320,7 +343,8 @@ print_r($delicious->getUserFans('someUser'));
 print_r($delicious->getUserNetwork('someUser'));
 
 // récupère les Tags de l'utilisateur someUser
-print_r($delicious->getUserTags('someUser'));]]></programlisting>
+print_r($delicious->getUserTags('someUser'));
+]]></programlisting>
         </example>
 
         <sect3 id="zend.service.delicious.public_data.posts">
@@ -393,8 +417,10 @@ print_r($delicious->getUserTags('someUser'));]]></programlisting>
         <example id="zend.service.delicious.httpclient.changing">
             <title>Modifier le client HTTP de <code>Zend_Rest_Client</code></title>
 
-            <programlisting role="php"><![CDATA[$myHttpClient = new My_Http_Client();
-Zend_Rest_Client::setHttpClient($myHttpClient);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$myHttpClient = new My_Http_Client();
+Zend_Rest_Client::setHttpClient($myHttpClient);
+]]></programlisting>
         </example>
 
         <para>Quand vous effectuez plus d'une requête avec <code>Zend_Service_Delicious</code> vous pouvez accélérez vos
@@ -403,9 +429,11 @@ Zend_Rest_Client::setHttpClient($myHttpClient);]]></programlisting>
         <example id="zend.service.delicious.httpclient.keepalive">
             <title>Configurer votre client HTTP pour qu'il ne ferme pas les connexions</title>
 
-            <programlisting role="php"><![CDATA[Zend_Rest_Client::getHttpClient()->setConfig(array(
+            <programlisting role="php"><![CDATA[
+Zend_Rest_Client::getHttpClient()->setConfig(array(
         'keepalive' => true
-));]]></programlisting>
+));
+]]></programlisting>
         </example>
 
         <note>

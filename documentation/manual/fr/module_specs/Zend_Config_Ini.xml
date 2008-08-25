@@ -25,8 +25,10 @@
 
         <para>Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut être changé en changeant
         la clé de <code>$options</code> en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
-        <programlisting role="php"><![CDATA[$options['nestSeparator'] = ':';
-$options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);]]></programlisting></para>
+        <programlisting role="php"><![CDATA[
+$options['nestSeparator'] = ':';
+$options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);
+]]></programlisting></para>
     </note>
 
     <example id="zend.config.adapters.ini.example.using">
@@ -41,7 +43,8 @@ $options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);]]><
         plus complexes. Supposons, que les données suivantes de configuration sont contenues dans
         <code>/chemin/vers/config.ini</code> :</para>
 
-        <programlisting role="ini"><![CDATA[; Données de configuration du site de production
+        <programlisting role="ini"><![CDATA[
+; Données de configuration du site de production
 [production]
 webhost                  = www.example.com
 database.adapter         = pdo_mysql
@@ -55,15 +58,18 @@ database.params.dbname   = dbname
 [test : production]
 database.params.host     = dev.example.com
 database.params.username = devuser
-database.params.password = devsecret]]></programlisting>
+database.params.password = devsecret
+]]></programlisting>
 
         <para>Ensuite, supposons que le développeur ait besoin des données de configuration de test issues du fichier
         INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :</para>
 
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 
 echo $config->database->params->host;   // affiche "dev.example.com"
-echo $config->database->params->dbname; // affiche "dbname"]]></programlisting>
+echo $config->database->params->dbname; // affiche "dbname"
+]]></programlisting>
     </example>
 
     <note>

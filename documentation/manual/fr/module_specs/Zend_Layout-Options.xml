@@ -74,19 +74,23 @@
 
         <para>Les exemples sont basés sur les paramètres <code>$options</code> et <code>$config</code> suivants :</para>
 
-        <programlisting role="php"><![CDATA[$options = array(
+        <programlisting role="php"><![CDATA[
+$options = array(
     'layout'     => 'foo',
     'layoutPath' => '/chemin/vers/layouts',
     'contentKey' => 'CONTENT',           // ignorés si MVC n'est pas utilisé
-);]]></programlisting>
+);
+]]></programlisting>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
 [layout]
 layout = "foo"
 layoutPath = "/chemin/vers/layouts"
 contentKey = "CONTENT"
 */
-$config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');]]></programlisting>
+$config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');
+]]></programlisting>
 
         <example id="zend.layout.options.examples.constructor">
             <title>Passer des options au constructeur ou à startMvc()</title>
@@ -96,21 +100,25 @@ $config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');]]></programl
 
             <para>Voyons le cas du tableau :</para>
 
-            <programlisting role="php"><![CDATA[// Avec le constructeur :
+            <programlisting role="php"><![CDATA[
+// Avec le constructeur :
 $layout = new Zend_Layout($options);
 
 // Avec startMvc():
-$layout = Zend_Layout::startMvc($options);]]></programlisting>
+$layout = Zend_Layout::startMvc($options);
+]]></programlisting>
 
             <para>Et maintenant avec l'objet de configuration :</para>
 
-            <programlisting role="php"><![CDATA[$config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');
+            <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');
 
 // Cas du constructeur:
 $layout = new Zend_Layout($config);
 
 // Via startMvc():
-$layout = Zend_Layout::startMvc($config);]]></programlisting>
+$layout = Zend_Layout::startMvc($config);
+]]></programlisting>
 
             <para>C'est la manière la plus simple de configurer votre objet <code>Zend_Layout</code>.</para>
         </example>
@@ -121,11 +129,13 @@ $layout = Zend_Layout::startMvc($config);]]></programlisting>
             <para>Pour configurer <code>Zend_Layout</code> après l'avoir instanciée, utilisez les méthodes
             <code>setOptions()</code> et <code>setConfig()</code> sur l'objet :</para>
 
-            <programlisting role="php"><![CDATA[// Utilisation d'un tableau d'options:
+            <programlisting role="php"><![CDATA[
+// Utilisation d'un tableau d'options:
 $layout->setOptions($options);
 
 // Utilisation d'un objet Zend_Config:
-$layout->setConfig($options);]]></programlisting>
+$layout->setConfig($options);
+]]></programlisting>
 
             <para>Notez cependant que certaines options comme <code>pluginClass</code> et <code>helperClass</code>
             n'auront aucun effet avec ses méthodes. Elles doivent être passées au constructeur ou à la méthode
@@ -138,9 +148,11 @@ $layout->setConfig($options);]]></programlisting>
             <para>Enfin, vous pouvez aussi configurer votre objet de <code>Zend_Layout</code> grâce à ses accesseurs.
             Ils peuvent s'utiliser chaînés (interface fluide):</para>
 
-            <programlisting role="php"><![CDATA[$layout->setLayout('foo')
+            <programlisting role="php"><![CDATA[
+$layout->setLayout('foo')
        ->setLayoutPath('/chemin/vers/layouts')
-       ->setContentKey('CONTENT');]]></programlisting>
+       ->setContentKey('CONTENT');
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

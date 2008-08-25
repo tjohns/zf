@@ -79,7 +79,8 @@
             aussi pour les autres rôles desquels le rôle recherché hérite (ici "<code>invite</code>",
             "<code>membre</code>", et "<code>admin</code>") :</para>
 
-            <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
+            <programlisting role="php"><![CDATA[
+$acl = new Zend_Acl();
 
 $acl->addRole(new Zend_Acl_Role('invite'))
     ->addRole(new Zend_Acl_Role('membre'))
@@ -93,7 +94,8 @@ $acl->add(new Zend_Acl_Resource('uneResource'));
 $acl->deny('invite', 'uneResource');
 $acl->allow('membre', 'uneResource');
 
-echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';]]></programlisting>
+echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
+]]></programlisting>
 
             <para>Puisqu'il n'y a pas de règle spécifiquement définie pour le rôle "<code>unUtilisateur</code>" et
             "<code>uneResource</code>", <code>Zend_Acl</code> doit rechercher des règles qui pourraient être définies
@@ -126,7 +128,9 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';]
         qui comporte plusieurs niveaux de groupes au sein d'une grande variété de zones. Pour créer un nouvel objet ACL,
         nous créons une nouvelle instance d'ACL sans paramètres :</para>
 
-        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$acl = new Zend_Acl();
+]]></programlisting>
 
         <note>
             <para>Jusqu'à ce que le développeur spécifie une règle "allow", <code>Zend_Acl</code> refuse l'accès pour
@@ -201,7 +205,8 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';]
         <code>Zend_Acl_Role_Interface</code> est acceptable. Ces groupes peuvent être ajoutés au registre des rôles
         comme suit :</para>
 
-        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
+        <programlisting role="php"><![CDATA[
+$acl = new Zend_Acl();
 
 // Ajoute des groupes au registre des rôles en utilisant Zend_Acl_Role
 
@@ -219,7 +224,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), $roleinvite);
 $acl->addRole(new Zend_Acl_Role('editeur'), 'staff');
 
 // Administrateur n'hérite pas d'accès
-$acl->addRole(new Zend_Acl_Role('administrateur'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrateur'));
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
@@ -240,7 +246,8 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));]]></programlisting>
         <para>En conséquence, on peut définir un nombre assez complexe de règles avec un nombre minimal de code. Pour
         définir les permissions comme définies ci-dessus :</para>
 
-        <programlisting role="php"><![CDATA[$acl = new Zend_Acl();
+        <programlisting role="php"><![CDATA[
+$acl = new Zend_Acl();
 
 $roleinvite = new Zend_Acl_Role('invité');
 $acl->addRole($roleinvite);
@@ -264,7 +271,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'relire'));
 $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 
 // Administrateur hérite de rien, mais reçoit tous les privilèges
-$acl->allow('administrateur');]]></programlisting>
+$acl->allow('administrateur');
+]]></programlisting>
 
         <para>Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont utilisées pour indiquer
         que les règles s'appliquent à toutes les ressources.</para>
@@ -277,7 +285,8 @@ $acl->allow('administrateur');]]></programlisting>
         permissions pour réaliser les fonctions au sein de l'application web. Interroger l'ACL est assez simple en
         utilisant la méthode <code>isAllowed()</code> :</para>
 
-        <programlisting role="php"><![CDATA[echo $acl->isAllowed('invité', null, 'voir') ?
+        <programlisting role="php"><![CDATA[
+echo $acl->isAllowed('invité', null, 'voir') ?
      "autorisé" : "refusé"; // autorisé
 
 echo $acl->isAllowed('staff', null, 'publier') ?
@@ -299,6 +308,7 @@ echo $acl->isAllowed('administrateur') ?
      "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
 
 echo $acl->isAllowed('administrateur', null, 'modifier') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout]]></programlisting>
+     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
+]]></programlisting>
     </sect2>
 </sect1>

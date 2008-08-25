@@ -26,13 +26,15 @@
         <example id="zend.console.getopt.fetching.exceptions.example">
             <title>Récupérer une exception Getopt</title>
 
-            <programlisting role="php"><![CDATA[try {
+            <programlisting role="php"><![CDATA[
+try {
     $opts = new Zend_Console_Getopt('abp:');
     $opts->parse();
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}]]></programlisting>
+}
+]]></programlisting>
         </example>
 
         <para>Les cas, où l'analyse syntaxique lève une exception, incluent :</para>
@@ -64,9 +66,11 @@
         <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title>Utiliser getOption()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');]]></programlisting>
+$p_parameter = $opts->getOption('p');
+]]></programlisting>
         </example>
 
         <para>De manière alternative, vous pouvez employer la fonction magique <code>__get()</code> pour rechercher la
@@ -76,11 +80,13 @@ $p_parameter = $opts->getOption('p');]]></programlisting>
         <example id="zend.console.getopt.fetching.byname.example.magic">
             <title>Utiliser les méthodes magiques __get() and __isset()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {
     echo "J'ai recu l'option b.\n";
 }
-$p_parameter = $opts->p; // null si non fourni]]></programlisting>
+$p_parameter = $opts->p; // null si non fourni
+]]></programlisting>
         </example>
 
         <para>Si vos options sont déclarées avec des alias, vous pouvez employer n'importe quel alias de l'option dans
@@ -133,9 +139,11 @@ $p_parameter = $opts->p; // null si non fourni]]></programlisting>
         <example id="zend.console.getopt.fetching.remainingargs.example">
             <title>Utiliser getRemainingArgs()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'nomdefichier'));
-$args = $opts->getRemainingArgs(); // retourne array('nomdefichier')]]></programlisting>
+$args = $opts->getRemainingArgs(); // retourne array('nomdefichier')
+]]></programlisting>
         </example>
 
         <para><code>Zend_Console_Getopt</code> supporte la convention GNU selon laquelle un argument se composant d'un

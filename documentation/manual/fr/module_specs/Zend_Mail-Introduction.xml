@@ -16,12 +16,14 @@
             envoyer ce genre de messages en utilisant <code>Zend_Mail_Transport_Sendmail</code>, vous pouvez faire comme
             ceci :</para>
 
-            <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+            <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 $mail->setBodyText('Ceci est le texte du message.');
 $mail->setFrom('somebody@example.com', 'un expéditeur');
 $mail->addTo('somebody_else@example.com', 'un destinataire');
 $mail->setSubject('Sujet de test');
-$mail->send();]]></programlisting>
+$mail->send();
+]]></programlisting>
         </example>
 
         <note>
@@ -43,12 +45,14 @@ $mail->send();]]></programlisting>
         fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, ainsi vous
         pouvez appeler aussitôt une autre méthode.</para>
 
-        <programlisting role="php"><![CDATA[$mail = new Zend_Mail();
+        <programlisting role="php"><![CDATA[
+$mail = new Zend_Mail();
 $mail->setBodyText('Ceci est le texte du message.')
     ->setFrom('somebody@example.com', 'un expéditeur')
     ->addTo('somebody_else@example.com', 'un destinataire')
     ->setSubject('Sujet de test')
-    ->send();]]></programlisting>
+    ->send();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.mail.introduction.sendmail">
@@ -68,7 +72,8 @@ $mail->setBodyText('Ceci est le texte du message.')
             <para>Cet exemple montre comment changer le Return-Path de la fonction <ulink
             url="http://php.net/mail"><code>mail()</code></ulink>.</para>
 
-            <programlisting role="php"><![CDATA[$tr = new Zend_Mail_Transport_Sendmail('-freturn_to_me@example.com');
+            <programlisting role="php"><![CDATA[
+$tr = new Zend_Mail_Transport_Sendmail('-freturn_to_me@example.com');
 Zend_Mail::setDefaultTransport($tr);
 
 $mail = new Zend_Mail();
@@ -76,7 +81,8 @@ $mail->setBodyText('Ceci est le texte du message.');
 $mail->setFrom('somebody@example.com', 'un expéditeur');
 $mail->addTo('somebody_else@example.com', 'un destinataire');
 $mail->setSubject('TestSubject');
-$mail->send();]]></programlisting>
+$mail->send();
+]]></programlisting>
         </example>
 
         <note>

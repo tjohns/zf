@@ -15,12 +15,14 @@
         <example>
             <title>Utilisation d'addRules()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
   )
-);]]></programlisting>
+);
+]]></programlisting>
         </example>
 
         <para>L'exemple au-dessus montre comment ajouter l'option "<code>--verbose</code>" avec l'alias
@@ -40,14 +42,16 @@ $opts->addRules(
         <example>
             <title>Utiliser setHelp()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'option abricot, sans parametres',
         'b' => 'option banane, avec un parametre obligatoire de type entier',
         'p' => 'option pear, avec un parametre optionel de type chaine de caracteres'
     )
-);]]></programlisting>
+);
+]]></programlisting>
         </example>
 
         <para>Si vous déclarez des options avec des alias, vous pouvez employer n'importe quel alias comme clé du
@@ -71,14 +75,16 @@ $opts->setHelp(
         <example>
             <title>Utiliser setAliases()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
         'a' => 'apple',
         'a' => 'apfel',
         'p' => 'pear'
     )
-);]]></programlisting>
+);
+]]></programlisting>
         </example>
 
         <para>Dans l'exemple ci-dessus, après leurs déclarations, "<code>-a</code>", "<code>--apple</code>" et
@@ -103,14 +109,16 @@ $opts->setAliases(
         <example>
             <title>Utilisation de addArguments() et setArguments()</title>
 
-            <programlisting role="php"><![CDATA[// Par défaut, le constructeur utilise $_SERVER['argv']
+            <programlisting role="php"><![CDATA[
+// Par défaut, le constructeur utilise $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
 
 // Ajoute un tableau aux arguments existants
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Remplace les arguments existants par un nouveau tableau
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]></programlisting>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
+]]></programlisting>
         </example>
     </sect2>
 
@@ -171,8 +179,10 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]></pro
         <example>
             <title>Utilisation de setOption()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
+$opts->setOption('ignoreCase', true);
+]]></programlisting>
         </example>
 
         <para>L'argument de la méthode <code>setOptions()</code> est un tableau associatif. Les clés de ce tableau sont
@@ -183,13 +193,15 @@ $opts->setOption('ignoreCase', true);]]></programlisting>
         <example>
             <title>Utilisation de setOptions()</title>
 
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
     array(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);]]></programlisting>
+);
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

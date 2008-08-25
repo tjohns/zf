@@ -39,14 +39,18 @@
             <para>Pour désactiver <code>ErrorHandler</code>, exécutez l'action suivante à n'importe quel point précédant
             l'appel à <code>dispatch()</code> :</para>
 
-            <programlisting role="php"><![CDATA[// Désactivez le plugin ErrorHandler :
-$front->setParam('noErrorHandler', true);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+// Désactivez le plugin ErrorHandler :
+$front->setParam('noErrorHandler', true);
+]]></programlisting>
 
             <para>Pour désactiver <code>ViewRenderer</code>, exécutez l'action suivante à n'importe quel point précédant
             l'appel à <code>dispatch()</code> :</para>
 
-            <programlisting role="php"><![CDATA[// Désactivez l'aide ViewRenderer :
-$front->setParam('noViewRenderer', true);]]></programlisting>
+            <programlisting role="php"><![CDATA[
+// Désactivez l'aide ViewRenderer :
+$front->setParam('noViewRenderer', true);
+]]></programlisting>
         </note>
     </sect2>
 
@@ -63,7 +67,9 @@ $front->setParam('noViewRenderer', true);]]></programlisting>
             contrôleur frontal implémente un motif de Singleton, c'est aussi le seul moyen possible pour instancier un
             objet unique de contrôleur frontal.</para>
 
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.front.methods.primary.setcontrollerdirectory">
@@ -76,7 +82,8 @@ $front->setParam('noViewRenderer', true);]]></programlisting>
 
             <para>Quelques exemples :</para>
 
-            <programlisting role="php"><![CDATA[// Régler le dossier des contrôleurs par défaut :
+            <programlisting role="php"><![CDATA[
+// Régler le dossier des contrôleurs par défaut :
 $front->setControllerDirectory('../application/controllers');
 
 // Régler plusieurs répertoires de modules d'un seul coup :
@@ -87,7 +94,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Ajouter le répertoire de module 'foo' :
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]></programlisting>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');
+]]></programlisting>
 
             <note>
                 <para>Si vous utilisez <code>addControllerDirectory()</code> sans nom de module, cela réglera le
@@ -173,8 +181,10 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]></program
             installations de sites qui n'exigent pas la personnalisation de l'environnement du contrôleur
             frontal.</para>
 
-            <programlisting role="php"><![CDATA[// Instancie le contrôleur frontal, règle les dossiers de contrôleurs, et dispatche en une seule étape :
-Zend_Controller_Front::run('../application/controllers');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+// Instancie le contrôleur frontal, règle les dossiers de contrôleurs, et dispatche en une seule étape :
+Zend_Controller_Front::run('../application/controllers');
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -347,7 +357,8 @@ Zend_Controller_Front::run('../application/controllers');]]></programlisting>
         <para>Pour sous-classer le contrôleur frontal, vous devez au minimum surcharger la méthode
         <code>getInstance()</code> :</para>
 
-        <programlisting role="php"><![CDATA[class Mon_Controleur_Frontal extends Zend_Controller_Front
+        <programlisting role="php"><![CDATA[
+class Mon_Controleur_Frontal extends Zend_Controller_Front
 {
     public static function getInstance()
     {
@@ -357,7 +368,8 @@ Zend_Controller_Front::run('../application/controllers');]]></programlisting>
 
         return self::$_instance;
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>Surcharger la méthode <code>getInstance()</code> assure que des appels suivants à
         <code>Zend_Controller_Front::getInstance()</code> retourneront une instance de votre nouvelle sous-classe au
