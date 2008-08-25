@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10985 -->
+<!-- EN-Revision: 11008 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -329,7 +329,7 @@ $upload->addValidator('Count', array(1, 5);
 
         <para>
             場合によっては大文字小文字を区別してチェックしたくなることもあるでしょう。
-            そんなときのために、isValid() メソッドには 2 番目のパラメータ
+            そんなときのために、コンストラクタで 2 番目のパラメータ
             <code>$case</code> を指定することができます。これを true
             にすると、大文字小文字を区別して拡張子のチェックを行います。
         </para>
