@@ -1,0 +1,64 @@
+<sect1 id="zend.soap.autodiscovery.functions">
+    <title>Functions autodiscovering.</title>
+
+    <para>
+        If set of functions are used to provide SOAP server functionality, then the same set should be provided to 
+        <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
+        <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
+$autodiscover->addFunction('function1');
+$autodiscover->addFunction('function2');
+$autodiscover->addFunction('function3');
+...
+$autodiscover->handle();]]></programlisting>
+    </para>
+    
+    <para>
+        The following rules are used while WSDL generation:
+        <itemizedlist>
+            <listitem>
+                <para>Generated WSDL describes an RPC style Web Service.</para>
+            </listitem>
+            <listitem>
+                <para>Current script name is used as a name of the Web Service being described.</para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
+                    as an URI where the WSDL is available.
+                </para>
+                <para>
+                     It's also used as a target namespace for all service related names (including 
+                     described complex types).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Functions are joined into one <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port Type</ulink>.
+                </para>
+                <para>
+                    <code>$functionName . 'Port'</code> is used as Port Type name.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Each function is registered as a corresponding port operation.</para>
+            </listitem>
+            <listitem>
+                <para>Each function prototype genrerates corresponding Request/Response messages.</para>
+                <para>Function may have several prototypes if some method parameters are optional.</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    
+    <note>
+        <title>Important!</title>
+        <para>
+            WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
+            In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
+            only way to determine them.
+        </para>
+        <para>
+            That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+        </para>
+    </note>
+</sect1>

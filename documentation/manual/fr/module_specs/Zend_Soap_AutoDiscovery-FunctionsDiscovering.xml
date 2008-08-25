@@ -1,0 +1,61 @@
+<!-- EN-Revision: 10934 -->
+<sect1 id="zend.soap.autodiscovery.functions">
+    <title>Auto découverte des fonctions.</title>
+
+    <para>Si des fonctions doivent être utilisées (partagées) via un serveur SOAP, alors elles doivent être passées à
+    <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
+$autodiscover->addFunction('function1');
+$autodiscover->addFunction('function2');
+$autodiscover->addFunction('function3');
+...
+$autodiscover->handle();
+]]></programlisting></para>
+
+    <para>Les règles suivantes sont utilisées lors de la génération du fichier WSDL : <itemizedlist>
+            <listitem>
+                <para>Le fichier WSDL généré décrit un service web de type RPC.</para>
+            </listitem>
+
+            <listitem>
+                <para>Le nom du service crée sera le nom du script analysé (utilisé).</para>
+            </listitem>
+
+            <listitem>
+                <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI pour
+                rechercher le fichier WSDL.</para>
+
+                <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant les
+                types complexes décrits éventuellement).</para>
+            </listitem>
+
+            <listitem>
+                <para>Les fonctions sont encapsulées dans un <ulink url="http://www.w3.org/TR/wsdl#_porttypes">Port
+                Type</ulink>.</para>
+
+                <para><code>$functionName . 'Port'</code> est utilisé comme nom de Port Type.</para>
+            </listitem>
+
+            <listitem>
+                <para>Chaque fonction est enregistrée comme opération possible.</para>
+            </listitem>
+
+            <listitem>
+                <para>Chaque prototype de fonction génère des messages de requête/réponse correspondants.</para>
+
+                <para>Une fonction peut avoir plusieurs prototypes si des paramètres sont optionnels.</para>
+            </listitem>
+        </itemizedlist></para>
+
+    <note>
+        <title>Important!</title>
+
+        <para>L'auto génération du fichier WSDL (avec auto découverte des fonctions) utilise les blocs de documentation
+        de PHP insérés par le développeur dans ses fonctions, afin de trouver les types retournés. De ce fait, pour les
+        types scalaires, c'est le seul moyen de les déterminer de manière sûre, et concernant les types de retour des
+        méthodes, c'est le seul moyen de les découvrir (PHP étant faiblement typé).</para>
+
+        <para>Ceci signifie que documenter de manière correcte vos fonctions n'est pas seulement une bonne pratique,
+        c'est tout simplement essentiel pour partager vos fonctions en tant que services SOAP auto générés.</para>
+    </note>
+</sect1>

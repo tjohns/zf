@@ -1,0 +1,81 @@
+<sect1 id="zend.file.transfer.introduction">
+
+    <title>Zend_File_Transfer</title>
+
+    <para>
+        <code>Zend_File_Transfer</code> enables developers to take control over file uploads and also over file
+        downloads. It allows you to use built in validators for file purposes and gives you the ability even to
+        change files with filters. <code>Zend_File_Transfer</code> works with adapters which allow to use the
+        same API for different transport protocols like HTTP, FTP, WEBDAV and more.
+    </para>
+
+    <note>
+        <title>Limitation</title>
+        <para>
+            The current implementation of <code>Zend_File_Transfer</code> shipped in 1.6.0 is limited to HTTP Post Uploads.
+            Download of files and other Adapters will be added in the next releases. Also there is actually
+            no filter available and the functionality for it is not implemented. Not implemented methods
+            will throw an exception. So actually you should use an instance of
+            <code>Zend_File_Transfer_Adapter_Http</code> directly. This will change in future, as soon as
+            there are multiple adapters available.
+        </para>
+    </note>
+
+    <para>
+        The usage of <code>Zend_File_Transfer</code> is quite simple. It consist of two parts. The HTTP Form
+        which does the upload, and the handling of the uploaded files with <code>Zend_File_Transfer</code>.
+        See the following example:
+    </para>
+
+    <example id="zend.file.transfer.introduction.example">
+        <title>Simple File-Upload Form</title>
+        <para>
+            This example illustrates a basic file upload which uses <code>Zend_File_Transfer</code>.
+            The first part is the file form. In our example there is one file which we want to upload.
+        </para>
+        <programlisting><![CDATA[
+<form enctype="multipart/form-data" action="/file/upload" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+        Choose a file to upload: <input name="uploadedfile" type="file" /><br />
+    <input type="submit" value="Upload File" />
+</form>]]>
+        </programlisting>
+        <para>
+            Note that you should use <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> for your convenience instead of creating
+            the HTML manually. 
+        </para>
+        <para>
+            The next step is to create the receiver of the upload. In our example the receiver is
+            <code>/file/upload</code>. So next we will create the controller <code>file</code>
+            with the action <code>upload</code>.
+        </para>
+        <programlisting role="php"><![CDATA[
+$adapter = new Zend_File_Transfer_Adapter_Http();
+
+$adapter->setDestination('C:\temp');
+
+if (!$adapter->receive()) {
+    $messages = $adapter->getMessages();
+    echo implode("\n", $messages);
+}
+]]>
+        </programlisting>
+        <para>
+            As you see the simplest usage is to define a destination with the <code>setDestination</code>
+            method and to call the <code>receive()</code> method. If there are any upload errors then you
+            will get them within an exception returned.
+        </para>
+
+    </example>
+    <note>
+        <title>Attention</title>
+        <para>
+            Keep in mind that this is just the simplest usage. You should
+            <emphasis role="strong">never</emphasis> just this example is an living environment as it
+            causes severe security issues. You should always use validators to increase security.
+        </para>
+    </note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 tw=80 et:
+-->

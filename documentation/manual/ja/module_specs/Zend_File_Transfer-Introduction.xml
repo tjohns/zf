@@ -1,0 +1,98 @@
+<!-- EN-Revision: 10926 -->
+<sect1 id="zend.file.transfer.introduction">
+
+    <title>Zend_File_Transfer</title>
+
+    <para>
+        <code>Zend_File_Transfer</code> を使用すると、
+        ファイルのアップロードやダウンロードを管理することができます。
+        組み込みのバリデータを使ってファイルを検証したり、
+        フィルタによってファイルを変更したりという機能があります。
+        <code>Zend_File_Transfer</code> はアダプタ形式を採用しており、
+        HTTP や FTP、WEBDAV などのさまざまな転送プロトコルを同じ API で使用することができます。
+    </para>
+
+    <note>
+        <title>制限</title>
+        <para>
+            1.6.0 に同梱される現在の <code>Zend_File_Transfer</code>
+            の実装では、HTTP Post によるアップロードにしか対応していません。
+            ファイルのダウンロードやその他のアダプタについては次のリリースで追加される予定です。
+            また、今のところ使用できるフィルタはありませんし、
+            フィルタ機能も実装されていません。
+            実装されていないメソッドを実行すると例外をスローします。
+            したがって、実際のところは
+            <code>Zend_File_Transfer_Adapter_Http</code>
+            のインスタンスを直接操作することになります。
+            これは、将来複数のアダプタが使用可能になった段階で変更される予定です。
+        </para>
+    </note>
+
+    <para>
+        <code>Zend_File_Transfer</code> の使い方はきわめて単純です。
+        ふたつの部分から成り立っており、
+        アップロードを行う HTTP フォームとアップロードされたファイルを
+        <code>Zend_File_Transfer</code> で処理するコードを作成します。
+        次の例を参照ください。
+    </para>
+
+    <example id="zend.file.transfer.introduction.example">
+        <title>シンプルなファイルアップロードフォーム</title>
+        <para>
+            この例は、<code>Zend_File_Transfer</code>
+            を使った基本的なファイルアップロード処理です。
+            まずはファイルアップロードフォームから。
+            今回の例では。アップロードしたいファイルはひとつです。
+        </para>
+        <programlisting><![CDATA[
+<form enctype="multipart/form-data" action="/file/upload" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+        アップロードするファイルを選択: <input name="uploadedfile" type="file" /><br />
+    <input type="submit" value="アップロード" />
+</form>]]>
+        </programlisting>
+        <para>
+            HTML を直接作成するのではなく、利便性を考慮して
+            <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link>
+            を使っていることに注意しましょう。
+        </para>
+        <para>
+            次はアップロードしたファイルを受け取る側です。
+            今回の例では、受け取る側は <code>/file/upload</code>
+            となります。そこで、<code>file</code> コントローラにアクション
+            <code>upload</code> を作成します。
+        </para>
+        <programlisting role="php"><![CDATA[
+$adapter = new Zend_File_Transfer_Adapter_Http();
+
+$adapter->setDestination('C:\temp');
+
+if (!$adapter->receive()) {
+    $messages = $adapter->getMessages();
+    echo implode("\n", $messages);
+}
+]]>
+        </programlisting>
+        <para>
+            ご覧いただいておわかりのとおり、最もシンプルな使用法は保存先を
+            <code>setDestination</code> メソッドで指定して
+            <code>receive()</code> メソッドをコールするというものです。
+            アップロード時に何らかのエラーが発生した場合は、
+            返された例外の中でその情報を取得することができます。
+        </para>
+
+    </example>
+    <note>
+        <title>注意</title>
+        <para>
+            これは最もシンプルな例であることを忘れないようにしましょう。
+            これをそのまま実際の環境で使用しては
+            <emphasis role="strong">いけません</emphasis>。
+            深刻なセキュリティ問題を引き起こしてしまいます。
+            常にバリデータを使用してセキュリティを向上させるようにしなければなりません。
+        </para>
+    </note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 tw=80 et:
+-->

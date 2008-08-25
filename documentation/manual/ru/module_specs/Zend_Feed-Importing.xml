@@ -1,0 +1,60 @@
+<sect1 id="zend.feed.importing">
+    <title>
+        Импортирование лент с помощью Zend_Feed
+        <!--Importing Feeds with Zend_Feed-->
+    </title>
+    <para>
+        <code>Zend_Feed</code> дает разработчикам возможность легко получать ленты.
+        Если вам известен URI ленты, то просто используйте метод <code>Zend_Feed::import()</code>:
+<!--
+        <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a
+        feed, simply use the <code>Zend_Feed::import()</code> method:
+-->
+    </para>
+    <programlisting role="php"><![CDATA[
+<?php
+
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+
+?>]]></programlisting>
+
+    <para>
+        Еще вы можете использовать <code>Zend_Feed</code> для извлечения содержимого
+        ленты из файла или строки:
+<!--
+        You can also use <code>Zend_Feed</code> to fetch the contents of a feed from a file or the contents
+        of a PHP string variable:
+-->
+    </para>
+    <programlisting role="php"><![CDATA[
+<?php
+
+// импортирование ленты из текстового файла
+$feedFromFile = Zend_Feed::importFile('feed.xml');
+
+// импортирование ленты из строки
+$feedFromPHP = Zend_Feed::importString($feedString);
+
+?>]]></programlisting>
+    <para>
+        В двух приведенных выше примерах в случае успеха возвращается
+        объект одного из классов, расширяющих <code>Zend_Feed_Abstract</code>, в
+        зависимости от типа ленты. Если посредством одного из вышеприведенных
+        методов для импортирования была извлечена лента RSS, то будет возвращен объект
+        <code>Zend_Feed_Rss</code>. Если же импортируется лента Atom, то
+        будет возвращен объект <code>Zend_Feed_Atom</code>. Эти методы для импортирования
+        будут генерировать исключение <code>Zend_Feed_Exception</code> в случае ошибки,
+        такой, как недоступная для чтения или плохо сформированная лента.
+<!--
+        In each of the examples above, an object of a class that extends <code>Zend_Feed_Abstract</code> is
+        returned upon success, depending on the type of the feed. If an RSS feed were retrieved via one of
+        the import methods above, then a <code>Zend_Feed_Rss</code> object would be returned. On the other
+        hand, if an Atom feed were imported, then a <code>Zend_Feed_Atom</code> object is returned. The
+        import methods will also throw a <code>Zend_Feed_Exception</code> object upon failure, such as an
+        unreadable or malformed feed.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
