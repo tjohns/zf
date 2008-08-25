@@ -320,7 +320,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      *
      * @return mixed|false a cache id (string), false if the cache should have not to be used
      */
-    private function _makeId()
+    protected function _makeId()
     {
         $tmp = $_SERVER['REQUEST_URI'];
         foreach (array('Get', 'Post', 'Session', 'Files', 'Cookie') as $arrayName) {
@@ -341,7 +341,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * @param  bool   $bool2     If true, we have to use the content of the superglobal array to make a partial id
      * @return mixed|false Partial id (string) or false if the cache should have not to be used
      */
-    private function _makePartialId($arrayName, $bool1, $bool2)
+    protected function _makePartialId($arrayName, $bool1, $bool2)
     {
         switch ($arrayName) {
         case 'Get':
