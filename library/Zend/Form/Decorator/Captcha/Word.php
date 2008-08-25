@@ -50,7 +50,7 @@ class Zend_Form_Decorator_Captcha_Word extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $name = $element->getName();
+        $name = $element->getFullyQualifiedName();
 
         $hiddenName = $name . '[id]';
         $textName   = $name . '[input]';
