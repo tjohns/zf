@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11005 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -353,7 +353,8 @@ $cache->call('veryExpensiveFunc', $params);
 
 // $params は配列です。
 // 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
-// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。]]>
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。
+]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> は、
@@ -452,7 +453,8 @@ $frontendOptions = array(
 // [...]
 
 // これはキャッシュされます
-$result = $cache->foobar('1', '2');]]>
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 通常のメソッドのコールをキャッシュするには次のようにします。

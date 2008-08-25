@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11005 -->
 <sect1 id="zend.cache.theory">
     <title>キャッシュの仕組み</title>
     <para>
@@ -50,7 +50,8 @@ $backendOptions = array([...]);
 
 // インスタンスを作成します
 // (もちろん、最後の 2 つの引数は必須ではありません)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+]]>
         </programlisting>
          <para>
             これ以降のドキュメントでは、<code>$cache</code>
