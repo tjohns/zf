@@ -83,7 +83,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
     protected function _setupWithFrontController()
     {
         $this->_request = new Zend_Wildfire_WildfireTest_Request();
-        $this->_response = new Zend_Wildfire_WildfireTest_Reponse();
+        $this->_response = new Zend_Wildfire_WildfireTest_Response();
         $this->_controller = Zend_Controller_Front::getInstance();
         $this->_controller->resetInstance();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')
@@ -99,7 +99,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
     protected function _setupWithoutFrontController()
     {
         $this->_request = new Zend_Wildfire_WildfireTest_Request();
-        $this->_response = new Zend_Wildfire_WildfireTest_Reponse();
+        $this->_response = new Zend_Wildfire_WildfireTest_Response();
 
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $channel->setRequest($this->_request);
@@ -496,7 +496,7 @@ class Zend_Wildfire_WildfireTest_Request extends Zend_Controller_Request_Http
 }
 
 
-class Zend_Wildfire_WildfireTest_Reponse extends Zend_Controller_Response_Http
+class Zend_Wildfire_WildfireTest_Response extends Zend_Controller_Response_Http
 {
 
     public function verifyHeaders($headers)
