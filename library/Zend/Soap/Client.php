@@ -89,20 +89,19 @@ class Zend_Soap_Client
      */
     protected $_wsdl = null;
 
-	/**
-	 * SoapClient object
-	 *
-	 * @var SoapClient
-	 */
-	protected $_soapClient;
+    /**
+     * SoapClient object
+     *
+     * @var SoapClient
+     */
+    protected $_soapClient;
 
-	/**
-	 * Zend_Soap_Server object to process requests locally
-	 *
-	 * @var Zend_Soap_Server
-	 */
-    protected $_localServer = null;
-
+    /**
+     * Last invoked method
+     *
+     * @var string
+     */
+    protected $_lastMethod = '';
 
     /**
      * Constructor
@@ -112,9 +111,9 @@ class Zend_Soap_Client
      */
     public function __construct($wsdl = null, $options = null)
     {
-    	if (!extension_loaded('soap')) {
-    		throw new Zend_Soap_Client_Exception('SOAP extension is not loaded.');
-    	}
+        if (!extension_loaded('soap')) {
+            throw new Zend_Soap_Client_Exception('SOAP extension is not loaded.');
+        }
 
         if ($wsdl !== null) {
             $this->setWsdl($wsdl);
@@ -132,7 +131,7 @@ class Zend_Soap_Client
      */
     public function setWsdl($wsdl)
     {
-    	$this->_wsdl = $wsdl;
+        $this->_wsdl = $wsdl;
         $this->_soapClient = null;
 
         return $this;
@@ -258,9 +257,9 @@ class Zend_Soap_Client
 //        $options['connection_timeout'] = $this->_connection_timeout;
 
         foreach ($options as $key => $value) {
-        	if ($value == null) {
-        		unset($options[$key]);
-        	}
+            if ($value == null) {
+                unset($options[$key]);
+            }
         }
 
         return $options;
@@ -729,9 +728,9 @@ class Zend_Soap_Client
      */
     public function getLastRequest()
     {
-    	if ($this->_soapClient !== null) {
-    		return $this->_soapClient->__getLastRequest();
-    	}
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastRequest();
+        }
 
         return '';
     }
@@ -779,14 +778,13 @@ class Zend_Soap_Client
     }
 
     /**
-     * Set Zend_Soap_Server object to process requests locally
+     * Retrieve last invoked method
      *
-     * @param Zend_Soap_Server $server
-     * @return Zend_Soap_Client
+     * @return string
      */
-    public function setLocalServer(Zend_Soap_Server $server)
+    public function getLastMethod()
     {
-    	$this->_localServer = $server;
+        return $this->_lastMethod;
     }
 
     /**
@@ -805,9 +803,9 @@ class Zend_Soap_Client
      */
     public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
     {
-    	// Perform request as is
+        // Perform request as is
         if ($one_way == null) {
-        	return $client->__doRequest($request, $location, $action, $version);
+            return $client->__doRequest($request, $location, $action, $version);
         } else {
             return $client->__doRequest($request, $location, $action, $version, $one_way);
         }
@@ -841,11 +839,7 @@ class Zend_Soap_Client
         }
         unset($options['wsdl']);
 
-        if ($this->_localServer === null) {
-        	$this->_soapClient = new Zend_Soap_Client_Common($wsdl, $options);
-        } else {
-        	$this->_soapClient = new Zend_Soap_Client_Local($this->_localServer, $wsdl, $options);
-        }
+        $this->_soapClient = new Zend_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
     }
 
 
@@ -858,8 +852,8 @@ class Zend_Soap_Client
      */
     protected function _preProcessArguments($arguments)
     {
-    	// Do nothing
-    	return $arguments;
+        // Do nothing
+        return $arguments;
     }
 
     /**
@@ -884,10 +878,12 @@ class Zend_Soap_Client
      */
     public function __call($name, $arguments)
     {
-    	if ($this->_soapClient == null) {
-    		$this->_initSoapClientObject();
+        if ($this->_soapClient == null) {
+            $this->_initSoapClientObject();
         }
 
+        $this->_lastMethod = $name; 
+        
         $result = call_user_func_array(array($this->_soapClient, $name), $this->_preProcessArguments($arguments));
 
         return $this->_preProcessResult($result);
@@ -902,9 +898,9 @@ class Zend_Soap_Client
      */
     public function getFunctions()
     {
-    	if ($this->getWsdl() == null) {
-    		throw new Zend_Soap_Client_Exception('\'getFunctions\' method is available only in WSDL mode.');
-    	}
+        if ($this->getWsdl() == null) {
+            throw new Zend_Soap_Client_Exception('\'getFunctions\' method is available only in WSDL mode.');
+        }
 
         if ($this->_soapClient == null) {
             $this->_initSoapClientObject();
