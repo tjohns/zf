@@ -1,0 +1,53 @@
+<sect1 id="zend.soap.autodiscovery.datatypes">
+    <title>Autodiscovering. Datatypes.</title>
+
+    <para>
+        Input/output datatypes are converted into network service types using the following mapping:
+
+        <itemizedlist>
+            <listitem>
+                <para>PHP strings &lt;-&gt; <code>xsd:string</code>.</para>
+            </listitem>
+            <listitem>
+                <para>PHP integers &lt;-&gt; <code>xsd:int</code>.</para>
+            </listitem>
+            <listitem>
+                <para>PHP floats and doubles &lt;-&gt; <code>xsd:float</code>.</para>
+            </listitem>
+            <listitem>
+                <para>PHP booleans &lt;-&gt; <code>xsd:boolean</code>.</para>
+            </listitem>
+            <listitem>
+                <para>PHP arrays &lt;-&gt; <code>soap-enc:Array</code>.</para>
+            </listitem>
+            <listitem>
+                <para>PHP object &lt;-&gt; <code>xsd:struct</code>.</para>
+            </listitem>
+            <listitem>
+                <para>
+                    PHP class &lt;-&gt; <code>tns:$className</code>
+                    <footnote>
+                        <para>
+                            If <code>Zend_Soap_AutoDiscover</code> object is created with <code>$extractComplexTypes</code>
+                            parameter turned off, then classes are translated to <code>xsd:anyType</code>.
+                        </para>
+                        <para>
+                            Otherwise, <code>tns:$className</code> is used and type is described in details in &lt;types&gt;
+                            WSDL section.
+                        </para>
+                    </footnote>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>PHP void &lt;-&gt; empty type.</para>
+            </listitem>
+            <listitem>
+                <para>If type is not matched to any of these types by some reason, then <code>xsd:anyType</code> is used.</para>
+            </listitem>
+        </itemizedlist>
+        
+        Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace, 
+        <code>soap-enc:</code> is a "http://schemas.xmlsoap.org/soap/encoding/" namespace,
+        <code>tns:</code> is a "target namespace" for a service.
+    </para>
+</sect1>
