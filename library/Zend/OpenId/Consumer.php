@@ -94,7 +94,7 @@ class Zend_OpenId_Consumer
      *
      * @var string $_error
      */
-    private $_erro = '';
+    private $_error = '';
 
     /**
      * Constructs a Zend_OpenId_Consumer object with given $storage.
