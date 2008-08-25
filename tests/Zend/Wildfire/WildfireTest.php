@@ -237,7 +237,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"This is a log message!"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"This is a log message!"]|';
         $headers['X-Wf-1-Index'] = '1';
                 
         $this->assertTrue($this->_response->verifyHeaders($headers));                
@@ -259,7 +259,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"This is a log message!"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"This is a log message!"]|';
         $headers['X-Wf-1-Index'] = '1';
                 
         $this->assertTrue($this->_response->verifyHeaders($headers));                
@@ -286,7 +286,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"'.$message.'"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"'.$message.'"]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      
@@ -312,7 +312,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":"* RECURSION (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) *"}}]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":"* RECURSION (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) *"}}]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      

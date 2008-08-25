@@ -192,15 +192,15 @@ class Zend_Wildfire_Protocol_JsonStream
           
                 foreach( $messages as $message ) {
                   
-                    foreach (explode("\n",chunk_split($message, 5000, "\n")) as $part) {
+                    foreach (explode("\n",chunk_split($message, 4998, "\n")) as $part) {
 
                         if ($part) {
-                  
+                          
                             $payload[] = array($protocol_index.'-'.
                                                $structure_index.'-'.
                                                $plugin_index.'-'.
                                                $message_index,
-                                               $part);
+                                               '|' . $part . '|');
                             
                             $message_index++;
                             
