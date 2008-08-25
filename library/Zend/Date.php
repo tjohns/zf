@@ -1325,6 +1325,8 @@ class Zend_Date extends Zend_Date_DateObject
         if ($zone instanceof Zend_Date) {
             return $zone->getTimezone();
         }
+
+        $match = array();
         preg_match('/([+-]\d{2}):{0,1}\d{2}/', $zone, $match);
         if (!empty($match) and ($match[count($match) - 1] <= 12) and ($match[count($match) - 1] >= -12)) {
             $zone = "Etc/GMT";
@@ -2145,6 +2147,7 @@ class Zend_Date extends Zend_Date_DateObject
             // date strings
             case self::ISO_8601:
                 // (-)YYYY-MM-dd
+                $datematch = array();
                 preg_match('/^(-{0,1}\d{4})-(\d{2})-(\d{2})/', $date, $datematch);
                 // (-)YY-MM-dd
                 if (empty($datematch)) {
@@ -2163,6 +2166,7 @@ class Zend_Date extends Zend_Date_DateObject
                     $tmpdate = substr($date, strlen($datematch[0]));
                 }
                 // (T)hh:mm:ss
+                $timematch = array();
                 preg_match('/[T,\s]{0,1}(\d{2}):(\d{2}):(\d{2})/', $tmpdate, $timematch);
                 if (empty($timematch)) {
                     preg_match('/[T,\s]{0,1}(\d{2})(\d{2})(\d{2})/', $tmpdate, $timematch);
@@ -2901,9 +2905,9 @@ class Zend_Date extends Zend_Date_DateObject
             $date = $date->get(self::DATE_FULL, $locale);
         } else {
             if (is_array($date)) {
-                if ((isset($time['year']) === true) or (isset($time['month']) === true) or
-                    (isset($time['day']) === true)) {
-                    $parsed = $time;
+                if ((isset($date['year']) === true) or (isset($date['month']) === true) or
+                    (isset($date['day']) === true)) {
+                    $parsed = $date;
                 } else {
                     require_once 'Zend/Date/Exception.php';
                     throw new Zend_Date_Exception("no day,month or year given in array");
