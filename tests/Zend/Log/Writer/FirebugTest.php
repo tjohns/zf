@@ -38,9 +38,6 @@ require_once 'Zend/Controller/Request/Http.php';
 /** Zend_Controller_Response_Http */
 require_once 'Zend/Controller/Response/Http.php';
 
-/** Zend_Controller_Front **/
-require_once 'Zend/Controller/Front.php';
-
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -90,7 +87,6 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        Zend_Controller_Front::getInstance()->resetInstance();
         Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
         Zend_Wildfire_Plugin_FirePhp::destroyInstance();
     }
@@ -207,6 +203,11 @@ class Zend_Log_Writer_FirebugTest_Request extends Zend_Controller_Request_Http
 class Zend_Log_Writer_FirebugTest_Reponse extends Zend_Controller_Response_Http
 {
 
+    public function canSendHeaders($throw = false)
+    {
+        return true;
+    }
+
     public function verifyHeaders($headers)
     {
 
@@ -249,4 +250,3 @@ class Zend_Log_Writer_FirebugTest_Reponse extends Zend_Controller_Response_Http
     }
 
 }
-

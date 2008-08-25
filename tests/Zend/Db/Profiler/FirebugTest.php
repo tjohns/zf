@@ -82,7 +82,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('America/Los_Angeles');
 
         $this->_request = new Zend_Db_Profiler_FirebugTest_Request();
-        $this->_response = new Zend_Controller_Response_Http();
+        $this->_response = new Zend_Db_Profiler_FirebugTest_Response();
 
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $channel->setRequest($this->_request);
@@ -162,3 +162,10 @@ class Zend_Db_Profiler_FirebugTest_Request extends Zend_Controller_Request_Http
     }
 }
 
+class Zend_Db_Profiler_FirebugTest_Response extends Zend_Controller_Response_Http
+{
+    public function canSendHeaders($throw = false)
+    {
+        return true;
+    }
+}
