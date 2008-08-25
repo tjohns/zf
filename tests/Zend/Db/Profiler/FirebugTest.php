@@ -130,6 +130,22 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
                             '[{"Type":"TABLE"},["Zend_Db_Profiler_Firebug');
     }
 
+    public function testDisable()
+    {
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $this->_profiler->setEnabled(true);
+
+        $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
+
+        $this->_profiler->setEnabled(false);
+
+        Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
+
+        $this->assertFalse($protocol->getMessages());
+    }
+
     public function testCustomLabel()
     {
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
@@ -147,6 +163,20 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(substr($messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
                                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],0,27),
                             '[{"Type":"TABLE"},["Label 1');
+    }
+
+    public function testNoQueries()
+    {
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $this->_profiler->setEnabled(true);
+
+        Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
+
+        $messages = $protocol->getMessages();
+        
+        $this->assertFalse($messages);
     }
 
 }
