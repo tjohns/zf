@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 11022 -->
 <sect2 id="zend.test.phpunit.assertions">
     <title>アサーション</title>
 
@@ -64,7 +64,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCount($path, $count, $message =
+                <code>assertQueryCount($path, $count, $message =
                     '')</code>:
                 指定した CSS セレクタにマッチする DOM 要素が、ちょうど
                 <code>$count</code> 個存在することを表明します。
@@ -73,7 +73,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMin($path, $count, $message =
+                <code>assertQueryCountMin($path, $count, $message =
                     '')</code>:
                 指定した CSS セレクタにマッチする DOM 要素が、少なくとも
                 <code>$count</code> 個以上存在することを表明します。
@@ -85,7 +85,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMax($path, $count, $message =
+                <code>assertQueryCountMax($path, $count, $message =
                     '')</code>:
                 指定した CSS セレクタにマッチする DOM 要素が、最大でも
                 <code>$count</code> 個以下しか存在しないことを表明します。
@@ -103,7 +103,7 @@
             <code>assertNotQuery()</code>、
             <code>assertNotQueryContentContains()</code>、
             <code>assertNotQueryContentRegex()</code> そして
-            <code>assertNotQueryContentCount()</code> です
+            <code>assertNotQueryCount()</code> です
             (min および max については対応するメソッドは存在しませんが、
             それは自明なことだからです)。
         </para>
