@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10825 -->
+<!-- EN-Revision: 11025 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha の方法</title>
 
@@ -59,7 +59,7 @@ echo $captcha->render();
 
 // それ以降のリクエスト
 // すでに captcha が準備済みで、送信された内容が $value に保存されているものとします
-if ($captcha->isValid($value)) {
+if ($captcha->isValid($_POST['foo'], $_POST)) {
     // 正解!
 }
 ]]></programlisting>
