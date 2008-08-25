@@ -1,4 +1,4 @@
-Welcome to Zend Framework 1.6 Release Candidate 2! This release may meet quality
+Welcome to Zend Framework 1.6 Release Candidate 3! This release may meet quality
 guidelines for production use but has not been fully tested by the Zend Framework
 community for production use.
 To help us deliver a stable Zend Framework 1.6 GA release soon, please post your
@@ -10,8 +10,8 @@ http://framework.zend.com/issues
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6 Release Candidate 2 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-08-11.
+Zend Framework 1.6 Release Candidate 3 (revision [INSERT REV NUMBER HERE]).
+Released on 2008-08-26.
 
 
 NEW FEATURES
@@ -48,7 +48,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10820
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10834
 
 INTENDED USE
 ------------
