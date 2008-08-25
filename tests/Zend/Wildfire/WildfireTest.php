@@ -124,7 +124,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
-    
+        
     public function testIsReady1()
     {
         $this->_setupWithFrontController();
@@ -191,6 +191,35 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($protocol->getMessages());
     }
     
+    public function testSetControllerPluginStackIndex1()
+    {
+        $this->_setupWithoutFrontController();
+        $controller = Zend_Controller_Front::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $firephp->send('Hello World');
+        
+        $plugins = $controller->getPlugins();
+        
+        $this->assertEquals($plugins[999],$channel);
+    }
+    
+    public function testSetControllerPluginStackIndex2()
+    {
+        $this->_setupWithoutFrontController();
+        $controller = Zend_Controller_Front::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+
+        Zend_Wildfire_Channel_HttpHeaders::setControllerPluginStackIndex(99);
+        
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $firephp->send('Hello World');
+        
+        $plugins = $controller->getPlugins();
+        
+        $this->assertEquals($plugins[99],$channel);
+    }
     
     public function testBasicLogging1()
     {

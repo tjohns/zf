@@ -62,13 +62,19 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
      * @var Zend_Wildfire_Channel_HttpHeaders
      */
     protected static $_instance = null;
+    
+    /**
+     * The index of the plugin in the controller dispatch loop plugin stack
+     * @var integer
+     */
+    protected static $_controllerPluginStackIndex = 999;
      
     /**
      * The protocol instances for this channel
      * @var array
      */
     protected $_protocols = null;
-    
+        
     /**
      * Initialize singleton instance.
      *
@@ -184,6 +190,35 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
         }
         return true;
     }
+    
+    /**
+     * Set the index of the plugin in the controller dispatch loop plugin stack
+     * 
+     * @param integer $index The index of the plugin in the stack
+     * @return integer The previous index.
+     */
+    public static function setControllerPluginStackIndex($index)
+    {
+        $previous = self::$_controllerPluginStackIndex;
+        self::$_controllerPluginStackIndex = $index;
+        return $previous;
+    }
+
+    /**
+     * Register this object as a controller plugin.
+     * 
+     * @return void
+     */
+    protected function _registerControllerPlugin()
+    {
+        $controller = Zend_Controller_Front::getInstance();
+        try {
+            $controller->registerPlugin($this, self::$_controllerPluginStackIndex);
+        } catch (Zend_Controller_Exception $e) {
+            // Exception indicates plugin is already registered
+            // which we simply ignore
+        }
+    }
 
     
     /*
@@ -208,12 +243,11 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
      */
 
     /**
-     * Flush messages to headers after request has been dispatched but before headers have been sent.
+     * Flush messages to headers as late as possible but before headers have been sent.
      *
-     * @param  Zend_Controller_Request_Abstract  $request  The controller request
      * @return void
      */
-    public function postDispatch(Zend_Controller_Request_Abstract $request)
+    public function dispatchLoopShutdown()
     {
         $this->flush();
     }
@@ -255,21 +289,4 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
         }
         return $this->_response;
     }
-    
-    /**
-     * Register this object as a controller plugin.
-     * 
-     * @return void
-     */
-    protected function _registerControllerPlugin()
-    {
-        $controller = Zend_Controller_Front::getInstance();
-        try {
-            $controller->registerPlugin($this);
-        } catch (Zend_Controller_Exception $e) {
-            // Exception indicates plugin is already registered
-            // which we simply ignore
-        }
-    }
-    
 }
