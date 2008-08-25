@@ -132,6 +132,8 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
     public function render(Zend_View_Interface $view = null)
     {
         $captcha    = $this->getCaptcha();
+        $captcha->setName($this->getFullyQualifiedName());
+
         $decorators = $this->getDecorators();
 
         $decorator  = $captcha->getDecorator();
@@ -220,5 +222,38 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
         }
+    }
+
+    /**
+     * Is the captcha valid?
+     * 
+     * @param  mixed $value 
+     * @param  mixed $context 
+     * @return boolean
+     */
+    public function isValid($value, $context = null)
+    {
+        $this->getCaptcha()->setName($this->getName());
+        $belongsTo = $this->getBelongsTo();
+        if (empty($belongsTo) || !is_array($context)) {
+            return parent::isValid($value, $context);
+        }
+
+        $name     = $this->getFullyQualifiedName();
+        $root     = substr($name, 0, strpos($name, '['));
+        $segments = substr($name, strpos($name, '['));
+        $segments = ltrim($segments, '[');
+        $segments = rtrim($segments, ']');
+        $segments = explode('][', $segments);
+        array_unshift($segments, $root);
+        array_pop($segments);
+        $newContext = $context;
+        foreach ($segments as $segment) {
+            if (array_key_exists($segment, $newContext)) {
+                $newContext = $newContext[$segment];
+            }
+        }
+
+        return parent::isValid($value, $newContext);
     }
 }

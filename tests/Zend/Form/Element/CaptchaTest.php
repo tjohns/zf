@@ -102,6 +102,45 @@ class Zend_Form_Element_CaptchaTest extends PHPUnit_Framework_TestCase
         $paths  = $loader->getPaths('My_Captcha');
         $this->assertTrue(is_array($paths));
     }
+
+    /**
+     * @see   ZF-4038
+     * @group ZF-4038
+     */
+    public function testCaptchaShouldRenderFullyQualifiedElementName()
+    {
+        require_once 'Zend/Form.php';
+        require_once 'Zend/View.php';
+        $form = new Zend_Form();
+        $form->addElement($this->element)
+             ->setElementsBelongTo('bar');
+        $html = $form->render(new Zend_View);
+        $this->assertContains('name="bar[foo', $html, $html);
+        $this->assertContains('id="bar-foo-', $html, $html);
+        $this->form = $form;
+    }
+
+    /**
+     * @see   ZF-4038
+     * @group ZF-4038
+     */
+    public function testCaptchaShouldValidateUsingFullyQualifiedElementName()
+    {
+        $this->testCaptchaShouldRenderFullyQualifiedElementName();
+        $word = $this->element->getCaptcha()->getWord();
+        $id   = $this->element->getCaptcha()->getId();
+        $data = array(
+            'bar' => array(
+                'foo' => array(
+                    'id'    => $id,
+                    'input' => $word,
+                )
+            )
+        );
+        $valid = $this->form->isValid($data);
+        $this->assertTrue($valid, var_export($this->form->getMessages(), 1));
+    }
+
 }
 
 class Zend_Form_Element_CaptchaTest_SessionContainer
