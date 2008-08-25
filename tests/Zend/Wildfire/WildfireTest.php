@@ -111,6 +111,20 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->_request->setUserAgentExtensionEnabled(true);
     }
     
+    public function testNoResponseObject()
+    {
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setEnabled(false);
+        Zend_Wildfire_Plugin_FirePhp::send('Hello World');
+
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setEnabled(true);
+        try {
+            Zend_Wildfire_Plugin_FirePhp::send('Hello World');
+            $this->fail('Should throw a response object not initialized error');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+        
     public function testIsReady1()
     {
         $this->_setupWithFrontController();
@@ -177,6 +191,35 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($protocol->getMessages());
     }
     
+    public function testSetControllerPluginStackIndex1()
+    {
+        $this->_setupWithoutFrontController();
+        $controller = Zend_Controller_Front::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $firephp->send('Hello World');
+        
+        $plugins = $controller->getPlugins();
+        
+        $this->assertEquals($plugins[999],$channel);
+    }
+    
+    public function testSetControllerPluginStackIndex2()
+    {
+        $this->_setupWithoutFrontController();
+        $controller = Zend_Controller_Front::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+
+        Zend_Wildfire_Channel_HttpHeaders::setControllerPluginStackIndex(99);
+        
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $firephp->send('Hello World');
+        
+        $plugins = $controller->getPlugins();
+        
+        $this->assertEquals($plugins[99],$channel);
+    }
     
     public function testBasicLogging1()
     {
@@ -194,12 +237,12 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"This is a log message!"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"This is a log message!"]|';
         $headers['X-Wf-1-Index'] = '1';
                 
         $this->assertTrue($this->_response->verifyHeaders($headers));                
     }    
-    
+
     public function testBasicLogging2()
     {
         $this->_setupWithFrontController();
@@ -216,7 +259,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"This is a log message!"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"This is a log message!"]|';
         $headers['X-Wf-1-Index'] = '1';
                 
         $this->assertTrue($this->_response->verifyHeaders($headers));                
@@ -243,7 +286,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},"'.$message.'"]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"'.$message.'"]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      
@@ -269,7 +312,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
-        $headers['X-Wf-1-1-1-1'] = '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":"* RECURSION (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) *"}}]';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":"* RECURSION (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) *"}}]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      
@@ -384,7 +427,18 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                             '[{"Type":"INFO"},["Label 1","Message 2"]]');
     }    
     
-    public function testBufferedMessage()
+    public function testMessageComparison()
+    {
+        $label = 'Message';
+        
+        $message1 = new Zend_Wildfire_Plugin_FirePhp_Message(Zend_Wildfire_Plugin_FirePhp::LOG, $label);
+
+        $message2 = new Zend_Wildfire_Plugin_FirePhp_Message(Zend_Wildfire_Plugin_FirePhp::LOG, $label);
+        
+        $this->assertNotEquals($message1,$message2);
+    }
+    
+    public function testBufferedMessage1()
     {
         $this->_setupWithoutFrontController();
 
@@ -408,7 +462,32 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],
                             '[{"Type":"LOG"},"Message 2"]');
     }
+
+    public function testBufferedMessage2()
+    {
+        $this->_setupWithFrontController();
+
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $message = new Zend_Wildfire_Plugin_FirePhp_Message(Zend_Wildfire_Plugin_FirePhp::LOG, 'Message 1');
+        $this->assertFalse($message->setBuffered(true));
         
+        Zend_Wildfire_Plugin_FirePhp::send($message);
+        
+        $this->assertFalse($protocol->getMessages());
+        
+        $message->setMessage('Message 2');
+
+        $this->_controller->dispatch();
+
+        $messages = $protocol->getMessages();
+
+        $this->assertEquals($messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],
+                            '[{"Type":"LOG"},"Message 2"]');
+    }
+            
     public function testDestroyedBufferedMessage()
     {
         $this->_setupWithoutFrontController();

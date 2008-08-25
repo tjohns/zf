@@ -37,6 +37,9 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
 /** Zend_Wildfire_Protocol_JsonStream */
 require_once 'Zend/Wildfire/Protocol/JsonStream.php';
 
+/** Zend_Controller_Front **/
+require_once 'Zend/Controller/Front.php';
+
 /**
  * Implements communication via HTTP request and response headers for Wildfire Protocols.
  * 
@@ -59,13 +62,19 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
      * @var Zend_Wildfire_Channel_HttpHeaders
      */
     protected static $_instance = null;
+    
+    /**
+     * The index of the plugin in the controller dispatch loop plugin stack
+     * @var integer
+     */
+    protected static $_controllerPluginStackIndex = 999;
      
     /**
      * The protocol instances for this channel
      * @var array
      */
     protected $_protocols = null;
-    
+        
     /**
      * Initialize singleton instance.
      *
@@ -134,6 +143,8 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
             $this->_protocols[$uri] = $this->_initProtocol($uri);
         }
  
+        $this->_registerControllerPlugin();
+
         return $this->_protocols[$uri];
     }
     
@@ -179,6 +190,35 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
         }
         return true;
     }
+    
+    /**
+     * Set the index of the plugin in the controller dispatch loop plugin stack
+     * 
+     * @param integer $index The index of the plugin in the stack
+     * @return integer The previous index.
+     */
+    public static function setControllerPluginStackIndex($index)
+    {
+        $previous = self::$_controllerPluginStackIndex;
+        self::$_controllerPluginStackIndex = $index;
+        return $previous;
+    }
+
+    /**
+     * Register this object as a controller plugin.
+     * 
+     * @return void
+     */
+    protected function _registerControllerPlugin()
+    {
+        $controller = Zend_Controller_Front::getInstance();
+        try {
+            $controller->registerPlugin($this, self::$_controllerPluginStackIndex);
+        } catch (Zend_Controller_Exception $e) {
+            // Exception indicates plugin is already registered
+            // which we simply ignore
+        }
+    }
 
     
     /*
@@ -203,12 +243,11 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
      */
 
     /**
-     * Flush messages to headers after request has been dispatched but before headers have been sent.
+     * Flush messages to headers as late as possible but before headers have been sent.
      *
-     * @param  Zend_Controller_Request_Abstract  $request  The controller request
      * @return void
      */
-    public function postDispatch(Zend_Controller_Request_Abstract $request)
+    public function dispatchLoopShutdown()
     {
         $this->flush();
     }
@@ -240,17 +279,14 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
     public function getResponse()
     {
         if (!$this->_response) {
-            $controller = Zend_Controller_Front::getInstance();
-            try {
-                $controller->registerPlugin($this);
-            } catch (Exception $e) {
+            $response = Zend_Controller_Front::getInstance()->getResponse();
+            if ($response) {
+                $this->setResponse($response);
             }
-            $this->setResponse($controller->getResponse());
         }
         if (!$this->_response) {
             throw new Zend_Wildfire_Exception('Response objects not initialized.');
         }
         return $this->_response;
-    }    
-    
+    }
 }
