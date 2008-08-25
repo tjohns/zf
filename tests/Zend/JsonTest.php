@@ -368,6 +368,29 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
+    
+    /**
+     * Test for ZF-4053
+     * 
+     * Check to see that cyclical exceptions are silenced when
+     * $option['silenceCyclicalExceptions'] = true is used
+     */
+    public function testZf4053()
+    {
+        $item1 = new Zend_JsonTest_Item() ;
+        $item2 = new Zend_JsonTest_Item() ;
+        $everything = array() ;
+        $everything['allItems'] = array($item1, $item2) ;
+        $everything['currentItem'] = $item1 ;
+
+        $options = array('silenceCyclicalExceptions'=>true);
+
+        Zend_Json::$useBuiltinEncoderDecoder = true;
+        $encoded = Zend_Json::encode($everything, true, $options);
+        $json = '{"allItems":[{"__className":"Zend_JsonTest_Item"},{"__className":"Zend_JsonTest_Item"}],"currentItem":"* RECURSION (Zend_JsonTest_Item) *"}';
+
+        $this->assertEquals($encoded,$json);
+    }
 
     public function testEncodeObject()
     {
