@@ -23,6 +23,9 @@
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+/** Zend_Log */
+require_once 'Zend/Log.php';
+
 /** Zend_Log_Writer_Firebug */
 require_once 'Zend/Log/Writer/Firebug.php';
 
@@ -82,6 +85,11 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $channel->setResponse($this->_response);
 
         $this->_writer = new Zend_Log_Writer_Firebug();
+        
+        // Explicitly enable writer as it is disabled by default
+        // when running from the command line.
+        $this->_writer->setEnabled(true);
+        
         $this->_logger = new Zend_Log($this->_writer);
     }
 
@@ -90,6 +98,25 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
         Zend_Wildfire_Plugin_FirePhp::destroyInstance();
     }
+    
+    
+    /**
+     * Test for ZF-3960
+     * 
+     * Zend_Log_Writer_Firebug should be automatically disabled when
+     * run from the command line
+     */
+    public function testZf3960()
+    {
+        Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
+        Zend_Wildfire_Plugin_FirePhp::destroyInstance();
+      
+        $log = new Zend_Log();
+        $writerFirebug = new Zend_Log_Writer_Firebug();
+        $log->addWriter($writerFirebug);
+        $log->log('hi', 2);
+    }
+    
     
     public function testSetFormatter()
     {
