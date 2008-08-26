@@ -20,6 +20,13 @@
 
         <listitem>
             <para>
+                <code>Exists</code>: This validator checks for the existence of files. It will throw an
+                error when an given file does not exist.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>Extension</code>: This validator checks the extension of files. It will throw an
                 error when an given file has an undefined extension.
             </para>
@@ -45,6 +52,13 @@
                 <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
                 validate types of mimetypes and will throw error when the mimetype of a given file does not
                 match.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>NotExists</code>: This validator checks for the existence of files. It will throw an
+                error when an given file does exist.
             </para>
         </listitem>
 
@@ -278,6 +292,51 @@ $upload->addValidator('Count', array(1, 5);
             <para>
                 Note that this validator stores the number of checked files internally. The file which
                 exceeds the maximum will be returned as error.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.exists">
+        <title><emphasis role="strong">Exists</emphasis> validator</title>
+
+        <para>
+            The <code>Exists</code> validator checks for the existence of files which are provided. It
+            supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checks if the file exists in the given directory.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            This validator accepts multiple directories either as a comma-delimited string, or as an
+            array. You may also use the methods <code>setDirectory()</code>, <code>addDirectory()</code>,
+            and <code>getDirectory()</code> to set and retrieve directories.
+        </para>
+
+        <example id="zend.file.transfer.validators.exists.example">
+            <title>Using the Exists validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Add the temp directory to check for
+$upload->addValidator('Exists', '\temp');
+
+// Add two directories using the array notation
+$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Note that this validator checks if the file exists in all set directories. The validation will fail
+                if the file does not exist in any of the given directories.
             </para>
         </note>
     </sect2>
@@ -563,6 +622,51 @@ $upload->setValidator('MimeType', 'image');
                 'image/xpixmap' or 'image/vasa' which could be problematic. When you are not sure if your
                 application supports all types you should better allow only defined mimetypes instead
                 of the complete group.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.notexists">
+        <title><emphasis role="strong">NotExists</emphasis> validator</title>
+
+        <para>
+            The <code>NotExists</code> validator checks for the existence of files which are provided. It
+            supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checks if the file does not exist in the given directory.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            This validator accepts multiple directories either as a comma-delimited string, or as an
+            array. You may also use the methods <code>setDirectory()</code>, <code>addDirectory()</code>,
+            and <code>getDirectory()</code> to set and retrieve directories.
+        </para>
+
+        <example id="zend.file.transfer.validators.notexists.example">
+            <title>Using the NotExists validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Add the temp directory to check for
+$upload->addValidator('NotExists', '\temp');
+
+// Add two directories using the array notation
+$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Note that this validator checks if the file does not exist in all of the set directories.
+                The validation will fail if the file does exist in any of the given directories.
             </para>
         </note>
     </sect2>

@@ -67,9 +67,9 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
             array(0, '10 MB', true),
             array(0, '10MB', true),
             array(0, '10  MB', true),
-            array(794, 0, true),
+            array(794, null, true),
             array(0, 500, false),
-            array(500, 0, false)
+            array(500, null, false)
         );
 
         foreach ($valuesExpected as $element) {
@@ -83,16 +83,24 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Size(array($element[0], $element[1]));
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Size(array('min' => $element[0], 'max' => $element[1]));
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $validator = new Zend_Validate_File_Size(array(2000));
-        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
+        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
 
         $validator = new Zend_Validate_File_Size(array(1, 2, 3));
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));

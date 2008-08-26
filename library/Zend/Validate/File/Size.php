@@ -109,6 +109,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
 
         if (empty($max)) {
             $max = $min;
+            $min = 0;
         }
 
         $this->setMin($min);
