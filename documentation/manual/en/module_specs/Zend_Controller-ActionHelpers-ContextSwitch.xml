@@ -39,7 +39,8 @@
         As an example, let's consider the following controller:
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     /**
      * Landing page; forwards to listAction()
@@ -71,7 +72,8 @@
         can hint that it can return an XML response:
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -293,7 +295,8 @@
             following controller class:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function listAction()
     {
@@ -310,7 +313,8 @@
     public function updateAction()
     {
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             Let's say we wanted to add an XML context to the 'list' action, and
@@ -318,7 +322,8 @@
             the <code>init()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -327,14 +332,16 @@
              ->addActionContext('comments', array('xml', 'json'))
              ->initContext();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             Alternately, you could simply define the array property
             <code>$contexts</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
         'list'     => array('xml'),
@@ -433,13 +440,15 @@
             <code>initContext()</code> in your action controller:
         </para>
 
-        <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
         $this->_helper->contextSwitch()->initContext();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             In some cases, you may want to force the context used; for instance,
@@ -448,7 +457,9 @@
             <code>initContext()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[$contextSwitch->initContext('xml');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$contextSwitch->initContext('xml');
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -470,8 +481,10 @@
                     <code>initContext()</code>.
                 </para>
 
-                <programlisting role="php"><![CDATA[$contextSwitch->setAutoJsonSerialization(false);
-$contextSwitch->initContext();]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$contextSwitch->setAutoJsonSerialization(false);
+$contextSwitch->initContext();
+]]></programlisting>
 
                 <para>
                     You can retrieve the value of the flag with
@@ -703,7 +716,8 @@ $contextSwitch->initContext();]]></programlisting>
                 latter, we'll return JSON.
             </para>
 
-            <programlisting role="php"><![CDATA[class CommentController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class CommentController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -731,10 +745,11 @@ $contextSwitch->initContext();]]></programlisting>
     public function processAction()
     {
         // Process a new comment
-        // Return the results as JSON; simply assign the results as view
-        // variables, and JSON will be returned.
+        // Return the results as JSON; simply assign the results as
+        // view variables, and JSON will be returned.
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>
                 On the client end, your AJAX library will simply request the

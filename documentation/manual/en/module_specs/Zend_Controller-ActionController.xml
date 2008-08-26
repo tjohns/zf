@@ -68,21 +68,25 @@ class FooController extends Zend_Controller_Action
                 of the following methods:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Local to this controller only; affects all actions, as loaded in init:
+        // Local to this controller only; affects all actions,
+        // as loaded in init:
         $this->_helper->viewRenderer->setNoRender(true);
 
         // Globally:
         $this->_helper->removeHelper('viewRenderer');
 
-        // Also globally, but would need to be in conjunction with the local
-        // version in order to propagate for this controller:
-        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+        // Also globally, but would need to be in conjunction with the
+        // local version in order to propagate for this controller:
+        Zend_Controller_Front::getInstance()
+            ->setParam('noViewRenderer', true);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -99,14 +103,16 @@ class FooController extends Zend_Controller_Action
                 flag:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // disable autorendering for this action only:
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -238,7 +244,8 @@ $this->getResponse()->appendBody($content);
                         retrieving a value:
                     </para>
 
-                    <programlisting role="php"><![CDATA[// Use default value of 1 if id is not set
+                    <programlisting role="php"><![CDATA[
+// Use default value of 1 if id is not set
 $id = $this->_getParam('id', 1);
 
 // Instead of:
@@ -246,7 +253,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}]]>
+}
+]]>
                     </programlisting>
                 </note>
             </listitem>
@@ -315,7 +323,11 @@ applicationOrModule/
                 <code>render()</code> has the following signature:
             </para>
 
-            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[
+string render(string $action = null,
+              string $name = null,
+              bool $noController = false);
+]]>
             </programlisting>
 
             <para>
@@ -351,7 +363,8 @@ applicationOrModule/
                 Some examples:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -364,11 +377,12 @@ applicationOrModule/
         // Renders baz.phtml
         $this->render('baz', null, true);
 
-        // Renders my/login.phtml to the 'form' segment of the response object
+        // Renders my/login.phtml to the 'form' segment of the
+        // response object
         $this->render('login', 'form');
 
-        // Renders site.phtml to the 'page' segment of the response object; does
-        // not use the 'my/' subirectory
+        // Renders site.phtml to the 'page' segment of the response
+        // object; does not use the 'my/' subirectory
         $this->render('site', 'page', true);
     }
 
@@ -377,7 +391,8 @@ applicationOrModule/
         // Renders my/baz-bat.phtml
         $this->render();
     }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -508,17 +523,22 @@ applicationOrModule/
                 message, you might write something like this:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, render the error template
+            // If the action method was not found, render the error
+            // template
             return $this->render('error');
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
 }]]>
             </programlisting>
@@ -528,7 +548,8 @@ applicationOrModule/
                 default controller page:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -538,14 +559,19 @@ applicationOrModule/
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, forward to the index action
+            // If the action method was not found, forward to the
+            // index action
             return $this->_forward('index');
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -558,7 +584,8 @@ applicationOrModule/
             <code>initView()</code> method with code resembling the following:
         </para>
 
-        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -573,7 +600,8 @@ applicationOrModule/
 
         return $this->view;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

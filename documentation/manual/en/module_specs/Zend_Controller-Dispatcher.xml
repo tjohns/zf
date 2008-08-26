@@ -32,12 +32,13 @@
                 in either the front controller or your dispatcher:
             </para>
 
-            <programlisting role="php"><![CDATA[// In your front controller:
+            <programlisting role="php"><![CDATA[
+// In your front controller:
 $front->setParam('prefixDefaultModule', true);
 
 // In your dispatcher:
 $dispatcher->setParam('prefixDefaultModule', true);
-?>]]></programlisting>
+]]></programlisting>
 
             <para>
                 This allows you to re-purpose an existing module to be the
@@ -69,7 +70,8 @@ $dispatcher->setParam('prefixDefaultModule', true);
             send to the new action:
         </para>
 
-        <programlisting role="php"><![CDATA[public function fooAction()
+        <programlisting role="php"><![CDATA[
+public function fooAction()
 {
     // forward to another action in the current controller and module:
     $this->_forward('bar', null, null, array('baz' => 'bogus'));
@@ -77,7 +79,8 @@ $dispatcher->setParam('prefixDefaultModule', true);
 
 public function barAction()
 {
-    // forward to an action in another controller, FooController::bazAction(),
+    // forward to an action in another controller:
+    // FooController::bazAction(),
     // in the current module:
     $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
 }
@@ -138,7 +141,9 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Request_Abstract $request
      * @return boolean
      */
-    public function isDispatchable(Zend_Controller_Request_Abstract $request);
+    public function isDispatchable(
+        Zend_Controller_Request_Abstract $request
+    );
 
     /**
      * Set a user parameter (via front controller, or for local use)
@@ -175,7 +180,8 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Clear the user parameter stack, or a single user parameter
      *
-     * @param null|string|array single key or array of keys for params to clear
+     * @param null|string|array single key or array of keys for
+     *        params to clear
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function clearParams($name = null);
@@ -186,7 +192,9 @@ interface Zend_Controller_Dispatcher_Interface
      * @param Zend_Controller_Response_Abstract|null $response
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Abstract $response = null);
+    public function setResponse(
+        Zend_Controller_Response_Abstract $response = null
+    );
 
     /**
      * Retrieve the response object, if any
@@ -205,7 +213,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path, $args = null);
 
     /**
-     * Set the directory (or directories) where controller files are stored
+     * Set the directory (or directories) where controller files are
+     * stored
      *
      * @param string|array $dir
      * @return Zend_Controller_Dispatcher_Interface
@@ -213,7 +222,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function setControllerDirectory($path);
 
     /**
-     * Return the currently set directory(ies) for controller file lookup
+     * Return the currently set directory(ies) for controller file
+     * lookup
      *
      * @return array
      */
@@ -226,7 +236,10 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Response_Abstract $response
      * @return Zend_Controller_Request_Abstract|boolean
      */
-    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+    public function dispatch(
+        Zend_Controller_Request_Abstract $request,
+        Zend_Controller_Response_Abstract $response
+    );
 
     /**
      * Whether or not a given module is valid

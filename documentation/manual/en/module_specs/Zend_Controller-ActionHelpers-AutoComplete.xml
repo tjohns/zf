@@ -21,7 +21,8 @@
         Basic usage for each implementation is the same:
     </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -31,13 +32,16 @@
         $this->_helper->autoCompleteDojo($data);
 
         // Or explicitly:
-        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->sendAutoCompletion($data);
 
         // Or simply prepare autocompletion response:
-        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->prepareAutoCompletion($data);
     }
 }
-?>]]></programlisting>
+?>
+]]></programlisting>
 
     <para>
         By default, autocompletion does the following:
@@ -126,7 +130,8 @@
             for use with such a store:
         </para>
 
-        <programlisting role="php"><![CDATA[// within a controller action:
+        <programlisting role="php"><![CDATA[
+// within a controller action:
 $this->_helper->autoCompleteDojo($data);
 ]]></programlisting>
         
@@ -174,7 +179,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 AutoCompletion:
             </para>
 
-            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
@@ -183,7 +189,9 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
         if (null === $this->_form) {
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
-                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->setAction(
+                    $this->getRequest()->getBaseUrl() . '/test/process'
+                )
                 ->addElements(array(
                     'test' => array('type' => 'text', 'options' => array(
                         'filters'        => array('StringTrim'),
@@ -193,7 +201,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                         'hasDownArrow'   => 'true',
                         'label' => 'Your input:',
                     )),
-                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                    'go' => array('type' => 'submit',
+                                  'options' => array('label' => 'Go!'))
                 ));
         }
         return $this->_form;
@@ -218,7 +227,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 for processing AutoCompletion:
             </para>
 
-            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class TestController extends Zend_Controller_Action
 {
     // ...
 
@@ -276,7 +286,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
             <programlisting role="php"><![CDATA[
 <? // setup our data store: ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    requestMethod="get"></div>
 
 <? // render our form: ?>
 <?= $this->form ?>
@@ -287,8 +298,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
 @import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <? $this->headStyle()->captureEnd() ?>
 
-<? // setup javascript to load in HTML head, including all required Dojo
-   // libraries: ?>
+<? // setup javascript to load in HTML head, including all required
+   // Dojo libraries: ?>
 <? $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 

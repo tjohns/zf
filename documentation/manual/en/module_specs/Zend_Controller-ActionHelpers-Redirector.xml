@@ -135,7 +135,8 @@
                 redirecting.
             </para>
 
-            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -149,23 +150,25 @@
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
         // Set the default options for the redirector
-        // Since the object is registered in the helper broker, these become
-        // relevant for all actions from this point forward
+        // Since the object is registered in the helper broker, these
+        // become relevant for all actions from this point forward
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGotoSimple("this-action", "some-controller");
+                          ->setGotoSimple("this-action",
+                                          "some-controller");
     }
 
     public function myAction()
     {
         /* do some stuff */
 
-        // Redirect to a previously registered URL, and force an exit to occur
-        // when done:
+        // Redirect to a previously registered URL, and force an exit
+        // to occur when done:
         $this->_redirector->redirectAndExit();
         return; // never reached
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -178,7 +181,8 @@
                 <code>exit()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[// ALTERNATIVE EXAMPLE
+            <programlisting role="php"><![CDATA[
+// ALTERNATIVE EXAMPLE
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -197,10 +201,12 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* do some stuff */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        $this->_redirector
+            ->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // never reached since default is to goto and exit
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -216,7 +222,8 @@ class AlternativeController extends Zend_Controller_Action
                 chaining the action.
             </para>
 
-            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -234,9 +241,15 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* do some stuff */
 
-        // Redirect to 'my-action' of 'my-controller' in the current module,
-        // using the params param1 => test and param2 => test2
-        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        // Redirect to 'my-action' of 'my-controller' in the current
+        // module, using the params param1 => test and param2 => test2
+        $this->_redirector->gotoSimple('my-action',
+                                       'my-controller',
+                                       null,
+                                       array('param1' => 'test',
+                                             'param2' => 'test2'
+                                             )
+                                       );
     }
 }]]>
             </programlisting>
