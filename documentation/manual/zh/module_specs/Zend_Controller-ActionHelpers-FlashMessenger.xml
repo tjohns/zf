@@ -14,8 +14,7 @@
             下面的例子展示flash messenger最基本的用法。当动作<code>/some/my</code> 被调用，它添加flash message "Record Saved!"，随后的对动作<code>/some/my-next-request</code>的请求将读取它（并也这样删除它）。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class SomeController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
 {
     /**
      * FlashMessenger

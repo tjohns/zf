@@ -91,11 +91,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/app/controllers');
-]]>
-            </programlisting>
+            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]></programlisting>
             
             <para>                
                 这是一个入口文件，目的仅在于启动Zend_Controller_Front。Zend_Controller_Front用于分配请求到不同的控制器。
@@ -127,10 +123,7 @@ Zend_Controller_Front::run('/path/to/app/controllers');
                 现在让我们来创建一个默认的控制器和Action方法吧。上面说过，默认的控制器和方法都以“index”命名。打开文件<code>application/controllers/IndexController.php</code>，输入：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
+            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
 class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
@@ -178,11 +171,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 默认情况下，<link linkend="zend.controller.plugins.standard.errorhandler">“错误处理器”插件</link> 是已经被注册的。这个插件要求存在一个用于处理错误的控制器。它假设存在一个<code>ErrorController</code>，并且其中有一个名为<code>errorAction</code>的Action：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
-class ErrorController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {

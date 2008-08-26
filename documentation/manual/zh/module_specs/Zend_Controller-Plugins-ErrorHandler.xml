@@ -78,8 +78,7 @@
             异常的抓取被记录在一个对象里，这个对象注册在请求里。使用<code>Zend_Controller_Action::_getParam('error_handler')</code>来读取它：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -116,8 +115,7 @@ class ErrorController extends Zend_Controller_Action
             然后可以测试头两个类型中的任意一个，并且，如果这样，显示一个404页面：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -144,8 +142,7 @@ class ErrorController extends Zend_Controller_Action
             最后，你可以读取异常，这个异常由错误管理器通过抓取<code>error_handler</code>对象的<code>exception</code>属性来触发的：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function errorAction()
+        <programlisting role="php"><![CDATA[public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
 
@@ -185,8 +182,7 @@ public function errorAction()
             如果你希望呈现错误内嵌到这样的页面，不需要修改。如果你不希望呈现这样的内容，你应该在呈现任何视图之前清除响应体：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$this->getResponse()->clearBody();]]>
+        <programlisting role="php"><![CDATA[$this->getResponse()->clearBody();]]>
         </programlisting>
     </sect4>
 
@@ -195,22 +191,14 @@ $this->getResponse()->clearBody();]]>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>Standard usage</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>Setting a different error handler</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'module'     => 'mystuff',
     'controller' => 'static',
@@ -221,11 +209,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>Using accessors</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
-
-$plugin = new Zend_Controller_Plugin_ErrorHandler();
+            <programlisting role="php"><![CDATA[$plugin = new Zend_Controller_Plugin_ErrorHandler();
 $plugin->setErrorHandlerModule('mystuff')
        ->setErrorHandlerController('static')
        ->setErrorHandlerAction('error');
@@ -243,8 +227,7 @@ $front->registerPlugin($plugin);]]>
             为了使用错误处理器插件，你需要错误控制器。下面是个简单的例子。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {

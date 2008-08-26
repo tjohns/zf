@@ -30,8 +30,7 @@
                 如需禁用<code>ErrorHandler</code>，调用<code>dispatch()</code>前执行下面代码：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Disable the ErrorHandler plugin:
+            <programlisting role="php"><![CDATA[// Disable the ErrorHandler plugin:
 $front->setParam('noErrorHandler', true);]]>
             </programlisting>
 
@@ -39,8 +38,7 @@ $front->setParam('noErrorHandler', true);]]>
                 如需禁用<code>ViewRenderer</code>，调用<code>dispatch()</code>前执行下面代码：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Disable the ViewRenderer helper:
+            <programlisting role="php"><![CDATA[// Disable the ViewRenderer helper:
 $front->setParam('noViewRenderer', true);]]>
             </programlisting>
         </note>
@@ -60,8 +58,7 @@ $front->setParam('noViewRenderer', true);]]>
                 <code>getInstance()</code>方法用来获取前端控制器实例。因为前端控制器实现了单件模式，这可能是唯一创建前端控制器对象的方法。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();]]>
+            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();]]>
             </programlisting>
         </sect3>
 
@@ -170,8 +167,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
 				        基本上，如果不要求定制前端控制器环境，<code>run()</code>是一个很方便的建立前端控制器环境的方法。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Instantiate front controller, set controller directory, and dispatch in one
+            <programlisting role="php"><![CDATA[// Instantiate front controller, set controller directory, and dispatch in one
 // easy step:
 Zend_Controller_Front::run('../application/controllers');]]>
             </programlisting>

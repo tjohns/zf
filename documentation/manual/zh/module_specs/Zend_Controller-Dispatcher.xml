@@ -15,8 +15,7 @@
                 当创建模块程序，你可能也需要缺省模块的命名空间（缺省配置中，缺省模块<emphasis>没有</emphasis>命名空间）。从 1.5.0 开始，可以在前端控制器或你的派遣器里通过指定 <code>prefixDefaultModule</code>  为 true 来实现。
              </para>
 
-            <programlisting role="php"><![CDATA[<?php 
-// 在你的前端控制器中：
+            <programlisting role="php"><![CDATA[// 在你的前端控制器中：
 $front->setParam('prefixDefaultModule', true);
 
 // 在你的分发器中：
@@ -40,8 +39,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
            控制这种分发过程的动作控制器方法是<code>_forward()</code>；在任意的<code>pre/postDispatch()</code>或者动作中调用该方法，并传入动作、控制器、模块、以及可选的附加参数，就可以进入新的动作。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-public function fooAction()
+        <programlisting role="php"><![CDATA[public function fooAction()
 {
     // forward to another action in the current controller and module:
     $this->_forward('bar', null, null, array('baz' => 'bogus'));

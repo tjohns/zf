@@ -66,8 +66,7 @@
                     第二好的办法：视图解析器（ViewRenderer）现在给 <code>Zend_Filter_Inflector</code> 代表视图脚本解析，可以修改变形器（inflector）的规则，使之不再用短横线作为动作名称中的分隔符：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -92,8 +91,7 @@ $inflector->setFilterRule(':action', array(
                     最不希望的办法：你可以强制派遣器用新的前端控制器标志－'useCaseSensitiveActions'来派遣驼峰命名的动作：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$front->setParam('useCaseSensitiveActions', true);
+                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);
 ?>]]></programlisting>
 
                 <para>
@@ -118,8 +116,7 @@ $front->setParam('useCaseSensitiveActions', true);
             在<code>postDispatch()</code>期间，<code>ErrorHandler</code>插件检查异常，并转发到一个特定的错误管理控制器。你需要包含这样一个控制器在你的程序中，可以通过设置前端控制器参数<code>noErrorHandler</code>来禁止它：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
         </programlisting>
 
         <para>
@@ -130,8 +127,7 @@ $front->setParam('noErrorHandler', true);]]>
             有若干策略你可以用来更新你的代码。短期，你可以在派遣之前全局地在前端控制器引导文件禁止<code>ViewRenderer</code>：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Assuming $front is an instance of Zend_Controller_Front
+        <programlisting role="php"><![CDATA[// Assuming $front is an instance of Zend_Controller_Front
 $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
@@ -207,8 +203,7 @@ public function preDispatch()
                     在派遣前端控制器实例之前：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Assuming $view has already been defined
+                <programlisting role="php"><![CDATA[// Assuming $view has already been defined
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -219,8 +214,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     在引导过程中的任何时候：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
@@ -272,10 +266,7 @@ $viewRenderer->setView($view);]]>
             每次修改，MVC组件的最基本用法保持不变：
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
 
         <para>
             然而，目录结构经历了检查，数个组件被删除，同时若干个其它的被改名或添加。变化包括：
@@ -340,10 +331,7 @@ final protected function _forward($action, $controller = null, $module = null, a
             still do each of the following:
         </para>
 
-        <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- create a router -- */

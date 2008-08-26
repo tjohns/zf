@@ -48,8 +48,7 @@
 					  通过向该方法传入一个true值，可以通知前端控制器，由开发人员来处理异常，而不是让响应对象收集或者使用错误处理器插件。例如：
 				</para>
 
-				<programlisting	role="php"><![CDATA[<?php
-$front->throwExceptions(true);
+				<programlisting	role="php"><![CDATA[$front->throwExceptions(true);
 try	{
 	$front->dispatch();
 } catch	(Exception $e) {
@@ -79,8 +78,7 @@ try	{
 					  向<code>Zend_Controller_Front::returnResponse()</code>传入一个true值, <code>Zend_Controller_Front::dispatch()</code> 将不渲染响应对象，而是将其返回。获得响应对象后，可通过<code>isException()</code>测试是否捕捉到异常，然后通过<code>getException()</code>获取异常。例如：
 				</para>
 
-				<programlisting	role="php"><![CDATA[<?php
-$front->returnResponse(true);
+				<programlisting	role="php"><![CDATA[$front->returnResponse(true);
 $response =	$front->dispatch();
 if ($response->isException()) {
 	$exceptions	= $response->getException();
@@ -120,10 +118,10 @@ if ($response->isException()) {
 							  在前端控制器或者分发器中，加入下列代码：
 						</para>
 
-						<programlisting	role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);
+						<programlisting	role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
 
 // or
+
 $dispatcher->setParam('useDefaultControllerAlways',	true);]]>
 						</programlisting>
 
@@ -151,8 +149,7 @@ $dispatcher->setParam('useDefaultControllerAlways',	true);]]>
 							  子类化<code>Zend_Controller_Action</code>并重写<code>__call()</code> 方法。例如：
 						</para>
 
-						<programlisting	role="php"><![CDATA[<?php
-class My_Controller_Action extends Zend_Controller_Action
+						<programlisting	role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
 {
 	public function	__call($method,	$args)
 	{
@@ -176,8 +173,7 @@ class My_Controller_Action extends Zend_Controller_Action
 							  子类化<code>Zend_Controller_Dispatcher</code>	并重写<code>getAction()</code> 方法来验证动作的存在。例如：
 						</para>
 
-						<programlisting	role="php"><![CDATA[<?php
-class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+						<programlisting	role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
 	public function	getAction($request)
 	{
@@ -227,8 +223,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 							  例如：
 						</para>
 
-						<programlisting	role="php"><![CDATA[<?php
-class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+						<programlisting	role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
 	public function	preDispatch(Zend_Controller_Request_Abstract $request)
 	{

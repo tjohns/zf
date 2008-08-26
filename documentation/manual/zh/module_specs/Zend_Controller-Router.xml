@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>标准路由器：Zend_Controller_Router_Rewrite</title>
+    <title>标准路由器</title>
     <sect2 id="zend.controller.router.introduction">
         <title>简介</title>
         <para>
@@ -31,7 +31,8 @@ RewriteRule ^(.*)$ index.php/$1 ]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]>
+RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]
+]]>
         </programlisting>
 
         <note>
@@ -59,14 +60,17 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
             为正确使用rewrite路由器你必须初始化它，添加一些用户定义的路由并注入到控制器。下面的代码示例这个过程：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/* Create a router */
+        <programlisting role="php"><![CDATA[
+// Create a router
 
 $router = $ctrl->getRouter(); // returns a rewrite router by default
 $router->addRoute(
     'user',
-    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
-);]]>
+    new Zend_Controller_Router_Route('user/:username', 
+                                     array('controller' => 'user', 
+                                           'action' => 'info'))
+);
+]]>
         </programlisting>
     </sect2>
 
@@ -77,8 +81,10 @@ $router->addRoute(
             RewriteRouter的核心是用户定义路由的定义。路由通过调用RewriteRouter的addRoute方法和传递一个由类实现的<code>Zend_Controller_Router_Route_Interface</code>的新的实例被添加。例如：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]>
+        <programlisting role="php"><![CDATA[
+$router->addRoute('user', 
+                  new Zend_Controller_Router_Route('user/:username'));
+]]>
         </programlisting>
 
         <para>
@@ -106,7 +112,8 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </para>
 
             <programlisting role="php"><![CDATA[
-<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>]]>
+"<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>            
+]]>
             </programlisting>
 
             <para>
@@ -199,8 +206,10 @@ http://example/blog/archive/list/sort/alpha/date/desc
             缺省路由是存储在RewriteRouter名（index）为'default'的简单的<code>Zend_Controller_Router_Route_Module</code>对象。它被创建多多少少象下面这样：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+        <programlisting role="php"><![CDATA[
+$compat = new Zend_Controller_Router_Route_Module(array(), 
+                                                  $dispatcher, 
+                                                  $request);
 $this->addRoute('default', $compat);]]>
         </programlisting>
 
@@ -208,9 +217,10 @@ $this->addRoute('default', $compat);]]>
             如果你不想这个特别的缺省路由在你的路由计划中，你可以重写你自己的‘缺省’路由（例如，把它存储在'default'名下）或用<code>removeDefaultRoutes()</code>完全清除它：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Remove any default routes
-$router->removeDefaultRoutes();]]>
+$router->removeDefaultRoutes();
+]]>
         </programlisting>
 
     </sect2>
@@ -226,8 +236,9 @@ $router->removeDefaultRoutes();]]>
             如果基本URL被误删除，你可以通过<code>Zend_Controller_Request_Http</code> 和调用 <code>setBaseUrl()</code> 方法（参见<xref linkend="zend.controller.request.http.baseurl" />）用你自己的基本路径重写它。    
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$request->setBaseUrl('/~user/application-root/');]]>
+        <programlisting role="php"><![CDATA[
+$request->setBaseUrl('/~user/application-root/');
+]]>
         </programlisting>
 
     </sect2>
@@ -268,7 +279,8 @@ routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
 routes.archive.map.1 = "year"
-; OR: routes.archive.map.year = 1]]>
+; OR: routes.archive.map.year = 1
+]]>
         </programlisting>
 
         <para>
@@ -278,7 +290,8 @@ routes.archive.map.1 = "year"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
-$router->addConfig($config, 'routes');]]>
+$router->addConfig($config, 'routes');
+]]>
         </programlisting>
 
         <para>
@@ -297,7 +310,7 @@ $router->addConfig($config, 'routes');]]>
             那就是说，你可能想要用不同的路由范例。接口<code>Zend_Controller_Router_Interface</code>提供了需要最少的信息来创建路由器，并包含一个单个的方法。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 interface Zend_Controller_Router_Interface
 {
   /**
@@ -306,7 +319,8 @@ interface Zend_Controller_Router_Interface
    * @return Zend_Controller_Request_Abstract
    */
   public function route(Zend_Controller_Request_Abstract $request);
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

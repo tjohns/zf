@@ -29,8 +29,7 @@
                    显式的调用<code>getHelper()</code>方法。简单的传入助手名字，就可以返回助手对象。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->getHelper('FlashMessenger');
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('We did something in the last request');]]>
                 </programlisting>
             </listitem>
@@ -40,8 +39,7 @@ $flashMessenger->addMessage('We did something in the last request');]]>
                    使用助手经纪人的<code>__get()</code>方法，就像获取经纪人的成员属性一样获取助手。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$flashMessenger = $this->_helper->FlashMessenger;
+                <programlisting role="php"><![CDATA[$flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('We did something in the last request');]]>
                 </programlisting>
             </listitem>
@@ -51,8 +49,7 @@ $flashMessenger->addMessage('We did something in the last request');]]>
                    最后，大部分动作助手实现了<code>direct()</code>方法，它将调用助手的一个特定的，默认的方法。以<code>FlashMessenger</code>为例，它调用了方法<code>addMessage()</code>：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->FlashMessenger('We did something in the last request');]]>
+                <programlisting role="php"><![CDATA[$this->_helper->FlashMessenger('We did something in the last request');]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -77,8 +74,7 @@ $this->_helper->FlashMessenger('We did something in the last request');]]>
            使用<code>addHelper</code>来注册助手：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
         </programlisting>
 
         <para>
@@ -91,8 +87,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
                     <code>addPrefix()</code>方法带有一个类前缀参数，用来加入自定义助手类的路径。它假定前缀遵循Zend Framework的类命名惯例。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Add helpers prefixed with My_Action_Helpers in My/Action/Helpers/
+                <programlisting role="php"><![CDATA[// Add helpers prefixed with My_Action_Helpers in My/Action/Helpers/
 Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
                 </programlisting>
             </listitem>
@@ -102,8 +97,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
                     <code>addPath()</code>方法第一个参数为一个目录，第二个为类前缀(默认为'Zend_Controller_Action_Helper')。用来将自己的类前缀映射到指定的目录。
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Add helpers prefixed with Helper in Plugins/Helpers/
+                <programlisting role="php"><![CDATA[// Add helpers prefixed with Helper in Plugins/Helpers/
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
                 </programlisting>
             </listitem>
@@ -117,8 +111,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
            使用<code>hasHelper($name)</code>方法来判定助手经纪人中是否存在某助手，<code>$name</code>是助手的短名称（去掉前缀的）：        
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Check if 'redirector' helper is registered with the broker:
+        <programlisting role="php"><![CDATA[// Check if 'redirector' helper is registered with the broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Redirector helper registered';
 }]]>
@@ -132,8 +125,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             两个方法都带一个参数，<code>$name</code>，它是助手的短名称（去掉前缀）。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Check if 'redirector' helper is registered with the broker, and fetch:
+        <programlisting role="php"><![CDATA[// Check if 'redirector' helper is registered with the broker, and fetch:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
@@ -147,8 +139,7 @@ $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector')
            最后，使用<code>removeHelper($name)</code>来删除助手经纪人中的某个助手，<code>$name</code>是助手的短名称。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Conditionally remove the 'redirector' helper from the broker:
+        <programlisting role="php"><![CDATA[// Conditionally remove the 'redirector' helper from the broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
 }]]>
@@ -226,8 +217,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
            助手类中还可以包含一个<code>direct()</code>方法，如果定义了该方法，就可以将助手视作助手经纪人的一个方法，以便简单的、一次性的使用助手。例如<link linkend="zend.controller.actionhelpers.redirector">redirector</link> 定义<code>direct()</code> 作为<code>goto()</code>的别名,就可以这样使用：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Redirect to /blog/view/item/id/42
+        <programlisting role="php"><![CDATA[// Redirect to /blog/view/item/id/42
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
         </programlisting>
 

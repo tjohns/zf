@@ -25,8 +25,7 @@ $response->sendResponse();]]>
 				        默认地，前端控制器完成分发请求后调用<code>sendResponse()</code>；一般地，你不需要调用它。但是，如果你想处理响应或者用它来测试你可以使用<code>Zend_Controller_Front::returnResponse(true)</code>设置<code>returnResponse</code> 标志覆盖默认行为：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[$front->returnResponse(true);
 $response = $front->dispatch();
 
 // do some more processing, such as logging...
@@ -190,8 +189,7 @@ $front->dispatch();]]>
 			      举例来说，你可以使用<code>preDispatch()</code> 钩子来向响应对象中加入页头，然后在动作控制器中加入主体内容，最后在<code>postDispatch()</code>钩子中加入页脚。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Assume that this plugin class is registered with the front controller
+        <programlisting role="php"><![CDATA[// Assume that this plugin class is registered with the front controller
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -227,8 +225,7 @@ class MyController extends Zend_Controller_Action
 			      上面的例子中，调用<code>/my/foo</code>会使得最终响应对象中的内容呈现下面的结构：           
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-array(
+        <programlisting role="php"><![CDATA[array(
     'header'  => ..., // header content
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content

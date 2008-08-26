@@ -72,8 +72,7 @@ application/
             用<code>setControllerDirectory()</code>，你将需要传递一个关联数组和指定‘模块名/目录路径’的‘键/值’对。特殊的键<code>default</code> 将被用作全局控制器（不需要模块命名空间）。所有条目应该包含指向一个单个路径的字符串键，并且<code>default</code>键必须出现。例如：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
 ));]]>
@@ -83,16 +82,14 @@ $front->setControllerDirectory(array(
             <code>addControllerDirectory()</code>将带有可选的第二个参数。当使用模块，传递模块名作为第二个参数；如果没有指定，路径将被加到<code>default</code>命名空间。例如：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
         </programlisting>
 
         <para>
             把最好的保留到最后，指定模块的最容易的方法是整体来做，把所有模块放到一个通用的目录并使用相同的结构。这可以用<code>addModuleDirectory()</code>来完成：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Assuming the following directory structure:
  * application/
  *     modules/
@@ -114,8 +111,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             你可以在模块中通过<code>setModuleControllerDirectoryName()</code>来定制模块子目录：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-/**
+        <programlisting role="php"><![CDATA[/**
  * Change the controllers subdirectory to be 'con'
  * application/
  *     modules/
@@ -163,8 +159,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             如果你总愿意缺省到全局命名空间，在前端控制器中设置<code>useDefaultControllerAlways</code> 参数：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]>
         </programlisting>
     </sect2>
 </sect1>

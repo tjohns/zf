@@ -103,10 +103,10 @@
 		                如果使用apache的404处理器来传递请求到前端控制器，或者使用重写规则(rewrite rules)的PT标志，URI包含在<code>$_SERVER['REDIRECT_URL']</code>，而不是<code>$_SERVER['REQUEST_URI']</code>。如果使用这样的设定并获取无效的路由，应该使用<code>Zend_Controller_Request_Apache404</code>类代替默认的HTTP类：
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Request/Apache404.php';
+                <programlisting role="php"><![CDATA[
 $request = new Zend_Controller_Request_Apache404();
-$front->setRequest($request);]]>
+$front->setRequest($request);
+]]>
                 </programlisting>
 
                 <para>
@@ -137,8 +137,7 @@ $front->setRequest($request);]]>
 		如果基地址经检测不正确，可以利用<code>Zend_Controller_Request_Http</code>或者<code>Zend_Controller_Front</code>类的<code>setBaseUrl()</code>方法设置自己的基路径。<code>Zend_Controller_Front</code>设置最容易，它将导入基地址到请求对象。定制基地址的用法举例：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/**
+            <programlisting role="php"><![CDATA[/**
  * Dispatch Request with custom base URL with Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();

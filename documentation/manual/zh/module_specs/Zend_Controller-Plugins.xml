@@ -74,10 +74,7 @@
             即可编写插件类。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Plugin/Abstract.php';
-
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }
@@ -104,12 +101,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
             下面的代码片段说明了如何在控制器链条中使用插件。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Router.php';
-require_once 'Zend/Controller/Plugin/Abstract.php';
-
-class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {

@@ -31,8 +31,7 @@
         用法很简单：或者把它作为助手代理的方法来调用，或者调用 <code>encodeJson()</code> 和 <code>sendJson()</code> 方法的其中之一：
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -47,7 +46,7 @@ class FooController extends Zend_Controller_Action
         $json = $this->_helper->json->encodeJson($data);
     }
 }
-?>]]></programlisting>
+]]></programlisting>
 
     <note>
         <title> 保持布局 （Keeping Layouts）</title>
@@ -56,16 +55,14 @@ class FooController extends Zend_Controller_Action
             如果你为 JSON 响应有分离的布局 － 也许把 JSON 封装到一些上下文 － 在 JSON 助手的每个方法接受第二个可选的参数：打开或关闭布局的 flag ，传递一个布尔 <code>true</code> 值将使布局保持打开：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // Retrieve the json, keeping layouts:
         $json = $this->_helper->json->encodeJson($data, true);
     }
-}
-?>]]></programlisting>
+}]]></programlisting>
     </note>
 </sect3>
 <!--

@@ -13,8 +13,7 @@
         每个实现的基本用法都一样：
     </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -95,8 +94,7 @@ class FooController extends Zend_Controller_Action
             在 Zend Framework 中，可以传递简单的索引的数组给 AutoCompleteDojo 助手，它将返回一个适合和这样一个存储一起使用的 JSON 响应： 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// within a controller action:
+        <programlisting role="php"><![CDATA[// within a controller action:
 $this->_helper->autoCompleteDojo($data);
 ]]></programlisting>
         
@@ -129,15 +127,13 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 下一步，为我们想要的 AutoCompletion 生成表单元素：
             </para>
              
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
     public function getForm()
     {   
         if (null === $this->_form) {
-            require_once 'Zend/Form.php';
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
                 ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
@@ -166,8 +162,7 @@ class TestController extends Zend_Controller_Action
                 让我们添加一个方法来显示表单，和处理 AutoCompletion 的结束点：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
 {
     // ...
 

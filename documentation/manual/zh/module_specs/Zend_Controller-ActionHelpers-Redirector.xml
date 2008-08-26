@@ -95,8 +95,7 @@
                这个例子改变了几个选项，包括设定重定向时使用的HTTP状态码为303，重定向时不默认退出，以及定义了默认的URL供重定向使用。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -137,8 +136,7 @@ class SomeController extends Zend_Controller_Action
                这个例子假定使用默认设定，也就意味着任何重定向将导致立即退出。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// ALTERNATIVE EXAMPLE
+            <programlisting role="php"><![CDATA[// ALTERNATIVE EXAMPLE
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -171,8 +169,7 @@ class AlternativeController extends Zend_Controller_Action
                 <code>gotoSimple()</code>'s API 模拟了<code>Zend_Controller_Action::_forward()</code>。主要的不同在于它通过传入的参数构造URL，使用默认路由器的默认格式<code>:module/:controller/:action/*</code>。然后重定向而不是继续动作链循环。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -205,8 +202,7 @@ class ForwardController extends Zend_Controller_Action
                 下面的例子使用了<link linkend="zend.controller.router">路由器</link>的<code>assemble()</code>方法，基于传入参数的关联数组来创建URL。假定下面的路由已经注册:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
@@ -217,8 +213,7 @@ $router->addRoute('blogArchive', $route);]]>
                给定一个数组，其中年份为2006，月份为4，日期为24，id为42，据此可以组装URL<code>/blog/2006/4/24/42</code>。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion

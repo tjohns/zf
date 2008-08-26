@@ -20,8 +20,7 @@
             经常地，仅仅指定动作、控制器和模块（和可选的参数）最简单，和调用<code>Zend_Controller_Action::_forward()</code>一样：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -46,8 +45,7 @@ class FooController extends Zend_Controller_Action
             有时候请求对象的OOP本性很有用；你也可以传递这样一个对象给<code>动作堆栈</code>助手。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {

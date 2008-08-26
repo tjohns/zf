@@ -67,8 +67,7 @@
 		       创建实例并注册自己的<code>ViewRenderer</code>对象，然后传入到助手经纪人。
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+                    <programlisting role="php"><![CDATA[$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
@@ -80,8 +79,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
 		        通过助手经纪人即时的初始化并/或获取<code>ViewRenderer</code>对象。
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                    <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');]]>
                     </programlisting>
@@ -97,8 +95,7 @@ $viewRenderer->setView($view)
             大多数使用中，只需要简单的创建 <code>ViewRenderer</code>对象，然后传入到动作助手经纪人。创建实例并注册的最简单方式是使用助手经纪人的<code>getStaticHelper()</code>方法：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
         </programlisting>
 
         <para>
@@ -113,8 +110,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
             例如这个类：
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// A controller class, foo module:
+        <programlisting role="php"><![CDATA[// A controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     // Render bar/index.phtml by default; no action required
@@ -133,7 +129,7 @@ class Foo_BarController extends Zend_Controller_Action
 ...
 
 // in one of your view scripts:
-<?php $this->foo(); // call Foo_View_Helper_Foo::foo()]]>
+$this->foo(); // call Foo_View_Helper_Foo::foo()]]>
         </programlisting>
 
         <para>
@@ -418,8 +414,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 大多数基础使用中，只需在bootstrap中使用助手经纪人简单的初始化和注册<code>ViewRenderer</code> 助手，然后在动作方法中设置变量。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// In your bootstrap:
+            <programlisting role="php"><![CDATA[// In your bootstrap:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
@@ -474,8 +469,7 @@ class Foo_BarController extends Zend_Controller_Action
                 对于某些动作和控制器，可能希望关闭自动解析——例如，如果想发送其他类型的输出（XML,JSON等），或者更简单的不想发送任何东西。有两个选项：关闭所有的自动解析(<code>setNeverRender()</code>)，或者仅仅关闭当前动作的自动解析(<code>setNoRender()</code>)。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Baz controller class, bar module:
+            <programlisting role="php"><![CDATA[// Baz controller class, bar module:
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
@@ -510,8 +504,7 @@ class Bar_BatController extends Zend_Controller_Action
                 有些情况下需要解析另一个脚本而非以动作命名的脚本。例如，如果你有一个控制器包含增加和编辑两个动作，它们可能都显示相同的'form'视图，尽管拥有不同的值集合(value set)。只需要使用<code>setScriptAction()</code>或者<code>setRender()</code>简单的改变脚本的名称，或者以成员方法的形式调用助手，它将调用<code>setRender()</code>。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+            <programlisting role="php"><![CDATA[// Bar controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
@@ -549,8 +542,7 @@ class Foo_BarController extends Zend_Controller_Action
                 如果需要修改视图对象怎么办——例如改变助手路径或者编码？可以在控制器中修改视图对象设定，或者从<code>ViewRenderer</code>中抓取视图对象；两种方式引用的是同一个对象。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Bar controller class, foo module:
+            <programlisting role="php"><![CDATA[// Bar controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -584,8 +576,7 @@ class Foo_BarController extends Zend_Controller_Action
                 假定视图的基路径(base path)为'/opt/vendor/templates',希望通过':moduleDir/:controller/:action.:suffix'引用视图脚本；如果设定了noController标志，想在顶级而不是在子目录中解析(':action.:suffix')。最终希望使用'tpl'作为视图脚本文件的后缀。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/**
+            <programlisting role="php"><![CDATA[/**
  * In your bootstrap:
  */
 
@@ -608,8 +599,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 有时可能需要在一个动作中解析多个视图脚本。这个非常简单，多次调用<code>render()</code>就行了：
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-class SearchController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {
