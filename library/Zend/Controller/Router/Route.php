@@ -85,7 +85,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      * for validation
      * @var int
      */
-    private $_staticCount = 0;
+    protected $_staticCount = 0;
 
     public function getVersion() {
         return 1;
