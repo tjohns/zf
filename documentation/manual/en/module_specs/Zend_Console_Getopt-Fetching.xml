@@ -38,7 +38,8 @@
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <para>
@@ -78,7 +79,8 @@
             <title>Using getOption()</title>
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');]]>
+$p_parameter = $opts->getOption('p');
+]]>
             </programlisting>
         </example>
         <para>
@@ -93,7 +95,8 @@ $p_parameter = $opts->getOption('p');]]>
 if (isset($opts->b)) {
     echo "I got the b option.\n";
 }
-$p_parameter = $opts->p; // null if not set]]>
+$p_parameter = $opts->p; // null if not set
+]]>
             </programlisting>
         </example>
         <para>
@@ -158,7 +161,8 @@ $p_parameter = $opts->p; // null if not set]]>
             <title>Using getRemainingArgs()</title>
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // returns array('filename')]]>
+$args = $opts->getRemainingArgs(); // returns array('filename')
+]]>
             </programlisting>
         </example>
         <para>

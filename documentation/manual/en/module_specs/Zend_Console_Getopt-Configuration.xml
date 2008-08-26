@@ -21,7 +21,8 @@ $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -212,7 +213,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Using setOption()</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);]]>
+$opts->setOption('ignoreCase', true);
+]]>
             </programlisting>
         </example>
         <para>
@@ -232,7 +234,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
     </sect2>

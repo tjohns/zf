@@ -8,13 +8,13 @@
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title> 使用 addRules()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -29,15 +29,15 @@ $opts->addRules(
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
             <title> 使用 setHelp()</title>
-            <programlisting role="php"><![CDATA[<?php
-$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'This option chooses apple, with no parameter',
-        'b' => 'This option chooses banana, with required integer parameter',
-        'p' => 'This option chooses pear, with optional string parameter'
+        'a' => 'apple option, with no parameter',
+        'b' => 'banana option, with required integer parameter',
+        'p' => 'pear option, with optional string parameter'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -58,7 +58,7 @@ $opts->setHelp(
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title> 使用 setAliases()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setAliases(
     array(
@@ -66,7 +66,8 @@ $opts->setAliases(
         'a' => 'apfel',
         'p' => 'pear'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -84,7 +85,7 @@ $opts->setAliases(
         </para>
         <example id="zend.console.getopt.configuration.addargs.example">
             <title> 使用 addArguments() 和 setArguments()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // 缺省地，构造器使用 $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
 
@@ -92,7 +93,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // 替换当前的参数
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -136,9 +138,10 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoption">
             <title> 使用 setOption()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);]]>
+$opts->setOption('ignoreCase', true);
+]]>
             </programlisting>
         </example>
         <para>
@@ -146,14 +149,15 @@ $opts->setOption('ignoreCase', true);]]>
         </para>
         <example id="zend.console.getopt.configuration.config.example.setoptions">
             <title> 使用 setOptions()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(
     array(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
     </sect2>
