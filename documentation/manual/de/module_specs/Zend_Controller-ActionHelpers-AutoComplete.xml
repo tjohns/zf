@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11075 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -22,7 +22,8 @@
         Die grundsätzliche Verwendung ist für jede Implementierung die selbe:
     </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -32,13 +33,16 @@
         $this->_helper->autoCompleteDojo($data);
 
         // oder explizit:
-        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->sendAutoCompletion($data);
 
         // oder einfach die Antwort der automatischen Vervollständigung vorbereiten;
-        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->prepareAutoCompletion($data);
     }
 }
-?>]]></programlisting>
+?>
+]]></programlisting>
 
     <para>
         Standardmäßig mach die automatische Vervollständigung folgendes:
@@ -125,7 +129,8 @@
             Verwendung in so einem Speicher ist:
         </para>
 
-        <programlisting role="php"><![CDATA[// In der Controller Aktion:
+        <programlisting role="php"><![CDATA[
+// In der Controller Aktion:
 +$this->_helper->autoCompleteDojo($data);
 ]]></programlisting>
 
@@ -171,7 +176,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 Als nächstes, erstellen wir das Form Element für das wir AutoCompletion wollen:
             </para>
 
-            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class TestController extends Zend_Controller_Action
 {
     protected $_form;
 
@@ -180,7 +186,9 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
         if (null === $this->_form) {
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
-                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->setAction(
+                    $this->getRequest()->getBaseUrl() . '/test/process'
+                )
                 ->addElements(array(
                     'test' => array('type' => 'text', 'options' => array(
                         'filters'        => array('StringTrim'),
@@ -190,7 +198,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                         'hasDownArrow'   => 'true',
                         'label' => 'Your input:',
                     )),
-                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                    'go' => array('type' => 'submit',
+                                  'options' => array('label' => 'Go!'))
                 ));
         }
         return $this->_form;
@@ -215,7 +224,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 Bearbeitung der AutoCompletion:
             </para>
 
-            <programlisting role="php"><![CDATA[class TestController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class TestController extends Zend_Controller_Action
 {
     // ...
 
@@ -272,7 +282,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
             <programlisting role="php"><![CDATA[
 <? // Den Datenspeicher einstellen: ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    requestMethod="get"></div>
 
 <? // Die Form darstellen: ?>
 <?= $this->form ?>

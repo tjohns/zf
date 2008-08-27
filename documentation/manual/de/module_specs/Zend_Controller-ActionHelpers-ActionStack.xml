@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11075 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -29,21 +29,25 @@
             aufgerufen werden würde:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // Dem Stack zwei Aktionen hinzufügen
         // Und /foo/baz/bar/baz aufrufen
         // (FooController::bazAction() mit der Anfrage var bar == baz)
-        $this->_helper->actionStack('baz', 'foo', 'default', array('bar' => 'baz'));
+        $this->_helper->actionStack('baz',
+                                    'foo',
+                                    'default',
+                                    array('bar' => 'baz'));
 
         // Aufruf für /bar/bat hinzufügen
         // (BarController::batAction())
         $this->_helper->actionStack('bat', 'bar');
     }
 }
-?>]]></programlisting>
+]]></programlisting>
 
     </example>
 
@@ -55,7 +59,8 @@
             dem <code>ActionStack</code> Helfer genauso übergeben werden.
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -63,19 +68,21 @@
         // Aufruf zu /foo/baz/bar/baz hinzufügen
         // (FooController::bazAction() mit der Anfrage var bar == baz)
         $request = clone $this->getRequest();
-        $request->setActionName('baz')              // Kontroller oder Modul nicht setzen 
-                ->setParams(array('bar' => 'baz')); // verwende aktuelle Werte
+        // Kontroller oder Modul nicht setzen, verwende aktuelle Werte
+        $request->setActionName('baz') 
+                ->setParams(array('bar' => 'baz'));
         $this->_helper->actionStack($request);
 
         // Aufruf zu /bar/bat hinzufügen
         // (BarController::batAction())
         $request = clone $this->getRequest();
-        $request->setActionName('bat')      // Modul nicht setzen
-                ->setControllerName('bar'); // verwende aktuelle Werte
+        // Modul nicht setzen, verwende aktuelle Werte
+        $request->setActionName('bat') 
+                ->setControllerName('bar');
         $this->_helper->actionStack($request);
     }
 }
-?>]]></programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

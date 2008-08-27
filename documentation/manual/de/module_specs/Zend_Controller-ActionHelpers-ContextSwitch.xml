@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11075 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch und AjaxContext</title>
 
@@ -39,7 +39,8 @@
         Als Beispiel wird der folgende Kontroller angenommen:
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     /**
      * Landeseite; leitet zu listAction() weiter
@@ -71,7 +72,8 @@
         zurückgegeben wird:
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -286,7 +288,8 @@
             von Kontexten. Als Beispiel nehmen wir die folgende Controller Klasse an:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function listAction()
     {
@@ -312,7 +315,8 @@
             Methode machen:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -328,7 +332,8 @@
             Alternativ kann einfach die Array-Eigenschaft <code>$contexts</code> definiert werden:
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
         'list'     => array('xml'),
@@ -420,7 +425,8 @@
             Controller aufgerufen werden:
         </para>
 
-        <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -436,7 +442,9 @@
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[$contextSwitch->initContext('xml');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$contextSwitch->initContext('xml');
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -456,7 +464,8 @@
                     werden; das muß vor dem Aufruf von <code>initContext()</code> geschehen.
                 </para>
 
-                <programlisting role="php"><![CDATA[$contextSwitch->setAutoJsonSerialization(false);
+                <programlisting role="php"><![CDATA[
+$contextSwitch->setAutoJsonSerialization(false);
 $contextSwitch->initContext();
 ]]></programlisting>
 
@@ -676,7 +685,8 @@ $contextSwitch->initContext();
                 soll; im letzteren wird JSON zurückgegeben.
             </para>
 
-            <programlisting role="php"><![CDATA[class CommentController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class CommentController extends Zend_Controller_Action
 {
     public function init()
     {

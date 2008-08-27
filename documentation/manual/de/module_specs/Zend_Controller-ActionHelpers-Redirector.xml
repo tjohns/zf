@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11075 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -124,7 +124,8 @@
                 die beim Umleiten verwendet wird.
             </para>
 
-            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes
@@ -142,7 +143,8 @@
         // Zeitpunkt relevant
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGotoSimple("this-action", "some-controller");
+                          ->setGotoSimple("this-action",
+                                          "some-controller");
     }
 
     public function myAction()
@@ -154,7 +156,8 @@
         $this->_redirector->redirectAndExit();
         return; // wird nie erreicht
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -166,7 +169,8 @@
                 einem sofortigen <code>exit()</code> resultiert.
             </para>
 
-            <programlisting role="php"><![CDATA[// ALTERNATIVES BBISPIEL
+            <programlisting role="php"><![CDATA[
+// ALTERNATIVES BEISPIEL
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -185,10 +189,12 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* Mach was */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        $this->_redirector
+            ->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // wird nie erreicht da standardmäßig gegangen und beendet wird
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -202,7 +208,8 @@ class AlternativeController extends Zend_Controller_Action
                 es um statt die Aktion zu verketten.
             </para>
 
-            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes
@@ -222,7 +229,13 @@ class AlternativeController extends Zend_Controller_Action
 
         // Umleiten zu 'my-action' von 'my-controller' im aktuellen Modul, und verwenden der Parameter
         // param1 => test und param2 => test2
-        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action',
+                                       'my-controller',
+                                       null,
+                                       array('param1' => 'test',
+                                             'param2' => 'test2'
+                                             )
+                                       );
     }
 }]]>
             </programlisting>

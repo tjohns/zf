@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11075 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
@@ -62,7 +62,8 @@ class FooController extends Zend_Controller_Action
                 ausgeschaltet werden:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -73,9 +74,11 @@ class FooController extends Zend_Controller_Action
         $this->_helper->removeHelper('viewRenderer');
 
         // Auch global, muß aber in Verbindung mit der Lokalen Version sein um für diesen Kontroller zu gelten:
-        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+        Zend_Controller_Front::getInstance()
+            ->setParam('noViewRenderer', true);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -89,14 +92,16 @@ class FooController extends Zend_Controller_Action
                 <code>noRender</code> Flags des <code>ViewRenderer</code>'s:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // Nur für diese Aktion das automatische Rendern ausschalten:
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -215,7 +220,8 @@ $this->getResponse()->appendBody($content);
                         Wertes aufzurufen:
                     </para>
 
-                    <programlisting role="php"><![CDATA[// Verwende des Standardwert 1 wenn id nicht gesetzt wurde
+                    <programlisting role="php"><![CDATA[
+// Verwende des Standardwert 1 wenn id nicht gesetzt wurde
 $id = $this->_getParam('id', 1);
 
 // Statt:
@@ -223,7 +229,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}]]>
+}
+]]>
                     </programlisting>
                 </note>
             </listitem>
@@ -286,7 +293,11 @@ applicationOrModule/
                 <code>render()</code> hat die folgende Signatur:
             </para>
 
-            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[
+string render(string $action = null,
+              string $name = null,
+              bool $noController = false);
+]]>
             </programlisting>
 
             <para>
@@ -315,7 +326,8 @@ applicationOrModule/
                 Einige Beispiele:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -341,7 +353,8 @@ applicationOrModule/
         // Rendert my/baz-bat.phtml
         $this->render();
     }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -457,7 +470,8 @@ applicationOrModule/
                 geschrieben werden:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -467,7 +481,10 @@ applicationOrModule/
         }
 
         // Alle anderen Methoden werfen eine Ausnahme
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
 }]]>
             </programlisting>
@@ -476,7 +493,8 @@ applicationOrModule/
                 Eine andere Möglichkeit ist das man zu einer standardmäßigen Kontroller Seiten weiterleiten will:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -491,9 +509,13 @@ applicationOrModule/
         }
 
         // Alle anderen Methoden werden eine Ausnahme
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -505,7 +527,8 @@ applicationOrModule/
             zusammensetzt:
         </para>
 
-        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -520,7 +543,8 @@ applicationOrModule/
 
         return $this->view;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
