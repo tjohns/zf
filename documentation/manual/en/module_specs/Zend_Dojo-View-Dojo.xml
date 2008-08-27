@@ -70,7 +70,7 @@ $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
              ->registerModulePath('../custom/')
              ->requireModule('dijit.form.FilteringSelect')
-             ->requireModule('custom.PairedStore');
+             ->requireModule('custom.PairedStore'); ?>
 ]]>
         </programlisting>
 

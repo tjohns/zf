@@ -69,7 +69,6 @@
     <para>
         Here is an example of common usage of the autodiscovery functionality:
         <programlisting role="php"><![CDATA[
-
 class My_SoapServer_Class {
 ...
 }

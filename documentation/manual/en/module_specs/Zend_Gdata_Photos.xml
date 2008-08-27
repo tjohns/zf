@@ -367,50 +367,50 @@ $query->setUser("sample.user");
         
             <para>The user feed can be accessed by passing the username to the <code>getUserFeed</code> method:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    try {
-        $userFeed = $service->getUserFeed("sample.user");
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $userFeed = $service->getUserFeed("sample.user");
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         
             <para>Or, the feed can be accessed by constructing a query, first:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_UserQuery();
-    $query->setUser("sample.user");
+$query = new Zend_Gdata_Photos_UserQuery();
+$query->setUser("sample.user");
 
-    try {
-        $userFeed = $service->getUserFeed(null, $query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $userFeed = $service->getUserFeed(null, $query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         
             <para>Constructing a query also provides the ability to request a user entry object:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_UserQuery();
-    $query->setUser("sample.user");
-    $query->setType("entry");
+$query = new Zend_Gdata_Photos_UserQuery();
+$query->setUser("sample.user");
+$query->setType("entry");
 
-    try {
-        $userEntry = $service->getUserEntry($query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $userEntry = $service->getUserEntry($query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         </sect3>
@@ -423,19 +423,19 @@ $query->setUser("sample.user");
                 The album feed is accessed by constructing a query object and passing it to <code>getAlbumFeed</code>:
             </para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_AlbumQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
+$query = new Zend_Gdata_Photos_AlbumQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
 
-    try {
-        $albumFeed = $service->getAlbumFeed($query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $albumFeed = $service->getAlbumFeed($query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         
@@ -446,20 +446,20 @@ $query->setUser("sample.user");
         
             <para>Constructing a query also provides the ability to request an album entry object:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_AlbumQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
-    $query->setType("entry");
+$query = new Zend_Gdata_Photos_AlbumQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
+$query->setType("entry");
 
-    try {
-        $albumEntry = $service->getAlbumEntry($query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $albumEntry = $service->getAlbumEntry($query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         </sect3>
@@ -472,40 +472,40 @@ $query->setUser("sample.user");
                 The photo feed is accessed by constructing a query object and passing it to <code>getPhotoFeed</code>:
             </para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_PhotoQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
-    $query->setPhotoId("100");
+$query = new Zend_Gdata_Photos_PhotoQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
+$query->setPhotoId("100");
 
-    try {
-        $photoFeed = $service->getPhotoFeed($query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $photoFeed = $service->getPhotoFeed($query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         
             <para>Constructing a query also provides the ability to request a photo entry object:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_PhotoQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
-    $query->setPhotoId("100");
-    $query->setType("entry");
+$query = new Zend_Gdata_Photos_PhotoQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
+$query->setPhotoId("100");
+$query->setType("entry");
 
-    try {
-        $photoEntry = $service->getPhotoEntry($query);
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
-    }
+try {
+    $photoEntry = $service->getPhotoEntry($query);
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         </sect3>
@@ -520,27 +520,27 @@ $query->setUser("sample.user");
         
             <para>Performing an action on each of the comments on a given photo can be accomplished as follows:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_PhotoQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
-    $query->setPhotoId("100");
-    $query->setKind("comment");
+$query = new Zend_Gdata_Photos_PhotoQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
+$query->setPhotoId("100");
+$query->setKind("comment");
 
-    try {
-        $photoFeed = $service->getPhotoFeed($query);
-    
-        foreach ($photoFeed as $entry) {
-            if ($entry instanceof Zend_Gdata_Photos_CommentEntry) {
-                // Do something with the comment
-            }
+try {
+    $photoFeed = $service->getPhotoFeed($query);
+
+    foreach ($photoFeed as $entry) {
+        if ($entry instanceof Zend_Gdata_Photos_CommentEntry) {
+            // Do something with the comment
         }
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
     }
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         </sect3>
@@ -554,27 +554,27 @@ $query->setUser("sample.user");
         
             <para>Performing an action on each of the tags on a given photo can be accomplished as follows:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $query = new Zend_Gdata_Photos_PhotoQuery();
-    $query->setUser("sample.user");
-    $query->setAlbumId("1");
-    $query->setPhotoId("100");
-    $query->setKind("tag");
+$query = new Zend_Gdata_Photos_PhotoQuery();
+$query->setUser("sample.user");
+$query->setAlbumId("1");
+$query->setPhotoId("100");
+$query->setKind("tag");
 
-    try {
-        $photoFeed = $service->getPhotoFeed($query);
-    
-        foreach ($photoFeed as $entry) {
-            if ($entry instanceof Zend_Gdata_Photos_TagEntry) {
-                // Do something with the tag
-            }
+try {
+    $photoFeed = $service->getPhotoFeed($query);
+
+    foreach ($photoFeed as $entry) {
+        if ($entry instanceof Zend_Gdata_Photos_TagEntry) {
+            // Do something with the tag
         }
-    } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
     }
+} catch (Zend_Gdata_App_Exception $e) {
+    echo "Error: " . $e->getResponse();
+}
 ]]>
             </programlisting>
         </sect3>
@@ -589,14 +589,14 @@ $query->setUser("sample.user");
             <title>Creating An Album</title>
             <para>The service supports creating a new album for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $entry = new Zend_Gdata_Photos_AlbumEntry();
-    $entry->setTitle($service->newTitle("test album"));
+$entry = new Zend_Gdata_Photos_AlbumEntry();
+$entry->setTitle($service->newTitle("test album"));
 
-    $service->insertAlbumEntry($entry);
+$service->insertAlbumEntry($entry);
 ]]>
             </programlisting>
         </sect3>
@@ -605,26 +605,26 @@ $query->setUser("sample.user");
             <title>Creating A Photo</title>
             <para>The service supports creating a new photo for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    // $photo is the name of a file uploaded via an HTML form
+// $photo is the name of a file uploaded via an HTML form
 
-    $fd = $service->newMediaFileSource($photo["tmp_name"]);
-    $fd->setContentType($photo["type"]);
+$fd = $service->newMediaFileSource($photo["tmp_name"]);
+$fd->setContentType($photo["type"]);
 
-    $entry = new Zend_Gdata_Photos_PhotoEntry();
-    $entry->setMediaSource($fd);
-    $entry->setTitle($service->newTitle($photo["name"]));
+$entry = new Zend_Gdata_Photos_PhotoEntry();
+$entry->setMediaSource($fd);
+$entry->setTitle($service->newTitle($photo["name"]));
 
-    $albumQuery = new Zend_Gdata_Photos_AlbumQuery;
-    $albumQuery->setUser("sample.user");
-    $albumQuery->setAlbumId("1");
+$albumQuery = new Zend_Gdata_Photos_AlbumQuery;
+$albumQuery->setUser("sample.user");
+$albumQuery->setAlbumId("1");
 
-    $albumEntry = $service->getAlbumEntry($albumQuery);
+$albumEntry = $service->getAlbumEntry($albumQuery);
 
-    $service->insertPhotoEntry($entry, $albumEntry);
+$service->insertPhotoEntry($entry, $albumEntry);
 ]]>
             </programlisting>
         </sect3>
@@ -633,23 +633,23 @@ $query->setUser("sample.user");
             <title>Creating A Comment</title>
             <para>The service supports creating a new comment for a photo:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $entry = new Zend_Gdata_Photos_CommentEntry();
-    $entry->setTitle($service->newTitle("comment"));
-    $entry->setContent($service->newContent("comment"));
+$entry = new Zend_Gdata_Photos_CommentEntry();
+$entry->setTitle($service->newTitle("comment"));
+$entry->setContent($service->newContent("comment"));
 
-    $photoQuery = new Zend_Gdata_Photos_PhotoQuery;
-    $photoQuery->setUser("sample.user");
-    $photoQuery->setAlbumId("1");
-    $photoQuery->setPhotoId("100");
-    $photoQuery->setType('entry');
+$photoQuery = new Zend_Gdata_Photos_PhotoQuery;
+$photoQuery->setUser("sample.user");
+$photoQuery->setAlbumId("1");
+$photoQuery->setPhotoId("100");
+$photoQuery->setType('entry');
 
-    $photoEntry = $service->getPhotoEntry($photoQuery);
+$photoEntry = $service->getPhotoEntry($photoQuery);
 
-    $service->insertCommentEntry($entry, $photoEntry);
+$service->insertCommentEntry($entry, $photoEntry);
 ]]>
             </programlisting>
         </sect3>
@@ -658,22 +658,22 @@ $query->setUser("sample.user");
             <title>Creating A Tag</title>
             <para>The service supports creating a new tag for a photo:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $entry = new Zend_Gdata_Photos_TagEntry();
-    $entry->setTitle($service->newTitle("tag"));
+$entry = new Zend_Gdata_Photos_TagEntry();
+$entry->setTitle($service->newTitle("tag"));
 
-    $photoQuery = new Zend_Gdata_Photos_PhotoQuery;
-    $photoQuery->setUser("sample.user");
-    $photoQuery->setAlbumId("1");
-    $photoQuery->setPhotoId("100");
-    $photoQuery->setType('entry');
+$photoQuery = new Zend_Gdata_Photos_PhotoQuery;
+$photoQuery->setUser("sample.user");
+$photoQuery->setAlbumId("1");
+$photoQuery->setPhotoId("100");
+$photoQuery->setType('entry');
 
-    $photoEntry = $service->getPhotoEntry($photoQuery);
+$photoEntry = $service->getPhotoEntry($photoQuery);
 
-    $service->insertTagEntry($entry, $photoEntry);
+$service->insertTagEntry($entry, $photoEntry);
 ]]>
             </programlisting>
         </sect3>
@@ -688,18 +688,18 @@ $query->setUser("sample.user");
             <title>Deleting An Album</title>
             <para>The service supports deleting an album for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $albumQuery = new Zend_Gdata_Photos_AlbumQuery;
-    $albumQuery->setUser("sample.user");
-    $albumQuery->setAlbumId("1");
-    $albumQuery->setType('entry');
+$albumQuery = new Zend_Gdata_Photos_AlbumQuery;
+$albumQuery->setUser("sample.user");
+$albumQuery->setAlbumId("1");
+$albumQuery->setType('entry');
 
-    $entry = $service->getAlbumEntry($albumQuery);
+$entry = $service->getAlbumEntry($albumQuery);
 
-    $service->deleteAlbumEntry($entry, true);
+$service->deleteAlbumEntry($entry, true);
 ]]>
             </programlisting>
         </sect3>
@@ -708,19 +708,19 @@ $query->setUser("sample.user");
             <title>Deleting A Photo</title>
             <para>The service supports deleting a photo for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $photoQuery = new Zend_Gdata_Photos_PhotoQuery;
-    $photoQuery->setUser("sample.user");
-    $photoQuery->setAlbumId("1");
-    $photoQuery->setPhotoId("100");
-    $photoQuery->setType('entry');
+$photoQuery = new Zend_Gdata_Photos_PhotoQuery;
+$photoQuery->setUser("sample.user");
+$photoQuery->setAlbumId("1");
+$photoQuery->setPhotoId("100");
+$photoQuery->setType('entry');
 
-    $entry = $service->getPhotoEntry($photoQuery);
+$entry = $service->getPhotoEntry($photoQuery);
 
-    $service->deletePhotoEntry($entry, true);
+$service->deletePhotoEntry($entry, true);
 ]]>
             </programlisting>
         </sect3>
@@ -729,21 +729,21 @@ $query->setUser("sample.user");
             <title>Deleting A Comment</title>
             <para>The service supports deleting a comment for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $photoQuery = new Zend_Gdata_Photos_PhotoQuery;
-    $photoQuery->setUser("sample.user");
-    $photoQuery->setAlbumId("1");
-    $photoQuery->setPhotoId("100");
-    $photoQuery->setType('entry');
+$photoQuery = new Zend_Gdata_Photos_PhotoQuery;
+$photoQuery->setUser("sample.user");
+$photoQuery->setAlbumId("1");
+$photoQuery->setPhotoId("100");
+$photoQuery->setType('entry');
 
-    $path = $photoQuery->getQueryUrl() . '/commentid/' . "1000";
+$path = $photoQuery->getQueryUrl() . '/commentid/' . "1000";
 
-    $entry = $service->getCommentEntry($path);
+$entry = $service->getCommentEntry($path);
 
-    $service->deleteCommentEntry($entry, true);
+$service->deleteCommentEntry($entry, true);
 ]]>
             </programlisting>
         </sect3>
@@ -752,28 +752,28 @@ $query->setUser("sample.user");
             <title>Deleting A Tag</title>
             <para>The service supports deleting a tag for an authenticated user:</para>
             <programlisting role="php"><![CDATA[
-    $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
-    $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
-    $service = new Zend_Gdata_Photos($client);
+$service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
+$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+$service = new Zend_Gdata_Photos($client);
 
-    $photoQuery = new Zend_Gdata_Photos_PhotoQuery;
-    $photoQuery->setUser("sample.user");
-    $photoQuery->setAlbumId("1");
-    $photoQuery->setPhotoId("100");
-    $photoQuery->setKind("tag");
-    $query = $photoQuery->getQueryUrl();
+$photoQuery = new Zend_Gdata_Photos_PhotoQuery;
+$photoQuery->setUser("sample.user");
+$photoQuery->setAlbumId("1");
+$photoQuery->setPhotoId("100");
+$photoQuery->setKind("tag");
+$query = $photoQuery->getQueryUrl();
 
-    $photoFeed = $service->getPhotoFeed($query);
+$photoFeed = $service->getPhotoFeed($query);
 
-    foreach ($photoFeed as $entry) {
-        if ($entry instanceof Zend_Gdata_Photos_TagEntry) {
-            if ($entry->getContent() == $tagContent) {
-                $tagEntry = $entry;
-            }
+foreach ($photoFeed as $entry) {
+    if ($entry instanceof Zend_Gdata_Photos_TagEntry) {
+        if ($entry->getContent() == $tagContent) {
+            $tagEntry = $entry;
         }
     }
+}
 
-    $service->deleteTagEntry($tagEntry, true);
+$service->deleteTagEntry($tagEntry, true);
 ]]>
             </programlisting>
         </sect3>
@@ -792,17 +792,17 @@ $query->setUser("sample.user");
                 An example of how to handle versioning during a deletion is shown by <code>deleteAlbumEntry</code>:
             </para>
             <programlisting role="php"><![CDATA[
-    // $album is the albumEntry to be deleted
-    try {
-        $this->delete($album);
-    } catch (Zend_Gdata_App_HttpException $e) {
-        if ($e->getResponse->getStatus() === 409) {
-            $entry = new Zend_Gdata_Photos_AlbumEntry($e->getResponse()->getBody());
-            $this->delete($entry->getLink('edit')->href);
-        } else {
-            throw $e;
-        }
+// $album is the albumEntry to be deleted
+try {
+    $this->delete($album);
+} catch (Zend_Gdata_App_HttpException $e) {
+    if ($e->getResponse->getStatus() === 409) {
+        $entry = new Zend_Gdata_Photos_AlbumEntry($e->getResponse()->getBody());
+        $this->delete($entry->getLink('edit')->href);
+    } else {
+        throw $e;
     }
+}
 ]]>
             </programlisting>
         </sect3>

@@ -94,9 +94,6 @@
                 (herein, "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"):
             </para>
             <programlisting role="php"><![CDATA[
-            
-            
-            
 $acl = new Zend_Acl();
 
 $acl->addRole(new Zend_Acl_Role('guest'))

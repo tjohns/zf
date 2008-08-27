@@ -624,7 +624,6 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
 
-<?php
 // 'foo' module, 'bar' controller:
 class Foo_BarController extends Zend_Controller_Action
 {

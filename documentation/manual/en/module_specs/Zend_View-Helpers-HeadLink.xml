@@ -79,7 +79,7 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
                  ->prependStylesheet('/styles/moz.css', 'screen', true);
 ?>
 <?php // rendering the links: ?>
-<?= $this->headLink() 
+<?= $this->headLink() ?>
 ]]>
         </programlisting>
     </example>

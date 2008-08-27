@@ -242,6 +242,7 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
         </para>
 
         <programlisting role="php"><![CDATA[
+<?php
 $auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
@@ -261,7 +262,8 @@ Zend_Service_Nirvanix_Response Object
             [ResponseCode] => 0
             [FilesUploaded] => 1
             [BytesUploaded] => 14
-        ))
+        )
+)
 ]]>
         </programlisting>
 

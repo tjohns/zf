@@ -61,7 +61,6 @@ $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');
-
 ]]>
         </programlisting>
 
@@ -79,7 +78,6 @@ $formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // load 'FormSubmit' helper:
 $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
-
 ]]>
         </programlisting>
 
@@ -114,7 +112,6 @@ $loader = new Zend_Loader_PluginLoader(array(
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
 ));
-
 ]]>
             </programlisting>
         </note>
@@ -130,7 +127,6 @@ $loader = new Zend_Loader_PluginLoader(array(
         <programlisting role="php"><![CDATA[
 // Store plugins in static registry 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
-
 ]]>
         </programlisting>
 
@@ -197,7 +193,6 @@ if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }
-
 ]]>
         </programlisting>
     </sect2>

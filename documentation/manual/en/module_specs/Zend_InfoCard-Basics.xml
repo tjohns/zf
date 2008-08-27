@@ -82,18 +82,18 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+<?php
 if (isset($_POST['xmlToken'])) {
 
     $adapter = new Zend_Auth_Adapter_InfoCard($_POST['xmlToken']);
-    
+
     $adapter->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
                                  '/usr/local/Zend/apache2/conf/server.crt');
-    
-    
+
     $auth = Zend_Auth::getInstance();
-    
+
     $result = $auth->authenticate($adapter);
-    
+
     switch ($result->getCode()) {
         case Zend_Auth_Result::SUCCESS:
             $claims = $result->getIdentity();
@@ -110,16 +110,14 @@ if (isset($_POST['xmlToken'])) {
             print "There was an error processing your credentials.";
             break;
     }
-    
+
     if (count($result->getMessages()) > 0) {
         print "<pre>";
         var_dump($result->getMessages());
         print "</pre>";
     }
-    
-    
-}
 
+}
 ?>
 <hr />
 <div id="login" style="font-family: arial; font-size: 2em;">
@@ -171,13 +169,14 @@ if (isset($_POST['xmlToken'])) {
         </para>
 
         <programlisting role="php"><![CDATA[
+<?php
 if (isset($_POST['xmlToken'])) {
     $infocard = new Zend_InfoCard();
     $infocard->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
                                    '/usr/local/Zend/apache2/conf/server.crt');
 
     $claims = $infocard->process($_POST['xmlToken']);
-    
+
     if($claims->isValid()) {
         print "Given Name: {$claims->givenname}<br />";
         print "Surname: {$claims->surname}<br />";
@@ -187,7 +186,6 @@ if (isset($_POST['xmlToken'])) {
         print "Error Validating identity: {$claims->getErrorMsg()}";
     }
 }
-
 ?>
 <hr />
 <div id="login" style="font-family: arial; font-size: 2em;">
@@ -321,7 +319,6 @@ public function submitinfocardAction()
         throw new ZBlog_Exception("Infomation card failed security checks");
     }
 }
-
 ]]>
         </programlisting>
     </sect2>
@@ -385,7 +382,6 @@ $infoCard->addCertificatePair(SSL_PRIVATE, SSL_PUB);
 $infoCard->setAdapter($adapter);
 
 $claims = $infoCard->process($_POST['xmlToken']);
-
 ]]>
         </programlisting>
     </sect2>

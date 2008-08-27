@@ -56,7 +56,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
         </para>
         
         <programlisting role="php"><![CDATA[
-<?php echo $this->doctype() 
+<?php echo $this->doctype() ?>
 ]]>
         </programlisting>
         
@@ -73,7 +73,6 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
-
 ]]>
         </programlisting>
 
@@ -86,7 +85,6 @@ $doctype = $view->doctype()->getDoctype();
 if ($view->doctype()->isXhtml()) {
     // do something differently
 }
-
 ]]>
         </programlisting>
     </example>

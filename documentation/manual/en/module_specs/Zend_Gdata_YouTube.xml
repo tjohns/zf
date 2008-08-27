@@ -473,7 +473,6 @@ try {
         which can be used to construct an HTML upload form.
       </para>
       <programlisting role="php"><![CDATA[
-<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
       
 $myVideoEntry= new Zend_Gdata_YouTube_VideoEntry();
@@ -503,7 +502,6 @@ $postUrl = $tokenArray['url'];
     </para>
     
       <programlisting role="php"><![CDATA[
-<?php
 // place to redirect user after upload
 $nextUrl = 'http://mysite.com/youtube_uploads';
     
@@ -528,7 +526,6 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> to see if it is not live yet or if it has been rejected.
       </para>
       <programlisting role="php"><![CDATA[
-<?php
 try {
     $control = $videoEntry->getControl();
 } catch (Zend_Gdata_App_Exception $e) {

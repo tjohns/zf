@@ -32,7 +32,6 @@ protected function _run()
 {
     include func_get_arg(0);
 }
-
 ]]>
     </programlisting>
 

@@ -712,7 +712,7 @@ foreach ($this->info as $info):
     endforeach; ?>
 </dl>
 <? endforeach;
-endforeach 
+endforeach ?>
 ]]>
             </programlisting>
             

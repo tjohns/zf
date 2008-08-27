@@ -26,12 +26,10 @@
     <para>
         By default, configuration data made available through <code>Zend_Config</code>
         are read-only, and an assignment (e.g.,
-        <code><![CDATA[
-$config->database->host = 'example.com']]></code>)
+        <code>$config->database->host = 'example.com'</code>)
         results in a thrown exception. This default behavior may be overridden through the constructor,
         however, to allow modification of data values. Also, when modifications are allowed, <code>Zend_Config</code>
-        supports unsetting of values (i.e. <code><![CDATA[
-unset($config->database->host);]]></code>).
+        supports unsetting of values (i.e. <code>unset($config->database->host);</code>).
         <note>
             <para>
                 It is important not to confuse such in-memory modifications with saving configuration

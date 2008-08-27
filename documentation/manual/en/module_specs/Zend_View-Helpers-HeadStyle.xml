@@ -77,9 +77,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // adding styles
+// adding styles
 $this->headStyle()->appendStyle($styles);
-
 ]]>
         </programlisting>
 
@@ -91,7 +90,7 @@ $this->headStyle()->appendStyle($styles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Putting styles in order
+// Putting styles in order
 
 // place at a particular offset:
 $this->headStyle()->offsetSetStyle(100, $customStyles);
@@ -101,7 +100,6 @@ $this->headStyle()->appendStyle($finalStyles);
 
 // place at beginning
 $this->headStyle()->prependStyle($firstStyles);
-
 ]]>
         </programlisting>
 
@@ -111,7 +109,7 @@ $this->headStyle()->prependStyle($firstStyles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headStyle() 
+<?= $this->headStyle() ?>
 ]]>
         </programlisting>
     </example>
@@ -132,7 +130,7 @@ $this->headStyle()->prependStyle($firstStyles);
 body {
     background-color: <?= $this->bgColor ?>;
 }
-<?php $this->headStyle()->captureEnd() 
+<?php $this->headStyle()->captureEnd() ?>
 ]]>
         </programlisting>
 

@@ -34,7 +34,6 @@ $filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-w
 
 $string   = 'this_is_not_camel_cased';
 $filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
-
 ]]>
         </programlisting>
     </example>
@@ -86,7 +85,6 @@ $filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_c
         <programlisting role="php"><![CDATA[
 // use Zend_Filter_Word_CamelCaseToDash as a rule
 $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
-
 ]]>
         </programlisting>
 
@@ -98,7 +96,6 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
             
         <programlisting role="php"><![CDATA[
 $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
-
 ]]>
         </programlisting>
 
@@ -110,7 +107,6 @@ $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
         <programlisting role="php"><![CDATA[
 $loader = $inflector->getPluginLoader();
 $loader->addPrefixPath('My_Filter', 'My/Filter/');
-
 ]]>
         </programlisting>
 
@@ -144,7 +140,6 @@ $inflector = new Zend_Filter_Inflector('#foo/#bar.#sfx', null, '#');
 
 // Via accessor:
 $inflector->setTargetReplacementIdentifier('#');
-
 ]]>
         </programlisting>
 
@@ -159,7 +154,6 @@ $inflector->setTargetReplacementIdentifier('#');
         <programlisting role="php"><![CDATA[
 $inflector = $layout->getInflector();
 $inflector->setTarget('layouts/:script.phtml');
-
 ]]>
         </programlisting>
 
@@ -201,7 +195,6 @@ class Foo
         return $this;
     }
 }
-
 ]]>
         </programlisting>
     </sect2>
@@ -243,7 +236,6 @@ $inflector->setStaticRule('suffix', 'phtml');
 
 // change it later:
 $inflector->setStaticRule('suffix', 'php');
-
 ]]>
             </programlisting>
 
@@ -287,7 +279,6 @@ class Foo
         return $this;
     }
 }
-
 ]]>
             </programlisting>
         </sect3>
@@ -346,7 +337,6 @@ $inflector->setFilterRule('script', array(
     'Word_CamelCaseToDash',
     new Zend_Filter_StringToLower()
 ));
-
 ]]>
             </programlisting>
         </sect3>
@@ -392,7 +382,6 @@ $inflector->addRules(array(
     // Static rule:
     'suffix'      => 'phtml'
 ));
-
 ]]>
                 </programlisting>
             </example>
@@ -496,7 +485,6 @@ $inflector = new Zend_Filter_Inflector($config);
 // Or with setConfig():
 $inflector = new Zend_Filter_Inflector();
 $inflector->setConfig($config);
-
 ]]>
             </programlisting>
         </example>

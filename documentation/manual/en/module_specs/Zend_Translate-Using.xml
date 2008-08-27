@@ -339,7 +339,6 @@ $translate->addTranslation($deutsch, 'de');
 
         <programlisting role="php"><![CDATA[
 // myarray.php
-<?php
 return array(
     'message1' => 'Nachricht1',
     'message2' => 'Nachricht2',

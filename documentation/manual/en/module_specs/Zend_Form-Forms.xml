@@ -44,7 +44,6 @@ $form = new Zend_Form();
 
 // Custom form object:
 $form = new My_Form()
-
 ]]>
     </programlisting>
 
@@ -56,7 +55,6 @@ $form = new My_Form()
     <programlisting role="php"><![CDATA[
 // Passing in configuration options:
 $form = new Zend_Form($config);
-
 ]]>
     </programlisting>
 
@@ -199,7 +197,6 @@ $form->addElement('text', 'foo');
 
 // Pass label option to the element:
 $form->addElement('text', 'foo', array('label' => 'Foo:'));
-
 ]]>
         </programlisting>
 
@@ -242,7 +239,6 @@ $foo = $form->getElement('foo');
 
 // As object property:
 $foo = $form->foo;
-
 ]]>
         </programlisting>
 
@@ -257,7 +253,6 @@ $foo = $form->foo;
         <programlisting role="php"><![CDATA[
 // $username becomes a Zend_Form_Element_Text object:
 $username = $form->createElement('text', 'username');
-
 ]]>
         </programlisting>
 
@@ -279,7 +274,6 @@ $values = $form->getValues();
 
 // Get only 'foo' element's value:
 $value = $form->getValue('foo');
-
 ]]>
             </programlisting>
 
@@ -293,7 +287,6 @@ $value = $form->getValue('foo');
             <programlisting role="php"><![CDATA[
 $form->setDefaults($data);
 $form->populate($data);
-
 ]]>
             </programlisting>
 
@@ -341,7 +334,6 @@ $form->addElementPrefixPath('My_Foo_Validate', 'My/Foo/Validate', 'validate');
 
 // Just decorator paths:
 $form->addElementPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator', 'decorator');
-
 ]]>
                 </programlisting>
             </example>
@@ -363,7 +355,6 @@ $form->setElementDecorators(array(
     'ViewHelper',
     'Label'
 ));
-
 ]]>
                 </programlisting>
             </example>
@@ -466,7 +457,6 @@ $form->setElementDecorators(
 
         <programlisting role="php"><![CDATA[
 $form->setElementFilters(array('StringTrim'));
-
 ]]>
         </programlisting>
             </example>
@@ -584,7 +574,6 @@ $form->setElementFilters(array('StringTrim'));
 
         <programlisting role="php"><![CDATA[
 $form->addDisplayGroup(array('username', 'password'), 'login');
-
 ]]>
         </programlisting>
 
@@ -600,7 +589,6 @@ $login = $form->getDisplayGroup('login');
 
 // Using overloading:
 $login = $form->login;
-
 ]]>
         </programlisting>
 
@@ -650,7 +638,6 @@ $form->addDisplayGroup(
 
                 <programlisting role="php"><![CDATA[
 $form->addDisplayGroupPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator');
-
 ]]>
                 </programlisting>
             </example>
@@ -673,7 +660,6 @@ $form->setDisplayGroupDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-
 ]]>
                 </programlisting>
             </example>
@@ -699,7 +685,6 @@ $form->addDisplayGroup(
     'user',
     array('displayGroupClass' => 'My_DisplayGroup')
 );
-
 ]]>
             </programlisting>
 
@@ -717,7 +702,6 @@ $form->addDisplayGroup(
             <programlisting role="php"><![CDATA[
 // Use the 'My_DisplayGroup' class for all display groups:
 $form->setDefaultDisplayGroupClass('My_DisplayGroup');
-
 ]]>
             </programlisting>
 
@@ -948,7 +932,6 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
 
         <programlisting role="php"><![CDATA[
 $form->addSubForm($subForm, 'subform');
-
 ]]>
         </programlisting>
 
@@ -964,7 +947,6 @@ $subForm = $form->getSubForm('subform');
 
 // Using overloading:
 $subForm = $form->subform;
-
 ]]>
         </programlisting>
 
@@ -993,7 +975,6 @@ $form->setSubFormDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-
 ]]>
             </programlisting>
         </sect3>
@@ -1063,7 +1044,6 @@ $form->setName('registration');
 
 // Retrieve the name:
 $name = $form->getName();
-
 ]]>
         </programlisting>
 
@@ -1077,7 +1057,6 @@ $name = $form->getName();
 // Set the action and method:
 $form->setAction('/user/login')
      ->setMethod('post');
-
 ]]>
         </programlisting>
 
@@ -1096,7 +1075,6 @@ $form->setAction('/user/login')
 $form->setAction('/user/login')
      ->setMethod('post')
      ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
-
 ]]>
         </programlisting>
 
@@ -1114,7 +1092,6 @@ $form->setAction('/user/login')
 
         <programlisting role="php"><![CDATA[
 $numItems = count($form);
-
 ]]>
         </programlisting>
 
@@ -1142,7 +1119,6 @@ $form->removeAttrib('onSubmit');
 
 // Clear all attributes:
 $form->clearAttribs();
-
 ]]>
         </programlisting>
     </sect2>
@@ -1178,7 +1154,6 @@ $form->setDecorators(array(
     array('HtmlTag', array('tag' => 'dl')),
     'Form'
 ));
-
 ]]>
         </programlisting>
 
@@ -1245,7 +1220,6 @@ $form->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
 
 // And retrieve later:
 $form = $element->getDecorator('FooBar');
-
 ]]>
             </programlisting>
 
@@ -1268,7 +1242,6 @@ $form->addDecorators(
 // And retrieve later:
 $htmlTag = $form->getDecorator('HtmlTag');
 $fooBar  = $form->getDecorator('FooBar');
-
 ]]>
             </programlisting>
         </note>
@@ -1336,7 +1309,6 @@ $fooBar  = $form->getDecorator('FooBar');
 if (!$form->isValid($_POST)) {
     // failed validation
 }
-
 ]]>
         </programlisting>
 
@@ -1354,7 +1326,6 @@ if (!$form->isValid($_POST)) {
 if (!$form->isValidPartial($data)) {
     // failed validation
 }
-
 ]]>
         </programlisting>
 
@@ -1373,7 +1344,6 @@ if (!$form->isValidPartial($data)) {
 
         <programlisting role="php"><![CDATA[
 $json = $form->processAjax($data);
-
 ]]>
         </programlisting>
 
@@ -1393,7 +1363,6 @@ $json = $form->processAjax($data);
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
 $messages = $form->getMessage();
-
 ]]>
         </programlisting>
 
@@ -1413,7 +1382,6 @@ $messages = $form->getMessage();
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors('username');
 $messages = $form->getMessages('username');
-
 ]]>
         </programlisting>
 
@@ -1795,7 +1763,6 @@ decorators.elements.decorator = "FormElements"
 decorators.fieldset.decorator = "FieldSet"
 decorators.fieldset.decorator.options.class = "zend_form"
 decorators.form.decorator = "Form"
-
 ]]>
 </programlisting>
 
@@ -1880,7 +1847,6 @@ class My_Form_Login extends Zend_Form
         ));
     }
 }
-
 ]]>
         </programlisting>
 
@@ -1890,7 +1856,6 @@ class My_Form_Login extends Zend_Form
 
         <programlisting role="php"><![CDATA[
 $form = new My_Form_Login();
-
 ]]>
         </programlisting>
 

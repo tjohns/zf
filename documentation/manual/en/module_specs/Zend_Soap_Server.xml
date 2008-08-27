@@ -157,7 +157,6 @@
             The first one is to attach some class to the <code>Zend_Soap_Server</code> object which has to completely describe
             Web Service API:
             <programlisting role="php"><![CDATA[
-
 ...
 class MyClass {
     /**
@@ -203,7 +202,6 @@ $server->handle();
             The second method of defining Web Service API is using set of functions and <code>addFunction()</code> or
             <code>loadFunctions()</code> methods:
             <programlisting role="php"><![CDATA[
-
 ...
 /**
  * This function ...
@@ -258,7 +256,6 @@ $server->handle();
                 It may be overridden either by supplying optional parameter to the <code>handle()</code> method or
                 by setting request using <code>setRequest()</code> method:
                 <programlisting role="php"><![CDATA[
-
 ...
 $server = new Zend_Soap_Server(...);
 ...
@@ -306,7 +303,6 @@ $server->handle();
             <para>
                 Last processed request may be retrieved using <code>getLastRequest()</code> method as an XML string:
                 <programlisting role="php"><![CDATA[
-
 ...
 $server = new Zend_Soap_Server(...);
 ...
@@ -332,7 +328,6 @@ $request = $server->getLastRequest();
                               </footnote>.
                 Generated response is returned by <code>handle()</code> method in this case.  
                 <programlisting role="php"><![CDATA[
-
 ...
 $server = new Zend_Soap_Server(...);
 ...
@@ -348,7 +343,6 @@ $response = $server->handle();
             <para>
                 Last response may be also retrieved by <code>getLastResponse()</code> method for some post-processing:
                 <programlisting role="php"><![CDATA[
-
 ...
 $server = new Zend_Soap_Server(...);
 ...

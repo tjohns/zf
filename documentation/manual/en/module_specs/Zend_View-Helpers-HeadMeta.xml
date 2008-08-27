@@ -82,9 +82,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // setting meta keywords
+// setting meta keywords
 $this->headMeta()->appendName('keywords', 'framework php productivity');
-
 ]]>
         </programlisting>
 
@@ -94,11 +93,10 @@ $this->headMeta()->appendName('keywords', 'framework php productivity');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // disabling client-side cache
+// disabling client-side cache
 $this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
                  ->appendHttpEquiv('pragma', 'no-cache')
                  ->appendHttpEquiv('Cache-Control', 'no-cache');
-
 ]]>
         </programlisting>
 
@@ -108,10 +106,9 @@ $this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // setting content type and character set
+// setting content type and character set
 $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
                  ->appendHttpEquiv('Content-Language', 'en-US');
-
 ]]>
         </programlisting>
 
@@ -121,9 +118,8 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // setting a meta refresh for 3 seconds to a new url:
+// setting a meta refresh for 3 seconds to a new url:
 $this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.html');
-
 ]]>
         </programlisting>
 
@@ -133,7 +129,7 @@ $this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.ht
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headMeta() 
+<?= $this->headMeta() ?>
 ]]>
         </programlisting>
     </example>

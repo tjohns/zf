@@ -82,16 +82,16 @@ $response->sendHeaders();
         Built-in and user-defined priorities can be styled with the <code>setPriorityStyle()</code> method.
       </para>
       <programlisting role="php"><![CDATA[
-  $logger->addPriority('FOO', 8);
-  $writer->setPriorityStyle(8, 'TRACE');
-  $logger->foo('Foo Message');
+$logger->addPriority('FOO', 8);
+$writer->setPriorityStyle(8, 'TRACE');
+$logger->foo('Foo Message');
 ]]>
       </programlisting>	
       <para>
         The default style for user-defined priorities can be set with the <code>setDefaultPriorityStyle()</code> method.
       </para>
       <programlisting role="php"><![CDATA[
-  $writer->setDefaultPriorityStyle('TRACE');
+$writer->setDefaultPriorityStyle('TRACE');
 ]]>
       </programlisting>
       <para>
@@ -164,8 +164,8 @@ $response->sendHeaders();
         recognized.
       </para>
       <programlisting role="php"><![CDATA[
-  $exception = new Zend_Exception('Test exception');
-  $logger->err($exception);
+$exception = new Zend_Exception('Test exception');
+$logger->err($exception);
 ]]>
       </programlisting>
     </sect3>
@@ -179,17 +179,17 @@ $response->sendHeaders();
         the first row of data automatically becomes the header.
       </para>
       <programlisting role="php"><![CDATA[
-  $writer->setPriorityStyle(8, 'TABLE');
-  $logger->addPriority('TABLE', 8);
-  
-  $table = array('Summary line for the table',
-                 array(
-                     array('Column 1', 'Column 2'),
-                     array('Row 1 c 1',' Row 1 c 2'),
-                     array('Row 2 c 1',' Row 2 c 2')
-                 )
-                );
-  $logger->table($table);
+$writer->setPriorityStyle(8, 'TABLE');
+$logger->addPriority('TABLE', 8);
+
+$table = array('Summary line for the table',
+             array(
+                 array('Column 1', 'Column 2'),
+                 array('Row 1 c 1',' Row 1 c 2'),
+                 array('Row 2 c 1',' Row 2 c 2')
+             )
+            );
+$logger->table($table);
 ]]>
       </programlisting>
     </sect3>

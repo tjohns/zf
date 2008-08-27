@@ -29,7 +29,6 @@ class Util
         return '<span class="label">' . $element->getLabel() . "</span>";
     }
 }
-
 ]]>
         </programlisting>
 
@@ -366,7 +365,6 @@ $element->setDecorators(array(array('ViewScript', array(
 // OR specifying the viewScript as an element attribute:
 $element->viewScript = '_element.phtml';
 $element->setDecorators(array(array('ViewScript', array('class' => 'form element'))));
-
 ]]>
         </programlisting>
         
@@ -410,7 +408,6 @@ $element->getDecorator('ViewScript')->setOption('placement', false);
 
 // Within a view script used by a decorator:
 $this->decorator->setOption('placement', false);
-
 ]]>
             </programlisting>
         </note>

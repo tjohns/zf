@@ -56,7 +56,6 @@
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
-
 ]]>
             </programlisting>
         
@@ -75,7 +74,6 @@ $gdata = new Zend_Gdata_Gapps($client, $domain);
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
-
 ]]>
             </programlisting>
             
@@ -90,7 +88,6 @@ $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
-
 ]]>
             </programlisting>
             
@@ -118,7 +115,6 @@ $query = $gdata->newUserQuery($arg);
             
             <programlisting role="php"><![CDATA[
 $gdata->createUser('foo', 'Random', 'User', '••••••••');
-
 ]]>
             </programlisting>
                         
@@ -138,7 +134,6 @@ $user->name = $gdata->newName();
 $user->name->givenName = 'Random';
 $user->name->familyName = 'User';
 $user = $gdata->insertUser($user);
-
 ]]>
             </programlisting>
             
@@ -169,7 +164,6 @@ echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
 echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-
 ]]>
             </programlisting>
             
@@ -192,7 +186,6 @@ echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
 echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-
 ]]>
             </programlisting>
             
@@ -221,7 +214,6 @@ foreach ($feed as $user) {
     echo "  * " . $user->login->username . ' (' . $user->name->givenName .
         ' ' . $user->name->familyName . ")\n";
 }
-
 ]]>
             </programlisting>
             
@@ -245,8 +237,6 @@ foreach ($feed as $user) {
     echo "  * " . $user->login->username . ' (' . $user->name->givenName .
         ' ' . $user->name->familyName . ")\n";
 }
-
-
 ]]>
             </programlisting>
                         
@@ -267,7 +257,6 @@ $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
 $user = $user->save();
-
 ]]>
             </programlisting>
             
@@ -283,7 +272,6 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->password = '••••••••';
 $user = $user->save();
-
 ]]>
                 </programlisting>
                 
@@ -309,7 +297,6 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->changePasswordAtNextLogin = true;
 $user = $user->save();
-
 ]]>
                 </programlisting>
 
@@ -336,7 +323,6 @@ $user = $user->save();
                 <programlisting role="php"><![CDATA[
 $gdata->suspendUser('foo');
 $gdata->restoreUser('foo');
-
 ]]>
                 </programlisting>
 
@@ -350,7 +336,6 @@ $gdata->restoreUser('foo');
 $user = $gdata->retrieveUser('foo');
 $user->login->suspended = true;
 $user = $user->save();
-
 ]]>
                 </programlisting>
 
@@ -375,7 +360,6 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->admin = true;
 $user = $user->save();
-
 ]]>
                 </programlisting>
 
@@ -401,7 +385,6 @@ $user = $user->save();
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
-
 ]]>
             </programlisting>
             
@@ -412,7 +395,6 @@ $user->delete();
             
             <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
-
 ]]>
             </programlisting>
             
@@ -445,7 +427,6 @@ $gdata->deleteUser('foo');
 
             <programlisting role="php"><![CDATA[
 $gdata->createNickname('foo', 'bar');
-
 ]]>
             </programlisting>
 
@@ -461,7 +442,6 @@ $nickname = $gdata->newNicknameEntry();
 $nickname->login = $gdata->newLogin('foo');
 $nickname->nickname = $gdata->newNickname('bar');
 $nickname = $gdata->insertNickname($nickname);
-
 ]]>
             </programlisting>
         
@@ -481,7 +461,6 @@ $nickname = $gdata->retrieveNickname('bar');
 
 echo 'Nickname: ' . $nickname->nickname->name . "\n";
 echo 'Owner: ' . $nickname->login->username . "\n";
-
 ]]>
             </programlisting>
 
@@ -499,7 +478,6 @@ $nickname = $gdata->getNicknameEntry($query);
 
 echo 'Nickname: ' . $nickname->nickname->name . "\n";
 echo 'Owner: ' . $nickname->login->username . "\n";
-
 ]]>
             </programlisting>
 
@@ -527,7 +505,6 @@ $feed = $gdata->retrieveNicknames('foo');
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -551,7 +528,6 @@ $feed = $gdata->getNicknameFeed($query);
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -571,7 +547,6 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -592,7 +567,6 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -610,7 +584,6 @@ foreach ($feed as $nickname) {
             <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 $nickname->delete();
-
 ]]>
             </programlisting>
 
@@ -621,7 +594,6 @@ $nickname->delete();
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteNickname('bar');
-
 ]]>
             </programlisting>
 
@@ -654,7 +626,6 @@ $gdata->deleteNickname('bar');
 
             <programlisting role="php"><![CDATA[
 $gdata->createEmailList('friends');
-
 ]]>
             </programlisting>
 
@@ -669,7 +640,6 @@ $gdata->createEmailList('friends');
 $list = $gdata->newEmailListEntry();
 $list->emailList = $gdata->newEmailList('friends');
 $list = $gdata->insertEmailList($list);
-
 ]]>
             </programlisting>
 
@@ -691,7 +661,6 @@ $feed = $gdata->retrieveEmailLists('baz@somewhere.com');
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -715,7 +684,6 @@ $feed = $gdata->getEmailListFeed($query);
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -735,7 +703,6 @@ $feed = $gdata->retrieveAllEmailLists();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-
 ]]>
             </programlisting>
 
@@ -755,7 +722,6 @@ $feed = $gdata->getEmailListFeed();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-
 ]]>
             </programlisting>
             
@@ -771,7 +737,6 @@ foreach ($feed as $list) {
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteEmailList('friends');
-
 ]]>
             </programlisting>
 
@@ -799,7 +764,6 @@ $gdata->deleteEmailList('friends');
             
             <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
-
 ]]>
             </programlisting>
             
@@ -819,7 +783,6 @@ $feed = $gdata->retrieveAllRecipients('friends');
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-
 ]]>
             </programlisting>
             
@@ -838,7 +801,6 @@ $feed = $gdata->getEmailListRecipientFeed($query);
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-
 ]]>
             </programlisting>
             
@@ -860,7 +822,6 @@ foreach ($feed as $recipient) {
             
             <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
-
 ]]>
             </programlisting>
             
@@ -918,7 +879,6 @@ function retrieveUser ($username) {
     }
     return $user;
 }
-
 ]]>
         </programlisting>
         

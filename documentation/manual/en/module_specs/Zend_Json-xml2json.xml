@@ -16,8 +16,8 @@
         This function call is made as shown below:
     </para>
     <programlisting role="php"><![CDATA[
-        // fromXml function simply takes a String containing XML contents as input.
-        $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
+// fromXml function simply takes a String containing XML contents as input.
+$jsonContents = Zend_Json::fromXml($xmlStringContents, true);
 ]]>
     </programlisting>
 

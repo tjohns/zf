@@ -118,7 +118,6 @@
         <programlisting role="php"><![CDATA[
 // In your bootstrap:
 Zend_Layout::startMvc();
-
 ]]>
         </programlisting>
         
@@ -148,7 +147,6 @@ class FooController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('foobaz');
     };
 }
-
 ]]>
         </programlisting>
 
@@ -161,7 +159,7 @@ class FooController extends Zend_Controller_Action
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php $this->layout()->setLayout('foo'); // set alternate layout 
+<?php $this->layout()->setLayout('foo'); // set alternate layout ?>
 ]]>
         </programlisting>
 
@@ -174,7 +172,6 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // Returns null if startMvc() has not first been called
 $layout = Zend_Layout::getMvcInstance(); 
-
 ]]>
         </programlisting>
 
@@ -260,7 +257,6 @@ $layout->setLayout('foo');
 
 // render final layout
 echo $layout->render();
-
 ]]>
         </programlisting>
     </sect2>

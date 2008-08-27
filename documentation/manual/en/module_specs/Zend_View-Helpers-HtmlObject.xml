@@ -54,7 +54,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->htmlFlash('/path/to/flash.swf'); 
+<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
 ]]>
         </programlisting>
 

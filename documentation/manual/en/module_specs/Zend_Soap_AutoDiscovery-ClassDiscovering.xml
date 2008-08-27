@@ -5,7 +5,6 @@
         If class is used to provide SOAP server functionality, then the same class should be provided to 
         <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
         <programlisting role="php"><![CDATA[
-
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();

@@ -105,7 +105,6 @@ $options = array(
     'layoutPath' => '/path/to/layouts',
     'contentKey' => 'CONTENT',           // ignored when MVC not used
 );
-
 ]]>
         </programlisting>
 
@@ -117,7 +116,6 @@ layoutPath = "/path/to/layouts"
 contentKey = "CONTENT"
 */
 $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
-
 ]]>
         </programlisting>
 
@@ -141,7 +139,6 @@ $layout = new Zend_Layout($options);
 
 // Using startMvc():
 $layout = Zend_Layout::startMvc($options);
-
 ]]>
             </programlisting>
 
@@ -158,7 +155,6 @@ $layout = new Zend_Layout($config);
 
 // Using startMvc():
 $layout = Zend_Layout::startMvc($config);
-
 ]]>
             </programlisting>
 
@@ -184,7 +180,6 @@ $layout->setOptions($options);
 
 // Using a Zend_Config object:
 $layout->setConfig($options);
-
 ]]>
             </programlisting>
         
@@ -209,7 +204,6 @@ $layout->setConfig($options);
 $layout->setLayout('foo')
        ->setLayoutPath('/path/to/layouts')
        ->setContentKey('CONTENT');
-
 ]]>
             </programlisting>
         </example>

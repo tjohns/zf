@@ -54,7 +54,6 @@
                 <programlisting role="php"><![CDATA[
 // use the 'Zend_Translate' key; $translate is a Zend_Translate object:
 Zend_Registry::set('Zend_Translate', $translate);
-
 ]]>
                 </programlisting>
 
@@ -75,7 +74,6 @@ Zend_Registry::set('Zend_Translate', $translate);
                 <programlisting role="php"><![CDATA[
 // Tell all validation classes to use a specific translate adapter:
 Zend_Validate_Abstract::setDefaultTranslator($translate);
-
 ]]>
                 </programlisting>
             </listitem>
@@ -91,7 +89,6 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
 // Tell all form classes to use a specific translate adapter, as well as use
 // this adapter to translate validation error messages:
 Zend_Form::setDefaultTranslator($translate);
-
 ]]>
                 </programlisting>
             </listitem>
@@ -111,7 +108,6 @@ $form->setTranslator($translate);
 // Tell *this* element to use a specific translate adapter; it will also be used
 // to translate validation error messages for this particular element:
 $element->setTranslator($translate);
-
 ]]>
                 </programlisting>
             </listitem>

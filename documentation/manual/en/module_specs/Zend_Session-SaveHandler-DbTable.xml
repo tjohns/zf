@@ -19,7 +19,6 @@ CREATE TABLE `session` (
   `data` text,
   PRIMARY KEY (`id`)
 );
-
 ]]>
 </programlisting>
         <programlisting role="php"><![CDATA[
@@ -50,7 +49,6 @@ Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 Zend_Session::start();
 
 //now you can use Zend_Session like any other time
-
 ]]>
         </programlisting>
     </example>
@@ -70,7 +68,6 @@ CREATE TABLE `session` (
     `session_data` text,
     PRIMARY KEY (`Session_ID`, `save_path`, `name`)
 );
-
 ]]>
 </programlisting>
         <programlisting role="php"><![CDATA[
@@ -102,7 +99,6 @@ Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 Zend_Session::start();
 
 //use Zend_Session as normal
-
 ]]>
         </programlisting>
     </example>

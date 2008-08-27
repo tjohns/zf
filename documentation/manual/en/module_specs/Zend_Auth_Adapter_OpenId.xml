@@ -70,6 +70,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+<?php
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&

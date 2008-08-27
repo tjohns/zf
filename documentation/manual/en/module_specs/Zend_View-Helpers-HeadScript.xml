@@ -102,7 +102,6 @@
 
         <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
-
 ]]>
         </programlisting>
     </note>
@@ -116,10 +115,9 @@ $this->headScript()->setAllowArbitraryAttributes(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // adding scripts
+// adding scripts
 $this->headScript()->appendFile('/js/prototype.js')
                    ->appendScript($onloadScript);
-
 ]]>
         </programlisting>
 
@@ -131,7 +129,7 @@ $this->headScript()->appendFile('/js/prototype.js')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Putting scripts in order
+// Putting scripts in order
 
 // place at a particular offset to ensure loaded last
 $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
@@ -141,7 +139,6 @@ $this->headScript()->appendScript('/js/scriptaculous.js');
 
 // but always have base prototype script load first:
 $this->headScript()->prependScript('/js/prototype.js');
-
 ]]>
         </programlisting>
 
@@ -151,7 +148,7 @@ $this->headScript()->prependScript('/js/prototype.js');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headScript() 
+<?= $this->headScript() ?>
 ]]>
         </programlisting>
     </example>
@@ -171,7 +168,7 @@ $this->headScript()->prependScript('/js/prototype.js');
 <?php $this->headScript()->captureStart() ?>
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
-<?php $this->headScript()->captureEnd() 
+<?php $this->headScript()->captureEnd() ?>
 ]]>
         </programlisting>
 

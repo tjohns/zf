@@ -31,8 +31,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
- 
-// setting the controller and action name as title segments:
+ // setting the controller and action name as title segments:
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
      ->headTitle($request->getControllerName());
@@ -42,7 +41,6 @@ $this->headTitle('Zend Framework');
 
 // setting a separator string for segments:
 $this->headTitle()->setSeparator(' / ');
-
 ]]>
         </programlisting>
 
@@ -53,7 +51,7 @@ $this->headTitle()->setSeparator(' / ');
 
         <programlisting role="php"><![CDATA[
 <!-- renders <action> / <controller> / Zend Framework -->
-<?= $this->headTitle() 
+<?= $this->headTitle() ?>
 ]]>
         </programlisting>
     </example>

@@ -120,7 +120,6 @@ $inflector->setFilterRule(':action', array(
     ),
     'StringToLower'
 ));
-
 ]]>
                 </programlisting>
 

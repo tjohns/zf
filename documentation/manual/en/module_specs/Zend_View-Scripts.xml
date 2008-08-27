@@ -47,7 +47,7 @@
 
     <p>There are no books to display.</p>
 
-<?php endif;
+<?php endif;?>
 ]]>
     </programlisting>
 
@@ -154,8 +154,9 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}]]>´
-                        </programlisting>
+}
+]]>
+            </programlisting>
 
             <para>
                 These would be the related template files:
@@ -180,7 +181,7 @@ if ($this->books) {
 <!-- nobooks.tpl -->
 <p>There are no books to display.</p>
 ]]>
-</programlisting>
+            </programlisting>
 
         </sect3>
 

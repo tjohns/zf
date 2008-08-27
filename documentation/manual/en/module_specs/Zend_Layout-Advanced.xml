@@ -56,7 +56,6 @@
         <programlisting role="php"><![CDATA[
 $view = new My_Custom_View();
 $layout->setView($view);
-
 ]]>
         </programlisting>
 
@@ -94,7 +93,6 @@ $layout->setView($view);
             <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
 $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
-
 ]]>
             </programlisting>
         </note>
@@ -193,7 +191,6 @@ $layout->setInflectorTarget('layouts/:script.:suffix');
 
 // Set the layout view script suffix:
 $layout->setViewSuffix('php');
-
 ]]>
             </programlisting>
         </example>
@@ -220,7 +217,6 @@ $layout->setViewSuffix('php');
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
                        ->setFilterRule(array('CamelCaseToUnderscore'));
-
 ]]>
             </programlisting>
         </example>
@@ -242,7 +238,6 @@ $inflector->addRules(array(
     'suffix'  => 'html'
 ));
 $layout->setInflector($inflector);
-
 ]]>
             </programlisting>
         </example>

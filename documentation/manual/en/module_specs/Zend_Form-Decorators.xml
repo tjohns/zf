@@ -158,7 +158,6 @@ interface Zend_Decorator_Interface
     public function clearOptions();
     public function render($content);
 }
-
 ]]>
         </programlisting>
 
@@ -258,7 +257,6 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         }
     }
 }
-
 ]]>
         </programlisting>
 
@@ -272,7 +270,6 @@ $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
 // for all elements:
 $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
-
 ]]>
         </programlisting>
 
@@ -284,7 +281,6 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
         <programlisting role="php"><![CDATA[
 // Overwrite existing decorators with this single one:
 $element->setDecorators(array('Composite'));
-
 ]]>
         </programlisting>
 
@@ -325,7 +321,6 @@ class My_Decorator_Errors
         }
     }
 }
-
 ]]>
         </programlisting>
     

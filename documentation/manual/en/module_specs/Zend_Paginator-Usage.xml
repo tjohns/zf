@@ -291,7 +291,7 @@ $paginator->setView($view);
         
         <para>
             <programlisting role="php"><![CDATA[
-<?= $this->paginator; 
+<?= $this->paginator; ?>
 ]]>
             </programlisting>
         </para>
@@ -337,7 +337,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
   <span class="disabled">Next &gt;</span>
 <?php endif; ?> 
 </div> 
-<?php endif; 
+<?php endif; ?>
 ]]>
                 </programlisting>
             </para>
@@ -384,7 +384,7 @@ of <?= $this->totalItemCount; ?>
 <?php endif; ?> 
 
 </div> 
-<?php endif; 
+<?php endif; ?>
 ]]>
                 </programlisting>
             </para>
