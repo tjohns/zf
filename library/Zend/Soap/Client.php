@@ -305,7 +305,7 @@ class Zend_Soap_Client
     {
         foreach ($classmap as $type => $class) {
             if (!class_exists($class)) {
-                throw new Zend_Soap_Class_Exception('Invalid class in class map');
+                throw new Zend_Soap_Client_Exception('Invalid class in class map');
             }
         }
 
