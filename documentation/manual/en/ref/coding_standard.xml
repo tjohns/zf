@@ -159,7 +159,8 @@ Zend/Db.php
 
 Zend/Controller/Front.php
 
-Zend/View/Helper/FormRadio.php]]>
+Zend/View/Helper/FormRadio.php
+]]>
                 </programlisting>
 
                 File names must map to class names as described above.
@@ -192,7 +193,8 @@ filterInput()
 
 getElementById()
 
-widgetFactory()]]>
+widgetFactory()
+]]>
                 </programlisting>
             </para>
 
@@ -276,9 +278,12 @@ widgetFactory()]]>
             <para>
                 PHP code must always be delimited by the full-form, standard PHP tags:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
+<?php
 
-?>]]></programlisting>
+?>
+]]>
+                </programlisting>
             </para>
 
             <para>
@@ -298,7 +303,8 @@ widgetFactory()]]>
                     "single quote" should always be used to demarcate the string:
 
                     <programlisting role="php"><![CDATA[
-$a = 'Example String';]]>
+$a = 'Example String';
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -312,7 +318,8 @@ $a = 'Example String';]]>
                     for SQL statements:
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
+$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";
+]]>
                     </programlisting>
 
                     This syntax is preferred over escaping apostrophes as it is much easier to read.
@@ -328,7 +335,8 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello $name, welcome back!";
 
-$greeting = "Hello {$name}, welcome back!";]]>
+$greeting = "Hello {$name}, welcome back!";
+]]>
                     </programlisting>
                 </para>
 
@@ -336,7 +344,8 @@ $greeting = "Hello {$name}, welcome back!";]]>
                     For consistency, this form is not permitted:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello ${name}, welcome back!";]]>
+$greeting = "Hello ${name}, welcome back!";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -349,7 +358,8 @@ $greeting = "Hello ${name}, welcome back!";]]>
                     be added before and after the "." operator to improve readability:
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . ' ' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';
+]]>
                     </programlisting>
                 </para>
 
@@ -362,7 +372,8 @@ $company = 'Zend' . ' ' . 'Technologies';]]>
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
-     . "ORDER BY `name` ASC ";]]>
+     . "ORDER BY `name` ASC ";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -386,7 +397,8 @@ $sql = "SELECT `id`, `name` FROM `people` "
                     added after each comma delimiter to improve readability:
 
                     <programlisting role="php"><![CDATA[
-$sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
+$sampleArray = array(1, 2, 3, 'Zend', 'Studio');
+]]>
                     </programlisting>
                 </para>
 
@@ -398,7 +410,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500);]]>
+                     56.44, $d, 500);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -412,7 +425,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
-                     'secondKey' => 'secondValue');]]>
+                     'secondKey' => 'secondValue');
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -448,7 +462,8 @@ class SampleClass
 {
     // all contents of class
     // must be indented four spaces
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -512,7 +527,8 @@ class Foo
         // all contents of function
         // must be indented four spaces
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -530,7 +546,8 @@ class Foo
      */
     public function bar(&$baz)
     {}
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -564,7 +581,8 @@ class Foo
     {
         return $this->bar;
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -578,7 +596,8 @@ class Foo
                     The following is an example of an acceptable invocation of a function that takes three arguments:
 
                     <programlisting role="php"><![CDATA[
-threeArguments(1, 2, 3);]]>
+threeArguments(1, 2, 3);
+]]>
                     </programlisting>
                 </para>
 
@@ -596,7 +615,8 @@ threeArguments(array(1, 2, 3), 2, 3);
 
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500), 2, 3);]]>
+                     56.44, $d, 500), 2, 3);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -628,7 +648,8 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -643,14 +664,14 @@ if ($a != 2) {
    $a = 7;
 }
 
-
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
    $a = 4;
 } else {
    $a = 7;
-}]]>
+}
+]]>
                     </programlisting>
                     PHP allows statements to be written without braces in some circumstances.
                     This coding standard makes no differentiation- all "if", "elseif" or "else" statements
@@ -686,7 +707,8 @@ switch ($numPeople) {
 
     default:
         break;
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -740,7 +762,8 @@ switch ($numPeople) {
  * @version    $Id:$
  * @link       http://framework.zend.com/package/PackageName
  * @since      File available since Release 1.5.0
-*/]]>
+*/
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -763,7 +786,8 @@ switch ($numPeople) {
  * @link       http://framework.zend.com/package/PackageName
  * @since      Class available since Release 1.5.0
  * @deprecated Class deprecated in Release 2.0.0
- */]]>
+ */
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -790,7 +814,8 @@ switch ($numPeople) {
                     If a function/method may throw an exception, use @throws for all known exception classes:
 
                     <programlisting role="php"><![CDATA[
-@throws exceptionclass [description]]]>
+@throws exceptionclass [description]
+]]>
                     </programlisting>
                 </para>
             </sect3>
