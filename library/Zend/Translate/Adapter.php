@@ -69,7 +69,8 @@ abstract class Zend_Translate_Adapter {
     protected $_options = array(
         'clear'  => false,
         'scan'   => null,
-        'locale' => 'auto' 
+        'locale' => 'auto',
+        'ignore' => '.'
     );
 
     /**
@@ -141,8 +142,13 @@ abstract class Zend_Translate_Adapter {
             $prev  = '';
             foreach (new RecursiveIteratorIterator(
                      new RecursiveDirectoryIterator($data, RecursiveDirectoryIterator::KEY_AS_PATHNAME), 
-                     RecursiveIteratorIterator::SELF_FIRST) as $file => $info) {
+                     RecursiveIteratorIterator::SELF_FIRST) as $directory => $info) {
                 $file = $info->getFilename();
+                if (strpos($directory, DIRECTORY_SEPARATOR . $this->_options['ignore']) !== false) {
+                    // ignore files matching first characters from option 'ignore' and all files below
+                    continue;
+                }
+
                 if ($info->isDir()) {
                     // pathname as locale
                     if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale($file, true))) {

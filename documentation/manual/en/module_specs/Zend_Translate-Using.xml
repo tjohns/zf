@@ -633,6 +633,16 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                     </row>
                     <row>
                         <entry>all</entry>
+                        <entry>ignore</entry>
+                        <entry><emphasis role="strong">.</emphasis></entry>
+                        <entry>All directories and files beginning with this prefix will be ignored when
+                        searching for files. This value defaults to <emphasis role="strong">'.'</emphasis>
+                        which leads to the behavior that all hidden files will be ignored. Setting this
+                        value to 'tmp' would mean that directories and files like 'tmpImages' and 'tmpFiles'
+                        would be ignored and also all subsequent directories</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
                         <entry>scan</entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>If set to null, no scanning of the directory structure will be done.

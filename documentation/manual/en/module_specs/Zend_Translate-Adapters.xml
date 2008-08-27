@@ -28,17 +28,17 @@
                 <row>
                     <entry>Csv</entry>
                     <entry>Use comma seperated (*.csv/*.txt) files</entry>
-                    <entry>Simple text file format; very fast; possible problems with unicode characters</entry>
+                    <entry>Simple text file format; fast; possible problems with unicode characters</entry>
                 </row>
                 <row>
                     <entry>Gettext</entry>
                     <entry>Use binary gettext (*.mo) files</entry>
-                    <entry>GNU standard for linux; very fast; thread-safe; needs tools for translation</entry>
+                    <entry>GNU standard for linux; thread-safe; needs tools for translation</entry>
                 </row>
                 <row>
                     <entry>Ini</entry>
                     <entry>Use simple ini (*.ini) files</entry>
-                    <entry>Simple text file format; very fast; possible problems with unicode characters</entry>
+                    <entry>Simple text file format; fast; possible problems with unicode characters</entry>
                 </row>
                 <row>
                     <entry>Tbx</entry>
