@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11008 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -18,6 +18,13 @@
             <para>
                 <code>Count</code>: このバリデータはファイルの数をチェックします。
                 最小値と最大値を指定し、そのいずれかに違反した場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Exists</code>: このバリデータはファイルの存在をチェックします。
+                指定したファイルが存在しない場合にエラーをスローします。
             </para>
         </listitem>
 
@@ -49,6 +56,13 @@
                 <code>MimeType</code>: このバリデータはファイルの mimetype をチェックします。
                 mimetype の種類を検証し、指定したファイルの mimetype
                 がそれと一致しないときにエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>NotExists</code>: このバリデータはファイルの存在をチェックします。
+                指定したファイルが存在する場合にエラーをスローします。
             </para>
         </listitem>
 
@@ -164,7 +178,8 @@ $upload->setValidators(array(
     'Size'  => array(20, 20000), 
     'Count' => array(1, 3),
 ));
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <example id="zend.file.transfer.validators.usage.exampletwo">
@@ -183,7 +198,8 @@ $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 20000 バイトとし、それを 'file2' にのみ適用します
 $upload->addValidator('Size', 20000, 'file2');
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -210,7 +226,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', 20000)
        ->addValidator('Count', 2)
        ->addValidator('Filessize', 25000);
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
         <note>
@@ -284,13 +301,61 @@ $upload->addValidator('Count', 2);
 
 // 最大でも 5 個、少なくとも 1 つのファイルが返されるよう制限します
 $upload->addValidator('Count', array(1, 5);
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
         <note>
             <para>
                 このバリデータは、チェックしたファイルの数を内部に保存することに注意しましょう。
                 最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.exists">
+        <title><emphasis role="strong">Exists</emphasis> バリデータ</title>
+
+        <para>
+            <code>Exists</code> バリデータは、
+            指定したファイルの存在をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: ファイルが指定したディレクトリに存在するかどうかをチェックします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数のディレクトリを指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setDirectory()</code>、<code>addDirectory()</code> および
+            <code>getDirectory()</code> といったメソッドでディレクトリの設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.exists.example">
+            <title>Exists バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// temp ディレクトリをチェック対象に追加します
+$upload->addValidator('Exists', '\temp');
+
+// ふたつのディレクトリを配列記法で追加します
+$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、ファイルが存在するかどうかをすべてのディレクトリでチェックすることに注意しましょう。
+                指定したディレクトリのうちのどこかひとつでもファイルが存在しなかった場合に検証が失敗します。
             </para>
         </note>
     </sect2>
@@ -594,6 +659,53 @@ $upload->setValidator('MimeType', 'image');
                 も受け付けることになりますが、おそらくこれは問題となるでしょう。
                 アプリケーション側ですべての形式を処理できるかどうか不安なら、
                 グループ指定ではなく個別の mimetype を指定するようにしましょう。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.notexists">
+        <title><emphasis role="strong">NotExists</emphasis> バリデータ</title>
+
+        <para>
+            <code>NotExists</code> バリデータは、
+            指定したファイルの存在をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: ファイルが指定したディレクトリに存在しないかどうかをチェックします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数のディレクトリを指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setDirectory()</code>、<code>addDirectory()</code> および
+            <code>getDirectory()</code> といったメソッドでディレクトリの設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.notexists.example">
+            <title>NotExists バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// temp ディレクトリをチェック対象に追加します
+$upload->addValidator('NotExists', '\temp');
+
+// ふたつのディレクトリを配列記法で追加します
+$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、ファイルが存在しないかどうかをすべてのディレクトリでチェックすることに注意しましょう。
+                指定したディレクトリのうちのどこかひとつでもファイルが存在した場合に検証が失敗します。
             </para>
         </note>
     </sect2>
