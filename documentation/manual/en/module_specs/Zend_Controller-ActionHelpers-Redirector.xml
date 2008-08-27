@@ -251,7 +251,8 @@ class ForwardController extends Zend_Controller_Action
                                              )
                                        );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -304,7 +305,8 @@ $router->addRoute('blogArchive', $route);]]>
             'blogArchive'
         );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>

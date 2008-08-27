@@ -40,7 +40,6 @@ class FooController extends Zend_Controller_Action
                                   ->prepareAutoCompletion($data);
     }
 }
-?>
 ]]></programlisting>
 
     <para>

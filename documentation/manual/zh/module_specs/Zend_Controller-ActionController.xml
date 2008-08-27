@@ -46,11 +46,12 @@ class FooController extends Zend_Controller_Action
                 缺省地，<link linkend="zend.controller.front">前端控制器</link>激活了<link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>动作助手。这个助手负责把视图对象注入到控制器，同时解析（rendering）视图。通过下面方法之一，可以在动作控制器里禁止它：
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // 对这个控制器的所有动作有效：
+        // 只是局部控制器；当初始化加载时，对这个控制器的所有动作有效：
         $this->_helper->viewRenderer->setNoRender(true);
 
         // 全局：
@@ -59,7 +60,8 @@ class FooController extends Zend_Controller_Action
         // 也是全局，但需要和本地版本协作，以便繁殖这个控制器：
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -70,14 +72,16 @@ class FooController extends Zend_Controller_Action
                 通过设置<code>ViewRenderer</code>的<code>noRender</code>标记，可以简单地为一个独立的视图禁止解析（rendering）：
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // disable autorendering for this action only:
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -166,7 +170,8 @@ $this->getResponse()->appendBody($content);
                         <code>_getParam()</code>可带有一个可选的第二个参数，如果它不是空的，就包含一个缺省的值。用它在读取值之前来消除对<code>_hasParam()</code> 的调用：
                     </para>
 
-                    <programlisting role="php"><![CDATA[// Use default value of 1 if id is not set
+                    <programlisting role="php"><![CDATA[
+// Use default value of 1 if id is not set
 $id = $this->_getParam('id', 1);
 
 // Instead of:
@@ -174,7 +179,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}]]>
+}
+]]>
                     </programlisting>
                 </note>
             </listitem>
@@ -224,7 +230,11 @@ applicationOrModule/
                 <code>render()</code> 有下列特征：has the following signature:
             </para>
 
-            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[
+string render(string $action = null, 
+              string $name = null, 
+              bool $noController = false);
+]]>
             </programlisting>
 
             <para>
@@ -239,7 +249,8 @@ applicationOrModule/
                 一些例子：
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -252,11 +263,12 @@ applicationOrModule/
         // Renders baz.phtml
         $this->render('baz', null, true);
 
-        // Renders my/login.phtml to the 'form' segment of the response object
+        // Renders my/login.phtml to the 'form' segment of the 
+        // response object
         $this->render('login', 'form');
 
-        // Renders site.phtml to the 'page' segment of the response object; does
-        // not use the 'my/' subirectory
+        // Renders site.phtml to the 'page' segment of the response 
+        // object; does not use the 'my/' subirectory
         $this->render('site', 'page', true);
     }
 
@@ -265,7 +277,8 @@ applicationOrModule/
         // Renders my/baz-bat.phtml
         $this->render();
     }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -354,26 +367,33 @@ applicationOrModule/
                 如果想执行其它操作，你应该重写这个函数。例如，如果你想显示错误信息，可以象下面这样来写：
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, render the error template
+            // If the action method was not found, render the error 
+            // template
             return $this->render('error');
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "' 
+                            . $method 
+                            . '" called', 
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
                 另外的可能性就是你可能想转发到缺省控制页面：
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -383,14 +403,19 @@ applicationOrModule/
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // If the action method was not found, forward to the index action
+            // If the action method was not found, forward to the 
+            // index action
             return $this->_forward('index');
         }
 
         // all other methods throw an exception
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "' 
+                            . $method 
+                            . '" called', 
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -398,7 +423,8 @@ applicationOrModule/
             为了定制控制器，除了重写<code>__call()</code>以外，本章前面说涉及的初始化、实用程序、访问器、视图和派遣钩子等方法都可以被重写。作为例子，如果把视图对象保存到注册表里，你可能想用象下面的代码来修改<code>initView()</code>：
         </para>
 
-        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -413,7 +439,8 @@ applicationOrModule/
 
         return $this->view;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

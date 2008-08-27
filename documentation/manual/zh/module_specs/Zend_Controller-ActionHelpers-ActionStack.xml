@@ -20,21 +20,25 @@
             经常地，仅仅指定动作、控制器和模块（和可选的参数）最简单，和调用<code>Zend_Controller_Action::_forward()</code>一样：
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // Add two actions to the stack
         // Add call to /foo/baz/bar/baz
         // (FooController::bazAction() with request var bar == baz)
-        $this->_helper->actionStack('baz', 'foo', 'default', array('bar' => 'baz'));
+        $this->_helper->actionStack('baz', 
+                                    'foo', 
+                                    'default', 
+                                    array('bar' => 'baz'));
 
         // Add call to /bar/bat
         // (BarController::batAction())
         $this->_helper->actionStack('bat', 'bar');
     }
 }
-?>]]></programlisting>
+]]></programlisting>
 
     </example>
 
@@ -45,7 +49,8 @@
             有时候请求对象的OOP本性很有用；你也可以传递这样一个对象给<code>动作堆栈</code>助手。
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -53,19 +58,21 @@
         // Add call to /foo/baz/bar/baz
         // (FooController::bazAction() with request var bar == baz)
         $request = clone $this->getRequest();
-        $request->setActionName('baz')              // don't set controller or 
-                ->setParams(array('bar' => 'baz')); // module; use current values
+        // Don't set controller or module; use current values
+        $request->setActionName('baz')               
+                ->setParams(array('bar' => 'baz')); 
         $this->_helper->actionStack($request);
 
         // Add call to /bar/bat
         // (BarController::batAction())
         $request = clone $this->getRequest();
-        $request->setActionName('bat')      // don't set module; use current
-                ->setControllerName('bar'); // value
+        // don't set module; use current value
+        $request->setActionName('bat')      
+                ->setControllerName('bar'); 
         $this->_helper->actionStack($request);
     }
 }
-?>]]></programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

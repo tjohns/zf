@@ -84,7 +84,6 @@ class FooController extends Zend_Controller_Action
         $this->_helper->actionStack($request);
     }
 }
-?>
 ]]></programlisting>
     </example>
 </sect3>

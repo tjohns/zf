@@ -540,7 +540,8 @@ class MyController extends Zend_Controller_Action
                             . '" called',
                             500);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>

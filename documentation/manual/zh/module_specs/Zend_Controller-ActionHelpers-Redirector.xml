@@ -5,7 +5,7 @@
         <title>介绍</title>
 
         <para>
-	         转向器<code>(Redirector)</code>助手让你使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>gotoSimple($action, $controller, $module, $params)</code>接口。
+	    转向器<code>(Redirector)</code>助手让你使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>gotoSimple($action, $controller, $module, $params)</code>接口。
         </para>
 
         <para>
@@ -95,7 +95,8 @@
                这个例子改变了几个选项，包括设定重定向时使用的HTTP状态码为303，重定向时不默认退出，以及定义了默认的URL供重定向使用。
             </para>
 
-            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -109,23 +110,25 @@
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
         // Set the default options for the redirector
-        // Since the object is registered in the helper broker, these become
-        // relevant for all actions from this point forward
+        // Since the object is registered in the helper broker, these 
+        // become relevant for all actions from this point forward
         $this->_redirector->setCode('303')
                           ->setExit(false)
-                          ->setGotoSimple("this-action", "some-controller");
+                          ->setGotoSimple("this-action", 
+                                          "some-controller");
     }
 
     public function myAction()
     {
         /* do some stuff */
 
-        // Redirect to a previously registered URL, and force an exit to occur
-        // when done:
+        // Redirect to a previously registered URL, and force an exit 
+        // to occur when done:
         $this->_redirector->redirectAndExit();
         return; // never reached
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -136,7 +139,8 @@
                这个例子假定使用默认设定，也就意味着任何重定向将导致立即退出。
             </para>
 
-            <programlisting role="php"><![CDATA[// ALTERNATIVE EXAMPLE
+            <programlisting role="php"><![CDATA[
+// ALTERNATIVE EXAMPLE
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -155,10 +159,12 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* do some stuff */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        $this->_redirector
+            ->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // never reached since default is to goto and exit
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -169,7 +175,8 @@ class AlternativeController extends Zend_Controller_Action
                 <code>gotoSimple()</code>'s API 模拟了<code>Zend_Controller_Action::_forward()</code>。主要的不同在于它通过传入的参数构造URL，使用默认路由器的默认格式<code>:module/:controller/:action/*</code>。然后重定向而不是继续动作链循环。
             </para>
 
-            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -187,11 +194,18 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* do some stuff */
 
-        // Redirect to 'my-action' of 'my-controller' in the current module,
-        // using the params param1 => test and param2 => test2
-        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        // Redirect to 'my-action' of 'my-controller' in the current 
+        // module, using the params param1 => test and param2 => test2
+        $this->_redirector->gotoSimple('my-action', 
+                                       'my-controller', 
+                                       null, 
+                                       array('param1' => 'test', 
+                                             'param2' => 'test2'
+                                             )
+                                       );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -238,7 +252,8 @@ $router->addRoute('blogArchive', $route);]]>
             'blogArchive'
         );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>
