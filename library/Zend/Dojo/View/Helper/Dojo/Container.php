@@ -205,7 +205,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
      */
     public function requireModule($module)
     {
-        if (!preg_match('/^[a-z][a-z0-9.]+$/i', $module)) {
+        if (!preg_match('/^[a-z][a-z0-9._]+$/i', $module)) {
             require_once 'Zend/Dojo/View/Exception.php';
             throw new Zend_Dojo_View_Exception(sprintf('Module name specified, "%s", contains invalid characters', (string) $module));
         }
