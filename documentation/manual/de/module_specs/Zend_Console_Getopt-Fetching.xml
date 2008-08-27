@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11067 -->
 <sect1 id="zend.console.getopt.fetching">
     <title>Holen von Optionen und Argumenten</title>
     <para>
@@ -41,7 +41,8 @@
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <para>
@@ -82,7 +83,8 @@
             <title>Verwenden von getOption()</title>
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');]]>
+$p_parameter = $opts->getOption('p');
+]]>
             </programlisting>
         </example>
         <para>
@@ -97,7 +99,8 @@ $p_parameter = $opts->getOption('p');]]>
 if (isset($opts->b)) {
     echo "Die Option b ist da.\n";
 }
-$p_parameter = $opts->p; // Null wenn nicht gesetzt]]>
+$p_parameter = $opts->p; // Null wenn nicht gesetzt
+]]>
             </programlisting>
         </example>
         <para>
@@ -162,7 +165,8 @@ $p_parameter = $opts->p; // Null wenn nicht gesetzt]]>
             <title>Verwenden von getRemainingArgs()</title>
             <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // Rückgabe array('filename')]]>
+$args = $opts->getRemainingArgs(); // Rückgabe array('filename')
+]]>
             </programlisting>
         </example>
         <para>

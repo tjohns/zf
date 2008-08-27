@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11067 -->
 <sect1 id="zend.console.getopt.configuration">
     <title>Konfigurieren von Zend_Console_Getopt</title>
 
@@ -23,7 +23,8 @@ $opts->addRules(
   array(
     'verbose|v' => 'Druckt zusätzliche Ausgaben'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -213,7 +214,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Verwenden von setOption()</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);]]>
+$opts->setOption('ignoreCase', true);
+]]>
             </programlisting>
         </example>
         <para>
@@ -234,7 +236,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
     </sect2>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10825 -->
+<!-- EN-Revision: 11025 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha Anwendung</title>
 
@@ -57,7 +57,7 @@ echo $captcha->render();
 
 // Eine nachfolgende Anfrage:
 // Annahme das das Captcha vorher eingestellt wurde, und $value der übertragene Wert ist:
-if ($captcha->isValid($value)) {
+if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }
 ]]></programlisting>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 11022 -->
 <sect2 id="zend.test.phpunit.assertions">
     <title>Ausnahmen</title>
 
@@ -52,14 +52,14 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCount($path, $count, $message = '')</code>:  Nimmt an das exakt 
+                <code>assertQueryCount($path, $count, $message = '')</code>:  Nimmt an das exakt 
                 <code>$count</code> DOM Elemente dem angegebenen CSS Selektor entsprechen. Wenn eine 
                 <code>$message</code> vorhanden ist, wird diese jeder fehlgeschlagenen Ausnahmemeldung
                 vorangestellt.
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMin($path, $count, $message = '')</code>: Nimmt an das zumindest
+                <code>assertQueryCountMin($path, $count, $message = '')</code>: Nimmt an das zumindest
                 <code>$count</code> DOM Element dem angegebenen CSS Selektor entsprechen. Wenn eine 
                 <code>$message</code> vorhanden ist, wird diese jeder fehlgeschlagenen Ausnahmemeldung
                 vorangestellt. <emphasis>Achtung:</emphasis> Die Spezifizierung eines Wertes von 1 für
@@ -67,7 +67,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryContentCountMax($path, $count, $message = '')</code>: Nimmt an das es nicht
+                <code>assertQueryCountMax($path, $count, $message = '')</code>: Nimmt an das es nicht
                 mehr als <code>$count</code> DOM Elemente gibt die dem angegebenen CSS Selektor entsprechen.
                 Wenn eine <code>$message</code> vorhanden ist, wird diese jeder fehlgeschlagenen Ausnahmemeldung
                 vorangestellt. <emphasis>Achtung:</emphasis> Die Spezifizierung eines Wertes von 1 für
@@ -78,7 +78,7 @@
         <para>
             Zusätzlich hat jede der obigen Methoden eine 'Not' Variante die eine negative Ausnahme anbietet:
             <code>assertNotQuery()</code>, <code>assertNotQueryContentContains()</code>,
-            <code>assertNotQueryContentRegex()</code>, und <code>assertNotQueryContentCount()</code>.
+            <code>assertNotQueryContentRegex()</code>, und <code>assertNotQueryCount()</code>.
             (Es ist zu beachten das die min und max Zählen keine dieser Varianten haben, was aus logischen
             Gründen so ist.)
         </para>
