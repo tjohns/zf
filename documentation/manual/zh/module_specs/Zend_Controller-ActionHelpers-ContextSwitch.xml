@@ -31,7 +31,8 @@
         例子，考虑下列的控制器：
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     /**
      * Landing page; forwards to listAction()
@@ -61,7 +62,8 @@
         我们想让 <code>listAction()</code> 也支持 XML 格式，不用创建一个不同的动作，我们可以提示它可以返回 XML 响应：
     </para>
 
-    <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -229,7 +231,8 @@
             添加动作/上下文关系的基本方法是 <code>addActionContext()</code> 。它有两个参数：上下文被添加到的动作和上下文的名称或上下文数组的其中之一。作为例子，考虑下列的控制器类：
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function listAction()
     {
@@ -246,13 +249,15 @@
     public function updateAction()
     {
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             假如我们想添加 XML 上下文到 'list'动作、XML 和 JSON 上下文到 'comments' 动作，可以在 <code>init()</code> 方法中完成：
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -261,13 +266,15 @@
              ->addActionContext('comments', array('xml', 'json'))
              ->initContext();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             另外，还可以定义数组属性 <code>$contexts</code>：
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
         'list'     => array('xml'),
@@ -341,19 +348,23 @@
             为初始化上下文开关，需要在动作控制器中调用 <code>initContext()</code>：
         </para>
 
-        <programlisting role="php"><![CDATA[class NewsController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class NewsController extends Zend_Controller_Action
 {
     public function init()
     {
         $this->_helper->contextSwitch()->initContext();
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
         <para>
             在某些情况下，你想强制使用上下文，例如，如果上下文开关是激活状态，你只想用 XML 上下文，可以通过传递上下文给 <code>initContext()</code> 来完成：
         </para>
 
-        <programlisting role="php"><![CDATA[$contextSwitch->initContext('xml');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$contextSwitch->initContext('xml');
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -369,8 +380,10 @@
                     <code>setAutoJsonSerialization($flag)</code>: 缺省地，JSON 上下文将系列化任何视图变量给 JSON 符号并把它作为响应返回。如果想创建自己的响应，你需要关闭它，这需要在调用  <code>initContext()</code> 之前来完成。
                 </para>
 
-                <programlisting role="php"><![CDATA[$contextSwitch->setAutoJsonSerialization(false);
-$contextSwitch->initContext();]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$contextSwitch->setAutoJsonSerialization(false);
+$contextSwitch->initContext();
+]]></programlisting>
 
                 <para>
                     用 <code>getAutoJsonSerialization()</code> 来获取 flag 的值。
@@ -527,7 +540,8 @@ $contextSwitch->initContext();]]></programlisting>
                 在下面的例子中，我们允许对动作 'view'、 'form' 和 'process' 的请求响应 AJAX 的请求。在头两个例子 'view' 和 'form'，返回不更新页面的 HTML 片段；在最后的例子，返回 JSON。
             </para>
 
-            <programlisting role="php"><![CDATA[class CommentController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class CommentController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -555,10 +569,11 @@ $contextSwitch->initContext();]]></programlisting>
     public function processAction()
     {
         // Process a new comment
-        // Return the results as JSON; simply assign the results as view
-        // variables, and JSON will be returned.
+        // Return the results as JSON; simply assign the results as 
+        // view variables, and JSON will be returned.
     }
-}]]></programlisting>
+}
+]]></programlisting>
 
             <para>
                 在客户端，AJAX 库将请求终点  '/comment/view'、 '/comment/form' 和 '/comment/process'，并传递 'format' 参数：'/comment/view/format/html'、'/comment/form/format/html' 和 '/comment/process/format/json'。（或者你可以通过查询字符串（ query string） 传递参数，如："?format=json"）
