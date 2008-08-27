@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.console.getopt.fetching">
     <title>オプションおよび引数の取得</title>
     <para>
@@ -32,13 +32,15 @@
         </para>
         <example id="zend.console.getopt.fetching.exceptions.example">
             <title>Getopt の例外処理</title>
-            <programlisting role="php"><![CDATA[try {
+            <programlisting role="php"><![CDATA[
+try {
     $opts = new Zend_Console_Getopt('abp:');
     $opts->parse();
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <para>
@@ -77,9 +79,11 @@
         </para>
         <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title>getOption() の使用法</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');]]>
+$p_parameter = $opts->getOption('p');
+]]>
             </programlisting>
         </example>
         <para>
@@ -89,11 +93,13 @@ $p_parameter = $opts->getOption('p');]]>
         </para>
         <example id="zend.console.getopt.fetching.byname.example.magic">
             <title>マジックメソッド __get() および __isset() の使用例</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {
     echo "オプション b を取得しました。\n";
 }
-$p_parameter = $opts->p; // 設定されていない場合は null となります]]>
+$p_parameter = $opts->p; // 設定されていない場合は null となります
+]]>
             </programlisting>
         </example>
         <para>
@@ -156,9 +162,11 @@ $p_parameter = $opts->p; // 設定されていない場合は null となりま�
         </para>
         <example id="zend.console.getopt.fetching.remainingargs.example">
             <title>getRemainingArgs() の使用法</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // array('filename') を返します]]>
+$args = $opts->getRemainingArgs(); // array('filename') を返します
+]]>
             </programlisting>
         </example>
         <para>

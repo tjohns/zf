@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.console.getopt.configuration">
     <title>Zend_Console_Getopt の設定</title>
 
@@ -17,12 +17,14 @@
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>addRules() の使用法</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => '詳細な出力を表示する'
   )
-);]]>
+);
+]]>
             </programlisting>
         </example>
         <para>
@@ -44,7 +46,8 @@ $opts->addRules(
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
             <title>setHelp() の使用法</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'リンゴです。パラメータは不要です。',
@@ -211,7 +214,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>setOption() の使用法</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);]]>
+$opts->setOption('ignoreCase', true);
+]]>
             </programlisting>
         </example>
         <para>
@@ -230,7 +234,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
     </sect2>
