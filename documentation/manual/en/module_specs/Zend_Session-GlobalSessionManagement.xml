@@ -42,7 +42,8 @@
                 configuration options to the INI file:
             </para>
 
-            <programlisting role="ini"><![CDATA[; Accept defaults for production
+            <programlisting role="ini"><![CDATA[
+; Accept defaults for production
 [production]
 ; bug_compat_42
 ; bug_compat_warn
@@ -79,8 +80,9 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; When persisting session id cookies, request a TTL of 10 days
-remember_me_seconds = 864000]]>
-            </programlisting>
+remember_me_seconds = 864000
+]]>
+</programlisting>
 
             <para>
                 Next, load the configuration file and pass its array representation to
@@ -90,7 +92,8 @@ remember_me_seconds = 864000]]>
             <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
-Zend_Session::setOptions($config->toArray());]]>
+Zend_Session::setOptions($config->toArray());
+]]>
             </programlisting>
 
         </example>

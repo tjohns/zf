@@ -48,7 +48,8 @@
 
         <example id="zend.date.additional.checking.example-1">
             <title>Checking dates</title>
-            <programlisting role="php"><![CDATA[// Checking dates
+            <programlisting role="php"><![CDATA[
+// Checking dates
 $date = '01.03.2000';
 if (Zend_Date::isDate($date)) {
     print "String $date is a date";
@@ -70,7 +71,8 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "String $date is a date";
 } else {
     print "String $date is NO date";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -101,8 +103,10 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <example id="zend.date.additional.sunrise-sunset.example-1">
             <title>Getting all available cities</title>
-            <programlisting role="php"><![CDATA[// Output the complete list of available cities
-print_r (Zend_Date_Cities::getCityList());]]>
+            <programlisting role="php"><![CDATA[
+// Output the complete list of available cities
+print_r (Zend_Date_Cities::getCityList());
+]]>
             </programlisting>
         </example>
 
@@ -160,7 +164,8 @@ print_r (Zend_Date_Cities::getCityList());]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-2">
             <title>Getting the location for a city</title>
-            <programlisting role="php"><![CDATA[// Get the location for a defined city
+            <programlisting role="php"><![CDATA[
+// Get the location for a defined city
 // uses the effective horizon as no horizon is defined
 print_r (Zend_Date_Cities::City('Vienna'));
 
@@ -168,7 +173,8 @@ print_r (Zend_Date_Cities::City('Vienna'));
 print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
 
 // self definition of a location
-$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
+$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
+]]>
             </programlisting>
         </example>
 
@@ -182,7 +188,8 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-3">
             <title>Calculating sun informations</title>
-            <programlisting role="php"><![CDATA[// Get the location for a defined city
+            <programlisting role="php"><![CDATA[
+// Get the location for a defined city
 $city = Zend_Date_Cities::City('Vienna');
 
 // create a date object for the day for which the sun has to be calculated
@@ -196,7 +203,8 @@ print $sunset->get(Zend_Date::ISO_8601);
 $info = $date->getSunInfo($city);
 foreach ($info as $sun) {
     print "\n" . $sun->get(Zend_Date::ISO_8601);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -234,7 +242,8 @@ foreach ($info as $sun) {
 
         <example id="zend.date.additional.timezones.example-1">
             <title>Working with timezones</title>
-            <programlisting role="php"><![CDATA[// Set a default timezone... this has to be done within the bootstrap file or php.ini
+            <programlisting role="php"><![CDATA[
+// Set a default timezone... this has to be done within the bootstrap file or php.ini
 // We do this here just for having a complete example
 date_default_timezone_set('Europe/Vienna');
 
@@ -254,7 +263,8 @@ $date->setTimezone('America/Chicago');
 print $date->getTimezone();
 
 // see the changed date object
-print $date->getIso();]]>
+print $date->getIso();
+]]>
             </programlisting>
         </example>
 
@@ -274,7 +284,8 @@ print $date->getIso();]]>
 
         <example id="zend.date.additional.timezones.example-2">
             <title>Multiple timezones</title>
-            <programlisting role="php"><![CDATA[// Set a default timezone... this has to be done within the bootstrap file or php.ini
+            <programlisting role="php"><![CDATA[
+// Set a default timezone... this has to be done within the bootstrap file or php.ini
 // We do this here just for having a complete example
 date_default_timezone_set('Europe/Vienna');
 
@@ -299,7 +310,8 @@ $lastdate = clone $date;
 $lastdate->setTimezone();
 
 // view our date object
-print $lastdate->getIso();]]>
+print $lastdate->getIso();
+]]>
             </programlisting>
         </example>
 

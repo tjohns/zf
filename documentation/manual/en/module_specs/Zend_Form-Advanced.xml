@@ -69,7 +69,8 @@
         <dd><input name="save" type="submit" value="Save" /></dd>
     </dl>
 </form>
-]]></programlisting>
+]]>
+</programlisting>
         
         <para>
             In this example, the billing and shipping address contain some
@@ -137,7 +138,8 @@
         <dd><input name="save" type="submit" value="Save" /></dd>
     </dl>
 </form>
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             In the above sample, we now get separate addresses. In the submitted
@@ -326,7 +328,8 @@ class My_Form_Registration extends Zend_Form
         ));
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Note that there are no submit buttons, and that we have done
@@ -412,7 +415,8 @@ class My_Form_Registration extends Zend_Form
         return $this;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Next, we need to add some scaffolding in our action controller,
@@ -430,7 +434,8 @@ class My_Form_Registration extends Zend_Form
                 form instance:
             </para>
 
-            <programlisting role="php"><![CDATA[class RegistrationController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class RegistrationController extends Zend_Controller_Action
 {
     protected $_form;
 
@@ -442,7 +447,8 @@ class My_Form_Registration extends Zend_Form
         return $this->_form;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Now, let's add some functionality for determining which form to
@@ -544,7 +550,8 @@ class RegistrationController extends Zend_Controller_Action
         return false;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 The above methods allow us to use notations such as "<code>$subForm =
@@ -611,7 +618,8 @@ class My_Form_Registration extends Zend_Form
         return $this->getForm()->isValid($data);
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Now that we have the legwork out of the way, let's build the
@@ -657,7 +665,8 @@ class RegistrationController extends Zend_Controller_Action
         $this->render('verification');
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 As you'll notice, the actual code for processing the form is
@@ -703,8 +712,9 @@ foreach ($this->info as $info):
     endforeach; ?>
 </dl>
 <? endforeach;
-endforeach ?>
-]]></programlisting>
+endforeach 
+]]>
+            </programlisting>
             
             <para>
                 Upcoming releases of Zend Framework will include components to

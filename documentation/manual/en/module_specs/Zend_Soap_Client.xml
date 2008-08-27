@@ -119,7 +119,8 @@
                         'compression' - compression options; it's a combination of <code>SOAP_COMPRESSION_ACCEPT</code>,
                         <code>SOAP_COMPRESSION_GZIP</code> and <code>SOAP_COMPRESSION_DEFLATE</code> options which 
                         may be used like this:
-                        <programlisting role="php"><![CDATA[// Accept response compression
+                        <programlisting role="php"><![CDATA[
+// Accept response compression
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
@@ -131,7 +132,9 @@ $client = new SoapClient("some.wsdl",
 
 // Compress requests using deflate compression
 $client = new SoapClient("some.wsdl", 
-  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));]]></programlisting>
+  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
+]]>
+                        </programlisting>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -152,7 +155,8 @@ $client = new SoapClient("some.wsdl",
         
         <para>
             Use it like in the following example:
-            <programlisting role="php"><![CDATA[//****************************************************************
+            <programlisting role="php"><![CDATA[
+//****************************************************************
 //                Server code
 //****************************************************************
 // class MyClass {
@@ -197,7 +201,9 @@ $result1 = $client->method1(10);
 ...
 
 // $result2 is a float
-$result2 = $client->method2(22, 'some string');]]></programlisting>
+$result2 = $client->method2(22, 'some string');
+]]>
+            </programlisting>
         </para>
     </sect2>
 </sect1>

@@ -72,7 +72,8 @@
 
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]>
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+]]>
             </programlisting>
         </para>
 
@@ -98,11 +99,13 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
              Use the following code to check, if PCRE UTF-8 suppor is enabled:
 
             <programlisting role="php"><![CDATA[
+
 if (@preg_match('/\pL/u', 'a') == 1) {
     echo "PCRE unicode support is turned on.\n";
 } else {
     echo "PCRE unicode support is turned off.\n";
-}]]>
+}
+]]>
             </programlisting>
         </para>
         
@@ -115,6 +118,7 @@ if (@preg_match('/\pL/u', 'a') == 1) {
             and query string before searching by converting them to lowercase:
         
             <programlisting role="php"><![CDATA[
+
 // Indexing
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
@@ -133,7 +137,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($conten
 $doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
 
 // Title field for retrieving (unindexed, stored)
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
@@ -147,7 +152,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 ...
 
-$hits = $index->find(strtolower($query));]]>
+$hits = $index->find(strtolower($query));
+]]>
             </programlisting>
         </para>
     </sect2>

@@ -151,7 +151,8 @@ $config = array(
 $client = Zend_Http_Client('https://www.example.com', $config);
 
 // The following request will be sent over a TLS secure connection.
-$response = $client->request();]]>
+$response = $client->request();
+]]>
             </programlisting>
         </example>
         <para>
@@ -255,7 +256,8 @@ $config = array(
 // Instantiate a client object
 $client = Zend_Http_Client('http://www.example.com', $config);
 
-// Continue working...]]>
+// Continue working...
+]]>
             </programlisting>
         </example>
         <para>
@@ -312,7 +314,8 @@ $adapter->setResponse(
     '</rss>');
 
 $response = $client->request('GET');
-// .. continue parsing $response..]]>
+// .. continue parsing $response..
+]]>
             </programlisting>
         </example>
         <para>
@@ -361,7 +364,8 @@ $adapter->addResponse(
     '</html>');
 
 // inject the http client object ($client) into your object
-// being tested and then test your object's behavior below]]>
+// being tested and then test your object's behavior below
+]]>
             </programlisting>
         </example>
         <para>
@@ -471,7 +475,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
 // Then, you could use this adapter:
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
-));]]>
+));
+]]>
             </programlisting>
         </example>
     </sect2>

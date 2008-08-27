@@ -65,7 +65,8 @@
     // Remove specified page.
     unset($pdf->pages[$id]);
 
-    ...]]>
+    ...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -96,7 +97,8 @@
     // Remove source template page from the documents.
     unset($pdf->pages[$templatePageIndex]);
 
-    ...]]>
+    ...
+]]>
             </programlisting>
         </example>
 

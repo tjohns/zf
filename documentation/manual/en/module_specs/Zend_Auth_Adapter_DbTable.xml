@@ -248,7 +248,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
+);
+]]>
         </programlisting>
         <para>
             Another scenario can be the implementation of a salting mechanism. 

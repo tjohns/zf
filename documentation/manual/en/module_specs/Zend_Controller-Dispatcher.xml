@@ -38,7 +38,8 @@ $front->setParam('prefixDefaultModule', true);
 
 // In your dispatcher:
 $dispatcher->setParam('prefixDefaultModule', true);
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 This allows you to re-purpose an existing module to be the
@@ -90,7 +91,8 @@ public function bazAction()
     // forward to an action in another controller in another module,
     // Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -269,7 +271,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return string
      */
     public function getDefaultAction();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

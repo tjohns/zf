@@ -19,6 +19,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
 echo $server->handle();
@@ -89,6 +90,7 @@ echo $server->handle();
         </para>
 
         <programlisting role="php"><![CDATA[
+
 /**
 * This is a sample function
 *
@@ -99,7 +101,8 @@ echo $server->handle();
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -119,6 +122,7 @@ function myFunc($val1, $val2, $val3)
         </para>
 
         <programlisting role="php"><![CDATA[
+
 /**
 * This is a sample function
 *
@@ -129,7 +133,8 @@ function myFunc($val1, $val2, $val3)
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -168,12 +173,14 @@ function myFunc($val1, $val2, $val3)
         </para>
 
         <programlisting role="php"><![CDATA[
+
 // All public methods in My_Service_Class will be accessible as
 // myservice.METHODNAME
 $server->setClass('My_Service_Class', 'myservice');
 
 // Function 'somefunc' will be accessible as funcs.somefunc
-$server->addFunction('somefunc', 'funcs');]]>
+$server->addFunction('somefunc', 'funcs');
+]]>
         </programlisting>
     </sect2>
 
@@ -232,7 +239,9 @@ $server->addFunction('somefunc', 'funcs');]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
+
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
+]]>
         </programlisting>
 
         <para>
@@ -265,6 +274,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
             An sample usage follows:
         </para>
         <programlisting role="php"><![CDATA[
+
 function __autoload($class)
 {
     Zend_Loader::loadClass($class);
@@ -313,6 +323,7 @@ echo $server->handle();
             </para>
 
             <programlisting role="php"><![CDATA[
+
 /**
  * Return the MD5 sum of a value
  *
@@ -340,6 +351,7 @@ echo $server->handle();
             </para>
 
             <programlisting role="php"><![CDATA[
+
 require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
@@ -358,6 +370,7 @@ echo $server->handle();
             </para>
 
             <programlisting role="php"><![CDATA[
+
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
@@ -366,7 +379,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -379,6 +393,7 @@ echo $server->handle();]]>
             </para>
 
             <programlisting role="php"><![CDATA[
+
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
@@ -405,6 +420,7 @@ echo $server->handle();
             </para>
 
             <programlisting role="php"><![CDATA[
+
 require_once 'Services/Request.php';
 require_once 'Services/Exception.php';
 require_once 'Services/Comb.php';
@@ -436,6 +452,7 @@ echo $server->handle($request);
             </para>
 
             <programlisting role="php"><![CDATA[
+
 require_once 'Services/Request.php';
 require_once 'Services/Response.php';
 require_once 'Services/Exception.php';
@@ -470,7 +487,8 @@ echo $server->handle($request);
                 between requests.
             </para>
 
-            <programlisting role="php"><![CDATA[// Specify a cache file
+            <programlisting role="php"><![CDATA[
+// Specify a cache file
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Allow Services_Exceptions to report as fault responses
@@ -494,7 +512,8 @@ $request = new Services_Request();
 // Utilize a custom response
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
     </sect2>

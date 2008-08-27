@@ -110,7 +110,8 @@
                     the words of an action with a dash:
                 </para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -119,7 +120,9 @@ $inflector->setFilterRule(':action', array(
     ),
     'StringToLower'
 ));
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     The above code will modify the inflector to no longer
@@ -142,7 +145,10 @@ $inflector->setFilterRule(':action', array(
                     flag, 'useCaseSensitiveActions':
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$front->setParam('useCaseSensitiveActions', true);
+]]>
+                </programlisting>
 
                 <para>
                     This will allow you to use camelCasing on the url and still
@@ -184,7 +190,9 @@ $inflector->setFilterRule(':action', array(
             front controller parameter <code>noErrorHandler</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('noErrorHandler', true);
+]]>
         </programlisting>
 
         <para>
@@ -203,8 +211,10 @@ $inflector->setFilterRule(':action', array(
             to dispatching:
         </para>
 
-        <programlisting role="php"><![CDATA[// Assuming $front is an instance of Zend_Controller_Front
-$front->setParam('noViewRenderer', true);]]>
+        <programlisting role="php"><![CDATA[
+// Assuming $front is an instance of Zend_Controller_Front
+$front->setParam('noViewRenderer', true);
+]]>
         </programlisting>
 
         <para>
@@ -232,7 +242,8 @@ $front->setParam('noViewRenderer', true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$this->_helper->viewRenderer->setNoRender();]]>
+$this->_helper->viewRenderer->setNoRender();
+]]>
         </programlisting>
 
         <para>
@@ -248,7 +259,8 @@ public function preDispatch()
     // disable view script autorendering
     $this->_helper->viewRenderer->setNoRender()
     // .. do other things...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -303,9 +315,11 @@ public function preDispatch()
                     Prior to dispatching a front controller instance:
                 </para>
 
-                <programlisting role="php"><![CDATA[// Assuming $view has already been defined
+                <programlisting role="php"><![CDATA[
+// Assuming $view has already been defined
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
                 </programlisting>
             </listitem>
 
@@ -314,8 +328,10 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     Any time during the bootstrap process:
                 </para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);]]>
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer->setView($view);
+]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -388,7 +404,10 @@ $viewRenderer->setView($view);]]>
             remains the same:
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
+        </programlisting>
 
         <para>
             However, the directory structure underwent an overhaul, several
@@ -446,7 +465,8 @@ $viewRenderer->setView($view);]]>
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);]]>
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]>
                 </programlisting>
 
                 <para>
@@ -471,7 +491,10 @@ final protected function _forward($action, $controller = null, $module = null, a
             still do each of the following:
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
+        </programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- create a router -- */
@@ -485,7 +508,8 @@ $ctrl->setRouter($router);
 
 /* -- set controller directory and dispatch -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
-$ctrl->dispatch();]]>
+$ctrl->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -526,7 +550,8 @@ $ctrl->dispatch();]]>
                             controller:
                         </para>
                         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
                         </programlisting>
                     </listitem>
 
@@ -544,7 +569,8 @@ $front->dispatch();
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
-echo $response;]]>
+echo $response;
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>
@@ -638,7 +664,8 @@ $action = $this->getRequest()->getActionName();
 // the request object now.
 $params = $this->_getParams();
 $foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
-                                           // 'default' as default value if not found]]>
+                                           // 'default' as default value if not found
+]]>
                         </programlisting>
                     </listitem>
 
@@ -660,7 +687,8 @@ public function __call($method, $args)
     }
 
     throw new Zend_Controller_Exception('Invalid method called');
-}]]>
+}
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>

@@ -376,7 +376,8 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "integer";
 } else {
     print "not a integer";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -454,7 +455,8 @@ function getScriptCode($scriptName, $locale)
 }
 echo getScriptCode('Latin', 'en'); // outputs "Latn"
 echo getScriptCode('Tamil', 'en'); // outputs "Taml"
-echo getScriptCode('tamoul', 'fr'); // outputs "Taml"]]>
+echo getScriptCode('tamoul', 'fr'); // outputs "Taml"
+]]>
             </programlisting>
         </example>
 

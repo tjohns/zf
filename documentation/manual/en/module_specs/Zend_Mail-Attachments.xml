@@ -30,7 +30,8 @@ $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
     <para>
         An alternative is to create an instance of <code>Zend_Mime_Part</code> and add it with <code>addAttachment()</code>:

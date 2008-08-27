@@ -84,7 +84,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'localhost',
 echo $mail->countMessages() . " messages found\n";
 foreach ($mail as $message) {
     echo "Mail from '{$message->from}': {$message->subject}\n";
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -100,13 +101,15 @@ foreach ($mail as $message) {
         </para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));]]>
+$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
+]]>
         </programlisting>
 
         <para>Maildir is very similar but needs a dirname:</para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));]]>
+$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
+]]>
         </programlisting>
 
         <para>Both constructors throw a <code>Zend_Mail_Exception</code> if the storage can't be read.</para>
@@ -136,7 +139,8 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
-                                         'password' => 'test'));]]>
+                                         'password' => 'test'));
+]]>
         </programlisting>
 
         <para>
@@ -156,7 +160,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
                                          'user'     => 'test',
                                          'password' => 'test',
-                                         'ssl'      => 'TLS'));]]>
+                                         'ssl'      => 'TLS'));
+]]>
         </programlisting>
 
         <para>
@@ -174,7 +179,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
         </para>
 
         <programlisting role="php"><![CDATA[
-$message = $mail->getMessage($messageNum);]]>
+$message = $mail->getMessage($messageNum);
+]]>
         </programlisting>
 
         <para>
@@ -183,7 +189,8 @@ $message = $mail->getMessage($messageNum);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$message = $mail[$messageNum];]]>
+$message = $mail[$messageNum];
+]]>
         </programlisting>
 
         <para>For iterating over all messages the Iterator interface is implemented:</para>
@@ -191,7 +198,8 @@ $message = $mail[$messageNum];]]>
         <programlisting role="php"><![CDATA[
 foreach ($mail as $messageNum => $message) {
     // do stuff ...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -204,7 +212,8 @@ foreach ($mail as $messageNum => $message) {
 $maxMessage = $mail->countMessages();
 
 // array access
-$maxMessage = count($mail);]]>
+$maxMessage = count($mail);
+]]>
         </programlisting>
 
         <para>To remove a mail you use the method <code>removeMessage()</code> or again array access:</para>
@@ -214,7 +223,8 @@ $maxMessage = count($mail);]]>
 $mail->removeMessage($messageNum);
 
 // array access
-unset($mail[$messageNum]);]]>
+unset($mail[$messageNum]);
+]]>
         </programlisting>
 
     </sect2>
@@ -235,7 +245,8 @@ $message = $mail->getMessage(1);
 echo $message->subject . "\n";
 
 // get content-type header
-$type = $message->contentType;]]>
+$type = $message->contentType;
+]]>
         </programlisting>
 
         <para>If you have multiple headers with the same name i.e. the Received headers you might want it as array
@@ -258,7 +269,8 @@ foreach ($received as $line) {
 $received = $message->getHeader('received');
 if (is_string($received)) {
     // only one received header found in message
-}]]>
+}
+]]>
         </programlisting>
 
         <para>The method <code>getHeaders()</code> returns all headers as array with the lower-cased name as
@@ -274,7 +286,8 @@ foreach ($message->getHeaders() as $name => $value) {
     foreach ($value as $entry) {
         echo "$name: $entry\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>If you don't have a multipart message fetching the content is easy done via
@@ -284,7 +297,8 @@ foreach ($message->getHeaders() as $name => $value) {
 // output message content for HTML
 echo '<pre>';
 echo $message->getContent();
-echo '</pre>';]]>
+echo '</pre>';
+]]>
         </programlisting>
 
         <para>Checking for a multipart message is done with the method <code>isMultipart()</code>. If you have
@@ -301,7 +315,8 @@ while ($part->isMultipart()) {
 }
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
 echo "Content:\n";
-echo $part->getContent();]]>
+echo $part->getContent();
+]]>
         </programlisting>
 
         <para><code>Zend_Mail_Part</code> also implements <code>RecursiveIterator</code>, which makes it easy to scan through all parts. And
@@ -324,7 +339,8 @@ if (!$foundPart) {
     echo 'no plain text part found';
 } else {
     echo "plain text part: \n" . $foundPart;
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -372,7 +388,8 @@ foreach ($flags as $flag) {
         default:
             echo $flag . '(unknown flag) ';
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>As IMAP allows user or client defined flags you could get flags, that don't have a constant in
@@ -387,7 +404,8 @@ if (!$message->hasFlag('$SpamTested')) {
     echo 'this message is spam';
 } else {
     echo 'this message is ham';
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -429,7 +447,8 @@ $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail
 // imap is the same with and without folders
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
                                          'user'     => 'test',
-                                         'password' => 'test'));]]>
+                                         'password' => 'test'));
+]]>
         </programlisting>
 
         <para>
@@ -487,7 +506,8 @@ foreach ($folders as $localName => $folder) {
     echo ' value="' . htmlspecialchars($folder) . '">'
         . htmlspecialchars($localName) . '</option>';
 }
-echo '</select>';]]>
+echo '</select>';
+]]>
         </programlisting>
 
         <para>
@@ -505,7 +525,8 @@ echo '</select>';]]>
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
 echo 'Last folder was ' . $mail->getSelectedFolder() . "new folder is $folder\n";
-$mail->selectFolder($folder);]]>
+$mail->selectFolder($folder);
+]]>
         </programlisting>
 
     </sect2>
@@ -530,7 +551,8 @@ foreach ($mail as $message) {
     // do something else ...
 
     $mail->noop(); // keep alive
-}]]>
+}
+]]>
             </programlisting>
 
         </sect3>
@@ -564,7 +586,8 @@ if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($
 
 // do stuff ...
 
-$cache->set($cache_id, $mail);]]>
+$cache->set($cache_id, $mail);
+]]>
             </programlisting>
 
         </sect3>
@@ -680,7 +703,8 @@ $mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/ma
 $mail->setQuota(true); // true to enable, false to disable
 echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
 // check quota can be used even if quota checks are disabled
-echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";]]>
+echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
+]]>
             </programlisting>
             
             <para>
@@ -691,7 +715,8 @@ echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";]]>
 $quota = $mail->checkQuota(true);
 echo 'You are ', $quota['over_quota'] ? 'over quota' : 'not over quota', "\n";
 echo 'You have ', $quota['count'], ' of ', $quota['quota']['count'], ' messages and use ';
-echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';]]>
+echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
+]]>
             </programlisting>
             
             <para>
@@ -701,7 +726,8 @@ echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';]]>
             
             <programlisting role="php"><![CDATA[
 // message count and octet size supported, order does matter
-$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
+$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
+]]>
             </programlisting>
             
             <para>
@@ -727,7 +753,8 @@ class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
 			return array('count' => $count, 'size' => $size);
 		}
 	}
-}]]>
+}
+]]>
             </programlisting>
 
 

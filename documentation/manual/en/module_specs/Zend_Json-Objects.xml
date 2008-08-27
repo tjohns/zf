@@ -27,7 +27,8 @@
     </para>
     <programlisting role="php"><![CDATA[
 // Decode JSON objects as PHP objects
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
+]]>
     </programlisting>
     <para>
         Any objects thus decoded are returned as <code>StdClass</code> objects

@@ -97,7 +97,8 @@ try {
    echo 'Problem authenticating: ' . $ae->exception() . "\n";
 }
 
-$cal = new Zend_Gdata_Calendar($client);]]>
+$cal = new Zend_Gdata_Calendar($client);
+]]>
         </programlisting>
 
     </sect2>

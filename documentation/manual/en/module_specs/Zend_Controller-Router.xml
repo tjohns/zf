@@ -26,7 +26,8 @@
 
         <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]>
         </programlisting>
 
         <para>
@@ -37,7 +38,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 ]]>
+RewriteRule ^(.*)$ index.php/$1 
+]]>
         </programlisting>
 
         <para>
@@ -66,11 +68,14 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
             If using Lighttpd, the following rewrite rule is valid:
         </para>
 
-        <programlisting role="lighttpd"><![CDATA[url.rewrite-once = (
+        <programlisting role="lighttpd"><![CDATA[
+url.rewrite-once = (
     ".*\?(.*)$" => "/index.php?$1",
     ".*\.(js|ico|gif|jpg|png|css)$" => "$0",
     "" => "/index.php"
-)]]></programlisting>
+)
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
@@ -270,7 +275,8 @@ http://example/blog/archive/list/sort/alpha/date/desc
 $compat = new Zend_Controller_Router_Route_Module(array(),
                                                   $dispatcher,
                                                   $request);
-$this->addRoute('default', $compat);]]>
+$this->addRoute('default', $compat);
+]]>
         </programlisting>
 
         <para>

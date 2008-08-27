@@ -279,7 +279,9 @@
             -- between the words 'Zend' and 'Platform' when using the
             <code>Zend_Cache::factory()</code> method:
         </para>
-        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        <programlisting role="php"><![CDATA[
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+]]>
         </programlisting>
         <para>
             There are no options for this backend.

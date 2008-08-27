@@ -44,7 +44,9 @@ $form = new Zend_Form();
 
 // Custom form object:
 $form = new My_Form()
-?>]]></programlisting>
+
+]]>
+    </programlisting>
 
     <para>
         You can optionally pass in configuration, which will be used to set
@@ -54,7 +56,9 @@ $form = new My_Form()
     <programlisting role="php"><![CDATA[
 // Passing in configuration options:
 $form = new Zend_Form($config);
-?>]]></programlisting>
+
+]]>
+    </programlisting>
 
     <para>
         <code>Zend_Form</code> is iterable, and will iterate over elements,
@@ -195,7 +199,9 @@ $form->addElement('text', 'foo');
 
 // Pass label option to the element:
 $form->addElement('text', 'foo', array('label' => 'Foo:'));
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <note>
             <title>addElement() Implements Fluent Interface</title>
@@ -236,7 +242,9 @@ $foo = $form->getElement('foo');
 
 // As object property:
 $foo = $form->foo;
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Occasionally, you may want to create an element without attaching it
@@ -249,7 +257,9 @@ $foo = $form->foo;
         <programlisting role="php"><![CDATA[
 // $username becomes a Zend_Form_Element_Text object:
 $username = $form->createElement('text', 'username');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <sect3 id="zend.form.forms.elements.values">
             <title>Populating and Retrieving Values</title>
@@ -269,7 +279,9 @@ $values = $form->getValues();
 
 // Get only 'foo' element's value:
 $value = $form->getValue('foo');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 Sometimes you'll want to populate the form with specified values
@@ -281,7 +293,9 @@ $value = $form->getValue('foo');
             <programlisting role="php"><![CDATA[
 $form->setDefaults($data);
 $form->populate($data);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 On the flip side, you may want to clear a form after populating
@@ -291,7 +305,8 @@ $form->populate($data);
 
             <programlisting role="php"><![CDATA[
 $form->reset();
-]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
@@ -326,7 +341,9 @@ $form->addElementPrefixPath('My_Foo_Validate', 'My/Foo/Validate', 'validate');
 
 // Just decorator paths:
 $form->addElementPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator', 'decorator');
-?>]]></programlisting>
+
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.elements.global.decorators">
@@ -346,7 +363,9 @@ $form->setElementDecorators(array(
     'ViewHelper',
     'Label'
 ));
-?>]]></programlisting>
+
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.elements.global.decoratorsFilter">
@@ -384,7 +403,8 @@ $form->setElementDecorators(
         'bar'
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     On the flip side, with this snippet, we'll now indicate
@@ -405,7 +425,8 @@ $form->setElementDecorators(
     ),
     false
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </example>
 
                 <note>
@@ -445,7 +466,9 @@ $form->setElementDecorators(
 
         <programlisting role="php"><![CDATA[
 $form->setElementFilters(array('StringTrim'));
-?>]]></programlisting>
+
+]]>
+        </programlisting>
             </example>
         </sect3>
 
@@ -561,7 +584,9 @@ $form->setElementFilters(array('StringTrim'));
 
         <programlisting role="php"><![CDATA[
 $form->addDisplayGroup(array('username', 'password'), 'login');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You can access display groups using the
@@ -575,7 +600,9 @@ $login = $form->getDisplayGroup('login');
 
 // Using overloading:
 $login = $form->login;
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <note>
             <title>Default Decorators Do Not Need to Be Loaded</title>
@@ -593,7 +620,8 @@ $form->addDisplayGroup(
     'foobar', 
     array('disableLoadDefaultDecorators' => true)
 );
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 This option may be mixed with any other options you pass,
@@ -622,7 +650,9 @@ $form->addDisplayGroup(
 
                 <programlisting role="php"><![CDATA[
 $form->addDisplayGroupPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator');
-?>]]></programlisting>
+
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.displaygroups.global.decorators">
@@ -643,7 +673,9 @@ $form->setDisplayGroupDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-?>]]></programlisting>
+
+]]>
+                </programlisting>
             </example>
         </sect3>
 
@@ -667,7 +699,9 @@ $form->addDisplayGroup(
     'user',
     array('displayGroupClass' => 'My_DisplayGroup')
 );
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 If the class has not yet been loaded, <code>Zend_Form</code>
@@ -683,7 +717,9 @@ $form->addDisplayGroup(
             <programlisting role="php"><![CDATA[
 // Use the 'My_DisplayGroup' class for all display groups:
 $form->setDefaultDisplayGroupClass('My_DisplayGroup');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 This setting may be specified in configurations as
@@ -912,7 +948,9 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
 
         <programlisting role="php"><![CDATA[
 $form->addSubForm($subForm, 'subform');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You can retrieve a sub form using either
@@ -926,7 +964,9 @@ $subForm = $form->getSubForm('subform');
 
 // Using overloading:
 $subForm = $form->subform;
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Sub forms are included in form iteration, though the elements it
@@ -953,7 +993,9 @@ $form->setSubFormDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-?>]]></programlisting>
+
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.subforms.methods">
@@ -1021,7 +1063,9 @@ $form->setName('registration');
 
 // Retrieve the name:
 $name = $form->getName();
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             To set the action (url to which the form submits) and method (method
@@ -1033,7 +1077,9 @@ $name = $form->getName();
 // Set the action and method:
 $form->setAction('/user/login')
      ->setMethod('post');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You may also specify the form encoding type specifically using the
@@ -1050,7 +1096,9 @@ $form->setAction('/user/login')
 $form->setAction('/user/login')
      ->setMethod('post')
      ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1066,7 +1114,9 @@ $form->setAction('/user/login')
 
         <programlisting role="php"><![CDATA[
 $numItems = count($form);
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Setting arbitrary metadata is done through the attribs accessors.
@@ -1092,7 +1142,9 @@ $form->removeAttrib('onSubmit');
 
 // Clear all attributes:
 $form->clearAttribs();
-?>]]></programlisting>
+
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.forms.decorators">
@@ -1126,7 +1178,9 @@ $form->setDecorators(array(
     array('HtmlTag', array('tag' => 'dl')),
     'Form'
 ));
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             This creates output like the following:
@@ -1138,7 +1192,8 @@ $form->setDecorators(array(
 ...
 </dl>
 </form>
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             Any attributes set on the form object will be used as HTML
@@ -1156,7 +1211,8 @@ $form->setDecorators(array(
 
             <programlisting role="php"><![CDATA[
 $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 This option may be mixed with any other options you pass,
@@ -1189,7 +1245,9 @@ $form->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
 
 // And retrieve later:
 $form = $element->getDecorator('FooBar');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 In the <code>addDecorators()</code> and
@@ -1210,7 +1268,9 @@ $form->addDecorators(
 // And retrieve later:
 $htmlTag = $form->getDecorator('HtmlTag');
 $fooBar  = $form->getDecorator('FooBar');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -1276,7 +1336,9 @@ $fooBar  = $form->getDecorator('FooBar');
 if (!$form->isValid($_POST)) {
     // failed validation
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             <code>isValid()</code> will validate every required element, and any
@@ -1292,7 +1354,9 @@ if (!$form->isValid($_POST)) {
 if (!$form->isValidPartial($data)) {
     // failed validation
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             <code>isValidPartial()</code> only attempts to validate those items
@@ -1309,7 +1373,9 @@ if (!$form->isValidPartial($data)) {
 
         <programlisting role="php"><![CDATA[
 $json = $form->processAjax($data);
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You can then simply send the JSON response to the client. If the
@@ -1327,7 +1393,9 @@ $json = $form->processAjax($data);
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
 $messages = $form->getMessage();
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1345,7 +1413,9 @@ $messages = $form->getMessage();
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors('username');
 $messages = $form->getMessages('username');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1725,7 +1795,9 @@ decorators.elements.decorator = "FormElements"
 decorators.fieldset.decorator = "FieldSet"
 decorators.fieldset.decorator.options.class = "zend_form"
 decorators.form.decorator = "Form"
-?>]]></programlisting>
+
+]]>
+</programlisting>
 
         <para>
             The above could easily be abstracted to an XML or PHP array-based
@@ -1808,7 +1880,9 @@ class My_Form_Login extends Zend_Form
         ));
     }
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             This form can then be instantiated with simply:
@@ -1816,7 +1890,9 @@ class My_Form_Login extends Zend_Form
 
         <programlisting role="php"><![CDATA[
 $form = new My_Form_Login();
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             and all functionality is already setup and ready; no config files
@@ -1842,7 +1918,8 @@ class My_Form_Login extends Zend_Form
         ));
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

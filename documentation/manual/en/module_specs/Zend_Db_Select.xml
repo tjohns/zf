@@ -68,8 +68,10 @@
 
             <title>Example of the database adapter's select() method</title>
 
-            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
-$select = $db->select();]]>
+            <programlisting role="php"><![CDATA[
+$db = Zend_Db::factory( ...options... );
+$select = $db->select();
+]]>
             </programlisting>
 
         </example>
@@ -83,8 +85,10 @@ $select = $db->select();]]>
 
             <title>Example of creating a new Select object</title>
 
-            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
-$select = new Zend_Db_Select($db);]]>
+            <programlisting role="php"><![CDATA[
+$db = Zend_Db::factory( ...options... );
+$select = new Zend_Db_Select($db);
+]]>
             </programlisting>
 
         </example>
@@ -104,7 +108,8 @@ $select = new Zend_Db_Select($db);]]>
 
             <title>Example of the using methods to add clauses</title>
 
-            <programlisting role="php"><![CDATA[// Create the Zend_Db_Select object
+            <programlisting role="php"><![CDATA[
+// Create the Zend_Db_Select object
 $select = $db->select();
 
 // Add a FROM clause
@@ -114,7 +119,8 @@ $select->from( ...specify table and columns... )
 $select->where( ...specify search criteria... )
 
 // Add an ORDER BY clause
-$select->order( ...specify sorting criteria... );]]>
+$select->order( ...specify sorting criteria... );
+]]>
             </programlisting>
 
         </example>
@@ -129,10 +135,12 @@ $select->order( ...specify sorting criteria... );]]>
 
             <title>Example of the using the fluent interface</title>
 
-            <programlisting role="php"><![CDATA[$select = $db->select()
+            <programlisting role="php"><![CDATA[
+$select = $db->select()
     ->from( ...specify table and columns... )
     ->where( ...specify search criteria... )
-    ->order( ...specify sorting criteria... );]]>
+    ->order( ...specify sorting criteria... );
+]]>
             </programlisting>
 
         </example>
@@ -158,12 +166,14 @@ $select->order( ...specify sorting criteria... );]]>
 
                 <title>Example of the from() method</title>
 
-                <programlisting role="php"><![CDATA[// Build this query:
+                <programlisting role="php"><![CDATA[
+// Build this query:
 //   SELECT *
 //   FROM "products"
 
 $select = $db->select()
-    ->from( 'products' );]]>
+    ->from( 'products' );
+]]>
                 </programlisting>
 
             </example>
@@ -187,7 +197,8 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'products') );]]>
+    ->from( array('p' => 'products') );
+]]>
                 </programlisting>
 
             </example>
@@ -215,7 +226,8 @@ $select = $db->select()
 // or
 
 $select = $db->select()
-    ->from('products', '*', 'myschema');]]>
+    ->from('products', '*', 'myschema');
+]]>
                 </programlisting>
 
             </example>
@@ -280,7 +292,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('prodno' => 'product_id', 'product_name'));]]>
+        array('prodno' => 'product_id', 'product_name'));
+]]>
                 </programlisting>
 
             </example>
@@ -344,7 +357,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));]]>
+        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));
+]]>
                 </programlisting>
 
             </example>
@@ -384,7 +398,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
+]]>
                 </programlisting>
 
             </example>
@@ -424,7 +439,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'), 'p.product_id')
-    ->columns('product_name', 'p'); // Alternatively use columns('p.product_name')]]>
+    ->columns('product_name', 'p'); // Alternatively use columns('p.product_name')
+]]>
                 </programlisting>
 
             </example>
@@ -456,7 +472,8 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id');]]>
+        'p.product_id = l.product_id');
+]]>
                 </programlisting>
 
             </example>
@@ -506,7 +523,8 @@ $select = $db->select()
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
-        array() ); // empty list of columns]]>
+        array() ); // empty list of columns
+]]>
                 </programlisting>
 
                 <para>
@@ -659,7 +677,8 @@ $select = $db->select()
 $select = $db->select()
     ->from('table1')
     ->joinUsing('table2', 'column1')
-    ->where('column2 = ?', 'foo');]]>
+    ->where('column2 = ?', 'foo');
+]]>
                 </programlisting>
 
             </example>
@@ -722,7 +741,8 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > 100.00');]]>
+    ->where('price > 100.00');
+]]>
                 </programlisting>
 
             </example>
@@ -766,7 +786,8 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > ?', $minimumPrice);]]>
+    ->where('price > ?', $minimumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -795,7 +816,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price > ?', $minimumPrice)
-    ->where('price < ?', $maximumPrice);]]>
+    ->where('price < ?', $maximumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -825,7 +847,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price < ?', $minimumPrice)
-    ->orWhere('price > ?', $maximumPrice);]]>
+    ->orWhere('price > ?', $maximumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -855,7 +878,8 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where("price < $minimumPrice OR price > $maximumPrice")
-    ->where('product_name = ?', $prod);]]>
+    ->where('product_name = ?', $prod);
+]]>
                 </programlisting>
 
             </example>
@@ -903,7 +927,8 @@ $select = $db->select()
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id');]]>
+    ->group('p.product_id');
+]]>
                 </programlisting>
 
             </example>
@@ -958,7 +983,8 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->having('line_items_per_product > 10');]]>
+    ->having('line_items_per_product > 10');
+]]>
                 </programlisting>
 
             </example>
@@ -1022,7 +1048,8 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->order(array('line_items_per_product DESC', 'product_id'));]]>
+    ->order(array('line_items_per_product DESC', 'product_id'));
+]]>
                 </programlisting>
 
             </example>
@@ -1059,7 +1086,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limit(10, 20);]]>
+    ->limit(10, 20);
+]]>
                 </programlisting>
 
             </example>
@@ -1097,7 +1125,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limitPage(2, 10);]]>
+    ->limitPage(2, 10);
+]]>
                 </programlisting>
 
             </example>
@@ -1124,7 +1153,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->distinct()
-    ->from(array('p' => 'products'), 'product_name');]]>
+    ->from(array('p' => 'products'), 'product_name');
+]]>
                 </programlisting>
 
             </example>
@@ -1151,7 +1181,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->forUpdate()
-    ->from(array('p' => 'products'));]]>
+    ->from(array('p' => 'products'));
+]]>
                 </programlisting>
 
             </example>
@@ -1438,7 +1469,8 @@ $select->reset( Zend_Db_Select::ORDER );
 $select->order('product_id');
 
 // Clear all parts of the query
-$select->reset();]]>
+$select->reset();
+]]>
                 </programlisting>
 
             </example>

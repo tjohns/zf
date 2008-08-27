@@ -25,7 +25,8 @@ $logger->addFilter($filter);
 $logger->info('Informational message');
 
 // logged
-$logger->emerg('Emergency message');]]>
+$logger->emerg('Emergency message');
+]]>
         </programlisting>
 
         When you add one or more Filters to the Log object, the message must pass
@@ -57,7 +58,8 @@ $writer2->addFilter($filter);
 $logger->info('Informational message');
 
 // logged by both writers
-$logger->emerg('Emergency message');]]>
+$logger->emerg('Emergency message');
+]]>
         </programlisting>
     </para>
   </sect2>

@@ -69,7 +69,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 
         <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]>
+$acl->allow(null, null, null, new CleanIPAssertion());
+]]>
         </programlisting>
 
         <para>

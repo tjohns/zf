@@ -26,7 +26,8 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 
     public function getErrors();
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         The name mutator and accessor are used to specify and retrieve the
@@ -59,7 +60,8 @@ echo $captcha->render();
 if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }
-]]></programlisting>
+]]>
+        </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

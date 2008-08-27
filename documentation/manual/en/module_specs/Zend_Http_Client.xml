@@ -29,7 +29,8 @@ $client = new Zend_Http_Client();
 $client->setUri('http://example.org');
 $client->setConfig(array(
     'maxredirects' => 0,
-    'timeout'      => 30));]]>
+    'timeout'      => 30));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -123,7 +124,8 @@ $client->setConfig(array(
                 <title>Performing a Simple GET Request</title>
                 <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org');
-$response = $client->request();]]>
+$response = $client->request();
+]]>
                 </programlisting>
             </example>
             The request() method takes one optional parameter - the request method.
@@ -149,7 +151,8 @@ $response = $client->request('POST');
 
 // Yet another way of preforming a POST request
 $client->setMethod(Zend_Http_Client::POST);
-$response = $client->request();]]>
+$response = $client->request();
+]]>
                 </programlisting>
             </example>
         </para>
@@ -180,7 +183,8 @@ $client->setParameterGet(array(
     'first_name'  => 'Bender',
     'middle_name' => 'Bending'
     'made_in'     => 'Mexico',
-));]]>
+));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -201,7 +205,8 @@ $client->setParameterPost(array(
     'language'  => 'es',
     'country'   => 'ar',
     'selection' => array(45, 32, 80)
-));]]>
+));
+]]>
                 </programlisting>
             </example>
             Note that when sending POST requests, you can set both GET and

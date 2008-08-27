@@ -14,7 +14,8 @@
 
     <programlisting role="text"><![CDATA[
 Content-Type: application/json
-]]></programlisting>
+]]>
+</programlisting>
 
     <para>
         Most AJAX libraries look for this header when parsing responses to
@@ -27,7 +28,9 @@ Content-Type: application/json
 
     <programlisting role="php"><![CDATA[
 <?= $this->json($this->data) ?>
-?>]]></programlisting>
+
+]]>
+    </programlisting>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:

@@ -62,7 +62,7 @@ database.params.host     = dev.example.com
 database.params.username = devuser
 database.params.password = devsecret
 ]]>
-        </programlisting>
+</programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the INI file. It is a
             simple matter to load these data by specifying the INI file and the staging section:
@@ -71,7 +71,8 @@ database.params.password = devsecret
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
-echo $config->database->params->dbname; // prints "dbname"]]>
+echo $config->database->params->dbname; // prints "dbname"
+]]>
         </programlisting>
     </example>
     <note>

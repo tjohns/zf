@@ -54,7 +54,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php]]>
+    index.php
+]]>
             </programlisting>
 
         </sect3>
@@ -78,7 +79,8 @@ html/
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]>
             </programlisting>
 
             <para>
@@ -109,7 +111,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 the following:
             </para>
 
-            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/app/controllers');
+]]>
+            </programlisting>
 
             <para>
                 This will instantiate and dispatch the front controller, which
@@ -161,13 +166,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 enter the following:
             </para>
 
-            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
+            <programlisting role="php"><![CDATA[
+/** Zend_Controller_Action */
 class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -218,7 +225,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hello, World!</h1>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
@@ -234,12 +242,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 with an <code>errorAction</code> method:
             </para>
 
-            <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -263,7 +273,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>An error occurred</h1>
     <p>An error occurred; please try again later.</p>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 

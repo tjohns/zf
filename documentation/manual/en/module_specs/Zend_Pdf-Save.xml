@@ -30,7 +30,8 @@ $pdf->save($newFileName);
 // Return PDF document as a string.
 $pdfString = $pdf->render();
 
-...]]>
+...
+]]>
         </programlisting>
     </example>
 

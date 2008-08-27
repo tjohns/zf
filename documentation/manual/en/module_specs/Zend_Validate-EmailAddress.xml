@@ -95,7 +95,8 @@ if ($validator->isValid($email)) {
         constructor.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+]]>
         </programlisting>
 
         Alternatively you can either pass <code>true</code> or <code>false</code> to
@@ -119,7 +120,8 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         that exists within <code>Zend_Validate_EmailAddress</code>.
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateIdn(false);]]>
+$validator->hostnameValidator->setValidateIdn(false);
+]]>
         </programlisting>
 
         More information on the usage of <code>setValidateIdn()</code> appears in the
@@ -140,7 +142,8 @@ $validator->hostnameValidator->setValidateIdn(false);]]>
         <code>Zend_Validate_Hostname</code> object that exists within <code>Zend_Validate_EmailAddress</code>.
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateTld(false);]]>
+$validator->hostnameValidator->setValidateTld(false);
+]]>
         </programlisting>
 
         More information on the usage of <code>setValidateTld()</code> appears in the

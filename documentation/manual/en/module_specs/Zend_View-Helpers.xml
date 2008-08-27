@@ -160,7 +160,8 @@ echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'ba
 // 'bar' and 'baz' as checked/unchecked options; unchecked 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
 echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     In all cases, the markup prepends a hidden element with the
@@ -318,14 +319,16 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
     <p><label>Would you like to opt in?
         <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <para>
             The resulting output from the view script will look something like this:
         </para>
 
-        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+        <programlisting role="php"><![CDATA[
+<form action="action.php" method="post">
     <p><label>Your Email:
         <input type="text" name="email" value="you@example.com" size="32" />
     </label></p>
@@ -340,7 +343,8 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         <input type="hidden" name="opt_in" value="no" />
         <input type="checkbox" name="opt_in" value="yes" checked="checked" />
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
@@ -377,7 +381,8 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 $view = new Zend_View();
 
 // Set path to /path/to/more/helpers, with prefix 'My_View_Helper'
-$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
+]]>
         </programlisting>
 
 
@@ -400,7 +405,8 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // now when you call $this->helperName(), Zend_View will look first for
 // "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
 // then for "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
-// and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".]]>
+// and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".
+]]>
         </programlisting>
 
     </sect2>
@@ -480,7 +486,8 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
         return htmlspecialchars($output);
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Then in a view script, you can call the <code>SpecialPurpose</code>
@@ -493,15 +500,18 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 // remember, in a view script, $this refers to the Zend_View instance.
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-echo $this->specialPurpose();]]>
+echo $this->specialPurpose();
+]]>
         </programlisting>
 
         <para>
             The output would look something like this:
         </para>
-        <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
+        <programlisting role="php"><![CDATA[
+I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).
-I have seen 'The Jerk' 3 time(s).]]>
+I have seen 'The Jerk' 3 time(s).
+]]>
         </programlisting>
 
         <para>
@@ -526,7 +536,8 @@ class My_View_Helper_ScriptPath
     {
         return $this->view->getScriptPath($script);
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

@@ -110,7 +110,8 @@
             </para>
             
             <para>The example below shows how to create a service class using ClientAuth authentication:</para>
-            <programlisting role="php"><![CDATA[// Parameters for ClientAuth authentication
+            <programlisting role="php"><![CDATA[
+// Parameters for ClientAuth authentication
 $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
 $user = "sample.user@gmail.com";
 $pass = "pa$$w0rd";
@@ -119,11 +120,13 @@ $pass = "pa$$w0rd";
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Create an instance of the service
-$service = new Zend_Gdata_Photos($client);]]>
+$service = new Zend_Gdata_Photos($client);
+]]>
             </programlisting>
             
             <para>A service instance using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
-            <programlisting role="php"><![CDATA[session_start();
+            <programlisting role="php"><![CDATA[
+session_start();
 
 /**
  * Returns the full URL of the current page, based upon env variables
@@ -207,12 +210,15 @@ function getAuthSubHttpClient()
  * Create a new instance of the service, redirecting the user
  * to the AuthSub server if necessary.
  */
-$service = new Zend_Gdata_Photos(getAuthSubHttpClient());]]>
+$service = new Zend_Gdata_Photos(getAuthSubHttpClient());
+]]>
             </programlisting>
             
             <para>Finally, an unauthenticated server can be created for use with public feeds:</para>
-            <programlisting role="php"><![CDATA[// Create an instance of the service using an unauthenticated HTTP client
-$service = new Zend_Gdata_Photos();]]>
+            <programlisting role="php"><![CDATA[
+// Create an instance of the service using an unauthenticated HTTP client
+$service = new Zend_Gdata_Photos();
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -255,7 +261,8 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $service = new Zend_Gdata_Photos($client);
 
 $query = new Zend_Gdata_Photos_UserQuery();
-$query->setUser("sample.user");]]>
+$query->setUser("sample.user");
+]]>
         </programlisting>
         
         <para>
@@ -368,7 +375,8 @@ $query->setUser("sample.user");]]>
         $userFeed = $service->getUserFeed("sample.user");
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         
             <para>Or, the feed can be accessed by constructing a query, first:</para>
@@ -384,7 +392,8 @@ $query->setUser("sample.user");]]>
         $userFeed = $service->getUserFeed(null, $query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         
             <para>Constructing a query also provides the ability to request a user entry object:</para>
@@ -401,7 +410,8 @@ $query->setUser("sample.user");]]>
         $userEntry = $service->getUserEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
     
@@ -425,7 +435,8 @@ $query->setUser("sample.user");]]>
         $albumFeed = $service->getAlbumFeed($query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         
             <para>
@@ -448,7 +459,8 @@ $query->setUser("sample.user");]]>
         $albumEntry = $service->getAlbumEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
     
@@ -473,7 +485,8 @@ $query->setUser("sample.user");]]>
         $photoFeed = $service->getPhotoFeed($query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         
             <para>Constructing a query also provides the ability to request a photo entry object:</para>
@@ -492,7 +505,8 @@ $query->setUser("sample.user");]]>
         $photoEntry = $service->getPhotoEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
     
@@ -526,7 +540,8 @@ $query->setUser("sample.user");]]>
         }
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
     
@@ -559,7 +574,8 @@ $query->setUser("sample.user");]]>
         }
     } catch (Zend_Gdata_App_Exception $e) {
         echo "Error: " . $e->getResponse();
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
         
@@ -580,7 +596,8 @@ $query->setUser("sample.user");]]>
     $entry = new Zend_Gdata_Photos_AlbumEntry();
     $entry->setTitle($service->newTitle("test album"));
 
-    $service->insertAlbumEntry($entry);]]>
+    $service->insertAlbumEntry($entry);
+]]>
             </programlisting>
         </sect3>
     
@@ -607,7 +624,8 @@ $query->setUser("sample.user");]]>
 
     $albumEntry = $service->getAlbumEntry($albumQuery);
 
-    $service->insertPhotoEntry($entry, $albumEntry);]]>
+    $service->insertPhotoEntry($entry, $albumEntry);
+]]>
             </programlisting>
         </sect3>
     
@@ -631,7 +649,8 @@ $query->setUser("sample.user");]]>
 
     $photoEntry = $service->getPhotoEntry($photoQuery);
 
-    $service->insertCommentEntry($entry, $photoEntry);]]>
+    $service->insertCommentEntry($entry, $photoEntry);
+]]>
             </programlisting>
         </sect3>
     
@@ -654,7 +673,8 @@ $query->setUser("sample.user");]]>
 
     $photoEntry = $service->getPhotoEntry($photoQuery);
 
-    $service->insertTagEntry($entry, $photoEntry);]]>
+    $service->insertTagEntry($entry, $photoEntry);
+]]>
             </programlisting>
         </sect3>
     
@@ -679,7 +699,8 @@ $query->setUser("sample.user");]]>
 
     $entry = $service->getAlbumEntry($albumQuery);
 
-    $service->deleteAlbumEntry($entry, true);]]>
+    $service->deleteAlbumEntry($entry, true);
+]]>
             </programlisting>
         </sect3>
     
@@ -699,7 +720,8 @@ $query->setUser("sample.user");]]>
 
     $entry = $service->getPhotoEntry($photoQuery);
 
-    $service->deletePhotoEntry($entry, true);]]>
+    $service->deletePhotoEntry($entry, true);
+]]>
             </programlisting>
         </sect3>
     
@@ -721,7 +743,8 @@ $query->setUser("sample.user");]]>
 
     $entry = $service->getCommentEntry($path);
 
-    $service->deleteCommentEntry($entry, true);]]>
+    $service->deleteCommentEntry($entry, true);
+]]>
             </programlisting>
         </sect3>
     
@@ -750,7 +773,8 @@ $query->setUser("sample.user");]]>
         }
     }
 
-    $service->deleteTagEntry($tagEntry, true);]]>
+    $service->deleteTagEntry($tagEntry, true);
+]]>
             </programlisting>
         </sect3>
     
@@ -778,7 +802,8 @@ $query->setUser("sample.user");]]>
         } else {
             throw $e;
         }
-    }]]>
+    }
+]]>
             </programlisting>
         </sect3>
         

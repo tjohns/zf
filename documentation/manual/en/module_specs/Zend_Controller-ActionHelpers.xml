@@ -203,7 +203,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 $redirector =
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Finally, to delete a registered helper from the broker, use
@@ -325,8 +326,10 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             allowing use of the helper like this:
         </para>
 
-        <programlisting role="php"><![CDATA[// Redirect to /blog/view/item/id/42
-$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+        <programlisting role="php"><![CDATA[
+// Redirect to /blog/view/item/id/42
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
+]]>
         </programlisting>
 
         <para>

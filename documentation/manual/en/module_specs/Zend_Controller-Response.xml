@@ -16,7 +16,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
         </programlisting>
 
         <para>
@@ -25,7 +26,8 @@ $front->throwExceptions(true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <note>
@@ -38,12 +40,14 @@ $response->sendResponse();]]>
                 <code>Zend_Controller_Front::returnResponse(true)</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 
 // do some more processing, such as logging...
 // and then send the output:
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
             </programlisting>
         </note>
 
@@ -58,7 +62,8 @@ $response->sendResponse();]]>
 // Set a header
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);]]>
+    ->appendBody($content);
+]]>
         </programlisting>
 
         <para>
@@ -106,7 +111,8 @@ $response = $front->dispatch();
 // do some processing...
 
 // finally, echo the response
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <para>
@@ -127,7 +133,8 @@ $response->sendResponse();
 
 // or:
 $front->throwExceptions(true);
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
     </sect2>
 
@@ -253,7 +260,8 @@ $front->dispatch();]]>
             footer:
         </para>
 
-        <programlisting role="php"><![CDATA[// Assume that this plugin class is registered with the front controller
+        <programlisting role="php"><![CDATA[
+// Assume that this plugin class is registered with the front controller
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -282,7 +290,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -291,11 +300,13 @@ class MyController extends Zend_Controller_Action
             structure:
         </para>
 
-        <programlisting role="php"><![CDATA[array(
+        <programlisting role="php"><![CDATA[
+array(
     'header'  => ..., // header content
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content
-);]]>
+);
+]]>
         </programlisting>
 
         <para>

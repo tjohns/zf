@@ -171,10 +171,12 @@
                 to retrieve a specific user's profile information:
             </para>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // Set the user whose profile information we want to retrieve
 $profileInfo = $as->userGetProfileInformation(); // Retrieve BigDaddy71's profile information
-print "Information for $profileInfo->realname can be found at $profileInfo->url"; // Display some of it]]>
+print "Information for $profileInfo->realname can be found at $profileInfo->url"; // Display some of it
+]]>
             </programlisting>
 
         </example>
@@ -183,7 +185,8 @@ print "Information for $profileInfo->realname can be found at $profileInfo->url"
 
             <title>Retrieving a User's Weekly Artist Chart</title>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setUser('lo_fye'); // Set the user whose profile weekly artist chart we want to retrieve
 $weeks = $as->userGetWeeklyChartList(); // Retrieves a list of previous weeks for which there are chart data
 if (count($weeks) < 1) {
@@ -201,7 +204,8 @@ echo 'Artist Chart For Week Of ' . date('Y-m-d h:i:s', $as->from_date) . '<br />
 foreach ($previousWeeklyArtists as $artist) {
     // Display the artists' names with links to their profiles
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -253,12 +257,14 @@ foreach ($previousWeeklyArtists as $artist) {
 
             <title>Retrieving Related Artists</title>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setArtist('LCD Soundsystem'); // Set the artist for whom you would like to retrieve related artists
 $relatedArtists = $as->artistGetRelatedArtists(); // Retrieve the related artists
 foreach ($relatedArtists as $artist) {
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />'; // Display the related artists
-}]]>
+}
+]]>
             </programlisting>
 
         </example>

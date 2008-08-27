@@ -85,10 +85,12 @@
             abstract class <code>Zend_Controller_Plugin_Abstract</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -117,7 +119,8 @@
             plugin may be used in the controller chain:
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
@@ -154,7 +157,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -169,7 +173,8 @@ $front->dispatch();]]>
 <p>dispatchLoopStartup() called</p>
 <p>preDispatch() called</p>
 <p>postDispatch() called</p>
-<p>dispatchLoopShutdown() called</p>]]>
+<p>dispatchLoopShutdown() called</p>
+]]>
         </programlisting>
 
         <note>

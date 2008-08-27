@@ -153,7 +153,8 @@
         <example id="zend.locale.representation.example-1">
             <title>Choosing a specific locale</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('de_DE'); // German language _ Germany]]>
+$locale = new Zend_Locale('de_DE'); // German language _ Germany
+]]>
             </programlisting>
         </example>
 
@@ -198,7 +199,8 @@ $locale = new Zend_Locale('de_DE'); // German language _ Germany]]>
 $locale  = new Zend_Locale();
 $locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // default behavior, same as above
 $locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // prefer settings on host server
-$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app default settings]]>
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app default settings
+]]>
             </programlisting>
         </example>
 
@@ -300,7 +302,8 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
 //$date = new Zend_Date($locale);
 
 // with automatic detection
-$date = new Zend_Date('auto');]]>
+$date = new Zend_Date('auto');
+]]>
             </programlisting>
         </example>
 
@@ -401,7 +404,8 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
             <programlisting role="php"><![CDATA[
 $usLocale = new Zend_Locale('en_US');
 $date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);]]>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);
+]]>
             </programlisting>
         </example>
 
@@ -415,7 +419,8 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
+]]>
             </programlisting>
         </example>
 
@@ -443,7 +448,8 @@ Zend_Registry::set('Zend_Locale', $locale);
 // within your model or controller
 $date = new Zend_Date();
 // print $date->getLocale();
-echo $date->getDate();]]>
+echo $date->getDate();
+]]>
             </programlisting>
         </example>
 

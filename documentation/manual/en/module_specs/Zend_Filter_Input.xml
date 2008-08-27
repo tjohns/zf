@@ -118,7 +118,8 @@ $filters = array(
 
 $validators = array(
     'account' => 'Alpha'
-);]]>
+);
+]]>
         </programlisting>
 
         <para>
@@ -139,7 +140,8 @@ $validators = array(
                     <programlisting role="php"><![CDATA[
 $validators = array(
     'month'   => 'Digits',
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -152,7 +154,8 @@ $digits = new Zend_Validate_Digits();
 
 $validators = array(
     'month'   => $digits
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -172,7 +175,8 @@ $validators = array(
         new Zend_Validate_Int(), // object instance
         array('Between', 1, 12)  // string with constructor arguments
     )
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -199,7 +203,8 @@ $validators = array(
 $filters = array(
     '*'     => 'StringTrim',
     'month' => 'Digits'
-);]]>
+);
+]]>
         </programlisting>
 
     </sect2>
@@ -216,7 +221,8 @@ $filters = array(
         </para>
 
         <programlisting role="php"><![CDATA[
-$input = new Zend_Filter_Input($filters, $validators);]]>
+$input = new Zend_Filter_Input($filters, $validators);
+]]>
         </programlisting>
 
         <para>
@@ -231,7 +237,8 @@ $input = new Zend_Filter_Input($filters, $validators);]]>
         <programlisting role="php"><![CDATA[
 $data = $_GET;
 
-$input = new Zend_Filter_Input($filters, $validators, $data);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data);
+]]>
         </programlisting>
 
         <para>
@@ -242,7 +249,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data);]]>
 
         <programlisting role="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators);
-$input->setData($newData);]]>
+$input->setData($newData);
+]]>
         </programlisting>
 
         <para>
@@ -279,7 +287,8 @@ $input->setData($newData);]]>
             <programlisting role="php"><![CDATA[
 if ($input->isValid()) {
   echo "OK\n";
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -292,7 +301,8 @@ if ($input->isValid()) {
             <programlisting role="php"><![CDATA[
 if ($input->isValid('month')) {
   echo "Field 'month' is OK\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </sect3>
@@ -345,7 +355,8 @@ if ($input->hasMissing()) {
 
 if ($input->hasUnknown()) {
   $unknownFields = $input->getUnknown();
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -390,7 +401,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // alternative method:
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);]]>
+$input->setOptions($options);
+]]>
             </programlisting>
 
             <para>
@@ -417,7 +429,8 @@ $input->setOptions($options);]]>
             <programlisting role="php"><![CDATA[
 $m = $input->month;                 // escaped output from magic accessor
 $m = $input->getEscaped('month');   // escaped output
-$m = $input->getUnescaped('month'); // not escaped]]>
+$m = $input->getUnescaped('month'); // not escaped
+]]>
             </programlisting>
 
             <para>
@@ -444,7 +457,8 @@ $m = $input->getUnescaped('month'); // not escaped]]>
 
             <programlisting role="php"><![CDATA[
 $options = array('escapeFilter' => 'StringTrim');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
             </programlisting>
 
             <para>
@@ -454,7 +468,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
 
             <programlisting role="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());]]>
+$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
+]]>
             </programlisting>
 
             <para>
@@ -524,7 +539,8 @@ $filters = array(
         'Digits',        // filter name at integer index [0]
         'fields' => 'mo' // field name at string index ['fields']
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -563,7 +579,8 @@ $validators = array(
     )
 );
 // Invokes hypothetical class Zend_Validate_StringEquals, passing an array argument
-// containing the values of the two input data fields named 'password1' and 'password2'.]]>
+// containing the values of the two input data fields named 'password1' and 'password2'.
+]]>
             </programlisting>
 
             <para>
@@ -598,7 +615,8 @@ $validators = array(
         'digits',
         'presence' => 'required'
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -644,7 +662,8 @@ $validators = array(
 $data = array();
 
 $input = new Zend_Filter_Input(null, $validators, $data);
-echo $input->month; // echoes 1]]>
+echo $input->month; // echoes 1
+]]>
             </programlisting>
 
             <para>
@@ -697,7 +716,8 @@ $validators = array(
         'Alnum',
         'allowEmpty' => true
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -725,7 +745,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // alternative method:
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);]]>
+$input->setOptions($options);
+]]>
             </programlisting>
 
         </sect3>
@@ -764,7 +785,8 @@ $validators = array(
         'breakChainOnFailure' => true
     )
 );
-$input = new Zend_Filter_Input(null, $validators);]]>
+$input = new Zend_Filter_Input(null, $validators);
+]]>
             </programlisting>
 
             <para>
@@ -795,7 +817,8 @@ $chain->addValidator(new Zend_Validate_GreaterThan(0), true);
 $validators = array(
     'month' => $chain
 );
-$input = new Zend_Filter_Input(null, $validators);]]>
+$input = new Zend_Filter_Input(null, $validators);
+]]>
             </programlisting>
 
         </sect3>
@@ -829,7 +852,8 @@ $validators = array(
         'digits',
         'messages' => 'A month must consist only of digits'
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -858,7 +882,8 @@ $validators = array(
             1 => 'A month value must be between 1 and 12'
         )
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -885,7 +910,8 @@ $validators = array(
             )
         )
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -922,7 +948,8 @@ $validators = array(
     )
 );
 
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
             </programlisting>
 
             <para>
@@ -956,7 +983,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
 
         <programlisting role="php"><![CDATA[
 $options = array('inputNamespace' => 'My_Namespace');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
         </programlisting>
 
         <para>
@@ -970,7 +998,8 @@ $input->addNamespace('Other_Namespace');
 // 1. My_Namespace
 // 2. Other_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate]]>
+// 4. Zend_Validate
+]]>
         </programlisting>
 
         <para>

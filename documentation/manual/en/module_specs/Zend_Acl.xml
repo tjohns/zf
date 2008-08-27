@@ -111,7 +111,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
+]]>
             </programlisting>
             <para>
                 Since there is no rule specifically defined for the "<code>someUser</code>" role and
@@ -154,7 +155,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$acl = new Zend_Acl();]]>
+$acl = new Zend_Acl();
+]]>
         </programlisting>
 
         <note>
@@ -242,7 +244,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator does not inherit access controls
-$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+$acl->addRole(new Zend_Acl_Role('administrator'));
+]]>
         </programlisting>
 
     </sect2>
@@ -296,7 +299,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
-$acl->allow('administrator');]]>
+$acl->allow('administrator');
+]]>
         </programlisting>
 
         <para>

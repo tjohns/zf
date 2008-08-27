@@ -181,7 +181,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);]]>
+echo($data);
+]]>
             </programlisting>
             <para>
                 If you want to cache special values (boolean with "automatic_serialization" option) or empty

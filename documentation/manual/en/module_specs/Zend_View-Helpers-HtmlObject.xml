@@ -2,7 +2,8 @@
     <title>HTML Object Helpers</title>
 
     <para>
-        The HTML <code><![CDATA[<object>]]></code> element is used for embedding
+        The HTML <code><![CDATA[
+<object>]]></code> element is used for embedding
         media like Flash or QuickTime in web pages. The object view helpers take
         care of embedding media with minimum effort.
     </para>
@@ -53,8 +54,9 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
-]]></programlisting>
+<?php echo $this->htmlFlash('/path/to/flash.swf'); 
+]]>
+        </programlisting>
 
         <para>
             This outputs the following HTML:
@@ -65,13 +67,15 @@
     classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
     codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
-]]></programlisting>
+]]>
+</programlisting>
 
     </example>
 
     <para>
         Additionally you can specify attributes, parameters and content that can
-        be rendered along with the <code><![CDATA[<object>]]></code>. This will
+        be rendered along with the <code><![CDATA[
+<object>]]></code>. This will
         be demonstrated using the <code>htmlObject</code> helper.
     </para>
 
@@ -87,7 +91,8 @@
             It only accepts an array with key-value pairs. The <code>classid</code>
             and <code>codebase</code> are examples of such attributes. The fourth
             argument also only takes a key-value array and uses them to create
-            <code><![CDATA[<param>]]></code> elements. You will see an example
+            <code><![CDATA[
+<param>]]></code> elements. You will see an example
             of this shortly. Lastly, there is the option of providing additional
             content to the object. Now for an example which utilizes all arguments.
         </para>
@@ -117,7 +122,8 @@ This would output:
     some content
 </object>
 */
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

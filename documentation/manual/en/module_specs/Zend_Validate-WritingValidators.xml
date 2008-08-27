@@ -243,7 +243,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
         return $isValid;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Note that the four criteria tests in <code>isValid()</code> do not immediately return <code>false</code>.

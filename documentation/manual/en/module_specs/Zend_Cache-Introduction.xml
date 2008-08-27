@@ -60,7 +60,8 @@ $cache = Zend_Cache::factory('Core',
             is no need to even connect to the database; records are fetched from cache and unserialized.
         </para>
 
-        <programlisting role="php"><![CDATA[// $cache initialized in previous example
+        <programlisting role="php"><![CDATA[
+// $cache initialized in previous example
 
 // see if a cache already exists:
 if(!$result = $cache->load('myresult')) {
@@ -80,7 +81,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]>
+print_r($result);
+]]>
         </programlisting>
     </example>
 
@@ -120,7 +122,7 @@ if(!$cache->start('mypage')) {
 
 echo 'This is never cached ('.time().').';
 ]]>
-       </programlisting>
+        </programlisting>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
            for demonstration purposes. Try running this and then refreshing several times; you will notice

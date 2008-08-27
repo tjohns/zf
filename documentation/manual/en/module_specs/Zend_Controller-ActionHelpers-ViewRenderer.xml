@@ -89,10 +89,12 @@
                         helper broker:
                     </para>
 
-                    <programlisting role="php"><![CDATA[$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+                    <programlisting role="php"><![CDATA[
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
                     </programlisting>
                 </listitem>
 
@@ -102,9 +104,11 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                         object on demand via the helper broker:
                     </para>
 
-                    <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                    <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
-             ->setViewSuffix('php');]]>
+             ->setViewSuffix('php');
+]]>
                     </programlisting>
                 </listitem>
             </itemizedlist>
@@ -121,7 +125,9 @@ $viewRenderer->setView($view)
             the helper broker's <code>getStaticHelper()</code> method:
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+]]>
         </programlisting>
 
         <para>
@@ -145,7 +151,8 @@ $viewRenderer->setView($view)
             As an example, consider the following class:
         </para>
 
-        <programlisting role="php"><![CDATA[// A controller class, foo module:
+        <programlisting role="php"><![CDATA[
+// A controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     // Render bar/index.phtml by default; no action required
@@ -164,7 +171,8 @@ class Foo_BarController extends Zend_Controller_Action
 ...
 
 // in one of your view scripts:
-$this->foo(); // call Foo_View_Helper_Foo::foo()]]>
+$this->foo(); // call Foo_View_Helper_Foo::foo()
+]]>
         </programlisting>
 
         <para>
@@ -610,7 +618,8 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 bootstrap, and then set variables in your action methods.
             </para>
 
-            <programlisting role="php"><![CDATA[// In your bootstrap:
+            <programlisting role="php"><![CDATA[
+// In your bootstrap:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
@@ -643,7 +652,8 @@ class Foo_BarController extends Zend_Controller_Action
     {
         $this->_redirect('/index');
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -689,7 +699,8 @@ class Foo_BarController extends Zend_Controller_Action
                 off for the current action (<code>setNoRender()</code>).
             </para>
 
-            <programlisting role="php"><![CDATA[// Baz controller class, bar module:
+            <programlisting role="php"><![CDATA[
+// Baz controller class, bar module:
 class Bar_BazController extends Zend_Controller_Action
 {
     public function fooAction()
@@ -707,7 +718,8 @@ class Bar_BatController extends Zend_Controller_Action
         // Never auto render this controller's actions
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -734,7 +746,8 @@ class Bar_BatController extends Zend_Controller_Action
                 <code>setRender()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[// Bar controller class, foo module:
+            <programlisting role="php"><![CDATA[
+// Bar controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function addAction()
@@ -761,7 +774,8 @@ class Foo_BarController extends Zend_Controller_Action
         // otherwise continue processing...
     }
 
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -776,7 +790,8 @@ class Foo_BarController extends Zend_Controller_Action
                 both are references to the same object.
             </para>
 
-            <programlisting role="php"><![CDATA[// Bar controller class, foo module:
+            <programlisting role="php"><![CDATA[
+// Bar controller class, foo module:
 class Foo_BarController extends Zend_Controller_Action
 {
     public function preDispatch()
@@ -791,7 +806,8 @@ class Foo_BarController extends Zend_Controller_Action
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>
@@ -823,7 +839,8 @@ class Foo_BarController extends Zend_Controller_Action
                 want to use 'tpl' as the view script filename suffix.
             </para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * In your bootstrap:
  */
 
@@ -835,7 +852,8 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
             </programlisting>
         </example>
 
@@ -848,7 +866,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 multiple calls to <code>render()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[class SearchController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {
@@ -865,7 +884,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
     {
         // do nothing; ViewRenderer autorenders the view script
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>

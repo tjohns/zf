@@ -19,7 +19,9 @@
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 echo 'The feed has: ' . $feed->count() . ' entry.';
 
-$entry = $feed->current();]]></programlisting>
+$entry = $feed->current();
+]]>
+        </programlisting>
     </example>
 
     <para>
@@ -32,7 +34,9 @@ $entry = $feed->current();]]></programlisting>
         <programlisting role="php"><![CDATA[
 
 $entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
-echo $entry->title();]]></programlisting>
+echo $entry->title();
+]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

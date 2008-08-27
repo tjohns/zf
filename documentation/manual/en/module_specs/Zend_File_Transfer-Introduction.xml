@@ -38,8 +38,9 @@
     <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
         Choose a file to upload: <input name="uploadedfile" type="file" /><br />
     <input type="submit" value="Upload File" />
-</form>]]>
-        </programlisting>
+</form>
+]]>
+</programlisting>
         <para>
             Note that you should use <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> for your convenience instead of creating
             the HTML manually. 

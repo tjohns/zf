@@ -10,7 +10,8 @@
             Create movable memory objects using the <code>create([$data])</code>
             method of the memory manager:
             <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->create($data);]]>
+$memObject = $memoryManager->create($data);
+]]>
             </programlisting>
         </para>
 
@@ -29,7 +30,8 @@ $memObject = $memoryManager->create($data);]]>
             Create locked memory objects using the <code>createLocked([$data])</code>
             method of the memory manager:
             <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->createLocked($data);]]>
+$memObject = $memoryManager->createLocked($data);
+]]>
             </programlisting>
         </para>
 
@@ -80,7 +82,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);]]>
+$memObject->value = substr($memObject->value, $start, $length);
+]]>
             </programlisting>
         </para>
 
@@ -106,7 +109,8 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
             <title>getRef() method</title>
 
             <programlisting role="php"><![CDATA[
-public function &getRef();]]>
+public function &getRef();
+]]>
             </programlisting>
 
             <para>
@@ -140,7 +144,8 @@ $value = &$memObject->getRef();
 for ($count = 0; $count < strlen($value); $count++) {
     $char = $value[$count];
     ...
-}]]>
+}
+]]>
                 </programlisting>
             </para>
 
@@ -151,7 +156,8 @@ for ($count = 0; $count < strlen($value); $count++) {
             <title>touch() method</title>
 
             <programlisting role="php"><![CDATA[
-public function touch();]]>
+public function touch();
+]]>
             </programlisting>
             <para>
                 The <code>touch()</code> method should be used in common with
@@ -170,7 +176,8 @@ for ($count = 0; $count < strlen($value); $count++) {
     ...
 }
 
-$memObject->touch();]]>
+$memObject->touch();
+]]>
                 </programlisting>
 
             </para>
@@ -182,7 +189,8 @@ $memObject->touch();]]>
             <title>lock() method</title>
 
             <programlisting role="php"><![CDATA[
-public function lock();]]>
+public function lock();
+]]>
             </programlisting>
 
             <para>
@@ -215,7 +223,8 @@ for ($count = 0; $count < strlen($value2); $count++) {
 
 $memObject1->touch();
 $memObject1->unlock();
-$memObject2->unlock();]]>
+$memObject2->unlock();
+]]>
                 </programlisting>
             </para>
 
@@ -226,7 +235,8 @@ $memObject2->unlock();]]>
             <title>unlock() method</title>
 
             <programlisting role="php"><![CDATA[
-public function unlock();]]>
+public function unlock();
+]]>
             </programlisting>
 
             <para>
@@ -241,7 +251,8 @@ public function unlock();]]>
             <title>isLocked() method</title>
 
             <programlisting role="php"><![CDATA[
-public function isLocked();]]>
+public function isLocked();
+]]>
             </programlisting>
 
             <para>

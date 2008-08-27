@@ -32,7 +32,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Second, you can provide a PHP callback to execute in order to bootstrap
@@ -49,7 +50,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         In cases where an object instance is necessary, we recommend performing
@@ -67,7 +69,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         parent::setUp();
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Note the call to <code>parent::setUp()</code>; this is necessary, as

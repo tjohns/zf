@@ -35,7 +35,8 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();]]>
+print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
+]]>
             </programlisting>
         </example>
 
@@ -59,7 +60,8 @@ $mylocale = new Zend_Locale('en_US');
 // Check if locales are equal
 if ($locale->equals($mylocale)) {
     print "Locales are equal";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -91,7 +93,8 @@ print_r($found);
 
 // Return only browser locales
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
-print_r($found2);]]>
+print_r($found2);
+]]>
             </programlisting>
         </example>
 
@@ -143,7 +146,8 @@ print $locale->toString();
 
 // new locale
 $locale->setLocale('aa_DJ');
-print $locale->toString();]]>
+print $locale->toString();
+]]>
             </programlisting>
         </example>
 
@@ -168,7 +172,8 @@ $locale = new Zend_Locale();
 print $locale->getLanguage();
 
 // if locale is 'de_AT' then 'AT' will be returned as region
-print $locale->getRegion();]]>
+print $locale->getRegion();
+]]>
             </programlisting>
         </example>
 
@@ -203,7 +208,8 @@ print_r ($list);
 
 // use one of the returned key as value for the getTranslation() method of another language
 print $locale->getTranslation('de', 'language', 'zh');
-// returns the translation for the language 'de' in chinese]]>
+// returns the translation for the language 'de' in chinese
+]]>
             </programlisting>
         </example>
 
@@ -968,7 +974,8 @@ print $locale->getTranslation('de', 'language', 'zh');
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('en_US');
 // prints the names of all countries in German language
-print_r($locale->getTranslationList('country', 'de'));]]>
+print_r($locale->getTranslationList('country', 'de'));
+]]>
             </programlisting>
         </example>
 
@@ -986,7 +993,8 @@ $code2name = $locale->getLanguageTranslationList();
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
 echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
-// output is the German name of the French language]]>
+// output is the German name of the French language
+]]>
             </programlisting>
         </example>
 
@@ -1004,7 +1012,8 @@ $lists = $locale->getTranslationList();
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1033,7 +1042,8 @@ foreach($list as $language => $content) {
     } catch (Exception $e) {
         continue;
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1103,7 +1113,8 @@ Array
 
     [yesexpr] => ^([jJ][aA]?)|([jJ]?)
     [noexpr] => ^([nN]([eE][iI][nN])?)|([nN]?)
-)]]>
+)
+]]>
             </programlisting>
         </example>
 

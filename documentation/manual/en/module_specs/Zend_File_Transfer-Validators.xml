@@ -173,7 +173,8 @@ $upload->setValidators(array(
     'Size'  => array(20, 20000), 
     'Count' => array(1, 3),
 ));
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <example id="zend.file.transfer.validators.usage.exampletwo">
@@ -192,7 +193,8 @@ $upload = new Zend_File_Transfer();
 
 // Set a filesize with 20000 bytes and limits it only to 'file2'
 $upload->addValidator('Size', 20000, 'file2');
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -216,7 +218,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', 20000)
        ->addValidator('Count', 2)
        ->addValidator('Filessize', 25000);
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
         <note>
@@ -285,7 +288,8 @@ $upload->addValidator('Count', 2);
 
 // Limit the amount of files to maximum 5 and expects minimum 1 file to be returned
 $upload->addValidator('Count', array(1, 5);
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
         <note>

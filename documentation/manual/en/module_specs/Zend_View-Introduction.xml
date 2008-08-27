@@ -59,7 +59,8 @@ $view = new Zend_View();
 $view->books = $data;
 
 // and render a view script called "booklist.php"
-echo $view->render('booklist.php');]]>
+echo $view->render('booklist.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -79,7 +80,8 @@ echo $view->render('booklist.php');]]>
             look like this:
         </para>
 
-        <programlisting role="php"><![CDATA[ if ($this->books): ?>
+        <programlisting role="php"><![CDATA[
+ if ($this->books): ?>
 
     <!-- A table of some books. -->
     <table>
@@ -101,7 +103,8 @@ echo $view->render('booklist.php');]]>
 
     <p>There are no books to display.</p>
 
-<?php endif;?>]]>
+<?php endif;
+]]>
         </programlisting>
 
         <para>
@@ -131,7 +134,8 @@ echo $view->render('booklist.php');]]>
 base/path/
     helpers/
     filters/
-    scripts/]]>
+    scripts/
+]]>
                 </programlisting>
 
                 <para>
@@ -213,7 +217,8 @@ base/path/
 
                 <programlisting role="apache"><![CDATA[
 php_value "short_open_tag" "on"
-]]></programlisting>
+]]>
+</programlisting>
 
                 <para>
                     This will only be possible if you are allowed to create and
@@ -230,7 +235,8 @@ php_value "short_open_tag" "on"
 
         <programlisting role="php"><![CDATA[
 $view->setUseStreamWrapper(true);
-]]></programlisting>
+]]>
+        </programlisting>
 
                 <para>
                     This registers <code>Zend_View_Stream</code> as a stream

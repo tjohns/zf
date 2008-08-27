@@ -20,7 +20,9 @@
             <code>setFormat()</code> method.
         </para>
 
-        <programlisting role="php"><![CDATA[$currency = new Zend_Currency($currency, $locale);]]>
+        <programlisting role="php"><![CDATA[
+$currency = new Zend_Currency($currency, $locale);
+]]>
         </programlisting>
 
         <para>
@@ -70,7 +72,9 @@
 
         </para>
 
-        <programlisting role="php"><![CDATA[$currency->setFormat(array $options);]]>
+        <programlisting role="php"><![CDATA[
+$currency->setFormat(array $options);
+]]>
         </programlisting>
 
         <para>
@@ -79,7 +83,9 @@
             can contain the same keys as for the <code>setFormat</code> method. 
         </para>
 
-        <programlisting role="php"><![CDATA[$currency->toCurrency($value, array $options);]]>
+        <programlisting role="php"><![CDATA[
+$currency->toCurrency($value, array $options);
+]]>
         </programlisting>
 
         <para>

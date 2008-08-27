@@ -177,7 +177,10 @@
                 The file resolver is a very simple class. It has a single property specifying a filename, which can also
                 be passed to the constructor. Its <code>resolve()</code> method walks through the text file, searching
                 for a line with a matching username and realm. The text file format similar to Apache htpasswd files:
-                <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>
+                <programlisting><![CDATA[
+<username>:<realm>:<credentials>\n
+]]>
+</programlisting>
                 Each line consists of three fields - username, realm, and credentials - each separated by a colon. The
                 credentials field is opaque to the file resolver; it simply returns that value as-is to the caller.
                 Therefore, this same file format serves both Basic and Digest authentication. In Basic authentication,
@@ -189,13 +192,15 @@
                 There are two equally easy ways to create a File resolver:
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
+]]>
                 </programlisting>
                 or
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]>
+$resolver->setFile($path);
+]]>
                 </programlisting>
                 If the given path is empty or not readable, an exception is thrown.
             </para>
@@ -216,7 +221,8 @@ $config = array(
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]>
+);
+]]>
             </programlisting>
             This array will cause the adapter to accept either Basic or Digest authentication, and will require
             authenticated access to all the areas of the site under <code>/members_only</code> and
@@ -227,7 +233,8 @@ $config = array(
         <para>
             Next, create the Zend_Auth_Adapter_Http object:
             <programlisting role="php"><![CDATA[
-$adapter = new Zend_Auth_Adapter_Http($config);]]>
+$adapter = new Zend_Auth_Adapter_Http($config);
+]]>
             </programlisting>
         </para>
 
@@ -242,7 +249,8 @@ $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]>
+$adapter->setDigestResolver($digestResolver);
+]]>
             </programlisting>
         </para>
 
@@ -259,7 +267,8 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Bad userame/password, or canceled password prompt
-}]]>
+}
+]]>
             </programlisting>
         </para>
 

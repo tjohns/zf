@@ -44,7 +44,8 @@ application/
                 index/
                 list/
             helpers/
-            filters/]]>
+            filters/
+]]>
         </programlisting>
 
         <para>
@@ -96,10 +97,12 @@ application/
             and the <code>default</code> key must be present. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
+        <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));]]>
+));
+]]>
         </programlisting>
 
         <para>
@@ -109,7 +112,9 @@ application/
             <code>default</code> namespace. As an example:
         </para>
 
-        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+]]>
         </programlisting>
 
         <para>
@@ -119,7 +124,8 @@ application/
             <code>addModuleDirectory()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Assuming the following directory structure:
  * application/
  *     modules/
@@ -130,7 +136,8 @@ application/
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <para>
@@ -144,7 +151,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             modules by using <code>setModuleControllerDirectoryName()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[/**
+        <programlisting role="php"><![CDATA[
+/**
  * Change the controllers subdirectory to be 'con'
  * application/
  *     modules/
@@ -156,7 +164,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <note><para>
@@ -206,7 +215,9 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             <code>useDefaultControllerAlways</code> parameter in the front controller:
         </para>
 
-        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
+]]>
         </programlisting>
     </sect2>
 </sect1>

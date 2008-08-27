@@ -188,7 +188,8 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <programlisting role="php"><![CDATA[
 $client->setSkipSystemLookup(true);
 $result = $client->call('foo.bar', array(array()));
-]]></programlisting>
+]]>
+                </programlisting>
             </note>
         </sect3>
 

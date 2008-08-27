@@ -16,7 +16,8 @@
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>Using addRules()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
@@ -46,7 +47,8 @@ $opts->addRules(
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
             <title>Using setHelp()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'apple option, with no parameter',

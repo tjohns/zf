@@ -27,8 +27,10 @@
             <code>Zend_Service_SlideShare</code> object and providing these values as shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[// Create a new instance of the component
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); ]]>
+        <programlisting role="php"><![CDATA[
+// Create a new instance of the component
+$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); 
+]]>
         </programlisting>
 
     </sect2>
@@ -179,7 +181,8 @@ class Zend_Service_SlideShare_SlideShow {
     public function getNumViews() {
         return $this->_numViews;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <note>
@@ -218,7 +221,7 @@ $slideshow = $ss->getSlideShow(123456);
 
 print "Slide Show Title: {$slideshow->getTitle()}<br/>\n";
 print "Number of views: {$slideshow->getNumViews()}<br/>\n";
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -275,7 +278,8 @@ print "Number of views: {$slideshow->getNumViews()}<br/>\n";
             used. An example of using each method is shown below:
         </para>
 
-        <programlisting role="php"><![CDATA[// Create a new instance of the component
+        <programlisting role="php"><![CDATA[
+// Create a new instance of the component
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
 $starting_offset = 0;
@@ -290,7 +294,7 @@ $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 foreach($ss_user as $slideshow) {
    print "Slide Show Title: {$slideshow->getTitle}<br/>\n";
 }
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -307,7 +311,8 @@ foreach($ss_user as $slideshow) {
             shown:
         </para>
 
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
                         'lifetime' => 7200,
                         'automatic_serialization' => true);
 $backendOptions  = array(
@@ -319,7 +324,7 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -336,13 +341,14 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
             other then default as shown:
         </para>
 
-        <programlisting role="php"><![CDATA[$client = new Zend_Http_Client();
+        <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>

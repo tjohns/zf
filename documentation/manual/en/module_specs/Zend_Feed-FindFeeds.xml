@@ -6,7 +6,8 @@
         page with one simple method call:
     </para>
     <programlisting role="php"><![CDATA[
-$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
+$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
+]]>
     </programlisting>
     <para>
         Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>

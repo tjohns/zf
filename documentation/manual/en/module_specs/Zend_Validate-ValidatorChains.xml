@@ -45,7 +45,8 @@ if ($validatorChain->isValid($username)) {
 
         <programlisting role="php"><![CDATA[
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
-        ->addValidator(new Zend_Validate_Alnum());]]>
+        ->addValidator(new Zend_Validate_Alnum());
+]]>
         </programlisting>
 
     </para>

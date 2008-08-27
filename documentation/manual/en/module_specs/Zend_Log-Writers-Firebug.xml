@@ -45,7 +45,8 @@ $writer = new Zend_Log_Writer_Firebug();
 $logger = new Zend_Log($writer);
 
 // Use this in your model, view and controller files
-$logger->log('This is a log message!', Zend_Log::INFO);]]>
+$logger->log('This is a log message!', Zend_Log::INFO);
+]]>
       </programlisting>	
     </example>
       
@@ -68,7 +69,8 @@ $logger->log('This is a log message!', Zend_Log::INFO);
 
 // Flush log data to browser
 $channel->flush();
-$response->sendHeaders();]]>
+$response->sendHeaders();
+]]>
       </programlisting>
     </example>
     
@@ -82,13 +84,15 @@ $response->sendHeaders();]]>
       <programlisting role="php"><![CDATA[
   $logger->addPriority('FOO', 8);
   $writer->setPriorityStyle(8, 'TRACE');
-  $logger->foo('Foo Message');]]>
+  $logger->foo('Foo Message');
+]]>
       </programlisting>	
       <para>
         The default style for user-defined priorities can be set with the <code>setDefaultPriorityStyle()</code> method.
       </para>
       <programlisting role="php"><![CDATA[
-  $writer->setDefaultPriorityStyle('TRACE');]]>
+  $writer->setDefaultPriorityStyle('TRACE');
+]]>
       </programlisting>
       <para>
         The supported styles are as follows:
@@ -161,7 +165,8 @@ $response->sendHeaders();]]>
       </para>
       <programlisting role="php"><![CDATA[
   $exception = new Zend_Exception('Test exception');
-  $logger->err($exception);]]>
+  $logger->err($exception);
+]]>
       </programlisting>
     </sect3>
   
@@ -184,7 +189,8 @@ $response->sendHeaders();]]>
                      array('Row 2 c 1',' Row 2 c 2')
                  )
                 );
-  $logger->table($table);]]>
+  $logger->table($table);
+]]>
       </programlisting>
     </sect3>
 </sect2>

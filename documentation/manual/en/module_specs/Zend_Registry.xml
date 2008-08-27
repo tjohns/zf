@@ -28,7 +28,8 @@
         <example id="zend.registry.using.storing.example">
             <title>Example of set() method</title>
             <programlisting role="php"><![CDATA[
-Zend_Registry::set('index', $value);]]>
+Zend_Registry::set('index', $value);
+]]>
             </programlisting>
         </example>
 
@@ -58,7 +59,8 @@ Zend_Registry::set('index', $value);]]>
         <example id="zend.registry.using.retrieving.example">
             <title>Example of get() method</title>
             <programlisting role="php"><![CDATA[
-$value = Zend_Registry::get('index');]]>
+$value = Zend_Registry::get('index');
+]]>
             </programlisting>
         </example>
 
@@ -78,7 +80,8 @@ $registry = Zend_Registry::getInstance();
 foreach ($registry as $index => $value) {
     echo "Registry index $index contains:\n";
     var_dump($value);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -111,7 +114,8 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example">
             <title>Example of constructing a registry</title>
             <programlisting role="php"><![CDATA[
-$registry = new Zend_Registry(array('index' => $value));]]>
+$registry = new Zend_Registry(array('index' => $value));
+]]>
             </programlisting>
         </example>
 
@@ -127,7 +131,8 @@ $registry = new Zend_Registry(array('index' => $value));]]>
             <programlisting role="php"><![CDATA[
 $registry = new Zend_Registry(array('index' => $value));
 
-Zend_Registry::setInstance($registry);]]>
+Zend_Registry::setInstance($registry);
+]]>
             </programlisting>
         </example>
 
@@ -155,7 +160,8 @@ $registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
-var_dump( $registry['index'] );]]>
+var_dump( $registry['index'] );
+]]>
             </programlisting>
         </example>
 
@@ -197,7 +203,8 @@ echo $registry->tree; // echo's "apple"
 
 $registry->index = $value;
 
-var_dump($registry->index);]]>
+var_dump($registry->index);
+]]>
             </programlisting>
         </example>
 
@@ -217,7 +224,8 @@ var_dump($registry->index);]]>
             <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -240,7 +248,8 @@ if (isset($registry['index'])) {
 // using object-access syntax, if enabled
 if (isset($registry->index)) {
     var_dump( $registry->index );
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -264,7 +273,8 @@ if (isset($registry->index)) {
             <programlisting role="php"><![CDATA[
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);]]>
+Zend_Registry::set('index', $value);
+]]>
             </programlisting>
         </example>
 
@@ -313,7 +323,8 @@ Zend_Registry::_unsetInstance();
 // change the class
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);]]>
+Zend_Registry::set('index', $value);
+]]>
             </programlisting>
         </example>
 

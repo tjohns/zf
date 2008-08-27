@@ -48,7 +48,8 @@ library/
                 FormLabel.php
                 FormSubmit.php
                 FormText.php
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             Now, let's create a plugin loader to address the various view
@@ -60,7 +61,9 @@ $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             We can then load a given view helper using just the portion of the
@@ -76,7 +79,9 @@ $formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // load 'FormSubmit' helper:
 $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Once the class is loaded, we can now instantiate it.
@@ -109,7 +114,9 @@ $loader = new Zend_Loader_PluginLoader(array(
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
 ));
-?>]]></programlisting>
+
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -123,7 +130,9 @@ $loader = new Zend_Loader_PluginLoader(array(
         <programlisting role="php"><![CDATA[
 // Store plugins in static registry 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Other components that instantiate the <code>PluginLoader</code>
@@ -188,7 +197,9 @@ if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

@@ -56,7 +56,9 @@
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
         
         </sect3>
         
@@ -73,7 +75,9 @@ $gdata = new Zend_Gdata_Gapps($client, $domain);
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 When using a service class factory method to create a query,
@@ -86,7 +90,9 @@ $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -112,7 +118,9 @@ $query = $gdata->newUserQuery($arg);
             
             <programlisting role="php"><![CDATA[
 $gdata->createUser('foo', 'Random', 'User', '••••••••');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
                         
             <para>
                 Users can also be created by instantiating UserEntry,
@@ -130,7 +138,9 @@ $user->name = $gdata->newName();
 $user->name->givenName = 'Random';
 $user->name->familyName = 'User';
 $user = $gdata->insertUser($user);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 The user's password should normally be provided as cleartext.
@@ -159,7 +169,9 @@ echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
 echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 Users can also be retrieved by creating an
@@ -180,7 +192,9 @@ echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
 echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 If the specified user cannot be located a ServiceException
@@ -207,7 +221,9 @@ foreach ($feed as $user) {
     echo "  * " . $user->login->username . ' (' . $user->name->givenName .
         ' ' . $user->name->familyName . ")\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 This will create a Zend_Gdata_Gapps_UserFeed object which
@@ -230,7 +246,9 @@ foreach ($feed as $user) {
         ' ' . $user->name->familyName . ")\n";
 }
 
-?>]]></programlisting>
+
+]]>
+            </programlisting>
                         
         </sect3>
         
@@ -249,7 +267,9 @@ $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
 $user = $user->save();
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <sect4 id="zend.gdata.gapps.users.updating.resettingPassword">
                 <title>Resetting a user's password</title>
@@ -263,7 +283,9 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->password = '••••••••';
 $user = $user->save();
-?>]]></programlisting>
+
+]]>
+                </programlisting>
                 
                 <para>
                     Note that it is not possible to recover a password in this
@@ -287,7 +309,9 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->changePasswordAtNextLogin = true;
 $user = $user->save();
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     Similarly, this can be undone by setting the
@@ -312,7 +336,9 @@ $user = $user->save();
                 <programlisting role="php"><![CDATA[
 $gdata->suspendUser('foo');
 $gdata->restoreUser('foo');
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     Alternatively, you can set the UserEntry's
@@ -324,7 +350,9 @@ $gdata->restoreUser('foo');
 $user = $gdata->retrieveUser('foo');
 $user->login->suspended = true;
 $user = $user->save();
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     To restore the user's access, set the
@@ -347,7 +375,9 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->admin = true;
 $user = $user->save();
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     And as expected, setting a user's <code>login->admin</code>
@@ -371,7 +401,9 @@ $user = $user->save();
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 If you do not have access to a UserEntry object for an
@@ -380,7 +412,9 @@ $user->delete();
             
             <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -411,7 +445,9 @@ $gdata->deleteUser('foo');
 
             <programlisting role="php"><![CDATA[
 $gdata->createNickname('foo', 'bar');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 Nicknames can also be created by instantiating NicknameEntry,
@@ -425,7 +461,9 @@ $nickname = $gdata->newNicknameEntry();
 $nickname->login = $gdata->newLogin('foo');
 $nickname->nickname = $gdata->newNickname('bar');
 $nickname = $gdata->insertNickname($nickname);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
         
         </sect3>
         
@@ -443,7 +481,9 @@ $nickname = $gdata->retrieveNickname('bar');
 
 echo 'Nickname: ' . $nickname->nickname->name . "\n";
 echo 'Owner: ' . $nickname->login->username . "\n";
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 Individual nicknames can also be retrieved by creating an
@@ -459,7 +499,9 @@ $nickname = $gdata->getNicknameEntry($query);
 
 echo 'Nickname: ' . $nickname->nickname->name . "\n";
 echo 'Owner: ' . $nickname->login->username . "\n";
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 As with users, if no corresponding nickname is found a
@@ -485,7 +527,9 @@ $feed = $gdata->retrieveNicknames('foo');
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 This will create a Zend_Gdata_Gapps_NicknameFeed object which
@@ -507,7 +551,9 @@ $feed = $gdata->getNicknameFeed($query);
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -525,7 +571,9 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 This will create a Zend_Gdata_Gapps_NicknameFeed object which
@@ -544,7 +592,9 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -560,7 +610,9 @@ foreach ($feed as $nickname) {
             <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 $nickname->delete();
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 For nicknames which you do not hold a NicknameEntry for, use
@@ -569,7 +621,9 @@ $nickname->delete();
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteNickname('bar');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
             
@@ -600,7 +654,9 @@ $gdata->deleteNickname('bar');
 
             <programlisting role="php"><![CDATA[
 $gdata->createEmailList('friends');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 Email lists can also be created by instantiating
@@ -613,7 +669,9 @@ $gdata->createEmailList('friends');
 $list = $gdata->newEmailListEntry();
 $list->emailList = $gdata->newEmailList('friends');
 $list = $gdata->insertEmailList($list);
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
         
@@ -633,7 +691,9 @@ $feed = $gdata->retrieveEmailLists('baz@somewhere.com');
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 This will create a Zend_Gdata_Gapps_EmailListFeed object which
@@ -655,7 +715,9 @@ $feed = $gdata->getEmailListFeed($query);
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -673,7 +735,9 @@ $feed = $gdata->retrieveAllEmailLists();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
             <para>
                 This will create a Zend_Gdata_Gapps_EmailListFeed object which
@@ -691,7 +755,9 @@ $feed = $gdata->getEmailListFeed();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -705,7 +771,9 @@ foreach ($feed as $list) {
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteEmailList('friends');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
 
         </sect3>
         
@@ -731,7 +799,9 @@ $gdata->deleteEmailList('friends');
             
             <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -749,7 +819,9 @@ $feed = $gdata->retrieveAllRecipients('friends');
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 Alternatively, construct a new EmailListRecipientQuery, set
@@ -766,7 +838,9 @@ $feed = $gdata->getEmailListRecipientFeed($query);
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
             <para>
                 This will create a Zend_Gdata_Gapps_EmailListRecipientFeed
@@ -786,7 +860,9 @@ foreach ($feed as $recipient) {
             
             <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
-?>]]></programlisting>
+
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -842,7 +918,9 @@ function retrieveUser ($username) {
     }
     return $user;
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
         
     </sect2>
     

@@ -102,7 +102,9 @@
 
         <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
-?>]]></programlisting>
+
+]]>
+        </programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
@@ -117,8 +119,9 @@ $this->headScript()->setAllowArbitraryAttributes(true);
 <?php // adding scripts
 $this->headScript()->appendFile('/js/prototype.js')
                    ->appendScript($onloadScript);
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Order is often important with client-side scripting; you may need to
@@ -138,8 +141,9 @@ $this->headScript()->appendScript('/js/scriptaculous.js');
 
 // but always have base prototype script load first:
 $this->headScript()->prependScript('/js/prototype.js');
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             When you're finally ready to output all scripts in your layout
@@ -147,8 +151,9 @@ $this->headScript()->prependScript('/js/prototype.js');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headScript() ?>
-]]></programlisting>
+<?= $this->headScript() 
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">
@@ -166,8 +171,9 @@ $this->headScript()->prependScript('/js/prototype.js');
 <?php $this->headScript()->captureStart() ?>
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
-<?php $this->headScript()->captureEnd() ?>
-]]></programlisting>
+<?php $this->headScript()->captureEnd() 
+]]>
+        </programlisting>
 
         <para>
             The following assumptions are made:

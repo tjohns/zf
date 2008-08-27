@@ -77,8 +77,9 @@ FileInputStream is = new FileInputStream(f);
 Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
-indexWriter.addDocument(doc);]]>
-        </programlisting>
+indexWriter.addDocument(doc);
+]]>
+</programlisting>
     </sect2>
 </sect1>
 

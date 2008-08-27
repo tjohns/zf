@@ -32,7 +32,8 @@
         </para>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerKey);
-]]></programlisting>
+]]>
+            </programlisting>
     </sect2>
     
     
@@ -77,7 +78,8 @@ foreach ($videoFeed as $videoEntry) {
     echo $videoEntry->getVideoDescription();
     echo "\n\n\n";
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 For more details on the different query parameters, please 
@@ -104,8 +106,9 @@ $query = $yt->newVideoQuery();
 $query->category = 'Comedy/dog';
 
 echo $query->queryUrl . "\n";
-$videoFeed = $yt->getVideoFeed($query); 
-]]></programlisting>
+$videoFeed = $yt->getVideoFeed($query);
+]]>
+            </programlisting>
         </sect3>
  
         <sect3 id="zend.gdata.youtube.videos.standard">
@@ -126,8 +129,9 @@ $videoFeed = $yt->getVideoFeed($query);
             </para>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
-$videoFeed = $yt->getTopRatedVideoFeed(); 
-]]></programlisting>
+$videoFeed = $yt->getTopRatedVideoFeed();
+]]>
+            </programlisting>
             <para>
                 There are also query parameters to specify the time period
                 over which the standard feed is computed.
@@ -141,8 +145,9 @@ $videoFeed = $yt->getTopRatedVideoFeed();
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
 $query->setTime('today');
-$videoFeed = $yt->getTopRatedVideoFeed($query); 
-]]></programlisting> 
+$videoFeed = $yt->getTopRatedVideoFeed($query);
+]]>
+            </programlisting> 
             <para>
                 Alternatively, you could just retrieve the feed using the
                 URL:
@@ -151,8 +156,9 @@ $videoFeed = $yt->getTopRatedVideoFeed($query);
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $url = 'http://gdata.youtube.com/feeds/standardfeeds/top_rated?time=today'
-$videoFeed = $yt->getVideoFeed($url); 
-]]></programlisting>
+$videoFeed = $yt->getVideoFeed($url);
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.user">
@@ -165,8 +171,9 @@ $videoFeed = $yt->getVideoFeed($url);
             </para>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
-$videoFeed = $yt->getUserUploads('liz'); 
-]]></programlisting>
+$videoFeed = $yt->getUserUploads('liz');
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.favorites">
@@ -179,8 +186,9 @@ $videoFeed = $yt->getUserUploads('liz');
             </para>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
-$videoFeed = $yt->getUserFavorites('liz'); 
-]]></programlisting>
+$videoFeed = $yt->getUserFavorites('liz');
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.videos.responses">
@@ -193,8 +201,9 @@ $videoFeed = $yt->getUserFavorites('liz');
             </para>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
-$videoFeed = $yt->getVideoResponseFeed('abc123813abc'); 
-]]></programlisting>
+$videoFeed = $yt->getVideoResponseFeed('abc123813abc');
+]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -213,8 +222,9 @@ $commentFeed = $yt->getVideoCommentFeed('abc123813abc');
 foreach ($commentFeed as $commentEntry) {
     echo $commentEntry->title->text . "\n";
     echo $commentEntry->content->text . "\n\n\n";
-} 
-]]></programlisting>
+}
+]]>
+        </programlisting>
 
         <para>
             Comments can also be retrieved for a video if you have
@@ -227,7 +237,8 @@ $videoEntry = $yt->getVideoEntry('abc123813abc');
 // we don't know the video ID in this example, but we do have the URL
 $commentFeed = $yt->getVideoCommentFeed(null,
                                         $videoEntry->comments->href);
-]]></programlisting>
+]]>
+            </programlisting>
         
     </sect2>
 
@@ -255,8 +266,9 @@ foreach ($playlistListFeed as $playlistEntry) {
     echo $playlistEntry->title->text . "\n";
     echo $playlistEntry->description->text . "\n";
     echo $playlistEntry->getPlaylistVideoFeedUrl() . "\n\n\n";
-} 
-]]></programlisting>
+}
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.youtube.playlists.special">
@@ -269,8 +281,9 @@ foreach ($playlistListFeed as $playlistEntry) {
             </para>
             <programlisting role="php"><![CDATA[
 $feedUrl = $playlistEntry->getPlaylistVideoFeedUrl();
-$playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl); 
-]]></programlisting>
+$playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl);
+]]>
+            </programlisting>
         </sect3>
     </sect2> 
 
@@ -293,8 +306,9 @@ $subscriptionFeed = $yt->getSubscriptionFeed('liz');
 
 foreach ($subscriptionFeed as $subscriptionEntry) {
     echo $subscriptionEntry->title->text . "\n";
-} 
-]]></programlisting>
+}
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.youtube.profile">
@@ -310,8 +324,9 @@ $yt = new Zend_Gdata_YouTube();
 $userProfile = $yt->getUserProfile('liz'); 
 echo "username: " . $userProfile->username->text . "\n";
 echo "age: " . $userProfile->age->text . "\n";
-echo "hometown: " . $userProfile->hometown->text . "\n"; 
-]]></programlisting>
+echo "hometown: " . $userProfile->hometown->text . "\n";
+]]>
+        </programlisting>
     </sect2>
  
     <sect2 id="zend.gdata.youtube.uploads">
@@ -437,8 +452,9 @@ try {
     echo $httpException->getRawResponseBody();
 } catch (Zend_Gdata_App_Exception $e) {
     echo $e->getMessage();
-}          
-]]></programlisting>
+}
+]]>
+    </programlisting>
     <para>
       To upload a video as private, simply use: $myVideoEntry->setVideoPrivate(); prior to 
       performing the upload. $videoEntry->isVideoPrivate() can be used to check whether a video 
@@ -456,7 +472,8 @@ try {
         submit all of your video's meta-data to receive back a token element 
         which can be used to construct an HTML upload form.
       </para>
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
+<?php
 $yt = new Zend_Gdata_YouTube($httpClient);
       
 $myVideoEntry= new Zend_Gdata_YouTube_VideoEntry();
@@ -471,7 +488,8 @@ $tokenHandlerUrl = 'http://gdata.youtube.com/action/GetUploadToken';
 $tokenArray = $yt->getFormUploadToken($myVideoEntry, $tokenHandlerUrl);
 $tokenValue = $tokenArray['token'];
 $postUrl = $tokenArray['url'];
-]]></programlisting>
+]]>
+      </programlisting>
     <para>
       The above code prints out a link and a token that is used to construct an 
       HTML form to display in the user's browser. A simple example form is shown 
@@ -484,7 +502,8 @@ $postUrl = $tokenArray['url'];
       returned in the URL.
     </para>
     
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
+<?php
 // place to redirect user after upload
 $nextUrl = 'http://mysite.com/youtube_uploads';
     
@@ -494,7 +513,8 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         '<input name="token" type="hidden" value="'. $tokenValue .'"/>'.
         '<input value="Upload Video File" type="submit" />'. 
         '</form>';
-]]></programlisting>
+]]>
+      </programlisting>
   </sect2>    
     <sect2 id="zend.gdata.youtube.uploads.status">
       <title>Checking upload status</title>
@@ -507,7 +527,8 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         user's uploads feed. The following code checks the status of a 
         <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> to see if it is not live yet or if it has been rejected.
       </para>
-      <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php"><![CDATA[
+<?php
 try {
     $control = $videoEntry->getControl();
 } catch (Zend_Gdata_App_Exception $e) {
@@ -529,7 +550,8 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
         }
     }
 }
-]]></programlisting>
+]]>
+      </programlisting>
   </sect2>    
     <sect2 id="zend.gdata.youtube.other">
       <title>Other Functions</title>

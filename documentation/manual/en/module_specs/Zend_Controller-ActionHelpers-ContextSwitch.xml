@@ -64,7 +64,8 @@ class NewsController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
     
     <para>
         Let's say that we want the <code>listAction()</code> to also be
@@ -84,7 +85,8 @@ class NewsController extends Zend_Controller_Action
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         What this will do is:
@@ -160,7 +162,10 @@ class NewsController extends Zend_Controller_Action
                     serialization:
                 </para>
 
-                <programlisting role="php"><![CDATA[$this->_helper->contextSwitch()->setAutoJsonSerialization(false);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$this->_helper->contextSwitch()->setAutoJsonSerialization(false);
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -314,7 +319,8 @@ class FooController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Let's say we wanted to add an XML context to the 'list' action, and
@@ -333,7 +339,8 @@ class FooController extends Zend_Controller_Action
              ->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Alternately, you could simply define the array property
@@ -353,7 +360,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The above is less overhead, but also prone to potential errors.
@@ -448,7 +456,8 @@ class NewsController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             In some cases, you may want to force the context used; for instance,
@@ -459,7 +468,8 @@ class NewsController extends Zend_Controller_Action
 
         <programlisting role="php"><![CDATA[
 $contextSwitch->initContext('xml');
-]]></programlisting>
+]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -484,7 +494,8 @@ $contextSwitch->initContext('xml');
                 <programlisting role="php"><![CDATA[
 $contextSwitch->setAutoJsonSerialization(false);
 $contextSwitch->initContext();
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     You can retrieve the value of the flag with
@@ -749,7 +760,8 @@ class CommentController extends Zend_Controller_Action
         // view variables, and JSON will be returned.
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 On the client end, your AJAX library will simply request the

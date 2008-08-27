@@ -103,18 +103,20 @@
         <programlisting role="php"><![CDATA[
 $figlet = new Zend_Text_Figlet();
 echo $figlet->render('Zend');
-?>]]>
+]]>
         </programlisting>
         <para>
             Assuming you are using a monospace font, this would look as follows:
         </para>
-        <programlisting role="text"><![CDATA[  ______    ______    _  __   ______   
+        <programlisting role="text"><![CDATA[
+  ______    ______    _  __   ______   
  |__  //   |  ___||  | \| || |  __ \\  
    / //    | ||__    |  ' || | |  \ || 
   / //__   | ||___   | .  || | |__/ || 
  /_____||  |_____||  |_|\_|| |_____//  
- `-----`'  `-----`   `-` -`'  -----`  ]]>
-        </programlisting>
+ `-----`'  `-----`   `-` -`'  -----`  
+]]>
+</programlisting>
     </example>
 </sect1>
 <!--

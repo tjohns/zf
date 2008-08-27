@@ -48,8 +48,10 @@ Zend_Session::start();
                     php.ini, you are using mod_php (or equivalent), and the setting is already enabled in
                     <code>php.ini</code>, then add the following to your <code>.htaccess</code> file (usually in your
                     HTML document root directory):
-                    <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]>
-                    </programlisting>
+                    <programlisting role="httpd.conf"><![CDATA[
+php_value session.auto_start 0
+]]>
+</programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -223,7 +225,8 @@ $s->setExpirationSeconds(60);
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // expire only this variable
 $testSpace->accept_answer = true;
-//...]]>
+//...
+]]>
             </programlisting>
 
             <para>
@@ -494,7 +497,8 @@ exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);
 session_start(); // resume artificially suspended session
 $this->assertTrue($result === ';p === plum',
-    "iteration over named Zend_Session namespace failed (result=$result)");]]>
+    "iteration over named Zend_Session namespace failed (result=$result)");
+]]>
             </programlisting>
 
         </example>

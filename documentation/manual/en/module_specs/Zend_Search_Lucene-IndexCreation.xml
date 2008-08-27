@@ -27,7 +27,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Add document to the index
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
         </programlisting>
 
         <para>
@@ -54,7 +55,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Add document to the index.
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
         </programlisting>
     </sect2>
 
@@ -76,7 +78,8 @@ $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -99,7 +102,8 @@ foreach ($hits as $hit) {
 
         <programlisting role="php"><![CDATA[
 $indexSize = $index->count();
-$documents = $index->numDocs();]]>
+$documents = $index->numDocs();
+]]>
         </programlisting>
 
         <para>
@@ -111,7 +115,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "Document #$id is deleted.\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -150,7 +155,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
 $index = Zend_Search_Lucene::open('/data/my-index');
 
 // Optimize index.
-$index->optimize();]]>
+$index->optimize();
+]]>
         </programlisting>
 
         <para>
@@ -248,7 +254,8 @@ $index->optimize();]]>
 $currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
 // Give read-writing permissions only for current user and group
-Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);]]>
+Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
+]]>
         </programlisting>
     </sect2>
 

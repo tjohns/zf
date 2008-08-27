@@ -30,7 +30,8 @@
             application: site, controller, action, and potentially resource.
         </para>
 
-        <programlisting role="php"><![CDATA[ 
+        <programlisting role="php"><![CDATA[
+ 
 // setting the controller and action name as title segments:
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
@@ -41,8 +42,9 @@ $this->headTitle('Zend Framework');
 
 // setting a separator string for segments:
 $this->headTitle()->setSeparator(' / ');
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             When you're finally ready to render the title in your layout
@@ -51,8 +53,9 @@ $this->headTitle()->setSeparator(' / ');
 
         <programlisting role="php"><![CDATA[
 <!-- renders <action> / <controller> / Zend Framework -->
-<?= $this->headTitle() ?>
-]]></programlisting>
+<?= $this->headTitle() 
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

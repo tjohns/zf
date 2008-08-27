@@ -16,7 +16,8 @@ $entry = $feed->current();
 $entry->title = 'This is a new title';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
         <para>
             This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
@@ -53,7 +54,8 @@ $entry->{'myns:myelement_one'} = 'my first custom value';
 $entry->{'myns:container_elt'}->part1 = 'first nested custom part';
 $entry->{'myns:container_elt'}->part2 = 'second nested custom part';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
     </example>
 </sect1>

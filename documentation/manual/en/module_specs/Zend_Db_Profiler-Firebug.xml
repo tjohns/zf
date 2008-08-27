@@ -72,7 +72,8 @@ $channel->setResponse($response);
 // Flush profiling data to browser
 $channel->flush();
 $response->sendHeaders();
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

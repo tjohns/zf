@@ -56,7 +56,7 @@ $loadedFiles[$index2]->value = $newValue;
 
 $loadedFiles[$index3]->value[$charIndex] = '_';
 ]]>
-            </programlisting>
+                </programlisting>
         </example>
     </sect2>
 
@@ -119,7 +119,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);]]>
+$memObject->value = substr($memObject->value, $start, $length);
+]]>
                 </programlisting>
             </para>
 

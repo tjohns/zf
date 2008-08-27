@@ -27,7 +27,8 @@
             the case for more complex situations. Suppose, then, that the following configuration data are contained in
             <code>/path/to/config.xml</code>:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -50,16 +51,19 @@
             </params>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the XML file. It is a
             simple matter to load these data by specifying the XML file and the staging section:
         </para>
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
-echo $config->database->params->dbname; // prints "dbname"]]>
+echo $config->database->params->dbname; // prints "dbname"
+]]>
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
@@ -71,7 +75,8 @@ echo $config->database->params->dbname; // prints "dbname"]]>
             making usage of attributes is to add attributes in a parent nodes, which then will be translated into
             children of that node:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production webhost="www.example.com">
         <database adapter="pdo_mysql">
@@ -83,14 +88,16 @@ echo $config->database->params->dbname; // prints "dbname"]]>
             <params host="dev.example.com" username="devuser" password="devsecret"/>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
         <para>
             The other way does not really shorten the config, but keeps it easier to maintain since you don't have to write
             the tag-name twice. You simply create an empty tag, which contains it's value withing the <code>value</code>
             attribute:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -113,8 +120,9 @@ echo $config->database->params->dbname; // prints "dbname"]]>
             </params>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
     </example>
 </sect1>
 <!--

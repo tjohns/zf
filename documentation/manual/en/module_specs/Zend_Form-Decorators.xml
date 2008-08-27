@@ -158,7 +158,9 @@ interface Zend_Decorator_Interface
     public function clearOptions();
     public function render($content);
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             To make this simpler, you can simply extend
@@ -256,7 +258,9 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         }
     }
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You can then place this in the decorator path:
@@ -268,7 +272,9 @@ $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
 // for all elements:
 $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You can then specify this decorator as 'Composite' and attach it to
@@ -278,7 +284,9 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
         <programlisting role="php"><![CDATA[
 // Overwrite existing decorators with this single one:
 $element->setDecorators(array('Composite'));
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             While this example showed how to create a decorator that renders
@@ -317,7 +325,9 @@ class My_Decorator_Errors
         }
     }
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
     
         <para>
             In this particular example, because the decorator's final segment,

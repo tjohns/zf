@@ -13,7 +13,8 @@ try {
 } catch(Zend_Gdata_App_Exception $ex) {
     // Report the exception to the user
     die($ex->getMessage());
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -90,7 +91,8 @@ try {
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data servers cannot be contacted.
-    die($httpEx->getMessage);}]]>
+    die($httpEx->getMessage);}
+]]>
     </programlisting>
 
 </sect1>

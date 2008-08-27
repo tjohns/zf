@@ -25,8 +25,9 @@
 <?php 
     echo $this->placeholder('foo'); 
     // outputs "Some text for later"
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.placeholder.aggregation">
@@ -76,8 +77,9 @@
 
         <programlisting role="php"><![CDATA[
 <!-- first view script -->
-<?php $this->placeholder('foo')->exchangeArray($this->data) ?>
-]]></programlisting>
+<?php $this->placeholder('foo')->exchangeArray($this->data) 
+]]>
+        </programlisting>
 
         <programlisting role="php"><![CDATA[
 <!-- later view script -->
@@ -91,8 +93,9 @@ $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
 <?php 
     echo $this->placeholder('foo'); 
     // outputs as unordered list with pretty indentation
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Because the <code>Placeholder</code> container objects extend
@@ -109,8 +112,9 @@ $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
 <?php
 $foo = $this->placeholder('foo');
 echo $foo['bar'];
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.placeholder.capture">
@@ -173,8 +177,9 @@ foreach ($this->data as $datum): ?>
 <?php endforeach; ?>
 <?php $this->placeholder('foo')->captureEnd() ?>
 
-<?php echo $this->placeholder('foo') ?>
-]]></programlisting>
+<?php echo $this->placeholder('foo') 
+]]>
+        </programlisting>
 
         <programlisting role="php"><![CDATA[
 <!-- Capture to key -->
@@ -187,8 +192,9 @@ foreach ($this->data as $datum): ?>
  <?php endforeach; ?>
 <?php $this->placeholder('foo')->captureEnd() ?>
 
-<?php echo $this->placeholder('foo')->data ?>
-]]></programlisting>
+<?php echo $this->placeholder('foo')->data 
+]]>
+        </programlisting>
     </example>
 
     <sect4 id="zend.view.helpers.initial.placeholder.implementations">

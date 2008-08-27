@@ -29,7 +29,10 @@
                 most used way to get the actual date as <code>Zend_Date</code> instance.
             </para>
 
-            <programlisting role="php"><![CDATA[$date = new Zend_Date();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
+]]>
+            </programlisting>
 
         </example>
 
@@ -44,7 +47,9 @@
                 always return the actual date and can not be changed by giving optional parameters.
             </para>
 
-            <programlisting role="php"><![CDATA[$date = Zend_Date::now();]]>
+            <programlisting role="php"><![CDATA[
+$date = Zend_Date::now();
+]]>
             </programlisting>
 
         </example>
@@ -84,8 +89,10 @@
                 for creating a timestamp through a query is much smaller than converting it to a specified format.
             </para>
 
-            <programlisting role="php"><![CDATA[// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
-$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
+            <programlisting role="php"><![CDATA[
+// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
+$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
+]]>
             </programlisting>
 
         </example>
@@ -106,8 +113,10 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
                 for dates after 1 January 1970.
             </para>
 
-            <programlisting role="php"><![CDATA[// SELECT datecolumn FROM my_table
-$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
+            <programlisting role="php"><![CDATA[
+// SELECT datecolumn FROM my_table
+$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
+]]>
             </programlisting>
 
         </example>
@@ -168,12 +177,16 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
                 given the hour <emphasis role="strong">0</emphasis> is used.
             </para>
 
-            <programlisting role="php"><![CDATA[<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
-$date = new Zend_Date($datearray);]]>
+            <programlisting role="php"><![CDATA[
+<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
 
-            <programlisting role="php"><![CDATA[<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
-$date = new Zend_Date($datearray);]]>
+            <programlisting role="php"><![CDATA[
+<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
         </example>
 

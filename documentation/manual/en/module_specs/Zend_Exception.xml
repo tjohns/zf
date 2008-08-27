@@ -17,7 +17,9 @@ try {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
     // other code to recover from the failure.
-}]]></programlisting>
+}
+]]>
+        </programlisting>
     </example>
 
     <para>

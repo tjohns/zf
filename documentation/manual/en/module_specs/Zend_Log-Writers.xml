@@ -21,7 +21,8 @@
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
     </para>
 
@@ -34,7 +35,8 @@ $logger->info('Informational message');]]>
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
 
       By default, the stream opens in the append mode (<code>"a"</code>).
@@ -54,7 +56,8 @@ if (! $stream) {
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
 
       You cannot specify the mode for existing stream resources. Doing so
@@ -82,7 +85,8 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
 
       The example above writes a single row of log data to the database table named
@@ -106,7 +110,8 @@ $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // goes nowhere
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
     </para>
   </sect2>
@@ -131,7 +136,8 @@ var_dump($mock->events[0]);
 //    [message] => Informational message
 //    [priority] => 6
 //    [priorityName] => INFO
-// )]]>
+// )
+]]>
       </programlisting>
     </para>
 
@@ -157,7 +163,8 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // goes to both writers
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
     </para>
   </sect2>

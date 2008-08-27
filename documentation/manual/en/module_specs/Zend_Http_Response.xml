@@ -27,7 +27,8 @@ fwrite($sock, $req);
 while ($buff = fread($sock, 1024))
     $str .= $sock;
 
-$response = Zend_Http_Response::factory($str);]]>
+$response = Zend_Http_Response::factory($str);
+]]>
                 </programlisting>
             </example>
         </para>
@@ -102,7 +103,8 @@ if ($response->isError()) {
   echo "Error transmitting data.\n"
   echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
-// .. process the response here...]]>
+// .. process the response here...
+]]>
                 </programlisting>
             </example>
         </para>
@@ -171,7 +173,8 @@ if ($response->getStatus() == 200) {
 } else {
   echo "An error occurred while fetching data:<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
-}]]>
+}
+]]>
                 </programlisting>
             </example>
             <note>
@@ -194,7 +197,8 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
   $body = htmlentities($body);
 }
 
-echo $body;]]>
+echo $body;
+]]>
                 </programlisting>
             </example>
         </para>

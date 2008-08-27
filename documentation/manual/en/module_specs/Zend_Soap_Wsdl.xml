@@ -317,6 +317,7 @@
                 <code>getType($type)</code> method may be used to get mapping for a specified PHP type: 
 
             <programlisting role="php"><![CDATA[
+
 ...
 $wsdl = new Zend_Soap_Wsdl('My_Web_Service', $myWebServiceUri);
 
@@ -328,7 +329,9 @@ class MyClass {
     ...
 }
 ...
-$soapMyClassType = $wsdl->getType('MyClass');]]></programlisting>
+$soapMyClassType = $wsdl->getType('MyClass');
+]]>
+            </programlisting>
             </para>
         </sect3>
 

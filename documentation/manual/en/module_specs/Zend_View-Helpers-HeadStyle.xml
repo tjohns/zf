@@ -79,8 +79,9 @@
         <programlisting role="php"><![CDATA[
 <?php // adding styles
 $this->headStyle()->appendStyle($styles);
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             Order is very important with CSS; you may need to ensure that
@@ -100,8 +101,9 @@ $this->headStyle()->appendStyle($finalStyles);
 
 // place at beginning
 $this->headStyle()->prependStyle($firstStyles);
-?>
-]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             When you're finally ready to output all style declarations in your
@@ -109,8 +111,9 @@ $this->headStyle()->prependStyle($firstStyles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headStyle() ?>
-]]></programlisting>
+<?= $this->headStyle() 
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
@@ -129,8 +132,9 @@ $this->headStyle()->prependStyle($firstStyles);
 body {
     background-color: <?= $this->bgColor ?>;
 }
-<?php $this->headStyle()->captureEnd() ?>
-]]></programlisting>
+<?php $this->headStyle()->captureEnd() 
+]]>
+        </programlisting>
 
         <para>
             The following assumptions are made:

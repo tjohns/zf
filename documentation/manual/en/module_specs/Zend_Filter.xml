@@ -64,7 +64,8 @@
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;]]>
+echo $htmlEntities->filter('"'); // &quot;
+]]>
             </programlisting>
 
         </para>
@@ -87,7 +88,10 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             instance, and applies the <code>filter()</code> method to the data
             input.
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('&', 'HtmlEntities');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('&', 'HtmlEntities');
+]]>
+            </programlisting>
 
         </para>
 
@@ -95,7 +99,9 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             You can also pass an array of constructor arguments, if they
             are needed for the filter class.
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
+]]>
             </programlisting>
 
         </para>

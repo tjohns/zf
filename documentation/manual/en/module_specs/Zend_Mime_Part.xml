@@ -29,7 +29,8 @@ public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;]]>
+public $charset;
+]]>
     </programlisting>
     </sect2>
 

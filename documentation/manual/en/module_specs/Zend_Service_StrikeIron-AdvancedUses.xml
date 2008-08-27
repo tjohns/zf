@@ -21,7 +21,8 @@
         give the <code>wsdl</code> option to <code>getService()</code>
         instead of the <code>class</code> option:
 
-        <programlisting role="php"><![CDATA[$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Get a generic client to the Reverse Phone Lookup service
@@ -30,7 +31,8 @@ $phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/Rever
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
 
-// Zend Technologies USA Inc]]>
+// Zend Technologies USA Inc
+]]>
         </programlisting>
       </para>
 

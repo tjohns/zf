@@ -69,12 +69,15 @@
     <para>
         Here is an example of common usage of the autodiscovery functionality:
         <programlisting role="php"><![CDATA[
+
 class My_SoapServer_Class {
 ...
 }
 
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
-$autodiscover->handle();]]></programlisting>
+$autodiscover->handle();
+]]>
+        </programlisting>
     </para>
 </sect1>

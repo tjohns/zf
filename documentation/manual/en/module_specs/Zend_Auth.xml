@@ -75,7 +75,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
             </programlisting>
 
             As indicated in its docblock, <code>authenticate()</code> must return an instance of
@@ -354,7 +355,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
 
 // Authenticate, saving the result, and persisting the identity on
 // success
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -430,7 +432,10 @@ if ($auth->hasIdentity()) {
         <para>
             To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
             This typically would be used for implementing an application "logout" operation:
-            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Auth::getInstance()->clearIdentity();
+]]>
+            </programlisting>
         </para>
 
         <para>

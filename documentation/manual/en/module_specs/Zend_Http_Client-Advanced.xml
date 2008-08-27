@@ -25,7 +25,8 @@
 $client->setConfig(array('strictredirects' => true));
 
 // Non-strict Redirections
-$client->setConfig(array('strictredirects' => false));]]>
+$client->setConfig(array('strictredirects' => false));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -54,7 +55,8 @@ $client->setCookie('flavor=chocolate%20chips');
 
 // By providing a Zend_Http_Cookie object
 $cookie = Zend_Http_Cookie::fromString('flavor=chocolate%20chips');
-$client->setCookie($cookie);]]>
+$client->setCookie($cookie);
+]]>
                 </programlisting>
             </example>
             For more information about Zend_Http_Cookie objects, see
@@ -85,7 +87,8 @@ $client->request('POST');
 // Now we can send our next request - the stored cookies
 // will be automatically sent.
 $client->setUri('http://example.com/read_member_news.php');
-$client->request('GET');]]>
+$client->request('GET');
+]]>
                 </programlisting>
             </example>
             For more information about the Zend_Http_CookieJar class, see
@@ -112,7 +115,8 @@ $client->setHeaders('Host: www.example.com');
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -132,7 +136,8 @@ $client->setHeaders(array(
 $client->setHeaders(array(
     'Host: www.example.com',
     'Accept-encoding: gzip,deflate',
-    'X-Powered-By: Zend Framework'));]]>
+    'X-Powered-By: Zend Framework'));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -168,7 +173,8 @@ $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // Send the files
-$client->submit('POST');]]>
+$client->submit('POST');
+]]>
                 </programlisting>
             </example>
             In the first example, the $text variable is uploaded and will be
@@ -210,7 +216,8 @@ $xml = '<book>' .
 $client->setRawData($xml, 'text/xml')->request('POST');
 
 // Another way to do the same thing:
-$client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
+$client->setRawData($xml)->setEncType('text/xml')->request('POST');
+]]>
                 </programlisting>
             </example>
             The data should be available on the server side through PHP's
@@ -243,7 +250,8 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
 $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
 
 // Since basic auth is default, you can just do this:
-$client->setAuth('shahar', 'myPassword!');]]>
+$client->setAuth('shahar', 'myPassword!');
+]]>
                 </programlisting>
             </example>
         </para>
@@ -331,7 +339,8 @@ if (isset($_SESSION['cookiejar']) &&
 $response = $client->request(Zend_Http_Client::GET);
 
 // Store cookies in session, for next page
-$_SESSION['cookiejar'] = $client->getCookieJar();]]>
+$_SESSION['cookiejar'] = $client->getCookieJar();
+]]>
             </programlisting>
         </example>
     </sect2>

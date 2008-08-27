@@ -117,7 +117,8 @@
             methods for these three operations.
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -128,7 +129,8 @@ $imfs->putContents('/foo.txt', 'contents to store');
 
 echo $imfs->getContents('/foo.txt');
 
-$imfs->unlink('/foo.txt');]]>
+$imfs->unlink('/foo.txt');
+]]>
         </programlisting>
 
         <para>
@@ -190,7 +192,8 @@ $imfs->unlink('/foo.txt');]]>
             which does not have a convenience method in <code>Zend_Service_Nirvanix</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -198,7 +201,8 @@ $nirvanix = new Zend_Service_Nirvanix($auth);
 $imfs = $nirvanix->getService('IMFS');
 
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
-                                  'newFileName' => 'bar.txt'));]]>
+                                  'newFileName' => 'bar.txt'));
+]]>
         </programlisting>        
 
         <para>
@@ -237,7 +241,8 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             built-in PHP functions like <code>print_r()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -256,7 +261,8 @@ Zend_Service_Nirvanix_Response Object
             [ResponseCode] => 0
             [FilesUploaded] => 1
             [BytesUploaded] => 14
-        ))]]>
+        ))
+]]>
         </programlisting>
 
         <para>
@@ -290,8 +296,9 @@ Zend_Service_Nirvanix_Response Object
         <programlisting role="xml"><![CDATA[
 <Response>
    <ResponseCode>0</ResponseCode>
-</Response>]]>
-        </programlisting>
+</Response>
+]]>
+</programlisting>
     
         <para>
             When the <code>ResponseCode</code> is zero such as in the example
@@ -307,7 +314,8 @@ Zend_Service_Nirvanix_Response Object
             error, a <code>Zend_Service_Nirvanix_Exception</code> will be thrown.
         </para>
 
-        <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="xml"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);
@@ -320,8 +328,9 @@ try {
 } catch (Zend_Service_Nirvanix_Exception $e) {
   echo $e->getMessage() . "\n";
   echo $e->getCode();
-}]]>
-        </programlisting>
+}
+]]>
+</programlisting>
 
         <para>
             In the example above, <code>unlink()</code> is a convenience method that wraps the

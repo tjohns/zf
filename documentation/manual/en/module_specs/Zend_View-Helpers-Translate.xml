@@ -73,7 +73,9 @@ Zend_Registry::set('Zend_Translate', $adapter);
 // within your view
 echo $this->translate('simple');
 // this returns 'einfach'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -98,7 +100,9 @@ echo $this->translate('simple');
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 $this->translate()->setTranslator($adapter)->translate('simple');
 // this returns 'einfach'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -118,7 +122,9 @@ $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 // initiate the adapter
 $translate = new Zend_View_Helper_Translate($adapter);
 print $translate->translate('simple'); // this returns 'einfach'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             You would use this way if you are not working with
@@ -148,7 +154,9 @@ print $translate->translate('simple'); // this returns 'einfach'
 $date = "Monday";
 $this->translate("Today is %1\$s", $date);
 // could return 'Heute ist Monday'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -174,7 +182,9 @@ $month = "April";
 $time = "11:20:55";
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $time);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -191,7 +201,9 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -211,7 +223,9 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // within your view
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -232,7 +246,9 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 
@@ -262,7 +278,9 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
 // returns 'it' as new set default locale
 $this->translate()->getLocale();
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
     </example>
 

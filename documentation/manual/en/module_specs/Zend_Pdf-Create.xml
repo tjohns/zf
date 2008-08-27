@@ -27,8 +27,9 @@ $pdf2 = Zend_Pdf::load($fileName);
 
 // Load PDF document from a string.
 $pdf3 = Zend_Pdf::parse($pdfString);
-...]]>
-      </programlisting>
+...
+]]>
+        </programlisting>
     </example>
 
     <para>
@@ -62,7 +63,8 @@ $pdf2 = Zend_Pdf::parse($pdfString, 1);
 $pdf3 = Zend_Pdf::load($fileName);
 $revisions = $pdf3->revisions();
 $pdf3->rollback($revisions - 1);
-...]]>
+...
+]]>
         </programlisting>
     </example>
 

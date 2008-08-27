@@ -212,7 +212,8 @@ try {
     $resultSet = $technorati->search('PHP');
 } catch(Zend_Service_Technorati_Exception $e) {
     echo "An error occurred: " $e->getMessage();
-} ]]>
+} 
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -549,7 +550,8 @@ $resultSet = $technorati->search('php');
 foreach ($resultSet as $result) {
     // do something with your
     // Zend_Service_Technorati_SearchResult object
-} ]]>
+} 
+]]>
                 </programlisting>
             </example>
         </sect3>

@@ -105,13 +105,15 @@
             <code>Zend_Controller_Action::_getParam('error_handler')</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -147,7 +149,8 @@
             indicate a 404 page:
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -167,7 +170,8 @@
                 break;
         }
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -176,7 +180,8 @@
             <code>error_handler</code> object:
         </para>
 
-        <programlisting role="php"><![CDATA[public function errorAction()
+        <programlisting role="php"><![CDATA[
+public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
 
@@ -201,7 +206,8 @@
                 $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
                 break;
         }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 
@@ -221,7 +227,10 @@
             clear the response body prior to rendering any views:
         </para>
 
-        <programlisting role="php"><![CDATA[$this->getResponse()->clearBody();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$this->getResponse()->clearBody();
+]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
@@ -229,31 +238,37 @@
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>Standard usage</title>
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
-$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
+]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>Setting a different error handler</title>
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'module'     => 'mystuff',
     'controller' => 'static',
     'action'     => 'error'
-)));]]>
+)));
+]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>Using accessors</title>
-            <programlisting role="php"><![CDATA[$plugin = new Zend_Controller_Plugin_ErrorHandler();
+            <programlisting role="php"><![CDATA[
+$plugin = new Zend_Controller_Plugin_ErrorHandler();
 $plugin->setErrorHandlerModule('mystuff')
        ->setErrorHandlerController('static')
        ->setErrorHandlerAction('error');
 
 $front = Zend_Controller_Front::getInstance();
-$front->registerPlugin($plugin);]]>
+$front->registerPlugin($plugin);
+]]>
             </programlisting>
         </example>
     </sect4>
@@ -266,7 +281,8 @@ $front->registerPlugin($plugin);]]>
             controller. Below is a simple example.
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -297,7 +313,8 @@ EOH;
 
         $this->view->content = $content;
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 </sect3>

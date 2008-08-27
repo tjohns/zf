@@ -17,7 +17,8 @@
     </para>
     <programlisting role="php"><![CDATA[
         // fromXml function simply takes a String containing XML contents as input.
-        $jsonContents = Zend_Json::fromXml($xmlStringContents, true);?>]]>
+        $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
+]]>
     </programlisting>
 
     <para>
@@ -62,7 +63,8 @@
         <author><first>Jack</first><last>Herrington</last></author>
         <publisher>O'Reilly</publisher>
     </book>
-</books> ?>]]>
+</books> 
+]]>
     </programlisting>
 
     <para>
@@ -99,7 +101,8 @@
          "publisher" : "O'Reilly"
       }
    ]}
-}  ?>]]>
+}  
+]]>
     </programlisting>
 
     <para>
