@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11008 -->
+<!-- EN-Revision: 11074 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -17,6 +17,13 @@
             <para>
                 <code>Count</code>: Diese Prüfung checkt die Anzahl der Dateien. Er bietet ein Minimum und ein
                 Maximum an und wirft einen Fehler wenn einer der zwei Werte überschritten werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Exists</code>: Diese Prüfung checkt ob Dateien existieren. Sie wirft einen Fehler wenn
+                die angegebene Datei nicht existiert.
             </para>
         </listitem>
 
@@ -48,6 +55,13 @@
                 <code>MimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
                 fähig Typen von Mimetypen zu prüfen und wirft einen Fehler wenn eine angegebene Datei nicht
                 passt.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>NotExists</code>: Diese Prüfung checkt ob Dateien existieren. Sie wirft einen Fehler
+                wenn eine angegebene Datei existiert.
             </para>
         </listitem>
 
@@ -277,6 +291,52 @@ $upload->addValidator('Count', array(1, 5);
             <para>
                 Beachte das diese Prüfung die Anzahl der geprüften Dateien intern speichert. Die Datei
                 welche das Maximum überschrietet wird als Fehler zurückgegeben.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.exists">
+        <title><emphasis role="strong">Exists</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Exists</code> Prüfung checkt ob Dateien die angegeben werden existieren. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checkt ob die Datei im gegebenen Verzeichnis existiert.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert mehrere Verzeichnisse, entweder als Komma-getrennter String, oder als
+            Array. Es können aber auch die Methoden <code>setDirectory()</code>, <code>addDirectory()</code>,
+            und <code>getDirectory()</code> verwendet werden um die Verzeichnisse zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.exists.example">
+            <title>Die Exists Prüfung verwenden</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Das temporäre Verzeichnis für die Prüfung hinzufügen
+$upload->addValidator('Exists', '\temp');
+
+// Zwei Verzeichnisse hinzufügen inden die Array Schreibweise verwendet wird
+$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Beachte das diese Prüfung checkt ob die Datei in allen gesetzten Verzeichnissen existiert.
+                Die Prüfung schlägt fehl, wenn die Datei in irgendeinem der angegebenen Verzeichnisse nicht
+                existiert.
             </para>
         </note>
     </sect2>
@@ -570,6 +630,52 @@ $upload->setValidator('MimeType', 'image');
                 erhält man auch 'image/xpixmap' oder 'image/vasa' was problematisch sein könnte. Wenn man
                 nicht sicher ist ob die eigene Anwendung alle Typen unterstützt ist es besser nur
                 definierte Mimetypen zu erlauben statt der kompletten Gruppe.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.notexists">
+        <title><emphasis role="strong">NotExists</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>NotExists</code> Prüfung checkt ob Dateien die angegeben werden existieren. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checkt ob die Datei im gegebenen Verzeichnis nicht existiert.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert mehrere Verzeichnisse, entweder als Komma-getrennter String, oder als
+            Array. Es können aber auch die Methoden <code>setDirectory()</code>, <code>addDirectory()</code>,
+            und <code>getDirectory()</code> verwendet werden um die Verzeichnisse zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.notexists.example">
+            <title>Verwendung der NotExists Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Das temporäre Verzeichnis für die Prüfung hinzufügen
+$upload->addValidator('NotExists', '\temp');
+
+// Zwei Verzeichnisse durch Verwendung der Array Schreibweise hinzufügen
+$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Beachte das diese Prüfung checkt ob die Datei in allen gesetzten Verzeichnissen nicht existiert.
+                Die Prüfung schlägt fehl, wenn die Datei in irgendeinem der angegebenen Verzeichnisse
+                existiert.
             </para>
         </note>
     </sect2>
