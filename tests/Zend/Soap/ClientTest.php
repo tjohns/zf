@@ -50,8 +50,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($client->getOptions() == array('encoding' => 'UTF-8', 'soap_version' => SOAP_1_2));
 
     	$nonWsdlOptions = array('soap_version'   => SOAP_1_1,
-		                        'classmap'       => array('TestData1' => 'Zend_Soap_Server_TestData1',
-		                                            'TestData2' => 'Zend_Soap_Server_TestData2',),
+		                        'classmap'       => array('TestData1' => 'Zend_Soap_Client_TestData1',
+		                                            'TestData2' => 'Zend_Soap_Client_TestData2',),
 		                        'encoding'       => 'ISO-8859-1',
 		                        'uri'            => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
 		                        'location'       => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
@@ -118,8 +118,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $options = array('soap_version'   => SOAP_1_1,
                          'wsdl'           => dirname(__FILE__).'/_files/wsdl_example.wsdl',
 
-                         'classmap'       => array('TestData1' => 'Zend_Soap_Server_TestData1',
-                                             'TestData2' => 'Zend_Soap_Server_TestData2',),
+                         'classmap'       => array('TestData1' => 'Zend_Soap_Client_TestData1',
+                                             'TestData2' => 'Zend_Soap_Client_TestData2',),
                          'encoding'       => 'ISO-8859-1',
                          'uri'            => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
                          'location'       => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
