@@ -20,9 +20,9 @@
  */
 
 /**
- * Test helper
+ * PHPUnit test case
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Zend_Translate
@@ -38,6 +38,17 @@ require_once 'Zend/Translate.php';
  */
 class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_TranslateTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function testCreate()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('1' => '1'));
@@ -241,4 +252,9 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'), 'de_AT');
         $this->assertEquals('de_AT', $lang->getLocale());
     }
+}
+
+// Call Zend_TranslateTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_TranslateTest::main") {
+    Zend_TranslateTest::main();
 }
