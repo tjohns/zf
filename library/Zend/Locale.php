@@ -792,6 +792,10 @@ class Zend_Locale
             throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
         }
 
+        if (strpos($locale, '-') !== false) {
+            $locale = strtr($locale, '-', '_');
+        }
+
         return (string) $locale;
     }
 

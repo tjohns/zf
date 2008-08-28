@@ -20,9 +20,9 @@
  */
 
 /**
- * Test helper
+ * PHPUnit test case
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 // define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
 
@@ -31,9 +31,6 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php'
  */
 require_once 'Zend/Locale.php';
 require_once 'Zend/Cache.php';
-
-
-// echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
 /**
  * @category   Zend
@@ -44,6 +41,17 @@ require_once 'Zend/Cache.php';
  */
 class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_LocaleTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     private $_cache = null;
 
     public function setUp()
@@ -523,6 +531,8 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $value = new Zend_LocaleTestHelper();
         $list = $value->getBrowser();
         $this->assertTrue(isset($list['de']));
+        $this->assertEquals(array('de' => 1, 'en_UK' => 0.5, 'en_US' => 0.5,
+                                  'en' => 0.5, 'fr_FR' => 0.2, 'fr' => 0.2), $list);
     }
 
     /**
@@ -599,6 +609,15 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
             $this->assertContains("Unknown locale", $e->getMessage());
         }
     }
+
+    /**
+     * test isLocale
+     * expected boolean
+     */
+    public function testZF3617() {
+        $value = new Zend_Locale('en-US');
+        $this->assertEquals('en_US', $value->toString());
+    }
 }
 
 class Zend_LocaleTestHelper extends Zend_Locale
@@ -613,4 +632,9 @@ class Zend_LocaleTestHelper extends Zend_Locale
         self::$_environment = null;
         self::$_browser     = null;
     }
+}
+
+// Call Zend_LocaleTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_LocaleTest::main") {
+    Zend_LocaleTest::main();
 }
