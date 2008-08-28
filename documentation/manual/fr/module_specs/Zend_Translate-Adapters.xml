@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11088 -->
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
 
@@ -34,7 +34,7 @@
 
                     <entry>Utilise les fichiers à séparation par virgule (*.csv/*.txt)</entry>
 
-                    <entry>Format simple de fichier texte ; très rapide ; problèmes possibles avec les caractères
+                    <entry>Format simple de fichier texte ; rapide ; problèmes possibles avec les caractères
                     Unicode</entry>
                 </row>
 
@@ -43,7 +43,7 @@
 
                     <entry>Utilise les fichiers binaires gettext (*.mo)</entry>
 
-                    <entry>Norme GNU pour Linux ; très rapide ; thread-safe ; besoin d'outils pour la traduction</entry>
+                    <entry>Norme GNU pour Linux ; thread-safe ; besoin d'outils pour la traduction</entry>
                 </row>
 
                 <row>
@@ -51,7 +51,7 @@
 
                     <entry>Utilise de simples fichiers ini (*.ini)</entry>
 
-                    <entry>Format simple de fichier texte ; très rapide ; problèmes possibles avec les caractères
+                    <entry>Format simple de fichier texte ; rapide ; problèmes possibles avec les caractères
                     Unicode</entry>
                 </row>
 
