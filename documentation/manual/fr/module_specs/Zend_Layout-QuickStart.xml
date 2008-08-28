@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout - Démarrage rapide</title>
 
@@ -120,7 +120,7 @@ class FooController extends Zend_Controller_Action
         mais bien un objet. Vous pouvez donc enchaîner une méthode immédiatement :</para>
 
         <programlisting role="php"><![CDATA[
-<?php $this->layout()->setLayout('foo'); // utilise un script de layout spécifique?>
+<?php $this->layout()->setLayout('foo'); // utilise un script de layout spécifique
 ]]></programlisting>
 
         <para>Autrement, vous pouvez n'importe où accéder à votre instance de <code>Zend_Layout</code> via la méthode

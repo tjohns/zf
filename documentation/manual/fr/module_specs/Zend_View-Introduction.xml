@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.view.introduction">
     <title>Introduction</title>
 
@@ -81,7 +81,7 @@ echo $view->render('booklist.php');
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; ?>
+<?php endif; 
 ]]></programlisting>
 
         <para>Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.</para>

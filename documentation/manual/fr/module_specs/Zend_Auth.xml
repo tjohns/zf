@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.introduction">
     <title>Introduction</title>
 
@@ -63,10 +63,11 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
         // ...
     }
 }
-]]></programlisting> Comme indiqué dans la documentation "docblock", <code>authenticate()</code> doit retourner une
-        instance de <code>Zend_Auth_Result</code> (ou d'une classe dérivée de <code>Zend_Auth_Result</code>). Si pour
-        quelque raison que ce soit, la requête d'authentification ne peut pas être réalisée, <code>authenticate()</code>
-        retournera une exception dérivée de <code>Zend_Auth_Adapter_Exception</code>.</para>
+]]></programlisting> Comme indiqué dans la documentation "docblock", <code>authenticate()</code> doit
+        retourner une instance de <code>Zend_Auth_Result</code> (ou d'une classe dérivée de
+        <code>Zend_Auth_Result</code>). Si pour quelque raison que ce soit, la requête d'authentification ne peut pas
+        être réalisée, <code>authenticate()</code> retournera une exception dérivée de
+        <code>Zend_Auth_Adapter_Exception</code>.</para>
     </sect2>
 
     <sect2 id="zend.auth.introduction.results">

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.view.scripts">
     <title>Scripts de vue</title>
 
@@ -38,7 +38,7 @@
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; ?>
+<?php endif; 
 ]]></programlisting>
 
     <sect2 id="zend.view.scripts.escaping">

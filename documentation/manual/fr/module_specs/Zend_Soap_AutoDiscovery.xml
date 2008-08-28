@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11097 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>Auto découverte.</title>
 
@@ -66,7 +66,7 @@ $autodiscover->handle();
 ]]></programlisting></para>
     </sect2>
 
-    <!-- EN-Revision: 10934 -->
+    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.class">
         <title>Auto découverte de classe.</title>
 
@@ -126,7 +126,7 @@ $autodiscover->handle();
         </note>
     </sect2>
 
-    <!-- EN-Revision: 10934 -->
+    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.functions">
         <title>Auto découverte des fonctions.</title>
 
@@ -188,7 +188,7 @@ $autodiscover->handle();
         </note>
     </sect2>
 
-    <!-- EN-Revision: 10589 -->
+    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.datatypes">
         <title>Types de donnée auto découverts.</title>
 

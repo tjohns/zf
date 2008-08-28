@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.db.statement">
     <title>Zend_Db_Statement</title>
 
@@ -261,8 +261,7 @@ echo $obj->bug_description;
             <title>Binding parameters from PHP variables</title>
             <programlisting role="php"><![CDATA[
 <?php
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -285,8 +284,7 @@ echo $obj->bug_description;
             <title>Binding results to PHP variables</title>
             <programlisting role="php"><![CDATA[
 <?php
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

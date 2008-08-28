@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>L'aide de vue HTML Object</title>
 
@@ -35,7 +35,7 @@
         ressource.</para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
+<?php echo $this->htmlFlash('/path/to/flash.swf'); 
 ]]></programlisting>
 
         <para>Ceci affichera le code HTML suivant :</para>
@@ -76,7 +76,7 @@
         'param2' => 'pval2'
     ), 
     'some content'
-); ?>
+); 
 ]]></programlisting>
 
         <para>Ceci affichera le code HTML suivant :</para>
