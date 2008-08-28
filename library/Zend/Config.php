@@ -160,6 +160,25 @@ class Zend_Config implements Countable, Iterator
             throw new Zend_Config_Exception('Zend_Config is read only');
         }
     }
+    
+    /**
+     * Deep clone of this instance to ensure that nested Zend_Configs
+     * are also cloned.
+     * 
+     * @return void
+     */
+    public function __clone()
+    {
+      $array = array();
+      foreach ($this->_data as $key => $value) {
+          if ($value instanceof Zend_Config) {
+              $array[$key] = clone $value;
+          } else {
+              $array[$key] = $value;
+          }
+      }
+      $this->_data = $array;
+    }
 
     /**
      * Return an associative array of the stored data.
