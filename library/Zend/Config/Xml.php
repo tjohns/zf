@@ -60,7 +60,7 @@ class Zend_Config_Xml extends Zend_Config
             throw new Zend_Config_Exception('Filename is not set');
         }
 
-        $old_error_handler = set_error_handler(array(__CLASS__, 'simplexmlLoadFileFileErrorHandler'));
+        $this->_oldErrorHandler = set_error_handler(array($this, '_loadFileFileErrorHandler'));
         $config = simplexml_load_file($filename);
         restore_error_handler();
 
@@ -222,23 +222,4 @@ class Zend_Config_Xml extends Zend_Config
 
         return $firstArray;
     }
-    
-    /**
-     * Handle any errors from simplexml_load_file
-     *
-     * @param integer $errno
-     * @param string $errstr
-     * @param string $errfile
-     * @param integer $errline
-     */
-    public static function simplexmlLoadFileFileErrorHandler($errno, $errstr, $errfile, $errline)
-    { 
-        /**
-         * @see Zend_Config_Exception
-         */
-        require_once 'Zend/Config/Exception.php';
-        throw new Zend_Config_Exception($errstr);
-    }
-
-    
 }
