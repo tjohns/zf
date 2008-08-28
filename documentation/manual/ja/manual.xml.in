@@ -375,17 +375,8 @@
         <xi:include href="module_specs/Zend_Soap_Wsdl.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_Wsdl.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-Introduction.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-Introduction.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Soap_AutoDiscovery.xml" /></xi:fallback>
         </xi:include>
     </chapter>
 

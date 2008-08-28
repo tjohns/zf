@@ -446,10 +446,7 @@
         <xi:include href="module_specs/Zend_Soap_Server.xml" />
         <xi:include href="module_specs/Zend_Soap_Client.xml" />
         <xi:include href="module_specs/Zend_Soap_Wsdl.xml" />
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-ClassDiscovering.xml" />
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-FunctionsDiscovering.xml" />
-        <xi:include href="module_specs/Zend_Soap_AutoDiscovery-DataTypes.xml" />
+        <xi:include href="module_specs/Zend_Soap_AutoDiscovery.xml" />
     </chapter>
     <chapter id="zend.test">
         <title>Zend_Test</title>
