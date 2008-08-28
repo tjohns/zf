@@ -63,7 +63,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
         <para>Ensuite vous l'affichez en début de votre layout :</para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->doctype() 
+<?php echo $this->doctype() ?>
 ]]></programlisting>
     </example>
 

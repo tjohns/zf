@@ -81,7 +81,7 @@ echo $view->render('booklist.php');
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; 
+<?php endif; ?>
 ]]></programlisting>
 
         <para>Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.</para>

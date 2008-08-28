@@ -86,7 +86,7 @@ $this->headStyle()->prependStyle($stylesInitiaux);
         faîtes un simple <code>echo</code> de l'aide :</para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headStyle() 
+<?= $this->headStyle() ?>
 ]]></programlisting>
     </example>
 
@@ -103,7 +103,7 @@ $this->headStyle()->prependStyle($stylesInitiaux);
 body {
     background-color: <?= $this->bgColor ?>;
 }
-<?php $this->headStyle()->captureEnd() 
+<?php $this->headStyle()->captureEnd() ?>
 ]]></programlisting>
 
         <para>Les suppositions suivantes sont considérées :</para>

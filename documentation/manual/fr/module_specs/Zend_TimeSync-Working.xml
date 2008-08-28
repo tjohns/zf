@@ -131,9 +131,6 @@ print $server->getDate()->getIso();
         aucun paramètre ne lui est passé, la méthode retournera toutes les options connues.</para>
 
         <programlisting role="php"><![CDATA[
-<?php
-require_once 'Zend/TimeSync.php';
-
 Zend_TimeSync::setOptions(array('timeout' => 3, 'myoption' => 'timesync'));
 $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));

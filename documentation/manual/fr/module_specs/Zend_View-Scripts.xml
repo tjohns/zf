@@ -38,7 +38,7 @@
 
     <p>Aucun livre à afficher</p>
 
-<?php endif; 
+<?php endif; ?>
 ]]></programlisting>
 
     <sect2 id="zend.view.scripts.escaping">

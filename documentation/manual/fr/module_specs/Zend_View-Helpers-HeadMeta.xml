@@ -109,7 +109,7 @@ $this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.ht
         "<code>echo</code>" de l'aide :</para>
 
         <programlisting role="php"><![CDATA[
-<?php echo $this->headMeta() 
+<?php echo $this->headMeta() ?>
 ]]></programlisting>
     </example>
 </sect3>

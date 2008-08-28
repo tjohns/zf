@@ -39,7 +39,7 @@ $this->headTitle()->setSeparator(' / ');
 
         <programlisting role="php"><![CDATA[
 <!-- Affiche <action> / <controller> / Zend Framework -->
-<?= $this->headTitle() 
+<?= $this->headTitle() ?>
 ]]></programlisting>
     </example>
 </sect3>

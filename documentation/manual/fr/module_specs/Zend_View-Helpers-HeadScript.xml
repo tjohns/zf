@@ -124,7 +124,7 @@ $this->headScript()->prependScript('/js/prototype.js');
         <code>echo</code> de l'aide :</para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headScript() 
+<?= $this->headScript() ?>
 ]]></programlisting>
     </example>
 
@@ -140,7 +140,7 @@ $this->headScript()->prependScript('/js/prototype.js');
 <?php $this->headScript()->captureStart() ?>
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
-<?php $this->headScript()->captureEnd() 
+<?php $this->headScript()->captureEnd() ?>
 ]]></programlisting>
 
         <para>Les suppositions suivantes sont considérées :</para>

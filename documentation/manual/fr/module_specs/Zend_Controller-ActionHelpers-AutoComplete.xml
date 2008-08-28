@@ -242,7 +242,7 @@ dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() 
+<? $this->headScript()->captureEnd() ?>
 ]]></programlisting>
 
             <para>Notez les appels aux aides de vue comme <code>headStyle</code> et <code>headScript</code>.</para>

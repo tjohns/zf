@@ -77,7 +77,7 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
 ?>
 
 <!-- effectuer le rendu -->
-<?= $this->headLink() 
+<?= $this->headLink() ?>
 ]]></programlisting>
     </example>
 </sect3>

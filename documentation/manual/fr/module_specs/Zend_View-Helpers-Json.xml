@@ -18,6 +18,6 @@ Content-Type: application/json
     <para>L'utilisation de l'aide de vue JSON est très simple :</para>
 
     <programlisting role="php"><![CDATA[
-<?= $this->json($this->data) 
+<?= $this->json($this->data) ?>
 ]]></programlisting>
 </sect3>

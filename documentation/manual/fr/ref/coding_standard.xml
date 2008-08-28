@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9740 -->
+<!-- EN-Revision: 11091 -->
 <appendix id="coding-standard">
     <title>Convention de codage PHP du Zend Framework</title>
 
@@ -132,7 +132,7 @@ Zend/Db.php
 Zend/Controller/Front.php
 
 Zend/View/Helper/FormRadio.php
-                ]]></programlisting> Les noms de fichiers doivent correspondre aux noms des classes décris
+]]></programlisting> Les noms de fichiers doivent correspondre aux noms des classes décris
             ci-dessus.</para>
         </sect2>
 
@@ -155,7 +155,7 @@ filterInput()
 getElementById()
 
 widgetFactory()
-                ]]></programlisting></para>
+]]></programlisting></para>
 
             <para>Pour la programmation orientée objet, les accesseurs aux objets doivent toujours être préfixés par
             soit "get" soit "set". Lorsque vous utilisez des motifs de conception, comme le Singleton ou la Fabrique, le
@@ -216,9 +216,11 @@ widgetFactory()
             <title>Démarcation du code PHP</title>
 
             <para>Les codes PHP doivent toujours être délimités dans la forme complète, par les balises PHP standards :
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
+<?php
 
-?>]]></programlisting></para>
+?>
+]]></programlisting></para>
 
             <para>Les balises courtes d'ouvertures ("&lt;?")ne sont pas autorisées. Pour les fichiers ne contenant que
             du code PHP, la balise de fermeture doit toujours être omise (Voir <xref
@@ -235,7 +237,7 @@ widgetFactory()
                 variables), l'apostrophe ou guillemet simple doit être utilisé pour démarquer la chaîne :
                 <programlisting role="php"><![CDATA[
 $a = 'Exemple de chaîne de caractères';
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.literals-containing-apostrophes">
@@ -245,7 +247,7 @@ $a = 'Exemple de chaîne de caractères';
                 utilisant les guillemets doubles. Ceci est particulièrement conseillé pour les requêtes SQL :
                 <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Eric' OR `name`='Caroline'";
-                    ]]></programlisting> La syntaxe ci-dessus est préférée à l'échappement des apostrophes car elle est
+]]></programlisting> La syntaxe ci-dessus est préférée à l'échappement des apostrophes car elle est
                 plus facile à lire.</para>
             </sect3>
 
@@ -257,12 +259,12 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Eric' OR `name`='Carolin
 $greeting = "Bonjour $name, bienvenue!";
 
 $greeting = "Bonjour {$name}, bienvenue!";
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>Pour des raisons d'uniformité, cette forme n'est pas permise : <programlisting
                 role="php"><![CDATA[
 $greeting = "Bonjour ${name}, bienvenue!";
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.string-concatenation">
@@ -272,7 +274,7 @@ $greeting = "Bonjour ${name}, bienvenue!";
                 ajouté avant, et après cet opérateur, cela permet d'améliorer la lisibilité : <programlisting
                 role="php"><![CDATA[
 $company = 'Zend' . ' ' . 'Technologies';
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>Lors de la concaténation de chaînes avec l'opérateur ".", il est permis de couper le segment en
                 plusieurs lignes pour améliorer la lisibilité. Dans ces cas, chaque nouvelle ligne doit être remplie
@@ -280,7 +282,7 @@ $company = 'Zend' . ' ' . 'Technologies';
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Caroline' "
      . "ORDER BY `name` ASC ";
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
         </sect2>
 
@@ -299,7 +301,7 @@ $sql = "SELECT `id`, `name` FROM `people` "
                 être ajouté après chaque virgule délimitante, pour améliorer la lisibilité : <programlisting
                 role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>Il est aussi permis de déclarer des tableaux indexés sur plusieurs lignes en utilisant la
                 construction <code>array</code>. Dans ce cas, chaque nouvelle ligne doit être remplie par des espaces
@@ -308,7 +310,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
                      56.44, $d, 500);
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.arrays.associative">
@@ -320,7 +322,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                 role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
                      'secondKey' => 'secondValue');
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
         </sect2>
 
@@ -354,7 +356,7 @@ class SampleClass
     // contenu de la classe
     // qui doit être indenté avec 4 espaces
 }
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.classes.member-variables">
@@ -406,7 +408,8 @@ class Foo
         // contenu de la fonction
         // qui doit être indenté avec 4 espaces
     }
-}                ]]></programlisting></para>
+}
+]]></programlisting></para>
 
                 <para><emphasis>NOTE :</emphasis> Le passage par référence est permis uniquement dans la déclaration de
                 la fonction : <programlisting role="php"><![CDATA[
@@ -421,7 +424,7 @@ class Foo
     public function bar(&$baz)
     {}
 }
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>L'appel par référence est interdit.</para>
 
@@ -449,7 +452,7 @@ class Foo
         return $this->bar;
     }
 }
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.usage">
@@ -458,7 +461,7 @@ class Foo
                 <para>Les arguments d'une fonction sont séparés par un espace après la virgule de délimitation. Voici un
                 exemple d'un appel de fonction qui prend trois arguments : <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>L'appel par référence est interdit. Référez vous à la section sur la déclaration de fonctions pour
                 la méthode correcte de passage des argument par référence.</para>
@@ -471,7 +474,7 @@ threeArguments(array(1, 2, 3), 2, 3);
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
                      56.44, $d, 500), 2, 3);
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
         </sect2>
 
@@ -495,7 +498,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
 if ($a != 2) {
     $a = 2;
 }
-                    ]]></programlisting></para>
+]]></programlisting></para>
 
                 <para>Pour les instruction "if" qui incluent "elseif" ou "else", les conventions de formatage sont
                 similaires à celles de la construction "if". Les exemples suivants montrent le formatage approprié pour
@@ -514,7 +517,7 @@ if ($a != 2) {
 } else {
    $a = 7;
 }
-                    ]]></programlisting> PHP permet que ces instructions soient écrites sans accolades dans certaines
+]]></programlisting> PHP permet que ces instructions soient écrites sans accolades dans certaines
                 circonstances. La convention de codage ne fait pas de différentiation et toutes les instructions "if",
                 "elseif" et "else" doivent utiliser des accolades.</para>
 
@@ -542,7 +545,7 @@ switch ($numPeople) {
     default:
         break;
 }
-                ]]></programlisting>
+]]></programlisting>
 
                 <para>La construction <code>default</code> ne doit jamais être oubliée dans une instruction
                 <code>switch</code>.</para>
@@ -589,7 +592,7 @@ switch ($numPeople) {
  * @link       http://framework.zend.com/package/PackageName
  * @since      File available since Release 1.5.0
 */
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
@@ -609,7 +612,7 @@ switch ($numPeople) {
  * @since      Class available since Release 1.5.0
  * @deprecated Class deprecated in Release 2.0.0
  */
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.functions">
@@ -635,8 +638,7 @@ switch ($numPeople) {
                 <para>Si une fonction/méthode peut lancer une exception, utilisez "@throws" : <programlisting
                 role="php"><![CDATA[
 @throws exceptionclass [description]
-
-                    ]]></programlisting></para>
+]]></programlisting></para>
             </sect3>
         </sect2>
     </sect1>

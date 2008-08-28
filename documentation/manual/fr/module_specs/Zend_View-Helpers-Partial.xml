@@ -29,7 +29,7 @@
         <programlisting role="php"><![CDATA[
 <?= $this->partial('partiel.phtml', array(
     'de' => 'Equipe Framework',
-    'sujet' => 'vues partielles')); 
+    'sujet' => 'vues partielles')); ?>
 ]]></programlisting>
 
         <para>Qui vous retournerait :</para>
@@ -154,7 +154,7 @@ $model = array(
         module "liste", vous pourriez le saisir comme suit :</para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->partial('pager.phtml', 'liste', $pagerData) 
+<?= $this->partial('pager.phtml', 'liste', $pagerData) ?>
 ]]></programlisting>
 
         <para>De cette façon, vous pouvez réutiliser des partiels créés spécifiquement pour d'autre modules. Ceci dit,
