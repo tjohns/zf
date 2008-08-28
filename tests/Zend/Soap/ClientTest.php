@@ -84,8 +84,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
         $wsdlOptions = array('soap_version'   => SOAP_1_1,
                              'wsdl'           => dirname(__FILE__).'/_files/wsdl_example.wsdl',
-                             'classmap'       => array('TestData1' => 'Zend_Soap_Server_TestData1',
-                                                 'TestData2' => 'Zend_Soap_Server_TestData2',),
+                             'classmap'       => array('TestData1' => 'Zend_Soap_Client_TestData1',
+                                                 'TestData2' => 'Zend_Soap_Client_TestData2',),
                              'encoding'       => 'ISO-8859-1',
 
                              'login'          => 'http_login',
