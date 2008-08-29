@@ -66,7 +66,6 @@ $autodiscover->handle();
 ]]></programlisting></para>
     </sect2>
 
-    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.class">
         <title>Auto découverte de classe.</title>
 
@@ -126,7 +125,6 @@ $autodiscover->handle();
         </note>
     </sect2>
 
-    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.functions">
         <title>Auto découverte des fonctions.</title>
 
@@ -188,11 +186,10 @@ $autodiscover->handle();
         </note>
     </sect2>
 
-    <!-- EN-Revision: 11097 -->
     <sect2 id="zend.soap.autodiscovery.datatypes">
         <title>Types de donnée auto découverts.</title>
 
-        <para>Les types de données d'entrée/sortie sont convertis en types spéciaux pour le réseau, suivant ces règles:
+        <para>Les types de données d'entrée/sortie sont convertis en types spéciaux pour le réseau, suivant ces règles :
         <itemizedlist>
                 <listitem>
                     <para>Chaînes strings &lt;-&gt; <code>xsd:string</code>.</para>
