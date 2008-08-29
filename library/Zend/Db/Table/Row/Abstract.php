@@ -790,6 +790,7 @@ abstract class Zend_Db_Table_Row_Abstract
      *
      * @param string|Zend_Db_Table_Abstract  $dependentTable
      * @param string                         OPTIONAL $ruleKey
+     * @param Zend_Db_Table_Select           OPTIONAL $select
      * @return Zend_Db_Table_Rowset_Abstract Query result from $dependentTable
      * @throws Zend_Db_Table_Row_Exception If $dependentTable is not a table or is not loadable.
      */

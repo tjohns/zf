@@ -494,7 +494,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add many prefix paths at once
      * 
      * @param  array $spec 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addPrefixPaths(array $spec)
     {
@@ -2070,7 +2070,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add a custom error message to return in the event of failed validation
      * 
      * @param  string $message 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addErrorMessage($message)
     {
@@ -2082,7 +2082,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add multiple custom error messages to return in the event of failed validation
      * 
      * @param  array $messages 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addErrorMessages(array $messages)
     {
@@ -2096,7 +2096,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Same as addErrorMessages(), but clears custom error message stack first
      * 
      * @param  array $messages 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function setErrorMessages(array $messages)
     {
@@ -2117,7 +2117,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     /**
      * Clear custom error messages stack
      * 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function clearErrorMessages()
     {
@@ -2128,7 +2128,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     /**
      * Mark the element as being in a failed validation state
      * 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function markAsError()
     {
@@ -2140,7 +2140,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add an error message and mark element as failed validation
      * 
      * @param  string $message 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addError($message)
     {
@@ -2153,7 +2153,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add multiple error messages and flag element as failed validation
      * 
      * @param  array $messages 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addErrors(array $messages)
     {
@@ -2167,7 +2167,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Overwrite any previously set error messages and flag as failed validation
      * 
      * @param  array $messages 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function setErrors(array $messages)
     {
@@ -2334,7 +2334,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * 
      * @param  string|Zend_Form_Decorator_Interface $decorator 
      * @param  array|Zend_Config $options Options with which to initialize decorator
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addDecorator($decorator, $options = null)
     {
@@ -2376,7 +2376,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Add many decorators at once
      * 
      * @param  array $decorators 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function addDecorators(array $decorators)
     {
@@ -2420,7 +2420,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * Overwrite all decorators
      * 
      * @param  array $decorators 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function setDecorators(array $decorators)
     {
@@ -2503,7 +2503,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
     /**
      * Clear all decorators
      * 
-     * @return Zend_Form_Element
+     * @return Zend_Form
      */
     public function clearDecorators()
     {
