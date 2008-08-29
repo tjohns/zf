@@ -400,5 +400,16 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         unset($config->b);
         $this->assertEquals(count($config), 2);
     }
+    
+    public function testZF4107_ensureCloneDoesNotKeepNestedReferences() 
+    {
+        $parent = new Zend_Config(array('key' => array('nested' => 'parent')), true);
+        $newConfig = clone $parent;
+        $newConfig->merge(new Zend_Config(array('key' => array('nested' => 'override')), true));
+
+        $this->assertEquals('override', $newConfig->key->nested, '$newConfig is not overridden');
+        $this->assertEquals('parent', $parent->key->nested, '$parent has been overridden');
+        
+    }
 }
 
