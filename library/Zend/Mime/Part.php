@@ -46,6 +46,8 @@ class Zend_Mime_Part {
     public $description;
     public $charset;
     public $boundary;
+    public $location;
+    public $language;
     protected $_content;
     protected $_isStream = false;
 
@@ -186,6 +188,14 @@ class Zend_Mime_Part {
 
         if ($this->description) {
             $headers[] = array('Content-Description', $this->description);
+        }
+        
+        if ($this->location) {
+            $headers[] = array('Content-Location', $this->location);
+        }
+        
+        if ($this->language){
+            $headers[] = array('Content-Language', $this->language);
         }
 
         return $headers;
