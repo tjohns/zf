@@ -105,7 +105,21 @@ class Zend_Cache_Core
      * @var string $_lastId
      */
     private $_lastId = null;
+    
+    /**
+     * True if the backend implements Zend_Cache_Backend_ExtendedInterface
+     *
+     * @var boolean $_extendedBackend
+     */
+    protected $_extendedBackend = false;
 
+    /**
+     * Array of capabilities of the backend (only if it implements Zend_Cache_Backend_ExtendedInterface)
+     * 
+     * @var array
+     */
+    protected $_backendCapabilities = array();
+    
     /**
      * Constructor
      *
@@ -138,6 +152,11 @@ class Zend_Cache_Core
             $directives[$directive] = $this->_options[$directive];
         }
         $this->_backend->setDirectives($directives);
+        if (in_array('Zend_Cache_Backend_ExtendedInterface', class_implements($this->_backend))) {
+            $this->_extendedBackend = true;
+            $this->_backendCapabilities = $this->_backend->getCapabilities();
+        }
+        
     }
 
     /**
@@ -285,10 +304,11 @@ class Zend_Cache_Core
      * @param  string $id             Cache id (if not set, the last cache id will be used)
      * @param  array $tags           Cache tags
      * @param  int $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
+     * @param  int   $priority         integer between 0 (very low priority) and 10 (maximum priority) used by some particular backends         
      * @throws Zend_Cache_Exception
      * @return boolean True if no problem
      */
-    public function save($data, $id = null, $tags = array(), $specificLifetime = false)
+    public function save($data, $id = null, $tags = array(), $specificLifetime = false, $priority = 8)
     {
         if (!$this->_options['caching']) {
             return true;
@@ -312,17 +332,31 @@ class Zend_Cache_Core
         if ($this->_options['automatic_cleaning_factor'] > 0) {
             $rand = rand(1, $this->_options['automatic_cleaning_factor']);
             if ($rand==1) {
-                if ($this->_backend->isAutomaticCleaningAvailable()) {
-                    $this->clean(Zend_Cache::CLEANING_MODE_OLD);
+                if ($this->_extendedBackend) {
+                    // New way
+                    if ($this->_backendCapabilities['automatic_cleaning']) {
+                        $this->clean(Zend_Cache::CLEANING_MODE_OLD);
+                    } else {
+                        $this->_log('Zend_Cache_Core::save() / automatic cleaning is not available/necessary with this backend');
+                    }
                 } else {
-                    $this->_log('Zend_Cache_Core::save() / automatic cleaning is not available with this backend');
+                    // Deprecated way (will be removed in next major version)
+                    if (method_exists($this->_backend, 'isAutomaticCleaningAvailable') && ($this->_backend->isAutomaticCleaningAvailable())) {
+                        $this->clean(Zend_Cache::CLEANING_MODE_OLD);
+                    } else {
+                        $this->_log('Zend_Cache_Core::save() / automatic cleaning is not available/necessary with this backend');
+                    }
                 }
             }
         }
         if ($this->_options['ignore_user_abort']) {
             $abort = ignore_user_abort(true);
         }
-        $result = $this->_backend->save($data, $id, $tags, $specificLifetime);
+        if (($this->_extendedBackend) && ($this->_backendCapabilities['priority'])) {
+            $result = $this->_backend->save($data, $id, $tags, $specificLifetime, $priority);
+        } else {
+            $result = $this->_backend->save($data, $id, $tags, $specificLifetime);
+        }
         if ($this->_options['ignore_user_abort']) {
             ignore_user_abort($abort);
         }
@@ -388,7 +422,102 @@ class Zend_Cache_Core
         self::_validateTagsArray($tags);
         return $this->_backend->clean($mode, $tags);
     }
-
+    
+    /**
+     * Return an array of stored cache ids which match given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of matching cache ids (string)
+     */
+    public function getIdsMatchingTags($tags = array())
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        if (!($this->_backendCapabilities['tags'])) {
+            Zend_Cache::throwException('tags are not supported by the current backend');
+        }
+        return $this->_backend->getIdsMatchingTags($tags);
+    }
+    
+    /**
+     * Return an array of stored cache ids which don't match given tags
+     * 
+     * In case of multiple tags, a logical OR is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of not matching cache ids (string)
+     */    
+    public function getIdsNotMatchingTags($tags = array())
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        if (!($this->_backendCapabilities['tags'])) {
+            Zend_Cache::throwException('tags are not supported by the current backend');
+        }
+        return $this->_backend->getIdsNotMatchingTags($tags);
+    }
+    
+    /**
+     * Return an array of stored cache ids
+     * 
+     * @return array array of stored cache ids (string)
+     */
+    public function getIds()
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        return $this->_backend->getIds();
+    }
+    
+    /**
+     * Return an array of stored tags
+	 *
+     * @return array array of stored tags (string)
+     */
+    public function getTags()
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        if (!($this->_backendCapabilities['tags'])) {
+            Zend_Cache::throwException('tags are not supported by the current backend');
+        }
+        return $this->_backend->getTags();        
+    }
+    
+    /**
+     * Return the filling percentage of the backend storage
+     *
+     * @return int integer between 0 and 100
+     */
+    public function getFillingPercentage()
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        return $this->_backend->getFillingPercentage();        
+    }
+    
+    /**
+     * Give (if possible) an extra lifetime to the given cache id
+     *
+     * @param string $id cache id
+     * @param int $extraLifetime
+     * @return boolean true if ok
+     */
+    public function touch($id, $extraLifetime)
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        return $this->_backend->touch($id, $extraLifetime);           
+    }
+    
     /**
      * Validate a cache id or a tag (security, reliable filenames, reserved prefixes...)
      *
