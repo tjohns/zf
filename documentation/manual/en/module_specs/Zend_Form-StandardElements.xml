@@ -92,7 +92,7 @@ $element->setCaptcha('Dumb');
         <programlisting role="php"><![CDATA[
 // Using single captcha key:
 $element = new Zend_Form_Element_Captcha('foo', array(
-    'label' => "Please verify you're a human"
+    'label' => "Please verify you're a human",
     'captcha' => array(
         'captcha' => 'Figlet',
         'wordLen' => 6,
