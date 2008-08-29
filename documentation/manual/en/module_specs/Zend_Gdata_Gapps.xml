@@ -162,8 +162,10 @@ echo 'Given Name: ' . $user->login->givenName . "\n";
 echo 'Family Name: ' . $user->login->familyName . "\n";
 echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
-echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
-echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
+echo 'Must Change Password: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
+echo 'Has Agreed To Terms: ' .
+     ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
 ]]>
             </programlisting>
             
@@ -184,8 +186,10 @@ echo 'Given Name: ' . $user->login->givenName . "\n";
 echo 'Family Name: ' . $user->login->familyName . "\n";
 echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
-echo 'Must Change Password: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
-echo 'Has Agreed To Terms: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
+echo 'Must Change Password: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
+echo 'Has Agreed To Terms: ' .
+     ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
 ]]>
             </programlisting>
             

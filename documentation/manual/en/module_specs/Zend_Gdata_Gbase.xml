@@ -101,9 +101,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filter php_self to avoid a security vulnerability.
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri =
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                     ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -119,8 +124,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Obtain an AuthSub authenticated HTTP client, redirecting the user to the
- *  AuthSub server to login if necessary.
+/**
+ * Obtain an AuthSub authenticated HTTP client, redirecting the user
+ * to the AuthSub server to login if necessary.
  */
 function getAuthSubHttpClient()
 {
@@ -137,7 +143,10 @@ function getAuthSubHttpClient()
 
         // Redirect the user to the AuthSub server to sign in
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -240,7 +249,8 @@ $feed = $service->getGbaseSnippetFeed($query);
             </para>
             <programlisting role="php"><![CDATA[
 foreach ($feed->entries as $entry) {
-  // Get all attributes and print out the name and text value of each attribute
+  // Get all attributes and print out the name and text value of each 
+  // attribute
   $baseAttributes = $entry->getGbaseAttributes();
   foreach ($baseAttributes as $attr) {
     echo "Attribute " . $attr->name . " : " . $attr->text . "<br>";

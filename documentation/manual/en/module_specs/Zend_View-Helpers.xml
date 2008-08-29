@@ -155,11 +155,17 @@ echo $this->formCheckbox('foo', null, null, array(
 
 // 'bar' and 'baz' as checked/unchecked options; checked 
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => true),
+                         array('bar', 'baz');
 
 // 'bar' and 'baz' as checked/unchecked options; unchecked 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => false),
+                         array('bar', 'baz');
 ]]>
                 </programlisting>
 
@@ -311,13 +317,13 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 ?>
 <form action="action.php" method="post">
     <p><label>Your Email:
-        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+<?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
     <p><label>Your Country:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+<?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
     </label></p>
     <p><label>Would you like to opt in?
-        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+<?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
 </form>
 ]]>
@@ -403,9 +409,12 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
-// then for "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
-// and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".
+// "/path/to/some/helpers/HelperName" using class name 
+// "Your_View_Helper_HelperName", then for 
+// "/other/path/to/helpers/HelperName.php" using class name 
+// "My_View_Helper_HelperName", and finally for 
+// "Zend/View/Helper/HelperName.php" using class name 
+// "Zend_View_Helper_HelperName".
 ]]>
         </programlisting>
 

@@ -100,8 +100,8 @@
 // Tell partial to pass objects as 'model' variable
 $view->partial()->setObjectKey('model');
 
-// Tell partial to pass objects from partialLoop as 'model' variable in final
-// partial view script:
+// Tell partial to pass objects from partialLoop as 'model' variable
+// in final partial view script:
 $view->partialLoop()->setObjectKey('model');
 ]]>
             </programlisting>

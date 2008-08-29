@@ -221,7 +221,8 @@ public function addBasePath($path, $prefix = 'Zend_View');
 public function getScriptPaths();
 
 /**
- * Overloading methods for assigning template variables as object properties
+ * Overloading methods for assigning template variables as object
+ * properties
  */
 public function __set($key, $value);
 public function __get($key);
@@ -229,8 +230,8 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Manual assignment of template variables, or ability to assign multiple
- * variables en masse.
+ * Manual assignment of template variables, or ability to assign
+ * multiple variables en masse.
  */
 public function assign($spec, $value = null);
 
@@ -389,14 +390,14 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Assign variables to the template
      *
-     * Allows setting a specific key to the specified value, OR passing an array
-     * of key => value pairs to set en masse.
+     * Allows setting a specific key to the specified value, OR passing
+     * an array of key => value pairs to set en masse.
      *
      * @see __set()
-     * @param string|array $spec The assignment strategy to use (key or array of key
-     * => value pairs)
-     * @param mixed $value (Optional) If assigning a named variable, use this
-     * as the value.
+     * @param string|array $spec The assignment strategy to use (key or
+     * array of key => value pairs)
+     * @param mixed $value (Optional) If assigning a named variable,
+     * use this as the value.
      * @return void
      */
     public function assign($spec, $value = null)
@@ -412,8 +413,9 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Clear all assigned variables
      *
-     * Clears all variables assigned to Zend_View either via {@link assign()} or
-     * property overloading ({@link __get()}/{@link __set()}).
+     * Clears all variables assigned to Zend_View either via
+     * {@link assign()} or property overloading
+     * ({@link __get()}/{@link __set()}).
      *
      * @return void
      */

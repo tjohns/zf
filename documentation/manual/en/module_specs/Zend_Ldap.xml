@@ -47,7 +47,8 @@ $options = array(
     'baseDn' => 'OU=Sales,DC=foo,DC=net',
 );
 $ldap = new Zend_Ldap($options);
-$acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
+$acctname = $ldap->getCanonicalAccountName('abaker',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
 ]]>
             </programlisting>
@@ -68,7 +69,8 @@ $options = array(
     'baseDn' => 'CN=Users,DC=w,DC=net',
 );
 $ldap = new Zend_Ldap($options);
-$acctname = $ldap->getCanonicalAccountName('bcarter', Zend_Ldap::ACCTNAME_FORM_DN);
+$acctname = $ldap->getCanonicalAccountName('bcarter',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
 ]]>
             </programlisting>
@@ -109,7 +111,8 @@ $options = array(
 );
 $ldap = new Zend_Ldap($options);
 $ldap->bind('abaker', 'moonbike55');
-$acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
+$acctname = $ldap->getCanonicalAccountName('abaker',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
 ]]>
                 </programlisting>

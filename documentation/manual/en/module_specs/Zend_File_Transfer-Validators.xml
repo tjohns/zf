@@ -168,7 +168,8 @@ $upload->addValidator('Size', 20000);
 // Set a filesize with 20 bytes minimum and 20000 bytes maximum
 $upload->addValidator('Size', array(20, 20000));
 
-// Set a filesize with 20 bytes minimum and 20000 bytes maximum and a file count in one step 
+// Set a filesize with 20 bytes minimum and 20000 bytes maximum and
+// a file count in one step 
 $upload->setValidators(array(
     'Size'  => array(20, 20000), 
     'Count' => array(1, 3),
@@ -286,7 +287,8 @@ $upload = new Zend_File_Transfer();
 // Limit the amount of files to maximum 2
 $upload->addValidator('Count', 2);
 
-// Limit the amount of files to maximum 5 and expects minimum 1 file to be returned
+// Limit the amount of files to maximum 5 and expects minimum 1 file
+// to be returned
 $upload->addValidator('Count', array(1, 5);
 ]]>
             </programlisting>
@@ -553,14 +555,20 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();
 
-// Limit the size of a image to a height of 100-200 and a width of 40-80 pixel
+// Limit the size of a image to a height of 100-200 and a width of
+// 40-80 pixel
 $upload->addValidator('ImageSize', 40, 100, 80, 200);
 
 // Use the array notation
 $upload->setValidator('ImageSize', array(40, 100, 80, 200);
 
 // Use the named array notation
-$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+$upload->setValidator('ImageSize', 
+                      array('minwidth' => 40, 
+                            'maxwidth' => 80, 
+                            'minheight' => 100, 
+                            'maxheight' => 200)
+                      );
 
 // Set other image dimensions
 $upload->setImageWidth(20, 200);
@@ -662,7 +670,10 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('NotExists', '\temp');
 
 // Add two directories using the array notation
-$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+$upload->addValidator('NotExists', 
+                      array('\home\images',
+                            '\home\uploads')
+                     );
 ]]>
             </programlisting>
 
@@ -730,8 +741,8 @@ $upload = new Zend_File_Transfer();
 // Limit the size of a file to 40000 bytes
 $upload->addValidator('Size', 40000);
 
-// Limit the size a given file to maximum 4MB and mimimum 10kB and limits this
-// validator to the file "uploadfile"
+// Limit the size a given file to maximum 4MB and mimimum 10kB and
+// limits this validator to the file "uploadfile"
 $upload->addValidator('Size', array('10kB', '4MB', 'uploadfile');
 ]]>
             </programlisting>

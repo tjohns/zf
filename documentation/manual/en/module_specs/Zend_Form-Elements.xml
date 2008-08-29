@@ -860,7 +860,10 @@ $messages = $element->getMessages();
             </para>
 
             <programlisting role="php"><![CDATA[
-$element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));
+$element = new Zend_Form_Element('foo',
+                                 array('disableLoadDefaultDecorators' => 
+                                      true)
+                                );
 ]]>
             </programlisting>
             
@@ -940,7 +943,8 @@ $this->addDecorators(array(
 
             <programlisting role="php"><![CDATA[
 // Alias to 'FooBar':
-$element->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
+$element->addDecorator(array('FooBar' => 'HtmlTag'),
+                       array('tag' => 'div'));
 
 // And retrieve later:
 $decorator = $element->getDecorator('FooBar');
@@ -1307,7 +1311,8 @@ description = "Foo elements are for examples"
 ignore = false
 attribs.id = "foo"
 attribs.class = "element"
-onclick = "autoComplete(this, '/form/autocomplete/element')" ; sets 'onclick' attribute
+; sets 'onclick' attribute
+onclick = "autoComplete(this, '/form/autocomplete/element')"
 prefixPaths.decorator.prefix = "My_Decorator"
 prefixPaths.decorator.path = "My/Decorator/"
 disableTranslator = 0
@@ -1411,7 +1416,8 @@ class My_Element_Text extends Zend_Form_Element
         $this->addDecorator('ViewHelper')
              ->addDecorator('DisplayError')
              ->addDecorator('Label')
-             ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'element'));
+             ->addDecorator('HtmlTag',
+                            array('tag' => 'div', 'class' => 'element'));
     }
 }
 ]]>

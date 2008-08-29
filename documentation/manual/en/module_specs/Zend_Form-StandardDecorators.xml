@@ -355,8 +355,9 @@ class Util
         </para>
 
         <programlisting role="php"><![CDATA[
-// Setting the decorator for the element to a single, ViewScript, decorator,
-// specifying the viewScript as an option, and some extra options:
+// Setting the decorator for the element to a single, ViewScript,
+// decorator, specifying the viewScript as an option, and some extra
+// options:
 $element->setDecorators(array(array('ViewScript', array(
     'viewScript' => '_element.phtml',
     'class'      => 'form element'
@@ -364,7 +365,8 @@ $element->setDecorators(array(array('ViewScript', array(
 
 // OR specifying the viewScript as an element attribute:
 $element->viewScript = '_element.phtml';
-$element->setDecorators(array(array('ViewScript', array('class' => 'form element'))));
+$element->setDecorators(array(array('ViewScript',
+                                    array('class' => 'form element'))));
 ]]>
         </programlisting>
         
@@ -374,7 +376,8 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
 
         <programlisting role="php"><![CDATA[
 <div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(), $this->element->getLabel()) ?>
+    <?= $this->formLabel($this->element->getName(), 
+                         $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
         $this->element->getValue(), 

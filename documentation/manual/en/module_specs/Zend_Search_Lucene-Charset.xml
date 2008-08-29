@@ -33,7 +33,7 @@
     </sect2>
 
     <sect2 id="zend.search.lucene.charset.default_analyzer">
-        <title>Default text analyzer.</title>
+        <title>Default text analyzer</title>
         <para>
             However, the default text analyzer (which is also used within query parser) uses
             ctype_alpha() for tokenizing text and queries.
@@ -59,7 +59,7 @@
     </sect2>
 
     <sect2 id="zend.search.lucene.charset.utf_analyzer">
-        <title>UTF-8 compatible text analyzers.</title>
+        <title>UTF-8 compatible text analyzers</title>
 
         <para>
             Zend_Search_Lucene also contains a set of UTF-8 compatible analyzers: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
@@ -131,10 +131,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 $doc = new Zend_Search_Lucene_Document();
 
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  strtolower($contents)));
 
 // Title field for search through (indexed, unstored)
-$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('title',
+                                                  strtolower($title)));
 
 // Title field for retrieving (unindexed, stored)
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));

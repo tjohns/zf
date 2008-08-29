@@ -35,7 +35,9 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toString();
+
+// PHP automatically calls toString() via __toString()
+print "copied: ", $copiedLocale;
 ]]>
             </programlisting>
         </example>
@@ -206,7 +208,8 @@ print_r ($list);
 // [de] -> Deutsch
 // [en] -> Englisch
 
-// use one of the returned key as value for the getTranslation() method of another language
+// use one of the returned key as value for the getTranslation() method
+// of another language
 print $locale->getTranslation('de', 'language', 'zh');
 // returns the translation for the language 'de' in chinese
 ]]>
@@ -552,7 +555,7 @@ print $locale->getTranslation('de', 'language', 'zh');
         </note>
 
         <para>
-            See the following table for detailed informations: 
+            See the following table for detailed information: 
         </para>
 
         <table id="zend.locale.getdata.table-2">

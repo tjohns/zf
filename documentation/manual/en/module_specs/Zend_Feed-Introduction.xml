@@ -34,7 +34,8 @@
         <programlisting role="php"><![CDATA[
 // Fetch the latest Slashdot headlines
 try {
-    $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
+    $slashdotRss =
+        Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
     // feed import failed
     echo "Exception caught importing feed: {$e->getMessage()}\n";

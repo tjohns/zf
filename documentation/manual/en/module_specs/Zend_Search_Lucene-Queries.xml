@@ -89,7 +89,8 @@ $hits  = $index->find($query);
         <para>
             The term field is optional. Zend_Search_Lucene searches through all indexed fields in each document if the field is not specified:
             <programlisting role="php"><![CDATA[
-$term  = new Zend_Search_Lucene_Index_Term('word1');  // Search for 'word1' in all indexed fields
+// Search for 'word1' in all indexed fields
+$term  = new Zend_Search_Lucene_Index_Term('word1');
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);
 ]]>
@@ -175,7 +176,8 @@ $hits  = $index->find($query);
 $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
 $query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
-$query->addTerm(new Zend_Search_Lucene_Index_Term('word2', 'author'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word2', 'author'),
+                null);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
 
 $hits  = $index->find($query);
@@ -536,7 +538,9 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
             Zend_Search_Lucene_Search_Query_Phrase class constructor takes three optional arguments:
         </para>
         <programlisting role="php"><![CDATA[
-Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);
+Zend_Search_Lucene_Search_Query_Phrase(
+    [array $terms[, array $offsets[, string $field]]]
+);
 ]]>
         </programlisting>
 
@@ -559,7 +563,8 @@ Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $
             Thus:
         </para>
         <programlisting role="php"><![CDATA[
-$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));
+$query =
+    new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));
 ]]>
         </programlisting>
         <para>
@@ -567,7 +572,9 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));
         </para>
 
         <programlisting role="php"><![CDATA[
-$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));
+$query = new Zend_Search_Lucene_Search_Query_Phrase(
+                 array('zend', 'download'), array(0, 2)
+             );
 ]]>
         </programlisting>
         <para>
@@ -576,7 +583,9 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), a
         </para>
 
         <programlisting role="php"><![CDATA[
-$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');
+$query = new Zend_Search_Lucene_Search_Query_Phrase(
+                 array('zend', 'framework'), null, 'title'
+             );
 ]]>
         </programlisting>
 
@@ -590,7 +599,9 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), 
             required <code>Zend_Search_Lucene_Index_Term</code> object and an optional position:
         </para>
         <programlisting role="php"><![CDATA[
-Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);
+Zend_Search_Lucene_Search_Query_Phrase::addTerm(
+    Zend_Search_Lucene_Index_Term $term[, integer $position]
+);
 ]]>
         </programlisting>
 
@@ -656,7 +667,8 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));
         </para>
         <programlisting role="php"><![CDATA[
 // Query without a gap.
-$query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
+$query =
+    new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
 
 // Search for 'word1 word2', 'word1 ... word2'
 $query->setSlop(1);
@@ -692,7 +704,9 @@ title:{Aida TO Carmen}
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('20020101', 'mod_date');
 $to   = new Zend_Search_Lucene_Index_Term('20030101', 'mod_date');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, true /* inclusive */);
+$query = new Zend_Search_Lucene_Search_Query_Range(
+                 $from, $to, true // inclusive
+             );
 $hits  = $index->find($query);
 ]]>
             </programlisting>
@@ -703,7 +717,9 @@ $hits  = $index->find($query);
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, false /* non-inclusive */);
+$query = new Zend_Search_Lucene_Search_Query_Range(
+                 $from, $to, false // non-inclusive
+             );
 $hits  = $index->find($query);
 ]]>
             </programlisting>
@@ -713,8 +729,11 @@ $hits  = $index->find($query);
             Either (but not both) of the boundary terms may be set to null. Zend_Search_Lucene searches from the beginning or
             up to the end of the dictionary for the specified field(s) in this case:
             <programlisting role="php"><![CDATA[
+// searches for ['20020101' TO ...]
 $from = new Zend_Search_Lucene_Index_Term('20020101', 'mod_date');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, null, true /* inclusive */);  // searches for ['20020101' TO ...]
+$query = new Zend_Search_Lucene_Search_Query_Range(
+                 $from, null, true // inclusive
+             );
 $hits  = $index->find($query);
 ]]>
             </programlisting>

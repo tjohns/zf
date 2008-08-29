@@ -65,7 +65,8 @@ if (!$server->hasUser(TEST_ID)) {
         <example id="zend.openid.provider.example-2">
             <title>Simple Identity Provider</title>
             <programlisting role="php"><![CDATA[
-$server = new Zend_OpenId_Provider("example-8-login.php", "example-8-trust.php");
+$server = new Zend_OpenId_Provider("example-8-login.php",
+                                   "example-8-trust.php");
 $ret = $server->handle();
 if (is_string($ret)) {
     echo $ret;
@@ -122,7 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     $_POST['openid_action'] === 'login' &&
     isset($_POST['openid_identifier']) &&
     isset($_POST['openid_password'])) {
-    $server->login($_POST['openid_identifier'], $_POST['openid_password']);
+    $server->login($_POST['openid_identifier'],
+                   $_POST['openid_password']);
     Zend_OpenId::redirect("example-8.php", $_GET);
 }
 ?>
@@ -130,11 +132,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 <form method="post"><fieldset>
 <legend>OpenID Login</legend>
 <table border=0>
-<tr><td>Name:</td><td><input type="text" name="openid_identifier" value="<?php
+<tr><td>Name:</td><td><input type="text" name="openid_identifier"
+value="<?php
 echo htmlspecialchars($_GET['openid_identity']);
 ?>"></td></tr>
-<tr><td>Password:</td><td><input type="text" name="openid_password" value=""></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="openid_action" value="login"></td></tr>
+<tr><td>Password:</td><td><input type="text"
+name="openid_password" value=""></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit"
+name="openid_action" value="login"></td></tr>
 </table></fieldset></form></body></html>
 ]]>
             </programlisting>
@@ -170,15 +175,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         if (isset($_POST['forever'])) {
             $server->denySite($server->getSiteRoot($_GET));
         }
-        Zend_OpenId::redirect($_GET['openid_return_to'], array('openid.mode'=>'cancel'));
+        Zend_OpenId::redirect($_GET['openid_return_to'],
+                              array('openid.mode'=>'cancel'));
     }
 }
 ?>
 <html><body>
-<p>A site identifying as <a href="<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>">
-<?php echo htmlspecialchars($server->getSiteRoot($_GET));?></a> has asked us for confirmation that
+<p>A site identifying as
+<a href="<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>">
+<?php echo htmlspecialchars($server->getSiteRoot($_GET));?></a>
+has asked us for confirmation that
 <a href="<?php echo htmlspecialchars($server->getLoggedInUser());?>">
-<?php echo htmlspecialchars($server->getLoggedInUser());?></a> is your identity URL.</p>
+<?php echo htmlspecialchars($server->getLoggedInUser());?></a>
+is your identity URL.</p>
 <form method="post">
 <input type="checkbox" name="forever">
 <label for="forever">forever</label><br>

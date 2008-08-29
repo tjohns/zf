@@ -305,7 +305,8 @@ $adapter->setResponse(
     "Content-type: text/xml" . "\r\n" .
                                "\r\n" .
     '<?xml version="1.0" encoding="UTF-8"?>' .
-    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '<rss version="2.0" ' .
+    '     xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
     '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
     '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
     '  <channel>' .
@@ -411,7 +412,8 @@ $adapter->addResponse(
         <example id="zend.http.client.adapters.extending.example-1">
             <title>Creating your own connection adapter</title>
             <programlisting role="php"><![CDATA[
-class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+class MyApp_Http_Client_Adapter_BananaProtocol
+    implements Zend_Http_Client_Adapter_Interface
 {
     /**
      * Set the configuration array for the adapter
@@ -420,8 +422,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function setConfig($config = array())
     {
-        // This rarely changes - you should usually copy the implementation
-        // in Zend_Http_Client_Adapter_Socket.
+        // This rarely changes - you should usually copy the
+        // implementation in Zend_Http_Client_Adapter_Socket.
     }
 
     /**
@@ -446,10 +448,15 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      * @param string        $body
      * @return string Request as text
      */
-    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
+    public function write($method,
+                          $url,
+                          $http_ver = '1.1',
+                          $headers = array(),
+                          $body = '')
     {
         // Send request to the remote server.
-        // This function is expected to return the full request (headers and body) as a string
+        // This function is expected to return the full request
+        // (headers and body) as a string
     }
 
     /**

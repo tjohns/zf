@@ -12,7 +12,10 @@
 $mail = new Zend_Mail();
 // build message...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+$mail->createAttachment($myImage,
+                        'image/gif',
+                        Zend_Mime::DISPOSITION_INLINE,
+                        Zend_Mime::ENCODING_8BIT);
 ]]>
         </programlisting>
     </example>

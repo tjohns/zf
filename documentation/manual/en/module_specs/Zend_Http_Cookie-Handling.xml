@@ -85,15 +85,21 @@
                <title>Instantiating a Zend_Http_Cookie object</title>
                <programlisting role="php"><![CDATA[
 // First, using the constructor. This cookie will expire in 2 hours
-$cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo',
+                               'bar',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // You can also take the HTTP response Set-Cookie header and use it.
 // This cookie is similar to the previous one, only it will not expire, and
 // will only be sent over secure connections
-$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
+$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; ' .
+                                       'path=/path; secure');
 
 // If the cookie's domain is not set, you have to manually specify it
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;',
+                                       'http://www.example.com/path');
 ]]>
                </programlisting>
             </example>
@@ -114,7 +120,11 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
                <title>Stringifying a Zend_Http_Cookie object</title>
                <programlisting role="php"><![CDATA[
 // Create a new cookie
-$cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo', 
+                               'two words',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // Will print out 'foo=two+words;' :
 echo $cookie->__toString();
@@ -193,7 +203,12 @@ echo $cookie;
                 <title>Using getter methods with Zend_Http_Cookie</title>
                 <programlisting role="php"><![CDATA[
 // First, create the cookie
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
+$cookie =
+    Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                 'domain=.example.com; ' +
+                                 'path=/somedir; ' +
+                                 'secure; ' +
+                                 'expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // Will echo 'foo'
 echo $cookie->getValue();  // will echo 'two words'
@@ -250,7 +265,10 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
                 <title>Matching cookies</title>
                 <programlisting role="php"><![CDATA[
 // Create the cookie object - first, a secure session cookie
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=.example.com; ' +
+                                       'path=/somedir; ' +
+                                       'secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
 // Will return true
@@ -270,20 +288,26 @@ $cookie->match('https://www.example.com/somedir/foo.php', false);
 $cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // Will return true
 
-// Create another cookie object - now, not secure, with expiration time in two hours
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200));
+// Create another cookie object - now, not secure, with expiration time
+// in two hours
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=www.example.com; ' +
+                                       'expires=' 
+                                       . date(DATE_COOKIE, time() + 7200));
 
 $cookie->match('http://www.example.com/');
 // Will return true
 
 $cookie->match('https://www.example.com/');
-// Will return true - non secure cookies can go over secure connections as well!
+// Will return true - non secure cookies can go over secure connections
+// as well!
 
 $cookie->match('http://subdomain.example.com/');
 // Will return false, because the domain is wrong
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// Will return false, because we added a time offset of +3 hours to current time
+// Will return false, because we added a time offset of +3 hours to
+// current time
 ]]>
                 </programlisting>
             </example>

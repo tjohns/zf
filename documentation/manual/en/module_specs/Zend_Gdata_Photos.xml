@@ -797,7 +797,8 @@ try {
     $this->delete($album);
 } catch (Zend_Gdata_App_HttpException $e) {
     if ($e->getResponse->getStatus() === 409) {
-        $entry = new Zend_Gdata_Photos_AlbumEntry($e->getResponse()->getBody());
+        $entry =
+            new Zend_Gdata_Photos_AlbumEntry($e->getResponse()->getBody());
         $this->delete($entry->getLink('edit')->href);
     } else {
         throw $e;

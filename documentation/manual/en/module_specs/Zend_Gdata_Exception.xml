@@ -9,7 +9,8 @@
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
+    $client =
+        Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
     // Report the exception to the user
     die($ex->getMessage());
@@ -84,7 +85,9 @@ try {
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+    $client = Zend_Gdata_ClientLogin::getHttpClient($username,
+                                                    $password,
+                                                    $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
     // The user's credentials were incorrect.
     // It would be appropriate to give the user a second try.

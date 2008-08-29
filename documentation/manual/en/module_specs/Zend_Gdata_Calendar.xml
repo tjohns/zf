@@ -120,9 +120,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filter php_self to avoid a security vulnerability.
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri = 
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                            ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -138,8 +143,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Obtain an AuthSub authenticated HTTP client, redirecting the user to the
- *  AuthSub server to login if necessary.
+/** 
+ * Obtain an AuthSub authenticated HTTP client, redirecting the user
+ * to the AuthSub server to login if necessary.
  */
 function getAuthSubHttpClient()
 {
@@ -156,7 +162,10 @@ function getAuthSubHttpClient()
 
         // Redirect the user to the AuthSub server to sign in
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, 
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -180,7 +189,7 @@ function getAuthSubHttpClient()
 
 // -> Script execution begins here <-
 
-// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat the user has a valid session, so we can record the
+// Make sure that the user has a valid session, so we can record the
 // AuthSub session token once it is available.
 session_start();
 
@@ -191,7 +200,8 @@ $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());
             </programlisting>
             <para>Finally, an unauthenticated server can be created for use with either public feeds or MagicCookie authentication:</para>
             <programlisting role="php"><![CDATA[
-// Create an instance of the Calendar service using an unauthenticated HTTP client
+// Create an instance of the Calendar service using an unauthenticated
+// HTTP client
 
 $service = new Zend_Gdata_Calendar();
 ]]>
@@ -238,7 +248,8 @@ try {
 echo "<h1>Calendar List Feed</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
-    echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
+    echo "<li>" . $calendar->title . 
+         " (Event Feed: " . $calendar->id . ")</li>";
 }
 echo "</ul>";
 ]]>
@@ -311,7 +322,8 @@ echo "</ul>";
             <programlisting role="php"><![CDATA[
 $query = $service->newEventQuery();
 $query->setUser('default');
-// Set to $query->setVisibility('private-magicCookieValue') if using MagicCookie auth
+// Set to $query->setVisibility('private-magicCookieValue') if using
+// MagicCookie auth
 $query->setVisibility('private');
 $query->setProjection('full');
 $query->setOrderby('starttime');
@@ -400,7 +412,8 @@ try {
                 URL contains all the necessary information to retrieve the event.
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+$eventURL =
+    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);
@@ -520,7 +533,8 @@ $event= $service->newEventEntry();
 // Note that each attribute is crated as an instance of a matching class
 $event->title = $service->newTitle("My Event");
 $event->where = array($service->newWhere("Mountain View, California"));
-$event->content = $service->newContent(" This is my awesome event. RSVP required.");
+$event->content =
+    $service->newContent(" This is my awesome event. RSVP required.");
 
 // Set the date using RFC 3339 format.
 $startDate = "2008-01-20";
@@ -562,7 +576,8 @@ $newEvent = $service->insertEvent($event);
                 format.
             </para>
             <programlisting role="php"><![CDATA[
-// Schedule the event to occur on December 05, 2007 at 2 PM PST (UTC-8) with a duration of one hour.
+// Schedule the event to occur on December 05, 2007 at 2 PM PST (UTC-8)
+// with a duration of one hour.
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
@@ -588,7 +603,8 @@ $event->when = $when;
                 should be entered as 90 minutes.
             </para>
             <programlisting role="php"><![CDATA[
-// Create a new reminder object. It should be set send an email message to the user 10 minutes beforehand.
+// Create a new reminder object. It should be set to send an email
+// to the user 10 minutes beforehand.
 $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
@@ -627,7 +643,10 @@ $event= $service->newEventEntry();
 // Note that each attribute is crated as an instance of a matching class
 $event->title = $service->newTitle("My Recurring Event");
 $event->where = array($service->newWhere("Palo Alto, California"));
-$event->content = $service->newContent(" This is my other awesome event, occurring all-day every Tuesday from 2007-05-01 until 207-09-04. No RSVP required.");
+$event->content =
+    $service->newContent(' This is my other awesome event, ' .
+                         ' occurring all-day every Tuesday from .
+                         '2007-05-01 until 207-09-04. No RSVP required.');
 
 // Set the duration and frequency by specifying a recurrence pattern.
 
@@ -718,7 +737,8 @@ $event->delete();
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
-// Option 2: Events can be deleted supplying the edit URL of the event to the calendar service, if known
+// Option 2: Events can be deleted supplying the edit URL of the event
+// to the calendar service, if known
 $service->delete($event->getEditLink()->href);
 ]]>
         </programlisting>
@@ -751,7 +771,8 @@ $commentFeed = $service->getFeed($commentUrl);
 // Output each comment as an HTML list
 echo "<ul>";
 foreach ($commentFeed as $comment) {
-    echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
+    echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" .
+         $comment->content . "</li>";
 }
 echo "</ul>";
 ]]>

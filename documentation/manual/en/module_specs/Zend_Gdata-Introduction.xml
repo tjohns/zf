@@ -640,7 +640,8 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Playing football at the park');
-$content = $gdata->newContent('We will visit the park and play a few football matches');
+$content = 
+    $gdata->newContent('We will visit the park and play football');
 $content->setType('text');
 $entry->content = $content;
 
@@ -682,7 +683,8 @@ $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
     // Option 1 - delete the entry directly
     $feedEntry->delete();
-    // Option 2 - delete the entry by passing the edit URL to $gdata->delete()
+    // Option 2 - delete the entry by passing the edit URL to
+    // $gdata->delete()
     // $gdata->delete($feedEntry->getEditLink()->href);
 }
 ]]>

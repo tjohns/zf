@@ -48,12 +48,14 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
-    $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+    // this will increment for each page load.
+    $defaultNamespace->numberOfPageRequests++;
 } else {
     $defaultNamespace->numberOfPageRequests = 1; // first time
 }
 
-echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
+echo "Page requests this session: ",
+    $defaultNamespace->numberOfPageRequests;
 ]]>
             </programlisting>
 
@@ -124,7 +126,8 @@ $_SESSION['Some_Web_Service']['user'] = "mywebusername";
             <title>Session Iteration</title>
 
             <programlisting role="php"><![CDATA[
-$aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
+$aNamespace =
+    new Zend_Session_Namespace('some_namespace_with_data_present');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";

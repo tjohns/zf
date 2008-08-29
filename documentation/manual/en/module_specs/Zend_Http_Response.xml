@@ -101,7 +101,8 @@ $response = Zend_Http_Response::factory($str);
                 <programlisting role="php"><![CDATA[
 if ($response->isError()) {
   echo "Error transmitting data.\n"
-  echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
+  echo "Server reply was: " . $response->getStatus() . 
+       " " . $response->getMessage() . "\n";
 }
 // .. process the response here...
 ]]>

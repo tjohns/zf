@@ -223,7 +223,8 @@ $s->setExpirationSeconds(60);
 // ...
 // in the question view controller
 $testSpace = new Zend_Session_Namespace('testSpace');
-$testSpace->setExpirationSeconds(300, 'accept_answer'); // expire only this variable
+// expire only this variable
+$testSpace->setExpirationSeconds(300, 'accept_answer');
 $testSpace->accept_answer = true;
 //...
 ]]>
@@ -275,7 +276,8 @@ else {
 // create an instance of a namespace
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
-// create another instance of the same namespace, but disallow any new instances
+// create another instance of the same namespace, but disallow any
+// new instances
 $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', true);
 
 // making a reference is still possible
@@ -288,7 +290,8 @@ assert($authSpaceAccessor2->foo, 'bar');
 try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
-    echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
+    echo 'Cannot instantiate this namespace since ' .
+         '$authSpaceAccessor2 was created\n';
 }
 ]]>
             </programlisting>
@@ -331,7 +334,9 @@ try {
             <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
-$sessionNamespace->array['testKey'] = 1; // may not work as expected before PHP 5.2.1
+
+// may not work as expected before PHP 5.2.1
+$sessionNamespace->array['testKey'] = 1; 
 echo $sessionNamespace->array['testKey'];
 ]]>
             </programlisting>
@@ -474,19 +479,24 @@ exec($script . "expireAll $id expireAll", $result);
 $result = $this->sortResult($result);
 $expect = ';a === apple;o === orange;p === pear';
 $this->assertTrue($result === $expect,
-    "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+    "iteration over default Zend_Session namespace failed; " .
+    "expecting result === '$expect', but got '$result'");
 
-sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+sleep(2); // long enough for things to expire (total of 6 seconds
+          // waiting, but expires in 5)
 exec($script . "expireAll $id expireAll", $result);
 $result = array_pop($result);
 $this->assertTrue($result === '',
-    "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+    "iteration over default Zend_Session namespace failed; " .
+    "expecting result === '', but got '$result')");
 session_start(); // resume artificially suspended session
 
-// We could split this into a separate test, but actually, if anything leftover from above
-// contaminates the tests below, that is also a bug that we want to know about.
+// We could split this into a separate test, but actually, if anything
+// leftover from above contaminates the tests below, that is also a
+// bug that we want to know about.
 $s = new Zend_Session_Namespace('expireGuava');
-$s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the keys in the namespace
+$s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the
+                                  // keys in the namespace
 $s->g = 'guava';
 $s->p = 'peach';
 $s->p = 'plum';

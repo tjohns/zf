@@ -33,7 +33,8 @@ foreach ($posts as $post) {
         </para>
         <programlisting role="php"><![CDATA[
 /**
- * Get posts matching the arguments. If no date or url is given, most recent date will be used.
+ * Get posts matching the arguments. If no date or url is given,
+ * most recent date will be used.
  *
  * @param string $tag Optional filtering by tag
  * @param Zend_Date $dt Optional filtering by date
@@ -46,7 +47,8 @@ public function getPosts($tag = null, $dt = null, $url = null);
  * Get recent posts
  *
  * @param string $tag   Optional filtering by tag
- * @param string $count Maximal number of posts to be returned (default 15)
+ * @param string $count Maximal number of posts to be returned
+ *                      (default 15)
  * @return Zend_Service_Delicious_PostList
  */
 public function getRecentPosts($tag = null, $count = 15);
@@ -212,7 +214,8 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->save();
 
 // create a new post and save it  (without method call chaining)
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
+$newPost = $delicious->createNewPost('Zend Framework',
+                                     'http://framework.zend.com');
 $newPost->setNotes('Zend Framework Homepage');
 $newPost->save();
 ]]>
@@ -261,7 +264,7 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
         </para>
         <table id="zend.service.delicious.public_data.functions_for_retrieving_public_data">
             <title>Methods for retrieving public data</title>
-            <tgroup cols="2">
+            <tgroup cols="3">
                 <thead>
                     <row>
                         <entry>Name</entry>

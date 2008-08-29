@@ -97,7 +97,10 @@ $logger->info('informational message');
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
-$formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));
+$formatter = new Zend_Log_Formatter_Xml('log',
+                                        array('msg' => 'message',
+                                              'level' => 'priorityName')
+                                       );
 $writer->setFormatter($formatter);
 
 $logger = new Zend_Log();

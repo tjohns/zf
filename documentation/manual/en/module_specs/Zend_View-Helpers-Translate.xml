@@ -176,7 +176,10 @@ $this->translate("Today is %1\$s", $date);
 $date = "Monday";
 $month = "April";
 $time = "11:20:55";
-$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, $month, $time);
+$this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s",
+                 $date,
+                 $month,
+                 $time);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
 ]]>
         </programlisting>

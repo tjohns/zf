@@ -26,7 +26,10 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Get a generic client to the Reverse Phone Lookup service
-$phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/ReversePhoneLookup?WSDL'));
+$phone = $strikeIron->getService(
+                          array('wsdl' =>
+                                'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+                      );
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
@@ -86,9 +89,10 @@ echo $result->listingName;
         <ulink url="http://www.php.net/manual/en/function.soap-soapclient-getlastresponse.php"><code>__getLastRequest()</code></ulink>:
 
         <programlisting role="php"><![CDATA[
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password',
-                                                'options'  => array('trace' => true)));
+$strikeIron =
+    new Zend_Service_StrikeIron(array('username' => 'your-username',
+                                      'password' => 'your-password',
+                                      'options'  => array('trace' => true)));
 
 // Get a client for the Sales & Use Tax Basic service
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));

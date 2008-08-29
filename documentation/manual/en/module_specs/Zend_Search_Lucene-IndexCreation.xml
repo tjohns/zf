@@ -52,7 +52,8 @@ $doc = new Zend_Search_Lucene_Document();
 // Store document URL to identify it in search result.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 // Index document content
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 
+                                                  $docContent));
 
 // Add document to the index.
 $index->addDocument($doc);
@@ -251,7 +252,8 @@ $index->optimize();
 
         <programlisting role="php"><![CDATA[
 // Get current default file permissions
-$currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
+$currentPermissions =
+    Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
 // Give read-writing permissions only for current user and group
 Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);

@@ -189,7 +189,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
             $label .= '*';
         }
         $label .= ':';
-        return $element->getView()->formLabel($element->getName(), $label);
+        return $element->getView()
+                       ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
@@ -211,7 +212,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         if (empty($messages)) {
             return '';
         }
-        return '<div class="errors">' . $element->getView()->formErrors($messages) . '</div>';
+        return '<div class="errors">' .
+               $element->getView()->formErrors($messages) . '</div>';
     }
 
     public function buildDescription()
@@ -266,10 +268,14 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 
         <programlisting role="php"><![CDATA[
 // for an element:
-$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+$element->addPrefixPath('My_Decorator',
+                        'My/Decorator/',
+                        'decorator');
 
 // for all elements:
-$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+$form->addElementPrefixPath('My_Decorator',
+                            'My/Decorator/',
+                            'decorator');
 ]]>
         </programlisting>
 

@@ -100,7 +100,9 @@ $index->find($query);
                 <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
-$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathTerm  = new Zend_Search_Lucene_Index_Term(
+                     '/data/doc_dir/' . $filename, 'path'
+                 );
 $pathQuery = new Zend_Search_Lucene_Search_Query_Term($pathTerm);
 
 $query = new Zend_Search_Lucene_Search_Query_Boolean();
@@ -116,7 +118,8 @@ $hits = $index->find($query);
                 <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes an optional encoding parameter,
                 which can specify query string encoding:
             <programlisting role="php"><![CDATA[
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
+                                                          'iso-8859-5');
 ]]>
             </programlisting>
             </para>
@@ -281,7 +284,9 @@ foreach ($hits as $hit) {
         <para>
             <code>$index->find()</code> call may take several optional parameters:
             <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] 
+                    [, $sortField2 [, $sortType [, $sortOrder]]]
+             ...);
 ]]>
             </programlisting>
         </para>

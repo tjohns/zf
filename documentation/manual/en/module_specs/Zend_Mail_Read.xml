@@ -101,14 +101,16 @@ foreach ($mail as $message) {
         </para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
+$mail = new Zend_Mail_Storage_Mbox(array('filename' => 
+                                             '/home/test/mail/inbox'));
 ]]>
         </programlisting>
 
         <para>Maildir is very similar but needs a dirname:</para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Maildir(array('dirname' =>
+                                                '/home/test/mail/'));
 ]]>
         </programlisting>
 
@@ -253,7 +255,8 @@ $type = $message->contentType;
         instead of a string, which is possible with the <code>getHeader()</code> method.</para>
 
         <programlisting role="php"><![CDATA[
-// get header as property - the result is always a string, with new lines between the single occurrences in the message
+// get header as property - the result is always a string,
+// with new lines between the single occurrences in the message
 $received = $message->received;
 
 // the same via getHeader() method
@@ -265,7 +268,8 @@ foreach ($received as $line) {
     // do stuff
 }
 
-// if you don't define a format you'll get the internal representation (string for single headers, array for multiple)
+// if you don't define a format you'll get the internal representation
+// (string for single headers, array for multiple)
 $received = $message->getHeader('received');
 if (is_string($received)) {
     // only one received header found in message
@@ -430,18 +434,23 @@ if (!$message->hasFlag('$SpamTested')) {
 
         <programlisting role="php"><![CDATA[
 // mbox with folders
-$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' =>
+                                                    '/home/test/mail/'));
 
 // mbox with a default folder not called INBOX, also works
 // with Zend_Mail_Storage_Folder_Maildir and Zend_Mail_Storage_Imap
-$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/',
-                                                'folder'  => 'Archive'));
+$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' =>
+                                                    '/home/test/mail/',
+                                                'folder'  => 
+                                                    'Archive'));
 
 // maildir with folders
-$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' =>
+                                                       '/home/test/mail/'));
 
 // maildir with colon as delimiter, as suggested in Maildir++
-$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'
+$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' =>
+                                                       '/home/test/mail/',
                                                    'delim'   => ':'));
 
 // imap is the same with and without folders
@@ -498,7 +507,8 @@ $folders = new RecursiveIteratorIterator($this->mail->getFolders(),
                                          RecursiveIteratorIterator::SELF_FIRST);
 echo '<select name="folder">';
 foreach ($folders as $localName => $folder) {
-    $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT) . $localName;
+    $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT) .
+                 $localName;
     echo '<option';
     if (!$folder->isSelectable()) {
         echo ' disabled="disabled"';
@@ -578,8 +588,10 @@ $mbox_basedir = '/home/test/mail/';
 $cache_id = 'example mail cache ' . $mbox_basedir . $signal_file;
 
 $cache = new Your_Cache_Class();
-if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($cache_id)) {
-    $mail = new Zend_Mail_Storage_Folder_Pop3(array('dirname' => $mbox_basedir));
+if (!$cache->isCached($cache_id) ||
+    filemtime($signal_file) > $cache->getMTime($cache_id)) {
+    $mail = new Zend_Mail_Storage_Folder_Pop3(array('dirname' =>
+                                                        $mbox_basedir));
 } else {
     $mail = $cache->get($cache_id);
 }
@@ -671,7 +683,8 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
 $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
                                           'user'        => 'test',
                                           'password'    => 'test',
-                                          'knock_ports' => array(1101, 1105, 1111)));
+                                          'knock_ports' =>
+                                              array(1101, 1105, 1111)));
 ]]>
             </programlisting>
 
@@ -699,7 +712,8 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             </para>
 
             <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' =>
+                                                   '/home/test/mail/'));
 $mail->setQuota(true); // true to enable, false to disable
 echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
 // check quota can be used even if quota checks are disabled

@@ -446,7 +446,9 @@ print_r $translate->getAdapterInfo();
 <?xml version="1.0" ?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
- <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en-us" srclang="de-at" o-tmf="abc" creationtool="XYZTool" >
+ <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+         adminlang="en-us" srclang="de-at" o-tmf="abc"
+         creationtool="XYZTool" >
  </header>
  <body>
   <tu tuid='message1'>
@@ -546,7 +548,10 @@ message2,"Nachricht,2"
 </programlisting>
 
             <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
+$translate = new Zend_Translate('csv',
+                                'path/to/mytranslation.csv',
+                                'de',
+                                array('delimiter' => ','));
 $translate->addTranslation('path/to/other.csv', 'fr');
 ]]>
             </programlisting>
@@ -618,7 +623,10 @@ $translate->addTranslation('path/to/other.ini', 'it');
             <programlisting role="php"><![CDATA[
 // define ':' as separator for the translation source files
 $options = array('separator' => ':');
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', $options);
+$translate = new Zend_Translate('csv',
+                                'path/to/mytranslation.csv',
+                                'de',
+                                $options);
 
 ...
 
@@ -755,7 +763,8 @@ echo $translate->_("my_text", "fr");
 // or set a new standard language
 $translate->setLocale("fr");
 echo $translate->_("my_text");
-// refer to the base language... fr_CH will be downgraded to fr and be used
+// refer to the base language... fr_CH will be downgraded to fr and be
+// used
 $translate->setLocale("fr_CH");
 echo $translate->_("my_text");
 
@@ -802,7 +811,8 @@ $translate->addTranslation("\my_it.mo","it_IT");
 // Example 3:
 $translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
 $translate->addTranslation("\my_de.mo","de");
-// best found fitting language is "de" because "de_AT" will be degraded to "de"
+// best found fitting language is "de" because "de_AT" will be
+// degraded to "de"
 
 // Example 4:
 $translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
@@ -930,7 +940,11 @@ $translate = new Zend_Translate('tmx', '/language');
 //  /language/en/login/login.mo
 //  /language/en/error/loginerror.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+$translate = new Zend_Translate('gettext',
+                                '/language',
+                                null,
+                                array('scan' =>
+                                      Zend_Translate::LOCALE_DIRECTORY));
 ]]>
                 </programlisting>
             </example>
@@ -977,7 +991,11 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 //  /language/error/loginerror_en.mo
 //  /language/error/loginerror_de.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));
+$translate = new Zend_Translate('gettext',
+                                '/language',
+                                null,
+                                array('scan' =>
+                                      Zend_Translate::LOCALE_FILENAME));
 ]]>
                 </programlisting>
             </example>
@@ -1048,7 +1066,7 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 <programlisting><![CDATA[
 /languages
   view_en_de.mo  -> detects english
-  view_en_es.mo  -> detects english and overwrites the first file because the same messageids are used
+  view_en_es.mo  -> detects english and overwrites the first file
   view_it_it.mo  -> detects italian
 ]]>
 </programlisting>
@@ -1106,7 +1124,8 @@ if ($translate->isTranslated('message1')) {
     print "'message1' can be translated";
 }
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' can not be translated in 'de' as it's only available in 'de_AT'";
+    print "'message1' can not be translated in 'de' as it's only " .
+    "available in 'de_AT'";
 }
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' can be translated in 'de_AT' falls back to 'de'";

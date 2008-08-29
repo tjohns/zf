@@ -110,7 +110,8 @@ echo $result->firstname() .' '. $result->lastname();
             <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
-<!DOCTYPE tapi PUBLIC "-//Technorati, Inc.//DTD TAPI 0.02//EN" "http://api.technorati.com/dtd/tapi-002.xml">
+<!DOCTYPE tapi PUBLIC "-//Technorati, Inc.//DTD TAPI 0.02//EN"
+                      "http://api.technorati.com/dtd/tapi-002.xml">
 <tapi version="1.0">
     <document>
         <result>
@@ -123,8 +124,12 @@ echo $result->firstname() .' '. $result->lastname();
                     <firstname>Davey</firstname>
                     <lastname>Shafik</lastname>
                 </author>
-                <rssurl>http://pixelated-dreams.com/feeds/index.rss2</rssurl>
-                <atomurl>http://pixelated-dreams.com/feeds/atom.xml</atomurl>
+                <rssurl>
+                    http://pixelated-dreams.com/feeds/index.rss2
+                </rssurl>
+                <atomurl>
+                    http://pixelated-dreams.com/feeds/atom.xml
+                </atomurl>
                 <inboundblogs>44</inboundblogs>
                 <inboundlinks>218</inboundlinks>
                 <lastupdate>2006-04-26 04:36:36 GMT</lastupdate>

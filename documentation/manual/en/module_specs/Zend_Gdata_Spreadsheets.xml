@@ -231,7 +231,9 @@ $listFeed = $spreadsheetService->getListFeed($query);
             </para>
 
             <programlisting role="php"><![CDATA[
-$insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $worksheetId);
+$insertedListEntry = $spreadsheetService->insertRow($rowData,
+                                                    $spreadsheetKey,
+                                                    $worksheetId);
 ]]>
             </programlisting>
 
@@ -259,7 +261,8 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
             </para>
 
             <programlisting role="php"><![CDATA[
-$updatedListEntry = $spreadsheetService->updateRow($oldListEntry, $newRowData);
+$updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
+                                                   $newRowData);
 ]]>
             </programlisting>
 
@@ -382,7 +385,11 @@ $feed = $spreadsheetService->getCellsFeed($query);
             </para>
 
             <programlisting role="php"><![CDATA[
-$updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreadsheetKey, $worksheetId);
+$updatedCell = $spreadsheetService->updateCell($row,
+                                               $col,
+                                               $inputValue,
+                                               $spreadsheetKey,
+                                               $worksheetId);
 ]]>
             </programlisting>
 

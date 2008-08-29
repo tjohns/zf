@@ -327,13 +327,19 @@ $form->reset();
 $form->addElementPrefixPath('My_Foo', 'My/Foo/');
 
 // Just filter paths:
-$form->addElementPrefixPath('My_Foo_Filter', 'My/Foo/Filter', 'filter');
+$form->addElementPrefixPath('My_Foo_Filter',
+                            'My/Foo/Filter',
+                            'filter');
 
 // Just validator paths:
-$form->addElementPrefixPath('My_Foo_Validate', 'My/Foo/Validate', 'validate');
+$form->addElementPrefixPath('My_Foo_Validate',
+                            'My/Foo/Validate',
+                            'validate');
 
 // Just decorator paths:
-$form->addElementPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator', 'decorator');
+$form->addElementPrefixPath('My_Foo_Decorator',
+                            'My/Foo/Decorator',
+                            'decorator');
 ]]>
                 </programlisting>
             </example>
@@ -1815,23 +1821,28 @@ class My_Form_Login extends Zend_Form
         $username->class = 'formtext';
         $username->setLabel('Username:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formText')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formText')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $password = new Zend_Form_Element_Password('password');
         $password->class = 'formtext';
         $password->setLabel('Username:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formPassword')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formPassword')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $submit = new Zend_Form_Element_Submit('login');
         $submit->class = 'formsubmit';
         $submit->setValue('Login')
                ->setDecorators(array(
-                   array('ViewHelper', array('helper' => 'formSubmit'))
+                   array('ViewHelper',
+                   array('helper' => 'formSubmit'))
                ));
 
         $this->addElements(array(

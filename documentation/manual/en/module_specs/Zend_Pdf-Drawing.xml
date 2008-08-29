@@ -1,8 +1,8 @@
 <sect1 id="zend.pdf.drawing">
-    <title>Drawing.</title>
+    <title>Drawing</title>
 
     <sect2 id="zend.pdf.drawing.geometry">
-        <title>Geometry.</title>
+        <title>Geometry</title>
         <para>
         PDF uses the same geometry as PostScript. It starts from bottom-left corner of page
         and by default is measured in points (1/72 of an inch).
@@ -20,7 +20,7 @@ $height = $pdfPage->getHeight();
     </sect2>
 
     <sect2 id="zend.pdf.drawing.color">
-        <title>Colors.</title>
+        <title>Colors</title>
         <para>
         PDF has a powerful capabilities for colors representation. Zend_Pdf module supports Gray Scale,
         RGB and CMYK color spaces. Any of them can be used in any place, where <code>Zend_Pdf_Color</code>
@@ -31,10 +31,10 @@ $height = $pdfPage->getHeight();
 // $grayLevel (float number). 0.0 (black) - 1.0 (white)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
-// $r, $g, $b (float numbers). 0.0 (minimum intensity) - 1.0 (maximum intensity)
+// $r, $g, $b (float numbers). 0.0 (min intensity) - 1.0 (max intensity)
 $color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
-// $c, $m, $y, $k (float numbers). 0.0 (minimum intensity) - 1.0 (maximum intensity)
+// $c, $m, $y, $k (float numbers). 0.0 (min intensity) - 1.0 (max intensity)
 $color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);
 ]]>
         </programlisting>
@@ -52,7 +52,7 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');
 
 
     <sect2 id="zend.pdf.drawing.shape-drawing">
-        <title>Shape Drawing.</title>
+        <title>Shape Drawing</title>
         <para>
         All drawing operations can be done in a context of PDF page.
         </para>
@@ -76,9 +76,10 @@ public function drawLine($x1, $y1, $x2, $y2);
  * Draw a rectangle.
  *
  * Fill types:
- * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle and stroke (default)
- * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - stroke rectangle
- * Zend_Pdf_Page::SHAPE_DRAW_FILL        - fill rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle 
+ *                                             and stroke (default)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE          - stroke rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL            - fill rectangle
  *
  * @param float $x1
  * @param float $y1
@@ -86,15 +87,16 @@ public function drawLine($x1, $y1, $x2, $y2);
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
+public function drawRectangle($x1, $y1, $x2, $y2,
+                    $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
  * Draw a polygon.
  *
- * If $fillType is Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE or Zend_Pdf_Page::SHAPE_DRAW_FILL,
- * then polygon is automatically closed.
+ * If $fillType is Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE or
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL, then polygon is automatically closed.
  * See detailed description of these methods in a PDF documentation
  * (section 4.4.2 Path painting Operators, Filling)
  *
@@ -104,8 +106,10 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+                            $fillType =
+                                Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod =
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -121,11 +125,12 @@ public function drawPolygon($x, $y,
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * It's not a really circle, because PDF supports only cubic Bezier curves.
- * But very good approximation.
- * It differs from a real circle on a maximum 0.00026 radiuses
- * (at PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 and 15*PI/8 angles).
- * At 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 and 7*PI/4 it's exactly a tangent to a circle.
+ * It's not a really circle, because PDF supports only cubic Bezier 
+ * curves. But very good approximation.
+ * It differs from a real circle on a maximum 0.00026 radiuses (at PI/8,
+ * 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 and 15*PI/8 angles).
+ * At 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 and 7*PI/4 it's exactly
+ * a tangent to a circle.
  *
  * @param float $x
  * @param float $y
@@ -134,7 +139,12 @@ public function drawPolygon($x, $y,
  * @param mixed $param5
  * @param mixed $param6
  */
-public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);
+public function  drawCircle($x,
+                            $y,
+                            $radius,
+                            $param4 = null,
+                            $param5 = null,
+                            $param6 = null);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -163,7 +173,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     </sect2>
 
     <sect2 id="zend.pdf.drawing.text-drawing">
-        <title>Text Drawing.</title>
+        <title>Text Drawing</title>
         <para>
         Text drawing operations also exist in the context of a PDF page. You can draw a single line of text
         at any position on the page by supplying the x and y coordinates of the baseline. Current font and
@@ -176,15 +186,15 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $text
  * @param float $x
  * @param float $y
- * @param string $charEncoding (optional) Character encoding of source text.
- *   Defaults to current locale.
+ * @param string $charEncoding (optional) Character encoding of source
+ *               text.Defaults to current locale.
  * @throws Zend_Pdf_Exception
  */
 public function drawText($text, $x, $y, $charEncoding = '');
 ]]>
         </programlisting>
         <example id="zend.pdf.drawing.text-drawing.example-1">
-            <title>Draw a string on the page.</title>
+            <title>Draw a string on the page</title>
             <programlisting role="php"><![CDATA[
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
@@ -200,7 +210,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         method supported by PHP's <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> function:
         </para>
         <example id="zend.pdf.drawing.text-drawing.example-2">
-            <title>Draw a UTF-8-encoded string on the page.</title>
+            <title>Draw a UTF-8-encoded string on the page</title>
             <programlisting role="php"><![CDATA[
 ...
 // Read a UTF-8-encoded string from disk
@@ -215,7 +225,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
     </sect2>
 
     <sect2 id="zend.pdf.drawing.using-fonts">
-        <title>Using fonts.</title>
+        <title>Using fonts</title>
         <para>
         <code>Zend_Pdf_Page::drawText()</code> uses the page's current font and font size, which is set with
         the <code>Zend_Pdf_Page::setFont()</code> method:
@@ -241,7 +251,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
         for the standard 14 PDF fonts or <code>Zend_Pdf_Font::fontWithPath($filePath)</code> for custom fonts.
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-1">
-            <title>Create a standard font.</title>
+            <title>Create a standard font</title>
             <programlisting role="php"><![CDATA[
 ...
 // Create new font
@@ -312,7 +322,7 @@ $pdfPage->setFont($font, 36);
         an exception:
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-2">
-            <title>Create a TrueType font.</title>
+            <title>Create a TrueType font</title>
             <programlisting role="php"><![CDATA[
 ...
 // Create new font
@@ -362,8 +372,10 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             <title>Do not throw an exception for fonts that cannot be embedded.</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
-                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+$font = Zend_Pdf_Font::fontWithPath(
+           '/path/to/unEmbeddableFont.ttf',
+           Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION
+        );
 ...
 ]]>
             </programlisting>
@@ -394,9 +406,10 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
             <title>Combining font embedding options.</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
-                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
-                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+$font = Zend_Pdf_Font::fontWithPath(
+            $someUserSelectedFontPath,
+            (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+            Zend_Pdf_Font::EMBED_DONT_COMPRESS));
 ...
 ]]>
             </programlisting>
@@ -432,8 +445,9 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
-    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
-                  . ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $page->drawText(
+       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') .
+       ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
     $yPosition -= 30;
 }
 ...
@@ -458,7 +472,9 @@ $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
 // This font name should be stored somewhere...
-$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
+                               'en',
+                               'UTF-8');
 ...
 $pdf->save($docPath);
 ...
@@ -471,7 +487,9 @@ $pdf = Zend_Pdf::load($docPath);
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 
-$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) can also be used here */
+/* $srcPage->extractFont($fontName) can also be used here */
+$font = $pdf->extractFont($fontName);
+
 $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
@@ -501,7 +519,10 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
     $page->drawText($text[$charIndex], xPosition, $y);
 
     // Use original font for text width calculation
-    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+    $width = $originalFont->widthForGlyph(
+                 $originalFont->glyphNumberForCharacter($text[$charIndex])
+             );
+    $xPosition += $width/$originalFont->getUnitsPerEm()*$fontSize;
 }
 ...
 ]]>
@@ -515,7 +536,7 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
 
 
     <sect2 id="zend.pdf.drawing.image-drawing">
-        <title>Image Drawing.</title>
+        <title>Image Drawing</title>
         <para>
         <code>Zend_Pdf_Page</code> class provides drawImage() method to draw image:
         </para>
@@ -537,7 +558,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
         (JPG, PNG and TIFF images are supported now):
         </para>
         <example id="zend.pdf.drawing.image-drawing.example-1">
-            <title>Image drawing.</title>
+            <title>Image drawing</title>
             <programlisting role="php"><![CDATA[
 ...
 // load image
@@ -561,7 +582,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
     </sect2>
 
     <sect2 id="zend.pdf.drawing.line-drawing-style">
-        <title>Line drawing style.</title>
+        <title>Line drawing style</title>
         <para>
         Line drawing style is defined by line width, line color and line dashing pattern.
         All of this parameters can be assigned by <code>Zend_Pdf_Page</code>
@@ -577,7 +598,8 @@ public function setLineWidth(float $width);
 /**
  * Set line dashing pattern.
  *
- * Pattern is an array of floats: array(on_length, off_length, on_length, off_length, ...)
+ * Pattern is an array of floats:
+ *     array(on_length, off_length, on_length, off_length, ...)
  * Phase is shift from the beginning of line.
  *
  * @param array $pattern
@@ -589,9 +611,9 @@ public function setLineDashingPattern($pattern, $phase = 0);
     </sect2>
 
     <sect2 id="zend.pdf.drawing.fill-style">
-        <title>Fill style.</title>
+        <title>Fill style</title>
         <para>
-        <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPoligon()</code>,
+        <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPolygon()</code>,
         <code>Zend_Pdf_Page::drawCircle()</code> and <code>Zend_Pdf_Page::drawEllipse()</code> methods take
         <code>$fillType</code> argument as an optional parameter. It can be:
         </para>
@@ -609,7 +631,7 @@ public function setLineDashingPattern($pattern, $phase = 0);
         </itemizedlist>
 
         <para>
-        <code>Zend_Pdf_Page::drawPoligon()</code> methods also takes an additional parameter
+        <code>Zend_Pdf_Page::drawPolygon()</code> methods also takes an additional parameter
         <code>$fillMethod</code>:
         </para>
         <itemizedlist>
@@ -673,7 +695,7 @@ regardless of the directions in which the circles are drawn.
     </sect2>
 
     <sect2 id="zend.pdf.drawing.rotations">
-        <title>Rotations.</title>
+        <title>Rotations</title>
         <para>
         PDF page can be rotated before applying any draw operation.
         It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
@@ -690,7 +712,7 @@ public function rotate($x, $y, $angle);
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
-        <title>Save/restore graphics state.</title>
+        <title>Save/restore graphics state</title>
         <para>
         At any time page graphics state (current font, font size, line color, fill color,
         line style, page rotation, clip area) can be saved and then restored. Save operation puts
@@ -702,13 +724,15 @@ public function rotate($x, $y, $angle);
         <programlisting role="php"><![CDATA[
 /**
  * Save the graphics state of this page.
- * This takes a snapshot of the currently applied style, position, clipping area and
- * any rotation/translation/scaling that has been applied.
+ * This takes a snapshot of the currently applied style, position,
+ * clipping area and any rotation/translation/scaling that has been
+ * applied.
  */
 public function saveGS();
 
 /**
- * Restore the graphics state that was saved with the last call to saveGS().
+ * Restore the graphics state that was saved with the last call to
+ * saveGS().
  */
 public function restoreGS();
 ]]>
@@ -716,7 +740,7 @@ public function restoreGS();
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
-        <title>Clipping draw area.</title>
+        <title>Clipping draw area</title>
         <para>
         PDF and Zend_Pdf module support clipping of draw area.
         Current clip area limits the regions of the page affected by painting operators. It's a whole page initially.
@@ -744,7 +768,10 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  * @param array $y  - array of float (the Y co-ordinates of the vertices)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+public function clipPolygon($x,
+                            $y,
+                            $fillMethod = 
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -757,7 +784,11 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);
+public function clipCircle($x,
+                           $y,
+                           $radius,
+                           $startAngle = null,
+                           $endAngle = null);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -777,13 +808,18 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);
+public function clipEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $startAngle = null,
+                            $endAngle = null);
 ]]>
         </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.styles">
-        <title>Styles.</title>
+        <title>Styles</title>
         <para>
         <code>Zend_Pdf_Style</code> class provides styles functionality.
         </para>
@@ -932,7 +968,7 @@ public function getFontSize();
     </sect2>
 
     <sect2 id="zend.pdf.drawing.alpha">
-        <title>Transparency.</title>
+        <title>Transparency</title>
         <para>
         <code>Zend_Pdf</code> module supports transparency handling.
         </para>
@@ -947,8 +983,8 @@ public function getFontSize();
  * $alpha == 1  - opaque
  *
  * Transparency modes, supported by PDF:
- * Normal (default), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
- * SoftLight, Difference, Exclusion
+ * Normal (default), Multiply, Screen, Overlay, Darken, Lighten,
+ * ColorDodge, ColorBurn, HardLight, SoftLight, Difference, Exclusion
  *
  * @param float $alpha
  * @param string $mode

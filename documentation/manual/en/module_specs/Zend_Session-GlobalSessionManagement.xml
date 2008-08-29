@@ -60,7 +60,8 @@
 ; gc_probability
 ; hash_bits_per_character
 ; hash_function
-; name should be unique for each PHP application sharing the same domain name
+; name should be unique for each PHP application sharing the same
+; domain name
 name = UNIQUE_NAME
 ; referer_check
 ; save_handler
@@ -74,9 +75,11 @@ name = UNIQUE_NAME
 ; strict = on|off
 
 
-; Development inherits configuration from production, but overrides several values
+; Development inherits configuration from production, but overrides
+; several values
 [development : production]
-; Don't forget to create this directory and make it rwx (readable and modifiable) by PHP.
+; Don't forget to create this directory and make it rwx (readable and
+; modifiable) by PHP.
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; When persisting session id cookies, request a TTL of 10 days
@@ -329,18 +332,18 @@ Zend_Session::setOptions($config->toArray());
                 <itemizedlist mark='opencircle'>
                     <listitem>
                         <para>
-                            - attacker first initiates a session on your website to obtain a valid session id
+                            attacker first initiates a session on your website to obtain a valid session id
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            - attacker uses XSS vulnerability on your website to create a cookie on the victim's browser
+                            attacker uses XSS vulnerability on your website to create a cookie on the victim's browser
                             with the same, valid session id (i.e. session fixation)
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            - both the victim and attacker originate from the same proxy farm (e.g. both are behind the
+                            both the victim and attacker originate from the same proxy farm (e.g. both are behind the
                             same firewall at a large company, like AOL)
                         </para>
                     </listitem>

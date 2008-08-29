@@ -53,7 +53,8 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 // importing a feed from an array
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// the following line is equivalent to the above; by default a Zend_Feed_Atom instance is returned
+// the following line is equivalent to the above;
+// by default a Zend_Feed_Atom instance is returned
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importing a rss feed from an array
@@ -75,13 +76,18 @@ array(
       'description' => 'short description of the feed', //optional
       'author'      => 'author/publisher of the feed', //optional
       'email'       => 'email of the author', //optional
-      'webmaster'   => 'email address for person responsible for technical issues' // optional, ignored if atom is used
+      'webmaster'   =>     // optional, ignored if atom is used
+                       'email address for person responsible ' .
+                       'for technical issues' 
       'copyright'   => 'copyright notice', //optional
       'image'       => 'url to image', //optional
       'generator'   => 'generator', // optional
       'language'    => 'language the feed is written in', // optional
-      'ttl'         => 'how long in minutes a feed can be cached before refreshing', // optional, ignored if atom is used
-      'rating'      => 'The PICS rating for the channel.', // optional, ignored if atom is used
+      'ttl'         =>     // optional, ignored if atom is used
+                       'how long in minutes a feed can be cached ' .
+                       'before refreshing', 
+      'rating'      =>     // optional, ignored if atom is used
+                       'The PICS rating for the channel.',
       'cloud'       => array(
                              'domain'            => 'domain of the cloud, e.g. rpc.sys.com' // required
                              'port'              => 'port to connect to' // optional, default to 80
@@ -224,13 +230,17 @@ array(
 
             <programlisting role="php"><![CDATA[
 // importing a feed from a custom builder source
-$atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
+$atomFeedFromArray = 
+    Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// the following line is equivalent to the above; by default a Zend_Feed_Atom instance is returned
-$atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
+// the following line is equivalent to the above;
+// by default a Zend_Feed_Atom instance is returned
+$atomFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importing a rss feed from a custom builder array
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+$rssFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
 ]]>
             </programlisting>
 
@@ -245,7 +255,8 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 <code>saveXml()</code> methods.
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // dump the feed to standard output

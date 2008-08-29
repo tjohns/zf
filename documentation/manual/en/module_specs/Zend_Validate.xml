@@ -127,14 +127,15 @@ if ($validator->isValid($email)) {
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
-    'The string \'%value%\' is too short; it must be at least %min% characters',
+    'The string \'%value%\' is too short; it must be at least %min% ' .
+    'characters',
     Zend_Validate_StringLength::TOO_SHORT);
 
 if (!$validator->isValid('word')) {
     $messages = $validator->getMessages();
     echo current($messages);
 
-    // echoes "The string 'word' is too short; it must be at least 8 characters"
+    // "The string 'word' is too short; it must be at least 8 characters"
 }
 ]]>
             </programlisting>
@@ -148,8 +149,10 @@ if (!$validator->isValid('word')) {
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
-    Zend_Validate_StringLength::TOO_SHORT => 'The string \'%value%\' is too short',
-    Zend_Validate_StringLength::TOO_LONG  => 'The string \'%value%\' is too long'
+    Zend_Validate_StringLength::TOO_SHORT => 
+        'The string \'%value%\' is too short',
+    Zend_Validate_StringLength::TOO_LONG  =>
+        'The string \'%value%\' is too long'
 ));
 ]]>
             </programlisting>

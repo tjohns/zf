@@ -343,7 +343,8 @@ if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
 
-// getMessages() simply returns the merge of getInvalid() and getMissing()
+// getMessages() simply returns the merge of getInvalid() and
+// getMissing()
 
 if ($input->hasInvalid()) {
   $invalidFields = $input->getInvalid();
@@ -578,8 +579,9 @@ $validators = array(
         'fields' => array('password1', 'password2')
     )
 );
-// Invokes hypothetical class Zend_Validate_StringEquals, passing an array argument
-// containing the values of the two input data fields named 'password1' and 'password2'.
+// Invokes hypothetical class Zend_Validate_StringEquals,
+// passing an array argument containing the values of the two input
+// data fields named 'password1' and 'password2'.
 ]]>
             </programlisting>
 
@@ -807,7 +809,8 @@ $input = new Zend_Filter_Input(null, $validators);
             </para>
 
             <programlisting role="php"><![CDATA[
-// Create validator chain with non-uniform breakChainOnFailure attributes
+// Create validator chain with non-uniform breakChainOnFailure
+// attributes
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
 $chain->addValidator(new Zend_Validate_Between(1,12), false);
@@ -904,9 +907,11 @@ $validators = array(
             'A month must consist only of digits',
             array(
                 Zend_Validate_Between::NOT_BETWEEN =>
-                    'Month value %value% must be between %min% and %max%',
+                    'Month value %value% must be between ' .
+                    '%min% and %max%',
                 Zend_Validate_Between::NOT_BETWEEN_STRICT =>
-                    'Month value %value% must be strictly between %min% and %max%'
+                    'Month value %value% must be strictly between ' .
+                    '%min% and %max%'
             )
         )
     )

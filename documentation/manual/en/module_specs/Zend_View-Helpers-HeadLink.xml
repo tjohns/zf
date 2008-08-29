@@ -75,7 +75,9 @@
         <programlisting role="php"><![CDATA[
 <?php // setting links in a view script:
 $this->headLink()->appendStylesheet('/styles/basic.css')
-                 ->headLink(array('rel' => 'favicon', 'href' => '/img/favicon.ico'), 'PREPEND')
+                 ->headLink(array('rel' => 'favicon',
+                                  'href' => '/img/favicon.ico'),
+                                  'PREPEND')
                  ->prependStylesheet('/styles/moz.css', 'screen', true);
 ?>
 <?php // rendering the links: ?>

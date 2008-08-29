@@ -173,7 +173,7 @@ if (isset($_POST['xmlToken'])) {
 if (isset($_POST['xmlToken'])) {
     $infocard = new Zend_InfoCard();
     $infocard->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
-                                   '/usr/local/Zend/apache2/conf/server.crt');
+                                  '/usr/local/Zend/apache2/conf/server.crt');
 
     $claims = $infocard->process($_POST['xmlToken']);
 
@@ -283,11 +283,13 @@ if (isset($_POST['xmlToken'])) {
 public function submitinfocardAction() 
 {
     if (!isset($_REQUEST['xmlToken'])) {
-        throw new ZBlog_Exception("Expected an encrypted token but was not provided");
+        throw new ZBlog_Exception('Expected an encrypted token ' .
+                                  'but was not provided');
     }
     
     $infoCard = new Zend_InfoCard();
-    $infoCard->addCertificatePair(SSL_CERTIFICATE_PRIVATE, SSL_CERTIFICATE_PUB);
+    $infoCard->addCertificatePair(SSL_CERTIFICATE_PRIVATE,
+                                  SSL_CERTIFICATE_PUB);
     
     try {
         $claims = $infoCard->process($request['xmlToken']);
@@ -316,7 +318,8 @@ public function submitinfocardAction()
         $this->view->render();
         return;
     } else {
-        throw new ZBlog_Exception("Infomation card failed security checks");
+        throw new 
+            ZBlog_Exception("Infomation card failed security checks");
     }
 }
 ]]>
@@ -359,7 +362,9 @@ public function submitinfocardAction()
         <programlisting role="php"><![CDATA[
 class myAdapter implements Zend_InfoCard_Adapter_Interface 
 {
-    public function storeAssertion($assertionURI, $assertionID, $conditions) 
+    public function storeAssertion($assertionURI,
+                                   $assertionID,
+                                   $conditions) 
     {
         /* Store the assertion and its conditions by ID and URI */
     }

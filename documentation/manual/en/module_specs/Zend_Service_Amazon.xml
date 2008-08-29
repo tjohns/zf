@@ -57,7 +57,8 @@
             </para>
             <programlisting><![CDATA[
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books',
+                                     'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
@@ -142,7 +143,8 @@ $item = $amazon->itemLookup('B0000A432X');
             <title>Performing Amazon Item Searches</title>
             <programlisting><![CDATA[
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books',
+                                     'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
@@ -160,7 +162,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array(
     'SearchIndex'   => 'Books',
     'Keywords'      => 'php',
-    'ResponseGroup' => 'Small,ItemAttributes,Images,SalesRank,Reviews,EditorialReview,Similarities,ListmaniaLists'
+    'ResponseGroup' => 'Small,ItemAttributes,Images,SalesRank,Reviews,' . 
+                       'EditorialReview,Similarities,ListmaniaLists'
     ));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
