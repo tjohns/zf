@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11125 -->
 <sect1 id="zend.captcha.operation">
     <title>Opération Captcha</title>
 
@@ -37,6 +37,9 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     <para>Un cas d'utilisation typique pourrait ressembler à ceci :</para>
 
     <programlisting role="php"><![CDATA[
+// Créer une instance de Zend_View
+$view = new Zend_View();
+
 // Requête original :
 $captcha = new Zend_Captcha_Figlet(array(
     'name' => 'foo',
@@ -44,7 +47,7 @@ $captcha = new Zend_Captcha_Figlet(array(
     'timeout' => 300,
 ));
 $id = $captcha->generate();
-echo $captcha->render();
+echo $captcha->render($view);
 
 // Lors de la requête suivante :
 // suppose que $captcha a été paramètré avant, et que $value est la valeur soumise :
