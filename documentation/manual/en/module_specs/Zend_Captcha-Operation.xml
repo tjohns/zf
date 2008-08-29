@@ -46,6 +46,9 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     </para>
 
         <programlisting role="php"><![CDATA[
+// Creating a Zend_View instance
+$view = new Zend_View();
+
 // Originating request:
 $captcha = new Zend_Captcha_Figlet(array(
     'name' => 'foo',
@@ -53,7 +56,7 @@ $captcha = new Zend_Captcha_Figlet(array(
     'timeout' => 300,
 ));
 $id = $captcha->generate();
-echo $captcha->render();
+echo $captcha->render($view);
 
 // On subsequent request:
 // Assume captcha setup as before, and $value is the submitted value:
