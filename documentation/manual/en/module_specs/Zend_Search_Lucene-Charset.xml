@@ -91,12 +91,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             All of these analyzers need PCRE (Perl-compatible regular expressions) library to be compiled with UTF-8 support turned on. 
-            PCRE UTF-8 support is turned on for the PCRE library sources bandled with PHP source code distribution, but if shared libraru is used
-            instead of bandled with PHP sources, then UTF-8 support state may depend on you operation system. 
+            PCRE UTF-8 support is turned on for the PCRE library sources bundled with PHP source code distribution, but if shared library is used
+            instead of bundled with PHP sources, then UTF-8 support state may depend on you operating system. 
         </para>
 
         <para>
-             Use the following code to check, if PCRE UTF-8 suppor is enabled:
+             Use the following code to check, if PCRE UTF-8 support is enabled:
 
             <programlisting role="php"><![CDATA[
 
