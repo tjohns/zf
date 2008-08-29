@@ -8,14 +8,11 @@
     </para>
     <example id="zend.mail.boundary.example-1">
         <title>Zmiana pola rozgraniczającego MIME</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
-// tworzymy wiadomość]]>
+// tworzymy wiadomość
+]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

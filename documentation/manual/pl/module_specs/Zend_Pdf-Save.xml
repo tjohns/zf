@@ -20,7 +20,7 @@
 
     <example id="zend.pdf.save.example-1">
         <title>Zapisywanie dokumentu PDF.</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 ...
 // Załaduj dokument PDF.
 $pdf = Zend_Pdf::load($fileName);
@@ -33,11 +33,9 @@ $pdf->save($newFileName);
 // Zwróć dokument PDF jako łańcuch znaków.
 $pdfString = $pdf->render();
 
-...]]>
+...
+]]>
         </programlisting>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

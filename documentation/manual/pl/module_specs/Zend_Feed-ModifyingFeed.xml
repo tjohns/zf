@@ -10,14 +10,15 @@
 
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modyfikacja istniejącego wpisu</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
 $entry->title = 'To jest nowy tytuł';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
         <para>
             To wyświetli pełną (dołączając prolog <code>&lt;?xml ... &gt;</code>)
@@ -44,7 +45,7 @@ echo $entry->saveXML();]]>
 
     <example id="zend.feed.modifying-feed.example.creating">
         <title>Tworzenie wpisu Atom z elementami własnej przestrzeni nazw</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom();
 // id w Atom jest zawsze nadane przez serwer
 $entry->title = 'mój własny wpis';
@@ -58,10 +59,8 @@ $entry->{'myns:myelement_one'} = 'pierwsza własna część';
 $entry->{'myns:container_elt'}->part1 = 'pierwsza zagnieżdżona część';
 $entry->{'myns:container_elt'}->part2 = 'druga zagnieżdżona część';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

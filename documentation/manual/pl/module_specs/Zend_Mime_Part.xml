@@ -22,14 +22,15 @@
         <code>Zend_Mime_Part</code>, jego podstawowe atrybuty mogą być zmienione
         bezpośrednio:</para>
 
-         <programlisting role="php"><![CDATA[<?php
+         <programlisting role="php"><![CDATA[
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;]]>
+public $charset;
+]]>
         </programlisting>
     </sect2>
 
@@ -85,6 +86,3 @@ public $charset;]]>
     </para>
   </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

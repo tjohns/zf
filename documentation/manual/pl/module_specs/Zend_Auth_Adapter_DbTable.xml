@@ -108,7 +108,7 @@ $dbAdapter->query($sqlInsert);
                 parametry do metod dostępowych już po utworzeniu instancji:
             </para>
             <programlisting role="php"><![CDATA[
-// Konfigurujemy instancję za pomocą parametrów konstruktora...
+// Konfigurujemy instancję za pomocą parametrów konstruktora
 $authAdapter = new Zend_Auth_Adapter_DbTable(
     $dbAdapter, 
     'users', 

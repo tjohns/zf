@@ -14,9 +14,10 @@
             egzemplarz klasy <code>Zend_Form</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             W zaawansowanych przypadkach możesz rozszerzyć klasę
@@ -30,10 +31,11 @@ $form = new Zend_Form;
             <code>setMethod()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Powyższy kod ustawia akcję formularza na adres URL 
@@ -48,9 +50,10 @@ $form->setAction('/resource/process')
             utaw atrybut "id":
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.elements">
@@ -121,13 +124,14 @@ $form->setAttrib('id', 'login');
             Kilka przykładów:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Utwórz egzemplarz elementu i przekaż go do obiektu formularza:
 $form->addElement(new Zend_Form_Element_Text('username'));
 
 // Przekaż typ elementu do obiektu:
 $form->addElement('text', 'username');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Domyślnie elementy te nie posiadają filtrów i weryfikatorów.
@@ -146,7 +150,7 @@ $form->addElement('text', 'username');
             użyty:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username = new Zend_Form_Element_Text('username');
 
 // Przekaż obiekt Zend_Validate_*:
@@ -154,17 +158,19 @@ $username->addValidator(new Zend_Validate_Alnum());
 
 // Przekaż nazwę weryfikatora:
 $username->addValidator('alnum');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jeśli używasz drugiego sposobu, a weryfikator przyjmuje argumenty
             konstruktora, możesz je pzekazać w tablicy jako trzeci parametr:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Przekaż wzór
 $username->addValidator('regex', false, array('/^[a-z]/i'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Drugi parametr jest używany aby określić czy niepowodzenie w
@@ -178,10 +184,11 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
             elementu. Oto pierwszy sposób:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Ustaw element jako wymagany:
 $username->setRequired(true);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Gdy element jest wymagany, weryfikator 'NotEmpty' dodawany jest na
@@ -195,15 +202,16 @@ $username->setRequired(true);
             litery:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Finalnie konfiguracja elementu może wyglądać tak:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $username->addValidator('alnum')
          ->addValidator('regex', false, array('/^[a-z]/'))
          ->setRequired(true)
@@ -215,8 +223,8 @@ $username->addValidators(array('alnum',
     ))
     ->setRequired(true)
     ->addFilters(array('StringToLower'));
-?>]]></programlisting>
-
+]]>
+        </programlisting>
 
         <para>
             Tworzenie obiektu dla każdego z elementów formularza może być czasem 
@@ -227,7 +235,7 @@ $username->addValidators(array('alnum',
             konfigurację filtrów i weryfikatorów. Aby to zrobić użyj kodu:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array(
     'validators' => array(
         'alnum',
@@ -236,7 +244,8 @@ $form->addElement('text', 'username', array(
     'required' => true,
     'filters'  => array('StringToLower'),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note><para>
             Jeśli konfigurujesz elementy w kilku miejscach używając tych samych
@@ -257,13 +266,14 @@ $form->addElement('text', 'username', array(
             konstrukcji echo.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Jawnie wywołaj metodę render() i przekaż pcjonalny obiekt widoku:
 echo $form->render($view);
 
 // Zakładając że obiekt widoku został wcześniej ustawiony za pomocą setView():
 echo $form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Domyślnie obiekty <code>Zend_Form</code> oraz
@@ -275,7 +285,8 @@ echo $form;
 
         <programlisting role="php"><![CDATA[
 <?= $this->form ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             <code>Zend_Form</code> używa "dekoratorów" do przeprowadzania 
@@ -287,14 +298,15 @@ echo $form;
             to w taki sposób:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addDecorators(array(
     'ViewHelper',
     'Errors',
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Gdzie &lt;HELPERNAME&gt; jest nazwą klasy pomocniczej widoku, która
@@ -314,7 +326,8 @@ $element->addDecorators(array(
         <li>'123-abc' does not match against pattern '/^[a-z]/i'</li>
     </ul>
 </dd>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Jednak kod jest inaczej sformatowany.)
@@ -341,17 +354,19 @@ $element->addDecorators(array(
             ustawiać kolejność elementów używając metody:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->setOrder(10);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Lub przekazując kolejność jako opcję podczas tworzenia elementu:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.validate">
@@ -371,13 +386,14 @@ $form->addElement('text', 'username', array('order' => 10));
             (np. żądań do serwisów web):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValid($_POST)) {
     // dane są poprawne
 } else {
     // dane nie są poprawne
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jeśli używasz żądań AJAX, możesz potrzebować przeprowadzić 
@@ -387,13 +403,14 @@ if ($form->isValid($_POST)) {
             ona weryfikacji pól dla elementów których wartości nie zostały podane:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($form->isValidPartial($_POST)) {
     // dane we wszystkich elementach pomyślnie przyszły weryfikację
 } else {
     // jeden lub więcej elementów nie przeszło poprawnie weryfikacji
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Do częściowej weryfikacji formularza możemy także użyć metody 
@@ -407,17 +424,19 @@ if ($form->isValidPartial($_POST)) {
             pobrać przefiltrowane wartości:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $values = $form->getValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jeśli potrzebujesz niefiltrowanych wartości, użyj:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.errorstatus">
@@ -429,7 +448,7 @@ $unfiltered = $form->getUnfilteredValues();
             wyświetlone używając dekoratorów:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if (!$form->isValid($_POST)) {
     echo $form;
 
@@ -437,7 +456,8 @@ if (!$form->isValid($_POST)) {
     $this->view->form = $form;
     return $this->render('form');
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Dostępne są dwie metody do sprawdzania błędów. Metoda 
@@ -478,7 +498,7 @@ if (!$form->isValid($_POST)) {
             zbudowania formularza:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
 
 $form = new Zend_Form();
@@ -503,13 +523,14 @@ $form->addElement($username)
      ->addElement($password)
      // użyj metody addElement() jako fabryki tworzącej przycisk 'Zaloguj':
      ->addElement('submit', 'login', array('label' => 'Zaloguj'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Następnie utworzymy kontroler obsługujący formularz:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class UserController extends Zend_Controller_Action
 {
     public function getForm()
@@ -541,7 +562,8 @@ class UserController extends Zend_Controller_Action
         // spróbuj uwierzytelnić
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Utworzymy skrypt widoku wyświetlający formularz:
@@ -550,7 +572,8 @@ class UserController extends Zend_Controller_Action
 <programlisting role="php"><![CDATA[
 <h2>Zaloguj się:</h2>
 <?= $this->form ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jak zauważysz w kodzie kontrolera, może być wymagane jeszcze trochę 
@@ -599,16 +622,18 @@ user.login.elements.password.options.required = true
 
 ; przycisk wysyłający
 user.login.elements.submit.type = "submit"
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Możesz to przekazać do konstruktora obiektu formularza:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             i cały formularz zostanie w ten sposób zdefiniowany.

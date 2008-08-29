@@ -8,15 +8,13 @@
     </para>
     <example id="zend.mail.additional-headers.example-1">
         <title>Dodawanie nagłówków do wiadomości e-mail</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MyCoolApplication');
 $mail->addHeader('X-greetingsTo', 'Mom', true); // wiele wartości
-$mail->addHeader('X-greetingsTo', 'Dad', true);]]>
+$mail->addHeader('X-greetingsTo', 'Dad', true);
+]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

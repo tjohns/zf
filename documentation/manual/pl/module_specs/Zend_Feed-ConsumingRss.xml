@@ -4,8 +4,9 @@
         Odczytywanie kanału RSS jest tak proste jak utworzenie obiektu <code>Zend_Feed_Rss</code> z adresem
         URL kanału przekazanym do konstruktora:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
+    <programlisting role="php"><![CDATA[
+$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
+]]>
     </programlisting>
     <para>
         Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału,
@@ -16,8 +17,9 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
         Kiedy już masz obiekt kanału informacyjnego, możesz łatwo uzyskać dostęp
         do standardowych właściwości kanału RSS bezpośrednio na obiekcie:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-echo $channel->title();]]>
+    <programlisting role="php"><![CDATA[
+echo $channel->title();
+]]>
     </programlisting>
     <para>
         Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji
@@ -32,8 +34,9 @@ echo $channel->title();]]>
         Jeśli właściwości kanału mają atrybuty, są one dostępne przy użyciu składni
         tablic PHP:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-echo $channel->category['domain'];]]>
+    <programlisting role="php"><![CDATA[
+echo $channel->category['domain'];
+]]>
     </programlisting>
     <para>
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
@@ -46,10 +49,11 @@ echo $channel->category['domain'];]]>
         w PHP interfejs <code>Iterator</code>, więc wyświetlenie wszystkich tytułów
         artykułów z kanału jest bardzo proste:
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 foreach ($channel as $item) {
     echo $item->title() . "\n";
-}]]>
+}
+]]>
     </programlisting>
     <para>
         Jeśli nie jesteś obeznany z RSS, poniżej znajdziesz opis podstawowych
@@ -132,10 +136,11 @@ foreach ($channel as $item) {
     <para>
         W twoim kodzie zawsze możesz sprawdzić czy element nie jest pusty za pomocą:
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 if ($item->propname()) {
     // ... kontynuuj.
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -149,6 +154,3 @@ if ($item->propname()) {
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

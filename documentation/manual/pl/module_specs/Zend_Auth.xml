@@ -89,7 +89,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Jak pokazano w bloku dokumentacyjnym , metoda <code>authenticate()</code>
@@ -380,7 +381,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          */
     }
 
-}]]>
+}
+]]>
                     </programlisting>
 
                 </para>

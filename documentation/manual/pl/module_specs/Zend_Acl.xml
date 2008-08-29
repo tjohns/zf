@@ -131,7 +131,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
+]]>
             </programlisting>
             <para>
                 Z tego względu, że nie ma zdefiniowanych reguł konkretnie dla
@@ -183,7 +184,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$acl = new Zend_Acl();]]>
+$acl = new Zend_Acl();
+]]>
         </programlisting>
 
         <note>
@@ -278,7 +280,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator nie dziedziczy kontroli dostępu
-$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+$acl->addRole(new Zend_Acl_Role('administrator'));
+]]>
         </programlisting>
 
     </sect2>
@@ -337,7 +340,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator nie dziedziczy niczego, ale ma dostęp do wszystkich zasobów
-$acl->allow('administrator');]]>
+$acl->allow('administrator');
+]]>
         </programlisting>
 
         <para>

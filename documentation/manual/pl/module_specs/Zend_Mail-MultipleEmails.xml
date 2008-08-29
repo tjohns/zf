@@ -12,12 +12,8 @@
     
         <title>Wysyłanie wielu maili podczas jednego połączenia SMTP</title>
         
-        <programlisting role="php"><![CDATA[<?php
-// Ładowanie klasy
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // Tworzenie transportu
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp('localhost');
 
 // Pętla wysyłająca wiadomości
@@ -28,7 +24,8 @@ for ($i = 0; $i > 5; $i++) {
     $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
     $mail->setBodyText('...Your message here...');
     $mail->send($transport);
-}]]>
+}
+]]>
         </programlisting>
         
     </example>
@@ -44,13 +41,8 @@ for ($i = 0; $i > 5; $i++) {
 
         <title>Ręczna obsługa połączenia</title>
 
-        <programlisting role="php"><![CDATA[<?php
-
-// Ładowanie klasy
-require_once 'Zend/Mail.php';
-
+        <programlisting role="php"><![CDATA[
 // Tworzenie transportu
-require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp();
 
 require_once 'Zend/Mail/Protocol/Smtp.php';
@@ -74,12 +66,10 @@ for ($i = 0; $i > 5; $i++) {
 }
 
 $protocol->quit();
-$protocol->disconnect();]]>
+$protocol->disconnect();
+]]>
         </programlisting>
 
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

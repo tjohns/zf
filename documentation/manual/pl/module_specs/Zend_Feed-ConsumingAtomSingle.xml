@@ -16,11 +16,12 @@
 
     <example id="zend.feed.consuming-atom-single-entry.example.atom">
         <title>Odczytywanie pojedynczego wpisu kanału Atom</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 echo 'Kanał zawiera: ' . $feed->count() . ' wspisów.';
 
-$entry = $feed->current();]]>
+$entry = $feed->current();
+]]>
         </programlisting>
     </example>
 
@@ -31,12 +32,10 @@ $entry = $feed->current();]]>
 
     <example id="zend.feed.consuming-atom-single-entry.example.entryatom">
         <title>Bezpośrednie użycie obiektu wpisu dla pojedynczego wpisu kanału Atom</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
-echo $entry->title();]]>
+echo $entry->title();
+]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

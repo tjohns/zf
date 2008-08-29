@@ -14,14 +14,11 @@
 
     <example id="zend.pdf.usage.example-1">
         <title>Przykład użycia modułu Zend_Pdf.</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * @package Zend_Pdf
  * @subpackage demo
  */
-
-/** Zend_Pdf */
-require_once 'Zend/Pdf.php';
 
 if (!isset($argv[1])) {
     echo "UŻYCIE: php demo.php <pdf_file> [<output_pdf_file>]\n";
@@ -155,11 +152,9 @@ if (isset($argv[2])) {
     $pdf->save($argv[2]);
 } else {
     $pdf->save($argv[1], true /* uaktualniamy */);
-}]]>
+}
+]]>
         </programlisting>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

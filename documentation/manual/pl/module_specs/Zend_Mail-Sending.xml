@@ -8,10 +8,10 @@
     </para>
     <example id="zend.mail.sending.example-1">
         <title>Wysyłanie e-maila przez SMTP</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail/Transport/Smtp.php';
+        <programlisting role="php"><![CDATA[
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);]]>
+Zend_Mail::setDefaultTransport($tr);
+]]>
         </programlisting>
     </example>
     <para>
@@ -24,6 +24,3 @@ Zend_Mail::setDefaultTransport($tr);]]>
         jaki serwer poczty ma być użyty itp.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

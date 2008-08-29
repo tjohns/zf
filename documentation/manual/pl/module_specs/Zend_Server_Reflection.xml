@@ -25,8 +25,7 @@
             Podstawowe użycie jest proste:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Server/Reflection.php';
+        <programlisting role="php"><![CDATA[
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
 
@@ -52,7 +51,8 @@ foreach ($prototypes as $prototype) {
 // Pobierz przestrzeń nazw dla klasy, funkcji lub metody
 // Przestrzenie nazw mogą być ustawione podczas tworzenia instancji
 // lub przez użycie metody setNamespace()
-$reflection->getNamespace();]]>
+$reflection->getNamespace();
+]]>
         </programlisting>
 
         <para>
@@ -64,6 +64,3 @@ $reflection->getNamespace();]]>
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

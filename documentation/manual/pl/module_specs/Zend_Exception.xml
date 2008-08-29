@@ -9,14 +9,15 @@
 
     <example id="zend.exception.using.example">
         <title>Przykład łapania wyjątku</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
     // inny kod do obsługi błędu.
-}]]>
+}
+]]>
         </programlisting>
     </example>
 
@@ -28,6 +29,3 @@ try {
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -118,7 +118,7 @@
                 w pliku "My/Decorator/Label.php".
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Decorator_Label extends Zend_Form_Decorator_Abstract
 {
     protected $_placement = 'PREPEND';
@@ -157,7 +157,8 @@ class My_Decorator_Label extends Zend_Form_Decorator_Abstract
         }
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Now we can tell the element to use this plugin path when looking
@@ -166,7 +167,8 @@ class My_Decorator_Label extends Zend_Form_Decorator_Abstract
 
             <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Alternately, we can do that at the form level to ensure all
@@ -175,7 +177,8 @@ $element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
             <programlisting role="php"><![CDATA[
 $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 With this path added, when you add a decorator, the
@@ -203,9 +206,10 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             <code>getValue()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $filtered = $element->getValue();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Filtry mogą być dodane na dwa sposoby:
@@ -225,7 +229,7 @@ $filtered = $element->getValue();
             Zobaczmy kilka przykładów:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Konkretny egzemplarz obiektu filtra:
 $element->addFilter(new Zend_Filter_Alnum());
 
@@ -235,7 +239,8 @@ $element->addFilter('Zend_Filter_Alnum');
 // Krótka nazwa filtra:
 $element->addFilter('Alnum');
 $element->addFilter('alnum');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Krótkie nazwy są zazwyczaj nazwą klasy filtra pozbawioną
@@ -255,9 +260,10 @@ $element->addFilter('alnum');
                 <code>Zend_Form_Element</code> informację w taki sposób:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Filter', 'My/Filter/', 'filter');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 (Zauważ że trzeci argument oznacza typ wtyczek dla którego 
@@ -270,9 +276,10 @@ $element->addPrefixPath('My_Filter', 'My/Filter/', 'filter');
             <code>getUnfilteredValue()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $unfiltered = $element->getUnfilteredValue();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Aby uzyskać więcej informacji o filtrach zobacz <link
@@ -342,7 +349,7 @@ $unfiltered = $element->getUnfilteredValue();
             Zobaczmy kilka przykładów:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Konkretny egzemplarz obiektu weryfikatora:
 $element->addValidator(new Zend_Validate_Alnum());
 
@@ -352,7 +359,8 @@ $element->addValidator('Zend_Validate_Alnum');
 // Krótka nazwa weryfikatora:
 $element->addValidator('Alnum');
 $element->addValidator('alnum');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Krótkie nazwy są zazwyczaj nazwą klasy weryfikatora pozbawioną
@@ -372,9 +380,10 @@ $element->addValidator('alnum');
                 <code>Zend_Form_Element</code> informację w taki sposób:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Validator', 'My/Validator/', 'validate');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 (Zauważ że trzeci argument oznacza typ wtyczek dla którego 
@@ -387,9 +396,10 @@ $element->addPrefixPath('My_Validator', 'My/Validator/', 'validate');
             from firing, pass boolean <code>true</code> as the second parameter:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addValidator('alnum', true);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             If you are using a string name to add a validator, and the
@@ -398,9 +408,10 @@ $element->addValidator('alnum', true);
             array:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addValidator('StringLength', false, array(6, 20));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Arguments passed in this way should be in the order in which they
@@ -409,9 +420,10 @@ $element->addValidator('StringLength', false, array(6, 20));
             <code>$min</code> and <code>$max</code> parameters:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(6, 20);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <title>Określanie własnych komunikatów o błędach</title>
@@ -442,20 +454,21 @@ $validator = new Zend_Validate_StringLength(6, 20);
             wartości, zgodnych z wywołaniem metody <code>addValidator()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addValidators(array(
     array('NotEmpty', true),
     array('alnum'),
     array('stringLength', false, array(6, 20)),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             If you want to be more verbose or explicit, you can use the array
             keys 'validator', 'breakChainOnFailure', and 'options':
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $element->addValidators(array(
     array(
         'validator'           => 'NotEmpty',
@@ -465,7 +478,8 @@ $element->addValidators(array(
         'validator' => 'stringLength',
         'options'   => array(6, 20)),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Ten przykład pokazuje w jaki sposób możesz skonfigurować 
@@ -479,7 +493,8 @@ element.validators.alnum.validator = "Alnum"
 element.validators.strlen.validator = "StringLength"
 element.validators.strlen.options.min = 6
 element.validators.strlen.options.max = 20
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Notice that every item has a key, whether or not it needs one; this
@@ -493,13 +508,14 @@ element.validators.strlen.options.max = 20
             <code>isValid()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($element->isValid($value)) {
     // prawidłowy
 } else {
     // nieprawidłowy
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <title>Weryfikowane są przefiltrowane wartości</title>
@@ -530,7 +546,7 @@ if ($element->isValid($value)) {
                 validator might look like the following:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Validate_PasswordConfirmation extends Zend_Validate_Abstract
 {
     const NOT_MATCH = 'notMatch';
@@ -558,7 +574,8 @@ class My_Validate_PasswordConfirmation extends Zend_Validate_Abstract
         return false;
     }
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -572,10 +589,11 @@ class My_Validate_PasswordConfirmation extends Zend_Validate_Abstract
             Po nieudanej weryfikacji możesz pobrać kody i komunikaty błędów:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $errors   = $element->getErrors();
 $messages = $element->getMessages();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Uwaga: komunikaty o błędach są zwracane jako asocjacyjna
@@ -837,9 +855,10 @@ $messages = $element->getMessages();
                 'disableLoadDefaultDecorators' konstruktora:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 Ta opcja może być użyta równolegle wraz z dowolnymi innymi
@@ -858,14 +877,15 @@ $element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => 
             domyślne dekoratory:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $this->addDecorators(array(
     array('ViewHelper'),
     array('Errors'),
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The initial content is created by the 'ViewHelper' decorator, which
@@ -888,7 +908,8 @@ $this->addDecorators(array(
         <li>"123" is not an alphanumeric value</li>
     </ul>
 </dd>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Aby uzyskać więcej informacji o dekoratorach, zobacz <link
@@ -914,13 +935,14 @@ $this->addDecorators(array(
                 or name:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Alias dla 'FooBar':
 $element->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
 
 // Pobieramy dekorator:
 $decorator = $element->getDecorator('FooBar');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Do metod <code>addDecorators()</code> oraz
@@ -928,7 +950,7 @@ $decorator = $element->getDecorator('FooBar');
                 'decorator' znajdującą się w tablicy reprezentującej dekorator.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Dodanie dwóch dekoratorów 'HtmlTag', ustawiając nazwę jednego z nich na 'FooBar':
 $element->addDecorators(
     array('HtmlTag', array('tag' => 'div')),
@@ -941,7 +963,8 @@ $element->addDecorators(
 // I pobranie ich póżniej:
 $htmlTag = $element->getDecorator('HtmlTag');
 $fooBar  = $element->getDecorator('FooBar');
-?>]]></programlisting>
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -1076,10 +1099,11 @@ $fooBar  = $element->getDecorator('FooBar');
             to facilitate access to them:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Odpowiednik metody $element->setAttrib('class', 'text'):
 $element->class = 'text;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             By default, all attributes are passed to the view helper used by
@@ -1294,7 +1318,8 @@ filters.ucase.filter = "StringToUpper"
 decorators.element.decorator = "ViewHelper"
 decorators.element.options.helper = "FormText"
 decorators.label.decorator = "Label"
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.elements.custom">
@@ -1333,7 +1358,7 @@ decorators.label.decorator = "Label"
             specify. You could define such an element as follows:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Element_Text extends Zend_Form_Element
 {
     public function init()
@@ -1347,7 +1372,8 @@ class My_Element_Text extends Zend_Form_Element
              ->setAttrib('class', 'text');
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             You could then inform your form object about the prefix path for
@@ -1357,7 +1383,8 @@ class My_Element_Text extends Zend_Form_Element
         <programlisting role="php"><![CDATA[<?php
 $form->addPrefixPath('My_Element', 'My/Element/', 'element')
      ->addElement('foo', 'text');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The 'foo' element will now be of type <code>My_Element_Text</code>,
@@ -1373,7 +1400,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
             class:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_Element_Text extends Zend_Form_Element
 {
     public function loadDefaultDecorators()
@@ -1384,7 +1411,8 @@ class My_Element_Text extends Zend_Form_Element
              ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'element'));
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             There are many ways to customize elements; be sure to read the API

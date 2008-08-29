@@ -62,13 +62,12 @@
             wyjściowych, na znaku Et (<code>&amp;</code>) oraz na znaku podwójnego
             cudzysłowu (<code>&quot;</code>):
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter/HtmlEntities.php';
-
+            <programlisting role="php"><![CDATA[
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;]]>
+echo $htmlEntities->filter('"'); // &quot;
+]]>
             </programlisting>
 
         </para>
@@ -90,10 +89,9 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             <code>get()</code> automatycznie ładuje klasę, tworzy instancję i
             wywołuje metodę <code>filter()</code> na danych wejściowych.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-
-echo Zend_Filter::get('&', 'HtmlEntities');]]>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('&', 'HtmlEntities');
+]]>
             </programlisting>
 
         </para>
@@ -102,10 +100,9 @@ echo Zend_Filter::get('&', 'HtmlEntities');]]>
             Możesz także przekazać tablicę argumentów konstruktora, jeśli są
             one potrzebne w klasie filtra.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter.php';
-
-echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
+]]>
             </programlisting>
 
         </para>

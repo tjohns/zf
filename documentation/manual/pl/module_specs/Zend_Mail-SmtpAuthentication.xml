@@ -11,10 +11,7 @@
   <example id="zend.mail.smtp-authentication.example-1">
     <title>Aktywowanie uwierzytelniania w klasie Zend_Mail_Transport_Smtp</title>
 
-    <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
-
+    <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',
                 'username' => 'myusername',
                 'password' => 'password');
@@ -26,7 +23,8 @@ $mail->setBodyText('To jest treść wiadomości e-mail.');
 $mail->setFrom('sender@test.com', 'Nadawca');
 $mail->addTo('recipient@test.com', 'Adresat');
 $mail->setSubject('Testowy temat');
-$mail->send($transport);]]>
+$mail->send($transport);
+]]>
     </programlisting>
   </example>
 
@@ -41,6 +39,3 @@ $mail->send($transport);]]>
     </para>
   </note>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -55,7 +55,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php]]>
+    index.php
+]]>
             </programlisting>
 
         </sect3>
@@ -80,7 +81,8 @@ html/
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]>
             </programlisting>
 
             <para>
@@ -112,7 +114,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 dodaj poniższy kod:
             </para>
 
-            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/app/controllers');
+]]>
             </programlisting>
 
             <para>
@@ -165,12 +169,14 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 dodaj poniższy kod:
             </para>
 
-            <programlisting role="php"><![CDATA[class IndexController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -221,7 +227,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Witaj!</h1>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
@@ -237,12 +244,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 default module with an <code>errorAction</code> method:
             </para>
 
-            <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -266,7 +275,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Wystąpił błąd</h1>
     <p>Wystąpił błąd; spróbuj ponownie później.</p>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 

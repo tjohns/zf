@@ -8,8 +8,9 @@
         użyj metody <code>Zend_Feed::import()</code>:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+    <programlisting role="php"><![CDATA[
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+]]>
     </programlisting>
 
     <para>
@@ -17,12 +18,13 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
         z pliku lub z łańcucha znaków PHP:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // importowanie kanału z pliku tekstowego
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // importowanie kanału z łańcucha znaków PHP
-$feedFromPHP = Zend_Feed::importString($feedString);]]>
+$feedFromPHP = Zend_Feed::importString($feedString);
+]]>
     </programlisting>
 
     <para>
@@ -54,7 +56,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
 
             <title>Importowanie własnej tablicy</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // importowanie kanału z tablicy
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
@@ -62,14 +64,15 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importowanie kanału rss z tablicy
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
+]]>
             </programlisting>
 
             <para>
                 Format tablicy musi zgadzać się z taką strukturą:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 array(
       'title'       => 'tytuł kanału', //wymagane
       'link'        => 'adres url kanału', //wymagane
@@ -165,7 +168,8 @@ array(
                                    // dane dla drugiego wpisu itd.
                                    )
                              )
-       );]]>
+       );
+]]>
             </programlisting>
 
             <para>
@@ -233,7 +237,7 @@ array(
                 Oto przykład użycia metody <code>Zend_Feed::importBuilder()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // importowanie kanału z własnego źródła
 $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
@@ -241,7 +245,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importowanie kanału rss z własnego źródła
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+]]>
             </programlisting>
 
         </sect3>
@@ -255,21 +260,16 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 możesz użyć metody <code>send()</code> lub <code>saveXml()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // zrzuca kanał do standardowego wyjścia
 print $feed->saveXML();
 
 // wysyła nagłówki oraz zrzuca zawartość kanału
-$feed->send();]]>
+$feed->send();
+]]>
             </programlisting>
-
         </sect3>
-
     </sect2>
-
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

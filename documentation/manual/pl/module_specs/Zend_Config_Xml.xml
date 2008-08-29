@@ -37,7 +37,8 @@
             być przykładem dla bardziej złożonych sytuacji. Załóżmy, że poniższe
             dane konfiguracyjne znajdują się w pliku <code>/path/to/config.xml</code>:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -60,7 +61,8 @@
             </params>
         </database>
     </staging>
-</configdata>]]>
+</configdata>
+]]>
         </programlisting>
         <para>
             Następnie załóżmy, że programista aplikacji potrzebuje danych
@@ -68,10 +70,12 @@
             sprawą jest załadowanie tych danych określając plik XML oraz
             sekcję dla aplikacji rozbudowywanej:
         </para>
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host; // wyświetla "dev.example.com"
-echo $config->database->params->dbname; // wyświetla "dbname"]]>
+echo $config->database->params->dbname; // wyświetla "dbname"
+]]>
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
@@ -85,7 +89,8 @@ echo $config->database->params->dbname; // wyświetla "dbname"]]>
             Pierwszym sposobem użycia atrybutu jest dodanie go w elemencie
             rodzica. Zostanie on automatycznie przełożony jako element dziecko:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production webhost="www.example.com">
         <database adapter="pdo_mysql">
@@ -97,7 +102,8 @@ echo $config->database->params->dbname; // wyświetla "dbname"]]>
             <params host="dev.example.com" username="devuser" password="devsecret"/>
         </database>
     </staging>
-</configdata>]]>
+</configdata>
+]]>
         </programlisting>
         <para>
             Kolejny sposób tak naprawdę nie zmniejsza objętości pliku 
@@ -106,7 +112,8 @@ echo $config->database->params->dbname; // wyświetla "dbname"]]>
             pusty znacznik, który zawiera swoją wartość wewnątrz atrybutu 
             <code>value</code>:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -129,7 +136,8 @@ echo $config->database->params->dbname; // wyświetla "dbname"]]>
             </params>
         </database>
     </staging>
-</configdata>]]>
+</configdata>
+]]>
         </programlisting>
     </example>
 </sect1>

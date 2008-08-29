@@ -84,7 +84,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]>
+print_r($result);
+]]>
         </programlisting>
     </example>
     <example id="zend.cache.introduction.example-3">

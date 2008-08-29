@@ -16,7 +16,7 @@
 
     <example id="zend.feed.custom-feed.example.extending">
         <title>Rozszerzanie klasy wpisu Atom z własnymi przestrzeniami nazw</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * Własna klasa wpisu może automatycznie nadawać adres URI (opcjonalnie)
  * oraz automatycznie dodawać dodatkowe przestrzenie nazw.
@@ -69,24 +69,23 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
-}]]>
+}
+]]>
         </programlisting>
         <para>
             Teraz aby użyć tej klasy, musisz po prostu bezpośrednio utworzyć jej
             instancję i przypisać wartość właściwości <code>myUpdated</code>:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
 // wywołanie w stylu metody jest obsługiwane przez funkcję __call
 $entry->myUpdated();  
 // wywołanie w stylu właściwości jest obsługiwane przez funkcję __get
-$entry->myUpdated;]]>
+$entry->myUpdated;
+]]>
         </programlisting>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

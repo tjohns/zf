@@ -70,12 +70,14 @@
                     obsłużyć je samodzielnie. Na przykład:
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->throwExceptions(true);
+                <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
     // sam obsłuż wyjątki
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -115,7 +117,8 @@ try {
                     Na przykład:
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->returnResponse(true);
+                <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
@@ -123,7 +126,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -166,10 +170,12 @@ if ($response->isException()) {
                             uruchamiającym, dodaj poniższą dyrektywę:
                         </para>
 
-                        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
+                        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
 
 // lub
-$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+$dispatcher->setParam('useDefaultControllerAlways', true);
+]]>
                         </programlisting>
 
                         <para>
@@ -214,7 +220,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             i nadpisanie metody <code>__call()</code>. Na przykład:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -226,7 +233,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
 
         throw new Exception('Invalid method');
     }
-}]]>
+}
+]]>
                         </programlisting>
                         <para>
                             Powyższa metoda przechwytuje wszystkie wywołane
@@ -242,7 +250,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             sprawdza czy akcja istnieje. Na przykład:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
     {
@@ -263,7 +272,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
 
         return $action;
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>
@@ -313,7 +323,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             Przykład:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+                        <programlisting role="php"><![CDATA[
+class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
@@ -333,7 +344,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
             exit;
         }
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>

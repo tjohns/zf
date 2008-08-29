@@ -26,13 +26,13 @@
         </para>
         <example id="zend.service.yahoo.websearch.example-1">
             <title>Wyszukiwanie w sieci Web z Yahoo!</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->webSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -50,13 +50,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.imagesearch.example-1">
             <title>Wyszukiwanie obrazków z Yahoo!</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->imageSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -70,13 +70,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.videosearch.example-1">
             <title>Wyszukiwanie filmów video za pomocą Yahoo!</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->videoSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -89,13 +89,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.localsearch.example-1">
             <title>Wyszukiwanie lokalnych firm i usług za pomocą Yahoo!</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->localSearch('Apple Computers', array('zip' => '95014'));
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -108,13 +108,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.newssearch.example-1">
             <title>Wyszukiwanie Yahoo! News</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->newsSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -129,13 +129,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.inlinkdatasearch.example-1">
             <title>Wyszukiwanie Yahoo! Site Explorer Inbound Links</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->inlinkDataSearch('http://framework.zend.com/');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -150,13 +150,13 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.yahoo.pagedatasearch.example-1">
             <title>Wyszukiwanie Yahoo! Site Explorer PageData</title>
-            <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Yahoo.php';
+            <programlisting><![CDATA[
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->pageDataSearch('http://framework.zend.com/');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -682,6 +682,3 @@ foreach ($results as $result) {
         </sect3>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

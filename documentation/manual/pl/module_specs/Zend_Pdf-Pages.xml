@@ -55,20 +55,21 @@
 
         <example id="zend.pdf.pages.example-1">
             <title>Zarządzanie stronami dokumentu PDF.</title>
-            <programlisting role="php"><![CDATA[<?php
-    ...
-    // Odwróć kolejność stron
-    $pdf->pages = array_reverse($pdf->pages);
-    ...
-    // Dodaj nową stronę
-    $pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
-    // Dodaj nową stronę
-    $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+            <programlisting role="php"><![CDATA[
+...
+// Odwróć kolejność stron
+$pdf->pages = array_reverse($pdf->pages);
+...
+// Dodaj nową stronę
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+// Dodaj nową stronę
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
-    // Usuń określoną stronę.
-    unset($pdf->pages[$id]);
+// Usuń określoną stronę.
+unset($pdf->pages[$id]);
 
-    ...]]>
+...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -82,25 +83,26 @@
 
         <example id="zend.pdf.pages.example-2">
             <title>Klonowanie istniejącej strony.</title>
-            <programlisting role="php"><![CDATA[<?php
-    ...
-    // Przechowaj szablon strony w osobnej zmiennej
-    $template = $pdf->pages[$templatePageIndex];
-    ...
-    // Dodaj nową stronę
-    $page1 = new Zend_Pdf_Page($template);
-    $pdf->pages[] = $page1;
-    ...
+            <programlisting role="php"><![CDATA[
+...
+// Przechowaj szablon strony w osobnej zmiennej
+$template = $pdf->pages[$templatePageIndex];
+...
+// Dodaj nową stronę
+$page1 = new Zend_Pdf_Page($template);
+$pdf->pages[] = $page1;
+...
 
-    // Dodaj kolejną stronę
-    $page2 = new Zend_Pdf_Page($template);
-    $pdf->pages[] = $page2;
-    ...
+// Dodaj kolejną stronę
+$page2 = new Zend_Pdf_Page($template);
+$pdf->pages[] = $page2;
+...
 
-    // Usuń źródłowy szablon strony z dokumentów
-    unset($pdf->pages[$templatePageIndex]);
+// Usuń źródłowy szablon strony z dokumentów
+unset($pdf->pages[$templatePageIndex]);
 
-    ...]]>
+...
+]]>
             </programlisting>
         </example>
 
@@ -119,6 +121,3 @@
         </caution>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -45,16 +45,15 @@
             jest aktywny, możesz to zrobić za pomocą tej metody.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Akismet.php';
-
+        <programlisting role="php"><![CDATA[
 // Tworzymy instancję podając klucz API i adres URL używanej aplikacji
 $akismet = new Zend_Service_Akismet($apiKey, 'http://framework.zend.com/wiki/');
 if ($akismet->verifyKey($apiKey) {
 echo "Key is valid.\n";
 } else {
 echo "Key is not valid\n";
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -175,7 +174,7 @@ echo "Key is not valid\n";
         <example id="zend.service.akismet.isspam.example-1">
             <title>Użycie metody isSpam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
@@ -188,7 +187,8 @@ if ($akismet->isSpam($data)) {
     echo "Sorry, but we think you're a spammer.";
 } else {
     echo "Welcome to our site!";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -218,7 +218,7 @@ if ($akismet->isSpam($data)) {
         <example id="zend.service.akismet.submitspam.example-1">
             <title>Użycie metody submitSpam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
@@ -227,7 +227,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitSpam($data));]]>
+$akismet->submitSpam($data));
+]]>
             </programlisting>
         </example>
 
@@ -259,7 +260,7 @@ $akismet->submitSpam($data));]]>
         <example id="zend.service.akismet.submitham.example-1">
             <title>Użycie metody submitHam()</title>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
@@ -268,7 +269,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitHam($data));]]>
+$akismet->submitHam($data));
+]]>
             </programlisting>
         </example>
 
@@ -344,7 +346,3 @@ $akismet->submitHam($data));]]>
         </itemizedlist>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

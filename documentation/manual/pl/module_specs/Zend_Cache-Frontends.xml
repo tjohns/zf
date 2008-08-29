@@ -730,7 +730,8 @@ $cache->start();
             </programlisting>
             <para>
                 bardziej kompleksowy przykład, który pokazuje sposób centralnego
-                zarządzania buforowaniem w pliku ładującym (przykładowo do użycia z klasą Zend_Controller)
+                zarządzania buforowaniem w pliku ładującym (przykładowo do użycia 
+                z klasą Zend_Controller)
             </para>
             <programlisting role="php"><![CDATA[
 /**

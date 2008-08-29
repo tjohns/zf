@@ -81,7 +81,8 @@ database.params.password = devsecret
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host; // wyświetla "dev.example.com"
-echo $config->database->params->dbname; // wyświetla "dbname"]]>
+echo $config->database->params->dbname; // wyświetla "dbname"
+]]>
         </programlisting>
     </example>
     <note>

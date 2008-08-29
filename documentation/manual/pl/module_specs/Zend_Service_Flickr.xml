@@ -15,16 +15,15 @@
         </para>
         <example id="zend.service.flickr.introduction.example-1">
             <title>Proste wyszukiwanie zdjęć Flickr</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
+            <programlisting role="php"><![CDATA[
 $flickr = new Zend_Service_Flickr('MY_API_KEY');
 
 $results = $flickr->tagSearch("php");
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <note>
@@ -71,16 +70,15 @@ foreach ($results as $result) {
                 Flickr i szukamy publicznych zdjęć użytkownika używając metody
                 <code>userSearch()</code>:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
+            <programlisting role="php"><![CDATA[
 $flickr = new Zend_Service_Flickr('MY_API_KEY');
 
 $results = $flickr->userSearch($userEmail);
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -93,16 +91,15 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
             <title>Pobieranie zdjęć z Group Pool na podstawie ID grupy:</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Service/Flickr.php';
+            <programlisting role="php"><![CDATA[
+$flickr = new Zend_Service_Flickr('MY_API_KEY');
 
-    $flickr = new Zend_Service_Flickr('MY_API_KEY');
+$results = $flickr->groupPoolGetPhotos($groupId);
 
-    $results = $flickr->groupPoolGetPhotos($groupId);
-
-    foreach ($results as $result) {
-        echo $result->title . '<br />';
-    }]]>            
+foreach ($results as $result) {
+    echo $result->title . '<br />';
+}
+]]>            
             </programlisting>
         </example>
         <note>
@@ -126,15 +123,14 @@ foreach ($results as $result) {
                 Jeśli posiadasz ID zdjęcia Flickr, pobranie informacji o zdjęciu
                 jest bardzo proste:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Service/Flickr.php';
-
+            <programlisting role="php"><![CDATA[
 $flickr = new Zend_Service_Flickr('MY_API_KEY');
 
 $image = $flickr->getImageDetails($imageId);
 
 echo "Obrazek o ID $imageId ma rozmiar $image->width x $image->height pikseli.<br />\n";
-echo "<a href=\"$image->clickUri\">Click for Image</a>\n";]]>
+echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -375,6 +371,3 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";]]>
         </sect3>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

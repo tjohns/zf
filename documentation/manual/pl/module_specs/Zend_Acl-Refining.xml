@@ -40,7 +40,8 @@
 
         <programlisting role="php"><![CDATA[
 // Nowa grupa marketing dziedziczy uprawnienia od grupy staff
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
+]]>
         </programlisting>
 
         <para>

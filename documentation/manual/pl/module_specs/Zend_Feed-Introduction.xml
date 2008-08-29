@@ -36,9 +36,7 @@
 
     <example id="zend.feed.introduction.example.rss">
         <title>Użycie Zend_Feed do pobierania danych RSS</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Feed.php';
-
+        <programlisting role="php"><![CDATA[
 // Ściągamy najnowsze nagłówki ze Slashdot
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
@@ -63,10 +61,8 @@ foreach ($slashdotRss as $item) {
         'link'        => $item->link(),
         'description' => $item->description()
         );
-}]]>
+}
+]]>
         </programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

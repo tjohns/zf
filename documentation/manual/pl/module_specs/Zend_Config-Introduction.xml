@@ -22,7 +22,8 @@
             sposób przekazać tablicę do konstruktora <code>Zend_Config</code> w celu
             uzyskania obiektu zawierającego dane konfiguracyjne:
         </para>
-        <programlisting role="php"><![CDATA[// Tablica danych konfiguracyjnych
+        <programlisting role="php"><![CDATA[
+// Tablica danych konfiguracyjnych
 $configArray = array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -48,7 +49,8 @@ $db = Zend_Db::factory($config->database->adapter,
 
 // Alternartywne użycie: przekazanie obiektu Zend_Config.
 // Metoda kklasy Zend_Db wie jak zinterpretować dane.
-$db = Zend_Db::factory($config->database);]]>
+$db = Zend_Db::factory($config->database);
+]]>
         </programlisting>
     </example>
     <para>
@@ -62,7 +64,9 @@ $db = Zend_Db::factory($config->database);]]>
         umożliwiającą zwrócenie podanej domyślnej wartości jeśli element nie
         istnieje. Na przykład:
     </para>
-    <programlisting role="php"><![CDATA[$host = $config->database->get('host', 'localhost');]]>
+    <programlisting role="php"><![CDATA[
+$host = $config->database->get('host', 'localhost');
+]]>
     </programlisting>
     <example id="zend.config.introduction.example.file.php">
         <title>Użycie Zend_Config z plikiem konfiguracyjnym PHP</title>
@@ -82,11 +86,16 @@ return array(
             'dbname'   => 'mydatabase'
         )
     )
-);]]></programlisting>
-        <programlisting role="php"><![CDATA[// Załadowanie konfiguracji
+);
+]]>
+        </programlisting>
+        <programlisting role="php"><![CDATA[
+// Załadowanie konfiguracji
 $config = new Zend_Config(require 'config.php');
 
 // Wyświetlenie danych konfiguracyjnych (powoduje wyświetlenie 'www.example.com')
-echo $config->webhost;]]></programlisting>
+echo $config->webhost;
+]]>
+        </programlisting>
     </example>
 </sect1>

@@ -29,7 +29,8 @@
             spowoduje odebranie komunikatu (oraz wykasowanie go).
         </para>
 
-        <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * FlashMessenger
@@ -40,14 +41,16 @@
 
     public function init()
     {
-        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
+        $this->_flashMessenger = 
+            $this->_helper->getHelper('FlashMessenger');
         $this->initView();
     }
 
     public function myAction()
     {
         /**
-         * domyślna metoda pobierania instancji klasy Zend_Controller_Action_Helper_FlashMessenger
+         * domyślna metoda pobierania instancji klasy 
+         * Zend_Controller_Action_Helper_FlashMessenger
          */
         $this->_flashMessenger->addMessage('Rekord zapisany!');
     }
@@ -57,7 +60,8 @@
         $this->view->messages = $this->_flashMessenger->getMessages();
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 </sect3>

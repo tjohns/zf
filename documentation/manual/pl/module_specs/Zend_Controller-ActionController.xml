@@ -38,7 +38,8 @@ class FooController extends Zend_Controller_Action
     {
         // zrób coś
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -66,7 +67,8 @@ class FooController extends Zend_Controller_Action
                 w swoim kontrolerze akcji używając jednej z poniższych metod:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -80,7 +82,8 @@ class FooController extends Zend_Controller_Action
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -97,14 +100,16 @@ class FooController extends Zend_Controller_Action
                 klasie <code>ViewRenderer</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // wyłączamy automatyczne renderowanie tylko dla tej akcji:
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -152,7 +157,8 @@ class FooController extends Zend_Controller_Action
             'dbname'   => 'website'
         ));
     }
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -198,7 +204,8 @@ class FooController extends Zend_Controller_Action
 
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
-$this->getResponse()->appendBody($content);]]>
+$this->getResponse()->appendBody($content);
+]]>
                 </programlisting>
             </listitem>
 
@@ -240,7 +247,8 @@ $this->getResponse()->appendBody($content);]]>
                         odebraniem parametru nie jest konieczne:
                     </para>
 
-                    <programlisting role="php"><![CDATA[// Użyj domyślnej wartości 1 jeśli parametr id jest pusty
+                    <programlisting role="php"><![CDATA[
+// Użyj domyślnej wartości 1 jeśli parametr id jest pusty
 $id = $this->_getParam('id', 1);
 
 // Zamiast:
@@ -248,7 +256,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}]]>
+}
+]]>
                     </programlisting>
                 </note>
             </listitem>
@@ -298,7 +307,8 @@ applicationOrModule/
             index/
                 index.phtml
         helpers/
-        filters/]]>
+        filters/
+]]>
             </programlisting>
 
             <para>
@@ -319,7 +329,9 @@ applicationOrModule/
                 Metoda <code>render()</code> ma taką sygnaturę:
             </para>
 
-            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[
+string render(string $action = null, string $name = null, bool $noController = false);
+]]>
             </programlisting>
 
             <para>
@@ -357,7 +369,8 @@ applicationOrModule/
                 Kilka przykładów:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -383,7 +396,8 @@ applicationOrModule/
         // Renderuje my/baz-bat.phtml
         $this->render();
     }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -518,7 +532,8 @@ applicationOrModule/
                 możesz zrobić to w taki sposób:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -530,14 +545,16 @@ applicationOrModule/
         // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called', 500);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
                 Inną możliwością jest przeniesienie do domyślnego kontrolera:
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -554,7 +571,8 @@ applicationOrModule/
         // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called', 500);
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -567,7 +585,8 @@ applicationOrModule/
             <code>initView()</code> method with code resembling the following:
         </para>
 
-        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -582,7 +601,8 @@ applicationOrModule/
 
         return $this->view;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

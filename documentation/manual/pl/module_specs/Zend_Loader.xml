@@ -35,8 +35,9 @@
 
         <example id="zend.loader.load.file.example">
             <title>Przykład użycia metody loadFile()</title>
-            <programlisting role="php"><![CDATA[<?php
-Zend_Loader::loadFile($filename, $dirs=null, $once=false)]]>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::loadFile($filename, $dirs=null, $once=false);
+]]>
             </programlisting>
     </example>
 
@@ -80,13 +81,14 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)]]>
 
         <example id="zend.loader.load.class.example">
             <title>Przykład użycia metody loadClass()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
 
@@ -133,10 +135,11 @@ Zend_Loader::loadClass('Container_Tree',
 
         <example id="zend.loader.load.isreadable.example">
             <title>Przykład użycia metody isReadable()</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // zrób coś z $filename
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -177,8 +180,9 @@ if (Zend_Loader::isReadable($filename)) {
                 wywołuje metodę o tej nazwie pochodzącą z klasy rodzica, a nie 
                 z klasy rozszerzonej.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-Zend_Loader::registerAutoload();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::registerAutoload();
+]]>
             </programlisting>
         </example>
 
@@ -199,7 +203,7 @@ Zend_Loader::registerAutoload();]]>
         <example id="zend.loader.load.autoload.example">
             <title>Przykład rejestrowania metody autoloadera z rozszerzonej
                 klasy</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)
@@ -218,7 +222,8 @@ class My_Loader extends Zend_Loader
     }
 }
 
-Zend_Loader::registerAutoload('My_Loader');]]>
+Zend_Loader::registerAutoload('My_Loader');
+]]>
             </programlisting>
         </example>
         

@@ -24,9 +24,10 @@
         asocjacyjne. Jednak jeśli chcesz odebrać obiekt, możesz to określić
         w ten sposób:
     </para>
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // Odkoduj obiekty JSON jako obiekty PHP
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
+]]>
     </programlisting>
     <para>
         Wszystkie dekodowane obiekty są zwracane jako obiekty klasy
