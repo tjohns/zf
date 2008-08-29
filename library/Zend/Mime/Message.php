@@ -269,6 +269,12 @@ class Zend_Mime_Message
                     case 'content-description':
                         $newPart->description = $value;
                         break;
+                    case 'Content-Location':
+                        $newPart->location = $value;
+                        break;
+                    case 'Content-Language':
+                        $newPart->language = $value;
+                        break;
                     default:
                         throw new Zend_Exception('Unknown header ignored for MimePart:' . $key);
                 }
