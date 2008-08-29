@@ -111,7 +111,8 @@
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -147,7 +148,7 @@ $inflector->setFilterRule(':action', array(
                 <programlisting role="php"><![CDATA[
 $front->setParam('useCaseSensitiveActions', true);
 ]]>
-                </programlisting>
+</programlisting>
 
                 <para>
                     This will allow you to use camelCasing on the url and still
@@ -328,9 +329,9 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);
-]]>
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -464,7 +465,10 @@ Zend_Controller_Front::run('/path/to/controllers');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);
+final protected function _forward($action,
+                                  $controller = null,
+                                  $module = null,
+                                  array $params = null);
 ]]>
                 </programlisting>
 
@@ -498,8 +502,10 @@ Zend_Controller_Front::run('/path/to/controllers');
         <programlisting role="php"><![CDATA[
 /* -- create a router -- */
 $router = new Zend_Controller_RewriteRouter();
-$router->addRoute('user', 'user/:username', array('controller' => 'user',
-'action' => 'info'));
+$router->addRoute('user',
+                  'user/:username',
+                  array('controller' => 'user', 'action' => 'info')
+);                  
 
 /* -- set it in a controller -- */
 $ctrl = Zend_Controller_Front::getInstance();
@@ -649,9 +655,9 @@ echo $response;
                         <programlisting role="php"><![CDATA[
 // Retrieve the requested controller name
 // Access used to be via: $this->_action->getControllerName().
-// The example below uses getRequest(), though you may also directly access the
-// $_request property; using getRequest() is recommended as a parent class may
-// override access to the request object.
+// The example below uses getRequest(), though you may also directly
+// access the $_request property; using getRequest() is recommended as
+// a parent class may override access to the request object.
 $controller = $this->getRequest()->getControllerName();
 
 // Retrieve the requested action name
@@ -659,11 +665,11 @@ $controller = $this->getRequest()->getControllerName();
 $action = $this->getRequest()->getActionName();
 
 // Retrieve the request parameters
-// This hasn't changed; the _getParams() and _getParam() methods simply proxy to
-// the request object now.
+// This hasn't changed; the _getParams() and _getParam() methods simply
+// proxy to the request object now.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
-                                           // 'default' as default value if not found
+// request 'foo' parameter, using 'default' as default value if not found
+$foo = $this->_getParam('foo', 'default');
 ]]>
                         </programlisting>
                     </listitem>
@@ -679,8 +685,8 @@ $foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
                         <programlisting role="php"><![CDATA[
 public function __call($method, $args)
 {
-    // If an unmatched 'Action' method was requested, pass on to the default
-    // action method:
+    // If an unmatched 'Action' method was requested, pass on to the
+    // default action method:
     if ('Action' == substr($method, -6)) {
         return $this->defaultAction();
     }

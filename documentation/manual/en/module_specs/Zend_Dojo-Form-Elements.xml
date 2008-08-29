@@ -406,7 +406,8 @@ $form->addElement(
         'label'          => 'Currency:',
         'required'       => true,
         'currency'       => 'USD',
-        'invalidMessage' => 'Invalid amount. Include dollar sign, commas, and cents.',
+        'invalidMessage' => 'Invalid amount. ' . 
+                            'Include dollar sign, commas, and cents.',
         'fractional'     => false,
     )
 );
@@ -818,7 +819,8 @@ $form->addElement(
         'trim'           => true,
         'lowercase'      => true,
         'regExp'         => '^[a-z0-9]{6,}$',
-        'invalidMessage' => 'Invalid password; must be at least 6 alphanumeric characters',
+        'invalidMessage' => 'Invalid password; ' .
+                            'must be at least 6 alphanumeric characters',
     )
 );
 ]]>

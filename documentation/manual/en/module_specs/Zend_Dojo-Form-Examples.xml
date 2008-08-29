@@ -92,7 +92,9 @@ class My_Form_Test extends Zend_Dojo_Form
                     'label' => 'CurrencyTextBox',
                     'required'  => true,
                     // 'currency' => 'USD',
-                    'invalidMessage' => 'Invalid amount. Include dollar sign, commas, and cents.',
+                    'invalidMessage' => 'Invalid amount. ' . 
+                                        'Include dollar sign, commas, ' .
+                                        'and cents.',
                     // 'fractional' => true,
                     // 'symbol' => 'USD',
                     // 'type' => 'currency',
@@ -265,10 +267,12 @@ class My_Form_Test extends Zend_Dojo_Form
                     ),
                     'topDecorationParams' => array(
                         'container' => array(
-                            'style' => 'height:1.2em; font-size=75%;color:gray;',
+                            'style' => 'height:1.2em; ' .
+                                       'font-size=75%;color:gray;',
                         ),
                         'list' => array(
-                            'style' => 'height:1em; font-size=75%;color:gray;',
+                            'style' => 'height:1em; ' .
+                                       'font-size=75%;color:gray;',
                         ),
                     ),
                     'bottomDecorationDijit' => 'HorizontalRule',
@@ -280,7 +284,8 @@ class My_Form_Test extends Zend_Dojo_Form
                     ),
                     'bottomDecorationParams' => array(
                         'list' => array(
-                            'style' => 'height:1em; font-size=75%;color:gray;',
+                            'style' => 'height:1em; ' .
+                                       'font-size=75%;color:gray;',
                         ),
                     ),
                 )

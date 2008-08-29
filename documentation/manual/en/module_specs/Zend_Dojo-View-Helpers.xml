@@ -368,7 +368,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
             </para>
 
             <programlisting role="php"><![CDATA[
-$view->borderContainer()->captureStart('masterLayout', array('design' => 'headline'));
+$view->borderContainer()->captureStart('masterLayout',
+                                       array('design' => 'headline'));
 
 echo $view->contentPane(
     'menuPane',
@@ -623,7 +624,8 @@ echo $view->currencyTextBox(
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+$view->headMeta()->appendHttpEquiv('Content-Type',
+                                   'text/html; charset=utf-8');
 ]]>
                     </programlisting>
 
@@ -1072,7 +1074,8 @@ echo $view->validationTextBox(
         'required' => true,
         'regExp'   => '[\w]+',
         'invalidMessage' => 'No spaces or non-word characters allowed',
-        'promptMessage'  => 'Single word consisting of alphanumeric characters and underscores only',
+        'promptMessage'  => 'Single word consisting of alphanumeric ' .
+                            'characters and underscores only',
     ),
     array(
         'maxlength' => 20,

@@ -10,7 +10,8 @@
             directory structure:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting>
+<![CDATA[
 docroot/
     index.php
 application/
@@ -99,8 +100,8 @@ application/
 
         <programlisting role="php"><![CDATA[
 $front->setControllerDirectory(array(
-      'default' => '/path/to/application/controllers',
-      'blog'    => '/path/to/application/blog/controllers'
+    'default' => '/path/to/application/controllers',
+    'blog'    => '/path/to/application/blog/controllers'
 ));
 ]]>
         </programlisting>
@@ -113,7 +114,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+$front->addControllerDirectory('/path/to/application/news/controllers',
+                               'news');
 ]]>
         </programlisting>
 

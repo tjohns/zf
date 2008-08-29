@@ -143,7 +143,8 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs');
 // If schemas are specified in both 'name' and 'schema', the one
 // specified in 'name' takes precedence:
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs',
+                            'schema' => 'ignored');
 ]]>
                 </programlisting>
 
@@ -217,7 +218,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Example of overriding the _setupTableName() method</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
@@ -289,7 +291,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
                     <title>Example usage of init() method</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_observer;
@@ -336,7 +339,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Example of constructing a Table using an Adapter object</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
 $table = new Bugs(array('db' => $db));
@@ -363,7 +367,8 @@ $table = new Bugs(array('db' => $db));
 
                 <title>Example of constructing a Table using a the Default Adapter</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
@@ -400,7 +405,8 @@ $table = new Bugs();
 
                 <title>Example of constructing a Table using a Registry key</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
@@ -848,17 +854,18 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
 
                     <para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting role="php">
+<![CDATA[
 // Fetching a rowset
-    $rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
-    $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
-                                             ->order('bug_id ASC')
-                                             ->limit(10, 0));
+$rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
+$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
+                                         ->order('bug_id ASC')
+                                         ->limit(10, 0));
 
-    // Fetching a single row
-    $row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
-    $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
-                                            ->order('bug_id ASC'));
+// Fetching a single row
+$row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
+$row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
+                                        ->order('bug_id ASC'));
 ]]>
                         </programlisting>
 
@@ -918,7 +925,8 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
 
                     <title>Simple usage</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -943,10 +951,12 @@ $rows = $table->fetchAll($select);
 
                     <title>Example of fluent interface</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
-$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
+$rows =
+    $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
 ]]>
                     </programlisting>
 
@@ -970,7 +980,8 @@ $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
 
                 <title>Example of finding rows by an expression</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $select = $table->select()->where('bug_status = ?', 'NEW');
@@ -992,7 +1003,8 @@ $rows = $table->fetchAll($select);
 
                 <title>Example of finding rows by an expression</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $order  = 'bug_id';
@@ -1081,7 +1093,8 @@ $rows = $table->fetchAll($select);
 $table = new Bugs();
 
 $select = $table->select();
-$select->from($table, array('COUNT(reported_by) as `count`', 'reported_by'))
+$select->from($table,
+              array('COUNT(reported_by) as `count`', 'reported_by'))
        ->where('bug_status = ?', 'NEW')
        ->group('reported_by');
 
@@ -1138,12 +1151,14 @@ $table = new Bugs();
 
 $select = $table->select()->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
-       ->join('accounts', 'accounts.account_name = bugs.reported_by', 'account_name')
+       ->join('accounts',
+              'accounts.account_name = bugs.reported_by',
+              'account_name')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);
 ]]>
-</programlisting>
+                </programlisting>
 
             </example>
 
@@ -1198,7 +1213,8 @@ $row = $table->fetchRow($select);
 
             <title>Example of getting the table name</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $info = $table->info();
@@ -1342,8 +1358,8 @@ echo "The table name is " . $info['name'] . "\n";
                 all table objects:
             </para>
 
-            <programlisting role="php"><![CDATA[
-<// First, set up the Cache
+            <programlisting role="php"><![CDATA[<
+// First, set up the Cache
 $frontendOptions = array(
     'automatic_serialization' => true
     );
@@ -1352,7 +1368,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 
 // Next, set the cache to be used with all table objects
@@ -1392,7 +1411,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // A table class is also needed
 class Bugs extends Zend_Db_Table_Abstract

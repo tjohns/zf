@@ -243,8 +243,9 @@ foreach ($info as $sun) {
         <example id="zend.date.additional.timezones.example-1">
             <title>Working with timezones</title>
             <programlisting role="php"><![CDATA[
-// Set a default timezone... this has to be done within the bootstrap file or php.ini
-// We do this here just for having a complete example
+// Set a default timezone... this has to be done within the bootstrap
+// file or php.ini.
+// We do this here just for having a complete example.
 date_default_timezone_set('Europe/Vienna');
 
 // create a date object
@@ -285,8 +286,9 @@ print $date->getIso();
         <example id="zend.date.additional.timezones.example-2">
             <title>Multiple timezones</title>
             <programlisting role="php"><![CDATA[
-// Set a default timezone... this has to be done within the bootstrap file or php.ini
-// We do this here just for having a complete example
+// Set a default timezone... this has to be done within the bootstrap
+// file or php.ini.
+// We do this here just for having a complete example.
 date_default_timezone_set('Europe/Vienna');
 
 // create a date object

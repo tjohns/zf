@@ -306,7 +306,8 @@ $this->_helper->viewRenderer('form', 'html', true);
         <programlisting role="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
+$viewRenderer =
+    new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]>
         </programlisting>
 
@@ -871,7 +872,8 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // Assume $this->model is the current model
-        $this->view->results = $this->model->find($this->_getParam('query', '');
+        $this->view->results = 
+            $this->model->find($this->_getParam('query', '');
 
         // render() by default proxies to the ViewRenderer
         // Render first the search form and then the results

@@ -38,7 +38,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 
+RewriteRule ^(.*)$ index.php/$1
 ]]>
         </programlisting>
 

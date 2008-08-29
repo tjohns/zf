@@ -178,13 +178,18 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
             </para>
 
             <programlisting role="php"><![CDATA[
-<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
-$date = new Zend_Date($datearray);
-]]>
+$datearray = array('year' => 2006,
+                   'month' => 4,
+                   'day' => 18,
+                   'hour' => 12,
+                   'minute' => 3,
+                   'second' => 10);
+$date = new Zend_Date($datearray)
+;]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-<$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
+$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
 $date = new Zend_Date($datearray);
 ]]>
             </programlisting>

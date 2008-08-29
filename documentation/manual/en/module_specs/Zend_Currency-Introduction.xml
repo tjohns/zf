@@ -40,10 +40,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Fluid interface</emphasis>
+                    <emphasis role="strong">Fluent interface</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> includes the fluid interface where possible.
+                    <code>Zend_Currency</code> includes fluent interfaces where possible.
                 </para>
             </listitem>
             <listitem>

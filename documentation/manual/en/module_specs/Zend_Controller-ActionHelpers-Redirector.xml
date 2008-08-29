@@ -270,7 +270,9 @@ class ForwardController extends Zend_Controller_Action
             <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
-    array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+    array('controller' => 'archive',
+          'module' => 'blog',
+          'action' => 'view')
 );
 $router->addRoute('blogArchive', $route);
 ]]>
@@ -304,7 +306,10 @@ class BlogAdminController extends Zend_Controller_Action
         // Redirect to blog archive. Builds the following URL:
         // /blog/2006/4/24/42
         $this->_redirector->gotoRoute(
-            array('year' => 2006, 'month' => 4, 'day' => 24, 'id' => 42),
+            array('year' => 2006,
+                  'month' => 4,
+                  'day' => 24,
+                  'id' => 42),
             'blogArchive'
         );
     }

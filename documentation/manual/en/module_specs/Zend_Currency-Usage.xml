@@ -100,13 +100,16 @@ $currency = new Zend_Currency();
         <programlisting role="php"><![CDATA[
 // expect standard locale 'de_AT'
 
-// creates an instance from 'en_US' using 'USD' which is default currency for 'en_US'
+// creates an instance from 'en_US' using 'USD' which is default
+// currency for 'en_US'
 $currency = new Zend_Currency('en_US');
 
-// creates an instance from the actual locale ('de_AT') using 'EUR' as currency
+// creates an instance from the actual locale ('de_AT') using 'EUR' as
+// currency
 $currency = new Zend_Currency();
 
-// creates an instance using 'EUR' as currency, 'en_US' for number formating
+// creates an instance using 'EUR' as currency, 'en_US' for number
+// formating
 $currency = new Zend_Currency('en_US', 'EUR');
 ]]>
         </programlisting>
@@ -156,7 +159,8 @@ $currency = new Zend_Currency('en_US', 'EUR');
             <title>Creating output for an currency</title>
 
             <programlisting role="php"><![CDATA[
-// creates an instance with 'en_US' using 'USD' which is the default values for 'en_US'
+// creates an instance with 'en_US' using 'USD' which is the default
+// values for 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$ 1,000.00'
@@ -299,7 +303,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
             <title>Constants for the selecting the currency description</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>constant</entry>
@@ -332,7 +336,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
             <title>Constants for the selecting the currency position</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>constant</entry>
@@ -362,13 +366,16 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
             <title>Changing the displayed format of a currency</title>
 
             <programlisting role="php"><![CDATA[
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as
+// these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints 'US$ 1,000.00'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME,
+                     'position' => Zend_Currency::RIGHT);
+
 // prints '1.000,00 US Dollar'
 echo $currency->toCurrency(1000);
 
@@ -455,7 +462,8 @@ echo $currency->toCurrency(1000);
             <title>Getting informations from currencies</title>
 
             <programlisting role="php"><![CDATA[
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US'
+// as these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$'
@@ -470,7 +478,8 @@ echo $currency->getName('ATS', 'de_AT');
 // returns an array with all regions where USD is used
 print_r($currency->getRegionList();
 
-// returns an array with all currencies which were ever used in this region
+// returns an array with all currencies which were ever used in this
+// region
 print_r($currency->getCurrencyList('de_AT');
 ]]>
             </programlisting>
@@ -526,9 +535,12 @@ print $currency->toCurrency(1000);
 
             <programlisting role="php"><![CDATA[
 // creating a cache object
-$cache = Zend_Cache::factory('Core', 'File',
-             array('lifetime' => 120, 'automatic_serialization' => true),
-             array('cache_dir' => dirname(__FILE__) . '/_files/'));
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             array('lifetime' => 120,
+                                   'automatic_serialization' => true),
+                             array('cache_dir'
+                                       => dirname(__FILE__) . '/_files/'));
 Zend_Currency::setCache($cache);
 ]]>
             </programlisting>

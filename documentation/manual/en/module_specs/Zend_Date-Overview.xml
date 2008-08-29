@@ -158,7 +158,8 @@ echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
-$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // strictly restricts interpretation to specified format
+// strictly restricts interpretation to specified format
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy');
 echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 ]]>
             </programlisting>
