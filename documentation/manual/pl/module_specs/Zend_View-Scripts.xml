@@ -22,7 +22,8 @@
         do Zend_View.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    <programlisting role="php"><![CDATA[
+if ($this->books): ?>
 
     <!-- Tabela z książkami. -->
     <table>
@@ -44,7 +45,8 @@
 
     <p>Nie ma żadnych książek do wyświetlenia.</p>
 
-<?php endif;]]>
+<?php endif;
+]]>
     </programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
@@ -65,12 +67,13 @@
             wyjściowe.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // zły zwyczaj wyświetlania zmiennej:
 echo $this->variable;
 
 // dobry zwyczaj wyświetlania zmiennej:
-echo $this->escape($this->variable);]]>
+echo $this->escape($this->variable);
+]]>
         </programlisting>
 
         <para>
@@ -81,7 +84,7 @@ echo $this->escape($this->variable);]]>
             Zend_View informację o tym, jakiej metody filtrowania ma używać.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // utwórz instancje Zend_View
 $view = new Zend_View();
 
@@ -96,7 +99,8 @@ $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
 // a teraz wygeneruj skrypt widoku
-echo $view->render(...);]]>
+echo $view->render(...);
+]]>
         </programlisting>
 
         <para>
@@ -130,7 +134,7 @@ echo $view->render(...);]]>
                 mniej więcej tak:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -150,7 +154,8 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -158,7 +163,6 @@ if ($this->books) {
             </para>
 
             <programlisting role="html"><![CDATA[
-
 <!-- booklist.tpl -->
 <table>
     <tr>
@@ -175,7 +179,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>Nie ma żadnych książek do wyświetlenia.</p>]]>
+<p>Nie ma żadnych książek do wyświetlenia.</p>
+]]>
             </programlisting>
 
         </sect3>
@@ -237,7 +242,8 @@ public function clearVars();
 /**
  * Renderowanie szablonu o nazwie $name
  */
-public function render($name);]]>
+public function render($name);
+]]>
             </programlisting>
 
             <para>
@@ -247,9 +253,6 @@ public function render($name);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-require_once 'Zend/View/Interface.php';
-require_once 'Smarty.class.php';
-
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**
@@ -429,7 +432,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -444,13 +448,11 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/path/to/templates');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');]]>
+$rendered = $view->render('bookinfo.tpl');
+]]>
             </programlisting>
 
         </sect3>
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

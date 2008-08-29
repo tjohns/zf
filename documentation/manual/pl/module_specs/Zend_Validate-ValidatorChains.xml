@@ -10,14 +10,7 @@
         nazwa użytkownika musi mieć długość między 6 a 12 alfanumerycznych
         znaków:
 
-        <programlisting role="php"><![CDATA[<?php
-// Zapewnia możliwość łańcuchowego wywoływania weryfikatorów
-require_once 'Zend/Validate.php';
-
-// Weryfikatory użyte w przykładzie
-require_once 'Zend/Validate/StringLength.php';
-require_once 'Zend/Validate/Alnum.php';
-
+        <programlisting role="php"><![CDATA[
 // Tworzymy łańcuch weryfikatorów i dodajemy do niego weryfikatory
 $validatorChain = new Zend_Validate();
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12))
@@ -31,7 +24,8 @@ if ($validatorChain->isValid($username)) {
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         Weryfikatory są uruchamiane w takiej kolejności, w jakiej zostały dodane
@@ -58,9 +52,10 @@ if ($validatorChain->isValid($username)) {
         alfanumerycznych nie byłaby przeprowadzona jeśli długość łańcucha znaków
         byłaby nieodpowiednia:
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
-        ->addValidator(new Zend_Validate_Alnum());]]>
+        ->addValidator(new Zend_Validate_Alnum());
+]]>
         </programlisting>
 
     </para>
@@ -71,6 +66,3 @@ $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

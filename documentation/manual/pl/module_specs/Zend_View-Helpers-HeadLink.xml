@@ -81,9 +81,7 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
 ?>
 <?php // generowaie łącz: ?>
 <?= $this->headLink() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

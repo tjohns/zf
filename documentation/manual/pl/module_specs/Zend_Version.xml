@@ -20,13 +20,11 @@
 
     <example id="zend.version.reading.example">
         <title>Przykład użycia metody compareVersion()</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // zwraca -1, 0 lub 1
-$cmp = Zend_Version::compareVersion('1.0.0');]]>
+$cmp = Zend_Version::compareVersion('1.0.0');
+]]>
         </programlisting>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -37,9 +37,7 @@
         <?= $this->action('list', 'comment', null, array('count' => 10)); ?> 
     </div>
 </div>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

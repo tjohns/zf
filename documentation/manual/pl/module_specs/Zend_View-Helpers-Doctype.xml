@@ -50,7 +50,8 @@
         <programlisting role="php"><![CDATA[
 $doctypeHelper = new Zend_View_Helper_Doctype();
 $doctypeHelper->doctype('XHTML1_STRICT');
-]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             I teraz wyświetl definicję typu dokumentu w swoim skrypcie layoutu:
@@ -58,7 +59,8 @@ $doctypeHelper->doctype('XHTML1_STRICT');
         
         <programlisting role="php"><![CDATA[
 <?php echo $this->doctype() ?>
-]]></programlisting>
+]]>
+        </programlisting>
         
     </example>
 
@@ -71,22 +73,21 @@ $doctypeHelper->doctype('XHTML1_STRICT');
             zwracany po wywołaniu helpera.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Najczęściej będzie potrzebował sprawdzić czy dany typ dokumentu jest 
             typem XHTML czy nie; do tego wystarczy metoda <code>isXhtml()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 if ($view->doctype()->isXhtml()) {
     // zrób coś w inny sposób
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

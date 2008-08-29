@@ -17,11 +17,12 @@
             to zrobić przypisując zmienne do zmiennych instancji widoku:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
-$view->c = "Sea";]]>
+$view->c = "Sea";
+]]>
         </programlisting>
 
         <para>
@@ -36,7 +37,7 @@ $view->c = "Sea";]]>
             pojedynczo:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 
 // przypisuje tablicę zmiennych w postaci par
@@ -56,7 +57,8 @@ $obj = new StdClass;
 $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
-$view->assign((array) $obj);]]>
+$view->assign((array) $obj);
+]]>
         </programlisting>
 
         <para>
@@ -65,11 +67,12 @@ $view->assign((array) $obj);]]>
             zmiennej:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
-$view->assign('c', "Sea");]]>
+$view->assign('c', "Sea");
+]]>
         </programlisting>
 
     </sect2>
@@ -86,12 +89,13 @@ $view->assign('c', "Sea");]]>
             za pomocą funkcji echo() lub print().
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-echo $view->render('someView.php');]]>
+echo $view->render('someView.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -114,9 +118,10 @@ echo $view->render('someView.php');]]>
             metody setScriptPath().
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
-$view->setScriptPath('/path/to/app/views');]]>
+$view->setScriptPath('/path/to/app/views');
+]]>
         </programlisting>
 
         <para>
@@ -132,7 +137,7 @@ $view->setScriptPath('/path/to/app/views');]]>
             "motywy" czy "skórki" dla niektórych widoków, zostawiając inne bez zmian.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->addScriptPath('/path/to/app/views');
 $view->addScriptPath('/path/to/custom/');
@@ -140,12 +145,10 @@ $view->addScriptPath('/path/to/custom/');
 // teraz gdy wywołasz $view->render('booklist.php'), Zend_View będzie
 // wpierw szukać pliku "/path/to/custom/booklist.php", potem
 // "/path/to/app/views/booklist.php", a ostatecznie pliku "booklist.php"
-// w bieżącym katalogu]]>
+// w bieżącym katalogu
+]]>
         </programlisting>
 
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -30,12 +30,13 @@
         wygląda tak:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 protected function _run()
 {
     include func_get_arg(0);
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Skrypty widoków mają dostęp do obecnego obiektu (<code>$this</code>), 
@@ -61,6 +62,3 @@ protected function _run()
         obszarów przed nadużyciami w skryptach widoków.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

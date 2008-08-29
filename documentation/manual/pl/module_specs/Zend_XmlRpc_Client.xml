@@ -35,14 +35,13 @@
 
         <example id="zend.xmlrpc.client.method-calls.example-1">
             <title>Wywołanie metody XML-RPC</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+            <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 echo $client->call('test.sayHello');
 
-// hello]]>
+// hello
+]]>
             </programlisting>
         </example>
 
@@ -63,9 +62,7 @@ echo $client->call('test.sayHello');
 
         <example id="zend.xmlrpc.client.method-calls.example-2">
             <title>Wywołanie metody XML-RPC z parametrem</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+            <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $arg1 = 1.1;
@@ -73,7 +70,8 @@ $arg2 = 'foo';
 
 $result = $client->call('test.sayHello', array($arg1, $arg2));
 
-// zmienna $result jest natywnego typu PHP]]>
+// zmienna $result jest natywnego typu PHP
+]]>
             </programlisting>
         </example>
 
@@ -190,7 +188,8 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <programlisting role="php"><![CDATA[
 $client->setSkipSystemLookup(true);
 $result = $client->call('foo.bar', array(array()));
-]]></programlisting>
+]]>
+                </programlisting>
             </note>
         </sect3>
 
@@ -331,14 +330,13 @@ $result = $client->call('foo.bar', array(array()));
 
         <example id="zend.xmlrpc.client.requests-and-responses.example-1">
             <title>Rozszerzanie domyślnej przestrzeni nazw</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+            <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $server = $client->getProxy();           // Rozszerza domyślną przestrzeń nazw
 
-$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) zwraca "hello"]]>
+$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) zwraca "hello"
+]]>
             </programlisting>
         </example>
 
@@ -353,14 +351,13 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) zwraca "hello"]]>
 
         <example id="zend.xmlrpc.client.requests-and-responses.example-2">
             <title>Rozszerzanie dowolnej przestrzeni nazw</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+            <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $test  = $client->getProxy('test');     // Rozszerza przestrzeń nazwa "test"
 
-$hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"]]>
+$hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"
+]]>
             </programlisting>
         </example>
 
@@ -395,9 +392,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"]]>
             <example id="zend.xmlrpc.client.error-handling.http.example-1">
                 <title>Obsługa błędów HTTP</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://foo/404');
 
 try {
@@ -409,7 +404,8 @@ try {
     // $e->getCode() zwraca 404
     // $e->getMessage() zwraca "Not found"
 
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -442,9 +438,7 @@ try {
             <example id="zend.xmlrpc.client.error-handling.faults.example-1">
                 <title>Obsługa błędów XML-RPC</title>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+                <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 try {
@@ -456,7 +450,8 @@ try {
     // $e->getCode() zwraca 1
     // $e->getMessage() zwraca "Unknown method"
 
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -514,9 +509,7 @@ try {
         <example id="zend.xmlrpc.client.request-to-response.example-1">
             <title>Przetwarzanie żądania do odpowiedzi</title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/XmlRpc/Client.php';
-
+            <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $request = new Zend_XmlRpc_Request();
@@ -526,7 +519,8 @@ $request->setParams(array('foo', 'bar'));
 $client->doRequest($request);
 
 // $server->getLastRequest() zwraca instancję Zend_XmlRpc_Request
-// $server->getLastResponse() zwraca instancję Zend_XmlRpc_Response]]>
+// $server->getLastResponse() zwraca instancję Zend_XmlRpc_Response
+]]>
             </programlisting>
         </example>
 

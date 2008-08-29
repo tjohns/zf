@@ -29,7 +29,7 @@
             kontrolera, akcji i prawdopodobnie zasobu.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php 
+        <programlisting role="php"><![CDATA[
 // ustawienie nazwy kontrolera oraz akcji jako segmentów tytułu:
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
@@ -40,8 +40,8 @@ $this->headTitle('Zend Framework');
 
 // ustawienie odgranicznika dla segmentów
 $this->headTitle()->setSeparator(' / ');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Kiedy jesteś juz gotowy aby wyświetlić tytuł, możesz to zrobić
@@ -54,6 +54,3 @@ $this->headTitle()->setSeparator(' / ');
 ]]></programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

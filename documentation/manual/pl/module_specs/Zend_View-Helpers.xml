@@ -137,7 +137,7 @@
                     Powyższe najlepiej podsumować za pomocą przykładów:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone
 echo $this->formCheckbox('foo');
 
@@ -166,7 +166,8 @@ echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'ba
 // 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
 echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     We wszystkich przypadkach zostanie dołączony ukryty element
@@ -314,7 +315,7 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
             odbędzie się automatycznie.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // wewnątrz skryptu widoku, $this odnosi się do instancji Zend_View.
 //
 // załóżmy, że już przypisałeś serię elementów opcji jako tablicę
@@ -331,14 +332,16 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
     <p><label>Czy zgadzasz się?
         <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <para>
             Rezultat wyglądałby w ten sposób:
         </para>
 
-        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+        <programlisting role="php"><![CDATA[
+<form action="action.php" method="post">
     <p><label>Adres Email:
         <input type="text" name="email" value="you@example.com" size="32" />
     </label></p>
@@ -353,7 +356,8 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         <input type="hidden" name="opt_in" value="no" />
         <input type="checkbox" name="opt_in" value="yes" checked="checked" />
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml">
@@ -414,10 +418,11 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
             przyjęty zostanie przedrostek 'Zend_View_Helper_'.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 // Ustaw ścieżkę na /path/to/more/helpers, z przedrostkiem 'My_View_Helper'
-$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
+]]>
         </programlisting>
 
         <para>
@@ -429,7 +434,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
             klasami.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 // Dodaj ścieżkę /path/to/some/helpers z przedrostkiem klasy 'My_View_Helper'
 $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
@@ -439,7 +444,8 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
 // "/path/to/some/helpers/HelperName" używająca nazwy klasy "Your_View_Helper_HelperName",
 // następnie w "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName"
-// i ostatecznie w "Zend/View/Helper/HelperName.php" używając nazwy klasy "Zend_View_Helper_HelperName".]]>
+// i ostatecznie w "Zend/View/Helper/HelperName.php" używając nazwy klasy "Zend_View_Helper_HelperName".
+]]>
         </programlisting>
 
     </sect2>
@@ -511,7 +517,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             <code>twojHelper</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_View_Helper_TwojHelper extends Zend_View_Helper_Abstract
 {
     protected $_count = 0;
@@ -522,7 +528,8 @@ class My_View_Helper_TwojHelper extends Zend_View_Helper_Abstract
         return htmlspecialchars($output);
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Teraz w skrypcie widoku możesz wywołać helpera
@@ -531,19 +538,22 @@ class My_View_Helper_TwojHelper extends Zend_View_Helper_Abstract
             instancji <code>Zend_View</code>.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // pamiętaj, że w skrypcie widoku $this odnosi się do instancji Zend_View.
 echo $this->twojHelper();
 echo $this->twojHelper();
-echo $this->twojHelper();]]>
+echo $this->twojHelper();
+]]>
         </programlisting>
 
         <para>
             Dane wyjściowe wyglądałyby w ten sposób:
         </para>
-        <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
+        <programlisting role="php"><![CDATA[
+I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).
-I have seen 'The Jerk' 3 time(s).]]>
+I have seen 'The Jerk' 3 time(s).
+]]>
         </programlisting>
 
         <para>
@@ -555,7 +565,7 @@ I have seen 'The Jerk' 3 time(s).]]>
             <code>setView($view)</code>, tak jak poniżej:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class My_View_Helper_ScriptPath
 {
     public $view;
@@ -569,7 +579,8 @@ class My_View_Helper_ScriptPath
     {
         return $this->view->getScriptPath($script);
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

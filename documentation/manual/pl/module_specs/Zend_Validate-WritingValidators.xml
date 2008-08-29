@@ -55,9 +55,7 @@
             The following example demonstrates how a very simple custom validator might be written. In this case the
             validation rules are simply that the input value must be a floating point value.
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_Float extends Zend_Validate_Abstract
 {
     const FLOAT = 'float';
@@ -77,7 +75,8 @@ class MyValid_Float extends Zend_Validate_Abstract
 
         return true;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             The class defines a template for its single validation failure message, which includes the built-in magic
@@ -115,9 +114,7 @@ class MyValid_Float extends Zend_Validate_Abstract
         <para>
             These validation failure reasons are then translated to definitions in the class:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_NumericBetween extends Zend_Validate_Abstract
 {
     const MSG_NUMERIC = 'msgNumeric';
@@ -159,7 +156,8 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
         return true;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
@@ -207,9 +205,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
         <para>
             The following class implements these validation criteria:
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/Abstract.php';
-
+            <programlisting role="php"><![CDATA[
 class MyValid_PasswordStrength extends Zend_Validate_Abstract
 {
     const LENGTH = 'length';
@@ -252,7 +248,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
         return $isValid;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Note that the four criteria tests in <code>isValid()</code> do not immediately return <code>false</code>.
@@ -265,6 +262,3 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

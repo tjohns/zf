@@ -88,10 +88,10 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // ustawienie słów kluczowych
+// ustawienie słów kluczowych
 $this->headMeta()->appendName('keywords', 'framework php productivity');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jeśli chcesz ustalić zasady buforowania po stronie klienta, 
@@ -99,12 +99,12 @@ $this->headMeta()->appendName('keywords', 'framework php productivity');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // zablokowanie buforowania po stronie klienta
+// zablokowanie buforowania po stronie klienta
 $this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
                  ->appendHttpEquiv('pragma', 'no-cache')
                  ->appendHttpEquiv('Cache-Control', 'no-cache');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Innym popularnym przykładem użycia znaczników meta jest ustawienie
@@ -112,11 +112,11 @@ $this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // ustawienie typu zawartości i zestawu znaków
+// ustawienie typu zawartości i zestawu znaków
 $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
                  ->appendHttpEquiv('Content-Language', 'en-US');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Ostatnim przykład pokazuje jak można w łatwy sposób wyświetlić
@@ -125,10 +125,10 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // ustawienie czasu odświeżenia strony na 3 sekundy z nowym adresem URL:
+// ustawienie czasu odświeżenia strony na 3 sekundy z nowym adresem URL:
 $this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.html');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Jeśli jesteś gotowy na wyświetlenie znaczników meta w layoucie, po
@@ -137,9 +137,7 @@ $this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.ht
 
         <programlisting role="php"><![CDATA[
 <?= $this->headMeta() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->
