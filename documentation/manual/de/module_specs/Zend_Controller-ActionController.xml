@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11075 -->
+<!-- EN-Revision: 11085 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
@@ -486,7 +486,8 @@ class MyController extends Zend_Controller_Action
                             . '" called',
                             500);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>

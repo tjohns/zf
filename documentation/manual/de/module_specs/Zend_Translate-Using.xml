@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11088 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -631,6 +631,17 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                         <entry>Wenn true gesetzt wird, werden bereits gelesene Übersetzungen entfernt. Das kann
                         statt dem Erstellen einer neuen Instanz verwendet werden wenn neue Übersetzungsdaten
                         gelesen werden</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
+                        <entry>ignore</entry>
+                        <entry><emphasis role="strong">.</emphasis></entry>
+                        <entry>Alle Verzeichnisse und Dateien die mit diesem Präfix beginnen werden bei der
+                        Suche nach Dateien ignoriert. Der Standardwert ist
+                        <emphasis role="strong">'.'</emphasis> was zu dem Verhalten führt das alle
+                        versteckten Dateien ignoriert werden. Wenn dieser Wert auf 'tmp' gesetzt wird, bedeutet
+                        das, das Verzeichnisse und Dateien wie z.B. 'tmpImages' und 'tmpFiles', sowie alle
+                        darunter liegenden Verzeichnisse, ignoriert werden.</entry>
                     </row>
                     <row>
                         <entry>all</entry>

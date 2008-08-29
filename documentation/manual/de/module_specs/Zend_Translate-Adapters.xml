@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11088 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
@@ -28,17 +28,17 @@
                 <row>
                     <entry>Csv</entry>
                     <entry>Für kommagetrennte (*.csv/*.txt) Dateien</entry>
-                    <entry>Einfaches Textdatei Format; sehr schnell; mögliche Probleme bei der Verwendung von Unicode Zeichen</entry>
+                    <entry>Einfaches Textdatei Format; schnell; mögliche Probleme bei der Verwendung von Unicode Zeichen</entry>
                 </row>
                 <row>
                     <entry>Gettext</entry>
                     <entry>Für binäre Gettext (*.mo) Dateien</entry>
-                    <entry>GNU Standard für Linux; sehr schnell; Threadsicher; benötigt Tools für die Übersetzung</entry>
+                    <entry>GNU Standard für Linux; Threadsicher; benötigt Tools für die Übersetzung</entry>
                 </row>
                 <row>
                     <entry>Ini</entry>
                     <entry>Für einfache ini (*.ini) Dateien</entry>
-                    <entry>Einfaches Testdatei Format; sehr schnell; mögliche Probleme mit Unicode Zeichen</entry>
+                    <entry>Einfaches Testdatei Format; schnell; mögliche Probleme mit Unicode Zeichen</entry>
                 </row>
                 <row>
                     <entry>Tbx</entry>

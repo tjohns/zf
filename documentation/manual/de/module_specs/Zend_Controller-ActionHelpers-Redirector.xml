@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11075 -->
+<!-- EN-Revision: 11085 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -237,7 +237,8 @@ class ForwardController extends Zend_Controller_Action
                                              )
                                        );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -288,7 +289,8 @@ $router->addRoute('blogArchive', $route);]]>
             'blogArchive'
         );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>
