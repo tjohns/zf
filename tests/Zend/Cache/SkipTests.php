@@ -75,3 +75,7 @@ class Zend_Cache_SqliteBackendTest_SkipTests extends Zend_Cache_BackendTest_Skip
 class Zend_Cache_ZendPlatformBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
 {
 }
+
+class Zend_Cache_TwoLevelsBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
+{
+}

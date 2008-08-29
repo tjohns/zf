@@ -42,6 +42,7 @@ require_once 'Zend/Cache/MemcachedBackendTest.php';
 require_once 'Zend/Cache/PageFrontendTest.php';
 require_once 'Zend/Cache/ZendPlatformBackendTest.php';
 require_once 'Zend/Cache/SkipTests.php';
+require_once 'Zend/Cache/TwoLevelsBackendTest.php';
 
 /**
  * @category   Zend
@@ -157,6 +158,22 @@ class Zend_Cache_AllTests
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_ZendPlatformBackendTest');
+        }
+        
+        /*
+         * Check if APC tests are enabled, and if extension is available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_APC_ENABLED') === false) {
+            $skipTest = new Zend_Cache_TwoLevelsBackendTest_SkipTests();
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('apc')) {
+            $skipTest = new Zend_Cache_TwoLevelsBackendTest_SkipTests();
+            $skipTest->message = "Extension 'APC' is not loaded";
+            $suite->addTest($skipTest);
+        } else {
+            $suite->addTestSuite('Zend_Cache_TwoLevelsBackendTest');
         }
 
         return $suite;
