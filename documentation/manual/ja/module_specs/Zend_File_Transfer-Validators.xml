@@ -1,0 +1,784 @@
+<!-- EN-Revision: 11089 -->
+<sect1 id="zend.file.transfer.validators">
+
+    <title>Zend_File_Transfer 用のバリデータ</title>
+
+    <para>
+        <code>Zend_File_Transfer</code> にはファイル関連のバリデータがいくつか同梱されています。
+        これらを使用してセキュリティを向上させ、攻撃から身を守るようにしましょう。
+        バリデータは、それを使ってこそ役に立つものなのですから。
+        <code>Zend_File_Transfer</code> が提供するバリデータは
+        <code>Zend_Validator</code> コンポーネントに含まれ、
+        <code>Zend_Validate_File_*</code> という名前がついています。
+        現在使用できるバリデータは次のとおりです。
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <code>Count</code>: このバリデータはファイルの数をチェックします。
+                最小値と最大値を指定し、そのいずれかに違反した場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Exists</code>: このバリデータはファイルの存在をチェックします。
+                指定したファイルが存在しない場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Extension</code>: このバリデータはファイルの拡張子をチェックします。
+                渡されたファイルの拡張子が未定義のものだった場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>FilesSize</code>: このバリデータはすべてのファイルのサイズをチェックします。
+                すべてのファイルのサイズを内部的に記憶し、
+                その合計が制限値を超えた場合にエラーをスローします。
+                サイズの最小値と最大値を指定することができます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ImageSize</code>: このバリデータは画像のサイズをチェックします。
+                幅と高さについて、最小値と最大値を検証することができます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>MimeType</code>: このバリデータはファイルの mimetype をチェックします。
+                mimetype の種類を検証し、指定したファイルの mimetype
+                がそれと一致しないときにエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>NotExists</code>: このバリデータはファイルの存在をチェックします。
+                指定したファイルが存在する場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Size</code>: このバリデータは各ファイルのサイズをチェックします。
+                最小値と最大値を指定し、そのいずれかに違反した場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Upload</code>: このバリデータは内部的に使用するもので、
+                アップロード時に何らかの問題が発生していないかどうかをチェックします。
+                自分でこれを設定してはいけません。これは、
+                <code>Zend_File_Transfer</code> 自身が自動的に設定します。
+                ですので、このバリデータのことは忘れてしまってもかまいません。
+                ただ、そういうバリデータが存在することだけを覚えておきましょう。
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <sect2 id="zend.file.transfer.validators.usage">
+        <title><code>Zend_File_Transfer</code> でのバリデータの使用法</title>
+
+        <para>
+            バリデータの使い方はきわめて簡単です。
+            バリデータを追加したり操作したりするには、次のメソッドを使用します。
+        </para>        
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>addValidator($validator, $options = null, $files =
+                    null)</code>: 指定したバリデータをバリデータスタックに追加します
+                    (オプションで、指定したファイルにだけ追加することもできます)。
+                    <code>$validator</code> に指定するのは、
+                    バリデータのインスタンスかあるいはバリデータの型の短い名前
+                    (たとえば 'Count') です。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>addValidators(array $validators, $files =
+                        null)</code>: 指定した複数のバリデータをバリデータスタックに追加します。
+                    各エントリは、バリデータの型とオプションのペアか
+                    あるいはキー 'validator' を持つ配列となります
+                    (配列の場合、バリデータのオプションはインスタンスの作成時に設定するものとします)。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setValidators(array $validators, $files =
+                        null)</code>: 既存のバリデータを、指定したバリデータで上書きします。
+                    バリデータの指定方法は <code>addValidators()</code>
+                    と同じです。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasValidator($name)</code>:
+                    バリデータが登録されているかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getValidator($name)</code>:
+                    前回登録されたバリデータを返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getValidators($files = null)</code>:
+                    登録されているバリデータを返します。<code>$files</code>
+                    を渡すと、そのファイルに関連するバリデータを返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>removeValidator($name)</code>:
+                    前回登録されたバリデータを削除します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearValidators()</code>:
+                    登録されているすべてのバリデータを消去します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.usage.example">
+            <title>ファイル転送用のバリデータの追加</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズを 20000 バイトに設定します
+$upload->addValidator('Size', 20000);
+
+// ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定します
+$upload->addValidator('Size', array(20, 20000));
+
+// ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定し、同時にファイルの数も設定します
+$upload->setValidators(array(
+    'Size'  => array(20, 20000), 
+    'Count' => array(1, 3),
+));
+]]>
+            </programlisting>
+        </example>
+
+        <example id="zend.file.transfer.validators.usage.exampletwo">
+            <title>特定のファイルに対してのみのバリデータの適用</title>
+
+            <para>
+                <code>addValidator()</code>、<code>addValidators()</code> および
+                <code>setValidators()</code> は、それぞれ最後の引数
+                <code>$files</code> を指定することができます。
+                この引数にはファイル名あるいはファイル名の配列を指定し、
+                指定したファイルに対してのみバリデータを設定します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズを 20000 バイトとし、それを 'file2' にのみ適用します
+$upload->addValidator('Size', 20000, 'file2');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            一般的には、単純に <code>addValidators()</code>
+            メソッドをコールすることになるでしょう。
+            これは何度でもコールすることができます。
+        </para>
+
+        <example id="zend.file.transfer.validators.usage.examplemultiple">
+            <title>複数のバリデータの追加</title>
+
+            <para>
+                単に <code>addValidator()</code> を複数回コールするほうがシンプルに書けます。
+                個々のバリデータごとにコールするというわけです。
+                これはコードの可読性も向上させ、保守性もあがります。
+                すべてのメソッドは流れるようなインターフェイスを提供しているので、
+                複数回のコールは以下のように書くことができます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズを 20000 バイトに設定します
+$upload->addValidator('Size', 20000)
+       ->addValidator('Count', 2)
+       ->addValidator('Filessize', 25000);
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                同じバリデータを複数回設定することもできます。
+                しかしそんなことをすると、
+                同じバリデータに異なるオプションを設定したときにおかしなことになるので注意しましょう。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.count">
+        <title><emphasis role="strong">Count</emphasis> バリデータ</title>
+
+        <para>
+            <code>Count</code> バリデータは、
+            渡されたファイルの数をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: 転送するファイル数の最小値。
+                </para>
+
+                <note>
+                    <para>
+                        このオプションを使用する場合は、
+                        このバリデータを最初にコールした際にファイル数の最小値を指定する必要があります。
+                        そうしないとエラーが返されます。
+                    </para>
+                </note>
+
+                <para>
+                    このオプションで、受け取りたいファイル数の最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: 転送するファイル数の最大値。
+                </para>
+
+                <para>
+                    このオプションで、受け取りたいファイル数を制限することができます。
+                    それだけでなく、フォームで定義されている以上の数のファイルを送られるなどの攻撃を防ぐこともできます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータは、両方のオプションを指定してインスタンス化することができます。
+            最初のオプションが <code>min</code>、
+            2 番目のオプションが <code>max</code> となります。
+            オプションをひとつだけ指定した場合は、<code>max</code>
+            とみなされます。しかし、後から <code>setMin()</code> や
+            <code>setMax()</code> でオプションを設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <example id="zend.file.transfer.validators.count.example">
+            <title>Count バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルの数を最大 2 に制限します
+$upload->addValidator('Count', 2);
+
+// 最大でも 5 個、少なくとも 1 つのファイルが返されるよう制限します
+$upload->addValidator('Count', array(1, 5);
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、チェックしたファイルの数を内部に保存することに注意しましょう。
+                最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.exists">
+        <title><emphasis role="strong">Exists</emphasis> バリデータ</title>
+
+        <para>
+            <code>Exists</code> バリデータは、
+            指定したファイルの存在をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: ファイルが指定したディレクトリに存在するかどうかをチェックします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数のディレクトリを指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setDirectory()</code>、<code>addDirectory()</code> および
+            <code>getDirectory()</code> といったメソッドでディレクトリの設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.exists.example">
+            <title>Exists バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// temp ディレクトリをチェック対象に追加します
+$upload->addValidator('Exists', '\temp');
+
+// ふたつのディレクトリを配列記法で追加します
+$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、ファイルが存在するかどうかをすべてのディレクトリでチェックすることに注意しましょう。
+                指定したディレクトリのうちのどこかひとつでもファイルが存在しなかった場合に検証が失敗します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.extension">
+        <title><emphasis role="strong">Extension</emphasis> バリデータ</title>
+
+        <para>
+            <code>Extension</code> バリデータは、
+            渡されたファイルの拡張子をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>extension</code>: 指定したファイルがこの拡張子かどうかをチェックします。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: チェックの際に大文字小文字を区別するかどうかを設定します。
+                    デフォルトでは大文字小文字を区別しません。
+                    このオプションは、すべての拡張子に対して適用されることに注意しましょう。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数の拡張子を指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setExtension()</code>、<code>addExtension()</code> および
+            <code>getExtension()</code> といったメソッドで拡張子の設定や取得が可能です。
+        </para>
+
+        <para>
+            場合によっては大文字小文字を区別してチェックしたくなることもあるでしょう。
+            そんなときのために、コンストラクタで 2 番目のパラメータ
+            <code>$case</code> を指定することができます。これを true
+            にすると、大文字小文字を区別して拡張子のチェックを行います。
+        </para>
+
+        <example id="zend.file.transfer.validators.extension.example">
+            <title>Extension バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// 拡張子を jpg と png のみに制限します
+$upload->addValidator('Extension', 'jpg,png');
+
+// 配列形式で、拡張子を jpg と png のみに制限します
+$upload->addValidator('Extension', array('jpg', 'png'));
+
+// 大文字小文字を区別したチェックを行います
+$upload = new Zend_File_Transfer('mo,png', true);
+if (!$upload->isValid('C:\temp\myfile.MO')) {
+    print 'Not valid due to MO instead of mo';
+}
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータがチェックするのはファイルの拡張子のみであることに注意しましょう。
+                実際の MIME タイプなどはチェックしません。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.filessize">
+        <title><emphasis role="strong">FilesSize</emphasis> バリデータ</title>
+
+        <para>
+            <code>FilesSize</code> バリデータは、
+            すべてのファイルの合計サイズをチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: ファイルサイズの総合計の最小値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、転送されるファイルの合計サイズの最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: ファイルサイズの総合計の最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、転送されるファイルの合計サイズの最大値を指定することができます。
+                    個別のファイルのサイズはチェックしません。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータは、両方のオプションを指定してインスタンス化することができます。
+            最初のオプションが <code>min</code>、
+            2 番目のオプションが <code>max</code> となります。
+            オプションをひとつだけ指定した場合は、<code>max</code>
+            とみなされます。しかし、後から <code>setMin()</code> や
+            <code>setMax()</code> でオプションを設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <para>
+            サイズの指定には SI 記法も使えます。
+            これは多くのオペレーティングシステムでもサポートされているものです。
+            20000 バイトと書くかわりに、<emphasis role="strong">20kB</emphasis>
+            とすることができるのです。すべての単位は、1024 単位に変換されます。
+            使用できる単位は <code>kB</code>、<code>MB</code>、
+            <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
+            です。先ほど説明したとおり、1kB は 1024 バイトであることに注意する必要があります。
+        </para>
+
+        <example id="zend.file.transfer.validators.filessize.example">
+            <title>FilesSize バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズの合計を 40000 バイトまでに制限します
+$upload->addValidator('FilesSize', 40000);
+
+// ファイルサイズの合計を最大 4MB、最小 10kB に制限します
+$upload->setValidator('FilesSize', array('10kB', '4MB');
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、チェックしたファイルのサイズを内部に保存することに注意しましょう。
+                最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title><emphasis role="strong">ImageSize</emphasis> バリデータ</title>
+
+        <para>
+            <code>ImageSize</code> バリデータは、
+            画像ファイルのサイズをチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>minheight</code>: 画像の高さの最小値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の高さの最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxheight</code>: 画像の高さの最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の高さの最大値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>minwidth</code>: 画像の幅の最小値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の幅の最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxwidth</code>: 画像の幅の最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、検証したい画像の幅の最大値を指定することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータは、これら 4 つのオプションを指定してインスタンス化することができます。
+            <code>minheight</code> あるいは <code>minwidth</code> を省略した場合は、
+            0 に設定されます。<code>maxwidth</code> あるいは <code>maxheight</code>
+            を省略した場合は、null に設定されます。しかし、後から
+            <code>setImageMin()</code> や <code>setImageMax()</code>
+            で最小値・最大値を設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <para>
+            利便性を考慮して、<code>setImageWidth</code> や <code>setImageHeight</code>
+            といったメソッドも用意されています。これは、幅や高さの最小値と最大値を設定します。
+            もちろん、それに対応する <code>getImageWidth</code> や <code>getImageHeight</code>
+            も使用可能です。
+        </para>
+
+        <para>
+            サイズの検証をしたくない場合は、その部分に値 <code>null</code> を設定します。
+        </para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>ImageSize バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// 画像の高さを 100-200 ピクセル、幅を 40-80 ピクセルに制限します
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// 配列表記を使用します
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// 連想配列表記を使用します
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// 別の画像サイズを設定します
+$upload->setImageWidth(20, 200);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.mimetype">
+        <title><emphasis role="strong">MimeType</emphasis> バリデータ</title>
+
+        <para>
+            <code>MimeType</code> バリデータは、
+            転送されるファイルの mimetype をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: 検証したい mimetype 形式を設定します。
+                </para>
+
+                <para>
+                    このオプションで、許可したいファイルの mimetype を定義することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数の mimetype を指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setMimeType()</code>、<code>addMimeType()</code> および
+            <code>getMimeType()</code> といったメソッドで mimetype の設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.mimetype.example">
+            <title>MimeType バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// mimetype を制限し、gif 画像のみを許可するようにします
+$upload->addValidator('MimeType', 'image/gif');
+
+// すべてのファイルが gif および jpeg 画像でなければならないように mimetype を制限します
+$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+
+// すべてのファイルが画像であるように mimetype を制限します
+$upload->setValidator('MimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            上の例で示したように、複数の mimetype をひとつのグループとして扱うこともできます。
+            画像ファイルならすべて許可したいという場合は、mimetype に 'image' と指定します。
+            'image' 以外にも 'audio'、'video'、'text などが使用可能です。
+        </para>
+
+        <note>
+            <para>
+                mimetype のグループを許可してしまうと、アプリケーション側で対応しているか否かにかかわらず
+                そのグループのすべての形式のファイルを許可してしまうことに注意しましょう。
+                たとえば 'image' を許可したら 'image/xpixmap' や 'image/vasa'
+                も受け付けることになりますが、おそらくこれは問題となるでしょう。
+                アプリケーション側ですべての形式を処理できるかどうか不安なら、
+                グループ指定ではなく個別の mimetype を指定するようにしましょう。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.notexists">
+        <title><emphasis role="strong">NotExists</emphasis> バリデータ</title>
+
+        <para>
+            <code>NotExists</code> バリデータは、
+            指定したファイルの存在をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: ファイルが指定したディレクトリに存在しないかどうかをチェックします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数のディレクトリを指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setDirectory()</code>、<code>addDirectory()</code> および
+            <code>getDirectory()</code> といったメソッドでディレクトリの設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.notexists.example">
+            <title>NotExists バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// temp ディレクトリをチェック対象に追加します
+$upload->addValidator('NotExists', '\temp');
+
+// ふたつのディレクトリを配列記法で追加します
+$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータは、ファイルが存在しないかどうかをすべてのディレクトリでチェックすることに注意しましょう。
+                指定したディレクトリのうちのどこかひとつでもファイルが存在した場合に検証が失敗します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.size">
+        <title><emphasis role="strong">Size</emphasis> バリデータ</title>
+
+        <para>
+            <code>Size</code> バリデータは、
+            個々のファイルのサイズをチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Min</code>: ファイルサイズの最小値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、転送されるファイルの個々のサイズの最小値を指定することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Max</code>: ファイルサイズの最大値を設定します。
+                </para>
+
+                <para>
+                    このオプションで、転送されるファイルの個々のサイズを制限することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータは、両方のオプションを指定してインスタンス化することができます。
+            最初のオプションが <code>min</code>、
+            2 番目のオプションが <code>max</code> となります。
+            オプションをひとつだけ指定した場合は、<code>max</code>
+            とみなされます。しかし、後から <code>setMin()</code> や
+            <code>setMax()</code> でオプションを設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <para>
+            サイズの指定には SI 記法も使えます。
+            これは多くのオペレーティングシステムでもサポートされているものです。
+            20000 バイトと書くかわりに、<emphasis role="strong">20kB</emphasis>
+            とすることができるのです。すべての単位は、1024 単位に変換されます。
+            使用できる単位は <code>kB</code>、<code>MB</code>、
+            <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
+            です。先ほど説明したとおり、1kB は 1024 バイトであることに注意する必要があります。
+        </para>
+
+        <example id="zend.file.transfer.validators.size.example">
+            <title>Size バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズを 40000 バイトまでに制限します
+$upload->addValidator('Size', 40000);
+
+// 指定したファイルのサイズを最大 4MB、最小 10kB に制限し、
+// このバリデータをファイル "uploadfile" に適用します
+$upload->addValidator('Size', array('10kB', '4MB', 'uploadfile');
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 tw=80 et:
+-->

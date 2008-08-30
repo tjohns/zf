@@ -1,0 +1,750 @@
+<!-- EN-Revision: 11074 -->
+<sect1 id="zend.file.transfer.validators">
+
+    <title>Prüfungen für Zend_File_Transfer</title>
+
+    <para>
+        <code>Zend_File_Transfer</code> wird mit verschiedenen Datei-relevanten Prüfungen ausgeliefert
+        welche verwendet werden sollten um die Sicherheit zu erhöhen und mögliche Attacken zu verhindern.
+        Es ist zu beachten das die Prüfungen nur so gut sind wie der der Sie verwendet. Alle Prüfungen
+        die von <code>Zend_File_Transfer</code> angeboten werden können in der <code>Zend_Validator</code>
+        Komponente gefunden werden und heißen <code>Zend_Validate_File_*</code>. Die folgenden Prüfungen
+        sind aktuell vorhanden:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <code>Count</code>: Diese Prüfung checkt die Anzahl der Dateien. Er bietet ein Minimum und ein
+                Maximum an und wirft einen Fehler wenn einer der zwei Werte überschritten werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Exists</code>: Diese Prüfung checkt ob Dateien existieren. Sie wirft einen Fehler wenn
+                die angegebene Datei nicht existiert.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Extension</code>: Diese Prüfung checkt die Dateierweiterung. Sie wirft einen Fehler
+                wenn eine angegebene Datei eine nicht definierte Erweiterung hat.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>FilesSize</code>: Diese Prüfung checkt die gesamte Größe aller geprüften Dateien.
+                Sie merkt sich intern die Größe aller geprüften Dateien und wirft einen Fehler wenn die
+                Summe aller Dateien die definierte Größe überschreitet. Sie bietet auch eine Mindest- und
+                Maximalgröße an.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ImageSize</code>: Diese Prüfung checkt die Größe von Bildern. Sie prüft die Breite
+                und Höhe und bietet sowohl eine Mindest- als auch eine Maximalgröße.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>MimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
+                fähig Typen von Mimetypen zu prüfen und wirft einen Fehler wenn eine angegebene Datei nicht
+                passt.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>NotExists</code>: Diese Prüfung checkt ob Dateien existieren. Sie wirft einen Fehler
+                wenn eine angegebene Datei existiert.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Size</code>: Diese Prüfung ist fähig Dateien auf Ihre Dateigröße zu prüfen. Sie
+                bietet eine Mindest- und eine Maximalgröße an und wirft einen Fehler wenn eine der
+                zwei überschritten wird.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Upload</code>: Diese Prüfung ist eine interne, die prüft ob ein Upload Probleme
+                produziert hat oder nicht. Dieser darf nicht gesetzt werden, da er automatisch durch
+                <code>Zend_File_Transfer</code> selbst gesetzt wird. Deshalb kann diese Prüfung
+                vergessen werden. Man sollte nur wissen das Sie existiert.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <sect2 id="zend.file.transfer.validators.usage">
+        <title>Prüfungen mit <code>Zend_File_Transfer</code> verwenden</title>
+
+        <para>
+            Die Verwendung von Prüfungen ist sehr einfach. Es gibt verschiedene Methoden für das
+            Hinzufügen und Manipulieren von Prüfungen.
+        </para>        
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>addValidator($validator, $options = null, $files = null)</code>: Fügt die
+                    angegebene Prüfung zu den Prüfungsstapel hinzu (optional nur zu den Datei(en) die
+                    spezifiziert wurden). <code>$validator</code> kann entweder eine aktuelle
+                    Prüfinstanz sein, oder ein Kurzname der den Pfrüfungstyp spezifiziert (z.B. 'Count').
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>addValidators(array $validators, $files = null)</code>: Fügt die angegebenen
+                    Prüfungen zum Prüfungsstapel hinzu. Jeder Eintrag kann entweder ein Prüfungstyp/-options
+                    Paar sein, oder ein Array mit dem Schlüssel 'validator' das die Prüfung spezifiziert
+                    (alle anderen Optoinen werden als Optionen für die Instalzierung der Prüfung angenommen).
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setValidators(array $validators, $files = null)</code>: Überschreibt alle bestehenden
+                    Prüfungen mit den spezifizierten Prüfungen. Die Prüfungen sollten der Syntax folgen die
+                    für <code>addValidators()</code> definiert ist.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasValidator($name)</code>: Zeigt ob eine Prüfung registriert wurde.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getValidator($name)</code>: Gibt eine vorher registrierte Prüfung zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getValidators($files = null)</code>: Gibt registrierte Prüfungen zurück; wenn
+                    <code>$files</code> übergeben wurde, werden die Prüfungen für die betreffende Datei
+                    oder das Set an Dateien zurückgegeben.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>removeValidator($name)</code>: Entfernt eine vorher registrierte Prüfung.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>clearValidators()</code>: Löscht alle registrierten Prüfungen.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.usage.example">
+            <title>Prüfungen zu einem Dateitransfer hinzufügen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Setzt eine Dateigröße von 20000 Bytes
+$upload->addValidator('Size', 20000);
+
+// Setzt eine Dateigröße von mindestens 20 Bytes und maximal 20000 Bytes
+$upload->addValidator('Size', array(20, 20000));
+
+// Setzt eine Dateigröße von mindestens 20 Bytes und Maximal 20000 Bytes und eine Dateianzahl in einem Schritt
+$upload->setValidators(array(
+    'Size'  => array(20, 20000), 
+    'Count' => array(1, 3),
+));
+]]></programlisting>
+        </example>
+
+        <example id="zend.file.transfer.validators.usage.exampletwo">
+            <title>Prüfungen auf eine einzelne Datei limitieren</title>
+
+            <para>
+                <code>addValidator()</code>, <code>addValidators()</code>, und <code>setValidators()</code>
+                akzeptieren ein endendes Argument <code>$files</code>. Dieses Argument kann verwendet werden
+                um eine Datei oder ein Array von Dateien zu spezifizieren auf dem die angegebene Prüfung
+                gesetzt werden soll.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Setzt die Dateigröße auf 20000 Bytes und limitiert Sie nur auf 'file2'
+$upload->addValidator('Size', 20000, 'file2');
+]]></programlisting>
+        </example>
+
+        <para>
+            Generell sollte einfach die <code>addValidators()</code> Methode verwendet werden, welche
+            mehrmals aufgerufen werden kann.
+        </para>
+
+        <example id="zend.file.transfer.validators.usage.examplemultiple">
+            <title>Mehrere Prüfungen hinzufügen</title>
+
+            <para>
+                Oft ist es einfacher <code>addValidator()</code> mehrere Male aufzurufen. Ein Aufruf für
+                jede Prüfung. Das erhöht auch die Lesbarkeit und macht den Code wartbarer. Da alle
+                Methoden das Fluent-Interface implementieren können Aufrufe einfach wie anbei gezeigt
+                gekoppelt werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Setzt die Dateigröße auf 20000 Bytes
+$upload->addValidator('Size', 20000)
+       ->addValidator('Count', 2)
+       ->addValidator('Filessize', 25000);
+]]></programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das, auch wenn das mehrfache Setzen der gleichen Prüfung erlaubt
+                ist, das zu Problemen führen kann wenn verschiedene Optionen für die gleiche
+                Prüfung verwendet werden.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.count">
+        <title><emphasis role="strong">Count</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Count</code> Prüfung checkt die Anzahl der Dateien die angegeben wurde. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: Setzt die minimale Anzahl der Dateien die übertragen wird.
+                </para>
+
+                <note>
+                    <para>
+                        Achtung: Wenn diese Option verwendet wird, muß die minimale Anzahl an Dateien
+                        übergeben werden wenn die Prüfung das erste Mal aufgerufen wird; sonst wird ein
+                        Fehler zurückgegeben.
+                    </para>
+                </note>
+
+                <para>
+                    Mit dieser Option kann die Mindestanzahl an Dateien definiert werden die man Empfangen sollte.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: Setzt die maximale Anzahl an Dateien die übertragen wird.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die Anzahl der Dateien limitiert werden die man akzeptiert,
+                    aber genauso eine mögliche Attacke erkennen wenn mehr Dateien übertragen werden als
+                    im Formular definiert wurden.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung kann mit beiden Optionen initiiert werden. Die erste Option ist <code>min</code>,
+            die zweite Option ist <code>max</code>. Wenn nur eine Option angegeben wird, wird Sie als
+            <code>max</code> verwendet. Es können aber auch die Methoden <code>setMin()</code> und
+            <code>setMax()</code> verwendet werden um beide Optionen im Nachhinein zu setzen und
+            <code>getMin()</code> und <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.count.example">
+            <title>Die Count Prüfung verwenden</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Die Anzahl der Dateien auf maximal 2 limitieren
+$upload->addValidator('Count', 2);
+
+// Die Anzahl der Datein auf Maximal 5 limitieren, und mindestens 1 Datei als Rückgabe erwarten
+$upload->addValidator('Count', array(1, 5);
+]]></programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Beachte das diese Prüfung die Anzahl der geprüften Dateien intern speichert. Die Datei
+                welche das Maximum überschrietet wird als Fehler zurückgegeben.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.exists">
+        <title><emphasis role="strong">Exists</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Exists</code> Prüfung checkt ob Dateien die angegeben werden existieren. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checkt ob die Datei im gegebenen Verzeichnis existiert.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert mehrere Verzeichnisse, entweder als Komma-getrennter String, oder als
+            Array. Es können aber auch die Methoden <code>setDirectory()</code>, <code>addDirectory()</code>,
+            und <code>getDirectory()</code> verwendet werden um die Verzeichnisse zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.exists.example">
+            <title>Die Exists Prüfung verwenden</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Das temporäre Verzeichnis für die Prüfung hinzufügen
+$upload->addValidator('Exists', '\temp');
+
+// Zwei Verzeichnisse hinzufügen inden die Array Schreibweise verwendet wird
+$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Beachte das diese Prüfung checkt ob die Datei in allen gesetzten Verzeichnissen existiert.
+                Die Prüfung schlägt fehl, wenn die Datei in irgendeinem der angegebenen Verzeichnisse nicht
+                existiert.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.extension">
+        <title><emphasis role="strong">Extension</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Extension</code> Prüfung checkt die Dateierweiterung der Dateien welche angegeben werden.
+            Sie unterstützt die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>extension</code>: Prüft ob die angegebene Datei diese Dateierweiterung verwendet.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: Definiert of die Prüfung auf die Klein/Großschreibung achten soll.
+                    Standardmäßig ist die Klein/Großschreibung egal. Es ist zu beachten das diese Option
+                    für alle verwendeten Erweiterungen verwendet wird.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Dieser Prüfer akzeptiert mehrere Erweiterungen entweder als komma-getrennten String, oder als
+            ein Array. Man kann auch die <code>setExtension()</code>, <code>addExtension()</code> und
+            <code>getExtension()</code> Methoden verwenden um Erweiterungen zu setzen und zu erhalten.
+        </para>
+
+        <para>
+            In einigen Fällen ist es nützlich auch auf Klein/Großschreibung zu testen. Hierfür erlaubt
+            der Constructor einen zweiten Parameter <code>$case</code> der, wenn er auf true gesetzt
+            wird, die Erweiterungen abhängig von der Klein/Großschreibung prüft.
+        </para>
+
+        <example id="zend.file.transfer.validators.extension.example">
+            <title>Verwendung der Extension Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limitiert die Erweiterungen auf jpg und png Dateien
+$upload->addValidator('Extension', 'jpg,png');
+
+// Limitiert die Erweiterungen auf jpg und png Dateien, verwendet aber die Array Schreibweise
+$upload->addValidator('Extension', array('jpg', 'png'));
+
+// Abhängig von der Klein/Großschreibung prüfen
+$upload = new Zend_File_Transfer('mo,png', true);
+if (!$upload->isValid('C:\temp\myfile.MO')) {
+    print 'Nicht gültig da MO statt mo verwendet wurde';
+}
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
+                den MIME Typ der aktuellen Datei.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.filessize">
+        <title><emphasis role="strong">FilesSize</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>FilesSize</code> Prüfung checkt die komplette Größe aller übertragenen Dateien.
+            Sie unterstützt die folgenden Optionen: 
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: Setzt die minimale gemeinsame Dateigröße.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die mindeste gemeinsame Dateigröße der Dateien definiert werden
+                    die man empfangen will.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: Setzt die maximale gemeinsame Dateigröße.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die gemeinsame Dateigröße aller Dateien die übertragen wurden,
+                    limitiert werden, aber nicht die Dateigröße von einzelnen Dateien.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung kann mit beiden Optionen initiiert werden. Die erste Option ist <code>min</code>,
+            die zweite Option <code>max</code>. Wenn nur eine Option angegeben wird, wird diese als
+            <code>max</code> verwendet. Aber man kann auch die Methoden <code>setMin()</code> und
+            <code>setMax()</code> verwenden um beide Optionen im Nachhinein zu setzen und
+            <code>getMin()</code> sowie <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <para>
+            Die Größe selbst wird auch in der SI Schreibweise akzeptiert wie Sie von den meisten
+            Betriebsystemen angegeben wird. Statt 20000 Bytes kann man auch
+            <emphasis role="strong">20kB</emphasis> angeben. Alle Einheiten werden mit dem Basiswert
+            1024 konvertiert. Die folgenden Einheiten werden akzeptiert: <code>kB</code>, <code>MB</code>,
+            <code>GB</code>, <code>TB</code>, <code>PB</code> und <code>EB</code>. Wie erwähnt muss man
+            berücksichtigen das 1kB gleich 1024 Bytes entspricht.
+        </para>
+
+        <example id="zend.file.transfer.validators.filessize.example">
+            <title>Verwenden der FilesSize Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limitiert die Größe aller angegebenen Dateien auf 40000 Bytes
+$upload->addValidator('FilesSize', 40000);
+
+// Limitiert die Größe aller angegebenen Dateien auf maximal 4MB und minimal 10kB
+$upload->setValidator('FilesSize', array('10kB', '4MB');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das diese Prüfung die Dateigrößen der geprüften Dateien intern
+                speichert. Die Datei welche die Größe überschreitet wird als Fehler zurückgegeben.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.imagesize">
+        <title><emphasis role="strong">ImageSize</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>ImageSize</code> Prüfung checkt die Größe von Bildern. Sie unterstützt die folgenden
+            Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>minheight</code>: Setzt die mindeste Höhe des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die Mindesthöhe des Bildes definiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxheight</code>: Settzt die maximale Höhe des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann di Maximalhöhe des Bildes limitiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>minwidth</code>: Setzt die mindeste Breite des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die mindeste Breite des Bildes definiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>maxwidth</code>: Setzt die maximale Breite des Bildes.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die maximale Breite des Bildes limitiert werden das geprüft werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung kann mit allen vier gesetzten Optionen initiiert werden. Wenn <code>minheight</code>
+            oder <code>minwidth</code> nicht angegeben werden, werden Sie auf 0 gesetzt. Und wenn
+            <code>maxwidth</code> oder <code>maxheight</code> nicht angegeben werden, werden Sie auf null
+            gesetzt. Aber man kann auch die <code>setImageMin()</code> und <code>setImageMax()</code>
+            Methoden verwenden um beide Minimal- und Maximalwerte im Nachhinein zu setzen und
+            <code>getMin()</code> und <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <para>
+            Der Bequemlichkeit halber gibt es auch die <code>setImageWidth</code> und <code>setImageHeight</code>
+            Methoden welche die Mindest- und Maximalhöhe und -Breite setzen können. Natürlich sind auch
+            passende <code>getImageWidth</code> und <code>getImageHeight</code> Methoden vorhanden.
+        </para>
+
+        <para>
+            Um die Prüfung einer Dimension zu unterdrücken muß der betreffende Wert einfach auf
+            <code>null</code> gesetzt werden.
+        </para>
+
+        <example id="zend.file.transfer.validators.imagesize.example">
+            <title>Verwendung der ImageSize Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Begrenzt die Größe eines Bildes auf eine Höhe von 100-200 und eine Breite von 40-80 Pixel
+$upload->addValidator('ImageSize', 40, 100, 80, 200);
+
+// Verwendet die Array Schreibweise
+$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+
+// Verwendet die benannte Array Schreibweise
+$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+
+// Setzt andere Dimensionen für das Bild
+$upload->setImageWidth(20, 200);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.mimetype">
+        <title><emphasis role="strong">MimeType</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>MimeType</code> Prüfung checkt den Mimetyp von übertragenen Dateien. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: Setzt die Art des Mimetyps der geprüft werden soll.
+                </para>
+
+                <para>
+                    Mit dieser Option kann der Mimetyp von Dateien definiert werden der akzeptiert werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert viele Mimetypen entweder als Komma-getrennter String, oder als
+            Array. Man kan auch die Methoden <code>setMimeType()</code>, <code>addMimeType()</code>,
+            und  <code>getMimeType()</code> verwenden um Mimetypen zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.mimetype.example">
+            <title>Verwendung der MimeType Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Begrenzt den Mimetyp aller gegebenen Dateien auf Gif Bilder
+$upload->addValidator('MimeType', 'image/gif');
+
+// Begrenzt den Mimetyp alle gegebenen Dateien auf Gif und Jpeg Dateien
+$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+
+// Begrenzt den Mimetyp aller Dateien auf die Gruppe image
+$upload->setValidator('MimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Das obige Beispiel zeigt das es auch möglich ist den akzeptierten Mimetyp auf eine Gruppe von
+            Mimetypen zu begrenzen. Um alle Bilder zu erlauben kann einfach 'image' als Mimetyp verwendet
+            werden. Das kann für alle Gruppen wie 'image', 'audio', 'video', 'test', und so weiter
+            gemacht werden.
+        </para>
+
+        <note>
+            <para>
+                Es ist zu beachten das die Verwendung von Mimetyp-Gruppen alle Mitglieder dieser Gruppe
+                akzeptiert, selbst wenn die Anwendung diese nicht unterstützt. Wenn man 'image' erlaubt,
+                erhält man auch 'image/xpixmap' oder 'image/vasa' was problematisch sein könnte. Wenn man
+                nicht sicher ist ob die eigene Anwendung alle Typen unterstützt ist es besser nur
+                definierte Mimetypen zu erlauben statt der kompletten Gruppe.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.notexists">
+        <title><emphasis role="strong">NotExists</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>NotExists</code> Prüfung checkt ob Dateien die angegeben werden existieren. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>directory</code>: Checkt ob die Datei im gegebenen Verzeichnis nicht existiert.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert mehrere Verzeichnisse, entweder als Komma-getrennter String, oder als
+            Array. Es können aber auch die Methoden <code>setDirectory()</code>, <code>addDirectory()</code>,
+            und <code>getDirectory()</code> verwendet werden um die Verzeichnisse zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.notexists.example">
+            <title>Verwendung der NotExists Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Das temporäre Verzeichnis für die Prüfung hinzufügen
+$upload->addValidator('NotExists', '\temp');
+
+// Zwei Verzeichnisse durch Verwendung der Array Schreibweise hinzufügen
+$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Beachte das diese Prüfung checkt ob die Datei in allen gesetzten Verzeichnissen nicht existiert.
+                Die Prüfung schlägt fehl, wenn die Datei in irgendeinem der angegebenen Verzeichnisse
+                existiert.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.size">
+        <title><emphasis role="strong">Size</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Size</code> Prüfung checkt die Größe von einzelnen Dateien. Sie unterstützt die
+            folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Min</code>: Setzt die mindimale Dateigröße.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die mindeste Dateigröße für einzelne Dateien die übertragen
+                    werden definieren.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>Max</code>: Setzt die maximale Dateigröße.
+                </para>
+
+                <para>
+                    Mit dieser Option kann die Dateigröße für einzelne Dateien die übertragen werden limitieren.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung kann mit beiden Optionen initiiert werden. Die erste Option ist <code>min</code>,
+            die zweite Option <code>max</code>. Wenn nur eine Option angegeben wird, wird diese als
+            <code>max</code> verwendet. Aber man kann auch die Methoden <code>setMin()</code> und
+            <code>setMax()</code> verwenden um beide Optionen im Nachhinein zu setzen, sowie
+            <code>getMin()</code> und <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <para>
+            Die Größe selbst wird auch in der SI Schreibweise akzeptiert wie Sie von den meisten
+            Betriebsystemen angegeben wird. Statt 20000 Bytes kann man auch
+            <emphasis role="strong">20kB</emphasis> angeben. Alle Einheiten werden mit dem Basiswert
+            1024 konvertiert. Die folgenden Einheiten werden akzeptiert: <code>kB</code>, <code>MB</code>,
+            <code>GB</code>, <code>TB</code>, <code>PB</code> und <code>EB</code>. Wie erwähnt muss man
+            berücksichtigen das 1kB gleich 1024 Bytes entspricht.
+        </para>
+
+        <example id="zend.file.transfer.validators.size.example">
+            <title>Verwendung der Size Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limitiert die Größe einer Datei auf 40000 Bytes
+$upload->addValidator('Size', 40000);
+
+// Limitiert die Größe der angegebenen Datei auf maximal 4MB und minimal 10kB, und limitiert diese
+// Prüfung auf die Datei 'uploadfile'
+$upload->addValidator('Size', array('10kB', '4MB', 'uploadfile');
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 tw=80 et:
+-->

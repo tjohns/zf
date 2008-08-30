@@ -1,0 +1,299 @@
+<!-- EN-Revision: 10935 -->
+<sect1 id="zend.cache.backends">
+    <title>Zend_Cache Backends</title>
+
+    <sect2 id="zend.cache.backends.file">
+        <title>Zend_Cache_Backend_File</title>
+        <para>
+            Dieses Backend speichert Cache Datensätze in Dateien (in einem gewählten Verzeichnis).
+        </para>
+        <para>
+            Mögliche Optionen sind :
+        </para>
+        <table id="zend.cache.backends.file.table">
+            <title>File Backend Optionen</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Daten Typ</entry>
+                        <entry>Standardwert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>cache_dir</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'/tmp/'</code></entry>
+                          <entry>
+                              Verzeichnis, in dem die Cache Dateien gespeichert werden
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>file_locking</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                            Ein- / Ausschalten von file_locking: kann die Beschädigung des Caches
+                            unter schlechten Bedingungen verhindern, aber es hilft nicht bei
+                            Multithreaded Webservern oder bei NFS Filesystemen...
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>read_control</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                            Ein- / Ausschalten von read_control: eingeschaltet wird ein Kontrollschlüssel
+                            im Cache File inkludiert und dieser Schlüssel wird mit dem Schlüssel
+                            verglichen, der nach dem Lesen berechnet wird.
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>read_control_type</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'crc32'</code></entry>
+                          <entry>
+                            Typ der Schreibkontrolle (nur wenn read_control eingeschaltet ist).
+                            Mögliche Werte sind :
+                            'md5' (bestes, aber am Langsamsten), 'crc32' (etwas weniger sicher, aber schneller,
+                            beste Wahl), 'adler32' (neue Wahl, schneller als crc32), 'strlen' um nur die Länge
+                            zu testen (schnellstes).
+                        </entry>
+                      </row>
+                      <row>
+                          <entry><code>hashed_directory_level</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0</code></entry>
+                          <entry>
+                             Level der gehashten Verzeichnis Struktur: 0 heißt "keine gehashte
+                             Verzeichnis Strutur, 1 heißt "ein Level von Verzeichnissen", 2 heißt
+                             "zwei Levels"...
+                             Diese Option kann den Cache nur dann schneller machen, wenn viele Tausende
+                             Cache Dateien verwendet werden. Nur spezielle Messungen können helfen, den perfekten
+                             Wert zu finden. Möglicherweise ist 1 oder 2 ein guter Anfang.
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>hashed_directory_umask</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0700</code></entry>
+                          <entry>
+                              Umask für die gehashte Verzeichnis Struktur
+                        </entry>
+                      </row>
+                      <row>
+                          <entry><code>file_name_prefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                              Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig
+                              umgehen, weil ein zu generischer Wert in einem System Cache Verzeichnis
+                              (wie /tmp) kann beim Löschen des Caches zu großen Problemen führen.
+                        </entry>
+                      </row>
+                      <row>
+                          <entry><code>cache_file_umask</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0700</code></entry>
+                          <entry>
+                              umask nach Cache Dateien
+                          </entry>
+                      </row>
+                       <row>
+                          <entry><code>metatadatas_array_max_size</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>100</code></entry>
+                          <entry>
+                              Interne maximale Größe für das Metadaten Array (dieser Wert sollte nicht
+                              geändert werden außer man weiß was man macht)
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.sqlite">
+        <title>Zend_Cache_Backend_Sqlite</title>
+        <para>
+            Dieses Backend speichert die Cache Datensätze in einer SQLite Datenbank.
+        </para>
+        <para>
+            Mögliche Optionen sind :
+        </para>
+        <table id="zend.cache.backends.sqlite.table">
+            <title>Sqlite Backend Optionen</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                           <entry>Option</entry>
+                        <entry>Daten Typ</entry>
+                        <entry>Standardwert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>cache_db_complete_path (mandatory)</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                              Der komplette Pfad (inklusive Dateiname) der SQLite Datenbank
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>automatic_vacuum_factor</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              Deaktiviere / stelle den automatischen Vakuumprozess ein.
+                              Der automatische Vakuumprozess defragmentiert die Datenbankdatei (und
+                              verkleinert sie) wenn clean() oder delete() aufgerufen wird:
+                              0 bedeutet kein automatisches Vakuum;
+                              1 bedeutet systematisches Vakuum (wenn die delete() or clean() Methoden aufgerufen werden;
+                              x (integer) > 1 => automatisches Vakuum zufällig einmal pro x clean() oder delete() Aufrufe.
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.memcached">
+        <title>Zend_Cache_Backend_Memcached</title>
+        <para>
+            Dieses Backend speichert Cache Datensätze in einem Memcached Server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
+            ist ein hoch-performantes, verteiltes Speicher Objekt Caching System. Um dieses Backend zu benutzen,
+            wird ein Memcached Dämon benötigt und <ulink url="http://pecl.php.net/package/memcache">die Memcached PECL Erweiterung</ulink>.
+        </para>
+        <para>
+            Vorsicht: mit diesem Backend werden zur Zeit "Marker" nicht unterstützt genauso wie das
+            "doNotTestCacheValidity=true" Argument.
+        </para>
+        <para>
+            Mögliche Optionen sind :
+        </para>
+        <table id="zend.cache.backends.memcached.table">
+            <title>Memcached Backend Optionen</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Daten Typ</entry>
+                        <entry>Standardwert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>servers</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
+                          <entry>
+                              Ein Array von Memcached Servern; jeder Memcached Server wird durch ein
+                              assoziatives Array beschrieben :
+                              'host' => (string) : Der Name des Memcached Servers,
+                              'port' => (int) : Der Port des Memcached Servers,
+                              'persistent' => (bool) : Persistente Verbindungen für diesen Memcached Server verwenden oder nicht
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>compression</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                             true wenn on-the-fly Kompression verwendet werden soll
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.apc">
+        <title>Zend_Cache_Backend_Apc</title>
+        <para>
+            Dieses Backend speichert Cache Datensätze im Shared Memory durch die
+            <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternativer PHP Cache) Erweiterung
+            (welche natürlich für die Verwendung dieses Backends benötigt wird).
+        </para>
+        <para>
+            Vorsicht: mit diesem Backend werden "Marker" zur Zeit nicht unterstützt genauso wie das
+            "doNotTestCacheValidity=true" Argument.
+        </para>
+        <para>
+            Es gibt keine Optionen für dieses Backend.
+        </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.xcache">
+        <title>Zend_Cache_Backend_Xcache</title>
+        <para>
+            Dieses Backend speichert Cache Einträge im Shared Memory durch die
+            <ulink url="http://xcache.lighttpd.net/">XCache</ulink> Erweiterung (welche natürlich
+            benötigt wird, damit dieses Backend verwendet werden kann).
+        </para>
+        <para>
+            Achtung: Bei diesem Backend werden "tags" aktuell nicht unterstützt sowie das
+            "doNotTestCacheValidity=true" Argument.
+        </para>
+        <para>
+            Mögliche Optionen sind:
+        </para>
+        <table id="zend.cache.backends.xcache.table">
+            <title>Xcache backend options</title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Option</entry>
+                        <entry>Daten Typ</entry>
+                        <entry>Standardwert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><code>user</code></entry>
+                        <entry><code>string</code></entry>
+                        <entry><code>null</code></entry>
+                        <entry>
+                              xcache.admin.user, notwendig für die clean() Methode
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><code>password</code></entry>
+                        <entry><code>string</code></entry>
+                        <entry><code>null</code></entry>
+                        <entry>
+                              xcache.admin.pass (in offener Form, nicht MD5), notwendig für die clean() Methode
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.platform">
+        <title>Zend_Cache_Backend_ZendPlatform</title>
+        <para>
+            Dieses Backend verwendet die Content Caching API des
+            <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> Produktes.
+            Natürlich muss man die Zend Platform installiert haben, um dieses Backend verwenden zu
+            können.
+        </para>
+        <para>
+            Dieses Backend unterstützt Tags, aber nicht den <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
+            Löschmodus.
+        </para>
+        <para>
+            Bei Definition dieses Backends muß ein Trennzeichen -- '-', '.', ' ', oder '_'
+            -- zwischen den Wörtern 'Zend' und 'Platform' definiert sein wenn die
+            <code>Zend_Cache::factory()</code> Methode verwendet wird:
+        </para>
+        <programlisting role="php"><![CDATA[$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
+        <para>
+            Es gibt keine Optionen für dieses Backend.
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
++-->

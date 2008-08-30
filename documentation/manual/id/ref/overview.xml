@@ -1,0 +1,19 @@
+<sect1 id="introduction.overview">
+
+    <title>Gambaran Umum</title>
+
+    <para>
+        Zend Framework adalah sebuah framework berkualitas tinggi dan <ulink url="http://id.wikipedia.org/wiki/Sumber_terbuka">sumber terbuka</ulink>
+        untuk membuat aplikasi web dan layanan web dengan PHP.
+    </para>
+
+    <para>
+        Dibuat dengan semangat PHP yang sebenarnya, Zend Framework menyediakan fungsi-fungsi
+        yang mudah digunakan dan handal. Zend Framework menyediakan solusi untuk membangun
+        website yang modern, handal dan aman.
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
