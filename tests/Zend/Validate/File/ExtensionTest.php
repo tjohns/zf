@@ -47,6 +47,17 @@ require_once 'Zend/Validate/File/Extension.php';
 class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Validate_File_ExtensionTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
      * @return void
@@ -79,7 +90,7 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
             'error'    => 0
         );
         $validator = new Zend_Validate_File_Extension('mo');
-        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.mo', false, $files));
+        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.mo', $files));
         $this->assertTrue(array_key_exists('fileExtensionNotFound', $validator->getMessages()));
 
         $files = array(

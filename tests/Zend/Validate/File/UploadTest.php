@@ -45,6 +45,17 @@ require_once 'Zend/Validate/File/Upload.php';
 class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Validate_File_UploadTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
      * @return void
@@ -143,6 +154,18 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_File_Upload();
         $this->assertFalse($validator->isValid('test9'));
         $this->assertTrue(array_key_exists('fileUploadErrorExtension', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('test1'));
+        $this->assertTrue(array_key_exists('fileUploadErrorAttack', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('tmp_test1'));
+        $this->assertTrue(array_key_exists('fileUploadErrorAttack', $validator->getMessages()));
+
+        $validator = new Zend_Validate_File_Upload();
+        $this->assertFalse($validator->isValid('test000'));
+        $this->assertTrue(array_key_exists('fileUploadErrorFileNotFound', $validator->getMessages()));
     }
 
     /**
@@ -233,4 +256,9 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
         $validator->setFiles($files);
         $this->assertEquals($files, $validator->getFiles());
     }
+}
+
+// Call Zend_Validate_File_UploadTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Validate_File_UploadTest::main") {
+    Zend_Validate_File_UploadTest::main();
 }

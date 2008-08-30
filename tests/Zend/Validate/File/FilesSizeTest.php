@@ -45,6 +45,17 @@ require_once 'Zend/Validate/File/FilesSize.php';
 class Zend_Validate_File_FilesSizeTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Validate_File_FilesSizeTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
      * @return void
@@ -56,23 +67,47 @@ class Zend_Validate_File_FilesSizeTest extends PHPUnit_Framework_TestCase
             array(0, '2 MB', true, true, true),
             array(0, '2MB', true, true, true),
             array(0, '2  MB', true, true, true),
-            array(2000, 0, false, false, false),
+            array(2000, null, true, true, false),
             array(0, 500, false, false, false),
-            array(500, 0, false, false, false)
+            array(500, null, false, false, false)
         );
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_FilesSize($element[0], $element[1]);
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-            $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_FilesSize(array($element[0], $element[1]));
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-            $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $validator = new Zend_Validate_File_FilesSize(array(0, 200));
@@ -179,4 +214,9 @@ class Zend_Validate_File_FilesSizeTest extends PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals('976.56kB', $validator->getMax());
     }
+}
+
+// Call Zend_Validate_File_FilesSizeTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Validate_File_FilesSizeTest::main") {
+    Zend_Validate_File_FilesSizeTest::main();
 }
