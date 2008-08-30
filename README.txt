@@ -1,18 +1,12 @@
-Welcome to Zend Framework 1.6 Release Candidate 3! This release may meet quality
-guidelines for production use but has not been fully tested by the Zend Framework
-community for production use.
-To help us deliver a stable Zend Framework 1.6 GA release soon, please post your
-comments and questions to the appropriate mailing list and bring any bugs to our
-attention in the Zend Framework issue tracker:
-
-http://framework.zend.com/issues
+Welcome to Zend Framework 1.6.0! This is the first release in the 
+Zend Framework 1.6 series. This release maintains backwards compatibility
+with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6 Release Candidate 3 (revision [INSERT REV NUMBER HERE]).
-Released on 2008-08-26.
-
+Zend Framework 1.6.0 (revision [INSERT REV NUMBER HERE]).
+Released on 2008-09-02.
 
 NEW FEATURES
 ------------
@@ -48,17 +42,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10834
-
-INTENDED USE
-------------
-
-The Zend Framework community does not recommend this release for production use.
-Please be aware that the API's introduced in this release may not be final and
-the Zend Framework community does not guarantee backwards compatibility to this
-release in future releases of Zend Framework. Once a release candidate is
-sanctioned by the ZF community as a GA release, Zend Technologies and the ZF community
-will make every effort to maintain backwards compatibility.
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10836
 
 SYSTEM REQUIREMENTS
 -------------------
@@ -80,8 +64,7 @@ Online documentation can be found at http://framework.zend.com/manual. Questions
 that are not addressed in the manual should be directed to the appropriate
 mailing list:
 
-http://framework.zend.com/wiki/x/GgE#ContributingtoZendFramework-
-Subscribetotheappropriatemailinglists
+http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists
 
 If you find code in this release behaving in an unexpected manner or contrary to
 its documented behavior, please create an issue in the Zend Framework issue
@@ -89,8 +72,8 @@ tracker at:
 
 http://framework.zend.com/issues
 
-If you would like to be notified of new releases- including the general
-availability release of Zend Framework 1.6- you can subscribe to the fw-announce
+If you would like to be notified of new releases- including further
+maintenance releases of Zend Framework 1.6- you can subscribe to the fw-announce
 mailing list by sending a blank message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
