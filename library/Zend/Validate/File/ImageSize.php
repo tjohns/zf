@@ -34,7 +34,7 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
 {
-    /**@+
+    /**
      * @const string Error constants
      */
     const WIDTH_TOO_BIG    = 'fileImageSizeWidthTooBig';
@@ -43,7 +43,6 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
     const HEIGHT_TOO_SMALL = 'fileImageSizeHeightTooSmall';
     const NOT_DETECTED     = 'fileImageSizeNotDetected';
     const NOT_READABLE     = 'fileImageSizeNotReadable';
-    /**@-*/
 
     /**
      * @var array Error message template
@@ -282,11 +281,7 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
     {
         // Is file readable ?
         if (@is_readable($value) === false) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error(self::NOT_READABLE);
+            $this->_throw($file, self::NOT_READABLE);
             return false;
         }
 
@@ -294,24 +289,24 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
         $this->_setValue($file);
 
         if (empty($size) or ($size[0] === 0) or ($size[1] === 0)) {
-            $this->_error(self::NOT_DETECTED);
+            $this->_throw($file, self::NOT_DETECTED);
             return false;
         }
 
         if ($size[0] < $this->_minwidth) {
-            $this->_error(self::WIDTH_TOO_SMALL);
+            $this->_throw($file, self::WIDTH_TOO_SMALL);
         }
 
         if ($size[1] < $this->_minheight) {
-            $this->_error(self::HEIGHT_TOO_SMALL);
+            $this->_throw($file, self::HEIGHT_TOO_SMALL);
         }
 
         if (($this->_maxwidth !== null) and ($this->_maxwidth < $size[0])) {
-            $this->_error(self::WIDTH_TOO_BIG);
+            $this->_throw($file, self::WIDTH_TOO_BIG);
         }
 
         if (($this->_maxheight !== null) and ($this->_maxheight < $size[1])) {
-            $this->_error(self::HEIGHT_TOO_BIG);
+            $this->_throw($file, self::HEIGHT_TOO_BIG);
         }
 
         if (count($this->_messages) > 0) {
@@ -319,5 +314,22 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
         } else {
             return true;
         }
+    }
+
+    /**
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
+     */
+    protected function _throw($file, $errorType)
+    {
+        if ($file !== null) {
+            $this->_value = $file['name'];
+        }
+
+        $this->_error($errorType);
+        return false;
     }
 }

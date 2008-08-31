@@ -160,24 +160,33 @@ class Zend_Validate_File_Exists extends Zend_Validate_Abstract
 
             $check = true;
             if (!file_exists($directory . DIRECTORY_SEPARATOR . $file['name'])) {
-                if ($file !== null) {
-                    $this->_value = $file['name'];
-                }
-
-                $this->_error(self::DOES_NOT_EXIST);
+                $this->_throw($file, self::DOES_NOT_EXIST);
                 return false; 
             }
         }
 
         if (!$check) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error(self::DOES_NOT_EXIST);
-            return false; 
+            $this->_throw($file, self::DOES_NOT_EXIST);
+            return false;
         }
 
         return true;
+    }
+
+    /**
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
+     */
+    protected function _throw($file, $errorType)
+    {
+        if ($file !== null) {
+            $this->_value = $file['name'];
+        }
+
+        $this->_error($errorType);
+        return false;
     }
 }

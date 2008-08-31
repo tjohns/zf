@@ -64,7 +64,6 @@ class Zend_Validate_File_NotExists extends Zend_Validate_File_Exists
             $file['name'] = $value;
         }
 
-        $check = false;
         foreach ($directories as $directory) {
             if (empty($directory)) {
                 continue;
@@ -72,21 +71,13 @@ class Zend_Validate_File_NotExists extends Zend_Validate_File_Exists
 
             $check = true;
             if (file_exists($directory . DIRECTORY_SEPARATOR . $file['name'])) {
-                if ($file !== null) {
-                    $this->_value = $file['name'];
-                }
-
-                $this->_error(self::DOES_EXIST);
+                $this->_throw($file, self::DOES_EXIST);
                 return false; 
             }
         }
 
-        if (!$check) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error(self::DOES_EXIST);
+        if (!isset($check)) {
+            $this->_throw($file, self::DOES_EXIST);
             return false; 
         }
 
