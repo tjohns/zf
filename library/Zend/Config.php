@@ -67,13 +67,6 @@ class Zend_Config implements Countable, Iterator
     protected $_loadedSection;
 
     /**
-     * Error Handler to restore
-     *
-     * @var string
-     */
-    protected $_oldErrorHandler;
-
-    /**
      * This is used to track section inheritance. The keys are names of sections that
      * extend other sections, and the values are the extended sections.
      *
@@ -378,14 +371,12 @@ class Zend_Config implements Countable, Iterator
      * @param string $errstr
      * @param string $errfile
      * @param integer $errline
+     * @throws Zend_Config_Exception
      */
-    protected function _loadFileFileErrorHandler($errno, $errstr, $errfile, $errline)
+    protected function _loadFileErrorHandler($errno, $errstr, $errfile, $errline)
     { 
-        /**
-         * @see Zend_Config_Exception
-         */
+        /** @see Zend_Config_Exception */
         require_once 'Zend/Config/Exception.php';
-        set_error_handler($this->_oldErrorHandler);
         throw new Zend_Config_Exception($errstr);
     }
 
