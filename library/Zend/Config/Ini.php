@@ -105,8 +105,14 @@ class Zend_Config_Ini extends Zend_Config
             }
         }
 
-        $this->_oldErrorHandler = set_error_handler(array($this, '_loadFileFileErrorHandler'));
-        $iniArray = parse_ini_file($filename, true); // convert any warnings into exceptions
+        set_error_handler(array($this, '_loadFileErrorHandler'));
+        try {
+            $iniArray = parse_ini_file($filename, true); // warnings are converted into exceptions
+        } catch (Exception $e) {
+            // Restore error handler and passthrough an exception
+            restore_error_handler();
+            throw $e;
+        }
         restore_error_handler();
         
         $preProcessedArray = array();
