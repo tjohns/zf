@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>Envoyer plusieurs émail par connexion SMTP</title>
 

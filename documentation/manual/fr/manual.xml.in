@@ -380,18 +380,12 @@
         <xi:include href="module_specs/Zend_Search_Lucene-Queries.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-Queries.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Search_Lucene-Charset.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-Charset.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Search_Lucene-Charset.xml" />
         <xi:include href="module_specs/Zend_Search_Lucene-Extending.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-Extending.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Search_Lucene-JavaLucene.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-JavaLucene.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Search_Lucene-Advanced.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-Advanced.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Search_Lucene-JavaLucene.xml" />
+        <xi:include href="module_specs/Zend_Search_Lucene-Advanced.xml" />
         <xi:include href="module_specs/Zend_Search_Lucene-BestPractice.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Search_Lucene-BestPractice.xml" /></xi:fallback>
         </xi:include>

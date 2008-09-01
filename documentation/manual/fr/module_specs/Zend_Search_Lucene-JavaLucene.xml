@@ -1,52 +1,45 @@
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Agir avec Lucene Java</title>
 
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>Formats de fichier</title>
-        <para>
-          Les formats des fichiers d'index de Zend_Search_Lucene sont compatibles avec la version de Lucene Java 1.4 ou plus.
-        </para>
 
-        <para>
-          Une description détaillée de ce format est disponible ici:
-          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>
-          <footnote><para>La version du format de fichier supporté actuellement est la 2.3 (depuis ZF 1.6).</para></footnote>.
-        </para>
+        <para>Les formats des fichiers d'index de <code>Zend_Search_Lucene</code> sont compatibles avec la version de
+        Lucene Java 1.4 ou plus.</para>
+
+        <para>Une description détaillée de ce format est disponible ici: <ulink
+        url="http://lucene.apache.org/java/docs/fileformats.html"></ulink><footnote>
+                <para>La version du format de fichier supporté actuellement est la 2.3 (depuis ZF 1.6).</para>
+            </footnote>.</para>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.index-directory">
-        <title>Repertoire Index</title>
+        <title>Répertoire Index</title>
 
-        <para>
-        Après la création de l'index, le repertoire d'index contiendra plusieurs fichiers:
-        </para>
+        <para>Après la création de l'index, le répertoire d'index contiendra plusieurs fichiers:</para>
 
         <itemizedlist>
             <listitem>
-                <para>
-                le fichier des <filename>segments</filename> est une liste des segments de l'index.
-                </para>
+                <para>le fichier des <filename>segments</filename> est une liste des segments de l'index.</para>
             </listitem>
+
             <listitem>
-                <para>
-                Les fichiers <filename>*.cfs</filename> contiennent les segments de l'index.
-                Notez qu'un index optimisé a toujours un seul segment.
-                </para>
+                <para>Les fichiers <filename>*.cfs</filename> contiennent les segments de l'index. Notez qu'un index
+                optimisé a toujours un seul segment.</para>
             </listitem>
+
             <listitem>
-                <para>
-                Les fichiers <filename>effaçables</filename> sont des fichiers qui ne sont plus utilisés par
-                l'index, mais qui n'ont pas pu être supprimés.
-                </para>
+                <para>Les fichiers <filename>effaçables</filename> sont des fichiers qui ne sont plus utilisés par
+                l'index, mais qui n'ont pas pu être supprimés.</para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.search.lucene.java-lucene.source-code">
         <title>Code source Java</title>
-        <para>
-            Le programme Java ci-après montre comment indexer un fichier en utilisant Java Lucene:
-        </para>
+
+        <para>Le programme Java ci-après montre comment indexer un fichier en utilisant Java Lucene :</para>
 
         <programlisting role="java"><![CDATA[
 /**
@@ -75,11 +68,7 @@ FileInputStream is = new FileInputStream(f);
 Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
-indexWriter.addDocument(doc);]]>
-        </programlisting>
+indexWriter.addDocument(doc);
+]]></programlisting>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
