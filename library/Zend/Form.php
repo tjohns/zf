@@ -1622,7 +1622,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * 
      * @param  array $elements 
      * @param  string $name 
-     * @param  int $order 
+     * @param  array|Zend_Config $options 
      * @return Zend_Form
      * @throws Zend_Form_Exception if no valid elements provided
      */
