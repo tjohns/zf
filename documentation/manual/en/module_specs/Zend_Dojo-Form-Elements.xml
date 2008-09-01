@@ -21,8 +21,8 @@
         </para></listitem>
 
         <listitem><para>
-                <code>hasDijitParam($key)</code>: whether or not a given dijit
-                parameter is defined and present.
+                <code>hasDijitParam($key)</code>: If a given dijit parameter
+                is defined and present, return TRUE, otherwise return FALSE.
         </para></listitem>
 
         <listitem><para>
