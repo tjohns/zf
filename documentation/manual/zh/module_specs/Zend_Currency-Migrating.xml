@@ -14,8 +14,9 @@
             创建 <code>Zend_Currency</code> 的对象变得容易了。现在你不再需要给一个脚本或把它设置为 null。可选的脚本参数现在可以通过 <code>setFormat()</code> 方法来设置。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency = new Zend_Currency($currency, $locale);]]>
+        <programlisting role="php"><![CDATA[
+$currency = new Zend_Currency($currency, $locale);
+]]>
         </programlisting>
 
         <para>
@@ -60,16 +61,18 @@ $currency = new Zend_Currency($currency, $locale);]]>
 
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency->setFormat(array $options);]]>
+        <programlisting role="php"><![CDATA[
+$currency->setFormat(array $options);
+]]>
         </programlisting>
 
         <para>
             The <code>toCurrency()</code> 方法不再支持可选的 'script' 和 'locale' 参数，而是它它带有一个选项数组，数组中包含和 <code>setFormat</code> 方法相同的键。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$currency->toCurrency($value, array $options);]]>
+        <programlisting role="php"><![CDATA[
+$currency->toCurrency($value, array $options);
+]]>
         </programlisting>
 
         <para>

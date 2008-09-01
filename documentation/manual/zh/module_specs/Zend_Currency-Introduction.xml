@@ -33,10 +33,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong"> Fluid 接口 </emphasis>
+                    <emphasis role="strong"> Fluent 接口 </emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> 按需包含 fluid 接口。
+                    <code>Zend_Currency</code> 按需包含 fluent 接口。
                 </para>
             </listitem>
             <listitem>

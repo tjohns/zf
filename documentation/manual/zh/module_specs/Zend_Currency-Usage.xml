@@ -14,10 +14,9 @@
             期望通过用户（的输入）或环境，你有 'en_US' 设置作为实际地方，通过使用不带参数创建<code>Zend_Currency</code>的实例从地方 'en_US' 来使用实际货币，这导致带美元实例作为带有'en_US'格式规则的实际货币。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-$currency = new Zend_Currency();]]>
+        <programlisting role="php"><![CDATA[
+$currency = new Zend_Currency();
+]]>
         </programlisting>
 
 
@@ -28,13 +27,14 @@ $currency = new Zend_Currency();]]>
         如果你想多次使用同一地方，用这个符号你不需要记住对每个实例手工设置地方。
      </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // in your bootstrap file
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // somewhere in your application
-$currency = new Zend_Currency();]]>
+$currency = new Zend_Currency();
+]]>
     </programlisting>
 
         <note>
@@ -75,18 +75,21 @@ $currency = new Zend_Currency();]]>
 
         <title> 创建 Zend_Currency 实例的其它例子 </title>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // expect standard locale 'de_AT'
-require_once 'Zend/Currency.php';
 
-// creates an instance from 'en_US' using 'USD' which is default currency for 'en_US'
+// creates an instance from 'en_US' using 'USD' which is default 
+// currency for 'en_US'
 $currency = new Zend_Currency('en_US');
 
-// creates an instance from the actual locale ('de_AT') using 'EUR' as currency
+// creates an instance from the actual locale ('de_AT') using 'EUR' as 
+// currency
 $currency = new Zend_Currency();
 
-// creates an instance using 'EUR' as currency, 'en_US' for number formating
-$currency = new Zend_Currency('en_US', 'EUR');]]>
+// creates an instance using 'EUR' as currency, 'en_US' for number 
+// formating
+$currency = new Zend_Currency('en_US', 'EUR');
+]]>
         </programlisting>
 
     </example>
@@ -121,10 +124,9 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
             <title> 为货币创建输出 </title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD' which is the default values for 'en_US'
+            <programlisting role="php"><![CDATA[
+// creates an instance with 'en_US' using 'USD' which is the default 
+// values for 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$ 1,000.00'
@@ -134,7 +136,8 @@ echo $currency->toCurrency(1000);
 echo $currency->toCurrency(1000, array('format' => 'de_AT'));
 
 // prints '$ ١٬٠٠٠٫٠٠'
-echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
+echo $currency->toCurrency(1000, array('script' => 'Arab'));
+]]>
             </programlisting>
 
         </example>
@@ -238,7 +241,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title> 选择货币描述的常量 </title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry> 常量 </entry>
@@ -271,7 +274,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title> 选择货币位置的常量 </title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry> 常量 </entry>
@@ -300,22 +303,23 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title> 修改货币的显示格式 </title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+            <programlisting role="php"><![CDATA[
+// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as 
+// these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints 'US$ 1,000.00'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME, 
+                     'position' => Zend_Currency::RIGHT);
 // prints '1.000,00 US Dollar'
 echo $currency->toCurrency(1000);
 
 $currency->setFormat('name' => 'American Dollar');
 // prints '1.000,00 American Dollar'
-echo $currency->toCurrency(1000);]]>
+echo $currency->toCurrency(1000);
+]]>
             </programlisting>
 
         </example>
@@ -380,10 +384,9 @@ echo $currency->toCurrency(1000);]]>
 
             <title> 从货币中获取信息 </title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+            <programlisting role="php"><![CDATA[
+// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' 
+// as these are the default values from 'en_US'
 $currency = new Zend_Currency('en_US');
 
 // prints '$'
@@ -398,8 +401,10 @@ echo $currency->getName('ATS', 'de_AT');
 // returns an array with all regions where USD is used
 print_r($currency->getRegionList();
 
-// returns an array with all currencies which were ever used in this region
-print_r($currency->getCurrencyList('de_AT');]]>
+// returns an array with all currencies which were ever used in this 
+// region
+print_r($currency->getCurrencyList('de_AT');
+]]>
             </programlisting>
 
         </example>
@@ -418,9 +423,7 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
             <title> 设置新地方 </title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-
+            <programlisting role="php"><![CDATA[
 // 获得 US 货币
 $currency = new Zend_Currency('en_US');
 print $currency->toCurrency(1000);
@@ -447,15 +450,16 @@ print $currency->toCurrency(1000);
 
             <title> 缓存货币 </title>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Currency.php';
-require_once 'Zend/Cache.php';
-
+            <programlisting role="php"><![CDATA[
 // 创建一个缓存对象
-$cache = Zend_Cache::factory('Core', 'File',
-             array('lifetime' => 120, 'automatic_serialization' => true),
-             array('cache_dir' => dirname(__FILE__) . '/_files/'));
-Zend_Currency::setCache($cache);]]>
+$cache = Zend_Cache::factory('Core', 
+                             'File',
+                             array('lifetime' => 120, 
+                                   'automatic_serialization' => true),
+                             array('cache_dir' 
+                                       => dirname(__FILE__) . '/_files/'));
+Zend_Currency::setCache($cache);
+]]>
             </programlisting>
         </example>
 
