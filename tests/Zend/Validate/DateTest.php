@@ -144,12 +144,12 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_validator->setFormat('dd/MM/yyyy')->isValid('2008/10/22'));
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $result = $this->_validator->setFormat('s')->isValid(0);
+        restore_error_handler();
         if (!$this->_errorOccurred) {
             $this->assertTrue($result);
         } else {
             $this->markTestSkipped('Affected by bug described in ZF-2789');
         }
-        restore_error_handler();
         $this->_errorOccurred = false;
     }
 
