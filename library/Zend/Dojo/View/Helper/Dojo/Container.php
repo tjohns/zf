@@ -378,7 +378,7 @@ class Zend_Dojo_View_Helper_Dojo_Container
     /**
      * Are we using the CDN?
      * 
-     * @return void
+     * @return bool
      */
     public function useCdn()
     {
