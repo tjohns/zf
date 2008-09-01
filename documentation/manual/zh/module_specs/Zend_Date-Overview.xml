@@ -113,15 +113,17 @@
 
         <example id="zend.date.values.example-1">
             <title> 用户指定的日期输入格式 </title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
-$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // strictly restricts interpretation to specified format
-echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"]]>
+// strictly restricts interpretation to specified format
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); 
+echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
+]]>
             </programlisting>
         </example>
 
@@ -139,13 +141,14 @@ echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"]]>
         如果你想多次使用同一地方，用这个符号你不需要记住对每个实例手工设置地方。
      </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 // in your bootstrap file
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // somewhere in your application
-$date = new Zend_Date('31.Feb.2007');]]>
+$date = new Zend_Date('31.Feb.2007');
+]]>
     </programlisting>
 
     </sect2>
@@ -164,14 +167,13 @@ $date = new Zend_Date('31.Feb.2007');]]>
 
         <example id="zend.date.basic.example-1">
             <title> 日期部件的操作 </title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
+            <programlisting role="php"><![CDATA[
 $date = new Zend_Date(); // $date's timestamp === time()
 
 // changes $date by adding 12 hours
 $date->add('12', Zend_Date::HOUR);
-print $date;]]>
+print $date;
+]]>
             </programlisting>
         </example>
 

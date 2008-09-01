@@ -25,10 +25,9 @@
                 来说这是最简单和最常用的方法来获得当期日期为 <code>Zend_Date</code> 的实例。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date();]]>
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
+]]>
             </programlisting>
 
         </example>
@@ -43,10 +42,9 @@ $date = new Zend_Date();]]>
                 但它将总返回当前日期并且不能用可选的参数修改。 
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-
-$date = Zend_Date::now();]]>
+            <programlisting role="php"><![CDATA[
+$date = Zend_Date::now();
+]]>
             </programlisting>
 
         </example>
@@ -81,11 +79,10 @@ $date = Zend_Date::now();]]>
                 成时间戳要比转换成其它格式快。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
+$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
+]]>
             </programlisting>
 
         </example>
@@ -103,11 +100,10 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
                 的时间来处理，但也应该知道 unix 时间戳只支持 1970年1月1日以后的日期。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // SELECT datecolumn FROM my_table
-require_once 'Zend/Date.php';
-
-$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
+$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
+]]>
             </programlisting>
 
         </example>
@@ -166,16 +162,21 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
                 这意味着如果没有给出小时值，那么就用 <emphasis role="strong">0</emphasis> 小时。
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
-$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
-$date = new Zend_Date($datearray);]]>
+            <programlisting role="php"><![CDATA[
+$datearray = array('year' => 2006, 
+                   'month' => 4, 
+                   'day' => 18, 
+                   'hour' => 12, 
+                   'minute' => 3, 
+                   'second' => 10);
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Date.php';
+            <programlisting role="php"><![CDATA[
 $datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
-$date = new Zend_Date($datearray);]]>
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
         </example>
 
