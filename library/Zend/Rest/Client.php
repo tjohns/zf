@@ -237,7 +237,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
         } else {
             // More than one arg means it's definitely a Zend_Rest_Server
             if (sizeof($args) == 1) {
-                $this->_data[$method] = $args[0];
+                $this->_data['method'] = $method;
                 $this->_data['arg1']  = $args[0];
             } else {
                 $this->_data['method'] = $method;
