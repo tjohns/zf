@@ -173,7 +173,7 @@ $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // Send the files
-$client->submit('POST');
+$client->request('POST');
 ]]>
                 </programlisting>
             </example>
