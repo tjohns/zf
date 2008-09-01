@@ -19,12 +19,12 @@
  */
 
 /**
- * Zend_Json
+ * @see Zend_Json
  */
 require_once 'Zend/Json.php';
 
 /**
- * Zend_Json_Exception
+ * @see Zend_Json_Exception
  */
 require_once 'Zend/Json/Exception.php';
 

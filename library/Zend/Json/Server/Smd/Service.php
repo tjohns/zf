@@ -18,7 +18,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Json_Server_Smd */
+/**
+ * @see Zend_Json_Server_Smd
+ */
 require_once 'Zend/Json/Server/Smd.php';
 
 /**
