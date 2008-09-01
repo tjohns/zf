@@ -75,6 +75,15 @@ class Zend_Config implements Countable, Iterator
     protected $_extends = array();
 
     /**
+     * Load file error string.
+     * 
+     * Is null if there was no error while file loading
+     *
+     * @var string
+     */
+    protected $_loadFileErrorStr = null;
+
+    /**
      * Zend_Config provides a property based interface to
      * an array. The data are read-only unless $allowModifications
      * is set to true on construction.
@@ -371,13 +380,10 @@ class Zend_Config implements Countable, Iterator
      * @param string $errstr
      * @param string $errfile
      * @param integer $errline
-     * @throws Zend_Config_Exception
      */
     protected function _loadFileErrorHandler($errno, $errstr, $errfile, $errline)
     { 
-        /** @see Zend_Config_Exception */
-        require_once 'Zend/Config/Exception.php';
-        throw new Zend_Config_Exception($errstr);
+        $this->_loadFileErrorStr = $errstr;
     }
 
 }

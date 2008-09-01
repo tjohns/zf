@@ -61,14 +61,12 @@ class Zend_Config_Xml extends Zend_Config
         }
 
         set_error_handler(array($this, '_loadFileErrorHandler'));
-        try {
-            $config = simplexml_load_file($filename); // Warnings are converted into exceptions
-        } catch (Exception $e) {
-            // Restore error handler and passthrough an exception
-            restore_error_handler();
-            throw $e;
-        }
+        $config = simplexml_load_file($filename); // Warnings and errors are suppressed
         restore_error_handler();
+        // Check if there was a error while loading file
+        if ($this->_loadFileErrorStr !== null) {
+            throw new Zend_Config_Exception($this->_loadFileErrorStr);
+        }
 
         if ($section === null) {
             $dataArray = array();
