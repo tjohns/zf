@@ -88,10 +88,11 @@ $this->dojo()->enable()
     <?= $this->headMeta() ?> 
     <?= $this->headLink() ?> 
     <?= $this->headStyle() ?> 
-<? if ($this->dojo()->isEnabled()):
+<? if ($this->dojo()->isEnabled()){
     $this->dojo()->setLocalPath('/js/dojo/dojo.js')
                  ->addStyleSheetModule('dijit.themes.tundra');
     echo $this->dojo();
+   }
 ?>
     <?= $this->headScript() ?> 
 </head>
