@@ -394,7 +394,7 @@ class Zend_Http_Response
      */
     public function asString($br = "\n")
     {
-        return $this->getHeadersAsString(true, $br) . $br . $this->getBody();
+        return $this->getHeadersAsString(true, $br) . $br . $this->getRawBody();
     }
 
     /**
