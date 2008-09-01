@@ -30,16 +30,20 @@
                 如需禁用<code>ErrorHandler</code>，调用<code>dispatch()</code>前执行下面代码：
             </para>
 
-            <programlisting role="php"><![CDATA[// Disable the ErrorHandler plugin:
-$front->setParam('noErrorHandler', true);]]>
+            <programlisting role="php"><![CDATA[
+// Disable the ErrorHandler plugin:
+$front->setParam('noErrorHandler', true);
+]]>
             </programlisting>
 
             <para>
                 如需禁用<code>ViewRenderer</code>，调用<code>dispatch()</code>前执行下面代码：
             </para>
 
-            <programlisting role="php"><![CDATA[// Disable the ViewRenderer helper:
-$front->setParam('noViewRenderer', true);]]>
+            <programlisting role="php"><![CDATA[
+// Disable the ViewRenderer helper:
+$front->setParam('noViewRenderer', true);
+]]>
             </programlisting>
         </note>
     </sect2>
@@ -58,7 +62,9 @@ $front->setParam('noViewRenderer', true);]]>
                 <code>getInstance()</code>方法用来获取前端控制器实例。因为前端控制器实现了单件模式，这可能是唯一创建前端控制器对象的方法。
             </para>
 
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+]]>
             </programlisting>
         </sect3>
 
@@ -85,7 +91,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Add a 'foo' module directory:
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');
+]]>
             </programlisting>
 
             <note>
@@ -167,9 +174,11 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
 				        基本上，如果不要求定制前端控制器环境，<code>run()</code>是一个很方便的建立前端控制器环境的方法。
             </para>
 
-            <programlisting role="php"><![CDATA[// Instantiate front controller, set controller directory, and dispatch in one
+            <programlisting role="php"><![CDATA[
+// Instantiate front controller, set controller directory, and dispatch in one
 // easy step:
-Zend_Controller_Front::run('../application/controllers');]]>
+Zend_Controller_Front::run('../application/controllers');
+]]>
             </programlisting>
         </sect3>
     </sect2>

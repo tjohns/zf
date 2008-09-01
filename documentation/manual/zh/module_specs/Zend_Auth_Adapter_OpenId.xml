@@ -75,7 +75,8 @@ if ((isset($_POST['openid_action']) &&
 <input type="submit" name="openid_action" value="login">
 <input type="submit" name="openid_action" value="logout">
 </fieldset></form></body></html>
-*/]]>
+*/
+]]>
         </programlisting>
 
         <para>

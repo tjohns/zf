@@ -185,7 +185,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
+);
+]]>
         </programlisting>
         <para>
             另外一个场景是免疫机制的实现。免疫是指大幅提高程序安全的技术术语。

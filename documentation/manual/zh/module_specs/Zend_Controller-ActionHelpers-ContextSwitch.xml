@@ -56,7 +56,8 @@ class NewsController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
     
     <para>
         我们想让 <code>listAction()</code> 也支持 XML 格式，不用创建一个不同的动作，我们可以提示它可以返回 XML 响应：
@@ -74,7 +75,8 @@ class NewsController extends Zend_Controller_Action
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         这将完成：
@@ -133,7 +135,10 @@ class NewsController extends Zend_Controller_Action
                     通过关闭 auto-JSON serialization 可禁止这个行为：
                 </para>
 
-                <programlisting role="php"><![CDATA[$this->_helper->contextSwitch()->setAutoJsonSerialization(false);]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$this->_helper->contextSwitch()->setAutoJsonSerialization(false);
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -250,7 +255,8 @@ class FooController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             假如我们想添加 XML 上下文到 'list'动作、XML 和 JSON 上下文到 'comments' 动作，可以在 <code>init()</code> 方法中完成：
@@ -267,7 +273,8 @@ class FooController extends Zend_Controller_Action
              ->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             另外，还可以定义数组属性 <code>$contexts</code>：
@@ -286,7 +293,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             上述不但缺少周密考虑，而且有潜在的错误。
@@ -356,7 +364,8 @@ class NewsController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             在某些情况下，你想强制使用上下文，例如，如果上下文开关是激活状态，你只想用 XML 上下文，可以通过传递上下文给 <code>initContext()</code> 来完成：
@@ -364,7 +373,8 @@ class NewsController extends Zend_Controller_Action
 
         <programlisting role="php"><![CDATA[
 $contextSwitch->initContext('xml');
-]]></programlisting>
+]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -383,7 +393,8 @@ $contextSwitch->initContext('xml');
                 <programlisting role="php"><![CDATA[
 $contextSwitch->setAutoJsonSerialization(false);
 $contextSwitch->initContext();
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     用 <code>getAutoJsonSerialization()</code> 来获取 flag 的值。
@@ -573,7 +584,8 @@ class CommentController extends Zend_Controller_Action
         // view variables, and JSON will be returned.
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 在客户端，AJAX 库将请求终点  '/comment/view'、 '/comment/form' 和 '/comment/process'，并传递 'format' 参数：'/comment/view/format/html'、'/comment/form/format/html' 和 '/comment/process/format/json'。（或者你可以通过查询字符串（ query string） 传递参数，如："?format=json"）

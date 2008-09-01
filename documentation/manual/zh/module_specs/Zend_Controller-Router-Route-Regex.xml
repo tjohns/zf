@@ -17,7 +17,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
     </programlisting>
 
     <para>
@@ -29,7 +30,8 @@ $values = array(
     1            => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]>
+);
+]]>
     </programlisting>
 
     <note>
@@ -59,7 +61,8 @@ public function showAction()
 {
     $request = $this->getRequest();
     $year    = $request->getParam(1); // $year = '2006';
-}]]>
+}
+]]>
     </programlisting>
 
     <note>
@@ -79,7 +82,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
     </programlisting>
 
     <para>
@@ -97,7 +101,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         1 => 'year'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
     </programlisting>
 
     <para>
@@ -109,7 +114,8 @@ $values = array(
     'year'       => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -130,7 +136,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     'archive/(\d+)',
     array( ... ),
     array('year' => 1)
-);]]>
+);
+]]>
     </programlisting>
 
     <note>
@@ -148,7 +155,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     'archive/(\d+)/page/(\d+)',
     array( ... ),
     array('year' => 1)
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -161,7 +169,8 @@ $values = array(
     2            => 10,
     'controller' => 'archive',
     'action'     => 'show'
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -174,7 +183,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     array( ... ),
     array('year' => 1),
     'archive/%s'
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -194,7 +204,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     ),
     'blog/archive/%d-%s.html'
 );
-$router->addRoute('blogArchive', $route);]]>
+$router->addRoute('blogArchive', $route);
+]]>
     </programlisting>
 
     <para>

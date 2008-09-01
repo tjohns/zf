@@ -66,7 +66,8 @@
                     第二好的办法：视图解析器（ViewRenderer）现在给 <code>Zend_Filter_Inflector</code> 代表视图脚本解析，可以修改变形器（inflector）的规则，使之不再用短横线作为动作名称中的分隔符：
                 </para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -75,7 +76,9 @@ $inflector->setFilterRule(':action', array(
     ),
     'StringToLower'
 ));
-?>]]></programlisting>
+
+]]>
+                </programlisting>
 
                 <para>
                     上面的代码修改变形器使之不再使用短横线作为字分隔符，如果你<emphasis>确实</emphasis>也想用驼峰命名实际的视图脚本，可能要删除 'StringToLower'过滤器。
@@ -91,8 +94,11 @@ $inflector->setFilterRule(':action', array(
                     最不希望的办法：你可以强制派遣器用新的前端控制器标志－'useCaseSensitiveActions'来派遣驼峰命名的动作：
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->setParam('useCaseSensitiveActions', true);
-?>]]></programlisting>
+                <programlisting role="php"><![CDATA[
+$front->setParam('useCaseSensitiveActions', true);
+
+]]>
+                </programlisting>
 
                 <para>
                     这将允许你再 url 中使用驼峰命名并且仍把它解析到和用字分隔符命名的同一动作。然而，这将意味着原有的问题接踵而来，你将可能使用上述第二种办法以确保可靠工作。
@@ -116,7 +122,9 @@ $inflector->setFilterRule(':action', array(
             在<code>postDispatch()</code>期间，<code>ErrorHandler</code>插件检查异常，并转发到一个特定的错误管理控制器。你需要包含这样一个控制器在你的程序中，可以通过设置前端控制器参数<code>noErrorHandler</code>来禁止它：
         </para>
 
-        <programlisting role="php"><![CDATA[$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('noErrorHandler', true);
+]]>
         </programlisting>
 
         <para>
@@ -127,8 +135,10 @@ $inflector->setFilterRule(':action', array(
             有若干策略你可以用来更新你的代码。短期，你可以在派遣之前全局地在前端控制器引导文件禁止<code>ViewRenderer</code>：
         </para>
 
-        <programlisting role="php"><![CDATA[// Assuming $front is an instance of Zend_Controller_Front
-$front->setParam('noViewRenderer', true);]]>
+        <programlisting role="php"><![CDATA[
+// Assuming $front is an instance of Zend_Controller_Front
+$front->setParam('noViewRenderer', true);
+]]>
         </programlisting>
 
         <para>
@@ -151,7 +161,8 @@ $front->setParam('noViewRenderer', true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$this->_helper->viewRenderer->setNoRender();]]>
+$this->_helper->viewRenderer->setNoRender();
+]]>
         </programlisting>
 
         <para>
@@ -164,7 +175,8 @@ public function preDispatch()
     // disable view script autorendering
     $this->_helper->viewRenderer->setNoRender()
     // .. do other things...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -203,9 +215,11 @@ public function preDispatch()
                     在派遣前端控制器实例之前：
                 </para>
 
-                <programlisting role="php"><![CDATA[// Assuming $view has already been defined
+                <programlisting role="php"><![CDATA[
+// Assuming $view has already been defined
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
                 </programlisting>
             </listitem>
 
@@ -214,8 +228,10 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     在引导过程中的任何时候：
                 </para>
 
-                <programlisting role="php"><![CDATA[$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);]]>
+                <programlisting role="php"><![CDATA[
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer->setView($view);
+]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -266,7 +282,10 @@ $viewRenderer->setView($view);]]>
             每次修改，MVC组件的最基本用法保持不变：
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
+        </programlisting>
 
         <para>
             然而，目录结构经历了检查，数个组件被删除，同时若干个其它的被改名或添加。变化包括：
@@ -309,7 +328,8 @@ $viewRenderer->setView($view);]]>
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);]]>
+final protected function _forward($action, $controller = null, $module = null, array $params = null);
+]]>
                 </programlisting>
 
                 <para>
@@ -331,7 +351,10 @@ final protected function _forward($action, $controller = null, $module = null, a
             still do each of the following:
         </para>
 
-        <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/controllers');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
+        </programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- create a router -- */
@@ -345,7 +368,8 @@ $ctrl->setRouter($router);
 
 /* -- set controller directory and dispatch -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
-$ctrl->dispatch();]]>
+$ctrl->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -386,7 +410,8 @@ $ctrl->dispatch();]]>
                             controller:
                         </para>
                         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
                         </programlisting>
                     </listitem>
 
@@ -404,7 +429,8 @@ $front->dispatch();
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
-echo $response;]]>
+echo $response;
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>
@@ -498,7 +524,8 @@ $action = $this->getRequest()->getActionName();
 // the request object now.
 $params = $this->_getParams();
 $foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
-                                           // 'default' as default value if not found]]>
+                                           // 'default' as default value if not found
+]]>
                         </programlisting>
                     </listitem>
 
@@ -520,7 +547,8 @@ public function __call($method, $args)
     }
 
     throw new Zend_Controller_Exception('Invalid method called');
-}]]>
+}
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>

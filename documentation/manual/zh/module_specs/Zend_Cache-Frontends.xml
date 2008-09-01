@@ -164,7 +164,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);]]>
+echo($data);
+]]>
             </programlisting>
             <para>
                 如果你想缓存特殊值（带 "automatic_serialization" 选项的布尔值）或不能用上述紧缩结构的空字符串，你需要正式地测试缓存记录。
@@ -316,7 +317,8 @@ $cache->call('veryExpensiveFunc', $params);
 // $params is an array 
 // For example to call veryExpensiveFunc(1, 'foo', 'bar') with 
 // caching, you can use 
-// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]> 
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the

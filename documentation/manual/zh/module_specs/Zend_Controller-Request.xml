@@ -137,7 +137,8 @@ $front->setRequest($request);
 		如果基地址经检测不正确，可以利用<code>Zend_Controller_Request_Http</code>或者<code>Zend_Controller_Front</code>类的<code>setBaseUrl()</code>方法设置自己的基路径。<code>Zend_Controller_Front</code>设置最容易，它将导入基地址到请求对象。定制基地址的用法举例：
             </para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Dispatch Request with custom base URL with Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
@@ -145,7 +146,8 @@ $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // set the base url!
-$response   = $controller->dispatch();]]>
+$response   = $controller->dispatch();
+]]>
             </programlisting>
 
         </sect3>
@@ -284,7 +286,8 @@ abstract class Zend_Controller_Request_Abstract
      * @return boolean
      */
     public function isDispatched();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

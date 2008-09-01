@@ -54,7 +54,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
             </programlisting>
 
            如上面所示，<code>authenticate()</code>必需返回一个<code>Zend_Auth_Result</code>的实例（或从<code>Zend_Auth_Result</code>派生的一个类的实例）。如果因为某些原因认证查询不能执行，<code>authenticate()</code>应该抛出一个由<code>Zend_Auth_Adapter_Exception</code>产生的异常。
@@ -288,7 +289,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
 
 // Authenticate, saving the result, and persisting the identity on 
 // success
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -361,7 +363,10 @@ if ($auth->hasIdentity()) {
 
         <para>
             从持久存储空间出去一个身份，可简单地使用<code>clearIdentity()</code>方法。这将被典型地用作“logout”操作。
-            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Auth::getInstance()->clearIdentity();
+]]>
+            </programlisting>
         </para>
 
         <para>

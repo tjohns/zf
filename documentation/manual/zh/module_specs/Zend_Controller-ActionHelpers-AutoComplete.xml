@@ -32,7 +32,8 @@ class FooController extends Zend_Controller_Action
                                   ->prepareAutoCompletion($data);
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
     <para>
         缺省地，自动完成做这些工作：
@@ -100,7 +101,8 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // within a controller action:
 $this->_helper->autoCompleteDojo($data);
-]]></programlisting>
+]]>
+        </programlisting>
         
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
             <title>AutoCompletion with Dojo Using Zend MVC</title>
@@ -121,7 +123,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
         return this.inherited("fetch", arguments);
     }
 });
-]]></programlisting>
+]]>
+</programlisting>
             
             <para>
                 该类是 Dojo 自己的 QueryReadStore 的扩展，QueryReadStore 是一个抽象类。我们简单地通过请求定义一个方法，并把它分配给 'test' 元素。
@@ -160,7 +163,8 @@ class TestController extends Zend_Controller_Action
         return $this->_form;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 这里，我们用 'test' 和 'go' 方法生成表单。'test' 方法添加若干特别的 Dojo 专用的属性：dojoType、 store、 autoComplete 和 hasDownArrow。dojoType 用来指示我们在生成 comboBox，并且我们将把它链接到 'testStore' 的数据存储（键 'store'）－－ 稍后还有更多。指定 'autoComplete' 作为 false 告诉 Dojo 不要自动选择第一个匹配，但是要显示一个匹配列表。最后，'hasDownArrow' 生成和选择 box 类似的向下箭头，这样我们可以显示和隐藏匹配。
@@ -203,7 +207,8 @@ class TestController extends Zend_Controller_Action
         $this->_helper->autoCompleteDojo($matches);
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 在 <code>autocompleteAction()</code> 中我们做许多事情。首先，我们注意确保我们有个 post 请求，并且有个 'format' 参数的值为 'ajax'；这样减少欺骗查询给动作。接着，我们检查 'test' 参数，并和我们的数据比较。（我在这里故意忽略了 <code>getData()</code> 的实现 －－ 它可以是任何数据源）。最后，发送匹配给 AutoCompletion 助手。
@@ -242,8 +247,9 @@ dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() ?>
-]]></programlisting>
+<? $this->headScript()->captureEnd() 
+]]>
+            </programlisting>
 
             <para>
                 注意对视图助手的调用如 headStyle 和 headScript，它们是占位符，我们可以在布局视图脚本的 HTML 头中解析。

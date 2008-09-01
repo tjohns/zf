@@ -43,7 +43,7 @@ database.params.host     = dev.example.com
 database.params.username = devuser
 database.params.password = devsecret
 ]]>
-        </programlisting>
+</programlisting>
         <para>
             接着，假定开发者需要从INI文件取开发配置数据。这非常简单，只要指定INI文件和开发系统节就可以加载这些数据了：
         </para>
@@ -51,7 +51,8 @@ database.params.password = devsecret
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // 输出 "dev.example.com"
-echo $config->database->params->dbname; // 输出 "dbname"]]>
+echo $config->database->params->dbname; // 输出 "dbname"
+]]>
         </programlisting>
     </example>
     <note>

@@ -21,7 +21,8 @@ $front->setParam('prefixDefaultModule', true);
 
 // 在你的分发器中：
 $dispatcher->setParam('prefixDefaultModule', true);
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 这允许你重定义一个已存在的模块为程序的缺省模块。
@@ -60,7 +61,8 @@ public function bazAction()
     // forward to an action in another controller in another module,
     // Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -232,7 +234,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return string
      */
     public function getDefaultAction();    
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

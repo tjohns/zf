@@ -74,11 +74,14 @@
             即可编写插件类。
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }
-?>]]></programlisting>
+
+]]>
+        </programlisting>
 
         <para>
             <code>Zend_Controller_Plugin_Abstract</code> 的全部方法都不是抽象的，
@@ -101,7 +104,8 @@
             下面的代码片段说明了如何在控制器链条中使用插件。
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
@@ -139,7 +143,8 @@ $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
 $front->dispatch();
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             假设没有动作产生任何输出，而只有一个动作被调用，前面演示的插件仍然会产生下面的输出：
@@ -152,7 +157,8 @@ $front->dispatch();
 <p>preDispatch() called</p>
 <p>postDispatch() called</p>
 <p>dispatchLoopShutdown() called</p>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <para>

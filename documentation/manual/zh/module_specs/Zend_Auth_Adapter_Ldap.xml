@@ -53,7 +53,9 @@ if ($log_path) {
             $logger->log("Ldap: $i: $message", Zend_Log::DEBUG);
         }
     }
-}]]></programlisting>
+}
+]]>
+            </programlisting>
             虽然日志（ logging ）代码是可选的，还是强烈建议使用日志。<code>Zend_Auth_Adapter_Ldap</code> 将记录任何想要的信息细节到 <code>$messages</code> （更多的信息看下面），对于难以调试的程序来说，有历史记录这是个很好的功能。
         </para>
 
@@ -81,7 +83,8 @@ ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
-]]></programlisting>
+]]>
+</programlisting>
             上述的配置将指示 <code>Zend_Auth_Adapter_Ldap</code> 首先来尝试用 OpenLDAP 服务器 <code>s0.foo.net</code> 来认证用户，如果不论什么原因认证失败，将尝试 AD 服务器 <code>dc1.w.net</code>。
         </para>
 
@@ -134,7 +137,9 @@ Array
             [bindRequiresDn] => 1
         )
 
-)]]></programlisting>
+)
+]]>
+</programlisting>
             上述每组选项提供的信息是不同的，主要是因为当绑定（参见下面 <emphasis> 服务器选项 </emphasis> 一节中的 <code>bindRequiresDn</code> 选项）时 AD 不要求在 DN 表单中的有用户名，这意味着我们可以忽略很多和为认证用户名获取 DN 相关的选项。 
         </para>
 

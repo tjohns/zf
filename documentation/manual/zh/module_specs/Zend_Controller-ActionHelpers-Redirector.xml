@@ -216,18 +216,21 @@ class ForwardController extends Zend_Controller_Action
                 下面的例子使用了<link linkend="zend.controller.router">路由器</link>的<code>assemble()</code>方法，基于传入参数的关联数组来创建URL。假定下面的路由已经注册:
             </para>
 
-            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
-$router->addRoute('blogArchive', $route);]]>
+$router->addRoute('blogArchive', $route);
+]]>
             </programlisting>
 
             <para>
                给定一个数组，其中年份为2006，月份为4，日期为24，id为42，据此可以组装URL<code>/blog/2006/4/24/42</code>。
             </para>
 
-            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion

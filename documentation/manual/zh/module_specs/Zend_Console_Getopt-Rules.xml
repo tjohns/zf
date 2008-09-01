@@ -17,7 +17,10 @@
         </para>
         <example id="zend.console.getopt.rules.short.example">
             <title> 使用短语法 </title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
+]]>
+            </programlisting>
         </example>
         <para>
             上面的例子示例使用 <code>Zend_Console_Getopt</code> 来声明选项，这个选项也可以以 "<code>-a</code>"、"<code>-b</code>" 或 "<code>-p</code>"的形式给出。后面的 flag 需要一个参数。

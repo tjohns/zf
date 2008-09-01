@@ -14,7 +14,8 @@
         </para>
         <example id="zend.console.getopt.fetching.exceptions.example">
             <title> 捕捉 Getopt 异常 </title>
-            <programlisting role="php"><![CDATA[try {
+            <programlisting role="php"><![CDATA[
+try {
     $opts = new Zend_Console_Getopt('abp:');
     $opts->parse();
 } catch (Zend_Console_Getopt_Exception $e) {
@@ -53,7 +54,8 @@
         </para>
         <example id="zend.console.getopt.fetching.byname.example.setoption">
             <title> 使用 getOption()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
 ]]>

@@ -90,7 +90,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
+]]>
             </programlisting>
             <para>
                 因为没有明确地为 "<code>someUser</code>"和"<code>someResource</code>" 定义规则，
@@ -125,7 +126,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$acl = new Zend_Acl();]]>
+$acl = new Zend_Acl();
+]]>
         </programlisting>
 
         <note>
@@ -204,7 +206,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator 不继承访问控制
-$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+$acl->addRole(new Zend_Acl_Role('administrator'));
+]]>
         </programlisting>
 
     </sect2>
@@ -253,7 +256,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator 不需要继承任何权限，它拥有所有的权限
-$acl->allow('administrator');]]>
+$acl->allow('administrator');
+]]>
         </programlisting>
 
         <para>

@@ -152,7 +152,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 $redirector = 
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
            最后，使用<code>removeHelper($name)</code>来删除助手经纪人中的某个助手，<code>$name</code>是助手的短名称。
@@ -238,8 +239,10 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
            助手类中还可以包含一个<code>direct()</code>方法，如果定义了该方法，就可以将助手视作助手经纪人的一个方法，以便简单的、一次性的使用助手。例如<link linkend="zend.controller.actionhelpers.redirector">redirector</link> 定义<code>direct()</code> 作为<code>goto()</code>的别名,就可以这样使用：
         </para>
 
-        <programlisting role="php"><![CDATA[// Redirect to /blog/view/item/id/42
-$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+        <programlisting role="php"><![CDATA[
+// Redirect to /blog/view/item/id/42
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
+]]>
         </programlisting>
 
         <para>
