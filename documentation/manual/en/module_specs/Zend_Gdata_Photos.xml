@@ -374,7 +374,7 @@ $service = new Zend_Gdata_Photos($client);
 try {
     $userFeed = $service->getUserFeed("sample.user");
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -391,7 +391,7 @@ $query->setUser("sample.user");
 try {
     $userFeed = $service->getUserFeed(null, $query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -409,7 +409,7 @@ $query->setType("entry");
 try {
     $userEntry = $service->getUserEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -434,7 +434,7 @@ $query->setAlbumId("1");
 try {
     $albumFeed = $service->getAlbumFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -458,7 +458,7 @@ $query->setType("entry");
 try {
     $albumEntry = $service->getAlbumEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -484,7 +484,7 @@ $query->setPhotoId("100");
 try {
     $photoFeed = $service->getPhotoFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -504,7 +504,7 @@ $query->setType("entry");
 try {
     $photoEntry = $service->getPhotoEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -539,7 +539,7 @@ try {
         }
     }
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -573,7 +573,7 @@ try {
         }
     }
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Error: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -796,9 +796,9 @@ $service->deleteTagEntry($tagEntry, true);
 try {
     $this->delete($album);
 } catch (Zend_Gdata_App_HttpException $e) {
-    if ($e->getResponse->getStatus() === 409) {
+    if ($e->getMessage()->getStatus() === 409) {
         $entry =
-            new Zend_Gdata_Photos_AlbumEntry($e->getResponse()->getBody());
+            new Zend_Gdata_Photos_AlbumEntry($e->getMessage()->getBody());
         $this->delete($entry->getLink('edit')->href);
     } else {
         throw $e;
