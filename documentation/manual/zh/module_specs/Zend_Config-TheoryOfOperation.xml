@@ -7,9 +7,9 @@
         为了很容易简单地访问配置数据，<code>Zend_Config</code>实现了<code>Countable</code> 和 <code>Iterator</code> 接口。这样，可以基于<code>Zend_Config</code>对象使用<ulink url="http://php.net/count"><code>count()</code></ulink>函数和PHP语句如<ulink url="http://php.net/foreach"><code>foreach</code></ulink>。
     </para>
     <para>
-        缺省地，配置数据通过<code>Zend_Config</code>可用是只读的，并且赋值（例如，<code><![CDATA[
-$config->database->host = 'example.com']]></code>）导致抛出异常。这个缺省的行为可以通过构造器重载，然而，需要允许修改数据值。并且，当修改被允许时，<code>Zend_Config</code>支持未设定的值（例如 <code><![CDATA[
-unset($config->database->host);]]></code>）。
+        缺省地，配置数据通过<code>Zend_Config</code>可用是只读的，并且赋值（例如，<code>
+$config->database->host = 'example.com'</code>）导致抛出异常。这个缺省的行为可以通过构造器重载，然而，需要允许修改数据值。并且，当修改被允许时，<code>Zend_Config</code>支持未设定的值（例如 <code>
+unset($config->database->host);</code>）。
         <note>
             <para>
                 不要混淆如在内存中更改和保存配置数据到指定的存储媒体很重要。创建和更改配置数据给不同的存储媒体的工具超出了<code>Zend_Config</code>的范围。为创建和更改配置数据给不同的存储媒体的第三方开源方案很容易实现。
