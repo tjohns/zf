@@ -7,7 +7,8 @@
             传统的模块目录结构允许你把不同的MVC应用程序分离成为独立的单元，并和不同的前端控制器配合再使用。示例一下这样的目录结构：
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting>
+<![CDATA[
 docroot/
     index.php
 application/
@@ -75,8 +76,8 @@ application/
 
         <programlisting role="php"><![CDATA[
 $front->setControllerDirectory(array(
-      'default' => '/path/to/application/controllers',
-      'blog'    => '/path/to/application/blog/controllers'
+    'default' => '/path/to/application/controllers',
+    'blog'    => '/path/to/application/blog/controllers'
 ));
 ]]>
         </programlisting>
@@ -86,7 +87,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+$front->addControllerDirectory('/path/to/application/news/controllers', 
+                               'news');
 ]]>
         </programlisting>
 

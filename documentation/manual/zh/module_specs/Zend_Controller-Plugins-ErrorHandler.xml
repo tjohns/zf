@@ -128,13 +128,14 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 error -- controller or action not found
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                     ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... get some output to display...
                 break;
             default:
-                // application error; display error page, but don't change
-                // status code
+                // application error; display error page, but don't 
+                // change status code
                 break;
         }
     }
@@ -146,7 +147,8 @@ class ErrorController extends Zend_Controller_Action
             最后，你可以读取异常，这个异常由错误管理器通过抓取<code>error_handler</code>对象的<code>exception</code>属性来触发的：
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
@@ -156,7 +158,8 @@ public function errorAction()
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 error -- controller or action not found
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                      ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... get some output to display...
                 break;
@@ -168,8 +171,13 @@ public function errorAction()
 
                 // Log the exception:
                 $exception = $errors->exception;
-                $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/applicationException.log'));
-                $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
+                $log = new Zend_Log(
+                    new Zend_Log_Writer_Stream(
+                        '/tmp/applicationException.log'
+                    )
+                );
+                $log->debug($exception->getMessage() . "\n" .  
+                            $exception->getTraceAsString());
                 break;
         }
 }
@@ -263,7 +271,7 @@ EOH;
                 // application error
                 $content =<<<EOH
 <h1>Error!</h1>
-<p>An unexpected error occurred with your request. Please try again later.</p>
+<p>An unexpected error occurred. Please try again later.</p>
 EOH;
                 break;
         }

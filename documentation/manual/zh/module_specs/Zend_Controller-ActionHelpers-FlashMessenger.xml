@@ -35,7 +35,8 @@ class SomeController extends Zend_Controller_Action
     {
         /**
          * default method of getting 
-         * Zend_Controller_Action_Helper_FlashMessenger instance on-demand
+         * Zend_Controller_Action_Helper_FlashMessenger instance 
+         * on-demand
          */
         $this->_flashMessenger->addMessage('Record Saved!');
     }
