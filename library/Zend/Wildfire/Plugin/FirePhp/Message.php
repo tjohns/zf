@@ -71,9 +71,9 @@ class Zend_Wildfire_Plugin_FirePhp_Message
     /**
      * Creates a new message with the given style and message
      * 
-     * @return 
      * @param string $style Style of the message.
      * @param mixed $message The message
+     * @return void
      */
     function __construct($style, $message)
     {
