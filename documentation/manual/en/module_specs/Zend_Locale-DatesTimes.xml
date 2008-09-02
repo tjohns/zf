@@ -85,7 +85,7 @@
 
         <table id="zend.locale.date.normalize.table-2">
             <title>Return values</title>
-            <tgroup cols='4'>
+            <tgroup cols='5'>
                 <thead>
                     <row>
                         <entry>getDate() format character</entry>
