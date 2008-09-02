@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -104,7 +104,8 @@ echo $server->handle();
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -136,7 +137,8 @@ function myFunc($val1, $val2, $val3)
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -179,7 +181,8 @@ function myFunc($val1, $val2, $val3)
 $server->setClass('My_Service_Class', 'myservice');
 
 // Funktion 'somefunc' ist als funcs.somefunc ansprechbar.
-$server->addFunction('somefunc', 'funcs');]]>
+$server->addFunction('somefunc', 'funcs');
+]]>
         </programlisting>
     </sect2>
 
@@ -242,7 +245,8 @@ $server->addFunction('somefunc', 'funcs');]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
+]]>
         </programlisting>
 
         <para>
@@ -376,7 +380,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
 $server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
 $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -481,7 +486,8 @@ echo $server->handle($request);
                 Anfragen zwischenspeichern kann.
             </para>
 
-            <programlisting role="php"><![CDATA[// Definieren einer Cache-Datei
+            <programlisting role="php"><![CDATA[
+// Definieren einer Cache-Datei
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Services_Exceptions dürfen als Fehler-Antwort genutzt werden
@@ -505,7 +511,8 @@ $request = new Services_Request();
 // Nutzen eigener Antwort-Klasse
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
     </sect2>

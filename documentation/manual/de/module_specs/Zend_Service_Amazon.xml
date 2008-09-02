@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.amazon">
     <title>Zend_Service_Amazon</title>
     <sect2 id="zend.service.amazon.introduction">
@@ -56,11 +56,13 @@
             <para>
                 In diesem Beispiel suchen wir nach PHP Büchern bei Amazon, blättern durch die Resultate und Drucken diese aus.
             </para>
-            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <example id="zend.service.amazon.introduction.example.query_api">
@@ -69,12 +71,14 @@ foreach ($results as $result) {
                 Hier suchen wir auch nach PHP Büchern bei Amazon. Aber wir verwenden stattdessen die Abfrage API,
                 welche das Fluent Interface Design Pattern verwendet.
             </para>
-            <programlisting><![CDATA[$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
+            <programlisting><![CDATA[
+$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -87,8 +91,10 @@ foreach ($results as $result) {
         </para>
         <example id="zend.service.amazon.countrycodes.example.country_code">
             <title>Auswahl eines Amazon Web Service Landes</title>
-            <programlisting><![CDATA[// Zu Amazon in Japan verbinden
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
+            <programlisting><![CDATA[
+// Zu Amazon in Japan verbinden
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
+]]>
             </programlisting>
         </example>
         <note>
@@ -107,8 +113,10 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
         </para>
         <example id="zend.service.amazon.itemlookup.example.asin">
             <title>Betrachten eines speziellen Teils bei Amazon durch ASIN</title>
-            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$item = $amazon->itemLookup('B0000A432X');]]>
+            <programlisting><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$item = $amazon->itemLookup('B0000A432X');
+]]>
             </programlisting>
         </example>
         <para>
@@ -132,11 +140,13 @@ $item = $amazon->itemLookup('B0000A432X');]]>
         </para>
         <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Suchen nach Teilen bei Amazon</title>
-            <programlisting><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
@@ -145,7 +155,8 @@ foreach ($results as $result) {
                 Die <code>ResponseGroup</code> Option wird verwendet um die spezielle Information zu kontrollieren
                 die in der Antwort zurückgegeben wird.
             </para>
-            <programlisting role="php"><![CDATA[$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+            <programlisting role="php"><![CDATA[
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array(
     'SearchIndex'   => 'Books',
     'Keywords'      => 'php',
@@ -153,7 +164,8 @@ $results = $amazon->itemSearch(array(
     ));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <para>
@@ -190,12 +202,14 @@ foreach ($results as $result) {
                     In diesem Beispiel wird die alternative Abfrage API als Fluent Interface benutzt um Optionen und
                     Ihre Werte festzulegen:
                 </para>
-                <programlisting><![CDATA[$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+                <programlisting><![CDATA[
+$query = new Zend_Service_Amazon_Query('MY_API_KEY');
 $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}]]>
+}
+]]>
                 </programlisting>
                 <para>
                     Das setzt die Option <code>Category</code> auf "Books" und <code>Keywords</code> auf "PHP".

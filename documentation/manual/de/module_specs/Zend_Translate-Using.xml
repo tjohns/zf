@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11088 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -15,7 +15,8 @@ print "========\n";
 print "Hier steht Zeile eins\n";
 print "Heute ist der " . date("d.m.Y") . "\n";
 print "\n";
-print "Fixe Sprache hier ist Zeile zwei\n";]]>
+print "Fixe Sprache hier ist Zeile zwei\n";
+]]>
         </programlisting>
     </example>
 
@@ -79,7 +80,8 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
         <programlisting role="php"><![CDATA[
 print $translate->_("Beispiel")."\n";
 print "========\n";
-print $translate->_("Hier ist die Zeile Eins")."\n";]]>
+print $translate->_("Hier ist die Zeile Eins")."\n";
+]]>
         </programlisting>
 
         Einige Strings müssen nicht übersetzt werden. Die Trennlinie wird immer eine Trennlinie sein,
@@ -91,7 +93,8 @@ print $translate->_("Hier ist die Zeile Eins")."\n";]]>
         Verwendung von eingebetteten Parametern.
 
         <programlisting role="php"><![CDATA[
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+]]>
         </programlisting>
 
         Statt <code>print()</code> wird die <code>printf()</code> Funktion benutzt
@@ -109,7 +112,8 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
         <programlisting role="php"><![CDATA[
 print $translate->_(1)."\n";
 print "=======\n";
-print $translate->_(2)."\n";]]>
+print $translate->_(2)."\n";
+]]>
         </programlisting>
 
         Allerdings hat dies mehrere grobe Nachteile:
@@ -164,7 +168,8 @@ print $translate->_(2)."\n";]]>
 /languages
   lang.en
   lang.de
-/library]]>
+/library
+]]>
                 </programlisting>
 
                 <para>
@@ -186,7 +191,8 @@ print $translate->_(2)."\n";]]>
   /de
     lang.de
     other.de
-/library]]>
+/library
+]]>
                 </programlisting>
 
                 <para>
@@ -207,7 +213,8 @@ print $translate->_(2)."\n";]]>
     lang.en
     lang.de
     other.en
-    other.de]]>
+    other.de
+]]>
                 </programlisting>
 
                 <para>
@@ -235,7 +242,8 @@ print $translate->_(2)."\n";]]>
   /en
     /LC_MESSAGES
       lang.mo
-      other.mo]]>
+      other.mo
+]]>
                 </programlisting>
 
                 <para>
@@ -269,7 +277,8 @@ print $translate->_(2)."\n";]]>
   index.php
   index.de
 /library
-  /Zend]]>
+  /Zend
+]]>
                 </programlisting>
                 <para>
                     Positiv: Jede Datei ist bei Ihrer Übersetzung zu finden
@@ -318,7 +327,8 @@ $german = array('message1' => 'Nachricht1',
                 'message3' => 'Nachricht3');
 
 $translate = new Zend_Translate('array', $english, 'en');
-$translate->addTranslation($deutsch, 'de');]]>
+$translate->addTranslation($deutsch, 'de');
+]]>
         </programlisting>
 
         <para>
@@ -336,7 +346,8 @@ return array(
     'message3' => 'Nachricht3');
 
 // controller
-$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');]]>
+$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');
+]]>
         </programlisting>
 
         <note>
@@ -366,7 +377,8 @@ $translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');]]>
         <programlisting role="php"><![CDATA[
 // Wir nehmen an das die mo Datien erstellt und übersetzt wurden
 $translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
-$translate->addTranslation('path/to/german.mo', 'de');]]>
+$translate->addTranslation('path/to/german.mo', 'de');
+]]>
         </programlisting>
 
         <para>
@@ -408,7 +420,8 @@ $translate->addTranslation('path/to/german.mo', 'de');]]>
         <programlisting role="php"><![CDATA[
 // Wie man Informationen des Adapters erhält
 $translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
-print_r $translate->getAdapterInfo();]]>
+print_r $translate->getAdapterInfo();
+]]>
         </programlisting>
 
     </sect2>
@@ -441,12 +454,14 @@ print_r $translate->getAdapterInfo();]]>
   <tu tuid='message2'>
    <tuv xml:lang="en"><seg>message2</seg></tuv>
    <tuv xml:lang="de"><seg>Nachricht2</seg></tuv>
-  </tu>]]>
+  </tu>
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
-// TMX kann mehrere Sprachen in einer einzigen TMX Datei enthalten.]]>
+// TMX kann mehrere Sprachen in einer einzigen TMX Datei enthalten.
+]]>
             </programlisting>
         </example>
 
@@ -479,12 +494,14 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
             <programlisting><![CDATA[
 ﻿#Example csv file
 message1;Nachricht1
-message2;Nachricht2]]>
+message2;Nachricht2
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
-$translate->addTranslation('path/to/other.csv', 'fr');]]>
+$translate->addTranslation('path/to/other.csv', 'fr');
+]]>
             </programlisting>
         </example>
 
@@ -522,12 +539,14 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 # translation 'Nachricht,2'
 message2,"Nachricht,2"
 # original 'message3,'
-"message3,",Nachricht3]]>
+"message3,",Nachricht3
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
-$translate->addTranslation('path/to/other.csv', 'fr');]]>
+$translate->addTranslation('path/to/other.csv', 'fr');
+]]>
             </programlisting>
         </example>
 
@@ -550,12 +569,14 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
 ;TestPage Comment
 Message_1="Nachricht 1 (de)"
 Message_2="Nachricht 2 (de)"
-Message_3="Nachricht :3 (de)"]]>
+Message_3="Nachricht :3 (de)"
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('ini', 'path/to/mytranslation.ini', 'de');
-$translate->addTranslation('path/to/other.ini', 'it');]]>
+$translate->addTranslation('path/to/other.ini', 'it');
+]]>
             </programlisting>
         </example>
 
@@ -603,7 +624,8 @@ $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', $optio
 
 // Lösche die definierte Sprache und verwende die neuen Übersetzungsdaten
 $options = array('clear' => true);
-$translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
+$translate->addTranslation('path/to/new.csv', 'fr', $options);
+]]>
             </programlisting>
         </example>
 
@@ -747,7 +769,8 @@ echo $translate->_("mein_Text");
 // Prüft ob die Sprache existiert
 if ($translate->isAvailable("fr")) {
     // Sprache existiert
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -793,7 +816,8 @@ $translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
 $translate->addTranslation("\my_ru.mo","ru");
 $translate->setLocale("it_IT");
 $translate->addTranslation("\my_de.mo","de");
-// gibt "it_IT" als Übersetzungsquelle zurück]]>
+// gibt "it_IT" als Übersetzungsquelle zurück
+]]>
                 </programlisting>
             </example>
 
@@ -823,7 +847,8 @@ Zend_Registry::set('Zend_Locale', $locale);
 
 // Irgendwo in der Anwendung
 $translate = new Zend_Translate("gettext", "\my_de.mo");
-$translate->getLocale();]]>
+$translate->getLocale();
+]]>
             </programlisting>
 
         </sect3>
@@ -862,7 +887,8 @@ $translate->getLocale();]]>
 //  /language/error/loginerror.tmx
 //  /language/error/logouterror.tmx
 
-$translate = new Zend_Translate('tmx', '/language');]]>
+$translate = new Zend_Translate('tmx', '/language');
+]]>
             </programlisting>
         </example>
 
@@ -914,7 +940,8 @@ $translate = new Zend_Translate('tmx', '/language');]]>
 //  /language/en/login/login.mo
 //  /language/en/error/loginerror.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+]]>
                 </programlisting>
             </example>
 
@@ -962,7 +989,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 //  /language/error/loginerror_en.mo
 //  /language/error/loginerror_de.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));
+]]>
                 </programlisting>
             </example>
 
@@ -979,7 +1007,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 /languages
   en.mo
   de.mo
-  es.mo]]>
+  es.mo
+]]>
                 </programlisting>
 
             </sect4>
@@ -998,7 +1027,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 /languages
   view.en
   view.de
-  view.es]]>
+  view.es
+]]>
                 </programlisting>
 
             </sect4>
@@ -1018,7 +1048,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 /languages
   view_en.mo  -> erkennt englisch
   view_de.mo  -> erkennt deutsch
-  view_it.mo  -> erkennt italienisch]]>
+  view_it.mo  -> erkennt italienisch
+]]>
                 </programlisting>
 
                 <para>
@@ -1030,7 +1061,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 /languages
   view_en_de.mo  -> erkennt englisch
   view_en_es.mo  -> erkennt englisch und überschreibt die erste Datei weil die gleichen MessageIDs verwendet werden
-  view_it_it.mo  -> erkennt italienisch]]>
+  view_it_it.mo  -> erkennt italienisch
+]]>
                 </programlisting>
 
                 <para>
@@ -1044,7 +1076,8 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 /languages
   view_en-it.mo  -> erkennt englisch weil '_' vor '-' verwendet wird
   view-en_it.mo  -> erkennt italienisch weil '_' vor '-' verwendet wird
-  view_en.it.mo  -> erkennt italienisch weil '.' vor '_' verwendet wird]]>
+  view_en.it.mo  -> erkennt italienisch weil '.' vor '_' verwendet wird
+]]>
                 </programlisting>
 
             </sect4>
@@ -1088,7 +1121,8 @@ if (!($translate->isTranslated('message1', true, 'de'))) {
 }
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' kann in 'de_AT' übersetzt werden da es zu 'de' zurückfällt";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1151,7 +1185,8 @@ print_r($messageids);
 ...
 // gibt die kompletten Übersetzungs Daten zurück
 $source = $translate->getMessages();
-print_r($source);]]>
+print_r($source);
+]]>
             </programlisting>
         </example>
 

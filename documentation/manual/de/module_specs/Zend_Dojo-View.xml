@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.dojo.view" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Dojo View Helfer</title>
 
@@ -24,7 +24,8 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Alternativ kann <code>Zend_Dojo</code>'s <code>enableView()</code> Methode verwendet werden um einem
@@ -33,7 +34,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
 
         <programlisting role="php"><![CDATA[
 Zend_Dojo::enableView($view);
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <xi:include href="Zend_Dojo-View-Dojo.xml" />

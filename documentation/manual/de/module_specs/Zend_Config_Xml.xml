@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
@@ -34,7 +34,8 @@
             Nehmen wir also an, dass sich die folgenden Konfigurations-Daten in der Datei
             <code>/path/to/config.xml</code> befinden:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -57,17 +58,20 @@
             </params>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
         <para>
             Nehmen wir weiterhin an, dass der Anwendungs-Entwickler die Staging-Konfiguration aus
             diesem XML-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das
             XML-File und die Staging-Sektion spezifiziert werden:
         </para>
-        <programlisting role="php"><![CDATA[$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
+        <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // ausgabe "dev.example.com"
-echo $config->database->params->dbname; // ausgabe "dbname"]]>
+echo $config->database->params->dbname; // ausgabe "dbname"
+]]>
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
@@ -80,7 +84,8 @@ echo $config->database->params->dbname; // ausgabe "dbname"]]>
             Attribute zu verwenden ist das hinzufügen von Attributen zum Elternknoten, welcher dann in einen
             Kindknoten dieses Knotens übersetzt wird:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production webhost="www.example.com">
         <database adapter="pdo_mysql">
@@ -92,14 +97,16 @@ echo $config->database->params->dbname; // ausgabe "dbname"]]>
             <params host="dev.example.com" username="devuser" password="devsecret"/>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
         <para>
             Der andere Weg verkürzt die Konfiguration nicht wirklich, macht es aber einfacher in der
             Handhabung das der Tag-Name nicht zweimal geschrieben werden muß. Man erstellt einfach einen
             leeren Tag, welcher seinen Wert im <code>value</code> Attribut enthält:
         </para>
-        <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0"?>
 <configdata>
     <production>
         <webhost>www.example.com</webhost>
@@ -122,8 +129,9 @@ echo $config->database->params->dbname; // ausgabe "dbname"]]>
             </params>
         </database>
     </staging>
-</configdata>]]>
-        </programlisting>
+</configdata>
+]]>
+</programlisting>
     </example>
 </sect1>
 <!--

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP Authentifizierung</title>
@@ -66,7 +66,9 @@ if ($log_path) {
             $logger->log("Ldap: $i: $message", Zend_Log::DEBUG);
         }
     }
-}]]></programlisting>
+}
+]]>
+            </programlisting>
             Natürlich ist der Logging Code optional, aber es wird dringend empfohlen einen Logger
             zu verwenden. <code>Zend_Auth_Adapter_Ldap</code> zeichnet fast jedes Bisschen an
             Information in <code>$messages</code> auf das irgendwer benötigen können (mehr anbei),
@@ -107,7 +109,8 @@ ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
-]]></programlisting>
+]]>
+</programlisting>
             Die obige Konfiguration instruiert <code>Zend_Auth_Adapter_Ldap</code> das es versuchen
             soll Benutzer zuerst mit dem OpenLDAP Server <code>s0.foo.net</code> authentifizieren
             soll. Wenn die Authentifizierung auf irgendeinem Grund fehlschlägt, wird der AD Server
@@ -175,7 +178,9 @@ Array
             [bindRequiresDn] => 1
         )
 
-)]]></programlisting>
+)
+]]>
+</programlisting>
             Die oben angebotene Information in jedem Set von Optionen ist hauptsächlich deswegen
             unterschiedlich weil AD keinen Benutzernamen wärend des Bindesn in der DN Form benötigt
             (siehe die <code>bindRequiresDn</code> Option des <emphasis>Server Optionen</emphasis>

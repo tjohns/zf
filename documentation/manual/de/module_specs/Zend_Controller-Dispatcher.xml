@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11075 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.dispatcher">
     <title>Der Dispatcher</title>
 
@@ -35,7 +35,8 @@ $front->setParam('prefixDefaultModule', true);
 
 // Im Dispatcher:
 $dispatcher->setParam('prefixDefaultModule', true);
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Das erlaubt es existierende Module als Standardmodule für eine Anwendung
@@ -84,7 +85,8 @@ public function bazAction()
 {
     // weiterleiten zu einer Aktion in einem anderen Controller in einem anderen Modul Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -259,7 +261,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return string
      */
     public function getDefaultAction();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

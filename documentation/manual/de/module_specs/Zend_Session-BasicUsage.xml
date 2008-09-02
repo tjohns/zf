@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>Grundsätzliche Verwendung</title>
@@ -21,7 +21,8 @@
         <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
-// $myNamespace corresponds to $_SESSION['myNamespace']]]>
+// $myNamespace corresponds to $_SESSION['myNamespace']
+]]>
         </programlisting>
 
         Es ist möglich Zend_Session in Verbindung mit anderem Code zu verwenden welche <code>$_SESSION</code> direkt
@@ -57,7 +58,8 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
     $defaultNamespace->numberOfPageRequests = 1; // Erster Zugriff
 }
 
-echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageRequests;]]>
+echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageRequests;
+]]>
             </programlisting>
 
         </example>
@@ -105,7 +107,8 @@ $webServiceNamespace->user = "meinwebbenutzername";
 
             <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "meinbenutzername";
-$_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]>
+$_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";
+]]>
             </programlisting>
 
         </example>

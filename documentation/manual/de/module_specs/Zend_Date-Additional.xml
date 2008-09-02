@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.date.additional">
 
     <title>Funktionierende Beispiele</title>
@@ -52,7 +52,8 @@
 
         <example id="zend.date.additional.checking.example-1">
             <title>Prüfen von Daten</title>
-            <programlisting role="php"><![CDATA[// Prüfen des Datums
+            <programlisting role="php"><![CDATA[
+// Prüfen des Datums
 $date = '01.03.2000';
 if (Zend_Date::isDate($date)) {
     print "Zeichenkette $date ist ein Datum";
@@ -74,7 +75,8 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "Zeichenkette $date ist ein Datum";
 } else {
     print "Zeichenkette $date ist KEIN Datum";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -106,8 +108,10 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <example id="zend.date.additional.sunrise-sunset.example-1">
             <title>Alle verfügbaren Städte ausgeben</title>
-            <programlisting role="php"><![CDATA[// Ausgabe der kompletten Liste aller verfügbaren Städte
-print_r (Zend_Date_Cities::getCityList());]]>
+            <programlisting role="php"><![CDATA[
+// Ausgabe der kompletten Liste aller verfügbaren Städte
+print_r (Zend_Date_Cities::getCityList());
+]]>
             </programlisting>
         </example>
 
@@ -165,7 +169,8 @@ print_r (Zend_Date_Cities::getCityList());]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-2">
             <title>Die Ortsangabe für eine Stadt auslesen</title>
-            <programlisting role="php"><![CDATA[// Die Ortsangabe für eine bestimmte Stadt auslesen
+            <programlisting role="php"><![CDATA[
+// Die Ortsangabe für eine bestimmte Stadt auslesen
 // Benutzt den effektiven Horizont da kein Horizont angegeben wurde
 print_r (Zend_Date_Cities::City('Vienna'));
 
@@ -173,7 +178,8 @@ print_r (Zend_Date_Cities::City('Vienna'));
 print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
 
 // Selbstdefinition einer Ortsangabe
-$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
+$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
+]]>
             </programlisting>
         </example>
 
@@ -188,7 +194,8 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-3">
             <title>Berechnung von Sonneninformationen</title>
-            <programlisting role="php"><![CDATA[// Die Ortsangabe einer bestimmten Stadt auslesen
+            <programlisting role="php"><![CDATA[
+// Die Ortsangabe einer bestimmten Stadt auslesen
 $city = Zend_Date_Cities::City('Vienna');
 
 // Ein Datumsobjekt erstellen für den Tag für den die Sonne berechnet werden soll
@@ -202,7 +209,8 @@ print $sunset->get(Zend_Date::ISO_8601);
 $info = $date->getSunInfo($city);
 foreach ($info as $sun) {
     print "\n" . $sun->get(Zend_Date::ISO_8601);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -241,7 +249,8 @@ foreach ($info as $sun) {
 
         <example id="zend.date.additional.timezones.example-1">
             <title>Arbeiten mit Zeitzonen</title>
-            <programlisting role="php"><![CDATA[// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
+            <programlisting role="php"><![CDATA[
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
 // Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
 date_default_timezone_set('Europe/Vienna');
 
@@ -261,7 +270,8 @@ $date->setTimezone('America/Chicago');
 print $date->getTimezone();
 
 // Ausgabe des geänderten Datumsobjektes
-print $date->getIso();]]>
+print $date->getIso();
+]]>
             </programlisting>
         </example>
 
@@ -282,7 +292,8 @@ print $date->getIso();]]>
 
         <example id="zend.date.additional.timezones.example-2">
             <title>Mehrere Zeitzonen</title>
-            <programlisting role="php"><![CDATA[// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
+            <programlisting role="php"><![CDATA[
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
 // Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
 date_default_timezone_set('Europe/Vienna');
 
@@ -307,7 +318,8 @@ $lastdate = clone $date;
 $lastdate->setTimezone();
 
 // Ausgabe des Datumsobjektes
-print $lastdate->getIso();]]>
+print $lastdate->getIso();
+]]>
             </programlisting>
         </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -26,7 +26,10 @@
             formatting rules from 'en_US'.
         </para>
 
-        <programlisting role="php"><![CDATA[$currency = new Zend_Currency();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$currency = new Zend_Currency();
+]]>
+        </programlisting>
 
     </example>
 
@@ -38,12 +41,14 @@
         Male verwenden will.
     </para>
 
-    <programlisting role="php"><![CDATA[// In der Bootstrap Datei
+    <programlisting role="php"><![CDATA[
+// In der Bootstrap Datei
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // Irgendwo in der Anwendung
-$currency = new Zend_Currency();]]>
+$currency = new Zend_Currency();
+]]>
     </programlisting>
 
     <note>
@@ -104,7 +109,8 @@ $currency = new Zend_Currency();]]>
 
         <title>Andere Beispiele für die Erstellung einer Instanz von Zend_Currency</title>
 
-        <programlisting role="php"><![CDATA[// Wir nehmen das Standardgebietsschema 'de_AT' an
+        <programlisting role="php"><![CDATA[
+// Wir nehmen das Standardgebietsschema 'de_AT' an
 
 // Erstellt eine Instanz von from 'en_US' und verwendet 'USD' welches die Standardwert von 'en_US' ist
 $currency = new Zend_Currency('en_US');
@@ -113,7 +119,8 @@ $currency = new Zend_Currency('en_US');
 $currency = new Zend_Currency();
 
 // Erstellt eine Instanz und verwendet 'EUR' als Währung, 'en_US' für die Formatierung der Ziffern
-$currency = new Zend_Currency('en_US', 'EUR');]]>
+$currency = new Zend_Currency('en_US', 'EUR');
+]]>
         </programlisting>
 
     </example>
@@ -164,7 +171,8 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
             <title>Eine Ausgabe für eine Währung erstellen</title>
 
-            <programlisting role="php"><![CDATA[// Erstellt eine Instanz mit 'en_US' und verwendet 'USD' welches die Standardwert von 'en_US' sind
+            <programlisting role="php"><![CDATA[
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD' welches die Standardwert von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
 // Gibt '$ 1,000.00' aus
@@ -174,7 +182,8 @@ echo $currency->toCurrency(1000);
 echo $currency->toCurrency(1000, array('format' => 'de_AT'));
 
 // Gibt '$ ١٬٠٠٠٫٠٠' aus
-echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
+echo $currency->toCurrency(1000, array('script' => 'Arab'));
+]]>
             </programlisting>
 
         </example>
@@ -381,7 +390,8 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title>Das Anzeigeformat der Währung ändern</title>
 
-            <programlisting role="php"><![CDATA[// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+            <programlisting role="php"><![CDATA[
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
 // da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
@@ -394,7 +404,8 @@ echo $currency->toCurrency(1000);
 
 $currency->setFormat('name' => 'Amerikanische Dollar');
 // Gibt '1.000,00 Amerikanische Dollar' aus
-echo $currency->toCurrency(1000);]]>
+echo $currency->toCurrency(1000);
+]]>
             </programlisting>
 
         </example>
@@ -474,7 +485,8 @@ echo $currency->toCurrency(1000);]]>
 
             <title>Informationen von Währungen erhalten</title>
 
-            <programlisting role="php"><![CDATA[// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+            <programlisting role="php"><![CDATA[
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
 // da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
@@ -491,7 +503,8 @@ echo $currency->getName('ATS', 'de_AT');
 print_r($currency->getRegionList();
 
 // Gibt ein Array aus mit allen Währungen die jemals in dieser Region verwendet wurden 
-print_r($currency->getCurrencyList('de_AT');]]>
+print_r($currency->getCurrencyList('de_AT');
+]]>
             </programlisting>
 
         </example>
@@ -512,7 +525,8 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
             <title>Ein neues Gebietsschema setzen</title>
 
-            <programlisting role="php"><![CDATA[// Die Währung für US bekommen
+            <programlisting role="php"><![CDATA[
+// Die Währung für US bekommen
 $currency = new Zend_Currency('en_US');
 print $currency->toCurrency(1000);
 
@@ -541,11 +555,13 @@ print $currency->toCurrency(1000);
 
             <title>Cachen von Währungen</title>
 
-            <programlisting role="php"><![CDATA[// Ein Cache-Objekt erstellen
+            <programlisting role="php"><![CDATA[
+// Ein Cache-Objekt erstellen
 $cache = Zend_Cache::factory('Core', 'File',
              array('lifetime' => 120, 'automatic_serialization' => true),
              array('cache_dir' => dirname(__FILE__) . '/_files/'));
-Zend_Currency::setCache($cache);]]>
+Zend_Currency::setCache($cache);
+]]>
             </programlisting>
         </example>
 

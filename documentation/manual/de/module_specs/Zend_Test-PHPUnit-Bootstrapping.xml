@@ -1,6 +1,6 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 11089 -->
 <sect2 id="zend.test.phpunit.bootstrapping">
-    <title>Bootstrapping des eigeen TestCases</title>
+    <title>Bootstrapping der eigenen TestCases</title>
 
     <para>
         Wie im <link linkend="zend.test.phpunit.loginexample">Login Beispiel</link> gezeigt sollten alle
@@ -22,7 +22,6 @@
         Front Kontroller konfigurieren und alles was die Anwendung an speziellen Dingen benötigt.
     </para>
 
-
     <programlisting role="php"><![CDATA[
 class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
@@ -30,7 +29,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Zweitens kann ein PHP Callback angegeben werden der nach dem Bootstrap der Anwendung ausgeführt wird.
@@ -46,7 +46,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         In Fällen in denen eine Objekt Instanz notwendig ist, empfehlen wir die Durchführung in der eigenen
@@ -64,7 +65,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         parent::setUp();
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Beachte das <code>parent::setUp()</code> aufgerufen wird; das ist notwendig, da die <code>setUp()</code>

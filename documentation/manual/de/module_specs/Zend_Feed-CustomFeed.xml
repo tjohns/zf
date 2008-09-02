@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.feed.custom-feed">
     <title>Eigene Klassen für Feeds und Einträge</title>
 
@@ -69,7 +69,8 @@ class MyEntry extends Zend_Feed_Entry_Atom
                 return parent::__call($var, $unused);
         }
     }
-}]]>
+}
+]]>
         </programlisting>
         <para>
             Um diese Klasse zu verwenden, musst du sie nur direkt instanziieren und die
@@ -82,7 +83,8 @@ $entry->myUpdated = '2005-04-19T15:30';
 // Methoden-Stil Aufruf wird von der _call Methode gehandhabt
 $entry->myUpdated();  
 // Eigenschaften-Stil Aufruf wurd von der __get Methode gehandhabt
-$entry->myUpdated;]]>
+$entry->myUpdated;
+]]>
         </programlisting>
     </example>
 

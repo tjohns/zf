@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.http.client.advanced">
     <title>Zend_Http_Client - Fortgeschrittende Nutzung</title>
 
@@ -25,7 +25,8 @@
 $client->setConfig(array('strictredirects' => true);
 
 // Nicht strikte Umleitungen
-$client->setConfig(array('strictredirects' => false);]]>
+$client->setConfig(array('strictredirects' => false);
+]]>
                 </programlisting>
             </example>
         </para>
@@ -54,7 +55,8 @@ $client->setCookie('flavor=chocolate%20chips');
 
 // Durch Übergabe eins Zend_Http_Cookie Objekts
 $cookie = Zend_Http_Cookie::fromString('flavor=chocolate%20chips');
-$client->setCookie($cookie);]]>
+$client->setCookie($cookie);
+]]>
                 </programlisting>
             </example>
             Für weitere Informationen über Zend_Http_Cookie Objekte, siehe
@@ -84,7 +86,8 @@ $client->request('POST');
 // Nun können wir die nächste Anfrage senden - die gespeicherten Cookies
 // werden automatisch mit gesendet
 $client->setUri('http://example.com/read_member_news.php');
-$client->request('GET');]]>
+$client->request('GET');
+]]>
                 </programlisting>
             </example>
             Für weitere Informationen über die Zend_Http_CookieJar Klasse, siehe
@@ -111,7 +114,8 @@ $client->setHeaders('Host: www.example.com');
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -131,7 +135,8 @@ $client->setHeaders(array(
 $client->setHeaders(array(
     'Host: www.example.com',
     'Accept-encoding: gzip,deflate',
-    'X-Powered-By: Zend Framework'));]]>
+    'X-Powered-By: Zend Framework'));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -165,7 +170,8 @@ $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // Dateien absenden
-$client->submit('POST');]]>
+$client->submit('POST');
+]]>
                 </programlisting>
             </example>
             Im ersten Beispiel, wird die Variable $text hochgeladen und als $_FILES['upload'] auf
@@ -205,7 +211,8 @@ $xml = '<book>' .
 $client->setRawData($xml, 'text/xml')->request('POST');
 
 // Ein anderer Weg, um das selbe zu tun:
-$client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
+$client->setRawData($xml)->setEncType('text/xml')->request('POST');
+]]>
                 </programlisting>
             </example>
             Die Daten sollten auf der Serverseite über die PHP Variable $HTTP_RAW_POST_DATA
@@ -238,7 +245,8 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
 $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
 
 // Da Basis Authentifizierung Standard ist, kann man auch dies verwenden:
-$client->setAuth('shahar', 'myPassword!');]]>
+$client->setAuth('shahar', 'myPassword!');
+]]>
                 </programlisting>
             </example>
         </para>
@@ -323,7 +331,8 @@ if (isset($_SESSION['cookiejar']) &&
 $response = $client->request(Zend_Http_Client::GET);
 
 // Speichere die Cookies in der Session für die nächste Seite
-$_SESSION['cookiejar'] = $client->getCookieJar();]]>
+$_SESSION['cookiejar'] = $client->getCookieJar();
+]]>
             </programlisting>
         </example>
     </sect2>

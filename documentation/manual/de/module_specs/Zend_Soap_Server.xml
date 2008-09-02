@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
     
@@ -208,7 +208,8 @@ $server = new Zend_Soap_Server(null, $options);
 $server->setClass('MyClass');
 ...
 $server->handle();
-]]></programlisting>
+]]>
+        </programlisting>
             <note>
                 <title>Wichtig!</title>
                 <para>
@@ -250,7 +251,8 @@ $server->addFunction('function1');
 $server->addFunction('function2');
 ...
 $server->handle();
-]]></programlisting>
+]]>
+            </programlisting>
         </para>
     </sect2>
     
@@ -287,7 +289,8 @@ $server->handle($request);
 // Eine Anfrage setzen durch Verwendung der setRequest() Methode
 $server->setRequest();
 $server->handle();
-]]></programlisting>
+]]>
+                </programlisting>
             </para>
             
             <para>
@@ -330,8 +333,9 @@ $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
 $request = $server->getLastRequest();
-]]></programlisting>
-                
+]]>
+                </programlisting>
+
             </para>
         </sect3>
 
@@ -358,7 +362,8 @@ $server->setReturnResponse(true);
 ...
 $response = $server->handle();
 ...
-]]></programlisting>
+]]>
+                </programlisting>
             </para>
             
             <para>
@@ -371,7 +376,8 @@ $server = new Zend_Soap_Server(...);
 $server->handle();
 $response = $server->getLastResyponse();
 ...
-]]></programlisting>
+]]>
+                </programlisting>
             </para>
         </sect3>
     </sect2>

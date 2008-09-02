@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Definieren von Getopt Regeln</title>
     <para>
@@ -34,7 +34,10 @@
         </para>
         <example id="zend.console.getopt.rules.short.example">
             <title>Verwendung der kurzen Syntax</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
+]]>
+            </programlisting>
         </example>
         <para>
             Das obige Beispiel zeigt die Verwendung von <code>Zend_Console_Getopt</code>

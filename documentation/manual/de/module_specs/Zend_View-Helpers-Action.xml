@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7086 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.view.helpers.initial.action">
     <title>Action View Helfer</title>
 
@@ -37,7 +37,8 @@
         <?= $this->action('list', 'comment', null, array('count' => 10)); ?> 
     </div>
 </div>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

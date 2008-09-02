@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.text.figlet">
     <title>Zend_Text_Figlet</title>
     <para>
@@ -94,18 +94,20 @@
         <programlisting role="php"><![CDATA[
 $figlet = new Zend_Text_Figlet();
 echo $figlet->render('Zend');
-?>]]>
+]]>
         </programlisting>
         <para>
             Angenommen es wird eine Monospace Schriftart verwenden dann würde das Beispiel wie folgt aussehen:
         </para>
-        <programlisting role="text"><![CDATA[  ______    ______    _  __   ______   
+        <programlisting role="text"><![CDATA[
+  ______    ______    _  __   ______   
  |__  //   |  ___||  | \| || |  __ \\  
    / //    | ||__    |  ' || | |  \ || 
   / //__   | ||___   | .  || | |__/ || 
  /_____||  |_____||  |_|\_|| |_____//  
- `-----`'  `-----`   `-` -`'  -----`  ]]>
-        </programlisting>
+ `-----`'  `-----`   `-` -`'  -----`
+]]>
+</programlisting>
     </example>
 </sect1>
 <!--

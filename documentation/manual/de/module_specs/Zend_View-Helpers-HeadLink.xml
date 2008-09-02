@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9648 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink Helfer</title>
 
@@ -77,7 +77,8 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
 ?>
 <?php // Darstellen der Links: ?>
 <?= $this->headLink() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

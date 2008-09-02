@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
 
@@ -108,7 +108,8 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();]]>
+$server->handle();
+]]>
             </programlisting>
         </example>
     </sect2>

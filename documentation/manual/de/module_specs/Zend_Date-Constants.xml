@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.date.constants">
 
     <title>Konstanten für generelle Datums Funktionen</title>
@@ -687,9 +687,11 @@
 
         <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>Beispiel Verwendung eines selbst-definierten ISO Formats</title>
-            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[
+$locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
-print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
+print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
+]]>
             </programlisting>
         </example>
 
@@ -1135,14 +1137,16 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
 
         <example id="zend.date.constants.phpformats.example-1">
             <title>Beispielbenutzung von Selbst-definierten Formaten mit PHP Formatbezeichnern</title>
-            <programlisting role="php"><![CDATA[$locale = new Zend_Locale('de_AT');
+            <programlisting role="php"><![CDATA[
+$locale = new Zend_Locale('de_AT');
 Zend_Date::setOptions(array('format_type' => 'php'));
 $date = new Zend_Date(1234567890, false, $locale);
 
 // Ausgabe zum Beispiel 'Februar 16, 2007, 3:36 vorm.'
 print $date->toString('F j, Y, g:i a');
 
-print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");]]>
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
+]]>
             </programlisting>
         </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10846 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profilen mit Firebug</title>
 
@@ -74,7 +74,8 @@ $channel->setResponse($response);
 // Die Profilingdaten an den Browser senden
 $channel->flush();
 $response->sendHeaders();
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

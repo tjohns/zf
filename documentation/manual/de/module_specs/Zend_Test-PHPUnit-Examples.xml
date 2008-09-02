@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 11089 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Beispiele</title>
 
@@ -126,7 +126,8 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     // Die Definition von Methoden würde hier folgen...
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Das erlaubt es uns einen Bootstrap Callback wie folgt zu erstellen:
@@ -149,7 +150,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Sobald das fertig ist, können wir unsere Tests schreiben. Trotzdem, was ist mit den Tests die
@@ -179,7 +181,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             Jetzt schreiben wir Tests:
@@ -262,7 +265,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQuery('form .errors');
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Es ist zu beachten das die Tests knapp sind und, für die meisten von Ihnen, nicht den aktuellen

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -33,7 +33,9 @@
 
             <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
-$rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
+$rowset = $bugs->fetchAll("bug_status = 'NEW'");
+]]>
+            </programlisting>
 
         </example>
 
@@ -69,7 +71,9 @@ if ($rowCount > 0) {
     echo "$rowCount Zeilen gefunden!";
 } else {
     echo 'keine Zeilen für die Abfrage gefunden.';
-}]]></programlisting>
+}
+]]>
+            </programlisting>
 
         </example>
 
@@ -86,7 +90,9 @@ if ($rowCount > 0) {
             <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
-$row    = $rowset->current();]]></programlisting>
+$row    = $rowset->current();
+]]>
+            </programlisting>
 
         </example>
 
@@ -126,7 +132,9 @@ foreach ($rowset as $row) {
 
     // Änderung in der Datenbank speichern
     $row->save();
-}]]></programlisting>
+}
+]]>
+            </programlisting>
 
         </example>
 
@@ -158,22 +166,24 @@ $row9 = $rowset->current();
 
 // und es verwenden
 $row9->assigned_to = 'mmouse';
-$row9->save();]]></programlisting>
+$row9->save();
+]]>
+            </programlisting>
 
         </example>
 
-            <para>
-                <code>getRow()</code> erlaubt es eine spezielle Zeile im Rowset zu erhalten wenn
-                dessen Position bekannt ist; trotzdem sollte nicht vergessen werden dass die
-                Position mit dem Index null beginnt. Der erste Parameter für <code>getRow()</code>
-                ist ein Integer für die gewünschte Position. Der zweite optionale Parameter ist ein
-                Boolean; Es teilt dem Rowset Iterator mit ob er zur gleichen Zeit diese Position
-                suchen muss, oder nicht (standard ist nicht). Diese Methode gibt standardmäßig ein
-                Zend_Db_Table_Row Objekt zurück. Wenn die angefragte Position nicht existiert wird
-                eine Ausnahme geworfen. Hier ist ein Beispiel:
-            </para>
+        <para>
+            <code>getRow()</code> erlaubt es eine spezielle Zeile im Rowset zu erhalten wenn
+            dessen Position bekannt ist; trotzdem sollte nicht vergessen werden dass die
+            Position mit dem Index null beginnt. Der erste Parameter für <code>getRow()</code>
+            ist ein Integer für die gewünschte Position. Der zweite optionale Parameter ist ein
+            Boolean; Es teilt dem Rowset Iterator mit ob er zur gleichen Zeit diese Position
+            suchen muss, oder nicht (standard ist nicht). Diese Methode gibt standardmäßig ein
+            Zend_Db_Table_Row Objekt zurück. Wenn die angefragte Position nicht existiert wird
+            eine Ausnahme geworfen. Hier ist ein Beispiel:
+        </para>
 
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 $bugs = new Bugs();
 
 // Alle Einträge von der Tabelle holen
@@ -184,7 +194,9 @@ $row9->getRow(8);
 
 // und es verwenden:
 $row9->assigned_to = 'mmouse';
-$row9->save();]]></programlisting>
+$row9->save();
+]]>
+        </programlisting>
 
         <para>
             Sobald der Zugriff auf ein Zeilenobjekt besteht, kann dieses mit den Methoden manipuliert werden,
@@ -222,7 +234,9 @@ foreach ($rowsetArray as $rowArray) {
     }
     ++$rowCount;
     echo "\n";
-}]]></programlisting>
+}
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -259,7 +273,9 @@ $rowset = $bugs->fetchAll();
 $serializedRowset = serialize($rowset);
 
 // Jetzt kann $serializedRowset bspw.
-// in einer Datei gespeichert werden]]></programlisting>
+// in einer Datei gespeichert werden
+]]>
+            </programlisting>
 
         </example>
 
@@ -286,7 +302,9 @@ $rowsetDisconnected = unserialize($serializedRowset);
 // Jetzt können Objekt-Methoden und -Eigenschaften genutzt werden,
 // aber nur lesend.
 $row = $rowsetDisconnected->current();
-echo $row->bug_description;]]></programlisting>
+echo $row->bug_description;
+]]>
+            </programlisting>
 
         </example>
 
@@ -331,7 +349,9 @@ $row = $rowset->current();
 
 // Jetzt können wieder Werte geändert und danach gespeichert werden
 $row->bug_status = 'FIXED';
-$row->save();]]></programlisting>
+$row->save();
+]]>
+            </programlisting>
 
         </example>
 
@@ -371,7 +391,9 @@ class Products extends Zend_Db_Table_Abstract
 
 // Oder eine eigene Zeilensatz-Klasse angeben, die in einer
 // Instanz einer Tabellenklasse benutzt wird
-$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]></programlisting>
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -407,7 +429,9 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
-}]]></programlisting>
+}
+]]>
+            </programlisting>
         </example>
 
     </sect2>

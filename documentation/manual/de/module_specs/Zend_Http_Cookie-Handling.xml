@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie und Zend_Http_CookieJar</title>
 
@@ -97,7 +97,8 @@ $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/pa
 $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
 
 // Wenn die Domain des Cookies nicht gesetzt ist, muss man ihn selbst angeben.
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');]]>
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');
+]]>
                 </programlisting>
             </example>
             <note>
@@ -127,7 +128,8 @@ echo $cookie->__toString();
 echo (string) $cookie;
 
 // Ab PHP 5.2 funktioniert auch diese Variante
-echo $cookie;]]>
+echo $cookie;
+]]>
                 </programlisting>
             </example>
         </para>
@@ -216,7 +218,8 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Ja' : 'Nein');
 // Gibt 'Nein' aus
 
 echo ($cookie->isSessionCookie() ? 'Ja' : 'Nein');
-// Gibt 'Nein' aus]]>
+// Gibt 'Nein' aus
+]]>
                 </programlisting>
             </example>
         </para>
@@ -290,7 +293,8 @@ $cookie->match('http://subdomain.example.com/');
 // Gibt false zurück, da die Domain unzutreffend ist
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// Gibt false zurück, da die Ablaufzeit drei Stunden in der Zukunft liegt]]>
+// Gibt false zurück, da die Ablaufzeit drei Stunden in der Zukunft liegt
+]]>
                 </programlisting>
             </example>
         </para>

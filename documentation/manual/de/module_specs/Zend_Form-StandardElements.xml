@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -64,7 +64,8 @@
 
         <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Captcha's können dann durch Verwendung der <code>setCaptcha()</code> Methode registriert werden,
@@ -77,7 +78,8 @@ $element->setCaptcha(new Zend_Captcha_Figlet());
 
 // Verwendung von Kurznamen:
 $element->setCaptcha('Dumb');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn das Element über die Konfiguration geladen werden soll, kann entweder der Schlüssel
@@ -106,7 +108,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         'timeout' => 300,
     ),
 ));
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Der verwendete Dekorator wird durch die Abfrage des Captcha Adapters erkannt. Standardmäßig wird
@@ -189,7 +192,8 @@ $element->setLabel('Ein Bild hochladen:')
         ->addValidator('Size', false, 102400) // Maximal 100k
         ->addValidator('Extension' false, 'jpg,png,gif'); // Nur JPEG, PNG, und GIFs
 $form->addElement($element, 'foo');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Man sollte auch den richtigen Encodingtyp sicherstellen in dem das Formular angeboten wird.
@@ -198,7 +202,8 @@ $form->addElement($element, 'foo');
 
             <programlisting role="php"><![CDATA[
 $form->setAttrib('enctype', 'multipart/form-data');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Wenn das Element erfolgreich geprüft wurde, kann der endgültige Ort durch verwendung von
@@ -207,7 +212,8 @@ $form->setAttrib('enctype', 'multipart/form-data');
 
             <programlisting role="php"><![CDATA[
 $location = $form->foo->getValue();
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
 
@@ -254,8 +260,9 @@ $location = $form->foo->getValue();
 
         <programlisting role="php"><![CDATA[
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
-?>]]></programlisting>
-        
+]]>
+        </programlisting>
+
         <para>
             Das Salt kann später gesetzt werden durch Verwendung der <code>setSalt($salt)</code>
             Methode.
@@ -368,7 +375,8 @@ $element = new Zend_Form_Element_MultiCheckbox('foo', array(
 ));
 
 $element->setValue(array('bar', 'bat'));
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Beachte das man auch für das Setzen eines einzelnen Wertes ein Array übergeben muß.

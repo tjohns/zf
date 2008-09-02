@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -29,7 +29,8 @@ class Util
         return '<span class="label">' . $element->getLabel() . "</span>";
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Dieser Callback würd als <code>array('Util', 'label')</code> spezifiziert werden, und
@@ -110,7 +111,8 @@ class Util
     <legend>Benutzer Information</legend>
     ...
 </fieldset></dd>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Dieser Dekorator ersetzt den Ihm angebotenen Inhalt durch dessen Einbettung in das
@@ -353,7 +355,8 @@ $element->setDecorators(array(array('ViewScript', array(
 // ODER das viewScript als Attribut des Elements spezifizieren:
 $element->viewScript = '_element.phtml';
 $element->setDecorators(array(array('ViewScript', array('class' => 'form element'))));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Dann könne ein View Skript die das folgende existieren:
@@ -370,7 +373,8 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
     <?= $this->formErrors($this->element->getMessages()) ?>
     <div class="hint"><?= $this->element->getDescription() ?></div>
 </div>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <title>Inhalte mit einem View Skript ersetzen</title>
@@ -394,7 +398,8 @@ $element->getDecorator('ViewScript')->setOption('placement', false);
 
 // In einem View Skript das von einem Dekorator verwendet wird:
 $this->decorator->setOption('placement', false);
-?>]]></programlisting>
+]]>
+            </programlisting>
         </note>
 
         <para>

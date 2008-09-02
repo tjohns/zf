@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.feed.consuming-rss">
     <title>Einen RSS Feed konsumieren</title>
     <para>
@@ -6,7 +6,8 @@
         Objekts mit der URL eines Feeds:
     </para>
         <programlisting role="php"><![CDATA[
-$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
+$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
+]]>
         </programlisting>
     <para>
         Wenn beim Abrufen des Feeds Fehler auftreten, wird eine <code>Zend_Feed_Exception</code>
@@ -18,7 +19,8 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
         RSS Feeds direkt über das Objekt zugreifen:
     </para>
         <programlisting role="php"><![CDATA[
-echo $channel->title();]]>
+echo $channel->title();
+]]>
         </programlisting>
     <para>
         Beachte die Syntax der Funktion. <code>Zend_Feed</code> verwendet die Konvention, die
@@ -34,7 +36,8 @@ echo $channel->title();]]>
         ansprechbar:
     </para>
         <programlisting role="php"><![CDATA[
-echo $channel->category['domain'];]]>
+echo $channel->category['domain'];
+]]>
         </programlisting>
     <para>
         Da XML Attribute keine Kindelemente haben können, ist die Methodensyntax für den Zugriff auf
@@ -49,7 +52,8 @@ echo $channel->category['domain'];]]>
         <programlisting role="php"><![CDATA[
 foreach ($channel as $item) {
     echo $item->title() . "\n";
-}]]>
+}
+]]>
         </programlisting>
     <para>
         Wenn du mit RSS nicht vertraut bist, kommt hier eine Übersicht über die Standardelemente,
@@ -138,7 +142,8 @@ foreach ($channel as $item) {
         <programlisting role="php"><![CDATA[
 if ($item->propname()) {
     // ... fahre fort.
-}]]>
+}
+]]>
         </programlisting>
 
     <para>

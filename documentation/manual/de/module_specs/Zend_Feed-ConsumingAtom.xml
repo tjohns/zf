@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.feed.consuming-atom">
     <title>Einen Atom Feed konsumieren</title>
 
@@ -25,7 +25,8 @@ echo 'Der Feed enthält ' . $feed->count() . ' Einträge.' . "\n\n";
 foreach ($feed as $entry) {
     echo 'Überschrift: ' . $entry->title() . "\n";
     echo 'Zusammenfassung: ' . $entry->summary() . "\n\n";
-}]]>
+}
+]]>
         </programlisting>
     </example>
 

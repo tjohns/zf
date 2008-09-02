@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9740 -->
+<!-- EN-Revision: 11091 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -170,7 +170,8 @@ Zend/Db.php
 
 Zend/Controller/Front.php
 
-Zend/View/Helper/FormRadio.php]]>
+Zend/View/Helper/FormRadio.php
+]]>
                 </programlisting>
 
                 Dateinamen müssen den Klassennamen wie oben beschrieben entsprechen.
@@ -205,7 +206,8 @@ filterInput()
 
 getElementById()
 
-widgetFactory()]]>
+widgetFactory()
+]]>
                 </programlisting>
             </para>
 
@@ -297,7 +299,8 @@ widgetFactory()]]>
                 <programlisting role="php"><![CDATA[
 <?php
 
-?>]]>
+?>
+]]>
                 </programlisting>
             </para>
 
@@ -318,7 +321,8 @@ widgetFactory()]]>
                     abzugrenzen:
 
                     <programlisting role="php"><![CDATA[
-$a = 'Beispiel String';]]>
+$a = 'Beispiel String';
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -332,7 +336,8 @@ $a = 'Beispiel String';]]>
                     SQL Anweisungen nützlich:
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
+$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";
+]]>
                     </programlisting>
 
                     Diese Syntax ist zu bevorzugen, im Gegensatz zum Ausbruch von Apostrophs, da Sie viel
@@ -349,7 +354,8 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "Halle $name, willkommen zurück!";
 
-$greeting = "Hallo {$name}, willkommen zurück!";]]>
+$greeting = "Hallo {$name}, willkommen zurück!";
+]]>
                     </programlisting>
                 </para>
 
@@ -357,7 +363,8 @@ $greeting = "Hallo {$name}, willkommen zurück!";]]>
                     Aus Gründen der Konstistenz ist folgende Form nicht gestattet:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hallo ${name}, willkommen zurück!";]]>
+$greeting = "Hallo ${name}, willkommen zurück!";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -370,7 +377,8 @@ $greeting = "Hallo ${name}, willkommen zurück!";]]>
                     immer vor und nach dem "." Operator hinzugefügt werden um die Lesbarkeit zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . ' ' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';
+]]>
                     </programlisting>
                 </para>
 
@@ -383,7 +391,8 @@ $company = 'Zend' . ' ' . 'Technologies';]]>
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
-     . "ORDER BY `name` ASC ";]]>
+     . "ORDER BY `name` ASC ";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -408,7 +417,8 @@ $sql = "SELECT `id`, `name` FROM `people` "
                     zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
-$sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
+$sampleArray = array(1, 2, 3, 'Zend', 'Studio');
+]]>
                     </programlisting>
                 </para>
 
@@ -420,7 +430,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500);]]>
+                     56.44, $d, 500);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -436,7 +447,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
-                     'secondKey' => 'secondValue');]]>
+                     'secondKey' => 'secondValue');
+]]>
                     </programlisting>
                  </para>
             </sect3>
@@ -473,7 +485,8 @@ class SampleClass
 {
     // gesamter Inhalt der Klasse
     // muss mit vier Leerzeichen eingerückt sein
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -540,7 +553,8 @@ class Foo
         // gesamter Inhalt der Funktion
         // muss durch view Leerzeichen eingerückt sein
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -559,7 +573,8 @@ class Foo
      */
     public function bar(&$baz)
     {}
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -593,7 +608,8 @@ class Foo
     {
         return $this->bar;
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -608,7 +624,8 @@ class Foo
                     Aufruf einer Funktion die drei Argumente benötigt:
 
                     <programlisting role="php"><![CDATA[
-threeArguments(1, 2, 3);]]>
+threeArguments(1, 2, 3);
+]]>
                     </programlisting>
                 </para>
 
@@ -628,7 +645,8 @@ threeArguments(array(1, 2, 3), 2, 3);
 
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500), 2, 3);]]>
+                     56.44, $d, 500), 2, 3);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -660,7 +678,8 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -676,14 +695,14 @@ if ($a != 2) {
    $a = 7;
 }
 
-
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
    $a = 4;
 } else {
    $a = 7;
-}]]>
+}
+]]>
                     </programlisting>
                     PHP erlaubt das Anweisungen in einigen Fällen auch ohne Klammern zu schreiben.
                     Dieser Coding Standard macht keine Unterscheidungen und es müssen alle "if", "elseif" oder "else"
@@ -721,7 +740,8 @@ switch ($numPeople) {
 
     default:
         break;
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -780,7 +800,8 @@ switch ($numPeople) {
  * @version    $Id:$
  * @link       http://framework.zend.com/package/PackageName
  * @since      Datei vorhanden seit Release 1.2.0
-*/]]>
+*/
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -803,7 +824,8 @@ switch ($numPeople) {
  * @link       http://framework.zend.com/package/PackageName
  * @since      Klasse vorhanden seit Release 1.5.0
  * @deprecated Klasse abgeraten ab Release 2.0.0
- */]]>
+ */
+ ]]>
                     </programlisting>
                 </para>
             </sect3>

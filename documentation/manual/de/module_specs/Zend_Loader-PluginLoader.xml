@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -45,7 +45,8 @@ library/
                 FormLabel.php
                 FormSubmit.php
                 FormText.php
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             Jetzt wird ein Plugin Lader erstellt um die verschiedenen vorhandenene View Helfer Repositories
@@ -57,7 +58,8 @@ $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
        ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Anschließend kann ein gegebener View Helfer geladen werden indem nur der Teil des Klassennamens
@@ -73,7 +75,8 @@ $formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // lädt den 'FormSubmit' Helfer:
 $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Sobald die Klasse geladen wurde, kann diese Instanziiert werden.
@@ -104,7 +107,8 @@ $loader = new Zend_Loader_PluginLoader(array(
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
 ));
-?>]]></programlisting>
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -117,7 +121,8 @@ $loader = new Zend_Loader_PluginLoader(array(
         <programlisting role="php"><![CDATA[
 // Speichere Plugins in der statischen Registry 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Andere Komponenten die den <code>PluginLoader</code> instanziieren un dden gleichen Registry Namen
@@ -180,7 +185,8 @@ if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

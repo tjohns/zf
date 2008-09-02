@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC Ausnahmen</title>
 
@@ -70,12 +70,14 @@
                     des Error Handler Plugin's, man diese Ausnahmen selbst behandeln will. Als Beispiel: 
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->throwExceptions(true);
+                <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
     // Ausnahmen selbst behandeln
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -112,7 +114,8 @@ try {
                     empfangen wird. Als Beispiel:
                 </para>
 
-                <programlisting role="php"><![CDATA[$front->returnResponse(true);
+                <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
     $exceptions = $response->getException();
@@ -120,7 +123,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -162,11 +166,13 @@ if ($response->isException()) {
                             Anweisung hinzufügen:
                         </para>
 
-                        <programlisting role="php"><![CDATA[$front->setParam('useDefaultControllerAlways', true);
+                        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
 
 // oder
 
-$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+$dispatcher->setParam('useDefaultControllerAlways', true);
+]]>
                         </programlisting>
 
                         <para>
@@ -206,7 +212,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             <code>__call()</code> Methode überschreiben. Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Action extends Zend_Controller_Action
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
@@ -218,7 +225,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
 
         throw new Exception('Ungültige Methode');
     }
-}]]>
+}
+]]>
                         </programlisting>
                         <para>
                             Das obige Beispiel fängt jede nicht definierte Aktionsmethode ab die aufgerufen wird
@@ -233,7 +241,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             existiert. Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+                        <programlisting role="php"><![CDATA[
+class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
     {
@@ -254,7 +263,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
 
         return $action;
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>
@@ -298,7 +308,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             Als Beispiel:
                         </para>
 
-                        <programlisting role="php"><![CDATA[class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+                        <programlisting role="php"><![CDATA[
+class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
@@ -318,7 +329,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
             exit;
         }
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>

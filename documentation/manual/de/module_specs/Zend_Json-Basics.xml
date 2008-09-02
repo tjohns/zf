@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.json.basics">
     <title>Grundlegende Verwendung</title>
     <para>
@@ -11,7 +11,8 @@
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Kodiere ihn für die Rückgabe an den Client:
-$json = Zend_Json::encode($phpNative);]]>
+$json = Zend_Json::encode($phpNative);
+]]>
     </programlisting>
 </sect1>
 <!--

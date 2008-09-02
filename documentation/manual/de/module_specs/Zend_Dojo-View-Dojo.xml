@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10635 -->
+<!-- EN-Revision: 11090 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -43,7 +43,8 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Als nächstes das View Skript. In diesem Fall werden die spezifizieren das ein FilterSelect
@@ -66,8 +67,9 @@ $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
              ->registerModulePath('../custom/')
              ->requireModule('dijit.form.FilteringSelect')
-             ->requireModule('custom.PairedStore');
-]]></programlisting>
+             ->requireModule('custom.PairedStore'); ?>
+]]>
+        </programlisting>
 
         <para>
             In unserem Layout Skript, prüfen wir anschließend ob Dojo aktiviert ist, und wenn das der Fall ist,
@@ -94,7 +96,8 @@ $this->dojo()->enable()
     <?= $this->inlineScript() ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             An diesem Punkt muß man nur sicherstellen das die Dateien am richtigen Ort vorhanden sind und
@@ -150,7 +153,8 @@ $this->dojo()->enable()
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Wenn man stattdessen die programmtechnische Verwendung verwenden will, muß die statische
@@ -159,7 +163,8 @@ Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Letztendlich, wenn man programmtechnische Regeln selbst erstellen will, sollte man die
@@ -169,7 +174,8 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect3>
 
@@ -183,7 +189,8 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
 
         <programlisting role="php"><![CDATA[
 $view->dojo()->addStylesheetModule('dijit.themes.tundra');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Der Modulpfad wird durch die Verwendung des Zeichens '.' als Trennzeichen vom Verzeichnis erkannt
@@ -200,7 +207,8 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 <body class="tundra">
-]]></programlisting>
+]]>
+</programlisting>
     </sect3>
 
     <sect3 id="zend.dojo.view.dojo.layers">
@@ -247,7 +255,8 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 $view->dojo()->addLayer('/js/foo/foo.js');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Für weitere Informationen über die Erstellung von eigenen Build, schauen Sie bitte 

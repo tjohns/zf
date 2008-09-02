@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9221 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.json.xml2json">
     <title>XML zu JSON Konvertierung</title>
     <para>
@@ -17,8 +17,9 @@
         Standardverhalten darun XML Attribute zu ignorieren. Der Funktionsaufruf wird wie folgt durchgeführt:
     </para>
     <programlisting role="php"><![CDATA[
-        // Die fromXml Funktion nimmt einfach einen String der XML Inhalt als Eingabe enthält.
-        $jsonContents = Zend_Json::fromXml($xmlStringContents, true);?>]]>
+// Die fromXml Funktion nimmt einfach einen String der XML Inhalt als Eingabe enthält.
+$jsonContents = Zend_Json::fromXml($xmlStringContents, true);
+]]>
     </programlisting>
 
     <para>
@@ -64,7 +65,8 @@
         <author><first>Jack</first><last>Herrington</last></author>
         <publisher>O'Reilly</publisher>
     </book>
-</books> ?>]]>
+</books>
+]]>
     </programlisting>
 
     <para>
@@ -101,7 +103,8 @@
          "publisher" : "O'Reilly"
       }
    ]}
-}  ?>]]>
+}
+]]>
     </programlisting>
 
     <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout Schnellstart</title>
 
@@ -46,7 +46,8 @@
 ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Weil <code>Zend_Layout</code> <code>Zend_View</code> für die Darstellung verwendet, kann auch jeder
@@ -77,7 +78,8 @@
     <?= $this->render('footer.phtml') ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.mvc">
@@ -108,7 +110,8 @@
         <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei:
 Zend_Layout::startMvc();
-?>]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             <code>startMvc()</code> kann ein optionales Array von Optionen oder ein <code>Zend_Config</code>
@@ -136,7 +139,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('foobaz');
     };
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Im View Skript kann dann auf das Layout Objekt über den <code>layout</code> View Helfer zugegriffen
@@ -146,8 +150,9 @@ class FooController extends Zend_Controller_Action
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php $this->layout()->setLayout('foo'); // alternatives Layout setzen ?>
-]]></programlisting>
+$this->layout()->setLayout('foo'); // alternatives Layout setzen
+]]>
+        </programlisting>
 
         <para>
             Die im MVC registrierte <code>Zend_Layout</code> Instanz kann jederzeit über die statische
@@ -157,7 +162,8 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // Gibt null zurück wenn startMvc() nicht zuerst aufgerufen wurde
 $layout = Zend_Layout::getMvcInstance(); 
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Letztendlich hat das Front Controller Plugin von <code>Zend_Layout</code> ein wichtiges Feature
@@ -184,7 +190,8 @@ $layout = Zend_Layout::getMvcInstance();
     <!-- Darstellung von /foo/index + /comment/fetch -->
     <div id="content"><?= $this->layout()->content ?></div>
 </body>
-]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             Dieses Feature ist teilweise nützlich wenn es in Verbindung mit dem ActionStack 
@@ -238,7 +245,8 @@ $layout->setLayout('foo');
 
 // Letztendlich das Layout darstellen
 echo $layout->render();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.example">

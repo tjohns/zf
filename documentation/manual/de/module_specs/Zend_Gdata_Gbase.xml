@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base verwenden</title>
     <para>
@@ -99,7 +99,8 @@
                 Das nachfolgende Beispiel zeigt wir eine Base Service Klasse erstellt wird indem die
                 ClientAuth Authentifizierung verwendet wird:
             </para>
-            <programlisting role="php"><![CDATA[// Parameter für die ClientAuth Authentifizierung
+            <programlisting role="php"><![CDATA[
+// Parameter für die ClientAuth Authentifizierung
 $service = Zend_Gdata_Gbase::AUTH_SERVICE_NAME;
 $user = "sample.user@gmail.com";
 $pass = "pa$$w0rd";
@@ -108,7 +109,8 @@ $pass = "pa$$w0rd";
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Erstellt eine Instanz des Base Services
-$service = new Zend_Gdata_Gbase($client);]]>
+$service = new Zend_Gdata_Gbase($client);
+]]>
             </programlisting>
             <para>
                 Ein Base Service der AuthSub verwendet kann ähnlich erstellt werden, durch einen etwas
@@ -191,14 +193,17 @@ session_start();
 
 // Erstellt eine Instanz des Base Services, leitet den Benutzer zum AuthSub Server um
 // wenn das notwendig ist.
-$service = new Zend_Gdata_Gbase(getAuthSubHttpClient());]]>
+$service = new Zend_Gdata_Gbase(getAuthSubHttpClient());
+]]>
             </programlisting>
             <para>
                 Letztendlich kann ein nicht authentifizierter Server erstellt werden für die Verwendung mit
                 Feed Fetzen:
             </para>
-            <programlisting role="php"><![CDATA[// Erstellt eine Instanz des Base Services und verwendet einen nicht authentifizierten HTTP Client
-$service = new Zend_Gdata_Gbase();]]>
+            <programlisting role="php"><![CDATA[
+// Erstellt eine Instanz des Base Services und verwendet einen nicht authentifizierten HTTP Client
+$service = new Zend_Gdata_Gbase();
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -234,7 +239,8 @@ $query->setBq('[title:Programming]');
 $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
-$feed = $service->getGbaseItemFeed($query);]]>
+$feed = $service->getGbaseItemFeed($query);
+]]>
                 </programlisting>
                 <para>
                     Eine komplette Liste dieser Parameter ist im
@@ -255,7 +261,8 @@ $query->setBq('[title:Programming]');
 $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
-$feed = $service->getGbaseSnippetFeed($query);]]>
+$feed = $service->getGbaseSnippetFeed($query);
+]]>
                 </programlisting>
                 <para>
                     Eine komplette Liste dieser Parameter ist im
@@ -281,7 +288,8 @@ foreach ($feed->entries as $entry) {
   foreach ($baseAttributes as $attr) {
     echo "Attribut " . $attr->name . " : " . $attr->text . "<br>";
   }
-}]]>
+}
+]]>
             </programlisting>
             <para>
                 Oder es kann auf spezielle Attributnamen gesehen werden und über die passenden Ergebnisse
@@ -294,7 +302,8 @@ foreach ($feed->entries as $entry) {
   foreach ($baseAttributes as $attr) {
     echo "Hauptzutaten: " . $attr->text . "<br>";
   }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -348,7 +357,8 @@ $newEntry->addGbaseAttribute("year", "2007", "number");
 $newEntry->addGbaseAttribute("payment_accepted", "Google Checkout", "text");
 
 $dryRun = true;
-$createdEntry = $service->insertGbaseItem($newEntry, $dryRun);]]>
+$createdEntry = $service->insertGbaseItem($newEntry, $dryRun);
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.gbase.crud.modify">
@@ -414,7 +424,8 @@ $entry->save($dryRun);
             </para>
             <programlisting role="php"><![CDATA[
 $dryRun = false;
-$service->deleteGbaseItem($entry, $dryRun);]]>
+$service->deleteGbaseItem($entry, $dryRun);
+]]>
             </programlisting>
             <para>
                 Alternativ kann <code>delete()</code> auf dem <code>Zend_Gdata_Gbase_ItemEntry</code> Objekt
@@ -422,7 +433,8 @@ $service->deleteGbaseItem($entry, $dryRun);]]>
             </para>
             <programlisting role="php"><![CDATA[
 $dryRun = false;
-$entry->delete($dryRun);]]>
+$entry->delete($dryRun);
+]]>
             </programlisting>
         </sect3>
     </sect2>

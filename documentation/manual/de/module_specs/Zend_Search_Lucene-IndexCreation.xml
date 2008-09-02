@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
 
@@ -29,7 +29,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
         </programlisting>
 
         <para>
@@ -59,7 +60,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.search.lucene.index-creation.document-updating">
@@ -81,7 +83,8 @@ $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -104,7 +107,8 @@ foreach ($hits as $hit) {
 
         <programlisting role="php"><![CDATA[
 $indexSize = $index->count();
-$documents = $index->numDocs();]]>
+$documents = $index->numDocs();
+]]>
         </programlisting>
 
         <para>
@@ -117,7 +121,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "Dokument #$id ist gelöscht.\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -161,7 +166,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
 $index = new Zend_Search_Lucene('/data/my-index');
 
 // Optimiere Index
-$index->optimize();]]>
+$index->optimize();
+]]>
         </programlisting>
 
         <para>
@@ -267,7 +273,8 @@ $index->optimize();]]>
 $currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
 // Nur für den aktuellen Benutzer und die Gruppe Lese-Schreib Berechtigung setzen
-Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);]]>
+Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
+]]>
         </programlisting>
     </sect2>
 

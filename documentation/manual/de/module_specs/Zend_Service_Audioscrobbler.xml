@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -176,11 +176,13 @@
                 Methoden verwendet um Informationen über ein spezielles Benutzerprofil zu erhalten:
             </para>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // Den Benutzer setzen dessen Profilinformationen man empfangen will
 $profileInfo = $as->userGetProfileInformation(); // Informationen von BigDaddy71's Profil erhalten
 print "Informationen für $profileInfo->realname können unter $profileInfo->url gefunden werden";
-// Einige von Ihnen darstellen]]>
+// Einige von Ihnen darstellen
+]]>
             </programlisting>
 
         </example>
@@ -189,7 +191,8 @@ print "Informationen für $profileInfo->realname können unter $profileInfo->url
 
             <title>Die wöchentlichen Artistencharts eines Benutzers erhalten</title>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setUser('lo_fye'); // Den Benutzer setzen dessen wöchentliche Artistencharts man empfangen will
 $weeks = $as->userGetWeeklyChartList(); // Eine Liste von vorherigen Wochen erhalten in denen Chartdaten vorhanden sind
 if (count($weeks) < 1) {
@@ -207,7 +210,8 @@ echo 'Artisten Chart für Woche ' . date('Y-m-d h:i:s', $as->from_date) . '<br /
 foreach ($previousWeeklyArtists as $artist) {
     // Artistennamen mit Links zu Ihrem Profil darstellen
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
-}]]>
+}
+]]>
             </programlisting>
 
         </example>
@@ -259,12 +263,14 @@ foreach ($previousWeeklyArtists as $artist) {
 
             <title>Ähnliche Artisten erhalten</title>
 
-            <programlisting role="php"><![CDATA[$as = new Zend_Service_Audioscrobbler();
+            <programlisting role="php"><![CDATA[
+$as = new Zend_Service_Audioscrobbler();
 $as->setArtist('LCD Soundsystem'); // Den Artisten setzen für den man ähnliche Artisten bekommen will
 $relatedArtists = $as->artistGetRelatedArtists(); // Ähnliche Artisten erhalten
 foreach ($relatedArtists as $artist) {
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />'; // Die ähnlichen Artisten anzeigen
-}]]>
+}
+]]>
             </programlisting>
 
         </example>

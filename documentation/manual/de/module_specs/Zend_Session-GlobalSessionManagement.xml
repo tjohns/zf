@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.session.global_session_management">
 
     <title>Globales Session Management</title>
@@ -45,7 +45,8 @@
                 muß zuerst die Konfigurations-Option dem INI File hinzugefügt werden:
             </para>
 
-            <programlisting role="ini"><![CDATA[; Accept defaults for production
+            <programlisting role="ini"><![CDATA[
+; Accept defaults for production
 [production]
 ; bug_compat_42
 ; bug_compat_warn
@@ -82,8 +83,9 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; Beim Analysieren von Session ID Cookies, frage nach einer TTL von 10 Tagen
-remember_me_seconds = 864000]]>
-            </programlisting>
+remember_me_seconds = 864000
+]]>
+</programlisting>
 
             <para>
                 Als nächstes die Konfigurationsdatei laden und dessen Array Representation
@@ -94,7 +96,8 @@ remember_me_seconds = 864000]]>
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray());]]>
+Zend_Session::setOptions($config->toArray());
+]]>
             </programlisting>
 
         </example>

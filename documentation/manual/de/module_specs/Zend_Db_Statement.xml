@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.db.statement">
 
     <title>Zend_Db_Statement</title>
@@ -31,7 +31,8 @@
             <title>Erzeugung eines SQL Statement Objekts mit query()</title>
             <programlisting role="php"><![CDATA[
 $stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
-                array('goofy', 'FIXED'));]]>
+                array('goofy', 'FIXED'));
+]]>
             </programlisting>
         </example>
 
@@ -51,9 +52,11 @@ $stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?'
 
         <example id="zend.db.statement.creating.example2">
             <title>Nutzung des SQL Statement Konstruktors</title>
-            <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+            <programlisting role="php"><![CDATA[
+$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
-$stmt = new Zend_Db_Statement_Mysqli($db, $sql);]]>
+$stmt = new Zend_Db_Statement_Mysqli($db, $sql);
+]]>
             </programlisting>
         </example>
 
@@ -171,7 +174,8 @@ $stmt = $db->query('SELECT * FROM bugs');
 
 while ($row = $stmt->fetch()) {
     echo $row['bug_description'];
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -201,7 +205,8 @@ $stmt = $db->query('SELECT * FROM bugs');
 
 $rows = $stmt->fetchAll();
 
-echo $rows[0]['bug_description'];]]>
+echo $rows[0]['bug_description'];
+]]>
                 </programlisting>
             </example>
 
@@ -235,7 +240,8 @@ $stmt->setFetchMode(Zend_Db::FETCH_NUM);
 
 $rows = $stmt->fetchAll();
 
-echo $rows[0][0];]]>
+echo $rows[0][0];
+]]>
                 </programlisting>
             </example>
 
@@ -269,7 +275,8 @@ echo $rows[0][0];]]>
                 <programlisting role="php"><![CDATA[
 $stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
-$bug_status = $stmt->fetchColumn(2);]]>
+$bug_status = $stmt->fetchColumn(2);
+]]>
                 </programlisting>
             </example>
 
@@ -298,7 +305,8 @@ $stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
 $obj = $stmt->fetchObject();
 
-echo $obj->bug_description;]]>
+echo $obj->bug_description;
+]]>
                 </programlisting>
             </example>
 

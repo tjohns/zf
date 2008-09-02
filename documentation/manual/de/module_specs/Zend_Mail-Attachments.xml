@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.mail.attachments">
     <title>Anhänge</title>
     <para>
@@ -33,7 +33,8 @@ $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
     <para>
         Eine Alternative ist die Erstellung einer Instanz von <code>Zend_Mime_Part</code> und das Hinzufügen von Ihr mit

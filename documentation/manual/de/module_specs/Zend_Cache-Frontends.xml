@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11005 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -189,7 +189,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);]]>
+echo($data);
+]]>
             </programlisting>
 
             <para>
@@ -450,7 +451,8 @@ $frontendOptions = array(
 // [...]
 
 // Der gecachte Aufruf
-$result = $cache->foobar('1', '2');]]>
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 Um klassische Methodenaufrufe zu cachen :

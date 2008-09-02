@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.introduction">
     <title>Einführung zu Gdata</title>
     <para>
@@ -216,7 +216,8 @@ $cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
-// ... $entry kann dann verwendet werden um eine Aktualisierung an eine Google Tabellenkalkulation zu senden]]>
+// ... $entry kann dann verwendet werden um eine Aktualisierung an eine Google Tabellenkalkulation zu senden
+]]>
         </programlisting>
 
         <para>
@@ -279,7 +280,8 @@ $entry->cell = $cell;
 $client = new Zend_Http_Client();
 $client->setConfig( ...options... );
 
-$gdata = new Zend_Gdata($client);]]>
+$gdata = new Zend_Gdata($client);
+]]>
         </programlisting>
 
         <para>
@@ -376,7 +378,8 @@ $gdata = new Zend_Gdata($client);]]>
         <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Query();
 $query->setMaxResults(10);
-echo $query->getMaxResults();   // gibt 10 zurück]]>
+echo $query->getMaxResults();   // gibt 10 zurück
+]]>
         </programlisting>
 
         <para>
@@ -387,7 +390,8 @@ echo $query->getMaxResults();   // gibt 10 zurück]]>
         <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
-echo $query->maxResults;        // gibt 10 zurück]]>
+echo $query->maxResults;        // gibt 10 zurück
+]]>
         </programlisting>
 
         <para>
@@ -401,7 +405,8 @@ $query->maxResults = 10;
 // ...den Feed empfangen...
 
 $query->resetParameters();      // löscht alle Parameter
-// ...einen anderen Feed empfangen...]]>
+// ...einen anderen Feed empfangen...
+]]>
         </programlisting>
 
     </sect2>
@@ -420,7 +425,8 @@ $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
 $query->setMaxResults(10);
-$feed = $gdata->getFeed($query);]]>
+$feed = $gdata->getFeed($query);
+]]>
         </programlisting>
 
         <para>
@@ -450,7 +456,8 @@ function getNextPage($feed) {
     } else {
         return null;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -464,7 +471,8 @@ function getNextPage($feed) {
 $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
-$feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
+$feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
+]]>
         </programlisting>
 
         <para>
@@ -496,7 +504,8 @@ foreach ($feed as $entry) {
     echo 'Titel: ' . $entry->title->text;
     // Die definierten Zugriffsmethoden verwenden
     echo 'Inhalt: ' . $entry->getContent()->getText();
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -523,7 +532,8 @@ foreach ($feed as $entry) {
     // Den Eintrag auf dem Server aktualisieren
     $newEntry = $entry->save();
     echo 'New Title: ' . $newEntry->title->text;
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -561,7 +571,8 @@ $entry->content = $content;
 $entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
-echo 'Die <id> des resultierenden Eintrages ist: ' . $entryResult->id->text;]]>
+echo 'Die <id> des resultierenden Eintrages ist: ' . $entryResult->id->text;
+]]>
         </programlisting>
 
         <para>
@@ -595,7 +606,8 @@ foreach ($feed as $feedEntry) {
     $feedEntry->delete();
     // Option 2 - den eintrag durch Übergabe der bearbeiteten URL an $gdata->delete() löschen
     // $gdata->delete($feedEntry->getEditLink()->href);
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

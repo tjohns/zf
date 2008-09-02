@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8427 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle Helfer</title>
 
@@ -74,10 +74,10 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Stile hinzufügen
+// Stile hinzufügen
 $this->headStyle()->appendStyle($styles);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Die Reihenfolge ist in CSS sehr wichtig; es könnte sein das man sichergestellen muß das
@@ -86,7 +86,7 @@ $this->headStyle()->appendStyle($styles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Styles in Reihenfolge bringen
+// Styles in Reihenfolge bringen
 
 // Ein spezielles Offset platzieren:
 $this->headStyle()->offsetSetStyle(100, $customStyles);
@@ -96,8 +96,8 @@ $this->headStyle()->appendStyle($finalStyles);
 
 // Am Anfang platzieren:
 $this->headStyle()->prependStyle($firstStyles);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn man damit fertig ist und alle Style Deklarationen im Layout Skript ausgegeben werden können
@@ -106,7 +106,8 @@ $this->headStyle()->prependStyle($firstStyles);
 
         <programlisting role="php"><![CDATA[
 <?= $this->headStyle() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
@@ -125,7 +126,8 @@ body {
     background-color: <?= $this->bgColor ?>;
 }
 <?php $this->headStyle()->captureEnd() ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Die folgenden Annahmen werden gemacht:

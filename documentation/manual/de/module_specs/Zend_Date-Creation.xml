@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.date.creation">
 
     <title>Erstellen von Datumswerten</title>
@@ -32,7 +32,10 @@
                 Instanz zu erhalten.
             </para>
 
-            <programlisting role="php"><![CDATA[$date = new Zend_Date();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
+]]>
+            </programlisting>
 
         </example>
 
@@ -48,7 +51,10 @@
                 zurückgegeben und das kann auch nur durch die Angabe von optionalen Parametern geändert werden.
             </para>
 
-            <programlisting role="php"><![CDATA[$date = Zend_Date::now();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$date = Zend_Date::now();
+]]>
+            </programlisting>
 
         </example>
 
@@ -89,8 +95,10 @@
                 Format.
             </para>
 
-            <programlisting role="php"><![CDATA[// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
-$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
+            <programlisting role="php"><![CDATA[
+// SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
+$date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
+]]>
             </programlisting>
 
         </example>
@@ -110,8 +118,10 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
                 Unix Timestamps nur für Datumswerte nach dem 1 Jänner 1970 unterstützt werden.
             </para>
 
-            <programlisting role="php"><![CDATA[// SELECT datecolumn FROM my_table
-$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
+            <programlisting role="php"><![CDATA[
+// SELECT datecolumn FROM my_table
+$date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
+]]>
             </programlisting>
 
         </example>
@@ -173,12 +183,16 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
                 <emphasis role="strong">0</emphasis> verwendet wird.
             </para>
 
-            <programlisting role="php"><![CDATA[$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
-$date = new Zend_Date($datearray);]]>
+            <programlisting role="php"><![CDATA[
+$datearray = array('year' => 2006, 'month' => 4, 'day' => 18, 'hour' => 12, 'minute' => 3, 'second' => 10);
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
 
-            <programlisting role="php"><![CDATA[$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
-$date = new Zend_Date($datearray);]]>
+            <programlisting role="php"><![CDATA[
+$datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
+$date = new Zend_Date($datearray);
+]]>
             </programlisting>
         </example>
 

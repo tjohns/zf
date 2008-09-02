@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.introduction">
     <title>Einführung</title>
     <para>
@@ -62,7 +62,8 @@ $cache = Zend_Cache::factory('Core',
             zur Datenbank zu machen; Datensätze werden vom Cache genommen und deserialisiert.
         </para>
 
-        <programlisting role="php"><![CDATA[// $cache initialisiert im vorhergehenden Beispiel
+        <programlisting role="php"><![CDATA[
+// $cache initialisiert im vorhergehenden Beispiel
 
 // Nachsehen, ob der Cache bereits existiert:
 if(!$result = $cache->load('myresult')) {
@@ -82,7 +83,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]>
+print_r($result);
+]]>
         </programlisting>
 
     </example>
@@ -124,17 +126,17 @@ if(!$cache->start('mypage')) {
 
 echo 'Das wird nie gecached ('.time().').';
 ]]>
-       </programlisting>
-       <para>
-           Zu beachten ist das das Ergebnis von <code>time()</code> zweimal ausgegeben wird; das ist
-           etwas dynamisches für Demonstrationszwecke. Beim Versuch dieses auszuführen und mehrfach zu
-           refreshen, kann bemerkt werden, dass sich die erste Nummer nie ändert, während die zweite sich
-           ändert, während die Zeit verstreicht. Das geschieht, weil die erste Nummer, die im gecacheten Abschnitt
-           ausgegeben wird, im Gegensatz zur anderen Ausgabe gecached wurde.
-           Nach einer halben Minute (die Lebensdauer wurde auf 30 Sekunden gesetzt) sind die Nummern
-           wieder identisch, weil der Cache Eintrag abgelaufen ist - er muß wieder gecached werden.
-           Man sollte das im Browser oder in der Konsole testen.
-       </para>
+        </programlisting>
+        <para>
+            Zu beachten ist das das Ergebnis von <code>time()</code> zweimal ausgegeben wird; das ist
+            etwas dynamisches für Demonstrationszwecke. Beim Versuch dieses auszuführen und mehrfach zu
+            refreshen, kann bemerkt werden, dass sich die erste Nummer nie ändert, während die zweite sich
+            ändert, während die Zeit verstreicht. Das geschieht, weil die erste Nummer, die im gecacheten Abschnitt
+            ausgegeben wird, im Gegensatz zur anderen Ausgabe gecached wurde.
+            Nach einer halben Minute (die Lebensdauer wurde auf 30 Sekunden gesetzt) sind die Nummern
+            wieder identisch, weil der Cache Eintrag abgelaufen ist - er muß wieder gecached werden.
+            Man sollte das im Browser oder in der Konsole testen.
+        </para>
     </example>
     <note><para>
         Wenn Zend_Cache benutzt wird, muß auf die wichtigen Cache Identifizierungen geachtet werden (welche an

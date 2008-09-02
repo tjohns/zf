@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11005 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.theory">
     <title>Die Theorie des Cachens</title>
     <para>
@@ -31,7 +31,8 @@
             Ein guter Weg, um eine verwendbare Instanz eines <code>Zend_Cache</code> Frontends zu erstellen, wird im
             folgenden Beispiel gegeben:
         </para>
-        <programlisting role="php"><![CDATA[// Wir wählen ein Backend (zum Beispiel 'File' oder 'Sqlite'...)
+        <programlisting role="php"><![CDATA[
+// Wir wählen ein Backend (zum Beispiel 'File' oder 'Sqlite'...)
 $backendName = '[...]';
 
 // Wir wählen ein Frontend (zum Beispiel 'Core', 'Output', 'Page'...)
@@ -68,7 +69,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             Dann besteht die Möglichkeit, alle markierten Cache Datensätze mit einer bestimmten Markierung (oder
             Markierungen), zu löschen:
         </para>
-        <programlisting role="php"><![CDATA[$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+]]>
         </programlisting>
         <note><para>
             Man beachte, dass die <code>save()</code> Method einen optionales, viertes Argument akzeptiert:
@@ -80,22 +83,28 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         <para>
             Um eine bestimmte Cache ID zu entfernen/annullieren, kann die <code>remove()</code> Methode benutzt werden:
         </para>
-             <programlisting role="php"><![CDATA[$cache->remove('idToRemove');]]>
+             <programlisting role="php"><![CDATA[
+$cache->remove('idToRemove');
+]]>
         </programlisting>
         <para>
             Um mehrere Cache IDs mit einer Operation zu entfernen/annulieren, kann die <code>clean()</code> Methode
             benutzt werden. Zum Beispiel um alle Cache Datensätze zu entfernen :
         </para>
-        <programlisting role="php"><![CDATA[// Löschen aller Datensätze
+        <programlisting role="php"><![CDATA[
+// Löschen aller Datensätze
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // Nur abgelaufene löschen
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+]]>
         </programlisting>
         <para>
             Um Cache Einträge zu löschen, die zu den Tags 'tagA' und 'tagC' passen :
         </para>
-        <programlisting role="php"><![CDATA[$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
         </programlisting>
         <para>
             Mögliche Löschmodi sind: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,

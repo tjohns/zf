@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.headtitle">
     <title>HeadTitle Helfer</title>
 
@@ -39,8 +39,8 @@ $this->headTitle('Zend Framework');
 
 // Setzen eines Separator Strings für Segmente:
 $this->headTitle()->setSeparator(' / ');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn man letztendlich damit fertig ist den Titel im Layoutskript darzustellen, muß dieser
@@ -50,7 +50,8 @@ $this->headTitle()->setSeparator(' / ');
         <programlisting role="php"><![CDATA[
 <!-- Darstellung <action> / <controller> / Zend Framework -->
 <?= $this->headTitle() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

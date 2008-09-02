@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.router.routes.static">
     <title>Zend_Controller_Router_Route_Static</title>
 
@@ -8,11 +8,13 @@
         Maschine wäre ein Overkill. Die Lösung zu dieser Situation ist die Verwendung von statischen Routen:
     </para>
 
-    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route_Static(
+    <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route_Static(
     'login',
     array('controller' => 'auth', 'action' => 'login')
 );
-$router->addRoute('login', $route);]]>
+$router->addRoute('login', $route);
+]]>
     </programlisting>
 
     <para>

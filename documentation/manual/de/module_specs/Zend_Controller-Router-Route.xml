@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -15,7 +15,8 @@
         diesen "martel" Typ zu sehen. Und die Route für so eine Funktionalität würde so aussehen:
     </para>
 
-    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'author/:username',
     array(
         'controller' => 'profile',
@@ -23,7 +24,8 @@
     )
 );
 
-$router->addRoute('user', $route);]]>
+$router->addRoute('user', $route);
+]]>
     </programlisting>
 
     <para>
@@ -52,11 +54,13 @@ $router->addRoute('user', $route);]]>
         werden:
     </para>
 
-    <programlisting role="php"><![CDATA[$values = array(
+    <programlisting role="php"><![CDATA[
+$values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -66,13 +70,15 @@ $router->addRoute('user', $route);]]>
         oder <code>Zend_Controller_Request::getParam()</code> Methoden zuzugreifen:
     </para>
 
-    <programlisting role="php"><![CDATA[public function userinfoAction()
+    <programlisting role="php"><![CDATA[
+public function userinfoAction()
 {
     $request = $this->getRequest();
     $username = $request->getParam('username');
 
     $username = $this->_getParam('username');
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -81,11 +87,13 @@ $router->addRoute('user', $route);]]>
         definiert in der URI). Die folgende Route imitiert mehr oder weniger das Verhalten des Modulrouters:
     </para>
 
-    <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+    <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     ':module/:controller/:action/*',
     array('module' => 'default')
 );
-$router->addRoute('default', $route);]]>
+$router->addRoute('default', $route);
+]]>
     </programlisting>
 
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
@@ -97,11 +105,13 @@ $router->addRoute('default', $route);]]>
             Array mit Schlüsseln die Variablennamen repräsentieren und mit Werten als gewünschte Standards:
         </para>
 
-        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array('year' => 2006)
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -119,7 +129,8 @@ $router->addRoute('archive', $route);]]>
             werden:
         </para>
 
-        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -127,7 +138,8 @@ $router->addRoute('archive', $route);]]>
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -146,7 +158,8 @@ $router->addRoute('archive', $route);]]>
             definiert:
         </para>
 
-        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'archive/:year',
     array(
         'year'       => 2006,
@@ -155,7 +168,8 @@ $router->addRoute('archive', $route);]]>
     ),
     array('year' => '\d+')
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -174,7 +188,8 @@ $router->addRoute('archive', $route);]]>
             eine statische Hostname Option:
         </para>
 
-        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     array(
         'host' => 'blog.mysite.com',
         'path' => 'archive'
@@ -185,7 +200,8 @@ $router->addRoute('archive', $route);]]>
         'action'     => 'index'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -195,7 +211,8 @@ $router->addRoute('archive', $route);]]>
             die man es mit den anderen Pfad Parametern machen würde: 
         </para>
         
-        <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     array(
         'host' => array(
             'regex'   => '([a-z]+).mysite.com',
@@ -212,7 +229,8 @@ $router->addRoute('archive', $route);]]>
         'action'     => 'index'
     )
 );
-$router->addRoute('profile', $route);]]>
+$router->addRoute('profile', $route);
+]]>
         </programlisting>
     </sect4>
 </sect3>

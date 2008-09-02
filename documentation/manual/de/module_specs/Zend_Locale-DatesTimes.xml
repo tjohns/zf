@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>Arbeiten mit Daten und Zeiten</title>
@@ -175,7 +175,8 @@ Array
     [month] => 4
     [year] => 2006
     [fixed] => 4
-)]]>
+)
+]]>
             </programlisting>
         </example>
 
@@ -196,7 +197,8 @@ Array
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale));
 
-print_r ($date);]]>
+print_r ($date);
+]]>
             </programlisting>
         </example>
 
@@ -211,7 +213,8 @@ print_r ($date);]]>
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale);
 
-print_r ($date);]]>
+print_r ($date);
+]]>
             </programlisting>
         </example>
 
@@ -226,7 +229,8 @@ print_r ($date);]]>
             <programlisting role="php"><![CDATA[
 $date = Zend_Locale_Format::getDate('13200504T551422', array('date_format' => 'ddyyyyMM ssmmHH');
 
-print_r ($date);]]>
+print_r ($date);
+]]>
             </programlisting>
         </example>
 
@@ -333,7 +337,8 @@ print_r ($date);]]>
 $date = Zend_Locale_Format::getDate('41.10.20', array('date_format' => 'ddMMyy', 'fix_date' => true));
 
 // Statt 41 für den Tag wird die 41 als Wert für das Jahr zurück gegeben
-print_r ($date);]]>
+print_r ($date);
+]]>
             </programlisting>
         </example>
 
@@ -362,7 +367,8 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
     print "Datum";
 } else {
     print "kein Datum";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -387,7 +393,8 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
     print "Zeit";
 } else {
     print "keine Zeit";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -411,7 +418,8 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     print "Zeit";
 } else {
     print "keine Zeit";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.feed.importing">
 
     <title>Feeds importieren</title>
@@ -9,7 +9,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+]]>
     </programlisting>
 
     <para>
@@ -22,7 +23,8 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // Feeds von einer PHP String Variable importieren
-$feedFromPHP = Zend_Feed::importString($feedString);]]>
+$feedFromPHP = Zend_Feed::importString($feedString);
+]]>
     </programlisting>
 
     <para>
@@ -59,7 +61,8 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // Importieren eines RSS Feeds von einem Array
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
+]]>
             </programlisting>
 
             <para>
@@ -162,7 +165,8 @@ array(
                                    // Daten für den zweiten Eintrag und so weiter
                                    )
                              )
-       );]]>
+       );
+]]>
             </programlisting>
 
             <para>
@@ -233,7 +237,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // Einen RSS Feeed von einem Array von eigenen Erstellungsquellen importieren
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+]]>
             </programlisting>
 
         </sect3>
@@ -254,7 +259,8 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // HTTP Header und den Feed ausgeben
-$feed->send();]]>
+$feed->send();
+]]>
             </programlisting>
 
         </sect3>

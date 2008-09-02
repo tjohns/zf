@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
@@ -45,7 +45,8 @@
 
     <p>Es gibt keine Bücher zum Anzeigen.</p>
 
-<?php endif;]]>
+<?php endif; ?>
+]]>
     </programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
@@ -69,7 +70,8 @@
 echo $this->variable;
 
 // gute View Skript Praxis:
-echo $this->escape($this->variable);]]>
+echo $this->escape($this->variable);
+]]>
         </programlisting>
 
         <para>
@@ -96,7 +98,8 @@ $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
 // und dann erstelle die Ausgabe
-echo $view->render(...);]]>
+echo $view->render(...);
+]]>
         </programlisting>
 
         <para>
@@ -146,7 +149,8 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -170,7 +174,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>Es gibt keine Bücher zum Anzeigen.</p>]]>
+<p>Es gibt keine Bücher zum Anzeigen.</p>
+]]>
             </programlisting>
 
         </sect3>
@@ -232,7 +237,8 @@ public function clearVars();
 /**
  * Rendern des Templates mit dem Namen $name
  */
-public function render($name);]]>
+public function render($name);
+]]>
             </programlisting>
 
             <para>
@@ -421,7 +427,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -435,7 +442,8 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/path/to/templates');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');]]>
+$rendered = $view->render('bookinfo.tpl');
+]]>
             </programlisting>
 
         </sect3>

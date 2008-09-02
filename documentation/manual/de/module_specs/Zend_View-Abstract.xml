@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.view.abstract">
     <title>Zend_View_Abstract</title>
 
@@ -32,7 +32,8 @@ protected function _run()
 {
     include func_get_arg(0);
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Als solches, haben die View Skripte Zugriff auf das aktuelle Objekt (<code>$this</code>),

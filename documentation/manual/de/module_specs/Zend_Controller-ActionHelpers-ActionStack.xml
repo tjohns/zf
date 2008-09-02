@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11085 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -47,7 +47,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->actionStack('bat', 'bar');
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
     </example>
 
@@ -82,7 +83,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->actionStack($request);
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

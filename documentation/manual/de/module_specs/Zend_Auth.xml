@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.introduction">
 
     <title>Einführung</title>
@@ -82,7 +82,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Wie im Docblock angegeben, muß <code>authenticate()</code> eine Instanz von
@@ -369,7 +370,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // Authentifizieren, das Ergebnis speichern, und die Identität bei Erfolg
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -446,7 +448,10 @@ if ($auth->hasIdentity()) {
             Um eine Identität vom persistenten Speicher zu entfernen muß einfach die <code>clearIdentity()</code>
             Methode verwendet werden. Das würde typischerweise für die Implementierung einer "Abmelde" Operation
             in einer Anwendung Verwendung finden. 
-            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Auth::getInstance()->clearIdentity();
+]]>
+            </programlisting>
         </para>
 
         <para>

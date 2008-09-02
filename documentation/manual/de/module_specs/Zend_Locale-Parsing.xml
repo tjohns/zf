@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.locale.parsing">
 
     <title>Normalisierung und Lokalisierung</title>
@@ -471,7 +471,8 @@ function getScriptCode($scriptName, $locale)
 }
 echo getScriptCode('Latin', 'en'); // Ausgabe "Latn"
 echo getScriptCode('Tamil', 'en'); // Ausgabe "Taml"
-echo getScriptCode('tamoul', 'fr'); // Ausgabe "Taml"]]>
+echo getScriptCode('tamoul', 'fr'); // Ausgabe "Taml"
+]]>
             </programlisting>
         </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata Ausnahmen auffangen</title>
 
@@ -14,7 +14,8 @@ try {
 } catch(Zend_Gdata_App_Exception $ex) {
     // Die Ausnahme an den Benutzer bekanntgeben
     die($ex->getMessage());
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -82,7 +83,9 @@ try {
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data Server konnten nicht erreicht werden.
-    die($httpEx->getMessage);}]]>
+    die($httpEx->getMessage);
+}
+]]>
     </programlisting>
 
 </sect1>

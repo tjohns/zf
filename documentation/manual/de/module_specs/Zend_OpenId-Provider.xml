@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
@@ -38,7 +38,8 @@ if (!$server->hasUser(TEST_ID)) {
 <link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
 </head><body>
 <?php echo TEST_ID;?>
-</body></html>]]>
+</body></html>
+]]>
             </programlisting>
         </example>
 
@@ -127,7 +128,8 @@ echo htmlspecialchars($_GET['openid_identity']);
 ?>"></td></tr>
 <tr><td>Passwort:</td><td><input type="text" name="openid_password" value=""></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="openid_action" value="login"></td></tr>
-</table></fieldset></form></body></html>]]>
+</table></fieldset></form></body></html>
+]]>
             </programlisting>
         </example>
 
@@ -175,7 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 <input type="hidden" name="openid_action" value="trust">
 <input type="submit" name="allow" value="Allow">
 <input type="submit" name="deny" value="Deny">
-</form></body></html>]]>
+</form></body></html>
+]]>
             </programlisting>
         </example>
 
@@ -275,7 +278,8 @@ if (!$server->hasUser(TEST_ID)) {
 <link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
 </head><body>
 <?php echo TEST_ID;?>
-</body></html>]]>
+</body></html>
+]]>
             </programlisting>
         </example>
 

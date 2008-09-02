@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -155,7 +155,8 @@
         <example id="zend.locale.representation.example-1">
             <title>Auswählen eines speziellen Gebietsschemas</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland]]>
+$locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland
+]]>
             </programlisting>
         </example>
 
@@ -204,7 +205,8 @@ $locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland]]>
 $locale  = new Zend_Locale();
 $locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // Standard verhalten, wie eine Zeile weiter oben
 $locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // Bevorzuge die Einstellungen des hostenden Servers
-$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellungen der Framework Anwendung]]>
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellungen der Framework Anwendung
+]]>
             </programlisting>
         </example>
 
@@ -312,7 +314,8 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
 //$date = new Zend_Date($locale);
 
 // mit automatischer Erkennung
-$date = new Zend_Date('auto');]]>
+$date = new Zend_Date('auto');
+]]>
             </programlisting>
         </example>
 
@@ -417,7 +420,8 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
             <programlisting role="php"><![CDATA[
 $usLocale = new Zend_Locale('en_US');
 $date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);]]>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);
+]]>
             </programlisting>
         </example>
 
@@ -432,7 +436,8 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
+]]>
             </programlisting>
         </example>
 
@@ -461,7 +466,8 @@ Zend_Registry::set('Zend_Locale', $locale);
 // Im Modell oder dem Controller
 $date = new Zend_Date();
 // print $date->getLocale();
-echo $date->getDate();]]>
+echo $date->getDate();
+]]>
             </programlisting>
         </example>
 

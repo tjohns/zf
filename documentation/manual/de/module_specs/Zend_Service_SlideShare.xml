@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.slideshare">
 
     <title>Einführung</title>
@@ -31,8 +31,10 @@
             anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[// Erstellt eine neue Instanz der Komponente
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); ]]>
+        <programlisting role="php"><![CDATA[
+// Erstellt eine neue Instanz der Komponente
+$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+]]>
         </programlisting>
 
     </sect2>
@@ -183,7 +185,8 @@ class Zend_Service_SlideShare_SlideShow {
     public function getNumViews() {
         return $this->_numViews;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <note>
@@ -225,7 +228,8 @@ $slideshow = $ss->getSlideShow(123456);
 
 print "Slide Show Titel: {$slideshow->getTitle()}<br/>\n";
 print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
-?>]]>
+
+]]>
         </programlisting>
 
     </sect2>
@@ -285,7 +289,8 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
             Ansatz verwendet wird. Ein Beispiel der Verwendung jeder Methode wird anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[// Erstellt eine neue Instanz der Komponente
+        <programlisting role="php"><![CDATA[
+// Erstellt eine neue Instanz der Komponente
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 
 $starting_offset = 0;
@@ -300,7 +305,8 @@ $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 foreach($ss_user as $slideshow) {
    print "Slide Show Titel: {$slideshow->getTitle}<br/>\n";
 }
-?>]]>
+
+]]>
         </programlisting>
 
     </sect2>
@@ -317,7 +323,8 @@ foreach($ss_user as $slideshow) {
             Methode angegeben werden wie anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
                         'lifetime' => 7200,
                         'automatic_serialization' => true);
 $backendOptions  = array(
@@ -329,7 +336,8 @@ $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWOR
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+
+]]>
         </programlisting>
 
     </sect2>
@@ -347,13 +355,15 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
             den Standardwert zu setzen wie anbei gezeigt:
         </para>
 
-        <programlisting role="php"><![CDATA[$client = new Zend_Http_Client();
+        <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
 $ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+
+]]>
         </programlisting>
 
     </sect2>

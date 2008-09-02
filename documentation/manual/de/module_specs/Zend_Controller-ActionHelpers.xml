@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11075 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Action Helfer</title>
 
@@ -187,7 +187,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 $redirector =
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Schlußendlich, um einen registrierten Helfer vom Broker zu entfernen, kann
@@ -311,8 +312,10 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             einen Alias von <code>goto()</code> und erlaubt damit die Verwendung des Helfers wie folgt:
         </para>
 
-        <programlisting role="php"><![CDATA[// Umleiten zu /blog/view/item/id/42
-$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+        <programlisting role="php"><![CDATA[
+// Umleiten zu /blog/view/item/id/42
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
+]]>
         </programlisting>
 
         <para>

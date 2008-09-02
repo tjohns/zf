@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.digest">
 
     <title>Digest Authentication</title>
@@ -39,7 +39,10 @@
             "<code>irgendeinPasswort</code>" ist):
         </para>
 
-        <programlisting><![CDATA[irgendeinBenutzer:Irgendein Bereich:fde17b91c3a510ecbaf7dbd37f59d4f8]]></programlisting>
+        <programlisting><![CDATA[
+irgendeinBenutzer:Irgendein Bereich:fde17b91c3a510ecbaf7dbd37f59d4f8
+]]>
+</programlisting>
 
     </sect2>
 

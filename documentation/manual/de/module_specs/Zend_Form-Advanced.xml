@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -70,7 +70,8 @@
         <dd><input name="save" type="submit" value="Speichern" /></dd>
     </dl>
 </form>
-]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             In diesem Beispiel enthalten die Rechnungs- und Versanadresse einige identische
@@ -138,7 +139,8 @@
         <dd><input name="save" type="submit" value="Speichern" /></dd>
     </dl>
 </form>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             In dem obigen Beispiel erhalten wir jetzt seperate Adressen. In der übermittelten Form
@@ -322,7 +324,8 @@ class My_Form_Registration extends Zend_Form
         ));
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Es ist zu beachten das es keinen Sendebutton gibt, und das wir nichts mit den
@@ -407,7 +410,8 @@ class My_Form_Registration extends Zend_Form
         return $this;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Als nächstes benötigen wir etwas Futter für unseren Action Kontroller, und haben
@@ -425,7 +429,8 @@ class My_Form_Registration extends Zend_Form
                 Form Instanz hinzu:
             </para>
 
-            <programlisting role="php"><![CDATA[class RegistrationController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class RegistrationController extends Zend_Controller_Action
 {
     protected $_form;
 
@@ -437,7 +442,8 @@ class My_Form_Registration extends Zend_Form
         return $this->_form;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Fügen wir also etwas Funktionalität hinzu für das Erkennen welche Form angezeigt
@@ -538,7 +544,8 @@ class RegistrationController extends Zend_Controller_Action
         return false;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Die obigen Methoden erlauben uns Schreibweise wie
@@ -603,7 +610,8 @@ class My_Form_Registration extends Zend_Form
         return $this->getForm()->isValid($data);
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Jetzt da die Kleinarbeiten aus dem Weg sind können die Aktionen für diesen
@@ -649,7 +657,8 @@ class RegistrationController extends Zend_Controller_Action
         $this->render('verification');
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 Wie festzustellen ist, ist der aktuelle Code für die Bearbeitung der Form relativ
@@ -695,7 +704,8 @@ foreach ($this->info as $info):
 </dl>
 <? endforeach;
 endforeach ?>
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 Kommende Releases des Zend Frameworks werden Komponenten enthalten die

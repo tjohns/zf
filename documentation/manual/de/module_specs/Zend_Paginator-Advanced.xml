@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10200 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.paginator.advanced">
     <title>Advanced usage</title>
 
@@ -44,7 +44,9 @@
         </para>
 
         <para>
-            <programlisting role="php"><![CDATA[return array_slice($this->_array, $offset, $itemCountPerPage);]]>
+            <programlisting role="php"><![CDATA[
+return array_slice($this->_array, $offset, $itemCountPerPage);
+]]>
             </programlisting>
         </para>
 
@@ -65,7 +67,9 @@
         </para>
 
         <para>
-            <programlisting role="php"><![CDATA[public function getPages(Zend_Paginator $paginator, $pageRange = null);]]>
+            <programlisting role="php"><![CDATA[
+public function getPages(Zend_Paginator $paginator, $pageRange = null);
+]]>
             </programlisting>
         </para>
         
@@ -81,7 +85,9 @@
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[return $paginator->getPagesInRange($lowerBound, $upperBound);]]>
+            <programlisting role="php"><![CDATA[
+return $paginator->getPagesInRange($lowerBound, $upperBound);
+]]>
             </programlisting>
         </para>
         
@@ -97,9 +103,11 @@
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[$prefix = 'My_Paginator_ScrollingStyle';
+            <programlisting role="php"><![CDATA[
+$prefix = 'My_Paginator_ScrollingStyle';
 $path   = 'My/Paginator/ScrollingStyle/';
-Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);]]>
+Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
+]]>
             </programlisting>
         </para>
     </sect2>

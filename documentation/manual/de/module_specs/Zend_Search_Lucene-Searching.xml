@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.searching">
     <title>Einen Index durchsuchen</title>
 
@@ -116,7 +116,8 @@ $query = new Zend_Search_Lucene_Search_Query_Boolean();
 $query->addSubquery($userQuery, true /* required */);
 $query->addSubquery($pathQuery, true /* required */);
 
-$hits = $index->find($query);]]>
+$hits = $index->find($query);
+]]>
                 </programlisting>
             </para>
 
@@ -124,7 +125,8 @@ $hits = $index->find($query);]]>
                 Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode nimmt auch einen optionalen
                 Encoding Parameter, welche die Codierung des Abfrage Strings definieren kann:
                 <programlisting role="php"><![CDATA[
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+]]>
                 </programlisting>
             </para>
 
@@ -138,7 +140,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
                 <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+]]>
                 </programlisting>
             </para>
 
@@ -239,7 +242,8 @@ foreach ($hits as $hit) {
             <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
-Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
+Zend_Search_Lucene::setResultSetLimit($newLimit);
+]]>
             </programlisting>
             Der Standardwert von 0 bedeutet 'keine Grenze'.
         </para>
@@ -276,7 +280,8 @@ $hits = $index->find($query);
 foreach ($hits as $hit) {
     echo $hit->id;
     echo $hit->score;
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -298,7 +303,8 @@ foreach ($hits as $hit) {
         <para>
             <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
             <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]>
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+]]>
             </programlisting>
         </para>
 
@@ -329,7 +335,8 @@ $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
 $index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
-$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]>
             </programlisting>
         </para>
 
@@ -349,7 +356,8 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
 ...
-$highlightedHTML = $query->highlightMatches($sourceHTML);]]>
+$highlightedHTML = $query->highlightMatches($sourceHTML);
+]]>
             </programlisting>
         </para>
 

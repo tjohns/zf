@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.view.controllers">
     <title>Controller Skripte</title>
 
@@ -22,7 +22,8 @@
 $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
-$view->c = "Sea";]]>
+$view->c = "Sea";
+]]>
         </programlisting>
 
         <para>
@@ -55,7 +56,8 @@ $obj = new StdClass;
 $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
-$view->assign((array) $obj);]]>
+$view->assign((array) $obj);
+]]>
         </programlisting>
 
         <para>
@@ -67,7 +69,8 @@ $view->assign((array) $obj);]]>
 $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
-$view->assign('c', "Sea");]]>
+$view->assign('c', "Sea");
+]]>
         </programlisting>
 
     </sect2>
@@ -89,7 +92,8 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-echo $view->render('someView.php');]]>
+echo $view->render('someView.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -113,7 +117,8 @@ echo $view->render('someView.php');]]>
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
-$view->setScriptPath('/path/to/app/views');]]>
+$view->setScriptPath('/path/to/app/views');
+]]>
         </programlisting>
 
         <para>
@@ -137,7 +142,8 @@ $view->addScriptPath('/path/to/custom/');
 // wenn du nun $view->render('booklist.php') aufrufst, wird
 // Zend_View zuerst nach der Datei "/path/to/custom/booklist.php",
 // dann nach "/path/to/app/views/booklist.php" und zuguterletzt
-// im aktuellen Pfad nach der Datei "booklist.php" schauen]]>
+// im aktuellen Pfad nach der Datei "booklist.php" schauen
+]]>
         </programlisting>
 
     </sect2>

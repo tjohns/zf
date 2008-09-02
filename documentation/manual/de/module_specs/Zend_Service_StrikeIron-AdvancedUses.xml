@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: Erweiterte Verwendung</title>
 
@@ -20,7 +20,8 @@
         Um ein StrikeIron Service zu probieren für das keine Wrapper Klasse vorhanden ist, muß die <code>wsdl</code>
         Option statt der <code>class</code> Option an <code>getService()</code> übergeben werden:
 
-        <programlisting role="php"><![CDATA[$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Erhalte einen generellen Client zum Reverse Phone Lookup Service
@@ -29,7 +30,8 @@ $phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/Rever
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
 
-// Zend Technologies USA Inc]]>
+// Zend Technologies USA Inc
+]]>
         </programlisting>
       </para>
 

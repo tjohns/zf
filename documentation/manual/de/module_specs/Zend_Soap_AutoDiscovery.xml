@@ -1,8 +1,7 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11097 -->
 <sect1 id="zend.soap.autodiscovery">
-    <title>AutoDiscovery.</title>
+    <title>AutoDiscovery</title>
 
-    <!-- EN-Revision: 10934 -->
     <sect2 id="zend.soap.autodiscovery.introduction">
         <title>AutoDiscovery. Einführung</title>
         <para>
@@ -14,7 +13,7 @@
             SOAP ist ein von der Sprache unabhängiges Protokoll. Deshalb kann es nicht nur für
             PHP-zu-PHP Kommunikation verwendet werden.
         </para>
-        
+
         <para>
             Es gibt drei Konfigurationen für SOAP Anwendungen wo Zend Framework verwendet werden kann:
             <orderedlist>
@@ -29,7 +28,7 @@
                 </listitem>
             </orderedlist>
         </para>
-        
+
         <para>
             Wir müssen immer wissen, welche Funktionalität vom SOAP Server angeboten wird um mit Ihm zu
             arbeiten. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> wird verwendet um die Netzwerk
@@ -40,7 +39,7 @@
             Die WSDL Sprache ist komplex genug (siehe <ulink url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink>
             für die Details). Es ist also kompliziert genug die richtige WSDL Beschreibung vorzubereiten.
         </para>
-        
+
         <para>
             Ein anderes Problem ist die Synchronisation von Änderungen in der Netzwerk Service API mit schon
             existierendem WSDL.
@@ -74,7 +73,6 @@
             <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD Typen</ulink>. 
         </para>
 
-
         <para>
             Hier ist ein Beispiel einer üblichen Verwendung der Autodiscovery Funktionalität:
             <programlisting role="php"><![CDATA[
@@ -84,11 +82,12 @@ class My_SoapServer_Class {
 
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
-$autodiscover->handle();]]></programlisting>
+$autodiscover->handle();
+]]>
+            </programlisting>
         </para>
     </sect2>
 
-    <!-- EN-Revision: 10934 -->
     <sect2 id="zend.soap.autodiscovery.class">
         <title>Automatische Erkennung von Klassen.</title>
 
@@ -98,7 +97,9 @@ $autodiscover->handle();]]></programlisting>
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
-$autodiscover->handle();]]></programlisting>
+$autodiscover->handle();
+]]>
+            </programlisting>
         </para>
 
         <para>
@@ -139,7 +140,7 @@ $autodiscover->handle();]]></programlisting>
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Wichtig!</title>
             <para>
@@ -154,7 +155,6 @@ $autodiscover->handle();]]></programlisting>
         </note>
     </sect2>
 
-    <!-- EN-Revision: 10934 -->
     <sect2 id="zend.soap.autodiscovery.functions">
         <title>Funktionen für Autodiscovery.</title>
 
@@ -167,9 +167,11 @@ $autodiscover->addFunction('function1');
 $autodiscover->addFunction('function2');
 $autodiscover->addFunction('function3');
 ...
-$autodiscover->handle();]]></programlisting>
+$autodiscover->handle();
+]]>
+            </programlisting>
         </para>
-        
+
         <para>
             Die folgenden Regeln werden wärend der WSDL Erzeugung verwendet:
             <itemizedlist>
@@ -210,7 +212,7 @@ $autodiscover->handle();]]></programlisting>
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Wichtig!</title>
             <para>
@@ -225,7 +227,6 @@ $autodiscover->handle();]]></programlisting>
         </note>
     </sect2>
 
-    <!-- EN-Revision: 10589 -->
     <sect2 id="zend.soap.autodiscovery.datatypes">
         <title>Automatische Erkennung. Datentypen.</title>
 
@@ -276,7 +277,7 @@ $autodiscover->handle();]]></programlisting>
                     <code>xsd:anyType</code> verwendet.</para>
                 </listitem>
             </itemizedlist>
-            
+
             Wo <code>xsd:</code> ein "http://www.w3.org/2001/XMLSchema" Namespace ist, ist
             <code>soap-enc:</code> ein "http://schemas.xmlsoap.org/soap/encoding/" Namespace, und
             <code>tns:</code> ist ein "Ziel Namespace" für einen Service.

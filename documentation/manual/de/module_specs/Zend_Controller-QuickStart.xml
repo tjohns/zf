@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller Schnellstart</title>
 
@@ -52,7 +52,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php]]>
+    index.php
+]]>
             </programlisting>
 
         </sect3>
@@ -75,7 +76,8 @@ html/
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]>
             </programlisting>
 
             <para>
@@ -103,7 +105,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 <code>html/index.php</code> gehört der folgende Code:
             </para>
 
-            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/app/controllers');
+]]>
             </programlisting>
 
             <para>
@@ -157,7 +161,8 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -200,7 +205,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hallo Welt!</h1>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
@@ -215,13 +221,15 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 im Default-Modul mit einer Methode namens <code>errorAction</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
+            <programlisting role="php"><![CDATA[
+/** Zend_Controller_Action */
 class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -245,7 +253,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Ein Fehler ist aufgetreten</h1>
     <p>Ein Fehler ist aufgetreten; bitte versuchen Sie es später noch einmal.</p>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 

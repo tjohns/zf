@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.filter.introduction">
 
     <title>Einführung</title>
@@ -57,7 +57,8 @@
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;]]>
+echo $htmlEntities->filter('"'); // &quot;
+]]>
             </programlisting>
 
         </para>
@@ -76,7 +77,10 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             Zend_Filter Namensraum, entspricht. Die <code>get()</code> Methode läde die Klasse automatisch, erstellt
             eine Instanz, und führt die Eingabedaten der <code>filter()</code> Methode zu.
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('&', 'HtmlEntities');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('&', 'HtmlEntities');
+]]>
+            </programlisting>
 
         </para>
 
@@ -84,7 +88,10 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             Es kann auch ein Array von Konstruktor Argumenten übergeben werden, wen diese für die Filterklasse
             benötigt werden.
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]></programlisting>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
+]]>
+            </programlisting>
 
         </para>
 

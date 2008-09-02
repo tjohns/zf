@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.view.introduction">
     <title>Einführung</title>
 
@@ -57,7 +57,8 @@ $view = new Zend_View();
 $view->books = $data;
 
 // und verarbeite ein View Skript mit Namen "booklist.php"
-echo $view->render('booklist.php');]]>
+echo $view->render('booklist.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -75,7 +76,8 @@ echo $view->render('booklist.php');]]>
             ein sehr einfaches View Skript wie folgt aussehen:
         </para>
 
-        <programlisting role="php"><![CDATA[ if ($this->books): ?>
+        <programlisting role="php"><![CDATA[
+<?php if ($this->books): ?>
     <!-- Eine Tabelle mit einigen Büchern. -->
     <table>
         <tr>
@@ -96,7 +98,8 @@ echo $view->render('booklist.php');]]>
 
     <p>Es gibt keine Bücher zum Anzeigen.</p>
 
-<?php endif;?>]]>
+<?php endif;?>
+]]>
         </programlisting>
 
         <para>
@@ -125,7 +128,8 @@ echo $view->render('booklist.php');]]>
 base/path/
     helpers/
     filters/
-    scripts/]]>
+    scripts/
+]]>
                 </programlisting>
 
                 <para>
@@ -200,7 +204,8 @@ base/path/
 
                 <programlisting role="apache"><![CDATA[
 php_value "short_open_tag" "on"
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     Das ist nur dann möglich wenn es erlaubt ist <code>.htaccess</code> Dateien zu erstellen
@@ -215,9 +220,10 @@ php_value "short_open_tag" "on"
                     konvertieren:
                 </para>
 
-        <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[
 $view->setUseStreamWrapper(true);
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     Das registriert <code>Zend_View_Stream</code> als Steam Wrapper für View Skripte, und

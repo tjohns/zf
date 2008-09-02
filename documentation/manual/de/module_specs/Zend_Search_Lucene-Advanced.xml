@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>Erweitert</title>
 
@@ -116,7 +116,8 @@ class Searcher {
     }
 }
 
-Searcher::initIndex();]]>
+Searcher::initIndex();
+]]>
             </programlisting>
         </para>
 
@@ -170,7 +171,8 @@ Searcher::initIndex();
 // Sktipt Shutdorn Routine
 ...
 Searcher::commit();
-...]]>
+...
+]]>
             </programlisting>
         </para>
 

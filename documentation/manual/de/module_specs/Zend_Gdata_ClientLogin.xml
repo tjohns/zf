@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>Authentifizieren mit ClientLogin</title>
 
@@ -85,7 +85,8 @@ try {
    echo 'Authentifizierungs Problem: ' . $ae->exception() . "\n";
 }
 
-$cal = new Zend_Gdata_Calendar($client);]]>
+$cal = new Zend_Gdata_Calendar($client);
+]]>
         </programlisting>
 
     </sect2>

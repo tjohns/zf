@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.config.introduction">
     <title>Einleitung</title>
     <para>
@@ -21,7 +21,8 @@
             auch einfach an den <code>Zend_Config</code>-Konstruktor übergeben werden, um dann
             über die objektorientierte Schnittstelle auf sie zugreifen zu können:
         </para>
-        <programlisting role="php"><![CDATA[// Gegeben ist ein Array mit Konfigurations-Daten
+        <programlisting role="php"><![CDATA[
+// Gegeben ist ein Array mit Konfigurations-Daten
 $configArray = array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -47,7 +48,8 @@ $db = Zend_Db::factory($config->database->adapter,
 
 // Alternative Verwendung: einfach das Zend_Config Objekt übergeben.
 // Zend_Db factory weiß wie es zu interpretieren ist.
-$db = Zend_Db::factory($config->database);]]>
+$db = Zend_Db::factory($config->database);
+]]>
         </programlisting>
     </example>
     <para>
@@ -60,7 +62,9 @@ $db = Zend_Db::factory($config->database);]]>
         <code>get()</code> welches den unterstützten Standardwert zurückgibt wenn das Daten Element
         nicht existiert. Zum Beispiel:
     </para>
-    <programlisting role="php"><![CDATA[$host = $config->database->get('host', 'localhost');]]>
+    <programlisting role="php"><![CDATA[
+$host = $config->database->get('host', 'localhost');
+]]>
     </programlisting>
     <example id="zend.config.introduction.example.file.php">
         <title>Zend_Config mit einer PHP Konfigurationsdatei verwenden</title>
@@ -68,7 +72,8 @@ $db = Zend_Db::factory($config->database);]]>
             Es ist oft gewünscht eine reine PHP-basierende Konfigurationsdatei zu verwenden. Der folgende
             Code zeigt wie das ganz einfach erreicht werden kann:
         </para>
-        <programlisting role="php"><![CDATA[// config.php
+        <programlisting role="php"><![CDATA[
+// config.php
 return array(
     'webhost'  => 'www.example.com',
     'database' => array(
@@ -80,12 +85,17 @@ return array(
             'dbname'   => 'mydatabase'
         )
     )
-);]]></programlisting>
-        <programlisting role="php"><![CDATA[// Konfiguration konsumieren
+);
+]]>
+        </programlisting>
+        <programlisting role="php"><![CDATA[
+// Konfiguration konsumieren
 $config = new Zend_Config(require 'config.php');
 
 // Einen Konfigurationswert ausgeben (führt zu 'www.example.com')
-echo $config->webhost;]]></programlisting>
+echo $config->webhost;
+]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

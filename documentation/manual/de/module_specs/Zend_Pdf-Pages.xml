@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.pdf.pages">
     <title>Dokument Seiten</title>
     <sect2 id="zend.pdf.pages.creation">
@@ -70,7 +70,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 // Entferne eine bestimmte Seite
 unset($pdf->pages[$id]);
 
-...]]>
+...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -102,7 +103,8 @@ $pdf->pages[] = $page2;
 // Die Quell Template Seite von den Dokumenten entfernen
 unset($pdf->pages[$templatePageIndex]);
 
-...]]>
+...
+]]>
             </programlisting>
         </example>
 

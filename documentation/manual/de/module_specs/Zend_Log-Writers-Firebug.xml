@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11090 -->
 <sect2 id="zend.log.writers.firebug">
 
     <title>An Firebox schreiben</title>
@@ -56,7 +56,8 @@ $writer = new Zend_Log_Writer_Firebug();
 $logger = new Zend_Log($writer);
 
 // Verwende das in den Modell, View, und Controller Dateien
-$logger->log('Das ist eine Lognachricht!', Zend_Log::INFO);]]>
+$logger->log('Das ist eine Lognachricht!', Zend_Log::INFO);
+]]>
         </programlisting>	
     </example>
       
@@ -78,7 +79,8 @@ $logger->log('Das ist eine Lognachricht!', Zend_Log::INFO);
 
 // Logdaten an den Browser senden
 $channel->flush();
-$response->sendHeaders();]]>
+$response->sendHeaders();
+]]>
         </programlisting>
     </example>
     
@@ -92,9 +94,10 @@ $response->sendHeaders();]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-  $logger->addPriority('FOO', 8);
-  $writer->setPriorityStyle(8, 'TRACE');
-  $logger->foo('Foo Nachricht');]]>
+$logger->addPriority('FOO', 8);
+$writer->setPriorityStyle(8, 'TRACE');
+$logger->foo('Foo Nachricht');
+]]>
         </programlisting>	
 
         <para>
@@ -103,7 +106,8 @@ $response->sendHeaders();]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-  $writer->setDefaultPriorityStyle('TRACE');]]>
+$writer->setDefaultPriorityStyle('TRACE');
+]]>
         </programlisting>
 
         <para>
@@ -178,8 +182,9 @@ $response->sendHeaders();]]>
       </para>
 
       <programlisting role="php"><![CDATA[
-  $exception = new Zend_Exception('Test Ausnahme');
-  $logger->err($exception);]]>
+$exception = new Zend_Exception('Test Ausnahme');
+$logger->err($exception);
+]]>
       </programlisting>
     </sect3>
   
@@ -193,17 +198,18 @@ $response->sendHeaders();]]>
       </para>
 
       <programlisting role="php"><![CDATA[
-  $writer->setPriorityStyle(8, 'TABLE');
-  $logger->addPriority('TABLE', 8);
-  
-  $table = array('Summary line for the table',
-                 array(
-                     array('Spalte 1', 'Spalte 2'),
-                     array('Zeile 1 c 1','Zeile 1 c 2'),
-                     array('Zeile 2 c 1',' Zeile 2 c 2')
-                 )
-                );
-  $logger->table($table);]]>
+$writer->setPriorityStyle(8, 'TABLE');
+$logger->addPriority('TABLE', 8);
+
+$table = array('Summary line for the table',
+               array(
+                   array('Spalte 1', 'Spalte 2'),
+                   array('Zeile 1 c 1','Zeile 1 c 2'),
+                   array('Zeile 2 c 1',' Zeile 2 c 2')
+               )
+         );
+$logger->table($table);
+]]>
       </programlisting>
     </sect3>
 </sect2>

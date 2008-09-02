@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype Helfer</title>
 
@@ -45,7 +45,8 @@
         <programlisting role="php"><![CDATA[
 $doctypeHelper = new Zend_View_Helper_Doctype();
 $doctypeHelper->doctype('XHTML1_STRICT');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Und Ihn dann am Beginn des Layout Scripts ausgeben:
@@ -53,7 +54,8 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->doctype() ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
     </example>
 
@@ -67,7 +69,8 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Typischerweise wird man einfach wissen wollen, ob der Doctype XHTML ist oder nicht; hierfür ist
@@ -78,7 +81,8 @@ $doctype = $view->doctype()->getDoctype();
 if ($view->doctype()->isXhtml()) {
     // etwas anderes machen
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

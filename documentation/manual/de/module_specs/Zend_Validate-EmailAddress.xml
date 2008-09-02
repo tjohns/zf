@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect2 id="zend.validate.set.email_address">
 
     <title>Email Adresse</title>
@@ -98,7 +98,8 @@ if ($validator->isValid($email)) {
         Konstruktor übergeben werden.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+]]>
         </programlisting>
 
         Alternativ kann entweder <code>true</code> oder <code>false</code> an
@@ -123,7 +124,8 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         <code>Zend_Validate_EmailAddress</code> existiert.
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateIdn(false);]]>
+$validator->hostnameValidator->setValidateIdn(false);
+]]>
         </programlisting>
 
         Weitere Informationen über die Verwendung von <code>setValidateIdn()</code> gibt es
@@ -145,7 +147,8 @@ $validator->hostnameValidator->setValidateIdn(false);]]>
         <code>Zend_Validate_EmailAddress</code> existiert.
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateTld(false);]]>
+$validator->hostnameValidator->setValidateTld(false);
+]]>
         </programlisting>
 
         Mehr Informationen über die Verwendung von <code>setValidateTld()</code> gibt es in der

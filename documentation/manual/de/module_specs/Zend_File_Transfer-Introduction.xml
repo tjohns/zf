@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -42,7 +42,8 @@
     <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
         Choose a file to upload: <input name="uploadedfile" type="file" /><br />
     <input type="submit" value="Upload File" />
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <para>

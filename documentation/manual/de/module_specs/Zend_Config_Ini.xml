@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -77,8 +77,9 @@ database.params.password = devsecret
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
-echo $config->database->params->host;   // ausgabe "dev.example.com"
-echo $config->database->params->dbname; // ausgabe "dbname"]]>
+echo $config->database->params->host;   // Ausgabe "dev.example.com"
+echo $config->database->params->dbname; // Ausgabe "dbname"
+]]>
         </programlisting>
     </example>
     <note>

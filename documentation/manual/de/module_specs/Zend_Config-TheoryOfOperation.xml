@@ -1,4 +1,4 @@
-<!-- EN-Revision: 6430 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.config.theory_of_operation">
     <title>Theory of Operation</title>
     <para>
@@ -25,11 +25,11 @@
     </para>
     <para>
         Standardmäßig gewährt <code>Zend_Config</code> nur Lesezugriff auf die Daten und der Versuch einer
-        Wertzuweisung (wie z. B. <code><![CDATA[$config->database->host = 'example.com';]]></code>) löst eine
+        Wertzuweisung (wie z. B. <code>$config->database->host = 'example.com';</code>) löst eine
         Ausnahme aus. Dieses Standard-Verhalten kann mit Hilfe des Konstruktors aber so überschrieben werden,
         dass die Veränderung von Daten erlaubt ist. Wenn auch Änderungen erlaubt sind, unterstützt
         <code>Zend_Config</code> das entfernen von Werten (z.B.
-        <code><![CDATA[unset($config->database->host);]]></code>).
+        <code>unset($config->database->host);</code>).
 
         <note>
             <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.acl.introduction">
     <title>Einführung</title>
 
@@ -104,9 +104,6 @@
                 "<code>member</code>" und "<code>admin</code>"):
             </para>
             <programlisting role="php"><![CDATA[
-
-
-
 $acl = new Zend_Acl();
 
 $acl->addRole(new Zend_Acl_Role('guest'))
@@ -121,7 +118,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]>
+echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';
+]]>
             </programlisting>
             <para>
                 Da keine Regel speziell für die Rolle "<code>someUser</code>" und
@@ -169,7 +167,8 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$acl = new Zend_Acl();]]>
+$acl = new Zend_Acl();
+]]>
         </programlisting>
 
         <note>
@@ -260,7 +259,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator erbt keine Zugriffsrechte
-$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+$acl->addRole(new Zend_Acl_Role('administrator'));
+]]>
         </programlisting>
 
     </sect2>
@@ -316,7 +316,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator erbt gar nichts, aber erhält alle Rechte
-$acl->allow('administrator');]]>
+$acl->allow('administrator');
+]]>
         </programlisting>
 
         <para>

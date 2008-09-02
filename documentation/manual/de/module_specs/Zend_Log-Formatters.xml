@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.log.formatters">
   <title>Formatter</title>
   <para>
@@ -20,7 +20,8 @@
 
       <programlisting role="php"><![CDATA[
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
-$formatter = new Zend_Log_Formatter_Simple($format);]]>
+$formatter = new Zend_Log_Formatter_Simple($format);
+]]>
       </programlisting>
     </para>
 
@@ -38,7 +39,8 @@ $logger->addWriter($writer);
 
 $logger->info('dort');
 
-// Gibt "Hallo dort" aus]]>
+// Gibt "Hallo dort" aus
+]]>
       </programlisting>
     </para>
 
@@ -65,7 +67,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('Informative Nachricht');]]>
+$logger->info('Informative Nachricht');
+]]>
       </programlisting>
     </para>
 
@@ -78,7 +81,8 @@ $logger->info('Informative Nachricht');]]>
   <message>Informative Nachricht</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
-</logEntry>]]>
+</logEntry>
+]]>
       </programlisting>
     </para>
 
@@ -96,7 +100,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('Informative Nachricht');]]>
+$logger->info('Informative Nachricht');
+]]>
       </programlisting>
 
       Der obige Code ändert das Root Element von seinem Standard <code>logEntry</code> zu <code>log</code>.
@@ -107,7 +112,8 @@ $logger->info('Informative Nachricht');]]>
 <log>
   <msg>Informative Nachricht</msg>
   <level>INFO</level>
-</log>]]>
+</log>
+]]>
       </programlisting>
     </para>
 

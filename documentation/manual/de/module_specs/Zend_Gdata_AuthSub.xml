@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.authsub">
     <title>Authentifizierung mit AuthSub</title>
 
@@ -87,7 +87,8 @@ if (!isset($_SESSION['cal_token'])) {
 $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['cal_token']);
 
 // Erstellt ein Gdara Objekt das den authentifizierten Http Client verwendet
-$cal = new Zend_Gdata_Calendar($client);]]>
+$cal = new Zend_Gdata_Calendar($client);
+]]>
         </programlisting>
 
     </sect2>
@@ -110,7 +111,8 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['cal_token']);
     header('Location: ' . $php_self);
     exit();
-}]]>
+}
+]]>
         </programlisting>
 
     <note>

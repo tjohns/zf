@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
     
@@ -131,7 +131,8 @@
                         <code>SOAP_COMPRESSION_ACCEPT</code>, <code>SOAP_COMPRESSION_GZIP</code> und
                         <code>SOAP_COMPRESSION_DEFLATE</code> Optionen welche wie folgt verwendet werden
                         können:
-                        <programlisting role="php"><![CDATA[// Komprimierung der Antworten akzeptieren
+                        <programlisting role="php"><![CDATA[
+// Komprimierung der Antworten akzeptieren
 $client = new SoapClient("some.wsdl", 
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
@@ -143,7 +144,9 @@ $client = new SoapClient("some.wsdl",
 
 // Anfragen komprimieren durch Verwendung der Deflate Komprimierung
 $client = new SoapClient("some.wsdl", 
-  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));]]></programlisting>
+  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
+]]>
+                        </programlisting>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -165,7 +168,8 @@ $client = new SoapClient("some.wsdl",
         
         <para>
             Es ist wie im folgenden Beispiel zu verwenden:
-            <programlisting role="php"><![CDATA[//****************************************************************
+            <programlisting role="php"><![CDATA[
+//****************************************************************
 //                Server Code
 //****************************************************************
 // class MyClass {
@@ -210,7 +214,9 @@ $result1 = $client->method1(10);
 ...
 
 // $result2 ist ein Float
-$result2 = $client->method2(22, 'irgendein String');]]></programlisting>
+$result2 = $client->method2(22, 'irgendein String');
+]]>
+            </programlisting>
         </para>
     </sect2>
 </sect1>

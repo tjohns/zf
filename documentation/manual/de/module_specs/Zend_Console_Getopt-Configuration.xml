@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11067 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.console.getopt.configuration">
     <title>Konfigurieren von Zend_Console_Getopt</title>
 
@@ -18,7 +18,8 @@
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>Verwenden von addRules()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Druckt zusätzliche Ausgaben'
@@ -48,7 +49,8 @@ $opts->addRules(
         </para>
         <example id="zend.console.getopt.configuration.addhelp.example">
             <title>Verwenden von setHelp()</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'Apfel Option, ohne Parameter',

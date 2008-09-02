@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.charset">
     <title>Zeichensätze</title>
 
@@ -72,7 +72,8 @@
 
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]>
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+]]>
             </programlisting>
         </para>
 
@@ -102,11 +103,13 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             Der folgende Code kann verwendet werden um zu prüfen ob PCRE UTF-8 Unterstützung eingeschaltet ist:
 
             <programlisting role="php"><![CDATA[
+
 if (@preg_match('/\pL/u', 'a') == 1) {
     echo "PCRE Unicode Unterstützung ist eingeschaltet.\n";
 } else {
     echo "PCRE Unicode Unterstützung ist ausgeschaltet.\n";
-}]]>
+}
+]]>
             </programlisting>
         </para>
         
@@ -123,6 +126,7 @@ if (@preg_match('/\pL/u', 'a') == 1) {
             Kleinschreibung konvertiert werden:
         
             <programlisting role="php"><![CDATA[
+
 // Indizierung
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
@@ -141,7 +145,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($conten
 $doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
 
 // Titel Feld für das Empfangen (nicht indiziert, gespeichert)
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
@@ -155,7 +160,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 ...
 
-$hits = $index->find(strtolower($query));]]>
+$hits = $index->find(strtolower($query));
+]]>
             </programlisting>
         </para>
     </sect2>

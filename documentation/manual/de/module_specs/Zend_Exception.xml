@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.exception.using">
 
     <title>Verwenden von Ausnahmen</title>
@@ -18,7 +18,8 @@ try {
     echo "Gefangene Ausnahme: " . get_class($e) . "\n";
     echo "Nachricht: " . $e->getMessage() . "\n";
     // anderer Code um den Fehler zu korrigieren.
-}]]>
+}
+]]>
         </programlisting>
     </example>
 

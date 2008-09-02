@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 11089 -->
 <sect2 id="zend.dojo.form.decorators">
     <title>Dijit-Spezifische Formular Dekoratore</title>
 
@@ -50,7 +50,8 @@ $element->setDecorators(array(
     'Label',
     'ContentPane',
 ));
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect3>
 
@@ -122,7 +123,8 @@ $subForm->setDecorators(array(
     array('HtmlTag', array('tag' => 'dl')),
     'ContentPane',
 ));
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect3>
 </sect2>

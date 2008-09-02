@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10968 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.soap.wsdl">
     <title>WSDL Zugriffsmethoden</title>
 
@@ -348,7 +348,9 @@ class MyClass {
     ...
 }
 ...
-$soapMyClassType = $wsdl->getType('MyClass');]]></programlisting>
+$soapMyClassType = $wsdl->getType('MyClass');
+]]>
+                </programlisting>
             </para>
         </sect3>
 

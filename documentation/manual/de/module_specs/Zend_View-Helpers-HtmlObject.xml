@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>HTML Objekt Helfer</title>
 
@@ -55,7 +55,8 @@
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Das gibt das folgende HTML aus:
@@ -66,7 +67,8 @@
     classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
     codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
-]]></programlisting>
+]]>
+        </programlisting>
 
     </example>
 
@@ -116,7 +118,8 @@ Das würde folgendes ausgeben:
     some content
 </object>
 */
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

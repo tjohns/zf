@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.technorati">
     <title>Zend_Service_Technorati</title>
 
@@ -216,7 +216,8 @@ try {
     $resultSet = $technorati->search('PHP');
 } catch(Zend_Service_Technorati_Exception $e) {
     echo "Ein Fehler ist aufgetreten: " $e->getMessage();
-} ]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -557,7 +558,8 @@ $resultSet = $technorati->search('php');
 // sie erweitert Zend_Service_Technorati_ResultSet
 foreach ($resultSet as $result) {
     // irgendwas mit dem Zend_Service_Technorati_SearchResult Objekt anfangen
-} ]]>
+}
+]]>
                 </programlisting>
             </example>
         </sect3>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>Fortgeschrittene Benutzung</title>
@@ -50,7 +50,10 @@ Zend_Session::start();
                     und die Einstellung schon in <code>php.ini</code> aktiviert ist, kann das folgende in der
                     <code>.htaccess</code> Datei (normalerweise im HTML Dokumenten Basisverzeichnis) hinzugefügt
                     werden:
-                    <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]></programlisting>
+                    <programlisting role="httpd.conf"><![CDATA[
+php_value session.auto_start 0
+]]>
+</programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -232,7 +235,8 @@ $s->setExpirationSeconds(60);
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // Nur diese Variable ablaufen lassen
 $testSpace->accept_answer = true;
-//...?>]]>
+//...
+]]>
             </programlisting>
 
             <para>
@@ -509,7 +513,8 @@ exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);
 session_start(); // Die bestimmte Session wiederherstellen
 $this->assertTrue($result === ';p === plum',
-    "Iterierung durch benannte Zend_Session Namensräume fehlgeschlaten (result=$result)");]]>
+    "Iterierung durch benannte Zend_Session Namensräume fehlgeschlaten (result=$result)");
+]]>
             </programlisting>
         </example>
 

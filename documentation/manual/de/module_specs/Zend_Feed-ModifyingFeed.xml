@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.feed.modifying-feed">
     <title>Verändern der Feed- und Eintragsstruktur</title>
 
@@ -18,7 +18,8 @@ $entry = $feed->current();
 $entry->title = 'Dies ist ein neuer Titel';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
         <para>
             Dies gibt eine vollständige (enthält den <code>&lt;?xml ... &gt;</code> Prolog) XML
@@ -57,7 +58,8 @@ $entry->{'myns:myelement_one'} = 'mein erster eigener Wert ';
 $entry->{'myns:container_elt'}->part1 = 'Erster verschachtelter Teil';
 $entry->{'myns:container_elt'}->part2 = 'Zweiter verschachtelter Teil';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
     </example>
 </sect1>

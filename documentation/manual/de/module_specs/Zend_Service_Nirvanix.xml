@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -116,7 +116,8 @@
             <code>Zend_Service_Nirvanix</code> bietet bequeme Methoden für diese drei Operationen.
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -127,7 +128,8 @@ $imfs->putContents('/foo.txt', 'zu speichernder Inhalt');
 
 echo $imfs->getContents('/foo.txt');
 
-$imfs->unlink('/foo.txt');]]>
+$imfs->unlink('/foo.txt');
+]]>
         </programlisting>
 
         <para>
@@ -191,7 +193,8 @@ $imfs->unlink('/foo.txt');]]>
             besitzen:
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -199,7 +202,8 @@ $nirvanix = new Zend_Service_Nirvanix($auth);
 $imfs = $nirvanix->getService('IMFS');
 
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
-                                  'newFileName' => 'bar.txt'));]]>
+                                  'newFileName' => 'bar.txt'));
+]]>
         </programlisting>        
 
         <para>
@@ -239,7 +243,9 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             in PHP eingebauten Funktionen wie <code>print_r()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'Dein-Benutzername',
+        <programlisting role="php"><![CDATA[
+<?php
+$auth = array('username' => 'Dein-Benutzername',
               'password' => 'Dein-Passwort',
               'appKey'   => 'Dein-App-Schlüssel');
 
@@ -258,7 +264,8 @@ Zend_Service_Nirvanix_Response Object
             [ResponseCode] => 0
             [FilesUploaded] => 1
             [BytesUploaded] => 14
-        ))]]>
+        ))
+]]>
         </programlisting>
 
         <para>
@@ -293,7 +300,8 @@ Zend_Service_Nirvanix_Response Object
         <programlisting role="xml"><![CDATA[
 <Response>
     <ResponseCode>0</ResponseCode>
-</Response>]]>
+</Response>
+]]>
         </programlisting>
 
         <para>
@@ -309,7 +317,8 @@ Zend_Service_Nirvanix_Response Object
             <code>Zend_Service_Nirvanix_Exception</code> geworfen.
         </para>
 
-      <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
+      <programlisting role="xml"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);
@@ -317,12 +326,13 @@ $nirvanix = new Zend_Service_Nirvanix($auth);
 try {
 
   $imfs = $nirvanix->getService('IMFS');
-  $imfs->unlink('/a-nonexistant-path');]]>
+  $imfs->unlink('/a-nonexistant-path');
 
 } catch (Zend_Service_Nirvanix_Exception $e) {
   echo $e->getMessage() . "\n";
   echo $e->getCode();
 }
+]]>
         </programlisting>
 
         <para>

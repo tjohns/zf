@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.measure.creation">
 
     <title>Erstellung einer Maßeinheit</title>
@@ -142,7 +142,8 @@ $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // Irgendwo in der eigenen Anwendung
-$length = new Zend_Measure_Length(Zend_Measure_Length::METER();]]>
+$length = new Zend_Measure_Length(Zend_Measure_Length::METER();
+]]>
         </programlisting>
 
     </sect2>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API Übersicht</title>
@@ -163,14 +163,16 @@
 
         <example id="zend.date.values.example-1">
             <title>Benutzerdefinierte Eingabeformate für Daten</title>
-            <programlisting role="php"><![CDATA[$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+            <programlisting role="php"><![CDATA[
+$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // Stikte Interpretation des angegebenen Formats
-echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
+echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
+]]>
             </programlisting>
         </example>
 
@@ -201,12 +203,14 @@ echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
             will.
         </para>
 
-        <programlisting role="php"><![CDATA[// In der Bootstrap Datei
+        <programlisting role="php"><![CDATA[
+// In der Bootstrap Datei
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // Irgendwo in der eigenen Anwendung
-$date = new Zend_Date('31.Feb.2007');]]>
+$date = new Zend_Date('31.Feb.2007');
+]]>
         </programlisting>
 
     </sect2>
@@ -230,11 +234,13 @@ $date = new Zend_Date('31.Feb.2007');]]>
 
         <example id="zend.date.basic.example-1">
             <title>Arbeiten an Teilen von Daten</title>
-            <programlisting role="php"><![CDATA[$date = new Zend_Date(); // $date's Zeitpunkt === time()
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date(); // $date's Zeitpunkt === time()
 
 // Ändert $date durch addieren von 12 Stunden
 $date->add('12', Zend_Date::HOUR);
-print $date;]]>
+print $date;
+]]>
             </programlisting>
         </example>
 

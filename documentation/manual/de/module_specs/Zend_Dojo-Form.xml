@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10130 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.dojo.form" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Dojo Form Elemente und Dekoratore</title>
 
@@ -79,7 +79,8 @@ class My_Form_Custom extends Zend_Form
         }
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <para>

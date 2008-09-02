@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
 
@@ -39,13 +39,15 @@
             erhaltener Schlüssel aktiv ist, kann das mit dieser Methode gemacht werden.
         </para>
 
-        <programlisting role="php"><![CDATA[// Instanzieren mit dem API Schlüssel und einer URL zur Anwendung oder Ressource die verwendet wird
+        <programlisting role="php"><![CDATA[
+// Instanzieren mit dem API Schlüssel und einer URL zur Anwendung oder Ressource die verwendet wird
 $akismet = new Zend_Service_Akismet($apiKey, 'http://framework.zend.com/wiki/');
 if ($akismet->verifyKey($apiKey) {
 echo "Schlüssel ist gültig.\n";
 } else {
 echo "Schlüssel ist ungültig\n";
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -156,7 +158,8 @@ echo "Schlüssel ist ungültig\n";
         <example id="zend.service.akismet.isspam.example-1">
             <title>Verwendung von isSpam()</title>
 
-            <programlisting role="php"><![CDATA[$data = array(
+            <programlisting role="php"><![CDATA[
+$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -168,7 +171,8 @@ if ($akismet->isSpam($data)) {
     echo "Sorry, aber wir denken das Du ein Spammer bist.";
 } else {
     echo "Willkommen auf unserer Seite!";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -195,7 +199,8 @@ if ($akismet->isSpam($data)) {
         <example id="zend.service.akismet.submitspam.example-1">
             <title>Verwendung von submitSpam()</title>
 
-            <programlisting role="php"><![CDATA[$data = array(
+            <programlisting role="php"><![CDATA[
+$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -203,7 +208,8 @@ if ($akismet->isSpam($data)) {
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "Ich bin kein Spammer, ehrlich!"
 );
-$akismet->submitSpam($data));]]>
+$akismet->submitSpam($data));
+]]>
             </programlisting>
         </example>
 
@@ -231,7 +237,8 @@ $akismet->submitSpam($data));]]>
         <example id="zend.service.akismet.submitham.example-1">
             <title>Verwenden von submitHam()</title>
 
-            <programlisting role="php"><![CDATA[$data = array(
+            <programlisting role="php"><![CDATA[
+$data = array(
     'user_ip'              => '111.222.111.222',
     'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
     'comment_type'         => 'contact',
@@ -239,7 +246,8 @@ $akismet->submitSpam($data));]]>
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitHam($data));]]>
+$akismet->submitHam($data));
+]]>
             </programlisting>
         </example>
 

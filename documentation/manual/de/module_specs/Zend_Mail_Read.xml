@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.mail.read">
     <title>Lesen von Mail Nachrichten</title>
 
@@ -86,7 +86,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'localhost',
 echo $mail->countMessages() . " Nachrichten gefunden\n";
 foreach ($mail as $message) {
     echo "Mail von '{$message->from}': {$message->subject}\n";
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -103,13 +104,15 @@ foreach ($mail as $message) {
         </para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));]]>
+$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
+]]>
         </programlisting>
 
         <para>Maildir ist sehr einfach benötigt aber einen Verzeichnisnamen:</para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));]]>
+$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
+]]>
         </programlisting>
 
         <para>Beide Konstruktoren werfen eine <code>Zend_Mail_Exception</code> Ausnahme wenn der Speicher nicht
@@ -140,7 +143,8 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
-                                         'password' => 'test'));]]>
+                                         'password' => 'test'));
+]]>
         </programlisting>
 
         <para>
@@ -161,7 +165,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
                                          'user'     => 'test',
                                          'password' => 'test',
-                                         'ssl'      => 'TLS'));]]>
+                                         'ssl'      => 'TLS'));
+]]>
         </programlisting>
 
         <para>
@@ -181,7 +186,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
         </para>
 
         <programlisting role="php"><![CDATA[
-$message = $mail->getMessage($messageNum);]]>
+$message = $mail->getMessage($messageNum);
+]]>
         </programlisting>
 
         <para>
@@ -190,7 +196,8 @@ $message = $mail->getMessage($messageNum);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$message = $mail[$messageNum];]]>
+$message = $mail[$messageNum];
+]]>
         </programlisting>
 
         <para>Um über alle Nachrichten zu iterieren wurde das Iterator Interface implementiert:</para>
@@ -198,7 +205,8 @@ $message = $mail[$messageNum];]]>
         <programlisting role="php"><![CDATA[
 foreach ($mail as $messageNum => $message) {
     // mach was ...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -211,7 +219,8 @@ foreach ($mail as $messageNum => $message) {
 $maxMessage = $mail->countMessages();
 
 // Array Zugriff
-$maxMessage = count($mail);]]>
+$maxMessage = count($mail);
+]]>
         </programlisting>
 
         <para>Um eine Mail zu entfernen kann die Methode <code>removeMessage()</code> oder auch der Array Zugriff
@@ -222,7 +231,8 @@ $maxMessage = count($mail);]]>
 $mail->removeMessage($messageNum);
 
 // Array Zugriff
-unset($mail[$messageNum]);]]>
+unset($mail[$messageNum]);
+]]>
         </programlisting>
 
     </sect2>
@@ -244,7 +254,8 @@ $message = $mail->getMessage(1);
 echo $message->subject . "\n";
 
 // Inhalts-Typ der Kopfzeile holen
-$type = $message->contentType;]]>
+$type = $message->contentType;
+]]>
         </programlisting>
 
         <para>Wenn mehrere Kopfzeilen mit dem selben Namen vorhanden sind z.B. die empfangenen Kopfzeilen
@@ -268,7 +279,8 @@ foreach ($received as $line) {
 $received = $message->getHeader('received');
 if (is_string($received)) {
     // Nur eine empfangene Kopfzeile in der Nachricht gefunden
-}]]>
+}
+]]>
         </programlisting>
 
         <para>Die Methode <code>getHeaders()</code> gibt alle Kopfzeilen als Array mit den kleingeschriebenen Namen
@@ -284,7 +296,8 @@ foreach ($message->getHeaders() as $name => $value) {
     foreach ($value as $entry) {
         echo "$name: $entry\n";
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>Wenn keine Nachricht aus mehreren Teilen vorlieg kann der Inhalt sehr einfach über
@@ -295,7 +308,8 @@ foreach ($message->getHeaders() as $name => $value) {
 // Inhalt der Nachricht für HTML ausgeben
 echo '<pre>';
 echo $message->getContent();
-echo '</pre>';]]>
+echo '</pre>';
+]]>
         </programlisting>
 
         <para>Die Prüfung auf mehrteilige Nachrichten wird in der Methode <code>isMultipart()</code> gemacht.
@@ -313,7 +327,8 @@ while ($part->isMultipart()) {
 }
 echo 'Der Typ des Teils ist ' . strtok($part->contentType, ';') . "\n";
 echo "Inhalt:\n";
-echo $part->getContent();]]>
+echo $part->getContent();
+]]>
         </programlisting>
 
         <para><code>Zend_Mail_Part</code> implementiert auch den <code>RecursiveIterator</code>, welcher es sehr einfach macht alle Teile
@@ -337,7 +352,8 @@ if (!$foundPart) {
     echo 'kein reiner Text-Teil gefunden';
 } else {
     echo "Reiner Text-Teil: \n" . $foundPart;
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -385,7 +401,8 @@ foreach ($flags as $flag) {
         default:
             echo $flag . '(unbekanntes Flag) ';
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>Da IMAP Benutzern oder auch Clients selbstdefinierte Flags erlaubt, können auch Flags empfangen werden
@@ -400,7 +417,8 @@ if (!$message->hasFlag('$SpamTested')) {
     echo 'Diese Nachricht ist Spam';
 } else {
     echo 'Diese Nachricht ist Speck';
-}]]>
+}
+]]>
         </programlisting>
 
     </sect2>
@@ -445,7 +463,8 @@ $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail
 // IMAP ist genauso mit und ohne Ordner
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
                                          'user'     => 'test',
-                                         'password' => 'test'));]]>
+                                         'password' => 'test'));
+]]>
         </programlisting>
 
         <para>
@@ -505,7 +524,8 @@ foreach ($folders as $localName => $folder) {
     echo ' value="' . htmlspecialchars($folder) . '">'
         . htmlspecialchars($localName) . '</option>';
 }
-echo '</select>';]]>
+echo '</select>';
+]]>
         </programlisting>
 
         <para>
@@ -524,7 +544,8 @@ echo '</select>';]]>
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
 echo 'Der letzte Ordner war ' . $mail->getSelectedFolder() . "neuer Ordner ist $folder\n";
-$mail->selectFolder($folder);]]>
+$mail->selectFolder($folder);
+]]>
         </programlisting>
 
     </sect2>
@@ -549,7 +570,8 @@ foreach ($mail as $message) {
     // irgendwas anderes tun ...
 
     $mail->noop(); // am Leben halten
-}]]>
+}
+]]>
             </programlisting>
 
         </sect3>
@@ -584,7 +606,8 @@ if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($
 
 // irgendwas machen ...
 
-$cache->set($cache_id, $mail);]]>
+$cache->set($cache_id, $mail);
+]]>
             </programlisting>
 
         </sect3>
@@ -705,7 +728,8 @@ $mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/ma
 $mail->setQuota(true); // true zum einschalten, false zum ausschalten
 echo 'Quotenprüfung ist jetzt ', $mail->getQuota() ? 'eingeschaltet' : 'ausgeschaltet', "\n";
 // Quotenprüfung kann verwendet werden selbst wenn die Quotenprüfung ausgeschaltet ist
-echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quote', "\n";]]>
+echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quote', "\n";
+]]>
             </programlisting>
 
             <para>
@@ -716,7 +740,8 @@ echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quo
 $quota = $mail->checkQuota(true);
 echo 'Sie sind ', $quota['over_quota'] ? 'über der Quote' : 'nicht über der Quote', "\n";
 echo 'Sie haben ', $quota['count'], ' von ', $quota['quota']['count'], ' Nachrichten und verwenden ';
-echo $quota['size'], ' von ', $quota['quota']['size'], ' Oktets';]]>
+echo $quota['size'], ' von ', $quota['quota']['size'], ' Oktets';
+]]>
             </programlisting>
 
             <para>
@@ -726,7 +751,8 @@ echo $quota['size'], ' von ', $quota['quota']['size'], ' Oktets';]]>
 
             <programlisting role="php"><![CDATA[
 // message count and octet size supported, order does matter
-$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
+$quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
+]]>
             </programlisting>
 
             <para>
@@ -739,28 +765,28 @@ $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));]]>
 
             <programlisting role="php"><![CDATA[
 class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
-         // getQuota wird mit $fromStorage = true durch die Quotenprüfung aufgerufen
-         public function getQuota($fromStorage = false) {
-                   try {
-                             return parent::getQuota($fromStorage);
-                   } catch (Zend_Mail_Storage_Exception $e) {
-                             if (!$fromStorage) {
-                                       // unbekannter Fehler:
-                                       throw $e;
-                             }
-                             // Die maildirsize Datei muß fehlen
+    // getQuota wird mit $fromStorage = true durch die Quotenprüfung aufgerufen
+    public function getQuota($fromStorage = false) {
+        try {
+            return parent::getQuota($fromStorage);
+        } catch (Zend_Mail_Storage_Exception $e) {
+            if (!$fromStorage) {
+                // unbekannter Fehler:
+                throw $e;
+            }
+            // Die maildirsize Datei muß fehlen
 
-                             list($count, $size) = get_quota_from_somewhere_else();
-                             return array('count' => $count, 'size' => $size);
-                   }
-         }
-}]]>
+            list($count, $size) = get_quota_from_somewhere_else();
+            return array('count' => $count, 'size' => $size);
+        }
+    }
+}
+]]>
             </programlisting>
 
         </sect3>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.feed.consuming-atom-single-entry">
     <title>Einen einzelnen Atom Eintrag konsumieren</title>
 
@@ -21,7 +21,8 @@
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 echo 'Der Feed hat: ' . $feed->count() . ' Eintrag.';
 
-$entry = $feed->current();]]>
+$entry = $feed->current();
+]]>
         </programlisting>
     </example>
 
@@ -34,7 +35,8 @@ $entry = $feed->current();]]>
         <title>Direkte Verwendung des Eintragsobjekts für einen Atom Feed mit nur einem Eintrag</title>
         <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
-echo $entry->title();]]>
+echo $entry->title();
+]]>
         </programlisting>
     </example>
 </sect1>

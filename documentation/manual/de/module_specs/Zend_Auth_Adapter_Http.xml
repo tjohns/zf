@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.http">
 
     <title>HTTP Authentication Adapter</title>
@@ -192,7 +192,10 @@
                 <code>resolve()</code> Methode geht durch die Textdatei, und sucht nach einer Zeile mit einem
                 entsprechenden Benutzernamen und Bereich. Das Format der Textdatei ist ähnlich dem von Apache
                 htpasswd Dateien:
-                <programlisting><![CDATA[<benutzername>:<bereich>:<zeugnisse>\n]]></programlisting>
+                <programlisting><![CDATA[
+<benutzername>:<bereich>:<zeugnisse>\n
+]]>
+</programlisting>
                 Jede Zeile besteht aus drei Feldern - Benutzername, Bereich und Zeugnisse - jede abgeteilt
                 durch einen Doppelpunkt. Das Zeugnis Feld ist für den Datei Auflöser nicht sichtbar; es gibt
                 den Wert einfach, wie er ist, an den Aufrufer zurück. Deswegen kann dieses Dateiformat sowohl
@@ -205,13 +208,15 @@
                 Es gibt zwei gleiche einfache Wege um einen Datei Auflöser zu erstellen:
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
+]]>
                 </programlisting>
                 oder
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]>
+$resolver->setFile($path);
+]]>
                 </programlisting>
                 Wenn der angegebene Pfad leer oder nicht lesbar ist, wird eine Ausnahme geworfen.
             </para>
@@ -232,7 +237,8 @@ $config = array(
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]>
+);
+]]>
             </programlisting>
             Dieses Array bringt den Adapter dazu entwedet Basis oder Digest Authentifizierung zu akzeptieren,
             und benötigt einen authentifizierten Zugriff auf alle Areale der Site unter <code>/members_only</code>
@@ -244,7 +250,8 @@ $config = array(
         <para>
             Dann wird ein Zend_Auth_Adapter_Http Objekt erstellt:
             <programlisting role="php"><![CDATA[
-$adapter = new Zend_Auth_Adapter_Http($config);]]>
+$adapter = new Zend_Auth_Adapter_Http($config);
+]]>
             </programlisting>
         </para>
 
@@ -260,7 +267,8 @@ $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]>
+$adapter->setDigestResolver($digestResolver);
+]]>
             </programlisting>
         </para>
 
@@ -277,7 +285,8 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Schlechter Benutzername/Passwort, oder abgebrochener Passwort Prompt
-}]]>
+}
+]]>
             </programlisting>
         </para>
 

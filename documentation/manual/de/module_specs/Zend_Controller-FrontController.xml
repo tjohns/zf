@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.front">
     <title>Der Front Controller</title>
 
@@ -55,8 +55,10 @@
                 dem Aufruf der <code>dispatch()</code>-Methode des Front-Controllers ausgeführt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[// Error-Handler-Plugin abschalten:
-$front->setParam('noErrorHandler', true);]]>
+            <programlisting role="php"><![CDATA[
+// Error-Handler-Plugin abschalten:
+$front->setParam('noErrorHandler', true);
+]]>
             </programlisting>
 
             <para>
@@ -64,8 +66,10 @@ $front->setParam('noErrorHandler', true);]]>
                 <code>dispatch()</code> ausgeführt werden:
             </para>
 
-            <programlisting role="php"><![CDATA[// Den ViewRenderer Action-Helper deaktivieren:
-$front->setParam('noViewRenderer', true);]]>
+            <programlisting role="php"><![CDATA[
+// Den ViewRenderer Action-Helper deaktivieren:
+$front->setParam('noViewRenderer', true);
+]]>
             </programlisting>
         </note>
     </sect2>
@@ -88,7 +92,9 @@ $front->setParam('noViewRenderer', true);]]>
                 Möglichkeit, ein Front-Controller-Objekt zu erhalten.
             </para>
 
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+]]>
             </programlisting>
         </sect3>
 
@@ -119,7 +125,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Den Ordner für das Modul 'foo' hinzufügen:
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');
+]]>
             </programlisting>
 
             <note>
@@ -231,9 +238,11 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
                 benutzt werden kann, die keine Anpassung der Front-Controller-Umgebung benötigen.
             </para>
 
-            <programlisting role="php"><![CDATA[// Front-Controller instanzieren, Controller-Verzeichnis setzen
+            <programlisting role="php"><![CDATA[
+// Front-Controller instanzieren, Controller-Verzeichnis setzen
 // und dispatchen in einem einfachen Schritt:
-Zend_Controller_Front::run('../application/controllers');]]>
+Zend_Controller_Front::run('../application/controllers');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -490,7 +499,8 @@ class My_Controller_Front extends Zend_Controller_Front
 
         return self::$_instance;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

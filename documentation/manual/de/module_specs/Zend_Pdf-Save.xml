@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.pdf.save">
     <title>Änderungen von PDF Dokumenten speichern</title>
     <para>
@@ -33,7 +33,8 @@ $pdf->save($newFileName, true);
 // Geb das PDF Dokument in einer Zeichenkette zurück.
 $pdfString = $pdf->render();
 
-...]]>
+...
+]]>
         </programlisting>
     </example>
 

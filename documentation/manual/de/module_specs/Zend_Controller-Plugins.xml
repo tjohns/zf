@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Plugins</title>
 
@@ -85,10 +85,12 @@
             <code>Zend_Controller_Plugin_Abstract</code> ein und erweitert sie:
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -115,7 +117,8 @@
             wie ein Plugin in der Controllerkette verwendet werden kann:
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
@@ -152,7 +155,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -166,7 +170,8 @@ $front->dispatch();]]>
 <p>dispatchLoopStartup() aufgerufen</p>
 <p>preDispatch() aufgerufen</p>
 <p>postDispatch() aufgerufen</p>
-<p>dispatchLoopShutdown() aufgerufen</p>]]>
+<p>dispatchLoopShutdown() aufgerufen</p>
+]]>
         </programlisting>
 
         <note>

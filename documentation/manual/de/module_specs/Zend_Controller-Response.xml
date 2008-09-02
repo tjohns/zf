@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.response">
     <title>Das Response Objekt</title>
 
@@ -16,7 +16,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
         </programlisting>
 
         <para>
@@ -25,7 +26,8 @@ $front->throwExceptions(true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <note>
@@ -42,7 +44,8 @@ $response = $front->dispatch();
 
 // ein bischen mehr verarbeiten, wie z.B. loggen...
 // und dann die Ausgabe senden:
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
             </programlisting>
         </note>
 
@@ -57,7 +60,8 @@ $response->sendResponse();]]>
 // Setze einen Header
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);]]>
+    ->appendBody($content);
+]]>
         </programlisting>
 
         <para>
@@ -101,7 +105,8 @@ $response = $front->dispatch();
 // mach irgend was...
 
 // zum Schluß, gib die Antwort aus
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <para>
@@ -123,7 +128,8 @@ $response->sendResponse();
 
 // oder:
 $front->throwExceptions(true);
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
     </sect2>
 
@@ -233,7 +239,8 @@ $front->dispatch();]]>
             <code>postDispatch()</code> Hook einen Footer hinzufügen zu lassen:
         </para>
 
-        <programlisting role="php"><![CDATA[// Angenommen diese Plugin Klasse ist im Front Controller registriert
+        <programlisting role="php"><![CDATA[
+// Angenommen diese Plugin Klasse ist im Front Controller registriert
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -262,7 +269,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -270,11 +278,13 @@ class MyController extends Zend_Controller_Action
             Objekts mit der folgenden Struktur verursachen:
         </para>
 
-        <programlisting role="php"><![CDATA[array(
+        <programlisting role="php"><![CDATA[
+array(
     'header'  => ..., // Header Inhalt
     'default' => ..., // Body Inhalt von MyController::fooAction()
     'footer'  => ...  // Footer Inhalt
-);]]>
+);
+]]>
         </programlisting>
 
         <para>

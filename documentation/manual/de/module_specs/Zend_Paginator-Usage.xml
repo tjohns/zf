@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -57,7 +57,9 @@
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_array($array));]]>
+            <programlisting role="php"><![CDATA[
+$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_array($array));
+]]>
             </programlisting>
         </para>
 
@@ -67,7 +69,9 @@
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[$paginator = Zend_Paginator::factory($array);]]>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($array);
+]]>
             </programlisting>
         </para>
 
@@ -85,7 +89,9 @@
         </para>
 
         <para>
-            <programlisting role="php"><![CDATA[$paginator->setCurrentPageNumber($pageNumber);]]>
+            <programlisting role="php"><![CDATA[
+$paginator->setCurrentPageNumber($pageNumber);
+]]>
             </programlisting>
         </para>
         
@@ -100,12 +106,14 @@
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[routes.example.route = articles/:articleName/:pageNumber
+            <programlisting role="php"><![CDATA[
+routes.example.route = articles/:articleName/:pageNumber
 routes.example.defaults.controller = articles
 routes.example.defaults.action = view
 routes.example.defaults.pageNumber = 1
 routes.example.reqs.articleName = \w+
-routes.example.reqs.pageNumber = \d+]]>
+routes.example.reqs.pageNumber = \d+
+]]>
             </programlisting>
         </para>
         
@@ -115,7 +123,9 @@ routes.example.reqs.pageNumber = \d+]]>
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[$paginator->setCurrentPageNumber($this->_getParam('pageNumber'));]]>
+            <programlisting role="php"><![CDATA[
+$paginator->setCurrentPageNumber($this->_getParam('pageNumber'));
+]]>
             </programlisting>
         </para>
         
@@ -130,7 +140,9 @@ routes.example.reqs.pageNumber = \d+]]>
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[$this->view->paginator = $paginator;]]>
+            <programlisting role="php"><![CDATA[
+$this->view->paginator = $paginator;
+]]>
             </programlisting>
         </para>
     </sect2>
@@ -150,7 +162,8 @@ routes.example.reqs.pageNumber = \d+]]>
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[<html>
+            <programlisting role="php"><![CDATA[
+<html>
 <body>
 <h1>Beispiel</h1>
 <?php if (count($this->paginator)): ?>
@@ -163,7 +176,8 @@ routes.example.reqs.pageNumber = \d+]]>
 
 <?= $this->paginationControl($this->paginator, 'Sliding', 'my_pagination_control.phtml'); ?>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </para>
         
@@ -249,9 +263,11 @@ routes.example.reqs.pageNumber = \d+]]>
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[Zend_Paginator::setDefaultScrollingStyle('Sliding');
+            <programlisting role="php"><![CDATA[
+Zend_Paginator::setDefaultScrollingStyle('Sliding');
 Zend_View_Helper_PaginationControl::setDefaultViewPartial('my_pagination_control.phtml');
-$paginator->setView($view);]]>
+$paginator->setView($view);
+]]>
             </programlisting>
         </para>
         
@@ -261,7 +277,9 @@ $paginator->setView($view);]]>
         </para>
         
         <para>
-            <programlisting role="php"><![CDATA[<?= $this->paginator; ?>]]>
+            <programlisting role="php"><![CDATA[
+<?= $this->paginator; ?>
+]]>
             </programlisting>
         </para>
         
@@ -276,7 +294,8 @@ $paginator->setView($view);]]>
             <para>
                 Such-Seitendarstellung
                 
-                <programlisting role="php"><![CDATA[<!-- 
+                <programlisting role="php"><![CDATA[
+<!-- 
 Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 -->
 
@@ -305,14 +324,16 @@ Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
   <span class="disabled">Nächster &gt;</span>
 <?php endif; ?> 
 </div> 
-<?php endif; ?>]]>
+<?php endif; ?>
+]]>
                 </programlisting>
             </para>
             
             <para>
                 Element Seitendarstellung
 
-                <programlisting role="php"><![CDATA[<!--
+                <programlisting role="php"><![CDATA[
+<!--
 Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 -->
 
@@ -350,7 +371,8 @@ of <?= $this->totalItemCount; ?>
 <?php endif; ?>
 
 </div>
-<?php endif; ?>]]>
+<?php endif; ?>
+]]>
                 </programlisting>
             </para>
 
@@ -372,7 +394,8 @@ of <?= $this->totalItemCount; ?>
 $('paginationControl').observe('change', function() {
     window.location = this.options[this.selectedIndex].value;
 })
-</script>]]>
+</script>
+]]>
                 </programlisting>
             </para>
         </sect3>

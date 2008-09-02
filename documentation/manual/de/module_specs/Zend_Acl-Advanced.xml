@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.acl.advanced">
 
     <title>Fortgeschrittene Verwendung</title>
@@ -76,7 +76,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 
         <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]>
+$acl->allow(null, null, null, new CleanIPAssertion());
+]]>
         </programlisting>
 
         <para>

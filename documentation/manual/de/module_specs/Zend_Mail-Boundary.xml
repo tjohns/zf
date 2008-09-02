@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.mail.boundary">
     <title>Die MIME Abgrenzung kontrollieren</title>
     <para>
@@ -12,7 +12,8 @@
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
-// erstelle Nachricht...]]>
+// erstelle Nachricht...
+]]>
         </programlisting>
     </example>
 </sect1>

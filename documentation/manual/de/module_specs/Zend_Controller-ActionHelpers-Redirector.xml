@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11085 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -252,11 +252,13 @@ class ForwardController extends Zend_Controller_Action
                 registriert wurde:
             </para>
 
-            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
-$router->addRoute('blogArchive', $route);]]>
+$router->addRoute('blogArchive', $route);
+]]>
             </programlisting>
 
             <para>
@@ -264,7 +266,8 @@ $router->addRoute('blogArchive', $route);]]>
                 würde dieses eine URL wie die folgende erstellen: <code>/blog/2006/4/24/42</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - definiert zur Komplettierung des Codes

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -94,7 +94,8 @@
 
         <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
-?>]]></programlisting>
+]]>
+        </programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
@@ -106,11 +107,11 @@ $this->headScript()->setAllowArbitraryAttributes(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Skripte hinzufügen
+// Skripte hinzufügen
 $this->headScript()->appendFile('/js/prototype.js')
                    ->appendScript($onloadScript);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Die Reihenfolge ist oft wichtig beim Clientseitigen Skripting; es kann notwendig sein sicherzustellen
@@ -119,7 +120,7 @@ $this->headScript()->appendFile('/js/prototype.js')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // Skripte in eine Reihenfolge bringen
+// Skripte in eine Reihenfolge bringen
 
 // An einem bestimmten Offset Platzieren um sicherzustellen das es als letztes geladen wird
 $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
@@ -129,8 +130,8 @@ $this->headScript()->appendScript('/js/scriptaculous.js');
 
 // Aber Basis Prototype Skripte müssen immer als erstes geladen werden
 $this->headScript()->prependScript('/js/prototype.js');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn man letztendlich damit fertig ist am alle Skripte im Layoutskript darzustellen, muß der
@@ -139,7 +140,8 @@ $this->headScript()->prependScript('/js/prototype.js');
 
         <programlisting role="php"><![CDATA[
 <?= $this->headScript() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">
@@ -157,7 +159,8 @@ $this->headScript()->prependScript('/js/prototype.js');
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
 <?php $this->headScript()->captureEnd() ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Die folgenden Annahmen werden gemacht:

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.ldap.using">
 
     <title>Einleitung</title>
@@ -51,7 +51,9 @@ $options = array(
 );
 $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+echo "$acctname\n";
+]]>
+            </programlisting>
 
         </para>
 
@@ -70,7 +72,9 @@ $options = array(
 );
 $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('bcarter', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+echo "$acctname\n";
+]]>
+            </programlisting>
 
             Beachten Sie, dass wir die Methode <code>getCanonicalAccountName()</code> hier nur
             benutzen, um den Domain-Name des Accounts 'bcarter' zu erhalten, weil das so ziemlich
@@ -112,7 +116,9 @@ $options = array(
 $ldap = new Zend_Ldap($options);
 $ldap->bind('abaker', 'moonbike55');
 $acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+echo "$acctname\n";
+]]>
+                </programlisting>
 
                 Der Aufruf von <code>bind()</code> in diesem Beispiel erkennt dass der Benutzername
                 '<code>abaker</code>' nicht in DN-Form ist und dass <code>bindRequiresDn</code>
@@ -392,7 +398,9 @@ foreach ($multiOptions as $name => $options) {
             continue;
         }
     }
-}]]></programlisting>
+}
+]]>
+                </programlisting>
 
                 Wenn die Bindung an einen Server aus irgendeinem Grund fehlschlägt, wird sie
                 mit dem nächsten Server erneut versucht.

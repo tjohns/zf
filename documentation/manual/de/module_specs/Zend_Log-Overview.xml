@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.log.overview">
     <title>Übersicht</title>
 
@@ -43,7 +43,8 @@
 $logger = new Zend_Log();
 $writer = new Zend_Log_Writer_Stream('php://output');
 
-$logger->addWriter($writer);]]>
+$logger->addWriter($writer);
+]]>
         </programlisting>
 
         Es ist wichtig anzumerken das das Log mindestens einen Writer haben muß. Man kann eine beliebige Anzahl von
@@ -55,7 +56,8 @@ $logger->addWriter($writer);]]>
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
-$logger = new Zend_Log($writer);]]>
+$logger = new Zend_Log($writer);
+]]>
       </programlisting>
 
         Das Log ist nun fertig zur Verwendung.
@@ -70,7 +72,8 @@ $logger = new Zend_Log($writer);]]>
         und die Nachricht mit einer entsprechenden Priorität übergeben werden:
 
       <programlisting role="php"><![CDATA[
-$logger->log('Informative Nachricht', Zend_Log::INFO);]]>
+$logger->log('Informative Nachricht', Zend_Log::INFO);
+]]>
       </programlisting>
 
       Der erste Parameter der <code>log()</code> Methode ist ein <code>message</code> String und der zweite
@@ -87,7 +90,8 @@ $logger->log('Informative Nachricht', Zend_Log::INFO);
 $logger->info('Informative Nachricht');
 
 $logger->log('Notfall Nachricht', Zend_Log::EMERG);
-$logger->emerg('Notfall Nachricht');]]>
+$logger->emerg('Notfall Nachricht');
+]]>
       </programlisting>
     </para>
   </sect2>
@@ -100,7 +104,8 @@ $logger->emerg('Notfall Nachricht');]]>
       hinzugefügten Writer aufrufen bevor das Log Objekt entfernt wird:
 
       <programlisting role="php"><![CDATA[
-$logger = null;]]>
+$logger = null;
+]]>
       </programlisting>
 
       Das explizite entfernen des Logs auf diesem Weg ist optional und wird automatisch durchgeführt wenn PHP
@@ -121,7 +126,8 @@ ERR     = 3;  // Fehler: Fehler Konditionen
 WARN    = 4;  // Warnung: Warnungs Konditionen
 NOTICE  = 5;  // Notiz: Normal aber signifikante Kondition
 INFO    = 6;  // Informativ: Informative Nachrichten
-DEBUG   = 7;  // Debug: Debug Nachrichten]]>
+DEBUG   = 7;  // Debug: Debug Nachrichten
+]]>
       </programlisting>
 
       Diese Prioritäten sind immer vorhanden und eine komfortable Methode für den selben Namen ist für jede
@@ -153,7 +159,8 @@ DEBUG   = 7;  // Debug: Debug Nachrichten]]>
       <code>addPriority()</code> Methode des Log's:
 
       <programlisting role="php"><![CDATA[
-$logger->addPriority('FOO', 8);]]>
+$logger->addPriority('FOO', 8);
+]]>
       </programlisting>
 
       Das obige Codeschnipsel erstellt eine neue Priorität, <code>FOO</code>, dessen Wert <code>8</code> ist.
@@ -161,7 +168,8 @@ $logger->addPriority('FOO', 8);]]>
 
       <programlisting role="php"><![CDATA[
 $logger->log('Foo Nachricht', 8);
-$logger->foo('Foo Nachricht');]]>
+$logger->foo('Foo Nachricht');
+]]>
       </programlisting>
 
       Neue Prioritäten können bereits bestehende nicht überschreiben.
@@ -189,7 +197,8 @@ $logger->foo('Foo Nachricht');]]>
       Methode aufgerufen werden wobei ein Schlüssel und ein Wert übergeben wird:
 
       <programlisting role="php"><![CDATA[
-$logger->setEventItem('pid', getmypid());]]>
+$logger->setEventItem('pid', getmypid());
+]]>
       </programlisting>
 
       Das obige Beispiel setzt ein neues Element welches <code>pid</code> heißt und veröffentlicht es mit der

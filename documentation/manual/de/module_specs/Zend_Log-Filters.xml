@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.log.filters">
     <title>Filter</title>
 
@@ -26,7 +26,8 @@ $logger->addFilter($filter);
 $logger->info('Informative Nachricht');
 
 // Gelogged
-$logger->emerg('Notfall Nachricht');]]>
+$logger->emerg('Notfall Nachricht');
+]]>
         </programlisting>
 
         Wenn ein oder mehrere Filter zu einem Log Objekt hinzugefügt werden, muß die Nachricht durch alle Filter
@@ -58,7 +59,8 @@ $writer2->addFilter($filter);
 $logger->info('Informative Nachricht');
 
 // Geloggt von beiden Writern
-$logger->emerg('Notfall Nachricht');]]>
+$logger->emerg('Notfall Nachricht');
+]]>
         </programlisting>
     </para>
   </sect2>

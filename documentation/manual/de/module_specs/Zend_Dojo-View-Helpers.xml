@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10723 -->
+<!-- EN-Revision: 11090 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -130,7 +130,8 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <sect3 id="zend.dojo.view.dijit.layout">
@@ -170,7 +171,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 200px; height: 300px;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -190,7 +192,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'background-color: lightgray;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -211,7 +214,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 100%; height: 100%',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -232,7 +236,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 120px; background-color: lightgray;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -255,7 +260,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 400px; height: 500px;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -274,7 +280,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 400px; height: 500px; border: 1px;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -293,7 +300,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         'style' => 'width: 400px; height: 500px; border: 1px;',
     ),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
 
@@ -367,7 +375,8 @@ echo $view->contentPane(
 );
 
 echo $view->borderContainer()->captureEnd('masterLayout');
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect3>
 
@@ -399,7 +408,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
     'Zeig mich!', 
     array('iconClass' => 'myButtons'),
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -432,7 +442,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
     array(),
     array('checkedValue' => 'foo', 'unCheckedValue' => 'bar')
 ); ?>
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -537,7 +548,8 @@ echo $view->comboBox(
         'storeParams'  => array('url' => '/js/states.json'),
     ),
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -556,7 +568,8 @@ echo $view->currencyTextBox(
     array('currency' => 'USD'),
     array('maxlength' => 20)
 );
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <note>
                     <title>Probleme mit Builds</title>
@@ -571,7 +584,8 @@ echo $view->currencyTextBox(
 
                     <programlisting role="php"><![CDATA[
 $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
-?>]]></programlisting>
+]]>
+                    </programlisting>
 
                     <para>
                         Das bedeutet natürlich, das man sicherstellen muß das der <code>headMeta()</code>
@@ -594,7 +608,8 @@ echo $view->dateTextBox(
     '2008-07-11',
     array('required' => true)
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -751,7 +766,8 @@ echo $view->horizontalSlider(
         ),
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -780,7 +796,8 @@ echo $view->numberSpinner(
         'maxlenth' => 3,
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -802,7 +819,8 @@ echo $view->numberTextBox(
         'maxlength' => 20,
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -823,7 +841,8 @@ echo $view->passwordTextBox(
         'maxlength' => 20,
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -851,7 +870,8 @@ echo $view->radioButton(
         'baz' => 'Baz',
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -876,7 +896,8 @@ echo $view->textarea(
     array(),
     array('style' => 'width: 300px;')
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -907,7 +928,8 @@ echo $view->textBox(
         'size' => 20,
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -931,8 +953,8 @@ echo $view->timeTextBox(
         'size' => 20,
     )
 );
-
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -981,7 +1003,8 @@ echo $view->validationTextBox(
         'maxlength' => 20,
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
     </sect3>

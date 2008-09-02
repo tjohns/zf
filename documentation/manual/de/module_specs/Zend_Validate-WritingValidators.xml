@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.validate.writing_validators">
 
     <title>Schreiben von Prüfern</title>
@@ -248,7 +248,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
         return $isValid;
     }
-}]]>
+}
+]]>
             </programlisting>
 
             Zu beachten ist das diese vier Testkriterien in <code>isValid()</code> nicht sofort <code>false</code>

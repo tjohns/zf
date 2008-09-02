@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10943 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -256,7 +256,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
+);
+]]>
         </programlisting>
 
         <para>

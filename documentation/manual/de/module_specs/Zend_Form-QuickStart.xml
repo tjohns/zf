@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
@@ -17,7 +17,8 @@
 
         <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Für fortgeschrittene Anwendungsfälle, kann man eine <code>Zend_Form</code> Subklasse
@@ -34,7 +35,8 @@ $form = new Zend_Form;
         <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Der obige Code setzt die Form Aktion zu der partiellen URL "/resource/process" und die
@@ -49,7 +51,8 @@ $form->setAction('/resource/process')
 
         <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.elements">
@@ -124,7 +127,8 @@ $form->addElement(new Zend_Form_Element_Text('username'));
 
 // Den Fyp des Form Elements dem Form Objekt übergeben:
 $form->addElement('text', 'username');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Standardmäßig haben diese keine Prüfer oder Filter. Das bedeutet das man eigene
@@ -149,7 +153,8 @@ $username->addValidator(new Zend_Validate_Alnum());
 
 // Den Namen des Prüfers übergeben:
 $username->addValidator('alnum');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn die zweite Option verwendet wird kann, wenn der Prüfer Argumente im Konstruktor
@@ -159,7 +164,8 @@ $username->addValidator('alnum');
         <programlisting role="php"><![CDATA[
 // Ein Pattern übergeben
 $username->addValidator('regex', false, array('/^[a-z]/i'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Der zweite Parameter wird verwendet um anzuzeigen ob spätere Prüfer bei einem Fehler
@@ -175,7 +181,8 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
         <programlisting role="php"><![CDATA[
 // Dieses Element als benötigt definieren:
 $username->setRequired(true);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn ein Element benöigt wird, wird ein 'NotEmpty' Prüfer ganz oben in der Prüfkette
@@ -190,7 +197,8 @@ $username->setRequired(true);
 
         <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Das endgültige Setup des Elements könnte also wie folgt aussehen: 
@@ -208,8 +216,8 @@ $username->addValidators(array('alnum',
     ))
     ->setRequired(true)
     ->addFilters(array('StringToLower'));
-?>]]></programlisting>
-
+]]>
+        </programlisting>
 
         <para>
             So einfach das ist, ist das für jedes einzelne Elemet in einer Form sehr aufwendig.
@@ -229,7 +237,8 @@ $form->addElement('text', 'username', array(
     'required' => true,
     'filters'  => array('StringToLower'),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note><para>
             Wenn man sieht das man Elemente konfiguriert die die gleichen Optionen in vielen
@@ -255,7 +264,8 @@ echo $form->render($view);
 
 // Angenommen ein View Objekt wurde vorher über setView() gesetzt:
 echo $form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Standardmäßig versuchen <code>Zend_Form</code> und <code>Zend_Form_Element</code> ein
@@ -266,7 +276,8 @@ echo $form;
 
         <programlisting role="php"><![CDATA[
 <?= $this->form ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Unter der Hand verwendet <code>Zend_Form</code> "Dekorators" um die Darstellung
@@ -284,7 +295,8 @@ $element->addDecorators(array(
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Wobei &lt;HELPERNAME&gt; der Name des View Helfers ist der verwendet wird, und
@@ -304,7 +316,8 @@ $element->addDecorators(array(
         <li>'123-abc' does not match against pattern '/^[a-z]/i'</li>
     </ul>
 </dd>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (Wenngleich nicht mit der gleichen Formatierung.)
@@ -330,7 +343,8 @@ $element->addDecorators(array(
 
         <programlisting role="php"><![CDATA[
 $element->setOrder(10);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Oder bei der Erstellung des Elements durch Übergabe als Option: 
@@ -338,7 +352,8 @@ $element->setOrder(10);
 
         <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.validate">
@@ -363,7 +378,8 @@ if ($form->isValid($_POST)) {
 } else {
     // fehlgeschlagen!
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Mit AJAX Anfragen kann man manchmal davon abgehen einzelne Elemente oder Gruppen von
@@ -378,7 +394,8 @@ if ($form->isValidPartial($_POST)) {
 } else {
     // Ein oder mehrere getestete Elemente haben die Prüfung nicht bestanden
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Eine zusätzliche Methode, <code>processAjax()</code>, kann auch dafür verwendet werden
@@ -393,7 +410,8 @@ if ($form->isValidPartial($_POST)) {
 
         <programlisting role="php"><![CDATA[
 $values = $form->getValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn an irgendeinem Punkt die ungefilterten Werte benötigt werden kann man folgendes
@@ -402,7 +420,8 @@ $values = $form->getValues();
 
         <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.errorstatus">
@@ -422,7 +441,8 @@ if (!$form->isValid($_POST)) {
     $this->view->form = $form;
     return $this->render('form');
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wenn die Fehler inspiziert werden sollen gibt es zwei Methoden.
@@ -462,8 +482,6 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <programlisting role="php"><![CDATA[
-
-
 $form = new Zend_Form();
 $form->setAction('/user/login')
      ->setMethod('post');
@@ -486,7 +504,8 @@ $form->addElement($username)
      ->addElement($password)
      // addElement() als Factory verwenden um den 'Login' Button zu erstellen:
      ->addElement('submit', 'login', array('label' => 'Login'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Als nächstes wird ein Controller erstellt der das behandelt:
@@ -524,7 +543,8 @@ class UserController extends Zend_Controller_Action
         // Jetzt versuchen zu Authentifizieren...
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Und ein View Skript für die Darstellung der Form:
@@ -533,7 +553,8 @@ class UserController extends Zend_Controller_Action
 <programlisting role="php"><![CDATA[
 <h2>Bitte anmelden:</h2>
 <?= $this->form ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Wie man im Controller Code sieht, gibt es mehr Arbeit zu tun: Wärend die Übertragung
@@ -581,7 +602,8 @@ user.login.elements.password.options.required = true
 
 ; submit element
 user.login.elements.submit.type = "submit"
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Das kann dann an den Contruktor der Form übergeben werden:
@@ -590,7 +612,8 @@ user.login.elements.submit.type = "submit"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             und die komplette Form wird definiert werden.
