@@ -24,9 +24,17 @@ require_once 'CommonBackendTest.php';
  */
 class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest {
 
+    private $_capabilities;
+    
     public function __construct($className)
     {
         parent::__construct($className);
+    }
+    
+    public function setUp($notag = false)
+    {
+        parent::setUp($notag);
+        $this->_capabilities = $this->_instance->getCapabilities();
     }
 
     public function testGetFillingPercentage()
@@ -39,6 +47,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIds()
     {
+        if (!($this->_capabilities['get_list'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIds();
         $this->assertTrue(count($res) == 3);
         $this->assertTrue(in_array('bar', $res));
@@ -48,6 +60,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetTags()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getTags();
         $this->assertTrue(count($res) == 4);
         $this->assertTrue(in_array('tag1', $res));
@@ -58,6 +74,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsMatchingTags()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsMatchingTags(array('tag3'));
         $this->assertTrue(count($res) == 3);
         $this->assertTrue(in_array('bar', $res));
@@ -67,6 +87,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsMatchingTags2()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsMatchingTags(array('tag2'));
         $this->assertTrue(count($res) == 1);
         $this->assertTrue(in_array('bar3', $res));
@@ -74,6 +98,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsMatchingTags3()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsMatchingTags(array('tag9999'));
         $this->assertTrue(count($res) == 0);
     }  
@@ -81,6 +109,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsMatchingTags4()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsMatchingTags(array('tag3', 'tag4'));
         $this->assertTrue(count($res) == 1);
         $this->assertTrue(in_array('bar', $res));
@@ -88,12 +120,20 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsNotMatchingTags()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsNotMatchingTags(array('tag3'));
         $this->assertTrue(count($res) == 0);
     }
     
     public function testGetIdsNotMatchingTags2()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsNotMatchingTags(array('tag1'));
         $this->assertTrue(count($res) == 2);
         $this->assertTrue(in_array('bar', $res));
@@ -102,6 +142,10 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
     
     public function testGetIdsNotMatchingTags3()
     {
+        if (!($this->_capabilities['tags'])) {
+            # unsupported by this backend
+            return;
+        }
         $res = $this->_instance->getIdsNotMatchingTags(array('tag1', 'tag4'));
         $this->assertTrue(count($res) == 1);
         $this->assertTrue(in_array('bar3', $res));
@@ -142,6 +186,7 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
         $this->assertTrue(isset($res['expired_read']));
         $this->assertTrue(isset($res['priority']));
         $this->assertTrue(isset($res['infinite_lifetime']));
+        $this->assertTrue(isset($res['get_list']));
     }
     
 }
