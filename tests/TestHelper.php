@@ -72,18 +72,11 @@ set_include_path(implode(PATH_SEPARATOR, $path));
  * Load the user-defined test configuration file, if it exists; otherwise, load
  * the default configuration.
  */
-    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
-/*
-if (is_readable($zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
-    require_once $zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
-} else
-if (is_readable($zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist')) {
-    require_once $zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
+if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
+    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
 } else {
-    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
+    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
 }
-*/
-
 
 /*
  * Add Zend Framework library/ directory to the PHPUnit code coverage
