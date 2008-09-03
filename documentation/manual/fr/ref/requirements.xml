@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9658 -->
+<!-- EN-Revision: 11146 -->
 <appendix id="requirements">
     <title>Configuration système requise par le Zend Framework</title>
 
@@ -42,11 +42,11 @@
             <title>Extensions PHP utilisées par composant dans le Zend Framework</title>
 
             <tgroup cols="3">
-                <colspec colwidth="1in" />
+                <!--<colspec colwidth="1in" />
 
                 <colspec colwidth="1in" />
 
-                <colspec colwidth="3in" />
+                <colspec colwidth="3in" />-->
 
                 <thead>
                     <row>
@@ -1053,6 +1053,10 @@
             <title>Composants du Zend Framework et les extensions PHP qu'ils utilisent</title>
 
             <tgroup cols="4">
+                <!-- <colspec colwidth='3in'/>
+                <colspec colwidth='1in'/>
+                <colspec colwidth='3in'/>
+                <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
                         <entry>Composant du Zend Framework</entry>
