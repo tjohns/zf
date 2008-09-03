@@ -372,17 +372,20 @@ class Zend_Cache_Backend_TwoLevels extends Zend_Cache_Backend implements Zend_Ca
      *                 (for doNotTestCacheValidity option for example))
      * - priority does the backend deal with priority when saving
      * - infinite_lifetime (is infinite lifetime can work with this backend)
+     * - get_list (is it possible to get the list of cache ids and the complete list of tags)
      * 
      * @return array associative of with capabilities
      */
     public function getCapabilities()
     {
+        $slowBackendCapabilities = $this->_slowBackend->getCapabilities();
         return array(
-            'automatic_cleaning' => true,
-            'tags' => true,
-            'expired_read' => true,
-            'priority' => true,
-            'infinite_lifetime' => true        
+            'automatic_cleaning' => $slowBackendCapabilities['automatic_cleaning'],
+            'tags' => $slowBackendCapabilities['tags'],
+            'expired_read' => $slowBackendCapabilities['expired_read'],
+            'priority' => $slowBackendCapabilities['priority'],
+            'infinite_lifetime' => $slowBackendCapabilities['infinite_lifetime'],
+            'get_list' => $slowBackendCapabilities['get_list']
         );
     }
     

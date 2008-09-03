@@ -310,6 +310,7 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      *                 (for doNotTestCacheValidity option for example))
      * - priority does the backend deal with priority when saving
      * - infinite_lifetime (is infinite lifetime can work with this backend)
+     * - get_list (is it possible to get the list of cache ids and the complete list of tags)
      * 
      * @return array associative of with capabilities
      */
@@ -320,7 +321,8 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
             'tags' => false,
             'expired_read' => false,
             'priority' => false,
-            'infinite_lifetime' => false
+            'infinite_lifetime' => false,
+            'get_list' => true
         );
     }
 
