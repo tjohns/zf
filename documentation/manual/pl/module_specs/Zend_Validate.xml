@@ -131,14 +131,16 @@ if ($validator->isValid($email)) {
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
-    'Łańcuch znaków \'%value%\' jest za krotki; musi składać się z przynajmniej %min% znaków',
+    'Łańcuch znaków \'%value%\' jest za krotki; ' .
+    'musi składać się z przynajmniej %min% znaków',
     Zend_Validate_StringLength::TOO_SHORT);
 
 if (!$validator->isValid('word')) {
     $messages = $validator->getMessages();
     echo current($messages);
 
-    // echoes "Łańcuch znaków 'word' jest za krotki; musi składać się z przynajmniej 8 znaków"
+    // "Łańcuch znaków 'word' jest za krotki; 
+    // musi składać się z przynajmniej 8 znaków"
 }
 ]]>
             </programlisting>
@@ -153,8 +155,10 @@ if (!$validator->isValid('word')) {
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
-    Zend_Validate_StringLength::TOO_SHORT => 'Łańcuch znaków \'%value%\' jest za krótki',
-    Zend_Validate_StringLength::TOO_LONG  => 'Łańcuch znaków \'%value%\' jest za długi'
+    Zend_Validate_StringLength::TOO_SHORT => 
+        'Łańcuch znaków \'%value%\' jest za krótki',
+    Zend_Validate_StringLength::TOO_LONG  => 
+        'Łańcuch znaków \'%value%\' jest za długi'
 ));
 ]]>
             </programlisting>

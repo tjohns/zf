@@ -60,7 +60,8 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 // importowanie kanału z tablicy
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// poniższy kod odpowiada kodowi powyżej; domyślnie zwracana jest instancja Zend_Feed_Atom
+// poniższy kod odpowiada kodowi powyżej; 
+// domyślnie zwracana jest instancja Zend_Feed_Atom
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importowanie kanału rss z tablicy
@@ -82,13 +83,18 @@ array(
       'description' => 'krótki opis kanału', //opcjonalne
       'author'      => 'autor kanału', //opcjonalne
       'email'       => 'adres email autora', //opcjonalne
-      'webmaster'   => 'adres osoby odpowiedzialnej za sprawy techniczne' // opcjonalne, ignorowane jeśli używany jest atom
+      'webmaster'   =>     // opcjonalne, ignorowane jeśli używany jest atom
+                       'adres osoby odpowiedzialnej' . 
+                       'za sprawy techniczne' 
       'copyright'   => 'informacje o prawach autorskich', //opcjonalne
       'image'       => 'adres obrazka', //opcjonalne
       'generator'   => 'generator', // opcjonalne
       'language'    => 'język w jakim publikowany jest kanał', // opcjonalne
-      'ttl'         => 'na jak długo, w minutach, kanał może być buforowany przed odświeżeniem', // opcjonalne, ignorowane jeśli używany jest atom
-      'rating'      => 'Ocena PICS dla kanału.', // opcjonalne, ignorowane jeśli używany jest atom
+      'ttl'         =>     // opcjonalne, ignorowane jeśli używany jest atom
+                       'na jak długo, w minutach, kanał może' . 
+                       'być buforowany przed odświeżeniem', 
+      'rating'      =>     // opcjonalne, ignorowane jeśli używany jest atom
+                       'Ocena PICS dla kanału.',
       'cloud'       => array(
                              'domain'            => 'domena usługi cloud, np. rpc.sys.com' // wymagane
                              'port'              => 'port usługi to' // opcjonalne, domyślnie wartość 80
@@ -239,13 +245,17 @@ array(
 
             <programlisting role="php"><![CDATA[
 // importowanie kanału z własnego źródła
-$atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
+$atomFeedFromArray = 
+    Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// poniższy kod odpowiada kodowi powyżej; domyślnie zwracana jest instancja Zend_Feed_Atom
-$atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
+// poniższy kod odpowiada kodowi powyżej; 
+// domyślnie zwracana jest instancja Zend_Feed_Atom
+$atomFeedFromArray = 
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importowanie kanału rss z własnego źródła
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+$rssFeedFromArray = 
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
 ]]>
             </programlisting>
 
@@ -260,7 +270,8 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 możesz użyć metody <code>send()</code> lub <code>saveXml()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // zrzuca kanał do standardowego wyjścia

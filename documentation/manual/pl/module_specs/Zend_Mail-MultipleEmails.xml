@@ -21,7 +21,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setSubject(
+        'Demonstration - Sending Multiple Mails per SMTP Connection'
+    );
     $mail->setBodyText('...Your message here...');
     $mail->send($transport);
 }
@@ -57,7 +59,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setSubject(
+        'Demonstration - Sending Multiple Mails per SMTP Connection'
+    );
     $mail->setBodyText('...Your message here...');
 
     // Ręczna obsługa połączenia

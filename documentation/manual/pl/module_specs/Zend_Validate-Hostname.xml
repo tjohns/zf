@@ -77,7 +77,8 @@ if ($validator->isValid($hostname)) {
         tych typów. Na przykład aby akceptować adresy DNS oraz adresy lokalne,
         uwtórz instancję obiektu Zend_Validate_Hostname w taki sposób:
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | 
+                                        Zend_Validate_Hostname::ALLOW_IP);
 ]]>
         </programlisting>
 
@@ -138,7 +139,8 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
         constructor in the following way.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
+$validator = 
+    new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
 ]]>
         </programlisting>
 
@@ -166,7 +168,10 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         In the example below we are supporting IDN validation via the second parameter.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
+$validator = 
+    new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, 
+                               true, 
+                               false);
 ]]>
         </programlisting>
 

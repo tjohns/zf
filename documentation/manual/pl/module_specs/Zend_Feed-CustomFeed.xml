@@ -29,7 +29,8 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         parent::__construct($uri, $xml);
 
-        Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
+        Zend_Feed::registerNamespace('myns', 
+                                     'http://www.example.com/myns/1.0');
     }
 
     public function __get($var)

@@ -138,34 +138,48 @@
                 </para>
 
                 <programlisting role="php"><![CDATA[
-// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone
+// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest niezaznaczone
 echo $this->formCheckbox('foo');
 
-// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone
+// '1' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest zaznaczone
 echo $this->formCheckbox('foo', null, array('checked' => true));
 
-// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest niezaznaczone 
 echo $this->formCheckbox('foo', 'bar');
 
-// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone 
+// 'bar' oraz '0' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest zaznaczone 
 echo $this->formCheckbox('foo', 'bar', array('checked' => true));
 
-// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest niezaznaczone 
 echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
 
-// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest niezaznaczone 
 echo $this->formCheckbox('foo', null, null, array(
     'checked' => 'bar', 
     'unChecked' => 'baz'
 ));
 
-// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest zaznaczone 
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest zaznaczone 
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+echo $this->formCheckbox('foo', 
+                         null, 
+                         array('checked' => true), 
+                         array('bar', 'baz');
 
-// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; pole jest niezaznaczone 
+// 'bar' oraz 'baz' jako opcje dla pola zaznaczonego/niezaznaczonego; 
+// pole jest niezaznaczone 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+echo $this->formCheckbox('foo', 
+                         null, 
+                         array('checked' => false), 
+                         array('bar', 'baz');
 ]]>
                 </programlisting>
 
@@ -324,13 +338,13 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 ?>
 <form action="action.php" method="post">
     <p><label>Adres Email:
-        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+<?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
     <p><label>Kraj:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+<?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
     </label></p>
     <p><label>Czy zgadzasz się?
-        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+<?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
 </form>
 ]]>
@@ -436,15 +450,22 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
-// Dodaj ścieżkę /path/to/some/helpers z przedrostkiem klasy 'My_View_Helper'
+
+// Dodaj ścieżkę /path/to/some/helpers z przedrostkiem 
+// klasy 'My_View_Helper'
 $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
-// Dodaj ścieżkę /other/path/to/helpers z przedrostkiem klasy 'Your_View_Helper'
+
+// Dodaj ścieżkę /other/path/to/helpers z przedrostkiem 
+// klasy 'Your_View_Helper'
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
-// teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
-// "/path/to/some/helpers/HelperName" używająca nazwy klasy "Your_View_Helper_HelperName",
-// następnie w "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName"
-// i ostatecznie w "Zend/View/Helper/HelperName.php" używając nazwy klasy "Zend_View_Helper_HelperName".
+// teraz kiedy wywołasz $this->helperName(), Zend_View będzie 
+// wpierw szukał w "/path/to/some/helpers/HelperName" używając 
+// nazwy klasy "Your_View_Helper_HelperName",
+// następnie w "/other/path/to/helpers/HelperName.php" używając 
+// nazwy klasy "My_View_Helper_HelperName"
+// i ostatecznie w "Zend/View/Helper/HelperName.php" używając 
+// nazwy klasy "Zend_View_Helper_HelperName".
 ]]>
         </programlisting>
 
@@ -599,6 +620,3 @@ class My_View_Helper_ScriptPath
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

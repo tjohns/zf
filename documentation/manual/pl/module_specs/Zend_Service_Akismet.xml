@@ -46,12 +46,14 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-// Tworzymy instancję podając klucz API i adres URL używanej aplikacji
-$akismet = new Zend_Service_Akismet($apiKey, 'http://framework.zend.com/wiki/');
+// Tworzymy instancję podając klucz API 
+// i adres URL używanej aplikacji
+$akismet = new Zend_Service_Akismet($apiKey, 
+                                    'http://framework.zend.com/wiki/');
 if ($akismet->verifyKey($apiKey) {
-echo "Key is valid.\n";
+    echo "Key is valid.\n";
 } else {
-echo "Key is not valid\n";
+    echo "Key is not valid\n";
 }
 ]]>
         </programlisting>
@@ -177,7 +179,9 @@ echo "Key is not valid\n";
             <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
-    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
+    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT' .
+                              '5.2; en-GB; rv:1.8.1) Gecko/20061010' . 
+                              'Firefox/2.0',
     'comment_type'         => 'contact',
     'comment_author'       => 'John Doe',
     'comment_author_email' => 'nospam@myhaus.net',
@@ -221,7 +225,9 @@ if ($akismet->isSpam($data)) {
             <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
-    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
+    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2;' . 
+                              'en-GB; rv:1.8.1) Gecko/20061010' . 
+                              'Firefox/2.0',
     'comment_type'         => 'contact',
     'comment_author'       => 'John Doe',
     'comment_author_email' => 'nospam@myhaus.net',
@@ -263,7 +269,9 @@ $akismet->submitSpam($data));
             <programlisting role="php"><![CDATA[
 $data = array(
     'user_ip'              => '111.222.111.222',
-    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0',
+    'user_agent'           => 'Mozilla/5.0 (Windows; U; Windows NT 5.2;' . 
+                              'en-GB; rv:1.8.1) Gecko/20061010' . 
+                              'Firefox/2.0',
     'comment_type'         => 'contact',
     'comment_author'       => 'John Doe',
     'comment_author_email' => 'nospam@myhaus.net',

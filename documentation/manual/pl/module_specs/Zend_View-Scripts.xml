@@ -1,4 +1,4 @@
-<sect1 id="zend.view.scripts">
+    <sect1 id="zend.view.scripts">
 
     <title>Skrypty widoków</title>
 
@@ -221,7 +221,8 @@ public function addBasePath($path, $prefix = 'Zend_View');
 public function getScriptPaths();
 
 /**
- * Nadpisanie metod do przypisywania zmiennych szablonów jako właściwości obiektu
+ * Nadpisanie metod do przypisywania zmiennych 
+ * szablonów jako właściwości obiektu
  */
 public function __set($key, $value);
 public function __get($key);
@@ -229,7 +230,8 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Ręczne przypisywanie zmiennych szablonu, lub możliwość przypisania wielu
+ * Ręczne przypisywanie zmiennych szablonu, 
+ * lub możliwość przypisania wielu
  * zmiennych na raz.
  */
 public function assign($spec, $value = null);
@@ -365,7 +367,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Pozwala działać funkcjom empty() oraz isset() na właściwościach obiektu
+     * Pozwala działać funkcjom empty() oraz 
+     * isset() na właściwościach obiektu
      *
      * @param string $key
      * @return boolean
@@ -389,14 +392,15 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Przypisywanie zmiennych do szablonu
      *
-     * Pozwala przypisać określoną wartość do określonego klucza, LUB przekazać
-     * tablicę par klucz => wartość aby przypisać je wszystkie na raz.
+     * Pozwala przypisać określoną wartość do określonego 
+     * klucza, LUB przekazać tablicę par klucz => wartość 
+     * aby przypisać je wszystkie na raz.
      *
      * @see __set()
-     * @param string|array $spec Strategia przypisania (klucz lub tablica
-     * par klucz=> wartość)
-     * @param mixed $value (Opcjonalny) Gdy przypisujesz nazwaną zmienną, użyj
-     * go jako wartości.
+     * @param string|array $spec Strategia przypisania (klucz 
+     * lub tablica par klucz=> wartość)
+     * @param mixed $value (Opcjonalny) Gdy przypisujesz 
+     * nazwaną zmienną, użyj go jako wartości.
      * @return void
      */
     public function assign($spec, $value = null)
@@ -412,8 +416,9 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Czyści wszystkie przypisane zmienne.
      *
-     * Czyści wszystkie zmienne przypisane do Zend_View za pomocą {@link assign()} lub
-     * przeładowania właściwości ({@link __get()}/{@link __set()}).
+     * Czyści wszystkie zmienne przypisane do Zend_View za pomocą 
+     * {@link assign()} lub przeładowania właściwości 
+     * ({@link __get()}/{@link __set()}).
      *
      * @return void
      */

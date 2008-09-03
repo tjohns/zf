@@ -61,9 +61,9 @@
         <table frame='all' id="requirements.extensions.table-1">
             <title>Rozszerzenia PHP używane przez komponenty Zend Framework</title>
             <tgroup cols='3'>
+                <!-- <colspec colwidth='1in'/>
                 <colspec colwidth='1in'/>
-                <colspec colwidth='1in'/>
-                <colspec colwidth='3in'/>
+                <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
                         <entry>Rozszerzenie</entry>
@@ -639,11 +639,11 @@
 
         <table frame='all' id="requirements.zendcomponents.table-1">
             <title>Komponenty Zend Framework i rozszerzenia PHP których używają</title>
-            <tgroup cols='3'>
-                <colspec colwidth='3in'/>
+            <tgroup cols='4'>
+                <!-- <colspec colwidth='3in'/>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='3in'/>
-                <colspec colwidth='3in'/>
+                <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
                         <entry>Komponenty Zend Framework</entry>
