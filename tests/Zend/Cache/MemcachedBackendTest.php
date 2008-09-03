@@ -13,7 +13,7 @@ require_once 'Zend/Cache/Backend/Memcached.php';
 /**
  * Common tests for backends
  */
-require_once 'CommonBackendTest.php';
+require_once 'CommonExtendedBackendTest.php';
 
 /**
  * PHPUnit test case
@@ -24,7 +24,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_MemcachedBackendTest extends Zend_Cache_CommonBackendTest {
+class Zend_Cache_MemcachedBackendTest extends Zend_Cache_CommonExtendedBackendTest {
     
     protected $_instance;
  
@@ -130,6 +130,12 @@ class Zend_Cache_MemcachedBackendTest extends Zend_Cache_CommonBackendTest {
         parent::testSaveWithSpecificLifeTime();
         $this->_instance->setDirectives(array('logging' => true));
     }
+    
+    public function testGetMetadatas()
+    {
+        parent::testGetMetadatas(true);
+    }
+
 }
 
 
