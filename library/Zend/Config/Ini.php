@@ -110,6 +110,10 @@ class Zend_Config_Ini extends Zend_Config
         restore_error_handler();
         // Check if there was a error while loading file
         if ($this->_loadFileErrorStr !== null) {
+            /**
+             * @see Zend_Config_Exception
+             */
+            require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception($this->_loadFileErrorStr);
         }
         
