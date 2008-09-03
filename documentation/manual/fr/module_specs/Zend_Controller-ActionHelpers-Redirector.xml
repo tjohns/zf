@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11189 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -110,7 +110,7 @@ class SomeController extends Zend_Controller_Action
         // Régle les options par défaut pour le redirector
         // Puisque l'objet est enregistré dans le gestionnaire d'aide, ceci sera effectif
         // pour toutes les actions réalisées après ce point
-        $this->_redirector->setCode('303')
+        $this->_redirector->setCode(303)
                           ->setExit(false)
                           ->setGotoSimple("this-action", "some-controller");
     }

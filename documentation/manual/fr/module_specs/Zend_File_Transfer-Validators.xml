@@ -250,8 +250,7 @@ $upload->addValidator('Exists', '\temp');
 
 // Add two directories using the array notation
 $upload->addValidator('Exists', array('\home\images', '\home\uploads'));
-
-            ]]></programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -509,8 +508,7 @@ $upload->addValidator('NotExists', '\temp');
 
 // Add two directories using the array notation
 $upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
-
-            ]]></programlisting>
+]]></programlisting>
         </example>
 
         <note>

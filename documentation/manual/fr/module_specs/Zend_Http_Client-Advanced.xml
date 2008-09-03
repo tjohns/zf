@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11183 -->
 <sect1 id="zend.http.client.advanced">
     <title>Zend_Http_Client - Utilisation avancée</title>
 
@@ -154,7 +154,7 @@ $client->setFileUpload('du_texte.txt', 'upload', $texte, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // envoi des fichiers
-$client->submit('POST');
+$client->request('POST');
 ]]></programlisting>
             </example> Dans le premier exemple, la variable $texte est envoyée et sera disponible dans
         <code>$_FILES['upload']</code> côté serveur. Dans le second exemple, le fichier existant

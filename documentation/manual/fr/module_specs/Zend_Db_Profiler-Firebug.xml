@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11202 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profiler avec Firebug</title>
 
@@ -32,9 +32,8 @@
 
         <programlisting role="php"><![CDATA[
 // Dans votre fichier d'amorçage
-
-// Instancier le profileur
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+$profiler->setEnabled(true);
 
 // Attacher le profileur à votre adaptateur de base de données
 $db->setProfiler($profiler)
@@ -51,6 +50,9 @@ $db->setProfiler($profiler)
 
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+$profiler->setEnabled(true);
+
+// Attacher le profileur à votre adaptateur de base de données
 $db->setProfiler($profiler)
 
 $request  = new Zend_Controller_Request_Http();
@@ -67,6 +69,3 @@ $response->sendHeaders();
 ]]></programlisting>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->
