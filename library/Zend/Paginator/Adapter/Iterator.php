@@ -68,14 +68,18 @@ class Zend_Paginator_Adapter_Iterator implements Zend_Paginator_Adapter_Interfac
     }
 
     /**
-     * Returns an array of items for a page.
+     * Returns an iterator of items for a page, or an empty array.
      *
      * @param  integer $offset Page offset
      * @param  integer $itemCountPerPage Number of items per page
-     * @return array
+     * @return LimitIterator|array
      */
     public function getItems($offset, $itemCountPerPage)
     {
+        if ($this->_count == 0) {
+            return array();
+        }
+
         return new LimitIterator($this->_iterator, $offset, $itemCountPerPage);
     }
 

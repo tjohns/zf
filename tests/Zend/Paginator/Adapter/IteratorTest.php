@@ -102,4 +102,16 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit_Framework_TestCase
             $this->assertEquals('Iterator must implement Countable', $e->getMessage());
         }
     }
+    
+    // ZF-4151
+    public function testDoesNotThrowOutOfBoundsExceptionIfIteratorIsEmpty()
+    {
+        $this->_paginator = Zend_Paginator::factory(new ArrayIterator(array()));
+        $items = $this->_paginator->getCurrentItems();
+        try {
+            foreach ($items as $item);
+        } catch (OutOfBoundsException $e) {
+            $this->fail('Empty iterator caused in an OutOfBoundsException');
+        }
+    }
 }
