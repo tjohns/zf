@@ -437,8 +437,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
              */
             require_once 'Zend/Paginator/Exception.php';
             
-            throw new Zend_Paginator_Exception('Page ' . $pageNumber . ' is empty. '
-                                             . 'Probably no data to paginate.');
+            throw new Zend_Paginator_Exception('Page ' . $pageNumber . ' does not exist');
         }
         
         if ($itemNumber > $itemCount) {
@@ -756,6 +755,15 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         if ($scrollingStyle === null) {
             $scrollingStyle = self::$_defaultScrollingStyle;
+        }
+        
+        if ($scrollingStyle === null) {
+            /**
+             * @see Zend_View_Exception
+             */
+            require_once 'Zend/View/Exception.php';
+
+            throw new Zend_View_Exception('No scrolling style provided and no default set');
         }
         
         $className = self::getScrollingStyleLoader()->load($scrollingStyle);

@@ -41,6 +41,8 @@ require_once 'Zend/Paginator/ScrollingStyle/ElasticTest.php';
 require_once 'Zend/Paginator/ScrollingStyle/JumpingTest.php';
 require_once 'Zend/Paginator/ScrollingStyle/SlidingTest.php';
 
+require_once 'Zend/View/Helper/PaginationControlTest.php';
+
 /**
  * @category   Zend
  * @package    Zend_Paginator
@@ -69,6 +71,8 @@ class Zend_Paginator_AllTests
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_ElasticTest');
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_JumpingTest');
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_SlidingTest');
+        
+        $suite->addTestSuite('Zend_View_Helper_PaginationControlTest');
         
         return $suite;
     }

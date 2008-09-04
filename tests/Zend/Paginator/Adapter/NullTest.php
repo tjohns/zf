@@ -61,13 +61,13 @@ class Zend_Paginator_Adapter_NullTest extends PHPUnit_Framework_TestCase
         parent::tearDown();
     }
     
-    public function testGetItems()
+    public function testGetsItems()
     {
         $actual = $this->_adapter->getItems(0, 10);
         $this->assertEquals(array_fill(0, 10, null), $actual);
     }
     
-    public function testCount()
+    public function testReturnsCorrectCount()
     {
         $this->assertEquals(101, $this->_adapter->count());
     }

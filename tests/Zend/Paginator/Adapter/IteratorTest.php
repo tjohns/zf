@@ -62,7 +62,7 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit_Framework_TestCase
         parent::tearDown();
     }
     
-    public function testGetItemsOffsetZero()
+    public function testGetsItemsAtOffsetZero()
     {
         $actual = $this->_adapter->getItems(0, 10);
         $this->assertType('LimitIterator', $actual);
@@ -74,7 +74,7 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    public function testGetItemsOffsetTen()
+    public function testGetsItemsAtOffsetTen()
     {
         $actual = $this->_adapter->getItems(10, 10);
         $this->assertType('LimitIterator', $actual);
@@ -86,7 +86,7 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    public function testCount()
+    public function testReturnsCorrectCount()
     {
         $this->assertEquals(101, $this->_adapter->count());
     }
