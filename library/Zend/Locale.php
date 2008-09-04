@@ -335,6 +335,7 @@ class Zend_Locale
         $accepted = preg_split('/,\s*/', $httplanguages);
 
         foreach ($accepted as $accept) {
+            $match  = null;
             $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i',
                                  $accept, $match);
 
@@ -758,6 +759,10 @@ class Zend_Locale
      */
     private static function _prepareLocale($locale, $strict = false)
     {
+        if (is_array($locale)) {
+            return '';
+        }
+
         if (empty(self::$_auto) === true) {
             self::$_browser     = self::getBrowser();
             self::$_environment = self::getEnvironment();

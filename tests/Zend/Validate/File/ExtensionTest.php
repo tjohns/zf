@@ -31,7 +31,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
- * @see Zend_Validate_File_Size
+ * @see Zend_Validate_File_Extension
  */
 require_once 'Zend/Validate/File/Extension.php';
 

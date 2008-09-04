@@ -71,7 +71,6 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      * Receive the file from the client (Upload)
      *
      * @todo Check if file exists otherwise existing will be overwritten
-     * @todo Add validations
      * @todo Add filters
      * @param  string|array $files (Optional) Files to receive
      * @return bool
