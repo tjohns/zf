@@ -58,7 +58,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     
     public function testGetsAndSetsView()
     {
-        $view = new Zend_View();
+        $view   = new Zend_View();
         $helper = new Zend_View_Helper_PaginationControl();
         $this->assertNull($helper->view);
         $helper->setView($view);
@@ -73,6 +73,35 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(null);
     }
 
+    // ZF-4153
+    public function testFindsPaginatorInView()
+    {
+        $this->_viewHelper->view->paginator = $this->_paginator;
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
+
+        try {
+            $output = $this->_viewHelper->paginationControl();
+        } catch (Exception $e) {
+            $this->fail('Could not find paginator in the view instance');
+        }
+
+        $this->assertContains('pagination control', $output, $output);
+    }
+
+    // ZF-4153
+    public function testThrowsExceptionIfNoPaginatorFound()
+    {
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
+
+        try {
+            $output = $this->_viewHelper->paginationControl();
+        } catch (Exception $e) {
+            $this->assertType('Zend_View_Exception', $e);
+            $this->assertEquals('No paginator instance provided nor found', $e->getMessage());
+        }
+    }
+
+    // ZF-4037
     public function testUsesDefaultScrollingStyleIfNoneSupplied()
     {
         // First we'll make sure the base case works

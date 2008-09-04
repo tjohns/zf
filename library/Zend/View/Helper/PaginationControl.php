@@ -74,18 +74,30 @@ class Zend_View_Helper_PaginationControl
     }
 
     /**
-     * Render the provided pages.  If no scrolling style or partial 
-     * are specified, the defaults will be used (if set).
+     * Render the provided pages.  This checks if $view->paginator is set and,
+     * if so, uses that.  Also, if no scrolling style or partial are specified, 
+     * the defaults will be used (if set).
      *
-     * @param  Zend_Paginator $paginator
+     * @param  Zend_Paginator (Optional) $paginator
      * @param  string $scrollingStyle (Optional) Scrolling style
      * @param  string $partial (Optional) View partial
      * @param  array|string $params (Optional) params to pass to the partial
      * @return string
      * @throws Zend_View_Exception
      */
-    public function paginationControl(Zend_Paginator $paginator, $scrollingStyle = null, $partial = null, $params = null)
+    public function paginationControl(Zend_Paginator $paginator = null, $scrollingStyle = null, $partial = null, $params = null)
     {
+        if (isset($this->view->paginator) and $this->view->paginator !== null) {
+            $paginator = $this->view->paginator;
+        } else if ($paginator === null) {
+            /**
+             * @see Zend_View_Exception
+             */
+            require_once 'Zend/View/Exception.php';
+
+            throw new Zend_View_Exception('No paginator instance provided nor found');
+        }
+        
         if ($partial === null) {
             if (self::$_defaultViewPartial === null) {
                 /**
