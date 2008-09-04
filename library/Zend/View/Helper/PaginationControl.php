@@ -86,14 +86,14 @@ class Zend_View_Helper_PaginationControl
      */
     public function paginationControl(Zend_Paginator $paginator, $scrollingStyle = null, $partial = null, $params = null)
     {
-        if (empty($partial)) {
-            if (empty(self::$_defaultViewPartial)) {
+        if ($partial === null) {
+            if (self::$_defaultViewPartial === null) {
                 /**
                  * @see Zend_View_Exception
                  */
                 require_once 'Zend/View/Exception.php';
-                
-                throw new Zend_View_Exception('No view partial provided and no default view partial set');
+
+                throw new Zend_View_Exception('No view partial provided and no default set');
             }
             
             $partial = self::$_defaultViewPartial;
@@ -101,7 +101,7 @@ class Zend_View_Helper_PaginationControl
 
         $pages = get_object_vars($paginator->getPages($scrollingStyle));
         
-        if ($params != null) {
+        if ($params !== null) {
             $pages = array_merge($pages, (array) $params);
         }
 

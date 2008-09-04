@@ -29,8 +29,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     {
         require_once "PHPUnit/TextUI/TestRunner.php";
 
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_PaginationControlTest");
-        
+        $suite = new PHPUnit_Framework_TestSuite("Zend_View_Helper_PaginationControlTest");
         PHPUnit_TextUI_TestRunner::run($suite);
     }
 
@@ -57,7 +56,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         unset($this->_paginator);
     }
     
-    public function testGetSetView()
+    public function testGetsAndSetsView()
     {
         $view = new Zend_View();
         $helper = new Zend_View_Helper_PaginationControl();
@@ -66,7 +65,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_View_Interface', $helper->view);
     }
     
-    public function testGetSetDefaultViewPartial()
+    public function testGetsAndSetsDefaultViewPartial()
     {
         $this->assertNull(Zend_View_Helper_PaginationControl::getDefaultViewPartial());
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('partial');
@@ -74,22 +73,37 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(null);
     }
 
-    public function testPaginationControlThrowsException()
+    public function testUsesDefaultScrollingStyleIfNoneSupplied()
     {
-        try {
-            $this->_viewHelper->paginationControl($this->_paginator);
-        } catch (Exception $e) {
-            $this->assertType('Zend_View_Exception', $e);
-            $this->assertEquals('No view partial provided and no default view partial set', $e->getMessage());
-        }
+        // First we'll make sure the base case works
+        $output = $this->_viewHelper->paginationControl($this->_paginator, 'All', 'testPagination.phtml');
+        $this->assertContains('page count (11) equals page range (11)', $output, $output);
+
+        Zend_Paginator::setDefaultScrollingStyle('All');
+        $output = $this->_viewHelper->paginationControl($this->_paginator, null, 'testPagination.phtml');        
+        $this->assertContains('page count (11) equals page range (11)', $output, $output);
+        
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
+        $output = $this->_viewHelper->paginationControl($this->_paginator);        
+        $this->assertContains('page count (11) equals page range (11)', $output, $output);
     }
-    
-    public function testPaginationControlUsesDefaultPartial()
+
+    public function testUsesDefaultViewPartialIfNoneSupplied()
     {
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
         $output = $this->_viewHelper->paginationControl($this->_paginator);
         $this->assertContains('pagination control', $output, $output);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(null);
+    }
+
+    public function testThrowsExceptionIfNoViewPartialFound()
+    {
+        try {
+            $this->_viewHelper->paginationControl($this->_paginator);
+        } catch (Exception $e) {
+            $this->assertType('Zend_View_Exception', $e);
+            $this->assertEquals('No view partial provided and no default set', $e->getMessage());
+        }
     }
 }
 
