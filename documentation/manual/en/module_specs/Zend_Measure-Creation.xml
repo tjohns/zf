@@ -126,7 +126,7 @@ echo $unit; // outputs "1234.50 m"
         </example>
 
         <para>
-            Since Zend Framework 1.6 <code>Zend_Measure</code> does also support the usage of an application
+            Since Zend Framework 1.7.0 <code>Zend_Measure</code> does also support the usage of an application
             wide locale. You can simply set a <code>Zend_Locale</code> instance to the registry like shown
             below. With this notation you can forget about setting the locale manually with each instance when
             you want to use the same locale multiple times.

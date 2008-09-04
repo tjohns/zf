@@ -13,8 +13,7 @@
         <title>Limitation</title>
         <para>
             The current implementation of <code>Zend_File_Transfer</code> shipped in 1.6.0 is limited to HTTP Post Uploads.
-            Download of files and other Adapters will be added in the next releases. Also there is actually
-            no filter available and the functionality for it is not implemented. Not implemented methods
+            Download of files and other Adapters will be added in the next releases. Not implemented methods
             will throw an exception. So actually you should use an instance of
             <code>Zend_File_Transfer_Adapter_Http</code> directly. This will change in future, as soon as
             there are multiple adapters available.
