@@ -313,7 +313,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 -->
 
 <?php if ($this->pageCount): ?> 
-<div id="paginationControl">
+<div class="paginationControl">
 <!-- Previous page link --> 
 <?php if (isset($this->previous)): ?> 
   <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Previous</a> | 
@@ -351,7 +351,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 -->
 
 <?php if ($this->pageCount): ?> 
-<div id="paginationControl">
+<div class="paginationControl">
 <?= $this->firstItemNumber; ?> - <?= $this->lastItemNumber; ?> 
 of <?= $this->totalItemCount; ?>
 
