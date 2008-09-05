@@ -70,6 +70,9 @@ $channel  = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
 
+// Start output buffering
+ob_start();
+
 // Now you can run your DB queries to be profiled
 
 // Flush profiling data to browser

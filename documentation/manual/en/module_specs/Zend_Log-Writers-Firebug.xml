@@ -63,6 +63,9 @@ $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
 
+// Start output buffering
+ob_start();
+
 // Now you can make calls to the logger
  
 $logger->log('This is a log message!', Zend_Log::INFO);
