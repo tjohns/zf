@@ -472,7 +472,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
     {
         $check           = $this->_getFiles($files);
         $this->_messages = array();
-        foreach ($check as $file => $content) {
+        foreach ($check as $content) {
             $uploaderror = false;
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
@@ -809,6 +809,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
                 $this->_files[$file]['destination'] = $destination;
             }
         }
+
         return $this;
     }
 
@@ -855,6 +856,33 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
         }
 
         return $this->_files[$files]['destination'];
+    }
+
+    /**
+     * Internal function to filter all given files
+     *
+     * @return boolean False on error
+     */
+    protected function _filter()
+    {
+        $check           = $this->_getFiles();
+        $this->_messages = array();
+        foreach ($check as $name => $content) {
+            if (array_key_exists('filters', $content)) {
+                foreach ($content['filters'] as $class) {
+                    $filter = $this->_filters[$class];
+                    $result = $filter->filter($this->getFileName($name));
+                    if (is_string($result)) {
+                        $this->_files[$name]['destination'] = dirname($result);
+                        $this->_files[$name]['name']        = basename($result);
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

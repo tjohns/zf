@@ -88,10 +88,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $directory = $destination . DIRECTORY_SEPARATOR;
             }
 
-            // Should never go here as it's tested by the upload validator
+            // Should never return false when it's tested by the upload validator
             if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
                 return false;
             }
+
         }
 
         return true;
