@@ -370,10 +370,6 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                 if (!isset($data['data'])) {
                     throw new Zend_Wildfire_Exception('You must supply data.');
                 }
-
-                if(!isset($this->_messages[$structure])) {
-                    $this->_messages[$structure] = array();
-                }
                 
                 return $this->_channel->getProtocol(self::PROTOCOL_URI)->
                            recordMessage($this,
