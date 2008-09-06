@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -149,12 +149,14 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
             <example id="zend.db.adapter.connecting.factory.example">
                 <title>Nutzung der Adapter factory() Methode</title>
                 <programlisting role="php"><![CDATA[
-// Wir benötigen das folgende Statement nicht da die Zend_Db_Adapter_Pdo_Mysql Datei
-// für uns durch die Factory Methode von Zend_Db geladen wird
+// Wir benötigen das folgende Statement nicht da die
+// Zend_Db_Adapter_Pdo_Mysql Datei für uns durch die Factory
+// Methode von Zend_Db geladen wird
 
 // require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
-// Lädt automatisch die Klasse Zend_Db_Adapter_Pdo_Mysql und erzeugt eine Instanz von Ihr.
+// Lädt automatisch die Klasse Zend_Db_Adapter_Pdo_Mysql
+// und erzeugt eine Instanz von Ihr.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -178,7 +180,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 // Wir müssen die Datei der Adapter Klasse nicht laden
 // weil Sie für uns durch die Factory Methode von Zend_Db geladen wird
 
-// Die MyProject_Db_Adapter_Pdo_Mysql Klasse automatisch laden und eine Instanz von Ihr erstellen.
+// Die MyProject_Db_Adapter_Pdo_Mysql Klasse automatisch laden
+// und eine Instanz von Ihr erstellen.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
     'username'         => 'webuser',
@@ -387,7 +390,8 @@ $params = array(
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
 
-echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
+echo $db->getConnection()
+        ->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 ]]>
                 </programlisting>
             </example>
@@ -511,7 +515,7 @@ CREATE TABLE bugs_products (
   PRIMARY KEY       (bug_id, product_id)
 );
 ]]>
-</programlisting>
+        </programlisting>
 
         <para>
             Weiterhin zu beachten ist, dass die <code>bugs</code> Tabelle mehrere Foreign-Key References zu der
@@ -698,7 +702,8 @@ echo $result[0]['bug_description'];
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
+$result = $db->fetchCol(
+    'SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
 // Enthält bug_description; bug_id wird nicht zurückgegeben
 echo $result[0];
@@ -1237,7 +1242,8 @@ echo $sql;
             <example id="zend.db.adapter.quoting.quote-into.example-2">
                 <title>Verwenden von quoteInto() mit einem SQL Typ</title>
                 <programlisting role="php"><![CDATA[
-$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
+$sql = $db
+    ->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
 // SELECT * FROM bugs WHERE reported_by = 1234

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -378,7 +378,8 @@ $form->addElement(
         'label'          => 'Währung:',
         'required'       => true,
         'currency'       => 'USD',
-        'invalidMessage' => 'Ungültiger Wert. Es müssen das Dollarzeichen, ein Komma und Cents enthalten sein.',
+        'invalidMessage' => 'Ungültiger Wert. Es müssen das Dollarzeichen, ' .
+                            'ein Komma und Cents enthalten sein.',
         'fractional'     => false,
     )
 );

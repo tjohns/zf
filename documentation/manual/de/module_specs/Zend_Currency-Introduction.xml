@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9943 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.currency.introduction">
 
     <title>Einführung in Zend_Currency</title>
@@ -43,10 +43,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Flüssiges Interface</emphasis>
+                    <emphasis role="strong">Fluent Interface</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> beinhaltet das flüssige Interface wo es möglich ist.
+                    <code>Zend_Currency</code> beinhaltet das Fluent Interface wo es möglich ist.
                 </para>
             </listitem>
             <listitem>

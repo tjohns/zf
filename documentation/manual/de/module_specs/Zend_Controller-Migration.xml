@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
@@ -102,7 +102,8 @@
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -112,7 +113,7 @@ $inflector->setFilterRule(':action', array(
     'StringToLower'
 ));
 ]]>
-                </programlisting>
+</programlisting>
 
                 <para>
                     Der obige Code ändert den Inflector so, das er Wörter nicht länger mit einem
@@ -302,9 +303,9 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);
-]]>
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -429,7 +430,10 @@ Zend_Controller_Front::run('/path/to/controllers');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);
+final protected function _forward($action,
+                                  $controller = null,
+                                  $module = null,
+                                  array $params = null);
 ]]>
                 </programlisting>
 
@@ -463,8 +467,10 @@ Zend_Controller_Front::run('/path/to/controllers');
         <programlisting role="php"><![CDATA[
 /* -- Erstelle einen Router -- */
 $router = new Zend_Controller_RewriteRouter();
-$router->addRoute('user', 'user/:username', array('controller' => 'user',
-'action' => 'info'));
+$router->addRoute('user',
+                  'user/:username',
+                  array('controller' => 'user', 'action' => 'info')
+);
 
 /* -- Setze ihn im Controller -- */
 $ctrl = Zend_Controller_Front::getInstance();
@@ -607,8 +613,9 @@ echo $response;
 // Hole den angeforderten Controllernamen
 // Der Zugriff erfolgte bisher über: $this->_action->getControllerName().
 // Das Beispiel unten verwendet getRequest(), obwohl man auch direkt auf die
-// $_request Eigenschaft zugreifen kann; die Verwendung von getRequest() wird empfohlen, da
-// eine Elternklasse den Zugriff auf das Request Objekt überschreiben könnte
+// $_request Eigenschaft zugreifen kann; die Verwendung von getRequest() wird
+// empfohlen, da eine Elternklasse den Zugriff auf das Request Objekt
+// überschreiben könnte
 $controller = $this->getRequest()->getControllerName();
 
 // Hole den angeforderten Aktionsnamen
@@ -616,11 +623,12 @@ $controller = $this->getRequest()->getControllerName();
 $action = $this->getRequest()->getActionName();
 
 // Hole die Anfrageparameter
-// Dies hat sich nicht verändert; die _getParams() und _getParam() Methoden leiten nun
-// einfach auf das Request Objekt weiter.
+// Dies hat sich nicht verändert; die _getParams() und _getParam()
+// Methoden leiten nun einfach auf das Request Objekt weiter.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); // fordere den 'foo' Parameter an und verwende
-                                           // 'default', wenn kein Standardwert gefunden werden kann
+// fordere den 'foo' Parameter an und verwende
+// 'default', wenn kein Standardwert gefunden werden kann
+$foo = $this->_getParam('foo', 'default');
 ]]>
                         </programlisting>
                     </listitem>
@@ -636,8 +644,8 @@ $foo = $this->_getParam('foo', 'default'); // fordere den 'foo' Parameter an und
                         <programlisting role="php"><![CDATA[
 public function __call($method, $args)
 {
-    // Wenn eine nicht vorhandene 'Action' Methode angefordert wurde, leite auf die Standard
-    // Aktionsmethode um:
+    // Wenn eine nicht vorhandene 'Action' Methode angefordert wurde,
+    // leite auf die Standard Aktionsmethode um:
     if ('Action' == substr($method, -6)) {
         return $this->defaultAction();
     }

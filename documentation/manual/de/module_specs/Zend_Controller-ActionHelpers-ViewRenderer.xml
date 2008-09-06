@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11118 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -280,7 +280,8 @@ $this->_helper->viewRenderer('form', 'html', true);
         <programlisting role="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
+$viewRenderer =
+    new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]>
         </programlisting>
 
@@ -791,7 +792,8 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // Annahme das $this->model das aktuelle Modell ist
-        $this->view->results = $this->model->find($this->_getParam('query', '');
+        $this->view->results =
+            $this->model->find($this->_getParam('query', '');
 
         // render() handelt standardmäßig in Vertretung zum ViewRenderer
         // Rendert zuerst die Such Form und anschließend die Ergebnisse

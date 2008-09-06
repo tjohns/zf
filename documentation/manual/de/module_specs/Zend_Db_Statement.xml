@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.statement">
 
     <title>Zend_Db_Statement</title>
@@ -30,8 +30,10 @@
         <example id="zend.db.statement.creating.example1">
             <title>Erzeugung eines SQL Statement Objekts mit query()</title>
             <programlisting role="php"><![CDATA[
-$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
-                array('goofy', 'FIXED'));
+$stmt = $db->query(
+            'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
+            array('goofy', 'FIXED')
+        );
 ]]>
             </programlisting>
         </example>
@@ -99,7 +101,8 @@ $stmt->execute(array('goofy', 'FIXED'));
         <example id="zend.db.statement.executing.example2">
             <title>Ausführen eines Statements mit benannten Parametern</title>
             <programlisting role="php"><![CDATA[
-$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
+$sql = 'SELECT * FROM bugs WHERE ' .
+       'reported_by = :reporter AND bug_status = :status';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 

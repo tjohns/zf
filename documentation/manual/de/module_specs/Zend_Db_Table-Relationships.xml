@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.table.relationships">
 
     <title>Zend_Db_Table Relationships</title>
@@ -227,7 +227,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
             referenzieren. Hierbei kann die folgende Methode verwendet werden:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 $row->findDependentRowset($table, [$rule]);
 ]]>
         </programlisting>
@@ -254,10 +255,11 @@ $row->findDependentRowset($table, [$rule]);
                 Account mitgeteilt wurden.
             </para>
 
-            <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
 $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
 ]]>
@@ -292,9 +294,9 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
             </para>
 
             <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
 $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 ]]>
@@ -321,13 +323,15 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
-$select             = $accountsTable->select()->order('name ASC')
-                                              ->limit(3);
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
+$select = $accountsTable->select()->order('name ASC')
+                                  ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
+                                                     'Engineer',
+                                                     $select);
 ]]>
                 </programlisting>
 
@@ -386,15 +390,15 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
             </para>
 
             <programlisting role="php"><![CDATA[
-$accountsTable    = new Accounts();
-$accountsRowset   = $accountsTable->find(1234);
-$user1234         = $accountsRowset->current();
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
 // Verwendung der standard Referenzregel
-$bugsReportedBy   = $user1234->findBugs();
+$bugsReportedBy = $user1234->findBugs();
 
 // Eine Referenzregel spezifizieren
-$bugsAssignedTo   = $user1234->findBugsByEngineer();
+$bugsAssignedTo = $user1234->findBugsByEngineer();
 ]]>
             </programlisting>
 
@@ -441,11 +445,11 @@ $row->findParentRow($table, [$rule]);
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
+$bug1 = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');
+$reporter = $bug1->findParentRow('Accounts');
 ]]>
             </programlisting>
 
@@ -477,11 +481,11 @@ $reporter          = $bug1->findParentRow('Accounts');
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
+$engineer = $bug1->findParentRow('Accounts', 'Engineer');
 ]]>
             </programlisting>
 
@@ -537,15 +541,15 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
 
 // Verwenden der standardmäßigen Referenzregel
-$reporter          = $bug1->findParentAccounts();
+$reporter = $bug1->findParentAccounts();
 
 // Die Referenzregel spezifizieren
-$engineer          = $bug1->findParentAccountsByEngineer();
+$engineer = $bug1->findParentAccountsByEngineer();
 ]]>
             </programlisting>
 
@@ -565,8 +569,15 @@ $engineer          = $bug1->findParentAccountsByEngineer();
             folgende Methode verwendet:
         </para>
 
-        <programlisting role="php"><![CDATA[
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);
+        <programlisting role="php">
+<![CDATA[
+$row->findManyToManyRowset($table,
+                           $intersectionTable,
+                           [$rule1,
+                               [$rule2,
+                                   [Zend_Db_Table_Select $select]
+                               ]
+                           ]);
 ]]>
         </programlisting>
 
@@ -602,11 +613,12 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_D
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts');
 ]]>
             </programlisting>
 
@@ -654,12 +666,15 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');
                 findet die Produkte repräsentieren die dem Fehler zugeordnet sind.
             </para>
 
-            <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts',
+                                                 'Bug');
 ]]>
             </programlisting>
 
@@ -727,15 +742,15 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
 // Verwendung der standardmäßigen Referenzregel
-$products          = $bug1234->findProductsViaBugsProducts();
+$products = $bug1234->findProductsViaBugsProducts();
 
 // Spezifizieren der Referenzregel
-$products          = $bug1234->findProductsViaBugsProductsByBug();
+$products = $bug1234->findProductsViaBugsProductsByBug();
 ]]>
             </programlisting>
 
@@ -795,9 +810,9 @@ $products          = $bug1234->findProductsViaBugsProductsByBug();
             </para>
 
             <programlisting role="php"><![CDATA[
-$productsTable  = new Products();
+$productsTable = new Products();
 $productsRowset = $productsTable->find(1234);
-$product1234    = $productsRowset->current();
+$product1234 = $productsRowset->current();
 
 $product1234->delete();
 // Kaskadiert automatisch zur Bugs Tabelle und löscht abhängige Zeilen.
@@ -855,7 +870,7 @@ $product1234->delete();
 class BugsProducts extends Zend_Db_Table_Abstract
 {
     ...
-    protected $_referenceMap    = array(
+    protected $_referenceMap = array(
         'Product' => array(
             'columns'           => array('product_id'),
             'refTableClass'     => 'Products',

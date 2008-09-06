@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11118 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -344,7 +344,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
             </para>
 
             <programlisting role="php"><![CDATA[
-$view->borderContainer()->captureStart('masterLayout', array('design' => 'headline'));
+$view->borderContainer()->captureStart('masterLayout',
+                                       array('design' => 'headline'));
 
 echo $view->contentPane(
     'menuPane',
@@ -583,7 +584,8 @@ echo $view->currencyTextBox(
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+$view->headMeta()->appendHttpEquiv('Content-Type',
+                                   'text/html; charset=utf-8');
 ]]>
                     </programlisting>
 
@@ -997,7 +999,8 @@ echo $view->validationTextBox(
         'required' => true,
         'regExp'   => '[\w]+',
         'invalidMessage' => 'Keine Leerzeichen oder nicht-Wort Zeichen erlaubt',
-        'promptMessage'  => 'Nur ein einzelnes Wor das aus alphanummerischen Zeichen und Unterstrichen besteht',
+        'promptMessage'  => 'Nur ein einzelnes Wort das aus ' .
+                            'alphanummerischen Zeichen und Unterstrichen besteht',
     ),
     array(
         'maxlength' => 20,

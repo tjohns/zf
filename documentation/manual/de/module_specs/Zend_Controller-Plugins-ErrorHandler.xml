@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
@@ -146,12 +146,14 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 Fehler -- Kontroller oder Aktion nicht gefunden
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                     ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... Ausgabe für die Anzeige erzeugen...
                 break;
             default:
-                // Anwendungsfehler; Fehler Seite anzeigen, aber den Status Code nicht ändern
+                // Anwendungsfehler; Fehler Seite anzeigen, aber den
+                // Status Code nicht ändern
                 break;
         }
     }
@@ -164,7 +166,8 @@ class ErrorController extends Zend_Controller_Action
             <code>exception</code> Eigenschaft des <code>error_handler</code> Objektes genommen wird:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
@@ -174,19 +177,26 @@ public function errorAction()
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 Fehler -- Kontroller oder Aktion nicht gefunden
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                     ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... Ausgabe für die Anzeige erzeugen...
                 break;
             default:
-                // Anwendungsfehler; Fehler Seite anzeigen, aber den Status Code nicht ändern
+                // Anwendungsfehler; Fehler Seite anzeigen, aber den
+                // Status Code nicht ändern
 
                 // ...
 
                 // Ausnahme loggen:
                 $exception = $errors->exception;
-                $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/applicationException.log'));
-                $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
+                $log = new Zend_Log(
+                    new Zend_Log_Writer_Stream(
+                        '/tmp/applicationException.log'
+                    )
+                );
+                $log->debug($exception->getMessage() . "\n" .
+                            $exception->getTraceAsString());
                 break;
         }
 }
@@ -285,7 +295,7 @@ EOH;
                 // Anwendungsfehler
                 $content =<<<EOH
 <h1>Fehler!</h1>
-<p>Ein unerwarteter Fehler trat in der Anfrage auf. Bitte versuchen Sie es etwas später nocheinmal.</p>
+<p>Ein unerwarteter Fehler trat auf. Bitte versuchen Sie es etwas später nocheinmal.</p>
 EOH;
                 break;
         }

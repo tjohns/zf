@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11133 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -90,7 +90,7 @@ $element->setCaptcha('Dumb');
         <programlisting role="php"><![CDATA[
 // Verwendung eines einzelnen captcha Schlüssels:
 $element = new Zend_Form_Element_Captcha('foo', array(
-    'label' => "Bitte verifizieren Sie das Sie menschlich sind"
+    'label' => "Bitte verifizieren Sie das Sie menschlich sind",
     'captcha' => array(
         'captcha' => 'Figlet',
         'wordLen' => 6,
@@ -100,7 +100,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
 
 // Verwendung von beiden, captcha und captchaOptions:
 $element = new Zend_Form_Element_Captcha('foo', array(
-    'label' => "Bitte verifizieren Sie das Sie menschlich sind"
+    'label' => "Bitte verifizieren Sie das Sie menschlich sind",
     'captcha' => 'Figlet',
     'captchaOptions' => array(
         'captcha' => 'Figlet',

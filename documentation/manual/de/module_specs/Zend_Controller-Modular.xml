@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.controller.modular">
     <title>Eine konventionelle modulare Verzeichnis Struktur verwenden</title>
 
@@ -10,7 +10,8 @@
             Um so eine Verzeichnisstruktur zu zeigen:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 docroot/
     index.php
 application/
@@ -93,8 +94,8 @@ application/
 
         <programlisting role="php"><![CDATA[
 $front->setControllerDirectory(array(
-      'default' => '/path/to/application/controllers',
-      'blog'    => '/path/to/application/blog/controllers'
+    'default' => '/path/to/application/controllers',
+    'blog'    => '/path/to/application/blog/controllers'
 ));
 ]]>
         </programlisting>
@@ -106,7 +107,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+$front->addControllerDirectory('/path/to/application/news/controllers',
+                               'news');
 ]]>
         </programlisting>
 

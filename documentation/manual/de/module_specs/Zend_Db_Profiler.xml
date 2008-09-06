@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
@@ -27,7 +27,8 @@ $params = array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test',
-    'profiler' => true  // aktiviere den Profiler; false, um ihn zu deaktivieren (standardmäßig deaktiviert)
+    'profiler' => true  // aktiviere den Profiler; false, um ihn zu
+                        // deaktivieren (standardmäßig deaktiviert)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -215,7 +216,8 @@ $profiler = $db->getProfiler();
             worden ist:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 $query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();
@@ -228,7 +230,8 @@ echo $query->getQuery();
             am längsten laufende zu finden:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting role="php">
+<![CDATA[
 $totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
@@ -241,8 +244,10 @@ foreach ($profiler->getQueryProfiles() as $query) {
     }
 }
 
-echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . ' seconds' . "\n";
-echo 'Average query length: ' . $totalTime / $queryCount . ' seconds' . "\n";
+echo 'Executed ' . $queryCount . ' queries in ' . $totalTime .
+     ' seconds' . "\n";
+echo 'Average query length: ' . $totalTime / $queryCount .
+     ' seconds' . "\n";
 echo 'Queries per second: ' . $queryCount / $totalTime . "\n";
 echo 'Longest query length: ' . $longestTime . "\n";
 echo "Longest query: \n" . $longestQuery . "\n";
@@ -270,7 +275,8 @@ echo "Longest query: \n" . $longestQuery . "\n";
                 entfernen, muss nur der Wert null an die Methode übergeben werden.
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 // Zeichne nur Abfragen auf, die mindestens 5 Sekunden laufen:
 $profiler->setFilterElapsedSecs(5);
 
@@ -345,9 +351,11 @@ $profiler->setFilterElapsedSecs(null);
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // zeichne SELECT, INSERT und UPDATE Abfragen auf
-$profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+$profiler->setFilterQueryType(Zend_Db_Profiler::SELECT |
+                              Zend_Db_Profiler::INSERT |
+                              Zend_Db_Profiler::UPDATE);
 
-// zeichne DELETE Abfragen auf (damit wir herausfinden, warum Daten verloren gehen)
+// zeichne DELETE Abfragen auf
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // Remove all filters
@@ -371,14 +379,17 @@ $profiler->setFilterQueryType(null);
                 Konstanten für Abfragetypen.
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 // Hole nur SELECT Abfragen zurück
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // Hole nur SELECT, INSERT un UPDATE Abfragen zurück
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT |
+                                        Zend_Db_Profiler::INSERT |
+                                        Zend_Db_Profiler::UPDATE);
 
-// Hole DELETE Abfragen zuürck (damit wir herausfinden, warum Daten verloren gehen)
+// Hole DELETE Abfragen zurück
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 ]]>
             </programlisting>

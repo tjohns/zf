@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11125 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha Anwendung</title>
 
@@ -47,6 +47,9 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     </para>
 
     <programlisting role="php"><![CDATA[
+// Eine Instanz von Zend_View erstellen
+$view = new Zend_View();
+
 // Originale Anfrage:
 $captcha = new Zend_Captcha_Figlet(array(
     'name' => 'foo',
@@ -54,7 +57,7 @@ $captcha = new Zend_Captcha_Figlet(array(
     'timeout' => 300,
 ));
 $id = $captcha->generate();
-echo $captcha->render();
+echo $captcha->render($view);
 
 // Eine nachfolgende Anfrage:
 // Annahme das das Captcha vorher eingestellt wurde, und $value der übertragene Wert ist:

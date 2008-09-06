@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11123 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -58,7 +58,7 @@
         
         <para>
             <programlisting role="php"><![CDATA[
-$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_array($array));
+$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
 ]]>
             </programlisting>
         </para>

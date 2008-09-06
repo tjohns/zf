@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.date.additional">
 
     <title>Funktionierende Beispiele</title>
@@ -250,8 +250,9 @@ foreach ($info as $sun) {
         <example id="zend.date.additional.timezones.example-1">
             <title>Arbeiten mit Zeitzonen</title>
             <programlisting role="php"><![CDATA[
-// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
-// Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei
+// oder php.ini gemacht werden. Wir setzen Sie hier nur der Vollständigkeit
+// halber um ein komplettes Beispiel zu erhalten.
 date_default_timezone_set('Europe/Vienna');
 
 // Erstellen des Datumsobjektes
@@ -293,8 +294,9 @@ print $date->getIso();
         <example id="zend.date.additional.timezones.example-2">
             <title>Mehrere Zeitzonen</title>
             <programlisting role="php"><![CDATA[
-// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder php.ini gemacht werden
-// Wir setzen Sie hier nur der Vollständigkeit halber um ein komplettes Beispiel zu erhalten
+// Setzen einer Standardzeitzone... das muß in der Bootstrap Datei oder
+// php.ini gemacht werden. Wir setzen Sie hier nur der Vollständigkeit
+// halber um ein komplettes Beispiel zu erhalten.
 date_default_timezone_set('Europe/Vienna');
 
 // Erstellen des Datumsobjektes

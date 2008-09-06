@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.date.introduction">
 
     <title>Einführung</title>
@@ -50,8 +50,10 @@
             <example id="zend.date.setdefaulttimezone.example-1">
                 <title>Definieren einer Standard-Zeitzone</title>
                 <programlisting role="php"><![CDATA[
-date_default_timezone_set('America/Los_Angeles'); // Zeitzone für die USA, Kalifornien
-date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland
+// Zeitzone für die USA, Kalifornien
+date_default_timezone_set('America/Los_Angeles');
+// Zeitzone für Deutschland
+date_default_timezone_set('Europe/Berlin');
 ]]>
                 </programlisting>
             </example>

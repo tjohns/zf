@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -112,13 +112,16 @@ $currency = new Zend_Currency();
         <programlisting role="php"><![CDATA[
 // Wir nehmen das Standardgebietsschema 'de_AT' an
 
-// Erstellt eine Instanz von from 'en_US' und verwendet 'USD' welches die Standardwert von 'en_US' ist
+// Erstellt eine Instanz von from 'en_US' und verwendet
+// 'USD' welches die Standardwert von 'en_US' ist
 $currency = new Zend_Currency('en_US');
 
-// Erstellt eine Instanz vom aktuellen Gebietsschema ('de_AT') und verwendet 'EUR' als Währung
+// Erstellt eine Instanz vom aktuellen Gebietsschema
+// ('de_AT') und verwendet 'EUR' als Währung
 $currency = new Zend_Currency();
 
-// Erstellt eine Instanz und verwendet 'EUR' als Währung, 'en_US' für die Formatierung der Ziffern
+// Erstellt eine Instanz und verwendet 'EUR' als Währung,
+// 'en_US' für die Formatierung der Ziffern
 $currency = new Zend_Currency('en_US', 'EUR');
 ]]>
         </programlisting>
@@ -172,7 +175,8 @@ $currency = new Zend_Currency('en_US', 'EUR');
             <title>Eine Ausgabe für eine Währung erstellen</title>
 
             <programlisting role="php"><![CDATA[
-// Erstellt eine Instanz mit 'en_US' und verwendet 'USD' welches die Standardwert von 'en_US' sind
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD'
+// welches die Standardwert von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
 // Gibt '$ 1,000.00' aus
@@ -328,7 +332,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
             <title>Konstanten für die Auswahl der Beschreibung einer Währung</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>Konstante</entry>
@@ -361,7 +365,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
             <title>Konstanten für die Auswahl der Position der Währung</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>Konstante</entry>
@@ -391,14 +395,15 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
             <title>Das Anzeigeformat der Währung ändern</title>
 
             <programlisting role="php"><![CDATA[
-// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
-// da das die Standardwerte von 'en_US' sind
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin'
+// und 'en_US' da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
 // Gibt 'US$ 1,000.00' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME,
+                     'position' => Zend_Currency::RIGHT);
 // Gibt '1.000,00 US Dollar' aus
 echo $currency->toCurrency(1000);
 
@@ -486,8 +491,8 @@ echo $currency->toCurrency(1000);
             <title>Informationen von Währungen erhalten</title>
 
             <programlisting role="php"><![CDATA[
-// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
-// da das die Standardwerte von 'en_US' sind
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin'
+// und 'en_US' da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
 // Gibt '$' aus
@@ -502,7 +507,8 @@ echo $currency->getName('ATS', 'de_AT');
 // Gibt ein Array aus mit allen Regionen in denen USD verwendet wird
 print_r($currency->getRegionList();
 
-// Gibt ein Array aus mit allen Währungen die jemals in dieser Region verwendet wurden 
+// Gibt ein Array aus mit allen Währungen die jemals in dieser
+// Region verwendet wurden 
 print_r($currency->getCurrencyList('de_AT');
 ]]>
             </programlisting>
@@ -557,9 +563,12 @@ print $currency->toCurrency(1000);
 
             <programlisting role="php"><![CDATA[
 // Ein Cache-Objekt erstellen
-$cache = Zend_Cache::factory('Core', 'File',
-             array('lifetime' => 120, 'automatic_serialization' => true),
-             array('cache_dir' => dirname(__FILE__) . '/_files/'));
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             array('lifetime' => 120,
+                                   'automatic_serialization' => true),
+                             array('cache_dir'
+                                       => dirname(__FILE__) . '/_files/'));
 Zend_Currency::setCache($cache);
 ]]>
             </programlisting>
